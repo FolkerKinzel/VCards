@@ -28,8 +28,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
-  </ItemGroup>
-
 </Project>
