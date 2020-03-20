@@ -19,6 +19,7 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public VCard() { }
 
+
         /// <summary>
         /// Initialisiert ein <see cref="VCard"/>-Objekt aus einer Queue von <see cref="VcfRow"/>-Objekten.
         /// </summary>
