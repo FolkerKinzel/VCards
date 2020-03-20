@@ -1,0 +1,29 @@
+﻿BEGIN:VCARD
+VERSION:3.0
+FN:Folker Kinzel
+N:Kinzel;Folker;;;
+item1.EMAIL;TYPE=INTERNET:fkinzel@freenet.de
+item1.X-ABLabel:
+item2.EMAIL;TYPE=INTERNET:info@folker-kinzel.de
+item2.X-ABLabel:
+item3.TEL:01577-1725821
+item3.X-ABLabel:
+item4.ADR:;;Priorauer Str. 32;Raguhn-Jeßnitz;;06779;DE
+item4.X-ABLabel:
+BDAY:19720131
+item5.URL:www.folker-kinzel.de
+item5.X-ABLabel:
+PHOTO:https://lh3.googleusercontent.com/-qA19KAIW4ig/XPRQfJuWDoI/AAAAAAAAAA
+ A/n3yseZjiGHcH1S5pjm8TULwkceJJtHykQCOQCEAE/photo.jpg
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+FN:KMS WSF
+N:KMS;WSF;;;
+EMAIL;TYPE=INTERNET:wsf@musik.blk.de
+TEL;TYPE=HOME:03443-303776
+item1.TEL:03443-333440
+item1.X-ABLabel:homeFax
+item2.ORG:KMS Weißenfels
+item2.X-ABLabel:
+END:VCARD

@@ -1,0 +1,79 @@
+﻿using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Attributes;
+using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Models.Enums;
+using System;
+using FolkerKinzel.VCards.Models.PropertyParts;
+
+
+namespace FolkerKinzel.VCards.Models
+{
+    /// <summary>
+    /// Abstrakte Basisklasse für Klassen, die die Daten von vCard-Properties kapseln, die Beziehungen zu anderen Menschen
+    /// beschreiben. Dies sind insbesondere die vCard-4.0-Property "RELATED", die vCard-2.1- und -3.0-Property "AGENT" sowie
+    /// Non-Standard-Properties zur Angabe des Namens des Ehepartners (wie z.B. "X-SPOUSE").
+    /// </summary>
+    public abstract class RelationProperty : VCardProperty<object?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    {
+        [InternalProtected]
+        internal RelationProperty(ParameterSection parameters, string? propertyGroup)
+            : base(parameters, propertyGroup)
+        {
+            InternalProtectedAttribute.Run();
+        }
+
+        /// <summary>
+        /// Konstruktor, der von abgeleiteten Klassen aufgerufen wird.
+        /// </summary>
+        /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum, der die 
+        /// Beziehung zu einer Person beschreibt.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        protected RelationProperty(RelationTypes? relation, string? propertyGroup)
+        {
+            this.Group = propertyGroup;
+            this.Parameters.RelationType = relation;
+        }
+
+
+        internal static RelationProperty Parse(VcfRow row, VCardDeserializationInfo info, VCdVersion version)
+        {
+            row.UnMask(info, version);
+
+            if (row.Value is null || row.Parameters.DataType == Enums.VCdDataType.Text)
+            {
+                return new RelationTextProperty(row, info, version);
+            }
+
+            if (row.Value.IsUuid())
+            {
+                var relation = new RelationUuidProperty(
+                    UuidConverter.ToGuid(row.Value),
+                    propertyGroup: row.Group);
+
+                relation.Parameters.Assign(row.Parameters);
+
+                return relation;
+            }
+            else
+            {
+                if (Uri.TryCreate(row.Value, UriKind.RelativeOrAbsolute, out Uri uri))
+                {
+                    var relation = new RelationUriProperty(
+                        uri,
+                        propertyGroup: row.Group);
+
+                    relation.Parameters.Assign(row.Parameters);
+
+                    return relation;
+                }
+                else
+                {
+                    return new RelationTextProperty(row, info, version);
+                }
+            }
+        }
+
+    }
+}
