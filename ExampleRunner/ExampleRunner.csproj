@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FolkerKinzel.VCardsExamples\FolkerKinzel.VCardsExamples.csproj" />
     <ProjectReference Include="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
   </ItemGroup>
 

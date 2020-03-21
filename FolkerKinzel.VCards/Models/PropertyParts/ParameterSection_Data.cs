@@ -35,7 +35,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// TYPE Beschreibt die Art einer Adresse. (2,3)
+        /// <c>(TYPE)</c> Beschreibt die Art einer Adresse. (2,3)
         /// </summary>
         public AddressTypes? AddressType
         {
@@ -49,7 +49,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// ALTID Ein String, der zu erkennen gibt, dass mehrere Instanzen derselben Property dasselbe 
+        /// <c>(ALTID)</c> Ein String, der zu erkennen gibt, dass mehrere Instanzen derselben Property dasselbe 
         /// darstellen (z.B. in unterschiedlichen Sprachen). (4)
         /// </summary>
         public string? AltID
@@ -62,7 +62,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// CALSCALE Gibt die Art des Kalenders an, der für Datumsangaben verwendet wird. (4)
+        /// <c>(CALSCALE)</c> Gibt die Art des Kalenders an, der für Datumsangaben verwendet wird. (4)
         /// </summary>
         /// <remarks>Der einzige offiziell registrierte Wert ist "GREGORIAN" für den gregorianischen 
         /// Kalender.</remarks>
@@ -76,7 +76,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// CHARSET Gibt den Zeichensatz an, der für die Property verwendet wurde. (2)
+        /// <c>(CHARSET)</c> Gibt den Zeichensatz an, der für die Property verwendet wurde. (2)
         /// </summary>
         public string? Charset
         {
@@ -88,7 +88,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// VALUE: Gibt an, wo sich der eigentiche Inhalt der Property befindet. (2)
+        /// <c>(VALUE)</c> Gibt an, wo sich der eigentiche Inhalt der Property befindet. (2)
         /// </summary>
         public VCdContentLocation ContentLocation
         {
@@ -100,7 +100,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// CONTEXT Gibt den Kontext der Daten an, z.B. "VCARD" oder "LDAP". (3)
+        /// <c>(CONTEXT)</c> Gibt den Kontext der Daten an, z.B. "VCARD" oder "LDAP". (3)
         /// </summary>
         /// <remarks>Kommt in der SOURCE-Property von vCard 3.0 zum Einsatz.</remarks>
         public string? Context
@@ -114,7 +114,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// VALUE: Gibt an, welchem der vom vCard-Standard vordefinierten Datentypen der Inhalt
+        /// <c>(VALUE)</c> Gibt an, welchem der vom vCard-Standard vordefinierten Datentypen der Inhalt
         /// der vCard-Property entspricht. (3,4)
         /// </summary>
         public VCdDataType? DataType
@@ -129,7 +129,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// TYPE Beschreibt die Art einer E-Mail. (Verwenden Sie nur die Konstanten der Klasse
+        /// <c>(TYPE)</c> Beschreibt die Art einer E-Mail. (Verwenden Sie nur die Konstanten der Klasse
         /// <see cref="EmailType"/>.) (2,3)
         /// </summary>
         public string? EmailType
@@ -143,7 +143,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// ENCODING Gibt die Encodierung der Property an. (2,3)
+        /// <c>(ENCODING)</c> Gibt die Encodierung der Property an. (2,3)
         /// </summary>
         /// <remarks>
         /// vCard 3.0 nur "b" für "Base64.
@@ -159,7 +159,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// LEVEL RFC 6715: Used to indicate a level of expertise
+        /// <c>(LEVEL)</c> RFC 6715: Used to indicate a level of expertise
         /// attained by the object the vCard represents. (Für Property EXPERTISE). (4 Erweiterung)
         /// </summary>
         public ExpertiseLevel? ExpertiseLevel
@@ -173,7 +173,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// GEO Geografische Position (4)
+        /// <c>(GEO)</c> Geografische Position (4)
         /// </summary>
         public GeoCoordinate? GeographicPosition
         {
@@ -186,7 +186,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// TYPE Nähere Beschreibung einer Instant-Messenger-Adresse. (3 Erweiterung RFC 4770)
+        /// <c>(TYPE)</c> Nähere Beschreibung einer Instant-Messenger-Adresse. (3 Erweiterung RFC 4770)
         /// </summary>
         public ImppTypes? InstantMessengerType
         {
@@ -198,7 +198,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// INDEX RFC 6715: Used in a multi-valued property to indicate the position of
+        /// <c>(INDEX)</c> RFC 6715: Used in a multi-valued property to indicate the position of
         /// this value within the set of values. (4 Erweiterung)
         /// </summary>
         public int? Index
@@ -218,7 +218,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// LEVEL RFC 6715: Used to indicate a level of hobby or interest
+        /// <c>(LEVEL)</c> RFC 6715: Used to indicate a level of hobby or interest
         /// attained by the object the vCard represents. (Für Property INTEREST.) (4 Erweiterung)
         /// </summary>
         public InterestLevel? InterestLevel
@@ -232,7 +232,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// LABEL Gibt die formatierte Textdarstellung einer Adresse an. ([2],[3],4)
+        /// <c>(LABEL)</c> Gibt die formatierte Textdarstellung einer Adresse an. ([2],[3],4)
         /// </summary>
         /// <remarks>In vCard 2.1 und vCard 3.0 wird der Inhalt als separate LABEL-Property eingefügt.</remarks>
         public string? Label
@@ -247,7 +247,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// LANGUAGE Sprache der Property. (2,3,4)
+        /// <c>(LANGUAGE)</c> Sprache der Property. (2,3,4)
         /// </summary>
         public string? Language
         {
@@ -257,7 +257,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// MEDIATYPE Gibt bei URIs den MIME-Typ an, auf den die Uri verweist (z.B. text/plain). (4)
+        /// <c>(MEDIATYPE)</c> Gibt bei URIs den MIME-Typ an, auf den die Uri verweist (z.B. text/plain). (4)
         /// </summary>
         public string? MediaType
         {
@@ -283,7 +283,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// PREF oder TYPE=PREF Drückt die Beliebtheit einer Property aus (zwischen 1 und 100). 1 bedeutet 
+        /// <c>(PREF</c> oder <c>TYPE=PREF)</c> Drückt die Beliebtheit einer Property aus (zwischen 1 und 100). 1 bedeutet 
         /// am beliebtesten. Bei Properties, die mehrfach vorkommen, zählt die größte Beliebtheit. (2,3,4)
         /// </summary>
         public int Preference
@@ -307,7 +307,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// TYPE Klassifiziert eine Property als dienstlich und / oder privat. (2,3,4)
+        /// <c>(TYPE)</c> Klassifiziert eine Property als dienstlich und / oder privat. (2,3,4)
         /// </summary>
         public PropertyClassTypes? PropertyClass
         {
@@ -321,7 +321,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// PID Property-ID: Um eine bestimmte Property unter verschiedenen Instanzen derselben Property
+        /// <c>(PID)</c> Property-ID: Um eine bestimmte Property unter verschiedenen Instanzen derselben Property
         /// zu identifizieren. (4)
         /// </summary>
         public IEnumerable<PropertyID>? PropertyIDs
@@ -336,7 +336,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// TYPE Bestimmt in der Relations-Property (RELATED) die Art der Beziehung zu einer Person. (4)
+        /// <c>(TYPE)</c> Bestimmt in der Relations-Property (RELATED) die Art der Beziehung zu einer Person. (4)
         /// </summary>
         public RelationTypes? RelationType
         {
@@ -349,7 +349,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// SORT-AS <see cref="string"/>s (case-sensitiv!), die die Sortierreihenfolge festlegen. (Maximal so viele, wie Felder der 
+        /// <c>(SORT-AS)</c>&#160;<see cref="string"/>s (case-sensitiv!), die die Sortierreihenfolge festlegen. (Maximal so viele, wie Felder der 
         /// zusammengesetzten Property!) ([3],4)
         /// </summary>
         /// <example>
@@ -359,7 +359,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// </code>
         /// </example>
         /// <remarks>
-        /// In vCard 3.0 wird eine separate SORT-STRING - Property eingefügt, in die lediglich der erste <see cref="string"/>
+        /// In vCard 3.0 wird eine separate <c>SORT-STRING</c> - Property eingefügt, in die lediglich der erste <see cref="string"/>
         /// übernommen wird.
         /// </remarks>
         public IEnumerable<string?>? SortAs
@@ -373,7 +373,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// TYPE Beschreibt die Art einer Telefonnummer. (2,3,4)
+        /// <c>(TYPE)</c> Beschreibt die Art einer Telefonnummer. (2,3,4)
         /// </summary>
         public TelTypes? TelephoneType
         {
@@ -387,7 +387,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// TZ Zeitzone (4)
+        /// <c>(TZ)</c> Zeitzone (4)
         /// </summary>
         public TimeZoneInfo? TimeZone
         {

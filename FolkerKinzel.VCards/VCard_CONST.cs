@@ -4,7 +4,7 @@
     public partial class VCard
     {
         /// <summary>
-        /// In VCF-Dateien verwendeter Zeilenwechsel.
+        /// In VCF-Dateien verwendeter Zeilenwechsel ("\r\n").
         /// </summary>
         public const string NewLine = "\r\n";
 

@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
-[assembly: InternalsVisibleTo("FolkerKinzel.VCardsTests")]
+[assembly: InternalsVisibleTo("FolkerKinzel.VCards.Tests")]
 //[assembly: NeutralResourcesLanguage("en")]
 
 // Allgemeine Informationen über eine Assembly werden über die folgenden

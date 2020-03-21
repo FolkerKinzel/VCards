@@ -2,15 +2,15 @@
 VERSION:3.0
 FN:Folker Kinzel
 N:Kinzel;Folker;;;
-item1.EMAIL;TYPE=INTERNET:fkinzel@freenet.de
+item1.EMAIL;TYPE=INTERNET:email1@freenet.de
 item1.X-ABLabel:
-item2.EMAIL;TYPE=INTERNET:info@folker-kinzel.de
+item2.EMAIL;TYPE=INTERNET:email2@folker-kinzel.de
 item2.X-ABLabel:
-item3.TEL:01577-1725821
+item3.TEL:0123-45678
 item3.X-ABLabel:
-item4.ADR:;;Priorauer Str. 32;Raguhn-Jeßnitz;;06779;DE
+item4.ADR:;;Berliner Str. 85;Halle;;06789;DE
 item4.X-ABLabel:
-BDAY:19720131
+BDAY:19780311
 item5.URL:www.folker-kinzel.de
 item5.X-ABLabel:
 PHOTO:https://lh3.googleusercontent.com/-qA19KAIW4ig/XPRQfJuWDoI/AAAAAAAAAA
