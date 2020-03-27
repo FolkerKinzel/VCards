@@ -13,16 +13,24 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'net45'">
     <NoWarn>$(NoWarn);8600;8601;8602;8603;8604</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="UnitTestsInitialize.cs" />
+    <Compile Remove="VcfPaths.cs" />
+  </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
-    <PackageReference Include="coverlet.collector" Version="1.1.0">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Nullable" Version="1.1.1">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Nullable" Version="1.2.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -31,5 +39,28 @@
   <ItemGroup>
     <ProjectReference Include="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestFiles\" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="echo $(ProjectDir) &gt; &quot;$(ProjectDir)\Resources\ProjDir.txt&quot;" />
+  </Target>
 
 </Project>

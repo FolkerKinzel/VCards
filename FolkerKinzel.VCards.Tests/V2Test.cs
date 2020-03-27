@@ -7,7 +7,7 @@ using System.Linq;
 using FolkerKinzel.VCards.Models;
 using System.Collections.Generic;
 
-namespace FolkerKinzel.VCards_Tests
+namespace FolkerKinzel.VCards.Tests
 {
     [TestClass]
     public class V2Test
@@ -15,7 +15,7 @@ namespace FolkerKinzel.VCards_Tests
         [TestMethod]
         public void Parse()
         {
-            var vcard = VCard.Load(VcfPaths.Vcard_2_1_Path);
+            var vcard = VCard.Load(TestFiles.V2vcf);
 
             Assert.IsNotNull(vcard);
             Assert.AreNotEqual(0, vcard.Count);
@@ -43,6 +43,7 @@ namespace FolkerKinzel.VCards_Tests
         }
 
         [TestMethod]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
         public void TestLineWrapping()
         {
             var vcard = new VCard();

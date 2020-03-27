@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FolkerKinzel.VCards_Tests
+namespace FolkerKinzel.VCards.Tests
 {
     [TestClass]
     public class V3Test
@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards_Tests
         [TestMethod]
         public void Parse()
         {
-            var vcard = VCard.Load(VcfPaths.Vcard_3_0_Path);
+            var vcard = VCard.Load(TestFiles.V3vcf);
 
             Assert.IsNotNull(vcard);
             Assert.AreNotEqual(0, vcard.Count);

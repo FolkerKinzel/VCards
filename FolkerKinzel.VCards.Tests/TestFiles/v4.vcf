@@ -1,0 +1,50 @@
+﻿BEGIN:VCARD
+VERSION:4.0
+PRODID:-//Thunderbird.net/NONSGML Thunderbird CardBook V36.3//DE
+UID:9e49143d-201c-46cc-b1ca-b84cac8211e9
+FN:Möhrke Marina
+N:Möhrke;Marina;;;
+ORG:KiTa Hohenmölsen
+EMAIL;PREF=1;TYPE=HOME:info@kinderland-hhm.de
+TEL;TYPE=WORK:034441/ 2 22 67
+TEL;TYPE=FAX:034441/ 39 23 34
+URL;TYPE=WORK:www.kinderland-hhm.de
+REV:20190602T115709Z
+END:VCARD
+
+BEGIN:VCARD
+VERSION:4.0
+PRODID:-//Thunderbird.net/NONSGML Thunderbird CardBook V36.8//DE
+UID:44a91276-ed88-4fc8-b496-ee14854276f8
+FN:Dr. Max Horst Mustermann jr. Maxl SED
+N:Mustermann;Max;Horst;Dr.;jr.
+NICKNAME:Maxl
+BDAY:19723101
+GENDER:M
+TITLE:Gröfaz
+ROLE:Generalsekretär
+ORG:SED
+EMAIL;TYPE=HOME:privat@freenet.de
+EMAIL;TYPE=WORK:geschaeftlich@freenet.de
+EMAIL;TYPE=OTHER:sonstige@freenet.de
+EMAIL:nichts@freenet.de
+TEL;TYPE=HOME:Privattelefon
+TEL;TYPE=WORK:Diensttelefon
+TEL;TYPE=FAX:Fax
+TEL;TYPE=FAX;TYPE=HOME:Fax privat
+TEL;TYPE=FAX;TYPE=WORK:Fax geschäftlich
+TEL;TYPE=MAIN:Festnetz
+TEL;TYPE=CELL:Mobil
+TEL;TYPE=PAGER:Pager
+TEL;TYPE=OTHER:sonstige
+TEL:ohne
+ADR;TYPE=HOME:;;Priorauer Str. 32;Raguhn;Sachsen-Anhalt;06779;Deutschland
+ADR;TYPE=WORK:;;Geschäftsadresse 32;Raguhn;Sachsen-Anhalt;06779;Deutschland
+URL;TYPE=WORK:www.business.de
+URL;TYPE=HOME:www.privat.de
+URL;TYPE=OTHER:www.sonstige.de
+NOTE:Kommentar
+REV:20190707T191121Z
+ITEM1.X-ABDATE:20190707
+ITEM1.X-ABLABEL:Hochzeitstag
+END:VCARD

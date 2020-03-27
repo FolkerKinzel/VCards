@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 
-namespace FolkerKinzel.VCards_Tests
+namespace FolkerKinzel.VCards.Tests
 {
     [TestClass]
     public class UnitTestsInitialize
