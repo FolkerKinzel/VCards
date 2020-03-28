@@ -16,35 +16,21 @@ namespace FolkerKinzel.VCards
 {
     public partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
-        ///// <summary>
-        ///// Lädt eine vcf-Datei mit der standardgerechten Textenkodierung UTF-8.
-        ///// </summary>
-        ///// <param name="path">Absoluter oder relativer Pfad zu einer vcf-Datei.</param>
-        ///// <returns>Ein Collection geparster <see cref="VCard"/>-Objekte, die den Inhalt der vcf-Datei darstellen.</returns>
-        ///// <exception cref="ArgumentNullException"><paramref name="path"/> ist null.</exception>
-        ///// <exception cref="ArgumentException"><paramref name="path"/> ist kein gültiger Dateipfad.</exception>
-        ///// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
-        //public static List<VCard> Load(string path)
-        //{
-        //    return Load(path, Encoding.UTF8);
-        //}
-
-
         /// <summary>
         /// Lädt eine vcf-Datei.
         /// </summary>
         /// <param name="fileName">Absoluter oder relativer Pfad zu einer vcf-Datei.</param>
-        /// <param name="enc">Die zum Einlesen der Datei zu verwendende Textenkodierung oder null, um die Datei mit der 
+        /// <param name="textEncoding">Die zum Einlesen der Datei zu verwendende Textenkodierung oder null, um die Datei mit der 
         /// standardgerechten Enkodierung <see cref="Encoding.UTF8"/> einzulesen.</param>
         /// <returns>Ein Collection geparster <see cref="VCard"/>-Objekte, die den Inhalt der vcf-Datei darstellen.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist null.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
-        public static List<VCard> Load(string fileName, Encoding? enc = null)
+        public static List<VCard> Load(string fileName, Encoding? textEncoding = null)
         {
             try
             {
-                using var reader = new StreamReader(fileName, enc ?? Encoding.UTF8, true);
+                using var reader = new StreamReader(fileName, textEncoding ?? Encoding.UTF8, true);
                 return DoParse(reader);
             }
             catch (ArgumentNullException)

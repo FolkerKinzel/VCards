@@ -4,7 +4,7 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <NeutralLanguage>en</NeutralLanguage>
-    <FileVersion>1.4.9.1</FileVersion>
+    <FileVersion>1.4.10.1</FileVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <!-- .nuget-Package: -->
     <PackageId>FolkerKinzel.VCards</PackageId>

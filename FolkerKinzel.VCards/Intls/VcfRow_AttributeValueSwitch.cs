@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Models;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Models.PropertyParts;

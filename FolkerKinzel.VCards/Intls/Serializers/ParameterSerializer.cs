@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Helpers;
+﻿using FolkerKinzel.VCards.Models.Helpers;
 using System.Diagnostics;
 using System.Text;
 using FolkerKinzel.VCards.Models.PropertyParts;

@@ -10,8 +10,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
             if (s is null) return Encoding.UTF8;
             try
             {
-                var enc = Encoding.GetEncoding(s);
-                return enc;
+                return Encoding.GetEncoding(s);
             }
             catch
             {

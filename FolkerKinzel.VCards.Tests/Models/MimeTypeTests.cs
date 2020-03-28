@@ -1,8 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models.PropertyParts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FolkerKinzel.VCards.Models.Tests
 {

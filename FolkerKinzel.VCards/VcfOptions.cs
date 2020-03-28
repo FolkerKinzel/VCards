@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+﻿using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
 
 namespace FolkerKinzel.VCards

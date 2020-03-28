@@ -5,6 +5,7 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   

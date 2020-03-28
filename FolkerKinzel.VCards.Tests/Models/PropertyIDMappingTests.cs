@@ -1,5 +1,4 @@
 ﻿using System;
-using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

@@ -1,11 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FolkerKinzel.VCards;
-using System.IO;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Linq;
 using FolkerKinzel.VCards.Models;
-using System.Collections.Generic;
 
 namespace FolkerKinzel.VCards.Tests
 {

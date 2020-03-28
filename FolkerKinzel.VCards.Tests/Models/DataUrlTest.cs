@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using System.Linq;
-using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Runtime.Serialization.Formatters.Binary;

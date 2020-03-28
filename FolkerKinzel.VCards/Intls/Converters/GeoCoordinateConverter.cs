@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
+﻿using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Diagnostics;
 using System.Globalization;

@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

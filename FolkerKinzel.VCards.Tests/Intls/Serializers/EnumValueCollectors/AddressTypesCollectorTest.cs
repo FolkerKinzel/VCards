@@ -1,13 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FolkerKinzel.VCards.Intls.Serializers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
 {

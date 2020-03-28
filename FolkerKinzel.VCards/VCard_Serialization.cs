@@ -3,7 +3,6 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.Helpers;
-using FolkerKinzel.VCards.Resources;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
