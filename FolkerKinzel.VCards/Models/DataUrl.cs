@@ -178,7 +178,7 @@ namespace FolkerKinzel.VCards.Models
             DataUrl BuildDataUri()
             {
                 var mType = new MimeType(vcfRow.Parameters.MediaType);
-                return new DataUrl($"data:{mType.ToString()};base64,{vcfRow.Value}", mType)
+                return new DataUrl($"data:{mType};base64,{vcfRow.Value}", mType)
                 {
                     Encoding = DataEncoding.Base64
                 };
@@ -351,7 +351,7 @@ namespace FolkerKinzel.VCards.Models
 
             var mType = new MimeType(mimeType);
             var dataUri =
-                new DataUrl($"data:{mType.ToString()};base64,{Convert.ToBase64String(bytes)}", mType)
+                new DataUrl($"data:{mType};base64,{Convert.ToBase64String(bytes)}", mType)
                 {
                     Encoding = DataEncoding.Base64
                 };
