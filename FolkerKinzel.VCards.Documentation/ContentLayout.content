@@ -1,18 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Topics>
-  <Topic id="397502cd-fe45-4dc2-a450-195693e7f902" visible="True" isDefault="true" isSelected="true" title="Welcome to the FolkerKinzel.VCards.dll">
+  <Topic id="397502cd-fe45-4dc2-a450-195693e7f902" visible="True" isDefault="true" isSelected="true" title="Einleitung">
     <HelpKeywords>
       <HelpKeyword index="K" term="Welcome" />
     </HelpKeywords>
-  </Topic>
-  <Topic id="47939c3d-e2d0-4739-a2b0-a98ae969f9e5" visible="True" isExpanded="true" title="Version History">
-    <HelpKeywords>
-      <HelpKeyword index="K" term="version, history" />
-    </HelpKeywords>
-    <Topic id="dad3825f-f35f-4c9b-b399-9466a775d0d0" visible="True" title="Version 1.0.0.0">
-      <HelpKeywords>
-        <HelpKeyword index="K" term="version, 1.0.0.0" />
-      </HelpKeywords>
-    </Topic>
   </Topic>
 </Topics>

@@ -7,7 +7,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
     /// <summary>
     /// Erweiterungsmethoden, die die Arbeit mit der <see cref="PropertyClassTypes"/>-Enum erleichtern.
     /// </summary>
-    public static class PropertyClassTypesExtensions
+    public static class PropertyClassTypesExtension
     {
         /// <summary>
         /// Setzt sämtliche in <paramref name="flags"/> gesetzten Flags in <paramref name="value"/>.

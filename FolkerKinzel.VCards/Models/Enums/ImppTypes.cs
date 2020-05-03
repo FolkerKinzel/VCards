@@ -7,7 +7,7 @@ namespace FolkerKinzel.VCards.Models.Enums
     /// kombiniert werden.
     /// </summary>
     /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
-    /// <see cref="Models.Helpers.ImppTypesExtensions"/>.</note>
+    /// <see cref="Models.Helpers.ImppTypesExtension"/>.</note>
     [Flags]
     public enum ImppTypes
     {

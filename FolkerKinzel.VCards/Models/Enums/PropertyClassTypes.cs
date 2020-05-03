@@ -6,7 +6,7 @@ namespace FolkerKinzel.VCards.Models.Enums
     /// Benannte Konstanten, um den Geltungsbereich einer vCard-Property zu klassifizieren.
     /// </summary>
     /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
-    /// <see cref="Models.Helpers.PropertyClassTypesExtensions"/>.</note>
+    /// <see cref="Models.Helpers.PropertyClassTypesExtension"/>.</note>
     [Flags]
     public enum PropertyClassTypes
     {

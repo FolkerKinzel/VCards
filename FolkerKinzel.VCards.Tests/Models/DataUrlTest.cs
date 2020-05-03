@@ -23,10 +23,16 @@ namespace FolkerKinzel.VCards.Models.Tests
 
             string test = DATA_PROTOCOL + "text/plain;charset=utf-8" + ";" + DEFAULT_ENCODING + "," + Uri.EscapeDataString(text);
 
-            var dataUri = DataUrl.FromText(text);
+            Assert.IsTrue(DataUrl.TryCreate(test, out DataUrl? dataUri));
+            Assert.AreEqual(text, dataUri?.GetEmbeddedText());
+
+            dataUri = DataUrl.FromText(text);
+
+            Assert.IsNotNull(dataUri);
 
             dataUri = DataUrl.FromBytes(new byte[] { 1, 2, 3 }, "application/x-octet");
 
+            Assert.IsNotNull(dataUri);
 
         }
 

@@ -255,15 +255,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         protected override void AppendOrganizations(IEnumerable<OrganizationProperty?> value)
         {
             this.BuildPrefProperty(VCard.PropKeys.ORG, value);
-
-            Debug.Assert(value != null);
-
-            var pref = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
-
-            if (pref != null)
-            {
-                this.BuildProperty(VCard.PropKeys.ORG, pref);
-            }
         }
 
 

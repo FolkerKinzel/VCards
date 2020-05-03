@@ -6,7 +6,7 @@ namespace FolkerKinzel.VCards.Models.Enums
     /// Beschreibt die Art der Beziehung zu einer Person oder Organisation.
     /// </summary>
     /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
-    /// <see cref="Models.Helpers.RelationTypesExtensions"/>.</note>
+    /// <see cref="Models.Helpers.RelationTypesExtension"/>.</note>
     [Flags]
     public enum RelationTypes
     {

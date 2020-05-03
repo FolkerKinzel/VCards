@@ -7,7 +7,7 @@ namespace FolkerKinzel.VCards
     /// Benannte Konstanten, um Optionen für das Schreiben von VCF-Dateien zu bestimmen. Die Konstanten sind kombinierbar.
     /// </summary>
     /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
-    /// <see cref="Models.Helpers.VcfOptionsExtensions"/>.</note>
+    /// <see cref="Models.Helpers.VcfOptionsExtension"/>.</note>
     [Flags]
     public enum VcfOptions
     {
