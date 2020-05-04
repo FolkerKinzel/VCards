@@ -13,10 +13,10 @@ namespace FolkerKinzel.VCards
     /// Kapselt die in einer vCard enthaltenen Informationen.
     /// </summary>
     /// <threadsafety static="true" instance="false" />
-    /// <remarks>
-    /// 
-    /// 
-    /// </remarks>
+    /// <example>
+    /// <note type="important">Der leichteren Lesbarkeit wegen wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
 #if NET40

@@ -22,7 +22,7 @@ namespace FolkerKinzel.VCards
         None = 0,
 
         /// <summary>
-        /// Standardeinstellung
+        /// Standardeinstellung (entspricht WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions | WriteImppExtension | WriteXExtensions)
         /// </summary>
         Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions | WriteImppExtension | WriteXExtensions,
 

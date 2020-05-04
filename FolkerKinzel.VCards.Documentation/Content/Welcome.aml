@@ -15,6 +15,12 @@
           <para>vCard-Dateien der Versionen 2.1, 3.0 und 4.0 in die jeweils andere Version zu konvertieren.</para>
         </listItem>
       </list>
+      <para>Wenn beim Parsen einer vCard etwas nicht gelesen werden kann, wird dies still ignoriert.</para>
+      <para>Dasselbe gilt beim Serialisieren der vCard: Da die verschiedenen vCard-Standards nicht in allen Punkten kompatibel
+            sind, werden beim Umwandeln von einer vCard-Version in eine andere inkompatible Daten stumm ignoriert. Um den Datenverlust
+            beim Umwandeln von vCard-Versionen so gering wie möglich zu halten, versucht die API, mit dem jeweiligen Standard inkompatible Daten
+            durch Verwendung bekannter Non-Standard-Properties zu bewahren. Der Einsatz der Non-Standard-Properties kann mit Optionen (VcfOptions)
+            gesteuert werden.</para>
 		</introduction>
 
 
