@@ -2,20 +2,13 @@
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.Helpers;
 
-namespace ExampleRunner
+namespace Examples
 {
     class Program
     {
         static void Main(string[] args)
         {
-            TelTypes? tel = null;
-
-            tel = tel.Set(TelTypes.Fax);
-
-            Console.WriteLine(tel);
-
-
-
+            VCardExample.ReadingAndWritingVCard();
         }
     }
 }

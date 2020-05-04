@@ -15,68 +15,68 @@ namespace FolkerKinzel.VCards.Models.Enums
 
 
         /// <summary>
-        /// VOICE Telefonnummer für Sprachkommunikation (Default). (2,3,4)
+        /// <c>(VOICE)</c>: Telefonnummer für Sprachkommunikation (Default). (2,3,4)
         /// </summary>
         Voice = 1,
 
         /// <summary>
-        /// FAX Fax-Nummer (2,3,4)
+        /// <c>(FAX)</c>: Fax-Nummer (2,3,4)
         /// </summary>
         Fax = 1 << 1,
 
         /// <summary>
-        /// MSG Indicates a messaging service on the number. (2,3)
+        /// <c>(MSG)</c>: Voice Message (z.B. MMS). (2,3)
         /// </summary>
         Msg = 1 << 2,
 
         /// <summary>
-        /// CELL Handy (2,3,4)
+        /// <c>(CELL)</c>: Handy (2,3,4)
         /// </summary>
         Cell = 1 << 3,
 
         /// <summary>
-        /// PAGER Pager-Nummer (2,3,4)
+        /// <c>(PAGER)</c>: Pager-Nummer (2,3,4)
         /// </summary>
         Pager = 1 << 4,
 
         /// <summary>
-        /// BBS Mailbox (Bulletin board system) (2,3)
+        /// <c>(BBS)</c>: Anrufbeantworter (Bulletin board system) (2,3)
         /// </summary>
         BBS = 1 << 5,
 
         /// <summary>
-        /// MODEM Modem (2,3)
+        /// <c>(MODEM)</c>: Modem (2,3)
         /// </summary>
         Modem = 1 << 6,
 
         /// <summary>
-        /// CAR Autotelefon (2,3)
+        /// <c>(CAR)</c>: Autotelefon (2,3)
         /// </summary>
         Car = 1 << 7,
 
         /// <summary>
-        /// ISDN ISDN-Nummer (2,3)
+        /// <c>(ISDN)</c>: ISDN-Nummer (2,3)
         /// </summary>
         ISDN = 1 << 8,
 
         /// <summary>
-        /// VIDEO Telefonnummer für Videokonferenzen (2,3,4)
+        /// <c>(VIDEO)</c>: Telefonnummer für Videokonferenzen (2,3,4)
         /// </summary>
         Video = 1 << 9,
 
         /// <summary>
-        /// PCS Mobilfunkdienst (Personal communication services) (3)
+        /// <c>(PCS)</c>: Mobilfunkdienst (Personal communication services) (3)
         /// </summary>
         PCS = 1 << 10, // nur vCard 3.0
 
         /// <summary>
-        /// TEXTPHONE Telefonnummer für Menschen mit Hör- oder 
+        /// <c>(TEXTPHONE)</c>: Telefonnummer für Menschen mit Hör- oder 
         /// Sprachstörungen. (4)
         /// </summary>
         TextPhone = 1 << 11,
 
         /// <summary>
-        /// Die Telefonnummer unterstützt Textnachrichten (SMS). (4)
+        /// <c>(TEXT)</c>: Die Telefonnummer unterstützt Textnachrichten (SMS). (4)
         /// </summary>
         Text = 1 << 12
     }

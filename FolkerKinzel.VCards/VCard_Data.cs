@@ -775,8 +775,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(SOUND)</c>: Gibt standardmäßig die Aussprache der FN-Eigenschaft des vCard-Objekts an, 
-        /// wenn diese Eigenschaft nicht mit anderen Eigenschaften verknüpft ist. (2,3,4)
+        /// <c>(SOUND)</c>: Gibt standardmäßig die Aussprache der <see cref="DisplayNames"/>-Eigenschaft des <see cref="VCard"/>-Objekts an. (2,3,4)
         /// </summary>
         public IEnumerable<DataProperty?>? Sounds
         {

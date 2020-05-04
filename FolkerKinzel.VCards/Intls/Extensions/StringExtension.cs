@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FolkerKinzel.VCards.Intls.Extensions
 {
-    static class StringExtensions
+    static class StringExtension
     {
         /// <summary>
         /// Splittet den Value-Teil einer vCard-Property unter Berücksichtigung der maskierten Zeichen.

@@ -12,17 +12,17 @@
         // Die Wertzuweisung als Flags ist nötig, um inkompatible Werte leichter auszufiltern!
 
         /// <summary>
-        /// TEXT Für Menschen lesbarer Text. (3,4)
+        /// <c>(TEXT)</c>: Für Menschen lesbarer Text. (3,4)
         /// </summary>
         Text = 1,
 
         /// <summary>
-        /// URI (3,4)
+        /// <c>(URI)</c>: Uri (3,4)
         /// </summary>
         Uri = 1 << 1,
 
         /// <summary>
-        /// DATE (3,4)
+        /// <c>(DATE)</c>: Datum (3,4)
         /// </summary>
         /// <remarks>
         /// <code>
@@ -36,7 +36,7 @@
         Date = 1 << 2,
 
         /// <summary>
-        /// TIME (3,4)
+        /// <c>(TIME)</c>: Zeitangabe (3,4)
         /// </summary>
         /// <remarks>
         /// <code>
@@ -52,7 +52,7 @@
 
 
         /// <summary>
-        /// DATE-TIME (3,4)
+        /// <c>(DATE-TIME)</c>: Kombination aus Datums- und Zeitangabe (3,4)
         /// </summary>
         /// <remarks>
         /// <code>
@@ -66,8 +66,9 @@
         /// </remarks>
         DateTime = 1 << 4,
 
+
         /// <summary>
-        /// DATE-AND-OR-TIME: Date, Time oder DateTime. (4)
+        /// <c>(DATE-AND-OR-TIME)</c>: Date, Time oder DateTime. (4)
         /// </summary>
         /// <remarks>
         /// A stand-alone TIME value is always preceded by a "T".
@@ -75,7 +76,7 @@
         DateAndOrTime = 1 << 5,
 
         /// <summary>
-        /// TIMESTAMP (4)
+        /// <c>(TIMESTAMP)</c>: Zeitstempel (4)
         /// </summary>
         /// <remarks>
         /// <code>
@@ -85,8 +86,9 @@
         /// </remarks>
         Timestamp = 1 << 6,
 
+
         /// <summary>
-        /// BOOLEAN (3,4)
+        /// <c>(BOOLEAN)</c>: Boolscher Wert (3,4)
         /// </summary>
         /// <remarks>
         /// TRUE / FALSE (nicht case-sensitiv)
@@ -94,7 +96,7 @@
         Boolean = 1 << 7,
 
         /// <summary>
-        /// INTEGER (3,4)
+        /// <c>(INTEGER)</c>: Ganzzahliger Typ mit Vorzeichen (3,4)
         /// </summary>
         /// <remarks>
         /// [sign] 1*DIGIT
@@ -102,7 +104,7 @@
         Integer = 1 << 8,
 
         /// <summary>
-        /// FLOAT (3,4)
+        /// <c>(FLOAT)</c>: Fließkommazahl mit Vorzeichen (3,4)
         /// </summary>
         /// <remarks>
         /// [sign] 1*DIGIT ["." 1*DIGIT]
@@ -110,7 +112,7 @@
         Float = 1 << 9,
 
         /// <summary>
-        /// UTC-OFFSET (3,4)
+        /// <c>(UTC-OFFSET)</c>: Offset von der Standardzeit (3,4)
         /// </summary>
         /// <remarks>
         /// [+/-hh[mm]]
@@ -118,7 +120,7 @@
         UtcOffset = 1 << 10,
 
         /// <summary>
-        /// LANGUAGE-TAG (4)
+        /// <c>(LANGUAGE-TAG)</c>: Sprachangabe nach RFC 5646 (4)
         /// </summary>
         /// <remarks>
         /// z.B. de-DE
@@ -127,19 +129,19 @@
 
 
         /// <summary>
-        /// BINARY Base64-codierte binäre Daten (3)
+        /// <c>(BINARY)</c>: Base64-codierte binäre Daten (3)
         /// </summary>
         Binary = 1 << 12,
 
 
         /// <summary>
-        /// PHONE-NUMBER Telefonnummer (3)
+        /// <c>(PHONE-NUMBER)</c>: Telefonnummer (3)
         /// </summary>
         PhoneNumber = 1 << 13,
 
 
         /// <summary>
-        /// VCARD eingebettete VCARD (3)
+        /// <c>(VCARD)</c>: Eingebettete vCard (3)
         /// </summary>
         VCard = 1 << 14
     }

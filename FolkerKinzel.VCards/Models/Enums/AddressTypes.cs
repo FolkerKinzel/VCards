@@ -15,25 +15,25 @@ namespace FolkerKinzel.VCards.Models.Enums
         // AddressTypesConverter und AddressTypesCollector angepasst werden!
 
         /// <summary>
-        /// DOM inländische Adresse
+        /// <c>(DOM)</c>: inländische Adresse
         /// </summary>
         Dom = 1,
 
 
         /// <summary>
-        /// INTL internationale Adresse
+        /// <c>(INTL)</c>: internationale Adresse
         /// </summary>
         Intl = 2,
 
 
         /// <summary>
-        /// POSTAL Postanschrift
+        /// <c>(POSTAL)</c>: Postanschrift
         /// </summary>
         Postal = 4,
 
 
         /// <summary>
-        /// PARCEL Anschrift für die Zustellung von Paketen (Lieferadresse)
+        /// <c>(PARCEL)</c>: Anschrift für die Zustellung von Paketen (Lieferadresse)
         /// </summary>
         Parcel = 8
 
