@@ -6,25 +6,26 @@ It enables you
 * to serialize vcf files from and to Streams and
 * to convert vCard files, that match the vCard-versions 2.1, 3.0 and 4.0, to each other.
 
+```
 nuget Package Manager:
-`PM> Install-Package FolkerKinzel.VCards -Version 1.4.2`
-
+PM> Install-Package FolkerKinzel.VCards -Version 1.4.2
 
 .NET CLI:
-`> dotnet add package FolkerKinzel.VCards --version 1.4.2`
+> dotnet add package FolkerKinzel.VCards --version 1.4.2
 
 Package Reference (Visual Studio Project File):
- `<PackageReference Include="FolkerKinzel.VCards" Version="1.4.2" />`
+<PackageReference Include="FolkerKinzel.VCards" Version="1.4.2" />
 
 Paket CLI:
-`paket add FolkerKinzel.VCards --version 1.4.2`
+paket add FolkerKinzel.VCards --version 1.4.2
+```
 
 
-[Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/FolkerKinzel.VCards.Reference.en/Help/FolkerKinzel.VCards.en.chm)
+* [Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/FolkerKinzel.VCards.Reference.en/Help/FolkerKinzel.VCards.en.chm)
 
-[Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/FolkerKinzel.VCards.Doku.de/Help/FolkerKinzel.VCards.de.chm)
+* [Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/FolkerKinzel.VCards.Doku.de/Help/FolkerKinzel.VCards.de.chm)
 
-> IMPORTANT: On some systems, the content of the chm file is blocked. Before extracting it,
+> IMPORTANT: On some systems, the content of the CHM file is blocked. Before extracting it,
 >  right click on the file, select Properties, and check the "Allow" checkbox - if it 
 > is present - in the lower right corner of the General tab in the Properties dialog.
 
