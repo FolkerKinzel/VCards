@@ -11,7 +11,7 @@
     <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual Studio adds them anyway -->
     <AssemblyName>FolkerKinzel.VCardsDocumentation</AssemblyName>
     <RootNamespace>FolkerKinzel.VCardsDocumentation</RootNamespace>
-    <Name>FolkerKinzel.VCards.Documentation</Name>
+    <Name>FolkerKinzel.VCards.Doku.de</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
     <OutputPath>.\Help\</OutputPath>
