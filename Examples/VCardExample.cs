@@ -42,7 +42,6 @@ namespace Examples
                     )
                 },
 
-
                 Titles = new VC::TextProperty[]
                 {
                     new VC::TextProperty("CEO")
@@ -50,7 +49,6 @@ namespace Examples
 
                 LastRevision = new VC::TimestampProperty(DateTimeOffset.UtcNow)
             };
-
 
             const string photoFileName = @"..\..\KätheMüller.jpg";
 
@@ -77,13 +75,11 @@ namespace Examples
                 telHome, telWork
             };
 
-
             var prefMail = new VC::TextProperty("kaethe_mueller@internet.com");
             prefMail.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
             prefMail.Parameters.Preference = 1;
 
             vcard.EmailAddresses = new VC::TextProperty[] { prefMail };
-
 
             // Save vcard as vCard 2.1:
             vcard.Save(v2FileName, VC::Enums.VCdVersion.V2_1);
@@ -97,7 +93,6 @@ namespace Examples
 
             // Load vCard:
             vcard = VCard.Load(v3FileName)[0];
-
 
             WriteResultsToConsole(vcard);
 
