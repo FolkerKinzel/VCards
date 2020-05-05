@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- The configuration and platform will be used to determine which assemblies to include from solution and
+				 project documentation sources -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{b252f6c1-c558-49d3-ac10-de990e95660b}</ProjectGuid>
+    <SHFBSchemaVersion>2017.9.26.0</SHFBSchemaVersion>
+    <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual Studio adds them anyway -->
+    <AssemblyName>FolkerKinzel.VCardsDocumentation</AssemblyName>
+    <RootNamespace>FolkerKinzel.VCardsDocumentation</RootNamespace>
+    <Name>FolkerKinzel.VCards.Documentation</Name>
+    <!-- SHFB properties -->
+    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
+    <OutputPath>.\Help\</OutputPath>
+    <HtmlHelpName>FolkerKinzel.VCards.en</HtmlHelpName>
+    <Language>en-US</Language>
+    <TransformComponentArguments>
+      <Argument Key="logoFile" Value="Help.png" xmlns="" />
+      <Argument Key="logoHeight" Value="" xmlns="" />
+      <Argument Key="logoWidth" Value="" xmlns="" />
+      <Argument Key="logoAltText" Value="" xmlns="" />
+      <Argument Key="logoPlacement" Value="left" xmlns="" />
+      <Argument Key="logoAlignment" Value="left" xmlns="" />
+      <Argument Key="maxVersionParts" Value="" xmlns="" />
+    </TransformComponentArguments>
+    <HelpTitle>FolkerKinzel.VCards</HelpTitle>
+    <HelpFileVersion>1.0.0.0</HelpFileVersion>
+    <NamingMethod>Guid</NamingMethod>
+    <ContentPlacement>AboveNamespaces</ContentPlacement>
+    <RootNamespaceContainer>False</RootNamespaceContainer>
+    <NamespaceGrouping>True</NamespaceGrouping>
+    <MaximumGroupParts>4</MaximumGroupParts>
+    <Preliminary>False</Preliminary>
+    <SdkLinkTarget>Blank</SdkLinkTarget>
+    <DocumentationSources>
+      <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net40\FolkerKinzel.VCards.xml" />
+      <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net40\FolkerKinzel.VCards.dll" />
+    </DocumentationSources>
+    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
+    <SyntaxFilters>Standard</SyntaxFilters>
+    <PresentationStyle>VS2013</PresentationStyle>
+    <CleanIntermediates>True</CleanIntermediates>
+    <KeepLogFile>True</KeepLogFile>
+    <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
+    <IndentHtml>False</IndentHtml>
+    <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
+    <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
+    <CopyrightText>Copyright &amp;#169%3b 2020 Folker Kinzel</CopyrightText>
+    <ProjectSummary>.NET library to read, write and convert vcf files, that match the vCard-Standards  2.1, 3.0 and 4.0.</ProjectSummary>
+    <NamespaceSummaries>
+      <NamespaceSummaryItem name="FolkerKinzel.VCards" isDocumented="True">Classes to read, write and convert vcf-files.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models (Group)" isGroup="True" isDocumented="True">Namespaces, containing classes that represent the data model of a vCard.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models" isDocumented="True">Classes that represent the data model of a vCard.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models.Enums" isDocumented="True">Enums to describe vCard data.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models.Helpers" isDocumented="True">Extension methods, that makes working with the flags enums from namespace FolkerKinzel.VCards.Models.Enums more comfortable.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models.PropertyParts" isDocumented="True">Classes of the vCard data model, that your application usually will not instantiate. Therefore it won't be necessary to expose this namespace in your code.</NamespaceSummaryItem></NamespaceSummaries>
+  </PropertyGroup>
+  <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
+			 the build.  The others are optional common platform types that may appear. -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Win32' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Win32' ">
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Content" />
+    <Folder Include="Content\VersionHistory" />
+    <Folder Include="icons" />
+    <Folder Include="media" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\VCardProperty.cs" />
+    <None Include="Content\VersionHistory\v1.0.0.0.aml" />
+    <None Include="Content\VersionHistory\VersionHistory.aml" />
+    <None Include="Content\Welcome.aml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ContentLayout Include="ContentLayout.content" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icons\Help.png" />
+  </ItemGroup>
+  <!-- Import the SHFB build targets -->
+  <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
+  <!-- The pre-build and post-build event properties must appear *after* the targets file import in order to be
+			 evaluated correctly. -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+</Project>

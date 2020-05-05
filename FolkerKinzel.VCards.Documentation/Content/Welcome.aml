@@ -2,7 +2,7 @@
 <topic id="397502cd-fe45-4dc2-a450-195693e7f902" revisionNumber="1">
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
-			<para>FolkerKinzel.VCards ist eine umfangreiche API zur Arbeit mit vCard-Dateien (*.vcf).</para>
+			<para>FolkerKinzel.VCards ist eine umfangreiche .NET-API zur Arbeit mit vCard-Dateien (*.vcf).</para>
       <para>Sie ermöglicht</para>
       <list class="bullet">
         <listItem>
