@@ -18,7 +18,7 @@
       <para>Parse errors are silently ignored.</para>
       <para>The same is for errors, that occur serializing the vCard: Because of the different vCard-standards are not completely compliant,
       incompliant data is silently ignored when converting from one vCard-Standard to another. To minimize the data loss, the API tries to preserve
-      incompliant data using well-known Non-Standard-Properties. The usage of such Non-Standard-Properties can be controlled with options (VcfOptions).</para>
+      incompliant data using well-known Non-Standard-Properties. The usage of such Non-Standard-Properties can be controlled via options (VcfOptions).</para>
 		</introduction>
 
 
@@ -36,8 +36,8 @@
           <section address="VCardProperty">
             <title>Class VCardProperty&lt;T&gt;</title>
             <content>
-              <para>The data model of the class VCard based on classes, that are derived from VCardProperty&lt;T&gt;.</para>
-              <para>VCardProperty&lt;T&gt; exposes the folowing data:</para>
+              <para>The data model of the class <codeInline>VCard</codeInline> based on classes, that are derived from <codeInline>VCardProperty&lt;T&gt;</codeInline>.</para>
+              <para><codeInline>VCardProperty&lt;T&gt;</codeInline> exposes the following data:</para>
               <code language="c#" source=".\Content\VCardProperty.cs"/>
 
               <para>This reflects the structure of a data row in a *.vcf-file:</para>
@@ -48,17 +48,17 @@
               <list class="bullet">
                 <listItem>
                   <para>
-                    <codeInline>group1</codeInline>: VCardProperty&lt;T&gt;.Group,
+                    <codeInline>group1</codeInline> to <codeInline>VCardProperty&lt;T&gt;.Group</codeInline>,
                   </para>
                 </listItem>
                 <listItem>
                   <para>
-                    <codeInline>TEL;TYPE=home,voice;VALUE=uri</codeInline>: VCardProperty&lt;T&gt;.Parameters and
+                    <codeInline>TEL;TYPE=home,voice;VALUE=uri</codeInline> to <codeInline>VCardProperty&lt;T&gt;.Parameters</codeInline> and
                   </para>
                 </listItem>
                 <listItem>
                   <para>
-                    <codeInline>tel:+49-123-4567</codeInline>: VCardProperty&lt;T&gt;.Value.
+                    <codeInline>tel:+49-123-4567</codeInline> to <codeInline>VCardProperty&lt;T&gt;.Value</codeInline>.
                   </para>
                 </listItem>
               </list>
@@ -67,10 +67,10 @@
           <section address="NamingConventions">
             <title>Naming Conventions</title>
             <content>
-              <para>Most properties of class VCard are collections. It has to do with, that many properties are allowed to have more than one
-              instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in plural.</para>
+              <para>Most properties of class <codeInline>VCard</codeInline> are collections. It has to do with, that many properties are allowed to have more than one
+              instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.</para>
               <para>A special feature are properties whose name ends with "Views": These are properties, which actually is only one instance allowed, but
-              vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same AltID parameter
+              vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same <codeInline>AltID</codeInline> parameter
               on each of these versions.</para>
             </content>
           </section>
