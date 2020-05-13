@@ -1,4 +1,7 @@
 # FolkerKinzel.VCards
+[![NuGet](https://img.shields.io/nuget/v/FolkerKinzel.VCards)](https://www.nuget.org/packages/FolkerKinzel.VCards/)
+
+
 Full featured .NET-API to work with vCard files (*.vcf).
 
 It enables you
