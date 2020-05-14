@@ -19,6 +19,9 @@ EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "FolkerKinzel.VCards.Reference.en", "FolkerKinzel.VCards.Reference.en\FolkerKinzel.VCards.Reference.en.shfbproj", "{B252F6C1-C558-49D3-AC10-DE990E95660B}"
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "FolkerKinzel.VCards.Doku.de", "FolkerKinzel.VCards.Doku.de\FolkerKinzel.VCards.Doku.de.shfbproj", "{D5E079B1-68A4-4421-8E85-5E9ACF5D49B5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5AE8E090-F500-44E0-83A2-811499A2A739} = {5AE8E090-F500-44E0-83A2-811499A2A739}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

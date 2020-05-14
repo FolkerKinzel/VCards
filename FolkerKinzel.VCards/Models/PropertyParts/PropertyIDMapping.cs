@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 {
     /// <summary>
     /// Verbindet die <see cref="PropertyID.MappingNumber"/> einer vCard-Property mit einer
-    /// über mehrere vCards hinweg einheitlichen <see cref="Guid"/>.
+    /// <see cref="Guid"/>, die diese vCard-Property über mehrere vCards hinweg eindeutig identifiziert.
     /// </summary>
     public readonly struct PropertyIDMapping : IEquatable<PropertyIDMapping>
     {

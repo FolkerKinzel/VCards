@@ -38,6 +38,7 @@
     <DocumentationSources>
       <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net40\FolkerKinzel.VCards.xml" />
       <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net40\FolkerKinzel.VCards.dll" />
+      <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net40\de\FolkerKinzel.VCards.xml" />
     </DocumentationSources>
     <HelpFileFormat>HtmlHelp1</HelpFileFormat>
     <SyntaxFilters>Standard</SyntaxFilters>

@@ -1,7 +1,7 @@
 ﻿namespace FolkerKinzel.VCards.Models.Enums
 {
     /// <summary>
-    /// Specifies the components of the sex and gender identity of the object the vCard represents.
+    /// Benannte Konstanten, um das Geschlecht des Subjekts anzugeben, das die vCard repräsentiert.
     /// </summary>
     public enum VCdSex
     {

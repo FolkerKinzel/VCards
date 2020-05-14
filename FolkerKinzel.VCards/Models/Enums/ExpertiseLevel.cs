@@ -1,7 +1,7 @@
 ﻿namespace FolkerKinzel.VCards.Models.Enums
 {
     /// <summary>
-    /// Benannte Konstanten, um den Level-Parameter in der Erweiterung "EXPERTISE" anzugeben. (RFC 6715)
+    /// Benannte Konstanten, um den Level-Parameter in der Erweiterung "EXPERTISE" anzugeben (RFC 6715).
     /// </summary>
     public enum ExpertiseLevel
     {

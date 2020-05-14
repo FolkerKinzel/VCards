@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tsltn Version="1.0" SourceFile="..\bin\Release\net40\de\FolkerKinzel.VCards.xml" SourceLanguage="de" TargetLanguage="en">
+  <T ID="DFB67AAF599BB7DC">Encapsulates the data of the vCard property CLASS, which defines the level of confidentiality of the vCard in vCard 3.0.</T>
+  <T ID="BFFD14FCD3080F13">Encapsulates the data of a vCard property that contains information about the postal address.</T>
+  <T ID="F57CB4C7BFCE564A">Encapsulates embedded binary data, references to binary data (e.g. Urls) or information available as free text.</T>
+  <T ID="D3277A646C71EBF6">Represents a data URL according to RFC 2397.</T>
+  <T ID="79E201AE9C8F8336">A class derived from &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty" /&gt; that specializes in encapsulating &lt;see cref="P:FolkerKinzel.VCards.Models.DateTimeOffsetProperty.DateTimeOffset" /&gt; values.</T>
+  <T ID="281AF77AB3C9E5BE">Encapsulates information about time and date.</T>
+  <T ID="63D5064E4113C493">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty" /&gt; class, which allows a time and/or date to be saved as free text.</T>
+  <T ID="E085386FDBC598B2">Named constants to describe the type of a postal address in vCards. The constants can be combined.</T>
+  <T ID="55B6F5013F53F7AF">Named constants to specify the encoding of the embedded data in the &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl" /&gt; class.</T>
+  <T ID="EA609C0E8C5A3389">Named constants to specify the level parameter in the "EXPERTISE" extension (RFC 6715).</T>
+  <T ID="ECA3C1F357C4BD6">Named constants to specify the type of an instant messenger handle in vCard 3.0. The constants can be combined.</T>
+  <T ID="A0BCF7A4AC5CB039">Named constants to specify the level parameter in the "INTEREST" extension (RFC 6715).</T>
+  <T ID="79EB3A1CE27D0A2A">Named constants to classify the scope of a vCard property.</T>
+  <T ID="D0553C0EEE50FEF3">Named constants to describe the type of a phone number in vCards. The constants can be combined.</T>
+  <T ID="34EBB91F5AC74C3D">Named constants to indicate in vCard 3.0 which level of confidentiality applies to the vCard.</T>
+  <T ID="8E0856953702F90">Named constants to indicate in vCard 2.1 where the content of a vCard property is located.</T>
+  <T ID="CC5B620DF38B70A4">Named constants to specify the data type of the value of a vCard property.</T>
+  <T ID="D9D4EDC0B54AD733">Named constants to specify the encoding of the value of a vCard property.</T>
+  <T ID="3CF4A1A9F2A281A">Named constants to access the properties of a &lt;see cref="T:FolkerKinzel.VCards.VCard" /&gt; object.</T>
+  <T ID="6BA720ED79A95997">Named constants to indicate the VCF version.</T>
+  <T ID="4A3B3162EFF3A8BC">Represents the vCard property GENDER introduced in vCard 4.0, which stores information about the gender.</T>
+  <T ID="91EF96D1C59C267D">Represents the vCard property GEO, which encapsulates a geographic position.</T>
+  <T ID="563A730D936CD5F7">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.AddressTypes" /&gt; enum easier.</T>
+  <T ID="70565698ECE50668">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes" /&gt; enum easier.</T>
+  <T ID="FEFE098E567CFC42">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes" /&gt; enum easier.</T>
+  <T ID="9CF197E647ED38A">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes" /&gt; enum easier.</T>
+  <T ID="E3435FD6D9729EC6">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes" /&gt; enum easier.</T>
+  <T ID="44400AEBFE8E59B">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.VcfOptions" /&gt; enum easier.</T>
+  <T ID="845125EA6A51197C">Interface implemented by &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty`1" /&gt; objects to facilitate access to the data stored in them.</T>
+  <T ID="D5DEAB03FF3EF6A1">Represents the KIND property introduced in vCard 4.0, which describes the type of object represented by the vCard.</T>
+  <T ID="2C9C5B2999B6C0FB">Represents the vCard property N, which stores the name of the vCard subject.</T>
+  <T ID="90207E9BAE441F16">Represents a vCard property that is not defined by the official standards.</T>
+  <T ID="DEBF81AE423B1FE1">Represents the ORG vCard property, which stores information about the organization to which the vCard object is associated.</T>
+  <T ID="D1D18BA79937C142">Represents the vCard 3.0 property PROFILE, which specifies that the vCard is a vCard.</T>
+  <T ID="8061FC6FAA844DCF">Encapsulates information that is used to uniquely identify a vCard property.</T>
+  <T ID="7B6F2C14FC87F96F">Encapsulates the information of a CLIENTPIDMAP property.</T>
+  <T ID="53229C164BC6D573">Encapsulates information about a postal address in vCards</T>
+  <T ID="2ED264DF7DF37F7">Encapsulates information about the gender in vCards.</T>
+  <T ID="65FCFA7EEC304F2D">Encapsulates information about the geographic position.</T>
+  <T ID="3681B171B1795491">Encapsulates information about a MIME type ("Multipurpose Internet Mail Extensions").</T>
+  <T ID="D5B3EC49BD7FF1F6">Encapsulates information about the name of the person which the vCard represents.</T>
+  <T ID="4560CEC4719E4F42">Encapsulates information about the organization (or company) of the subject that the vCard represents.</T>
+  <T ID="5379A48AE5A6E9A">Encapsulates the information about the parameters of a vCard property.</T>
+  <T ID="42C40A1575E31626">Abstract base class for classes that encapsulate data from vCard properties that describe relationships with other people. These are in particular the vCard 4.0 property "RELATED", the vCard 2.1 and 3.0 property "AGENT" as well as non-standard properties for specifying the name of the spouse (such as "X-SPOUSE").</T>
+  <T ID="6CDB9800F02C1673">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty" /&gt; class to specify the name of a person with whom there is a relationship.</T>
+  <T ID="F53B64AB4515CA38">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty" /&gt; class to describe a person with whom a relationship exists with a &lt;see cref="P:FolkerKinzel.VCards.Models.RelationUriProperty.Uri"/&gt;.</T>
+  <T ID="393303368777EE1B">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty" /&gt; class to include a person with whom there is a relationship with the Uuid of their &lt;see cref="T:FolkerKinzel.VCards.VCard" /&gt;.</T>
+  <T ID="C6C07776CCE12A">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to describe a person with whom there is a relationship with their &lt;see cref="P:FolkerKinzel.VCards.Models.RelationVCardProperty.VCard"/&gt;.</T>
+  <T ID="6B0C88EC6BFA8921">Represents vCard properties that store a collection of text content.</T>
+  <T ID="B24DC67218609DBF">Represents vCard properties, whose content consists of text.</T>
+  <T ID="C4146572C57185B5">Encapsulates the vCard property REV, which represents a time stamp of the last update of the &lt;see cref="T:FolkerKinzel.VCards.VCard" /&gt;.</T>
+  <T ID="7C658E085EA70F2E">Represents the vCard property TZ, which encapsulates the time zone of the vCard.</T>
+  <T ID="69835567849E13E1">Represents the vCard property UID, which stores a unique identifier for the vCard subject.</T>
+  <T ID="20E29B9E782FABD2">Abstract base class of all classes that represent vCard properties.</T>
+  <T ID="56F2B6B9CE2456BA">Encapsulates the data of the vCard property "XML", which enables embedded XML data.</T>
+  <T ID="801D5818CF60254F">Encapsulates the information contained in a vCard.</T>
+  <T ID="82B8E8DE67B86E10">Named constants to specify options for writing VCF files. The constants can be combined.</T>
+  <T ID="D2A11B9E1BBE20A0">Named Constants to specify the components of the sex and gender identity of the object the vCard represents.</T>
+  <T ID="EF395BB67D29793B">Connects the &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyID.MappingNumber" /&gt; of a vCard property with a &lt;see cref="T:System.Guid" /&gt; that uniquely identifies this property across several vCards.</T>
+  <T ID="B5568F0CBE51E719">Named Constants to specify the type of object that the vCard represents.</T>
+  <T ID="A1247501E35DCE64">Named constants to describe the type of an email address.</T>
+  <T ID="EAE427E860CE31F9">Named constants to describe the type of relationship with a person or organization.</T>
+</Tsltn>

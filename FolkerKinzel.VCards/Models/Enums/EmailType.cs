@@ -1,7 +1,7 @@
 ﻿namespace FolkerKinzel.VCards.Models.Enums
 {
     /// <summary>
-    /// Konstanten, die die Art einer E-Mail-Adresse beschreiben.
+    /// Benannte Konstanten, die die Art einer E-Mail-Adresse beschreiben.
     /// </summary>
     public static class EmailType
     {

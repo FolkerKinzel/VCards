@@ -1,7 +1,7 @@
 namespace FolkerKinzel.VCards.Models.Enums
 {
     /// <summary>
-    /// Spezifiziert die Art des Objekts, das die vCard repräsentiert.
+    /// Benannte Konstanten, um die Art des Objekts anzugeben, das die vCard repräsentiert.
     /// </summary>
     public enum VCdKind
     {

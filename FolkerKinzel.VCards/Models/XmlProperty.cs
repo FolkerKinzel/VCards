@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models
     public sealed class XmlProperty : TextProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
-        /// Initialisiert ein neues <see cref="TextProperty"/>-Objekt.
+        /// Initialisiert ein neues <see cref="XmlProperty"/>-Objekt.
         /// </summary>
         /// <param name="xmlContent">Ein <see cref="XElement"/> oder null. Das Element muss einem XML-Namespace
         /// explizit zugeordnet sein (xmlns-Attribut). Dieser Namespace darf nicht der VCARD 4.0-Namespace 
