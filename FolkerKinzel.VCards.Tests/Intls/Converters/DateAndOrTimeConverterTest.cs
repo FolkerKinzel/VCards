@@ -12,13 +12,26 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         private readonly DateAndOrTimeConverter conv = new DateAndOrTimeConverter();
 
         [TestMethod]
-        public void TestDateAndOrTimeConverter()
+        public void DateTest()
+        {
+            string s = "1963-08-17";
+
+            Assert.IsTrue(conv.TryParse(s, out DateTimeOffset dt));
+
+            DateTime reference = new DateTime(1963, 8, 17);
+            Assert.AreEqual(reference, dt.DateTime);
+
+        }
+
+
+
+
+        [TestMethod]
+        public void RountripsTest()
         {
             Roundtrip("19720131");
             Roundtrip("19720131T15-07", false);
             Roundtrip("19720131T15+04", false);
-
-
 
             RoundtripTimestamp("19961022T140000", false);
             RoundtripTimestamp("19961022T140000Z", true);

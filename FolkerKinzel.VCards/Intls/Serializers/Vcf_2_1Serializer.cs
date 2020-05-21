@@ -173,7 +173,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             Debug.Assert(value != null);
 
             var displayName = value
-                .Where(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) ? true : !x.IsEmpty))
+                .Where(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty))
                 .OrderBy(x => x!.Parameters.Preference).FirstOrDefault()
 
                 ?? new TextProperty(Options.IsSet(VcfOptions.WriteEmptyProperties) ? null : "?");
@@ -229,7 +229,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(value != null);
 
-            var name = value.FirstOrDefault(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) ? true : !x.IsEmpty))
+            var name = value.FirstOrDefault(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty))
 
                 ?? (Options.IsSet(VcfOptions.WriteEmptyProperties) ? new NameProperty() : new NameProperty(new string[] { "?" }));
 
