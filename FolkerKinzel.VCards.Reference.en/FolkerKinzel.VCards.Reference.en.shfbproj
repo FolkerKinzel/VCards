@@ -53,7 +53,7 @@
     <NamespaceSummaries>
       <NamespaceSummaryItem name="FolkerKinzel.VCards" isDocumented="True">Classes to read, write and convert vcf-files.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.Models (Group)" isGroup="True" isDocumented="True">Namespaces, containing classes that represent the data model of a vCard.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="FolkerKinzel.VCards.Models" isDocumented="True">Classes that represent the data model of a vCard.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models" isDocumented="True">Classes, that represent the data model of a vCard.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.Models.Enums" isDocumented="True">Enums to describe vCard data.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.Models.Helpers" isDocumented="True">Extension methods, that makes working with the flags enums from namespace FolkerKinzel.VCards.Models.Enums more comfortable.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.Models.PropertyParts" isDocumented="True">Classes of the vCard data model, that your application usually will not instantiate. Therefore it won't be necessary to expose this namespace in your code.</NamespaceSummaryItem></NamespaceSummaries>

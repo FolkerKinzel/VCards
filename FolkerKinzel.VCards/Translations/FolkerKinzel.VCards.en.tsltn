@@ -22,13 +22,13 @@
   <T ID="6BA720ED79A95997">Named constants to indicate the VCF version.</T>
   <T ID="4A3B3162EFF3A8BC">Represents the vCard property GENDER introduced in vCard 4.0, which stores information about the gender.</T>
   <T ID="91EF96D1C59C267D">Represents the vCard property GEO, which encapsulates a geographic position.</T>
-  <T ID="563A730D936CD5F7">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.AddressTypes" /&gt; enum easier.</T>
-  <T ID="70565698ECE50668">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes" /&gt; enum easier.</T>
-  <T ID="FEFE098E567CFC42">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes" /&gt; enum easier.</T>
-  <T ID="9CF197E647ED38A">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes" /&gt; enum easier.</T>
-  <T ID="E3435FD6D9729EC6">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes" /&gt; enum easier.</T>
-  <T ID="44400AEBFE8E59B">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.VcfOptions" /&gt; enum easier.</T>
-  <T ID="845125EA6A51197C">Interface implemented by &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty`1" /&gt; objects to facilitate access to the data stored in them.</T>
+  <T ID="563A730D936CD5F7">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.AddressTypes" /&gt; enum easier.</T>
+  <T ID="70565698ECE50668">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes" /&gt; enum easier.</T>
+  <T ID="FEFE098E567CFC42">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes" /&gt; enum easier.</T>
+  <T ID="9CF197E647ED38A">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes" /&gt; enum easier.</T>
+  <T ID="E3435FD6D9729EC6">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes" /&gt; enum easier.</T>
+  <T ID="44400AEBFE8E59B">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.VcfOptions" /&gt; enum easier.</T>
+  <T ID="845125EA6A51197C">Interface, implemented by &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty`1" /&gt; objects, to facilitate access to the data stored in them.</T>
   <T ID="D5DEAB03FF3EF6A1">Represents the KIND property introduced in vCard 4.0, which describes the type of object represented by the vCard.</T>
   <T ID="2C9C5B2999B6C0FB">Represents the vCard property N, which stores the name of the vCard subject.</T>
   <T ID="90207E9BAE441F16">Represents a vCard property that is not defined by the official standards.</T>

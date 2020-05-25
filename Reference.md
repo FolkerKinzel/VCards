@@ -6,6 +6,9 @@ It enables you
 * to serialize vcf files from and to Streams and
 * to convert vCard files, that match the vCard-versions 2.1, 3.0 and 4.0, to each other.
 
+FolkerKinzel.VCards is used as a dependency in [FolkerKinzel.Contacts.IO](https://www.nuget.org/packages/FolkerKinzel.Contacts.IO/) - an easy to use .NET-API
+to manage contact data of organizations and natural persons.
+
 [Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/FolkerKinzel.VCards.Reference.en/Help/FolkerKinzel.VCards.en.chm)
 
 [Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/FolkerKinzel.VCards.Doku.de/Help/FolkerKinzel.VCards.de.chm)
@@ -16,14 +19,15 @@ It enables you
 
 
 ## Overview
-### How errors are handled
+### How data errors are handled
 
-Parse errors are silently ignored.
+Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from
+such files.
 
-The same is for errors, that occur serializing the vCard: Because of the different vCard-standards 
+The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards 
 are not completely compliant, incompliant data is silently ignored when converting from one 
-vCard-Standard to another. To minimize the data loss, the API tries to preserve incompliant data 
-using well-known Non-Standard-Properties. The usage of such Non-Standard-Properties can be 
+vCard standard to another. To minimize this kind of data loss, the API tries to preserve incompliant data 
+using well-known x-name properties. The usage of such x-name properties can be 
 controlled via options (VcfOptions).
 
 ### The data model explained

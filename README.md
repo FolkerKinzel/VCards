@@ -14,16 +14,16 @@ to manage contact data of organizations and natural persons.
 
 ```
 nuget Package Manager:
-PM> Install-Package FolkerKinzel.VCards -Version 1.4.2
+PM> Install-Package FolkerKinzel.VCards -Version 1.4.3
 
 .NET CLI:
-> dotnet add package FolkerKinzel.VCards --version 1.4.2
+> dotnet add package FolkerKinzel.VCards --version 1.4.3
 
 Package Reference (Visual Studio Project File):
-<PackageReference Include="FolkerKinzel.VCards" Version="1.4.2" />
+<PackageReference Include="FolkerKinzel.VCards" Version="1.4.3" />
 
 Paket CLI:
-paket add FolkerKinzel.VCards --version 1.4.2
+paket add FolkerKinzel.VCards --version 1.4.3
 ```
 
 
@@ -39,12 +39,12 @@ paket add FolkerKinzel.VCards --version 1.4.2
 ## Overview
 ### How data errors are handled
 
-Parse errors, caused by not well-formed vcf-files, are silently ignored by the library: It reads as much as it can from
+Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from
 such files.
 
-The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard-standards 
+The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards 
 are not completely compliant, incompliant data is silently ignored when converting from one 
-vCard-Standard to another. To minimize this kind of data loss, the API tries to preserve incompliant data 
+vCard standard to another. To minimize this kind of data loss, the API tries to preserve incompliant data 
 using well-known x-name properties. The usage of such x-name properties can be 
 controlled via options (VcfOptions).
 
