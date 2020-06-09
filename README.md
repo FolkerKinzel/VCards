@@ -38,9 +38,9 @@ paket add FolkerKinzel.VCards --version 1.4.3
 
 ## Overview
 
-1. [The data model explained](#The-data-model-explained)
-2. [How the library handles data errors](#How-the-library-handles-data-errors)
-3. [Example Code](#Example-Code)
+1. [The data model explained](###The-data-model-explained)
+2. [How the library handles data errors](###How-the-library-handles-data-errors)
+3. [Example Code](###Example-Code)
 
 ### 1. The data model explained
 
