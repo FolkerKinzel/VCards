@@ -40,7 +40,7 @@ paket add FolkerKinzel.VCards --version 1.4.3
 
 1. [The data model explained](#the-data-model-explained)
 2. [How the library handles data errors](#how-the-library-handles-data-errors)
-3. [Example Code](###example-code)
+3. [Example Code](#example-code)
 
 ### 1. The data model explained
 
