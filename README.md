@@ -40,15 +40,15 @@ paket add FolkerKinzel.VCards --version 1.4.3
 
 1. [The data model explained](#the-data-model-explained)
 2. [How the library handles data errors](#how-the-library-handles-data-errors)
-3. [Example Code](#example-code)
+3. [Example](#example)
 
-### 1. The data model explained
+### The data model explained
 
 The data model used by this API is aligned to the vCard 4.0 standard (RFC6350). This means, every read
 vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are 
 converted back.
 
-#### 1.1. Class `VCardProperty<T>`
+#### Class `VCardProperty<T>`
 
 The data model of the class `VCard` based on classes, that are derived from `VCardProperty<T>`.
 
@@ -73,7 +73,7 @@ In this example corresponds
 * `TEL;TYPE=home,voice;VALUE=uri` to `VCardProperty<T>.Parameters` and
 * `tel:+49-123-4567` to `VCardProperty<T>.Value`.
 
-#### 1.2. Naming Conventions
+#### Naming Conventions
 
 Most properties of class `VCard` are collections. It has to do with, that many properties are allowed to have more than one
 instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.</para>
@@ -82,7 +82,7 @@ A special feature are properties whose name ends with "Views": These are propert
 vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same `AltID` parameter
 on each of these versions.
 
-### 2. How the library handles data errors
+### How the library handles data errors
 
 Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from such files.
 
@@ -91,7 +91,7 @@ completely compliant, incompliant data is silently ignored when converting from 
 this kind of data loss, the API tries to preserve incompliant data using well-known x-name properties. The usage of 
 such x-name properties can be controlled via options (VcfOptions).
 
-### 3. Example Code
+### Example
 
 **_(For better readability exception handling is ommitted in the following example.)_**
 
