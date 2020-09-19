@@ -254,7 +254,11 @@ namespace FolkerKinzel.VCards
                     {
                         isBase64 = AddVcfRow();
                     }
-                    if (isBase64) return;
+
+                    if (isBase64)
+                    {
+                        return;
+                    }
 
                     Debug.WriteLine("  == QuotedPrintable Soft-Linebreak detected ==");
                     info.Builder.Append(s);
@@ -316,7 +320,7 @@ namespace FolkerKinzel.VCards
                 {
                     var vcfRow = VcfRow.Parse(info);
 
-                    bool vCard2_1Base64Detected = isVcard_2_1 ? ConcatVcard2_1Base64() : false;
+                    bool vCard2_1Base64Detected = isVcard_2_1 && ConcatVcard2_1Base64();
 
                     if (vcfRow != null) // null, wenn nicht lesbar
                     {
@@ -327,11 +331,21 @@ namespace FolkerKinzel.VCards
 
                     return vCard2_1Base64Detected;
 
+                    ///////////////////////////////////////////////////////////////
+
                     bool ConcatVcard2_1Base64()
                     {
-                        if (vcfRow?.Parameters.Encoding == VCdEncoding.Base64)
+                        if (vcfRow is null)
+                        {
+                            return false;
+                        }
+
+                        if (vcfRow.Parameters.Encoding == VCdEncoding.Base64)
                         {
                             Debug.WriteLine("  == vCard 2.1 Base64 detected ==");
+
+                            info.Builder.Clear();
+                            info.Builder.Append(vcfRow.Value);
 
                             while (s.Length != 0)
                             {
@@ -348,7 +362,7 @@ namespace FolkerKinzel.VCards
                                 }
                             }
 
-                            vcfRow = VcfRow.Parse(info);
+                            vcfRow.Value = info.Builder.ToString();
                             return true;
                         }
 

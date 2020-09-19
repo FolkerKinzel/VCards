@@ -18,6 +18,29 @@ namespace FolkerKinzel.VCards.Tests
             Assert.AreNotEqual(0, vcard.Count);
         }
 
+        [TestMethod]
+        public void ParseOutlook()
+        {
+            var vcard = VCard.Load(TestFiles.OutlookV2vcf);
+
+            Assert.IsNotNull(vcard);
+            Assert.IsNotNull(vcard.FirstOrDefault());
+
+            var photo = vcard[0].Photos?.FirstOrDefault();
+            Assert.IsNotNull(photo);
+
+            if(photo?.Value is DataUrl dataUrl)
+            {
+                Assert.AreEqual(dataUrl.MimeType.MediaType, "image/jpeg");
+                //System.IO.File.WriteAllBytes(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"Testbild{dataUrl.GetFileExtension()}"), dataUrl.GetEmbeddedBytes());
+            }
+            else
+            {
+                Assert.Fail();
+            }
+
+        }
+
 
         [TestMethod]
         public void WriteEmptyVCard()
