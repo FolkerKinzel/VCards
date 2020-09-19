@@ -14,16 +14,16 @@ to manage contact data of organizations and natural persons.
 
 ```
 nuget Package Manager:
-PM> Install-Package FolkerKinzel.VCards -Version 1.4.3
+PM> Install-Package FolkerKinzel.VCards -Version 1.4.4
 
 .NET CLI:
-> dotnet add package FolkerKinzel.VCards --version 1.4.3
+> dotnet add package FolkerKinzel.VCards --version 1.4.4
 
 Package Reference (Visual Studio Project File):
-<PackageReference Include="FolkerKinzel.VCards" Version="1.4.3" />
+<PackageReference Include="FolkerKinzel.VCards" Version="1.4.4" />
 
 Paket CLI:
-paket add FolkerKinzel.VCards --version 1.4.3
+paket add FolkerKinzel.VCards --version 1.4.4
 ```
 
 

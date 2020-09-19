@@ -139,7 +139,10 @@ namespace FolkerKinzel.VCards
             do //findet den Anfang der vCard
             {
                 s = reader.ReadLine();
-                if (s == null) return false; //Dateiende
+                if (s == null)
+                {
+                    return false; //Dateiende
+                }
 
                 Debug.WriteLine(s);
 
@@ -148,7 +151,10 @@ namespace FolkerKinzel.VCards
 
             Queue<VcfRow>? vcfRows = ParseVcfRows();
 
-            if (vcfRows == null) return false; //Dateiende
+            if (vcfRows == null)
+            {
+                return false; //Dateiende
+            }
 
             try
             {
@@ -183,7 +189,11 @@ namespace FolkerKinzel.VCards
                 do
                 {
                     s = reader.ReadLine();
-                    if (s == null) return null;  // Dateiende: Sollte END:VCARD fehlen, wird die vCard nicht gelesen.
+                    if (s == null)
+                    {
+                        return null;  // Dateiende: Sollte END:VCARD fehlen, wird die vCard nicht gelesen.
+                    }
+
                     Debug.WriteLine(s);
 
                     if (isFirstLine && s.Length != 0)
@@ -194,7 +204,7 @@ namespace FolkerKinzel.VCards
 
                     if (isVcard_2_1 && s.Length != 0 && s[s.Length - 1] == '=')  // QuotedPrintable Soft-Linebreak (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
                     {
-                        ConcatQuotePrintableSoftLineBreak();
+                        ConcatQuotedPrintableSoftLineBreak();
                         continue;
                     }
                     else if (s.Length != 0 && char.IsWhiteSpace(s[0])) //vCard-Wrapping (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
@@ -246,7 +256,7 @@ namespace FolkerKinzel.VCards
                 }
 
 
-                void ConcatQuotePrintableSoftLineBreak()
+                void ConcatQuotedPrintableSoftLineBreak()
                 {
                     bool isBase64 = false;
 
@@ -269,9 +279,16 @@ namespace FolkerKinzel.VCards
                         while (s.Length == 0 || s[s.Length - 1] == '=')
                         {
                             s = reader.ReadLine();
-                            if (s == null) return;
+                            if (s == null)
+                            {
+                                return;
+                            }
+
                             Debug.WriteLine(s);
-                            if (s.Length == 0) continue;
+                            if (s.Length == 0)
+                            {
+                                continue;
+                            }
 
                             info.Builder.Append(Environment.NewLine);
                             info.Builder.Append(s);
@@ -302,9 +319,17 @@ namespace FolkerKinzel.VCards
                     do
                     {
                         s = reader.ReadLine();
-                        if (s == null) return;
+                        if (s == null)
+                        {
+                            return;
+                        }
+
                         Debug.WriteLine(s);
-                        if (s.Length == 0) continue;
+                        if (s.Length == 0)
+                        {
+                            continue;
+                        }
+
                         info.Builder.Append(VCard.NewLine);
                         info.Builder.Append(s);
                     }
@@ -362,7 +387,7 @@ namespace FolkerKinzel.VCards
                                 }
                             }
 
-                            vcfRow.Value = info.Builder.ToString();
+                            vcfRow.SetValue(info.Builder.Replace(" ", "").ToString());
                             return true;
                         }
 
@@ -395,14 +420,20 @@ namespace FolkerKinzel.VCards
 
             void SetRelationReferences(List<RelationProperty?>? relations)
             {
-                if (relations is null) return;
+                if (relations is null)
+                {
+                    return;
+                }
 
                 RelationUuidProperty[] guidProps = relations
                     .Select(x => x as RelationUuidProperty)
                     .Where(x => x != null && !x.IsEmpty)
                     .ToArray()!;
 
-                if (guidProps == null) return;
+                if (guidProps == null)
+                {
+                    return;
+                }
 
                 foreach (var guidProp in guidProps)
                 {

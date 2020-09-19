@@ -24,7 +24,14 @@ namespace FolkerKinzel.VCards.Intls
 
 
         // Value: ;;Waldstr. 54;Kleinknuffelsdorf;Sachsen-Anhalt;06789;Germany
-        public string? Value { get; set; }
+        public string? Value { get; private set; }
+
+
+        /// <summary>
+        /// Wird nur beim Lesen von vCard 2.1 benötigt, um fehlende Base64-Daten nachträglich hinzuzufügen.
+        /// </summary>
+        /// <param name="newValue">Der neue Wert für <see cref="Value"/>.</param>
+        internal void SetValue(string newValue) => Value = newValue;
 
 
 

@@ -25,7 +25,7 @@ namespace FolkerKinzel.VCards.Tests
 
         internal static string ProjectDirectory { get; }
 
-
+        internal static string LibraryV2vcf => Path.Combine(_testFileDirectory, "Library v2.vcf");
         internal static string PhotoOutlookV2vcf => Path.Combine(_testFileDirectory, "Photo Outlook v2.vcf");
         internal static string OutlookV2vcf => Path.Combine(_testFileDirectory, "Outlook v2.vcf");
         internal static string V2vcf => Path.Combine(_testFileDirectory, "v2_1.vcf");
