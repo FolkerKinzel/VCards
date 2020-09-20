@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Linq;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Helpers;
 
 namespace FolkerKinzel.VCards.Tests
 {
@@ -39,7 +40,9 @@ namespace FolkerKinzel.VCards.Tests
                 Assert.Fail();
             }
 
-            //VCard.Save(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"), vcard!, VCdVersion.V2_1);
+            VCard.Save(System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"),
+                vcard!, VCdVersion.V2_1, VcfOptions.Default.Set(VcfOptions.WriteNonStandardProperties));
         }
 
 

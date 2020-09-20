@@ -26,14 +26,16 @@ namespace FolkerKinzel.VCards.Intls
             // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
             var vCardRowParts = SplitKeySectionFromValue(vCardRow);
 
-            VcfRow? row = vCardRowParts.Count != 0 ? new VcfRow(vCardRowParts, info) : null; // eigentlich überfüssig (siebt Leerzeilen aus)
+            //VcfRow? row = vCardRowParts.Count != 0 ? new VcfRow(vCardRowParts, info) : null; // eigentlich überfüssig (siebt Leerzeilen aus)
 
             //if(row?.Parameters.Encoding == Models.Enums.VCdEncoding.Base64)
             //{
             //    row.Value = row.Value?.Replace(" ", "");
             //}
 
-            return row;
+            //return row;
+
+            return vCardRowParts.Count != 0 ? new VcfRow(vCardRowParts, info) : null; // eigentlich überfüssig (siebt Leerzeilen aus)
 
         }
 
