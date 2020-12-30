@@ -165,9 +165,7 @@ namespace FolkerKinzel.VCards
                 Debug.WriteLine("");
                 Debug.WriteLine(vCard);
             }
-#pragma warning disable CA1031 // Keine allgemeinen Ausnahmetypen abfangen
             catch (Exception e)
-#pragma warning restore CA1031 // Keine allgemeinen Ausnahmetypen abfangen
             {
                 Debug.WriteLine(e);
             }
