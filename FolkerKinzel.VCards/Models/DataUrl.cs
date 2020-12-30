@@ -33,12 +33,12 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// Initialisiert ein <see cref="DataUrl"/>-Objekt.
+        /// Initialisiert ein neues <see cref="DataUrl"/>-Objekt.
         /// </summary>
         /// <param name="uriString">Der String, aus dem die <see cref="DataUrl"/> initialisiert wird.</param>
-        /// <param name="mimeType">Der MIME-Typ der eingebetteten Daten. Wenn null übergeben wird, 
+        /// <param name="mimeType">Der MIME-Typ der eingebetteten Daten. Wenn <c>null</c> übergeben wird, 
         /// wird der Standard-MIME-Typ "text/plain;charset=US-ASCII" erzeugt.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="uriString"/> ist null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="uriString"/> ist <c>null</c>.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
         /// weil <paramref name="uriString"/> länger als 65519 Zeichen ist.</exception>
         private DataUrl(string uriString, MimeType? mimeType) : base(uriString)
@@ -48,12 +48,13 @@ namespace FolkerKinzel.VCards.Models
 
 
 
-        /// <summary>
-        /// Füllt eine <see cref="SerializationInfo"/> mit den Daten auf, die zum Serialisieren des Zielobjekts erforderlich sind.
-        /// Die Methode wird während der Serialisierung des Objekts aufgerufen.
-        /// </summary>
-        /// <param name="info">Die mit Daten zu füllende <see cref="SerializationInfo"/>.</param>
-        /// <param name="context">Das Ziel dieser Serialisierung.</param>
+        ///// <summary>
+        ///// Füllt eine <see cref="SerializationInfo"/> mit den Daten auf, die zum Serialisieren des Zielobjekts erforderlich sind.
+        ///// Die Methode wird während der Serialisierung des Objekts aufgerufen.
+        ///// </summary>
+        ///// <param name="info">Die mit Daten zu füllende <see cref="SerializationInfo"/>.</param>
+        ///// <param name="context">Das Ziel dieser Serialisierung.</param>
+        /// <inheritdoc/>
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         public new void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -68,18 +69,19 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        /// <summary>
-        /// Konstruktor, der während der Deserialisierung des Objekts aufgerufen wird.
-        /// </summary>
-        /// <param name="info">Die zu deserialisierenden Daten.</param>
-        /// <param name="context">Kontext der Deserialisierung.</param>
-        protected DataUrl(SerializationInfo info, StreamingContext context) : base(info, context)
+        ///// <summary>
+        ///// Konstruktor, der während der Deserialisierung des Objekts aufgerufen wird.
+        ///// </summary>
+        ///// <param name="serializationInfo">Die zu deserialisierenden Daten.</param>
+        ///// <param name="streamingContext">Kontext der Deserialisierung.</param>
+        /// <inheritdoc/>
+        protected DataUrl(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext)
         {
-            if (info != null)
+            if (serializationInfo != null)
             {
                 // Reset the property value using the GetValue method.
-                this.MimeType = (MimeType)(info.GetValue("MimeType", typeof(MimeType)) ?? new MimeType());
-                this.Encoding = (DataEncoding)(info.GetValue("Encoding", typeof(DataEncoding)) ?? DataEncoding.UrlEncoded);
+                this.MimeType = (MimeType)(serializationInfo.GetValue("MimeType", typeof(MimeType)) ?? new MimeType());
+                this.Encoding = (DataEncoding)(serializationInfo.GetValue("Encoding", typeof(DataEncoding)) ?? DataEncoding.UrlEncoded);
             }
             else
             {
@@ -97,10 +99,9 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>-Objekt.</param>
         /// <param name="version">Version der VCF-Datei.</param>
         /// <returns>Ein <see cref="Uri"/>- oder <see cref="DataUrl"/>-Objekt.</returns>
-        /// <exception cref="ArgumentNullException">Der in <paramref name="vcfRow"/> gespeicherte <see cref="string"/> ist null.</exception>
+        /// <exception cref="ArgumentNullException">Der in <paramref name="vcfRow"/> gespeicherte <see cref="string"/> ist <c>null</c>.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
         /// weil der in <paramref name="vcfRow"/> gespeicherte <see cref="string"/> länger als 65519 Zeichen ist.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Zeichenfolgen in Großbuchstaben normalisieren", Justification = "<Ausstehend>")]
         internal static Uri? FromVcfRow(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
         {
             Debug.Assert(vcfRow != null);
@@ -253,9 +254,7 @@ namespace FolkerKinzel.VCards.Models
                     Encoding = enc,
                 };
             }
-#pragma warning disable CA1031 // Keine allgemeinen Ausnahmetypen abfangen
             catch
-#pragma warning restore CA1031 // Keine allgemeinen Ausnahmetypen abfangen
             {
                 return false;
             }
@@ -282,9 +281,7 @@ namespace FolkerKinzel.VCards.Models
                     }
 
                     endIndex = end;
-#pragma warning disable CS8762 // Der Parameter dataUrl darf keinen NULL-Wert aufweisen, wenn er in einer Bedingung beendet wird.
                     return true;
-#pragma warning restore CS8762 // Der Parameter dataUrl darf keinen NULL-Wert aufweisen, wenn er in einer Bedingung beendet wird.
                 }
 
                 return false;
@@ -301,7 +298,7 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="text">Der in den <see cref="DataUrl"/> einzubettende Text.</param>
         /// <returns>Ein <see cref="DataUrl"/>, in den <paramref name="text"/> eingebettet ist.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="text"/> ist null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="text"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="text"/> ist ein Leerstring oder
         /// enthält nur Whitespace.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
@@ -330,10 +327,10 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="bytes">Die in den <see cref="DataUrl"/> einzubettenden Daten.</param>
         /// <param name="mimeType">Der MIME-Typ der in <paramref name="bytes"/> enthaltenen
-        /// Daten oder null für "text/plain;charset=US-ASCII".</param>
+        /// Daten oder <c>null</c> für "text/plain;charset=US-ASCII".</param>
         /// <returns>Ein <see cref="DataUrl"/>, in den die in <paramref name="bytes"/> enthaltenen 
         /// binären Daten eingebettet sind.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="bytes"/> ist null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="bytes"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="bytes"/> ist ein leeres Array.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
         /// weil der URI-String länger als 65519 Zeichen ist.</exception>
@@ -364,11 +361,11 @@ namespace FolkerKinzel.VCards.Models
         /// Erstellt einen <see cref="DataUrl"/> aus einer physisch vorhandenen Datei.
         /// </summary>
         /// <param name="path">Absoluter Pfad zu der einzubettenden Datei.</param>
-        /// <param name="mimeType">(optional) Mime-Typ der einzubettenden Datei. Wenn null angegeben wird,
+        /// <param name="mimeType">(optional) Mime-Typ der einzubettenden Datei. Wenn <c>null</c> angegeben wird,
         /// wird versucht, den Mime-Typ aus der Dateiendung automatisch zu ermitteln.</param>
         /// <returns>Ein <see cref="DataUrl"/>, in den die Daten der mit <paramref name="path"/> referenzierten Datei
         /// eingebettet sind.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="path"/> oder <paramref name="mimeType"/> ist null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="path"/> oder <paramref name="mimeType"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="path"/> ist kein gültiger Dateipfad oder
         /// <paramref name="mimeType"/> hat kein gültiges Format.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
@@ -420,7 +417,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// MIME-Type der eingebetteten Daten. (nie null)
+        /// MIME-Type der eingebetteten Daten. (nie <c>null</c>)
         /// </summary>
         public MimeType MimeType { get; }
 
@@ -452,11 +449,10 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// Gibt den im <see cref="DataUrl"/> eingebetteten Text zurück oder null,
+        /// Gibt den im <see cref="DataUrl"/> eingebetteten Text zurück oder <c>null</c>,
         /// wenn der <see cref="DataUrl"/> eingebettete binäre Daten enthält.
         /// </summary>
-        /// <returns>Der eingebettete Text oder null.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Keine allgemeinen Ausnahmetypen abfangen", Justification = "<Ausstehend>")]
+        /// <returns>Der eingebettete Text oder <c>null</c>.</returns>
         public string? GetEmbeddedText()
         {
             if (!ContainsText)
@@ -489,12 +485,11 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// Gibt die im <see cref="DataUrl"/> eingebetteten binären Daten zurück oder null,
+        /// Gibt die im <see cref="DataUrl"/> eingebetteten binären Daten zurück oder <c>null</c>,
         /// wenn der <see cref="DataUrl"/> keine eingebetteten binäre Daten enthält oder wenn
         /// diese nicht dekodiert werden konnten.
         /// </summary>
-        /// <returns>Der eingebettete freie Text oder null.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Keine allgemeinen Ausnahmetypen abfangen", Justification = "<Ausstehend>")]
+        /// <returns>Der eingebettete freie Text oder <c>null</c>.</returns>
         public byte[]? GetEmbeddedBytes()
         {
             //if (!ContainsBytes) return null;

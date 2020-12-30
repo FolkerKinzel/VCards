@@ -16,11 +16,12 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="XmlProperty"/>-Objekt.
         /// </summary>
-        /// <param name="xmlContent">Ein <see cref="XElement"/> oder null. Das Element muss einem XML-Namespace
+        /// <param name="xmlContent">Ein <see cref="XElement"/> oder <c>null</c>. Das Element muss einem XML-Namespace
         /// explizit zugeordnet sein (xmlns-Attribut). Dieser Namespace darf nicht der VCARD 4.0-Namespace 
         /// "urn:ietf:params:xml:ns:vcard-4.0" sein.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property
-        /// zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         /// <exception cref="ArgumentException"><paramref name="xmlContent"/> ist keinem XML-Namespace zugeordnet - oder -
         /// <paramref name="xmlContent"/> ist dem reservierten Namespace "urn:ietf:params:xml:ns:vcard-4.0"
         /// zugeordnet.</exception>

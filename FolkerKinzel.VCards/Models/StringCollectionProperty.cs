@@ -18,10 +18,12 @@ namespace FolkerKinzel.VCards.Models
     public class StringCollectionProperty : VCardProperty<ReadOnlyCollection<string>>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
-        /// Initialisiert ein <see cref="StringCollectionProperty"/>-Objekt.
+        /// Initialisiert ein neues <see cref="StringCollectionProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Eine Sammlung von <see cref="string"/>s.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null)
         {
             Group = propertyGroup;

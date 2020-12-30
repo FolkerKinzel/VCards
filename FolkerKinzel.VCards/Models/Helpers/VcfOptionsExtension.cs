@@ -32,7 +32,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// <param name="flags">Ein einzelner <see cref="VcfOptions"/>-Wert oder eine Kombination aus mehreren 
         /// <see cref="VcfOptions"/>-Werten.</param>
         /// <returns>True, wenn sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
-        /// gesetzt sind. (Wenn <paramref name="flags"/> <see cref="VcfOptions.None"/> ist, wird nur dann true zurückgegeben,
+        /// gesetzt sind. (Wenn <paramref name="flags"/> <see cref="VcfOptions.None"/> ist, wird nur dann <c>true</c> zurückgegeben,
         /// wenn auch <paramref name="value"/> <see cref="VcfOptions.None"/> ist. Dasselbe gilt auch für <see cref="VcfOptions.All"/>.)</returns>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -13,11 +13,14 @@ namespace FolkerKinzel.VCards.Models
     public class DateTimeTextProperty : DateTimeProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
-        /// Initialisiert ein neues <see cref="DateTimeTextProperty"/>-Objekt, bei dem der PropertyValue-Parameter
+        /// Initialisiert ein neues <see cref="DateTimeTextProperty"/>-Objekt, bei dem der 
+        /// <see cref="FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType"/>-Parameter
         /// auf <see cref="VCdDataType.Text"/> gesetzt ist.
         /// </summary>
         /// <param name="value">Ein beliebiger <see cref="string"/>.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public DateTimeTextProperty(string? value, string? propertyGroup = null) : base(propertyGroup)
         {
             this.Text = string.IsNullOrWhiteSpace(value) ? null : value.Trim();

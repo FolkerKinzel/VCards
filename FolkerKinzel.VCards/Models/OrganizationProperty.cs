@@ -21,7 +21,9 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="organizationName">Name der Organisation.</param>
         /// <param name="organizationalUnits">Namen der Unterorganisationen.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public OrganizationProperty(string? organizationName, IEnumerable<string?>? organizationalUnits = null, string? propertyGroup = null)
         {
             Value = new Organization(organizationName, organizationalUnits);
@@ -79,9 +81,10 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-        /// <summary>
-        /// True, wenn das <see cref="OrganizationProperty"/>-Objekt keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn das <see cref="OrganizationProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
 
     }

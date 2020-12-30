@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models
     public readonly struct PropertyID : IEquatable<PropertyID>
     {
         /// <summary>
-        /// Initialisiert eine Instanz der <see cref="PropertyID"/>-<c>struct</c>
+        /// Initialisiert eine neue Instanz der <see cref="PropertyID"/>-<c>struct</c>
         /// mit der Nummer der vCard-Property und der Nummer des Mappings dieser 
         /// vCard-Property.
         /// </summary>
@@ -86,12 +86,13 @@ namespace FolkerKinzel.VCards.Models
 
         #region IEquatable
 
-        /// <summary>
-        /// Gibt einen Wert zurück, der angibt, ob diese Instanz gleich einem angegebenen <see cref="object"/> ist.
-        /// </summary>
-        /// <param name="obj">Ein mit dieser Instanz zu vergleichendes <see cref="object"/>.</param>
-        /// <returns><c>true</c>, wenn <paramref name="obj"/> eine <see cref="PropertyID"/>-Struktur ist, die 
-        /// über dieselben Werte wie diese Instanz verfügt, andernfalls <c>false</c>.</returns>
+        ///// <summary>
+        ///// Gibt einen Wert zurück, der angibt, ob diese Instanz gleich einem angegebenen <see cref="object"/> ist.
+        ///// </summary>
+        ///// <param name="obj">Ein mit dieser Instanz zu vergleichendes <see cref="object"/>.</param>
+        ///// <returns><c>true</c>, wenn <paramref name="obj"/> eine <see cref="PropertyID"/>-Struktur ist, die 
+        ///// über dieselben Werte wie diese Instanz verfügt, andernfalls <c>false</c>.</returns>
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
             //       
@@ -111,21 +112,23 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-        /// <summary>
-        /// Gibt einen Wert zurück, der angibt, ob diese Instanz gleich einer angegebenen <see cref="PropertyID"/>-Struktur ist.
-        /// </summary>
-        /// <param name="other">Eine mit dieser Instanz zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
-        /// <returns><c>true</c>, wenn <paramref name="other"/> über dieselben Werte wie diese Instanz verfügt, andernfalls <c>false</c>.</returns>
+        ///// <summary>
+        ///// Gibt einen Wert zurück, der angibt, ob diese Instanz gleich einer angegebenen <see cref="PropertyID"/>-Struktur ist.
+        ///// </summary>
+        ///// <param name="other">Eine mit dieser Instanz zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
+        ///// <returns><c>true</c>, wenn <paramref name="other"/> über dieselben Werte wie diese Instanz verfügt, andernfalls <c>false</c>.</returns>
+        /// <inheritdoc/>
         public bool Equals(PropertyID other)
         {
             return PropertyNumber == other.PropertyNumber && MappingNumber == other.MappingNumber;
         }
 
 
-        /// <summary>
-        /// Gibt den Hashcode für diese Instanz zurück.
-        /// </summary>
-        /// <returns>Ein 32-Bit-Hashcode als ganze Zahl mit Vorzeichen.</returns>
+        ///// <summary>
+        ///// Gibt den Hashcode für diese Instanz zurück.
+        ///// </summary>
+        ///// <returns>Ein 32-Bit-Hashcode als ganze Zahl mit Vorzeichen.</returns>
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             int hashCode = -1;

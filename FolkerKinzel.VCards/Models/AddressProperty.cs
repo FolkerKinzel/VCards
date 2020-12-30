@@ -25,7 +25,9 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="region">Bundesland</param>
         /// <param name="postalCode">Postleitzahl</param>
         /// <param name="country">Land (Staat)</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public AddressProperty(
             IEnumerable<string?>? postOfficeBox = null,
             IEnumerable<string?>? extendedAddress = null,
@@ -124,9 +126,10 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-        /// <summary>
-        /// True, wenn das <see cref="AddressProperty"/>-Objekt keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn das <see cref="AddressProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
     }
 }

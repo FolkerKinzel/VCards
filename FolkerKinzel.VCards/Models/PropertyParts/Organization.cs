@@ -79,7 +79,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public string? OrganizationName { get; }
 
         /// <summary>
-        /// Namen der Unterorganisationen (Kann null sein.)
+        /// Namen der Unterorganisationen (Kann <c>null</c> sein.)
         /// </summary>
         public ReadOnlyCollection<string>? OrganizationalUnits { get; }
 

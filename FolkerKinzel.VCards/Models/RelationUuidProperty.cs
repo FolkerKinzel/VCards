@@ -14,13 +14,15 @@ namespace FolkerKinzel.VCards.Models
     public sealed class RelationUuidProperty : RelationProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
-        /// Initialisiert ein <see cref="RelationUuidProperty"/>-Objekt.
+        /// Initialisiert ein neues <see cref="RelationUuidProperty"/>-Objekt.
         /// </summary>
         /// <param name="uuid">Uuid einer Person, zu der eine Beziehung besteht. Das kann zum Beispiel der Wert der 
         /// vCard-Property "UID" der vCard dieser Person sein.</param>
         /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum, der die 
         /// Beziehung beschreibt.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public RelationUuidProperty(Guid uuid, RelationTypes? relation = null, string? propertyGroup = null)
             : base(relation, propertyGroup)
         {
@@ -68,9 +70,10 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        /// <summary>
-        /// True, wenn das <see cref="RelationUuidProperty"/>-Objekt keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn das <see cref="RelationUuidProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public override bool IsEmpty => Uuid == Guid.Empty;
     }
 

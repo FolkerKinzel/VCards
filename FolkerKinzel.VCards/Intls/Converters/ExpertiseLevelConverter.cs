@@ -12,7 +12,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
             internal const string Expert = "expert";
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Zeichenfolgen in Großbuchstaben normalisieren", Justification = "<Ausstehend>")]
         internal static ExpertiseLevel? Parse(string val)
         {
             Debug.Assert(val != null);

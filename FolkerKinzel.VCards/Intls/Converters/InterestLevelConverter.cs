@@ -12,7 +12,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
             internal const string Low = "low";
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Zeichenfolgen in Großbuchstaben normalisieren", Justification = "<Ausstehend>")]
         internal static InterestLevel? Parse(string val)
         {
             Debug.Assert(val != null);

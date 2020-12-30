@@ -16,7 +16,6 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         private const string CHARSET_PARAMETER_NAME = "charset";
         private const string DEFAULT_CHARSET = "US-ASCII";
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Zeichenfolgen in Großbuchstaben normalisieren", Justification = "<Ausstehend>")]
         internal MimeType(string? value = null)
         {
             this.MediaType = TEXT_PLAIN;
@@ -95,7 +94,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// MIME-Typ (nie null)
+        /// MIME-Typ (nie <c>null</c>)
         /// </summary>
         public string MediaType { get; }
 

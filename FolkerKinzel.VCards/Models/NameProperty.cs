@@ -24,7 +24,9 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="middleName">zweiter Vorname</param>
         /// <param name="prefix">Namenspräfix (z.B. "Prof. Dr.")</param>
         /// <param name="suffix">Namenssuffix (z.B. "jr.")</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public NameProperty(
             IEnumerable<string?>? lastName = null,
             IEnumerable<string?>? firstName = null,
@@ -124,9 +126,10 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-        /// <summary>
-        /// True, wenn das <see cref="NameProperty"/>-Objekt keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn das <see cref="NameProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public override bool IsEmpty => Value.IsEmpty;
 
     }

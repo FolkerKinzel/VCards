@@ -31,8 +31,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// Initialisiert ein neues <see cref="Address"/>-Objekt.
         /// </summary>
-        /// <param name="postOfficeBox">Postfach (sollte immer null sein).</param>
-        /// <param name="extendedAddress">Adresszusatz (sollte immer null sein).</param>
+        /// <param name="postOfficeBox">Postfach (sollte immer <c>null</c> sein).</param>
+        /// <param name="extendedAddress">Adresszusatz (sollte immer <c>null</c> sein).</param>
         /// <param name="street">Straße</param>
         /// <param name="locality">Ort</param>
         /// <param name="region">Bundesland</param>
@@ -114,39 +114,39 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// Postfach (nie null) (nicht verwenden)
+        /// Postfach (nie <c>null</c>) (nicht verwenden)
         /// </summary>
         [Obsolete("Don't use this property.", false)]
         public ReadOnlyCollection<string> PostOfficeBox => data[POST_OFFICE_BOX];
 
         /// <summary>
-        /// Adresszusatz (nie null) (nicht verwenden)
+        /// Adresszusatz (nie <c>null</c>) (nicht verwenden)
         /// </summary>
         [Obsolete("Don't use this property.", false)]
         public ReadOnlyCollection<string> ExtendedAddress => data[EXTENDED_ADDRESS];
 
         /// <summary>
-        /// Straße (nie null)
+        /// Straße (nie <c>null</c>)
         /// </summary>
         public ReadOnlyCollection<string> Street => data[STREET];
 
         /// <summary>
-        /// Ort (nie null)
+        /// Ort (nie <c>null</c>)
         /// </summary>
         public ReadOnlyCollection<string> Locality => data[LOCALITY];
 
         /// <summary>
-        /// Bundesland (nie null)
+        /// Bundesland (nie <c>null</c>)
         /// </summary>
         public ReadOnlyCollection<string> Region => data[REGION];
 
         /// <summary>
-        /// Postleitzahl (nie null)
+        /// Postleitzahl (nie <c>null</c>)
         /// </summary>
         public ReadOnlyCollection<string> PostalCode => data[POSTAL_CODE];
 
         /// <summary>
-        /// Land (Staat) (nie null)
+        /// Land (Staat) (nie <c>null</c>)
         /// </summary>
         public ReadOnlyCollection<string> Country => data[COUNTRY];
 

@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     public readonly struct PropertyIDMapping : IEquatable<PropertyIDMapping>
     {
         /// <summary>
-        /// Initialisiert ein <see cref="PropertyIDMapping"/>-Objekt.
+        /// Initialisiert ein neues <see cref="PropertyIDMapping"/>-Objekt.
         /// </summary>
         /// <param name="mappingNumber">Nummer des Mappings.</param>
         /// <param name="uuid">Identifier des Mappings.</param>
@@ -31,7 +31,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// Nummer des Mappings. (Entspricht <see cref="PropertyID.MappingNumber"/>).
+        /// Nummer des Mappings. (Entspricht <see cref="PropertyID.MappingNumber">PropertyID.MappingNumber</see>).
         /// </summary>
         public int MappingNumber { get; }
 
@@ -51,13 +51,14 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         #region IEquatable
 
-        /// <summary>
-        /// Gibt einen Wert zurück, der angibt, ob diese Instanz gleich einem angegebenen <see cref="object"/> ist.
-        /// </summary>
-        /// <param name="obj">Ein mit dieser Instanz zu vergleichendes <see cref="object"/>.</param>
-        /// <returns><c>true</c>, wenn <paramref name="obj"/> eine <see cref="PropertyIDMapping"/>-Struktur ist, die 
-        /// über dieselben Werte wie diese Instanz verfügt, andernfalls <c>false</c>.</returns>
-        // override object.Equals
+        ///// <summary>
+        ///// Gibt einen Wert zurück, der angibt, ob diese Instanz gleich einem angegebenen <see cref="object"/> ist.
+        ///// </summary>
+        ///// <param name="obj">Ein mit dieser Instanz zu vergleichendes <see cref="object"/>.</param>
+        ///// <returns><c>true</c>, wenn <paramref name="obj"/> eine <see cref="PropertyIDMapping"/>-Struktur ist, die 
+        ///// über dieselben Werte wie diese Instanz verfügt, andernfalls <c>false</c>.</returns>
+        //// override object.Equals
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             //       
@@ -78,21 +79,24 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
 
-        /// <summary>
-        /// Gibt einen Wert zurück, der angibt, ob diese Instanz gleich einer angegebenen <see cref="PropertyIDMapping"/>-Struktur ist.
-        /// </summary>
-        /// <param name="other">Eine mit dieser Instanz zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
-        /// <returns><c>true</c>, wenn <paramref name="other"/> über dieselben Werte wie diese Instanz verfügt, andernfalls <c>false</c>.</returns>
+        ///// <summary>
+        ///// Gibt einen Wert zurück, der angibt, ob diese Instanz gleich einer angegebenen <see cref="PropertyIDMapping"/>-Struktur ist.
+        ///// </summary>
+        ///// <param name="other">Eine mit dieser Instanz zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
+        ///// <returns><c>true</c>, wenn <paramref name="other"/> über dieselben Werte wie diese Instanz verfügt, 
+        ///// andernfalls <c>false</c>.</returns>
+        /// <inheritdoc/>
         public bool Equals(PropertyIDMapping other)
         {
             return this.MappingNumber == other.MappingNumber && this.Uuid == other.Uuid;
         }
 
 
-        /// <summary>
-        /// Gibt den Hashcode für diese Instanz zurück.
-        /// </summary>
-        /// <returns>Ein 32-Bit-Hashcode als ganze Zahl mit Vorzeichen.</returns>
+        ///// <summary>
+        ///// Gibt den Hashcode für diese Instanz zurück.
+        ///// </summary>
+        ///// <returns>Ein 32-Bit-Hashcode als ganze Zahl mit Vorzeichen.</returns>
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             int hashCode = -1;

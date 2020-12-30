@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     public class Gender
     {
         /// <summary>
-        /// Initialisiert ein <see cref="Gender"/>-Objekt.
+        /// Initialisiert ein neues <see cref="Gender"/>-Objekt.
         /// </summary>
         /// <param name="sex">Standardisierte Geschlechtsangabe.</param>
         /// <param name="genderIdentity">Freie Beschreibung des Geschlechts.</param>

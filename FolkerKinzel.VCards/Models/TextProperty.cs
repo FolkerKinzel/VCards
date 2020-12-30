@@ -18,7 +18,9 @@ namespace FolkerKinzel.VCards.Models
         /// Initialisiert ein neues <see cref="TextProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein <see cref="string"/>.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public TextProperty(string? value, string? propertyGroup = null)
         {
             Value = string.IsNullOrWhiteSpace(value) ? null : value;

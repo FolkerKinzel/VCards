@@ -16,7 +16,9 @@ namespace FolkerKinzel.VCards.Models
         /// Initialisiert ein neues <see cref="KindProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein Member der <see cref="VCdKind"/>-Enumeration.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public KindProperty(VCdKind value, string? propertyGroup = null)
         {
             Value = value;
@@ -39,9 +41,10 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        /// <summary>
-        /// True, wenn das <see cref="KindProperty"/>-Objekt keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn das <see cref="KindProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public override bool IsEmpty => false;
     }
 }

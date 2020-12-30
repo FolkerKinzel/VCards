@@ -39,7 +39,6 @@ namespace FolkerKinzel.VCards.Models
             Parameters.DataType = VCdDataType.Uri;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Keine allgemeinen Ausnahmetypen abfangen", Justification = "<Ausstehend>")]
         internal DataProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {

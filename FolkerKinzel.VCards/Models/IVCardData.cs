@@ -14,17 +14,17 @@ namespace FolkerKinzel.VCards.Models
         public object? Value { get; }
 
         /// <summary>
-        /// Gruppenbezeichner eine vCard-Property oder null, wenn die vCard-Property keinen Gruppenbezeichner hat.
+        /// Gruppenbezeichner eine vCard-Property oder <c>null</c>, wenn die vCard-Property keinen Gruppenbezeichner hat.
         /// </summary>
         public string? Group { get; set; }
 
         /// <summary>
-        /// Entspricht dem Parameter-Teil einer vCard-Property (nie null).
+        /// Entspricht dem Parameter-Teil einer vCard-Property (nie <c>null</c>).
         /// </summary>
         public ParameterSection Parameters { get; }
 
         /// <summary>
-        /// True, wenn das Objekt keine Daten enthält.
+        /// <c>true</c>, wenn das Objekt keine Daten enthält.
         /// </summary>
         public bool IsEmpty { get; }
     }

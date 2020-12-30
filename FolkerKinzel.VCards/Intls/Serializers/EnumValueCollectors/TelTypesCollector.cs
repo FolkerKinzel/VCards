@@ -29,7 +29,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
         /// <paramref name="list"/>. <paramref name="list"/> wird von der Methode nicht
         /// geleert.
         /// </summary>
-        /// <param name="telType"><see cref="TelTypes"/>-Objekt oder null.</param>
+        /// <param name="telType"><see cref="TelTypes"/>-Objekt oder <c>null</c>.</param>
         /// <param name="list">Eine Liste zum sammeln.</param>
         internal void CollectValueStrings(TelTypes? telType, List<string> list)
         {

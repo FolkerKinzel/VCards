@@ -24,10 +24,16 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="parameters">Ein <see cref="ParameterSection"/>-Objekt, das den Parameter-Teil einer
         /// vCard-Property repräsentiert.</param>
-        /// <param name="propertyGroup">Ein <see cref="string"/> oder null, um den optionalen Gruppenbezeichner
-        /// der vCard-Property anzugeben.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="parameters"/> ist <c>null</c>.</exception>
         protected VCardProperty(ParameterSection parameters, string? propertyGroup)
         {
+            if(parameters is null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
             Parameters = parameters;
             Group = propertyGroup;
 
@@ -59,7 +65,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         /// <summary>
-        /// Enthält die Daten des Parameter-Teils der vCard-Property. (Ist nie null.)
+        /// Enthält die Daten des Parameter-Teils der vCard-Property. (Ist nie <c>null</c>.)
         /// </summary>
         public ParameterSection Parameters { get; }
 

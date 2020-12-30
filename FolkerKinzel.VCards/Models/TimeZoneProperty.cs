@@ -16,7 +16,9 @@ namespace FolkerKinzel.VCards.Models
         /// Initialisiert ein neues <see cref="TimeZoneProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein <see cref="TimeZoneInfo"/>-Objekt.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public TimeZoneProperty(TimeZoneInfo? value, string? propertyGroup = null)
         {
             Value = value;

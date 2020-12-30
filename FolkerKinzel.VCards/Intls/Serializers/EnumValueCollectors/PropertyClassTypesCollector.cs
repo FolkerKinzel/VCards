@@ -18,7 +18,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
         /// <paramref name="list"/>. <paramref name="list"/> wird von der Methode nicht
         /// geleert.
         /// </summary>
-        /// <param name="propertyClassType"><see cref="PropertyClassTypes"/>-Objekt oder null.</param>
+        /// <param name="propertyClassType"><see cref="PropertyClassTypes"/>-Objekt oder <c>null</c>.</param>
         /// <param name="list">Eine Liste zum sammeln.</param>
         internal void CollectValueStrings(PropertyClassTypes? propertyClassType, List<string> list)
         {

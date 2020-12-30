@@ -20,7 +20,9 @@ namespace FolkerKinzel.VCards.Models
         /// auf <see cref="VCdDataType.Timestamp"/> gesetzt ist.
         /// </summary>
         /// <param name="value">Ein <see cref="DateTimeOffset"/>-Objekt.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public TimestampProperty(DateTimeOffset value, string? propertyGroup = null)
         {
             Value = value;
@@ -54,9 +56,10 @@ namespace FolkerKinzel.VCards.Models
             serializer.Builder.Append(worker);
         }
 
-        /// <summary>
-        /// True, wenn das <see cref="TimestampProperty"/>-Objekt keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn das <see cref="TimestampProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public override bool IsEmpty => Value == DateTimeOffset.MinValue;
     }
 }

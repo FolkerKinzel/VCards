@@ -18,11 +18,12 @@ namespace FolkerKinzel.VCards.Models
     public abstract class DateTimeProperty : VCardProperty<object?>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
-        /// Konstruktor, der abgeleiteten Klassen erlaubt, ein <see cref="DateTimeProperty"/>-Objekt zu initialisieren,
+        /// Konstruktor, der abgeleiteten Klassen erlaubt, ein neues <see cref="DateTimeProperty"/>-Objekt zu initialisieren,
         /// bei dem ein Gruppenname für vCard-Properties angegeben ist.
         /// </summary>
-        /// <param name="propertyGroup">Der Gruppenname für eine Gruppe von vCard-Properties, der das <see cref="DateTimeProperty"/>-Objekt
-        /// zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         protected DateTimeProperty(string? propertyGroup) { this.Group = propertyGroup; }
 
 

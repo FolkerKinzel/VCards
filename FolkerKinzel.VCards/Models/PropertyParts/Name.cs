@@ -26,7 +26,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         private const int SUFFIX = 4;
 
         /// <summary>
-        /// Initialisiert ein <see cref="Name"/>-Objekt.
+        /// Initialisiert ein neues <see cref="Name"/>-Objekt.
         /// </summary>
         /// <param name="lastName">Nachname</param>
         /// <param name="firstName">Vorname</param>
@@ -102,27 +102,27 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// Nachname (nie null)
+        /// Nachname (nie <c>null</c>)
         /// </summary>
         public ReadOnlyCollection<string> LastName => data[LAST_NAME];
 
         /// <summary>
-        /// Vorname (nie null)
+        /// Vorname (nie <c>null</c>)
         /// </summary>
         public ReadOnlyCollection<string> FirstName => data[FIRST_NAME];
 
         /// <summary>
-        /// zweiter Vorname (nie null)
+        /// zweiter Vorname (nie <c>null</c>)
         /// </summary>
         public ReadOnlyCollection<string> MiddleName => data[MIDDLE_NAME];
 
         /// <summary>
-        /// Namenspräfix (z.B. "Prof. Dr.") (nie null)
+        /// Namenspräfix (z.B. "Prof. Dr.") (nie <c>null</c>)
         /// </summary>
         public ReadOnlyCollection<string> Prefix => data[PREFIX];
 
         /// <summary>
-        /// Namenssuffix (z.B. "jr.") (nie null)
+        /// Namenssuffix (z.B. "jr.") (nie <c>null</c>)
         /// </summary>
         public ReadOnlyCollection<string> Suffix => data[SUFFIX];
 

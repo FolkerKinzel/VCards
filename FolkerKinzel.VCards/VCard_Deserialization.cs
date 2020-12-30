@@ -20,10 +20,10 @@ namespace FolkerKinzel.VCards
         /// Lädt eine vcf-Datei.
         /// </summary>
         /// <param name="fileName">Absoluter oder relativer Pfad zu einer vcf-Datei.</param>
-        /// <param name="textEncoding">Die zum Einlesen der Datei zu verwendende Textenkodierung oder null, um die Datei mit der 
+        /// <param name="textEncoding">Die zum Einlesen der Datei zu verwendende Textenkodierung oder <c>null</c>, um die Datei mit der 
         /// standardgerechten Enkodierung <see cref="Encoding.UTF8"/> einzulesen.</param>
         /// <returns>Ein Collection geparster <see cref="VCard"/>-Objekte, die den Inhalt der vcf-Datei darstellen.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
         public static List<VCard> Load(string fileName, Encoding? textEncoding = null)
@@ -69,7 +69,7 @@ namespace FolkerKinzel.VCards
         /// </summary>
         /// <param name="content">Ein String, der vCard-Daten enthält.</param>
         /// <returns>Ein Collection geparster <see cref="VCard"/>-Objekte, die den Inhalt der vcf-Datei darstellen.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="content"/> ist null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="content"/> ist <c>null</c>.</exception>
         public static List<VCard> Parse(string content)
         {
             if (content == null)

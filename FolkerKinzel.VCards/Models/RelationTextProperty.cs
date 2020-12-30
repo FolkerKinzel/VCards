@@ -15,12 +15,14 @@ namespace FolkerKinzel.VCards.Models
     public sealed class RelationTextProperty : RelationProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
-        /// Initialisiert ein <see cref="RelationTextProperty"/>-Objekt.
+        /// Initialisiert ein neues <see cref="RelationTextProperty"/>-Objekt.
         /// </summary>
         /// <param name="text">Name einer Person, zu der eine Beziehung besteht.</param>
         /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum, der die 
         /// Beziehung beschreibt.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public RelationTextProperty(string? text, RelationTypes? relation = null, string? propertyGroup = null)
             : base(relation, propertyGroup)
         {

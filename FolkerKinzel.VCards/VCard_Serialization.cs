@@ -27,7 +27,7 @@ namespace FolkerKinzel.VCards
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> oder <paramref name="vcards"/>
-        /// ist null.</exception>
+        /// ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
         /// <remarks>Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
@@ -99,7 +99,7 @@ namespace FolkerKinzel.VCards
         /// <remarks>Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!</remarks>
-        /// <exception cref="ArgumentNullException"><paramref name="vcards"/> ist null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="vcards"/> ist <c>null</c>.</exception>
         /// <exception cref="IOException">E/A-Fehler.</exception>
         /// <exception cref="ObjectDisposedException">Die Ressourcen von <paramref name="writer"/> sind bereits freigegeben.</exception>
 #if !NET40
@@ -139,7 +139,7 @@ namespace FolkerKinzel.VCards
         /// kombiniert werden.</param>
         /// <note type="tip">Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
         /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.</note>
-        /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
 #if !NET40

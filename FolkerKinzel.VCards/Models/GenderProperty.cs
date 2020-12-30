@@ -17,11 +17,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class GenderProperty : VCardProperty<Gender>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
-        /// Initialisiert ein neues <see cref="GeoProperty"/>-Objekt.
+        /// Initialisiert ein neues <see cref="GenderProperty"/>-Objekt.
         /// </summary>
         /// <param name="sex">Standardisierte Geschlechtsangabe.</param>
         /// <param name="genderIdentity">Freie Beschreibung des Geschlechts.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public GenderProperty(VCdSex? sex, string? genderIdentity = null, string? propertyGroup = null)
         {
             Value = new Gender(sex, genderIdentity);
@@ -61,9 +63,10 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        /// <summary>
-        /// True, wenn das <see cref="GenderProperty"/>-Objekt keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn das <see cref="GenderProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
     }
 }

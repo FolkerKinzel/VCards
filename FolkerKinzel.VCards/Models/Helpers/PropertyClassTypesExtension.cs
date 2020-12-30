@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// <param name="flags">Ein einzelner <see cref="PropertyClassTypes"/>-Wert oder eine Kombination aus mehreren 
         /// <see cref="PropertyClassTypes"/>-Werten.</param>
         /// <returns>Ein <see cref="PropertyClassTypes"/>-Wert, auf dem sämtliche in <paramref name="value"/> und <paramref name="flags"/>
-        /// gesetzten Flags gesetzt sind. Wenn <paramref name="value"/> null ist, wird <paramref name="flags"/> zurückgegeben.</returns>
+        /// gesetzten Flags gesetzt sind. Wenn <paramref name="value"/> <c>null</c> ist, wird <paramref name="flags"/> zurückgegeben.</returns>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -37,7 +37,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// <param name="flags">Ein einzelner <see cref="PropertyClassTypes"/>-Wert oder eine Kombination aus mehreren 
         /// <see cref="PropertyClassTypes"/>-Werten.</param>
         /// <returns>True, wenn sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
-        /// gesetzt sind. Wenn <paramref name="value"/> null ist, wird false zurückgegeben.</returns>
+        /// gesetzt sind. Wenn <paramref name="value"/> <c>null</c> ist, wird false zurückgegeben.</returns>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -54,8 +54,8 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// <param name="flags">Ein einzelner <see cref="PropertyClassTypes"/>-Wert oder eine Kombination aus mehreren 
         /// <see cref="PropertyClassTypes"/>-Werten.</param>
         /// <returns>Ein <see cref="PropertyClassTypes"/>-Wert, auf dem sämtliche in <paramref name="flags"/>
-        /// gesetzten Flags entfernt sind oder null, wenn sämtliche Flags entfernt wurden. Wenn <paramref name="value"/>
-        /// null ist, wird null zurückgegeben.</returns>
+        /// gesetzten Flags entfernt sind oder <c>null</c>, wenn sämtliche Flags entfernt wurden. Wenn <paramref name="value"/>
+        /// <c>null</c> ist, wird <c>null</c> zurückgegeben.</returns>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif

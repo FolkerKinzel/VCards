@@ -29,10 +29,10 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
         /// Codiert einen String in Quoted-Printable. Sollte Environment.NewLine auf dem ausführenden System nicht 
         /// "\r\n" sein, wird der String automatisch angepasst.
         /// </summary>
-        /// <param name="value">Der String, der codiert werden soll. Ist sb == null wird
-        /// ein string.Empty zurückgegeben.</param>
+        /// <param name="value">Der String, der codiert werden soll. Ist <c>sb == null</c> wird
+        /// ein <see cref="String.Empty">string.Empty</see> zurückgegeben.</param>
         /// <param name="firstLineOffset">Anzahl der nicht-enkodierten Zeichen, die in der ersten Zeile vor dem enkodierten Text kommen.</param>
-        /// <returns>Der encodierte String. Wenn der übergebene String null oder Empty ist, wird string.Empty zurückgegeben.</returns>
+        /// <returns>Der encodierte String. Wenn der übergebene String <c>null</c> oder Empty ist, wird string.Empty zurückgegeben.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Wird ausgelöst, wenn maxRowLength kleiner als 4 ist.</exception>
         public static string Encode(
             string? value,
@@ -177,10 +177,10 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
         /// <summary>
         /// Decodiert einen Quoted-Printable codierten String. Zeilenwechselzeichen werden an das auf dem System übliche Zeilenwechselzeichen angepasst.
         /// </summary>
-        /// <remarks>Wenn der übergebene String null oder Empty ist, wird string.Empty zurückgegeben.</remarks>
-        /// <param name="qpCoded">Der codierte String. Wird null übergeben, wird ein Leerstring zurückgegeben.</param>
+        /// <remarks>Wenn der übergebene String <c>null</c> oder Empty ist, wird string.Empty zurückgegeben.</remarks>
+        /// <param name="qpCoded">Der codierte String. Wird <c>null</c> übergeben, wird ein Leerstring zurückgegeben.</param>
         /// <param name="textEncoding">Die Textencodierung, der der codierte String entspricht. Als Standard wird Encoding.UTF-8 angenommen.
-        /// (Wird auch gewählt, wenn dem Parameter null übergeben wird.)</param>
+        /// (Wird auch gewählt, wenn dem Parameter <c>null</c> übergeben wird.)</param>
         /// <returns>Der decodierte String.</returns>
         public static string? Decode(
             string? qpCoded,
@@ -213,9 +213,9 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
         /// <summary>
         /// Decodiert beliebige Daten, die im Quoted-Printable-Format codiert sind.
         /// </summary>
-        /// <remarks>Wenn der übergebene String null oder Empty ist, wird ein Byte-Array 
+        /// <remarks>Wenn der übergebene String <c>null</c> oder Empty ist, wird ein Byte-Array 
         /// der Länge 0 zurückgegeben.</remarks>
-        /// <param name="qpCoded">Der codierte String. Wird null übergeben, wird ein Byte-Array der Länge 0 zurückgegeben.</param>
+        /// <param name="qpCoded">Der codierte String. Wird <c>null</c> übergeben, wird ein Byte-Array der Länge 0 zurückgegeben.</param>
         /// <returns>Die decodierten Daten als Byte-Array.</returns>
         public static byte[] DecodeData(
             string? qpCoded)
@@ -297,9 +297,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
                 {
                     return Convert.ToByte(s, 16);
                 }
-#pragma warning disable CA1031 // Keine allgemeinen Ausnahmetypen abfangen
                 catch (Exception)
-#pragma warning restore CA1031 // Keine allgemeinen Ausnahmetypen abfangen
                 {
                     return (byte)'?';
                 }

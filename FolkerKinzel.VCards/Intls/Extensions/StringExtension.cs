@@ -7,13 +7,13 @@ namespace FolkerKinzel.VCards.Intls.Extensions
     {
         /// <summary>
         /// Splittet den Value-Teil einer vCard-Property unter Berücksichtigung der maskierten Zeichen.
-        /// Kann auch auf null aufgerufen werden: Gibt dann eine leere Liste zurück.
+        /// Kann auch auf <c>null</c> aufgerufen werden: Gibt dann eine leere Liste zurück.
         /// </summary>
         /// <param name="valueString">Der zu splittende String.</param>
         /// <param name="splitChar">Das Trennzeichen.</param>
         /// <param name="options"><see cref="StringSplitOptions"/>: Der Standardwert ist <see cref="StringSplitOptions.None"/>.</param>
         /// <returns>Den gesplitteten String als Liste oder eine leere Liste, wenn <paramref name="valueString"/>
-        /// null war.</returns>
+        /// <c>null</c> war.</returns>
         internal static List<string> SplitValueString(
             this string? valueString, char splitChar, StringSplitOptions options = StringSplitOptions.None)
         {
@@ -58,7 +58,7 @@ namespace FolkerKinzel.VCards.Intls.Extensions
 
 
         /// <summary>
-        /// Gibt true zurück, wenn <paramref name="s"/> NON-ASCII-Zeichen oder Zeilenwechsel enthält.
+        /// Gibt <c>true</c> zurück, wenn <paramref name="s"/> NON-ASCII-Zeichen oder Zeilenwechsel enthält.
         /// Benötigt keine NULL-Prüfung.
         /// </summary>
         /// <param name="s"></param>

@@ -13,11 +13,15 @@ namespace FolkerKinzel.VCards.Models
     /// </summary>
     public sealed class AccessProperty : VCardProperty<VCdAccess>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
+
+
         /// <summary>
         /// Initialisiert ein neues <see cref="AccessProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein Member der <see cref="VCdAccess"/>-Enumeration.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public AccessProperty(VCdAccess value, string? propertyGroup = null)
         {
             Value = value;
@@ -40,9 +44,10 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        /// <summary>
-        /// True, wenn das <see cref="AccessProperty"/>-Objekt keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn das <see cref="AccessProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public override bool IsEmpty => false;
     }
 }

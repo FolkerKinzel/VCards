@@ -12,7 +12,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
     {
         const string GEO_SCHEME = "geo:";
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Keine allgemeinen Ausnahmetypen abfangen", Justification = "<Ausstehend>")]
         internal static GeoCoordinate? Parse(string? value)
         {
             if (value is null) return null;

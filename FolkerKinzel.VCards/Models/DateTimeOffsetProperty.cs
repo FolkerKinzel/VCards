@@ -17,7 +17,9 @@ namespace FolkerKinzel.VCards.Models
         /// auf <see cref="VCdDataType.DateAndOrTime"/> gesetzt ist.
         /// </summary>
         /// <param name="value">Ein <see cref="DateTimeOffset"/>-Objekt.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         public DateTimeOffsetProperty(DateTimeOffset value, string? propertyGroup = null) : base(propertyGroup)
         {
             this.DateTimeOffset = value;

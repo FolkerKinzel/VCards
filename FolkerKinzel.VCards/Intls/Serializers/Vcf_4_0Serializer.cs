@@ -134,7 +134,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             Debug.Assert(value != null);
 
             TextProperty[] displNames = value
-                .Where(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) ? true : !x.IsEmpty)).ToArray()!;
+                .Where(x => !(x is null) && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty)).ToArray()!;
 
             if (displNames.Length == 0)
             {

@@ -232,9 +232,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string GetMimeTypeFromFileExtension(string path)
         {
-#pragma warning disable CA1308 // Zeichenfolgen in Großbuchstaben normalisieren
             switch (Path.GetExtension(path).ToLowerInvariant())
-#pragma warning restore CA1308 // Zeichenfolgen in Großbuchstaben normalisieren
             {
                 // Verchlüsselung
                 case ".pgp":
@@ -440,10 +438,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
             };
         }
 
-
-
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Zeichenfolgen in Großbuchstaben normalisieren", Justification = "<Ausstehend>")]
         internal static string? KeyTypeValueFromMimeType(string? mimeType)
         {
             return mimeType?.ToLowerInvariant() switch

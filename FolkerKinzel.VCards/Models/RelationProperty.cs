@@ -29,7 +29,9 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum, der die 
         /// Beziehung zu einer Person beschreibt.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
         protected RelationProperty(RelationTypes? relation, string? propertyGroup)
         {
             this.Group = propertyGroup;

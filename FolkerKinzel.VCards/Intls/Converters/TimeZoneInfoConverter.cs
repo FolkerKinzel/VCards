@@ -10,7 +10,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
 {
     static class TimeZoneInfoConverter
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Keine allgemeinen Ausnahmetypen abfangen", Justification = "<Ausstehend>")]
         internal static TimeZoneInfo? Parse(string? value)
         {
             if (value is null) return null;

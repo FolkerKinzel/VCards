@@ -20,7 +20,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// Weist der Instanz den Inhalt von <paramref name="other"/> zu.
         /// </summary>
         /// <param name="other">Fremde Instanz, deren Inhalt übernommen wird.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="other"/> ist null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="other"/> ist <c>null</c>.</exception>
         public void Assign(ParameterSection other)
         {
             if (other is null) throw new ArgumentNullException(nameof(other));
