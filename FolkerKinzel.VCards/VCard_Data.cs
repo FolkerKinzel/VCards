@@ -79,14 +79,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public AccessProperty? Access
         {
-            get
-            {
-                return Get<AccessProperty?>(VCdProp.Access);
-            }
-            set
-            {
-                Set(VCdProp.Access, value);
-            }
+            get => Get<AccessProperty?>(VCdProp.Access);
+            set => Set(VCdProp.Access, value);
         }
 
 
@@ -95,14 +89,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<AddressProperty?>? Addresses
         {
-            get
-            {
-                return Get<IList<AddressProperty?>?>(VCdProp.Addresses);
-            }
-            set
-            {
-                Set(VCdProp.Addresses, value);
-            }
+            get => Get<IList<AddressProperty?>?>(VCdProp.Addresses);
+            set => Set(VCdProp.Addresses, value);
         }
 
 
@@ -116,14 +104,8 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         public IEnumerable<DateTimeProperty?>? AnniversaryViews
         {
-            get
-            {
-                return Get<IEnumerable<DateTimeProperty?>?>(VCdProp.AnniversaryViews);
-            }
-            set
-            {
-                Set(VCdProp.AnniversaryViews, value);
-            }
+            get => Get<IEnumerable<DateTimeProperty?>?>(VCdProp.AnniversaryViews);
+            set => Set(VCdProp.AnniversaryViews, value);
         }
 
 
@@ -137,14 +119,8 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         public IEnumerable<DateTimeProperty?>? BirthDayViews
         {
-            get
-            {
-                return Get<IEnumerable<DateTimeProperty?>?>(VCdProp.BirthDayViews);
-            }
-            set
-            {
-                Set(VCdProp.BirthDayViews, value);
-            }
+            get => Get<IEnumerable<DateTimeProperty?>?>(VCdProp.BirthDayViews);
+            set => Set(VCdProp.BirthDayViews, value);
         }
 
         /// <summary>
@@ -157,14 +133,8 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         public IEnumerable<TextProperty?>? BirthPlaceViews
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.BirthPlaceViews);
-            }
-            set
-            {
-                Set(VCdProp.BirthPlaceViews, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.BirthPlaceViews);
+            set => Set(VCdProp.BirthPlaceViews, value);
         }
 
 
@@ -174,14 +144,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? CalendarAddresses
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.CalendarAddresses);
-            }
-            set
-            {
-                Set(VCdProp.CalendarAddresses, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.CalendarAddresses);
+            set => Set(VCdProp.CalendarAddresses, value);
         }
 
 
@@ -191,14 +155,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? CalendarUserAddresses
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.CalendarUserAddresses);
-            }
-            set
-            {
-                Set(VCdProp.CalendarUserAddresses, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.CalendarUserAddresses);
+            set => Set(VCdProp.CalendarUserAddresses, value);
         }
 
 
@@ -207,14 +165,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<StringCollectionProperty?>? Categories
         {
-            get
-            {
-                return Get<IEnumerable<StringCollectionProperty?>?>(VCdProp.Categories);
-            }
-            set
-            {
-                Set(VCdProp.Categories, value);
-            }
+            get => Get<IEnumerable<StringCollectionProperty?>?>(VCdProp.Categories);
+            set => Set(VCdProp.Categories, value);
         }
 
 
@@ -228,14 +180,8 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         public IEnumerable<DateTimeProperty?>? DeathDateViews
         {
-            get
-            {
-                return Get<IEnumerable<DateTimeProperty?>?>(VCdProp.DeathDateViews);
-            }
-            set
-            {
-                Set(VCdProp.DeathDateViews, value);
-            }
+            get => Get<IEnumerable<DateTimeProperty?>?>(VCdProp.DeathDateViews);
+            set => Set(VCdProp.DeathDateViews, value);
         }
 
 
@@ -249,14 +195,8 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         public IEnumerable<TextProperty?>? DeathPlaceViews
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.DeathPlaceViews);
-            }
-            set
-            {
-                Set(VCdProp.DeathPlaceViews, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.DeathPlaceViews);
+            set => Set(VCdProp.DeathPlaceViews, value);
         }
 
 
@@ -266,14 +206,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public TextProperty? DirectoryName
         {
-            get
-            {
-                return Get<TextProperty?>(VCdProp.DirectoryName);
-            }
-            set
-            {
-                Set(VCdProp.DirectoryName, value);
-            }
+            get => Get<TextProperty?>(VCdProp.DirectoryName);
+            set => Set(VCdProp.DirectoryName, value);
         }
 
 
@@ -284,14 +218,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? DisplayNames
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.DisplayNames);
-            }
-            set
-            {
-                Set(VCdProp.DisplayNames, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.DisplayNames);
+            set => Set(VCdProp.DisplayNames, value);
         }
 
 
@@ -301,14 +229,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? EmailAddresses
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.EmailAddresses);
-            }
-            set
-            {
-                Set(VCdProp.EmailAddresses, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.EmailAddresses);
+            set => Set(VCdProp.EmailAddresses, value);
         }
 
 
@@ -317,14 +239,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? Expertises
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty>>(VCdProp.Expertises);
-            }
-            set
-            {
-                Set(VCdProp.Expertises, value);
-            }
+            get => Get<IEnumerable<TextProperty>>(VCdProp.Expertises);
+            set => Set(VCdProp.Expertises, value);
         }
 
         /// <summary>
@@ -337,14 +253,8 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         public IEnumerable<GenderProperty?>? GenderViews
         {
-            get
-            {
-                return Get<IEnumerable<GenderProperty?>?>(VCdProp.GenderViews);
-            }
-            set
-            {
-                Set(VCdProp.GenderViews, value);
-            }
+            get => Get<IEnumerable<GenderProperty?>?>(VCdProp.GenderViews);
+            set => Set(VCdProp.GenderViews, value);
         }
 
 
@@ -353,14 +263,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<GeoProperty?>? GeoCoordinates
         {
-            get
-            {
-                return Get<IEnumerable<GeoProperty?>?>(VCdProp.GeoCoordinates);
-            }
-            set
-            {
-                Set(VCdProp.GeoCoordinates, value);
-            }
+            get => Get<IEnumerable<GeoProperty?>?>(VCdProp.GeoCoordinates);
+            set => Set(VCdProp.GeoCoordinates, value);
         }
 
 
@@ -370,14 +274,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? Hobbies
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.Hobbies);
-            }
-            set
-            {
-                Set(VCdProp.Hobbies, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.Hobbies);
+            set => Set(VCdProp.Hobbies, value);
         }
 
 
@@ -386,14 +284,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? InstantMessengerHandles
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.InstantMessengerHandles);
-            }
-            set
-            {
-                Set(VCdProp.InstantMessengerHandles, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.InstantMessengerHandles);
+            set => Set(VCdProp.InstantMessengerHandles, value);
         }
 
 
@@ -403,14 +295,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? Interests
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.Interests);
-            }
-            set
-            {
-                Set(VCdProp.Interests, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.Interests);
+            set => Set(VCdProp.Interests, value);
         }
 
 
@@ -423,14 +309,8 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         public IEnumerable<DataProperty?>? Keys
         {
-            get
-            {
-                return Get<IEnumerable<DataProperty?>?>(VCdProp.Keys);
-            }
-            set
-            {
-                Set(VCdProp.Keys, value);
-            }
+            get => Get<IEnumerable<DataProperty?>?>(VCdProp.Keys);
+            set => Set(VCdProp.Keys, value);
         }
 
 
@@ -440,14 +320,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public KindProperty? Kind
         {
-            get
-            {
-                return Get<KindProperty?>(VCdProp.Kind);
-            }
-            set
-            {
-                Set(VCdProp.Kind, value);
-            }
+            get => Get<KindProperty?>(VCdProp.Kind);
+            set => Set(VCdProp.Kind, value);
         }
 
 
@@ -456,14 +330,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? Languages
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.Languages);
-            }
-            set
-            {
-                Set(VCdProp.Languages, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.Languages);
+            set => Set(VCdProp.Languages, value);
         }
 
 
@@ -472,14 +340,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public TimestampProperty? LastRevision
         {
-            get
-            {
-                return Get<TimestampProperty?>(VCdProp.LastRevision);
-            }
-            set
-            {
-                Set(VCdProp.LastRevision, value);
-            }
+            get => Get<TimestampProperty?>(VCdProp.LastRevision);
+            set => Set(VCdProp.LastRevision, value);
         }
 
 
@@ -488,14 +350,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<DataProperty?>? Logos
         {
-            get
-            {
-                return Get<IEnumerable<DataProperty?>?>(VCdProp.Logos);
-            }
-            set
-            {
-                Set(VCdProp.Logos, value);
-            }
+            get => Get<IEnumerable<DataProperty?>?>(VCdProp.Logos);
+            set => Set(VCdProp.Logos, value);
         }
 
 
@@ -505,14 +361,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public TextProperty? Mailer
         {
-            get
-            {
-                return Get<TextProperty?>(VCdProp.Mailer);
-            }
-            set
-            {
-                Set(VCdProp.Mailer, value);
-            }
+            get => Get<TextProperty?>(VCdProp.Mailer);
+            set => Set(VCdProp.Mailer, value);
         }
 
 
@@ -539,14 +389,8 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         public IEnumerable<RelationProperty?>? Members
         {
-            get
-            {
-                return Get<IEnumerable<RelationProperty?>?>(VCdProp.Members);
-            }
-            set
-            {
-                Set(VCdProp.Members, value);
-            }
+            get => Get<IEnumerable<RelationProperty?>?>(VCdProp.Members);
+            set => Set(VCdProp.Members, value);
         }
 
 
@@ -560,14 +404,8 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         public IEnumerable<NameProperty?>? NameViews
         {
-            get
-            {
-                return Get<IEnumerable<NameProperty?>?>(VCdProp.NameViews);
-            }
-            set
-            {
-                Set(VCdProp.NameViews, value);
-            }
+            get => Get<IEnumerable<NameProperty?>?>(VCdProp.NameViews);
+            set => Set(VCdProp.NameViews, value);
         }
 
 
@@ -576,14 +414,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<StringCollectionProperty?>? NickNames
         {
-            get
-            {
-                return Get<IEnumerable<StringCollectionProperty?>?>(VCdProp.NickNames);
-            }
-            set
-            {
-                Set(VCdProp.NickNames, value);
-            }
+            get => Get<IEnumerable<StringCollectionProperty?>?>(VCdProp.NickNames);
+            set => Set(VCdProp.NickNames, value);
         }
 
 
@@ -593,14 +425,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<NonStandardProperty?>? NonStandardProperties
         {
-            get
-            {
-                return Get<IEnumerable<NonStandardProperty?>?>(VCdProp.NonStandardProperties);
-            }
-            set
-            {
-                Set(VCdProp.NonStandardProperties, value);
-            }
+            get => Get<IEnumerable<NonStandardProperty?>?>(VCdProp.NonStandardProperties);
+            set => Set(VCdProp.NonStandardProperties, value);
         }
 
 
@@ -609,14 +435,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? Notes
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.Notes);
-            }
-            set
-            {
-                Set(VCdProp.Notes, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.Notes);
+            set => Set(VCdProp.Notes, value);
         }
 
 
@@ -625,14 +445,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<OrganizationProperty?>? Organizations
         {
-            get
-            {
-                return Get<IList<OrganizationProperty?>?>(VCdProp.Organizations);
-            }
-            set
-            {
-                Set(VCdProp.Organizations, value);
-            }
+            get => Get<IList<OrganizationProperty?>?>(VCdProp.Organizations);
+            set => Set(VCdProp.Organizations, value);
         }
 
 
@@ -643,14 +457,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? OrgDirectories
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.OrgDirectories);
-            }
-            set
-            {
-                Set(VCdProp.OrgDirectories, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.OrgDirectories);
+            set => Set(VCdProp.OrgDirectories, value);
         }
 
 
@@ -659,14 +467,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? PhoneNumbers
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.PhoneNumbers);
-            }
-            set
-            {
-                Set(VCdProp.PhoneNumbers, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.PhoneNumbers);
+            set => Set(VCdProp.PhoneNumbers, value);
         }
 
 
@@ -677,14 +479,8 @@ namespace FolkerKinzel.VCards
         /// in die vCard eingebettet werden.</remarks>
         public IEnumerable<DataProperty?>? Photos
         {
-            get
-            {
-                return Get<IEnumerable<DataProperty>>(VCdProp.Photos);
-            }
-            set
-            {
-                Set(VCdProp.Photos, value);
-            }
+            get => Get<IEnumerable<DataProperty>>(VCdProp.Photos);
+            set => Set(VCdProp.Photos, value);
         }
 
 
@@ -695,14 +491,8 @@ namespace FolkerKinzel.VCards
         /// Formal Public Identifiers [ISO9070] oder Universal Resource Names in [RFC3406] entsprechen.</value>
         public TextProperty? ProdID
         {
-            get
-            {
-                return Get<TextProperty?>(VCdProp.ProdID);
-            }
-            set
-            {
-                Set(VCdProp.ProdID, value);
-            }
+            get => Get<TextProperty?>(VCdProp.ProdID);
+            set => Set(VCdProp.ProdID, value);
         }
 
         /// <summary>
@@ -710,14 +500,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public ProfileProperty? Profile
         {
-            get
-            {
-                return Get<ProfileProperty?>(VCdProp.Profile);
-            }
-            set
-            {
-                Set(VCdProp.Profile, value);
-            }
+            get => Get<ProfileProperty?>(VCdProp.Profile);
+            set => Set(VCdProp.Profile, value);
         }
 
         /// <summary>
@@ -725,14 +509,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<PropertyIDMappingProperty?>? PropertyIDMappings
         {
-            get
-            {
-                return Get<IEnumerable<PropertyIDMappingProperty?>?>(VCdProp.PropertyIDMappings);
-            }
-            set
-            {
-                Set(VCdProp.PropertyIDMappings, value);
-            }
+            get => Get<IEnumerable<PropertyIDMappingProperty?>?>(VCdProp.PropertyIDMappings);
+            set => Set(VCdProp.PropertyIDMappings, value);
         }
 
 
@@ -744,14 +522,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<RelationProperty?>? Relations
         {
-            get
-            {
-                return Get<IEnumerable<RelationProperty?>?>(VCdProp.Relations);
-            }
-            set
-            {
-                Set(VCdProp.Relations, value);
-            }
+            get => Get<IEnumerable<RelationProperty?>?>(VCdProp.Relations);
+            set => Set(VCdProp.Relations, value);
         }
 
 
@@ -762,14 +534,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? Roles
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.Roles);
-            }
-            set
-            {
-                Set(VCdProp.Roles, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.Roles);
+            set => Set(VCdProp.Roles, value);
         }
 
 
@@ -779,14 +545,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<DataProperty?>? Sounds
         {
-            get
-            {
-                return Get<IEnumerable<DataProperty?>?>(VCdProp.Sounds);
-            }
-            set
-            {
-                Set(VCdProp.Sounds, value);
-            }
+            get => Get<IEnumerable<DataProperty?>?>(VCdProp.Sounds);
+            set => Set(VCdProp.Sounds, value);
         }
 
 
@@ -796,14 +556,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? Sources
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.Sources);
-            }
-            set
-            {
-                Set(VCdProp.Sources, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.Sources);
+            set => Set(VCdProp.Sources, value);
         }
 
 
@@ -812,14 +566,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TimeZoneProperty?>? TimeZones
         {
-            get
-            {
-                return Get<IEnumerable<TimeZoneProperty?>?>(VCdProp.TimeZones);
-            }
-            set
-            {
-                Set(VCdProp.TimeZones, value);
-            }
+            get => Get<IEnumerable<TimeZoneProperty?>?>(VCdProp.TimeZones);
+            set => Set(VCdProp.TimeZones, value);
         }
 
 
@@ -829,14 +577,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? Titles
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.Titles);
-            }
-            set
-            {
-                Set(VCdProp.Titles, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.Titles);
+            set => Set(VCdProp.Titles, value);
         }
 
 
@@ -849,14 +591,8 @@ namespace FolkerKinzel.VCards
         /// </value>
         public UuidProperty? UniqueIdentifier
         {
-            get
-            {
-                return Get<UuidProperty?>(VCdProp.UniqueIdentifier);
-            }
-            set
-            {
-                Set(VCdProp.UniqueIdentifier, value);
-            }
+            get => Get<UuidProperty?>(VCdProp.UniqueIdentifier);
+            set => Set(VCdProp.UniqueIdentifier, value);
         }
 
 
@@ -866,14 +602,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<TextProperty?>? URLs
         {
-            get
-            {
-                return Get<IEnumerable<TextProperty?>?>(VCdProp.URLs);
-            }
-            set
-            {
-                Set(VCdProp.URLs, value);
-            }
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.URLs);
+            set => Set(VCdProp.URLs, value);
         }
 
 
@@ -882,14 +612,8 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<XmlProperty?>? XmlProperties
         {
-            get
-            {
-                return Get<IEnumerable<XmlProperty?>?>(VCdProp.XmlProperties);
-            }
-            set
-            {
-                Set(VCdProp.XmlProperties, value);
-            }
+            get => Get<IEnumerable<XmlProperty?>?>(VCdProp.XmlProperties);
+            set => Set(VCdProp.XmlProperties, value);
         }
 
 

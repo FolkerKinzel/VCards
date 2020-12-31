@@ -1,7 +1,0 @@
-﻿[*.cs]
-
-# CA1303: Literale nicht als lokalisierte Parameter übergeben
-dotnet_diagnostic.CA1303.severity = none
-
-# CA1307: StringComparison angeben
-dotnet_diagnostic.CA1307.severity = none

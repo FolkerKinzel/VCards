@@ -95,8 +95,8 @@ namespace FolkerKinzel.VCards
         {
             DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoParse) + "(TextReader)");
 
-            VCardDeserializationInfo info = new VCardDeserializationInfo();
-            List<VCard> vCardList = new List<VCard>();
+            var info = new VCardDeserializationInfo();
+            var vCardList = new List<VCard>();
 
             while (GetVCard(reader, info, VCdVersion.V2_1, out VCard? vCard))
             {

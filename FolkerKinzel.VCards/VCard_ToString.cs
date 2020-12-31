@@ -18,7 +18,7 @@ namespace FolkerKinzel.VCards
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="VCard"/>-Objekts.</returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             sb.Append("Version: ").Append(GetVersionString(this.Version))
                 .Append(Environment.NewLine);
