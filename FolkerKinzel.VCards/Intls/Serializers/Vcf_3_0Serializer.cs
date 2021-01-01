@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
-    class Vcf_3_0Serializer : VcfSerializer
+    internal class Vcf_3_0Serializer : VcfSerializer
     {
         internal Vcf_3_0Serializer(TextWriter writer, VcfOptions options) : base(writer, options, new ParameterSerializer3_0(options)) { }
 
@@ -44,11 +44,11 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(serializables != null);
 
-            var arr = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray();
+            IVcfSerializableData[] arr = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray()!;
 
             for (int i = 0; i < arr.Length; i++)
             {
-                IVcfSerializableData prop = arr[i]!;
+                IVcfSerializableData prop = arr[i];
                 this.BuildProperty(propertyKey, prop, i == 0 && prop.Parameters.Preference < 100);
             }
         }

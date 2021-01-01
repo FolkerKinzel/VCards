@@ -51,11 +51,15 @@ namespace FolkerKinzel.VCards.Intls.Converters
         internal bool TryParse(string? s, out DateTimeOffset offset)
         {
             offset = DateTimeOffset.MinValue;
-            if (s is null) return false;
+            
+            if (s is null)
+            {
+                return false;
+            }
 
             //s = s.Trim();
 
-            var styles = DateTimeStyles.AllowWhiteSpaces;
+            DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
             if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
             {
@@ -92,7 +96,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string ToDateTimeString(DateTimeOffset dt, VCdVersion version)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             AppendDateTimeStringTo(builder, dt, version);
 
@@ -101,7 +105,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string ToTimestamp(DateTimeOffset dt, VCdVersion version)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             AppendTimestampTo(builder, dt, version);
 
@@ -147,7 +151,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                             builder.AppendFormat(CultureInfo.InvariantCulture, "--{0:00}-{1:00}", dt.Month, dt.Day);
                         }
 
-                        var utcOffset = dt.Offset;
+                        TimeSpan utcOffset = dt.Offset;
 
                         if (HasTimeComponent(dt))
                         {
@@ -177,7 +181,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                             builder.AppendFormat(CultureInfo.InvariantCulture, "--{0:00}{1:00}", dt.Month, dt.Day);
                         }
 
-                        var utcOffset = dt.Offset;
+                        TimeSpan utcOffset = dt.Offset;
 
                         if (HasTimeComponent(dt))
                         {

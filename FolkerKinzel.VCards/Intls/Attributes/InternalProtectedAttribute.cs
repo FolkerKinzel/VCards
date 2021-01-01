@@ -21,7 +21,7 @@ namespace FolkerKinzel.VCards.Intls.Attributes
         AttributeTargets.Constructor | AttributeTargets.Method |
         AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     [Conditional("DEBUG")]
-    internal class InternalProtectedAttribute : Attribute
+    internal sealed class InternalProtectedAttribute : Attribute
     {
         /// <summary>
         /// Die Methode prüft im Debug-Modus, ob der Aufrufer den Zugriffsmodifizierer internal nutzt (Warnmeldung, wenn nicht) 
@@ -36,18 +36,21 @@ namespace FolkerKinzel.VCards.Intls.Attributes
         [DebuggerStepThrough()]
         public static void Run()
         {
-            StackFrame sfCallee = new StackFrame(1, false);
+            var sfCallee = new StackFrame(1, false);
             MethodBase calleeMethod = sfCallee.GetMethod();
             Type calleeType = calleeMethod.DeclaringType;
 
-            StackFrame sfCaller = new StackFrame(2, false);
+            var sfCaller = new StackFrame(2, false);
             MethodBase callerMethod = sfCaller.GetMethod();
             Type callerType = callerMethod.DeclaringType;
 
             Debug.Assert(calleeMethod.IsAssembly, "Die Verwendung des Attributs \"InternalProtected\" ist nur auf Methoden, " +
                 "Eigenschaften und Konstruktoren sinnvoll, die den Zugriffsmodifizierer \"internal\" verwenden.");
 
-            if (IsAssignableFrom(callerType, calleeType) || IsAssignableFrom(calleeType, callerType)) return;
+            if (IsAssignableFrom(callerType, calleeType) || IsAssignableFrom(calleeType, callerType))
+            {
+                return;
+            }
 
             const string format = "Die Methode \"{0}.{1}\" wurde von der Methode \"{2}.{3}\" aufgerufen. " +
                 "Sie ist aber \"InternalProtected\" deklariert und darf nur von abgeleiteten Typen oder Basistypen aufgerufen werden.";

@@ -134,8 +134,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         internal void AppendVCardString(VcfSerializer serializer)
         {
-            StringBuilder? builder = serializer.Builder;
-            StringBuilder? worker = serializer.Worker;
+            StringBuilder builder = serializer.Builder;
+            StringBuilder worker = serializer.Worker;
 
             char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
 

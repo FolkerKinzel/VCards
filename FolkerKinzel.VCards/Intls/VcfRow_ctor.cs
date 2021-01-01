@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
-
+using System.Text;
 
 namespace FolkerKinzel.VCards.Intls
 {
-    partial class VcfRow
+    internal partial class VcfRow
     {
         /// <summary>
         /// Parsed eine Datenzeile der VCF-Datei.
@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Intls
         /// <returns><see cref="VcfRow"/>-Objekt</returns>
         internal static VcfRow? Parse(VCardDeserializationInfo info)
         {
-            var builder = info.Builder;
+            StringBuilder builder = info.Builder;
 
             // vCardRow:
             // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part
@@ -24,16 +24,7 @@ namespace FolkerKinzel.VCards.Intls
 
             // vCardRowParts:
             // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
-            var vCardRowParts = SplitKeySectionFromValue(vCardRow);
-
-            //VcfRow? row = vCardRowParts.Count != 0 ? new VcfRow(vCardRowParts, info) : null; // eigentlich überfüssig (siebt Leerzeilen aus)
-
-            //if(row?.Parameters.Encoding == Models.Enums.VCdEncoding.Base64)
-            //{
-            //    row.Value = row.Value?.Replace(" ", "");
-            //}
-
-            //return row;
+            List<string> vCardRowParts = SplitKeySectionFromValue(vCardRow);
 
             return vCardRowParts.Count != 0 ? new VcfRow(vCardRowParts, info) : null; // eigentlich überfüssig (siebt Leerzeilen aus)
 
@@ -86,7 +77,7 @@ namespace FolkerKinzel.VCards.Intls
         {
             bool isInDoubleQuotes = false;
 
-            List<string> propertyParts = new List<string>();
+            var propertyParts = new List<string>();
 
             for (int i = 0; i < vCardRow.Length; i++)
             {
@@ -119,7 +110,7 @@ namespace FolkerKinzel.VCards.Intls
         {
             var parameterTuples = new List<Tuple<string, string>>();
 
-            var parameters = SplitParameters(parameterSection);
+            List<string> parameters = SplitParameters(parameterSection);
 
             foreach (string parameter in parameters)
             {
@@ -154,7 +145,7 @@ namespace FolkerKinzel.VCards.Intls
             bool isInDoubleQuotes = false;
             int nextStringStartIndex = 0;
 
-            List<string> splittedParameterSection = new List<string>();
+            var splittedParameterSection = new List<string>();
 
             int i;
 

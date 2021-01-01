@@ -26,7 +26,10 @@ namespace FolkerKinzel.VCards.Models
         /// <exception cref="ArgumentException"><paramref name="propertyKey"/> ist kein X-Name.</exception>
         public NonStandardProperty(string propertyKey, string? value, string? propertyGroup = null)
         {
-            if (propertyKey == null) throw new ArgumentNullException(nameof(propertyKey));
+            if (propertyKey == null)
+            {
+                throw new ArgumentNullException(nameof(propertyKey));
+            }
 
             PropertyKey = propertyKey.Trim().ToUpperInvariant();
 
@@ -61,7 +64,7 @@ namespace FolkerKinzel.VCards.Models
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="NonStandardProperty"/>-Objekts.</returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             sb.Append("Key:   ").Append(PropertyKey).Append(Environment.NewLine);
             sb.Append("Value: ").Append(Value);

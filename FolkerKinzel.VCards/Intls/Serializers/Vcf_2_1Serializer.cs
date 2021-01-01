@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
-    class Vcf_2_1Serializer : VcfSerializer
+    internal class Vcf_2_1Serializer : VcfSerializer
     {
         internal Vcf_2_1Serializer(TextWriter writer, VcfOptions options) : base(writer, options, new ParameterSerializer2_1(options)) { }
 
@@ -106,7 +106,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(serializables != null);
 
-            var pref = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
+            IVcfSerializableData? pref = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
 
             if (pref != null)
             {
@@ -134,7 +134,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(value != null);
 
-            var adr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
+            AddressProperty? adr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
 
             if (adr != null)
             {
@@ -229,8 +229,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(value != null);
 
-            var name = value.FirstOrDefault(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty))
-
+            NameProperty? name = value.FirstOrDefault(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty))
                 ?? (Options.IsSet(VcfOptions.WriteEmptyProperties) ? new NameProperty() : new NameProperty(new string[] { "?" }));
 
             BuildProperty(VCard.PropKeys.N, name);

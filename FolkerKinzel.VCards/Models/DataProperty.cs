@@ -7,6 +7,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -201,8 +202,8 @@ namespace FolkerKinzel.VCards.Models
                 return;
             }
 
-            System.Text.StringBuilder? builder = serializer.Builder;
-            System.Text.StringBuilder? worker = serializer.Worker;
+            StringBuilder builder = serializer.Builder;
+            StringBuilder worker = serializer.Worker;
 
             worker.Clear();
 

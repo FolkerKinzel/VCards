@@ -8,13 +8,16 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Converters
 {
-    static class GeoCoordinateConverter
+    internal static class GeoCoordinateConverter
     {
-        const string GEO_SCHEME = "geo:";
+        private const string GEO_SCHEME = "geo:";
 
         internal static GeoCoordinate? Parse(string? value)
         {
-            if (value is null) return null;
+            if (value is null)
+            {
+                return null;
+            }
 
             value = value.Trim();
 
@@ -33,8 +36,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
             try
             {
-                var numStyle = NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign;
-                var culture = CultureInfo.InvariantCulture;
+                NumberStyles numStyle = NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign;
+                CultureInfo culture = CultureInfo.InvariantCulture;
 
                 return new GeoCoordinate(
                     double.Parse(arr[0].Trim(), numStyle, culture),
@@ -53,7 +56,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
             Debug.Assert(builder != null);
             Debug.Assert(coordinate != null);
 
-            var culture = CultureInfo.InvariantCulture;
+            CultureInfo culture = CultureInfo.InvariantCulture;
 
             switch (version)
             {

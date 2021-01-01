@@ -7,7 +7,7 @@ using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Text;
 using FolkerKinzel.VCards.Models.PropertyParts;
-
+using System.Collections.Generic;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -36,7 +36,7 @@ namespace FolkerKinzel.VCards.Models
             VCdSex? sex = null;
             string? genderIdentity = null;
 
-            var list = vcfRow.Value.SplitValueString(';');
+            List<string> list = vcfRow.Value.SplitValueString(';');
 
             if (list.Count >= 1)
             {

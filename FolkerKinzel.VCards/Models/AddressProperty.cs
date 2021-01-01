@@ -7,6 +7,7 @@ using FolkerKinzel.VCards.Models.Enums;
 using System.Collections.Generic;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -112,7 +113,7 @@ namespace FolkerKinzel.VCards.Models
             Debug.Assert(Value != null); // value ist nie null
 
 
-            System.Text.StringBuilder? builder = serializer.Builder;
+            StringBuilder builder = serializer.Builder;
             int startIndex = builder.Length;
 
             Value.AppendVCardString(serializer);

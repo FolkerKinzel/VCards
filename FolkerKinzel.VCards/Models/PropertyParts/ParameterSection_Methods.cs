@@ -56,7 +56,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             {
                 sb.Append('[').Append(para.Key).Append(": ");
 
-                var valStr = para.Value?.ToString();
+                string? valStr = para.Value?.ToString();
 
                 if (valStr != null &&
 #if NET40

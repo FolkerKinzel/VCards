@@ -38,11 +38,15 @@ namespace FolkerKinzel.VCards.Intls.Converters
         internal bool TryParse(string? s, out DateTimeOffset offset)
         {
             offset = DateTimeOffset.MinValue;
-            if (s is null) return false;
+
+            if (s is null)
+            {
+                return false;
+            }
 
             //s = s.Trim();
 
-            var styles = DateTimeStyles.AllowWhiteSpaces;
+            DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
             if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
             {
@@ -71,7 +75,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string ToTimeString(DateTimeOffset dt, VCdVersion version)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             AppendTo(builder, dt, version);
 
@@ -89,7 +93,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                         builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}:{2:00}",
                             dt.Hour, dt.Minute, dt.Second);
 
-                        var utcOffset = dt.Offset;
+                        TimeSpan utcOffset = dt.Offset;
 
                         if (utcOffset == TimeSpan.Zero)
                         {
@@ -109,7 +113,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                         builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}{1:00}{2:00}",
                             dt.Hour, dt.Minute, dt.Second);
 
-                        var utcOffset = dt.Offset;
+                        TimeSpan utcOffset = dt.Offset;
 
                         if (utcOffset == TimeSpan.Zero)
                         {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FolkerKinzel.VCards.Intls.Converters
 {
-    static class UuidConverter
+    internal static class UuidConverter
     {
         internal const string UUID_PROTOCOL = "urn:uuid:";
 
@@ -17,7 +17,10 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static Guid ToGuid(string? uuid)
         {
-            if (string.IsNullOrWhiteSpace(uuid)) return Guid.Empty;
+            if (string.IsNullOrWhiteSpace(uuid))
+            {
+                return Guid.Empty;
+            }
 
 #if NET40
             var arr = uuid.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);

@@ -5,10 +5,11 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Intls
 {
-    partial class VcfRow
+    internal partial class VcfRow
     {
         internal void DecodeQuotedPrintable()
         {
@@ -21,24 +22,30 @@ namespace FolkerKinzel.VCards.Intls
 
         internal void UnMask(VCardDeserializationInfo info, VCdVersion version)
         {
-            var builder = info.Builder;
+            StringBuilder builder = info.Builder;
 
             builder.Clear();
             builder.Append(this.Value);
             builder.UnMask(version);
             this.Value = builder.ToString();
-            if (this.Value.Length == 0) this.Value = null;
+            if (this.Value.Length == 0)
+            {
+                this.Value = null;
+            }
         }
 
         internal void UnMaskAndTrim(VCardDeserializationInfo info, VCdVersion version)
         {
-            var builder = info.Builder;
+            StringBuilder builder = info.Builder;
 
             builder.Clear();
             builder.Append(this.Value);
             builder.UnMask(version).Trim().RemoveQuotes();
             this.Value = builder.ToString();
-            if (this.Value.Length == 0) this.Value = null;
+            if (this.Value.Length == 0)
+            {
+                this.Value = null;
+            }
         }
 
         internal void DecodeQuotedPrintableData()

@@ -8,11 +8,14 @@ using System.Text.RegularExpressions;
 
 namespace FolkerKinzel.VCards.Intls.Converters
 {
-    static class TimeZoneInfoConverter
+    internal static class TimeZoneInfoConverter
     {
         internal static TimeZoneInfo? Parse(string? value)
         {
-            if (value is null) return null;
+            if (value is null)
+            {
+                return null;
+            }
 
             try
             {
@@ -39,7 +42,10 @@ namespace FolkerKinzel.VCards.Intls.Converters
                         value,
                         new string[] { @"\-hhmm", @"\-hh" },
                         CultureInfo.InvariantCulture,
-                        TimeSpanStyles.AssumeNegative, out timeSpan)) goto done;
+                        TimeSpanStyles.AssumeNegative, out timeSpan))
+                    {
+                        goto done;
+                    }
                 }
                 else if (TimeSpan.TryParseExact(
                         value,
@@ -69,7 +75,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
             {
                 case VCdVersion.V2_1:
                 case VCdVersion.V3_0:
-                    var timeSpan = tzInfo.BaseUtcOffset;
+                    TimeSpan timeSpan = tzInfo.BaseUtcOffset;
                     string format = timeSpan < TimeSpan.Zero ? @"\-hh\:mm" : @"hh\:mm";
                     builder.Append(timeSpan.ToString(format, CultureInfo.InvariantCulture));
                     break;

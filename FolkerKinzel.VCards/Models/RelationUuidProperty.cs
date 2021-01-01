@@ -30,16 +30,12 @@ namespace FolkerKinzel.VCards.Models
             this.Uuid = uuid;
         }
 
-       
+
 
         /// <summary>
         /// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="Uuid"/> zurück.
         /// </summary>
-        public override object Value
-        {
-            get => this.Uuid;
-            //protected set => base.Value = value; 
-        }
+        public override object Value => this.Uuid;
 
 
         /// <summary>

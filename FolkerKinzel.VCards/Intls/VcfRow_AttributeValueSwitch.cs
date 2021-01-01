@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls
 {
-    partial class VcfRow
+    internal partial class VcfRow
     {
         private static string ParseAttributeKeyFromValue(string value)
         {
@@ -17,10 +17,15 @@ namespace FolkerKinzel.VCards.Intls
             const string LANGUAGE_PROPERTY = ParameterSection.ParameterKey.LANGUAGE;
             const string VALUE_PROPERTY = ParameterSection.ParameterKey.VALUE;
 
-            if (value.StartsWith("QUOTED", true, CultureInfo.InvariantCulture)) return ENCODING_PROPERTY; // "QUOTED-PRINTABLE" oder "Q"
-            if (value.StartsWith("UTF", true, CultureInfo.InvariantCulture) || value.StartsWith("ISO", true, CultureInfo.InvariantCulture)) return CHARSET_PROPERTY;
+            if (value.StartsWith("QUOTED", true, CultureInfo.InvariantCulture))
+            {
+                return ENCODING_PROPERTY; // "QUOTED-PRINTABLE" oder "Q"
+            }
 
-
+            if (value.StartsWith("UTF", true, CultureInfo.InvariantCulture) || value.StartsWith("ISO", true, CultureInfo.InvariantCulture))
+            {
+                return CHARSET_PROPERTY;
+            }
 
             string upperCase = value.ToUpperInvariant();
 

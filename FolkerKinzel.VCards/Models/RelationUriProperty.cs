@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -34,11 +35,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="Uri"/> zurück.
         /// </summary>
-        public override object? Value
-        {
-            get => this.Uri;
-            //protected set => base.Value = value; 
-        }
+        public override object? Value => this.Uri;
 
         /// <summary>
         /// <see cref="Uri"/> einer Person, zu der eine Beziehung besteht.
@@ -55,11 +52,14 @@ namespace FolkerKinzel.VCards.Models
 
             this.Parameters.DataType = VCdDataType.Uri;
 
-            if (this.Uri is null) return;
+            if (this.Uri is null)
+            {
+                return;
+            }
 
             if (serializer.Version == VCdVersion.V2_1)
             {
-                var uri = this.Uri;
+                Uri? uri = this.Uri;
 
                 if (uri.IsAbsoluteUri && (uri.Scheme?.StartsWith("cid", StringComparison.Ordinal) ?? false))
                 {
@@ -85,7 +85,7 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            var builder = serializer.Builder;
+            StringBuilder builder = serializer.Builder;
 
             if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
             {

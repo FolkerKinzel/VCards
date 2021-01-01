@@ -6,6 +6,7 @@ using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -81,7 +82,7 @@ namespace FolkerKinzel.VCards.Models
 
             string UnMask()
             {
-                var builder = info.Builder;
+                StringBuilder builder = info.Builder;
                 builder.Clear().Append(vcfRow.Value).UnMask(version);
 
                 return builder.ToString();

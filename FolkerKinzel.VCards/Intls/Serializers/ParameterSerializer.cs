@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 using FolkerKinzel.VCards.Models.PropertyParts;
-
+using System.Collections.Generic;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
@@ -363,12 +363,17 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         protected void AppendNonStandardParameters()
         {
             if (this.ParaSection.NonStandardParameters is null
-                || !Options.IsSet(VcfOptions.WriteNonStandardParameters)) return;
-
-            foreach (var parameter in this.ParaSection.NonStandardParameters)
+                || !Options.IsSet(VcfOptions.WriteNonStandardParameters))
             {
-                if (string.IsNullOrWhiteSpace(parameter.Key)) continue;
-                if (string.IsNullOrWhiteSpace(parameter.Value)) continue;
+                return;
+            }
+
+            foreach (KeyValuePair<string, string> parameter in this.ParaSection.NonStandardParameters)
+            {
+                if (string.IsNullOrWhiteSpace(parameter.Key) || string.IsNullOrWhiteSpace(parameter.Value))
+                {
+                    continue;
+                }
 
                 AppendParameter(parameter.Key.Trim().ToUpperInvariant(), parameter.Value);
             }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace FolkerKinzel.VCards
 {
@@ -37,7 +38,7 @@ namespace FolkerKinzel.VCards
 
             this.Version = versionHint;
 
-            System.Text.StringBuilder? builder = info.Builder;
+            StringBuilder builder = info.Builder;
 
             int vcfRowsToParse = queue.Count;
             int vcfRowsParsed = 0;

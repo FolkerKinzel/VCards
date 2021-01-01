@@ -12,7 +12,7 @@ using System.Text;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
-    abstract class VcfSerializer
+    internal abstract class VcfSerializer
     {
         internal ParameterSerializer ParameterSerializer { get; }
 
@@ -98,7 +98,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendProperties()
         {
-            foreach (var kvp in VCardToSerialize.OrderBy(x => x.Key))
+            foreach (KeyValuePair<VCdProp, object> kvp in VCardToSerialize.OrderBy(x => x.Key))
             {
                 switch (kvp.Key)
                 {
@@ -267,11 +267,11 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (Options.IsSet(VcfOptions.WriteXExtensions))
             {
-                var arr = value.Where(x => x?.Value != null).OrderBy(x => x!.Parameters.Preference).ToArray();
+                TextProperty[] arr = value.Where(x => x?.Value != null).OrderBy(x => x!.Parameters.Preference).ToArray()!;
 
                 for (int i = 0; i < arr.Length; i++)
                 {
-                    TextProperty prop = arr[i]!;
+                    TextProperty prop = arr[i];
 
                     if (prop.Parameters.InstantMessengerType.IsSet(ImppTypes.Personal))
                     {
@@ -339,7 +339,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (Options.IsSet(VcfOptions.WriteKAddressbookExtensions))
             {
-                var prop = value.Where(x => x?.Value != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
+                TextProperty? prop = value.Where(x => x?.Value != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
 
                 if (prop != null)
                 {
@@ -361,7 +361,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             int counter = 0;
 
-            var enc = Encoding.UTF8;
+            Encoding enc = Encoding.UTF8;
             char[] arr = new char[1];
 
             // nach einem Softlinebreak muss noch mindestens 1 Zeichen
@@ -478,7 +478,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             {
                 VCdSex sex = pref.Value.Sex!.Value;
 
-                if (sex != VCdSex.Male && sex != VCdSex.Female) return;
+                if (sex != VCdSex.Male && sex != VCdSex.Female)
+                {
+                    return;
+                }
 
                 if (Options.IsSet(VcfOptions.WriteXExtensions))
                 {
@@ -533,11 +536,18 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(value != null);
 
-            if (!this.Options.IsSet(VcfOptions.WriteNonStandardProperties)) return;
-
-            foreach (var nonStandardProp in value)
+            if (!this.Options.IsSet(VcfOptions.WriteNonStandardProperties))
             {
-                if (nonStandardProp is null) continue;
+                return;
+            }
+
+            foreach (NonStandardProperty? nonStandardProp in value)
+            {
+                if (nonStandardProp is null)
+                {
+                    continue;
+                }
+
                 this.BuildProperty(nonStandardProp.PropertyKey, nonStandardProp, nonStandardProp.Parameters.Preference == 1);
             }
         }
@@ -562,7 +572,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected virtual void AppendRelations(IEnumerable<RelationProperty?> value)
         {
-            var agent = Options.IsSet(VcfOptions.WriteEmptyProperties)
+            RelationProperty? agent = Options.IsSet(VcfOptions.WriteEmptyProperties)
                 ? value.Where(x => x != null && x.Parameters.RelationType.IsSet(RelationTypes.Agent))
                        .OrderBy(x => x!.Parameters.Preference).FirstOrDefault()
 
@@ -575,7 +585,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
 
 
-            var spouse = Options.IsSet(VcfOptions.WriteEmptyProperties)
+            RelationProperty? spouse = Options.IsSet(VcfOptions.WriteEmptyProperties)
                 ? value.Where(x => x != null && x.Parameters.RelationType.IsSet(RelationTypes.Spouse))
                        .OrderBy(x => x!.Parameters.Preference).FirstOrDefault()
 
@@ -622,7 +632,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
                 if (name is null)
                 {
-                    var vcdName = vcardProp.VCard?.NameViews?.Where(x => x != null && !x.IsEmpty).FirstOrDefault()?.Value;
+                    Models.PropertyParts.Name? vcdName = vcardProp.VCard?.NameViews?.Where(x => x != null && !x.IsEmpty).FirstOrDefault()?.Value;
 
                     if (vcdName != null)
                     {

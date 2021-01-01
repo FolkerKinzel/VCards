@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -28,12 +29,18 @@ namespace FolkerKinzel.VCards.Models
         {
             Group = propertyGroup;
 
-            if (value == null) return;
+            if (value == null)
+            {
+                return;
+            }
 
             // Die Überprüfungen könnten eine allgemeine Verwendbarkeit der Klasse einschränken:
             var arr = value.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x!.Trim()).ToArray();
 
-            if (arr.Length == 0) return;
+            if (arr.Length == 0)
+            {
+                return;
+            }
 
             this.Value = new ReadOnlyCollection<string>(arr);
         }
@@ -54,7 +61,10 @@ namespace FolkerKinzel.VCards.Models
             vcfRow.DecodeQuotedPrintable();
             var arr = SplitValue();
 
-            if (arr.Length == 0) return;
+            if (arr.Length == 0)
+            {
+                return;
+            }
 
             this.Value = new ReadOnlyCollection<string>(arr);
 
@@ -66,8 +76,8 @@ namespace FolkerKinzel.VCards.Models
             string[] SplitValue()
             {
                 string? value = vcfRow.Value;
-                var builder = info.Builder;
-                var list = value.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
+                StringBuilder builder = info.Builder;
+                List<string> list = value.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
 
 
                 for (int i = 0; i < list.Count; i++)
@@ -94,12 +104,15 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            if (Value is null) return;
+            if (Value is null)
+            {
+                return;
+            }
 
             Debug.Assert(Value.Count != 0);
 
-            var worker = serializer.Worker;
-            var builder = serializer.Builder;
+            StringBuilder worker = serializer.Worker;
+            StringBuilder builder = serializer.Builder;
             string s;
 
             for (int i = 0; i < Value.Count - 1; i++)
@@ -130,7 +143,10 @@ namespace FolkerKinzel.VCards.Models
         {
             string s = "";
 
-            if (Value is null) return s;
+            if (Value is null)
+            {
+                return s;
+            }
 
             Debug.Assert(Value.Count != 0);
 

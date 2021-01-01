@@ -30,7 +30,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
         /// "\r\n" sein, wird der String automatisch angepasst.
         /// </summary>
         /// <param name="value">Der String, der codiert werden soll. Ist <c>sb == null</c> wird
-        /// ein <see cref="String.Empty">string.Empty</see> zurückgegeben.</param>
+        /// ein <see cref="string.Empty">string.Empty</see> zurückgegeben.</param>
         /// <param name="firstLineOffset">Anzahl der nicht-enkodierten Zeichen, die in der ersten Zeile vor dem enkodierten Text kommen.</param>
         /// <returns>Der encodierte String. Wenn der übergebene String <c>null</c> oder Empty ist, wird string.Empty zurückgegeben.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Wird ausgelöst, wenn maxRowLength kleiner als 4 ist.</exception>
@@ -41,7 +41,10 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
             Debug.Assert(firstLineOffset >= 0);
             Debug.Assert(MAX_ROWLENGTH >= MIN_ROWLENGTH);
 
-            if (string.IsNullOrEmpty(value)) return string.Empty;
+            if (string.IsNullOrEmpty(value))
+            {
+                return string.Empty;
+            }
 
             if (Environment.NewLine != STANDARD_LINEBREAK)
             {
@@ -99,7 +102,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
                 {
                     char lastChar = sb[lastCharIndex];
 
-                    if (!Char.IsWhiteSpace(lastChar) && lastChar != '=')
+                    if (!char.IsWhiteSpace(lastChar) && lastChar != '=')
                     {
                         lineLength = InsertSoftlineBreak(sb, lastCharIndex + 1);
                         break;
@@ -140,7 +143,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 
         private static StringBuilder ProcessCoding(IEnumerable<byte> data)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             foreach (byte bt in data)
             {
@@ -161,11 +164,12 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 
             static bool HasToBeQuoted(byte bt)
             {
-                if (bt == (byte)'\t') return false;
+                if (bt == (byte)'\t')
+                {
+                    return false;
+                }
 
-                if (bt > 126 || bt == (byte)'=' || bt < 32 || bt == (byte)'\r' || bt == (byte)'\n') return true;
-
-                return false;
+                return bt > 126 || bt == (byte)'=' || bt < 32 || bt == (byte)'\r' || bt == (byte)'\n';
             }
         }
 
@@ -186,13 +190,18 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
             string? qpCoded,
             Encoding? textEncoding = null)
         {
-            if (string.IsNullOrEmpty(qpCoded)) return null;
-
+            if (string.IsNullOrEmpty(qpCoded))
+            {
+                return null;
+            }
 
             byte[] bytes = DecodeData(qpCoded);
 
 
-            if (textEncoding == null) textEncoding = Encoding.UTF8;
+            if (textEncoding == null)
+            {
+                textEncoding = Encoding.UTF8;
+            }
 
             string s = textEncoding.GetString(bytes);
 
@@ -245,7 +254,10 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 
                 int last = zeilen[i].Length - 1;
 
-                if (last == -1) continue; // unerlaubte Leerzeile
+                if (last == -1)
+                {
+                    continue; // unerlaubte Leerzeile
+                }
 
                 //Soft-Line-Break entfernen
                 if (zeilen[i][last] == '=')
@@ -258,13 +270,15 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 
                     //Hard-Line-Break wiederherstellen
                     if (i < zeilen.Length - 1)
+                    {
                         zeilen[i] += Environment.NewLine;
+                    }
                 }
             }
 
-            List<byte> bytes = new List<byte>(qpCoded.Length);
+            var bytes = new List<byte>(qpCoded.Length);
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var zeile in zeilen)
             {
                 sb.Append(zeile);
@@ -276,9 +290,13 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
                 if (sb[i] == '=')
                 {
                     if (i > sb.Length - 3)
+                    {
                         break; // abgeschnittener String
+                    }
                     else
+                    {
                         bytes.Add(HexToByte(new char[] { sb[++i], sb[++i] }));
+                    }
                 }
                 else
                 {
@@ -291,7 +309,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 
             static byte HexToByte(char[] charr)
             {
-                string s = new String(charr);
+                string s = new string(charr);
 
                 try
                 {

@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Models.Helpers;
 using System;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
-
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -60,8 +60,8 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         public string? Group
         {
-            get { return _group; }
-            set { _group = string.IsNullOrWhiteSpace(value) ? null : value.Trim(); }
+            get => _group;
+            set => _group = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// Überladung der <see cref="Object.ToString"/>-Methode. Nur zum Debugging.
+        /// Überladung der <see cref="object.ToString"/>-Methode. Nur zum Debugging.
         /// </summary>
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="VCardProperty{T}"/>-Objekts. </returns>
         public override string ToString()
@@ -100,9 +100,12 @@ namespace FolkerKinzel.VCards.Models
             Debug.Assert(serializer != null);
             Debug.Assert(serializer.PropertyKey != null);
 
-            if (this.IsEmpty && !serializer.Options.IsSet(VcfOptions.WriteEmptyProperties)) return;
+            if (this.IsEmpty && !serializer.Options.IsSet(VcfOptions.WriteEmptyProperties))
+            {
+                return;
+            }
 
-            var builder = serializer.Builder;
+            StringBuilder builder = serializer.Builder;
             Debug.Assert(builder != null);
             builder.Clear();
 

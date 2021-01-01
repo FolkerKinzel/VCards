@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -29,11 +30,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="DateTimeOffset"/> zurück.
         /// </summary>
-        public override object? Value
-        {
-            get => this.DateTimeOffset == DateTimeOffset.MinValue ? null : (object)this.DateTimeOffset;
-            //protected set => base.Value = value;
-        }
+        public override object? Value => this.DateTimeOffset == DateTimeOffset.MinValue ? null : (object)this.DateTimeOffset;
 
         /// <summary>
         /// Der gespeicherte <see cref="DateTimeOffset"/>-Wert.
@@ -62,7 +59,7 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            var worker = serializer.Worker;
+            StringBuilder worker = serializer.Worker;
 
             worker.Clear();
 

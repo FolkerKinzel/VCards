@@ -730,9 +730,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendGeo()
         {
-            var geo = ParaSection.GeographicPosition;
+            GeoCoordinate? geo = ParaSection.GeographicPosition;
 
-            if (geo is null || geo.IsUnknown) return;
+            if (geo is null || geo.IsUnknown)
+            {
+                return;
+            }
 
             Worker.Clear().Append('"');
             GeoCoordinateConverter.AppendTo(Worker, geo, VCdVersion.V4_0);
@@ -745,7 +748,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             int? val = ParaSection.Index;
 
-            if (!val.HasValue) return;
+            if (!val.HasValue)
+            {
+                return;
+            }
 
             if (val < ParameterSection.PREF_MAX_VALUE)
             {
@@ -794,13 +800,16 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendPid()
         {
-            var pids = ParaSection.PropertyIDs;
+            IEnumerable<Models.PropertyID>? pids = ParaSection.PropertyIDs;
 
-            if (pids is null) return;
+            if (pids is null)
+            {
+                return;
+            }
 
             Worker.Clear();
 
-            foreach (var pid in pids)
+            foreach (Models.PropertyID pid in pids)
             {
                 if(pid.IsEmpty)
                 {
@@ -830,9 +839,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendSortAs()
         {
-            var sortAs = ParaSection.SortAs;
+            IEnumerable<string?>? sortAs = ParaSection.SortAs;
 
-            if (sortAs is null) return;
+            if (sortAs is null)
+            {
+                return;
+            }
 
             Worker.Clear();
 
@@ -891,9 +903,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendTz()
         {
-            var tz = ParaSection.TimeZone;
+            TimeZoneInfo? tz = ParaSection.TimeZone;
 
-            if (tz is null) return;
+            if (tz is null)
+            {
+                return;
+            }
 
             Worker.Clear();
 

@@ -16,9 +16,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static VCdSex? Parse(string? value)
         {
-            if (value is null) return null;
-
-            return value.ToUpperInvariant() switch
+            return value is null
+                ? null
+                : (value.ToUpperInvariant() switch
             {
                 Values.Male => VCdSex.Male,
                 Values.Female => VCdSex.Female,
@@ -26,7 +26,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 Values.NonOrNotApplicable => VCdSex.NonOrNotApplicable,
                 Values.Unknown => VCdSex.Unknown,
                 _ => (VCdSex?)null
-            };
+            });
         }
 
 

@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Diagnostics;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -30,11 +31,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="Text"/> zurück.
         /// </summary>
-        public override object? Value
-        {
-            get => this.Text;
-            //protected set => base.Value = value;
-        }
+        public override object? Value => this.Text;
 
         /// <summary>
         /// Die als freier Text gespeicherte Zeit- und/oder Datumsangabe.
@@ -60,8 +57,8 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            var builder = serializer.Builder;
-            var worker = serializer.Worker;
+            StringBuilder builder = serializer.Builder;
+            StringBuilder worker = serializer.Worker;
 
             worker.Clear().Append(this.Text).Mask(serializer.Version);
             builder.Append(worker);

@@ -224,7 +224,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
                 default:
                     {
-                        var arr = mime.Split(new char[] { '/', '+' }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] arr = mime.Split(new char[] { '/', '+' }, StringSplitOptions.RemoveEmptyEntries);
                         return "." + arr[arr.Length - 1];
                     }
             }
@@ -410,7 +410,10 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string? ImageTypeValueFromMimeType(string? mimeType)
         {
-            if (mimeType is null) return null;
+            if (mimeType is null)
+            {
+                return null;
+            }
 
             const string imageType = @"image/";
 
@@ -498,7 +501,10 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string? SoundTypeValueFromMimeType(string? mimeType)
         {
-            if (mimeType is null) return null;
+            if (mimeType is null)
+            {
+                return null;
+            }
 
             const string audioType = @"audio/";
 

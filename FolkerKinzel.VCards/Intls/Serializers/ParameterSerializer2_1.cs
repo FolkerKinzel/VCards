@@ -287,7 +287,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendEncodingAndCharset()
         {
-            var enc = ParaSection.Encoding;
+            VCdEncoding? enc = ParaSection.Encoding;
+
             if (enc.HasValue)
             {
                 if (enc.Value == VCdEncoding.Base64)
@@ -398,7 +399,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             //    ParaSection.ContentLocation = VCdContentLocation.Url;
             //}
 
-            var contentLocation = ParaSection.ContentLocation;
+            VCdContentLocation contentLocation = ParaSection.ContentLocation;
 
             if (contentLocation != VCdContentLocation.Inline)
             {

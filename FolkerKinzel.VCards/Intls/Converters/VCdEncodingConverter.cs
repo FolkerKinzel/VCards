@@ -6,7 +6,10 @@ namespace FolkerKinzel.VCards.Intls.Converters
     {
         internal static VCdEncoding? Parse(string? val)
         {
-            if (val is null) return null;
+            if (val is null)
+            {
+                return null;
+            }
 
             for (int i = 0; i < val.Length; i++) // ersetzt Trim
             {

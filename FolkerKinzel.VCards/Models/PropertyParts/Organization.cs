@@ -99,8 +99,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         internal void AppendVCardString(VcfSerializer serializer)
         {
-            StringBuilder? builder = serializer.Builder;
-            StringBuilder? worker = serializer.Worker;
+            StringBuilder builder = serializer.Builder;
+            StringBuilder worker = serializer.Worker;
 
             worker.Clear().Append(OrganizationName).Mask(serializer.Version);
             builder.Append(worker);

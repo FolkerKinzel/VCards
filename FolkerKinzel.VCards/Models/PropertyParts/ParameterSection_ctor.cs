@@ -23,7 +23,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 x => !(string.IsNullOrWhiteSpace(x.Item1) || string.IsNullOrWhiteSpace(x.Item2))
                 ));
 
-            StringBuilder? builder = info.Builder;
+            StringBuilder builder = info.Builder;
 
             foreach (Tuple<string, string>? parameter in propertyParameters)
             {

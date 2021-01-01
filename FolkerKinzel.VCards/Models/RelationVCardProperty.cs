@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.Helpers;
 using System.Diagnostics;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -33,11 +34,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="VCard"/> zurück.
         /// </summary>
-        public override object? Value
-        {
-            get => this.VCard;
-            //protected set => base.Value = value; 
-        }
+        public override object? Value => this.VCard;
 
         /// <summary>
         /// <see cref="VCard"/> einer Person, zu der eine Beziehung besteht.
@@ -61,12 +58,15 @@ namespace FolkerKinzel.VCards.Models
         {
             InternalProtectedAttribute.Run();
 
-            if (this.VCard is null) return;
+            if (this.VCard is null)
+            {
+                return;
+            }
 
             Debug.Assert(serializer != null);
 
-            var builder = serializer.Builder;
-            var worker = serializer.Worker;
+            StringBuilder builder = serializer.Builder;
+            StringBuilder worker = serializer.Worker;
 
             if (serializer.Version >= VCdVersion.V4_0)
             {

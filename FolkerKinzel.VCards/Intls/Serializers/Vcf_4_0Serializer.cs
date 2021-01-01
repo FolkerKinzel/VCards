@@ -57,11 +57,14 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             IVCardData[] arr = props.Where(x => x != null).ToArray()!;
 
-            if (arr.Length <= 1) return;
+            if (arr.Length <= 1)
+            {
+                return;
+            }
 
             string altID = arr.FirstOrDefault(x => x.Parameters.AltID != null)?.Parameters.AltID ?? "1";
 
-            foreach (var prop in arr)
+            foreach (IVCardData prop in arr)
             {
                 prop.Parameters.AltID = altID;
             }
