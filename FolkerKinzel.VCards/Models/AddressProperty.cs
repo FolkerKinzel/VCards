@@ -112,7 +112,7 @@ namespace FolkerKinzel.VCards.Models
             Debug.Assert(Value != null); // value ist nie null
 
 
-            var builder = serializer.Builder;
+            System.Text.StringBuilder? builder = serializer.Builder;
             int startIndex = builder.Length;
 
             Value.AppendVCardString(serializer);

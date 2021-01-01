@@ -24,16 +24,20 @@ namespace FolkerKinzel.VCards
                 .Append(Environment.NewLine);
 
 
-            foreach (var prop in this._propDic.OrderBy(x => x.Key))
+            foreach (KeyValuePair<VCdProp, object> prop in this._propDic.OrderBy(x => x.Key))
             {
                 switch (prop.Value)
                 {
                     case IEnumerable numerable:
                         Debug.Assert(numerable != null);
 
-                        foreach (var o in numerable)
+                        foreach (object? o in numerable)
                         {
-                            if (o is null) continue;
+                            if (o is null)
+                            {
+                                continue;
+                            }
+
                             var vcdProp = (IVCardData)o;
                             AppendProperty(prop, vcdProp);
                         }

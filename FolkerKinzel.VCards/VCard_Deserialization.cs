@@ -409,7 +409,7 @@ namespace FolkerKinzel.VCards
         {
             Debug.Assert(vCardList != null);
 
-            foreach (var vcard in vCardList)
+            foreach (VCard? vcard in vCardList)
             {
                 Debug.Assert(vcard != null);
                 SetRelationReferences((List<RelationProperty?>?)vcard.Relations);
@@ -433,7 +433,7 @@ namespace FolkerKinzel.VCards
                     return;
                 }
 
-                foreach (var guidProp in guidProps)
+                foreach (RelationUuidProperty? guidProp in guidProps)
                 {
                     VCard referencedVCard =
                         vCardList.FirstOrDefault(v => v.UniqueIdentifier?.Value == guidProp.Uuid);

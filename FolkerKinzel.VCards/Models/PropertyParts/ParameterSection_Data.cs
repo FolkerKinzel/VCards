@@ -56,10 +56,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public string? AltID
         {
             get => Get<string?>(VCdParam.AltID);
-            set
-            {
-                Set(VCdParam.AltID, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
-            }
+            set => Set(VCdParam.AltID, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
         }
 
         /// <summary>
@@ -70,10 +67,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public string? Calendar
         {
             get => Get<string?>(VCdParam.Calendar);
-            set
-            {
-                Set<string?>(VCdParam.Calendar, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
-            }
+            set => Set<string?>(VCdParam.Calendar, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
         }
 
         /// <summary>
@@ -82,10 +76,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public string? Charset
         {
             get => Get<string?>(VCdParam.Charset);
-            set
-            {
-                Set(VCdParam.Charset, value);
-            }
+            set => Set(VCdParam.Charset, value);
         }
 
         /// <summary>
@@ -94,10 +85,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public VCdContentLocation ContentLocation
         {
             get => Get<VCdContentLocation>(VCdParam.ContentLocation);
-            set
-            {
-                Set(VCdParam.ContentLocation, value);
-            }
+            set => Set(VCdParam.ContentLocation, value);
         }
 
         /// <summary>
@@ -107,10 +95,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public string? Context
         {
             get => Get<string?>(VCdParam.Context);
-            set
-            {
-                Set<string?>(VCdParam.Context, string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToUpperInvariant());
-            }
+            set => Set<string?>(VCdParam.Context, string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToUpperInvariant());
         }
 
 
@@ -121,10 +106,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public VCdDataType? DataType
         {
             get => Get<VCdDataType?>(VCdParam.DataType);
-            set
-            {
-                Set(VCdParam.DataType, value);
-            }
+            set => Set(VCdParam.DataType, value);
         }
 
 
@@ -137,10 +119,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public string? EmailType
         {
             get => Get<string?>(VCdParam.EmailType);
-            set
-            {
-                Set<string?>(VCdParam.EmailType, string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToUpperInvariant());
-            }
+            set => Set<string?>(VCdParam.EmailType, string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToUpperInvariant());
         }
 
 
@@ -153,10 +132,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public VCdEncoding? Encoding
         {
             get => Get<VCdEncoding?>(VCdParam.Encoding);
-            set
-            {
-                Set(VCdParam.Encoding, value);
-            }
+            set => Set(VCdParam.Encoding, value);
         }
 
 
@@ -166,10 +142,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public ExpertiseLevel? ExpertiseLevel
         {
             get => Get<ExpertiseLevel?>(VCdParam.ExpertiseLevel);
-            set
-            {
-                Set(VCdParam.ExpertiseLevel, value);
-            }
+            set => Set(VCdParam.ExpertiseLevel, value);
         }
 
 
@@ -179,10 +152,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public GeoCoordinate? GeographicPosition
         {
             get => Get<GeoCoordinate?>(VCdParam.GeographicPosition);
-            set
-            {
-                Set(VCdParam.GeographicPosition, value);
-            }
+            set => Set(VCdParam.GeographicPosition, value);
         }
 
 
@@ -192,10 +162,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public ImppTypes? InstantMessengerType
         {
             get => Get<ImppTypes?>(VCdParam.InstantMessengerType);
-            set
-            {
-                Set(VCdParam.InstantMessengerType, value);
-            }
+            set => Set(VCdParam.InstantMessengerType, value);
         }
 
         /// <summary>
@@ -223,10 +190,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public InterestLevel? InterestLevel
         {
             get => Get<InterestLevel?>(VCdParam.InterestLevel);
-            set
-            {
-                Set(VCdParam.InterestLevel, value);
-            }
+            set => Set(VCdParam.InterestLevel, value);
         }
 
 
@@ -274,10 +238,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public IEnumerable<KeyValuePair<string, string>>? NonStandardParameters
         {
             get => Get<IEnumerable<KeyValuePair<string, string>>?>(VCdParam.NonStandard);
-            set
-            {
-                Set(VCdParam.NonStandard, value);
-            }
+            set => Set(VCdParam.NonStandard, value);
         }
 
 
@@ -325,10 +286,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public IEnumerable<PropertyID>? PropertyIDs
         {
             get => Get<IEnumerable<PropertyID>?>(VCdParam.PID);
-            set
-            {
-                Set(VCdParam.PID, value);
-            }
+            set => Set(VCdParam.PID, value);
         }
 
 
@@ -363,10 +321,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public IEnumerable<string?>? SortAs
         {
             get => Get<IEnumerable<string?>?>(VCdParam.SortAs);
-            set
-            {
-                Set(VCdParam.SortAs, value);
-            }
+            set => Set(VCdParam.SortAs, value);
         }
 
 
@@ -390,10 +345,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public TimeZoneInfo? TimeZone
         {
             get => Get<TimeZoneInfo?>(VCdParam.TimeZone);
-            set
-            {
-                Set(VCdParam.TimeZone, value);
-            }
+            set => Set(VCdParam.TimeZone, value);
         }
 
     }

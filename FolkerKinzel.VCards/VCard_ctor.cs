@@ -37,7 +37,7 @@ namespace FolkerKinzel.VCards
 
             this.Version = versionHint;
 
-            var builder = info.Builder;
+            System.Text.StringBuilder? builder = info.Builder;
 
             int vcfRowsToParse = queue.Count;
             int vcfRowsParsed = 0;
@@ -45,7 +45,7 @@ namespace FolkerKinzel.VCards
             while (queue.Count != 0)
             {
                 // vcfRow.Value ist entweder null oder enthält verwertbare Daten
-                var vcfRow = queue.Dequeue();
+                VcfRow? vcfRow = queue.Dequeue();
 
                 switch (vcfRow.Key)
                 {

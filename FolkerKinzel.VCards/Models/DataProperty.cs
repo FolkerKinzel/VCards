@@ -196,10 +196,13 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            if (Value is null) return;
+            if (Value is null)
+            {
+                return;
+            }
 
-            var builder = serializer.Builder;
-            var worker = serializer.Worker;
+            System.Text.StringBuilder? builder = serializer.Builder;
+            System.Text.StringBuilder? worker = serializer.Worker;
 
             worker.Clear();
 
@@ -238,7 +241,7 @@ namespace FolkerKinzel.VCards.Models
                     }
                     break;
                 case VCdVersion.V3_0:
-                    var dataType = Parameters.DataType;
+                    VCdDataType? dataType = Parameters.DataType;
 
                     if (dataType == VCdDataType.Binary)
                     {

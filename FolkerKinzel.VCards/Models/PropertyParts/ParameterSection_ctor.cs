@@ -23,9 +23,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 x => !(string.IsNullOrWhiteSpace(x.Item1) || string.IsNullOrWhiteSpace(x.Item2))
                 ));
 
-            var builder = info.Builder;
+            StringBuilder? builder = info.Builder;
 
-            foreach (var parameter in propertyParameters)
+            foreach (Tuple<string, string>? parameter in propertyParameters)
             {
                 switch (parameter.Item1)
                 {
@@ -35,12 +35,12 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                     case ParameterKey.VALUE:
                         {
                             string valValue = CleanParameterValue(parameter.Item2, builder);
-                            var dataType = VCdDataTypeConverter.Parse(valValue);
+                            VCdDataType? dataType = VCdDataTypeConverter.Parse(valValue);
                             this.DataType = dataType;
 
                             if (!dataType.HasValue)
                             {
-                                var contentLocation = VCdContentLocationConverter.Parse(valValue);
+                                VCdContentLocation contentLocation = VCdContentLocationConverter.Parse(valValue);
                                 this.ContentLocation = contentLocation;
 
                                 if (contentLocation == VCdContentLocation.Url)
@@ -76,7 +76,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         }
                     case ParameterKey.TYPE:
                         {
-                            var values = parameter.Item2.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
+                            List<string>? values = parameter.Item2.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
 
                             for (int i = 0; i < values.Count; i++)
                             {
@@ -95,7 +95,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         break;
                     case ParameterKey.SORT_AS:
                         {
-                            var list = parameter.Item2.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
+                            List<string>? list = parameter.Item2.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
 
                             for (int i = list.Count - 1; i >= 0; i--)
                             {

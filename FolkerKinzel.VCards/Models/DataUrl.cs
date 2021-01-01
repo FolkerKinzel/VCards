@@ -29,7 +29,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Gibt das Zeichen an, das das Schema des Kommunikationsprotokolls vom Adressteil des URIs trennt. Dieses Feld ist schreibgeschützt.
         /// </summary>
-        public new static readonly string SchemeDelimiter = ":";
+        public static readonly new string SchemeDelimiter = ":";
 
 
         /// <summary>
@@ -106,7 +106,10 @@ namespace FolkerKinzel.VCards.Models
         {
             Debug.Assert(vcfRow != null);
 
-            if (string.IsNullOrWhiteSpace(vcfRow.Value)) return null;
+            if (string.IsNullOrWhiteSpace(vcfRow.Value))
+            {
+                return null;
+            }
 
             string value = vcfRow.Value;
 
@@ -213,7 +216,10 @@ namespace FolkerKinzel.VCards.Models
         {
             dataUrl = null;
 
-            if (string.IsNullOrWhiteSpace(value) || !value.StartsWith("data:", StringComparison.OrdinalIgnoreCase)) return false;
+            if (string.IsNullOrWhiteSpace(value) || !value.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
 
             const int DATA_PROTOCOL_LENGTH = 5; // 5 == LengthOf "data:"
             const int BASE64_LENGTH = 7; // 7 = LengthOf ";base64"
@@ -225,7 +231,10 @@ namespace FolkerKinzel.VCards.Models
             for (int i = DATA_PROTOCOL_LENGTH; i < value.Length; i++)
             {
                 char c = value[i];
-                if (char.IsWhiteSpace(c)) return false;
+                if (char.IsWhiteSpace(c))
+                {
+                    return false;
+                }
 
                 if (c == ',')
                 {
@@ -234,7 +243,10 @@ namespace FolkerKinzel.VCards.Models
                 }
             }
 
-            if (endIndex == -1) return false;
+            if (endIndex == -1)
+            {
+                return false;
+            }
 
 
             // dies ändert ggf. auch endIndex
@@ -277,7 +289,10 @@ namespace FolkerKinzel.VCards.Models
                     {
                         char c = char.ToLowerInvariant(val[i]);
 
-                        if (c != ";base64"[index]) return false;
+                        if (c != ";base64"[index])
+                        {
+                            return false;
+                        }
                     }
 
                     endIndex = end;

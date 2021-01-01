@@ -82,7 +82,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             for (int i = 0; i < listList.Count; i++)
             {
-                var currentList = listList[i];
+                List<string>? currentList = listList[i];
 
                 Debug.Assert(currentList != null);
 
@@ -153,8 +153,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         internal void AppendVCardString(VcfSerializer serializer)
         {
-            var builder = serializer.Builder;
-            var worker = serializer.Worker;
+            StringBuilder? builder = serializer.Builder;
+            StringBuilder? worker = serializer.Worker;
 
             char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
 
@@ -168,7 +168,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             void AppendProperty(IList<string> strings)
             {
-                if (strings.Count == 0) return;
+                if (strings.Count == 0)
+                {
+                    return;
+                }
 
                 for (int i = 0; i < strings.Count - 1; i++)
                 {
@@ -209,14 +212,17 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="Address"/>-Objekts.</returns>
         public override string ToString()
         {
-            StringBuilder worker = new StringBuilder();
+            var worker = new StringBuilder();
             var dic = new List<Tuple<string, string>>();
 
             for (int i = 0; i < data.Length; i++)
             {
                 string? s = BuildProperty(data[i]);
 
-                if (s is null) continue;
+                if (s is null)
+                {
+                    continue;
+                }
 
                 dic.Add(new Tuple<string, string>(i switch
                 {
@@ -233,7 +239,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 }, s));
             }
 
-            if (dic.Count == 0) return string.Empty;
+            if (dic.Count == 0)
+            {
+                return string.Empty;
+            }
 
             int maxLength = dic.Select(x => x.Item1.Length).Max();
             maxLength += 2;
@@ -242,7 +251,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             for (int i = 0; i < dic.Count; i++)
             {
-                var tpl = dic[i];
+                Tuple<string, string>? tpl = dic[i];
                 string s = tpl.Item1 + ": ";
                 worker.Append(s.PadRight(maxLength)).Append(tpl.Item2).Append(Environment.NewLine);
             }
@@ -254,7 +263,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             {
                 worker.Clear();
 
-                if (strings.Count == 0) return null;
+                if (strings.Count == 0)
+                {
+                    return null;
+                }
 
                 for (int i = 0; i < strings.Count - 1; i++)
                 {

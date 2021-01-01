@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts
 {
@@ -44,7 +45,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         internal void AppendVCardStringTo(VcfSerializer serializer)
         {
-            var builder = serializer.Builder;
+            StringBuilder? builder = serializer.Builder;
             if (Sex.HasValue)
             {
                 builder.Append(Sex.ToVCardString());
@@ -53,7 +54,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             if (GenderIdentity != null)
             {
-                var worker = serializer.Worker;
+                StringBuilder? worker = serializer.Worker;
                 worker.Clear().Append(GenderIdentity).Trim().Mask(serializer.Version);
 
                 builder.Append(';');

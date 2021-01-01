@@ -42,9 +42,15 @@ namespace FolkerKinzel.VCards
             VCdVersion version = VCdVersion.V3_0,
             VcfOptions options = VcfOptions.Default)
         {
-            if (vcards is null) throw new ArgumentNullException(nameof(vcards));
+            if (vcards is null)
+            {
+                throw new ArgumentNullException(nameof(vcards));
+            }
 
-            if (!vcards.Any(x => x != null)) return;
+            if (!vcards.Any(x => x != null))
+            {
+                return;
+            }
 
             try
             {
@@ -109,16 +115,26 @@ namespace FolkerKinzel.VCards
         {
             DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(Serialize)}({nameof(TextWriter)}, List<{nameof(VCard)}>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
 
-            if (writer is null) throw new ArgumentNullException(nameof(writer));
-            if (vcards is null) throw new ArgumentNullException(nameof(vcards));
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (vcards is null)
+            {
+                throw new ArgumentNullException(nameof(vcards));
+            }
 
             Dereference(vcards, version, options);
 
             var serializer = VcfSerializer.GetSerializer(writer, version, options);
 
-            foreach (var vCard in vcards)
+            foreach (VCard? vCard in vcards)
             {
-                if (vCard is null) continue;
+                if (vCard is null)
+                {
+                    continue;
+                }
 
                 vCard.Version = version;
 
@@ -177,12 +193,12 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Serialisiert die <see cref="VCard"/> als VCF-<see cref="String"/>. (Ideal für Testzwecke.)
+        /// Serialisiert die <see cref="VCard"/> als VCF-<see cref="string"/>. (Ideal für Testzwecke.)
         /// </summary>
         /// <param name="version">Die vCard-Version, in die serialisiert wird.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
-        /// <returns>Die <see cref="VCard"/>, serialisiert als VCF-<see cref="String"/>.</returns>
+        /// <returns>Die <see cref="VCard"/>, serialisiert als VCF-<see cref="string"/>.</returns>
         public string ToVcfString(VCdVersion version, VcfOptions options = VcfOptions.Default)
         {
             // kein Inlining, da schon VCard.Serialize ge-inlined ist und die Methode in Tests
@@ -202,9 +218,12 @@ namespace FolkerKinzel.VCards
         {
             Debug.Assert(vcdList != null);
 
-            foreach (var vcard in vcdList)
+            foreach (VCard? vcard in vcdList)
             {
-                if (vcard is null) continue;
+                if (vcard is null)
+                {
+                    continue;
+                }
 
                 DereferenceMembers(vcard);
                 DereferenceRelations(vcard);
@@ -213,16 +232,22 @@ namespace FolkerKinzel.VCards
 
             void DereferenceMembers(VCard vcard)
             {
-                if (version < VCdVersion.V4_0) return;
+                if (version < VCdVersion.V4_0)
+                {
+                    return;
+                }
 
-                var vcdProps = vcard.Members?
+                RelationVCardProperty?[]? vcdProps = vcard.Members?
                                 .Select(x => x as RelationVCardProperty)
                                 .Where(x => x != null && !x.IsEmpty)
                                 .ToArray();
 
-                if (vcdProps is null || vcdProps.Length == 0) return;
+                if (vcdProps is null || vcdProps.Length == 0)
+                {
+                    return;
+                }
 
-                foreach (var vcdProp in vcdProps)
+                foreach (RelationVCardProperty? vcdProp in vcdProps)
                 {
                     Debug.Assert(vcdProp != null);
                     Debug.Assert(vcdProp.VCard != null);
@@ -241,14 +266,17 @@ namespace FolkerKinzel.VCards
 
             void DereferenceRelations(VCard vcard)
             {
-                var vcdProps = vcard.Relations?
+                RelationVCardProperty?[]? vcdProps = vcard.Relations?
                                 .Select(x => x as RelationVCardProperty)
                                 .Where(x => x != null && !x.IsEmpty)
                                 .ToArray();
 
-                if (vcdProps is null || vcdProps.Length == 0) return;
+                if (vcdProps is null || vcdProps.Length == 0)
+                {
+                    return;
+                }
 
-                foreach (var vcdProp in vcdProps)
+                foreach (RelationVCardProperty? vcdProp in vcdProps)
                 {
                     Debug.Assert(vcdProp != null);
                     Debug.Assert(vcdProp.VCard != null);

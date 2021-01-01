@@ -74,7 +74,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 #endif
 
-                    if (para.Length < 2) continue;
+                    if (para.Length < 2)
+                    {
+                        continue;
+                    }
 
                     // repariere falsche Lowercase-Schreibweise:
                     if (para[1].StartsWith(DEFAULT_CHARSET, StringComparison.OrdinalIgnoreCase))
@@ -115,18 +118,24 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 Debug.Assert(Parameters != null);
                 Debug.Assert(Parameters.Count != 0);
 
-                if (Parameters.Count == 1 && Parameters[0].Value == DEFAULT_CHARSET) return string.Empty;
+                if (Parameters.Count == 1 && Parameters[0].Value == DEFAULT_CHARSET)
+                {
+                    return string.Empty;
+                }
             }
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             sb.Append(MediaType);
 
-            if (Parameters is null) return sb.ToString();
+            if (Parameters is null)
+            {
+                return sb.ToString();
+            }
 
             for (int i = 0; i < Parameters.Count; i++)
             {
-                var kvp = Parameters[i];
+                KeyValuePair<string, string> kvp = Parameters[i];
                 sb.Append(';').Append(kvp.Key).Append('=').Append(kvp.Value);
             }
 

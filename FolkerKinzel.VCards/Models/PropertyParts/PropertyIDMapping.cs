@@ -138,8 +138,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <returns>Eine <see cref="string"/>-Repräsentation der <see cref="PropertyIDMapping"/>-Struct.</returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder(48);
-            this.AppendTo(sb);
+            var sb = new StringBuilder(48);
+            AppendTo(sb);
             return sb.ToString();
         }
 

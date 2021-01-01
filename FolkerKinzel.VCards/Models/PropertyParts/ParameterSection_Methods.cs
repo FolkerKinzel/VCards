@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -23,11 +24,14 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <exception cref="ArgumentNullException"><paramref name="other"/> ist <c>null</c>.</exception>
         public void Assign(ParameterSection other)
         {
-            if (other is null) throw new ArgumentNullException(nameof(other));
+            if (other is null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
 
-            this.Clear();
+            Clear();
 
-            foreach (var kvp in other._propDic)
+            foreach (KeyValuePair<VCdParam, object> kvp in other._propDic)
             {
                 this._propDic.Add(kvp.Key, kvp.Value);
             }
@@ -40,12 +44,15 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="ParameterSection"/>-Objekts.</returns>
         public override string ToString()
         {
-            if (this._propDic.Count == 0) return "";
+            if (this._propDic.Count == 0)
+            {
+                return "";
+            }
 
-            StringBuilder sb = new StringBuilder(64);
+            var sb = new StringBuilder(64);
             const string INDENT = "    ";
 
-            foreach (var para in this._propDic.OrderBy(x => x.Key))
+            foreach (KeyValuePair<VCdParam, object> para in this._propDic.OrderBy(x => x.Key))
             {
                 sb.Append('[').Append(para.Key).Append(": ");
 

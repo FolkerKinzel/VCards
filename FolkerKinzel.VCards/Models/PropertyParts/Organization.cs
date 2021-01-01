@@ -33,13 +33,16 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                                                         .Select(x => x!.Trim())
                                                         .ToArray());
 
-                if (OrganizationalUnits.Count == 0) OrganizationalUnits = null;
+                if (OrganizationalUnits.Count == 0)
+                {
+                    OrganizationalUnits = null;
+                }
             }
         }
 
         internal Organization(string? propertyValue, StringBuilder builder, VCdVersion version)
         {
-            var list = propertyValue.SplitValueString(';', StringSplitOptions.RemoveEmptyEntries);
+            List<string>? list = propertyValue.SplitValueString(';', StringSplitOptions.RemoveEmptyEntries);
 
             if (list.Count != 0)
             {
@@ -96,8 +99,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         internal void AppendVCardString(VcfSerializer serializer)
         {
-            var builder = serializer.Builder;
-            var worker = serializer.Worker;
+            StringBuilder? builder = serializer.Builder;
+            StringBuilder? worker = serializer.Worker;
 
             worker.Clear().Append(OrganizationName).Mask(serializer.Version);
             builder.Append(worker);
@@ -121,7 +124,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="Organization"/>-Objekts.</returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             string orgName = OrganizationName is null ? "" : nameof(OrganizationName);
             string orgUnit = OrganizationalUnits is null ? "" : nameof(OrganizationalUnits);
