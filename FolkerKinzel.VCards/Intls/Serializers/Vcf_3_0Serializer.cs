@@ -58,7 +58,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(serializables != null);
 
-            var pref = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
+            IVcfSerializableData? pref = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
 
             if (pref != null)
             {
@@ -66,9 +66,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
-
-
-        // TODO: die Methoden von VcfSerializer überschreiben
 
         protected override void AppendAccess(AccessProperty value)
         {
@@ -81,11 +78,11 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(value != null);
 
-            var arr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray();
+            AddressProperty[] arr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray()!;
 
             for (int i = 0; i < arr.Length; i++)
             {
-                AddressProperty prop = arr[i]!;
+                AddressProperty prop = arr[i];
                 this.BuildProperty(VCard.PropKeys.ADR, prop, i == 0 && prop.Parameters.Preference < 100);
 
                 string? label = prop.Parameters.Label;
@@ -132,7 +129,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(value != null);
 
-            var displayName = value
+            TextProperty displayName = value
                 .Where(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty))
                 .OrderBy(x => x!.Parameters.Preference).FirstOrDefault()
 
@@ -168,11 +165,11 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (Options.IsSet(VcfOptions.WriteImppExtension))
             {
-                var arr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray();
+                TextProperty[] arr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray()!;
 
                 for (int i = 0; i < arr.Length; i++)
                 {
-                    TextProperty prop = arr[i]!;
+                    TextProperty prop = arr[i];
 
                     if (prop.Parameters.PropertyClass.IsSet(PropertyClassTypes.Home))
                     {
@@ -223,7 +220,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(value != null);
 
-            var name = value.FirstOrDefault(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty))
+            NameProperty name = value.FirstOrDefault(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty))
 
                 ?? (Options.IsSet(VcfOptions.WriteEmptyProperties) ? new NameProperty() : new NameProperty(new string[] { "?" }));
 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FolkerKinzel.VCards.Intls.Extensions
 {
-    static class StringBuilderExtension
+    internal static class StringBuilderExtension
     {
         internal const string NEWLINE_REPLACEMENT = @"\n";
 

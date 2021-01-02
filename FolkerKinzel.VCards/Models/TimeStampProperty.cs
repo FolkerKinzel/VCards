@@ -7,6 +7,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -49,7 +50,7 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            var worker = serializer.Worker;
+            StringBuilder worker = serializer.Worker;
             worker.Clear();
             DateAndOrTimeConverter.AppendTimestampTo(worker, this.Value, serializer.Version);
             worker.Mask(serializer.Version);

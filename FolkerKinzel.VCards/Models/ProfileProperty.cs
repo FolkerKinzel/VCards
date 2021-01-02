@@ -28,11 +28,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Textinhalt der <see cref="ProfileProperty"/>.
         /// </summary>
-        public override string Value
-        {
-            get => base.Value ?? PROFILE_PROPERTY_VALUE;
-            //protected set => base.Value = value;
-        }
+        public override string Value => base.Value ?? PROFILE_PROPERTY_VALUE;
 
 
         [InternalProtected]

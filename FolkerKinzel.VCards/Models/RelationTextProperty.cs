@@ -52,11 +52,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="Text"/> zurück.
         /// </summary>
-        public override object? Value
-        {
-            get => this.Text;
-            //protected set => base.Value = value; 
-        }
+        public override object? Value => this.Text;
 
         /// <summary>
         /// Text zur Beschreibung einer Beziehung, z.B. Name der Person, zu der die Beziehung besteht.

@@ -91,7 +91,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildAnniversaryPara()
         {
-            var dataType = this.ParaSection.DataType;
+            VCdDataType? dataType = this.ParaSection.DataType;
+
             if (dataType == VCdDataType.Text)
             {
                 AppendValue(VCdDataType.Text);
@@ -113,7 +114,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildBdayPara()
         {
-            var dataType = this.ParaSection.DataType;
+            VCdDataType? dataType = this.ParaSection.DataType;
+
             if (dataType == VCdDataType.Text)
             {
                 AppendValue(VCdDataType.Text);
@@ -426,7 +428,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             ActionList.Add(CollectPropertyClassTypes);
             ActionList.Add(CollectRelationTypes);
 
-            var dataType = this.ParaSection.DataType;
+            VCdDataType? dataType = this.ParaSection.DataType;
 
             AppendType();
             AppendPref();
@@ -701,7 +703,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendAltId()
         {
-            var altId = ParaSection.AltID;
+            string? altId = ParaSection.AltID;
             if (altId != null)
             {
                 AppendParameter(ParameterSection.ParameterKey.ALTID, EscapeAndQuote(altId));
@@ -710,7 +712,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendCalScale()
         {
-            var calScale = ParaSection.Calendar;
+            string? calScale = ParaSection.Calendar;
             if (calScale != null)
             {
                 AppendParameter(ParameterSection.ParameterKey.ALTID, EscapeAndQuote(calScale));
@@ -772,7 +774,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendLabel()
         {
-            var label = ParaSection.Label;
+            string? label = ParaSection.Label;
+
             if (label != null)
             {
                 AppendParameter(ParameterSection.ParameterKey.LABEL, EscapeAndQuote(label));
@@ -781,7 +784,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendLanguage()
         {
-            var lang = ParaSection.Language;
+            string? lang = ParaSection.Language;
+
             if (lang != null)
             {
                 AppendParameter(ParameterSection.ParameterKey.LANGUAGE, EscapeAndQuote(lang));
@@ -790,7 +794,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendMediatype()
         {
-            var mediaType = ParaSection.MediaType;
+            string? mediaType = ParaSection.MediaType;
+
             if (mediaType != null)
             {
                 AppendParameter(ParameterSection.ParameterKey.MEDIATYPE, EscapeAndQuote(mediaType));

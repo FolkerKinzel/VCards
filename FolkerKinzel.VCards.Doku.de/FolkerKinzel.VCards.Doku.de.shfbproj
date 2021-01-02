@@ -36,7 +36,6 @@
     <Preliminary>False</Preliminary>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net40\FolkerKinzel.VCards.xml" />
       <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net40\FolkerKinzel.VCards.dll" />
       <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net40\de\FolkerKinzel.VCards.xml" />
     </DocumentationSources>

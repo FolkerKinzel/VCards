@@ -28,7 +28,10 @@ namespace FolkerKinzel.VCards.Models
         public XmlProperty(XElement? xmlContent, string? propertyGroup = null)
             : base(xmlContent?.ToString(), propertyGroup)
         {
-            if (xmlContent is null) return;
+            if (xmlContent is null)
+            {
+                return;
+            }
 
             const string XCARD_NAMESPACE = "urn:ietf:params:xml:ns:vcard-4.0";
 

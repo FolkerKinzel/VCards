@@ -69,13 +69,13 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(VERSION)</c>: Version der vCard-Spezifikation. (2,3,4)
+        /// <c>VERSION</c>: Version der vCard-Spezifikation. (2,3,4)
         /// </summary>
         public VCdVersion Version { get; private set; }
 
 
         /// <summary>
-        /// <c>(CLASS)</c>: Sensibilität der in der vCard enthaltenen Daten. (3)
+        /// <c>CLASS</c>: Sensibilität der in der vCard enthaltenen Daten. (3)
         /// </summary>
         public AccessProperty? Access
         {
@@ -85,7 +85,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(ADR)</c>: Adressen (2,3,4)
+        /// <c>ADR</c>: Adressen (2,3,4)
         /// </summary>
         public IEnumerable<AddressProperty?>? Addresses
         {
@@ -95,11 +95,11 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(ANNIVERSARY)</c>: Jahrestag (gemeint ist i. A. der Hochzeitstag) der Person. (4)
+        /// <c>ANNIVERSARY</c>: Jahrestag (gemeint ist i. A. der Hochzeitstag) der Person. (4)
         /// </summary>
         /// <remarks>
-        /// Mehrere Instanzen sind nur zulässig, wenn sie
-        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann 
+        /// Mehrere Instanzen sind nur dann zulässig, wenn sie
+        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
         /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
         /// </remarks>
         public IEnumerable<DateTimeProperty?>? AnniversaryViews
@@ -110,11 +110,11 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(BDAY)</c>: Geburtstag (2,3,4)
+        /// <c>BDAY</c>: Geburtstag (2,3,4)
         /// </summary>
         /// <remarks>
-        /// Mehrere Instanzen sind nur in vCard 4.0 zulässig und müssen dann
-        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann 
+        /// Mehrere Instanzen sind nur in vCard 4.0 zulässig, und nur dann, wenn sie
+        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
         /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
         /// </remarks>
         public IEnumerable<DateTimeProperty?>? BirthDayViews
@@ -123,12 +123,13 @@ namespace FolkerKinzel.VCards
             set => Set(VCdProp.BirthDayViews, value);
         }
 
+
         /// <summary>
-        /// <c>(BIRTHPLACE)</c>: Geburtsort (4 - Erweiterung RFC 6474)
+        /// <c>BIRTHPLACE</c>: Geburtsort (4 - Erweiterung RFC 6474)
         /// </summary>
         /// <remarks>
-        /// Mehrere Instanzen müssen
-        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann 
+        /// Mehrere Instanzen sind nur dann zulässig, wenn sie
+        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
         /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
         /// </remarks>
         public IEnumerable<TextProperty?>? BirthPlaceViews
@@ -140,7 +141,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(CALURI)</c>: URLs zum Kalender der Person. (4)
+        /// <c>CALURI</c>: URLs zum Kalender der Person. (4)
         /// </summary>
         public IEnumerable<TextProperty?>? CalendarAddresses
         {
@@ -151,7 +152,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(CALADRURI)</c>: URLs für das Senden einer Terminanforderung an die Person oder Organisation. (4)
+        /// <c>CALADRURI</c>: URLs für das Senden einer Terminanforderung an die Person oder Organisation. (4)
         /// </summary>
         public IEnumerable<TextProperty?>? CalendarUserAddresses
         {
@@ -161,7 +162,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(CATEGORIES)</c>: Liste(n) von Eigenschaften, die das Objekt der vCard beschreiben. (3,4)
+        /// <c>CATEGORIES</c>: Liste(n) von Eigenschaften, die das Objekt der vCard beschreiben. (3,4)
         /// </summary>
         public IEnumerable<StringCollectionProperty?>? Categories
         {
@@ -171,11 +172,11 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(DEATHDATE)</c>: Todestag (4 - Erweiterung RFC 6474)
+        /// <c>DEATHDATE</c>: Todestag (4 - Erweiterung RFC 6474)
         /// </summary>
         /// <remarks>
-        /// Mehrere Instanzen müssen
-        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann 
+        /// Mehrere Instanzen sind nur dann zulässig, wenn sie
+        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
         /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
         /// </remarks>
         public IEnumerable<DateTimeProperty?>? DeathDateViews
@@ -186,11 +187,11 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(DEATHPLACE)</c>: Sterbeort (4 - Erweiterung RFC 6474)
+        /// <c>DEATHPLACE</c>: Sterbeort (4 - Erweiterung RFC 6474)
         /// </summary>
         /// <remarks>
-        /// Mehrere Instanzen müssen
-        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann 
+        /// Mehrere Instanzen sind nur dann zulässig, wenn sie
+        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
         /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
         /// </remarks>
         public IEnumerable<TextProperty?>? DeathPlaceViews
@@ -201,7 +202,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(NAME)</c>:
+        /// <c>NAME</c>:
         /// Anzeigbarer Name der SOURCE-Eigenschaft (3)
         /// </summary>
         public TextProperty? DirectoryName
@@ -214,7 +215,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(FN)</c>: Formatierte Zeichenfolge mit dem/den vollständigen Namen des vCard-Objekts. (2,3,4)
+        /// <c>FN</c>: Formatierte Zeichenfolge mit dem/den vollständigen Namen des vCard-Objekts. (2,3,4)
         /// </summary>
         public IEnumerable<TextProperty?>? DisplayNames
         {
@@ -225,7 +226,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(EMAIL)</c>: E-Mail-Adressen  (2,3,4)
+        /// <c>EMAIL</c>: E-Mail-Adressen  (2,3,4)
         /// </summary>
         public IEnumerable<TextProperty?>? EmailAddresses
         {
@@ -235,7 +236,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(EXPERTISE)</c>: Fachgebiete, über die die Person Kenntnisse hat (Erweiterung RFC 6715)
+        /// <c>EXPERTISE</c>: Fachgebiete, über die die Person Kenntnisse hat (Erweiterung RFC 6715)
         /// </summary>
         public IEnumerable<TextProperty?>? Expertises
         {
@@ -244,11 +245,11 @@ namespace FolkerKinzel.VCards
         }
 
         /// <summary>
-        /// <c>(GENDER)</c>: Geschlecht (4)
+        /// <c>GENDER</c>: Geschlecht (4)
         /// </summary>
         /// <remarks>
-        /// Mehrere Instanzen sind nur in vCard 4.0 zulässig und müssen dann
-        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann 
+        /// Mehrere Instanzen sind nur dann zulässig, wenn sie
+        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
         /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
         /// </remarks>
         public IEnumerable<GenderProperty?>? GenderViews
@@ -259,7 +260,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(GEO)</c>: Längen- und Breitengrad(e). (2,3,4)
+        /// <c>GEO</c>: Längen- und Breitengrad(e). (2,3,4)
         /// </summary>
         public IEnumerable<GeoProperty?>? GeoCoordinates
         {
@@ -270,7 +271,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(HOBBY)</c>: Freizeitbeschäftigungen, denen die Person nachgeht (4 - Erweiterung RFC 6715)
+        /// <c>HOBBY</c>: Freizeitbeschäftigungen, denen die Person nachgeht (4 - Erweiterung RFC 6715)
         /// </summary>
         public IEnumerable<TextProperty?>? Hobbies
         {
@@ -280,7 +281,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(IMPP)</c>: Liste von Instant-Messenger-Handles. (3,4)
+        /// <c>IMPP</c>: Liste von Instant-Messenger-Handles. (3,4)
         /// </summary>
         public IEnumerable<TextProperty?>? InstantMessengerHandles
         {
@@ -290,7 +291,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(INTEREST)</c>: Freizeitbeschäftigungen, für die sich die Person interessiert, an denen sie 
+        /// <c>INTEREST</c>: Freizeitbeschäftigungen, für die sich die Person interessiert, an denen sie 
         /// aber nicht zwangsläufig teilnimmt. (4 - Erweiterung RFC 6715)
         /// </summary>
         public IEnumerable<TextProperty?>? Interests
@@ -301,7 +302,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(KEY)</c>: Öffentliche Schlüssel, die dem vCard-Objekt zugeordnet sind. (2,3,4)
+        /// <c>KEY</c>: Öffentliche Schlüssel, die dem vCard-Objekt zugeordnet sind. (2,3,4)
         /// </summary>
         /// <remarks>
         /// Es kann zu einer externen URL verwiesen werden, 
@@ -315,7 +316,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(KIND)</c>: Art des Objekts, das die vCard beschreibt: Eine Person, eine Organisation oder 
+        /// <c>KIND</c>: Art des Objekts, das die vCard beschreibt: Eine Person, eine Organisation oder 
         /// eine Gruppe. (4)
         /// </summary>
         public KindProperty? Kind
@@ -326,7 +327,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(LANG)</c>: Sprachen, die die Person spricht. (4)
+        /// <c>LANG</c>: Sprachen, die die Person spricht. (4)
         /// </summary>
         public IEnumerable<TextProperty?>? Languages
         {
@@ -336,7 +337,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(REV)</c>: Zeitstempel der letzten Aktualisierung der vCard. (2,3,4)
+        /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. (2,3,4)
         /// </summary>
         public TimestampProperty? LastRevision
         {
@@ -346,7 +347,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(LOGO)</c>: Logo(s) der Organisation, mit der die Person in Beziehung steht, der die vCard gehört. (2,3,4)
+        /// <c>LOGO</c>: Logo(s) der Organisation, mit der die Person in Beziehung steht, der die vCard gehört. (2,3,4)
         /// </summary>
         public IEnumerable<DataProperty?>? Logos
         {
@@ -357,7 +358,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(MAILER)</c>: Art des genutzten E-Mail-Programms. (2,3)
+        /// <c>MAILER</c>: Art des genutzten E-Mail-Programms. (2,3)
         /// </summary>
         public TextProperty? Mailer
         {
@@ -367,7 +368,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(MEMBER)</c>: Definiert das Objekt, das die vCard repräsentiert, als Teil einer Gruppe. 
+        /// <c>MEMBER</c>: Definiert das Objekt, das die vCard repräsentiert, als Teil einer Gruppe. 
         /// Um diese Eigenschaft verwenden zu können, muss die <see cref="VCard.Kind"/>-Eigenschaft auf
         /// <see cref="VCdKind.Group"/> gesetzt werden. (4)
         /// </summary>
@@ -395,11 +396,11 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(N)</c>: Name der Person oder Organisation, die die vCard repräsentiert. (2,3,4)
+        /// <c>N</c>: Name der Person oder Organisation, die die vCard repräsentiert. (2,3,4)
         /// </summary>
         /// <remarks>
-        /// Mehrere Instanzen sind nur in vCard 4.0 zulässig und müssen dann
-        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann 
+        /// Mehrere Instanzen sind nur in vCard 4.0 zulässig, und nur dann, wenn sie
+        /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
         /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
         /// </remarks>
         public IEnumerable<NameProperty?>? NameViews
@@ -410,7 +411,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(NICKNAME)</c>: Ein oder mehrere Alternativnamen für das Objekt, das von der vCard repräsentiert wird. (3,4)
+        /// <c>NICKNAME</c>: Ein oder mehrere Alternativnamen für das Objekt, das von der vCard repräsentiert wird. (3,4)
         /// </summary>
         public IEnumerable<StringCollectionProperty?>? NickNames
         {
@@ -431,7 +432,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(NOTE)</c>: Kommentar(e) (2,3,4)
+        /// <c>NOTE</c>: Kommentar(e) (2,3,4)
         /// </summary>
         public IEnumerable<TextProperty?>? Notes
         {
@@ -441,7 +442,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(ORG)</c>: Name und gegebenenfalls Einheit(en) der Organisation, der das vCard-Objekt zugeordnet ist. (2,3,4)
+        /// <c>ORG</c>: Name und gegebenenfalls Einheit(en) der Organisation, der das vCard-Objekt zugeordnet ist. (2,3,4)
         /// </summary>
         public IEnumerable<OrganizationProperty?>? Organizations
         {
@@ -452,7 +453,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(ORG-DIRECTORY)</c>: URIs, die die Arbeitsplätze der Person repräsentieren. Damit können Informationen 
+        /// <c>ORG-DIRECTORY</c>: URIs, die die Arbeitsplätze der Person repräsentieren. Damit können Informationen 
         /// über Mitarbeiter der Person eingeholt werden. (Erweiterung RFC 6715)
         /// </summary>
         public IEnumerable<TextProperty?>? OrgDirectories
@@ -463,7 +464,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(TEL)</c>: Telefonnummern (2,3,4)
+        /// <c>TEL</c>: Telefonnummern (2,3,4)
         /// </summary>
         public IEnumerable<TextProperty?>? PhoneNumbers
         {
@@ -473,7 +474,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(PHOTO)</c>: Bild(er) oder Fotografie(n) der mit der vCard verbundenen Person. (2,3,4)
+        /// <c>PHOTO</c>: Bild(er) oder Fotografie(n) der mit der vCard verbundenen Person. (2,3,4)
         /// </summary>
         /// <remarks> Es kann auf eine externe URL verwiesen oder ein Base64-kodierter Textblock 
         /// in die vCard eingebettet werden.</remarks>
@@ -485,7 +486,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(PRODID)</c>: Kennung für das Produkt, mit dem das vCard-Objekt erstellt wurde. (3,4)
+        /// <c>PRODID</c>: Kennung für das Produkt, mit dem das vCard-Objekt erstellt wurde. (3,4)
         /// </summary>
         /// <value>Der Name sollte weltweit eindeutig sein. Er sollte deshalb der Spezifikation für
         /// Formal Public Identifiers [ISO9070] oder Universal Resource Names in [RFC3406] entsprechen.</value>
@@ -496,7 +497,7 @@ namespace FolkerKinzel.VCards
         }
 
         /// <summary>
-        /// <c>(PROFILE)</c>: Legt fest, dass die VCF-Datei eine vCard ist. (3)
+        /// <c>PROFILE</c>: Legt fest, dass die VCF-Datei eine vCard ist. (3)
         /// </summary>
         public ProfileProperty? Profile
         {
@@ -505,7 +506,7 @@ namespace FolkerKinzel.VCards
         }
 
         /// <summary>
-        /// <c>(CLIENTPIDMAP)</c>: Mappings für Property-IDs
+        /// <c>CLIENTPIDMAP</c>: Mappings für Property-IDs
         /// </summary>
         public IEnumerable<PropertyIDMappingProperty?>? PropertyIDMappings
         {
@@ -518,7 +519,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(RELATED)</c>: Andere Einheiten, zu der die Person Verbindung hat. (4)
+        /// <c>RELATED</c>: Andere Einheiten, zu der die Person Verbindung hat. (4)
         /// </summary>
         public IEnumerable<RelationProperty?>? Relations
         {
@@ -529,7 +530,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(ROLE)</c>: Rolle, Beruf oder Wirtschaftskategorie des vCard-Objekts innerhalb 
+        /// <c>ROLE</c>: Rolle, Beruf oder Wirtschaftskategorie des vCard-Objekts innerhalb 
         /// einer Organisation, z.B. "rechte Hand des Chefs". (2,3,4)
         /// </summary>
         public IEnumerable<TextProperty?>? Roles
@@ -541,7 +542,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(SOUND)</c>: Gibt standardmäßig die Aussprache der <see cref="DisplayNames"/>-Eigenschaft des <see cref="VCard"/>-Objekts an. (2,3,4)
+        /// <c>SOUND</c>: Gibt standardmäßig die Aussprache der <see cref="DisplayNames"/>-Eigenschaft des <see cref="VCard"/>-Objekts an. (2,3,4)
         /// </summary>
         public IEnumerable<DataProperty?>? Sounds
         {
@@ -551,7 +552,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(SOURCE)</c>: URLs, die verwendet werden können, um die neueste Version dieser vCard zu 
+        /// <c>SOURCE</c>: URLs, die verwendet werden können, um die neueste Version dieser vCard zu 
         /// erhalten. (3,4)
         /// </summary>
         public IEnumerable<TextProperty?>? Sources
@@ -562,7 +563,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(TZ)</c>: Zeitzone(n) des vCard Objekts. (2,3,4)
+        /// <c>TZ</c>: Zeitzone(n) des vCard Objekts. (2,3,4)
         /// </summary>
         public IEnumerable<TimeZoneProperty?>? TimeZones
         {
@@ -572,7 +573,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(TITLE)</c>: Angabe der Stellenbezeichnung, funktionellen Stellung oder Funktion der mit dem vCard-Objekt 
+        /// <c>TITLE</c>: Angabe der Stellenbezeichnung, funktionellen Stellung oder Funktion der mit dem vCard-Objekt 
         /// verbundenen Person innerhalb einer Organisation, z.B. “Vizepräsident”. (2,3,4)
         /// </summary>
         public IEnumerable<TextProperty?>? Titles
@@ -583,7 +584,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(UID)</c>: UUID, die eine persistente, global eindeutige Kennung des verbundenen Objekts darstellt. (2,3,4)
+        /// <c>UID</c>: UUID, die eine persistente, global eindeutige Kennung des verbundenen Objekts darstellt. (2,3,4)
         /// </summary>
         /// <value>
         /// Obwohl der Standard beliebige Strings zur Identifizierung erlaubt, werden hier nur 
@@ -598,7 +599,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(URL)</c>: URLs, die die Person repräsentieren. (Webseiten, Blogs, Social-Media-Seiten) (2,3,4)
+        /// <c>URL</c>: URLs, die die Person repräsentieren. (Webseiten, Blogs, Social-Media-Seiten) (2,3,4)
         /// </summary>
         public IEnumerable<TextProperty?>? URLs
         {
@@ -608,7 +609,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// <c>(XML)</c>: Beliebige zusätzliche XML-Daten (4)
+        /// <c>XML</c>: Beliebige zusätzliche XML-Daten (4)
         /// </summary>
         public IEnumerable<XmlProperty?>? XmlProperties
         {

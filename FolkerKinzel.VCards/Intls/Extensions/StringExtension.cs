@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FolkerKinzel.VCards.Intls.Extensions
 {
-    static class StringExtension
+    internal static class StringExtension
     {
         /// <summary>
         /// Splittet den Value-Teil einer vCard-Property unter Berücksichtigung der maskierten Zeichen.
@@ -18,7 +18,10 @@ namespace FolkerKinzel.VCards.Intls.Extensions
             this string? valueString, char splitChar, StringSplitOptions options = StringSplitOptions.None)
         {
             // wichtig: NIE ändern!
-            if (valueString is null) return new List<string>();
+            if (valueString is null)
+            {
+                return new List<string>();
+            }
 
 #if NET40
             var arr = valueString.Split(new char[] { splitChar }, options);
@@ -26,7 +29,7 @@ namespace FolkerKinzel.VCards.Intls.Extensions
             var arr = valueString.Split(splitChar, options);
 #endif
 
-            List<string> list = new List<string>(arr.Length);
+            var list = new List<string>(arr.Length);
 
             const string MASK = @"\";
             const string MASKED_BACKSLASH = @"\\";
@@ -65,7 +68,10 @@ namespace FolkerKinzel.VCards.Intls.Extensions
         /// <returns></returns>
         public static bool NeedsToBeQpEncoded(this string? s)
         {
-            if (s is null) return false;
+            if (s is null)
+            {
+                return false;
+            }
 
             if (
 #if NET40
@@ -80,7 +86,10 @@ namespace FolkerKinzel.VCards.Intls.Extensions
 
             for (int i = 0; i < s.Length; i++)
             {
-                if ((int)s[i] > 126) return true;
+                if ((int)s[i] > 126)
+                {
+                    return true;
+                }
             }
 
             return false;

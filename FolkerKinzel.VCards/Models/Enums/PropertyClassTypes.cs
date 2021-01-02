@@ -15,13 +15,13 @@ namespace FolkerKinzel.VCards.Models.Enums
         // und PropertyClassTypesCollector angepasst werden!
 
         /// <summary>
-        /// <c>(HOME)</c>: privat
+        /// <c>HOME</c>: privat
         /// </summary>
         Home = 1,
 
 
         /// <summary>
-        /// <c>(WORK)</c>: dienstlich
+        /// <c>WORK</c>: dienstlich
         /// </summary>
         Work = 2
     }

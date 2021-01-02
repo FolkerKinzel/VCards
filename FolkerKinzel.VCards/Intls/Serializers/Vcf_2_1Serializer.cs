@@ -118,11 +118,11 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(serializables != null);
 
-            var arr = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray();
+            IVcfSerializableData[] arr = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray()!;
 
             for (int i = 0; i < arr.Length; i++)
             {
-                IVcfSerializableData prop = arr[i]!;
+                IVcfSerializableData prop = arr[i];
                 this.BuildProperty(propertyKey, prop, i == 0 && prop.Parameters.Preference < 100);
             }
         }
@@ -172,7 +172,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(value != null);
 
-            var displayName = value
+            TextProperty displayName = value
                 .Where(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty))
                 .OrderBy(x => x!.Parameters.Preference).FirstOrDefault()
 

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
-    class Vcf_4_0Serializer : VcfSerializer
+    internal class Vcf_4_0Serializer : VcfSerializer
     {
         internal Vcf_4_0Serializer(TextWriter writer, VcfOptions options) : base(writer, options, new ParameterSerializer4_0(options)) { }
 
@@ -42,9 +42,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(serializables != null);
 
-            foreach (var serializable in serializables)
+            foreach (IVcfSerializable? serializable in serializables)
             {
-                if (serializable is null) continue;
+                if (serializable is null)
+                {
+                    continue;
+                }
 
                 this.BuildProperty(propertyKey, serializable);
             }
@@ -92,7 +95,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void AppendBirthPlaceViews(IEnumerable<TextProperty?> value)
         {
-            if (!Options.IsSet(VcfOptions.WriteRfc6474Extensions)) return;
+            if (!Options.IsSet(VcfOptions.WriteRfc6474Extensions))
+            {
+                return;
+            }
 
             SetAltID(value);
             this.BuildPropertyCollection(VCard.PropKeys.NonStandard.BIRTHPLACE, value);
@@ -116,7 +122,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void AppendDeathDateViews(IEnumerable<DateTimeProperty?> value)
         {
-            if (!Options.IsSet(VcfOptions.WriteRfc6474Extensions)) return;
+            if (!Options.IsSet(VcfOptions.WriteRfc6474Extensions))
+            {
+                return;
+            }
 
             SetAltID(value);
             this.BuildPropertyCollection(VCard.PropKeys.NonStandard.DEATHDATE, value);
@@ -124,7 +133,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void AppendDeathPlaceViews(IEnumerable<TextProperty?> value)
         {
-            if (!Options.IsSet(VcfOptions.WriteRfc6474Extensions)) return;
+            if (!Options.IsSet(VcfOptions.WriteRfc6474Extensions))
+            {
+                return;
+            }
 
             SetAltID(value);
             this.BuildPropertyCollection(VCard.PropKeys.NonStandard.DEATHPLACE, value);
@@ -164,7 +176,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void AppendExpertises(IEnumerable<TextProperty?> value)
         {
-            if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions)) return;
+            if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions))
+            {
+                return;
+            }
 
             this.BuildPropertyCollection(VCard.PropKeys.NonStandard.EXPERTISE, value);
         }
@@ -183,7 +198,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void AppendHobbies(IEnumerable<TextProperty?> value)
         {
-            if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions)) return;
+            if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions))
+            {
+                return;
+            }
 
             this.BuildPropertyCollection(VCard.PropKeys.NonStandard.HOBBY, value);
         }
@@ -192,9 +210,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(value != null);
 
-            foreach (var prop in value)
+            foreach (TextProperty? prop in value)
             {
-                if (prop is null) continue;
+                if (prop is null)
+                {
+                    continue;
+                }
 
                 if (prop.Parameters.InstantMessengerType.IsSet(ImppTypes.Personal))
                 {
@@ -212,12 +233,13 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void AppendInterests(IEnumerable<TextProperty?> value)
         {
-            if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions)) return;
+            if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions))
+            {
+                return;
+            }
 
             this.BuildPropertyCollection(VCard.PropKeys.NonStandard.INTEREST, value);
         }
-
-
 
 
         protected override void AppendKind(KindProperty value)
@@ -278,7 +300,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void AppendOrgDirectories(IEnumerable<TextProperty?> value)
         {
-            if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions)) return;
+            if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions))
+            {
+                return;
+            }
 
             this.BuildPropertyCollection(VCard.PropKeys.NonStandard.ORG_DIRECTORY, value);
         }

@@ -6,6 +6,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Diagnostics;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -60,7 +61,7 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            var builder = serializer.Builder;
+            StringBuilder builder = serializer.Builder;
 
 
             if (serializer.Version == VCdVersion.V2_1)
@@ -76,7 +77,7 @@ namespace FolkerKinzel.VCards.Models
             }
             else
             {
-                var worker = serializer.Worker;
+                StringBuilder worker = serializer.Worker;
 
                 worker.Clear().Append(Value).Mask(serializer.Version);
                 builder.Append(worker);
