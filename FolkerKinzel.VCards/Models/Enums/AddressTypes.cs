@@ -6,8 +6,10 @@ namespace FolkerKinzel.VCards.Models.Enums
     /// Benannte Konstanten, um in vCards die Art einer Postanschrift zu beschreiben. Die Konstanten können
     /// kombiniert werden.
     /// </summary>
-    /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
-    /// <see cref="Models.Helpers.AddressTypesExtension"/>.</note>
+    /// <remarks>
+    /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der
+    /// <see cref="Models.Helpers.AddressTypesExtension"/>-Klasse.</note>
+    /// </remarks>
     [Flags]
     public enum AddressTypes
     {

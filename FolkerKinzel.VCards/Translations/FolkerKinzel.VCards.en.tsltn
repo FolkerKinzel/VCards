@@ -8,9 +8,7 @@
   <T ID="63D5064E4113C493">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty" /&gt; class, which allows a time and/or date to be saved as free text.</T>
   <T ID="E085386FDBC598B2">Named constants to describe the type of a postal address in vCards. The constants can be combined.</T>
   <T ID="55B6F5013F53F7AF">Named constants to specify the encoding of the embedded data in the &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl" /&gt; class.</T>
-  <T ID="EA609C0E8C5A3389">Named constants to specify the level parameter in the "EXPERTISE" extension (RFC 6715).</T>
   <T ID="ECA3C1F357C4BD6">Named constants to specify the type of an instant messenger handle in vCard 3.0. The constants can be combined.</T>
-  <T ID="A0BCF7A4AC5CB039">Named constants to specify the level parameter in the "INTEREST" extension (RFC 6715).</T>
   <T ID="79EB3A1CE27D0A2A">Named constants to classify the scope of a vCard property.</T>
   <T ID="D0553C0EEE50FEF3">Named constants to describe the type of a phone number in vCards. The constants can be combined.</T>
   <T ID="34EBB91F5AC74C3D">Named constants to indicate in vCard 3.0 which level of confidentiality applies to the vCard.</T>
@@ -100,7 +98,7 @@
             Provides a textual representation of the &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdProp.Sources"/&gt; property. &lt;c&gt;(3)&lt;/c&gt;</T>
   <T ID="96C5299871EF2391">&lt;c&gt;FN&lt;/c&gt;: The formatted name string associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="9D5B3B61AE638C67">&lt;c&gt;EMAIL&lt;/c&gt;: The addresses for electronic mail communication with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
-  <T ID="AF210802ACEE169C">&lt;c&gt;EXPERTISE&lt;/c&gt;: A professional subject area that the person has knowledge of. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
+  <T ID="AF210802ACEE169C">&lt;c&gt;EXPERTISE&lt;/c&gt;: A professional subject area, that the person has knowledge of. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
   <T ID="BA4444F22C4FD885">&lt;c&gt;GENDER&lt;/c&gt;: Defines the person's gender. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="EE6512D78FF78106">Multiple instances are only allowed, if they
              have the same &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.AltID"/&gt; parameters. This can e.g.
@@ -142,7 +140,7 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="ECC5853265D06E0F">&lt;c&gt;ORG&lt;/c&gt;: The name and optionally the unit(s) of the organization associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="56E94619CCEA015C">&lt;c&gt;ORG-DIRECTORY&lt;/c&gt;: A URI representing the person's work place, which can be used to look up information on the person's co-workers. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
   <T ID="24E4B1922AA8047">&lt;c&gt;TEL&lt;/c&gt;: Canonical number strings for a telephone numbers for telephony communication with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
-  <T ID="7B8397591C20DD89">&lt;c&gt;PHOTO&lt;/c&gt;: Images or photographs of the individual, associated with the vCard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="7B8397591C20DD89">&lt;c&gt;PHOTO&lt;/c&gt;: Image(s) or photograph(s) of the individual, associated with the vCard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="717A907A292AD231">It may point to an external URL or may be embedded in the vCard as a Base64 encoded block of text.</T>
   <T ID="1FFDFE985C1478A2">&lt;c&gt;PRODID&lt;/c&gt;: The identifier for the product, that created the vCard object. &lt;c&gt;(3,4)&lt;/c&gt;</T>
   <T ID="B1773CAB411B7ABB">The name should be unique worldwide. It should therefore conform to the specification for
@@ -157,7 +155,7 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="9A08BC4340544A7">vCard 3.0 only allows one instance of this property.</T>
   <T ID="72CEEDCB5306E7A4">&lt;c&gt;TZ&lt;/c&gt;: The time zone(s) of the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="9BD1CCDF1273786F">&lt;c&gt;TITLE&lt;/c&gt;: Specifies the job title, functional position or function of the individual, associated with the vCard object, within an organization. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
-  <T ID="5BF5400146E07157">&lt;c&gt;UID&lt;/c&gt;: Specifies a value that represents a persistent, globally unique identifier, associated with the object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="5BF5400146E07157">&lt;c&gt;UID&lt;/c&gt;: Specifies a value, that represents a persistent, globally unique identifier, associated with the object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="9CB2B521F5243D5A">Although the standard allows any strings for identification, the library only supports UUIDs.</T>
   <T ID="3C345CEB79CA7F4D">&lt;c&gt;URL&lt;/c&gt;: URLs, pointing to websites, that represent the person in some way. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="DFBC8943AC37BA08">&lt;c&gt;XML&lt;/c&gt;: Any XML data, that is attached to the vCard. &lt;c&gt;(4)&lt;/c&gt;</T>
@@ -218,4 +216,191 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="C3101466CBBA9915">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object.
              (For debugging only.)</T>
   <T ID="42D27235F6305DA0">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object.</T>
+  <T ID="445A4306E0DCDFC2">&lt;para&gt; &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt; saves all vCard properties, that could not be evaluated, when parsing the vCard. To serialize the content of &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt; into a vCard, the flag &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteNonStandardProperties"&gt;VcfOptions.WriteNonStandardProperties&lt;/see&gt; has to be set explicitly. &lt;/para&gt; &lt;para&gt; Some &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects are automatically added to the vCard to be written, if there is no standard equivalent for it. You can control this behavior with &lt;see cref ="T:FolkerKinzel.VCards.VcfOptions"/&gt;. It is therefore not recommended to assign instances of those
+            &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects to the property &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt;.&lt;/para&gt;
+&lt;para&gt; These vCard properties are the following: &lt;/para&gt;
+&lt;list type="bullet"&gt;&lt;item&gt;&lt;c&gt;X-AIM&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-ANNIVERSARY&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-ASSISTANT&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-EVOLUTION-SPOUSE&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-EVOLUTION-ANNIVERSARY&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-EVOLUTION-ASSISTANT&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-GADUGADU&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-GENDER&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-GOOGLE-TALK&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-GROUPWISE&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-GTALK&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-ICQ&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-JABBER&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-KADDRESSBOOK-X-ANNIVERSARY&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-KADDRESSBOOK-X-ASSISTANTSNAME&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-KADDRESSBOOK-X-IMADDRESS&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-KADDRESSBOOK-X-SPOUSENAME&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-MS-IMADDRESS&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-MSN&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-SKYPE&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-SKYPE-USERNAME&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-SPOUSE&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-TWITTER&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-WAB-GENDER&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-WAB-WEDDING_ANNIVERSARY&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-WAB-SPOUSE_NAME&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-YAHOO&lt;/c&gt;&lt;/item&gt;&lt;/list&gt;</T>
+  <T ID="93E7678FD0B2C2F5">All flags are set.</T>
+  <T ID="3BB66FAA5B1FBBBD">All flags are unset.</T>
+  <T ID="64FF9980766E44A8">Default setting (corresponds to &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteGroups"/&gt; | &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6474Extensions"/&gt;
+             | &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6715Extensions"/&gt; | &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteImppExtension"/&gt; | &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteXExtensions"/&gt;)</T>
+  <T ID="CF148B35B02F311E">Set the flag to write property group identifiers.</T>
+  <T ID="2008988C601FCFA0">Set the flag to also write empty properties to the vCard.</T>
+  <T ID="24DA0906324D2AA">Set the flag to append in vCard 2.1 and vCard 3.0 embedded 
+             &lt;c&gt;AGENT&lt;/c&gt;-vCards additionally to the main vCard.</T>
+  <T ID="EE5C7AC7E140AAA6">Set the flag to write Non-Standard-Parameters of the property &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.NonStandardParameters"&gt;ParameterSection.NonStandardParameters&lt;/see&gt;.</T>
+  <T ID="FF9AC4A7DF14AE2A">Set the flag to serialize &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; - objects, that are stored in the property &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"&gt;VCard.NonStandardProperties&lt;/see&gt;.</T>
+  <T ID="5A86F58AE214453D">Set the flag to write the extensions from RFC 6474 (&lt;c&gt;BIRTHPLACE&lt;/c&gt;, &lt;c&gt;DEATHPLACE&lt;/c&gt;, &lt;c&gt;DEATHDATE&lt;/c&gt;). (Beginning from vCard 4.0.)</T>
+  <T ID="E154D6C4A110F7F">Set the flag to write the extensions from RFC 6715 (&lt;c&gt;EXPERTISE&lt;/c&gt;, &lt;c&gt;HOBBY&lt;/c&gt;, &lt;c&gt;INTEREST&lt;/c&gt;, &lt;c&gt;ORG-DIRECTORY&lt;/c&gt;). (Beginning from vCard 4.0.)</T>
+  <T ID="743EB6383B3D953D">Set the flag to write the extension &lt;c&gt;IMPP&lt;/c&gt; from RFC 4770 in vCard 3.0.</T>
+  <T ID="7FFD732920852B4E">Set the flag to write the following vCard properties if necessary: &lt;c&gt;X-AIM&lt;/c&gt;, &lt;c&gt;X-GADUGADU&lt;/c&gt;, &lt;c&gt;X-GOOGLE-TALK&lt;/c&gt;, &lt;c&gt;X-GTALK&lt;/c&gt;, &lt;c&gt;X-ICQ&lt;/c&gt;, &lt;c&gt;X-JABBER&lt;/c&gt;, &lt;c&gt;X-MSN&lt;/c&gt;, &lt;c&gt;X-SKYPE&lt;/c&gt;, &lt;c&gt;X-TWITTER&lt;/c&gt;,
+            &lt;c&gt;X-YAHOO&lt;/c&gt;, &lt;c&gt;X-MS-IMADDRESS&lt;/c&gt;, &lt;c&gt;X-GENDER&lt;/c&gt;, &lt;c&gt;X-ANNIVERSARY&lt;/c&gt; and &lt;c&gt;X-SPOUSE&lt;/c&gt;.</T>
+  <T ID="92F2B1279AD6661">Set the flag to write the following vCard properties if necessary: &lt;c&gt;X-EVOLUTION-ANNIVERSARY&lt;/c&gt;, &lt;c&gt;X-EVOLUTION-SPOUSE&lt;/c&gt;.</T>
+  <T ID="EA755E614F5CADF9">Set the flag to write the following vCard properties if necessary: &lt;c&gt;X-KADDRESSBOOK-X-IMAddress&lt;/c&gt;, &lt;c&gt;X-KADDRESSBOOK-X-Anniversary&lt;/c&gt;, &lt;c&gt;X-KADDRESSBOOK-X-SpouseName&lt;/c&gt;.</T>
+  <T ID="598590065D7E7DA">Set the flag to write the following vCard properties if necessary: &lt;c&gt;X-WAB-GENDER&lt;/c&gt;, &lt;c&gt;X-WAB-WEDDING-ANNIVERSARY&lt;/c&gt;, &lt;c&gt;X-WAB-SPOUSE-NAME&lt;/c&gt;.</T>
+  <T ID="7B9D144334A48AB8">&lt;c&gt;PROFILE&lt;/c&gt;: States, that the vCard is a vCard. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="250E5CAE4E6DCF6B">&lt;c&gt;KIND&lt;/c&gt;: Defines the type of entity, that this vCard represents. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="ACE443F6C8E2CD5F">&lt;c&gt;REV&lt;/c&gt;: A timestamp for the last time the vCard was updated. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="4F2CCD446E07157">&lt;c&gt;UID&lt;/c&gt;: Specifies a value, that represents a persistent, globally unique identifier, associated with the object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="1D3DC57594B89F59">&lt;c&gt;CATEGORIES&lt;/c&gt;: Lists of "tags", that can be used to describe the object represented by this vCard. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="CBCFB9DD5306E7A4">&lt;c&gt;TZ&lt;/c&gt;: The time zone(s) of the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="D7E0AFD587749C0E">&lt;c&gt;GEO&lt;/c&gt;: Specifies latitudes and longitudes. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="87C2C32855BF6C87">&lt;c&gt;CLASS&lt;/c&gt;: Describes the sensitivity of the information in the vCard. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="96B91E8FC18B1910">&lt;c&gt;SOURCE&lt;/c&gt;: URLs, that can be used to get the latest version of this vCard.&lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="CD87FC03DC4CEDBE">&lt;c&gt;PRODID&lt;/c&gt;: The identifier for the product, that created the vCard object. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="FA2BE91F71EF2391">&lt;c&gt;FN&lt;/c&gt;: The formatted name string associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="76AAC83A9F38ACD2">&lt;c&gt;N&lt;/c&gt;: A structured representation of the name of the person, place or thing associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="37C69FA32C4FD885">&lt;c&gt;GENDER&lt;/c&gt;: Defines the person's gender. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="B434EB0B528709F3">&lt;c&gt;NICKNAME&lt;/c&gt;: One or more descriptive/familiar names for the object represented by this vCard. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="486D6BDD1273786F">&lt;c&gt;TITLE&lt;/c&gt;: Specifies the job title, functional position or function of the individual, associated with the vCard object, within an organization. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="373BAF590370F765">&lt;c&gt;ROLE&lt;/c&gt;: The role, occupation, or business category of the vCard object within an organization. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="86A6ADA565D06E0F">&lt;c&gt;ORG&lt;/c&gt;: The name and optionally the unit(s) of the organization associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="36526D08D4E3E626">&lt;c&gt;BDAY&lt;/c&gt;: Date of birth of the individual associated with the vCard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="8D3C1633874C0B9C">&lt;c&gt;BIRTHPLACE&lt;/c&gt;: The location of the individual's birth. &lt;c&gt;(4 - RFC 6474)&lt;/c&gt;</T>
+  <T ID="826EB9AD9D2576D8">&lt;c&gt;ANNIVERSARY&lt;/c&gt;: Defines the person's anniversary. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="AAA815081F2B25B1">&lt;c&gt;DEATHDATE&lt;/c&gt;: The individual's time of death. &lt;c&gt;(4 - RFC 6474)&lt;/c&gt;</T>
+  <T ID="31EBCFFAF6D52E6D">&lt;c&gt;DEATHPLACE&lt;/c&gt;: The location of the individual's death. &lt;c&gt;(4 - RFC 6474)&lt;/c&gt;</T>
+  <T ID="7E26B38E517AAEE9">&lt;c&gt;ADR&lt;/c&gt;: A structured representation of the physical delivery address for the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="B2344A8422AA8047">&lt;c&gt;TEL&lt;/c&gt;: Canonical number strings for a telephone numbers for telephony communication with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="ABA99C56AE638C67">&lt;c&gt;EMAIL&lt;/c&gt;: The addresses for electronic mail communication with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="3881F82E79CA7F4D">&lt;c&gt;URL&lt;/c&gt;: URLs, pointing to websites, that represent the person in some way. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="7C66C5D53FC2ED13">&lt;c&gt;IMPP&lt;/c&gt;: List of instant messenger handles. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="13594CD040684AF0">&lt;c&gt;KEY&lt;/c&gt;: Public encryption keys, associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="E60B61FCF677AD59">&lt;c&gt;CALURI&lt;/c&gt;: URLs to the person's calendar. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="E9A4824CE02C41A1">&lt;c&gt;CALADRURI&lt;/c&gt;: URLs to use for sending a scheduling request to the person's calendar. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="7D42910C81D94B0B">&lt;c&gt;RELATED&lt;/c&gt;: Other entities, that the person is related to. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="8F8787C39E6C2A03">&lt;c&gt;MEMBER&lt;/c&gt;: Defines a member, that is part of the group that this vCard represents. 
+The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdKind.Group"/&gt; in order to use this property.  &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="FFEADCD0CCEA015C">&lt;c&gt;ORG-DIRECTORY&lt;/c&gt;: A URI representing the person's work place, which can be used to look up information on the person's co-workers. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
+  <T ID="EA0A8266ACEE169C">&lt;c&gt;EXPERTISE&lt;/c&gt;: A professional subject area, that the person has knowledge of. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
+  <T ID="25A95388D7AFA71F">&lt;c&gt;INTEREST&lt;/c&gt;: Recreational activities, that the person is interested in, but does not necessarily take part in. &lt;c&gt;(4 - RFC 6715)&lt;/c&gt;</T>
+  <T ID="EBA7A2766A241678">&lt;c&gt;HOBBY&lt;/c&gt;: Recreational activities, that the person actively engages in. &lt;c&gt;(4 - RFC 6715)&lt;/c&gt;</T>
+  <T ID="728783F89D30FA2F">&lt;c&gt;LANG&lt;/c&gt;: Defines languages, that the person speaks. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="820EB66375AA1943">&lt;c&gt;NOTE&lt;/c&gt;: Specifies supplemental informations or comments, that are associated with the vCard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="786CE5F5AC37BA08">&lt;c&gt;XML&lt;/c&gt;: Any XML data, that is attached to the vCard. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="1BEA7D36B53DBA58">&lt;c&gt;LOGO&lt;/c&gt;: Images or graphics of the logo of the organization, that is associated with the individual to which the vCard belongs. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="58EF4C8A1C20DD89">&lt;c&gt;PHOTO&lt;/c&gt;: Image(s) or photograph(s) of the individual, associated with the vCard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="C1602D32ADCB5F8E">&lt;c&gt;SOUND&lt;/c&gt;: Specifies the pronunciation of the &lt;see cref="P:FolkerKinzel.VCards.VCard.DisplayNames"/&gt; property of the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;-object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="A73172442C418E26">&lt;c&gt;CLIENTPIDMAP&lt;/c&gt;: Mappings for &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt;s. It is used for synchronizing different revisions of the same vCard. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="7374CFE8F36FCFFB">vCard-Properties, that don't belong to the standard.</T>
+  <T ID="B3A7A23B114A6B91">&lt;c&gt; TYPE &lt;/c&gt;: Describes the type of a postal address. &lt;c&gt; (2,3) &lt;/c&gt;</T>
+  <T ID="A4F425479544A4BC">&lt;c&gt;ALTID&lt;/c&gt;: A common identifier, that indicates, that several instances of the same property represent the same (e.g. in different languages). &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="F6553D1C5F83F66F">&lt;c&gt;CALSCALE&lt;/c&gt;: It is used to define the
+   calendar system in which a date or date-time value is expressed.&lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="61E7B741DF90CAD9">The
+   only value specified is &lt;c&gt;GREGORIAN&lt;/c&gt;, which stands for
+   the Gregorian system.</T>
+  <T ID="C7F718EB32537723">&lt;c&gt;CHARSET&lt;/c&gt;: Indicates the character set, that was used for the property. &lt;c&gt;(2)&lt;/c&gt;</T>
+  <T ID="B16B3D60DD8EAC2">&lt;c&gt;VALUE&lt;/c&gt;: Indicates where the actual content of the property is located. &lt;c&gt;(2)&lt;/c&gt;</T>
+  <T ID="92DA0C14396E06E1">&lt;c&gt;CONTEXT&lt;/c&gt;: Indicates the context of the data, e.g. &lt;c&gt;VCARD&lt;/c&gt; or &lt;c&gt;LDAP&lt;/c&gt;. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="E559B5EF23801226">Is used in the &lt;c&gt;SOURCE&lt;/c&gt; property of vCard 3.0.</T>
+  <T ID="917D44ADA51D88E1">&lt;c&gt;VALUE&lt;/c&gt;: Indicates which of the data types predefined by the vCard standard the content of the vCard property corresponds to. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="64FB513908CDDB00">&lt;c&gt;TYPE&lt;/c&gt;: Describes the type of an email. &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="C08E84BD6E3A4DA">Use only the constants defined in the class
+             &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.EmailType"/&gt;!</T>
+  <T ID="FD097DE22375DF90">&lt;c&gt;ENCODING&lt;/c&gt;: Indicates the encoding of the &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty`1"/&gt;. &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="25F007BF04C435D3">&lt;para&gt; The value is set automatically -
+             only for &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects this has to be done manually. &lt;/para&gt; &lt;para&gt; In vCard 3.0 only &lt;see cref ="F:FolkerKinzel.VCards.Models.Enums.VCdEncoding.Base64"/&gt; is permitted. &lt;/para&gt;</T>
+  <T ID="11ACEEC6756D71CA">&lt;c&gt;GEO&lt;/c&gt;: Geographical position. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="36583F3656FAEA27">&lt;c&gt;TYPE&lt;/c&gt;: Description of an instant messenger address. &lt;c&gt;(3 - RFC 4770)&lt;/c&gt;</T>
+  <T ID="2CB7FC70098D6315">&lt;c&gt;LABEL&lt;/c&gt;: Represents the actual text, that should be put on the mailing label, when delivering a physical package to the person/object associated with the vCard. &lt;c&gt;([2],[3],4)&lt;/c&gt;</T>
+  <T ID="4029DFE929F19427">In vCard 2.1 and vCard 3.0, the content is automatically inserted into the vCard as a separate &lt;c&gt;LABEL&lt;/c&gt; property.</T>
+  <T ID="1BA0D231C3E8FE25">&lt;c&gt;LANGUAGE&lt;/c&gt;: Language of the data in &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty`1"/&gt;. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="4812CE27D263E682">&lt;c&gt; INDEX &lt;/c&gt;: 1-based index of a property, if several instances of the same property are possible. &lt;c&gt; (4 - RFC 6715) &lt;/c&gt;</T>
+  <T ID="1DFE7250A32A96C4">An IETF Language Tag as defined in Section 2 of RFC 5646.</T>
+  <T ID="BB39AFA3DC7C5C7A">&lt;c&gt; MEDIATYPE &lt;/c&gt;: Specifies the MIME type for the data to which a URI refers (e.g. &lt;c&gt;text/plain&lt;/c&gt;). &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="488997B9644F2835">MIME type according to RFC 2046.</T>
+  <T ID="763373B3CB3F0D50">Non-standard attributes. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="8F05843EB7B70734">In order to write non-standardized attributes in a vCard, the &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteNonStandardParameters"&gt;VcfOptions.WriteNonStandardParameters&lt;/see&gt;-flag must be set explicitly when serializing the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object.</T>
+  <T ID="2EEEBD584BBD9B6B">&lt;c&gt;PREF&lt;/c&gt; oder &lt;c&gt;TYPE = PREF&lt;/c&gt;: Drückt die Präferenz für eine Eigenschaft aus. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="92DBA318DD2924AB">A value between 1 and 100. 1 means most preferred.</T>
+  <T ID="9E70F865716A0A2A">A differentiated preference can only be stated beginning with vCard 4.0. In vCard 2.1 and vCard 3.0 only the most preferred property is marked. As the preferred property the one is selected with the lowest numerical value for &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Preference"/&gt;.</T>
+  <T ID="C9640E79E2D8FC1B">&lt;c&gt;TYPE&lt;/c&gt;: Indicates, wether a &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty`1"/&gt; is related to an individual's work place or to an individual's  personal life. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="F00F20D0294202B9">&lt;c&gt;PID&lt;/c&gt;: Property ID for identifying a specific vCard property under several instances with the same identifier. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="224B1A15368F451D">&lt;c&gt;TYPE&lt;/c&gt;: Specifies in a &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; (&lt;c&gt;RELATED&lt;/c&gt;) the type of relationship with a person. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="8C107C8267BB4331">&lt;c&gt;SORT-AS&lt;/c&gt;:&amp;#160;&lt;see cref ="T:System.String"/&gt;s (case-sensitive!), which determine the sort order. (Maximum as many as fields of the compound property!) &lt;c&gt;([3],4)&lt;/c&gt;</T>
+  <T ID="3F76B16437A3D245">&lt;code/&gt;</T>
+  <T ID="75ADA71E69EB4EC">When serializing a file as vCard 3.0, a separate &lt;c&gt;SORT-STRING&lt;/c&gt;-property, which contains the first &lt;see cref ="T:System.String"/&gt;, is automatically inserted into the vCard.</T>
+  <T ID="39FC73256E0FCAF6">&lt;c&gt;TYPE&lt;/c&gt;: Describes a telephone number. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="C33EFD5D5DCC0BED">&lt;c&gt;TZ&lt;/c&gt;: Time zone &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="5F982B5AAFD7E363">Deletes all contents of the current instance.</T>
+  <T ID="13C798FCF36A9D1A">Assigns the content of &lt;paramref name ="other"/&gt; to the instance.</T>
+  <T ID="F791F02AA6090E55">Foreign instance, whose content is adopted.</T>
+  <T ID="FFEE652A8C6C03A6">&lt;paramref name="other"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="7D763CCA7F362828">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/&gt; object. (For debugging only.)</T>
+  <T ID="BC6FFD1D4899FACD">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/&gt; object.</T>
+  <T ID="EA609C0EC4A9468B">Named constants to specify the parameter &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.ExpertiseLevel"/&gt; in the property &lt;see cref="P:FolkerKinzel.VCards.VCard.Expertises"&gt;VCard.Expertises&lt;/see&gt;. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
+  <T ID="C63D24DC9A382F57">&lt;c&gt;LEVEL&lt;/c&gt;: A person's level of expertise. (For the property &lt;see cref="P:FolkerKinzel.VCards.VCard.Expertises"&gt;VCard.Expertises&lt;/see&gt;.) &lt;c&gt;(4 - RFC 6715)&lt;/c&gt;</T>
+  <T ID="6B161DB53E6663AF">&lt;c&gt;LEVEL&lt;/c&gt;: Degree of interest of a person in a thing. (For the properties &lt;see cref="P:FolkerKinzel.VCards.VCard.Hobbies"&gt;VCard.Hobbies&lt;/see&gt; and &lt;see cref="P:FolkerKinzel.VCards.VCard.Interests"&gt;VCard.Interests&lt;/see&gt;.) &lt;c&gt;(4 - RFC 6715)&lt;/c&gt;</T>
+  <T ID="A0BCF7A4892FE001">Named constants to specify the parameter &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.InterestLevel"/&gt; in the properties &lt;see cref="P:FolkerKinzel.VCards.VCard.Hobbies"&gt;VCard.Hobbies&lt;/see&gt; and &lt;see cref="P:FolkerKinzel.VCards.VCard.Interests"&gt;VCard.Interests&lt;/see&gt;. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
+  <T ID="C9D98BA61B916F28">Define the level of interest in the parameter &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.InterestLevel"/&gt;!</T>
+  <T ID="A36AEB5D1B916F28">Define the level of interest in the parameter &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.InterestLevel"/&gt;!</T>
+  <T ID="DA3AB7AF056445A4">Enter the level of expertise in the parameter &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.ExpertiseLevel"/&gt;!</T>
+  <T ID="4B4E4B31002C53F4">&lt;note type ="tip"&gt; When working with the enum, use the extension methods from &lt;see cref ="T:FolkerKinzel.VCards.Models.Helpers.VcfOptionsExtension"/&gt;.&lt;/note&gt;&lt;para&gt; The flags &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteWabExtensions"/&gt;,
+             &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteXExtensions"/&gt;, &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteEvolutionExtensions"/&gt; and &lt;see cref="F:FolkerKinzel.VCards.VcfOptions.WriteKAddressbookExtensions"/&gt; control the automatic generation of non-standard properties. Even if these flags are set, the non-standard properties are only generated automatically, if the selected vCard standard does not allow a standardized equivalent. &lt;/para&gt;</T>
+  <T ID="39112E8A81AA63F9">&lt;note type ="tip"&gt; When working with the enum, use the extension methods from the
+             &lt;see cref ="T:FolkerKinzel.VCards.Models.Helpers.AddressTypesExtension"/&gt; - class. &lt;/note&gt;</T>
+  <T ID="5BEC1784FC735A47">&lt;c&gt;DOM&lt;/c&gt;: Domestic delivery address</T>
+  <T ID="298E7FE122D693A7">&lt;c&gt;INTL&lt;/c&gt;: International delivery address</T>
+  <T ID="AD609E36B5B8EA12">&lt;c&gt;POSTAL&lt;/c&gt;: Postal delivery address</T>
+  <T ID="AB07A7E0A2800338">&lt;c&gt;PARCEL&lt;/c&gt;: Parcel delivery address</T>
+  <T ID="480E6AF3B6EFA39D">URL encoded</T>
+  <T ID="FB84311FA00B2ED2">Base64 encoded</T>
+  <T ID="F3B12F4E9F3D5DE6">Internet addressing type</T>
+  <T ID="FFDAB3AE9B8DE389">X.400 addressing type (e.g. "BusinessMail X.400")</T>
+  <T ID="333D0370CFE4A529">Beginner</T>
+  <T ID="6E363E5589A2F340">Average</T>
+  <T ID="1DEB579AA3C6F0E8">Expert</T>
+  <T ID="17823BAE8090B087">&lt;note type ="tip"&gt; When working with the Enum, use the extension methods from the &lt;see cref ="T:FolkerKinzel.VCards.Models.Helpers.ImppTypesExtension"/&gt; class. &lt;/note&gt;</T>
+  <T ID="CD9BD17889ED36E6">Personal</T>
+  <T ID="A72AD974EA711A78">Business</T>
+  <T ID="6D2E690F16101276">Mobile</T>
+  <T ID="77FD894564E91AB4">High</T>
+  <T ID="6C496E91687B5819">Medium</T>
+  <T ID="A8631DF1521DD7DC">Low</T>
+  <T ID="276307858B105D55">&lt;note type ="tip"&gt; When working with the Enum, use the extension methods from the &lt;see cref="T:FolkerKinzel.VCards.Models.Helpers.PropertyClassTypesExtension"/&gt; class. &lt;/note&gt;</T>
+  <T ID="70347FDC3EDE8B96">&lt;c&gt;WORK&lt;/c&gt;: Implies, that the property is related to an individual's work place.</T>
+  <T ID="662E6F18A106EED5">&lt;c&gt;HOME&lt;/c&gt;: Implies, that the property is related to an individual's personal life.</T>
+  <T ID="9EC0AC61989F1F97">&lt;note type ="tip"&gt; When working with the enum, use the extension methods from the &lt;see cref ="T:FolkerKinzel.VCards.Models.Helpers.RelationTypesExtension"/&gt; class. &lt;/note&gt;</T>
+  <T ID="826BB66BC8C58DFD">&lt;c&gt;CONTACT&lt;/c&gt;: Someone you know how to get in touch with. Often symmetric.</T>
+  <T ID="BEE34847BBD27652">&lt;c&gt;ACQUAINTANCE&lt;/c&gt;: Someone who you have exchanged greetings and not much (if any) more — maybe a short conversation or two. Often symmetric.</T>
+  <T ID="542B3CE5B55881B7">&lt;c&gt;FRIEND&lt;/c&gt;: Someone you are a friend to. A compatriot, buddy, home(boy|girl), that you know. Often symmetric.</T>
+  <T ID="10153739AC9F6088">&lt;c&gt;MET&lt;/c&gt;: Someone who you have actually met in person. Symmetric.</T>
+  <T ID="8DB718F02F32DB7D">&lt;c&gt;CO-WORKER&lt;/c&gt;: Someone a person works with, or works at the same organization as. Symmetric. Usually transitive.</T>
+  <T ID="48E31D5F29E6A418">&lt;c&gt;COLLEAGUE&lt;/c&gt;: Someone in the same field of study/activity. Symmetric. Often transitive.</T>
+  <T ID="40A475F97A6F0DC">&lt;c&gt;CO-RESIDENT&lt;/c&gt;: Someone you share a street address with. Symmetric and transitive.</T>
+  <T ID="F97A682E0E5C8AB6">&lt;c&gt;NEIGHBOR&lt;/c&gt;: Someone who lives nearby, perhaps only at an adjacent street address or doorway. Symmetric. Often transitive.</T>
+  <T ID="524E1C61E7560DEC">&lt;c&gt;CHILD&lt;/c&gt;: A person's genetic offspring, or someone that a person has adopted and takes care of. Inverse is parent.</T>
+  <T ID="591960F46573C6FE">&lt;c&gt;PARENT&lt;/c&gt;: Inverse of child.</T>
+  <T ID="1F0FB8953AF93DA1">&lt;c&gt;SIBLING&lt;/c&gt;:  Someone a person shares a parent with. Symmetric. Usually transitive.</T>
+  <T ID="2DCFF49F0390E6E">&lt;c&gt;SPOUSE&lt;/c&gt;: Someone you are married to. Symmetric. Not transitive.</T>
+  <T ID="82960D752DDE0758">&lt;c&gt;KIN&lt;/c&gt;: A relative, someone you consider part of your extended family. Symmetric and typically transitive.</T>
+  <T ID="7C3A622AC5E61159">&lt;c&gt;MUSE&lt;/c&gt;: Someone who brings you inspiration. No inverse.</T>
+  <T ID="9B689FD49EABDCD2">&lt;c&gt;CRUSH&lt;/c&gt;: Someone you have a crush on. No inverse.</T>
+  <T ID="241FD63023AE9F98">&lt;c&gt;DATE&lt;/c&gt;: Someone you are dating. Symmetric. Not transitive.</T>
+  <T ID="A81D73A5D868292B">&lt;c&gt;SWEETHEART&lt;/c&gt;: Someone with whom you are intimate and at least somewhat committed, typically exclusively. Symmetric. Not transitive.</T>
+  <T ID="9B74F4F9B131CAED">&lt;c&gt;ME&lt;/c&gt;: A link to yourself at a different URL. Exclusive of all other XFN values. Required symmetric. There is an implicit "me" relation from the contents of a directory to the directory itself.</T>
+  <T ID="142B283AAA1C2B41">&lt;c&gt;AGENT&lt;/c&gt;: An entity, who may sometimes act on behalf of the entity
+         associated with the vCard.</T>
+  <T ID="14C773A5B525579">&lt;c&gt;EMERGENCY&lt;/c&gt;: Indicates an emergency contact.</T>
+  <T ID="8B3B99CD3867D656">&lt;note type ="tip"&gt; When working with the Enum, use the extension methods from the &lt;see cref="T:FolkerKinzel.VCards.Models.Helpers.TelTypesExtension"/&gt; class. &lt;/note&gt;</T>
+  <T ID="3F7491267AF71DB8">&lt;c&gt;VOICE&lt;/c&gt;: Indicates a voice telephone number. (Default). &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="848634F980A53F3F">&lt;c&gt;FAX&lt;/c&gt;: Indicates a facsimile telephone number. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="3A4DD86DC1B10B00">&lt;c&gt;CELL&lt;/c&gt;: Indicates a cellular or mobile telephone number.  &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="1563486DBD1726A3">&lt;c&gt;PAGER&lt;/c&gt;: Indicates a paging device telephone number.  &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="F8961CE5F771EB30">&lt;c&gt;VIDEO&lt;/c&gt;: Indicates a video conferencing telephone number. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="52FE47144F5457A7">&lt;c&gt;TEXTPHONE&lt;/c&gt;: Indicates a telecommunication device for people with hearing or speech difficulties. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="C6F45A473302A0E">&lt;c&gt;TEXT&lt;/c&gt;: Indicates that the telephone number supports text messages (SMS). &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="A0A18810F475A586">&lt;c&gt;PCS&lt;/c&gt;: Indicates a personal communication services telephone number. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="6170B1EF6852EDA1">&lt;c&gt;ISDN&lt;/c&gt;: Indicates an ISDN service telephone number. &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="8A2D69FCE00FDEF4">&lt;c&gt;CAR&lt;/c&gt;: Indicates a car-phone telephone number.&lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="F59C06DBBE402D0A">&lt;c&gt;MODEM&lt;/c&gt;: Indicates a MODEM connected telephone number. &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="F28A42F1E4EA52E3">&lt;c&gt;BBS&lt;/c&gt;: Indicates a bulletin board system telephone number. &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="B2D633BB22D3EECA">&lt;c&gt;MSG&lt;/c&gt;: Indicates, that the telephone number has voice messaging support. &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="E9177BD324E2CFBB">Public</T>
+  <T ID="58DB071B713DCD65">Private</T>
+  <T ID="824C9C608B5650FD">Confidential</T>
+  <T ID="173775B02C3D2205">&lt;c&gt;INLINE&lt;/c&gt;: The location of the property value is inline with the property. (Default)</T>
+  <T ID="69CCB9EB23B8F36D">&lt;c&gt;Content-ID&lt;/c&gt;, &lt;c&gt;CID&lt;/c&gt;: In the case of the vCard being transported within a MIME email message, the property value can be specified as being located in a separate MIME entity with the “Content-ID” value, or “CID” for short. In this case, the property value is the Content-ID for the MIME entity containing the property value.</T>
+  <T ID="4BCF01B2A165C8DA">&lt;c&gt;URL&lt;/c&gt;: The property value is specified as being located out on the network within some Internet resource. In this case, the property value is the Uniform Resource Locator for the Internet resource containing the property value.</T>
 </Tsltn>

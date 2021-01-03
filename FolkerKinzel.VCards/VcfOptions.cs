@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Models.PropertyParts;
+﻿using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
 
 namespace FolkerKinzel.VCards
@@ -6,23 +7,31 @@ namespace FolkerKinzel.VCards
     /// <summary>
     /// Benannte Konstanten, um Optionen für das Schreiben von VCF-Dateien zu bestimmen. Die Konstanten sind kombinierbar.
     /// </summary>
+    /// <remarks>
     /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
     /// <see cref="Models.Helpers.VcfOptionsExtension"/>.</note>
+    /// <para>Die Flags <see cref="WriteWabExtensions"/>,
+    /// <see cref="WriteXExtensions"/>, <see cref="WriteEvolutionExtensions"/> und <see cref="WriteKAddressbookExtensions"/>
+    /// steuern die automatische Verwendung von Non-Standard-Properties. Auch wenn diese Flags gesetzt sind,
+    /// werden die Non-Standard-Properties nur dann automatisch erzeugt, wenn der gewählte vCard-Standard kein standardisiertes
+    /// Äquivalent ermöglicht.</para>
+    /// </remarks>
     [Flags]
     public enum VcfOptions
     {
         /// <summary>
-        /// Alle Options-Flags sind gesetzt.
+        /// Alle Flags sind gesetzt.
         /// </summary>
         All = -1,
 
         /// <summary>
-        /// Alle Options-Flags sind ausgeschaltet.
+        /// Alle Flags sind ausgeschaltet.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Standardeinstellung (entspricht WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions | WriteImppExtension | WriteXExtensions)
+        /// Standardeinstellung (entspricht <see cref="WriteGroups"/> | <see cref="WriteRfc6474Extensions"/>
+        /// | <see cref="WriteRfc6715Extensions"/> | <see cref="WriteImppExtension"/> | <see cref="WriteXExtensions"/>)
         /// </summary>
         Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions | WriteImppExtension | WriteXExtensions,
 
@@ -40,80 +49,61 @@ namespace FolkerKinzel.VCards
 
         /// <summary>
         /// Flag setzen, um in vCard 2.1 und vCard 3.0 eingebettete
-        /// AGENT-vCards zusätzlich an die Haupt-vCard anzuhängen.
+        /// <c>AGENT</c>-vCards zusätzlich an die Haupt-vCard anzuhängen.
         /// </summary>
         IncludeAgentAsSeparateVCard = 1 << 2,
 
 
         /// <summary>
-        /// Flag setzen, um Non-Standard-Parameter der Property <see cref="ParameterSection.NonStandardParameters"/>
+        /// Flag setzen, um Non-Standard-Parameter der Eigenschaft <see cref="ParameterSection.NonStandardParameters">ParameterSection.NonStandardParameters</see>
         /// zu schreiben.
         /// </summary>
         WriteNonStandardParameters = 1 << 3,
 
 
         /// <summary>
-        /// Flag setzen, um Non-Standard-vCard-Properties zu schreiben, die in der Eigenschaft <see cref="VCard.NonStandardProperties"/>
+        /// Flag setzen, um <see cref="NonStandardProperty"/>-Objekte zu serialisieren, die in der Eigenschaft <see cref="VCard.NonStandardProperties">VCard.NonStandardProperties</see>
         /// gespeichert sind.
         /// </summary>
         WriteNonStandardProperties = 1 << 4,
 
         /// <summary>
-        /// Flag setzen, um in vCard 4.0 die Erweiterungen aus RFC 6474 zu schreiben (BIRTHPLACE, DEATHPLACE, DEATHDATE).
+        /// Flag setzen, um in vCard 4.0 die Erweiterungen aus RFC 6474 zu schreiben (<c>BIRTHPLACE</c>, <c>DEATHPLACE</c>, <c>DEATHDATE</c>).
         /// </summary>
         WriteRfc6474Extensions = 1 << 5,
 
         /// <summary>
-        /// Flag setzen, um in vCard 4.0 die Erweiterungen aus RFC 6715 zu schreiben (EXPERTISE, HOBBY, INTEREST, ORG-DIRECTORY).
+        /// Flag setzen, um in vCard 4.0 die Erweiterungen aus RFC 6715 zu schreiben (<c>EXPERTISE</c>, <c>HOBBY</c>, <c>INTEREST</c>, <c>ORG-DIRECTORY</c>).
         /// </summary>
         WriteRfc6715Extensions = 1 << 6,
 
         /// <summary>
-        /// Flag setzen, um in vCard 3.0 die Erweiterung IMPP aus RFC 4770 zu schreiben.
+        /// Flag setzen, um in vCard 3.0 die Erweiterung <c>IMPP</c> aus RFC 4770 zu schreiben.
         /// </summary>
         WriteImppExtension = 1 << 7,
 
         /// <summary>
-        /// Flag setzen, um bei Bedarf die folgenden vCard-Properties zu schreiben: X-AIM, X-GADUGADU, X-GOOGLE-TALK, X-GTALK, X-ICQ, X-JABBER, 
-        /// X-MSN, X-SKYPE, X-TWITTER, X-YAHOO, X-MS-IMADDRESS, X-GENDER, X-ANNIVERSARY und X-SPOUSE.
+        /// Flag setzen, um bei Bedarf die folgenden vCard-Properties zu schreiben: 
+        /// <c>X-AIM</c>, <c>X-GADUGADU</c>, <c>X-GOOGLE-TALK</c>, <c>X-GTALK</c>, <c>X-ICQ</c>, <c>X-JABBER</c>, <c>X-MSN</c>, <c>X-SKYPE</c>, <c>X-TWITTER</c>,
+        /// <c>X-YAHOO</c>, <c>X-MS-IMADDRESS</c>, <c>X-GENDER</c>, <c>X-ANNIVERSARY</c> und <c>X-SPOUSE</c>.
         /// </summary>
-        /// <remarks>
-        /// Die Erweiterungen werden nur dann in die vCard geschrieben, wenn in der gewählten vCard-Version keine 
-        /// standardgerechte Property für die entsprechenden Daten existiert. So werden z.B. die Instant-Messenger-Properties
-        /// in vCard 3.0 nur dann geschrieben, wenn die in RFC 4770 definierte Erweiterung "IMPP" nicht verfügbar ist,
-        /// weil das Flag <see cref="WriteImppExtension"/> nicht gesetzt ist.
-        /// </remarks>
         WriteXExtensions = 1 << 8,
 
         /// <summary>
-        /// Flag setzen, um bei Bedarf die folgenden vCard-Properties zu schreiben: X-EVOLUTION-ANNIVERSARY, X-EVOLUTION-SPOUSE.
+        /// Flag setzen, um bei Bedarf die folgenden vCard-Properties zu schreiben: <c>X-EVOLUTION-ANNIVERSARY</c>, <c>X-EVOLUTION-SPOUSE</c>.
         /// </summary>
-        /// <remarks>
-        /// Die Erweiterungen werden nur dann in die vCard geschrieben, wenn in der gewählten vCard-Version keine 
-        /// standardgerechte Property für die entsprechenden Daten existiert.
-        /// </remarks>
         WriteEvolutionExtensions = 1 << 9,
 
         /// <summary>
-        /// Flag setzen, um bei Bedarf die folgenden vCard-Properties zu schreiben: X-KADDRESSBOOK-X-IMAddress,
-        /// X-KADDRESSBOOK-X-Anniversary, X-KADDRESSBOOK-X-SpouseName.
+        /// Flag setzen, um bei Bedarf die folgenden vCard-Properties zu schreiben:
+        /// <c>X-KADDRESSBOOK-X-IMAddress</c>, <c>X-KADDRESSBOOK-X-Anniversary</c>, <c>X-KADDRESSBOOK-X-SpouseName</c>.
         /// </summary>
-        /// <remarks>
-        /// Die Erweiterungen werden nur dann in die vCard geschrieben, wenn in der gewählten vCard-Version keine 
-        /// standardgerechte Property für die entsprechenden Daten existiert. So wird z.B. X-KADDRESSBOOK-X-IMAddress
-        /// in vCard 3.0 nur dann geschrieben, wenn die in RFC 4770 definierte Erweiterung "IMPP" nicht verfügbar ist,
-        /// weil das Flag <see cref="WriteImppExtension"/> nicht gesetzt ist.
-        /// </remarks>
         WriteKAddressbookExtensions = 1 << 10,
 
         /// <summary>
-        /// Flag setzen, um bei Bedarf die folgenden vCard-Properties zu schreiben: X-WAB-GENDER, X-WAB-WEDDING-ANNIVERSARY
-        /// und X-WAB-SPOUSE-NAME.
+        /// Flag setzen, um bei Bedarf die folgenden vCard-Properties zu schreiben:
+        /// <c>X-WAB-GENDER</c>, <c>X-WAB-WEDDING-ANNIVERSARY</c>, <c>X-WAB-SPOUSE-NAME</c>.
         /// </summary>
-        /// <remarks>
-        /// Die Erweiterungen werden nur dann in die vCard geschrieben, wenn in der gewählten vCard-Version keine 
-        /// standardgerechte Property für die entsprechenden Daten existiert.
-        /// </remarks>
         WriteWabExtensions = 1 << 11
     }
 }

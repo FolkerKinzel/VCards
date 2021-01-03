@@ -5,8 +5,10 @@ namespace FolkerKinzel.VCards.Models.Enums
     /// <summary>
     /// Benannte Konstanten, um die Art der Beziehung zu einer Person oder Organisation zu beschreiben.
     /// </summary>
-    /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
-    /// <see cref="Models.Helpers.RelationTypesExtension"/>.</note>
+    /// <remarks>
+    /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der
+    /// <see cref="Models.Helpers.RelationTypesExtension"/>-Klasse.</note>
+    /// </remarks>
     [Flags]
     public enum RelationTypes
     {
@@ -108,8 +110,8 @@ namespace FolkerKinzel.VCards.Models.Enums
         Me = 1 << 17,
 
         /// <summary>
-        /// <c>AGENT</c>: Person oder Organisation, die manchmal als Helfer der Person oder Organisation, auf die die vCard 
-        /// ausgestellt ist, auftritt.
+        /// <c>AGENT</c>: Person oder Organisation, die manchmal als Helfer der Person oder Organisation auftritt, auf die die vCard 
+        /// ausgestellt ist.
         /// </summary>
         Agent = 1 << 18,
 

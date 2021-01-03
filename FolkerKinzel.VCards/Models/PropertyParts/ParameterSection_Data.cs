@@ -48,7 +48,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>ALTID</c>: Ein String, der zu erkennen gibt, dass mehrere Instanzen derselben Property dasselbe 
+        /// <c>ALTID</c>: Ein gemeinsamer Bezeichner, der zu erkennen gibt, dass mehrere Instanzen derselben Property dasselbe 
         /// darstellen (z.B. in unterschiedlichen Sprachen). <c>(4)</c>
         /// </summary>
         public string? AltID
@@ -122,10 +122,12 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>ENCODING</c>: Gibt die Encodierung der Property an. <c>(2,3)</c>
+        /// <c>ENCODING</c>: Gibt die Encodierung der <see cref="VCardProperty{T}"/> an. <c>(2,3)</c>
         /// </summary>
         /// <value>
-        /// In vCard 3.0 ist nur <see cref="VCdEncoding.Base64"/> gestattet.
+        /// <para>Der Wert wird automatisch gesetzt - 
+        /// lediglich bei <see cref="NonStandardProperty"/>-Objekten muss dies manuell erfolgen.</para>
+        /// <para>In vCard 3.0 ist nur <see cref="VCdEncoding.Base64"/> gestattet.</para> 
         /// </value>
         public VCdEncoding? Encoding
         {
@@ -135,7 +137,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>LEVEL</c>: Grad der Sachkenntnis (Für Property <c>EXPERTISE</c>). <c>(4 - RFC 6715)</c>
+        /// <c>LEVEL</c>: Grad der Sachkenntnis einer Person. (Für die Eigenschaft <see cref="VCard.Expertises">VCard.Expertises</see>.) <c>(4 - RFC 6715)</c>
         /// </summary>
         public ExpertiseLevel? ExpertiseLevel
         {
@@ -145,7 +147,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>GEO</c>: Geografische Position <c>(4)</c>
+        /// <c>GEO</c>: Geografische Position. <c>(4)</c>
         /// </summary>
         public GeoCoordinate? GeographicPosition
         {
@@ -164,7 +166,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// <c>INDEX</c>: Index einer Property, wenn mehrere Instanzen derselben Property möglich sind. <c>(4 - RFC 6715)</c>
+        /// <c>INDEX</c>: 1-basierter Index einer Property, wenn mehrere Instanzen derselben Property möglich sind. <c>(4 - RFC 6715)</c>
         /// </summary>
         public int? Index
         {
@@ -183,7 +185,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>LEVEL</c>: Grad des Interesses für eine Sache (Für Property <c>INTEREST</c>.) <c>(4 - RFC 6715)</c>
+        /// <c>LEVEL</c>: Grad des Interesses einer Person für eine Sache. (Für die Eigenschaften 
+        /// <see cref="VCard.Hobbies">VCard.Hobbies</see> und <see cref="VCard.Interests">VCard.Interests</see>.) <c>(4 - RFC 6715)</c>
         /// </summary>
         public InterestLevel? InterestLevel
         {
@@ -195,7 +198,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// <c>LABEL</c>: Gibt die formatierte Textdarstellung einer Adresse an. <c>([2],[3],4)</c>
         /// </summary>
-        /// <remarks>In vCard 2.1 und vCard 3.0 wird der Inhalt als separate <c>LABEL</c>-Property eingefügt.</remarks>
+        /// <remarks>In vCard 2.1 und vCard 3.0 wird der Inhalt automatisch als separate <c>LABEL</c>-Property in die vCard eingefügt.</remarks>
         public string? Label
         {
             get => Get<string?>(VCdParam.Label);
@@ -208,8 +211,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>LANGUAGE</c>: Sprache der Property. <c>(2,3,4)</c>
+        /// <c>LANGUAGE</c>: Sprache der <see cref="VCardProperty{T}"/>. <c>(2,3,4)</c>
         /// </summary>
+        /// <value>Ein IETF-Language-Tag wie in Section 2 von RFC 5646 definiert.</value>
         public string? Language
         {
             get => Get<string?>(VCdParam.Language);
@@ -218,8 +222,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>MEDIATYPE</c>: Gibt bei URIs den MIME-Typ an, auf den die Uri verweist (z.B. <c>text/plain</c>). <c>(4)</c>
+        /// <c>MEDIATYPE</c>: Gibt bei URIs den MIME-Typ der Daten an, auf den der URI verweist (z.B. <c>text/plain</c>). <c>(4)</c>
         /// </summary>
+        /// <value>
+        /// MIME-Typ entsprechend RFC 2046.
+        /// </value>
         public string? MediaType
         {
             get => Get<string?>(VCdParam.MediaType);
@@ -230,8 +237,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// Nichtstandardisierte Attribute. <c>(2,3,4)</c>
         /// </summary>
         /// <remarks>
-        /// Um nicht-standardisierte Attribute in eine vCard-Property zu schreiben, muss beim Serialisieren des 
-        /// <see cref="VCard"/>-Objekts das Flag <see cref="VcfOptions.WriteNonStandardParameters"/> gesetzt sein.
+        /// Um nicht-standardisierte Attribute in eine vCard zu schreiben, muss beim Serialisieren des 
+        /// <see cref="VCard"/>-Objekts das Flag <see cref="VcfOptions.WriteNonStandardParameters">VcfOptions.WriteNonStandardParameters</see> 
+        /// explizit gesetzt werden.
         /// </remarks>
         public IEnumerable<KeyValuePair<string, string>>? NonStandardParameters
         {
@@ -269,7 +277,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>TYPE</c>: Klassifiziert eine Property als dienstlich und / oder privat. <c>(2,3,4)</c>
+        /// <c>TYPE</c>: Klassifiziert eine <see cref="VCardProperty{T}"/> als dienstlich und / oder privat. <c>(2,3,4)</c>
         /// </summary>
         public PropertyClassTypes? PropertyClass
         {
@@ -283,12 +291,12 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>PID</c>: Property-ID zur Identifizierung einer bestimmten Property unter verschiedenen Instanzen derselben Property. <c>(4)</c>
+        /// <c>PID</c>: Property-ID zur Identifizierung einer bestimmten vCard-Property unter verschiedenen Instanzen mit demselben Bezeichner. <c>(4)</c>
         /// </summary>
         public IEnumerable<PropertyID>? PropertyIDs
         {
-            get => Get<IEnumerable<PropertyID>?>(VCdParam.PID);
-            set => Set(VCdParam.PID, value);
+            get => Get<IEnumerable<PropertyID>?>(VCdParam.PropertyIDs);
+            set => Set(VCdParam.PropertyIDs, value);
         }
 
 
@@ -317,7 +325,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// </code>
         /// </example>
         /// <remarks>
-        /// In vCard 3.0 wird eine separate <c>SORT-STRING</c> - Property eingefügt, in die lediglich der erste <see cref="string"/>
+        /// In vCard 3.0 wird automatisch eine separate <c>SORT-STRING</c>-Property eingefügt, in die lediglich der erste <see cref="string"/>
         /// übernommen wird.
         /// </remarks>
         public IEnumerable<string?>? SortAs

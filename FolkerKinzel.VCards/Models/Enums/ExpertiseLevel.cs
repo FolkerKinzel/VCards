@@ -1,7 +1,10 @@
-﻿namespace FolkerKinzel.VCards.Models.Enums
+﻿using FolkerKinzel.VCards.Models.PropertyParts;
+
+namespace FolkerKinzel.VCards.Models.Enums
 {
     /// <summary>
-    /// Benannte Konstanten, um den Level-Parameter in der Erweiterung "EXPERTISE" anzugeben (RFC 6715).
+    /// Benannte Konstanten, um den Parameter <see cref="ParameterSection.ExpertiseLevel"/> in der 
+    /// Eigenschaft <see cref="VCard.Expertises">VCard.Expertises</see> anzugeben. <c>(RFC 6715)</c>
     /// </summary>
     public enum ExpertiseLevel
     {

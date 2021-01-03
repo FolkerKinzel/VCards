@@ -44,7 +44,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         /// <summary>
-        /// Initialisiert ein neues <see cref="NameProperty"/>-Objekt.
+        /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
         /// </summary>
         /// <param name="postOfficeBox">Postfach</param>
         /// <param name="extendedAddress">Adresszusatz</param>
@@ -54,6 +54,10 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="postalCode">Postleitzahl</param>
         /// <param name="country">Land (Staat)</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe, der die Property zugehören soll.</param>
+        /// <remarks>
+        /// Es ist empfehlenswert, dem Parameter <see cref="ParameterSection.Label"/> des <see cref="AddressProperty"/>-Objekts
+        /// eine formatierte Darstellung der Adresse zuzuweisen.
+        /// </remarks>
         public AddressProperty(
             string? postOfficeBox,
             string? extendedAddress,

@@ -5,138 +5,118 @@
         private enum VCdParam
         {
             /// <summary>
-            /// CONTEXT Gibt den Kontext der Daten an, z.B. "VCARD" oder "LDAP". (3)
+            /// <c>CONTEXT</c>: Gibt den Kontext der Daten an, z.B. <c>VCARD</c> oder <c>LDAP</c>. <c>(3)</c>
             /// </summary>
-            /// <remarks>Kommt in der SOURCE-Property von vCard 3.0 zum Einsatz.</remarks>
             Context,
 
             /// <summary>
-            /// TYPE Klassifiziert eine Property als dienstlich und / oder privat. (2,3,4)
+            /// <c>TYPE</c>: Klassifiziert eine <see cref="VCardProperty{T}"/> als dienstlich und / oder privat. <c>(2,3,4)</c>
             /// </summary>
             PropertyClass,
 
             /// <summary>
-            /// TYPE Bestimmt in der Relations-Property (RELATED) die Art der Beziehung zu einer Person. (4)
+            /// <c>TYPE</c>: Bestimmt in einer <see cref="RelationProperty"/> (<c>RELATED</c>) die Art der Beziehung zu einer Person. <c>(4)</c>
             /// </summary>
             RelationType,
 
             /// <summary>
-            /// TYPE Beschreibt die Art einer Adresse. (2,3)
+            /// <c>TYPE</c>: Beschreibt die Art einer Adresse. <c>(2,3)</c>
             /// </summary>
             AddressType,
 
             /// <summary>
-            /// TYPE Beschreibt die Art einer E-Mail. Verwenden Sie nur die Konstanten der Klasse
-            /// <see cref="EmailType"/>. (2,3)
+            /// <c>TYPE</c>: Beschreibt die Art einer E-Mail. <c>(2,3)</c>
             /// </summary>
             EmailType,
 
 
             /// <summary>
-            /// TYPE Beschreibt die Art einer Telefonnummer. (2,3,4)
+            /// <c>TYPE</c>: Beschreibt die Art einer Telefonnummer. <c>(2,3,4)</c>
             /// </summary>
             TelephoneType,
 
 
             /// <summary>
-            /// LEVEL RFC 6715: Used to indicate a level of expertise
-            /// attained by the object the vCard represents. (Für Property EXPERTISE). (4 Erweiterung)
+            /// <c>LEVEL</c>: Grad der Sachkenntnis einer Person. (Für vCard-Property <c>EXPERTISE</c>). <c>(4 - RFC 6715)</c>
             /// </summary>
             ExpertiseLevel,
 
             /// <summary>
-            /// TYPE Nähere Beschreibung einer Instant-Messenger-Adresse. (3 - RFC 4770)
+            /// <c>TYPE</c>: Nähere Beschreibung einer Instant-Messenger-Adresse. <c>(3 - RFC 4770)</c>
             /// </summary>
             InstantMessengerType,
 
             /// <summary>
-            /// LEVEL RFC 6715: Used to indicate a level of hobby or interest
-            /// attained by the object the vCard represents. (Für Property INTEREST.) (4 Erweiterung)
+            /// <c>LEVEL</c>: Grad des Interesses einer Person für eine Sache (Für die vCard-Properties <c>HOBBY</c> und <c>INTEREST</c>.) <c>(4 - RFC 6715)</c>
             /// </summary>
             InterestLevel,
 
 
             /// <summary>
-            /// LABEL Gibt die formatierte Textdarstellung einer Adresse an. ([2],[3],4)
+            /// <c>LABEL</c>: Gibt die formatierte Textdarstellung einer Adresse an. <c>([2],[3],4)</c>
             /// </summary>
-            /// <remarks>In vCard 2.1 und vCard 3.0 wird der Inhalt als separate LABEL-Property eingefügt.</remarks>
             Label,
 
 
             /// <summary>
-            /// PREF oder TYPE=PREF Drückt die Beliebtheit einer Property aus (zwischen 1 und 100). 1 bedeutet 
-            /// am beliebtesten. Bei Properties, die mehrfach vorkommen, zählt die größte Beliebtheit. (2,3,4)
+            /// <c>PREF</c> oder <c>TYPE=PREF</c>: Drückt die Beliebtheit einer Property aus. <c>(2,3,4)</c>
             /// </summary>
             Preference,
 
 
             /// <summary>
-            /// CHARSET Gibt den Zeichensatz an, der für die Property verwendet wurde. (2)
+            /// <c>CHARSET</c>: Gibt den Zeichensatz an, der für die Property verwendet wurde. <c>(2)</c>
             /// </summary>
             Charset,
 
             /// <summary>
-            /// ENCODING Gibt die Encodierung der Property an. (2,3)
+            /// <c>ENCODING</c>: Gibt die Encodierung der <see cref="VCardProperty{T}"/> an. <c>(2,3)</c>
             /// </summary>
-            /// <remarks>
-            /// vCard 3.0 nur "b" für "Base64.
-            /// </remarks>
             Encoding,
 
             /// <summary>
-            /// LANGUAGE Sprache der Property. (2,3,4)
+            /// <c>LANGUAGE</c>: Sprache der <see cref="VCardProperty{T}"/>. <c>(2,3,4)</c>
             /// </summary>
             Language,
 
 
             /// <summary>
-            /// VALUE: Gibt an, welchem der vom vCard-Standard vordefinierten Datentypen der Inhalt
-            /// der vCard-Property entspricht. (3,4)
+            /// <c>VALUE</c>: Gibt an, welchem der vom vCard-Standard vordefinierten Datentypen der Inhalt
+            /// der vCard-Property entspricht. <c>(3,4)</c>
             /// </summary>
             DataType,
 
             /// <summary>
-            /// VALUE: Gibt an, wo sich der eigentiche Inhalt der Property befindet. (2)
+            /// <c>VALUE</c>: Gibt an, wo sich der eigentiche Inhalt der Property befindet. <c>(2)</c>
             /// </summary>
             ContentLocation,
 
             /// <summary>
-            /// MEDIATYPE Gibt bei URIs den MIME-Typ an, auf den die Uri verweist (z.B. text/plain). (4)
+            /// <c>MEDIATYPE</c>: Gibt bei URIs den MIME-Typ der Daten an, auf den der URI verweist (z.B. <c>text/plain</c>). <c>(4)</c>
             /// </summary>
             MediaType,
 
             /// <summary>
-            /// GEO Geografische Position (4)
+            /// <c>GEO</c>: Geografische Position. <c>(4)</c>
             /// </summary>
             GeographicPosition,
 
 
             /// <summary>
-            /// TZ Zeitzone (4)
+            /// <c>TZ</c>: Zeitzone <c>(4)</c>
             /// </summary>
             TimeZone,
 
             /// <summary>
-            /// CALSCALE Gibt die Art des Kalenders an, der für Datumsangaben verwendet wird. (4)
+            /// <c>CALSCALE</c>: Gibt die Art des Kalenders an, der für Datumsangaben verwendet wird. <c>(4)</c>
             /// </summary>
-            /// <remarks>Der einzige offiziell registrierte Wert ist "GREGORIAN" für den gregorianischen 
-            /// Kalender.</remarks>
             Calendar,
 
 
             /// <summary>
-            /// SORT-AS Ein kommagetrennter <see cref="string"/> (case-sensitiv!) der die Sortierreihenfolge festlegt. ([3],4)
+            /// <c>SORT-AS</c>:&#160;<see cref="string"/>s (case-sensitiv!), die die Sortierreihenfolge festlegen. (Maximal so viele, wie Felder der 
+            /// zusammengesetzten Property!) <c>([3],4)</c>
             /// </summary>
-            /// <example>
-            /// <code>
-            /// FN:Rene van der Harten
-            /// N;SORT-AS="Harten,Rene":van der Harten;Rene,J.;Sir;R.D.O.N.
-            /// </code>
-            /// </example>
-            /// <remarks>
-            /// In vCard 3.0 wird eine separate SORT-STRING - Property eingefügt, in die lediglich der erste <see cref="string"/>
-            /// übernommen wird.
-            /// </remarks>
             SortAs,
 
 
@@ -147,22 +127,20 @@
 
 
             /// <summary>
-            /// PID Property-ID: Um eine bestimmte Property unter verschiedenen Instanzen derselben Property
-            /// zu identifizieren. (4)
+            /// <c>PID</c>: Property-ID zur Identifizierung einer bestimmten vCard-Property unter verschiedenen Instanzen mit demselben Bezeichner. <c>(4)</c>
             /// </summary>
-            PID,
+            PropertyIDs,
 
 
             /// <summary>
-            /// ALTID Ein String, der zu erkennen gibt, dass mehrere Instanzen derselben Property dasselbe 
-            /// darstellen (z.B. in unterschiedlichen Sprachen). (4)
+            /// <c>ALTID</c>: Ein gemeinsamer Bezeichner, der zu erkennen gibt, dass mehrere Instanzen derselben Property dasselbe 
+            /// darstellen (z.B. in unterschiedlichen Sprachen). <c>(4)</c>
             /// </summary>
             AltID,
 
 
             /// <summary>
-            /// INDEX RFC 6715: Used in a multi-valued property to indicate the position of
-            /// this value within the set of values. (4 Erweiterung)
+            /// <c>INDEX</c>: 1-basierter Index einer Property, wenn mehrere Instanzen derselben Property möglich sind. <c>(4 - RFC 6715)</c>
             /// </summary>
             Index
 

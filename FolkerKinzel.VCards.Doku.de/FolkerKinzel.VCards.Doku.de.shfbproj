@@ -58,6 +58,7 @@
       <NamespaceSummaryItem name="FolkerKinzel.VCards.Models.Helpers" isDocumented="True">Enthält Erweiterungsmethoden, die das sichere Arbeiten mit den Flags-Enums aus dem Namespace FolkerKinzel.VCards.Models.Enums erleichtern.</NamespaceSummaryItem>
       <NamespaceSummaryItem name="FolkerKinzel.VCards.Models.PropertyParts" isDocumented="True">Enthält Klassen des vCard-Datenmodells, die i.d.R. in der Anwendung nicht selbständig verwendet werden. Es ist deshalb nicht nötig, diesen Namensraum in der Anwendung bekanntzugeben.</NamespaceSummaryItem>
     </NamespaceSummaries>
+    <VisibleItems>ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, ProtectedInternalAsProtected, NonBrowsable</VisibleItems>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->

@@ -71,7 +71,10 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// <c>VERSION</c>: Version der vCard-Spezifikation. <c>(2,3,4)</c>
         /// </summary>
-        public VCdVersion Version { get; private set; }
+        public VCdVersion Version
+        {
+            get; private set;
+        }
 
 
         /// <summary>
@@ -238,6 +241,9 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// <c>EXPERTISE</c>: Fachgebiete, über die die Person Kenntnisse hat. <c>(RFC 6715)</c>
         /// </summary>
+        /// <remarks>
+        /// Geben Sie den Grad der Fachkenntnis im Parameter <see cref="ParameterSection.ExpertiseLevel"/> an!
+        /// </remarks>
         public IEnumerable<TextProperty?>? Expertises
         {
             get => Get<IEnumerable<TextProperty>>(VCdProp.Expertises);
@@ -273,6 +279,9 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// <c>HOBBY</c>: Freizeitbeschäftigungen, denen die Person nachgeht. <c>(4 - RFC 6715)</c>
         /// </summary>
+        /// <remarks>
+        /// Legen Sie den Grad des Interesses im Parameter <see cref="ParameterSection.InterestLevel"/> fest!
+        /// </remarks>
         public IEnumerable<TextProperty?>? Hobbies
         {
             get => Get<IEnumerable<TextProperty?>?>(VCdProp.Hobbies);
@@ -294,6 +303,9 @@ namespace FolkerKinzel.VCards
         /// <c>INTEREST</c>: Freizeitbeschäftigungen, für die sich die Person interessiert, an denen sie 
         /// aber nicht zwangsläufig teilnimmt. <c>(4 - RFC 6715)</c>
         /// </summary>
+        /// <remarks>
+        /// Legen Sie den Grad des Interesses im Parameter <see cref="ParameterSection.InterestLevel"/> fest!
+        /// </remarks>
         public IEnumerable<TextProperty?>? Interests
         {
             get => Get<IEnumerable<TextProperty?>?>(VCdProp.Interests);
@@ -426,6 +438,46 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// vCard-Properties, die nicht dem Standard entsprechen.
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="NonStandardProperties"/> speichert alle vCard-Properties, die beim Parsen nicht
+        /// ausgewertet werden konnten. Um den Inhalt von <see cref="NonStandardProperties"/> in eine vCard
+        /// zu schreiben, muss das Flag <see cref="VcfOptions.WriteNonStandardProperties">VcfOptions.WriteNonStandardProperties</see>
+        /// explizit gesetzt werden.</para>
+        /// <para>Einige <see cref="NonStandardProperty"/>-Objekte werden der zu schreibenden vCard automatisch
+        /// hinzugefügt, wenn es kein Standard-Äquivalent dafür gibt. Sie können dieses Verhalten mit <see cref="VcfOptions"/>
+        /// steuern. Es wird deshalb nicht empfohlen, der Eigenschaft <see cref="NonStandardProperties"/> Instanzen dieser
+        /// automatisch hinzuzufügenden <see cref="NonStandardProperty"/>-Objekte zu übergeben.</para>
+        /// <para>Es handelt sich um folgende vCard-Properties:</para>
+        /// <list type="bullet">
+        /// <item><c>X-AIM</c></item>
+        /// <item><c>X-ANNIVERSARY</c></item>
+        /// <item><c>X-ASSISTANT</c></item>
+        /// <item><c>X-EVOLUTION-SPOUSE</c></item>
+        /// <item><c>X-EVOLUTION-ANNIVERSARY</c></item>
+        /// <item><c>X-EVOLUTION-ASSISTANT</c></item>
+        /// <item><c>X-GADUGADU</c></item>
+        /// <item><c>X-GENDER</c></item>
+        /// <item><c>X-GOOGLE-TALK</c></item>
+        /// <item><c>X-GROUPWISE</c></item>
+        /// <item><c>X-GTALK</c></item>
+        /// <item><c>X-ICQ</c></item>
+        /// <item><c>X-JABBER</c></item>
+        /// <item><c>X-KADDRESSBOOK-X-ANNIVERSARY</c></item>
+        /// <item><c>X-KADDRESSBOOK-X-ASSISTANTSNAME</c></item>
+        /// <item><c>X-KADDRESSBOOK-X-IMADDRESS</c></item>
+        /// <item><c>X-KADDRESSBOOK-X-SPOUSENAME</c></item>
+        /// <item><c>X-MS-IMADDRESS</c></item>
+        /// <item><c>X-MSN</c></item>
+        /// <item><c>X-SKYPE</c></item>
+        /// <item><c>X-SKYPE-USERNAME</c></item>
+        /// <item><c>X-SPOUSE</c></item>
+        /// <item><c>X-TWITTER</c></item>
+        /// <item><c>X-WAB-GENDER</c></item>
+        /// <item><c>X-WAB-WEDDING_ANNIVERSARY</c></item>
+        /// <item><c>X-WAB-SPOUSE_NAME</c></item>
+        /// <item><c>X-YAHOO</c></item>
+        /// </list>
+        /// </remarks>
         public IEnumerable<NonStandardProperty?>? NonStandardProperties
         {
             get => Get<IEnumerable<NonStandardProperty?>?>(VCdProp.NonStandardProperties);

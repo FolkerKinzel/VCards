@@ -6,8 +6,10 @@ namespace FolkerKinzel.VCards.Models.Enums
     /// Benannte Konstanten, um in vCard 3.0 die Art einer Instant-Messenger-Adresse anzugeben. Die Konstanten können
     /// kombiniert werden.
     /// </summary>
-    /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
-    /// <see cref="Models.Helpers.ImppTypesExtension"/>.</note>
+    /// <remarks>
+    /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der
+    /// <see cref="Models.Helpers.ImppTypesExtension"/>-Klasse.</note>
+    /// </remarks>
     [Flags]
     public enum ImppTypes
     {

@@ -6,18 +6,18 @@
     public enum VCdContentLocation
     {
         /// <summary>
-        /// Der Inhalt ist direkt in die vCard eingebettet.
+        /// <c>INLINE</c>: Der Inhalt ist direkt in die vCard eingebettet. (Default)
         /// </summary>
         Inline,
 
         /// <summary>
-        /// Der Inhalt befindet sich an einer anderen Stelle in derselben Datei (z.B. Multipart-E-Mail). Auf
+        /// <c>Content-ID</c>, <c>CID</c>: Der Inhalt befindet sich an einer anderen Stelle in derselben Datei (z.B. Multipart-E-Mail). Auf
         /// ihn wird mit einer Content-ID (cid) verwiesen.
         /// </summary>
         ContentID,
 
         /// <summary>
-        /// Der Inhalt befindet sich im Internet. Auf ihn wird mit einer Url verwiesen.
+        /// <c>URL</c>: Der Inhalt befindet sich im Internet. Auf ihn wird mit einer Url verwiesen.
         /// </summary>
         Url
     }

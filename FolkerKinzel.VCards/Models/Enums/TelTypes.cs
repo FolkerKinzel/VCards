@@ -5,8 +5,10 @@ namespace FolkerKinzel.VCards.Models.Enums
     /// <summary>
     /// Benannte Konstanten, um in vCards die Art einer Telefonnummer zu beschreiben. Die Konstanten können kombiniert werden.
     /// </summary>
-    /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
-    /// <see cref="Models.Helpers.TelTypesExtension"/>.</note>
+    /// <remarks>
+    /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der
+    /// <see cref="Models.Helpers.TelTypesExtension"/>-Klasse.</note>
+    /// </remarks>
     [Flags]
     public enum TelTypes
     {

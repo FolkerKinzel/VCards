@@ -36,7 +36,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
             return (contentLocation) switch
             {
                 VCdContentLocation.Inline => Values.INLINE,
-                VCdContentLocation.ContentID => Values.CONTENT_ID,
+                VCdContentLocation.ContentID => Values.CID,
                 VCdContentLocation.Url => Values.URL,
                 _ => Values.INLINE
             };
