@@ -15,7 +15,7 @@
     <PackageReleaseNotes>Fixed a bug that occured parsing the vCard 2.1 PHOTO property.</PackageReleaseNotes>
     <PackageTags>vcard vcf</PackageTags>
     <Description>
-      .NET-Library to read, write and convert vcf-files that match the vCard-Standards 2.1, 3.0 and 4.0.
+      .NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
     </Description>
     <Authors>Folker Kinzel</Authors>
     <Copyright>Copyright © 2020 Folker Kinzel</Copyright>
