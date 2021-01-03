@@ -11,7 +11,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Kapselt die Informationen einer CLIENTPIDMAP-Property.
+    /// Kapselt die Informationen einer <c>CLIENTPIDMAP</c>-Property.
     /// </summary>
     /// <remarks>
     /// Der Standard erlaubt, dass das Mapping mit einer beliebigen URI signiert wird. Unterstützt werden hier

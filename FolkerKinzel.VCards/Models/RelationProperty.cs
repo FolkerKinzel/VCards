@@ -12,8 +12,8 @@ namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Abstrakte Basisklasse für Klassen, die die Daten von vCard-Properties kapseln, die Beziehungen zu anderen Menschen
-    /// beschreiben. Dies sind insbesondere die vCard-4.0-Property "RELATED", die vCard-2.1- und -3.0-Property "AGENT" sowie
-    /// Non-Standard-Properties zur Angabe des Namens des Ehepartners (wie z.B. "X-SPOUSE").
+    /// beschreiben. Dies sind insbesondere die vCard-4.0-Property <c>RELATED</c>, die vCard-2.1- und -3.0-Property <c>AGENT</c> sowie
+    /// Non-Standard-Properties zur Angabe des Namens des Ehepartners (wie z.B. <c>X-SPOUSE</c>).
     /// </summary>
     public abstract class RelationProperty : VCardProperty<object?>, IVCardData, IVcfSerializable, IVcfSerializableData
     {

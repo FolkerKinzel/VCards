@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Repräsentiert die vCard-3.0-Property PROFILE, die festlegt, dass die vCard eine vCard ist.
+    /// Repräsentiert die vCard-3.0-Property <c>PROFILE</c>, die festlegt, dass die vCard eine vCard ist.
     /// </summary>
     public class ProfileProperty : TextProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {

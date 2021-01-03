@@ -8,7 +8,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>1.4.4</Version>
-    <FileVersion>1.4.4.27</FileVersion>
+    <FileVersion>1.4.4.46</FileVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
@@ -33,6 +33,11 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Translations\**" />
+    <EmbeddedResource Remove="Translations\**" />
+    <None Remove="Translations\**" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Nuget-Logo\Logo.png">
       <Pack>True</Pack>

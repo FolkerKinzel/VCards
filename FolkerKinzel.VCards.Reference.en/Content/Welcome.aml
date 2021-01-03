@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <topic id="397502cd-fe45-4dc2-a450-195693e7f902" revisionNumber="1">
-	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-		<introduction>
-			<para>FolkerKinzel.VCards is a full featured .NET-API to work with vCard files (*.vcf).</para>
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>FolkerKinzel.VCards is a full featured .NET library to work with vCard files (*.vcf).</para>
       <para>It enables you</para>
       <list class="bullet">
         <listItem>
@@ -25,8 +25,10 @@
         vCard standard to another. To minimize this kind of data loss, the API tries to preserve incompliant data
         using well-known x-name properties. The usage of such x-name properties can be
         controlled via options (VcfOptions).
-        </para>
-		</introduction>
+      </para>
+      <autoOutline />
+
+    </introduction>
 
 
     <section address="DataModel">
@@ -34,58 +36,191 @@
       <content>
         <para>
           The data model used by this API is aligned to the vCard 4.0 standard (RFC6350). This means, every read
-          vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are 
+          vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are
           converted back.
         </para>
-        <autoOutline />
       </content>
-        <sections>
-          <section address="VCardProperty">
-            <title>Class VCardProperty&lt;T&gt;</title>
-            <content>
-              <para>The data model of the class <codeInline>VCard</codeInline> based on classes, that are derived from <codeInline>VCardProperty&lt;T&gt;</codeInline>.</para>
-              <para><codeInline>VCardProperty&lt;T&gt;</codeInline> exposes the following data:</para>
-              <code language="c#" source=".\Content\VCardProperty.cs"/>
+      <sections>
+        <section address="VCardProperty">
+          <title>Class VCardProperty&lt;T&gt;</title>
+          <content>
+            <para>
+              The data model of the class <codeInline>VCard</codeInline> based on classes, that are derived from <codeInline>VCardProperty&lt;T&gt;</codeInline>.
+            </para>
+            <para>
+              <codeInline>VCardProperty&lt;T&gt;</codeInline> exposes the following data:
+            </para>
+            <code language="c#" source=".\Content\VCardProperty.cs"/>
 
-              <para>This reflects the structure of a data row in a *.vcf-file:</para>
-              <para>
-                <codeInline>group1.TEL;TYPE=home,voice;VALUE=uri:tel:+49-123-4567</codeInline>
-              </para>
-              <para>In this example corresponds</para>
-              <list class="bullet">
-                <listItem>
-                  <para>
-                    <codeInline>group1</codeInline> to <codeInline>VCardProperty&lt;T&gt;.Group</codeInline>,
-                  </para>
-                </listItem>
-                <listItem>
-                  <para>
-                    <codeInline>TEL;TYPE=home,voice;VALUE=uri</codeInline> to <codeInline>VCardProperty&lt;T&gt;.Parameters</codeInline> and
-                  </para>
-                </listItem>
-                <listItem>
-                  <para>
-                    <codeInline>tel:+49-123-4567</codeInline> to <codeInline>VCardProperty&lt;T&gt;.Value</codeInline>.
-                  </para>
-                </listItem>
-              </list>
-            </content>
-          </section>
-          <section address="NamingConventions">
-            <title>Naming Conventions</title>
-            <content>
-              <para>Most properties of class <codeInline>VCard</codeInline> are collections. It has to do with, that many properties are allowed to have more than one
-              instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.</para>
-              <para>A special feature are properties whose name ends with "Views": These are properties, which actually is only one instance allowed, but
-              vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same <codeInline>AltID</codeInline> parameter
-              on each of these versions.</para>
-            </content>
-          </section>
-        </sections>
-      
+            <para>This reflects the structure of a data row in a *.vcf-file:</para>
+            <para>
+              <codeInline>group1.TEL;TYPE=home,voice;VALUE=uri:tel:+49-123-4567</codeInline>
+            </para>
+            <para>In this example corresponds</para>
+            <list class="bullet">
+              <listItem>
+                <para>
+                  <codeInline>group1</codeInline> to <codeInline>VCardProperty&lt;T&gt;.Group</codeInline>,
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  <codeInline>TEL;TYPE=home,voice;VALUE=uri</codeInline> to <codeInline>VCardProperty&lt;T&gt;.Parameters</codeInline> and
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  <codeInline>tel:+49-123-4567</codeInline> to <codeInline>VCardProperty&lt;T&gt;.Value</codeInline>.
+                </para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+      </sections>
     </section>
 
+
+    <section address="ReadingTheDocumentation">
+      <title>Reading the Project Reference</title>
+      <content>
+        <autoOutline/>
+      </content>
+      <sections>
+        <section address="NamingConventions">
+          <title>Naming Conventions</title>
+          <content>
+            <para>
+              Most properties of class <codeInline>VCard</codeInline> are collections. It has to do with, that many properties are allowed to have more than one
+              instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.
+            </para>
+            <para>
+              A special feature are properties whose name ends with "Views": These are properties, which actually is only one instance allowed, but
+              vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same <codeInline>AltID</codeInline> parameter
+              on each of these versions.
+            </para>
+          </content>
+        </section>
+        
+        <section address="SpecialContent">
+          <title>Special Content</title>
+          <content>
+            <para>
+              Uppercase words, which are often found at the beginning of the documentation for a .NET property, are identifiers from the vCard standard.
+              Digits in brackets,
+              which can be found at the end of the documentation for a .NET property, e.g. <literal> (2,3,4) </literal>, describe which with vCard standard
+              the content of the .NET property is compatible.
+            </para>
+            <para>
+              The digits have the following meaning:
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
+                  <codeInline>2</codeInline>: vCard 2.1,
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  <codeInline>3</codeInline>: vCard 3.0
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  <codeInline>4</codeInline>: vCard 4.0
+                </para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+      </sections>
+    </section>
+
+    <section address="VcardStandard">
+      <title>The vCard-Standard</title>
+      <content>
+        <para>The vCard standard is defined in the following documents:</para>
+
+        <list class="bullet">
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 6350 (vCard 4.0)</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc6350</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 2426 (vCard 3.0)</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc2426</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>vCard.The Electronic Business Card.Version 2.1 (vCard 2.1)</linkText>
+                <linkUri>https://web.archive.org/web/20120501162958/http://www.imc.org/pdi/vcard-21.doc</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+        </list>
+
+        <para>Extensions of the standard describe e.g. the following documents:</para>
+
+        <list class="bullet">
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 6474: vCard Format Extensions: Place of Birth, Place and Date of Death</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc6474</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>
+                  RFC 6715: vCard Format Extensions: Representing vCard Extensions Defined by the Open Mobile
+                  Alliance (OMA) Converged Address Book (CAB) Group
+                </linkText>
+                <linkUri>https://tools.ietf.org/html/rfc6715</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 6473: vCard KIND: application</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc6473</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 4770: vCard Extensions for Instant Messaging (IM)</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc4770</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 2739: Calendar Attributes for vCard and LDAP</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc2739</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+        </list>
+      </content>
+    </section>
+
+
+    
+
     <relatedTopics></relatedTopics>
-				
-	</developerConceptualDocument>
+
+  </developerConceptualDocument>
 </topic>

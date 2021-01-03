@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Repräsentiert die in vCard 4.0 eingeführte Property KIND, die die Art des Objekts beschreibt, das durch die vCard repräsentiert wird.
+    /// Repräsentiert die in vCard 4.0 eingeführte Property <c>KIND</c>, die die Art des Objekts beschreibt, das durch die vCard repräsentiert wird.
     /// </summary>
     public sealed class KindProperty : VCardProperty<VCdKind>, IVCardData, IVcfSerializable, IVcfSerializableData
     {

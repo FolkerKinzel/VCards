@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Repräsentiert die vCard-Property TZ, die die Zeitzone der vCard speichert.
+    /// Repräsentiert die vCard-Property <c>TZ</c>, die die Zeitzone der vCard speichert.
     /// </summary>
     public class TimeZoneProperty : VCardProperty<TimeZoneInfo?>, IVCardData, IVcfSerializable, IVcfSerializableData
     {

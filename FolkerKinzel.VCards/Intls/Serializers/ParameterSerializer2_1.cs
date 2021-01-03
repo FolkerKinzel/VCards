@@ -161,7 +161,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             //AppendNonStandardParameters();
         }
 
-        //protected override void BuildNamePara() // Erweiterung RFC 2425
+        //protected override void BuildNamePara() // RFC 2425
         //{
         //    AppendEncodingAndCharset();
         //    AppendLanguage();
@@ -187,7 +187,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             //AppendNonStandardParameters();
         }
 
-        //protected override void BuildProfilePara() // Erweiterung RFC 2425
+        //protected override void BuildProfilePara() // RFC 2425
         //{
         //    // keine Parameter
         //}
@@ -217,7 +217,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             AppendValue();
         }
 
-        //protected override void BuildSourcePara() // Erweiterung RFC 2425
+        //protected override void BuildSourcePara() // RFC 2425
         //{
         //    AppendEncodingAndCharset();
         //    AppendContext();

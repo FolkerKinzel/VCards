@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Tsltn Version="1.0" SourceFile="..\bin\Release\net40\de\FolkerKinzel.VCards.xml" SourceLanguage="de" TargetLanguage="en">
-  <T ID="DFB67AAF599BB7DC">Encapsulates the data of the vCard property CLASS, which defines the level of confidentiality of the vCard in vCard 3.0.</T>
   <T ID="BFFD14FCD3080F13">Encapsulates the data of a vCard property that contains information about the postal address.</T>
-  <T ID="F57CB4C7BFCE564A">Encapsulates embedded binary data, references to binary data (e.g. Urls) or information available as free text.</T>
+  <T ID="F57CB4C7BFCE564A">Encapsulates embedded binary data, references to binary data (e.g. URLs) or information available as free text.</T>
   <T ID="D3277A646C71EBF6">Represents a data URL according to RFC 2397.</T>
   <T ID="79E201AE9C8F8336">A class derived from &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty" /&gt; that specializes in encapsulating &lt;see cref="P:FolkerKinzel.VCards.Models.DateTimeOffsetProperty.DateTimeOffset" /&gt; values.</T>
   <T ID="281AF77AB3C9E5BE">Encapsulates information about time and date.</T>
@@ -20,8 +19,6 @@
   <T ID="D9D4EDC0B54AD733">Named constants to specify the encoding of the value of a vCard property.</T>
   <T ID="3CF4A1A9F2A281A">Named constants to access the properties of a &lt;see cref="T:FolkerKinzel.VCards.VCard" /&gt; object.</T>
   <T ID="6BA720ED79A95997">Named constants to indicate the VCF version.</T>
-  <T ID="4A3B3162EFF3A8BC">Represents the vCard property GENDER introduced in vCard 4.0, which stores information about the gender.</T>
-  <T ID="91EF96D1C59C267D">Represents the vCard property GEO, which encapsulates a geographic position.</T>
   <T ID="563A730D936CD5F7">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.AddressTypes" /&gt; enum easier.</T>
   <T ID="70565698ECE50668">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes" /&gt; enum easier.</T>
   <T ID="FEFE098E567CFC42">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes" /&gt; enum easier.</T>
@@ -29,13 +26,8 @@
   <T ID="E3435FD6D9729EC6">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes" /&gt; enum easier.</T>
   <T ID="44400AEBFE8E59B">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.VcfOptions" /&gt; enum easier.</T>
   <T ID="845125EA6A51197C">Interface, implemented by &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty`1" /&gt; objects, to facilitate access to the data stored in them.</T>
-  <T ID="D5DEAB03FF3EF6A1">Represents the KIND property introduced in vCard 4.0, which describes the type of object represented by the vCard.</T>
-  <T ID="2C9C5B2999B6C0FB">Represents the vCard property N, which stores the name of the vCard subject.</T>
   <T ID="90207E9BAE441F16">Represents a vCard property that is not defined by the official standards.</T>
-  <T ID="DEBF81AE423B1FE1">Represents the ORG vCard property, which stores information about the organization to which the vCard object is associated.</T>
-  <T ID="D1D18BA79937C142">Represents the vCard 3.0 property PROFILE, which specifies that the vCard is a vCard.</T>
   <T ID="8061FC6FAA844DCF">Encapsulates information that is used to uniquely identify a vCard property.</T>
-  <T ID="7B6F2C14FC87F96F">Encapsulates the information of a CLIENTPIDMAP property.</T>
   <T ID="53229C164BC6D573">Encapsulates information about a postal address in vCards</T>
   <T ID="2ED264DF7DF37F7">Encapsulates information about the gender in vCards.</T>
   <T ID="65FCFA7EEC304F2D">Encapsulates information about the geographic position.</T>
@@ -43,18 +35,13 @@
   <T ID="D5B3EC49BD7FF1F6">Encapsulates information about the name of the person which the vCard represents.</T>
   <T ID="4560CEC4719E4F42">Encapsulates information about the organization (or company) of the subject that the vCard represents.</T>
   <T ID="5379A48AE5A6E9A">Encapsulates the information about the parameters of a vCard property.</T>
-  <T ID="42C40A1575E31626">Abstract base class for classes that encapsulate data from vCard properties that describe relationships with other people. These are in particular the vCard 4.0 property "RELATED", the vCard 2.1 and 3.0 property "AGENT" as well as non-standard properties for specifying the name of the spouse (such as "X-SPOUSE").</T>
   <T ID="6CDB9800F02C1673">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty" /&gt; class to specify the name of a person with whom there is a relationship.</T>
   <T ID="F53B64AB4515CA38">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty" /&gt; class to describe a person with whom a relationship exists with a &lt;see cref="P:FolkerKinzel.VCards.Models.RelationUriProperty.Uri"/&gt;.</T>
   <T ID="393303368777EE1B">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty" /&gt; class to include a person with whom there is a relationship with the Uuid of their &lt;see cref="T:FolkerKinzel.VCards.VCard" /&gt;.</T>
   <T ID="C6C07776CCE12A">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to describe a person with whom there is a relationship with their &lt;see cref="P:FolkerKinzel.VCards.Models.RelationVCardProperty.VCard"/&gt;.</T>
   <T ID="6B0C88EC6BFA8921">Represents vCard properties that store a collection of text content.</T>
   <T ID="B24DC67218609DBF">Represents vCard properties, whose content consists of text.</T>
-  <T ID="C4146572C57185B5">Encapsulates the vCard property REV, which represents a time stamp of the last update of the &lt;see cref="T:FolkerKinzel.VCards.VCard" /&gt;.</T>
-  <T ID="7C658E085EA70F2E">Represents the vCard property TZ, which encapsulates the time zone of the vCard.</T>
-  <T ID="69835567849E13E1">Represents the vCard property UID, which stores a unique identifier for the vCard subject.</T>
   <T ID="20E29B9E782FABD2">Abstract base class of all classes that represent vCard properties.</T>
-  <T ID="56F2B6B9CE2456BA">Encapsulates the data of the vCard property "XML", which enables embedded XML data.</T>
   <T ID="801D5818CF60254F">Encapsulates the information contained in a vCard.</T>
   <T ID="82B8E8DE67B86E10">Named constants to specify options for writing VCF files. The constants can be combined.</T>
   <T ID="D2A11B9E1BBE20A0">Named Constants to specify the components of the sex and gender identity of the object the vCard represents.</T>
@@ -62,4 +49,173 @@
   <T ID="B5568F0CBE51E719">Named Constants to specify the type of object that the vCard represents.</T>
   <T ID="A1247501E35DCE64">Named constants to describe the type of an email address.</T>
   <T ID="EAE427E860CE31F9">Named constants to describe the type of relationship with a person or organization.</T>
+  <T ID="DFB67AAF83746835">Encapsulates the data of the vCard property &lt;c&gt;CLASS&lt;/c&gt;, which defines the level of confidentiality of the vCard in vCard 3.0.</T>
+  <T ID="4A3B3162F5727319">Represents the vCard property &lt;c&gt;GENDER&lt;/c&gt;, introduced in vCard 4.0, which stores information about the gender.</T>
+  <T ID="91EF96D16DE0BB0F">Represents the vCard property &lt;c&gt;GEO&lt;/c&gt;, which encapsulates a geographic position.</T>
+  <T ID="D5DEAB0311146371">Represents the &lt;c&gt;KIND&lt;/c&gt; property, introduced in vCard 4.0, which describes the type of object represented by the vCard.</T>
+  <T ID="2C9C5B29269DFA7B">Represents the vCard property &lt;c&gt;N&lt;/c&gt;, which stores the name of the vCard subject.</T>
+  <T ID="DEBF81AED386F490">Represents the vCard property &lt;c&gt;ORG&lt;/c&gt;, which stores information about the organization to which the vCard object is associated.</T>
+  <T ID="D1D18BA771608810">Represents the vCard 3.0 property &lt;c&gt;PROFILE&lt;/c&gt;, which specifies, that the vCard is a vCard.</T>
+  <T ID="7B6F2C14A949AEA2">Encapsulates the information of a &lt;c&gt;CLIENTPIDMAP&lt;/c&gt; property.</T>
+  <T ID="42C40A157E60FB8D">Abstract base class for classes that encapsulate data from vCard properties, that describe relationships with other people. These are in particular the vCard 4.0 property   &lt;c&gt;RELATED&lt;/c&gt;, the vCard 2.1- and -3.0-property &lt;c&gt;AGENT&lt;/c&gt;, as well as non-standard properties for specifying the name of the spouse (such as &lt;c&gt;X-SPOUSE&lt;/c&gt;).</T>
+  <T ID="C41465722D03F016">Encapsulates the vCard property &lt;c&gt;REV&lt;/c&gt;, which represents a timestamp of the last update of the &lt;see cref="T:FolkerKinzel.VCards.VCard" /&gt;.</T>
+  <T ID="7C658E08F5BADD78">Represents the vCard property TZ, which encapsulates the time zone of the vCard.</T>
+  <T ID="698355677B8F98ED">Represents the vCard property &lt;c&gt;UID&lt;/c&gt;, which stores a unique identifier for the vCard subject.</T>
+  <T ID="56F2B6B9D64E9FF1">Encapsulates the data of the vCard property &lt;c&gt;XML&lt;/c&gt;, which enables embedded XML data.</T>
+  <T ID="B8BFC69E4C7AD753">&lt;note type ="note"&gt;To make it easier to read, exception handling has been omitted in the following example.&lt;/note&gt;&lt;code/&gt;</T>
+  <T ID="513ADC31CA8565">Newline used in VCF files ("\r\n").</T>
+  <T ID="56CAFD77B801D12C">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt; object.</T>
+  <T ID="F6C7F408C1421939">Returns an enumerator, that iterates through the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
+  <T ID="B3773CE3732BF6EB">An Enumerator for the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
+  <T ID="D66DB8E33E2BD2B8">&lt;c&gt;VERSION&lt;/c&gt;: Version of the vCard standard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="6D0A14EE55BF6C87">&lt;c&gt;CLASS&lt;/c&gt;: Describes the sensitivity of the information in the vCard. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="1F98F0A4517AAEE9">&lt;c&gt;ADR&lt;/c&gt;: A structured representation of the physical delivery address for the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="EFBA6CF29D2576D8">&lt;c&gt;ANNIVERSARY&lt;/c&gt;: Defines the person's anniversary. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="D3D84B458FF78106">Multiple instances are only allowed, if they
+             have the same &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.AltID"/&gt; parameters. This can e.g.
+             be useful, if the property is displayed in different languages.</T>
+  <T ID="9DED7B8BD4E3E626">&lt;c&gt;BDAY&lt;/c&gt;: Date of birth of the individual associated with the vCard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="6D6DC5D43F003D3E">Multiple instances are only allowed in vCard 4.0, and only, if they all 
+             have the same &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.AltID"/&gt; parameter. This can e.g.
+             be useful, if the property is displayed in different languages.</T>
+  <T ID="64E1115640A4B83D">&lt;c&gt;BIRTHPLACE&lt;/c&gt;: The location of the individual's birth. &lt;c&gt;(4 - RFC 6474)&lt;/c&gt;</T>
+  <T ID="CD16BE838FF78106">Multiple instances are only allowed, if they
+             have the same &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.AltID"/&gt; parameters. This can e.g.
+             be useful, if the property is displayed in different languages.</T>
+  <T ID="1C148826F677AD59">&lt;c&gt;CALURI&lt;/c&gt;: URLs to the person's calendar. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="4D16615DE02C41A1">&lt;c&gt;CALADRURI&lt;/c&gt;: URLs to use for sending a scheduling request to the person's calendar. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="6AC92251D9F2F5FD">&lt;c&gt;CATEGORIES&lt;/c&gt;: Lists of "tags", that can be used to describe the object represented by this vCard. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="1D429B44CEC44D7E">&lt;c&gt;DEATHDATE&lt;/c&gt;: The individual's time of death. &lt;c&gt;(4 - RFC 6474)&lt;/c&gt;</T>
+  <T ID="2F698F798FF78106">Multiple instances are only allowed, if they
+             have the same &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.AltID"/&gt; parameters. This can e.g.
+             be useful, if the property is displayed in different languages.</T>
+  <T ID="56C167EB990FB5F6">&lt;c&gt;DEATHPLACE&lt;/c&gt;: The location of the individual's death. &lt;c&gt;(4 - RFC 6474)&lt;/c&gt;</T>
+  <T ID="6B9078A88FF78106">Multiple instances are only allowed, if they
+             have the same &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.AltID"/&gt; parameters. This can e.g.
+             be useful, if the property is displayed in different languages.</T>
+  <T ID="F897FF978D283D79">&lt;c&gt;NAME&lt;/c&gt;: 
+            Provides a textual representation of the &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdProp.Sources"/&gt; property. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="786B4F284955EC25">&lt;c&gt;MAILER&lt;/c&gt;: Type of email program used. &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="7891993016AD573D">&lt;c&gt;NAME&lt;/c&gt;: 
+            Provides a textual representation of the &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdProp.Sources"/&gt; property. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="96C5299871EF2391">&lt;c&gt;FN&lt;/c&gt;: The formatted name string associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="9D5B3B61AE638C67">&lt;c&gt;EMAIL&lt;/c&gt;: The addresses for electronic mail communication with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="AF210802ACEE169C">&lt;c&gt;EXPERTISE&lt;/c&gt;: A professional subject area that the person has knowledge of. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
+  <T ID="BA4444F22C4FD885">&lt;c&gt;GENDER&lt;/c&gt;: Defines the person's gender. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="EE6512D78FF78106">Multiple instances are only allowed, if they
+             have the same &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.AltID"/&gt; parameters. This can e.g.
+             be useful, if the property is displayed in different languages.</T>
+  <T ID="E808E5B087749C0E">&lt;c&gt;GEO&lt;/c&gt;: Specifies latitudes and longitudes. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="B29B07D6DD4FC9F0">&lt;c&gt;HOBBY&lt;/c&gt;: Recreational activities, that the person actively engages in. &lt;c&gt;(4 - RFC 6715)&lt;/c&gt;</T>
+  <T ID="D41FE1153FC2ED13">&lt;c&gt;IMPP&lt;/c&gt;: List of instant messenger handles. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="4B168945CE1260AB">&lt;c&gt;INTEREST&lt;/c&gt;: Recreational activities, that the person is interested in, but does not necessarily take part in. &lt;c&gt;(4 - RFC 6715)&lt;/c&gt;</T>
+  <T ID="27BC4A5340684AF0">&lt;c&gt;KEY&lt;/c&gt;: Public encryption keys, associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="A2E5EB2A666AA3D2">It may point to an external URL, may be plain text, or may be embedded in the vCard as a Base64 encoded block of text.</T>
+  <T ID="F63A91544E6DCF6B">&lt;c&gt;KIND&lt;/c&gt;: Defines the type of entity, that this vCard represents. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="1DA3B5F69D30FA2F">&lt;c&gt;LANG&lt;/c&gt;: Defines languages, that the person speaks. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="ABBA8D7C8E2CD5F">&lt;c&gt;REV&lt;/c&gt;: A timestamp for the last time the vCard was updated. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="6A198E63B53DBA58">&lt;c&gt;LOGO&lt;/c&gt;: Images or graphics of the logo of the organization, that is associated with the individual to which the vCard belongs. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="A671919AD8F069F9">It may point to an external URL or may be embedded in the vCard as a Base64 encoded block of text.</T>
+  <T ID="868C3DF54955EC25">&lt;c&gt;MAILER&lt;/c&gt;: Type of email program used. &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="BABA6FD59E6C2A03">&lt;c&gt;MEMBER&lt;/c&gt;: Defines a member, that is part of the group that this vCard represents. 
+The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdKind.Group"/&gt; in order to use this property.  &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="A5BB7B4865AE6FDC">&lt;para&gt;
+            The standard only allows URI values. Data, that cannot be converted to a URI,
+            are read and inserted as &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationTextProperty"/&gt;, but the content of a
+            &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationTextProperty"/&gt; is only written to the VCF file, if its value can be converted to a
+            &lt;see cref ="T:System.Uri"/&gt;.
+            &lt;/para&gt; &lt;para&gt;
+            The content of a &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/&gt; is written as &lt;see cref ="T:System.Uri"/&gt; (urn: uuid: ...).
+            The &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects referenced by &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/&gt; objects are
+            appended to the VCF file as separate VCards when writing  and the value of their &lt;see cref ="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/&gt; property
+            is written in the "mother"-&lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; as uuid-URI. If the &lt;see cref ="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/&gt; property of
+            the inserted &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt;s is not set, automatically a new &lt;see cref ="T:System.Guid"/&gt; is
+            assigned to it.
+            &lt;/para&gt;</T>
+  <T ID="C4D735E29F38ACD2">&lt;c&gt;N&lt;/c&gt;: A structured representation of the name of the person, place or thing associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="6277EED13F003D3E">Multiple instances are only allowed in vCard 4.0, and only, if they all 
+             have the same &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.AltID"/&gt; parameter. This can e.g.
+             be useful, if the property is displayed in different languages.</T>
+  <T ID="1CD65695528709F3">&lt;c&gt;NICKNAME&lt;/c&gt;: One or more descriptive/familiar names for the object represented by this vCard. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="F1D49B3FF36FCFFB">vCard-Properties, that don't belong to the standard.</T>
+  <T ID="14BE48FE75AA1943">&lt;c&gt;NOTE&lt;/c&gt;: Specifies supplemental informations or comments, that are associated with the vCard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="ECC5853265D06E0F">&lt;c&gt;ORG&lt;/c&gt;: The name and optionally the unit(s) of the organization associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="56E94619CCEA015C">&lt;c&gt;ORG-DIRECTORY&lt;/c&gt;: A URI representing the person's work place, which can be used to look up information on the person's co-workers. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
+  <T ID="24E4B1922AA8047">&lt;c&gt;TEL&lt;/c&gt;: Canonical number strings for a telephone numbers for telephony communication with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="7B8397591C20DD89">&lt;c&gt;PHOTO&lt;/c&gt;: Images or photographs of the individual, associated with the vCard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="717A907A292AD231">It may point to an external URL or may be embedded in the vCard as a Base64 encoded block of text.</T>
+  <T ID="1FFDFE985C1478A2">&lt;c&gt;PRODID&lt;/c&gt;: The identifier for the product, that created the vCard object. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="B1773CAB411B7ABB">The name should be unique worldwide. It should therefore conform to the specification for
+             Formal Public Identifiers [ISO9070] or Universal Resource Names in RFC 3406.</T>
+  <T ID="20BFAD6B34A48AB8">&lt;c&gt;PROFILE&lt;/c&gt;: States, that the vCard is a vCard. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="9ED6A5CE2C418E26">&lt;c&gt;CLIENTPIDMAP&lt;/c&gt;: Mappings for &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt;s. It is used for synchronizing different revisions of the same vCard. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="E2BA1BA081D94B0B">&lt;c&gt;RELATED&lt;/c&gt;: Other entities, that the person is related to. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="C175DE890370F765">&lt;c&gt;ROLE&lt;/c&gt;: The role, occupation, or business category of the vCard object within an organization. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="F0F591B9ADCB5F8E">&lt;c&gt;SOUND&lt;/c&gt;: Specifies the pronunciation of the &lt;see cref="P:FolkerKinzel.VCards.VCard.DisplayNames"/&gt; property of the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;-object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="989C135DD8F069F9">It may point to an external URL or may be embedded in the vCard as a Base64 encoded block of text.</T>
+  <T ID="89098D91C18B1910">&lt;c&gt;SOURCE&lt;/c&gt;: URLs, that can be used to get the latest version of this vCard.&lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="9A08BC4340544A7">vCard 3.0 only allows one instance of this property.</T>
+  <T ID="72CEEDCB5306E7A4">&lt;c&gt;TZ&lt;/c&gt;: The time zone(s) of the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="9BD1CCDF1273786F">&lt;c&gt;TITLE&lt;/c&gt;: Specifies the job title, functional position or function of the individual, associated with the vCard object, within an organization. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="5BF5400146E07157">&lt;c&gt;UID&lt;/c&gt;: Specifies a value that represents a persistent, globally unique identifier, associated with the object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="9CB2B521F5243D5A">Although the standard allows any strings for identification, the library only supports UUIDs.</T>
+  <T ID="3C345CEB79CA7F4D">&lt;c&gt;URL&lt;/c&gt;: URLs, pointing to websites, that represent the person in some way. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="DFBC8943AC37BA08">&lt;c&gt;XML&lt;/c&gt;: Any XML data, that is attached to the vCard. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="9A539F24A4CD5A51">Loads a VCF file.</T>
+  <T ID="907855A934CE9713">Absolute or relative path to a vcf file.</T>
+  <T ID="180CF8F5DE7D1B3F">The text encoding to use to read the file or &lt;c&gt;null&lt;/c&gt;, to read the file with the standard-compliant text encoding &lt;see cref ="P:System.Text.Encoding.UTF8"/&gt;.</T>
+  <T ID="F978DF731ECA1A3E">A collection of parsed &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects, that represent the content of the vcf file.</T>
+  <T ID="942EA073C46C7EAE">&lt;paramref name="fileName"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="511017C132DE2369">&lt;paramref name ="fileName"/&gt; is not a valid file path.</T>
+  <T ID="1AAB718CD1E0AAAB">The file could not be loaded.</T>
+  <T ID="A44474F0EF6D9431">Parses a &lt;see cref ="T:System.String"/&gt;, that contains vCard data.</T>
+  <T ID="35FDC32556D7A145">A &lt;see cref ="T:System.String"/&gt;, that contains vCard data.</T>
+  <T ID="909F0F191B9246D9">A collection of parsed &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects, that represent the content of &lt;paramref name ="content"/&gt;.</T>
+  <T ID="C5C32AED7451B058">&lt;paramref name="content"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="8F7D1083682BF3CA">Saves a list of &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects in a common VCF file.</T>
+  <T ID="D7A2D60052BD6917">The file path of the VCF file to be saved.</T>
+  <T ID="2CAB4C99AF3A1E4D">The &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects to be saved. The listing may be empty or  may contain &lt;c&gt;null&lt;/c&gt; values. If the listing does not contain any &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object, no file will be written.</T>
+  <T ID="B4FF275256041619">The vCard-Version of the file to be written.</T>
+  <T ID="FB507626AB57F8C5">Options for writing the VCF file. The flags can be combined.</T>
+  <T ID="FBD0BE5F179EA26D">&lt;paramref name="fileName"/&gt; or &lt;paramref name="vcards"/&gt;
+            is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="6C56337F32DE2369">&lt;paramref name ="fileName"/&gt; is not a valid file path.</T>
+  <T ID="2C2FFEBE7773BFAF">The file could not be written.</T>
+  <T ID="89F1AAA89E1C7E0A">Serializes a list of &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects with a &lt;see cref ="T:System.IO.TextWriter"/&gt;.</T>
+  <T ID="AE65F0AA41F53661">The &lt;see cref="T:System.IO.TextWriter"/&gt; used for serialization.</T>
+  <T ID="CB9B5732A4826B65">The &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt; objects to serialize.</T>
+  <T ID="9577C07156041619">The vCard-Version to serialize to.</T>
+  <T ID="9F617561AB57F8C5">Options for serializing VCF. The flags can be combined.</T>
+  <T ID="C5DEFD3EE0F84F60">&lt;paramref name="vcards"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="71F2990C3696023E">I/O-Error.</T>
+  <T ID="5094B52F632CC11C">The resources of &lt;paramref name ="writer"/&gt; are already released.</T>
+  <T ID="8C3315B81A2F8B4F">Writes the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; to disk.</T>
+  <T ID="B326F6F352BD6917">The file path of the VCF file to be saved.</T>
+  <T ID="9F50166456041619">The vCard-Version of the file to be written.</T>
+  <T ID="B23935A8AB57F8C5">Options for writing the VCF file. The flags can be combined.</T>
+  <T ID="C269C71AC46C7EAE">&lt;paramref name="fileName"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="5A3EEE4832DE2369">&lt;paramref name ="fileName"/&gt; is not a valid file path.</T>
+  <T ID="B18B7FF27773BFAF">The file could not be written.</T>
+  <T ID="EAEAAA3476DD6F02">Serializes the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; with a &lt;see cref ="T:System.IO.TextWriter"/&gt;.</T>
+  <T ID="AF5E463AA62969A4">A &lt;see cref ="T:System.IO.TextWriter"/&gt;, with which the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; is serialized.</T>
+  <T ID="5039D1982C304A9D">The vCard-Version to serialize to.</T>
+  <T ID="7F2E4CAA9BB2B1E8">Options for serializing VCF. The flags can be combined.</T>
+  <T ID="6B760B946FCEBCB5">&lt;note type="caution"&gt;Although the method itself is thread-safe, those &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects passed to the method are not. Block read and write access to these
+             &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects during the execution of this method!&lt;/note&gt;</T>
+  <T ID="4C39339B759BCE6E">&lt;para&gt;The method may serialize several vCards, even if &lt;paramref name ="vcards"/&gt; only contained a single &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object - namely then,  if this &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object references other &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt;s in its properties &lt;see cref ="P:FolkerKinzel.VCards.VCard.Members"/&gt; or &lt;see cref ="P:FolkerKinzel.VCards.VCard.Relations"/&gt;.&lt;/para&gt;
+&lt;note type="caution"&gt;Although the method itself is thread-safe, those &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects passed to the method are not. Block read and write access to these
+             &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects during the execution of this method!&lt;/note&gt;
+             .</T>
+  <T ID="805411E9131E800A">&lt;para&gt;The method may serialize several vCards, namely then,  if the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object references other &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt;s in its properties &lt;see cref ="P:FolkerKinzel.VCards.VCard.Members"/&gt; or &lt;see cref ="P:FolkerKinzel.VCards.VCard.Relations"/&gt;.&lt;/para&gt;
+&lt;para&gt;If several &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects are to be serialized, for performance reasons the use of the static methods of the class &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; is recommended.&lt;/para&gt;</T>
+  <T ID="9420BF99131E800A">&lt;para&gt;The method may serialize several vCards, namely then,  if the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object references other &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt;s in its properties &lt;see cref ="P:FolkerKinzel.VCards.VCard.Members"/&gt; or &lt;see cref ="P:FolkerKinzel.VCards.VCard.Relations"/&gt;.&lt;/para&gt;
+&lt;para&gt;If several &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects are to be serialized, for performance reasons the use of the static methods of the class &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; is recommended.&lt;/para&gt;</T>
+  <T ID="A9F895B346FEFE0C">Serializes the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; as a &lt;see cref ="T:System.String"/&gt;, which represents the content of a VCF file.</T>
+  <T ID="19C764FB2C304A9D">The vCard-Version to serialize to.</T>
+  <T ID="7F3ED14D9BB2B1E8">Options for serializing VCF. The flags can be combined.</T>
+  <T ID="656010097E199DB">The &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt;, serialized as &lt;see cref ="T:System.String"/&gt;, which represents the content of a VCF file.</T>
+  <T ID="2D34E942DE9BDA67">The method may serialize several vCards, namely then,  if the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object references other &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt;s in its properties &lt;see cref ="P:FolkerKinzel.VCards.VCard.Members"/&gt; or &lt;see cref ="P:FolkerKinzel.VCards.VCard.Relations"/&gt;.</T>
+  <T ID="C3101466CBBA9915">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object.
+             (For debugging only.)</T>
+  <T ID="42D27235F6305DA0">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object.</T>
 </Tsltn>

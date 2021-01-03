@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Repräsentiert die vCard-Property UID, die einen eindeutigen Bezeichner für das vCard-Subjekt speichert.
+    /// Repräsentiert die vCard-Property <c>UID</c>, die einen eindeutigen Bezeichner für das vCard-Subjekt speichert.
     /// </summary>
     public sealed class UuidProperty : VCardProperty<Guid>, IVCardData, IVcfSerializable, IVcfSerializableData
     {

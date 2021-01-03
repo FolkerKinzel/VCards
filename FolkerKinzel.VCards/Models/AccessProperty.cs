@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Kapselt die Daten der vCard-Property CLASS, die in vCard 3.0 die Geheimhaltungsstufe der 
+    /// Kapselt die Daten der vCard-Property <c>CLASS</c>, die in vCard 3.0 die Geheimhaltungsstufe der 
     /// vCard definiert.
     /// </summary>
     public sealed class AccessProperty : VCardProperty<VCdAccess>, IVCardData, IVcfSerializable, IVcfSerializableData

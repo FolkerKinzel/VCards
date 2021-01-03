@@ -65,10 +65,10 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Parst einen string mit vCard-Daten.
+        /// Parst einen <see cref="string"/>, der vCard-Daten enthält.
         /// </summary>
-        /// <param name="content">Ein String, der vCard-Daten enthält.</param>
-        /// <returns>Ein Collection geparster <see cref="VCard"/>-Objekte, die den Inhalt der vcf-Datei darstellen.</returns>
+        /// <param name="content">Ein <see cref="string"/>, der vCard-Daten enthält.</param>
+        /// <returns>Eine Collection geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="content"/> darstellen.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="content"/> ist <c>null</c>.</exception>
         public static List<VCard> Parse(string content)
         {

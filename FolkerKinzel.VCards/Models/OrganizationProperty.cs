@@ -12,7 +12,7 @@ using System.Text;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Repräsentiert die vCard-Property ORG, die Informationen über die Organisation speichert, der das vCard-Objekt zugeordnet ist.
+    /// Repräsentiert die vCard-Property <c>ORG</c>, die Informationen über die Organisation speichert, der das vCard-Objekt zugeordnet ist.
     /// </summary>
     public sealed class OrganizationProperty : VCardProperty<Organization>, IVCardData, IVcfSerializable, IVcfSerializableData
     {

@@ -22,7 +22,7 @@
             /// <summary>
             /// Informationen über eine andere Person, die im Namen des vCard-Objekts handeln soll. 
             /// Typischerweise ist das ein Vertreter, Assistent oder Sekretär. Hier kann entweder 
-            /// eine URL oder eine eingebettete vCard angegeben werden. (2, 3, 4)
+            /// eine URL oder eine eingebettete vCard angegeben werden. (2,3,4)
             /// </summary>
             internal const string AGENT = "AGENT";
 

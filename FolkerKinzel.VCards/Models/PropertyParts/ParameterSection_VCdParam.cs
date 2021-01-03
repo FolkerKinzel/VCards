@@ -4,8 +4,6 @@
     {
         private enum VCdParam
         {
-
-
             /// <summary>
             /// CONTEXT Gibt den Kontext der Daten an, z.B. "VCARD" oder "LDAP". (3)
             /// </summary>
@@ -47,7 +45,7 @@
             ExpertiseLevel,
 
             /// <summary>
-            /// TYPE Nähere Beschreibung einer Instant-Messenger-Adresse. (3 Erweiterung RFC 4770)
+            /// TYPE Nähere Beschreibung einer Instant-Messenger-Adresse. (3 - RFC 4770)
             /// </summary>
             InstantMessengerType,
 

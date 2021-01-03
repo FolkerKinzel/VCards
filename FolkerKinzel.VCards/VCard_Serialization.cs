@@ -30,9 +30,13 @@ namespace FolkerKinzel.VCards
         /// ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
-        /// <remarks>Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
+        /// <remarks>
+        /// <note type="caution">
+        /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
-        /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!</remarks>
+        /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+        /// </note>
+        /// </remarks>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -93,18 +97,21 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten mit einem <see cref="TextWriter"/>.
         /// </summary>
-        /// <remarks>Die Methode serialisiert möglicherweise auch dann mehrere
+        /// <remarks><para>Die Methode serialisiert möglicherweise auch dann mehrere
         /// vCards, wenn <paramref name="vcards"/> nur ein <see cref="VCard"/>-Objekt enthielt, nämlich dann,
         /// wenn dieses <see cref="VCard"/>-Objekt in den Properties <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
-        /// weitere VCards refenziert hat.</remarks>
+        /// weitere VCards refenziert hat.</para>
+        /// <note type="caution">
+        /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
+        /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
+        /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+        /// </note>
+        /// </remarks>
         /// <param name="writer">Ein <see cref="TextWriter"/>, mit dem die serialisierten <see cref="VCard"/>-Objekte geschrieben werden.</param>
         /// <param name="vcards">Die zu serialisierenden <see cref="VCard"/>-Objekte.</param>
         /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
-        /// <remarks>Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
-        /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
-        /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!</remarks>
         /// <exception cref="ArgumentNullException"><paramref name="vcards"/> ist <c>null</c>.</exception>
         /// <exception cref="IOException">E/A-Fehler.</exception>
         /// <exception cref="ObjectDisposedException">Die Ressourcen von <paramref name="writer"/> sind bereits freigegeben.</exception>
@@ -153,8 +160,15 @@ namespace FolkerKinzel.VCards
         /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
-        /// <note type="tip">Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
-        /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.</note>
+        /// <remarks>
+        /// <para>Die Methode serialisiert möglicherweise mehrere
+        /// vCards, nämlich dann,
+        /// wenn in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
+        /// weitere VCards refenziert waren.</para>
+        /// <para>
+        /// Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
+        /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.
+        /// </para></remarks>
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
@@ -177,12 +191,16 @@ namespace FolkerKinzel.VCards
         /// <param name="version">Die vCard-Version, in die serialisiert wird.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
-        /// <note type="tip">Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
-        /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.</note>
-        /// <remarks>Die <see cref="VCard"/> - serialisiert als <see cref="string"/>. Der von der Methode 
-        /// zurückgegebene <see cref="string"/> kann auch mehrere serialisierte
-        /// vCards enthalten, nämlich dann, wenn in den Properties <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
-        /// weitere VCards refenziert wurden.</remarks>
+        /// <remarks>
+        ///<para>Die Methode serialisiert möglicherweise mehrere
+        /// vCards, nämlich dann,
+        /// wenn in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
+        /// weitere VCards refenziert waren.</para>
+        /// <para>
+        /// Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
+        /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.
+        /// </para>
+        /// </remarks>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -193,12 +211,18 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Serialisiert die <see cref="VCard"/> als VCF-<see cref="string"/>. (Ideal für Testzwecke.)
+        /// Serialisiert die <see cref="VCard"/> als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
         /// </summary>
         /// <param name="version">Die vCard-Version, in die serialisiert wird.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
-        /// <returns>Die <see cref="VCard"/>, serialisiert als VCF-<see cref="string"/>.</returns>
+        /// <returns>Die <see cref="VCard"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
+        /// <remarks>
+        /// Die Methode serialisiert möglicherweise mehrere
+        /// vCards, nämlich dann,
+        /// wenn in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
+        /// weitere VCards refenziert waren.
+        /// </remarks>
         public string ToVcfString(VCdVersion version, VcfOptions options = VcfOptions.Default)
         {
             // kein Inlining, da schon VCard.Serialize ge-inlined ist und die Methode in Tests

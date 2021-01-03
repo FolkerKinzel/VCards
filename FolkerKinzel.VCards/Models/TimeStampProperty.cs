@@ -12,7 +12,7 @@ using System.Text;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Kapselt die vCard-Property REV, die einen Zeitstempel der letzten Aktualisierung der <see cref="VCard"/> darstellt.
+    /// Kapselt die vCard-Property <c>REV</c>, die einen Zeitstempel der letzten Aktualisierung der <see cref="VCard"/> darstellt.
     /// </summary>
     public sealed class TimestampProperty : VCardProperty<DateTimeOffset>, IVCardData, IVcfSerializable, IVcfSerializableData
     {

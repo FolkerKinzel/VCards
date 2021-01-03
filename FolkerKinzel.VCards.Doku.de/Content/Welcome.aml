@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <topic id="397502cd-fe45-4dc2-a450-195693e7f902" revisionNumber="1">
-	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-		<introduction>
-			<para>FolkerKinzel.VCards ist eine umfangreiche .NET-API zur Arbeit mit vCard-Dateien (*.vcf).</para>
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>FolkerKinzel.VCards ist eine .NET-Library zur Arbeit mit vCard-Dateien (*.vcf).</para>
       <para>Sie ermöglicht</para>
       <list class="bullet">
         <listItem>
@@ -16,12 +16,16 @@
         </listItem>
       </list>
       <para>Wenn beim Parsen einer vCard etwas nicht gelesen werden kann, wird dies still ignoriert.</para>
-      <para>Dasselbe gilt beim Serialisieren der vCard: Da die verschiedenen vCard-Standards nicht in allen Punkten kompatibel
-            sind, werden beim Umwandeln von einer vCard-Version in eine andere inkompatible Daten stumm ignoriert. Um den Datenverlust
-            beim Umwandeln von vCard-Versionen so gering wie möglich zu halten, versucht die API, mit dem jeweiligen Standard inkompatible Daten
-            durch Verwendung bekannter Non-Standard-Properties zu bewahren. Der Einsatz der Non-Standard-Properties kann mit Optionen (VcfOptions)
-            gesteuert werden.</para>
-		</introduction>
+      <para>
+        Dasselbe gilt beim Serialisieren der vCard: Da die verschiedenen vCard-Standards nicht in allen Punkten kompatibel
+        sind, werden inkompatible Daten beim Umwandeln von einer vCard-Version in eine andere stumm ignoriert. Um den Datenverlust
+        beim Umwandeln von vCard-Versionen so gering wie möglich zu halten, versucht die API, mit dem jeweiligen Standard inkompatible Daten
+        durch Verwendung bekannter Non-Standard-Properties zu bewahren. Der Einsatz der Non-Standard-Properties kann mit Optionen (<codeInline>VcfOptions</codeInline>)
+        gesteuert werden.
+      </para>
+      <autoOutline />
+
+    </introduction>
 
 
     <section address="DataModel">
@@ -32,57 +36,187 @@
           jede gelesene vCard der Versionen 2.1 und 3.0 wird intern in eine vCard 4.0 konvertiert. Beim Speichern und
           Serialisieren findet ggf. eine Rückkonvertierung statt.
         </para>
-        <autoOutline />
       </content>
-        <sections>
-          <section address="VCardProperty">
-            <title>Die Klasse VCardProperty&lt;T&gt;</title>
-            <content>
-              <para>Das Datenmodell der Klasse <codeInline>VCard</codeInline> basiert auf Objekten, die von der Klasse <codeInline>VCardProperty&lt;T&gt;</codeInline> abgeleitet sind.</para>
-              <para>
-                <codeInline>VCardProperty&lt;T&gt;</codeInline> veröffentlicht die folgenden Daten:</para>
-              <code language="c#" source=".\Content\VCardProperty.cs"/>
+      <sections>
+        <section address="VCardProperty">
+          <title>Die Klasse VCardProperty&lt;T&gt;</title>
+          <content>
+            <para>
+              Das Datenmodell der Klasse <codeInline>VCard</codeInline> basiert auf Objekten, die von der Klasse <codeInline>VCardProperty&lt;T&gt;</codeInline> abgeleitet sind.
+            </para>
+            <para>
+              <codeInline>VCardProperty&lt;T&gt;</codeInline> veröffentlicht die folgenden Daten:
+            </para>
+            <code language="c#" source=".\Content\VCardProperty.cs"/>
 
-              <para>Dies spiegelt den Aufbau einer vCard-Property (Datenzeile einer vcf-Datei):</para>
-              <para>
-                <codeInline>group1.TEL;TYPE=home,voice;VALUE=uri:tel:+49-123-4567</codeInline>
-              </para>
-              <para>In diesem Beispiel entspricht</para>
-              <list class="bullet">
-                <listItem>
-                  <para>
-                    <codeInline>group1</codeInline>: <codeInline>VCardProperty&lt;T&gt;.Group</codeInline>,
-                  </para>
-                </listItem>
-                <listItem>
-                  <para>
-                    <codeInline>TEL;TYPE=home,voice;VALUE=uri</codeInline>: <codeInline>VCardProperty&lt;T&gt;.Parameters</codeInline> und
-                  </para>
-                </listItem>
-                <listItem>
-                  <para>
-                    <codeInline>tel:+49-123-4567</codeInline>: <codeInline>VCardProperty&lt;T&gt;.Value</codeInline>.
-                  </para>
-                </listItem>
-              </list>
-            </content>
-          </section>
-          <section address="NamingConventions">
-            <title>Namenskonventionen</title>
-            <content>
-              <para>Die meisten Eigenschaften der <codeInline>VCard</codeInline>-Klasse sind Collections. Das hängt damit zusammen, dass viele Eigenschaften
+            <para>Dies spiegelt den Aufbau einer vCard-Property (Datenzeile einer vcf-Datei):</para>
+            <para>
+              <codeInline>group1.TEL;TYPE=home,voice;VALUE=uri:tel:+49-123-4567</codeInline>
+            </para>
+            <para>In diesem Beispiel entspricht</para>
+            <list class="bullet">
+              <listItem>
+                <para>
+                  <codeInline>group1</codeInline>: <codeInline>VCardProperty&lt;T&gt;.Group</codeInline>,
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  <codeInline>TEL;TYPE=home,voice;VALUE=uri</codeInline>: <codeInline>VCardProperty&lt;T&gt;.Parameters</codeInline> und
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  <codeInline>tel:+49-123-4567</codeInline>: <codeInline>VCardProperty&lt;T&gt;.Value</codeInline>.
+                </para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+      </sections>
+    </section>
+
+
+
+    <section address="ReadingTheDocumentation">
+      <title>Lesen der Projektdokumentation</title>
+      <content>
+        <autoOutline/>
+      </content>
+      <sections>
+        <section address="NamingConventions">
+          <title>Namenskonventionen</title>
+          <content>
+            <para>
+              Die meisten Eigenschaften der <codeInline>VCard</codeInline>-Klasse sind Collections. Das hängt damit zusammen, dass viele Eigenschaften
               (z.B. Telefonnummern, E-Mail-Adressen) mehrere Instanzen in einer vCard haben können. Solche Eigenschaften haben - im
-            Gegensatz zu denen, die nur eine Instanz unterstützen - Pluralnamen.</para>
-              <para>Eine Besonderheit bilden Eigenschaften, deren Name mit "Views" endet: Dies sind Eigenschaften, von denen es eigentlich
-              nur eine Instanz geben darf. vCard 4.0 erlaubt es aber, mehrere Versionen derselben Eigenschaft in einer vCard zu speichern 
-              (z.B. in verschiedenen Sprachen). Dabei muss aber auf allen Versionen dieser Eigenschaft derselbe <codeInline>AltID</codeInline>-Parameter gesetzt sein.</para>
-            </content>
-          </section>
-        </sections>
-      
+              Gegensatz zu denen, die nur eine Instanz unterstützen - Pluralnamen.
+            </para>
+            <para>
+              Eine Besonderheit bilden Eigenschaften, deren Name mit "Views" endet: Dies sind Eigenschaften, von denen es eigentlich
+              nur eine Instanz geben darf. vCard 4.0 erlaubt es aber, mehrere Versionen derselben Eigenschaft in einer vCard zu speichern
+              (z.B. in verschiedenen Sprachen). Dabei muss aber auf allen Versionen dieser Eigenschaft derselbe <codeInline>AltID</codeInline>-Parameter gesetzt sein.
+            </para>
+          </content>
+        </section>
+
+        <section address="SpecialContent">
+          <title>Besondere Inhalte</title>
+          <content>
+            <para>
+              Wörter in Großbuchstaben, die sich häufig am Beginn der Dokumentation einer .NET-Eigenschaft befinden, sind Bezeichner aus dem vCard-Standard.
+              Ziffern in Klammern,
+              die sich am Ende der Dokumentation einer .NET-Eigenschaft befinden, z.B. <literal>(2,3,4)</literal>, beschreiben, zu welchem vCard-Standard
+              der Inhalt der .NET-Eigenschaft kompatibel ist.
+            </para>
+            <para>
+              Die Ziffern haben folgende Bedeutung:
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
+                  <codeInline>2</codeInline>: vCard 2.1,
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  <codeInline>3</codeInline>: vCard 3.0
+                </para>
+              </listItem>
+              <listItem>
+                <para>
+                  <codeInline>4</codeInline>: vCard 4.0
+                </para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+      </sections>
+    </section>
+
+    <section address="VcardStandard">
+      <title>Der vCard-Standard</title>
+      <content>
+        <para>Der vCard-Standard wird in folgenden Dokumenten beschrieben:</para>
+
+        <list class="bullet">
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 6350 (vCard 4.0)</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc6350</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 2426 (vCard 3.0)</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc2426</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>vCard.The Electronic Business Card.Version 2.1 (vCard 2.1)</linkText>
+                <linkUri>https://web.archive.org/web/20120501162958/http://www.imc.org/pdi/vcard-21.doc</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+        </list>
+
+        <para>Erweiterungen des Standards beschreiben z.B. folgende Dokumente:</para>
+
+        <list class="bullet">
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 6474: vCard Format Extensions: Place of Birth, Place and Date of Death</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc6474</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>
+                  RFC 6715: vCard Format Extensions: Representing vCard Extensions Defined by the Open Mobile
+                  Alliance (OMA) Converged Address Book (CAB) Group
+                </linkText>
+                <linkUri>https://tools.ietf.org/html/rfc6715</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 6473: vCard KIND: application</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc6473</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 4770: vCard Extensions for Instant Messaging (IM)</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc4770</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 2739: Calendar Attributes for vCard and LDAP</linkText>
+                <linkUri>https://tools.ietf.org/html/rfc2739</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+        </list>
+      </content>
     </section>
 
     <relatedTopics></relatedTopics>
-				
-	</developerConceptualDocument>
+
+  </developerConceptualDocument>
 </topic>

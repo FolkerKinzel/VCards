@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Repräsentiert die in vCard 4.0 eingeführte vCard-Property GENDER, die Informationen über das Geschlecht speichert.
+    /// Repräsentiert die in vCard 4.0 eingeführte vCard-Property <c>GENDER</c>, die Informationen über das Geschlecht speichert.
     /// </summary>
     public sealed class GenderProperty : VCardProperty<Gender>, IVCardData, IVcfSerializable, IVcfSerializableData
     {

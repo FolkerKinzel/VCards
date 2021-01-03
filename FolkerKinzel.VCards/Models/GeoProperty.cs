@@ -9,7 +9,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Repräsentiert die vCard-Property GEO, die eine geographische Position speichert.
+    /// Repräsentiert die vCard-Property <c>GEO</c>, die eine geographische Position speichert.
     /// </summary>
     public sealed class GeoProperty : VCardProperty<GeoCoordinate?>, IVCardData, IVcfSerializable, IVcfSerializableData
     {

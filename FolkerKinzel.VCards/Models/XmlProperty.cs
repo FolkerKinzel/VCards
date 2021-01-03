@@ -9,7 +9,7 @@ using System.Xml.Linq;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Die Klasse kapselt die Daten der vCard-Property "XML", die eingebettete XML-Daten ermöglicht.
+    /// Die Klasse kapselt die Daten der vCard-Property <c>XML</c>, die eingebettete XML-Daten ermöglicht.
     /// </summary>
     public sealed class XmlProperty : TextProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
