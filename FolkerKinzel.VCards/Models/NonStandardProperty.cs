@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert eine vCard-Property, die nicht von den offiziellen Standards definiert ist.
     /// </summary>
-    public sealed class NonStandardProperty : VCardProperty, IVCardData, IDataContainer<string?>, IVcfSerializable, IVcfSerializableData
+    public sealed class NonStandardProperty : VCardProperty, IDataContainer<string?>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="NonStandardProperty"/>-Objekt, das eine benutzerdefinierte
@@ -103,6 +103,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         [InternalProtected]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0022:Ausdruckskörper für Methoden verwenden", Justification = "<Ausstehend>")]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)
         {
             InternalProtectedAttribute.Run();

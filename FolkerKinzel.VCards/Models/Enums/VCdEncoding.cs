@@ -26,7 +26,7 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// <summary>
         /// 7-Bit-Zeichensatz (Default in vCard 2.1) <c>(2)</c>
         /// </summary>
-        [Obsolete("Ascii (7-Bit) is the standard encoding in vCard 2.1 and does not have to be indicated. Therefore this enum value will be removed in the next major version.")]
+        [Obsolete("Ascii (7-Bit) is the standard encoding in vCard 2.1 and does not have to be indicated. Therefore this enum value will be removed in the release candidate.")]
         Ascii
     }
 }

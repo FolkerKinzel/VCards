@@ -18,7 +18,7 @@ namespace FolkerKinzel.VCards.Models
     /// Der Standard erlaubt, dass das Mapping mit einer beliebigen URI signiert wird. Unterstützt werden hier
     /// aber nur UUIDs.
     /// </remarks>
-    public sealed class PropertyIDMappingProperty : VCardProperty, IVCardData, IDataContainer<PropertyIDMapping>, IVcfSerializable, IVcfSerializableData
+    public sealed class PropertyIDMappingProperty : VCardProperty, IDataContainer<PropertyIDMapping>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="PropertyIDMappingProperty"/>-Objekt.
@@ -41,7 +41,7 @@ namespace FolkerKinzel.VCards.Models
                 return;
             }
 
-            var arr = vcfRow.Value.Split(info.Semicolon, 2, StringSplitOptions.RemoveEmptyEntries);
+            string[] arr = vcfRow.Value.Split(info.Semicolon, 2, StringSplitOptions.RemoveEmptyEntries);
 
             if (arr.Length < 2 ||
                 !int.TryParse(arr[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out int mappingNumber))

@@ -17,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert die in vCard 4.0 eingeführte vCard-Property <c>GENDER</c>, die Informationen über das Geschlecht speichert.
     /// </summary>
-    public sealed class GenderProperty : VCardProperty, IVCardData, IDataContainer<Gender>, IVcfSerializable, IVcfSerializableData
+    public sealed class GenderProperty : VCardProperty, IDataContainer<Gender>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="GenderProperty"/>-Objekt.

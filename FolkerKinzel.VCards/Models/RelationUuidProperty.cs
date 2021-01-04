@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit der UUID ihrer <see cref="VCard"/>
     /// zu beschreiben.
     /// </summary>
-    public sealed class RelationUuidProperty : RelationProperty, IVCardData, IDataContainer<Guid>, IVcfSerializable, IVcfSerializableData
+    public sealed class RelationUuidProperty : RelationProperty, IDataContainer<Guid>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationUuidProperty"/>-Objekt.
@@ -65,7 +65,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Uuid einer Person, zu der eine Beziehung besteht.
         /// </summary>
-        [Obsolete("This property is deprecated and will be removed with the next Major release. Use Value instead!")]
+        [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
         public Guid Uuid => Value;
         
 

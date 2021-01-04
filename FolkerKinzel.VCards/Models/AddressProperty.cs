@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Kapselt die Daten einer vCard-Property, die Informationen über die Postanschrift enthält.
     /// </summary>
-    public sealed class AddressProperty : VCardProperty, IVCardData, IDataContainer<Address>, IVcfSerializable, IVcfSerializableData
+    public sealed class AddressProperty : VCardProperty, IDataContainer<Address>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.

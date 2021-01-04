@@ -1,12 +1,13 @@
-﻿using FolkerKinzel.VCards.Models.PropertyParts;
+﻿using FolkerKinzel.VCards.Models.Interfaces;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards.Models.Interfaces
+namespace FolkerKinzel.VCards.Intls.Serializers
 {
     /// <summary>
     /// Interface, das von <see cref="VCardProperty"/>-Objekten implementiert wird, um den Zugriff auf die in Ihnen gespeicherten
     /// Daten zu erleichtern.
     /// </summary>
-    public interface IVCardData : IDataContainer
+    internal interface IVCardData : IDataContainer
     {
         /// <summary>
         /// Gruppenbezeichner eine vCard-Property oder <c>null</c>, wenn die vCard-Property keinen Gruppenbezeichner hat.

@@ -17,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit ihrer <see cref="VCard"/>
     /// zu beschreiben.
     /// </summary>
-    public sealed class RelationVCardProperty : RelationProperty, IVCardData, IDataContainer<VCard?>, IVcfSerializable, IVcfSerializableData
+    public sealed class RelationVCardProperty : RelationProperty, IDataContainer<VCard?>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationVCardProperty"/>-Objekt.
@@ -59,7 +59,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// <see cref="VCard"/> einer Person, zu der eine Beziehung besteht.
         /// </summary>
-        [Obsolete("This property is deprecated and will be removed with the next Major release. Use Value instead!")]
+        [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
         public VCard? VCard => Value;
 
 

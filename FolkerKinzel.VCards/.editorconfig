@@ -143,3 +143,6 @@ dotnet_diagnostic.CA1307.severity = suggestion
 
 # IDE0056: Indexoperator verwenden
 csharp_style_prefer_index_operator = true:silent
+
+# IDE0057: Bereichsoperator verwenden
+csharp_style_prefer_range_operator = true:silent

@@ -28,7 +28,7 @@ namespace FolkerKinzel.VCards.Models
     /// einzubettende Binärdaten oder freien Text zu übergeben oder diese Informationen aus der Property
     /// wieder auszulesen.</para>
     /// </remarks>
-    public sealed class DataProperty : VCardProperty, IVCardData, IDataContainer<Uri?>, IVcfSerializable, IVcfSerializableData
+    public sealed class DataProperty : VCardProperty, IDataContainer<Uri?>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DataProperty"/>-Objekt.

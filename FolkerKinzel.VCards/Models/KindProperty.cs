@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert die in vCard 4.0 eingeführte Property <c>KIND</c>, die die Art des Objekts beschreibt, das durch die vCard repräsentiert wird.
     /// </summary>
-    public sealed class KindProperty : VCardProperty, IVCardData, IDataContainer<VCdKind>, IVcfSerializable, IVcfSerializableData
+    public sealed class KindProperty : VCardProperty, IDataContainer<VCdKind>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="KindProperty"/>-Objekt.

@@ -292,47 +292,47 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
                     if (val.StartsWith("aim:", StringComparison.OrdinalIgnoreCase))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_AIM, prop, i == 0 && prop.Parameters.Preference < 100);
+                        BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_AIM, prop, i == 0 && prop.Parameters.Preference < 100);
                     }
                     else if (val.StartsWith("gg:", StringComparison.OrdinalIgnoreCase))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GADUGADU, prop, i == 0 && prop.Parameters.Preference < 100);
+                        BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GADUGADU, prop, i == 0 && prop.Parameters.Preference < 100);
                     }
                     else if (val.StartsWith("gtalk:", StringComparison.OrdinalIgnoreCase))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GTALK, prop, i == 0 && prop.Parameters.Preference < 100);
+                        BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GTALK, prop, i == 0 && prop.Parameters.Preference < 100);
                     }
                     else if (val.StartsWith("com.google.hangouts:", StringComparison.OrdinalIgnoreCase))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GOOGLE_TALK, prop, i == 0 && prop.Parameters.Preference < 100);
+                        BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GOOGLE_TALK, prop, i == 0 && prop.Parameters.Preference < 100);
                     }
                     else if (val.StartsWith("icq:", StringComparison.OrdinalIgnoreCase))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_ICQ, prop, i == 0 && prop.Parameters.Preference < 100);
+                        BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_ICQ, prop, i == 0 && prop.Parameters.Preference < 100);
                     }
                     else if (val.StartsWith("xmpp:", StringComparison.OrdinalIgnoreCase))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_JABBER, prop, i == 0 && prop.Parameters.Preference < 100);
+                        BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_JABBER, prop, i == 0 && prop.Parameters.Preference < 100);
                     }
                     else if (val.StartsWith("msnim:", StringComparison.OrdinalIgnoreCase))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_MSN, prop, i == 0 && prop.Parameters.Preference < 100);
+                        BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_MSN, prop, i == 0 && prop.Parameters.Preference < 100);
                     }
                     else if (val.StartsWith("sip:", StringComparison.OrdinalIgnoreCase))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_MS_IMADDRESS, prop, i == 0 && prop.Parameters.Preference < 100);
+                        BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_MS_IMADDRESS, prop, i == 0 && prop.Parameters.Preference < 100);
                     }
                     else if (val.StartsWith("skype:", StringComparison.OrdinalIgnoreCase))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_SKYPE, prop, i == 0 && prop.Parameters.Preference < 100);
+                        BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_SKYPE, prop, i == 0 && prop.Parameters.Preference < 100);
                     }
                     else if (val.StartsWith("twitter:", StringComparison.OrdinalIgnoreCase))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_TWITTER, prop, i == 0 && prop.Parameters.Preference < 100);
+                        BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_TWITTER, prop, i == 0 && prop.Parameters.Preference < 100);
                     }
                     else if (val.StartsWith("ymsgr:", StringComparison.OrdinalIgnoreCase))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_YAHOO, prop, i == 0 && prop.Parameters.Preference < 100);
+                        BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_YAHOO, prop, i == 0 && prop.Parameters.Preference < 100);
                     }
                 }
             }
@@ -343,18 +343,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
                 if (prop != null)
                 {
-                    this.BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_IMAddress, prop, prop.Parameters.Preference < 100);
+                    BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_IMAddress, prop, prop.Parameters.Preference < 100);
                 }
             }
         }
-
-
-
-        //protected string Mask(string value)
-        //{
-        //    return Worker.Clear().Append(value).Mask(this.Version).ToString();
-        //}
-
 
 
         protected virtual void AppendLineFolding()
@@ -391,11 +383,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             }
         }
-
-
-
-
-
 
 
 
@@ -550,7 +537,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                     continue;
                 }
 
-                this.BuildProperty(nonStandardProp.PropertyKey, nonStandardProp, nonStandardProp.Parameters.Preference == 1);
+                BuildProperty(nonStandardProp.PropertyKey, nonStandardProp, nonStandardProp.Parameters.Preference == 1);
             }
         }
 
@@ -583,7 +570,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (agent != null)
             {
-                this.BuildProperty(VCard.PropKeys.AGENT, agent);
+                BuildProperty(VCard.PropKeys.AGENT, agent);
             }
 
 
@@ -606,22 +593,22 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
                     if (Options.IsSet(VcfOptions.WriteXExtensions))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.X_SPOUSE, spouse);
+                        BuildProperty(VCard.PropKeys.NonStandard.X_SPOUSE, spouse);
                     }
 
                     if (Options.IsSet(VcfOptions.WriteKAddressbookExtensions))
                     {
-                        this.BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_SpouseName, spouse);
+                        BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_SpouseName, spouse);
                     }
 
                     if (Options.IsSet(VcfOptions.WriteEvolutionExtensions))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE, spouse);
+                        BuildProperty(VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE, spouse);
                     }
 
                     if (Options.IsSet(VcfOptions.WriteWabExtensions))
                     {
-                        this.BuildProperty(VCard.PropKeys.NonStandard.X_WAB_SPOUSE_NAME, spouse);
+                        BuildProperty(VCard.PropKeys.NonStandard.X_WAB_SPOUSE_NAME, spouse);
                     }
                 }
             }

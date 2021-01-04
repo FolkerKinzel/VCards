@@ -110,7 +110,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (pref != null)
             {
-                this.BuildProperty(propertyKey, pref);
+                BuildProperty(propertyKey, pref);
             }
         }
 
@@ -123,12 +123,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             for (int i = 0; i < arr.Length; i++)
             {
                 IVcfSerializableData prop = arr[i];
-                this.BuildProperty(propertyKey, prop, i == 0 && prop.Parameters.Preference < 100);
+                BuildProperty(propertyKey, prop, i == 0 && prop.Parameters.Preference < 100);
             }
         }
-
-
-        // TODO: die Methoden von VcfSerializer überschreiben
 
         protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
         {
@@ -138,7 +135,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (adr != null)
             {
-                this.BuildProperty(VCard.PropKeys.ADR, adr, false);
+                BuildProperty(VCard.PropKeys.ADR, adr, false);
 
                 string? label = adr.Parameters.Label;
 
@@ -146,21 +143,16 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 {
                     var labelProp = new TextProperty(label, adr.Group);
                     labelProp.Parameters.Assign(adr.Parameters);
-                    this.BuildProperty(VCard.PropKeys.LABEL, labelProp);
+                    BuildProperty(VCard.PropKeys.LABEL, labelProp);
                 }
             }
         }
 
-
-        protected override void AppendAnniversaryViews(IEnumerable<DateTimeProperty?> value)
-        {
-            base.AppendAnniversaryViews(value);
-        }
+        protected override void AppendAnniversaryViews(IEnumerable<DateTimeProperty?> value) => base.AppendAnniversaryViews(value);
 
         protected override void AppendBirthDayViews(IEnumerable<DateTimeProperty?> value)
         {
             Debug.Assert(value != null);
-
 
             if (value.FirstOrDefault(x => x != null && x is DateTimeOffsetProperty) is DateTimeOffsetProperty pref)
             {
@@ -182,48 +174,21 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             BuildProperty(VCard.PropKeys.FN, displayName);
         }
 
+        protected override void AppendEmailAddresses(IEnumerable<TextProperty?> value) => BuildPropertyCollection(VCard.PropKeys.EMAIL, value);
 
-        protected override void AppendEmailAddresses(IEnumerable<TextProperty?> value)
-        {
-            BuildPropertyCollection(VCard.PropKeys.EMAIL, value);
-        }
+        protected override void AppendGenderViews(IEnumerable<GenderProperty?> value) => base.AppendGenderViews(value);
 
+        protected override void AppendGeoCoordinates(IEnumerable<GeoProperty?> value) => BuildPrefProperty(VCard.PropKeys.GEO, value);
 
-        protected override void AppendGenderViews(IEnumerable<GenderProperty?> value)
-        {
-            base.AppendGenderViews(value);
-        }
+        protected override void AppendInstantMessengerHandles(IEnumerable<TextProperty?> value) => BuildXImpps(value);
 
-        protected override void AppendGeoCoordinates(IEnumerable<GeoProperty?> value)
-        {
-            BuildPrefProperty(VCard.PropKeys.GEO, value);
-        }
+        protected override void AppendKeys(IEnumerable<DataProperty?> value) => BuildPrefProperty(VCard.PropKeys.KEY, value);
 
-        protected override void AppendInstantMessengerHandles(IEnumerable<TextProperty?> value)
-        {
-            BuildXImpps(value);
-        }
+        protected override void AppendLastRevision(TimestampProperty value) => BuildProperty(VCard.PropKeys.REV, value);
 
+        protected override void AppendLogos(IEnumerable<DataProperty?> value) => BuildPrefProperty(VCard.PropKeys.LOGO, value);
 
-        protected override void AppendKeys(IEnumerable<DataProperty?> value)
-        {
-            BuildPrefProperty(VCard.PropKeys.KEY, value);
-        }
-
-        protected override void AppendLastRevision(TimestampProperty value)
-        {
-            BuildProperty(VCard.PropKeys.REV, value);
-        }
-
-        protected override void AppendLogos(IEnumerable<DataProperty?> value)
-        {
-            BuildPrefProperty(VCard.PropKeys.LOGO, value);
-        }
-
-        protected override void AppendMailer(TextProperty value)
-        {
-            this.BuildProperty(VCard.PropKeys.MAILER, value);
-        }
+        protected override void AppendMailer(TextProperty value) => BuildProperty(VCard.PropKeys.MAILER, value);
 
         protected override void AppendNameViews(IEnumerable<NameProperty?> value)
         {
@@ -235,60 +200,27 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             BuildProperty(VCard.PropKeys.N, name);
         }
 
-        protected override void AppendNotes(IEnumerable<TextProperty?> value)
-        {
-            BuildPrefProperty(VCard.PropKeys.NOTE, value);
-        }
+        protected override void AppendNotes(IEnumerable<TextProperty?> value) => BuildPrefProperty(VCard.PropKeys.NOTE, value);
 
-        protected override void AppendOrganizations(IEnumerable<OrganizationProperty?> value)
-        {
-            BuildPrefProperty(VCard.PropKeys.ORG, value);
-        }
+        protected override void AppendOrganizations(IEnumerable<OrganizationProperty?> value) => BuildPrefProperty(VCard.PropKeys.ORG, value);
 
-        protected override void AppendPhoneNumbers(IEnumerable<TextProperty?> value)
-        {
-            BuildPropertyCollection(VCard.PropKeys.TEL, value);
-        }
+        protected override void AppendPhoneNumbers(IEnumerable<TextProperty?> value) => BuildPropertyCollection(VCard.PropKeys.TEL, value);
 
-        protected override void AppendPhotos(IEnumerable<DataProperty?> value)
-        {
-            BuildPrefProperty(VCard.PropKeys.PHOTO, value);
-        }
+        protected override void AppendPhotos(IEnumerable<DataProperty?> value) => BuildPrefProperty(VCard.PropKeys.PHOTO, value);
 
-        protected override void AppendRelations(IEnumerable<RelationProperty?> value)
-        {
-            base.AppendRelations(value);
-        }
+        protected override void AppendRelations(IEnumerable<RelationProperty?> value) => base.AppendRelations(value);
 
-        protected override void AppendRoles(IEnumerable<TextProperty?> value)
-        {
-            this.BuildPrefProperty(VCard.PropKeys.ROLE, value);
-        }
+        protected override void AppendRoles(IEnumerable<TextProperty?> value) => BuildPrefProperty(VCard.PropKeys.ROLE, value);
 
-        protected override void AppendSounds(IEnumerable<DataProperty?> value)
-        {
-            BuildPrefProperty(VCard.PropKeys.SOUND, value);
-        }
+        protected override void AppendSounds(IEnumerable<DataProperty?> value) => BuildPrefProperty(VCard.PropKeys.SOUND, value);
 
-        protected override void AppendTimeZones(IEnumerable<TimeZoneProperty?> value)
-        {
-            BuildPrefProperty(VCard.PropKeys.TZ, value);
-        }
+        protected override void AppendTimeZones(IEnumerable<TimeZoneProperty?> value) => BuildPrefProperty(VCard.PropKeys.TZ, value);
 
-        protected override void AppendTitles(IEnumerable<TextProperty?> value)
-        {
-            BuildPrefProperty(VCard.PropKeys.TITLE, value);
-        }
+        protected override void AppendTitles(IEnumerable<TextProperty?> value) => BuildPrefProperty(VCard.PropKeys.TITLE, value);
 
-        protected override void AppendUniqueIdentifier(UuidProperty value)
-        {
-            this.BuildProperty(VCard.PropKeys.UID, value);
-        }
+        protected override void AppendUniqueIdentifier(UuidProperty value) => BuildProperty(VCard.PropKeys.UID, value);
 
-        protected override void AppendURLs(IEnumerable<TextProperty?> value)
-        {
-            BuildPrefProperty(VCard.PropKeys.URL, value);
-        }
+        protected override void AppendURLs(IEnumerable<TextProperty?> value) => BuildPrefProperty(VCard.PropKeys.URL, value);
 
     }
 }

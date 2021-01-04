@@ -107,7 +107,7 @@ namespace FolkerKinzel.VCards.Models
 
             if ((obj is PropertyID other))
             {
-                return this.Equals(other);
+                return Equals(other);
             }
             else
             {
@@ -121,10 +121,7 @@ namespace FolkerKinzel.VCards.Models
         ///// <param name="other">Eine mit dieser Instanz zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
         ///// <returns><c>true</c>, wenn <paramref name="other"/> über dieselben Werte wie diese Instanz verfügt, andernfalls <c>false</c>.</returns>
         /// <inheritdoc/>
-        public bool Equals(PropertyID other)
-        {
-            return PropertyNumber == other.PropertyNumber && MappingNumber == other.MappingNumber;
-        }
+        public bool Equals(PropertyID other) => PropertyNumber == other.PropertyNumber && MappingNumber == other.MappingNumber;
 
 
         ///// <summary>
@@ -173,7 +170,7 @@ namespace FolkerKinzel.VCards.Models
         public override string ToString()
         {
             var sb = new StringBuilder(5);
-            this.AppendTo(sb);
+            AppendTo(sb);
             return sb.ToString();
         }
 

@@ -445,9 +445,9 @@ namespace FolkerKinzel.VCards.Models
         /// Die eingebetteten encodierten Daten.
         /// </summary>
 #if NET40
-        public string EncodedData => this.ToString().Split(new char[] { ',' }, 2, StringSplitOptions.None)[1];
+        public string EncodedData => ToString().Split(new char[] { ',' }, 2, StringSplitOptions.None)[1];
 #else
-        public string EncodedData => this.ToString().Split(',', 2, StringSplitOptions.None)[1];
+        public string EncodedData => ToString().Split(',', 2, StringSplitOptions.None)[1];
 #endif
 
         /// <summary>
@@ -523,9 +523,6 @@ namespace FolkerKinzel.VCards.Models
         /// Gibt eine geeignete Dateiendung für den <see cref="DataUrl"/> zurück.
         /// </summary>
         /// <returns>Eine geeignete Dateiendung für den <see cref="DataUrl"/>. Die Dateiendung enthält den Punkt als Trennzeichen.</returns>
-        public string GetFileExtension()
-        {
-            return MimeTypeConverter.GetFileExtension(this.MimeType);
-        }
+        public string GetFileExtension() => MimeTypeConverter.GetFileExtension(this.MimeType);
     }
 }

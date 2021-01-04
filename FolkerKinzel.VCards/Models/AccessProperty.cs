@@ -13,13 +13,8 @@ namespace FolkerKinzel.VCards.Models
     /// Kapselt die Daten der vCard-Property <c>CLASS</c>, die in vCard 3.0 die Geheimhaltungsstufe der 
     /// vCard definiert.
     /// </summary>
-    public sealed class AccessProperty : VCardProperty
-        , IVCardData
-        , IDataContainer<VCdAccess>
-        , IVcfSerializable, IVcfSerializableData
+    public sealed class AccessProperty : VCardProperty, IDataContainer<VCdAccess>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
-
-
         /// <summary>
         /// Initialisiert ein neues <see cref="AccessProperty"/>-Objekt.
         /// </summary>

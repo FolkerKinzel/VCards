@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um den Namen einer Person, zu der eine Beziehung besteht, anzugeben.
     /// </summary>
-    public sealed class RelationTextProperty : RelationProperty, IVCardData, IDataContainer<string?>, IVcfSerializable, IVcfSerializableData
+    public sealed class RelationTextProperty : RelationProperty, IDataContainer<string?>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationTextProperty"/>-Objekt.
@@ -74,7 +74,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Text zur Beschreibung einer Beziehung, z.B. Name der Person, zu der die Beziehung besteht.
         /// </summary>
-        [Obsolete("This property is deprecated and will be removed with the next Major release. Use Value instead!")]
+        [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
         public string? Text => Value;
         
 

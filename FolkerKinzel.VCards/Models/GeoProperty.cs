@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert die vCard-Property <c>GEO</c>, die eine geographische Position speichert.
     /// </summary>
-    public sealed class GeoProperty : VCardProperty, IVCardData, IDataContainer<GeoCoordinate?>, IVcfSerializable, IVcfSerializableData
+    public sealed class GeoProperty : VCardProperty, IDataContainer<GeoCoordinate?>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="GeoProperty"/>-Objekt.

@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert die vCard-Property <c>ORG</c>, die Informationen über die Organisation speichert, der das vCard-Objekt zugeordnet ist.
     /// </summary>
-    public sealed class OrganizationProperty : VCardProperty, IVCardData, IDataContainer<Organization>, IVcfSerializable, IVcfSerializableData
+    public sealed class OrganizationProperty : VCardProperty, IDataContainer<Organization>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="OrganizationProperty"/>-Objekt.

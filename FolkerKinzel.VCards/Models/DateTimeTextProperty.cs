@@ -15,7 +15,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="DateTimeProperty"/>-Klasse, die es erlaubt eine Zeit- und/oder Datumsangabe
     /// als freien Text zu speichern.
     /// </summary>
-    public class DateTimeTextProperty : DateTimeProperty, IVCardData, IDataContainer<string?>, IVcfSerializable, IVcfSerializableData
+    public class DateTimeTextProperty : DateTimeProperty, IDataContainer<string?>, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DateTimeTextProperty"/>-Objekt, bei dem der 
@@ -51,7 +51,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Die als freier Text gespeicherte Zeit- und/oder Datumsangabe.
         /// </summary>
-        [Obsolete("This property is deprecated and will be removed with the next Major release. Use Value instead!")]
+        [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
         public string? Text => Value;
 
 
