@@ -6,28 +6,28 @@ namespace FolkerKinzel.VCards.Models.Enums
     public enum VCdKind
     {
         /// <summary>
-        /// Einzelne Person oder Entität.
+        /// <c>INDIVIDUAL</c>: Einzelne Person oder Entität. <c>4</c>
         /// </summary>
         Individual,
 
         /// <summary>
-        /// Gruppe von Personen oder Entitäten.
+        /// <c>GROUP</c>: Gruppe von Personen oder Entitäten. <c>4</c>
         /// </summary>
         Group,
 
         /// <summary>
-        /// Eine Organisation.
+        /// <c>ORGANIZATION</c>: Eine Organisation. <c>4</c>
         /// </summary>
         Organization,
 
         /// <summary>
-        /// Einen geographischen Ort.
+        /// <c>LOCATION</c>: Einen geographischen Ort. <c>4</c>
         /// </summary>
         Location,
 
 
         /// <summary>
-        /// Ein Software-Programm (Server, Online-Service etc.). (siehe RFC 6473)
+        /// <c>APPLICATION</c>: Ein Software-Programm (Server, Online-Service etc.). <c>(4 - RFC 6473)</c>
         /// </summary>
         Application
 

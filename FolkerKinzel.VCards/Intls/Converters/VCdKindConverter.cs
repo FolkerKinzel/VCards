@@ -13,7 +13,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
             internal const string Application = "application";
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Zeichenfolgen in Großbuchstaben normalisieren", Justification = "<Ausstehend>")]
         internal static VCdKind Parse(string? value)
         {
             return (value?.ToLowerInvariant()) switch

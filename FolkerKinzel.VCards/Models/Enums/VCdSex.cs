@@ -6,27 +6,27 @@
     public enum VCdSex
     {
         /// <summary>
-        /// unbekannt
+        /// <c>U</c>: unbekannt <c>(4)</c>
         /// </summary>
         Unknown,
 
         /// <summary>
-        /// weiblich
+        /// <c>F</c>: weiblich <c>(4)</c>
         /// </summary>
         Female,
 
         /// <summary>
-        /// männlich
+        /// <c>M</c>: männlich <c>(4)</c>
         /// </summary>
         Male,
 
         /// <summary>
-        /// geschlechtslos oder nicht zuzuordnen
+        /// <c>N</c>: geschlechtslos oder nicht zuzuordnen <c>(4)</c>
         /// </summary>
         NonOrNotApplicable,
 
         /// <summary>
-        /// anderes Geschlecht
+        /// <c>O</c>: anderes Geschlecht <c>(4)</c>
         /// </summary>
         Other
 

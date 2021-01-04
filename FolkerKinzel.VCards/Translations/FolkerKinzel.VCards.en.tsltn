@@ -42,9 +42,9 @@
   <T ID="20E29B9E782FABD2">Abstract base class of all classes that represent vCard properties.</T>
   <T ID="801D5818CF60254F">Encapsulates the information contained in a vCard.</T>
   <T ID="82B8E8DE67B86E10">Named constants to specify options for writing VCF files. The constants can be combined.</T>
-  <T ID="D2A11B9E1BBE20A0">Named Constants to specify the components of the sex and gender identity of the object the vCard represents.</T>
+  <T ID="D2A11B9E1BBE20A0">Named Constants to specify the sex of the object the vCard represents.</T>
   <T ID="EF395BB67D29793B">Connects the &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyID.MappingNumber" /&gt; of a vCard property with a &lt;see cref="T:System.Guid" /&gt; that uniquely identifies this property across several vCards.</T>
-  <T ID="B5568F0CBE51E719">Named Constants to specify the type of object that the vCard represents.</T>
+  <T ID="B5568F0CBE51E719">Named Constants to specify the type of object, that the vCard represents.</T>
   <T ID="A1247501E35DCE64">Named constants to describe the type of an email address.</T>
   <T ID="EAE427E860CE31F9">Named constants to describe the type of relationship with a person or organization.</T>
   <T ID="DFB67AAF83746835">Encapsulates the data of the vCard property &lt;c&gt;CLASS&lt;/c&gt;, which defines the level of confidentiality of the vCard in vCard 3.0.</T>
@@ -423,4 +423,17 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="CC93485C4804002E">&lt;c&gt;QUOTED-PRINTABLE&lt;/c&gt;: Quoted Printable &lt;c&gt;(2)&lt;/c&gt;</T>
   <T ID="5204896A0FC1B70">&lt;c&gt;8BIT&lt;/c&gt;: 8-Bit charset &lt;c&gt;(2)&lt;/c&gt;</T>
   <T ID="C5F69008708CD878">7-Bit charset (Default in vCard 2.1) &lt;c&gt;(2)&lt;/c&gt;</T>
+  <T ID="DD725D8E30CCE050">&lt;c&gt;INDIVIDUAL&lt;/c&gt;: The vCard represents a single person or entity. (Default) &lt;c&gt;4&lt;/c&gt;</T>
+  <T ID="1C5F0BB2531C9DA7">&lt;c&gt;GROUP&lt;/c&gt;: The vCard represents a group of persons or entities. &lt;c&gt;4&lt;/c&gt;</T>
+  <T ID="AADF6839E798039D">&lt;c&gt;ORGANIZATION&lt;/c&gt;: The vCard represents an organization. &lt;c&gt;4&lt;/c&gt;</T>
+  <T ID="433D653EB1FE0F84">&lt;c&gt;LOCATION&lt;/c&gt;: The vCard represents a named geographical place. &lt;c&gt;4&lt;/c&gt;</T>
+  <T ID="F7771E0B090EAFA6">&lt;c&gt;APPLICATION&lt;/c&gt;: The vCard represents a software application such as a server, an online service  (e.g., a chat room), or an automated software bot. &lt;c&gt;(4 - RFC 6473)&lt;/c&gt;</T>
+  <T ID="DFD3BB78AD757868">&lt;c&gt;U&lt;/c&gt;: Unknown. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="F3C53774DCBF71D2">&lt;c&gt;F&lt;/c&gt;: Female. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="B07D2DCB4B8F4917">&lt;c&gt;M&lt;/c&gt;: Male. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="79046B15AAAB0F5A">&lt;c&gt;N&lt;/c&gt;: None or not applicable. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="A20095331553E74">&lt;c&gt;O&lt;/c&gt;: Other. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="BCBC60F0729D8382">vCard 2.1</T>
+  <T ID="29D2CD901544F81C">vCard 3.0</T>
+  <T ID="74243307428A3F23">vCard 4.0</T>
 </Tsltn>
