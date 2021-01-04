@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Informationen zur Angabe des Geschlechts in vCards.
     /// </summary>
-    public class Gender
+    public class Gender : IDataContainer
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="Gender"/>-Objekt.
@@ -42,6 +42,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// </summary>
         public bool IsEmpty => !Sex.HasValue && GenderIdentity is null;
 
+        object IDataContainer.Value => this;
 
         internal void AppendVCardStringTo(VcfSerializer serializer)
         {

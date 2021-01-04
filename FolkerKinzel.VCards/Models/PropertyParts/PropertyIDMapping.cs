@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// Verbindet die <see cref="PropertyID.MappingNumber"/> einer vCard-Property mit einer
     /// <see cref="Guid"/>, die diese vCard-Property über mehrere vCards hinweg eindeutig identifiziert.
     /// </summary>
-    public readonly struct PropertyIDMapping : IEquatable<PropertyIDMapping>
+    public readonly struct PropertyIDMapping : IEquatable<PropertyIDMapping>, IDataContainer
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="PropertyIDMapping"/>-Objekt.
@@ -42,10 +42,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public Guid Uuid { get; }
 
 
-        /// <summary>
-        /// True, wenn die <see cref="PropertyIDMapping"/>-Struct keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn die <see cref="PropertyIDMapping"/>-Struct keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public bool IsEmpty => Uuid == Guid.Empty;
+
+        object IDataContainer.Value => this;
 
 
 

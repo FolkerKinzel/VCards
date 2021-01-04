@@ -54,32 +54,38 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         public virtual T Value { get; protected set; }
 
+        ///// <summary>
+        ///// Repräsentiert den Inhalt einer vCard-Property.
+        ///// </summary>
+        /// <inheritdoc/>
+        object? IDataContainer.Value => Value;
 
-        /// <summary>
-        /// Optionaler Gruppenbezeichner einer vCard-Property.
-        /// </summary>
+
+        ///// <summary>
+        ///// Optionaler Gruppenbezeichner einer vCard-Property.
+        ///// </summary>
+        /// <inheritdoc/>
         public string? Group
         {
             get => _group;
             set => _group = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
         }
 
-        /// <summary>
-        /// Enthält die Daten des Parameter-Teils der vCard-Property. (Ist nie <c>null</c>.)
-        /// </summary>
+        ///// <summary>
+        ///// Enthält die Daten des Parameter-Teils der vCard-Property. (Ist nie <c>null</c>.)
+        ///// </summary>
+        /// <inheritdoc/>
         public ParameterSection Parameters { get; }
 
 
-        /// <summary>
-        /// True, wenn das <see cref="VCardProperty{T}"/>-Objekt keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn das <see cref="VCardProperty{T}"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public virtual bool IsEmpty => Value == null;
 
 
-        /// <summary>
-        /// Repräsentiert den Inhalt einer vCard-Property.
-        /// </summary>
-        object? IVCardData.Value => Value;
+        
 
 
 

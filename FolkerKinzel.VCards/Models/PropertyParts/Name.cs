@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Informationen über den Namen der Person, die die vCard repräsentiert.
     /// </summary>
-    public class Name
+    public class Name : IDataContainer
     {
         private readonly ReadOnlyCollection<string>[] data;
 
@@ -126,11 +126,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// </summary>
         public ReadOnlyCollection<string> Suffix => data[SUFFIX];
 
-        /// <summary>
-        /// True, wenn das <see cref="Name"/>-Objekt keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn das <see cref="Name"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public bool IsEmpty => !data.Any(x => x.Count != 0);
 
+        object IDataContainer.Value => this;
 
         internal void AppendVCardString(VcfSerializer serializer)
         {

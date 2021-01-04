@@ -10,20 +10,20 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         [TestMethod()]
         public void Roundtrip()
         {
-            foreach (var kind in (VCdContentLocation[])Enum.GetValues(typeof(VCdContentLocation)))
+            foreach (VCdContentLocation kind in (VCdContentLocation[])Enum.GetValues(typeof(VCdContentLocation)))
             {
-                var cIdString = kind.ToString().ToUpperInvariant();
+                string cIdString = kind.ToString().ToUpperInvariant();
 
-                cIdString = cIdString == "CONTENTID" ? "CONTENT-ID" : cIdString;
+                cIdString = cIdString == "CONTENTID" ? "CID" : cIdString;
 
-                var kind2 = VCdContentLocationConverter.Parse(cIdString);
+                VCdContentLocation kind2 = VCdContentLocationConverter.Parse(cIdString);
 
                 Assert.AreEqual(kind, kind2);
 
                 cIdString = kind.ToVCardString();
-                cIdString = cIdString == "CONTENT-ID" ? "ContentId" : cIdString;
+                cIdString = cIdString == "CID" ? "ContentId" : cIdString;
 
-                var kind3 = Enum.Parse(typeof(VCdContentLocation), cIdString, true);
+                object kind3 = Enum.Parse(typeof(VCdContentLocation), cIdString, true);
 
                 Assert.AreEqual(kind, kind3);
 

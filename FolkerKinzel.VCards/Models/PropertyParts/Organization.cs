@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Angaben zur Organisation (oder Firma) des Subjekts, das die vCard repräsentiert.
     /// </summary>
-    public class Organization
+    public class Organization : IDataContainer
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="Organization"/>-Objekt.
@@ -87,10 +87,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public ReadOnlyCollection<string>? OrganizationalUnits { get; }
 
 
-        /// <summary>
-        /// True, wenn das <see cref="Organization"/>-Objekt keine Daten enthält.
-        /// </summary>
+        ///// <summary>
+        ///// True, wenn das <see cref="Organization"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
         public bool IsEmpty => OrganizationName is null && OrganizationalUnits is null;
+
+        object IDataContainer.Value => this;
 
 
         internal bool NeedsToBeQpEncoded => OrganizationName.NeedsToBeQpEncoded() ||

@@ -34,6 +34,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public bool IsUnknown => (double.IsNaN(Latitude) || double.IsNaN(Longitude) ||
             Latitude < -90 || Latitude > 90 || Longitude < -180 || Longitude > 180);
 
+        
+
 
         ///// <summary>
         ///// Stellt fest, ob das <see cref="GeoCoordinate"/>-Objekt dem Parameter entspricht.
