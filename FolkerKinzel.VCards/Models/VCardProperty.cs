@@ -25,11 +25,11 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="parameters">Ein <see cref="ParameterSection"/>-Objekt, das den Parameter-Teil einer
         /// vCard-Property repräsentiert.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe von <see cref="VCardProperty"/>-Objekten,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         /// <exception cref="ArgumentNullException"><paramref name="parameters"/> ist <c>null</c>.</exception>
-        protected VCardProperty(ParameterSection parameters, string? propertyGroup)
+        protected VCardProperty(ParameterSection parameters, string? propertyGroup = null)
         {
             if(parameters is null)
             {
@@ -48,15 +48,6 @@ namespace FolkerKinzel.VCards.Models
             Parameters = new ParameterSection();
         }
 
-
-        ///// <summary>
-        ///// Repräsentiert den Inhalt einer vCard-Property.
-        ///// </summary>
-        //public virtual T Value { get; protected set; }
-
-        ///// <summary>
-        ///// Repräsentiert den Inhalt einer vCard-Property.
-        ///// </summary>
         /// <inheritdoc/>
         object? IDataContainer.Value => GetContainerValue();
 
@@ -70,20 +61,18 @@ namespace FolkerKinzel.VCards.Models
         protected abstract object? GetContainerValue();
 
 
-        ///// <summary>
-        ///// Optionaler Gruppenbezeichner einer vCard-Property.
-        ///// </summary>
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gruppenbezeichner einer vCard-Property oder <c>null</c>, wenn die vCard-Property keinen Gruppenbezeichner hat.
+        /// </summary>
         public string? Group
         {
             get => _group;
             set => _group = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
         }
 
-        ///// <summary>
-        ///// Enthält die Daten des Parameter-Teils der vCard-Property. (Ist nie <c>null</c>.)
-        ///// </summary>
-        /// <inheritdoc/>
+        /// <summary>
+        /// Enthält die Daten des Parameter-Abschnitts einer vCard-Property. (Nie <c>null</c>.)
+        /// </summary>
         public ParameterSection Parameters { get; }
 
 
@@ -92,12 +81,6 @@ namespace FolkerKinzel.VCards.Models
         ///// </summary>
         /// <inheritdoc/>
         public virtual bool IsEmpty => GetContainerValue() is null;
-
-
-
-
-
-
 
 
         /// <summary>
@@ -155,8 +138,6 @@ namespace FolkerKinzel.VCards.Models
 
 
         internal abstract void AppendValue(VcfSerializer serializer);
-
-
 
     }
 }

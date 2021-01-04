@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Models.Interfaces;
+﻿using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Interfaces;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
@@ -10,7 +11,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
     internal interface IVCardData : IDataContainer
     {
         /// <summary>
-        /// Gruppenbezeichner eine vCard-Property oder <c>null</c>, wenn die vCard-Property keinen Gruppenbezeichner hat.
+        /// Gruppenbezeichner einer vCard-Property oder <c>null</c>, wenn die vCard-Property keinen Gruppenbezeichner hat.
         /// </summary>
         public string? Group { get; set; }
 
