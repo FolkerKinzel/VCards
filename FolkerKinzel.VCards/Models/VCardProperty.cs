@@ -94,7 +94,7 @@ namespace FolkerKinzel.VCards.Models
         public virtual bool IsEmpty => GetContainerValue() is null;
 
 
-        
+
 
 
 
@@ -104,10 +104,7 @@ namespace FolkerKinzel.VCards.Models
         /// Überladung der <see cref="object.ToString"/>-Methode. Nur zum Debugging.
         /// </summary>
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="VCardProperty"/>-Objekts. </returns>
-        public override string ToString()
-        {
-            return ((IDataContainer)this).Value?.ToString() ?? "<null>";
-        }
+        public override string ToString() => ((IDataContainer)this).Value?.ToString() ?? "<null>";
 
 
         void IVcfSerializable.BuildProperty(VcfSerializer serializer)

@@ -62,7 +62,7 @@ namespace FolkerKinzel.VCards.Models
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             vcfRow.DecodeQuotedPrintable();
-            var arr = SplitValue();
+            string[] arr = SplitValue();
 
             if (arr.Length == 0)
             {

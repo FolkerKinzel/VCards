@@ -56,7 +56,7 @@ namespace FolkerKinzel.VCards.Tests
 
             string s = vcard.ToVcfString(VCdVersion.V2_1);
 
-            var cards = VCard.Parse(s);
+            List<VCard> cards = VCard.Parse(s);
 
             Assert.AreEqual(cards.Count, 1);
 
