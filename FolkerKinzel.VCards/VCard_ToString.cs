@@ -39,12 +39,12 @@ namespace FolkerKinzel.VCards
                                 continue;
                             }
 
-                            var vcdProp = (IVCardData)o;
-                            AppendProperty(prop, vcdProp);
+                            var vcdProp = (VCardProperty)o;
+                            AppendProperty(prop.Key, vcdProp);
                         }
                         break;
-                    case IVCardData vcdProp:
-                        AppendProperty(prop, vcdProp);
+                    case VCardProperty vcdProp:
+                        AppendProperty(prop.Key, vcdProp);
                         break;
                     default:
                         break;
@@ -71,7 +71,7 @@ namespace FolkerKinzel.VCards
 
             // ////////////////////////////////
 
-            void AppendProperty(KeyValuePair<VCdProp, object> prop, IVCardData vcdProp)
+            void AppendProperty(VCdProp key, VCardProperty vcdProp)
             {
                 const string INDENT = "    ";
                 string s = vcdProp.Parameters.ToString();
@@ -106,7 +106,7 @@ namespace FolkerKinzel.VCards
                     var arr = propStr.Split(Environment.NewLine, StringSplitOptions.None);
 #endif
 
-                    sb.Append(prop.Key).AppendLine(":");
+                    sb.Append(key).AppendLine(":");
 
                     foreach (var str in arr)
                     {
@@ -115,7 +115,7 @@ namespace FolkerKinzel.VCards
                 }
                 else
                 {
-                    sb.Append(prop.Key).Append(": ").AppendLine(propStr);
+                    sb.Append(key).Append(": ").AppendLine(propStr);
                 }
             }
         }

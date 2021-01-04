@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Models.Enums;
 using System.Linq;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Helpers;
+using System.Collections.Generic;
 
 namespace FolkerKinzel.VCards.Tests
 {
@@ -13,7 +14,7 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void Parse()
         {
-            var vcard = VCard.Load(fileName: TestFiles.V2vcf);
+            List<VCard> vcard = VCard.Load(fileName: TestFiles.V2vcf);
 
             Assert.IsNotNull(vcard);
             Assert.AreNotEqual(0, vcard.Count);
@@ -22,12 +23,14 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void ParseOutlook()
         {
-            var vcard = VCard.Load(fileName: TestFiles.OutlookV2vcf);
+            List<VCard> vcard = VCard.Load(fileName: TestFiles.OutlookV2vcf);
 
             Assert.IsNotNull(vcard);
             Assert.IsNotNull(vcard.FirstOrDefault());
 
-            var photo = vcard[0].Photos?.FirstOrDefault();
+            //string s = vcard[0].ToString();
+
+            DataProperty? photo = vcard[0].Photos?.FirstOrDefault();
             Assert.IsNotNull(photo);
 
             if(photo?.Value is DataUrl dataUrl)
