@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -14,7 +15,7 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void Parse()
         {
-            var vcard = VCard.Load(TestFiles.V4vcf);
+            List<VCard>? vcard = VCard.Load(TestFiles.V4vcf);
           
             Assert.IsNotNull(vcard);
             Assert.AreNotEqual(0, vcard.Count);
@@ -27,7 +28,7 @@ namespace FolkerKinzel.VCards.Tests
 
             string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-            var cards = VCard.Parse(s);
+            List<VCard>? cards = VCard.Parse(s);
 
             Assert.AreEqual(cards.Count, 1);
 

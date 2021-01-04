@@ -2,8 +2,11 @@
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.Interfaces;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace FolkerKinzel.VCards.Models
@@ -11,31 +14,43 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Eine von <see cref="DateTimeProperty"/> abgeleitete Klasse, die darauf spezialisiert ist <see cref="DateTimeOffset"/>-Werte zu speichern.
     /// </summary>
-    public class DateTimeOffsetProperty : DateTimeProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class DateTimeOffsetProperty : DateTimeProperty, IVCardData, IDataContainer<DateTimeOffset?>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
-        /// Initialisiert ein neues <see cref="DateTimeOffsetProperty"/>-Objekt, bei dem der PropertyValue-Parameter
+        /// Initialisiert ein neues <see cref="DateTimeOffsetProperty"/>-Objekt, bei dem der <see cref="ParameterSection.DataType"/>-Parameter
         /// auf <see cref="VCdDataType.DateAndOrTime"/> gesetzt ist.
         /// </summary>
-        /// <param name="value">Ein <see cref="DateTimeOffset"/>-Objekt.</param>
+        /// <param name="value">Ein <see cref="DateTimeOffset"/>-Objekt oder <c>null</c>.</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
-        public DateTimeOffsetProperty(DateTimeOffset value, string? propertyGroup = null) : base(propertyGroup)
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
+        public DateTimeOffsetProperty(DateTimeOffset? value, string? propertyGroup = null) : base(propertyGroup)
         {
-            this.DateTimeOffset = value;
+            this.Value = (value == System.DateTimeOffset.MinValue) ? null : value;
             Parameters.DataType = VCdDataType.DateAndOrTime;
         }
 
-        /// <summary>
-        /// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="DateTimeOffset"/> zurück.
-        /// </summary>
-        public override object? Value => this.DateTimeOffset == DateTimeOffset.MinValue ? null : (object)this.DateTimeOffset;
+
+        /// <inheritdoc/>
+        public DateTimeOffset? Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
+
 
         /// <summary>
-        /// Der gespeicherte <see cref="DateTimeOffset"/>-Wert.
+        /// Der gespeicherte <see cref="DateTimeOffset"/>-Wert oder <c>null</c>.
         /// </summary>
-        public DateTimeOffset DateTimeOffset { get; }
+        [Obsolete("This property is deprecated and will be removed with the next Major release. Use Value instead!")]
+        public DateTimeOffset? DateTimeOffset => Value;
+        
 
 
         [InternalProtected]
@@ -47,7 +62,7 @@ namespace FolkerKinzel.VCards.Models
             if (serializer.Version < VCdVersion.V4_0)
             {
                 this.Parameters.DataType =
-                    DateAndOrTimeConverter.HasTimeComponent(this.DateTimeOffset)
+                    DateAndOrTimeConverter.HasTimeComponent(this.Value)
                     ? VCdDataType.DateTime : VCdDataType.Date;
             }
         }
@@ -63,7 +78,7 @@ namespace FolkerKinzel.VCards.Models
 
             worker.Clear();
 
-            DateAndOrTimeConverter.AppendDateTimeStringTo(worker, this.DateTimeOffset, serializer.Version);
+            DateAndOrTimeConverter.AppendDateTimeStringTo(worker, this.Value, serializer.Version);
 
             //serializer.Worker.Mask(serializer.Version);
             serializer.Builder.Append(worker);

@@ -4,14 +4,16 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Resources;
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
+using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert eine vCard-Property, die nicht von den offiziellen Standards definiert ist.
     /// </summary>
-    public sealed class NonStandardProperty : VCardProperty<string?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class NonStandardProperty : VCardProperty, IVCardData, IDataContainer<string?>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="NonStandardProperty"/>-Objekt, das eine benutzerdefinierte
@@ -20,8 +22,8 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="value">Der Wert der Property (Text oder BASE64-codierte Bytes).</param>
         /// <param name="propertyKey">Der Schlüssel (Format X-Name).</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         /// <exception cref="ArgumentNullException"><paramref name="propertyKey"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="propertyKey"/> ist kein X-Name.</exception>
         public NonStandardProperty(string propertyKey, string? value, string? propertyGroup = null)
@@ -31,14 +33,20 @@ namespace FolkerKinzel.VCards.Models
                 throw new ArgumentNullException(nameof(propertyKey));
             }
 
-            PropertyKey = propertyKey.Trim().ToUpperInvariant();
-
-            if (PropertyKey.Length < 3 || !PropertyKey.StartsWith("X-", StringComparison.Ordinal))
+            if (propertyKey.Length < 3
+                || !propertyKey.StartsWith("X-", StringComparison.OrdinalIgnoreCase)
+#if NET40
+                || propertyKey.Contains(" ")
+#else
+                || propertyKey.Contains(' ', StringComparison.Ordinal)
+#endif
+                )
             {
                 throw new ArgumentException(
                     Res.NoXName, nameof(propertyKey));
             }
 
+            PropertyKey = propertyKey;
             Value = value;
             Group = propertyGroup;
         }
@@ -55,6 +63,28 @@ namespace FolkerKinzel.VCards.Models
         /// Bezeichner der vCard-Property.
         /// </summary>
         public string PropertyKey { get; }
+
+        /// <inheritdoc/>
+        public string? Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
+
+
+
+
+        /////// <summary>
+        /////// True, wenn das <see cref="NonStandardProperty"/>-Objekt keine Daten enthält.
+        /////// </summary>
+        /////  <inheritdoc/>
+        //public override bool IsEmpty => false;
 
 
         /// <summary>
@@ -90,10 +120,6 @@ namespace FolkerKinzel.VCards.Models
             serializer.Builder.Append(Value);
         }
 
-        ///// <summary>
-        ///// True, wenn das <see cref="NonStandardProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
-        ///  <inheritdoc/>
-        public override bool IsEmpty => false;
+       
     }
 }

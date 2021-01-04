@@ -261,51 +261,55 @@ namespace FolkerKinzel.VCards
                     return;
                 }
 
-                RelationVCardProperty?[]? vcdProps = vcard.Members?
+                RelationVCardProperty[]? vcdProps = vcard.Members?
                                 .Select(x => x as RelationVCardProperty)
                                 .Where(x => x != null && !x.IsEmpty)
-                                .ToArray();
+                                .ToArray()!;
 
                 if (vcdProps is null || vcdProps.Length == 0)
                 {
                     return;
                 }
 
-                foreach (RelationVCardProperty? vcdProp in vcdProps)
+                foreach (RelationVCardProperty vcdProp in vcdProps)
                 {
                     Debug.Assert(vcdProp != null);
-                    Debug.Assert(vcdProp.VCard != null);
+                    Debug.Assert(vcdProp.Value != null);
 
-                    if (!vcdList.Contains(vcdProp.VCard))
+                    VCard vc = vcdProp.Value;
+
+                    if (!vcdList.Contains(vc))
                     {
-                        vcdList.Add(vcdProp.VCard);
+                        vcdList.Add(vc);
                     }
 
-                    if (vcdProp.VCard.UniqueIdentifier is null)
+                    if (vc.UniqueIdentifier is null)
                     {
-                        vcdProp.VCard.UniqueIdentifier = new UuidProperty();
+                        vc.UniqueIdentifier = new UuidProperty();
                     }
                 }
             }
 
             void DereferenceRelations(VCard vcard)
             {
-                RelationVCardProperty?[]? vcdProps = vcard.Relations?
+                RelationVCardProperty[]? vcdProps = vcard.Relations?
                                 .Select(x => x as RelationVCardProperty)
                                 .Where(x => x != null && !x.IsEmpty)
-                                .ToArray();
+                                .ToArray()!;
 
                 if (vcdProps is null || vcdProps.Length == 0)
                 {
                     return;
                 }
 
-                foreach (RelationVCardProperty? vcdProp in vcdProps)
+                foreach (RelationVCardProperty vcdProp in vcdProps)
                 {
                     Debug.Assert(vcdProp != null);
-                    Debug.Assert(vcdProp.VCard != null);
+                    Debug.Assert(vcdProp.Value != null);
 
-                    if (!vcdList.Contains(vcdProp.VCard))
+                    VCard vc = vcdProp.Value;
+
+                    if (!vcdList.Contains(vc))
                     {
                         if (version < VCdVersion.V4_0
                            && vcdProp.Parameters.RelationType.IsSet(RelationTypes.Agent)
@@ -314,12 +318,12 @@ namespace FolkerKinzel.VCards
                             continue;
                         }
 
-                        vcdList.Add(vcdProp.VCard);
+                        vcdList.Add(vc);
                     }
 
-                    if (vcdProp.VCard.UniqueIdentifier is null)
+                    if (vc.UniqueIdentifier is null)
                     {
-                        vcdProp.VCard.UniqueIdentifier = new UuidProperty();
+                        vc.UniqueIdentifier = new UuidProperty();
                     }
                 }
             }

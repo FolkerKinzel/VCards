@@ -6,22 +6,25 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
+using FolkerKinzel.VCards.Models.Interfaces;
+
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert vCard-Properties, deren Inhalt aus Text besteht.
     /// </summary>
-    public class TextProperty : VCardProperty<string?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class TextProperty : VCardProperty, IVCardData, IDataContainer<string?>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="TextProperty"/>-Objekt.
         /// </summary>
-        /// <param name="value">Ein <see cref="string"/>.</param>
+        /// <param name="value">Ein <see cref="string"/> oder <c>null</c>.</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         public TextProperty(string? value, string? propertyGroup = null)
         {
             Value = string.IsNullOrWhiteSpace(value) ? null : value;
@@ -39,6 +42,22 @@ namespace FolkerKinzel.VCards.Models
 
             Value = vcfRow.Value;
         }
+
+
+        /// <inheritdoc/>
+        public virtual string? Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
+
+
 
         [InternalProtected]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)

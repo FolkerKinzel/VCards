@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Models.Tests
                 "<Folker>Kinzel</Folker>";
                 
 
-            XElement xelement = XElement.Parse(XML_TEXT1);
+            var xelement = XElement.Parse(XML_TEXT1);
 
             _ = new XmlProperty(xelement);
         }
@@ -31,7 +31,7 @@ namespace FolkerKinzel.VCards.Models.Tests
                 "<Folker xmlns=\"urn:ietf:params:xml:ns:vcard-4.0\">Kinzel</Folker>";
 
 
-            XElement xelement = XElement.Parse(XML_TEXT1);
+            var xelement = XElement.Parse(XML_TEXT1);
 
             _ = new XmlProperty(xelement);
         }
@@ -50,7 +50,7 @@ namespace FolkerKinzel.VCards.Models.Tests
             const string GROUP = "group1";
 
 
-            XElement xelement = XElement.Parse(XML_TEXT1);
+            var xelement = XElement.Parse(XML_TEXT1);
 
             var prop = new XmlProperty(xelement, GROUP);
 

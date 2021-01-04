@@ -10,7 +10,7 @@
             Context,
 
             /// <summary>
-            /// <c>TYPE</c>: Klassifiziert eine <see cref="VCardProperty{T}"/> als dienstlich und / oder privat. <c>(2,3,4)</c>
+            /// <c>TYPE</c>: Klassifiziert eine <see cref="VCardProperty"/> als dienstlich und / oder privat. <c>(2,3,4)</c>
             /// </summary>
             PropertyClass,
 
@@ -70,12 +70,12 @@
             Charset,
 
             /// <summary>
-            /// <c>ENCODING</c>: Gibt die Encodierung der <see cref="VCardProperty{T}"/> an. <c>(2,3)</c>
+            /// <c>ENCODING</c>: Gibt die Encodierung der <see cref="VCardProperty"/> an. <c>(2,3)</c>
             /// </summary>
             Encoding,
 
             /// <summary>
-            /// <c>LANGUAGE</c>: Sprache der <see cref="VCardProperty{T}"/>. <c>(2,3,4)</c>
+            /// <c>LANGUAGE</c>: Sprache der <see cref="VCardProperty"/>. <c>(2,3,4)</c>
             /// </summary>
             Language,
 

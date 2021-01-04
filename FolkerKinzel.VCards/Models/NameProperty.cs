@@ -8,13 +8,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
+using System.Runtime.CompilerServices;
+using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert die vCard-Property <c>N</c>, die den Namen des vCard-Subjekts speichert.
     /// </summary>
-    public sealed class NameProperty : VCardProperty<Name>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class NameProperty : VCardProperty, IVCardData, IDataContainer<Name>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="NameProperty"/>-Objekt.
@@ -25,8 +27,8 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="prefix">Namenspräfix (z.B. "Prof. Dr.")</param>
         /// <param name="suffix">Namenssuffix (z.B. "jr.")</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public NameProperty(
             IEnumerable<string?>? lastName = null,
             IEnumerable<string?>? firstName = null,
@@ -85,6 +87,28 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
+        /// <inheritdoc/>
+        public Name Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
+
+
+
+        ///// <summary>
+        ///// True, wenn das <see cref="NameProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
+        public override bool IsEmpty => Value.IsEmpty;
+
+
         [InternalProtected]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)
         {
@@ -126,11 +150,7 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-        ///// <summary>
-        ///// True, wenn das <see cref="NameProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
-        /// <inheritdoc/>
-        public override bool IsEmpty => Value.IsEmpty;
+        
 
     }
 }

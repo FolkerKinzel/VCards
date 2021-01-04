@@ -9,22 +9,25 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using FolkerKinzel.VCards.Models.Interfaces;
+
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert vCard-Properties, die eine Sammlung von Text-Inhalten speichern.
     /// </summary>
-    public class StringCollectionProperty : VCardProperty<ReadOnlyCollection<string>>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class StringCollectionProperty : VCardProperty, IVCardData, IDataContainer<ReadOnlyCollection<string>?>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="StringCollectionProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Eine Sammlung von <see cref="string"/>s.</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null)
         {
             Group = propertyGroup;
@@ -35,7 +38,7 @@ namespace FolkerKinzel.VCards.Models
             }
 
             // Die Überprüfungen könnten eine allgemeine Verwendbarkeit der Klasse einschränken:
-            var arr = value.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x!.Trim()).ToArray();
+            string[] arr = value.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x!.Trim()).ToArray();
 
             if (arr.Length == 0)
             {
@@ -98,6 +101,20 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+        /// <inheritdoc/>
+        public ReadOnlyCollection<string>? Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
+
+
         [InternalProtected]
         internal override void AppendValue(VcfSerializer serializer)
         {
@@ -134,11 +151,12 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        /// <summary>
-        /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="StringCollectionProperty"/>-Objekts. (Nur zum 
-        /// Debuggen.)
-        /// </summary>
-        /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="StringCollectionProperty"/>-Objekts.</returns>
+        ///// <summary>
+        ///// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="StringCollectionProperty"/>-Objekts. (Nur zum 
+        ///// Debuggen.)
+        ///// </summary>
+        ///// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="StringCollectionProperty"/>-Objekts.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             string s = "";

@@ -3,7 +3,8 @@
 namespace FolkerKinzel.VCards.Models.Enums
 {
     /// <summary>
-    /// Benannte Konstanten, um den Geltungsbereich einer vCard-Property zu klassifizieren.
+    /// Benannte Konstanten, um den Geltungsbereich einer vCard-Property zu klassifizieren. Die Konstanten können
+    /// kombiniert werden.
     /// </summary>
     /// <remarks>
     /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 

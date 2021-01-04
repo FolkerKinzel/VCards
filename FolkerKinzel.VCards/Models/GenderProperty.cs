@@ -8,13 +8,16 @@ using System;
 using System.Text;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using FolkerKinzel.VCards.Models.Interfaces;
+
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert die in vCard 4.0 eingeführte vCard-Property <c>GENDER</c>, die Informationen über das Geschlecht speichert.
     /// </summary>
-    public sealed class GenderProperty : VCardProperty<Gender>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class GenderProperty : VCardProperty, IVCardData, IDataContainer<Gender>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="GenderProperty"/>-Objekt.
@@ -22,13 +25,37 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="sex">Standardisierte Geschlechtsangabe.</param>
         /// <param name="genderIdentity">Freie Beschreibung des Geschlechts.</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         public GenderProperty(VCdSex? sex, string? genderIdentity = null, string? propertyGroup = null)
         {
             Value = new Gender(sex, genderIdentity);
             Group = propertyGroup;
         }
+
+
+        /// <inheritdoc/>
+        public Gender Value
+        {
+            get;
+        }
+
+
+        ///// <summary>
+        ///// True, wenn das <see cref="GenderProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
+        public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
+
+
+
 
         internal GenderProperty(VcfRow vcfRow, StringBuilder builder)
             : base(vcfRow.Parameters, vcfRow.Group)
@@ -63,10 +90,5 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        ///// <summary>
-        ///// True, wenn das <see cref="GenderProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
-        /// <inheritdoc/>
-        public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
     }
 }

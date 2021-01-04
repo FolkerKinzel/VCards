@@ -4,8 +4,12 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.Helpers;
+using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
+using FolkerKinzel.VCards.Models.Interfaces;
+
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -13,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit ihrer <see cref="VCard"/>
     /// zu beschreiben.
     /// </summary>
-    public sealed class RelationVCardProperty : RelationProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class RelationVCardProperty : RelationProperty, IVCardData, IDataContainer<VCard?>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationVCardProperty"/>-Objekt.
@@ -22,24 +26,42 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum, der die 
         /// Beziehung beschreibt.</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         public RelationVCardProperty(VCard? vcard, RelationTypes? relation = null, string? propertyGroup = null)
             : base(relation, propertyGroup)
         {
-            this.VCard = vcard;
+            this.Value = vcard;
             this.Parameters.DataType = VCdDataType.VCard;
         }
 
-        /// <summary>
-        /// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="VCard"/> zurück.
-        /// </summary>
-        public override object? Value => this.VCard;
+        ///// <summary>
+        ///// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="VCard"/> zurück.
+        ///// </summary>
+        //public override object? Value => this.VCard;
+
+
+
+        /// <inheritdoc/>
+        public VCard? Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
+
 
         /// <summary>
         /// <see cref="VCard"/> einer Person, zu der eine Beziehung besteht.
         /// </summary>
-        public VCard? VCard { get; }
+        [Obsolete("This property is deprecated and will be removed with the next Major release. Use Value instead!")]
+        public VCard? VCard => Value;
+
 
         [InternalProtected]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)
@@ -58,7 +80,7 @@ namespace FolkerKinzel.VCards.Models
         {
             InternalProtectedAttribute.Run();
 
-            if (this.VCard is null)
+            if (this.Value is null)
             {
                 return;
             }
@@ -70,15 +92,15 @@ namespace FolkerKinzel.VCards.Models
 
             if (serializer.Version >= VCdVersion.V4_0)
             {
-                Debug.Assert(this.VCard.UniqueIdentifier != null);
-                Debug.Assert(!this.VCard.UniqueIdentifier.IsEmpty);
+                Debug.Assert(this.Value.UniqueIdentifier != null);
+                Debug.Assert(!this.Value.UniqueIdentifier.IsEmpty);
 
-                builder.AppendUuid(this.VCard.UniqueIdentifier.Value);
+                builder.AppendUuid(this.Value.UniqueIdentifier.Value);
                 return;
             }
 
 
-            string vc = this.VCard.ToVcfString(serializer.Version, serializer.Options.Unset(VcfOptions.IncludeAgentAsSeparateVCard));
+            string vc = this.Value.ToVcfString(serializer.Version, serializer.Options.Unset(VcfOptions.IncludeAgentAsSeparateVCard));
 
             if (serializer.Version == VCdVersion.V3_0)
             {

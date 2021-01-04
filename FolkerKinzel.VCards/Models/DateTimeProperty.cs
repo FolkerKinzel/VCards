@@ -6,7 +6,10 @@ using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
+using FolkerKinzel.VCards.Models.Interfaces;
+
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -16,15 +19,15 @@ namespace FolkerKinzel.VCards.Models
     /// <remarks>Die Informationen könnnen in verschiedenen Formaten vorliegen. So ist z.B. in vCard 4.0 auch
     /// freier Text wie "dienstags nach Mitternacht" möglich. Um herauszufinden, welcher Art die enthaltene Information ist,
     /// ist die <see cref="ParameterSection.DataType"/>-Eigenschaft hilfreich.</remarks>
-    public abstract class DateTimeProperty : VCardProperty<object?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public abstract class DateTimeProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Konstruktor, der abgeleiteten Klassen erlaubt, ein neues <see cref="DateTimeProperty"/>-Objekt zu initialisieren,
         /// bei dem ein Gruppenname für vCard-Properties angegeben ist.
         /// </summary>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         protected DateTimeProperty(string? propertyGroup) { this.Group = propertyGroup; }
 
 

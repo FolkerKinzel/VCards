@@ -4,6 +4,8 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using System.Runtime.CompilerServices;
+using FolkerKinzel.VCards.Models.Interfaces;
 
 
 namespace FolkerKinzel.VCards.Models
@@ -11,25 +13,40 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert die vCard-Property <c>GEO</c>, die eine geographische Position speichert.
     /// </summary>
-    public sealed class GeoProperty : VCardProperty<GeoCoordinate?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class GeoProperty : VCardProperty, IVCardData, IDataContainer<GeoCoordinate?>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="GeoProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein <see cref="GeoCoordinate"/>-Objekt.</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         public GeoProperty(GeoCoordinate? value, string? propertyGroup = null)
         {
-            Value = value;
+            this.Value = (value is null) || value.IsUnknown ? null : value;
             Group = propertyGroup;
         }
 
         internal GeoProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
         {
-            Value = GeoCoordinateConverter.Parse(vcfRow.Value);
+            GeoCoordinate? value = GeoCoordinateConverter.Parse(vcfRow.Value);
+            this.Value = (value is null) || value.IsUnknown ? null : value;
         }
+
+
+        /// <inheritdoc/>
+        public GeoCoordinate? Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
 
 
         [InternalProtected]
@@ -37,18 +54,9 @@ namespace FolkerKinzel.VCards.Models
         {
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
-
-            if (Value != null)
-            {
-                GeoCoordinateConverter.AppendTo(serializer.Builder, Value, serializer.Version);
-            }
+            
+            GeoCoordinateConverter.AppendTo(serializer.Builder, Value, serializer.Version);
         }
 
-
-        ///// <summary>
-        ///// True, wenn das <see cref="GeoProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
-        /// <inheritdoc/>
-        public override bool IsEmpty => Value is null || Value.IsUnknown;
     }
 }

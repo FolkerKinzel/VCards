@@ -51,10 +51,14 @@ namespace FolkerKinzel.VCards.Intls.Converters
         }
 
 
-        internal static void AppendTo(StringBuilder builder, GeoCoordinate coordinate, VCdVersion version)
+        internal static void AppendTo(StringBuilder builder, GeoCoordinate? coordinate, VCdVersion version)
         {
             Debug.Assert(builder != null);
-            Debug.Assert(coordinate != null);
+
+            if (coordinate is null)
+            {
+                return;
+            }
 
             CultureInfo culture = CultureInfo.InvariantCulture;
 

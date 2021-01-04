@@ -7,7 +7,10 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
+using FolkerKinzel.VCards.Models.Interfaces;
+
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -25,7 +28,7 @@ namespace FolkerKinzel.VCards.Models
     /// einzubettende Binärdaten oder freien Text zu übergeben oder diese Informationen aus der Property
     /// wieder auszulesen.</para>
     /// </remarks>
-    public sealed class DataProperty : VCardProperty<Uri?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class DataProperty : VCardProperty, IVCardData, IDataContainer<Uri?>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DataProperty"/>-Objekt.
@@ -50,6 +53,20 @@ namespace FolkerKinzel.VCards.Models
             }
             catch { } // Value = null : not readable
         }
+
+
+        /// <inheritdoc/>
+        public Uri? Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
 
 
         [InternalProtected]
@@ -281,5 +298,8 @@ namespace FolkerKinzel.VCards.Models
                     break;
             }
         }
+
+
+
     }
 }

@@ -4,14 +4,17 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using FolkerKinzel.VCards.Models.Interfaces;
+
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit der Uuid ihrer <see cref="VCard"/>
+    /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit der UUID ihrer <see cref="VCard"/>
     /// zu beschreiben.
     /// </summary>
-    public sealed class RelationUuidProperty : RelationProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class RelationUuidProperty : RelationProperty, IVCardData, IDataContainer<Guid>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationUuidProperty"/>-Objekt.
@@ -21,27 +24,50 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum, der die 
         /// Beziehung beschreibt.</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         public RelationUuidProperty(Guid uuid, RelationTypes? relation = null, string? propertyGroup = null)
             : base(relation, propertyGroup)
         {
             this.Parameters.DataType = VCdDataType.Uri;
-            this.Uuid = uuid;
+            this.Value = uuid;
         }
 
 
 
-        /// <summary>
-        /// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="Uuid"/> zurück.
-        /// </summary>
-        public override object Value => this.Uuid;
+        ///// <summary>
+        ///// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="Uuid"/> zurück.
+        ///// </summary>
+        //public override object Value => this.Uuid;
+
+
+        /// <inheritdoc/>
+        public Guid Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
+
+
+        ///// <summary>
+        ///// True, wenn das <see cref="RelationUuidProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
+        public override bool IsEmpty => Value == Guid.Empty;
 
 
         /// <summary>
         /// Uuid einer Person, zu der eine Beziehung besteht.
         /// </summary>
-        public Guid Uuid { get; }
+        [Obsolete("This property is deprecated and will be removed with the next Major release. Use Value instead!")]
+        public Guid Uuid => Value;
+        
 
         [InternalProtected]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)
@@ -62,15 +88,11 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            serializer.Builder.AppendUuid(this.Uuid, serializer.Version);
+            serializer.Builder.AppendUuid(this.Value, serializer.Version);
         }
 
 
-        ///// <summary>
-        ///// True, wenn das <see cref="RelationUuidProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
-        /// <inheritdoc/>
-        public override bool IsEmpty => Uuid == Guid.Empty;
+        
     }
 
 }

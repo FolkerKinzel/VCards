@@ -1,9 +1,9 @@
 ﻿using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards.Models
+namespace FolkerKinzel.VCards.Models.Interfaces
 {
     /// <summary>
-    /// Interface, das von <see cref="VCardProperty{T}"/>-Objekten implementiert wird, um den Zugriff auf die in Ihnen gespeicherten
+    /// Interface, das von <see cref="VCardProperty"/>-Objekten implementiert wird, um den Zugriff auf die in Ihnen gespeicherten
     /// Daten zu erleichtern.
     /// </summary>
     public interface IVCardData : IDataContainer

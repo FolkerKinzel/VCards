@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
+using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -11,7 +12,7 @@ namespace FolkerKinzel.VCards.Models
     /// Kapselt Informationen, die dazu dienen, eine vCard-Property eindeutig
     /// zu identifizieren.
     /// </summary>
-    public readonly struct PropertyID : IEquatable<PropertyID>
+    public readonly struct PropertyID : IEquatable<PropertyID>, IDataContainer
     {
         /// <summary>
         /// Initialisiert eine neue Instanz der <see cref="PropertyID"/>-<c>struct</c>
@@ -82,6 +83,8 @@ namespace FolkerKinzel.VCards.Models
         /// True, wenn die <see cref="PropertyID"/>-Struct keine verwertbaren Daten enthält.
         /// </summary>
         public bool IsEmpty => PropertyNumber < 1;
+
+        object? IDataContainer.Value => this;
 
 
         #region IEquatable

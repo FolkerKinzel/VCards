@@ -3,7 +3,9 @@ using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.Interfaces;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -11,7 +13,7 @@ namespace FolkerKinzel.VCards.Models
     /// Kapselt die Daten der vCard-Property <c>CLASS</c>, die in vCard 3.0 die Geheimhaltungsstufe der 
     /// vCard definiert.
     /// </summary>
-    public sealed class AccessProperty : VCardProperty<VCdAccess>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class AccessProperty : VCardProperty, IVCardData, IDataContainer<VCdAccess>, IVcfSerializable, IVcfSerializableData
     {
 
 
@@ -20,8 +22,8 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="value">Ein Member der <see cref="VCdAccess"/>-Enumeration.</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         public AccessProperty(VCdAccess value, string? propertyGroup = null)
         {
             Value = value;
@@ -43,11 +45,29 @@ namespace FolkerKinzel.VCards.Models
             serializer.Builder.Append(Value.ToVCardString());
         }
 
+        
+
 
         ///// <summary>
         ///// True, wenn das <see cref="AccessProperty"/>-Objekt keine Daten enthält.
         ///// </summary>
         /// <inheritdoc/>
         public override bool IsEmpty => false;
+
+
+        /// <inheritdoc/>
+        public VCdAccess Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object GetContainerValue() => Value;
+
+
     }
 }

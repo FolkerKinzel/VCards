@@ -122,7 +122,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>ENCODING</c>: Gibt die Encodierung der <see cref="VCardProperty{T}"/> an. <c>(2,3)</c>
+        /// <c>ENCODING</c>: Gibt die Encodierung der <see cref="VCardProperty"/> an. <c>(2,3)</c>
         /// </summary>
         /// <value>
         /// <para>Der Wert wird automatisch gesetzt - 
@@ -211,7 +211,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>LANGUAGE</c>: Sprache der <see cref="VCardProperty{T}"/>. <c>(2,3,4)</c>
+        /// <c>LANGUAGE</c>: Sprache der <see cref="VCardProperty"/>. <c>(2,3,4)</c>
         /// </summary>
         /// <value>Ein IETF-Language-Tag wie in Section 2 von RFC 5646 definiert.</value>
         public string? Language
@@ -277,7 +277,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>TYPE</c>: Klassifiziert eine <see cref="VCardProperty{T}"/> als dienstlich und / oder privat. <c>(2,3,4)</c>
+        /// <c>TYPE</c>: Klassifiziert eine <see cref="VCardProperty"/> als dienstlich und / oder privat. <c>(2,3,4)</c>
         /// </summary>
         public PropertyClassTypes? PropertyClass
         {

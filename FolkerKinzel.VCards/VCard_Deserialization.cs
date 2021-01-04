@@ -436,7 +436,7 @@ namespace FolkerKinzel.VCards
                 foreach (RelationUuidProperty? guidProp in guidProps)
                 {
                     VCard referencedVCard =
-                        vCardList.FirstOrDefault(v => v.UniqueIdentifier?.Value == guidProp.Uuid);
+                        vCardList.FirstOrDefault(v => v.UniqueIdentifier?.Value == guidProp.Value);
 
                     if (referencedVCard != null)
                     {

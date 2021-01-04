@@ -3,7 +3,8 @@
 namespace FolkerKinzel.VCards.Models.Enums
 {
     /// <summary>
-    /// Benannte Konstanten, um die Art der Beziehung zu einer Person oder Organisation zu beschreiben.
+    /// Benannte Konstanten, um die Art der Beziehung zu einer Person oder Organisation zu beschreiben. Die Konstanten können
+    /// kombiniert werden.
     /// </summary>
     /// <remarks>
     /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der

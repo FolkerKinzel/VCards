@@ -8,13 +8,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
+using System.Runtime.CompilerServices;
+using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Kapselt die Daten einer vCard-Property, die Informationen über die Postanschrift enthält.
     /// </summary>
-    public sealed class AddressProperty : VCardProperty<Address>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class AddressProperty : VCardProperty, IVCardData, IDataContainer<Address>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
@@ -27,8 +29,8 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="postalCode">Postleitzahl</param>
         /// <param name="country">Land (Staat)</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public AddressProperty(
             IEnumerable<string?>? postOfficeBox = null,
             IEnumerable<string?>? extendedAddress = null,
@@ -136,5 +138,20 @@ namespace FolkerKinzel.VCards.Models
         ///// </summary>
         /// <inheritdoc/>
         public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
+
+
+        /// <inheritdoc/>
+        public Address Value
+        {
+            get;
+        }
+
+        
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object GetContainerValue() => Value;
+
     }
 }

@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Diagnostics;
+using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -18,16 +19,17 @@ namespace FolkerKinzel.VCards.Models
         /// Initialisiert ein neues <see cref="ProfileProperty"/>-Objekt.
         /// </summary>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         public ProfileProperty(string? propertyGroup = null) : base(PROFILE_PROPERTY_VALUE, propertyGroup) { }
 
 
         internal ProfileProperty(VcfRow row, VCardDeserializationInfo info, VCdVersion version) : base(row, info, version) { }
 
-        /// <summary>
-        /// Textinhalt der <see cref="ProfileProperty"/>.
-        /// </summary>
+        ///// <summary>
+        ///// Textinhalt der <see cref="ProfileProperty"/>.
+        ///// </summary>
+        /// <inheritdoc/>
         public override string Value => base.Value ?? PROFILE_PROPERTY_VALUE;
 
 

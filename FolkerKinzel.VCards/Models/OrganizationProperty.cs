@@ -8,13 +8,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
+using System.Runtime.CompilerServices;
+using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert die vCard-Property <c>ORG</c>, die Informationen über die Organisation speichert, der das vCard-Objekt zugeordnet ist.
     /// </summary>
-    public sealed class OrganizationProperty : VCardProperty<Organization>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class OrganizationProperty : VCardProperty, IVCardData, IDataContainer<Organization>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="OrganizationProperty"/>-Objekt.
@@ -22,8 +24,8 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="organizationName">Name der Organisation.</param>
         /// <param name="organizationalUnits">Namen der Unterorganisationen.</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         public OrganizationProperty(string? organizationName, IEnumerable<string?>? organizationalUnits = null, string? propertyGroup = null)
         {
             Value = new Organization(organizationName, organizationalUnits);
@@ -39,6 +41,29 @@ namespace FolkerKinzel.VCards.Models
 
             Value = new Organization(vcfRow.Value, info.Builder, version);
         }
+
+        /// <inheritdoc/>
+        public Organization Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
+
+
+
+        ///// <summary>
+        ///// True, wenn das <see cref="OrganizationProperty"/>-Objekt keine Daten enthält.
+        ///// </summary>
+        /// <inheritdoc/>
+        public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
+
+
 
         [InternalProtected]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)
@@ -81,11 +106,7 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-        ///// <summary>
-        ///// True, wenn das <see cref="OrganizationProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
-        /// <inheritdoc/>
-        public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
+        
 
     }
 }

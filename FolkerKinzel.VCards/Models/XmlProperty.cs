@@ -5,6 +5,8 @@ using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Resources;
 using System;
 using System.Xml.Linq;
+using FolkerKinzel.VCards.Models.Interfaces;
+
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -20,8 +22,8 @@ namespace FolkerKinzel.VCards.Models
         /// explizit zugeordnet sein (xmlns-Attribut). Dieser Namespace darf nicht der VCARD 4.0-Namespace 
         /// "urn:ietf:params:xml:ns:vcard-4.0" sein.</param>
         /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty{T}">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty{T}">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
         /// <exception cref="ArgumentException"><paramref name="xmlContent"/> ist keinem XML-Namespace zugeordnet - oder -
         /// <paramref name="xmlContent"/> ist dem reservierten Namespace "urn:ietf:params:xml:ns:vcard-4.0"
         /// zugeordnet.</exception>

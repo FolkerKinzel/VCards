@@ -1,4 +1,4 @@
-﻿namespace FolkerKinzel.VCards.Models
+﻿namespace FolkerKinzel.VCards.Models.Interfaces
 {
     /// <summary>
     /// Interface, das von Klassen implementiert wird, die Daten zur Verfügung stellen.
@@ -6,7 +6,7 @@
     public interface IDataContainer
     {
         /// <summary>
-        /// Die vom implementierenden Objekt bereitgestellten Daten.
+        /// Die vom Objekt bereitgestellten Daten.
         /// </summary>
         public object? Value
         {

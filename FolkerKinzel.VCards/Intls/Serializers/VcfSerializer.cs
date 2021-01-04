@@ -436,10 +436,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
                 void BuildAnniversary(string propKey, string? group)
                 {
+                    DateTimeOffset dto = pref.Value ?? DateTimeOffset.MinValue;
+
                     var xAnniversary = new NonStandardProperty(
                         propKey,
-                        string.Format(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}",
-                                      pref.DateTimeOffset.Year, pref.DateTimeOffset.Month, pref.DateTimeOffset.Day),
+                        pref.IsEmpty ? null : string.Format(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}",
+                                      dto.Year, dto.Month, dto.Day),
                         group);
 
                     BuildProperty(propKey, xAnniversary);
@@ -627,12 +629,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             static RelationTextProperty ConvertToRelationTextProperty(RelationVCardProperty vcardProp)
             {
-                string? name = vcardProp.VCard?.DisplayNames?.Where(x => x != null && !x.IsEmpty)
+                string? name = vcardProp.Value?.DisplayNames?.Where(x => x != null && !x.IsEmpty)
                     .OrderBy(x => x!.Parameters.Preference).FirstOrDefault()?.Value;
 
                 if (name is null)
                 {
-                    Models.PropertyParts.Name? vcdName = vcardProp.VCard?.NameViews?.Where(x => x != null && !x.IsEmpty).FirstOrDefault()?.Value;
+                    Models.PropertyParts.Name? vcdName = vcardProp.Value?.NameViews?.Where(x => x != null && !x.IsEmpty).FirstOrDefault()?.Value;
 
                     if (vcdName != null)
                     {

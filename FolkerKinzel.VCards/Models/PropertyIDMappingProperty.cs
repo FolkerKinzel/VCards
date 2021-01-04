@@ -6,7 +6,8 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using System;
 using System.Globalization;
 using FolkerKinzel.VCards.Models.PropertyParts;
-
+using System.Runtime.CompilerServices;
+using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -17,7 +18,7 @@ namespace FolkerKinzel.VCards.Models
     /// Der Standard erlaubt, dass das Mapping mit einer beliebigen URI signiert wird. Unterstützt werden hier
     /// aber nur UUIDs.
     /// </remarks>
-    public sealed class PropertyIDMappingProperty : VCardProperty<PropertyIDMapping>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class PropertyIDMappingProperty : VCardProperty, IVCardData, IDataContainer<PropertyIDMapping>, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="PropertyIDMappingProperty"/>-Objekt.
@@ -59,6 +60,20 @@ namespace FolkerKinzel.VCards.Models
             }
 
         }
+
+        /// <inheritdoc/>
+        public PropertyIDMapping Value
+        {
+            get;
+        }
+
+
+        /// <inheritdoc/>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        protected override object? GetContainerValue() => Value;
+
 
 
         ///// <summary>

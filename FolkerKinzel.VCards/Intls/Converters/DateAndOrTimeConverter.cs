@@ -114,9 +114,14 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
 
         internal static void AppendTimestampTo(StringBuilder builder,
-            DateTimeOffset dt, VCdVersion version)
+            DateTimeOffset? dto, VCdVersion version)
         {
-            dt = dt.ToUniversalTime();
+            if (!dto.HasValue)
+            {
+                return;
+            }
+
+            DateTimeOffset dt = dto.Value.ToUniversalTime();
 
             switch (version)
             {
@@ -135,8 +140,15 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
 
         internal static void AppendDateTimeStringTo(StringBuilder builder,
-            DateTimeOffset dt, VCdVersion version)
+            DateTimeOffset? dto, VCdVersion version)
         {
+            if (!dto.HasValue)
+            {
+                return;
+            }
+
+            DateTimeOffset dt = dto.Value;
+
             switch (version)
             {
                 case VCdVersion.V2_1:
@@ -204,9 +216,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
         }
 
 
-        internal static bool HasTimeComponent(DateTimeOffset dt)
+        internal static bool HasTimeComponent(DateTimeOffset? dt)
         {
-            return dt.TimeOfDay != TimeSpan.Zero;
+            return dt.HasValue && (dt.Value.TimeOfDay != TimeSpan.Zero);
             //|| utcOffset != TimeSpan.Zero //nicht konsequent, aber sonst bei Geburtstagen meist komisch
 
         }
