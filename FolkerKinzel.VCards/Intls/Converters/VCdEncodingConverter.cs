@@ -22,7 +22,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
                         'B' => VCdEncoding.Base64,
                         'Q' => VCdEncoding.QuotedPrintable,
                         '8' => VCdEncoding.Ansi,
-                        '7' => VCdEncoding.Ascii,
+
+                        // Ascii ist der Standard in vCard 2.1 und hat kein Symbol
+                        // '7' => VCdEncoding.Ascii,
                         _ => (VCdEncoding?)null,
                     };
                 }

@@ -17,7 +17,7 @@
         Text = 1,
 
         /// <summary>
-        /// <c>URI</c>: Uri <c>(3,4)</c>
+        /// <c>URI</c>: URI <c>(3,4)</c>
         /// </summary>
         Uri = 1 << 1,
 
@@ -56,7 +56,7 @@
         // ---ddThh[mm[ss]][Z]
 
         /// <summary>
-        /// <c>DATE-AND-OR-TIME</c>: Date, Time oder DateTime. <c>(4)</c>
+        /// <c>DATE-AND-OR-TIME</c>: <see cref="Date"/>, <see cref="Time"/> oder <see cref="DateTime"/>. <c>(4)</c>
         /// </summary>
         DateAndOrTime = 1 << 5,
         // A stand-alone TIME value is always preceded by a "T".

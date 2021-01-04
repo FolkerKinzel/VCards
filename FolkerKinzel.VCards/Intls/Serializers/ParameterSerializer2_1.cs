@@ -287,27 +287,48 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendEncodingAndCharset()
         {
-            VCdEncoding? enc = ParaSection.Encoding;
+            //VCdEncoding? enc = ParaSection.Encoding;
 
-            if (enc.HasValue)
+            switch (ParaSection.Encoding)    
             {
-                if (enc.Value == VCdEncoding.Base64)
-                {
+                case VCdEncoding.Base64:
                     AppendParameter(ParameterSection.ParameterKey.ENCODING, "BASE64");
-                }
-                else
-                {
+                    break;
+                case VCdEncoding.QuotedPrintable:
                     AppendParameter(ParameterSection.ParameterKey.ENCODING, "QUOTED-PRINTABLE");
                     AppendParameter(ParameterSection.ParameterKey.CHARSET, VCard.DEFAULT_CHARSET);
-                }
-
-                //AppendParameter(ParameterSection.ParameterKey.ENCODING, enc.Value switch
-                //{
-                //    VCdEncoding.Base64 => "BASE64",
-                //    VCdEncoding.QuotedPrintable => "QUOTED-PRINTABLE",
-                //    _ => null
-                //});
+                    break;
+                case VCdEncoding.Ansi:
+                    AppendParameter(ParameterSection.ParameterKey.ENCODING, "8BIT");
+                    break;
+                default:
+                    break;
             }
+
+
+            //if (enc.HasValue)
+            //{
+            //    if (enc.Value == VCdEncoding.Base64)
+            //    {
+            //        AppendParameter(ParameterSection.ParameterKey.ENCODING, "BASE64");
+            //    }
+            //    else if (enc.Value == VCdEncoding.QuotedPrintable)
+            //    {
+            //        AppendParameter(ParameterSection.ParameterKey.ENCODING, "QUOTED-PRINTABLE");
+            //        AppendParameter(ParameterSection.ParameterKey.CHARSET, VCard.DEFAULT_CHARSET);
+            //    }
+            //    else if (enc.Value == VCdEncoding.Ansi)
+            //    {
+            //        AppendParameter(ParameterSection.ParameterKey.ENCODING, "8BIT");
+            //    }
+
+            //    //AppendParameter(ParameterSection.ParameterKey.ENCODING, enc.Value switch
+            //    //{
+            //    //    VCdEncoding.Base64 => "BASE64",
+            //    //    VCdEncoding.QuotedPrintable => "QUOTED-PRINTABLE",
+            //    //    _ => null
+            //    //});
+            //}
         }
 
 

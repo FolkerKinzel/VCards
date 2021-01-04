@@ -403,4 +403,24 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="173775B02C3D2205">&lt;c&gt;INLINE&lt;/c&gt;: The location of the property value is inline with the property. (Default)</T>
   <T ID="69CCB9EB23B8F36D">&lt;c&gt;Content-ID&lt;/c&gt;, &lt;c&gt;CID&lt;/c&gt;: In the case of the vCard being transported within a MIME email message, the property value can be specified as being located in a separate MIME entity with the “Content-ID” value, or “CID” for short. In this case, the property value is the Content-ID for the MIME entity containing the property value.</T>
   <T ID="4BCF01B2A165C8DA">&lt;c&gt;URL&lt;/c&gt;: The property value is specified as being located out on the network within some Internet resource. In this case, the property value is the Uniform Resource Locator for the Internet resource containing the property value.</T>
+  <T ID="AAF279E48B13407D">&lt;c&gt;TEXT&lt;/c&gt;: Values, that contain human-readable text. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="50BEDF5CA72CF12F">&lt;c&gt;URI&lt;/c&gt;: Values, that are referenced by a Uniform Resource Identifier (URI) instead of encoded in-line. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="2949C7C6DE508170">&lt;c&gt;DATE&lt;/c&gt;: A calendar date. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="BCB3DBB82C5D2C12">&lt;c&gt;TIME&lt;/c&gt;: A time of day. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="E87BCAF9D7A38A8D">&lt;c&gt;DATE-TIME&lt;/c&gt;: A date and time of day combination. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="FBEFF9CCB5B70B0C">&lt;c&gt;DATE-AND-OR-TIME&lt;/c&gt;: Either a &lt;see cref="FolkerKinzel.VCards.Models.Enums.VCdDataType.DateTime"/&gt;, a &lt;see cref="FolkerKinzel.VCards.Models.Enums.VCdDataType.Date"/&gt;, or a &lt;see cref="FolkerKinzel.VCards.Models.Enums.VCdDataType.Time"/&gt; value. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="ED6DE4A3E7F02218">&lt;c&gt;TIMESTAMP&lt;/c&gt;: A complete date and time of day combination as specified in
+   [ISO.8601.2004], Section 4.3.2. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="1BAC97B986BA14B1">&lt;c&gt;BOOLEAN&lt;/c&gt;: A boolean value. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="AD14D52E2C3C47BB">&lt;c&gt;INTEGER&lt;/c&gt;: Signed integer values in decimal format. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="DAE1EDE9EF711203">&lt;c&gt;FLOAT&lt;/c&gt;: Real numbers. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="B5CB1CD0CE392EB5">&lt;c&gt;UTC-OFFSET&lt;/c&gt;: The value is a signed offset from UTC. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="EA2A2BC623EB2A7E">&lt;c&gt;LANGUAGE-TAG&lt;/c&gt;: A single language tag, as defined in RFC 5646. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="4AD509E00A237B79">&lt;c&gt;BINARY&lt;/c&gt;: The value is inline, Base64-encoded binary data. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="7C0A408B8C9EED51">&lt;c&gt;PHONE-NUMBER&lt;/c&gt;: The value is a telephone number. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="1AD2848CA70D7B2D">&lt;c&gt;VCARD&lt;/c&gt;: The value is another embedded vCard. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="FAC83DB9909BB93F">&lt;c&gt;B&lt;/c&gt;, &lt;c&gt;BASE64&lt;/c&gt;: Base64 &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="CC93485C4804002E">&lt;c&gt;QUOTED-PRINTABLE&lt;/c&gt;: Quoted Printable &lt;c&gt;(2)&lt;/c&gt;</T>
+  <T ID="5204896A0FC1B70">&lt;c&gt;8BIT&lt;/c&gt;: 8-Bit charset &lt;c&gt;(2)&lt;/c&gt;</T>
+  <T ID="C5F69008708CD878">7-Bit charset (Default in vCard 2.1) &lt;c&gt;(2)&lt;/c&gt;</T>
 </Tsltn>
