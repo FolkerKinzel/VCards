@@ -12,8 +12,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected readonly StringBuilder Worker = new StringBuilder();
 
-
-
         /// <summary>
         /// ctor
         /// </summary>
@@ -24,8 +22,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             this.Options = options;
         }
-
-
 
         protected ParameterSection ParaSection { get; private set; }
 
@@ -241,124 +237,116 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         }
 
 
-
-
         #region BuildPara
 
-        protected virtual void BuildXMessengerPara(bool isPref) { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildXMessengerPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildNonStandardPropertyPara(bool isPref) { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildNonStandardPropertyPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildOrgDirectoryPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildOrgDirectoryPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildInterestPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildInterestPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildHobbyPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildHobbyPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildExpertisePara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildExpertisePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildDeathPlacePara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildDeathPlacePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildDeathDatePara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildDeathDatePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildBirthPlacePara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildBirthPlacePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildXmlPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildXmlPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildUrlPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildUrlPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildUidPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildUidPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildTzPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildTzPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildTitlePara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildTitlePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildTelPara(bool isPref) { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildTelPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildSourcePara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildSourcePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildSoundPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildSoundPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildSortStringPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildSortStringPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildRolePara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildRolePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildRevPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildRevPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildRelatedPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildRelatedPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildProfilePara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildProfilePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildProdidPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildProdidPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildPhotoPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildPhotoPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildOrgPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildOrgPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildNotePara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildNotePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildNicknamePara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildNicknamePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildNamePara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildNamePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildNPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildNPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildMemberPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildMemberPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildMailerPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildMailerPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildLogoPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildLogoPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildLangPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildLangPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildLabelPara(bool isPref) { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildLabelPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildKindPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildKindPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildKeyPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildKeyPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildImppPara(bool isPref) { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildImppPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildGeoPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildGeoPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildGenderPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildGenderPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildFnPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildFnPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildFburlPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildFburlPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildEmailPara(bool isPref) { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildEmailPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildClientpidmapPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildClientpidmapPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildClassPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildClassPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildCategoriesPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildCategoriesPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildCaluriPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildCaluriPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildCaladruriPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildCaladruriPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildBdayPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildBdayPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildAnniversaryPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildAnniversaryPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildAgentPara() { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildAgentPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
-        protected virtual void BuildAdrPara(bool isPref) { Debug.Fail("Die Methode wurde nicht überschrieben."); }
+        protected virtual void BuildAdrPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
 
         #endregion
 
 
-        protected void AppendParameter(string key, string value)
-        {
-            Builder.Append(';').Append(key).Append('=').Append(value);
-        }
+        protected void AppendParameter(string key, string value) => Builder.Append(';').Append(key).Append('=').Append(value);
 
-        protected void AppendV2_1Type(string value)
-        {
-            Builder.Append(';').Append(value);
-        }
+        protected void AppendV2_1Type(string value) => Builder.Append(';').Append(value);
 
         protected void AppendNonStandardParameters()
         {

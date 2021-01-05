@@ -18,10 +18,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static VcfOptions Set(this VcfOptions value, VcfOptions flags)
-        {
-            return (value | flags);
-        }
+        public static VcfOptions Set(this VcfOptions value, VcfOptions flags) => (value | flags);
 
         /// <summary>
         /// Untersucht, ob sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
@@ -37,10 +34,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static bool IsSet(this VcfOptions value, VcfOptions flags)
-        {
-            return flags == VcfOptions.None ? value == flags : (value & flags) == flags;
-        }
+        public static bool IsSet(this VcfOptions value, VcfOptions flags) => flags == VcfOptions.None ? value == flags : (value & flags) == flags;
 
         /// <summary>
         /// Entfernt sämtliche in <paramref name="flags"/> gesetzten Flags aus <paramref name="value"/>.
@@ -54,9 +48,6 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static VcfOptions Unset(this VcfOptions value, VcfOptions flags)
-        {
-            return value & ~flags;
-        }
+        public static VcfOptions Unset(this VcfOptions value, VcfOptions flags) => value & ~flags;
     }
 }

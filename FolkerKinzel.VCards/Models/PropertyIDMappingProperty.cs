@@ -75,7 +75,6 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetContainerValue() => Value;
 
 
-
         ///// <summary>
         ///// True, wenn das <see cref="PropertyIDMappingProperty"/>-Objekt keine Daten enthält.
         ///// </summary>

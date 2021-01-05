@@ -143,8 +143,6 @@
             /// <c>INDEX</c>: 1-basierter Index einer Property, wenn mehrere Instanzen derselben Property möglich sind. <c>(4 - RFC 6715)</c>
             /// </summary>
             Index
-
-
         }
     }
 }

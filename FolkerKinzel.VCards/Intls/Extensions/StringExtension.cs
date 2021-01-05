@@ -24,9 +24,9 @@ namespace FolkerKinzel.VCards.Intls.Extensions
             }
 
 #if NET40
-            var arr = valueString.Split(new char[] { splitChar }, options);
+            string[] arr = valueString.Split(new char[] { splitChar }, options);
 #else
-            var arr = valueString.Split(splitChar, options);
+            string[] arr = valueString.Split(splitChar, options);
 #endif
 
             var list = new List<string>(arr.Length);

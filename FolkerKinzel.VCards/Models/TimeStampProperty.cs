@@ -47,20 +47,17 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-
         /// <inheritdoc/>
         public DateTimeOffset Value
         {
             get;
         }
 
-
         /// <inheritdoc/>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         protected override object? GetContainerValue() => Value;
-
 
 
         ///// <summary>
@@ -82,6 +79,5 @@ namespace FolkerKinzel.VCards.Models
             serializer.Builder.Append(worker);
         }
 
- 
     }
 }

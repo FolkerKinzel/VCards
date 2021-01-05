@@ -74,7 +74,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             if (obj is PropertyIDMapping other)
             {
-                return this.Equals(other);
+                return Equals(other);
             }
             else
             {
@@ -90,10 +90,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         ///// <returns><c>true</c>, wenn <paramref name="other"/> über dieselben Werte wie diese Instanz verfügt, 
         ///// andernfalls <c>false</c>.</returns>
         /// <inheritdoc/>
-        public bool Equals(PropertyIDMapping other)
-        {
-            return this.MappingNumber == other.MappingNumber && this.Uuid == other.Uuid;
-        }
+        public bool Equals(PropertyIDMapping other) => this.MappingNumber == other.MappingNumber && this.Uuid == other.Uuid;
 
 
         ///// <summary>

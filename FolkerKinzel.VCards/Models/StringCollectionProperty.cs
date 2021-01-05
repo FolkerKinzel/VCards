@@ -71,9 +71,6 @@ namespace FolkerKinzel.VCards.Models
 
             this.Value = new ReadOnlyCollection<string>(arr);
 
-
-
-
             //////////////////////////////////////////////////////
 
             string[] SplitValue()

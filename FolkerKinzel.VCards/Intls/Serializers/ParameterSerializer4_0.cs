@@ -450,10 +450,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             AppendNonStandardParameters();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0022:Ausdruckskörper für Methoden verwenden", Justification = "<Ausstehend>")]
         protected override void BuildRevPara()
         {
             // TimeStamp is default
-            //AppendValue(this.ParaSection.DataType != null ? VCdDataType.Timestamp : (VCdDataType?)null);
             AppendNonStandardParameters();
         }
 
@@ -853,7 +853,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             Worker.Clear();
 
-            foreach (var item in sortAs)
+            foreach (string? item in sortAs)
             {
                 if (string.IsNullOrWhiteSpace(item))
                 {

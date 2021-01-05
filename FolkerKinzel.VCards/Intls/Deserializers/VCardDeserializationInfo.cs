@@ -35,16 +35,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         internal readonly char Comma = ',';
 #endif
 
-
         internal readonly char[] AllQuotes = new char[] { '\"', '\'' };
-
-
-
-
-
-
-
-
 
 
         internal DateAndOrTimeConverter DateAndOrTimeConverter

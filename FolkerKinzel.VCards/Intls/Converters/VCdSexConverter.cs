@@ -13,7 +13,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
             internal const string Unknown = "U";
         }
 
-
         internal static VCdSex? Parse(string? value)
         {
             return value is null
@@ -28,7 +27,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 _ => (VCdSex?)null
             });
         }
-
 
         internal static string? ToVCardString(this VCdSex? sex)
         {

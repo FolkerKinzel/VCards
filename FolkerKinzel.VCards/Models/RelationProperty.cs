@@ -25,6 +25,7 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
         }
 
+
         /// <summary>
         /// Konstruktor, der von abgeleiteten Klassen aufgerufen wird.
         /// </summary>

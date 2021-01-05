@@ -40,7 +40,6 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-
         /// <inheritdoc/>
         public Guid Value
         {
@@ -70,9 +69,6 @@ namespace FolkerKinzel.VCards.Models
 
             serializer.Builder.AppendUuid(this.Value, serializer.Version);
         }
-
-
-        
 
     }
 }

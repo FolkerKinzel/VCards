@@ -29,9 +29,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
             value = value.Replace(';', ','); // vCard 3.0
 
 #if NET40
-            var arr = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries); // vCard 4.0
+            string[] arr = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries); // vCard 4.0
 #else
-            var arr = value.Split(',', StringSplitOptions.RemoveEmptyEntries); // vCard 4.0
+            string[] arr = value.Split(',', StringSplitOptions.RemoveEmptyEntries); // vCard 4.0
 #endif
 
             try

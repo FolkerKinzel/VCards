@@ -7,14 +7,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 {
     public partial class ParameterSection
     {
-
         /// <summary>
         /// Löscht alle Inhalte der aktuellen Instanz.
         /// </summary>
-        public void Clear()
-        {
-            this._propDic.Clear();
-        }
+        public void Clear() => this._propDic.Clear();
 
 
         /// <summary>
@@ -66,14 +62,15 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 #endif
                 {
 #if NET40
-                    var arr = valStr.Split(
+                    string?[] arr = valStr.Split(
                         new string[] { Environment.NewLine }, StringSplitOptions.None);
 #else
-                    var arr = valStr.Split(Environment.NewLine, StringSplitOptions.None);
+                    string?[] arr = valStr.Split(Environment.NewLine, StringSplitOptions.None);
 #endif
 
                     sb.Append(Environment.NewLine);
-                    foreach (var str in arr)
+
+                    foreach (string? str in arr)
                     {
                         sb.Append(INDENT).AppendLine(str);
                     }

@@ -52,7 +52,6 @@ namespace FolkerKinzel.VCards.Models
         public DateTimeOffset? DateTimeOffset => Value;
         
 
-
         [InternalProtected]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)
         {
@@ -84,6 +83,4 @@ namespace FolkerKinzel.VCards.Models
             serializer.Builder.Append(worker);
         }
     }
-
-
 }

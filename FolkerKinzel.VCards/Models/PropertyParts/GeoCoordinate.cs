@@ -34,7 +34,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public bool IsUnknown => (double.IsNaN(Latitude) || double.IsNaN(Longitude) ||
             Latitude < -90 || Latitude > 90 || Longitude < -180 || Longitude > 180);
 
-        
+
 
 
         ///// <summary>
@@ -43,10 +43,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         ///// <param name="other">Ein anderes <see cref="GeoCoordinate"/>-Objekt, mit dem die Instanz verglichen wird.</param>
         ///// <returns>True, wenn das <see cref="GeoCoordinate"/>-Objekt dem Parameter entspricht.</returns>
         /// <inheritdoc/>
-        public bool Equals(GeoCoordinate? other)
-        {
-            return !(other is null) && (other.Latitude == this.Latitude) && (other.Longitude == this.Longitude);
-        }
+        public bool Equals(GeoCoordinate? other) => !(other is null) && (other.Latitude == this.Latitude) && (other.Longitude == this.Longitude);
 
         ///// <summary>
         ///// Stellt fest, ob der Parameter ein <see cref="GeoCoordinate"/>-Objekt ist, dessen Werte mit denen
@@ -56,32 +53,20 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         ///// <returns>True, wenn der Parameter ein <see cref="GeoCoordinate"/>-Objekt ist, dessen Werte mit denen
         ///// der vergleichenden Instanz übereinstimmen.</returns>
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as GeoCoordinate);
-        }
+        public override bool Equals(object? obj) => Equals(obj as GeoCoordinate);
 
         ///// <summary>
         ///// Hashfunktion für das <see cref="GeoCoordinate"/>-Objekt.
         ///// </summary>
         ///// <returns>Ein Hashcode für das aktuelle <see cref="GeoCoordinate"/>-Objekt.</returns>
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return -1 ^ Latitude.GetHashCode() ^ Longitude.GetHashCode();
-        }
+        public override int GetHashCode() => -1 ^ Latitude.GetHashCode() ^ Longitude.GetHashCode();
 
         /// <summary>
         /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="GeoCoordinate"/>-Objekts. 
         /// (Nur zum Debugging.)
         /// </summary>
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="GeoCoordinate"/>-Objekts.</returns>
-        public override string ToString()
-        {
-            return $"Latitude:  {Latitude}" + Environment.NewLine +
-                   $"Longitude: {Longitude}";
-        }
-
-
+        public override string ToString() => $"Latitude:  {Latitude}{ Environment.NewLine}Longitude: {Longitude}";
     }
 }

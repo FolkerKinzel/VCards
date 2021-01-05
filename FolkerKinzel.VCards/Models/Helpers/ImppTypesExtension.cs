@@ -21,10 +21,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         [return: NotNull]
-        public static ImppTypes? Set(this ImppTypes? value, ImppTypes flags)
-        {
-            return value.HasValue ? (value.Value | flags) : flags;
-        }
+        public static ImppTypes? Set(this ImppTypes? value, ImppTypes flags) => value.HasValue ? (value.Value | flags) : flags;
 
         /// <summary>
         /// Untersucht, ob sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
@@ -39,10 +36,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static bool IsSet(this ImppTypes? value, ImppTypes flags)
-        {
-            return (value & flags) == flags;
-        }
+        public static bool IsSet(this ImppTypes? value, ImppTypes flags) => (value & flags) == flags;
 
 
         /// <summary>

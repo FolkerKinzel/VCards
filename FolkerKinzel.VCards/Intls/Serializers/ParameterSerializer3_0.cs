@@ -24,7 +24,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         private readonly List<Action<ParameterSerializer3_0>> ActionList = new List<Action<ParameterSerializer3_0>>(2);
 
 
-
         private AddressTypesCollector AddressTypesCollector
         {
             get
@@ -94,7 +93,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
 
         public ParameterSerializer3_0(VcfOptions options) : base(options) { }
-
 
 
         #region Build
@@ -426,15 +424,13 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         }
 
 
-        private void AppendBase64Encoding()
-        {
-            AppendParameter(ParameterSection.ParameterKey.ENCODING, "b");
-        }
+        private void AppendBase64Encoding() => AppendParameter(ParameterSection.ParameterKey.ENCODING, "b");
 
 
         private void AppendLanguage()
         {
-            var lang = ParaSection.Language;
+            string? lang = ParaSection.Language;
+
             if (lang != null)
             {
                 AppendParameter(ParameterSection.ParameterKey.LANGUAGE, Mask(lang));
@@ -517,10 +513,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         }
 
 
-        private void DoCollectEmailType()
-        {
-            StringCollectionList.Add(ParaSection.EmailType ?? EmailType.SMTP);
-        }
+        private void DoCollectEmailType() => StringCollectionList.Add(ParaSection.EmailType ?? EmailType.SMTP);
 
 
         private void DoCollectMediaType()

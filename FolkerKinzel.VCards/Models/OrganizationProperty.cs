@@ -106,7 +106,5 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-        
-
     }
 }

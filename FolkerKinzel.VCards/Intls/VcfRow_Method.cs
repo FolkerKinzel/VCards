@@ -56,7 +56,7 @@ namespace FolkerKinzel.VCards.Intls
             // wandle diese in BASE64 um: (vCard 2.1 kennt keine DataUri)
             if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
             {
-                var bytes = QuotedPrintableConverter.DecodeData(this.Value);
+                byte[] bytes = QuotedPrintableConverter.DecodeData(this.Value);
                 this.Value = Convert.ToBase64String(bytes);
                 this.Parameters.Encoding = VCdEncoding.Base64;
             }

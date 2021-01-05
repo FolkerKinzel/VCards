@@ -41,12 +41,12 @@ namespace FolkerKinzel.VCards.Intls
 
             // keySectionParts:
             // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
-            var keySectionParts = vCardRowParts[0].Split(info.Semicolon, 2, StringSplitOptions.RemoveEmptyEntries);
+            string[] keySectionParts = vCardRowParts[0].Split(info.Semicolon, 2, StringSplitOptions.RemoveEmptyEntries);
 
 
             // keyParts:
             // group | key
-            var keyParts = keySectionParts[0].Split(info.Dot, 2, StringSplitOptions.RemoveEmptyEntries);
+            string[] keyParts = keySectionParts[0].Split(info.Dot, 2, StringSplitOptions.RemoveEmptyEntries);
 
             if (keyParts.Length == 2)
             {
@@ -120,7 +120,7 @@ namespace FolkerKinzel.VCards.Intls
                 }
 
 
-                var splitArr = parameter.Split(info.EqualSign, 2, StringSplitOptions.RemoveEmptyEntries);
+                string[] splitArr = parameter.Split(info.EqualSign, 2, StringSplitOptions.RemoveEmptyEntries);
 
                 if (splitArr.Length == 2)
                 {

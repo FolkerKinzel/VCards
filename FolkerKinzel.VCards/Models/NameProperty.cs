@@ -101,7 +101,6 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetContainerValue() => Value;
 
 
-
         ///// <summary>
         ///// True, wenn das <see cref="NameProperty"/>-Objekt keine Daten enthält.
         ///// </summary>
@@ -149,8 +148,6 @@ namespace FolkerKinzel.VCards.Models
                 builder.Append(QuotedPrintableConverter.Encode(toEncode, valueStartIndex));
             }
         }
-
-        
 
     }
 }

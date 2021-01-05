@@ -35,12 +35,6 @@ namespace FolkerKinzel.VCards.Models
             this.Parameters.DataType = VCdDataType.VCard;
         }
 
-        ///// <summary>
-        ///// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="VCard"/> zurück.
-        ///// </summary>
-        //public override object? Value => this.VCard;
-
-
 
         /// <inheritdoc/>
         public VCard? Value
@@ -117,7 +111,6 @@ namespace FolkerKinzel.VCards.Models
                 builder.Append(VCard.NewLine).Append(vc);
             }
         }
+
     }
-
-
 }

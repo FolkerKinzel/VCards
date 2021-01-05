@@ -31,7 +31,6 @@ namespace FolkerKinzel.VCards.Models
             this.Value = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
             Parameters.DataType = VCdDataType.Text;
         }
-
         
 
         /// <inheritdoc/>
@@ -80,5 +79,4 @@ namespace FolkerKinzel.VCards.Models
             builder.Append(worker);
         }
     }
-
 }

@@ -25,8 +25,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
             };
         }
 
-
-
         internal static string? ToVCardString(this ExpertiseLevel? expertise)
         {
             return expertise switch

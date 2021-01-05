@@ -101,9 +101,7 @@ namespace FolkerKinzel.VCards.Models
                 worker.Clear().Append(Value).Mask(serializer.Version);
                 builder.Append(worker);
             }
-
-
-
         }
+
     }
 }

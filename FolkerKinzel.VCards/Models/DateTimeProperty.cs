@@ -116,5 +116,4 @@ namespace FolkerKinzel.VCards.Models
 
         }
     }// class DateTimeProperty
-
 }

@@ -78,15 +78,6 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetContainerValue() => Value;
 
 
-
-
-        /////// <summary>
-        /////// True, wenn das <see cref="NonStandardProperty"/>-Objekt keine Daten enthält.
-        /////// </summary>
-        /////  <inheritdoc/>
-        //public override bool IsEmpty => false;
-
-
         /// <summary>
         /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="NonStandardProperty"/>-Objekts. (Nur zum 
         /// Debuggen.)
@@ -121,6 +112,5 @@ namespace FolkerKinzel.VCards.Models
             serializer.Builder.Append(Value);
         }
 
-       
     }
 }

@@ -178,10 +178,7 @@ namespace FolkerKinzel.VCards
         public void Save(
             string fileName,
             VCdVersion version = VCdVersion.V3_0,
-            VcfOptions options = VcfOptions.Default)
-        {
-            VCard.Save(fileName, new List<VCard?> { this }, version, options);
-        }
+            VcfOptions options = VcfOptions.Default) => VCard.Save(fileName, new List<VCard?> { this }, version, options);
 
 
         /// <summary>
@@ -204,10 +201,8 @@ namespace FolkerKinzel.VCards
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public void Serialize(TextWriter writer, VCdVersion version, VcfOptions options = VcfOptions.Default)
-        {
-            VCard.Serialize(writer, new List<VCard?> { this }, version, options);
-        }
+        public void Serialize(TextWriter writer, VCdVersion version, VcfOptions options = VcfOptions.Default) 
+            => VCard.Serialize(writer, new List<VCard?> { this }, version, options);
 
 
         /// <summary>

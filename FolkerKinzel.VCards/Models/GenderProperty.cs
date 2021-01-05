@@ -55,8 +55,6 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetContainerValue() => Value;
 
 
-
-
         internal GenderProperty(VcfRow vcfRow, StringBuilder builder)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
@@ -80,7 +78,6 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-
         [InternalProtected]
         internal override void AppendValue(VcfSerializer serializer)
         {
@@ -88,7 +85,6 @@ namespace FolkerKinzel.VCards.Models
 
             Value.AppendVCardStringTo(serializer);
         }
-
 
     }
 }

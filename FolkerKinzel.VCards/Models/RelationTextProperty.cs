@@ -50,11 +50,6 @@ namespace FolkerKinzel.VCards.Models
             this.Value = row.Value;
         }
 
-        ///// <summary>
-        ///// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="Text"/> zurück.
-        ///// </summary>
-        //public override object? Value => this.Text;
-
 
         /// <inheritdoc/>
         public string? Value
@@ -68,7 +63,6 @@ namespace FolkerKinzel.VCards.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         protected override object? GetContainerValue() => Value;
-
 
 
         /// <summary>
@@ -121,7 +115,6 @@ namespace FolkerKinzel.VCards.Models
                 builder.Append(worker);
             }
         }
+
     }
-
-
 }

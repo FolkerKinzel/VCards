@@ -21,6 +21,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         [return: NotNull]
+        [SuppressMessage("Style", "IDE0022:Ausdruckskörper für Methoden verwenden", Justification = "<Ausstehend>")]
         public static PropertyClassTypes? Set(this PropertyClassTypes? value, PropertyClassTypes flags)
         {
             // Check inlining:
@@ -41,10 +42,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static bool IsSet(this PropertyClassTypes? value, PropertyClassTypes flags)
-        {
-            return (value & flags) == flags;
-        }
+        public static bool IsSet(this PropertyClassTypes? value, PropertyClassTypes flags) => (value & flags) == flags;
 
 
         /// <summary>

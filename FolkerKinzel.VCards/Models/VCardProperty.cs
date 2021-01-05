@@ -19,7 +19,6 @@ namespace FolkerKinzel.VCards.Models
     {
         private string? _group;
 
-
         /// <summary>
         /// Initialiert ein neues <see cref="VCardProperty"/>-Objekt.
         /// </summary>

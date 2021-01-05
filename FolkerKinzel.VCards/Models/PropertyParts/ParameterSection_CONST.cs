@@ -2,8 +2,6 @@
 {
     public partial class ParameterSection
     {
-
-
         internal const int PREF_MIN_VALUE = 1;
         internal const int PREF_MAX_VALUE = 100;
 
@@ -35,8 +33,6 @@
             internal const string HOME = "HOME";
 
         }//class TypeValue
-
-
 
     }
 }

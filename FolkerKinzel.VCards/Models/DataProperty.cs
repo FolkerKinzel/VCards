@@ -299,7 +299,5 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-
-
     }
 }

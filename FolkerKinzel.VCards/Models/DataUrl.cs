@@ -47,7 +47,6 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-
         ///// <summary>
         ///// Füllt eine <see cref="SerializationInfo"/> mit den Daten auf, die zum Serialisieren des Zielobjekts erforderlich sind.
         ///// Die Methode wird während der Serialisierung des Objekts aufgerufen.
@@ -88,7 +87,6 @@ namespace FolkerKinzel.VCards.Models
                 this.MimeType = new MimeType();
             }
         }
-
 
 
         /// <summary>
@@ -305,8 +303,6 @@ namespace FolkerKinzel.VCards.Models
 
         }
 
-        
-
 
         /// <summary>
         /// Erzeugt einen <see cref="DataUrl"/>, in den beliebiger Text eingebettet ist.
@@ -462,7 +458,6 @@ namespace FolkerKinzel.VCards.Models
         public bool ContainsBytes => !ContainsText;
 
 
-
         /// <summary>
         /// Gibt den im <see cref="DataUrl"/> eingebetteten Text zurück oder <c>null</c>,
         /// wenn der <see cref="DataUrl"/> eingebettete binäre Daten enthält.
@@ -496,7 +491,6 @@ namespace FolkerKinzel.VCards.Models
                 return Uri.UnescapeDataString(EncodedData ?? "");
             }
         }
-
 
 
         /// <summary>

@@ -63,11 +63,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             serializer.AddressTypesCollector.CollectValueStrings(
                 serializer.ParaSection.AddressType, serializer.StringCollectionList);
 
-
-
         public ParameterSerializer2_1(VcfOptions options) : base(options) { }
-
-
 
 
         #region Build
@@ -149,10 +145,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             //AppendNonStandardParameters();
         }
 
-        protected override void BuildMailerPara()
-        {
-            AppendEncodingAndCharset();
-        }
+        protected override void BuildMailerPara() => AppendEncodingAndCharset();
 
         protected override void BuildNPara()
         {
@@ -246,15 +239,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             // keine Parameter
         }
 
-        protected override void BuildUidPara()
-        {
-            AppendValue(); // z.B. Inhalt: Url zu einem Webservice, der die neueste Version der vCard liefert
-        }
+        protected override void BuildUidPara() => AppendValue(); // z.B. Inhalt: Url zu einem Webservice, der die neueste Version der vCard liefert
 
-        protected override void BuildUrlPara()
-        {
-            AppendEncodingAndCharset();
-        }
+        protected override void BuildUrlPara() => AppendEncodingAndCharset();
 
         protected override void BuildXMessengerPara(bool isPref)
         {
@@ -287,8 +274,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendEncodingAndCharset()
         {
-            //VCdEncoding? enc = ParaSection.Encoding;
-
             switch (ParaSection.Encoding)    
             {
                 case VCdEncoding.Base64:
@@ -304,37 +289,13 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 default:
                     break;
             }
-
-
-            //if (enc.HasValue)
-            //{
-            //    if (enc.Value == VCdEncoding.Base64)
-            //    {
-            //        AppendParameter(ParameterSection.ParameterKey.ENCODING, "BASE64");
-            //    }
-            //    else if (enc.Value == VCdEncoding.QuotedPrintable)
-            //    {
-            //        AppendParameter(ParameterSection.ParameterKey.ENCODING, "QUOTED-PRINTABLE");
-            //        AppendParameter(ParameterSection.ParameterKey.CHARSET, VCard.DEFAULT_CHARSET);
-            //    }
-            //    else if (enc.Value == VCdEncoding.Ansi)
-            //    {
-            //        AppendParameter(ParameterSection.ParameterKey.ENCODING, "8BIT");
-            //    }
-
-            //    //AppendParameter(ParameterSection.ParameterKey.ENCODING, enc.Value switch
-            //    //{
-            //    //    VCdEncoding.Base64 => "BASE64",
-            //    //    VCdEncoding.QuotedPrintable => "QUOTED-PRINTABLE",
-            //    //    _ => null
-            //    //});
-            //}
         }
 
 
         private void AppendLanguage()
         {
-            var lang = ParaSection.Language;
+            string? lang = ParaSection.Language;
+
             if (lang != null && lang != "en-US")
             {
                 AppendParameter(ParameterSection.ParameterKey.LANGUAGE, lang);
@@ -408,10 +369,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
-        private void AppendEmailType()
-        {
-            AppendParameter(ParameterSection.ParameterKey.TYPE, ParaSection.EmailType ?? EmailType.SMTP);
-        }
+        private void AppendEmailType() => AppendParameter(ParameterSection.ParameterKey.TYPE, ParaSection.EmailType ?? EmailType.SMTP);
 
         private void AppendValue()
         {

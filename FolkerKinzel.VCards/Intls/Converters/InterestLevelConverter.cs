@@ -26,7 +26,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
         }
 
 
-
         internal static string? ToVCardString(this InterestLevel? interest)
         {
             return interest switch

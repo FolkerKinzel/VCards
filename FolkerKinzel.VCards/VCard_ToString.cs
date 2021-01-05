@@ -90,7 +90,7 @@ namespace FolkerKinzel.VCards
                     sb.Append('[').Append("Group: ").Append(vcdProp.Group).AppendLine("]");
                 }
 
-                var propStr = vcdProp.IsEmpty ? "<EMPTY>" : vcdProp.ToString();
+                string propStr = vcdProp.IsEmpty ? "<EMPTY>" : vcdProp.ToString();
 
                 if (propStr != null &&
 #if NET40
@@ -100,15 +100,15 @@ namespace FolkerKinzel.VCards
 #endif
                 {
 #if NET40
-                    var arr = propStr.Split(
+                    string?[] arr = propStr.Split(
                         new string[] { Environment.NewLine }, StringSplitOptions.None);
 #else
-                    var arr = propStr.Split(Environment.NewLine, StringSplitOptions.None);
+                    string?[] arr = propStr.Split(Environment.NewLine, StringSplitOptions.None);
 #endif
 
                     sb.Append(key).AppendLine(":");
 
-                    foreach (var str in arr)
+                    foreach (string? str in arr)
                     {
                         sb.Append(INDENT).AppendLine(str);
                     }

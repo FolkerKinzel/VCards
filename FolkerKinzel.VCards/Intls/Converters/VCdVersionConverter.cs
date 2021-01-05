@@ -4,7 +4,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
 {
     internal static class VCdVersionConverter
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Keine allgemeinen Ausnahmetypen abfangen", Justification = "<Ausstehend>")]
         internal static VCdVersion Parse(string? value)
         {
             try
@@ -21,7 +20,5 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 return VCdVersion.V2_1;
             }
         }
-
-
     }
 }

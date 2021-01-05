@@ -35,10 +35,7 @@ namespace FolkerKinzel.VCards
         private readonly Dictionary<VCdProp, object> _propDic = new Dictionary<VCdProp, object>();
 
         [return: MaybeNull]
-        private T Get<T>(VCdProp prop)
-        {
-            return _propDic.ContainsKey(prop) ? (T)_propDic[prop] : default;
-        }
+        private T Get<T>(VCdProp prop) => _propDic.ContainsKey(prop) ? (T)_propDic[prop] : default;
 
 
         private void Set(VCdProp prop, object? value)
@@ -57,15 +54,9 @@ namespace FolkerKinzel.VCards
         /// Gibt einen Enumerator zurück, der die <see cref="VCard"/> durchläuft.
         /// </summary>
         /// <returns>Ein Enumerator für die <see cref="VCard"/>.</returns>
-        public IEnumerator<KeyValuePair<VCdProp, object>> GetEnumerator()
-        {
-            return ((IEnumerable<KeyValuePair<VCdProp, object>>)_propDic).GetEnumerator();
-        }
+        public IEnumerator<KeyValuePair<VCdProp, object>> GetEnumerator() => ((IEnumerable<KeyValuePair<VCdProp, object>>)_propDic).GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<KeyValuePair<VCdProp, object>>)_propDic).GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<KeyValuePair<VCdProp, object>>)_propDic).GetEnumerator();
 
 
         /// <summary>

@@ -49,9 +49,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             IEnumerable<string?>? country = null)
         {
 #if NET40
-            var empty = VCard.EmptyStringArray;
+            string[] empty = VCard.EmptyStringArray;
 #else
-            var empty = Array.Empty<string>();
+            string[] empty = Array.Empty<string>();
 #endif
 
 

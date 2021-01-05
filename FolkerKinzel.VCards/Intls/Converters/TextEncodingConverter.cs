@@ -19,8 +19,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
             {
                 return Encoding.UTF8;
             }
-
-
         }
     }
 }

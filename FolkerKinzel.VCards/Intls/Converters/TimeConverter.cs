@@ -44,8 +44,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 return false;
             }
 
-            //s = s.Trim();
-
             DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
             if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
@@ -60,16 +58,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
             }
 
             return (DateTimeOffset.TryParseExact(s, modelStrings, CultureInfo.InvariantCulture, styles, out offset));
-            //{
-            //    var tmp = new DateTimeOffset();
-            //    tmp += offset.Subtract(offset.Date);
-            //    offset = tmp.ToLocalTime();
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
         }
 
 

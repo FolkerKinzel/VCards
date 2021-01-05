@@ -34,12 +34,6 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        ///// <summary>
-        ///// Überschreibt <see cref="VCardProperty{T}.Value"/>. Gibt den Inhalt von <see cref="Uri"/> zurück.
-        ///// </summary>
-        //public override object? Value => this.Uri;
-
-
         /// <inheritdoc/>
         public Uri? Value
         {
@@ -52,7 +46,6 @@ namespace FolkerKinzel.VCards.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         protected override object? GetContainerValue() => Value;
-
 
 
         /// <summary>
@@ -117,7 +110,5 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-
     }
-
 }

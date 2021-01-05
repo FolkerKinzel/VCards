@@ -28,9 +28,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             }
 
 #if NET40
-            var arr = value.Replace(" ", "").Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);;
+            string[] arr = value.Replace(" ", "").Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);;
 #else
-            var arr = value.Replace(" ", "", StringComparison.Ordinal).Split(';', StringSplitOptions.RemoveEmptyEntries); ;
+            string[] arr = value.Replace(" ", "", StringComparison.Ordinal).Split(';', StringSplitOptions.RemoveEmptyEntries); ;
 #endif
             int start;
 
@@ -68,9 +68,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 for (int i = start; i < arr.Length; i++)
                 {
 #if NET40
-                    var para = arr[i].Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] para = arr[i].Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
 #else
-                    var para = arr[i].Split('=', StringSplitOptions.RemoveEmptyEntries);
+                    string[] para = arr[i].Split('=', StringSplitOptions.RemoveEmptyEntries);
 
 #endif
 
@@ -93,11 +93,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                     Parameters = new ReadOnlyCollection<KeyValuePair<string, string>>(list);
                 }
             }
-
         }
 
         /// <summary>
-        /// MIME-Typ (nie <c>null</c>)
+        /// MIME-Typ (Nie <c>null</c>.)
         /// </summary>
         public string MediaType { get; }
 

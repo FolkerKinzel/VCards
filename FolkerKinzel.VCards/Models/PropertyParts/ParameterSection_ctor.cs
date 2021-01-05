@@ -61,14 +61,14 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         }
                     case ParameterKey.PID:
                         {
-                            var val = parameter.Item2.Trim().Trim(info.AllQuotes).Split(info.Comma, StringSplitOptions.RemoveEmptyEntries);
+                            string[] val = parameter.Item2.Trim().Trim(info.AllQuotes).Split(info.Comma, StringSplitOptions.RemoveEmptyEntries);
 
-                            var pid = (List<PropertyID>?)this.PropertyIDs ?? new List<PropertyID>();
+                            List<PropertyID> pid = (List<PropertyID>?)this.PropertyIDs ?? new List<PropertyID>();
                             this.PropertyIDs = pid;
 
                             for (int i = 0; i < val.Length; i++)
                             {
-                                var arr = val[i].Split(info.Dot, StringSplitOptions.RemoveEmptyEntries);
+                                string[] arr = val[i].Split(info.Dot, StringSplitOptions.RemoveEmptyEntries);
                                 pid.Add(new PropertyID(arr));
                             }
 
@@ -162,7 +162,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                     default:
                         {
-                            var userAttributes = (List<KeyValuePair<string, string>>?)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
+                            List<KeyValuePair<string, string>> userAttributes 
+                                = (List<KeyValuePair<string, string>>?)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
                             userAttributes.Add(new KeyValuePair<string, string>(parameter.Item1, parameter.Item2));
                             this.NonStandardParameters = userAttributes;
                             break;

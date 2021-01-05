@@ -21,6 +21,7 @@ namespace FolkerKinzel.VCards
         public VCard() { }
 
 
+
         /// <summary>
         /// Initialisiert ein <see cref="VCard"/>-Objekt aus einer Queue von <see cref="VcfRow"/>-Objekten.
         /// </summary>
@@ -29,6 +30,7 @@ namespace FolkerKinzel.VCards
         /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>-Objekt, das Daten für den Deserialisierungsvorgang zur Verfügung stellt.</param>
         /// <param name="versionHint">Ein Hinweis, welche vCard-Version angenommen wird. (Eingebettete
         /// vCards haben manchmal keinen "VERSION:"-Tag.)</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0008:Expliziten Typ verwenden", Justification = "<Ausstehend>")]
         private VCard(Queue<VcfRow> queue, VCardDeserializationInfo info, VCdVersion versionHint)
         {
             Debug.Assert(queue != null);

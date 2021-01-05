@@ -19,7 +19,5 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         /// Entspricht dem Parameter-Teil einer vCard-Property (nie <c>null</c>).
         /// </summary>
         public ParameterSection Parameters { get; }
-
-        
     }
 }

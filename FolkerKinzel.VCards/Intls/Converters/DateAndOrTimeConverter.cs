@@ -216,12 +216,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
         }
 
 
-        internal static bool HasTimeComponent(DateTimeOffset? dt)
-        {
-            return dt.HasValue && (dt.Value.TimeOfDay != TimeSpan.Zero);
-            //|| utcOffset != TimeSpan.Zero //nicht konsequent, aber sonst bei Geburtstagen meist komisch
-
-        }
+        internal static bool HasTimeComponent(DateTimeOffset? dt) 
+            => dt.HasValue && (dt.Value.TimeOfDay != TimeSpan.Zero);
+              //|| utcOffset != TimeSpan.Zero //nicht konsequent, aber sonst bei Geburtstagen meist komisch
 
     }
 }

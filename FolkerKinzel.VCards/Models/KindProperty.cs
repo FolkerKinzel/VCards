@@ -54,7 +54,6 @@ namespace FolkerKinzel.VCards.Models
         public override bool IsEmpty => false;
 
 
-
         [InternalProtected]
         internal override void AppendValue(VcfSerializer serializer)
         {

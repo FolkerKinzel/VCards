@@ -279,7 +279,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
             var bytes = new List<byte>(qpCoded.Length);
 
             var sb = new StringBuilder();
-            foreach (var zeile in zeilen)
+            foreach (string? zeile in zeilen)
             {
                 sb.Append(zeile);
             }

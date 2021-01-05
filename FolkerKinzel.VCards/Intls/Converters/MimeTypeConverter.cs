@@ -8,7 +8,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
 {
     internal static class MimeTypeConverter
     {
-
         //Bilder
         internal static class ImageTypeValue
         {
@@ -451,9 +450,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 _ => null,
             };
         }
-
-
-
 
 
         internal static string MimeTypeFromSoundTypeValue(string? typeValue)

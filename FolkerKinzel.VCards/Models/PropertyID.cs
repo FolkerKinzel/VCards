@@ -187,8 +187,5 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-
-
-
     }
 }

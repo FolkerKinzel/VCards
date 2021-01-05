@@ -21,10 +21,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         [return: NotNull]
-        public static AddressTypes? Set(this AddressTypes? value, AddressTypes flags)
-        {
-            return value.HasValue ? (value.Value | flags) : flags;
-        }
+        public static AddressTypes? Set(this AddressTypes? value, AddressTypes flags) => value.HasValue ? (value.Value | flags) : flags;
 
 
         /// <summary>
@@ -40,10 +37,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static bool IsSet(this AddressTypes? value, AddressTypes flags)
-        {
-            return (value & flags) == flags;
-        }
+        public static bool IsSet(this AddressTypes? value, AddressTypes flags) => (value & flags) == flags;
 
 
         /// <summary>

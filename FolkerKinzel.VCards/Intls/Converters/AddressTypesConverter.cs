@@ -7,9 +7,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
     internal static class AddressTypesConverter
     {
 
-
-
-
         //Post
         internal static class AdrTypeValue
         {
@@ -36,8 +33,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 _ => addressType,
             };
         }
-
-
 
     }
 }

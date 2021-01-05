@@ -10,10 +10,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
         internal const string UUID_PROTOCOL = "urn:uuid:";
 
 
-        internal static bool IsUuid(this string? uri)
-        {
-            return uri?.StartsWith(UUID_PROTOCOL, StringComparison.OrdinalIgnoreCase) ?? false;
-        }
+        internal static bool IsUuid(this string? uri) => uri?.StartsWith(UUID_PROTOCOL, StringComparison.OrdinalIgnoreCase) ?? false;
 
         internal static Guid ToGuid(string? uuid)
         {
@@ -23,9 +20,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
             }
 
 #if NET40
-            var arr = uuid.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arr = uuid.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 #else
-            var arr = uuid.Split(':', StringSplitOptions.RemoveEmptyEntries);
+            string[] arr = uuid.Split(':', StringSplitOptions.RemoveEmptyEntries);
 #endif
 
             _ = Guid.TryParse(arr[arr.Length - 1], out Guid guid);
