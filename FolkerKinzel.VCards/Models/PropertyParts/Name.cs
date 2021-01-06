@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Intls.Serializers.Interfaces;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Informationen über den Namen der Person, die die vCard repräsentiert.
     /// </summary>
-    public class Name : IDataContainer
+    public class Name
     {
         private readonly ReadOnlyCollection<string>[] data;
 
@@ -127,13 +126,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// </summary>
         public ReadOnlyCollection<string> Suffix => data[SUFFIX];
 
-        ///// <summary>
-        ///// True, wenn das <see cref="Name"/>-Objekt keine Daten enthält.
-        ///// </summary>
-        /// <inheritdoc/>
+        /// <summary>
+        /// True, wenn das <see cref="Name"/>-Objekt keine verwertbaren Daten enthält.
+        /// </summary>
         public bool IsEmpty => !data.Any(x => x.Count != 0);
 
-        object IDataContainer.Value => this;
 
         internal void AppendVCardString(VcfSerializer serializer)
         {

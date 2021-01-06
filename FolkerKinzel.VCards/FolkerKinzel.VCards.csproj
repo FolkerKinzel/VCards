@@ -8,7 +8,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>2.0.0-alpha</Version>
-    <FileVersion>2.0.0.2</FileVersion>
+    <FileVersion>2.0.0.3</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
@@ -34,16 +34,15 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Intls\Serializers\Interfaces\**" />
     <Compile Remove="Models\Interfaces\**" />
     <Compile Remove="Translations\**" />
+    <EmbeddedResource Remove="Intls\Serializers\Interfaces\**" />
     <EmbeddedResource Remove="Models\Interfaces\**" />
     <EmbeddedResource Remove="Translations\**" />
+    <None Remove="Intls\Serializers\Interfaces\**" />
     <None Remove="Models\Interfaces\**" />
     <None Remove="Translations\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Intls\Serializers\Interfaces\IVcfSerializable.cs" />
-    <Compile Remove="Intls\Serializers\Interfaces\IVcfSerializableData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Nuget-Logo\Logo.png">

@@ -7,14 +7,14 @@ using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
 using System.Runtime.CompilerServices;
-using FolkerKinzel.VCards.Intls.Serializers.Interfaces;
+
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Abstrakte Basisklasse aller Klassen, die vCard-Properties repräsentieren.
     /// </summary>
-    public abstract class VCardProperty : IVCardData //, IVcfSerializable //, IVcfSerializableData
+    public abstract class VCardProperty
     {
         private string? _group;
 
@@ -46,13 +46,15 @@ namespace FolkerKinzel.VCards.Models
             Parameters = new ParameterSection();
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="VCardProperty"/> bereitgestellten Daten.
+        /// </summary>
         public object? Value => GetContainerValue();
 
         /// <summary>
-        /// Zugriffsmethode für die Daten von <see cref="IDataContainer"/>.
+        /// Zugriffsmethode für die Daten von <see cref="VCardProperty"/>.
         /// </summary>
-        /// <returns>Die Daten, die den Inhalt von <see cref="IDataContainer"/> darstellen.</returns>
+        /// <returns>Die Daten, die den Inhalt von <see cref="VCardProperty"/> darstellen.</returns>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -74,10 +76,9 @@ namespace FolkerKinzel.VCards.Models
         public ParameterSection Parameters { get; }
 
 
-        ///// <summary>
-        ///// True, wenn das <see cref="VCardProperty{T}"/>-Objekt keine Daten enthält.
-        ///// </summary>
-        /// <inheritdoc/>
+        /// <summary>
+        /// True, wenn das <see cref="VCardProperty"/>-Objekt keine verwertbaren Daten enthält.
+        /// </summary>
         public virtual bool IsEmpty => GetContainerValue() is null;
 
 
@@ -85,7 +86,7 @@ namespace FolkerKinzel.VCards.Models
         /// Überladung der <see cref="object.ToString"/>-Methode. Nur zum Debugging.
         /// </summary>
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="VCardProperty"/>-Objekts. </returns>
-        public override string ToString() => ((IDataContainer)this).Value?.ToString() ?? "<null>";
+        public override string ToString() => Value?.ToString() ?? "<null>";
 
 
         internal void BuildProperty(VcfSerializer serializer)

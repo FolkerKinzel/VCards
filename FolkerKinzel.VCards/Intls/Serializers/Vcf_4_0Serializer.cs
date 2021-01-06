@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Serializers.Interfaces;
-using FolkerKinzel.VCards.Models;
+﻿using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.Helpers;
 using System;
@@ -39,27 +38,27 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         }
 
 
-        private void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> serializables)
+        private void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> props)
         {
-            Debug.Assert(serializables != null);
+            Debug.Assert(props != null);
 
-            foreach (VCardProperty? serializable in serializables)
+            foreach (VCardProperty? prop in props)
             {
-                if (serializable is null)
+                if (prop is null)
                 {
                     continue;
                 }
 
-                BuildProperty(propertyKey, serializable);
+                BuildProperty(propertyKey, prop);
             }
         }
 
 
-        private static void SetAltID(IEnumerable<IVCardData?> props)
+        private static void SetAltID(IEnumerable<VCardProperty?> props)
         {
             Debug.Assert(props != null);
 
-            IVCardData[] arr = props.Where(x => x != null).ToArray()!;
+            VCardProperty[] arr = props.Where(x => x != null).ToArray()!;
 
             if (arr.Length <= 1)
             {
@@ -68,7 +67,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             string altID = arr.FirstOrDefault(x => x.Parameters.AltID != null)?.Parameters.AltID ?? "1";
 
-            foreach (IVCardData prop in arr)
+            foreach (VCardProperty prop in arr)
             {
                 prop.Parameters.AltID = altID;
             }

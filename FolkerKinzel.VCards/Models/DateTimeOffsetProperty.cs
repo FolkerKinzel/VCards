@@ -45,9 +45,9 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetContainerValue() => Value;
 
 
-        ///// <summary>
-        ///// Der gespeicherte <see cref="DateTimeOffset"/>-Wert oder <c>null</c>.
-        ///// </summary>
+        /// <summary>
+        /// Der gespeicherte <see cref="DateTimeOffset"/>-Wert oder <c>null</c>.
+        /// </summary>
         [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

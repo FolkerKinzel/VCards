@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Intls.Serializers.Interfaces;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Informationen über die Postanschrift in vCards
     /// </summary>
-    public class Address : IDataContainer
+    public class Address
     {
         private readonly ReadOnlyCollection<string>[] data;
 
@@ -151,6 +150,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// </summary>
         public ReadOnlyCollection<string> Country => data[COUNTRY];
 
+        /// <summary>
+        /// True, wenn das <see cref="Address"/>-Objekt keine verwertbaren Daten enthält.
+        /// </summary>
+        public bool IsEmpty => !data.Any(x => x.Count != 0);
+
 
         internal void AppendVCardString(VcfSerializer serializer)
         {
@@ -200,13 +204,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             return false;
         }
 
-        ///// <summary>
-        ///// True, wenn das <see cref="Address"/>-Objekt keine Daten enthält.
-        ///// </summary>
-        /// <inheritdoc/>
-        public bool IsEmpty => !data.Any(x => x.Count != 0);
+        
 
-        object IDataContainer.Value => this;
 
 
         /// <summary>

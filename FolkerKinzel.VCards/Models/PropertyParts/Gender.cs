@@ -1,7 +1,6 @@
 ﻿using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Intls.Serializers.Interfaces;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Text;
 
@@ -10,7 +9,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Informationen zur Angabe des Geschlechts in vCards.
     /// </summary>
-    public class Gender : IDataContainer
+    public class Gender
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="Gender"/>-Objekt.
@@ -39,11 +38,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public string? GenderIdentity { get; }
 
         /// <summary>
-        /// True, wenn das <see cref="Gender"/>-Objekt keine Daten enthält.
+        /// True, wenn das <see cref="Gender"/>-Objekt keine verwertbaren Daten enthält.
         /// </summary>
         public bool IsEmpty => !Sex.HasValue && GenderIdentity is null;
 
-        object IDataContainer.Value => this;
 
         internal void AppendVCardStringTo(VcfSerializer serializer)
         {
