@@ -6,7 +6,6 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 
 namespace FolkerKinzel.VCards.Models
@@ -16,7 +15,7 @@ namespace FolkerKinzel.VCards.Models
     /// beschreiben. Dies sind insbesondere die vCard-4.0-Property <c>RELATED</c>, die vCard-2.1- und -3.0-Property <c>AGENT</c> sowie
     /// Non-Standard-Properties zur Angabe des Namens des Ehepartners (wie z.B. <c>X-SPOUSE</c>).
     /// </summary>
-    public abstract class RelationProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public abstract class RelationProperty : VCardProperty
     {
         [InternalProtected]
         internal RelationProperty(ParameterSection parameters, string? propertyGroup)

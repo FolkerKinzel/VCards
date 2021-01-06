@@ -9,14 +9,13 @@ using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
 using System.Runtime.CompilerServices;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert die vCard-Property <c>N</c>, die den Namen des vCard-Subjekts speichert.
     /// </summary>
-    public sealed class NameProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class NameProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="NameProperty"/>-Objekt.

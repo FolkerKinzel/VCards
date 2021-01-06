@@ -8,7 +8,6 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 
 namespace FolkerKinzel.VCards.Models
@@ -19,7 +18,7 @@ namespace FolkerKinzel.VCards.Models
     /// <remarks>Die Informationen könnnen in verschiedenen Formaten vorliegen. So ist z.B. in vCard 4.0 auch
     /// freier Text wie "dienstags nach Mitternacht" möglich. Um herauszufinden, welcher Art die enthaltene Information ist,
     /// ist die <see cref="ParameterSection.DataType"/>-Eigenschaft hilfreich.</remarks>
-    public abstract class DateTimeProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public abstract class DateTimeProperty : VCardProperty
     {
         /// <summary>
         /// Konstruktor, der abgeleiteten Klassen erlaubt, ein neues <see cref="DateTimeProperty"/>-Objekt zu initialisieren,

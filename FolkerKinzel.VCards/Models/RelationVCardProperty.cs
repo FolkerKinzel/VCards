@@ -8,7 +8,6 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
-using FolkerKinzel.VCards.Models.Interfaces;
 using System.ComponentModel;
 
 namespace FolkerKinzel.VCards.Models
@@ -17,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit ihrer <see cref="VCard"/>
     /// zu beschreiben.
     /// </summary>
-    public sealed class RelationVCardProperty : RelationProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class RelationVCardProperty : RelationProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationVCardProperty"/>-Objekt.

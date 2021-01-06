@@ -3,7 +3,6 @@ using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Interfaces;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -16,7 +15,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit einem
     /// <see cref="Uri"/> dieser Person zu beschreiben.
     /// </summary>
-    public sealed class RelationUriProperty : RelationProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class RelationUriProperty : RelationProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationUriProperty"/>-Objekt.

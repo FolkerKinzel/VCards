@@ -5,7 +5,6 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 
 namespace FolkerKinzel.VCards.Models
@@ -13,7 +12,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert die vCard-Property <c>UID</c>, die einen eindeutigen Bezeichner für das vCard-Subjekt speichert.
     /// </summary>
-    public sealed class UuidProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class UuidProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="UuidProperty"/>-Objekt mit einer automatisch erzeugten

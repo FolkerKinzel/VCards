@@ -8,7 +8,6 @@ using FolkerKinzel.VCards.Models.Enums;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 
 namespace FolkerKinzel.VCards.Models
@@ -16,7 +15,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert vCard-Properties, deren Inhalt aus Text besteht.
     /// </summary>
-    public class TextProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class TextProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="TextProperty"/>-Objekt.

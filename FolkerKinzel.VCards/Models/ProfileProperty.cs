@@ -4,14 +4,13 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Diagnostics;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert die vCard-3.0-Property <c>PROFILE</c>, die festlegt, dass die vCard eine vCard ist.
     /// </summary>
-    public class ProfileProperty : TextProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class ProfileProperty : TextProperty
     {
         private const string PROFILE_PROPERTY_VALUE = "VCARD";
 

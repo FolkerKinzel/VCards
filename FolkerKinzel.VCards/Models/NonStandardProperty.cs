@@ -6,14 +6,13 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert eine vCard-Property, die nicht von den offiziellen Standards definiert ist.
     /// </summary>
-    public sealed class NonStandardProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class NonStandardProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="NonStandardProperty"/>-Objekt, das eine benutzerdefinierte

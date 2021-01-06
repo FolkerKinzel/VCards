@@ -9,14 +9,14 @@ using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
 using System.Runtime.CompilerServices;
-using FolkerKinzel.VCards.Models.Interfaces;
+
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Kapselt die Daten einer vCard-Property, die Informationen über die Postanschrift enthält.
     /// </summary>
-    public sealed class AddressProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class AddressProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.

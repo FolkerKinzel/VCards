@@ -5,14 +5,13 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert die in vCard 4.0 eingeführte Property <c>KIND</c>, die die Art des Objekts beschreibt, das durch die vCard repräsentiert wird.
     /// </summary>
-    public sealed class KindProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class KindProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="KindProperty"/>-Objekt.

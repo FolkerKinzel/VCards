@@ -11,7 +11,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 
 namespace FolkerKinzel.VCards.Models
@@ -19,7 +18,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert vCard-Properties, die eine Sammlung von Text-Inhalten speichern.
     /// </summary>
-    public class StringCollectionProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class StringCollectionProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="StringCollectionProperty"/>-Objekt.

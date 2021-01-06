@@ -9,7 +9,6 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 
 namespace FolkerKinzel.VCards.Models
@@ -28,7 +27,7 @@ namespace FolkerKinzel.VCards.Models
     /// einzubettende Binärdaten oder freien Text zu übergeben oder diese Informationen aus der Property
     /// wieder auszulesen.</para>
     /// </remarks>
-    public sealed class DataProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class DataProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DataProperty"/>-Objekt.

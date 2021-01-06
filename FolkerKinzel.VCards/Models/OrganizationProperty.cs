@@ -9,14 +9,13 @@ using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
 using System.Runtime.CompilerServices;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert die vCard-Property <c>ORG</c>, die Informationen über die Organisation speichert, der das vCard-Objekt zugeordnet ist.
     /// </summary>
-    public sealed class OrganizationProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class OrganizationProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="OrganizationProperty"/>-Objekt.

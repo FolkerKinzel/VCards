@@ -2,7 +2,6 @@
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Interfaces;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
 using System.ComponentModel;
@@ -15,7 +14,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Eine von <see cref="DateTimeProperty"/> abgeleitete Klasse, die darauf spezialisiert ist <see cref="DateTimeOffset"/>-Werte zu speichern.
     /// </summary>
-    public class DateTimeOffsetProperty : DateTimeProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class DateTimeOffsetProperty : DateTimeProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DateTimeOffsetProperty"/>-Objekt, bei dem der <see cref="ParameterSection.DataType"/>-Parameter

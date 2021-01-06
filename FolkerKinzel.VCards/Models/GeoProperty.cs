@@ -5,7 +5,6 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Runtime.CompilerServices;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 
 namespace FolkerKinzel.VCards.Models
@@ -13,7 +12,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert die vCard-Property <c>GEO</c>, die eine geographische Position speichert.
     /// </summary>
-    public sealed class GeoProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class GeoProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="GeoProperty"/>-Objekt.

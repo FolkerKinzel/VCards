@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Interfaces;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers

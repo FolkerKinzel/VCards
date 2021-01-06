@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using FolkerKinzel.VCards.Models.Interfaces;
+using FolkerKinzel.VCards.Intls.Serializers;
 
 namespace FolkerKinzel.VCards.Models
 {

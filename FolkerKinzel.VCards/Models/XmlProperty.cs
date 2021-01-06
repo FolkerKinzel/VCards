@@ -5,7 +5,6 @@ using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Resources;
 using System;
 using System.Xml.Linq;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 
 namespace FolkerKinzel.VCards.Models
@@ -13,7 +12,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Die Klasse kapselt die Daten der vCard-Property <c>XML</c>, die eingebettete XML-Daten ermöglicht.
     /// </summary>
-    public sealed class XmlProperty : TextProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class XmlProperty : TextProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="XmlProperty"/>-Objekt.

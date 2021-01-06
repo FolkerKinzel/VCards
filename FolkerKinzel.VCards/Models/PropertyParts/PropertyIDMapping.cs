@@ -1,10 +1,10 @@
 ﻿using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Resources;
 using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts
 {

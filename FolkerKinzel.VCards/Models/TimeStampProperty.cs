@@ -10,7 +10,6 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
-using FolkerKinzel.VCards.Models.Interfaces;
 
 
 namespace FolkerKinzel.VCards.Models
@@ -18,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Kapselt die vCard-Property <c>REV</c>, die einen Zeitstempel der letzten Aktualisierung der <see cref="VCard"/> darstellt.
     /// </summary>
-    public sealed class TimestampProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class TimestampProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="TimestampProperty"/>-Objekt, bei dem der <see cref="ParameterSection.DataType"/>-Parameter

@@ -34,12 +34,12 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Models\Interfaces\**" />
     <Compile Remove="Translations\**" />
+    <EmbeddedResource Remove="Models\Interfaces\**" />
     <EmbeddedResource Remove="Translations\**" />
+    <None Remove="Models\Interfaces\**" />
     <None Remove="Translations\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Models\Interfaces\IDataContainer_T.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Nuget-Logo\Logo.png">

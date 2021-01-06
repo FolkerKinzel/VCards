@@ -5,7 +5,6 @@ using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Interfaces;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -17,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um den Namen einer Person, zu der eine Beziehung besteht, anzugeben.
     /// </summary>
-    public sealed class RelationTextProperty : RelationProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class RelationTextProperty : RelationProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationTextProperty"/>-Objekt.

@@ -3,7 +3,6 @@ using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Interfaces;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -13,7 +12,7 @@ namespace FolkerKinzel.VCards.Models
     /// Kapselt die Daten der vCard-Property <c>CLASS</c>, die in vCard 3.0 die Geheimhaltungsstufe der 
     /// vCard definiert.
     /// </summary>
-    public sealed class AccessProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class AccessProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="AccessProperty"/>-Objekt.

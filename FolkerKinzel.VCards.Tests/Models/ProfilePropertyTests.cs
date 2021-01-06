@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using FolkerKinzel.VCards.Models.Interfaces;
+
 
 namespace FolkerKinzel.VCards.Models.Tests
 {

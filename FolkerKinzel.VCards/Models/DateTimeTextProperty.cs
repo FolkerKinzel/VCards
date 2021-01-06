@@ -2,7 +2,6 @@
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Interfaces;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
 using System.ComponentModel;
@@ -16,7 +15,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="DateTimeProperty"/>-Klasse, die es erlaubt eine Zeit- und/oder Datumsangabe
     /// als freien Text zu speichern.
     /// </summary>
-    public class DateTimeTextProperty : DateTimeProperty, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class DateTimeTextProperty : DateTimeProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DateTimeTextProperty"/>-Objekt, bei dem der 
