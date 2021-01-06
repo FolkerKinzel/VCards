@@ -21,9 +21,8 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationVCardProperty"/>-Objekt.
         /// </summary>
-        /// <param name="vcard"><see cref="VCard"/> einer Person, zu der eine Beziehung besteht.</param>
-        /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum, der die 
-        /// Beziehung beschreibt.</param>
+        /// <param name="vcard"><see cref="VCard"/> einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
+        /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -34,8 +33,9 @@ namespace FolkerKinzel.VCards.Models
             this.Parameters.DataType = VCdDataType.VCard;
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="RelationVCardProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new VCard? Value
         {
             get;

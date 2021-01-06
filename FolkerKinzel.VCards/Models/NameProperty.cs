@@ -49,7 +49,9 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="middleName">zweiter Vorname</param>
         /// <param name="prefix">Namenspräfix (z.B. "Prof. Dr.")</param>
         /// <param name="suffix">Namenssuffix (z.B. "jr.")</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public NameProperty(
             string? lastName,
             string? firstName = null,
@@ -85,8 +87,9 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="NameProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new Name Value
         {
             get;

@@ -45,8 +45,9 @@ namespace FolkerKinzel.VCards.Models
             Parameters.DataType = VCdDataType.Timestamp;
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="TimestampProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new DateTimeOffset Value
         {
             get;

@@ -30,8 +30,9 @@ namespace FolkerKinzel.VCards.Models
             Parameters.DataType = VCdDataType.DateAndOrTime;
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="DateTimeOffsetProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new DateTimeOffset? Value
         {
             get;

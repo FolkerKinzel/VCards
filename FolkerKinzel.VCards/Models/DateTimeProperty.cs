@@ -21,8 +21,7 @@ namespace FolkerKinzel.VCards.Models
     public abstract class DateTimeProperty : VCardProperty
     {
         /// <summary>
-        /// Konstruktor, der abgeleiteten Klassen erlaubt, ein neues <see cref="DateTimeProperty"/>-Objekt zu initialisieren,
-        /// bei dem ein Gruppenname für vCard-Properties angegeben ist.
+        /// Konstruktor, der abgeleiteten Klassen erlaubt, ein neues <see cref="DateTimeProperty"/>-Objekt zu initialisieren.
         /// </summary>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,

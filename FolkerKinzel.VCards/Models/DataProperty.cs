@@ -32,7 +32,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="DataProperty"/>-Objekt.
         /// </summary>
-        /// <param name="value">Ein <see cref="Uri"/>. Verwenden Sie die statischen Methoden der <see cref="DataUrl"/>-Klasse,
+        /// <param name="value">Ein <see cref="Uri"/>: Verwenden Sie die statischen Methoden der <see cref="DataUrl"/>-Klasse,
         /// um einzubettende Binärdaten oder freien Text als <see cref="Uri"/>zu übergeben.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
@@ -55,8 +55,9 @@ namespace FolkerKinzel.VCards.Models
             catch { } // Value = null : not readable
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="DataProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new Uri? Value
         {
             get;

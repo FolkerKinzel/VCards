@@ -25,10 +25,10 @@ namespace FolkerKinzel.VCards.Models
 
         internal ProfileProperty(VcfRow row, VCardDeserializationInfo info, VCdVersion version) : base(row, info, version) { }
 
-        ///// <summary>
-        ///// Textinhalt der <see cref="ProfileProperty"/>.
-        ///// </summary>
-        /// <inheritdoc/>
+
+        /// <summary>
+        /// Die von der <see cref="ProfileProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public override string Value => base.Value ?? PROFILE_PROPERTY_VALUE;
 
 

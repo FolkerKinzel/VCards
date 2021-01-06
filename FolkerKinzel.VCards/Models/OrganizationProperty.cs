@@ -20,8 +20,8 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="OrganizationProperty"/>-Objekt.
         /// </summary>
-        /// <param name="organizationName">Name der Organisation.</param>
-        /// <param name="organizationalUnits">Namen der Unterorganisationen.</param>
+        /// <param name="organizationName">Name der Organisation oder <c>null</c>.</param>
+        /// <param name="organizationalUnits">Namen der Unterorganisationen oder <c>null</c>.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -41,7 +41,9 @@ namespace FolkerKinzel.VCards.Models
             Value = new Organization(vcfRow.Value, info.Builder, version);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="OrganizationProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new Organization Value
         {
             get;

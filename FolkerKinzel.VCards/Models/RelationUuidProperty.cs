@@ -20,8 +20,7 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="uuid">Uuid einer Person, zu der eine Beziehung besteht. Das kann zum Beispiel der Wert der 
         /// vCard-Property "UID" der vCard dieser Person sein.</param>
-        /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum, der die 
-        /// Beziehung beschreibt.</param>
+        /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -32,8 +31,9 @@ namespace FolkerKinzel.VCards.Models
             this.Value = uuid;
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="RelationUuidProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new Guid Value
         {
             get;

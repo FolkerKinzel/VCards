@@ -17,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="AccessProperty"/>-Objekt.
         /// </summary>
-        /// <param name="value">Ein Member der <see cref="VCdAccess"/>-Enumeration, der den Inhalt der <see cref="AccessProperty"/> darstellt.</param>
+        /// <param name="value">Ein Member der <see cref="VCdAccess"/>-Enumeration.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -51,8 +51,9 @@ namespace FolkerKinzel.VCards.Models
         /// <inheritdoc/>
         public override bool IsEmpty => false;
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="AccessProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new VCdAccess Value
         {
             get;

@@ -12,14 +12,22 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert eine vCard-Property, die nicht von den offiziellen Standards definiert ist.
     /// </summary>
+    /// <remarks>
+    /// <note type="important">
+    /// <para>Um Objekte der Klasse <see cref="NonStandardProperty"/> in eine vCard zu schreiben, muss beim Schreibvorgang das Flag
+    /// <see cref="VcfOptions.WriteNonStandardProperties">VcfOptions.WriteNonStandardProperties</see> explizit gesetzt werden.</para>
+    /// <para>Bedenken Sie, dass Sie sich bei Verwendung der Klasse um die standardgerechte Maskierung, Demaskierung, Enkodierung und Dekodierung der 
+    /// Daten selbst kümmern müssen.</para>
+    /// </note>
+    /// </remarks>
     public sealed class NonStandardProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="NonStandardProperty"/>-Objekt, das eine benutzerdefinierte
         /// Erweiterung des vCard-Standards darstellt.
         /// </summary>
-        /// <param name="value">Der Wert der Property (Text oder BASE64-codierte Bytes).</param>
-        /// <param name="propertyKey">Der Schlüssel (Format X-Name).</param>
+        /// <param name="propertyKey">Der Schlüssel (Format: <c>X-Name</c>).</param>
+        /// <param name="value">Der Wert der Property (beliebige als <see cref="string"/> kodierte Daten oder <c>null</c>).</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -63,7 +71,9 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         public string PropertyKey { get; }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="NonStandardProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new string? Value
         {
             get;

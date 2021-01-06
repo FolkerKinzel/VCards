@@ -21,74 +21,66 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
         /// </summary>
-        /// <param name="postOfficeBox">Postfach</param>
-        /// <param name="extendedAddress">Adresszusatz</param>
-        /// <param name="street">Straße</param>
-        /// <param name="locality">Ort</param>
-        /// <param name="region">Bundesland</param>
-        /// <param name="postalCode">Postleitzahl</param>
-        /// <param name="country">Land (Staat)</param>
+        /// <param name="address">Ein <see cref="VCardAddress"/>-Objekt oder <c>null</c>.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public AddressProperty(
-            IEnumerable<string?>? postOfficeBox = null,
-            IEnumerable<string?>? extendedAddress = null,
-            IEnumerable<string?>? street = null,
-            IEnumerable<string?>? locality = null,
-            IEnumerable<string?>? region = null,
-            IEnumerable<string?>? postalCode = null,
-            IEnumerable<string?>? country = null,
-            string? propertyGroup = null)
-        {
-            Value = new Address(postOfficeBox, extendedAddress, street, locality, region, postalCode, country);
-            Group = propertyGroup;
-        }
-
-        /// <summary>
-        /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
-        /// </summary>
-        /// <param name="postOfficeBox">Postfach</param>
-        /// <param name="extendedAddress">Adresszusatz</param>
-        /// <param name="street">Straße</param>
-        /// <param name="locality">Ort</param>
-        /// <param name="region">Bundesland</param>
-        /// <param name="postalCode">Postleitzahl</param>
-        /// <param name="country">Land (Staat)</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe, der die Property zugehören soll.</param>
         /// <remarks>
         /// Es ist empfehlenswert, dem Parameter <see cref="ParameterSection.Label"/> des <see cref="AddressProperty"/>-Objekts
         /// eine formatierte Darstellung der Adresse zuzuweisen.
         /// </remarks>
-        public AddressProperty(
-            string? postOfficeBox,
-            string? extendedAddress,
-            string? street,
-            string? locality,
-            string? region,
-            string? postalCode,
-            string? country,
-            string? propertyGroup = null)
+        public AddressProperty(VCardAddress? address, string? propertyGroup = null)
         {
-            Value = new Address(
-                new string?[] { postOfficeBox }, new string?[] { extendedAddress }, new string?[] { street },
-                new string?[] { locality }, new string?[] { region }, new string?[] { postalCode }, new string?[] { country });
+            Value = (address is null || address.IsEmpty) ? null : address;
             Group = propertyGroup;
         }
+
+        ///// <summary>
+        ///// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
+        ///// </summary>
+        ///// <param name="street">Straße</param>
+        ///// <param name="locality">Ort</param>
+        ///// <param name="postalCode">Postleitzahl</param>
+        ///// <param name="region">Bundesland</param>
+        ///// <param name="country">Land (Staat)</param>
+        ///// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+        ///// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+        ///// <param name="propertyGroup">Bezeichner der Gruppe,
+        ///// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        ///// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+        ///// <remarks>
+        ///// Es ist empfehlenswert, dem Parameter <see cref="ParameterSection.Label"/> des <see cref="AddressProperty"/>-Objekts
+        ///// eine formatierte Darstellung der Adresse zuzuweisen.
+        ///// </remarks>
+        //public AddressProperty(
+        //    string? street,
+        //    string? locality,
+        //    string? postalCode,
+        //    string? region,
+        //    string? country,
+        //    string? postOfficeBox,
+        //    string? extendedAddress,
+        //    string? propertyGroup = null)
+        //{
+        //    Value = new VCardAddress(
+        //        new string?[] { postOfficeBox }, new string?[] { extendedAddress }, new string?[] { street },
+        //        new string?[] { locality }, new string?[] { region }, new string?[] { postalCode }, new string?[] { country });
+        //    Group = propertyGroup;
+        //}
 
         internal AddressProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             if (vcfRow.Value is null)
             {
-                Value = new Address();
+                Value = new VCardAddress();
             }
             else
             {
                 Debug.Assert(!string.IsNullOrWhiteSpace(vcfRow.Value));
 
                 vcfRow.DecodeQuotedPrintable();
-                Value = new Address(vcfRow.Value, info.Builder, version);
+                Value = new VCardAddress(vcfRow.Value, info.Builder, version);
             }
         }
 
@@ -133,15 +125,16 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-        ///// <summary>
-        ///// True, wenn das <see cref="AddressProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
-        /// <inheritdoc/>
-        public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
+        /////// <summary>
+        /////// True, wenn das <see cref="AddressProperty"/>-Objekt keine Daten enthält.
+        /////// </summary>
+        ///// <inheritdoc/>
+        //public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
 
-
-        /// <inheritdoc/>
-        public new Address Value
+        /// <summary>
+        /// Die von der <see cref="AddressProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
+        public new VCardAddress? Value
         {
             get;
         }
@@ -151,7 +144,7 @@ namespace FolkerKinzel.VCards.Models
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        protected override object GetVCardPropertyValue() => Value;
+        protected override object? GetVCardPropertyValue() => Value;
 
     }
 }

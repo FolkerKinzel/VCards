@@ -22,7 +22,7 @@ namespace FolkerKinzel.VCards.Models
         /// <see cref="ParameterSection.DataType"/>-Parameter
         /// auf <see cref="VCdDataType.Text"/> gesetzt ist.
         /// </summary>
-        /// <param name="value">Ein beliebiger <see cref="string"/>.</param>
+        /// <param name="value">Ein beliebiger <see cref="string"/>, der eine Zeit oder ein Datum beschreibt, oder <c>null</c>.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -31,9 +31,10 @@ namespace FolkerKinzel.VCards.Models
             this.Value = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
             Parameters.DataType = VCdDataType.Text;
         }
-        
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="DateTimeTextProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new string? Value
         {
             get;

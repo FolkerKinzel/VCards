@@ -31,8 +31,9 @@ namespace FolkerKinzel.VCards.Models
             Value = VCdKindConverter.Parse(vcfRow.Value);
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="KindProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new VCdKind Value
         {
             get;

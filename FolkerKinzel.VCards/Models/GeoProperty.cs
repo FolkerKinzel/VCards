@@ -17,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="GeoProperty"/>-Objekt.
         /// </summary>
-        /// <param name="value">Ein <see cref="GeoCoordinate"/>-Objekt.</param>
+        /// <param name="value">Ein <see cref="GeoCoordinate"/>-Objekt oder <c>null</c>.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -33,8 +33,9 @@ namespace FolkerKinzel.VCards.Models
             this.Value = (value is null) || value.IsUnknown ? null : value;
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="GeoProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new GeoCoordinate? Value
         {
             get;

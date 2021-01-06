@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Informationen über die Postanschrift in vCards
     /// </summary>
-    public class Address
+    public class VCardAddress
     {
         private readonly ReadOnlyCollection<string>[] data;
 
@@ -29,23 +29,22 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// Initialisiert ein neues <see cref="Address"/>-Objekt.
+        /// Initialisiert ein neues <see cref="VCardAddress"/>-Objekt.
         /// </summary>
-        /// <param name="postOfficeBox">Postfach (sollte immer <c>null</c> sein).</param>
-        /// <param name="extendedAddress">Adresszusatz (sollte immer <c>null</c> sein).</param>
         /// <param name="street">Straße</param>
         /// <param name="locality">Ort</param>
-        /// <param name="region">Bundesland</param>
         /// <param name="postalCode">Postleitzahl</param>
+        /// <param name="region">Bundesland</param>
         /// <param name="country">Land (Staat)</param>
-        internal Address(
-            IEnumerable<string?>? postOfficeBox = null,
-            IEnumerable<string?>? extendedAddress = null,
-            IEnumerable<string?>? street = null,
-            IEnumerable<string?>? locality = null,
-            IEnumerable<string?>? region = null,
-            IEnumerable<string?>? postalCode = null,
-            IEnumerable<string?>? country = null)
+        /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+        /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+        public VCardAddress(IEnumerable<string?>? street = null,
+                            IEnumerable<string?>? locality = null,
+                            IEnumerable<string?>? postalCode = null,
+                            IEnumerable<string?>? region = null,
+                            IEnumerable<string?>? country = null,
+                            IEnumerable<string?>? postOfficeBox = null,
+                            IEnumerable<string?>? extendedAddress = null)
         {
 #if NET40
             string[] empty = VCard.EmptyStringArray;
@@ -71,7 +70,37 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
 
-        internal Address(string vCardValue, StringBuilder builder, VCdVersion version)
+        /// <summary>
+        /// Initialisiert ein neues <see cref="VCardAddress"/>-Objekt.
+        /// </summary>
+        /// <param name="street">Straße</param>
+        /// <param name="locality">Ort</param>
+        /// <param name="postalCode">Postleitzahl</param>
+        /// <param name="region">Bundesland</param>
+        /// <param name="country">Land (Staat)</param>
+        /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+        /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+        public VCardAddress(
+            string? street,
+            string? locality,
+            string? postalCode,
+            string? region,
+            string? country,
+            string? postOfficeBox,
+            string? extendedAddress)
+            : this(street: string.IsNullOrWhiteSpace(street) ? null : new string[] { street },
+                   locality: string.IsNullOrWhiteSpace(locality) ? null : new string[] { locality },
+                   postalCode: string.IsNullOrWhiteSpace(postalCode) ? null : new string[] { postalCode },
+                   region: string.IsNullOrWhiteSpace(region) ? null : new string[] { region },
+                   country: string.IsNullOrWhiteSpace(country) ? null : new string[] { country },
+                   postOfficeBox: string.IsNullOrWhiteSpace(postOfficeBox) ? null : new string[] { postOfficeBox },
+                   extendedAddress: string.IsNullOrWhiteSpace(extendedAddress) ? null : new string[] { extendedAddress })
+        {
+            
+        }
+
+
+        internal VCardAddress(string vCardValue, StringBuilder builder, VCdVersion version)
         {
             Debug.Assert(vCardValue != null);
 
@@ -151,7 +180,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public ReadOnlyCollection<string> Country => data[COUNTRY];
 
         /// <summary>
-        /// True, wenn das <see cref="Address"/>-Objekt keine verwertbaren Daten enthält.
+        /// True, wenn das <see cref="VCardAddress"/>-Objekt keine verwertbaren Daten enthält.
         /// </summary>
         public bool IsEmpty => !data.Any(x => x.Count != 0);
 
@@ -204,15 +233,15 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             return false;
         }
 
-        
+
 
 
 
         /// <summary>
-        /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="Address"/>-Objekts. 
+        /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="VCardAddress"/>-Objekts. 
         /// (Nur zum Debugging.)
         /// </summary>
-        /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="Address"/>-Objekts.</returns>
+        /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="VCardAddress"/>-Objekts.</returns>
         public override string ToString()
         {
             var worker = new StringBuilder();

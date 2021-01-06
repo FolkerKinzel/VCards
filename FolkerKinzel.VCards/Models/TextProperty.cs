@@ -42,8 +42,9 @@ namespace FolkerKinzel.VCards.Models
             Value = vcfRow.Value;
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="TextProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public virtual new string? Value
         {
             get;

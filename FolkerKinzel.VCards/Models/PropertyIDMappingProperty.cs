@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models
     /// Kapselt die Informationen einer <c>CLIENTPIDMAP</c>-Property.
     /// </summary>
     /// <remarks>
-    /// Der Standard erlaubt, dass das Mapping mit einer beliebigen URI signiert wird. Unterstützt werden hier
+    /// Der Standard erlaubt, dass das Mapping mit einer beliebigen URI signiert wird. Unterstützt werden von FolkerKinzel.VCards
     /// aber nur UUIDs.
     /// </remarks>
     public sealed class PropertyIDMappingProperty : VCardProperty
@@ -60,7 +60,10 @@ namespace FolkerKinzel.VCards.Models
 
         }
 
-        /// <inheritdoc/>
+
+        /// <summary>
+        /// Die von der <see cref="PropertyIDMappingProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new PropertyIDMapping Value
         {
             get;

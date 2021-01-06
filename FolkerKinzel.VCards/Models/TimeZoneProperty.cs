@@ -17,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="TimeZoneProperty"/>-Objekt.
         /// </summary>
-        /// <param name="value">Ein <see cref="TimeZoneInfo"/>-Objekt.</param>
+        /// <param name="value">Ein <see cref="TimeZoneInfo"/>-Objekt oder <c>null</c>.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -32,8 +32,9 @@ namespace FolkerKinzel.VCards.Models
             Value = TimeZoneInfoConverter.Parse(vcfRow.Value);
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="TimeZoneProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new TimeZoneInfo? Value
         {
             get;

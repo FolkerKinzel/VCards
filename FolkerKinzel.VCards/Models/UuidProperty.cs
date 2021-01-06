@@ -38,8 +38,9 @@ namespace FolkerKinzel.VCards.Models
             Value = UuidConverter.ToGuid(vcfRow.Value);
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="UuidProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new Guid Value
         {
             get;

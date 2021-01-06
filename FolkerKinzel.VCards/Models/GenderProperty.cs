@@ -22,7 +22,7 @@ namespace FolkerKinzel.VCards.Models
         /// Initialisiert ein neues <see cref="GenderProperty"/>-Objekt.
         /// </summary>
         /// <param name="sex">Standardisierte Geschlechtsangabe.</param>
-        /// <param name="genderIdentity">Freie Beschreibung des Geschlechts.</param>
+        /// <param name="genderIdentity">Freie Beschreibung des sexuellen Identität.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -32,8 +32,9 @@ namespace FolkerKinzel.VCards.Models
             Group = propertyGroup;
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Die von der <see cref="GenderProperty"/> zur Verfügung gestellten Daten.
+        /// </summary>
         public new Gender Value
         {
             get;

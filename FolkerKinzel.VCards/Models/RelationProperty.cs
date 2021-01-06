@@ -28,8 +28,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Konstruktor, der von abgeleiteten Klassen aufgerufen wird.
         /// </summary>
-        /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum, der die 
-        /// Beziehung zu einer Person beschreibt.</param>
+        /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>

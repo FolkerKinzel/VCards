@@ -38,6 +38,7 @@ namespace FolkerKinzel.VCards.Models
 
         }
 
+
         /// <summary>
         /// Initialiert ein neues <see cref="VCardProperty"/>-Objekt.
         /// </summary>
@@ -46,10 +47,12 @@ namespace FolkerKinzel.VCards.Models
             Parameters = new ParameterSection();
         }
 
+
         /// <summary>
-        /// Die von der <see cref="VCardProperty"/> bereitgestellten Daten.
+        /// Die von der <see cref="VCardProperty"/> zur Verfügung gestellten Daten.
         /// </summary>
         public object? Value => GetVCardPropertyValue();
+
 
         /// <summary>
         /// Zugriffsmethode für die Daten von <see cref="VCardProperty"/>.
