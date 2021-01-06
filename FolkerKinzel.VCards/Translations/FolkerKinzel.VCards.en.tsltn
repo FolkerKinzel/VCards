@@ -3,7 +3,6 @@
   <T ID="BFFD14FCD3080F13">Encapsulates the data of a vCard property that contains information about the postal address.</T>
   <T ID="F57CB4C7BFCE564A">Encapsulates embedded binary data, references to binary data (e.g. URLs) or information available as free text.</T>
   <T ID="D3277A646C71EBF6">Represents a data URL according to RFC 2397.</T>
-  <T ID="79E201AE9C8F8336">A class derived from &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/&gt; that specializes in encapsulating &lt;see cref="P:FolkerKinzel.VCards.Models.DateTimeOffsetProperty.DateTimeOffset"/&gt; values.</T>
   <T ID="281AF77AB3C9E5BE">Encapsulates information about time and date.</T>
   <T ID="63D5064E4113C493">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/&gt; class, which allows a time and/or date to be saved as free text.</T>
   <T ID="E085386FDBC598B2">Named constants to describe the type of a postal address in vCards. The constants can be combined.</T>
@@ -17,25 +16,22 @@
   <T ID="D9D4EDC0B54AD733">Named constants to specify the encoding of the value of a vCard property.</T>
   <T ID="3CF4A1A9F2A281A">Named constants to access the properties of a &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt; object.</T>
   <T ID="6BA720ED79A95997">Named constants to indicate the VCF version.</T>
-  <T ID="563A730D936CD5F7">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; enum easier.</T>
-  <T ID="70565698ECE50668">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes"/&gt; enum easier.</T>
-  <T ID="FEFE098E567CFC42">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes"/&gt; enum easier.</T>
-  <T ID="9CF197E647ED38A">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; enum easier.</T>
-  <T ID="E3435FD6D9729EC6">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes"/&gt; enum easier.</T>
-  <T ID="44400AEBFE8E59B">Extension methods, that make working with the &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; enum easier.</T>
-  <T ID="F53B64AB3D8F9168">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to describe a person, with whom a relationship exists, with a &lt;see cref="P:FolkerKinzel.VCards.Models.RelationUriProperty.Uri"/&gt;.</T>
+  <T ID="563A730D936CD5F7">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; enum easier.</T>
+  <T ID="70565698ECE50668">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes"/&gt; enum easier.</T>
+  <T ID="FEFE098E567CFC42">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes"/&gt; enum easier.</T>
+  <T ID="9CF197E647ED38A">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; enum easier.</T>
+  <T ID="E3435FD6D9729EC6">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes"/&gt; enum easier.</T>
+  <T ID="44400AEBFE8E59B">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; enum easier.</T>
   <T ID="90207E9BAE441F16">Represents a vCard property that is not defined by the official standards.</T>
   <T ID="8061FC6FAA844DCF">Encapsulates information, that is used to uniquely identify a vCard property.</T>
   <T ID="53229C164BC6D573">Encapsulates information about a postal address.</T>
-  <T ID="2ED264DF7DF37F7">Encapsulates information about the sex and gender identity of the object the vCard represents.</T>
-  <T ID="65FCFA7EEC304F2D">Encapsulates information about the geographic position.</T>
+  <T ID="65FCFA7EEC304F2D">Encapsulates information about the geographical position.</T>
   <T ID="3681B171B1795491">Encapsulates information about a MIME type ("Multipurpose Internet Mail Extensions").</T>
-  <T ID="D5B3EC49BD7FF1F6">Encapsulates information about the name of the person which the vCard represents.</T>
-  <T ID="4560CEC4719E4F42">Encapsulates information about the organization (or company) of the subject that the vCard represents.</T>
+  <T ID="D5B3EC49BD7FF1F6">Encapsulates information about the name of the person the vCard represents.</T>
+  <T ID="4560CEC4719E4F42">Encapsulates information about the organization (or company) of the subject the vCard represents.</T>
   <T ID="5379A48AE5A6E9A">Encapsulates the information about the parameters of a vCard property.</T>
   <T ID="6CDB9800F02C1673">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to specify the name of a person with whom there is a relationship.</T>
-  <T ID="393303368777EE1B">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to include a person, with whom there is a relationship, with the Uuid of their &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
-  <T ID="C6C07776CCE12A">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to describe a person, with whom there is a relationship, with their &lt;see cref="P:FolkerKinzel.VCards.Models.RelationVCardProperty.VCard"/&gt;.</T>
+  <T ID="393303368777EE1B">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to describe a person, with whom there is a relationship, with the UUID of their &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
   <T ID="6B0C88EC6BFA8921">Represents vCard properties that store a collection of text content.</T>
   <T ID="B24DC67218609DBF">Represents vCard properties whose content consists of text.</T>
   <T ID="801D5818CF60254F">Encapsulates the information contained in a vCard.</T>
@@ -46,7 +42,6 @@
   <T ID="A1247501E35DCE64">Named constants to describe the type of an email address.</T>
   <T ID="1BA0D231AF61F1FC">&lt;c&gt;LANGUAGE&lt;/c&gt;: Language of the data in the &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="DFB67AAF83746835">Encapsulates the data of the vCard property &lt;c&gt;CLASS&lt;/c&gt;, which defines the level of confidentiality of the vCard in vCard 3.0.</T>
-  <T ID="4A3B3162F5727319">Represents the vCard property &lt;c&gt;GENDER&lt;/c&gt;, introduced in vCard 4.0, which stores information about the gender.</T>
   <T ID="91EF96D16DE0BB0F">Represents the vCard property &lt;c&gt;GEO&lt;/c&gt;, which encapsulates a geographic position.</T>
   <T ID="D5DEAB0311146371">Represents the &lt;c&gt;KIND&lt;/c&gt; property, introduced in vCard 4.0, which describes the type of object represented by the vCard.</T>
   <T ID="2C9C5B29269DFA7B">Represents the vCard property &lt;c&gt;N&lt;/c&gt;, which stores the name of the vCard subject.</T>
@@ -298,7 +293,6 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
              &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.EmailType"/&gt;!</T>
   <T ID="25F007BF04C435D3">&lt;para&gt; The value is set automatically -
              only for &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects this has to be done manually. &lt;/para&gt; &lt;para&gt; In vCard 3.0 only &lt;see cref ="F:FolkerKinzel.VCards.Models.Enums.VCdEncoding.Base64"/&gt; is permitted. &lt;/para&gt;</T>
-  <T ID="11ACEEC6756D71CA">&lt;c&gt;GEO&lt;/c&gt;: Geographical position. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="36583F3656FAEA27">&lt;c&gt;TYPE&lt;/c&gt;: Description of an instant messenger address. &lt;c&gt;(3 - RFC 4770)&lt;/c&gt;</T>
   <T ID="2CB7FC70098D6315">&lt;c&gt;LABEL&lt;/c&gt;: Represents the actual text, that should be put on the mailing label, when delivering a physical package to the person/object associated with the vCard. &lt;c&gt;([2],[3],4)&lt;/c&gt;</T>
   <T ID="4029DFE929F19427">In vCard 2.1 and vCard 3.0, the content is automatically inserted into the vCard as a separate &lt;c&gt;LABEL&lt;/c&gt; property.</T>
@@ -435,30 +429,108 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="EAE427E807D93AAE">Named constants to describe the type of relationship with a person or organization. The constants can be combined.</T>
   <T ID="FD097DE2034FC692">&lt;c&gt;ENCODING&lt;/c&gt;: Indicates the encoding of the &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;. &lt;c&gt;(2,3)&lt;/c&gt;</T>
   <T ID="302E8A23782FABD2">Abstract base class of all classes that represent vCard properties.</T>
-  <T ID="4B3BC8E0DD19117B">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; object.</T>
   <T ID="B3F60A8ECBB1CFF1">A &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/&gt; object that represents the parameter part of a vCard property.</T>
-  <T ID="798D539DBA323989">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects to which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="798D539DBA323989">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="81B3B486735BE7B6">&lt;paramref name="parameters"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
-  <T ID="5F6F0568DD19117B">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; object.</T>
   <T ID="AFED563658F5170C">Corresponds to the Group identifier of a vCard property or is &lt;c&gt;null&lt;/c&gt;, if the vCard property has no group identifier.</T>
   <T ID="6585BEE95E613631">Contains the data of the parameter section of a vCard property. (Never &lt;c&gt;null&lt;/c&gt;.)</T>
   <T ID="8DCF9A4C77DDBC9E">Overload of the &lt;see cref ="M:System.Object.ToString"/&gt; method. For debugging only.</T>
   <T ID="F1F1884193278305">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; object.</T>
-  <T ID="3F61C689B82758BE">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
-  <T ID="BCE935CB333319E5">Access method to get the data from &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
+  <T ID="BCE935CB333319E5">Abstract access method to get the data from &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
   <T ID="9143ECC0C30F4383">The data provided by &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
   <T ID="6DA2C74DE3ADC947">Returns &lt;c&gt;true&lt;/c&gt;, if the &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; object does not contain any usable data.</T>
   <T ID="B83E00E131E00DB">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.AccessProperty"/&gt; object.</T>
   <T ID="DAA859F485A24605">A member of the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.VCdAccess"/&gt; enum.</T>
   <T ID="D9FAB987DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="26AAF5C9B32B423E">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
-  <T ID="C7AB873301291480">The post office box.</T>
-  <T ID="7F26B5805370149D">The extended address (e.g. apartment or suite number).</T>
   <T ID="F44218FE6C1C342A">The street address.</T>
   <T ID="3FB6EFB4B2CD4333">The locality (e.g. city).</T>
   <T ID="18EC3DE7509F6036">The region (e.g. state or province).</T>
   <T ID="F558C0232F267067">The postal code.</T>
   <T ID="976A2C83D10A0BD9">The country name (full name).</T>
   <T ID="8FC1E9BDDD3CF227">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.AccessProperty"/&gt;.</T>
-  <T ID="C7AB8733DF2653FA">The post office box. (Don't use: This should always be &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="7A2E47F5D5B0C874"></T>
+  <T ID="CE1D0EF1D0B2CB29"></T>
+  <T ID="92B774B826FA966B"></T>
+  <T ID="4E18621C39990D91"></T>
+  <T ID="6FF758B5CCC3E635"></T>
+  <T ID="1FC29C70641D8ACF"></T>
+  <T ID="C26AC4A164D1B0BC"></T>
+  <T ID="A222890974E012D4"></T>
+  <T ID="574C8C8309BD54A1"></T>
+  <T ID="9BC500D8C224E94D"></T>
+  <T ID="80680CE0A6E7F15F"></T>
+  <T ID="1BA6443366A32F44"></T>
+  <T ID="F19FB26A117A94AC"></T>
+  <T ID="C72234B5DCA9176D"></T>
+  <T ID="3A81332DA19E6151"></T>
+  <T ID="7A3A512AD20A8E50"></T>
+  <T ID="92DE11583A5F375"></T>
+  <T ID="5CC18FF4F4164B60"></T>
+  <T ID="E2D3DDCEAD0D9A04"></T>
+  <T ID="1E7E059A84F48500"></T>
+  <T ID="DD6101AB3C5D3B7C"></T>
+  <T ID="50E1074DDD25A276"></T>
+  <T ID="EDD74FF945D486A7"></T>
+  <T ID="B9CE058232065016"></T>
+  <T ID="3B54E3CE8E17E684"></T>
+  <T ID="327134384147C046"></T>
+  <T ID="6847E33B2D2816FE"></T>
+  <T ID="5B1E686B2D2816FE"></T>
+  <T ID="1AF8ECE9F14C9605"></T>
+  <T ID="7A0CD48B52A59AC6"></T>
+  <T ID="55E33D41ADC542D7"></T>
+  <T ID="6DD1331B48CA8E2E"></T>
+  <T ID="B10FD6E00DAEC392"></T>
+  <T ID="D7F43DFEADC542D7"></T>
+  <T ID="168C5DFA5F1BE83F"></T>
+  <T ID="B2CD2F2087C90C9"></T>
+  <T ID="8D98B340ADC542D7"></T>
+  <T ID="FAC94F6929D3BD37"></T>
+  <T ID="1509C3062CDA6DE3"></T>
+  <T ID="99142625ADC542D7"></T>
+  <T ID="AACC927CCBC188"></T>
+  <T ID="4A1C2881C60FB47A"></T>
+  <T ID="89C5CC0AADC542D7"></T>
+  <T ID="90D057693C74E9BC"></T>
+  <T ID="7E5BA06F2D2816FE"></T>
+  <T ID="D594B2ED0D3CF27F"></T>
+  <T ID="A09EB7A3E91ADF6"></T>
+  <T ID="F7411A47E22BC073"></T>
+  <T ID="5E82B7DCA17CCC47"></T>
+  <T ID="AA62B6CF33E2F1C"></T>
+  <T ID="1647718D203E9755"></T>
+  <T ID="72FEF01975A753B8"></T>
+  <T ID="DB6476A23C74E9BC"></T>
+  <T ID="7C64C5CC3C2C0A25"></T>
+  <T ID="6074B05C6A370594"></T>
+  <T ID="C99328BFD51642FF"></T>
+  <T ID="36C1A441A1281EDB"></T>
+  <T ID="C7AB87332CE16B60">The post office box. (Don't use this parameter!)</T>
+  <T ID="7F26B58072345EEF">The extended address (e.g. apartment or suite number).  (Don't use this parameter!)</T>
+  <T ID="EA33381CDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="AFB7E0461EE45C7F">It is recommended to assign a formatted representation of the address to the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/&gt; parameter of the &lt;see cref ="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
+  <T ID="108FD039B32B423E">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
+  <T ID="1D33951B6C1C342A">The street address.</T>
+  <T ID="4898625CB2CD4333">The locality (e.g. city).</T>
+  <T ID="C18A281E2F267067">The postal code.</T>
+  <T ID="D6B17852509F6036">The region (e.g. state or province).</T>
+  <T ID="ECCB752ED10A0BD9">The country name (full name).</T>
+  <T ID="7D32E4012CE16B60">The post office box. (Don't use this parameter!)</T>
+  <T ID="F60C0DF272345EEF">The extended address (e.g. apartment or suite number).  (Don't use this parameter!)</T>
+  <T ID="7CF600D0DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="6C46404E1EE45C7F">It is recommended to assign a formatted representation of the address to the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/&gt; parameter of the &lt;see cref ="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
+  <T ID="2712F74801854DAF">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt;.</T>
+  <T ID="79E201AE803F7456">A class derived from &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/&gt; that specializes in encapsulating &lt;see cref="T:System.DateTimeOffset"/&gt; values.</T>
+  <T ID="2ED264D4D41D7A8">Encapsulates information to specify the components of the sex and gender identity of the object the vCard represents</T>
+  <T ID="4A3B31623EDC8CCA">Represents the vCard property &lt;c&gt;GENDER&lt;/c&gt;, introduced in vCard 4.0, which stores information to specify the components of the sex and gender identity of the object the vCard represents</T>
+  <T ID="E37F2DD1756D71CA">&lt;c&gt;GEO&lt;/c&gt;: Geographical position. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="1A774353396E06E1">&lt;c&gt;CONTEXT&lt;/c&gt;: Indicates the context of the data, e.g. &lt;c&gt;VCARD&lt;/c&gt; or &lt;c&gt;LDAP&lt;/c&gt;. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="72EC36D4B873C9F">&lt;c&gt;TYPE&lt;/c&gt;: Indicates, wether a &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; is related to an individual's work place or to an individual's  personal life. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="F53B64AB0F519F05">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to describe a person, with whom a relationship exists, with a &lt;see cref="T:System.Uri"/&gt;.</T>
+  <T ID="C6C077365C5092">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to describe a person, with whom there is a relationship, with their &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
+  <T ID="4B3BC8E08D6F1D9F">Constructor called by derived classes.</T>
+  <T ID="B038D948D6F1D9F">Constructor called by derived classes.</T>
+  <T ID="A1212A6EBA323989">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="3F61C689BA4A94D2">The data provided by &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
 </Tsltn>

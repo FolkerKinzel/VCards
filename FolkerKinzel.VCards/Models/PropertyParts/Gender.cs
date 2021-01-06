@@ -7,7 +7,7 @@ using System.Text;
 namespace FolkerKinzel.VCards.Models.PropertyParts
 {
     /// <summary>
-    /// Kapselt Informationen zur Angabe des Geschlechts und der sexuellen Orientierung in vCards.
+    /// Kapselt Informationen zur Angabe des Geschlechts und der Geschlechtsidentität.
     /// </summary>
     public class Gender
     {
@@ -33,7 +33,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public VCdSex? Sex { get; }
 
         /// <summary>
-        /// Freie Beschreibung der sexuellen Orientierung.
+        /// Freie Beschreibung der Geschlechtsidentität.
         /// </summary>
         public string? GenderIdentity { get; }
 

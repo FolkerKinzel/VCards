@@ -13,14 +13,14 @@ namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit einem
-    /// <see cref="Uri"/> dieser Person zu beschreiben.
+    /// <see cref="System.Uri"/> dieser Person zu beschreiben.
     /// </summary>
     public sealed class RelationUriProperty : RelationProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationUriProperty"/>-Objekt.
         /// </summary>
-        /// <param name="uri">Uri einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
+        /// <param name="uri"><see cref="System.Uri"/> einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
         /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
@@ -49,7 +49,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// <see cref="Uri"/> einer Person, zu der eine Beziehung besteht.
+        /// <see cref="System.Uri"/> einer Person, zu der eine Beziehung besteht.
         /// </summary>
         [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
         [Browsable(false)]

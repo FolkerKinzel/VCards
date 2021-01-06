@@ -13,7 +13,7 @@ using System.ComponentModel;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit ihrer <see cref="VCard"/>
+    /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit ihrer <see cref="VCards.VCard"/>
     /// zu beschreiben.
     /// </summary>
     public sealed class RelationVCardProperty : RelationProperty
@@ -21,7 +21,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationVCardProperty"/>-Objekt.
         /// </summary>
-        /// <param name="vcard"><see cref="VCard"/> einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
+        /// <param name="vcard"><see cref="VCards.VCard"/> einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
         /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
@@ -50,7 +50,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// <see cref="VCard"/> einer Person, zu der eine Beziehung besteht.
+        /// <see cref="VCards.VCard"/> einer Person, zu der eine Beziehung besteht.
         /// </summary>
         [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
         [Browsable(false)]

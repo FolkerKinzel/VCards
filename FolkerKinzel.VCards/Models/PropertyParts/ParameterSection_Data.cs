@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Models.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts
@@ -146,10 +147,23 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// <c>GEO</c>: Geografische Position. <c>(4)</c>
         /// </summary>
+        public GeoCoordinate? GeographicalPosition
+        {
+            get => Get<GeoCoordinate?>(VCdParam.GeographicalPosition);
+            set => Set(VCdParam.GeographicalPosition, value);
+        }
+
+
+        /// <summary>
+        /// deprecated
+        /// </summary>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is deprecated and will be removed in the release candidate. Use GeographicalPosition instead!")]
         public GeoCoordinate? GeographicPosition
         {
-            get => Get<GeoCoordinate?>(VCdParam.GeographicPosition);
-            set => Set(VCdParam.GeographicPosition, value);
+            get => GeographicalPosition;
+            set => GeographicalPosition = value;
         }
 
 

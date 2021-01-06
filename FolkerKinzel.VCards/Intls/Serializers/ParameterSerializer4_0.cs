@@ -732,7 +732,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendGeo()
         {
-            GeoCoordinate? geo = ParaSection.GeographicPosition;
+            GeoCoordinate? geo = ParaSection.GeographicalPosition;
 
             if (geo is null || geo.IsUnknown)
             {

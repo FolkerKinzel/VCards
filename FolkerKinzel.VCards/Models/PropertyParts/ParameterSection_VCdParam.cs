@@ -99,7 +99,7 @@
             /// <summary>
             /// <c>GEO</c>: Geografische Position. <c>(4)</c>
             /// </summary>
-            GeographicPosition,
+            GeographicalPosition,
 
 
             /// <summary>

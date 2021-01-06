@@ -14,7 +14,8 @@ using System.Runtime.CompilerServices;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Repräsentiert die in vCard 4.0 eingeführte vCard-Property <c>GENDER</c>, die Informationen über das Geschlecht speichert.
+    /// Repräsentiert die in vCard 4.0 eingeführte vCard-Property <c>GENDER</c>, die Informationen über das Geschlecht
+    /// und die Geschlechtsidentität speichert.
     /// </summary>
     public sealed class GenderProperty : VCardProperty
     {

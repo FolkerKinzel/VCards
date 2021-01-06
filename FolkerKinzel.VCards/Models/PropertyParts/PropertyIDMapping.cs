@@ -51,7 +51,6 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// True, wenn die <see cref="PropertyIDMapping"/>-Struct keine verwertbaren Daten enthält.
         /// </summary>
-        /// <inheritdoc/>
         public bool IsEmpty => Uuid == Guid.Empty;
 
 

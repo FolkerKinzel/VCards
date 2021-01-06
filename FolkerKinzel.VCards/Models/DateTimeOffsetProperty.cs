@@ -12,7 +12,7 @@ using System.Text;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Eine von <see cref="DateTimeProperty"/> abgeleitete Klasse, die darauf spezialisiert ist <see cref="DateTimeOffset"/>-Werte zu speichern.
+    /// Eine von <see cref="DateTimeProperty"/> abgeleitete Klasse, die darauf spezialisiert ist <see cref="System.DateTimeOffset"/>-Werte zu speichern.
     /// </summary>
     public sealed class DateTimeOffsetProperty : DateTimeProperty
     {
@@ -20,7 +20,7 @@ namespace FolkerKinzel.VCards.Models
         /// Initialisiert ein neues <see cref="DateTimeOffsetProperty"/>-Objekt, bei dem der <see cref="ParameterSection.DataType"/>-Parameter
         /// auf <see cref="VCdDataType.DateAndOrTime"/> gesetzt ist.
         /// </summary>
-        /// <param name="value">Ein <see cref="DateTimeOffset"/>-Objekt oder <c>null</c>.</param>
+        /// <param name="value">Ein <see cref="System.DateTimeOffset"/>-Objekt oder <c>null</c>.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -47,7 +47,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// Der gespeicherte <see cref="DateTimeOffset"/>-Wert oder <c>null</c>.
+        /// Der gespeicherte <see cref="System.DateTimeOffset"/>-Wert oder <c>null</c>.
         /// </summary>
         [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
         [Browsable(false)]

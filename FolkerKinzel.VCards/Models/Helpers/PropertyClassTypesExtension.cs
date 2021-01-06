@@ -37,7 +37,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// Flags auf ihm gesetzt sind.</param>
         /// <param name="flags">Ein einzelner <see cref="PropertyClassTypes"/>-Wert oder eine Kombination aus mehreren 
         /// <see cref="PropertyClassTypes"/>-Werten.</param>
-        /// <returns>True, wenn sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
+        /// <returns><c>true</c>, wenn sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
         /// gesetzt sind. Wenn <paramref name="value"/> <c>null</c> ist, wird false zurückgegeben.</returns>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

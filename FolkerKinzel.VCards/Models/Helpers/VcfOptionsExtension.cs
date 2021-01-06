@@ -28,9 +28,9 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// Flags auf ihm gesetzt sind.</param>
         /// <param name="flags">Ein einzelner <see cref="VcfOptions"/>-Wert oder eine Kombination aus mehreren 
         /// <see cref="VcfOptions"/>-Werten.</param>
-        /// <returns>True, wenn sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
-        /// gesetzt sind. (Wenn <paramref name="flags"/> <see cref="VcfOptions.None"/> ist, wird nur dann <c>true</c> zurückgegeben,
-        /// wenn auch <paramref name="value"/> <see cref="VcfOptions.None"/> ist. Dasselbe gilt auch für <see cref="VcfOptions.All"/>.)</returns>
+        /// <returns><c>true</c>, wenn sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
+        /// gesetzt sind. (Wenn <paramref name="flags"/>&#160;<see cref="VcfOptions.None"/> ist, wird nur dann <c>true</c> zurückgegeben,
+        /// wenn auch <paramref name="value"/>&#160;<see cref="VcfOptions.None"/> ist. Dasselbe gilt auch für <see cref="VcfOptions.All"/>.)</returns>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -43,7 +43,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// <param name="flags">Ein einzelner <see cref="VcfOptions"/>-Wert oder eine Kombination aus mehreren 
         /// <see cref="VcfOptions"/>-Werten.</param>
         /// <returns>Ein <see cref="VcfOptions"/>-Wert, auf dem sämtliche in <paramref name="flags"/>
-        /// gesetzten Flags entfernt sind. (Wenn <paramref name="flags"/> <see cref="VcfOptions.All"/> ist, wird 
+        /// gesetzten Flags entfernt sind. (Wenn <paramref name="flags"/>&#160;<see cref="VcfOptions.All"/> ist, wird 
         /// <see cref="VcfOptions.None"/> zurückgegeben.)</returns>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

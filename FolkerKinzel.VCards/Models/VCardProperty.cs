@@ -19,7 +19,7 @@ namespace FolkerKinzel.VCards.Models
         private string? _group;
 
         /// <summary>
-        /// Initialiert ein neues <see cref="VCardProperty"/>-Objekt.
+        /// Konstruktor, der von abgeleiteten Klassen aufgerufen wird.
         /// </summary>
         /// <param name="parameters">Ein <see cref="ParameterSection"/>-Objekt, das den Parameter-Teil einer
         /// vCard-Property repräsentiert.</param>
@@ -40,7 +40,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// Initialiert ein neues <see cref="VCardProperty"/>-Objekt.
+        /// Konstruktor, der von abgeleiteten Klassen aufgerufen wird.
         /// </summary>
         /// <param name="propertyGroup">Bezeichner der Gruppe von <see cref="VCardProperty"/>-Objekten,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
