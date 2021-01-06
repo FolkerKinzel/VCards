@@ -19,8 +19,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// Initialisiert ein neues <see cref="Organization"/>-Objekt.
         /// </summary>
-        /// <param name="organizationName">Name der Organisation. (Pflichtfeld)</param>
-        /// <param name="organizationalUnits">(optional) Namen der Unterorganisationen.</param>
+        /// <param name="organizationName">Name der Organisation.</param>
+        /// <param name="organizationalUnits">Name(n) der Unterorganisation(en).</param>
         internal Organization(string? organizationName, IEnumerable<string?>? organizationalUnits = null)
         {
             this.OrganizationName = string.IsNullOrWhiteSpace(organizationName) ? null : organizationName.Trim();

@@ -21,7 +21,13 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
         /// </summary>
-        /// <param name="address">Ein <see cref="VCardAddress"/>-Objekt oder <c>null</c>.</param>
+        /// <param name="street">Straße</param>
+        /// <param name="locality">Ort</param>
+        /// <param name="postalCode">Postleitzahl</param>
+        /// <param name="region">Bundesland</param>
+        /// <param name="country">Land (Staat)</param>
+        /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+        /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -29,10 +35,58 @@ namespace FolkerKinzel.VCards.Models
         /// Es ist empfehlenswert, dem Parameter <see cref="ParameterSection.Label"/> des <see cref="AddressProperty"/>-Objekts
         /// eine formatierte Darstellung der Adresse zuzuweisen.
         /// </remarks>
-        public AddressProperty(VCardAddress? address, string? propertyGroup = null) : base(propertyGroup)
+        public AddressProperty(IEnumerable<string?>? street = null,
+                               IEnumerable<string?>? locality = null,
+                               IEnumerable<string?>? postalCode = null,
+                               IEnumerable<string?>? region = null,
+                               IEnumerable<string?>? country = null,
+                               IEnumerable<string?>? postOfficeBox = null,
+                               IEnumerable<string?>? extendedAddress = null,
+                               string? propertyGroup = null) : base(propertyGroup)
         {
-            Value = (address is null || address.IsEmpty) ? null : address;
+            Value = new Address(street: street, locality: locality, postalCode: postalCode, region: region,
+                                     country: country, postOfficeBox: postOfficeBox, extendedAddress: extendedAddress);
         }
+
+
+        /// <summary>
+        /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
+        /// </summary>
+        /// <param name="street">Straße</param>
+        /// <param name="locality">Ort</param>
+        /// <param name="postalCode">Postleitzahl</param>
+        /// <param name="region">Bundesland</param>
+        /// <param name="country">Land (Staat)</param>
+        /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+        /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+        /// <remarks>
+        /// Es ist empfehlenswert, dem Parameter <see cref="ParameterSection.Label"/> des <see cref="AddressProperty"/>-Objekts
+        /// eine formatierte Darstellung der Adresse zuzuweisen.
+        /// </remarks>
+        public AddressProperty(
+            string? street,
+            string? locality,
+            string? postalCode,
+            string? region = null,
+            string? country = null,
+            string? postOfficeBox = null,
+            string? extendedAddress = null,
+            string? propertyGroup = null)
+            : this(street: string.IsNullOrWhiteSpace(street) ? null : new string[] { street },
+                   locality: string.IsNullOrWhiteSpace(locality) ? null : new string[] { locality },
+                   postalCode: string.IsNullOrWhiteSpace(postalCode) ? null : new string[] { postalCode },
+                   region: string.IsNullOrWhiteSpace(region) ? null : new string[] { region },
+                   country: string.IsNullOrWhiteSpace(country) ? null : new string[] { country },
+                   postOfficeBox: string.IsNullOrWhiteSpace(postOfficeBox) ? null : new string[] { postOfficeBox },
+                   extendedAddress: string.IsNullOrWhiteSpace(extendedAddress) ? null : new string[] { extendedAddress },
+                   propertyGroup: propertyGroup)
+        {
+
+        }
+
 
 
         internal AddressProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
@@ -40,14 +94,14 @@ namespace FolkerKinzel.VCards.Models
         {
             if (vcfRow.Value is null)
             {
-                Value = new VCardAddress();
+                Value = new Address();
             }
             else
             {
                 Debug.Assert(!string.IsNullOrWhiteSpace(vcfRow.Value));
 
                 vcfRow.DecodeQuotedPrintable();
-                Value = new VCardAddress(vcfRow.Value, info.Builder, version);
+                Value = new Address(vcfRow.Value, info.Builder, version);
             }
         }
 
@@ -96,12 +150,14 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Die von der <see cref="AddressProperty"/> zur Verfügung gestellten Daten.
         /// </summary>
-        public new VCardAddress? Value
+        public new Address Value
         {
             get;
         }
 
-        
+        /// <inheritdoc/>
+        public override bool IsEmpty => Value.IsEmpty;
+
         /// <inheritdoc/>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

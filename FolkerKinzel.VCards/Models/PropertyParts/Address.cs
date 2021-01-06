@@ -8,12 +8,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace FolkerKinzel.VCards.Models
+namespace FolkerKinzel.VCards.Models.PropertyParts
 {
     /// <summary>
-    /// Kapselt Informationen über die Postanschrift in vCards
+    /// Kapselt Informationen über die Postanschrift in vCards.
     /// </summary>
-    public class VCardAddress
+    public class Address
     {
         private readonly ReadOnlyCollection<string>[] data;
 
@@ -29,7 +29,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// Initialisiert ein neues <see cref="VCardAddress"/>-Objekt.
+        /// Initialisiert ein neues <see cref="Address"/>-Objekt.
         /// </summary>
         /// <param name="street">Straße</param>
         /// <param name="locality">Ort</param>
@@ -38,7 +38,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="country">Land (Staat)</param>
         /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
         /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-        public VCardAddress(IEnumerable<string?>? street = null,
+        public Address(IEnumerable<string?>? street = null,
                             IEnumerable<string?>? locality = null,
                             IEnumerable<string?>? postalCode = null,
                             IEnumerable<string?>? region = null,
@@ -70,37 +70,10 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        /// <summary>
-        /// Initialisiert ein neues <see cref="VCardAddress"/>-Objekt.
-        /// </summary>
-        /// <param name="street">Straße</param>
-        /// <param name="locality">Ort</param>
-        /// <param name="postalCode">Postleitzahl</param>
-        /// <param name="region">Bundesland</param>
-        /// <param name="country">Land (Staat)</param>
-        /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-        /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-        public VCardAddress(
-            string? street,
-            string? locality,
-            string? postalCode,
-            string? region = null,
-            string? country = null,
-            string? postOfficeBox = null,
-            string? extendedAddress = null)
-            : this(street: string.IsNullOrWhiteSpace(street) ? null : new string[] { street },
-                   locality: string.IsNullOrWhiteSpace(locality) ? null : new string[] { locality },
-                   postalCode: string.IsNullOrWhiteSpace(postalCode) ? null : new string[] { postalCode },
-                   region: string.IsNullOrWhiteSpace(region) ? null : new string[] { region },
-                   country: string.IsNullOrWhiteSpace(country) ? null : new string[] { country },
-                   postOfficeBox: string.IsNullOrWhiteSpace(postOfficeBox) ? null : new string[] { postOfficeBox },
-                   extendedAddress: string.IsNullOrWhiteSpace(extendedAddress) ? null : new string[] { extendedAddress })
-        {
-
-        }
+        
 
 
-        internal VCardAddress(string vCardValue, StringBuilder builder, VCdVersion version)
+        internal Address(string vCardValue, StringBuilder builder, VCdVersion version)
         {
             Debug.Assert(vCardValue != null);
 
@@ -180,7 +153,7 @@ namespace FolkerKinzel.VCards.Models
         public ReadOnlyCollection<string> Country => data[COUNTRY];
 
         /// <summary>
-        /// True, wenn das <see cref="VCardAddress"/>-Objekt keine verwertbaren Daten enthält.
+        /// True, wenn das <see cref="Address"/>-Objekt keine verwertbaren Daten enthält.
         /// </summary>
         public bool IsEmpty => !data.Any(x => x.Count != 0);
 
@@ -238,10 +211,10 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="VCardAddress"/>-Objekts. 
+        /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="Address"/>-Objekts. 
         /// (Nur zum Debugging.)
         /// </summary>
-        /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="VCardAddress"/>-Objekts.</returns>
+        /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="Address"/>-Objekts.</returns>
         public override string ToString()
         {
             var worker = new StringBuilder();

@@ -125,7 +125,7 @@ namespace FolkerKinzel.VCards
                             }
                             else
                             {
-                                addresses.Add(new AddressProperty(null));
+                                addresses.Add(new AddressProperty());
                                 addresses[0]!.Parameters.Label = vcfRow.Value;
                                 Addresses = addresses;
                             }
