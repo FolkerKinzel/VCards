@@ -248,7 +248,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         }
 
 
-        protected void BuildProperty(string propertyKey, IVcfSerializable prop, bool isPref = false)
+        protected void BuildProperty(string propertyKey, VCardProperty prop, bool isPref = false)
         {
             PropertyKey = propertyKey;
             //PropertyStartIndex = Builder.Length;

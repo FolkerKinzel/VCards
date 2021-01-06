@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Abstrakte Basisklasse aller Klassen, die vCard-Properties repräsentieren.
     /// </summary>
-    public abstract class VCardProperty : IVCardData, IVcfSerializable //, IVcfSerializableData
+    public abstract class VCardProperty : IVCardData //, IVcfSerializable //, IVcfSerializableData
     {
         private string? _group;
 
@@ -88,7 +88,7 @@ namespace FolkerKinzel.VCards.Models
         public override string ToString() => ((IDataContainer)this).Value?.ToString() ?? "<null>";
 
 
-        void IVcfSerializable.BuildProperty(VcfSerializer serializer)
+        internal void BuildProperty(VcfSerializer serializer)
         {
             Debug.Assert(serializer != null);
             Debug.Assert(serializer.PropertyKey != null);

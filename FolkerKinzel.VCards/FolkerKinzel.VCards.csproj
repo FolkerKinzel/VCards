@@ -42,6 +42,7 @@
     <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Intls\Serializers\Interfaces\IVcfSerializable.cs" />
     <Compile Remove="Intls\Serializers\Interfaces\IVcfSerializableData.cs" />
   </ItemGroup>
   <ItemGroup>

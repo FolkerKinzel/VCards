@@ -39,11 +39,11 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         }
 
 
-        private void BuildPropertyCollection(string propertyKey, IEnumerable<IVcfSerializable?> serializables)
+        private void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> serializables)
         {
             Debug.Assert(serializables != null);
 
-            foreach (IVcfSerializable? serializable in serializables)
+            foreach (VCardProperty? serializable in serializables)
             {
                 if (serializable is null)
                 {
