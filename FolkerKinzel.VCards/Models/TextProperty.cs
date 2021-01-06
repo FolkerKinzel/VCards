@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert vCard-Properties, deren Inhalt aus Text besteht.
     /// </summary>
-    public class TextProperty : VCardProperty, IDataContainer<string?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class TextProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="TextProperty"/>-Objekt.

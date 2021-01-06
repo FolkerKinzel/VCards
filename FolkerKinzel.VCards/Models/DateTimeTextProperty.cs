@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="DateTimeProperty"/>-Klasse, die es erlaubt eine Zeit- und/oder Datumsangabe
     /// als freien Text zu speichern.
     /// </summary>
-    public class DateTimeTextProperty : DateTimeProperty, IDataContainer<string?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class DateTimeTextProperty : DateTimeProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DateTimeTextProperty"/>-Objekt, bei dem der 

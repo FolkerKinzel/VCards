@@ -24,7 +24,7 @@ namespace FolkerKinzel.VCards.Models.Tests
 
             DateTimeOffset dto = prop.Value!.Value;
 
-            IDataContainer vcProp = prop;
+            VCardProperty vcProp = prop;
 
             Assert.AreEqual(vcProp.Value, dto);
         }

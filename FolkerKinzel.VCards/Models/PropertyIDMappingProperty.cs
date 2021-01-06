@@ -18,7 +18,7 @@ namespace FolkerKinzel.VCards.Models
     /// Der Standard erlaubt, dass das Mapping mit einer beliebigen URI signiert wird. Unterstützt werden hier
     /// aber nur UUIDs.
     /// </remarks>
-    public sealed class PropertyIDMappingProperty : VCardProperty, IDataContainer<PropertyIDMapping>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class PropertyIDMappingProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="PropertyIDMappingProperty"/>-Objekt.

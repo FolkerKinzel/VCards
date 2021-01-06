@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit einem
     /// <see cref="Uri"/> dieser Person zu beschreiben.
     /// </summary>
-    public sealed class RelationUriProperty : RelationProperty, IDataContainer<Uri?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class RelationUriProperty : RelationProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationUriProperty"/>-Objekt.

@@ -15,7 +15,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Eine von <see cref="DateTimeProperty"/> abgeleitete Klasse, die darauf spezialisiert ist <see cref="DateTimeOffset"/>-Werte zu speichern.
     /// </summary>
-    public class DateTimeOffsetProperty : DateTimeProperty, IDataContainer<DateTimeOffset?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class DateTimeOffsetProperty : DateTimeProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DateTimeOffsetProperty"/>-Objekt, bei dem der <see cref="ParameterSection.DataType"/>-Parameter

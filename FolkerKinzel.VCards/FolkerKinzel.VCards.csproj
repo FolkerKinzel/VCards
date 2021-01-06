@@ -39,6 +39,9 @@
     <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Models\Interfaces\IDataContainer_T.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\..\..\Nuget-Logo\Logo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

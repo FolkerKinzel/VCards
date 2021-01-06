@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert die vCard-Property <c>TZ</c>, die die Zeitzone der vCard speichert.
     /// </summary>
-    public class TimeZoneProperty : VCardProperty, IDataContainer<TimeZoneInfo?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public class TimeZoneProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="TimeZoneProperty"/>-Objekt.

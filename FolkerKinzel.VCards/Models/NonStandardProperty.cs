@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert eine vCard-Property, die nicht von den offiziellen Standards definiert ist.
     /// </summary>
-    public sealed class NonStandardProperty : VCardProperty, IDataContainer<string?>, IVCardData, IVcfSerializable, IVcfSerializableData
+    public sealed class NonStandardProperty : VCardProperty, IVCardData, IVcfSerializable, IVcfSerializableData
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="NonStandardProperty"/>-Objekt, das eine benutzerdefinierte
