@@ -26,10 +26,11 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public GenderProperty(VCdSex? sex, string? genderIdentity = null, string? propertyGroup = null)
+        public GenderProperty(VCdSex? sex,
+                              string? genderIdentity = null,
+                              string? propertyGroup = null) : base(propertyGroup)
         {
             Value = new Gender(sex, genderIdentity);
-            Group = propertyGroup;
         }
 
         /// <summary>

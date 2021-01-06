@@ -34,10 +34,9 @@ namespace FolkerKinzel.VCards.Models
             IEnumerable<string?>? middleName = null,
             IEnumerable<string?>? prefix = null,
             IEnumerable<string?>? suffix = null,
-            string? propertyGroup = null)
+            string? propertyGroup = null) : base(propertyGroup)
         {
             Value = new Name(lastName, firstName, middleName, prefix, suffix);
-            Group = propertyGroup;
         }
 
 
@@ -58,7 +57,7 @@ namespace FolkerKinzel.VCards.Models
             string? middleName = null,
             string? prefix = null,
             string? suffix = null,
-            string? propertyGroup = null)
+            string? propertyGroup = null) : base(propertyGroup)
         {
             Value = new Name(
                 lastName is null ? null : new string?[] { lastName },
@@ -66,7 +65,6 @@ namespace FolkerKinzel.VCards.Models
                 middleName is null ? null : new string?[] { middleName },
                 prefix is null ? null : new string?[] { prefix },
                 suffix is null ? null : new string?[] { suffix });
-            Group = propertyGroup;
         }
 
 

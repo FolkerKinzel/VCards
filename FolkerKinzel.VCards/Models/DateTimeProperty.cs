@@ -26,7 +26,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        protected DateTimeProperty(string? propertyGroup) { this.Group = propertyGroup; }
+        protected DateTimeProperty(string? propertyGroup) : base(propertyGroup) { }
 
 
         internal static DateTimeProperty Create(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)

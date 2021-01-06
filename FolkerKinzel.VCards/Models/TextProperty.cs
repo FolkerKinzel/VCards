@@ -24,10 +24,9 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public TextProperty(string? value, string? propertyGroup = null)
+        public TextProperty(string? value, string? propertyGroup = null) : base(propertyGroup)
         {
             Value = string.IsNullOrWhiteSpace(value) ? null : value;
-            Group = propertyGroup;
         }
 
         internal TextProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)

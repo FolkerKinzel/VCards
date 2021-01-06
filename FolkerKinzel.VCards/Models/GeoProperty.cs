@@ -21,10 +21,9 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public GeoProperty(GeoCoordinate? value, string? propertyGroup = null)
+        public GeoProperty(GeoCoordinate? value, string? propertyGroup = null) : base(propertyGroup)
         {
             this.Value = (value is null) || value.IsUnknown ? null : value;
-            Group = propertyGroup;
         }
 
         internal GeoProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)

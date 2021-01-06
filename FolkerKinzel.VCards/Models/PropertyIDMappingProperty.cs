@@ -25,7 +25,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="mappingNumber">Nummer des Mappings.</param>
         /// <param name="uuid">Identifier des Mappings.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="mappingNumber"/> muss größer als 0 sein.</exception>
-        public PropertyIDMappingProperty(int mappingNumber, Guid uuid)
+        public PropertyIDMappingProperty(int mappingNumber, Guid uuid) : base(null)
         {
             Value = new PropertyIDMapping(mappingNumber, uuid);
         }

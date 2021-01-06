@@ -459,4 +459,6 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="18EC3DE7509F6036">The region (e.g. state or province).</T>
   <T ID="F558C0232F267067">The postal code.</T>
   <T ID="976A2C83D10A0BD9">The country name (full name).</T>
+  <T ID="8FC1E9BDDD3CF227">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.AccessProperty"/&gt;.</T>
+  <T ID="C7AB8733DF2653FA">The post office box. (Don't use: This should always be &lt;c&gt;null&lt;/c&gt;.)</T>
 </Tsltn>

@@ -27,10 +27,8 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null)
+        public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null) : base(propertyGroup)
         {
-            Group = propertyGroup;
-
             if (value == null)
             {
                 return;

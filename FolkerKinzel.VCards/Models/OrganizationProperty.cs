@@ -25,10 +25,11 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public OrganizationProperty(string? organizationName, IEnumerable<string?>? organizationalUnits = null, string? propertyGroup = null)
+        public OrganizationProperty(string? organizationName,
+                                    IEnumerable<string?>? organizationalUnits = null,
+                                    string? propertyGroup = null) : base(propertyGroup)
         {
             Value = new Organization(organizationName, organizationalUnits);
-            Group = propertyGroup;
         }
 
         internal OrganizationProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)

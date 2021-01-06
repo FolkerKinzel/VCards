@@ -33,8 +33,8 @@ namespace FolkerKinzel.VCards.Models
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         /// <exception cref="ArgumentNullException"><paramref name="propertyKey"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="propertyKey"/> ist kein X-Name.</exception>
-        public NonStandardProperty(string propertyKey, string? value, string? propertyGroup = null)
-        {
+        public NonStandardProperty(string propertyKey, string? value, string? propertyGroup = null) : base(propertyGroup)
+        { 
             if (propertyKey == null)
             {
                 throw new ArgumentNullException(nameof(propertyKey));
@@ -55,7 +55,6 @@ namespace FolkerKinzel.VCards.Models
 
             PropertyKey = propertyKey;
             Value = value;
-            Group = propertyGroup;
         }
 
         internal NonStandardProperty(VcfRow vcfRow)

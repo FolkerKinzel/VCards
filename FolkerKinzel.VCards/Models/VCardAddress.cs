@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts
+namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Kapselt Informationen über die Postanschrift in vCards
@@ -57,12 +57,12 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             {
 #nullable disable
                 new ReadOnlyCollection<string>(postOfficeBox?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                    new ReadOnlyCollection<string>(extendedAddress?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                    new ReadOnlyCollection<string>(street?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                    new ReadOnlyCollection<string>(locality?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                    new ReadOnlyCollection<string>(region?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                    new ReadOnlyCollection<string>(postalCode?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                    new ReadOnlyCollection<string>(country?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty)
+                new ReadOnlyCollection<string>(extendedAddress?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
+                new ReadOnlyCollection<string>(street?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
+                new ReadOnlyCollection<string>(locality?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
+                new ReadOnlyCollection<string>(region?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
+                new ReadOnlyCollection<string>(postalCode?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
+                new ReadOnlyCollection<string>(country?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty)
 #nullable restore
             };
 
@@ -84,10 +84,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             string? street,
             string? locality,
             string? postalCode,
-            string? region,
-            string? country,
-            string? postOfficeBox,
-            string? extendedAddress)
+            string? region = null,
+            string? country = null,
+            string? postOfficeBox = null,
+            string? extendedAddress = null)
             : this(street: string.IsNullOrWhiteSpace(street) ? null : new string[] { street },
                    locality: string.IsNullOrWhiteSpace(locality) ? null : new string[] { locality },
                    postalCode: string.IsNullOrWhiteSpace(postalCode) ? null : new string[] { postalCode },
@@ -96,7 +96,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                    postOfficeBox: string.IsNullOrWhiteSpace(postOfficeBox) ? null : new string[] { postOfficeBox },
                    extendedAddress: string.IsNullOrWhiteSpace(extendedAddress) ? null : new string[] { extendedAddress })
         {
-            
+
         }
 
 

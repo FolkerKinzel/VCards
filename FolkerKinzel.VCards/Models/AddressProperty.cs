@@ -29,10 +29,9 @@ namespace FolkerKinzel.VCards.Models
         /// Es ist empfehlenswert, dem Parameter <see cref="ParameterSection.Label"/> des <see cref="AddressProperty"/>-Objekts
         /// eine formatierte Darstellung der Adresse zuzuweisen.
         /// </remarks>
-        public AddressProperty(VCardAddress? address, string? propertyGroup = null)
+        public AddressProperty(VCardAddress? address, string? propertyGroup = null) : base(propertyGroup)
         {
             Value = (address is null || address.IsEmpty) ? null : address;
-            Group = propertyGroup;
         }
 
         ///// <summary>
