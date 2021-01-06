@@ -1,5 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Intls.Serializers.Interfaces;
 using FolkerKinzel.VCards.Resources;
 using System;
 using System.Diagnostics;
@@ -22,7 +22,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="mappingNumber"/> muss größer als 0 sein.</exception>
         internal PropertyIDMapping(int mappingNumber, Guid uuid)
         {
-            if(mappingNumber < 1)
+            if (mappingNumber < 1)
             {
                 throw new ArgumentOutOfRangeException(nameof(mappingNumber), Res.ValueMustBeGreaterThanZero);
             }
@@ -34,13 +34,19 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// Nummer des Mappings. (Entspricht <see cref="PropertyID.MappingNumber">PropertyID.MappingNumber</see>).
         /// </summary>
-        public int MappingNumber { get; }
+        public int MappingNumber
+        {
+            get;
+        }
 
 
         /// <summary>
         /// Identifier des Mappings.
         /// </summary>
-        public Guid Uuid { get; }
+        public Guid Uuid
+        {
+            get;
+        }
 
 
         ///// <summary>

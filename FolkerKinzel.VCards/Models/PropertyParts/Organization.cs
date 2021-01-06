@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Intls.Serializers.Interfaces;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Collections.Generic;

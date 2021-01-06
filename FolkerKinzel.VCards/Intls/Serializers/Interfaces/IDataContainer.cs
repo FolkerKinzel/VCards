@@ -1,4 +1,4 @@
-﻿namespace FolkerKinzel.VCards.Intls.Serializers
+﻿namespace FolkerKinzel.VCards.Intls.Serializers.Interfaces
 {
     /// <summary>
     /// Interface, das von Klassen implementiert wird, die Daten zur Verfügung stellen.
