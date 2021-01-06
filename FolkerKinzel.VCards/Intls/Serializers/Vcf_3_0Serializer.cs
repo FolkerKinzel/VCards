@@ -40,25 +40,25 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         }
 
 
-        private void BuildPropertyCollection(string propertyKey, IEnumerable<IVcfSerializableData?> serializables)
+        private void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> serializables)
         {
             Debug.Assert(serializables != null);
 
-            IVcfSerializableData[] arr = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray()!;
+            VCardProperty[] arr = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray()!;
 
             for (int i = 0; i < arr.Length; i++)
             {
-                IVcfSerializableData prop = arr[i];
+                VCardProperty prop = arr[i];
                 BuildProperty(propertyKey, prop, i == 0 && prop.Parameters.Preference < 100);
             }
         }
 
 
-        private void BuildPrefProperty(string propertyKey, IEnumerable<IVcfSerializableData?> serializables)
+        private void BuildPrefProperty(string propertyKey, IEnumerable<VCardProperty?> serializables)
         {
             Debug.Assert(serializables != null);
 
-            IVcfSerializableData? pref = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
+            VCardProperty? pref = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
 
             if (pref != null)
             {

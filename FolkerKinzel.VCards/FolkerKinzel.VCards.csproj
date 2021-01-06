@@ -42,6 +42,9 @@
     <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Intls\Serializers\Interfaces\IVcfSerializableData.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\..\..\Nuget-Logo\Logo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

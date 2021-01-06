@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Abstrakte Basisklasse aller Klassen, die vCard-Properties repräsentieren.
     /// </summary>
-    public abstract class VCardProperty : IVCardData, IVcfSerializable, IVcfSerializableData
+    public abstract class VCardProperty : IVCardData, IVcfSerializable //, IVcfSerializableData
     {
         private string? _group;
 
