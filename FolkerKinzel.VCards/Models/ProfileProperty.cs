@@ -10,16 +10,16 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert die vCard-3.0-Property <c>PROFILE</c>, die festlegt, dass die vCard eine vCard ist.
     /// </summary>
-    public class ProfileProperty : TextProperty
+    public sealed class ProfileProperty : TextProperty
     {
         private const string PROFILE_PROPERTY_VALUE = "VCARD";
 
         /// <summary>
         /// Initialisiert ein neues <see cref="ProfileProperty"/>-Objekt.
         /// </summary>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public ProfileProperty(string? propertyGroup = null) : base(PROFILE_PROPERTY_VALUE, propertyGroup) { }
 
 

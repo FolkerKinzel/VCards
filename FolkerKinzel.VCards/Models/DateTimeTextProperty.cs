@@ -15,7 +15,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="DateTimeProperty"/>-Klasse, die es erlaubt eine Zeit- und/oder Datumsangabe
     /// als freien Text zu speichern.
     /// </summary>
-    public class DateTimeTextProperty : DateTimeProperty
+    public sealed class DateTimeTextProperty : DateTimeProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DateTimeTextProperty"/>-Objekt, bei dem der 
@@ -23,9 +23,9 @@ namespace FolkerKinzel.VCards.Models
         /// auf <see cref="VCdDataType.Text"/> gesetzt ist.
         /// </summary>
         /// <param name="value">Ein beliebiger <see cref="string"/>.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public DateTimeTextProperty(string? value, string? propertyGroup = null) : base(propertyGroup)
         {
             this.Value = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
@@ -44,7 +44,7 @@ namespace FolkerKinzel.VCards.Models
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        protected override object? GetContainerValue() => Value;
+        protected override object? GetVCardPropertyValue() => Value;
 
 
         /// <summary>

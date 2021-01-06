@@ -24,9 +24,9 @@ namespace FolkerKinzel.VCards.Models
         /// Konstruktor, der abgeleiteten Klassen erlaubt, ein neues <see cref="DateTimeProperty"/>-Objekt zu initialisieren,
         /// bei dem ein Gruppenname für vCard-Properties angegeben ist.
         /// </summary>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         protected DateTimeProperty(string? propertyGroup) { this.Group = propertyGroup; }
 
 

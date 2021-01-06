@@ -71,7 +71,7 @@ namespace FolkerKinzel.VCards.Models
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        protected override object? GetContainerValue() => Value;
+        protected override object? GetVCardPropertyValue() => Value;
 
 
         ///// <summary>

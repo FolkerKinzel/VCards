@@ -49,7 +49,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Die von der <see cref="VCardProperty"/> bereitgestellten Daten.
         /// </summary>
-        public object? Value => GetContainerValue();
+        public object? Value => GetVCardPropertyValue();
 
         /// <summary>
         /// Zugriffsmethode für die Daten von <see cref="VCardProperty"/>.
@@ -58,7 +58,7 @@ namespace FolkerKinzel.VCards.Models
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        protected abstract object? GetContainerValue();
+        protected abstract object? GetVCardPropertyValue();
 
 
         /// <summary>
@@ -77,9 +77,9 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// True, wenn das <see cref="VCardProperty"/>-Objekt keine verwertbaren Daten enthält.
+        /// <c>true</c>, wenn das <see cref="VCardProperty"/>-Objekt keine verwertbaren Daten enthält.
         /// </summary>
-        public virtual bool IsEmpty => GetContainerValue() is null;
+        public virtual bool IsEmpty => GetVCardPropertyValue() is null;
 
 
         /// <summary>

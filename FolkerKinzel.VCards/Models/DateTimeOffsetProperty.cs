@@ -14,16 +14,16 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Eine von <see cref="DateTimeProperty"/> abgeleitete Klasse, die darauf spezialisiert ist <see cref="DateTimeOffset"/>-Werte zu speichern.
     /// </summary>
-    public class DateTimeOffsetProperty : DateTimeProperty
+    public sealed class DateTimeOffsetProperty : DateTimeProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DateTimeOffsetProperty"/>-Objekt, bei dem der <see cref="ParameterSection.DataType"/>-Parameter
         /// auf <see cref="VCdDataType.DateAndOrTime"/> gesetzt ist.
         /// </summary>
         /// <param name="value">Ein <see cref="DateTimeOffset"/>-Objekt oder <c>null</c>.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public DateTimeOffsetProperty(DateTimeOffset? value, string? propertyGroup = null) : base(propertyGroup)
         {
             this.Value = (value == System.DateTimeOffset.MinValue) ? null : value;
@@ -42,7 +42,7 @@ namespace FolkerKinzel.VCards.Models
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        protected override object? GetContainerValue() => Value;
+        protected override object? GetVCardPropertyValue() => Value;
 
 
         /// <summary>

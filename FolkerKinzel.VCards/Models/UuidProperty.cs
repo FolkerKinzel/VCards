@@ -24,9 +24,9 @@ namespace FolkerKinzel.VCards.Models
         /// Initialisiert ein neues <see cref="UuidProperty"/>-Objekt.
         /// </summary>
         /// <param name="uuid">Ein <see cref="Guid"/>-Objekt.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public UuidProperty(Guid uuid, string? propertyGroup = null)
         {
             Value = uuid;
@@ -56,7 +56,7 @@ namespace FolkerKinzel.VCards.Models
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        protected override object? GetContainerValue() => Value;
+        protected override object? GetVCardPropertyValue() => Value;
 
 
 

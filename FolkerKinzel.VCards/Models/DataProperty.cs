@@ -34,7 +34,9 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="value">Ein <see cref="Uri"/>. Verwenden Sie die statischen Methoden der <see cref="DataUrl"/>-Klasse,
         /// um einzubettende Binärdaten oder freien Text als <see cref="Uri"/>zu übergeben.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public DataProperty(Uri? value, string? propertyGroup = null)
         {
             Value = value;
@@ -65,7 +67,7 @@ namespace FolkerKinzel.VCards.Models
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        protected override object? GetContainerValue() => Value;
+        protected override object? GetVCardPropertyValue() => Value;
 
 
         [InternalProtected]

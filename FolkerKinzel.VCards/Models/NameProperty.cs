@@ -25,7 +25,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="middleName">zweiter Vorname</param>
         /// <param name="prefix">Namenspräfix (z.B. "Prof. Dr.")</param>
         /// <param name="suffix">Namenssuffix (z.B. "jr.")</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public NameProperty(
@@ -97,7 +97,7 @@ namespace FolkerKinzel.VCards.Models
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        protected override object? GetContainerValue() => Value;
+        protected override object? GetVCardPropertyValue() => Value;
 
 
         ///// <summary>

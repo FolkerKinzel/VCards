@@ -17,10 +17,10 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="AccessProperty"/>-Objekt.
         /// </summary>
-        /// <param name="value">Ein Member der <see cref="VCdAccess"/>-Enumeration.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// <param name="value">Ein Member der <see cref="VCdAccess"/>-Enumeration, der den Inhalt der <see cref="AccessProperty"/> darstellt.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public AccessProperty(VCdAccess value, string? propertyGroup = null)
         {
             Value = value;
@@ -63,7 +63,7 @@ namespace FolkerKinzel.VCards.Models
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        protected override object GetContainerValue() => Value;
+        protected override object GetVCardPropertyValue() => Value;
 
 
     }

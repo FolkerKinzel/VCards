@@ -18,15 +18,15 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert vCard-Properties, die eine Sammlung von Text-Inhalten speichern.
     /// </summary>
-    public class StringCollectionProperty : VCardProperty
+    public sealed class StringCollectionProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="StringCollectionProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Eine Sammlung von <see cref="string"/>s.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null)
         {
             Group = propertyGroup;
@@ -108,7 +108,7 @@ namespace FolkerKinzel.VCards.Models
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        protected override object? GetContainerValue() => Value;
+        protected override object? GetVCardPropertyValue() => Value;
 
 
         [InternalProtected]

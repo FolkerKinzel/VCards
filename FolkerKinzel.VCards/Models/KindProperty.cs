@@ -17,9 +17,9 @@ namespace FolkerKinzel.VCards.Models
         /// Initialisiert ein neues <see cref="KindProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein Member der <see cref="VCdKind"/>-Enumeration.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe,
-        /// der die <see cref="VCardProperty">VCardProperty</see> zugehören soll, oder <c>null</c>,
-        /// um anzuzeigen, dass die <see cref="VCardProperty">VCardProperty</see> keiner Gruppe angehört.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public KindProperty(VCdKind value, string? propertyGroup = null)
         {
             Value = value;
@@ -43,7 +43,7 @@ namespace FolkerKinzel.VCards.Models
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        protected override object? GetContainerValue() => Value;
+        protected override object? GetVCardPropertyValue() => Value;
 
 
         ///// <summary>
