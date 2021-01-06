@@ -35,7 +35,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public TimeZoneInfo? Value
+        public new TimeZoneInfo? Value
         {
             get;
         }

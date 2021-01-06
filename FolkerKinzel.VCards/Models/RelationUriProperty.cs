@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.Interfaces;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -35,7 +36,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public Uri? Value
+        public new Uri? Value
         {
             get;
         }
@@ -52,6 +53,8 @@ namespace FolkerKinzel.VCards.Models
         /// <see cref="Uri"/> einer Person, zu der eine Beziehung besteht.
         /// </summary>
         [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Uri? Uri => Value;
 
 

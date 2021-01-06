@@ -6,7 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using FolkerKinzel.VCards.Models.Interfaces;
-
+using System.ComponentModel;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -35,7 +35,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public Guid Value
+        public new Guid Value
         {
             get;
         }
@@ -59,6 +59,8 @@ namespace FolkerKinzel.VCards.Models
         /// Uuid einer Person, zu der eine Beziehung besteht.
         /// </summary>
         [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Guid Uuid => Value;
         
 

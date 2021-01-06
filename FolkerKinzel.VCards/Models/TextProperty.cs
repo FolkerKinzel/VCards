@@ -45,7 +45,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public virtual string? Value
+        public virtual new string? Value
         {
             get;
         }

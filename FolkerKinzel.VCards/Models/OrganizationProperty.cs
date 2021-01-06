@@ -43,7 +43,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         /// <inheritdoc/>
-        public Organization Value
+        public new Organization Value
         {
             get;
         }

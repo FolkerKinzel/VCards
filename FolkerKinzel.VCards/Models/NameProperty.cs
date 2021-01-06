@@ -88,7 +88,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public Name Value
+        public new Name Value
         {
             get;
         }

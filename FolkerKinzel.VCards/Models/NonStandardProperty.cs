@@ -65,7 +65,7 @@ namespace FolkerKinzel.VCards.Models
         public string PropertyKey { get; }
 
         /// <inheritdoc/>
-        public string? Value
+        public new string? Value
         {
             get;
         }

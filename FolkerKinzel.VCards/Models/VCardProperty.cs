@@ -48,7 +48,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         /// <inheritdoc/>
-        object? IDataContainer.Value => GetContainerValue();
+        public object? Value => GetContainerValue();
 
         /// <summary>
         /// Zugriffsmethode für die Daten von <see cref="IDataContainer"/>.

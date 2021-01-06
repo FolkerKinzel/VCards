@@ -99,7 +99,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         /// <inheritdoc/>
-        public ReadOnlyCollection<string>? Value
+        public new ReadOnlyCollection<string>? Value
         {
             get;
         }

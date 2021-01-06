@@ -48,7 +48,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public DateTimeOffset Value
+        public new DateTimeOffset Value
         {
             get;
         }

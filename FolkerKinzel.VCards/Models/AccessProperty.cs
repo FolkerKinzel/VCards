@@ -54,7 +54,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public VCdAccess Value
+        public new VCdAccess Value
         {
             get;
         }

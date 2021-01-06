@@ -41,7 +41,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public Guid Value
+        public new Guid Value
         {
             get;
         }

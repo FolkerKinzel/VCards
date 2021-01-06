@@ -141,7 +141,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public Address Value
+        public new Address Value
         {
             get;
         }

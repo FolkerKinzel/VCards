@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.Interfaces;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -34,7 +35,7 @@ namespace FolkerKinzel.VCards.Models
         
 
         /// <inheritdoc/>
-        public string? Value
+        public new string? Value
         {
             get;
         }
@@ -51,6 +52,8 @@ namespace FolkerKinzel.VCards.Models
         /// Die als freier Text gespeicherte Zeit- und/oder Datumsangabe.
         /// </summary>
         [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string? Text => Value;
 
 

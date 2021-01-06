@@ -34,7 +34,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public VCdKind Value
+        public new VCdKind Value
         {
             get;
         }

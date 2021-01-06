@@ -56,7 +56,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public Uri? Value
+        public new Uri? Value
         {
             get;
         }

@@ -36,7 +36,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public GeoCoordinate? Value
+        public new GeoCoordinate? Value
         {
             get;
         }

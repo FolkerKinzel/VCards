@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.Interfaces;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -32,7 +33,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public DateTimeOffset? Value
+        public new DateTimeOffset? Value
         {
             get;
         }
@@ -45,10 +46,12 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetContainerValue() => Value;
 
 
-        /// <summary>
-        /// Der gespeicherte <see cref="DateTimeOffset"/>-Wert oder <c>null</c>.
-        /// </summary>
+        ///// <summary>
+        ///// Der gespeicherte <see cref="DateTimeOffset"/>-Wert oder <c>null</c>.
+        ///// </summary>
         [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public DateTimeOffset? DateTimeOffset => Value;
         
 

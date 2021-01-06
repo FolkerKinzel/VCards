@@ -62,7 +62,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         /// <inheritdoc/>
-        public PropertyIDMapping Value
+        public new PropertyIDMapping Value
         {
             get;
         }

@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using FolkerKinzel.VCards.Models.Interfaces;
-
+using System.ComponentModel;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -37,7 +37,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public VCard? Value
+        public new VCard? Value
         {
             get;
         }
@@ -54,6 +54,8 @@ namespace FolkerKinzel.VCards.Models
         /// <see cref="VCard"/> einer Person, zu der eine Beziehung besteht.
         /// </summary>
         [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public VCard? VCard => Value;
 
 

@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Resources;
 using System;
+using System.ComponentModel;
 
 namespace FolkerKinzel.VCards.Models.Enums
 {
@@ -27,6 +28,8 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// 7-Bit-Zeichensatz (Default in vCard 2.1) <c>(2)</c>
         /// </summary>
         [Obsolete("Ascii (7-Bit) is the standard encoding in vCard 2.1 and does not have to be indicated. Therefore this enum value will be removed in the release candidate.")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         Ascii
     }
 }

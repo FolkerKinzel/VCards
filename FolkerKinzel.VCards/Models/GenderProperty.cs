@@ -35,7 +35,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public Gender Value
+        public new Gender Value
         {
             get;
         }
