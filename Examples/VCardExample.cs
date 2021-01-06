@@ -8,7 +8,7 @@ using VC = FolkerKinzel.VCards.Models;
 
 namespace Examples
 {
-    static class VCardExample
+    public static class VCardExample
     {
         private const string v2FileName = "VCard2.vcf";
         private const string v3FileName = "VCard3.vcf";
@@ -16,7 +16,7 @@ namespace Examples
 
         public static void ReadingAndWritingVCard()
         {
-            VCard vcard = new VCard
+            var vcard = new VCard
             {
                 NameViews = new VC::NameProperty[]
                 {
