@@ -447,13 +447,13 @@ namespace FolkerKinzel.VCards.Models
 #endif
 
         /// <summary>
-        /// True, wenn der <see cref="DataUrl"/> eingebetteten Text enthält.
+        /// <c>true</c>, wenn der <see cref="DataUrl"/> eingebetteten Text enthält.
         /// </summary>
         public bool ContainsText => this.MimeType.MediaType.StartsWith("text", StringComparison.Ordinal);
 
 
         /// <summary>
-        /// True, wenn der <see cref="DataUrl"/> eingebettete binäre Daten enthält.
+        /// <c>true</c>, wenn der <see cref="DataUrl"/> eingebettete binäre Daten enthält.
         /// </summary>
         public bool ContainsBytes => !ContainsText;
 

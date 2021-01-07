@@ -127,7 +127,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public ReadOnlyCollection<string> Suffix => data[SUFFIX];
 
         /// <summary>
-        /// True, wenn das <see cref="Name"/>-Objekt keine verwertbaren Daten enthält.
+        /// <c>true</c>, wenn das <see cref="Name"/>-Objekt keine verwertbaren Daten enthält.
         /// </summary>
         public bool IsEmpty => !data.Any(x => x.Count != 0);
 

@@ -80,7 +80,7 @@ namespace FolkerKinzel.VCards.Models
         public int? MappingNumber { get; }
 
         /// <summary>
-        /// True, wenn die <see cref="PropertyID"/>-Struct keine verwertbaren Daten enthält.
+        /// <c>true</c>, wenn die <see cref="PropertyID"/>-Struct keine verwertbaren Daten enthält.
         /// </summary>
         public bool IsEmpty => PropertyNumber < 1;
 

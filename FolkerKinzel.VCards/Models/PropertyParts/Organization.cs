@@ -88,7 +88,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// True, wenn das <see cref="Organization"/>-Objekt keine verwertbaren Daten enthält.
+        /// <c>true</c>, wenn das <see cref="Organization"/>-Objekt keine verwertbaren Daten enthält.
         /// </summary>
         public bool IsEmpty => OrganizationName is null && OrganizationalUnits is null;
 

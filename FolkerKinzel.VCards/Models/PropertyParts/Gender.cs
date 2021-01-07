@@ -38,7 +38,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public string? GenderIdentity { get; }
 
         /// <summary>
-        /// True, wenn das <see cref="Gender"/>-Objekt keine verwertbaren Daten enthält.
+        /// <c>true</c>, wenn das <see cref="Gender"/>-Objekt keine verwertbaren Daten enthält.
         /// </summary>
         public bool IsEmpty => !Sex.HasValue && GenderIdentity is null;
 

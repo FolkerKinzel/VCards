@@ -46,7 +46,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         ///// <summary>
-        ///// True, wenn das <see cref="UuidProperty"/>-Objekt keine Daten enthält.
+        ///// <c>true</c>, wenn das <see cref="UuidProperty"/>-Objekt keine Daten enthält.
         ///// </summary>
         /// <inheritdoc/>
         public override bool IsEmpty => Value == Guid.Empty;

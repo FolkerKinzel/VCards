@@ -29,7 +29,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public double Longitude { get; }
 
         /// <summary>
-        /// True, wenn das <see cref="GeoCoordinate"/>-Objekt keine gültige geographische Position beschreibt.
+        /// <c>true</c>, wenn das <see cref="GeoCoordinate"/>-Objekt keine gültige geographische Position beschreibt.
         /// </summary>
         public bool IsUnknown => (double.IsNaN(Latitude) || double.IsNaN(Longitude) ||
             Latitude < -90 || Latitude > 90 || Longitude < -180 || Longitude > 180);
@@ -41,7 +41,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         ///// Stellt fest, ob das <see cref="GeoCoordinate"/>-Objekt dem Parameter entspricht.
         ///// </summary>
         ///// <param name="other">Ein anderes <see cref="GeoCoordinate"/>-Objekt, mit dem die Instanz verglichen wird.</param>
-        ///// <returns>True, wenn das <see cref="GeoCoordinate"/>-Objekt dem Parameter entspricht.</returns>
+        ///// <returns><c>true</c>, wenn das <see cref="GeoCoordinate"/>-Objekt dem Parameter entspricht.</returns>
         /// <inheritdoc/>
         public bool Equals(GeoCoordinate? other) => !(other is null) && (other.Latitude == this.Latitude) && (other.Longitude == this.Longitude);
 
@@ -50,7 +50,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         ///// der vergleichenden Instanz übereinstimmen.
         ///// </summary>
         ///// <param name="obj">Ein beliebiges <see cref="object"/>.</param>
-        ///// <returns>True, wenn der Parameter ein <see cref="GeoCoordinate"/>-Objekt ist, dessen Werte mit denen
+        ///// <returns><c>true</c>, wenn der Parameter ein <see cref="GeoCoordinate"/>-Objekt ist, dessen Werte mit denen
         ///// der vergleichenden Instanz übereinstimmen.</returns>
         /// <inheritdoc/>
         public override bool Equals(object? obj) => Equals(obj as GeoCoordinate);
