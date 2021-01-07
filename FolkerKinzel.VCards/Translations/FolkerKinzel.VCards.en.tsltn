@@ -533,4 +533,11 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="B038D948D6F1D9F">Constructor called by derived classes.</T>
   <T ID="A1212A6EBA323989">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="3F61C689BA4A94D2">The data provided by &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
+  <T ID="A3F34D6E500561B">The post office box. (Don't use this property!)</T>
+  <T ID="2A78EF7A0478DCEF">The extended address (e.g. apartment or suite number).  (Don't use this property!)</T>
+  <T ID="388C6CCCF84361D3">The street address. (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="2FE6275807AA6B50">The locality (e.g. city).  (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="A85C396E5510DEE5">The region (e.g. state or province).  (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="7DC323381A0A7B13">The postal code. (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="2FC3C0AF140933DD">The country name (full name).  (Never &lt;c&gt;null&lt;/c&gt;.)</T>
 </Tsltn>

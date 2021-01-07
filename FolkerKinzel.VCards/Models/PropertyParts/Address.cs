@@ -38,7 +38,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <param name="country">Land (Staat)</param>
         /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
         /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-        public Address(IEnumerable<string?>? street = null,
+        internal Address(IEnumerable<string?>? street = null,
                             IEnumerable<string?>? locality = null,
                             IEnumerable<string?>? postalCode = null,
                             IEnumerable<string?>? region = null,
