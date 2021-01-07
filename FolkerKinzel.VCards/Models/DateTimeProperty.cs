@@ -17,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
     /// </summary>
     /// <remarks>Die Informationen könnnen in verschiedenen Formaten vorliegen. So ist z.B. in vCard 4.0 auch
     /// freier Text wie "dienstags nach Mitternacht" möglich. Um herauszufinden, welcher Art die enthaltene Information ist,
-    /// ist die <see cref="ParameterSection.DataType"/>-Eigenschaft hilfreich.</remarks>
+    /// ist die <see cref="ParameterSection.DataType">Parameters.DataType</see>-Eigenschaft hilfreich.</remarks>
     public abstract class DateTimeProperty : VCardProperty
     {
         /// <summary>
