@@ -49,7 +49,7 @@ namespace FolkerKinzel.VCards.Models
         /// Initialisiert ein <see cref="StringCollectionProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein <see cref="string"/> oder <c>null</c>.</param>
-        /// <param name="propertyGroup">(optional) Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
         public StringCollectionProperty(string? value, string? propertyGroup = null) :
             this(value is null ? null : new string?[] { value }, propertyGroup)
         { }

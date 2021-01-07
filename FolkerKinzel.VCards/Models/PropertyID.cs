@@ -21,7 +21,7 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="propertyNumber">Nummer der vCard-Property</param>
         /// <param name="mappingNumber">Nummer des Mappings der 
-        /// vCard-Property (optional)</param>
+        /// vCard-Property</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="propertyNumber"/> oder <paramref name="mappingNumber"/>
         /// haben den Wert 0 oder sind negativ.</exception>
         public PropertyID(int propertyNumber, int? mappingNumber = null)

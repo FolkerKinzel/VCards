@@ -178,7 +178,7 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="9577C07156041619">The vCard-Version to serialize to.</T>
   <T ID="9F617561AB57F8C5">Options for serializing VCF. The flags can be combined.</T>
   <T ID="C5DEFD3EE0F84F60">&lt;paramref name="vcards"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
-  <T ID="71F2990C3696023E">I/O-Error.</T>
+  <T ID="71F2990C3696023E">I/O error.</T>
   <T ID="5094B52F632CC11C">The resources of &lt;paramref name ="writer"/&gt; are already released.</T>
   <T ID="8C3315B81A2F8B4F">Writes the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; to disk.</T>
   <T ID="B326F6F352BD6917">The file path of the VCF file to be saved.</T>
@@ -584,4 +584,64 @@ Use the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; class to embed
   <T ID="DA4C82F0ABED7B92">An &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate"/&gt; object or &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="BB327EFADE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="68D5930D752E2D3E">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.GeoProperty"/&gt;.</T>
+  <T ID="40B3A456BB8450F1">Specifies that the URI is a data URL according to RFC 2397. This field is read-only.</T>
+  <T ID="A83145605DD48F85">Specifies the character that separate the communication protocol scheme from the address portion of the URI. This field is read-only.</T>
+  <T ID="D96E57963CB8F647">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; object.</T>
+  <T ID="F3B8079B25775148"></T>
+  <T ID="D22D42AFA813853F"></T>
+  <T ID="342752A8631186BA"></T>
+  <T ID="56D7D05E48CE858E"></T>
+  <T ID="6720A60B01E12347"></T>
+  <T ID="22210E8CD5CDB1E0"></T>
+  <T ID="AC90D6DC6A370594"></T>
+  <T ID="A3936513EC10425C"></T>
+  <T ID="90FABE1852B757C1"></T>
+  <T ID="8A82DE008457E19D"></T>
+  <T ID="DDB39DEB988117CC"></T>
+  <T ID="8A28D3498DF04E8A">Creates a new &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;. Does not throw an exception if the &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; cannot be created.</T>
+  <T ID="15E08A031F0C4DAF">The string representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;,  according to RFC 2397.</T>
+  <T ID="29A347B7B33AC01F">When this method returns and if the conversion succeeded, contains a &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; object. Contains &lt;c&gt;null&lt;/c&gt; if the conversion failed.
+This parameter is passed uninitialized; any value originally supplied in &lt;paramref name="dataUrl"/&gt; will be overwritten.</T>
+  <T ID="E8C0B0D2EBAA6012">&lt;c&gt;true&lt;/c&gt; if &lt;paramref name="dataUrl"/&gt; was converted successfully; otherwise, &lt;c&gt;false&lt;/c&gt;.</T>
+  <T ID="EC6A01B1886936E8">Generates a &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; to embed any text.</T>
+  <T ID="D240BB25BC5B1F38">The text to be embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;.</T>
+  <T ID="2E48061232BFF43D">A &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; which holds embedded text.</T>
+  <T ID="BB29E13429EA124E">&lt;paramref name="text"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="F5D94EED401676D9">&lt;paramref name="text"/&gt; is an empty &lt;see cref ="T:System.String"/&gt; oder only contains white space.</T>
+  <T ID="5D4DEBA6C5DF2033">A &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; cannot be initialized, e.g. because the URI string is longer than 65519 characters.</T>
+  <T ID="C51075E5E22F1BC2">Generates a &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; to embed binary data.</T>
+  <T ID="9C1ECC6D609AFC10">The binary data to be embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;.</T>
+  <T ID="B3298A57FE3AE928">The MIME type of the data contained in &lt;paramref name ="bytes"/&gt; or &lt;c&gt;null&lt;/c&gt; for "text/plain;charset=US-ASCII".</T>
+  <T ID="E97BE67285357329">A &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; which holds the binary data supplied by &lt;paramref name="bytes"/&gt;.</T>
+  <T ID="213D9A30FD8B2F43">&lt;paramref name="bytes"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="DA16DE578FD72CED">&lt;paramref name="bytes"/&gt; is an empty array.</T>
+  <T ID="D0FF58E9C5DF2033">A &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; cannot be initialized, e.g. because the resulting URI string is longer than 65519 characters.</T>
+  <T ID="C3918FAAFBC14B68">Creates a &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; from an existing file.</T>
+  <T ID="913C3732F62F6B75">Absolute path to the file whose content is to be embedded.</T>
+  <T ID="60BB48BE34A1B2D1">MIME type of the file to be embedded. If &lt;c&gt;null&lt;/c&gt; is specified, an attempt is made to determine the MIME type automatically from the file extension.</T>
+  <T ID="80ABFC5729FD4105">A &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; which holds the binary data of the file referenced by &lt;paramref name="path"/&gt;.</T>
+  <T ID="B382F709CB931A6F">&lt;paramref name="path"/&gt; or &lt;paramref name="mimeType"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="E1D66025E5F8357">&lt;paramref name ="path"/&gt; is not a valid file path or &lt;paramref name ="mimeType"/&gt; is not in a valid format.</T>
+  <T ID="57339611C5DF2033">A &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; cannot be initialized, e.g. because the resulting URI string is longer than 65519 characters.</T>
+  <T ID="9330A08793ECE268">I/O error.</T>
+  <T ID="9330A0873696023E">I/O error.</T>
+  <T ID="4D3C64D41D14353B">Returns the MIME type of the embedded data. (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="9A47CBE438FC6C16">Returns the encoding of the embedded data.</T>
+  <T ID="83B939D711077A45">Returns the embedded and encoded data as &lt;see cref ="T:System.String"/&gt;. (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="35C69FA22E61F265">&lt;c&gt;true&lt;/c&gt; if the &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; contains embedded text.</T>
+  <T ID="DA864EC04E8C701F">&lt;c&gt;true&lt;/c&gt; if the &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; contains embedded binary data.</T>
+  <T ID="5FBA96EB7321B24C">Returns the text embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; or &lt;c&gt;null&lt;/c&gt;, if the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; contains embedded binary data.</T>
+  <T ID="B97DA76E63B91F1">Returns the binary data embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; or &lt;c&gt;null&lt;/c&gt;, if the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; contains embedded text.</T>
+  <T ID="4DB97B140006749A">The embedded text or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="DB1E23B17F443EB8">The embedded binary data or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="F6940A72C0624E7C"></T>
+  <T ID="F6940A72A812E856">Returns a suitable file type extension for the data embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;.</T>
+  <T ID="BD5D1879DCCDF34">A suitable file type extension for the data embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; (including the period ".")</T>
+  <T ID="BD5D18705B62B62">A suitable file type extension for the data embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; (including the period ".").</T>
+  <T ID="A9D15250B13FBA28">Constructor called by derived classes to initialize a new &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/&gt; object.</T>
+  <T ID="EE08DFF5DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="8169B9C43578B8E9">Sets all the flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="23AAABA490CBBFE8">The &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt;? value, to which the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
+  <T ID="51BFD1D65BE26F6E">A single &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; value or a combination of several &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; values.</T>
+  <T ID="62E7ECFFEE4DFCC4">A &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; value, to which all flags set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt; are set . If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
 </Tsltn>

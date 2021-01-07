@@ -372,8 +372,8 @@ namespace FolkerKinzel.VCards.Models
         /// Erstellt einen <see cref="DataUrl"/> aus einer physisch vorhandenen Datei.
         /// </summary>
         /// <param name="path">Absoluter Pfad zu der einzubettenden Datei.</param>
-        /// <param name="mimeType">(optional) Mime-Typ der einzubettenden Datei. Wenn <c>null</c> angegeben wird,
-        /// wird versucht, den Mime-Typ aus der Dateiendung automatisch zu ermitteln.</param>
+        /// <param name="mimeType">MIME-Typ der einzubettenden Datei. Wenn <c>null</c> angegeben wird,
+        /// wird versucht, den MIME-Typ aus der Dateiendung automatisch zu ermitteln.</param>
         /// <returns>Ein <see cref="DataUrl"/>, in den die Daten der mit <paramref name="path"/> referenzierten Datei
         /// eingebettet sind.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="path"/> oder <paramref name="mimeType"/> ist <c>null</c>.</exception>
@@ -381,7 +381,7 @@ namespace FolkerKinzel.VCards.Models
         /// <paramref name="mimeType"/> hat kein gültiges Format.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
         /// weil der URI-String länger als 65519 Zeichen ist.</exception>
-        /// <exception cref="IOException">IO-Fehler.</exception>
+        /// <exception cref="IOException">E/A-Fehler.</exception>
         public static DataUrl FromFile(string path, string? mimeType = null)
         {
             try
@@ -498,7 +498,7 @@ namespace FolkerKinzel.VCards.Models
         /// wenn der <see cref="DataUrl"/> keine eingebetteten binäre Daten enthält oder wenn
         /// diese nicht dekodiert werden konnten.
         /// </summary>
-        /// <returns>Der eingebettete freie Text oder <c>null</c>.</returns>
+        /// <returns>Die eingebetteten binären Daten oder <c>null</c>.</returns>
         public byte[]? GetEmbeddedBytes()
         {
             //if (!ContainsBytes) return null;
@@ -514,9 +514,11 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// Gibt eine geeignete Dateiendung für den <see cref="DataUrl"/> zurück.
+        /// Gibt eine geeignete Dateiendung für die in den den <see cref="DataUrl"/> eingebetteten Daten 
+        /// zurück.
         /// </summary>
-        /// <returns>Eine geeignete Dateiendung für den <see cref="DataUrl"/>. Die Dateiendung enthält den Punkt als Trennzeichen.</returns>
+        /// <returns>Eine geeignete Dateiendung für die in den <see cref="DataUrl"/>
+        /// eingebetteten Daten. Die Dateiendung enthält den Punkt "." als Trennzeichen.</returns>
         public string GetFileExtension() => MimeTypeConverter.GetFileExtension(this.MimeType);
     }
 }
