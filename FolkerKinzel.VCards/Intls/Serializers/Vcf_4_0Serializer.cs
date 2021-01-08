@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
-    internal class Vcf_4_0Serializer : VcfSerializer
+    internal sealed class Vcf_4_0Serializer : VcfSerializer
     {
         internal Vcf_4_0Serializer(TextWriter writer, VcfOptions options) : base(writer, options, new ParameterSerializer4_0(options)) { }
 
