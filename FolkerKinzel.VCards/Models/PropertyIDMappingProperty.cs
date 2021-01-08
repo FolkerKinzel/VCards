@@ -11,20 +11,18 @@ using System.Runtime.CompilerServices;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Kapselt die Informationen einer <c>CLIENTPIDMAP</c>-Property.
+    /// Kapselt Informationen, die dazu dienen, verschiedene Bearbeitungsstände einer <see cref="VCardProperty"/> plattformübergreifend
+    /// zwischen verschiedenen vCards zu synchronisieren.
     /// </summary>
-    /// <remarks>
-    /// Der Standard erlaubt, dass das Mapping mit einer beliebigen URI signiert wird. Unterstützt werden von FolkerKinzel.VCards
-    /// aber nur UUIDs.
-    /// </remarks>
     public sealed class PropertyIDMappingProperty : VCardProperty
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="PropertyIDMappingProperty"/>-Objekt.
         /// </summary>
-        /// <param name="mappingNumber">Nummer des Mappings.</param>
-        /// <param name="uuid">Identifier des Mappings.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="mappingNumber"/> muss größer als 0 sein.</exception>
+        /// <param name="mappingNumber">Nummer des Mappings (Wert: zwischen 1 und 9).</param>
+        /// <param name="uuid">Eine Instanz der <see cref="Guid"/>-Struktur, die als plattformübergreifender Bezeichner für eine 
+        /// <see cref="VCardProperty"/> dient.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="mappingNumber"/> ist kleiner als 1 oder größer als 9.</exception>
         public PropertyIDMappingProperty(int mappingNumber, Guid uuid) : base(null)
         {
             Value = new PropertyIDMapping(mappingNumber, uuid);

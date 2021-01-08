@@ -95,7 +95,7 @@ namespace FolkerKinzel.VCards.Models
         {
             var sb = new StringBuilder();
 
-            sb.Append("Key:   ").Append(PropertyKey).Append(Environment.NewLine);
+            sb.Append("Key:   ").AppendLine(PropertyKey);
             sb.Append("Value: ").Append(Value);
 
             return sb.ToString();

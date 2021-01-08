@@ -88,20 +88,20 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The value must be between 1 and 9. ähnelt.
+        /// </summary>
+        internal static string PidValue {
+            get {
+                return ResourceManager.GetString("PidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The XML element is in the reserved vCard 4.0-namespace. ähnelt.
         /// </summary>
         internal static string ReservedNameSpace {
             get {
                 return ResourceManager.GetString("ReservedNameSpace", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The value must be greater than zero. ähnelt.
-        /// </summary>
-        internal static string ValueMustBeGreaterThanZero {
-            get {
-                return ResourceManager.GetString("ValueMustBeGreaterThanZero", resourceCulture);
             }
         }
     }

@@ -9,31 +9,31 @@ using FolkerKinzel.VCards.Intls.Serializers;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Kapselt Informationen, die dazu dienen, eine vCard-Property eindeutig
+    /// Kapselt Informationen, die dazu dienen, eine Instanz einer <see cref="VCardProperty"/> eindeutig
     /// zu identifizieren.
     /// </summary>
     public readonly struct PropertyID : IEquatable<PropertyID>
     {
         /// <summary>
-        /// Initialisiert eine neue Instanz der <see cref="PropertyID"/>-<c>struct</c>
-        /// mit der Nummer der vCard-Property und der Nummer des Mappings dieser 
-        /// vCard-Property.
+        /// Initialisiert eine neue Instanz der <see cref="PropertyID"/>-Struktur
+        /// mit der Nummer der <see cref="VCardProperty"/> und der Nummer des Mappings dieser 
+        /// <see cref="VCardProperty"/>.
         /// </summary>
-        /// <param name="propertyNumber">Nummer der vCard-Property</param>
+        /// <param name="propertyNumber">Nummer der <see cref="VCardProperty"/> (Wert: zwischen 1 und 9).</param>
         /// <param name="mappingNumber">Nummer des Mappings der 
-        /// vCard-Property</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="propertyNumber"/> oder <paramref name="mappingNumber"/>
-        /// haben den Wert 0 oder sind negativ.</exception>
+        /// <see cref="VCardProperty"/> (Wert: zwischen 1 und 9) oder <c>null</c>, um kein Mapping anzugeben.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="propertyNumber"/> und/oder <paramref name="mappingNumber"/>
+        /// sind kleiner als 1 oder größer als 9.</exception>
         public PropertyID(int propertyNumber, int? mappingNumber = null)
         {
-            if (propertyNumber < 1)
+            if (propertyNumber < 1 || propertyNumber > 9)
             {
-                throw new ArgumentOutOfRangeException(nameof(propertyNumber), Res.ValueMustBeGreaterThanZero);
+                throw new ArgumentOutOfRangeException(nameof(propertyNumber), Res.PidValue);
             }
 
-            if(mappingNumber.HasValue && mappingNumber.Value < 1)
+            if(mappingNumber.HasValue && (mappingNumber.Value < 1 || mappingNumber.Value > 9))
             {
-                throw new ArgumentOutOfRangeException(nameof(mappingNumber), Res.ValueMustBeGreaterThanZero);
+                throw new ArgumentOutOfRangeException(nameof(mappingNumber), Res.PidValue);
             }
 
             PropertyNumber = propertyNumber;
@@ -41,46 +41,30 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        internal PropertyID(string[] arr)
+        internal static PropertyID Create(string[] arr)
         {
             Debug.Assert(arr != null);
             Debug.Assert(arr.Length > 0);
 
-            PropertyNumber = 0;
-            MappingNumber = null;
-
-
-            if (int.TryParse(arr[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out int intVal))
-            {
-                PropertyNumber = intVal;
-            }
-
-
-            if (arr.Length == 2)
-            {
-                if (int.TryParse(arr[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out intVal))
-                {
-                    if (intVal > 0)
-                    {
-                        MappingNumber = intVal;
-                    }
-                }
-            }
+            return new PropertyID(
+                int.Parse(arr[0], NumberStyles.Integer, CultureInfo.InvariantCulture),
+                (arr.Length == 2) ? int.Parse(arr[1], NumberStyles.Integer, CultureInfo.InvariantCulture) : (int?)null);
         }
 
+
         /// <summary>
-        /// Nummer der vCard-Property
+        /// Gibt die Nummer der <see cref="VCardProperty"/> zurück.
         /// </summary>
         public int PropertyNumber { get; }
 
         /// <summary>
-        /// Nummer des Mappings der 
-        /// vCard-Property oder <c>null</c>, wenn diese nicht angegeben ist.
+        /// Gibt die Nummer des Mappings der 
+        /// <see cref="VCardProperty"/> zurück oder <c>null</c>, wenn kein Mapping angegeben ist.
         /// </summary>
         public int? MappingNumber { get; }
 
         /// <summary>
-        /// <c>true</c>, wenn die <see cref="PropertyID"/>-Struct keine verwertbaren Daten enthält.
+        /// <c>true</c>, wenn die Instanz der <see cref="PropertyID"/>-Struktur keine verwertbaren Daten enthält.
         /// </summary>
         public bool IsEmpty => PropertyNumber < 1;
 
@@ -162,10 +146,10 @@ namespace FolkerKinzel.VCards.Models
         #endregion
 
         /// <summary>
-        /// Erstellt eine <see cref="string"/>-Repräsentation der <see cref="PropertyID"/>-Struct. (Nur zum 
+        /// Erstellt eine <see cref="string"/>-Repräsentation der <see cref="PropertyID"/>-Struktur. (Nur zum 
         /// Debuggen.)
         /// </summary>
-        /// <returns>Eine <see cref="string"/>-Repräsentation der <see cref="PropertyID"/>-Struct.</returns>
+        /// <returns>Eine <see cref="string"/>-Repräsentation der <see cref="PropertyID"/>-Struktur.</returns>
         public override string ToString()
         {
             var sb = new StringBuilder(5);

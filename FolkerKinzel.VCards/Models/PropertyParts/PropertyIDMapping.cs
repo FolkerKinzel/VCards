@@ -8,22 +8,27 @@ using System.Text;
 namespace FolkerKinzel.VCards.Models.PropertyParts
 {
     /// <summary>
-    /// Verbindet die <see cref="PropertyID.MappingNumber"/> einer vCard-Property mit einer
-    /// <see cref="Guid"/>, die diese vCard-Property über mehrere vCards hinweg eindeutig identifiziert.
+    /// Verbindet die <see cref="PropertyID.MappingNumber"/> einer <see cref="VCardProperty"/> mit einer
+    /// <see cref="Guid"/>, die diese <see cref="VCardProperty"/> über mehrere vCards hinweg eindeutig identifiziert.
     /// </summary>
+    /// <remarks>
+    /// Der Standard erlaubt zwar, dass das Mapping mit einer beliebigen <see cref="Uri"/> signiert wird, unterstützt
+    /// werden von dieser Bibliothek aber nur <see cref="Guid"/>-Instanzen.
+    /// </remarks>
     public readonly struct PropertyIDMapping : IEquatable<PropertyIDMapping>
     {
         /// <summary>
-        /// Initialisiert ein neues <see cref="PropertyIDMapping"/>-Objekt.
+        /// Initialisiert eine neue Instanz der <see cref="PropertyIDMapping"/>-Struktur.
         /// </summary>
-        /// <param name="mappingNumber">Nummer des Mappings.</param>
-        /// <param name="uuid">Identifier des Mappings.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="mappingNumber"/> muss größer als 0 sein.</exception>
+        /// <param name="mappingNumber">Nummer des Mappings (Wert: zwischen 1 und 9).</param>
+        /// <param name="uuid">Eine Instanz der <see cref="Guid"/>-Struktur, die als plattformübergreifender Bezeichner für eine 
+        /// <see cref="VCardProperty"/> dient.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="mappingNumber"/> ist kleiner als 1 oder größer als 9.</exception>
         internal PropertyIDMapping(int mappingNumber, Guid uuid)
         {
-            if (mappingNumber < 1)
+            if (mappingNumber < 1 || mappingNumber > 9)
             {
-                throw new ArgumentOutOfRangeException(nameof(mappingNumber), Res.ValueMustBeGreaterThanZero);
+                throw new ArgumentOutOfRangeException(nameof(mappingNumber), Res.PidValue);
             }
             MappingNumber = mappingNumber;
             Uuid = uuid;
@@ -40,7 +45,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// Identifier des Mappings.
+        /// Plattformübergreifender Bezeichner des Mappings.
         /// </summary>
         public Guid Uuid
         {
@@ -49,11 +54,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>true</c>, wenn die <see cref="PropertyIDMapping"/>-Struct keine verwertbaren Daten enthält.
+        /// <c>true</c>, wenn die Instanz der <see cref="PropertyIDMapping"/>-Struktur keine verwertbaren Daten enthält.
         /// </summary>
         public bool IsEmpty => Uuid == Guid.Empty;
-
-
 
 
         #region IEquatable
@@ -108,24 +111,24 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// Vergleicht zwei <see cref="PropertyID"/>-Strukturen. Das Ergebnis gibt an, ob die Werte der beiden 
-        /// <see cref="PropertyID"/>-Strukturen gleich sind.
+        /// Vergleicht zwei <see cref="PropertyIDMapping"/>-Strukturen. Das Ergebnis gibt an, ob die Werte der beiden 
+        /// <see cref="PropertyIDMapping"/>-Strukturen gleich sind.
         /// </summary>
-        /// <param name="pidMap1">Eine zu vergleichende <see cref="PropertyID"/>-Struktur.</param>
-        /// <param name="pidMap2">Eine zu vergleichende <see cref="PropertyID"/>-Struktur.</param>
-        /// <returns><c>true</c>, wenn die Werte der beiden <see cref="PropertyID"/>-Strukturen gleich sind, andernfalls <c>false</c>.</returns>
+        /// <param name="pidMap1">Eine zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
+        /// <param name="pidMap2">Eine zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
+        /// <returns><c>true</c>, wenn die Werte der beiden <see cref="PropertyIDMapping"/>-Strukturen gleich sind, andernfalls <c>false</c>.</returns>
         public static bool operator ==(PropertyIDMapping pidMap1, PropertyIDMapping pidMap2)
         {
             return pidMap1.Equals(pidMap2);
         }
 
         /// <summary>
-        /// Vergleicht zwei <see cref="PropertyID"/>-Strukturen. Das Ergebnis gibt an, ob die Werte der beiden 
-        /// <see cref="PropertyID"/>-Strukturen ungleich sind.
+        /// Vergleicht zwei <see cref="PropertyIDMapping"/>-Strukturen. Das Ergebnis gibt an, ob die Werte der beiden 
+        /// <see cref="PropertyIDMapping"/>-Strukturen ungleich sind.
         /// </summary>
-        /// <param name="pidMap1">Eine zu vergleichende <see cref="PropertyID"/>-Struktur.</param>
-        /// <param name="pidMap2">Eine zu vergleichende <see cref="PropertyID"/>-Struktur.</param>
-        /// <returns><c>true</c>, wenn die Werte der beiden <see cref="PropertyID"/>-Strukturen ungleich sind, 
+        /// <param name="pidMap1">Eine zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
+        /// <param name="pidMap2">Eine zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
+        /// <returns><c>true</c>, wenn die Werte der beiden <see cref="PropertyIDMapping"/>-Strukturen ungleich sind, 
         /// andernfalls <c>false</c>.</returns>
         public static bool operator !=(PropertyIDMapping pidMap1, PropertyIDMapping pidMap2)
         {
@@ -136,10 +139,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// Erstellt eine <see cref="string"/>-Repräsentation der <see cref="PropertyIDMapping"/>-Struct. (Nur zum 
+        /// Erstellt eine <see cref="string"/>-Repräsentation der <see cref="PropertyIDMapping"/>-Struktur. (Nur zum 
         /// Debuggen.)
         /// </summary>
-        /// <returns>Eine <see cref="string"/>-Repräsentation der <see cref="PropertyIDMapping"/>-Struct.</returns>
+        /// <returns>Eine <see cref="string"/>-Repräsentation der <see cref="PropertyIDMapping"/>-Struktur.</returns>
         public override string ToString()
         {
             var sb = new StringBuilder(48);

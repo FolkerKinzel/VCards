@@ -96,12 +96,12 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
         /// <summary>
-        /// MIME-Typ (Nie <c>null</c>.)
+        /// Internet Media Type (Nie <c>null</c>.)
         /// </summary>
         public string MediaType { get; }
 
         /// <summary>
-        /// MIME-Parameter
+        /// Parameter
         /// </summary>
         public ReadOnlyCollection<KeyValuePair<string, string>>? Parameters { get; }
 

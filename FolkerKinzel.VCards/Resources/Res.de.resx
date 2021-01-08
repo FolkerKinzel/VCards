@@ -126,10 +126,10 @@
   <data name="NoXName" xml:space="preserve">
     <value>Das Argument ist kein gültiger X-Name.</value>
   </data>
+  <data name="PidValue" xml:space="preserve">
+    <value>Der Wert muss zwischen 1 und 9 liegen.</value>
+  </data>
   <data name="ReservedNameSpace" xml:space="preserve">
     <value>Das XML-Element befindet sich im reservierten vCard4.0-Namespace.</value>
-  </data>
-  <data name="ValueMustBeGreaterThanZero" xml:space="preserve">
-    <value>Der Wert muss größer als 0 sein.</value>
   </data>
 </root>

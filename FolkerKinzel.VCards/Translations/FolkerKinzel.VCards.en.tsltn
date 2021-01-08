@@ -23,8 +23,7 @@
   <T ID="E3435FD6D9729EC6">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes"/&gt; enum easier.</T>
   <T ID="44400AEBFE8E59B">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; enum easier.</T>
   <T ID="90207E9BAE441F16">Represents a vCard property that is not defined by the official standards.</T>
-  <T ID="8061FC6FAA844DCF">Encapsulates information, that is used to uniquely identify a vCard property.</T>
-  <T ID="53229C164BC6D573">Encapsulates information about a postal address.</T>
+  <T ID="53229C164BC6D573">Encapsulates information about a postal delivery address.</T>
   <T ID="65FCFA7EEC304F2D">Encapsulates information about the geographical position.</T>
   <T ID="3681B171B1795491">Encapsulates information about a MIME type ("Multipurpose Internet Mail Extensions").</T>
   <T ID="D5B3EC49BD7FF1F6">Encapsulates information about the name of the person the vCard represents.</T>
@@ -37,7 +36,6 @@
   <T ID="801D5818CF60254F">Encapsulates the information contained in a vCard.</T>
   <T ID="82B8E8DE67B86E10">Named constants to specify options for writing VCF files. The constants can be combined.</T>
   <T ID="D2A11B9E1BBE20A0">Named Constants to specify the sex of the object the vCard represents.</T>
-  <T ID="EF395BB67D29793B">Connects the &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyID.MappingNumber"/&gt; of a vCard property with a &lt;see cref="T:System.Guid"/&gt; that uniquely identifies this property across several vCards.</T>
   <T ID="B5568F0CBE51E719">Named Constants to specify the type of object the vCard represents.</T>
   <T ID="A1247501E35DCE64">Named constants to describe the type of an email address.</T>
   <T ID="1BA0D231AF61F1FC">&lt;c&gt;LANGUAGE&lt;/c&gt;: Language of the data in the &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
@@ -47,7 +45,6 @@
   <T ID="2C9C5B29269DFA7B">Represents the vCard property &lt;c&gt;N&lt;/c&gt;, which stores the name of the vCard subject.</T>
   <T ID="DEBF81AED386F490">Represents the vCard property &lt;c&gt;ORG&lt;/c&gt;, which stores information about the organization to which the vCard object is associated.</T>
   <T ID="D1D18BA771608810">Represents the vCard 3.0 property &lt;c&gt;PROFILE&lt;/c&gt;, which specifies that the vCard is a vCard.</T>
-  <T ID="7B6F2C14A949AEA2">Encapsulates the information of a &lt;c&gt;CLIENTPIDMAP&lt;/c&gt; property.</T>
   <T ID="42C40A157E60FB8D">Abstract base class for classes that encapsulate data from vCard properties that describe relationships with other people. These are in particular the vCard 4.0 property  &lt;c&gt;RELATED&lt;/c&gt;, the vCard 2.1- and -3.0-property &lt;c&gt;AGENT&lt;/c&gt;, as well as non-standard properties for specifying the name of the spouse (such as &lt;c&gt;X-SPOUSE&lt;/c&gt;).</T>
   <T ID="C41465722D03F016">Encapsulates the vCard property &lt;c&gt;REV&lt;/c&gt;, which represents a timestamp of the last update of the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
   <T ID="7C658E08F5BADD78">Represents the vCard property TZ, which encapsulates the time zone of the vCard.</T>
@@ -623,7 +620,6 @@ This parameter is passed uninitialized; any value originally supplied in &lt;par
   <T ID="B382F709CB931A6F">&lt;paramref name="path"/&gt; or &lt;paramref name="mimeType"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="E1D66025E5F8357">&lt;paramref name ="path"/&gt; is not a valid file path or &lt;paramref name ="mimeType"/&gt; is not in a valid format.</T>
   <T ID="57339611C5DF2033">A &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; cannot be initialized, e.g. because the resulting URI string is longer than 65519 characters.</T>
-  <T ID="9330A08793ECE268">I/O error.</T>
   <T ID="9330A0873696023E">I/O error.</T>
   <T ID="4D3C64D41D14353B">Returns the MIME type of the embedded data. (Never &lt;c&gt;null&lt;/c&gt;.)</T>
   <T ID="9A47CBE438FC6C16">Returns the encoding of the embedded data.</T>
@@ -634,14 +630,242 @@ This parameter is passed uninitialized; any value originally supplied in &lt;par
   <T ID="B97DA76E63B91F1">Returns the binary data embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; or &lt;c&gt;null&lt;/c&gt;, if the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; contains embedded text.</T>
   <T ID="4DB97B140006749A">The embedded text or &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="DB1E23B17F443EB8">The embedded binary data or &lt;c&gt;null&lt;/c&gt;.</T>
-  <T ID="F6940A72C0624E7C"></T>
   <T ID="F6940A72A812E856">Returns a suitable file type extension for the data embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;.</T>
-  <T ID="BD5D1879DCCDF34">A suitable file type extension for the data embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; (including the period ".")</T>
   <T ID="BD5D18705B62B62">A suitable file type extension for the data embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; (including the period ".").</T>
   <T ID="A9D15250B13FBA28">Constructor called by derived classes to initialize a new &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/&gt; object.</T>
   <T ID="EE08DFF5DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="8169B9C43578B8E9">Sets all the flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
-  <T ID="23AAABA490CBBFE8">The &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt;? value, to which the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
+  <T ID="23AAABA490CBBFE8">The value to which all the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
   <T ID="51BFD1D65BE26F6E">A single &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; value or a combination of several &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; values.</T>
-  <T ID="62E7ECFFEE4DFCC4">A &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; value, to which all flags set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt; are set . If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
+  <T ID="62E7ECFFEE4DFCC4">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
+  <T ID="DF70F1B36C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="13C5F3DEC3BB1B3A">The value which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="349A02125BE26F6E">A single &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; value or a combination of several &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; values.</T>
+  <T ID="1309200E164C4D15">Returns &lt;c&gt;true&lt;/c&gt;, if all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;false&lt;/c&gt; is returned.</T>
+  <T ID="713293AF5226B55B">Unsets all flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="DDEF2D57FDECA71F">The value from which the flags set in &lt;paramref name ="flags"/&gt; are removed.</T>
+  <T ID="2377216F5BE26F6E">A single &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; value or a combination of several &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; values.</T>
+  <T ID="785FD6DCF9449FE7">A value from which all the flags set in &lt;paramref name ="flags"/&gt; are removed, respectively &lt;c&gt;null&lt;/c&gt; if all flags are unset. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;null&lt;/c&gt; is returned.</T>
+  <T ID="CCD91F173578B8E9">Sets all the flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="4C19FF883578B8E9">Sets all the flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="37D579DB3578B8E9">Sets all the flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="DD18D9A23578B8E9">Sets all the flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="A97056953578B8E9">Sets all the flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="6E6170E220EEB5E1">The value, to which all the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
+  <T ID="D7BD3066E35781CE">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes"/&gt; values.</T>
+  <T ID="443F486256F273A8">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
+  <T ID="E3B7BBB56C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="66EFF5EA6C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="CE2194D56C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="E8918C026C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="331A889E6C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="D7A26DDC9982B932">The value which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="927C7E7CB258473F">The value which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="E7FEAFB437E850E0">The value, which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="A5224F8137C504F8">The value, which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="11744FE5B7A6164B">The value, which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="E636E931B9077D98">The value to which all the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
+  <T ID="63D6135C421A81EC">The value to which all the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
+  <T ID="95B9AD73BE865E60">The value, to which all the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
+  <T ID="890A3A1D7BD5DDD4">The value, to which all the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
+  <T ID="506D4CE76AE58911">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
+  <T ID="5644CA48E9EAC849">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
+  <T ID="D84CC00750488EDA">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
+  <T ID="20D7AA0A1D9B6C47">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;.</T>
+  <T ID="A4081264164C4D15">Returns &lt;c&gt;true&lt;/c&gt;, if all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;false&lt;/c&gt; is returned.</T>
+  <T ID="D4DDA09D164C4D15">Returns &lt;c&gt;true&lt;/c&gt;, if all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;false&lt;/c&gt; is returned.</T>
+  <T ID="77C99C2C164C4D15">Returns &lt;c&gt;true&lt;/c&gt;, if all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;false&lt;/c&gt; is returned.</T>
+  <T ID="2BF2E403164C4D15">Returns &lt;c&gt;true&lt;/c&gt;, if all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;false&lt;/c&gt; is returned.</T>
+  <T ID="3C4D57D38D46A6CD">Returns &lt;c&gt;true&lt;/c&gt;, if all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;false&lt;/c&gt; is returned. (If &lt;paramref name ="flags"/&gt; is &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.None"/&gt;, &lt;c&gt;true&lt;/c&gt; is only returned if &lt;paramref name ="value"/&gt; is also &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.None"/&gt;. The same applies to &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.All"/&gt;.)</T>
+  <T ID="2DAEED965226B55B">Unsets all flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="7EB98D8C5226B55B">Unsets all flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="6A25C0AD5226B55B">Unsets all flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="AC690FD55226B55B">Unsets all flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="E40233645226B55B">Unsets all flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
+  <T ID="5BC8C2CF8027C4BC">The value from which the flags set in &lt;paramref name ="flags"/&gt; are removed.</T>
+  <T ID="4B2BECC32F1CEEF8">The value from which the flags set in &lt;paramref name ="flags"/&gt; are removed.</T>
+  <T ID="8940AB6A87B75ADD">The value from which the flags set in &lt;paramref name ="flags"/&gt; are removed.</T>
+  <T ID="654E8F3714B245CA">The value from which the flags set in &lt;paramref name ="flags"/&gt; are removed.</T>
+  <T ID="E97A0AB455A5D5BC">The value from which the flags set in &lt;paramref name ="flags"/&gt; are removed.</T>
+  <T ID="675F402F4E25065D">A value from which all the flags set in &lt;paramref name ="flags"/&gt; are removed, respectively &lt;c&gt;null&lt;/c&gt; if all flags are unset. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;null&lt;/c&gt; is returned.</T>
+  <T ID="6B138D559E597FE7">A value from which all the flags set in &lt;paramref name ="flags"/&gt; are removed, respectively &lt;c&gt;null&lt;/c&gt; if all flags are unset. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;null&lt;/c&gt; is returned.</T>
+  <T ID="AD7250BC0F83AC32">A value from which all the flags set in &lt;paramref name ="flags"/&gt; are removed, respectively &lt;c&gt;null&lt;/c&gt; if all flags are unset. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;null&lt;/c&gt; is returned.</T>
+  <T ID="8071B41E60B20FB3">A value from which all the flags set in &lt;paramref name ="flags"/&gt; are removed, respectively &lt;c&gt;null&lt;/c&gt; if all flags are unset. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;null&lt;/c&gt; is returned.</T>
+  <T ID="AD9A958CC83D21">A value from which all the flags set in &lt;paramref name ="flags"/&gt; are removed. If &lt;paramref name="flags"/&gt; is &lt;see cref="F:FolkerKinzel.VCards.VcfOptions.All"/&gt;, &lt;see cref="F:FolkerKinzel.VCards.VcfOptions.None"/&gt; is returned.</T>
+  <T ID="73107CA8E35781CE">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes"/&gt; values.</T>
+  <T ID="CF90F465E35781CE">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.ImppTypes"/&gt; values.</T>
+  <T ID="D906A16D9507DDD6">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes"/&gt; values.</T>
+  <T ID="3B85D2FA9507DDD6">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes"/&gt; values.</T>
+  <T ID="AF4FBD239507DDD6">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.PropertyClassTypes"/&gt; values.</T>
+  <T ID="46FB1ED2FD4860F9">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; values.</T>
+  <T ID="2617A38CFD4860F9">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; values.</T>
+  <T ID="A61BA856FD4860F9">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; values.</T>
+  <T ID="A087344BE5E14B12">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes"/&gt; values.</T>
+  <T ID="684259FBE5E14B12">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes"/&gt; values.</T>
+  <T ID="59B623D7E5E14B12">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.TelTypes"/&gt; values.</T>
+  <T ID="D9F647C999268DEA">A single &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; values.</T>
+  <T ID="7939A91399268DEA">A single &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; values.</T>
+  <T ID="D5D7DADC99268DEA">A single &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; values.</T>
+  <T ID="B878D5A2FC43CEB6">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.KindProperty"/&gt; object.</T>
+  <T ID="7233594A4F0233B">A member of the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.VCdKind"/&gt; enum.</T>
+  <T ID="4EB31A73DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="3360FFAABD375445">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.KindProperty"/&gt;.</T>
+  <T ID="2DD7A12F8202639C">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.NameProperty"/&gt; object.</T>
+  <T ID="2D133DF2084845ED">Family Name(s) (also known as surname(s))</T>
+  <T ID="37AD1BEF3537DEF">Given Name(s) (first name(s))</T>
+  <T ID="B45121EA5761DCFD">Additional Name(s)</T>
+  <T ID="A39C8BD31F64278">Honorific Prefix(es)</T>
+  <T ID="52335B4EC24F0309">Honorific Suffix(es)</T>
+  <T ID="99E75EF2DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="D5C4EABE8202639C">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.NameProperty"/&gt; object.</T>
+  <T ID="68938069084845ED">Family Name (also known as surname)</T>
+  <T ID="F3A9880DF3537DEF">Given Name (first name)</T>
+  <T ID="91CE8FC85761DCFD">Additional Name</T>
+  <T ID="E670710831F64278">Honorific Prefix</T>
+  <T ID="EC6E003DC24F0309">Honorific Suffix</T>
+  <T ID="6321A846DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="25549A763C13F61C">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.NameProperty"/&gt;.</T>
+  <T ID="659DC9AFCC53BCF7">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Name"/&gt; object.</T>
+  <T ID="72A1D6F9084845ED"></T>
+  <T ID="C432DAF5F3537DEF"></T>
+  <T ID="9DF0273D5761DCFD"></T>
+  <T ID="BAC135A131F64278"></T>
+  <T ID="B6AB2EF6C24F0309"></T>
+  <T ID="CB73F7B86E3775C8">Family Name(s) (also known as surname(s)) (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="B31BF1EA477C5AF1">Given Name(s) (first name(s)) (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="B6CB0041B273E23">Additional Name(s) (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="69FB8D598F6B3982">Honorific Prefix(es) (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="817774FBBB842E68">Honorific Suffix(es) (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="D18C2CD1DBFA4489">Returns &lt;c&gt;true&lt;/c&gt;, if the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Name"/&gt; object does not contain any usable data.</T>
+  <T ID="2A5BA9DBA53AE317">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Name"/&gt; object. (For debugging only.)</T>
+  <T ID="6970E690A09B52D5">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Name"/&gt; object.</T>
+  <T ID="EB817C29AEE6C1E8">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Organization"/&gt; object.</T>
+  <T ID="FB687BF462894343">Organization name.</T>
+  <T ID="39D15722879264F2">Organizational unit name(s).</T>
+  <T ID="146D350262894343">Organization name.</T>
+  <T ID="E8550FA4879264F2">Organizational unit name(s).</T>
+  <T ID="74F7CF7AF5100CE6">Returns &lt;c&gt;true&lt;/c&gt;, if the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Organization"/&gt; object does not contain any usable data.</T>
+  <T ID="F4ADF71BE9DC7AF5">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Organization"/&gt; object. (For debugging only.)</T>
+  <T ID="F2911A9AD0D9614E">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Organization"/&gt; object.</T>
+  <T ID="11ACEEC6AEE547FD"></T>
+  <T ID="48CBDDD4368F451D">&lt;c&gt;TYPE&lt;/c&gt;: Specifies in a &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; (&lt;c&gt;RELATED&lt;/c&gt;) the type of relationship with a person. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="90EDEBFA53D1F704"></T>
+  <T ID="FCA772A86C1C342A"></T>
+  <T ID="DE223442B2CD4333"></T>
+  <T ID="BD07151D2F267067"></T>
+  <T ID="6A0E01CD509F6036"></T>
+  <T ID="41CE40D6D10A0BD9"></T>
+  <T ID="CCCEDD932CE16B60"></T>
+  <T ID="BBE1D0B572345EEF"></T>
+  <T ID="C8B6B7BE114A6B91">&lt;c&gt;TYPE&lt;/c&gt;: Specifies the type of a postal delivery address. &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="91CC4AC608CDDB00">&lt;c&gt;TYPE&lt;/c&gt;: Describes the type of an email. &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="4DABFC906E0FCAF6"></T>
+  <T ID="FF0B52A6DFADCD13"></T>
+  <T ID="86F6D90856FAEA27"></T>
+  <T ID="970464CE3E0346B5"></T>
+  <T ID="5F695C02098D6315"></T>
+  <T ID="D912C7774BBD9B6B"></T>
+  <T ID="31C7B54632537723"></T>
+  <T ID="6A77CD1D034FC692"></T>
+  <T ID="B2BEF6AAAF61F1FC"></T>
+  <T ID="D6AFEF42A51D88E1"></T>
+  <T ID="6CB57C0DD8EAC2"></T>
+  <T ID="F7604696DC7C5C7A"></T>
+  <T ID="C63FC49D756D71CA"></T>
+  <T ID="329690FD5DCC0BED"></T>
+  <T ID="2487B0285F83F66F"></T>
+  <T ID="D097CA6267BB4331"></T>
+  <T ID="4282C8D7F5670C10"></T>
+  <T ID="FE214161294202B9"></T>
+  <T ID="83AC44A39544A4BC"></T>
+  <T ID="85CA576BD263E682"></T>
+  <T ID="D2F53EEA81145594">&lt;note type ="important"&gt;
+&lt;para&gt;
+To write objects of the class &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; into a vCard, the flag &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteNonStandardProperties"&gt;VcfOptions.WriteNonStandardProperties&lt;/see&gt; must be set explicitly.
+&lt;/para&gt;
+&lt;para&gt;
+Please note, that when using the class, yourself is responsible for the standard-compliant masking, unmasking, encoding and decoding of the data.
+&lt;/para&gt;
+&lt;/note&gt;</T>
+  <T ID="D39E1DAB7281E564">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; object.</T>
+  <T ID="2C3ADA40C3C6374">The key ("name") of the non-standard vCard property (format: &lt;c&gt;X-NAME&lt;/c&gt;).</T>
+  <T ID="780B1A31D4EFFEB2">The value of the vCard property: any data encoded as &lt;see cref="T:System.String"/&gt; or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="DAA35D9EDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="66A0390AB62039CC">&lt;paramref name="propertyKey"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="497FCD688CA264F1">&lt;paramref name="propertyKey"/&gt; is not a valid X-NAME.</T>
+  <T ID="9C8A199F78F8FA33">The key ("name") of the vCard property.</T>
+  <T ID="CAD2BF0A5C45394A">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; (raw &lt;see cref="T:System.String"/&gt; data).</T>
+  <T ID="5DCA892BCF3E8800">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; object. (For debugging only.)</T>
+  <T ID="9D80BCE6788C7E7C">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; object.</T>
+  <T ID="FBCB35C909B3DC5">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.OrganizationProperty"/&gt; object.</T>
+  <T ID="37B9158BDE86C5DA">Organization name or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="B757F7C133DD000C">Organization unit(s) or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="763B6E61DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="7B0658F84086FA54">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.OrganizationProperty"/&gt;.</T>
+  <T ID="5BD391E02B5F93B9">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.ProfileProperty"/&gt; object.</T>
+  <T ID="7FF01400DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="7F42530A1D62A4A7">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.ProfileProperty"/&gt;.</T>
+  <T ID="8061FC6F54EDC9B1">Encapsulates information that is used to uniquely identify an instance of a &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
+  <T ID="549A0E411EF5402">Initializes a new instance of the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; struct with the number of the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; and the number of the mapping that belongs to this &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
+  <T ID="E3E9F656CDA887A2">The number of the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; (value: between 1 and 9).</T>
+  <T ID="115767FDEBA3E25F">The number of the mapping of the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; (value: between 1 and 9) or &lt;c&gt;null&lt;/c&gt;, in order not to specify a mapping.</T>
+  <T ID="2972C9F2B7BA636F">&lt;paramref name ="propertyNumber"/&gt; and / or &lt;paramref name ="mappingNumber"/&gt; are less than 1 or greater than 9.</T>
+  <T ID="4FD069F4D2583B1D">Returns the Number of the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
+  <T ID="503EFCC29507812A">Returns the number of the mapping of the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; or &lt;c&gt;null&lt;/c&gt; if no mapping is specified.</T>
+  <T ID="F1B5EC27CC059DA8">Returns &lt;c&gt;true&lt;/c&gt;, if the instance of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; struct does not contain any usable data.</T>
+  <T ID="B1C641580ACDB7FB">Compares two instances of the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; struct. The result indicates whether the values of the two instances are equal.</T>
+  <T ID="4E62CEEF939E7608">A &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt;.</T>
+  <T ID="4E62CEF2939E7608">A &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt;.</T>
+  <T ID="8906D27172971125">Returns &lt;c&gt;true&lt;/c&gt;, if the values of the two &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; instances are equal, otherwise &lt;c&gt;false&lt;/c&gt;.</T>
+  <T ID="11292999F94E9F21">Compares two instances of the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; struct. The result indicates whether the values of the two instances are different.</T>
+  <T ID="D9B14E03939E7608">A &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt;.</T>
+  <T ID="D9B14E04939E7608">A &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt;.</T>
+  <T ID="B38CA7DAC621746E">Returns &lt;c&gt;true&lt;/c&gt;, if the values of the two &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; instances are different, otherwise &lt;c&gt;false&lt;/c&gt;.</T>
+  <T ID="EC7F8CC7AFDC82B0">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; instance. (For debugging only.)</T>
+  <T ID="C46326243BFFC97D">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; instance.</T>
+  <T ID="7B6F2C143B7FC9F3">Encapsulates information that is used to synchronize different versions of a &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; between several vCard instances across multiple platforms.</T>
+  <T ID="212F22AD1C293989">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyIDMappingProperty"/&gt; object.</T>
+  <T ID="1AA77666C2A43C3D">The number of the mapping (value: between 1 and 9).</T>
+  <T ID="E4D9B365FFF9D0A9">An instance of the &lt;see cref ="T:System.Guid"/&gt; structure that serves as a cross-platform identifier for a &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
+  <T ID="845B390106CC4E36">&lt;paramref name ="mappingNumber"/&gt; has a value less than 1 or greater than 9.</T>
+  <T ID="C78E8566C8B52FBC">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyIDMappingProperty"/&gt;.</T>
+  <T ID="B0306121EE11C483">Initializes &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Gender"/&gt; object.</T>
+  <T ID="C42FB7F3897756A4">Standardized information about the sex of a person.</T>
+  <T ID="27B40F6D3D41896">Free text describing the gender identity.</T>
+  <T ID="52E25C04897756A4">Standardized information about the sex of a person.</T>
+  <T ID="72BAEE5E1ABEB56B">Free text describing the gender identity.</T>
+  <T ID="BA421BC1332CA640">Returns &lt;c&gt;true&lt;/c&gt;, if the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Gender"/&gt; object does not contain any usable data.</T>
+  <T ID="D0831EC46A66DE0B">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Gender"/&gt; object. (For debugging only.)</T>
+  <T ID="18DB323546721EC">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Gender"/&gt; object. (For debugging only.)</T>
+  <T ID="BD28C11809340B62">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate"/&gt; object.</T>
+  <T ID="CD9429C8DD0F1BC">Latitude (value between -90 and 90).</T>
+  <T ID="A10EA26AB13BF4BD">Longitude (value between -180 and 180).</T>
+  <T ID="C04A269696034F26">Latitude.</T>
+  <T ID="EFC3079811B357F0">Longitude.</T>
+  <T ID="C446015A2B5553FB">Returns &lt;c&gt;true&lt;/c&gt;, if the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate"/&gt; object does not describe a valid geographical position.</T>
+  <T ID="F1480BFA08D1833E">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate"/&gt; object. (For debugging only.)</T>
+  <T ID="C0CD5EEB376BC8EF">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate"/&gt; object. (For debugging only.)</T>
+  <T ID="6DA6DA02D25EC8F7">Internet Media Type (Never &lt;c&gt;null&lt;/c&gt;.)</T>
+  <T ID="DE7DC616F2E143E">Parameters</T>
+  <T ID="69A72DF2A7EA044C">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.MimeType"/&gt; object. (For debugging only.)</T>
+  <T ID="7016BCE7761789AD">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.MimeType"/&gt; object. (For debugging only.)</T>
+  <T ID="EF395BB6FFA5F4AC">Connects the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyID.MappingNumber"/&gt; of a &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; with a &lt;see cref ="T:System.Guid"/&gt; that uniquely identifies this &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; between several vCard instances across multiple platforms.</T>
+  <T ID="A168497D70A3AB3">Although the standard allows the mapping to be signed with any &lt;see cref ="T:System.Uri"/&gt; instances, this library only supports &lt;see cref ="T:System.Guid"/&gt; instances.</T>
+  <T ID="9EE0F72B7A3FD053">Initializes a new instance of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; struct.</T>
+  <T ID="EC54B0ADC2A43C3D">The number of the mapping (value: between 1 and 9).</T>
+  <T ID="1E033030FFF9D0A9">An instance of the &lt;see cref ="T:System.Guid"/&gt; structure that serves as a cross-platform identifier for a &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
+  <T ID="F34F37A406CC4E36">&lt;paramref name ="mappingNumber"/&gt; has a value less than 1 or greater than 9.</T>
+  <T ID="F544AF98A7043922">The number of the mapping. (Corresponds to &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyID.MappingNumber"&gt;PropertyID.MappingNumber&lt;/see&gt;).</T>
+  <T ID="1E2BB180BE05E042">The cross-platform identifier of the mapping.</T>
+  <T ID="2516AB994569C997">Returns &lt;c&gt;true&lt;/c&gt;, if the instance of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; struct does not contain any usable data.</T>
+  <T ID="520CCD38B7027456">Compares two instances of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; struct. The result indicates whether the values of the two instances are equal.</T>
+  <T ID="5A58478671983E02">A &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt;.</T>
+  <T ID="5A58478971983E02">A &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt;.</T>
+  <T ID="8A85509E71983E02">A &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt;.</T>
+  <T ID="8A85509F71983E02">A &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt;.</T>
+  <T ID="91BCB1BDBCDA936D">Returns &lt;c&gt;true&lt;/c&gt;, if the values of the two &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; instances are equal, otherwise &lt;c&gt;false&lt;/c&gt;.</T>
+  <T ID="3C49F5E279382AD7">Compares two instances of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; struct. The result indicates whether the values of the two instances are different.</T>
+  <T ID="17D4161752596877">Returns &lt;c&gt;true&lt;/c&gt;, if the values of the two &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; instances are different, otherwise &lt;c&gt;false&lt;/c&gt;.</T>
+  <T ID="F53DFEFD7E323CC1">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; instance. (For debugging only.)</T>
+  <T ID="AC571F8C5330B26B">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; instance.</T>
 </Tsltn>

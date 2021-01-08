@@ -69,7 +69,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             for (int i = 0; i < val.Length; i++)
                             {
                                 string[] arr = val[i].Split(info.Dot, StringSplitOptions.RemoveEmptyEntries);
-                                pid.Add(new PropertyID(arr));
+                                try
+                                {
+                                    pid.Add(PropertyID.Create(arr));
+                                }
+                                catch { }
                             }
 
                             break;
