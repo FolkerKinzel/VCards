@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
     /// Konvertiert das vCard-Value "Time".
     /// </summary>
     /// <threadsafety static="true" instance="false" />
-    internal class TimeConverter
+    internal sealed class TimeConverter
     {
         private readonly string[] modelStrings = new string[]
         {
