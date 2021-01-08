@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
 {
-    internal class PropertyClassTypesCollector
+    internal sealed class PropertyClassTypesCollector
     {
         private readonly
             PropertyClassTypes[] definedEnumValues = new PropertyClassTypes[] { PropertyClassTypes.Home,
