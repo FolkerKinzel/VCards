@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Angaben zur Organisation (oder Firma) des Subjekts, das die vCard repräsentiert.
     /// </summary>
-    public class Organization
+    public sealed class Organization
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="Organization"/>-Objekt.
