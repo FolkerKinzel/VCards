@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
 {
-    internal class RelationTypesCollector
+    internal sealed class RelationTypesCollector
     {
         //private static class RelationTypeValue
         //{
