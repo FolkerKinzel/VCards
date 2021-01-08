@@ -6,7 +6,7 @@ namespace FolkerKinzel.VCards.Intls
     /// <summary>
     /// Eine <see cref="VcfRow"/> stellt eine zusammengehörende Datenzeile der Vcf-Datei dar.
     /// </summary>
-    internal partial class VcfRow
+    internal sealed partial class VcfRow
     {
         // Bsp. Vcf-Datenzeile:
         // item1.ADR;TYPE=HOME,WORK;PREF=1:;;Waldstr. 54;Kleinknuffelsdorf;Sachsen-Anhalt;06789;Germany

@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls
 {
-    internal partial class VcfRow
+    internal sealed partial class VcfRow
     {
         private static string ParseAttributeKeyFromValue(string value)
         {

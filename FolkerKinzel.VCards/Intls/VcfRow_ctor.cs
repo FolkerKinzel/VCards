@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FolkerKinzel.VCards.Intls
 {
-    internal partial class VcfRow
+    internal sealed partial class VcfRow
     {
         /// <summary>
         /// Parsed eine Datenzeile der VCF-Datei.
