@@ -1,6 +1,6 @@
 ﻿namespace FolkerKinzel.VCards.Models.PropertyParts
 {
-    public partial class ParameterSection
+    public sealed partial class ParameterSection
     {
         internal const int PREF_MIN_VALUE = 1;
         internal const int PREF_MAX_VALUE = 100;

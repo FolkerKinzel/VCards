@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// Kapselt die Information über die Parameter einer vCard-Property.
     /// </summary>
     /// <threadsafety static="true" instance="false" />
-    public partial class ParameterSection
+    public sealed partial class ParameterSection
     {
         private readonly Dictionary<VCdParam, object> _propDic = new Dictionary<VCdParam, object>();
 

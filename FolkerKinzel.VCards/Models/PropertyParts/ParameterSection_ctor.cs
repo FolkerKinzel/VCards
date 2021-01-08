@@ -11,7 +11,7 @@ using System.Text;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts
 {
-    public partial class ParameterSection
+    public sealed partial class ParameterSection
     {
         internal ParameterSection() { }
 
