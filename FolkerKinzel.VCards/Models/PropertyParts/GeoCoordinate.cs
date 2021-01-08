@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Informationen über die geographische Position.
     /// </summary>
-    public class GeoCoordinate : IEquatable<GeoCoordinate?>
+    public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="GeoCoordinate"/>-Objekt.
