@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
 {
-    internal class TelTypesCollector
+    internal sealed class TelTypesCollector
     {
         private readonly
             TelTypes[] definedEnumValues
