@@ -20,20 +20,20 @@ FolkerKinzel.VCards is used as a dependency in [FolkerKinzel.Contacts.IO](https:
 
 The data model used by this API is aligned to the vCard 4.0 standard (RFC6350). This means, every read vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are converted back.
 
-#### Class VCardProperty<T>
+#### Class VCardProperty
 
-The data model of the class `VCard` based on classes, that are derived from VCardProperty<T>.
+The data model of the class `VCard` based on classes, that are derived from VCardProperty.
 
-VCardProperty<T> exposes the following data:
+VCardProperty exposes the following members:
 
 ```csharp
-public abstract class VCardProperty<T>
+public abstract class VCardProperty
 {
     public string? Group { get; set; }
 
     public ParameterSection Parameters { get; }
 
-    public virtual T Value { get; protected set; }
+    public virtual object? Value { get; protected set; }
 }
 ````
 
@@ -41,9 +41,9 @@ This reflects the structure of a data row in a *.vcf-file:
 > group1.TEL;TYPE=home,voice;VALUE=uri:tel:+49-123-4567
 
 In this example corresponds
-* `group1` to VCardProperty<T>.Group,
-* `TEL;TYPE=home,voice;VALUE=uri` to VCardProperty<T>.Parameters and
-* `tel:+49-123-4567` to VCardProperty<T>.Value.
+* `group1` to VCardProperty.Group,
+* `TEL;TYPE=home,voice;VALUE=uri` to VCardProperty.Parameters and
+* `tel:+49-123-4567` to VCardProperty.Value.
 
 #### Naming Conventions
 

@@ -39,13 +39,13 @@
       </content>
       <sections>
         <section address="VCardProperty">
-          <title>Die Klasse VCardProperty&lt;T&gt;</title>
+          <title>Die Klasse VCardProperty</title>
           <content>
             <para>
-              Das Datenmodell der Klasse <codeInline>VCard</codeInline> basiert auf Objekten, die von der Klasse <codeInline>VCardProperty&lt;T&gt;</codeInline> abgeleitet sind.
+              Das Datenmodell der Klasse <codeInline>VCard</codeInline> basiert auf Objekten, die von der Klasse <codeInline>VCardProperty</codeInline> abgeleitet sind.
             </para>
             <para>
-              <codeInline>VCardProperty&lt;T&gt;</codeInline> veröffentlicht die folgenden Daten:
+              <codeInline>VCardProperty</codeInline> exponiert die folgenden Member:
             </para>
             <code language="c#" source=".\Content\VCardProperty.cs"/>
 
@@ -57,17 +57,17 @@
             <list class="bullet">
               <listItem>
                 <para>
-                  <codeInline>group1</codeInline>: <codeInline>VCardProperty&lt;T&gt;.Group</codeInline>,
+                  <codeInline>group1</codeInline>: <codeInline>VCardProperty.Group</codeInline>,
                 </para>
               </listItem>
               <listItem>
                 <para>
-                  <codeInline>TEL;TYPE=home,voice;VALUE=uri</codeInline>: <codeInline>VCardProperty&lt;T&gt;.Parameters</codeInline> und
+                  <codeInline>TEL;TYPE=home,voice;VALUE=uri</codeInline>: <codeInline>VCardProperty.Parameters</codeInline> und
                 </para>
               </listItem>
               <listItem>
                 <para>
-                  <codeInline>tel:+49-123-4567</codeInline>: <codeInline>VCardProperty&lt;T&gt;.Value</codeInline>.
+                  <codeInline>tel:+49-123-4567</codeInline>: <codeInline>VCardProperty.Value</codeInline>.
                 </para>
               </listItem>
             </list>
