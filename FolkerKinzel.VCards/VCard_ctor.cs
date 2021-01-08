@@ -13,7 +13,7 @@ using System.Text;
 
 namespace FolkerKinzel.VCards
 {
-    public partial class VCard
+    public sealed partial class VCard
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="VCard"/>-Objekt.

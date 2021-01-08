@@ -17,7 +17,7 @@ namespace FolkerKinzel.VCards
     /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
+    public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
 #if NET40
         internal static string[] EmptyStringArray = new string[0];

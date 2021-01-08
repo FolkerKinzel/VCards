@@ -1,7 +1,7 @@
 ﻿namespace FolkerKinzel.VCards
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Bezeichner müssen ein korrektes Suffix aufweisen", Justification = "<Ausstehend>")]
-    public partial class VCard
+    public sealed partial class VCard
     {
         /// <summary>
         /// In VCF-Dateien verwendeter Zeilenwechsel ("\r\n").

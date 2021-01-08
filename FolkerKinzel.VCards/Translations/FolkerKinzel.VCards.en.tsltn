@@ -31,7 +31,6 @@
   <T ID="5379A48AE5A6E9A">Encapsulates the information about the parameters of a vCard property.</T>
   <T ID="6CDB9800F02C1673">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to specify the name of a person with whom there is a relationship.</T>
   <T ID="393303368777EE1B">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to point to a person, with whom there is a relationship, with the UUID of their &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
-  <T ID="6B0C88EC6BFA8921">Represents vCard properties that store a collection of text content.</T>
   <T ID="B24DC67218609DBF">Represents vCard properties whose content consists of text.</T>
   <T ID="801D5818CF60254F">Encapsulates the information contained in a vCard.</T>
   <T ID="82B8E8DE67B86E10">Named constants to specify options for writing VCF files. The constants can be combined.</T>
@@ -46,10 +45,9 @@
   <T ID="DEBF81AED386F490">Represents the vCard property &lt;c&gt;ORG&lt;/c&gt;, which stores information about the organization to which the vCard object is associated.</T>
   <T ID="D1D18BA771608810">Represents the vCard 3.0 property &lt;c&gt;PROFILE&lt;/c&gt;, which specifies that the vCard is a vCard.</T>
   <T ID="42C40A157E60FB8D">Abstract base class for classes that encapsulate data from vCard properties that describe relationships with other people. These are in particular the vCard 4.0 property  &lt;c&gt;RELATED&lt;/c&gt;, the vCard 2.1- and -3.0-property &lt;c&gt;AGENT&lt;/c&gt;, as well as non-standard properties for specifying the name of the spouse (such as &lt;c&gt;X-SPOUSE&lt;/c&gt;).</T>
-  <T ID="C41465722D03F016">Encapsulates the vCard property &lt;c&gt;REV&lt;/c&gt;, which represents a timestamp of the last update of the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
   <T ID="7C658E08F5BADD78">Represents the vCard property TZ, which encapsulates the time zone of the vCard.</T>
   <T ID="698355677B8F98ED">Represents the vCard property &lt;c&gt;UID&lt;/c&gt;, which stores a unique identifier for the vCard subject.</T>
-  <T ID="56F2B6B9D64E9FF1">Encapsulates the data of the vCard property &lt;c&gt;XML&lt;/c&gt;, which enables embedded XML data.</T>
+  <T ID="56F2B6B9D64E9FF1">Encapsulates the data of the vCard property &lt;c&gt;XML&lt;/c&gt;, which enables embedded XML data in VCF files.</T>
   <T ID="B8BFC69E4C7AD753">&lt;note type ="note"&gt;To make it easier to read, exception handling has been omitted in the following example.&lt;/note&gt;&lt;code/&gt;</T>
   <T ID="513ADC31CA8565">Newline used in VCF files ("\r\n").</T>
   <T ID="56CAFD77B801D12C">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt; object.</T>
@@ -908,4 +906,128 @@ Please note, that when using the class, yourself is responsible for the standard
   <T ID="5AEC006DDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="C3B44AE9C8B283E6">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.StringCollectionProperty"/&gt; object.</T>
   <T ID="74969A1D964D2DCB">A &lt;see cref="T:System.String"/&gt; or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="4161BB8FDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="3A3CADE868C50EB8">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.StringCollectionProperty"/&gt;.</T>
+  <T ID="A1C3DF2E1F4AC27C">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.TextProperty"/&gt; object.</T>
+  <T ID="F989B04C964D2DCB">A &lt;see cref="T:System.String"/&gt; or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="D5444A4FDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="B08B1013915C6471">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.TextProperty"/&gt;.</T>
+  <T ID="C872FD7E2D03F016">Encapsulates the vCard property &lt;c&gt;REV&lt;/c&gt;, which represents a timestamp of the last update of the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
+  <T ID="D12A7033EF599EEE">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.TimeStampProperty"/&gt; object in which the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType"/&gt; parameter is set to &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.Timestamp"/&gt;.</T>
+  <T ID="D55A88A00329D5CD">An instance of the &lt;see cref="T:System.DateTimeOffset"/&gt; struct.</T>
+  <T ID="188A9B1FDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="22FEADBA23C51692">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.TimeStampProperty"/&gt;.</T>
+  <T ID="694E6A4261B52FC4">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.TimeZoneProperty"/&gt; object.</T>
+  <T ID="B256D09049AB3CF4">A &lt;see cref="T:System.TimeZoneInfo"/&gt; object or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="4E83B98DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="7D9EEF7B477776F9">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.TimeZoneProperty"/&gt;.</T>
+  <T ID="D516A10FF2E40F56">Initializes a new &lt;see cref ="T:FolkerKinzel.VCards.Models.UuidProperty"/&gt; object with an automatically generated &lt;see cref ="T:System.Guid"/&gt;.</T>
+  <T ID="4F24C4F8D4B2609">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.UuidProperty"/&gt;-Objekt.</T>
+  <T ID="45137508C5BAAD78">An instance of the &lt;see cref="T:System.Guid"/&gt; struct.</T>
+  <T ID="41973C62DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="3B5001F41FA1D3D8">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.UuidProperty"/&gt;.</T>
+  <T ID="2E49A41183EEEF40">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.XmlProperty"/&gt; object.</T>
+  <T ID="3366DD0E2A74410C">A &lt;see cref ="T:System.Xml.Linq.XElement"/&gt; or &lt;c&gt;null&lt;/c&gt;. The element must be explicitly assigned to an XML namespace (xmlns attribute). This namespace must not be the VCARD 4.0 namespace &lt;c&gt;urn:ietf:params:xml:ns:vcard-4.0&lt;/c&gt;!</T>
+  <T ID="7E149F0BDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="EA247CD9B62A5E29">&lt;paramref name ="xmlContent"/&gt; is not assigned to an XML namespace - or - &lt;paramref name ="xmlContent"/&gt; is in the reserved namespace &lt;c&gt;urn:ietf:params:xml:ns:vcard-4.0&lt;/c&gt;.</T>
+  <T ID="91ED39A83A9E4862"></T>
+  <T ID="E54DA39F87FCA7D1"></T>
+  <T ID="6A71BF5FC333693A"></T>
+  <T ID="D89C7B01C241419F"></T>
+  <T ID="34721E76E0202B0E"></T>
+  <T ID="6A0542C913930260"></T>
+  <T ID="3BAC3309DA78569C"></T>
+  <T ID="5BFDAD9DD6D09120"></T>
+  <T ID="A2875C07174224D3"></T>
+  <T ID="BB1D82201EDCBD7A"></T>
+  <T ID="8EDBA9B6DBD085B2"></T>
+  <T ID="1AEEA414DA3C0972"></T>
+  <T ID="6BD98ED4B6B91CBB"></T>
+  <T ID="936F05E3B5BB2FE1"></T>
+  <T ID="99562EC06ABE3868"></T>
+  <T ID="DF721A490B072B74"></T>
+  <T ID="D135CAD76F4BD3E4"></T>
+  <T ID="9B7820E3A55E5F95"></T>
+  <T ID="4E6BB5FED7DDA4D2"></T>
+  <T ID="148C4F2865138F02"></T>
+  <T ID="1CE78E96257E5D80"></T>
+  <T ID="17E2541F29A0E98A"></T>
+  <T ID="1D743281CBF86F21"></T>
+  <T ID="B26C3939B7EED5CF"></T>
+  <T ID="14EFA19E6F9CEB92"></T>
+  <T ID="C1B18B9C583D381"></T>
+  <T ID="B99932203ED68C0E"></T>
+  <T ID="C7887D2F4B843310"></T>
+  <T ID="5D123392C08E333E"></T>
+  <T ID="6999A2FE1136276F"></T>
+  <T ID="988E22131BA8F87D"></T>
+  <T ID="E72A298EBB69C8A7"></T>
+  <T ID="BF1CDF6941D0A365"></T>
+  <T ID="DF6157C7FADB6822"></T>
+  <T ID="33AAED5962D2F083"></T>
+  <T ID="284F53D28B91D509"></T>
+  <T ID="29435547C5F621E7"></T>
+  <T ID="4D826B5CC2700A3E"></T>
+  <T ID="E2AB76D72F6A58D1"></T>
+  <T ID="C52CF213035D471"></T>
+  <T ID="3803E63C292AD231"></T>
+  <T ID="5C09C7AA3CC28538"></T>
+  <T ID="B8E33EAF062E65B9"></T>
+  <T ID="3D4C75E077276DD2"></T>
+  <T ID="1543C91D33DDF491"></T>
+  <T ID="D8130243144BF232"></T>
+  <T ID="6C8CEE536F83D92F"></T>
+  <T ID="3197C9E3155390A5"></T>
+  <T ID="F0CF13643EF810E7"></T>
+  <T ID="C8C5DBE7292AD231"></T>
+  <T ID="6D29631BC2380C29"></T>
+  <T ID="3F6443EBDB4F944E"></T>
+  <T ID="CFE2B1DFBFC9FE0A"></T>
+  <T ID="3FEBD9C266D4AE00"></T>
+  <T ID="64AD6E32BDCCCE25"></T>
+  <T ID="DA3CC2A303EB80B4"></T>
+  <T ID="6919F1E3A43F1C06"></T>
+  <T ID="AF8FCFA01B2D8FBC"></T>
+  <T ID="38278697551BC169"></T>
+  <T ID="148C839B7FCBE582"></T>
+  <T ID="68B8452263E06065"></T>
+  <T ID="7F52F997F15B6817"></T>
+  <T ID="6326E6BB3704C900"></T>
+  <T ID="BDFBBAAE9232BF1F"></T>
+  <T ID="6E13C775114F63E9"></T>
+  <T ID="6B784622FF507ACE"></T>
+  <T ID="C2D51FADC9963D34"></T>
+  <T ID="ECB3CD0F50C289BA"></T>
+  <T ID="7BC6BFFCA240BF3C"></T>
+  <T ID="E5ABAD5F309E6112"></T>
+  <T ID="366A4896A240BF3C"></T>
+  <T ID="5F8131B20D3CF27F"></T>
+  <T ID="6E662046B4C33B6F"></T>
+  <T ID="189C35ABDCE61F48"></T>
+  <T ID="78392912046CFB91"></T>
+  <T ID="1FFE9668046CFB91"></T>
+  <T ID="83B71C45046CFB91"></T>
+  <T ID="CB8AD260046CFB91"></T>
+  <T ID="251803E046CFB91"></T>
+  <T ID="5C50E26D046CFB91"></T>
+  <T ID="6A163720046CFB91"></T>
+  <T ID="75E81B53046CFB91"></T>
+  <T ID="4B6A7F09046CFB91"></T>
+  <T ID="FF638C1F046CFB91"></T>
+  <T ID="3E5B27E098948421"></T>
+  <T ID="D4CAF26A162E806E"></T>
+  <T ID="675F7D096A9BEA68"></T>
+  <T ID="3378EB550D3CF27F"></T>
+  <T ID="BFBC89BD3E91ADF6"></T>
+  <T ID="FFB7989ADCE61F48"></T>
+  <T ID="C15E5C930D3CF27F"></T>
+  <T ID="70F6E9463E91ADF6"></T>
+  <T ID="D31C1DABDCE61F48"></T>
+  <T ID="904CE5A59771BBA2"></T>
+  <T ID="1465C5A1F3ABA120"></T>
+  <T ID="D6CC8A14A32FFD93"></T>
+  <T ID="E3ED91986D751B39"></T>
+  <T ID="97C7462E06D1D7FC"></T>
+  <T ID="1C0C586C90A4A487"></T>
+  <T ID="947C6C83D2CE14D2"></T>
 </Tsltn>

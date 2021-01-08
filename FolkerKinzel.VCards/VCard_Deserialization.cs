@@ -14,7 +14,7 @@ using System.Text;
 
 namespace FolkerKinzel.VCards
 {
-    public partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
+    public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
         /// <summary>
         /// Lädt eine vcf-Datei.
