@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
     /// Konvertiert die vCard-Values Date, Date-Time, Date-And-Or-Time und Timestamp.
     /// </summary>
     /// <threadsafety static="true" instance="false" />
-    internal class DateAndOrTimeConverter
+    internal sealed class DateAndOrTimeConverter
     {
         private readonly string[] modelStrings = new string[]
         {
