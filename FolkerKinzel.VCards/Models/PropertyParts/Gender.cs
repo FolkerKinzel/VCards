@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Informationen zur Angabe des Geschlechts und der Geschlechtsidentität.
     /// </summary>
-    public class Gender
+    public sealed class Gender
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="Gender"/>-Objekt.
