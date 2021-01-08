@@ -16,7 +16,7 @@ using System.Text;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Repräsentiert vCard-Properties, die eine Sammlung von Text-Inhalten speichern.
+    /// Repräsentiert vCard-Properties, die eine Sammlung von <see cref="string"/>s speichern.
     /// </summary>
     public sealed class StringCollectionProperty : VCardProperty
     {
@@ -49,7 +49,9 @@ namespace FolkerKinzel.VCards.Models
         /// Initialisiert ein <see cref="StringCollectionProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein <see cref="string"/> oder <c>null</c>.</param>
-        /// <param name="propertyGroup">Bezeichner der Gruppe von Properties, der die Property zugehören soll.</param>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public StringCollectionProperty(string? value, string? propertyGroup = null) :
             this(value is null ? null : new string?[] { value }, propertyGroup)
         { }

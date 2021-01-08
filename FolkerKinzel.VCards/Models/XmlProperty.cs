@@ -19,12 +19,12 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="xmlContent">Ein <see cref="XElement"/> oder <c>null</c>. Das Element muss einem XML-Namespace
         /// explizit zugeordnet sein (xmlns-Attribut). Dieser Namespace darf nicht der VCARD 4.0-Namespace 
-        /// "urn:ietf:params:xml:ns:vcard-4.0" sein!</param>
+        /// <c>urn:ietf:params:xml:ns:vcard-4.0</c> sein!</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         /// <exception cref="ArgumentException"><paramref name="xmlContent"/> ist keinem XML-Namespace zugeordnet - oder -
-        /// <paramref name="xmlContent"/> ist dem reservierten Namespace "urn:ietf:params:xml:ns:vcard-4.0"
+        /// <paramref name="xmlContent"/> ist dem reservierten Namespace <c>urn:ietf:params:xml:ns:vcard-4.0</c>
         /// zugeordnet.</exception>
         public XmlProperty(XElement? xmlContent, string? propertyGroup = null)
             : base(xmlContent?.ToString(), propertyGroup)

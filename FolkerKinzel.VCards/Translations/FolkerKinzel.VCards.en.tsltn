@@ -30,7 +30,7 @@
   <T ID="4560CEC4719E4F42">Encapsulates information about the organization (or company) of the subject the vCard represents.</T>
   <T ID="5379A48AE5A6E9A">Encapsulates the information about the parameters of a vCard property.</T>
   <T ID="6CDB9800F02C1673">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to specify the name of a person with whom there is a relationship.</T>
-  <T ID="393303368777EE1B">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to describe a person, with whom there is a relationship, with the UUID of their &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
+  <T ID="393303368777EE1B">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to point to a person, with whom there is a relationship, with the UUID of their &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
   <T ID="6B0C88EC6BFA8921">Represents vCard properties that store a collection of text content.</T>
   <T ID="B24DC67218609DBF">Represents vCard properties whose content consists of text.</T>
   <T ID="801D5818CF60254F">Encapsulates the information contained in a vCard.</T>
@@ -524,7 +524,7 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="E37F2DD1756D71CA">&lt;c&gt;GEO&lt;/c&gt;: Geographical position. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="1A774353396E06E1">&lt;c&gt;CONTEXT&lt;/c&gt;: Indicates the context of the data, e.g. &lt;c&gt;VCARD&lt;/c&gt; or &lt;c&gt;LDAP&lt;/c&gt;. &lt;c&gt;(3)&lt;/c&gt;</T>
   <T ID="72EC36D4B873C9F">&lt;c&gt;TYPE&lt;/c&gt;: Indicates, wether a &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; is related to an individual's work place or to an individual's  personal life. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
-  <T ID="F53B64AB0F519F05">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to describe a person, with whom a relationship exists, with a &lt;see cref="T:System.Uri"/&gt;.</T>
+  <T ID="F53B64AB0F519F05">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to point to a person, with whom there is a relationship, with their &lt;see cref="T:System.Uri"/&gt;.</T>
   <T ID="C6C077365C5092">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to describe a person, with whom there is a relationship, with their &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
   <T ID="4B3BC8E08D6F1D9F">Constructor called by derived classes.</T>
   <T ID="B038D948D6F1D9F">Constructor called by derived classes.</T>
@@ -868,4 +868,44 @@ Please note, that when using the class, yourself is responsible for the standard
   <T ID="17D4161752596877">Returns &lt;c&gt;true&lt;/c&gt;, if the values of the two &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; instances are different, otherwise &lt;c&gt;false&lt;/c&gt;.</T>
   <T ID="F53DFEFD7E323CC1">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; instance. (For debugging only.)</T>
   <T ID="AC571F8C5330B26B">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; instance.</T>
+  <T ID="6ACC3E4F2D2816FE"></T>
+  <T ID="9C9C71362D2816FE"></T>
+  <T ID="E6DE9BB318097BB"></T>
+  <T ID="CAC6BDD92D2816FE"></T>
+  <T ID="C5750C342D2816FE"></T>
+  <T ID="F50828322D2816FE"></T>
+  <T ID="10D1D9B095916333"></T>
+  <T ID="9D4CBE818D6F1D9F">Constructor called by derived classes.</T>
+  <T ID="FD81693C36207056">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; values.</T>
+  <T ID="E656BF56DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="DEED631692E9030D">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.RelationTextProperty"/&gt; object.</T>
+  <T ID="500B40A2A4138A00">Name of a person with whom there is a relationship or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="C8D23D0136207056">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; values.</T>
+  <T ID="1E7EB9D2DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="CB7B40586AC443E9">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationTextProperty"/&gt;.</T>
+  <T ID="FC502CC8CDAB81D4"></T>
+  <T ID="63C6C313401A4D32">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.RelationUriProperty"/&gt; object.</T>
+  <T ID="327A311DA5519B25">A &lt;see cref="T:System.Uri"/&gt; of a  person, with whom there is a relationship, or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="8F0F04EB36207056">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; values.</T>
+  <T ID="FD5405F5DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="CE872D98858C9BE6">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationUriProperty"/&gt;.</T>
+  <T ID="7CF4C18A5560F816">A &lt;see cref="T:System.Uri"/&gt; of a person, with whom there is a relationship.</T>
+  <T ID="270019FC768780D2">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/&gt; object.</T>
+  <T ID="AD748549D4B6BA13">UUID of a person with whom there is a relationship. This can be, e.g., the value of the vCard property &lt;c&gt;UID&lt;/c&gt; (&lt;see cref ="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"&gt;VCard.UniqueIdentifier&lt;/see&gt;) of this person's vCard.</T>
+  <T ID="9559784836207056">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; values.</T>
+  <T ID="FDC85F28DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="E62658C08913BDE9">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/&gt;.</T>
+  <T ID="2D30C1FF8CCDA031"></T>
+  <T ID="83746CCAB945C391">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/&gt; object.</T>
+  <T ID="4E3522E8C2DEEB54">The &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt; of a person, with whom there is a relationship, or  &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="4D235C0E36207056">A single &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/&gt; values.</T>
+  <T ID="249A1712DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="1F234CC31BB3824F">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/&gt;.</T>
+  <T ID="FB45D4D92227F6AD"></T>
+  <T ID="6B0C88ECFC4BF923">Represents vCard properties that store a collection of &lt;see cref="T:System.String"/&gt;s .</T>
+  <T ID="9B458A4F7D7530FE">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.StringCollectionProperty"/&gt; object.</T>
+  <T ID="45BD08978C1C3EBD">A collection of &lt;see cref="T:System.String"/&gt;s or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="5AEC006DDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="C3B44AE9C8B283E6">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.StringCollectionProperty"/&gt; object.</T>
+  <T ID="74969A1D964D2DCB">A &lt;see cref="T:System.String"/&gt; or &lt;c&gt;null&lt;/c&gt;.</T>
 </Tsltn>

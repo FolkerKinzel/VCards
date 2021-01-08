@@ -18,8 +18,8 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationUuidProperty"/>-Objekt.
         /// </summary>
-        /// <param name="uuid">Uuid einer Person, zu der eine Beziehung besteht. Das kann zum Beispiel der Wert der 
-        /// vCard-Property "UID" der vCard dieser Person sein.</param>
+        /// <param name="uuid">UUID einer Person, zu der eine Beziehung besteht. Das kann zum Beispiel der Wert der 
+        /// vCard-Property <c>UID</c> (<see cref="VCard.UniqueIdentifier">VCard.UniqueIdentifier</see>) der vCard dieser Person sein.</param>
         /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,

@@ -13,8 +13,8 @@ using System.ComponentModel;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit ihrer <see cref="VCards.VCard"/>
-    /// zu beschreiben.
+    /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, 
+    /// mit ihrer <see cref="VCards.VCard"/> zu beschreiben.
     /// </summary>
     public sealed class RelationVCardProperty : RelationProperty
     {
