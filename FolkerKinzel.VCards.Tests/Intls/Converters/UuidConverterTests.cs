@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests
@@ -27,8 +28,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             string guidString = "550e8400-e29b-11d4-a716-446655440000";
             guidString = "urn:uuid:" + guidString;
 
-
-           Assert.IsTrue(guidString.AsSpan().IsUuidUri());
+            Assert.IsTrue(guidString.AsSpan().IsUuidUri());
         }
 #endif
 
