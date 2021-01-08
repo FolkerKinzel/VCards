@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
 {
-    internal class ImppTypesCollector
+    internal sealed class ImppTypesCollector
     {
         private readonly
             ImppTypes[] definedEnumValues = new ImppTypes[] { ImppTypes.Business,
