@@ -341,9 +341,9 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
         /// </summary>
-        public TimestampProperty? LastRevision
+        public TimeStampProperty? LastRevision
         {
-            get => Get<TimestampProperty?>(VCdProp.LastRevision);
+            get => Get<TimeStampProperty?>(VCdProp.LastRevision);
             set => Set(VCdProp.LastRevision, value);
         }
 

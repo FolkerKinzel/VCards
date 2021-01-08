@@ -17,24 +17,24 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Kapselt die vCard-Property <c>REV</c>, die einen Zeitstempel der letzten Aktualisierung der <see cref="VCard"/> darstellt.
     /// </summary>
-    public sealed class TimestampProperty : VCardProperty
+    public sealed class TimeStampProperty : VCardProperty
     {
         /// <summary>
-        /// Initialisiert ein neues <see cref="TimestampProperty"/>-Objekt, bei dem der <see cref="ParameterSection.DataType"/>-Parameter
+        /// Initialisiert ein neues <see cref="TimeStampProperty"/>-Objekt, bei dem der <see cref="ParameterSection.DataType"/>-Parameter
         /// auf <see cref="VCdDataType.Timestamp"/> gesetzt ist.
         /// </summary>
         /// <param name="value">Ein <see cref="DateTimeOffset"/>-Objekt.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public TimestampProperty(DateTimeOffset value, string? propertyGroup = null) : base(propertyGroup)
+        public TimeStampProperty(DateTimeOffset value, string? propertyGroup = null) : base(propertyGroup)
         {
             Value = value;
             Parameters.DataType = VCdDataType.Timestamp;
         }
 
 
-        internal TimestampProperty(VcfRow vcfRow, VCardDeserializationInfo info)
+        internal TimeStampProperty(VcfRow vcfRow, VCardDeserializationInfo info)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             // ein statischer DateAndOrTimeConverter kann nicht benutzt werden, da das die 
@@ -45,7 +45,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         /// <summary>
-        /// Die von der <see cref="TimestampProperty"/> zur Verfügung gestellten Daten.
+        /// Die von der <see cref="TimeStampProperty"/> zur Verfügung gestellten Daten.
         /// </summary>
         public new DateTimeOffset Value
         {

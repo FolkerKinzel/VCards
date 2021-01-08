@@ -232,7 +232,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void AppendLanguages(IEnumerable<TextProperty?> value) => BuildPropertyCollection(VCard.PropKeys.LANG, value);
 
-        protected override void AppendLastRevision(TimestampProperty value) => BuildProperty(VCard.PropKeys.REV, value);
+        protected override void AppendLastRevision(TimeStampProperty value) => BuildProperty(VCard.PropKeys.REV, value);
 
         protected override void AppendLogos(IEnumerable<DataProperty?> value) => BuildPropertyCollection(VCard.PropKeys.LOGO, value);
 

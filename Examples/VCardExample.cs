@@ -47,7 +47,7 @@ namespace Examples
                     new VC::TextProperty("CEO")
                 },
 
-                LastRevision = new VC::TimestampProperty(DateTimeOffset.UtcNow)
+                LastRevision = new VC::TimeStampProperty(DateTimeOffset.UtcNow)
             };
 
             const string photoFileName = @"..\..\KätheMüller.jpg";

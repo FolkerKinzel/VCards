@@ -115,7 +115,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                         AppendProdID((TextProperty)kvp.Value);
                         break;
                     case VCdProp.LastRevision:
-                        AppendLastRevision((TimestampProperty)kvp.Value);
+                        AppendLastRevision((TimeStampProperty)kvp.Value);
                         break;
                     case VCdProp.UniqueIdentifier:
                         AppendUniqueIdentifier((UuidProperty)kvp.Value);
@@ -511,7 +511,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected virtual void AppendLanguages(IEnumerable<TextProperty?> value) { }
 
-        protected virtual void AppendLastRevision(TimestampProperty value) { }
+        protected virtual void AppendLastRevision(TimeStampProperty value) { }
 
         protected virtual void AppendLogos(IEnumerable<DataProperty?> value) { }
 
