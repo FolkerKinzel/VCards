@@ -3,7 +3,7 @@ using System.Text;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers
 {
-    internal class VCardDeserializationInfo
+    internal sealed class VCardDeserializationInfo
     {
         private const int INITIAL_STRINGBUILDER_CAPACITY = 1024;
 
