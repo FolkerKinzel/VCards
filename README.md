@@ -5,9 +5,9 @@
 .NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
 
 It enables you
-* to load vcf files from the file system and to save them there,
-* to serialize vcf files from and to Streams and
-* to convert vCard files, that match the vCard-versions 2.1, 3.0 and 4.0, to each other.
+* to load VCF files from the file system and to save them there,
+* to serialize VCF files from and to Streams and
+* to convert VCF files, that match the vCard-versions 2.1, 3.0 and 4.0, to each other.
 
 It is used as a dependency in [FolkerKinzel.Contacts.IO](https://github.com/FolkerKinzel/Contacts.IO) - an easy to use .NET-API
 to manage contact data of organizations and natural persons.

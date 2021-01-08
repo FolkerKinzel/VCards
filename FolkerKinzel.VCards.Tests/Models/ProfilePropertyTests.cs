@@ -25,8 +25,10 @@ namespace FolkerKinzel.VCards.Models.Tests
             string s = prop.Value;
 
             VCardProperty vcProp = prop;
-
             Assert.AreEqual(vcProp.Value, s);
+
+            TextProperty textProp = prop;
+            Assert.AreEqual(textProp.Value, s);
         }
     }
 }
