@@ -850,7 +850,7 @@ Please note, that when using the class, yourself is responsible for the standard
   <T ID="69A72DF2A7EA044C">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.MimeType"/&gt; object. (For debugging only.)</T>
   <T ID="7016BCE7761789AD">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.MimeType"/&gt; object. (For debugging only.)</T>
   <T ID="EF395BB6FFA5F4AC">Connects the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyID.MappingNumber"/&gt; of a &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; with a &lt;see cref ="T:System.Guid"/&gt; that uniquely identifies this &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; between several vCard instances across multiple platforms.</T>
-  <T ID="A168497D70A3AB3">Although the standard allows the mapping to be signed with any &lt;see cref ="T:System.Uri"/&gt; instances, this library only supports &lt;see cref ="T:System.Guid"/&gt; instances.</T>
+  <T ID="A168497D70A3AB3">Although the standard allows the mapping to be signed with any URIs, this library only supports &lt;see cref ="T:System.Guid"/&gt;s (urn:uuid: ...).</T>
   <T ID="9EE0F72B7A3FD053">Initializes a new instance of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping"/&gt; struct.</T>
   <T ID="EC54B0ADC2A43C3D">The number of the mapping (value: between 1 and 9).</T>
   <T ID="1E033030FFF9D0A9">An instance of the &lt;see cref ="T:System.Guid"/&gt; structure that serves as a cross-platform identifier for a &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
