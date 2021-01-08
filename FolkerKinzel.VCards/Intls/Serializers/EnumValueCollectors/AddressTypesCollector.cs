@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
 {
-    internal class AddressTypesCollector
+    internal sealed class AddressTypesCollector
     {
         private readonly
             AddressTypes[] definedEnumValues = new AddressTypes[] { AddressTypes.Dom,
