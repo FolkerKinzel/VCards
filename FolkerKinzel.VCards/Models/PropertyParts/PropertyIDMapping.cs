@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Resources;
 using System;
 using System.Diagnostics;
@@ -34,6 +35,70 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             Uuid = uuid;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="s"/> ist kein <see cref="PropertyIDMapping"/>.</exception>
+        internal static PropertyIDMapping Parse(string s)
+        {
+            int mappingNumber = 0;
+            int index;
+            for (index = 0; index < s.Length; index++)
+            {
+                char c = s[index];
+
+                if (char.IsDigit(c))
+                {
+                    mappingNumber = DigitParser.Parse(c);
+                    index++;
+                    break;
+                }
+            }
+
+            if (mappingNumber == 0)
+            {
+                // keine MappingNumber
+                throw new ArgumentOutOfRangeException(nameof(s));
+            }
+
+            while (index < s.Length)
+            {
+                char c = s[index++];
+                if (c == ';')
+                {
+#if NET40
+                    string guid = s.Substring(index);
+#else
+                    ReadOnlySpan<char> guid = s.AsSpan(index);
+#endif
+                    if (guid.IsUuidUri())
+                    {
+                        return new PropertyIDMapping(mappingNumber, UuidConverter.ToGuid(guid));
+                    }
+                    else
+                    {
+                        // Obwohl der Standard beliebige URIs erlaubt, werden
+                        // hier nur UUIDs unterstützt
+                        throw new ArgumentOutOfRangeException(nameof(s));
+                    }
+                }
+                else if (char.IsWhiteSpace(c))
+                {
+                    continue;
+                }
+                else
+                {
+                    // 2stellige MappingNumber
+                    throw new ArgumentOutOfRangeException(nameof(s));
+                }
+            }
+
+            // fehlender URI-Teil:
+            throw new ArgumentOutOfRangeException(nameof(s));
+        }
+
 
         /// <summary>
         /// Nummer des Mappings. (Entspricht <see cref="PropertyID.MappingNumber">PropertyID.MappingNumber</see>).
@@ -42,6 +107,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         {
             get;
         }
+        
 
 
         /// <summary>
@@ -59,7 +125,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public bool IsEmpty => Uuid == Guid.Empty;
 
 
-        #region IEquatable
+#region IEquatable
 
         ///// <summary>
         ///// Gibt einen Wert zurück, der angibt, ob diese Instanz gleich einem angegebenen <see cref="object"/> ist.
@@ -135,7 +201,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             return !pidMap1.Equals(pidMap2);
         }
 
-        #endregion
+#endregion
 
 
         /// <summary>
@@ -153,6 +219,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         internal void AppendTo(StringBuilder builder)
         {
             Debug.Assert(builder != null);
+
+            if (MappingNumber == 0)
+            {
+                return;
+            }
 
             builder.Append(MappingNumber.ToString(CultureInfo.InvariantCulture));
             builder.Append(';');

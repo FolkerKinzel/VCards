@@ -19,7 +19,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         [TestMethod()]
         public void AddressPropertyTest()
         {
-            var adr = new AddressProperty(STREET, LOCALITY, POSTAL_CODE, REGION, COUNTRY);
+            var adr = new AddressProperty(STREET, LOCALITY, POSTAL_CODE, REGION, COUNTRY, propertyGroup: GROUP);
 
             Assert.IsNotNull(adr);
             Assert.AreEqual(STREET, adr.Value.Street[0]);
@@ -39,7 +39,8 @@ namespace FolkerKinzel.VCards.Models.Tests
                 new string[] { LOCALITY },
                 new string[] { POSTAL_CODE },
                 new string[] { REGION },
-                new string[] { COUNTRY });
+                new string[] { COUNTRY },
+                propertyGroup: GROUP);
 
             Assert.IsNotNull(adr);
             Assert.AreEqual(STREET, adr.Value.Street[0]);

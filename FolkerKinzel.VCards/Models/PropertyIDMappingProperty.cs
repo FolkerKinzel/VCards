@@ -29,32 +29,22 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        internal PropertyIDMappingProperty(VcfRow vcfRow, VCardDeserializationInfo info)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vcfRow"></param>
+        /// <exception cref="ArgumentOutOfRangeException">Aus <paramref name="vcfRow"/> kann kein <see cref="PropertyIDMapping"/>
+        /// geparst werden.</exception>
+        internal PropertyIDMappingProperty(VcfRow vcfRow)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             if (vcfRow.Value is null)
             {
-                Value = new PropertyIDMapping();
+                //Value = new PropertyIDMapping();
                 return;
             }
 
-            string[] arr = vcfRow.Value.Split(info.Semicolon, 2, StringSplitOptions.RemoveEmptyEntries);
-
-            if (arr.Length < 2 ||
-                !int.TryParse(arr[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out int mappingNumber))
-            {
-                Value = new PropertyIDMapping();
-                return;
-            }
-
-            try
-            {
-                Value = new PropertyIDMapping(mappingNumber, UuidConverter.ToGuid(arr[1]));
-            }
-            catch(ArgumentOutOfRangeException) // mappingNumber ist 0 oder negativ
-            {
-                Value = new PropertyIDMapping();
-            }
+            Value = PropertyIDMapping.Parse(vcfRow.Value);
 
         }
 

@@ -57,7 +57,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Uuid einer Person, zu der eine Beziehung besteht.
         /// </summary>
-        [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
+        [Obsolete(OBSOLETE_MESSAGE, OBSOLETE_AS_ERROR)]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Guid Uuid => Value;

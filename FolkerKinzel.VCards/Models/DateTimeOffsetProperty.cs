@@ -49,7 +49,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Der gespeicherte <see cref="System.DateTimeOffset"/>-Wert oder <c>null</c>.
         /// </summary>
-        [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
+        [Obsolete(OBSOLETE_MESSAGE, OBSOLETE_AS_ERROR)]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DateTimeOffset? DateTimeOffset => Value;

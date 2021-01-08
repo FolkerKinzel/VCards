@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using FolkerKinzel.VCards.Intls.Serializers;
+using System.Collections.Generic;
+using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -41,14 +43,79 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        internal static PropertyID Create(string[] arr)
+        internal static void ParseInto(List<PropertyID> list, string pids)
         {
-            Debug.Assert(arr != null);
-            Debug.Assert(arr.Length > 0);
+            if (pids.Length == 0)
+            {
+                return;
+            }
+            
+            int index = 0;
 
-            return new PropertyID(
-                int.Parse(arr[0], NumberStyles.Integer, CultureInfo.InvariantCulture),
-                (arr.Length == 2) ? int.Parse(arr[1], NumberStyles.Integer, CultureInfo.InvariantCulture) : (int?)null);
+            int propertyNumber = 0;
+            int? mappingNumber = null;
+            bool parseMapping = false;
+
+            
+            while (index < pids.Length)
+            {
+                char c = pids[index++];
+
+                if (c == ',')
+                {
+                    try
+                    {
+                        list.Add(new PropertyID(propertyNumber, mappingNumber));
+                    }
+                    catch (ArgumentOutOfRangeException) { }
+
+                    propertyNumber = 0;
+                    mappingNumber = null;
+                    parseMapping = false;
+                }
+                else if (c == '.')
+                {
+                    parseMapping = true;
+                }
+                else if (char.IsDigit(c))
+                {
+                    if (parseMapping)
+                    {
+                        // Exception bei mehrstelligen Nummern:
+                        if (mappingNumber.HasValue)
+                        {
+                            mappingNumber = 0;
+                        }
+                        else
+                        {
+                            mappingNumber = DigitParser.Parse(c);
+                        }
+                    }
+                    else
+                    {
+                        if (propertyNumber == 0)
+                        {
+                            propertyNumber = DigitParser.Parse(c);
+                        }
+                        else
+                        {
+                            // Exception bei mehrstelligen Nummern:
+                            propertyNumber = 0;
+                        }
+                    }
+                }//else
+            }//while
+
+            // if vermeidet unnötige Exception, falls der letzte Wert (standardungerecht)
+            // mit einem Komma endet
+            if (propertyNumber != 0)
+            {
+                try
+                {
+                    list.Add(new PropertyID(propertyNumber, mappingNumber));
+                }
+                catch (ArgumentOutOfRangeException) { }
+            }
         }
 
 
@@ -160,6 +227,11 @@ namespace FolkerKinzel.VCards.Models
         internal void AppendTo(StringBuilder builder)
         {
             Debug.Assert(builder != null);
+
+            if(PropertyNumber == 0) 
+            { 
+                return; 
+            }
 
             builder.Append(PropertyNumber.ToString(CultureInfo.InvariantCulture));
 

@@ -68,7 +68,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Text zur Beschreibung einer Beziehung, z.B. Name der Person, zu der die Beziehung besteht.
         /// </summary>
-        [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
+        [Obsolete(OBSOLETE_MESSAGE, OBSOLETE_AS_ERROR)]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string? Text => Value;

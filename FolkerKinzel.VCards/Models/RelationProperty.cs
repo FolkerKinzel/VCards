@@ -47,7 +47,11 @@ namespace FolkerKinzel.VCards.Models
                 return new RelationTextProperty(row, info, version);
             }
 
-            if (row.Value.IsUuid())
+#if NET40
+            if (row.Value.IsUuidUri())
+#else
+            if (row.Value?.AsSpan().IsUuidUri() ?? false)
+#endif
             {
                 var relation = new RelationUuidProperty(
                     UuidConverter.ToGuid(row.Value),

@@ -52,7 +52,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// <see cref="VCards.VCard"/> einer Person, zu der eine Beziehung besteht.
         /// </summary>
-        [Obsolete("This property is deprecated and will be removed in the release candidate. Use Value instead!")]
+        [Obsolete(OBSOLETE_MESSAGE, OBSOLETE_AS_ERROR)]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public VCard? VCard => Value;

@@ -10,8 +10,6 @@ namespace FolkerKinzel.VCards.Tests
     [TestClass]
     public class V4Test
     {
-        
-
         [TestMethod]
         public void Parse()
         {
@@ -19,6 +17,7 @@ namespace FolkerKinzel.VCards.Tests
           
             Assert.IsNotNull(vcard);
             Assert.AreNotEqual(0, vcard.Count);
+
         }
 
         [TestMethod]

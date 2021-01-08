@@ -61,26 +61,16 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         }
                     case ParameterKey.PID:
                         {
-                            string[] val = parameter.Item2.Trim().Trim(info.AllQuotes).Split(info.Comma, StringSplitOptions.RemoveEmptyEntries);
-
-                            List<PropertyID> pid = (List<PropertyID>?)this.PropertyIDs ?? new List<PropertyID>();
-                            this.PropertyIDs = pid;
-
-                            for (int i = 0; i < val.Length; i++)
-                            {
-                                string[] arr = val[i].Split(info.Dot, StringSplitOptions.RemoveEmptyEntries);
-                                try
-                                {
-                                    pid.Add(PropertyID.Create(arr));
-                                }
-                                catch { }
-                            }
+                            List<PropertyID> list = (List<PropertyID>?)this.PropertyIDs ?? new List<PropertyID>();
+                            this.PropertyIDs = list;
+                            
+                            PropertyID.ParseInto(list, parameter.Item2);
 
                             break;
                         }
                     case ParameterKey.TYPE:
                         {
-                            List<string>? values = parameter.Item2.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
+                            List<string> values = parameter.Item2.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
 
                             for (int i = 0; i < values.Count; i++)
                             {
@@ -99,7 +89,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         break;
                     case ParameterKey.SORT_AS:
                         {
-                            List<string>? list = parameter.Item2.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
+                            List<string> list = parameter.Item2.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
 
                             for (int i = list.Count - 1; i >= 0; i--)
                             {

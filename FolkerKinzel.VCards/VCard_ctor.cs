@@ -179,7 +179,11 @@ namespace FolkerKinzel.VCards
                             break;
                         }
                     case PropKeys.UID:
-                        UniqueIdentifier = new UuidProperty(vcfRow);
+                        try
+                        {
+                            UniqueIdentifier = new UuidProperty(vcfRow);
+                        }
+                        catch { }
                         break;
                     case PropKeys.ORG:
                         {
@@ -527,9 +531,15 @@ namespace FolkerKinzel.VCards
                     case PropKeys.CLIENTPIDMAP:
                         {
                             var pidMappings = (List<PropertyIDMappingProperty?>?)PropertyIDMappings ?? new List<PropertyIDMappingProperty?>();
-                            pidMappings.Add(new PropertyIDMappingProperty(vcfRow, info));
+                            try
+                            {
+                                pidMappings.Add(new PropertyIDMappingProperty(vcfRow));
+                            }
+                            catch { }
+
                             PropertyIDMappings = pidMappings;
                             break;
+
                         }
 
                     case PropKeys.PRODID:

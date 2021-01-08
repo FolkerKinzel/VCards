@@ -159,7 +159,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and will be removed in the release candidate. Use GeographicalPosition instead!")]
+        [Obsolete("Use \"GeographicalPosition\" instead!", VCardProperty.OBSOLETE_AS_ERROR)]
         public GeoCoordinate? GeographicPosition
         {
             get => GeographicalPosition;

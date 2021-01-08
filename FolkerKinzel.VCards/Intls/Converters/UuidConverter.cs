@@ -8,25 +8,74 @@ namespace FolkerKinzel.VCards.Intls.Converters
     internal static class UuidConverter
     {
         internal const string UUID_PROTOCOL = "urn:uuid:";
+        private const int GUID_MIN_LENGTH = 32;
 
+#if NET40
+        internal static bool IsUuidUri(this string? uri)
+        {
+            if(uri is null || uri.Length < GUID_MIN_LENGTH) 
+#else
+        internal static bool IsUuidUri(this ReadOnlySpan<char> uri)
+        {
+            if (uri.Length < GUID_MIN_LENGTH) 
+#endif
+            {
+                return false; 
+            }
 
-        internal static bool IsUuid(this string? uri) => uri?.StartsWith(UUID_PROTOCOL, StringComparison.OrdinalIgnoreCase) ?? false;
+            int i = 0;
 
+            while (i < uri.Length && char.IsWhiteSpace(uri[i]))
+            {
+                i++;
+            }
+
+            for (int j = i, k = 0; j < uri.Length; j++, k++)
+            {
+                if (k == UUID_PROTOCOL.Length)
+                {
+                    return true;
+                }
+
+                if (!char.ToLowerInvariant(uri[j]).Equals(UUID_PROTOCOL[k]))
+                {
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+#if NET40
         internal static Guid ToGuid(string? uuid)
         {
-            if (string.IsNullOrWhiteSpace(uuid))
+            if (string.IsNullOrWhiteSpace(uuid) || uuid.Length < GUID_MIN_LENGTH)
+#else
+        internal static Guid ToGuid(ReadOnlySpan<char> uuid)
+        {
+            if (uuid.IsWhiteSpace() || uuid.Length < GUID_MIN_LENGTH)
+#endif
+
             {
                 return Guid.Empty;
             }
 
+            int startOfGuid = 0;
+
+            for (int i = uuid.Length - GUID_MIN_LENGTH - 1; i >= 0; i--)
+            {
+                if (uuid[i].Equals(':'))
+                {
+                    startOfGuid = i + 1;
+                    break;
+                }
+            }
+
 #if NET40
-            string[] arr = uuid.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+            _ = Guid.TryParse(uuid.Substring(startOfGuid), out Guid guid);
 #else
-            string[] arr = uuid.Split(':', StringSplitOptions.RemoveEmptyEntries);
+            _ = Guid.TryParse(uuid.Slice(startOfGuid), out Guid guid);
 #endif
-
-            _ = Guid.TryParse(arr[arr.Length - 1], out Guid guid);
-
             return guid;
         }
 
