@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Informationen über den Namen der Person, die die vCard repräsentiert.
     /// </summary>
-    public class Name
+    public sealed class Name
     {
         private readonly ReadOnlyCollection<string>[] data;
 
