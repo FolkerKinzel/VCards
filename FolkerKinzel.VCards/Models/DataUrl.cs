@@ -19,7 +19,7 @@ namespace FolkerKinzel.VCards.Models
     /// Repräsentiert einen Data-URL nach RFC 2397.
     /// </summary>
     [Serializable]
-    public sealed class DataUrl : Uri, ISerializable
+    public class DataUrl : Uri, ISerializable
     {
         /// <summary>
         /// Gibt an, dass der URI ein Data-Url nach RFC 2397 ist. Dieses Feld ist schreibgeschützt.
