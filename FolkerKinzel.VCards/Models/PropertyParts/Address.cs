@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Informationen über die Postanschrift in vCards.
     /// </summary>
-    public class Address
+    public sealed class Address
     {
         private readonly ReadOnlyCollection<string>[] data;
 
