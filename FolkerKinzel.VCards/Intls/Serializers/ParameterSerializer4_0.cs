@@ -11,7 +11,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
-    internal class ParameterSerializer4_0 : ParameterSerializer
+    internal sealed class ParameterSerializer4_0 : ParameterSerializer
     {
         private RelationTypesCollector? _relationTypesCollector;
         private TelTypesCollector? _telTypesCollector;
