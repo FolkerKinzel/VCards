@@ -9,7 +9,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
-    internal class ParameterSerializer2_1 : ParameterSerializer
+    internal sealed class ParameterSerializer2_1 : ParameterSerializer
     {
         private AddressTypesCollector? _addressTypesCollector;
         private TelTypesCollector? _telTypesCollector;
