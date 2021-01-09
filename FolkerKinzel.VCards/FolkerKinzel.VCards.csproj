@@ -8,10 +8,13 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>2.0.0-beta</Version>
-    <FileVersion>2.0.0.47</FileVersion>
+    <FileVersion>2.0.0.49</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <PackageReleaseNotes>This package contains changes that might break existing code.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      This update brings a significantly improved usability and performance, but the changes require a new major version as they might break existing code.
+      (Note: Please check the use of the constructor of the AddressProperty class when updating,
+      because the parameter order is different than in version 1.)</PackageReleaseNotes>
     <PackageTags>vcard vcf</PackageTags>
     <Description>
       .NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.

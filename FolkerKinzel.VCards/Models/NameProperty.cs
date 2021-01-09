@@ -34,10 +34,7 @@ namespace FolkerKinzel.VCards.Models
             IEnumerable<string?>? middleName = null,
             IEnumerable<string?>? prefix = null,
             IEnumerable<string?>? suffix = null,
-            string? propertyGroup = null) : base(propertyGroup)
-        {
-            Value = new Name(lastName, firstName, middleName, prefix, suffix);
-        }
+            string? propertyGroup = null) : base(propertyGroup) => Value = new Name(lastName, firstName, middleName, prefix, suffix);
 
 
         /// <summary>
@@ -145,7 +142,7 @@ namespace FolkerKinzel.VCards.Models
                 string toEncode = builder.ToString(valueStartIndex, builder.Length - valueStartIndex);
                 builder.Length = valueStartIndex;
 
-                builder.Append(QuotedPrintableConverter.Encode(toEncode, valueStartIndex));
+                _ = builder.Append(QuotedPrintableConverter.Encode(toEncode, valueStartIndex));
             }
         }
 

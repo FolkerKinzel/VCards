@@ -63,6 +63,7 @@ dotnet_style_readonly_field = true:suggestion
 # Einstellungen für Parameter
 #dotnet_code_quality_unused_parameters = all:suggestion
 
+
 # Unterdrückungseinstellungen
 #dotnet_remove_unnecessary_suppression_exclusions = none
 
@@ -165,7 +166,6 @@ csharp_preserve_single_line_statements = true
 #### Benennungsstile ####
 
 # Benennungsregeln
-
 dotnet_naming_rule.interface_should_be_beginnt_mit_i.severity = suggestion
 dotnet_naming_rule.interface_should_be_beginnt_mit_i.symbols = interface
 dotnet_naming_rule.interface_should_be_beginnt_mit_i.style = beginnt_mit_i
@@ -178,9 +178,25 @@ dotnet_naming_rule.nicht_feldmember_should_be_pascal_schreibweise.severity = sug
 dotnet_naming_rule.nicht_feldmember_should_be_pascal_schreibweise.symbols = nicht_feldmember
 dotnet_naming_rule.nicht_feldmember_should_be_pascal_schreibweise.style = pascal_schreibweise
 
+dotnet_naming_rule.private_const.severity = suggestion
+dotnet_naming_rule.private_const.symbols = const
+dotnet_naming_rule.private_const.style = const_fields
+
+dotnet_naming_rule.private_mit_Unterstrich.severity = suggestion
+dotnet_naming_rule.private_mit_Unterstrich.symbols = private
+dotnet_naming_rule.private_mit_Unterstrich.style = private_fields
+
+
 #dotnet_code_quality.CAXXXX.api_surface = public, protected
 
 # Symbolspezifikationen
+
+dotnet_naming_symbols.private.applicable_kinds = field
+dotnet_naming_symbols.private.applicable_accessibilities = private, private_protected
+
+dotnet_naming_symbols.const.applicable_kinds = field
+dotnet_naming_symbols.const.applicable_accessibilities = private, private_protected
+dotnet_naming_symbols.const.required_modifiers = const, readonly
 
 dotnet_naming_symbols.interface.applicable_kinds = interface
 dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
@@ -196,15 +212,26 @@ dotnet_naming_symbols.nicht_feldmember.applicable_accessibilities = public, inte
 
 # Benennungsstile
 
-#dotnet_naming_style.pascal_schreibweise.required_prefix = 
+#dotnet_naming_style.pascal_schreibweise.required_prefix =
 #dotnet_naming_style.pascal_schreibweise.required_suffix = 
 #dotnet_naming_style.pascal_schreibweise.word_separator = 
 dotnet_naming_style.pascal_schreibweise.capitalization = pascal_case
+
 
 dotnet_naming_style.beginnt_mit_i.required_prefix = I
 #dotnet_naming_style.beginnt_mit_i.required_suffix = 
 #dotnet_naming_style.beginnt_mit_i.word_separator = 
 dotnet_naming_style.beginnt_mit_i.capitalization = pascal_case
 
+
+dotnet_naming_style.private_fields.capitalization = camel_case
+dotnet_naming_style.private_fields.required_prefix = _
+
+dotnet_naming_style.const_fields.capitalization = all_upper
+dotnet_naming_style.const_fields.word_separator = _
+
+
 # CA1303: Literale nicht als lokalisierte Parameter übergeben
 dotnet_diagnostic.CA1303.severity = warning
+
+
