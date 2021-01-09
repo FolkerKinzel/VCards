@@ -1,6 +1,6 @@
-﻿using FolkerKinzel.VCards;
-using System;
+﻿using System;
 using System.IO;
+using FolkerKinzel.VCards;
 
 // It's recommended to use a namespace-alias for better readability of
 // your code and better usability of Visual Studio IntelliSense:
@@ -55,7 +55,7 @@ namespace Examples
             // Create a little "Photo" for demonstration purposes:
             File.WriteAllBytes(photoFileName, new byte[] { 47, 155, 11, 25, 48, 79, 3, 2, 1 });
 
-            vcard.Photos = new VC::DataProperty[] 
+            vcard.Photos = new VC::DataProperty[]
             {
                 new VC::DataProperty(VC::DataUrl.FromFile(photoFileName))
             };

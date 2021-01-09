@@ -8,10 +8,9 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>2.0.0-beta</Version>
-    <FileVersion>2.0.0.45</FileVersion>
+    <FileVersion>2.0.0.47</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <PackageReleaseNotes>This package contains changes that might break existing code.</PackageReleaseNotes>
     <PackageTags>vcard vcf</PackageTags>
     <Description>

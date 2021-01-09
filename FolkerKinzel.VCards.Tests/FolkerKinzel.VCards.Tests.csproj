@@ -7,7 +7,7 @@
     <IsPackable>false</IsPackable>
     <NeutralLanguage>en</NeutralLanguage>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    
   </PropertyGroup>
 
   

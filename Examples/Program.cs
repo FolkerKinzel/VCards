@@ -6,9 +6,6 @@ namespace Examples
 {
     class Program
     {
-        static void Main()
-        {
-            VCardExample.ReadingAndWritingVCard();
-        }
+        static void Main() => VCardExample.ReadingAndWritingVCard();
     }
 }
