@@ -50,9 +50,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 {
                     Debug.Assert(list[i] != null);
 
-                    builder.Clear();
-                    builder.Append(list[i]);
-                    builder.UnMask(version).Trim().RemoveQuotes();
+                    _ = builder.Clear();
+                    _ = builder.Append(list[i]);
+                    _ = builder.UnMask(version).Trim().RemoveQuotes();
 
                     if (builder.Length == 0)
                     {
@@ -103,17 +103,17 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             StringBuilder builder = serializer.Builder;
             StringBuilder worker = serializer.Worker;
 
-            worker.Clear().Append(OrganizationName).Mask(serializer.Version);
-            builder.Append(worker);
+            _ = worker.Clear().Append(OrganizationName).Mask(serializer.Version);
+            _ = builder.Append(worker);
 
             if (OrganizationalUnits != null)
             {
                 for (int i = 0; i < OrganizationalUnits.Count; i++)
                 {
-                    worker.Clear().Append(OrganizationalUnits[i]).Mask(serializer.Version);
+                    _ = worker.Clear().Append(OrganizationalUnits[i]).Mask(serializer.Version);
 
-                    builder.Append(';');
-                    builder.Append(worker);
+                    _ = builder.Append(';');
+                    _ = builder.Append(worker);
                 }
             }
         }
@@ -134,24 +134,24 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             if (OrganizationName != null)
             {
-                sb.Append($"{orgName}: ".PadRight(padLength)).Append(OrganizationName);
+                _ = sb.Append($"{orgName}: ".PadRight(padLength)).Append(OrganizationName);
             }
 
             if (OrganizationalUnits != null)
             {
                 if (sb.Length != 0)
                 {
-                    sb.Append(Environment.NewLine);
+                    _ = sb.Append(Environment.NewLine);
                 }
 
-                sb.Append($"{orgUnit}: ".PadRight(padLength));
+                _ = sb.Append($"{orgUnit}: ".PadRight(padLength));
 
                 for (int i = 0; i < OrganizationalUnits.Count - 1; i++)
                 {
-                    sb.Append(OrganizationalUnits[i]).Append("; ");
+                    _ = sb.Append(OrganizationalUnits[i]).Append("; ");
                 }
 
-                sb.Append(OrganizationalUnits[OrganizationalUnits.Count - 1]);
+                _ = sb.Append(OrganizationalUnits[OrganizationalUnits.Count - 1]);
             }
 
             return sb.ToString();

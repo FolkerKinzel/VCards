@@ -18,7 +18,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static VcfOptions Set(this VcfOptions value, VcfOptions flags) => (value | flags);
+        public static VcfOptions Set(this VcfOptions value, VcfOptions flags) => value | flags;
 
         /// <summary>
         /// Untersucht, ob sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>

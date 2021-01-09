@@ -21,15 +21,9 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public AccessProperty(VCdAccess value, string? propertyGroup = null) : base(propertyGroup)
-        {
-            Value = value;
-        }
+        public AccessProperty(VCdAccess value, string? propertyGroup = null) : base(propertyGroup) => Value = value;
 
-        internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
-        {
-            Value = VCdAccessConverter.Parse(vcfRow.Value);
-        }
+        internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = VCdAccessConverter.Parse(vcfRow.Value);
 
 
         [InternalProtected]
@@ -38,7 +32,7 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            serializer.Builder.Append(Value.ToVCardString());
+            _ = serializer.Builder.Append(Value.ToVCardString());
         }
 
         

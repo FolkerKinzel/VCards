@@ -89,9 +89,9 @@ namespace FolkerKinzel.VCards.Models
 
                 string UnescapeString(string val)
                 {
-                    builder.Clear();
-                    builder.Append(val);
-                    builder.UnMask(version);
+                    _ = builder.Clear();
+                    _ = builder.Append(val);
+                    _ = builder.UnMask(version);
                     return builder.ToString();
                 }
             }
@@ -137,16 +137,16 @@ namespace FolkerKinzel.VCards.Models
 
                 Debug.Assert(!string.IsNullOrEmpty(s));
 
-                worker.Clear().Append(s).Mask(serializer.Version);
-                builder.Append(worker).Append(',');
+                _ = worker.Clear().Append(s).Mask(serializer.Version);
+                _ = builder.Append(worker).Append(',');
             }
 
             s = Value[Value.Count - 1];
 
             Debug.Assert(!string.IsNullOrEmpty(s));
 
-            worker.Clear().Append(s).Mask(serializer.Version);
-            builder.Append(worker);
+            _ = worker.Clear().Append(s).Mask(serializer.Version);
+            _ = builder.Append(worker);
         }
 
 

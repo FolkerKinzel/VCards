@@ -24,9 +24,9 @@ namespace FolkerKinzel.VCards.Intls
         {
             StringBuilder builder = info.Builder;
 
-            builder.Clear();
-            builder.Append(this.Value);
-            builder.UnMask(version);
+            _ = builder.Clear();
+            _ = builder.Append(this.Value);
+            _ = builder.UnMask(version);
             this.Value = builder.ToString();
             if (this.Value.Length == 0)
             {
@@ -38,9 +38,9 @@ namespace FolkerKinzel.VCards.Intls
         {
             StringBuilder builder = info.Builder;
 
-            builder.Clear();
-            builder.Append(this.Value);
-            builder.UnMask(version).Trim().RemoveQuotes();
+            _ = builder.Clear();
+            _ = builder.Append(this.Value);
+            _ = builder.UnMask(version).Trim().RemoveQuotes();
             this.Value = builder.ToString();
             if (this.Value.Length == 0)
             {

@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         private AddressTypesCollector? _addressTypesCollector;
         private TelTypesCollector? _telTypesCollector;
 
-        private readonly PropertyClassTypesCollector PropertyClassTypesCollector
+        private readonly PropertyClassTypesCollector _propertyClassTypesCollector
             = new PropertyClassTypesCollector();
 
         private AddressTypesCollector AddressTypesCollector
@@ -36,32 +36,32 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
-        private readonly List<string> StringCollectionList = new List<string>();
-        private readonly List<Action<ParameterSerializer2_1>> ActionList = new List<Action<ParameterSerializer2_1>>(2);
+        private readonly List<string> _stringCollectionList = new List<string>();
+        private readonly List<Action<ParameterSerializer2_1>> _actionList = new List<Action<ParameterSerializer2_1>>(2);
 
 
 
-        private readonly Action<ParameterSerializer2_1> CollectPropertyClassTypes =
+        private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes =
         serializer =>
-            serializer.PropertyClassTypesCollector.CollectValueStrings(
-                serializer.ParaSection.PropertyClass, serializer.StringCollectionList);
+            serializer._propertyClassTypesCollector.CollectValueStrings(
+                serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
 
 
-        private readonly Action<ParameterSerializer2_1> CollectTelTypes =
+        private readonly Action<ParameterSerializer2_1> _collectTelTypes =
         serializer =>
         {
             const TelTypes DEFINED_TELTYPES = TelTypes.Voice | TelTypes.Fax | TelTypes.Msg | TelTypes.Cell |
             TelTypes.Pager | TelTypes.BBS | TelTypes.Modem | TelTypes.Car | TelTypes.ISDN | TelTypes.Video;
 
             serializer.TelTypesCollector.CollectValueStrings(
-                    serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer.StringCollectionList);
+                    serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
         };
 
 
-        private readonly Action<ParameterSerializer2_1> CollectAddressTypes =
+        private readonly Action<ParameterSerializer2_1> _collectAddressTypes =
         serializer =>
             serializer.AddressTypesCollector.CollectValueStrings(
-                serializer.ParaSection.AddressType, serializer.StringCollectionList);
+                serializer.ParaSection.AddressType, serializer._stringCollectionList);
 
         public ParameterSerializer2_1(VcfOptions options) : base(options) { }
 
@@ -70,9 +70,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildAdrPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectAddressTypes);
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectAddressTypes);
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType(false);
             AppendEncodingAndCharset();
@@ -127,9 +127,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildLabelPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectAddressTypes);
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectAddressTypes);
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType(false);
             AppendEncodingAndCharset();
@@ -218,9 +218,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildTelPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
-            ActionList.Add(CollectTelTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
+            _actionList.Add(_collectTelTypes);
 
 
             AppendType(isPref);
@@ -245,9 +245,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildXMessengerPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
-            ActionList.Add(CollectTelTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
+            _actionList.Add(_collectTelTypes);
 
 
             AppendType(isPref);
@@ -257,8 +257,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildNonStandardPropertyPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType(isPref);
             AppendEncodingAndCharset();
@@ -305,37 +305,37 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendType(bool isPref)
         {
-            this.StringCollectionList.Clear();
+            this._stringCollectionList.Clear();
 
-            for (int i = 0; i < this.ActionList.Count; i++)
+            for (int i = 0; i < this._actionList.Count; i++)
             {
-                ActionList[i](this);
+                _actionList[i](this);
             }
 
             if (isPref)
             {
-                StringCollectionList.Add(ParameterSection.TypeValue.PREF);
+                _stringCollectionList.Add(ParameterSection.TypeValue.PREF);
             }
 
-            if (this.StringCollectionList.Count != 0)
+            if (this._stringCollectionList.Count != 0)
             {
                 AppendV2_1Type(ConcatValues());
             }
 
             string ConcatValues()
             {
-                this.Worker.Clear();
-                int count = this.StringCollectionList.Count;
+                _ = this._worker.Clear();
+                int count = this._stringCollectionList.Count;
 
                 Debug.Assert(count != 0);
 
                 for (int i = 0; i < count - 1; i++)
                 {
-                    Worker.Append(StringCollectionList[i]).Append(';');
+                    _ = _worker.Append(_stringCollectionList[i]).Append(';');
                 }
 
-                Worker.Append(StringCollectionList[count - 1]);
-                return Worker.ToString();
+                _ = _worker.Append(_stringCollectionList[count - 1]);
+                return _worker.ToString();
             }
         }
 

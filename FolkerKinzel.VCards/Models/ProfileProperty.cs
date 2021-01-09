@@ -49,7 +49,7 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            serializer.Builder.Append(PROFILE_PROPERTY_VALUE);
+            _ = serializer.Builder.Append(PROFILE_PROPERTY_VALUE);
         }
     }
 }

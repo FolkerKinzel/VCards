@@ -37,11 +37,11 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             // mindestens 1 Zeichen muss in der letzten Datenzeile verbleiben
             for (int i = VCard.MAX_BYTES_PER_LINE; i < Builder.Length - 1; i += VCard.MAX_BYTES_PER_LINE)
             {
-                Builder.Insert(i, VCard.NewLine);
+                _ = Builder.Insert(i, VCard.NewLine);
                 i += VCard.NewLine.Length;
             }
 
-            Builder.Append(VCard.NewLine); //Leerzeile nach den Daten
+            _ = Builder.Append(VCard.NewLine); //Leerzeile nach den Daten
         }
 
 
@@ -80,7 +80,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
                             if (c == ' ' || c == '\t')
                             {
-                                Builder.Insert(current, VCard.NewLine);
+                                _ = Builder.Insert(current, VCard.NewLine);
                                 i = current += VCard.NewLine.Length + 1; // das Leerzeichen
                                 counter = 1; // um das Leerzeichen vorschieben
 
@@ -92,7 +92,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                     {                                            // Leerzeichen gefunden wurde
                         if (c == ' ' || c == '\t')
                         {
-                            Builder.Insert(i, VCard.NewLine);
+                            _ = Builder.Insert(i, VCard.NewLine);
                             i += VCard.NewLine.Length + 1; // das Leerzeichen
                             counter = 1; // um das Leerzeichen vorschieben
                         }

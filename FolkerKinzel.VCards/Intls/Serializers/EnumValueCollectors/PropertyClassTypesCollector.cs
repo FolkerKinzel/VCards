@@ -9,8 +9,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
     internal sealed class PropertyClassTypesCollector
     {
         private readonly
-            PropertyClassTypes[] definedEnumValues = new PropertyClassTypes[] { PropertyClassTypes.Home,
-                                                                                PropertyClassTypes.Work };
+            PropertyClassTypes[] _definedEnumValues = new PropertyClassTypes[] { PropertyClassTypes.Home,
+                                                                                 PropertyClassTypes.Work };
 
 
         /// <summary>
@@ -25,9 +25,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
             Debug.Assert(list != null);
 
 
-            for (int i = 0; i < definedEnumValues.Length; i++)
+            for (int i = 0; i < _definedEnumValues.Length; i++)
             {
-                PropertyClassTypes value = definedEnumValues[i];
+                PropertyClassTypes value = _definedEnumValues[i];
 
                 if ((propertyClassType & value) == value)
                 {

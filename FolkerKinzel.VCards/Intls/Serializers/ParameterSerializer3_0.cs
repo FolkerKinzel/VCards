@@ -20,8 +20,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         private PropertyClassTypesCollector PropertyClassTypesCollector { get; }
             = new PropertyClassTypesCollector();
 
-        private readonly List<string> StringCollectionList = new List<string>();
-        private readonly List<Action<ParameterSerializer3_0>> ActionList = new List<Action<ParameterSerializer3_0>>(2);
+        private readonly List<string> _stringCollectionList = new List<string>();
+        private readonly List<Action<ParameterSerializer3_0>> _actionList = new List<Action<ParameterSerializer3_0>>(2);
 
 
         private AddressTypesCollector AddressTypesCollector
@@ -52,13 +52,13 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
-        private readonly Action<ParameterSerializer3_0> CollectPropertyClassTypes =
+        private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes =
         serializer =>
             serializer.PropertyClassTypesCollector.CollectValueStrings(
-                serializer.ParaSection.PropertyClass, serializer.StringCollectionList);
+                serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
 
 
-        private readonly Action<ParameterSerializer3_0> CollectTelTypes =
+        private readonly Action<ParameterSerializer3_0> _collectTelTypes =
         serializer =>
         {
             const TelTypes DEFINED_TELTYPES = TelTypes.Voice | TelTypes.Fax | TelTypes.Msg |
@@ -66,30 +66,30 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             TelTypes.Video | TelTypes.PCS;
 
             serializer.TelTypesCollector.CollectValueStrings(
-                    serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer.StringCollectionList);
+                    serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
         };
 
 
-        private readonly Action<ParameterSerializer3_0> CollectAddressTypes =
+        private readonly Action<ParameterSerializer3_0> _collectAddressTypes =
         serializer =>
             serializer.AddressTypesCollector.CollectValueStrings(
-                serializer.ParaSection.AddressType, serializer.StringCollectionList);
+                serializer.ParaSection.AddressType, serializer._stringCollectionList);
 
-        private readonly Action<ParameterSerializer3_0> CollectImppTypes =
+        private readonly Action<ParameterSerializer3_0> _collectImppTypes =
         serializer =>
             serializer.ImppTypesCollector.CollectValueStrings(
-                serializer.ParaSection.InstantMessengerType, serializer.StringCollectionList);
+                serializer.ParaSection.InstantMessengerType, serializer._stringCollectionList);
 
 
-        private readonly Action<ParameterSerializer3_0> CollectKeyType = serializer => serializer.DoCollectKeyType();
+        private readonly Action<ParameterSerializer3_0> _collectKeyType = serializer => serializer.DoCollectKeyType();
 
-        private readonly Action<ParameterSerializer3_0> CollectImageType = serializer => serializer.DoCollectImageType();
+        private readonly Action<ParameterSerializer3_0> _collectImageType = serializer => serializer.DoCollectImageType();
 
-        private readonly Action<ParameterSerializer3_0> CollectEmailType = serializer => serializer.DoCollectEmailType();
+        private readonly Action<ParameterSerializer3_0> _collectEmailType = serializer => serializer.DoCollectEmailType();
 
-        private readonly Action<ParameterSerializer3_0> CollectSoundType = serializer => serializer.DoCollectSoundType();
+        private readonly Action<ParameterSerializer3_0> _collectSoundType = serializer => serializer.DoCollectSoundType();
 
-        private readonly Action<ParameterSerializer3_0> CollectMediaType = serializer => serializer.DoCollectMediaType();
+        private readonly Action<ParameterSerializer3_0> _collectMediaType = serializer => serializer.DoCollectMediaType();
 
 
         public ParameterSerializer3_0(VcfOptions options) : base(options) { }
@@ -99,9 +99,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildAdrPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
-            ActionList.Add(CollectAddressTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
+            _actionList.Add(_collectAddressTypes);
 
 
             AppendType(isPref);
@@ -141,8 +141,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildEmailPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectEmailType);
+            _actionList.Clear();
+            _actionList.Add(_collectEmailType);
 
             AppendType(isPref);
         }
@@ -161,9 +161,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildImppPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
-            ActionList.Add(CollectImppTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
+            _actionList.Add(_collectImppTypes);
 
             AppendType(isPref);
         }
@@ -171,8 +171,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildKeyPara()
         {
-            ActionList.Clear();
-            ActionList.Add(this.CollectKeyType);
+            _actionList.Clear();
+            _actionList.Add(this._collectKeyType);
 
             if (ParaSection.DataType == VCdDataType.Text)
             {
@@ -189,9 +189,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildLabelPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
-            ActionList.Add(CollectAddressTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
+            _actionList.Add(_collectAddressTypes);
 
 
             AppendType(isPref);
@@ -203,8 +203,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildLogoPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectImageType);
+            _actionList.Clear();
+            _actionList.Add(_collectImageType);
 
 
             if (ParaSection.DataType == VCdDataType.Uri)
@@ -262,8 +262,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildPhotoPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectImageType);
+            _actionList.Clear();
+            _actionList.Add(_collectImageType);
 
 
             if (ParaSection.DataType == VCdDataType.Uri)
@@ -310,8 +310,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildSoundPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectSoundType);
+            _actionList.Clear();
+            _actionList.Add(_collectSoundType);
 
 
             if (ParaSection.DataType == VCdDataType.Uri)
@@ -336,9 +336,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildTelPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
-            ActionList.Add(CollectTelTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
+            _actionList.Add(_collectTelTypes);
 
             AppendType(isPref);
         }
@@ -367,18 +367,18 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildXMessengerPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
-            ActionList.Add(CollectTelTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
+            _actionList.Add(_collectTelTypes);
 
             AppendType(isPref);
         }
 
         protected override void BuildNonStandardPropertyPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
-            ActionList.Add(CollectMediaType);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
+            _actionList.Add(_collectMediaType);
 
             AppendValue(ParaSection.DataType);
 
@@ -439,37 +439,37 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendType(bool isPref)
         {
-            this.StringCollectionList.Clear();
+            this._stringCollectionList.Clear();
 
-            for (int i = 0; i < this.ActionList.Count; i++)
+            for (int i = 0; i < this._actionList.Count; i++)
             {
-                ActionList[i](this);
+                _actionList[i](this);
             }
 
             if (isPref)
             {
-                StringCollectionList.Add(ParameterSection.TypeValue.PREF);
+                _stringCollectionList.Add(ParameterSection.TypeValue.PREF);
             }
 
-            if (this.StringCollectionList.Count != 0)
+            if (this._stringCollectionList.Count != 0)
             {
                 AppendParameter(ParameterSection.ParameterKey.TYPE, ConcatValues());
             }
 
             string ConcatValues()
             {
-                this.Worker.Clear();
-                int count = this.StringCollectionList.Count;
+                _ = this._worker.Clear();
+                int count = this._stringCollectionList.Count;
 
                 Debug.Assert(count != 0);
 
                 for (int i = 0; i < count - 1; i++)
                 {
-                    Worker.Append(StringCollectionList[i]).Append(',');
+                    _ = _worker.Append(_stringCollectionList[i]).Append(',');
                 }
 
-                Worker.Append(StringCollectionList[count - 1]);
-                return Worker.ToString();
+                _ = _worker.Append(_stringCollectionList[count - 1]);
+                return _worker.ToString();
             }
         }
 
@@ -484,7 +484,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (s != null)
             {
-                StringCollectionList.Add(Mask(s));
+                _stringCollectionList.Add(Mask(s));
             }
         }
 
@@ -495,7 +495,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (s != null)
             {
-                StringCollectionList.Add(Mask(s));
+                _stringCollectionList.Add(Mask(s));
             }
 
         }
@@ -507,13 +507,13 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (s != null)
             {
-                StringCollectionList.Add(Mask(s));
+                _stringCollectionList.Add(Mask(s));
             }
 
         }
 
 
-        private void DoCollectEmailType() => StringCollectionList.Add(ParaSection.EmailType ?? EmailType.SMTP);
+        private void DoCollectEmailType() => _stringCollectionList.Add(ParaSection.EmailType ?? EmailType.SMTP);
 
 
         private void DoCollectMediaType()
@@ -522,7 +522,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (m != null)
             {
-                StringCollectionList.Add(Mask(m));
+                _stringCollectionList.Add(Mask(m));
             }
         }
 
@@ -531,14 +531,14 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private string Mask(string? s)
         {
-            Worker.Clear().Append(s).Mask(VCdVersion.V3_0);
+            _ = _worker.Clear().Append(s).Mask(VCdVersion.V3_0);
             //.Replace(@"\", @"\\") // Reihenfolge beachten!
             //.Replace(Environment.NewLine, @"\n")
             //.Replace(",", @"\,")
             //.Replace(";", @"\;")
             //.Replace(":", @"\:");
 
-            return Worker.ToString();
+            return _worker.ToString();
         }
 
     }

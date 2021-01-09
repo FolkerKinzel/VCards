@@ -32,7 +32,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
         //}
 
         private readonly
-            RelationTypes[] definedEnumValues = new RelationTypes[]{    RelationTypes.Contact,
+            RelationTypes[] _definedEnumValues = new RelationTypes[]{   RelationTypes.Contact,
                                                                         RelationTypes.Acquaintance,
                                                                         RelationTypes.Friend,
                                                                         RelationTypes.Met,
@@ -64,9 +64,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
         {
             Debug.Assert(list != null);
 
-            for (int i = 0; i < definedEnumValues.Length; i++)
+            for (int i = 0; i < _definedEnumValues.Length; i++)
             {
-                RelationTypes value = definedEnumValues[i];
+                RelationTypes value = _definedEnumValues[i];
 
                 if ((relationType & value) == value)
                 {

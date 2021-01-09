@@ -8,20 +8,16 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 {
     internal abstract class ParameterSerializer
     {
-        private readonly StringBuilder Builder = new StringBuilder();
+        private readonly StringBuilder _builder = new StringBuilder();
 
-        protected readonly StringBuilder Worker = new StringBuilder();
+        protected readonly StringBuilder _worker = new StringBuilder();
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="options"></param>
 #pragma warning disable CS8618 // Das Feld lässt keine NULL-Werte zu und ist nicht initialisiert. Deklarieren Sie das Feld ggf. als "Nullable".
-        protected ParameterSerializer(VcfOptions options)
-#pragma warning restore CS8618 // Das Feld lässt keine NULL-Werte zu und ist nicht initialisiert. Deklarieren Sie das Feld ggf. als "Nullable".
-        {
-            this.Options = options;
-        }
+        protected ParameterSerializer(VcfOptions options) => this.Options = options;
 
         protected ParameterSection ParaSection { get; private set; }
 
@@ -32,7 +28,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             ParaSection = vCardPropertyParameter;
 
-            Builder.Clear();
+            _ = _builder.Clear();
 
             //Builder.Append(';');
 
@@ -233,7 +229,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             //if (Builder.Length == 1) Builder.Clear();
 
-            return Builder;
+            return _builder;
         }
 
 
@@ -344,9 +340,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         #endregion
 
 
-        protected void AppendParameter(string key, string value) => Builder.Append(';').Append(key).Append('=').Append(value);
+        protected void AppendParameter(string key, string value) => _builder.Append(';').Append(key).Append('=').Append(value);
 
-        protected void AppendV2_1Type(string value) => Builder.Append(';').Append(value);
+        protected void AppendV2_1Type(string value) => _builder.Append(';').Append(value);
 
         protected void AppendNonStandardParameters()
         {

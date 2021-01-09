@@ -86,9 +86,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
             if (version >= VCdVersion.V4_0)
             {
-                builder.Append(UUID_PROTOCOL);
+                _ = builder.Append(UUID_PROTOCOL);
             }
-            builder.Append(guid.ToString()); // FormatProvider ist reserviert
+            _ = builder.Append(guid.ToString()); // FormatProvider ist reserviert
 
             return builder;
         }

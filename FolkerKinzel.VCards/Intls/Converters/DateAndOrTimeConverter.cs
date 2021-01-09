@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
     /// <threadsafety static="true" instance="false" />
     internal sealed class DateAndOrTimeConverter
     {
-        private readonly string[] modelStrings = new string[]
+        private readonly string[] _modelStrings = new string[]
         {
             "yyyyMMdd",
             "yyyy",
@@ -79,18 +79,12 @@ namespace FolkerKinzel.VCards.Intls.Converters
             }
             else if (s.StartsWith("--", StringComparison.Ordinal))
             {
-                if (s.Length == 4) // "--MM" zu "yyyy-MM"
-                {
-                    s = "0004-" + s.Substring(2);
-                }
-                else
-                {
-                    s = "0004" + s.Substring(2);
-                }
+                // "--MM" zu "yyyy-MM"
+                s = s.Length == 4 ? "0004-" + s.Substring(2) : "0004" + s.Substring(2);
             }
 
 
-            return DateTimeOffset.TryParseExact(s, modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+            return DateTimeOffset.TryParseExact(s, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
         }
 
 
@@ -127,11 +121,11 @@ namespace FolkerKinzel.VCards.Intls.Converters
             {
                 case VCdVersion.V2_1:
                 case VCdVersion.V3_0:
-                    builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}T{3:00}:{4:00}:{5:00}Z",
+                    _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}T{3:00}:{4:00}:{5:00}Z",
                         dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
                     break;
                 default:
-                    builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}{1:00}{2:00}T{3:00}{4:00}{5:00}Z",
+                    _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}{1:00}{2:00}T{3:00}{4:00}{5:00}Z",
                         dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
                     break;
             }
@@ -154,60 +148,51 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 case VCdVersion.V2_1:
                 case VCdVersion.V3_0:
                     {
-                        if (dt.Year > 4) // erstes Schaltjahr
-                        {
-                            builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}", dt.Year, dt.Month, dt.Day);
-                        }
-                        else
-                        {
-                            builder.AppendFormat(CultureInfo.InvariantCulture, "--{0:00}-{1:00}", dt.Month, dt.Day);
-                        }
+                        _ = dt.Year > 4
+                            ? builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}", dt.Year, dt.Month, dt.Day)
+                            : builder.AppendFormat(CultureInfo.InvariantCulture, "--{0:00}-{1:00}", dt.Month, dt.Day);
 
                         TimeSpan utcOffset = dt.Offset;
 
                         if (HasTimeComponent(dt))
                         {
-                            builder.AppendFormat(CultureInfo.InvariantCulture, "T{0:00}:{1:00}:{2:00}", dt.Hour, dt.Minute, dt.Second);
+                            _ = builder.AppendFormat(CultureInfo.InvariantCulture, "T{0:00}:{1:00}:{2:00}", dt.Hour, dt.Minute, dt.Second);
 
                             if (utcOffset == TimeSpan.Zero)
                             {
-                                builder.Append('Z');
+                                _ = builder.Append('Z');
                             }
                             else
                             {
                                 string sign = utcOffset < TimeSpan.Zero ? "" : "+";
 
-                                builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
+                                _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
                             }
                         }
                         break;
                     }
                 default: // vCard 4.0
                     {
-                        if (dt.Year > 4) // erstes Schaltjahr
-                        {
-                            builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}{1:00}{2:00}", dt.Year, dt.Month, dt.Day);
-                        }
-                        else
-                        {
-                            builder.AppendFormat(CultureInfo.InvariantCulture, "--{0:00}{1:00}", dt.Month, dt.Day);
-                        }
+                        // 4 == erstes Schaltjahr
+                        _ = dt.Year > 4
+                            ? builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}{1:00}{2:00}", dt.Year, dt.Month, dt.Day)
+                            : builder.AppendFormat(CultureInfo.InvariantCulture, "--{0:00}{1:00}", dt.Month, dt.Day);
 
                         TimeSpan utcOffset = dt.Offset;
 
                         if (HasTimeComponent(dt))
                         {
-                            builder.AppendFormat(CultureInfo.InvariantCulture, "T{0:00}{1:00}{2:00}", dt.Hour, dt.Minute, dt.Second);
+                            _ = builder.AppendFormat(CultureInfo.InvariantCulture, "T{0:00}{1:00}{2:00}", dt.Hour, dt.Minute, dt.Second);
 
                             if (utcOffset == TimeSpan.Zero)
                             {
-                                builder.Append('Z');
+                                _ = builder.Append('Z');
                             }
                             else
                             {
                                 string sign = utcOffset < TimeSpan.Zero ? "" : "+";
 
-                                builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
+                                _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
                             }
                         }
                         break;

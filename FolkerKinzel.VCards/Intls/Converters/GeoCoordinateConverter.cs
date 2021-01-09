@@ -66,15 +66,15 @@ namespace FolkerKinzel.VCards.Intls.Converters
             {
                 case VCdVersion.V2_1:
                 case VCdVersion.V3_0:
-                    builder.Append(coordinate.Latitude.ToString(culture));
-                    builder.Append(';');
-                    builder.Append(coordinate.Longitude.ToString(culture));
+                    _ = builder.Append(coordinate.Latitude.ToString(culture));
+                    _ = builder.Append(';');
+                    _ = builder.Append(coordinate.Longitude.ToString(culture));
                     break;
                 default:
-                    builder.Append(GEO_SCHEME);
-                    builder.Append(coordinate.Latitude.ToString(culture));
-                    builder.Append(',');
-                    builder.Append(coordinate.Longitude.ToString(culture));
+                    _ = builder.Append(GEO_SCHEME);
+                    _ = builder.Append(coordinate.Latitude.ToString(culture));
+                    _ = builder.Append(',');
+                    _ = builder.Append(coordinate.Longitude.ToString(culture));
                     break;
             }//switch
         }

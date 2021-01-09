@@ -142,7 +142,7 @@ namespace FolkerKinzel.VCards.Models
                 string toEncode = builder.ToString(startIndex, builder.Length - startIndex);
                 builder.Length = startIndex;
 
-                builder.Append(QuotedPrintableConverter.Encode(toEncode, startIndex));
+                _ = builder.Append(QuotedPrintableConverter.Encode(toEncode, startIndex));
             }
         }
 

@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
     /// <threadsafety static="true" instance="false" />
     internal sealed class TimeConverter
     {
-        private readonly string[] modelStrings = new string[]
+        private readonly string[] _modelStrings = new string[]
         {
             "HH",
             "HHmm",
@@ -57,7 +57,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 styles |= DateTimeStyles.AssumeLocal;
             }
 
-            return (DateTimeOffset.TryParseExact(s, modelStrings, CultureInfo.InvariantCulture, styles, out offset));
+            return DateTimeOffset.TryParseExact(s, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
         }
 
 
@@ -78,40 +78,40 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 case VCdVersion.V2_1:
                 case VCdVersion.V3_0:
                     {
-                        builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}:{2:00}",
+                        _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}:{2:00}",
                             dt.Hour, dt.Minute, dt.Second);
 
                         TimeSpan utcOffset = dt.Offset;
 
                         if (utcOffset == TimeSpan.Zero)
                         {
-                            builder.Append('Z');
+                            _ = builder.Append('Z');
                         }
                         else
                         {
                             string sign = utcOffset < TimeSpan.Zero ? "" : "+";
 
-                            builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
+                            _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
                         }
 
                         break;
                     }
                 default: // vCard 4.0
                     {
-                        builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}{1:00}{2:00}",
+                        _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}{1:00}{2:00}",
                             dt.Hour, dt.Minute, dt.Second);
 
                         TimeSpan utcOffset = dt.Offset;
 
                         if (utcOffset == TimeSpan.Zero)
                         {
-                            builder.Append('Z');
+                            _ = builder.Append('Z');
                         }
                         else
                         {
                             string sign = utcOffset < TimeSpan.Zero ? "" : "+";
 
-                            builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
+                            _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
                         }
                         break;
                     }

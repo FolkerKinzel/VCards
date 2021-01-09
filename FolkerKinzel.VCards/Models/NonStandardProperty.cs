@@ -95,8 +95,8 @@ namespace FolkerKinzel.VCards.Models
         {
             var sb = new StringBuilder();
 
-            sb.Append("Key:   ").AppendLine(PropertyKey);
-            sb.Append("Value: ").Append(Value);
+            _ = sb.Append("Key:   ").AppendLine(PropertyKey);
+            _ = sb.Append("Value: ").Append(Value);
 
             return sb.ToString();
         }
@@ -117,7 +117,7 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            serializer.Builder.Append(Value);
+            _ = serializer.Builder.Append(Value);
         }
 
     }

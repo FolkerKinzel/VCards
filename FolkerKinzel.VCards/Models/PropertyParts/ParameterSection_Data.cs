@@ -22,7 +22,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         {
             if (value is null || value.Equals(default))
             {
-                _propDic.Remove(prop);
+                _ = _propDic.Remove(prop);
             }
             else
             {

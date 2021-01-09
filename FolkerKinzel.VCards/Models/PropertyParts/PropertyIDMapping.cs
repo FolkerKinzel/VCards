@@ -125,7 +125,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public bool IsEmpty => Uuid == Guid.Empty;
 
 
-#region IEquatable
+        #region IEquatable
 
         ///// <summary>
         ///// Gibt einen Wert zurück, der angibt, ob diese Instanz gleich einem angegebenen <see cref="object"/> ist.
@@ -135,24 +135,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         ///// über dieselben Werte wie diese Instanz verfügt, andernfalls <c>false</c>.</returns>
         //// override object.Equals
         /// <inheritdoc/>
-        public override bool Equals(object obj)
-        {
-            //       
-            // See the full list of guidelines at
-            //   http://go.microsoft.com/fwlink/?LinkID=85237  
-            // and also the guidance for operator== at
-            //   http://go.microsoft.com/fwlink/?LinkId=85238
-            //
-
-            if (obj is PropertyIDMapping other)
-            {
-                return Equals(other);
-            }
-            else
-            {
-                return false;
-            }
-        }
+        public override bool Equals(object obj) => obj is PropertyIDMapping other && Equals(other);
 
 
         ///// <summary>
@@ -183,10 +166,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <param name="pidMap1">Eine zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
         /// <param name="pidMap2">Eine zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
         /// <returns><c>true</c>, wenn die Werte der beiden <see cref="PropertyIDMapping"/>-Strukturen gleich sind, andernfalls <c>false</c>.</returns>
-        public static bool operator ==(PropertyIDMapping pidMap1, PropertyIDMapping pidMap2)
-        {
-            return pidMap1.Equals(pidMap2);
-        }
+        public static bool operator ==(PropertyIDMapping pidMap1, PropertyIDMapping pidMap2) => pidMap1.Equals(pidMap2);
 
         /// <summary>
         /// Vergleicht zwei <see cref="PropertyIDMapping"/>-Strukturen. Das Ergebnis gibt an, ob die Werte der beiden 
@@ -196,12 +176,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <param name="pidMap2">Eine zu vergleichende <see cref="PropertyIDMapping"/>-Struktur.</param>
         /// <returns><c>true</c>, wenn die Werte der beiden <see cref="PropertyIDMapping"/>-Strukturen ungleich sind, 
         /// andernfalls <c>false</c>.</returns>
-        public static bool operator !=(PropertyIDMapping pidMap1, PropertyIDMapping pidMap2)
-        {
-            return !pidMap1.Equals(pidMap2);
-        }
+        public static bool operator !=(PropertyIDMapping pidMap1, PropertyIDMapping pidMap2) => !pidMap1.Equals(pidMap2);
 
-#endregion
+        #endregion
 
 
         /// <summary>
@@ -225,9 +202,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 return;
             }
 
-            builder.Append(MappingNumber.ToString(CultureInfo.InvariantCulture));
-            builder.Append(';');
-            builder.AppendUuid(Uuid);
+            _ = builder.Append(MappingNumber.ToString(CultureInfo.InvariantCulture));
+            _ = builder.Append(';');
+            _ = builder.AppendUuid(Uuid);
         }
     }
 

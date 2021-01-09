@@ -29,7 +29,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Gibt das Zeichen an, das das Schema des Kommunikationsprotokolls vom Adressteil des URIs trennt. Dieses Feld ist schreibgeschützt.
         /// </summary>
-        public static readonly new string SchemeDelimiter = ":";
+        public static new readonly string SchemeDelimiter = ":";
 
 
         /// <summary>
@@ -41,10 +41,7 @@ namespace FolkerKinzel.VCards.Models
         /// <exception cref="ArgumentNullException"><paramref name="uriString"/> ist <c>null</c>.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
         /// weil <paramref name="uriString"/> länger als 65519 Zeichen ist.</exception>
-        private DataUrl(string uriString, MimeType? mimeType) : base(uriString)
-        {
-            this.MimeType = mimeType ?? new MimeType();
-        }
+        private DataUrl(string uriString, MimeType? mimeType) : base(uriString) => this.MimeType = mimeType ?? new MimeType();
 
 
         ///// <summary>
@@ -126,12 +123,7 @@ namespace FolkerKinzel.VCards.Models
                         {
                             vcfRow.DecodeQuotedPrintableData();
 
-                            if (vcfRow.Parameters.Encoding == VCdEncoding.Base64)
-                            {
-                                return BuildDataUri();
-                            }
-
-                            return BuildUri();
+                            return vcfRow.Parameters.Encoding == VCdEncoding.Base64 ? BuildDataUri() : BuildUri();
                         }
                     }
                 case VCdVersion.V3_0:
@@ -163,18 +155,9 @@ namespace FolkerKinzel.VCards.Models
             vcfRow.UnMaskAndTrim(info, version);
 
 
-            if (DataUrl.TryCreate(value, out DataUrl? dataUri)) // DataUri vCard 4.0
-            {
-                return dataUri;
-            }
-            else if (vcfRow.Parameters.DataType == VCdDataType.Text) // freier Text
-            {
-                return DataUrl.FromText(value);
-            }
-            else
-            {
-                return BuildUri();
-            }
+            return DataUrl.TryCreate(value, out DataUrl? dataUri)
+                ? dataUri
+                : vcfRow.Parameters.DataType == VCdDataType.Text ? DataUrl.FromText(value) : BuildUri();
 
 
             DataUrl BuildDataUri()
@@ -189,17 +172,8 @@ namespace FolkerKinzel.VCards.Models
 
             Uri BuildUri()
             {
-                if (Uri.TryCreate(value, UriKind.RelativeOrAbsolute, out Uri uri))
-                {
-                    return uri;
-                }
-                else
-                {
-                    return DataUrl.FromText(value);
-                }
+                return Uri.TryCreate(value, UriKind.RelativeOrAbsolute, out Uri uri) ? uri : DataUrl.FromText(value);
             }
-
-
         }
 
 

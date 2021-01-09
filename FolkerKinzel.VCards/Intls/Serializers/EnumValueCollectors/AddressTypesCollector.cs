@@ -8,10 +8,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
     internal sealed class AddressTypesCollector
     {
         private readonly
-            AddressTypes[] definedEnumValues = new AddressTypes[] { AddressTypes.Dom,
-                                                                    AddressTypes.Intl,
-                                                                    AddressTypes.Postal,
-                                                                    AddressTypes.Parcel };
+            AddressTypes[] _definedEnumValues = new AddressTypes[] { AddressTypes.Dom,
+                                                                     AddressTypes.Intl,
+                                                                     AddressTypes.Postal,
+                                                                     AddressTypes.Parcel };
 
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
             Debug.Assert(list != null);
 
 
-            for (int i = 0; i < definedEnumValues.Length; i++)
+            for (int i = 0; i < _definedEnumValues.Length; i++)
             {
-                AddressTypes value = definedEnumValues[i];
+                AddressTypes value = _definedEnumValues[i];
 
                 if ((addressType & value) == value)
                 {

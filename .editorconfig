@@ -192,11 +192,11 @@ dotnet_naming_rule.private_mit_Unterstrich.style = private_fields
 # Symbolspezifikationen
 
 dotnet_naming_symbols.private.applicable_kinds = field
-dotnet_naming_symbols.private.applicable_accessibilities = private, private_protected
+dotnet_naming_symbols.private.applicable_accessibilities = private, private_protected, protected
 
 dotnet_naming_symbols.const.applicable_kinds = field
 dotnet_naming_symbols.const.applicable_accessibilities = private, private_protected
-dotnet_naming_symbols.const.required_modifiers = const, readonly
+dotnet_naming_symbols.const.required_modifiers = const
 
 dotnet_naming_symbols.interface.applicable_kinds = interface
 dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected

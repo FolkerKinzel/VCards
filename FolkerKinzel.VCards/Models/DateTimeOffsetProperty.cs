@@ -78,12 +78,12 @@ namespace FolkerKinzel.VCards.Models
 
             StringBuilder worker = serializer.Worker;
 
-            worker.Clear();
+            _ = worker.Clear();
 
             DateAndOrTimeConverter.AppendDateTimeStringTo(worker, this.Value, serializer.Version);
 
             //serializer.Worker.Mask(serializer.Version);
-            serializer.Builder.Append(worker);
+            _ = serializer.Builder.Append(worker);
         }
     }
 }

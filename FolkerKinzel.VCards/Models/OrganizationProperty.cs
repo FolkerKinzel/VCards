@@ -27,10 +27,7 @@ namespace FolkerKinzel.VCards.Models
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public OrganizationProperty(string? organizationName,
                                     IEnumerable<string?>? organizationalUnits = null,
-                                    string? propertyGroup = null) : base(propertyGroup)
-        {
-            Value = new Organization(organizationName, organizationalUnits);
-        }
+                                    string? propertyGroup = null) : base(propertyGroup) => Value = new Organization(organizationName, organizationalUnits);
 
         internal OrganizationProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
@@ -104,7 +101,7 @@ namespace FolkerKinzel.VCards.Models
                 string toEncode = builder.ToString(valueStartIndex, builder.Length - valueStartIndex);
                 builder.Length = valueStartIndex;
 
-                builder.Append(QuotedPrintableConverter.Encode(toEncode, valueStartIndex));
+                _ = builder.Append(QuotedPrintableConverter.Encode(toEncode, valueStartIndex));
             }
         }
 

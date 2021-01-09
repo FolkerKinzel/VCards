@@ -8,7 +8,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
     internal sealed class TelTypesCollector
     {
         private readonly
-            TelTypes[] definedEnumValues
+            TelTypes[] _definedEnumValues
                 = new TelTypes[] {  TelTypes.Voice,
                                     TelTypes.Fax,
                                     TelTypes.Msg,
@@ -36,9 +36,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
             Debug.Assert(list != null);
 
 
-            for (int i = 0; i < definedEnumValues.Length; i++)
+            for (int i = 0; i < _definedEnumValues.Length; i++)
             {
-                TelTypes value = definedEnumValues[i];
+                TelTypes value = _definedEnumValues[i];
 
                 if ((telType & value) == value)
                 {

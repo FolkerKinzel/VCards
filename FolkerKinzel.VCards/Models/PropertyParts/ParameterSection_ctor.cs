@@ -173,8 +173,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         private static string CleanParameterValue(string parameterValue, StringBuilder builder)
         {
-            builder.Clear();
-            builder.Append(parameterValue);
+            _ = builder.Clear();
+            _ = builder.Append(parameterValue);
 
             for (int i = builder.Length - 1; i >= 0; i--)
             {
@@ -182,7 +182,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                 if (char.IsWhiteSpace(c) || c == '\'' || c == '\"')
                 {
-                    builder.Remove(i, 1);
+                    _ = builder.Remove(i, 1);
                     continue;
                 }
 

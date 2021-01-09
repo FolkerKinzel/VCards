@@ -23,10 +23,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="uuid">Eine Instanz der <see cref="Guid"/>-Struktur, die als plattformübergreifender Bezeichner für eine 
         /// <see cref="VCardProperty"/> dient.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="mappingNumber"/> ist kleiner als 1 oder größer als 9.</exception>
-        public PropertyIDMappingProperty(int mappingNumber, Guid uuid) : base(null)
-        {
-            Value = new PropertyIDMapping(mappingNumber, uuid);
-        }
+        public PropertyIDMappingProperty(int mappingNumber, Guid uuid) : base(null) => Value = new PropertyIDMapping(mappingNumber, uuid);
 
 
         /// <summary>

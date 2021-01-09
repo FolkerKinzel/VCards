@@ -119,7 +119,7 @@ namespace FolkerKinzel.VCards
             content = versionHint == VCdVersion.V2_1 ? content : info.Builder.Clear().Append(content).UnMask(versionHint).ToString();
 
             using var reader = new StringReader(content);
-            GetVCard(reader, info, versionHint, out VCard? vCard);
+            _ = GetVCard(reader, info, versionHint, out VCard? vCard);
 
             return vCard;
         }
@@ -177,7 +177,7 @@ namespace FolkerKinzel.VCards
             Queue<VcfRow>? ParseVcfRows()
             {
 
-                info.Builder.Clear(); // nötig, wenn die vcf-Datei mehrere vCards enthält
+                _ = info.Builder.Clear(); // nötig, wenn die vcf-Datei mehrere vCards enthält
 
                 var parsedVcfRows = new Queue<VcfRow>();
 
@@ -220,17 +220,17 @@ namespace FolkerKinzel.VCards
                                 Debug.WriteLine("  == Embedded VCARD 2.1 vCard detected ==");
 
                                 ConcatNestedVcard();
-                                AddVcfRow();
+                                _ = AddVcfRow();
                             }
                             else
                             {
                                 // s stellt den Beginn einer neuen VcfRow dar. Deshalb enthält
                                 // builder bereits eine vollständige VcfRow, die erzeugt werden muss,
                                 // bevor s in builder geladen werden kann:
-                                AddVcfRow();
+                                _ = AddVcfRow();
                             }
                         }
-                        info.Builder.Append(s);
+                        _ = info.Builder.Append(s);
                     }
 
                 } while (!VCardEnd.IsMatch(s));
@@ -269,7 +269,7 @@ namespace FolkerKinzel.VCards
                     }
 
                     Debug.WriteLine("  == QuotedPrintable Soft-Linebreak detected ==");
-                    info.Builder.Append(s);
+                    _ = info.Builder.Append(s);
                     var vcfRow = VcfRow.Parse(info);
 
                     if (vcfRow?.Parameters.Encoding == VCdEncoding.QuotedPrintable)
@@ -288,8 +288,8 @@ namespace FolkerKinzel.VCards
                                 continue;
                             }
 
-                            info.Builder.Append(Environment.NewLine);
-                            info.Builder.Append(s);
+                            _ = info.Builder.Append(Environment.NewLine);
+                            _ = info.Builder.Append(s);
                         }
                     }
                 }
@@ -300,11 +300,11 @@ namespace FolkerKinzel.VCards
                 void ConcatVcardWrapping()
                 {
                     int insertPosition = info.Builder.Length;
-                    info.Builder.Append(s);
+                    _ = info.Builder.Append(s);
 
                     if (!isVcard_2_1)
                     {
-                        info.Builder.Remove(insertPosition, 1); //automatisch eingefügtes Leerzeichen wieder entfernen
+                        _ = info.Builder.Remove(insertPosition, 1); //automatisch eingefügtes Leerzeichen wieder entfernen
                     }
                 }
 
@@ -313,7 +313,7 @@ namespace FolkerKinzel.VCards
 
                 void ConcatNestedVcard()
                 {
-                    info.Builder.Append(s);
+                    _ = info.Builder.Append(s);
                     do
                     {
                         s = reader.ReadLine();
@@ -328,8 +328,8 @@ namespace FolkerKinzel.VCards
                             continue;
                         }
 
-                        info.Builder.Append(VCard.NewLine);
-                        info.Builder.Append(s);
+                        _ = info.Builder.Append(VCard.NewLine);
+                        _ = info.Builder.Append(s);
                     }
                     while (!VCardEnd.IsMatch(s));
 
@@ -350,7 +350,7 @@ namespace FolkerKinzel.VCards
                         parsedVcfRows.Enqueue(vcfRow);
                     }
 
-                    info.Builder.Clear();
+                    _ = info.Builder.Clear();
 
                     return vCard2_1Base64Detected;
 
@@ -367,12 +367,12 @@ namespace FolkerKinzel.VCards
                         {
                             Debug.WriteLine("  == vCard 2.1 Base64 detected ==");
 
-                            info.Builder.Clear();
-                            info.Builder.Append(vcfRow.Value);
+                            _ = info.Builder.Clear();
+                            _ = info.Builder.Append(vcfRow.Value);
 
                             while (s.Length != 0)
                             {
-                                info.Builder.Append(s);
+                                _ = info.Builder.Append(s);
                                 s = reader.ReadLine();
                                 if (s == null)
                                 {
@@ -445,7 +445,7 @@ namespace FolkerKinzel.VCards
                                             propertyGroup: guidProp.Group);
                         vcardProp.Parameters.Assign(guidProp.Parameters);
 
-                        relations.Remove(guidProp);
+                        _ = relations.Remove(guidProp);
                     }
                 }
 

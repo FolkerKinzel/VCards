@@ -48,17 +48,17 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             StringBuilder builder = serializer.Builder;
             if (Sex.HasValue)
             {
-                builder.Append(Sex.ToVCardString());
+                _ = builder.Append(Sex.ToVCardString());
             }
 
 
             if (GenderIdentity != null)
             {
                 StringBuilder worker = serializer.Worker;
-                worker.Clear().Append(GenderIdentity).Trim().Mask(serializer.Version);
+                _ = worker.Clear().Append(GenderIdentity).Trim().Mask(serializer.Version);
 
-                builder.Append(';');
-                builder.Append(worker);
+                _ = builder.Append(';');
+                _ = builder.Append(worker);
             }
         }
 

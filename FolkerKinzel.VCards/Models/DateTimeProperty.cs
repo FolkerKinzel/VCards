@@ -52,26 +52,16 @@ namespace FolkerKinzel.VCards.Models
                 case VCdDataType.Timestamp:
                 case null:
                     {
-                        if (info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset))
-                        {
-                            return BuildDateTimeOffsetProperty(dateTimeOffset);
-                        }
-                        else
-                        {
-                            return BuildDateTimeTextProperty();
-                        }
+                        return info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
+                            ? BuildDateTimeOffsetProperty(dateTimeOffset)
+                            : (DateTimeProperty)BuildDateTimeTextProperty();
                     }
                 case VCdDataType.Time:
                     {
 
-                        if (info.TimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset))
-                        {
-                            return BuildDateTimeOffsetProperty(dateTimeOffset);
-                        }
-                        else
-                        {
-                            return BuildDateTimeTextProperty();
-                        }
+                        return info.TimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
+                            ? BuildDateTimeOffsetProperty(dateTimeOffset)
+                            : (DateTimeProperty)BuildDateTimeTextProperty();
                     }
                 default:
                     {
@@ -84,7 +74,7 @@ namespace FolkerKinzel.VCards.Models
             string UnMask()
             {
                 StringBuilder builder = info.Builder;
-                builder.Clear().Append(vcfRow.Value).UnMask(version);
+                _ = builder.Clear().Append(vcfRow.Value).UnMask(version);
 
                 return builder.ToString();
             }

@@ -27,15 +27,9 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public UuidProperty(Guid uuid, string? propertyGroup = null) : base(propertyGroup)
-        {
-            Value = uuid;
-        }
+        public UuidProperty(Guid uuid, string? propertyGroup = null) : base(propertyGroup) => Value = uuid;
 
-        internal UuidProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
-        {
-            Value = UuidConverter.ToGuid(vcfRow.Value);
-        }
+        internal UuidProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = UuidConverter.ToGuid(vcfRow.Value);
 
         /// <summary>
         /// Die von der <see cref="UuidProperty"/> zur Verfügung gestellten Daten.
@@ -66,7 +60,7 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            serializer.Builder.AppendUuid(this.Value, serializer.Version);
+            _ = serializer.Builder.AppendUuid(this.Value, serializer.Version);
         }
 
     }

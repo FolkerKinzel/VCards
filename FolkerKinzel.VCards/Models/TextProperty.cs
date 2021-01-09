@@ -24,10 +24,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public TextProperty(string? value, string? propertyGroup = null) : base(propertyGroup)
-        {
-            Value = string.IsNullOrWhiteSpace(value) ? null : value;
-        }
+        public TextProperty(string? value, string? propertyGroup = null) : base(propertyGroup) => Value = string.IsNullOrWhiteSpace(value) ? null : value;
 
         internal TextProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
         {
@@ -44,7 +41,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Die von der <see cref="TextProperty"/> zur Verfügung gestellten Daten.
         /// </summary>
-        public virtual new string? Value
+        public new virtual string? Value
         {
             get;
         }
@@ -84,21 +81,16 @@ namespace FolkerKinzel.VCards.Models
 
             if (serializer.Version == VCdVersion.V2_1)
             {
-                if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
-                {
-                    builder.Append(QuotedPrintableConverter.Encode(Value, builder.Length));
-                }
-                else
-                {
-                    builder.Append(Value);
-                }
+                _ = this.Parameters.Encoding == VCdEncoding.QuotedPrintable
+                    ? builder.Append(QuotedPrintableConverter.Encode(Value, builder.Length))
+                    : builder.Append(Value);
             }
             else
             {
                 StringBuilder worker = serializer.Worker;
 
-                worker.Clear().Append(Value).Mask(serializer.Version);
-                builder.Append(worker);
+                _ = worker.Clear().Append(Value).Mask(serializer.Version);
+                _ = builder.Append(worker);
             }
         }
 

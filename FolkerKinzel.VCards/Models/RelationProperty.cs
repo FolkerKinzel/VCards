@@ -19,10 +19,7 @@ namespace FolkerKinzel.VCards.Models
     {
         [InternalProtected]
         internal RelationProperty(ParameterSection parameters, string? propertyGroup)
-            : base(parameters, propertyGroup)
-        {
-            InternalProtectedAttribute.Run();
-        }
+            : base(parameters, propertyGroup) => InternalProtectedAttribute.Run();
 
 
         /// <summary>
@@ -32,10 +29,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        protected RelationProperty(RelationTypes? relation, string? propertyGroup) : base(propertyGroup)
-        {
-            this.Parameters.RelationType = relation;
-        }
+        protected RelationProperty(RelationTypes? relation, string? propertyGroup) : base(propertyGroup) => this.Parameters.RelationType = relation;
 
 
         internal static RelationProperty Parse(VcfRow row, VCardDeserializationInfo info, VCdVersion version)

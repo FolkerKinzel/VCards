@@ -26,7 +26,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         [NotNull]
         internal string? PropertyKey { get; private set; }
         internal bool IsPref { get; private set; }
-        private readonly TextWriter Writer;
+        private readonly TextWriter _writer;
 
 
 
@@ -34,7 +34,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             this.Options = options;
             this.ParameterSerializer = parameterSerializer;
-            this.Writer = writer;
+            this._writer = writer;
             writer.NewLine = VCard.NewLine;
         }
 
@@ -80,15 +80,15 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             ReplenishRequiredProperties();
 
-            Builder.Clear();
-            Writer.WriteLine("BEGIN:VCARD");
-            Writer.Write(VCard.PropKeys.VERSION);
-            Writer.Write(':');
-            Writer.WriteLine(VersionString);
+            _ = Builder.Clear();
+            _writer.WriteLine("BEGIN:VCARD");
+            _writer.Write(VCard.PropKeys.VERSION);
+            _writer.Write(':');
+            _writer.WriteLine(VersionString);
 
             AppendProperties();
 
-            Writer.WriteLine("END:VCARD");
+            _writer.WriteLine("END:VCARD");
 
         }
 
@@ -257,7 +257,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             AppendLineFolding();
 
-            Writer.WriteLine(Builder);
+            _writer.WriteLine(Builder);
         }
 
 
@@ -376,9 +376,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 }
 
 
-                Builder.Insert(++i, VCard.NewLine);
+                _ = Builder.Insert(++i, VCard.NewLine);
                 i += VCard.NewLine.Length;
-                Builder.Insert(i, ' ');
+                _ = Builder.Insert(i, ' ');
                 counter = 1; // um das Leerzeichen vorschieben
 
             }

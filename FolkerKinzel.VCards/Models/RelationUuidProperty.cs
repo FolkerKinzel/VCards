@@ -82,7 +82,7 @@ namespace FolkerKinzel.VCards.Models
             InternalProtectedAttribute.Run();
             Debug.Assert(serializer != null);
 
-            serializer.Builder.AppendUuid(this.Value, serializer.Version);
+            _ = serializer.Builder.AppendUuid(this.Value, serializer.Version);
         }
 
         

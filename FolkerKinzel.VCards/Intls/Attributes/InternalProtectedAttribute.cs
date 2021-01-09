@@ -77,14 +77,11 @@ namespace FolkerKinzel.VCards.Intls.Attributes
                 {
                     return false;
                 }
-                if (extendType.IsGenericType && !extendType.IsGenericTypeDefinition)
-                {
-                    extendType = extendType.GetGenericTypeDefinition();
-                }
-                else
-                {
-                    extendType = extendType.BaseType;
-                }
+                
+                extendType = 
+                    extendType.IsGenericType && !extendType.IsGenericTypeDefinition
+                    ? extendType.GetGenericTypeDefinition()
+                    : extendType.BaseType;
             }
             return true;
         }

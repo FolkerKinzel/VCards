@@ -42,7 +42,7 @@ namespace FolkerKinzel.VCards
         {
             if (value is null)
             {
-                _propDic.Remove(prop);
+                _ = _propDic.Remove(prop);
             }
             else
             {

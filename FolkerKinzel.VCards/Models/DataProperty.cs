@@ -223,7 +223,7 @@ namespace FolkerKinzel.VCards.Models
             StringBuilder builder = serializer.Builder;
             StringBuilder worker = serializer.Worker;
 
-            worker.Clear();
+            _ = worker.Clear();
 
             switch (serializer.Version)
             {
@@ -232,31 +232,21 @@ namespace FolkerKinzel.VCards.Models
                     {
                         if (dataUrl.ContainsText)
                         {
-                            if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
-                            {
-                                builder.Append(QuotedPrintableConverter.Encode(dataUrl.GetEmbeddedText(), builder.Length));
-                            }
-                            else
-                            {
-                                builder.Append(dataUrl.GetEmbeddedText());
-                            }
+                            _ = this.Parameters.Encoding == VCdEncoding.QuotedPrintable
+                                ? builder.Append(QuotedPrintableConverter.Encode(dataUrl.GetEmbeddedText(), builder.Length))
+                                : builder.Append(dataUrl.GetEmbeddedText());
                         }
                         else // binary
                         {
-                            builder.Append(dataUrl.EncodedData);
+                            _ = builder.Append(dataUrl.EncodedData);
                             ((Vcf_2_1Serializer)serializer).WrapBase64Data();
                         }
                     }
                     else // Value is Uri
                     {
-                        if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
-                        {
-                            builder.Append(QuotedPrintableConverter.Encode(Value.ToString(), builder.Length));
-                        }
-                        else
-                        {
-                            builder.Append(Value);
-                        }
+                        _ = this.Parameters.Encoding == VCdEncoding.QuotedPrintable
+                            ? builder.Append(QuotedPrintableConverter.Encode(Value.ToString(), builder.Length))
+                            : builder.Append(Value);
                     }
                     break;
                 case VCdVersion.V3_0:
@@ -264,21 +254,21 @@ namespace FolkerKinzel.VCards.Models
 
                     if (dataType == VCdDataType.Binary)
                     {
-                        Debug.Assert(Value as DataUrl != null);
+                        Debug.Assert(Value is DataUrl);
 
-                        builder.Append(((DataUrl)Value).EncodedData);
+                        _ = builder.Append(((DataUrl)Value).EncodedData);
                         return;
                     }
                     else if (dataType == VCdDataType.Text)
                     {
-                        Debug.Assert(Value as DataUrl != null);
+                        Debug.Assert(Value is DataUrl);
 
-                        worker.Append(((DataUrl)Value).GetEmbeddedText()).Mask(serializer.Version);
-                        builder.Append(worker);
+                        _ = worker.Append(((DataUrl)Value).GetEmbeddedText()).Mask(serializer.Version);
+                        _ = builder.Append(worker);
                     }
                     else
                     {
-                        builder.Append(Value);
+                        _ = builder.Append(Value);
                         return;
                     }
                     break;
@@ -287,15 +277,15 @@ namespace FolkerKinzel.VCards.Models
 
                     if (Parameters.DataType == VCdDataType.Text)
                     {
-                        Debug.Assert(Value as DataUrl != null);
+                        Debug.Assert(Value is DataUrl);
 
-                        worker.Append(((DataUrl)Value).GetEmbeddedText()).Mask(serializer.Version);
+                        _ = worker.Append(((DataUrl)Value).GetEmbeddedText()).Mask(serializer.Version);
                     }
                     else
                     {
-                        worker.Append(Value).Mask(serializer.Version);
+                        _ = worker.Append(Value).Mask(serializer.Version);
                     }
-                    builder.Append(worker);
+                    _ = builder.Append(worker);
                     break;
             }
         }

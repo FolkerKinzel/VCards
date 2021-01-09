@@ -102,14 +102,9 @@ namespace FolkerKinzel.VCards.Models
 
             StringBuilder builder = serializer.Builder;
 
-            if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
-            {
-                builder.Append(QuotedPrintableConverter.Encode(this.Value?.ToString(), builder.Length));
-            }
-            else
-            {
-                builder.Append(this.Value);
-            }
+            _ = this.Parameters.Encoding == VCdEncoding.QuotedPrintable
+                ? builder.Append(QuotedPrintableConverter.Encode(this.Value?.ToString(), builder.Length))
+                : builder.Append(this.Value);
         }
 
     }

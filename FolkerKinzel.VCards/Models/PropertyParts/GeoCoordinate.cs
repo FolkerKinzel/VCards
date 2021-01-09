@@ -31,8 +31,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// <c>true</c>, wenn das <see cref="GeoCoordinate"/>-Objekt keine gültige geographische Position beschreibt.
         /// </summary>
-        public bool IsUnknown => (double.IsNaN(Latitude) || double.IsNaN(Longitude) ||
-            Latitude < -90 || Latitude > 90 || Longitude < -180 || Longitude > 180);
+        public bool IsUnknown => double.IsNaN(Latitude) || double.IsNaN(Longitude) ||
+            Latitude < -90 || Latitude > 90 || Longitude < -180 || Longitude > 180;
 
 
 

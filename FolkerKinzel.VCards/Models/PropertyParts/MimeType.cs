@@ -125,7 +125,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             var sb = new StringBuilder();
 
-            sb.Append(MediaType);
+            _ = sb.Append(MediaType);
 
             if (Parameters is null)
             {
@@ -135,7 +135,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             for (int i = 0; i < Parameters.Count; i++)
             {
                 KeyValuePair<string, string> kvp = Parameters[i];
-                sb.Append(';').Append(kvp.Key).Append('=').Append(kvp.Value);
+                _ = sb.Append(';').Append(kvp.Key).Append('=').Append(kvp.Value);
             }
 
             return sb.ToString();

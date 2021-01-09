@@ -29,10 +29,7 @@ namespace FolkerKinzel.VCards.Models
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public GenderProperty(VCdSex? sex,
                               string? genderIdentity = null,
-                              string? propertyGroup = null) : base(propertyGroup)
-        {
-            Value = new Gender(sex, genderIdentity);
-        }
+                              string? propertyGroup = null) : base(propertyGroup) => Value = new Gender(sex, genderIdentity);
 
         /// <summary>
         /// Die von der <see cref="GenderProperty"/> zur Verfügung gestellten Daten.
@@ -72,7 +69,7 @@ namespace FolkerKinzel.VCards.Models
 
             if (list.Count >= 2)
             {
-                builder.Clear().Append(list[1]).UnMask(VCdVersion.V4_0).Trim();
+                _ = builder.Clear().Append(list[1]).UnMask(VCdVersion.V4_0).Trim();
                 genderIdentity = builder.ToString();
             }
 

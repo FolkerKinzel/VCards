@@ -1,12 +1,12 @@
-﻿using FolkerKinzel.VCards.Intls.Attributes;
+﻿using System;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Text;
+using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.Helpers;
-using System;
-using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using System.Text;
-using System.Runtime.CompilerServices;
 
 
 namespace FolkerKinzel.VCards.Models
@@ -18,8 +18,6 @@ namespace FolkerKinzel.VCards.Models
     {
         internal const bool OBSOLETE_AS_ERROR = false;
         internal const string OBSOLETE_MESSAGE = "Use \"Value\" instead!";
-
-
         private string? _group;
 
         /// <summary>
@@ -33,7 +31,7 @@ namespace FolkerKinzel.VCards.Models
         /// <exception cref="ArgumentNullException"><paramref name="parameters"/> ist <c>null</c>.</exception>
         protected VCardProperty(ParameterSection parameters, string? propertyGroup)
         {
-            if(parameters is null)
+            if (parameters is null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
@@ -112,22 +110,22 @@ namespace FolkerKinzel.VCards.Models
 
             StringBuilder builder = serializer.Builder;
             Debug.Assert(builder != null);
-            builder.Clear();
+            _ = builder.Clear();
 
             PrepareForVcfSerialization(serializer);
 
             if (serializer.Options.IsSet(VcfOptions.WriteGroups) && Group != null)
             {
-                builder.Append(Group);
-                builder.Append('.');
+                _ = builder.Append(Group);
+                _ = builder.Append('.');
             }
-            builder.Append(serializer.PropertyKey);
+            _ = builder.Append(serializer.PropertyKey);
 
-            builder.Append(
+            _ = builder.Append(
                 serializer.ParameterSerializer
                 .Serialize(Parameters, serializer.PropertyKey, serializer.IsPref));
 
-            builder.Append(':');
+            _ = builder.Append(':');
             AppendValue(serializer);
         }
 

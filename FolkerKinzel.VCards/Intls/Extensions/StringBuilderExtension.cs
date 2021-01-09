@@ -15,18 +15,18 @@ namespace FolkerKinzel.VCards.Intls.Extensions
 
             if (version == VCdVersion.V2_1)
             {
-                builder.Replace(@"\;", ";");
+                _ = builder.Replace(@"\;", ";");
                 return builder;
             }
 
             if (version >= VCdVersion.V4_0)
             {
-                builder
+                _ = builder
                     .Replace(@"\\", @"\");
             }
 
 
-            builder
+            _ = builder
                 .Replace(@"\n", Environment.NewLine)
                 .Replace(@"\N", Environment.NewLine)
                 .Replace(@"\,", ",")
@@ -59,18 +59,18 @@ namespace FolkerKinzel.VCards.Intls.Extensions
 
             if (version == VCdVersion.V2_1)
             {
-                builder.Replace(";", @"\;");
+                _ = builder.Replace(";", @"\;");
                 return builder;
             }
 
             if (version >= VCdVersion.V4_0)
             {
-                builder
+                _ = builder
                     .Replace(@"\", @"\\");
             }
 
 
-            builder
+            _ = builder
                 .Replace(Environment.NewLine, NEWLINE_REPLACEMENT)
                 .Replace(",", @"\,")
                 .Replace(";", @"\;");
@@ -87,7 +87,7 @@ namespace FolkerKinzel.VCards.Intls.Extensions
 
         internal static StringBuilder MaskNewLine(this StringBuilder builder)
         {
-            builder
+            _ = builder
                     .Replace(@"\", @"\\")
                     .Replace(Environment.NewLine, NEWLINE_REPLACEMENT);
 
@@ -101,12 +101,12 @@ namespace FolkerKinzel.VCards.Intls.Extensions
 
             while (builder.Length >= 1 && char.IsWhiteSpace(builder[0]))
             {
-                builder.Remove(0, 1);
+                _ = builder.Remove(0, 1);
             }
 
             while (builder.Length >= 1 && char.IsWhiteSpace(builder[builder.Length - 1]))
             {
-                builder.Remove(builder.Length - 1, 1);
+                _ = builder.Remove(builder.Length - 1, 1);
             }
 
             return builder;
@@ -119,12 +119,12 @@ namespace FolkerKinzel.VCards.Intls.Extensions
 
             while (builder.Length >= 1 && (builder[0] == '\"' || builder[0] == '\''))
             {
-                builder.Remove(0, 1);
+                _ = builder.Remove(0, 1);
             }
 
             while (builder.Length >= 1 && (builder[builder.Length - 1] == '\"' || builder[builder.Length - 1] == '\''))
             {
-                builder.Remove(builder.Length - 1, 1);
+                _ = builder.Remove(builder.Length - 1, 1);
             }
 
             return builder;

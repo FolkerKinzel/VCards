@@ -20,25 +20,25 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             = TelTypes.Voice | TelTypes.Text | TelTypes.Fax | TelTypes.Cell
             | TelTypes.Video | TelTypes.Pager | TelTypes.TextPhone;
 
-        private readonly PropertyClassTypesCollector PropertyClassTypesCollector
+        private readonly PropertyClassTypesCollector _propertyClassTypesCollector
             = new PropertyClassTypesCollector();
 
-        private readonly List<string> StringCollectionList = new List<string>();
-        private readonly List<Action<ParameterSerializer4_0>> ActionList = new List<Action<ParameterSerializer4_0>>(2);
+        private readonly List<string> _stringCollectionList = new List<string>();
+        private readonly List<Action<ParameterSerializer4_0>> _actionList = new List<Action<ParameterSerializer4_0>>(2);
 
-        private readonly Action<ParameterSerializer4_0> CollectPropertyClassTypes =
-            serializer => serializer.PropertyClassTypesCollector.CollectValueStrings(
-                serializer.ParaSection.PropertyClass, serializer.StringCollectionList);
+        private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes =
+            serializer => serializer._propertyClassTypesCollector.CollectValueStrings(
+                serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
 
 
-        private readonly Action<ParameterSerializer4_0> CollectTelTypes =
+        private readonly Action<ParameterSerializer4_0> _collectTelTypes =
             serializer => serializer.TelTypesCollector.CollectValueStrings(
-                serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer.StringCollectionList);
+                serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
 
 
-        private readonly Action<ParameterSerializer4_0> CollectRelationTypes =
+        private readonly Action<ParameterSerializer4_0> _collectRelationTypes =
             serializer => serializer.RelationTypesCollector.CollectValueStrings(
-                serializer.ParaSection.RelationType, serializer.StringCollectionList);
+                serializer.ParaSection.RelationType, serializer._stringCollectionList);
 
 
         private RelationTypesCollector RelationTypesCollector
@@ -71,8 +71,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildAdrPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -134,8 +134,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildCaladruriPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -149,8 +149,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildCaluriPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -164,8 +164,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildCategoriesPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -184,8 +184,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildEmailPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -198,8 +198,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildFburlPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -212,8 +212,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildFnPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -236,8 +236,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildGeoPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -251,8 +251,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildImppPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -266,8 +266,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildKeyPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -297,8 +297,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildLangPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -311,8 +311,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildLogoPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -352,8 +352,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildNicknamePara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -367,8 +367,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildNotePara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -382,8 +382,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildOrgPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -398,8 +398,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildPhotoPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
 
@@ -424,9 +424,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildRelatedPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
-            ActionList.Add(CollectRelationTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
+            _actionList.Add(_collectRelationTypes);
 
             VCdDataType? dataType = this.ParaSection.DataType;
 
@@ -459,8 +459,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildRolePara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -474,8 +474,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildSoundPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
 
@@ -507,9 +507,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildTelPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
-            ActionList.Add(CollectTelTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
+            _actionList.Add(_collectTelTypes);
 
             AppendType();
             AppendPref();
@@ -529,8 +529,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildTitlePara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -544,8 +544,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildTzPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -565,8 +565,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildUrlPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -619,8 +619,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildExpertisePara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -635,8 +635,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildHobbyPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -651,8 +651,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildInterestPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -665,8 +665,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildOrgDirectoryPara()
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -679,8 +679,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildNonStandardPropertyPara(bool isPref)
         {
-            ActionList.Clear();
-            ActionList.Add(CollectPropertyClassTypes);
+            _actionList.Clear();
+            _actionList.Add(_collectPropertyClassTypes);
 
             AppendType();
             AppendPref();
@@ -739,11 +739,11 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 return;
             }
 
-            Worker.Clear().Append('"');
-            GeoCoordinateConverter.AppendTo(Worker, geo, VCdVersion.V4_0);
-            Worker.Append('"');
+            _ = _worker.Clear().Append('"');
+            GeoCoordinateConverter.AppendTo(_worker, geo, VCdVersion.V4_0);
+            _ = _worker.Append('"');
 
-            AppendParameter(ParameterSection.ParameterKey.GEO, Worker.ToString());
+            AppendParameter(ParameterSection.ParameterKey.GEO, _worker.ToString());
         }
 
         private void AppendIndex()
@@ -812,7 +812,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 return;
             }
 
-            Worker.Clear();
+            _ = _worker.Clear();
 
             foreach (Models.PropertyID pid in pids)
             {
@@ -820,14 +820,14 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 {
                     continue;
                 }
-                pid.AppendTo(Worker);
-                Worker.Append(',');
+                pid.AppendTo(_worker);
+                _ = _worker.Append(',');
             }
 
-            if (Worker.Length != 0)
+            if (_worker.Length != 0)
             {
-                --Worker.Length;
-                AppendParameter(ParameterSection.ParameterKey.PID, Worker.ToString());
+                --_worker.Length;
+                AppendParameter(ParameterSection.ParameterKey.PID, _worker.ToString());
             }
         }
 
@@ -851,7 +851,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 return;
             }
 
-            Worker.Clear();
+            _ = _worker.Clear();
 
             foreach (string? item in sortAs)
             {
@@ -860,14 +860,14 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                     continue;
                 }
 
-                Worker.Append(EscapeAndQuote(item));
-                Worker.Append(',');
+                _ = _worker.Append(EscapeAndQuote(item));
+                _ = _worker.Append(',');
             }
 
-            if (Worker.Length != 0)
+            if (_worker.Length != 0)
             {
-                --Worker.Length;
-                AppendParameter(ParameterSection.ParameterKey.SORT_AS, Worker.ToString());
+                --_worker.Length;
+                AppendParameter(ParameterSection.ParameterKey.SORT_AS, _worker.ToString());
             }
 
 
@@ -876,32 +876,32 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendType()
         {
-            this.StringCollectionList.Clear();
+            this._stringCollectionList.Clear();
 
-            for (int i = 0; i < this.ActionList.Count; i++)
+            for (int i = 0; i < this._actionList.Count; i++)
             {
-                ActionList[i](this);
+                _actionList[i](this);
             }
 
-            if (this.StringCollectionList.Count != 0)
+            if (this._stringCollectionList.Count != 0)
             {
                 AppendParameter(ParameterSection.ParameterKey.TYPE, ConcatValues());
             }
 
             string ConcatValues()
             {
-                this.Worker.Clear();
-                int count = this.StringCollectionList.Count;
+                _ = this._worker.Clear();
+                int count = this._stringCollectionList.Count;
 
                 Debug.Assert(count != 0);
 
                 for (int i = 0; i < count - 1; i++)
                 {
-                    Worker.Append(StringCollectionList[i]).Append(',');
+                    _ = _worker.Append(_stringCollectionList[i]).Append(',');
                 }
 
-                Worker.Append(StringCollectionList[count - 1]);
-                return Worker.ToString();
+                _ = _worker.Append(_stringCollectionList[count - 1]);
+                return _worker.ToString();
             }
         }
 
@@ -915,11 +915,11 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 return;
             }
 
-            Worker.Clear();
+            _ = _worker.Clear();
 
-            TimeZoneInfoConverter.AppendTo(Worker, tz, VCdVersion.V4_0);
+            TimeZoneInfoConverter.AppendTo(_worker, tz, VCdVersion.V4_0);
 
-            AppendParameter(ParameterSection.ParameterKey.TZ, EscapeAndQuote(Worker.ToString()));
+            AppendParameter(ParameterSection.ParameterKey.TZ, EscapeAndQuote(_worker.ToString()));
         }
 
         private void AppendValue(VCdDataType? dataType)
@@ -953,23 +953,23 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private string EscapeAndQuote(string s)
         {
-            Worker.Clear().Append(s).MaskNewLine();
+            _ = _worker.Clear().Append(s).MaskNewLine();
 
             if (MustBeQuoted())
             {
-                Worker.Insert(0, '\"');
-                Worker.Append('\"');
+                _ = _worker.Insert(0, '\"');
+                _ = _worker.Append('\"');
             }
 
-            return Worker.ToString();
+            return _worker.ToString();
 
             bool MustBeQuoted()
             {
                 bool mustBeQuoted = false;
 
-                for (int i = Worker.Length - 1; i >= 0; i--)
+                for (int i = _worker.Length - 1; i >= 0; i--)
                 {
-                    char c = Worker[i];
+                    char c = _worker[i];
 
                     if (c == ',' || c == ';')
                     {
@@ -977,7 +977,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                     }
                     else if (c == '\"')
                     {
-                        Worker.Remove(i, 1);
+                        _ = _worker.Remove(i, 1);
                     }
                 }
 

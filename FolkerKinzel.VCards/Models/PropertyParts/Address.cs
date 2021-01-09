@@ -15,7 +15,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// </summary>
     public sealed class Address
     {
-        private readonly ReadOnlyCollection<string>[] data;
+        private readonly ReadOnlyCollection<string>[] _data;
 
         private const int MAX_COUNT = 7;
 
@@ -66,7 +66,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 #nullable restore
             };
 
-            data = arr;
+            _data = arr;
         }
 
 
@@ -90,9 +90,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                 for (int j = currentList.Count - 1; j >= 0; j--)
                 {
-                    builder.Clear();
-                    builder.Append(currentList[j]);
-                    builder.UnMask(version).Trim().RemoveQuotes();
+                    _ = builder.Clear();
+                    _ = builder.Append(currentList[j]);
+                    _ = builder.UnMask(version).Trim().RemoveQuotes();
 
                     if (builder.Length != 0)
                     {
@@ -112,50 +112,50 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 listList.Add(new List<string>());
             }
 
-            data = listList.Select(x => new ReadOnlyCollection<string>(x)).ToArray();
+            _data = listList.Select(x => new ReadOnlyCollection<string>(x)).ToArray();
         }
 
         /// <summary>
         /// Postfach (nie <c>null</c>) (nicht verwenden)
         /// </summary>
         [Obsolete("Don't use this property.", false)]
-        public ReadOnlyCollection<string> PostOfficeBox => data[POST_OFFICE_BOX];
+        public ReadOnlyCollection<string> PostOfficeBox => _data[POST_OFFICE_BOX];
 
         /// <summary>
         /// Adresszusatz (nie <c>null</c>) (nicht verwenden)
         /// </summary>
         [Obsolete("Don't use this property.", false)]
-        public ReadOnlyCollection<string> ExtendedAddress => data[EXTENDED_ADDRESS];
+        public ReadOnlyCollection<string> ExtendedAddress => _data[EXTENDED_ADDRESS];
 
         /// <summary>
         /// Straße (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> Street => data[STREET];
+        public ReadOnlyCollection<string> Street => _data[STREET];
 
         /// <summary>
         /// Ort (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> Locality => data[LOCALITY];
+        public ReadOnlyCollection<string> Locality => _data[LOCALITY];
 
         /// <summary>
         /// Bundesland (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> Region => data[REGION];
+        public ReadOnlyCollection<string> Region => _data[REGION];
 
         /// <summary>
         /// Postleitzahl (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> PostalCode => data[POSTAL_CODE];
+        public ReadOnlyCollection<string> PostalCode => _data[POSTAL_CODE];
 
         /// <summary>
         /// Land (Staat) (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> Country => data[COUNTRY];
+        public ReadOnlyCollection<string> Country => _data[COUNTRY];
 
         /// <summary>
         /// <c>true</c>, wenn das <see cref="Address"/>-Objekt keine verwertbaren Daten enthält.
         /// </summary>
-        public bool IsEmpty => !data.Any(x => x.Count != 0);
+        public bool IsEmpty => !_data.Any(x => x.Count != 0);
 
 
         internal void AppendVCardString(VcfSerializer serializer)
@@ -165,13 +165,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
 
-            for (int i = 0; i < data.Length - 1; i++)
+            for (int i = 0; i < _data.Length - 1; i++)
             {
-                AppendProperty(data[i]);
-                builder.Append(';');
+                AppendProperty(_data[i]);
+                _ = builder.Append(';');
             }
 
-            AppendProperty(data[data.Length - 1]);
+            AppendProperty(_data[_data.Length - 1]);
 
             void AppendProperty(IList<string> strings)
             {
@@ -182,12 +182,12 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                 for (int i = 0; i < strings.Count - 1; i++)
                 {
-                    worker.Clear().Append(strings[i]).Mask(serializer.Version);
-                    builder.Append(worker).Append(joinChar);
+                    _ = worker.Clear().Append(strings[i]).Mask(serializer.Version);
+                    _ = builder.Append(worker).Append(joinChar);
                 }
 
-                worker.Clear().Append(strings[strings.Count - 1]).Mask(serializer.Version);
-                builder.Append(worker);
+                _ = worker.Clear().Append(strings[strings.Count - 1]).Mask(serializer.Version);
+                _ = builder.Append(worker);
             }
 
         }
@@ -195,9 +195,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         internal bool NeedsToBeQpEncoded()
         {
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i < _data.Length; i++)
             {
-                if (data[i].Any(s => s.NeedsToBeQpEncoded()))
+                if (_data[i].Any(s => s.NeedsToBeQpEncoded()))
                 {
                     return true;
                 }
@@ -220,9 +220,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             var worker = new StringBuilder();
             var dic = new List<Tuple<string, string>>();
 
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i < _data.Length; i++)
             {
-                string? s = BuildProperty(data[i]);
+                string? s = BuildProperty(_data[i]);
 
                 if (s is null)
                 {
@@ -252,13 +252,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             int maxLength = dic.Select(x => x.Item1.Length).Max();
             maxLength += 2;
 
-            worker.Clear();
+            _ = worker.Clear();
 
             for (int i = 0; i < dic.Count; i++)
             {
                 Tuple<string, string>? tpl = dic[i];
                 string s = tpl.Item1 + ": ";
-                worker.Append(s.PadRight(maxLength)).Append(tpl.Item2).Append(Environment.NewLine);
+                _ = worker.Append(s.PadRight(maxLength)).Append(tpl.Item2).Append(Environment.NewLine);
             }
 
             worker.Length -= Environment.NewLine.Length;
@@ -266,7 +266,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             string? BuildProperty(IList<string> strings)
             {
-                worker.Clear();
+                _ = worker.Clear();
 
                 if (strings.Count == 0)
                 {
@@ -275,10 +275,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                 for (int i = 0; i < strings.Count - 1; i++)
                 {
-                    worker.Append(strings[i]).Append(", ");
+                    _ = worker.Append(strings[i]).Append(", ");
                 }
 
-                worker.Append(strings[strings.Count - 1]);
+                _ = worker.Append(strings[strings.Count - 1]);
 
                 return worker.ToString();
             }

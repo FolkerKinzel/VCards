@@ -90,7 +90,7 @@ namespace FolkerKinzel.VCards.Models
                 Debug.Assert(this.Value.UniqueIdentifier != null);
                 Debug.Assert(!this.Value.UniqueIdentifier.IsEmpty);
 
-                builder.AppendUuid(this.Value.UniqueIdentifier.Value);
+                _ = builder.AppendUuid(this.Value.UniqueIdentifier.Value);
                 return;
             }
 
@@ -101,15 +101,15 @@ namespace FolkerKinzel.VCards.Models
             {
                 Debug.Assert(serializer.PropertyKey == VCard.PropKeys.AGENT);
 
-                worker.Clear().Append(vc).Mask(serializer.Version);
+                _ = worker.Clear().Append(vc).Mask(serializer.Version);
 
-                builder.Append(worker);
+                _ = builder.Append(worker);
             }
             else //vCard 2.1
             {
                 Debug.Assert(serializer.PropertyKey == VCard.PropKeys.AGENT);
 
-                builder.Append(VCard.NewLine).Append(vc);
+                _ = builder.Append(VCard.NewLine).Append(vc);
             }
         }
 

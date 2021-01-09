@@ -8,9 +8,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
     internal sealed class ImppTypesCollector
     {
         private readonly
-            ImppTypes[] definedEnumValues = new ImppTypes[] { ImppTypes.Business,
-                                                              ImppTypes.Mobile,
-                                                              ImppTypes.Personal
+            ImppTypes[] _definedEnumValues = new ImppTypes[] { ImppTypes.Business,
+                                                               ImppTypes.Mobile,
+                                                               ImppTypes.Personal
                                                              };
 
 
@@ -26,9 +26,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
             Debug.Assert(list != null);
 
 
-            for (int i = 0; i < definedEnumValues.Length; i++)
+            for (int i = 0; i < _definedEnumValues.Length; i++)
             {
-                ImppTypes value = definedEnumValues[i];
+                ImppTypes value = _definedEnumValues[i];
 
                 if ((imppType & value) == value)
                 {

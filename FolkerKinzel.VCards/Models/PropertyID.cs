@@ -82,26 +82,12 @@ namespace FolkerKinzel.VCards.Models
                     if (parseMapping)
                     {
                         // Exception bei mehrstelligen Nummern:
-                        if (mappingNumber.HasValue)
-                        {
-                            mappingNumber = 0;
-                        }
-                        else
-                        {
-                            mappingNumber = DigitParser.Parse(c);
-                        }
+                        mappingNumber = mappingNumber.HasValue ? 0 : DigitParser.Parse(c);
                     }
                     else
                     {
-                        if (propertyNumber == 0)
-                        {
-                            propertyNumber = DigitParser.Parse(c);
-                        }
-                        else
-                        {
-                            // Exception bei mehrstelligen Nummern:
-                            propertyNumber = 0;
-                        }
+                        // Exception bei mehrstelligen Nummern:
+                        propertyNumber = propertyNumber == 0 ? DigitParser.Parse(c) : 0;
                     }
                 }//else
             }//while
@@ -146,24 +132,7 @@ namespace FolkerKinzel.VCards.Models
         ///// <returns><c>true</c>, wenn <paramref name="obj"/> eine <see cref="PropertyID"/>-Struktur ist, die 
         ///// über dieselben Werte wie diese Instanz verfügt, andernfalls <c>false</c>.</returns>
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            //       
-            // See the full list of guidelines at
-            //   http://go.microsoft.com/fwlink/?LinkID=85237  
-            // and also the guidance for operator== at
-            //   http://go.microsoft.com/fwlink/?LinkId=85238
-            //
-
-            if ((obj is PropertyID other))
-            {
-                return Equals(other);
-            }
-            else
-            {
-                return false;
-            }
-        }
+        public override bool Equals(object? obj) => obj is PropertyID other && Equals(other);
 
         ///// <summary>
         ///// Gibt einen Wert zurück, der angibt, ob diese Instanz gleich einer angegebenen <see cref="PropertyID"/>-Struktur ist.
@@ -192,10 +161,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="pid1">Eine zu vergleichende <see cref="PropertyID"/>-Struktur.</param>
         /// <param name="pid2">Eine zu vergleichende <see cref="PropertyID"/>-Struktur.</param>
         /// <returns><c>true</c>, wenn die Werte der beiden <see cref="PropertyID"/>-Strukturen gleich sind, andernfalls <c>false</c>.</returns>
-        public static bool operator ==(PropertyID pid1, PropertyID pid2)
-        {
-            return pid1.Equals(pid2);
-        }
+        public static bool operator ==(PropertyID pid1, PropertyID pid2) => pid1.Equals(pid2);
 
         /// <summary>
         /// Vergleicht zwei <see cref="PropertyID"/>-Strukturen. Das Ergebnis gibt an, ob die Werte der beiden 
@@ -205,10 +171,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="pid2">Eine zu vergleichende <see cref="PropertyID"/>-Struktur.</param>
         /// <returns><c>true</c>, wenn die Werte der beiden <see cref="PropertyID"/>-Strukturen ungleich sind, 
         /// andernfalls <c>false</c>.</returns>
-        public static bool operator !=(PropertyID pid1, PropertyID pid2)
-        {
-            return !pid1.Equals(pid2);
-        }
+        public static bool operator !=(PropertyID pid1, PropertyID pid2) => !pid1.Equals(pid2);
 
         #endregion
 
@@ -233,12 +196,12 @@ namespace FolkerKinzel.VCards.Models
                 return; 
             }
 
-            builder.Append(PropertyNumber.ToString(CultureInfo.InvariantCulture));
+            _ = builder.Append(PropertyNumber.ToString(CultureInfo.InvariantCulture));
 
             if (MappingNumber.HasValue)
             {
-                builder.Append('.');
-                builder.Append(MappingNumber.Value.ToString(CultureInfo.InvariantCulture));
+                _ = builder.Append('.');
+                _ = builder.Append(MappingNumber.Value.ToString(CultureInfo.InvariantCulture));
             }
         }
 

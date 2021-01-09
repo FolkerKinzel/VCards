@@ -125,8 +125,8 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
             static int EncodeLastChar(StringBuilder sb, char lastChar, int lastCharIndex)
             {
 
-                sb.Remove(lastCharIndex, 1);
-                sb.Insert(lastCharIndex, '=')
+                _ = sb.Remove(lastCharIndex, 1);
+                _ = sb.Insert(lastCharIndex, '=')
                     .Insert(lastCharIndex + 1, ((byte)lastChar).ToString("X02", CultureInfo.InvariantCulture));
 
                 return lastCharIndex - 1 + ENCODED_CHAR_LENGTH;
@@ -134,7 +134,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 
             static int InsertSoftlineBreak(StringBuilder sb, int softlineBreakIndex)
             {
-                sb.Insert(softlineBreakIndex, SOFT_LINEBREAK);
+                _ = sb.Insert(softlineBreakIndex, SOFT_LINEBREAK);
                 return softlineBreakIndex + SOFT_LINEBREAK_LENGTH;
             }
         }
@@ -149,12 +149,12 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
             {
                 if (HasToBeQuoted(bt))
                 {
-                    sb.Append('=');
-                    sb.Append(bt.ToString("X02", CultureInfo.InvariantCulture));
+                    _ = sb.Append('=');
+                    _ = sb.Append(bt.ToString("X02", CultureInfo.InvariantCulture));
                 }
                 else
                 {
-                    sb.Append((char)bt);
+                    _ = sb.Append((char)bt);
                 }
             }
             return sb;
@@ -164,12 +164,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 
             static bool HasToBeQuoted(byte bt)
             {
-                if (bt == (byte)'\t')
-                {
-                    return false;
-                }
-
-                return bt > 126 || bt == (byte)'=' || bt < 32 || bt == (byte)'\r' || bt == (byte)'\n';
+                return bt != (byte)'\t' && (bt > 126 || bt == (byte)'=' || bt < 32 || bt == (byte)'\r' || bt == (byte)'\n');
             }
         }
 

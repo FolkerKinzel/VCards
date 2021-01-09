@@ -102,19 +102,14 @@ namespace FolkerKinzel.VCards.Models
 
             if (serializer.Version == VCdVersion.V2_1)
             {
-                if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
-                {
-                    builder.Append(QuotedPrintableConverter.Encode(Value, builder.Length));
-                }
-                else
-                {
-                    builder.Append(Value);
-                }
+                _ = this.Parameters.Encoding == VCdEncoding.QuotedPrintable
+                    ? builder.Append(QuotedPrintableConverter.Encode(Value, builder.Length))
+                    : builder.Append(Value);
             }
             else
             {
-                worker.Clear().Append(Value).Mask(serializer.Version);
-                builder.Append(worker);
+                _ = worker.Clear().Append(Value).Mask(serializer.Version);
+                _ = builder.Append(worker);
             }
         }
 

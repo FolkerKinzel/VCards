@@ -77,10 +77,10 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 case VCdVersion.V3_0:
                     TimeSpan timeSpan = tzInfo.BaseUtcOffset;
                     string format = timeSpan < TimeSpan.Zero ? @"\-hh\:mm" : @"hh\:mm";
-                    builder.Append(timeSpan.ToString(format, CultureInfo.InvariantCulture));
+                    _ = builder.Append(timeSpan.ToString(format, CultureInfo.InvariantCulture));
                     break;
                 default:
-                    builder.Append(tzInfo.Id); // Wenn ein URI-Schema eingeführt wird, muss ParameterSerializer4_0.AppendTz() geändert werden
+                    _ = builder.Append(tzInfo.Id); // Wenn ein URI-Schema eingeführt wird, muss ParameterSerializer4_0.AppendTz() geändert werden
                     break;
             }
         }

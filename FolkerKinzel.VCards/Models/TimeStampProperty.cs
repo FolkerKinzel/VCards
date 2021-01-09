@@ -72,10 +72,10 @@ namespace FolkerKinzel.VCards.Models
             Debug.Assert(serializer != null);
 
             StringBuilder worker = serializer.Worker;
-            worker.Clear();
+            _ = worker.Clear();
             DateAndOrTimeConverter.AppendTimestampTo(worker, this.Value, serializer.Version);
-            worker.Mask(serializer.Version);
-            serializer.Builder.Append(worker);
+            _ = worker.Mask(serializer.Version);
+            _ = serializer.Builder.Append(worker);
         }
 
     }

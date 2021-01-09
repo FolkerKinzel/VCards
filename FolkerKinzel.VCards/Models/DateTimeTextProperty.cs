@@ -78,8 +78,8 @@ namespace FolkerKinzel.VCards.Models
             StringBuilder builder = serializer.Builder;
             StringBuilder worker = serializer.Worker;
 
-            worker.Clear().Append(this.Value).Mask(serializer.Version);
-            builder.Append(worker);
+            _ = worker.Clear().Append(this.Value).Mask(serializer.Version);
+            _ = builder.Append(worker);
         }
     }
 }
