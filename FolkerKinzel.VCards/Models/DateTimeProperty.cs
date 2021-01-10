@@ -34,15 +34,6 @@ namespace FolkerKinzel.VCards.Models
             Debug.Assert(vcfRow != null);
             Debug.Assert(info != null);
 
-            //if(version == VCdVersion.V2_1)
-            //{
-            //    vcfRow.Parameters.DataType = VCdDataType.Date;
-            //}
-            //else if(version == VCdVersion.V3_0 && !vcfRow.Parameters.DataType.HasValue)
-            //{
-            //    vcfRow.Parameters.DataType = VCdDataType.DateAndOrTime;
-            //}
-
 
             switch (vcfRow.Parameters.DataType)
             {
