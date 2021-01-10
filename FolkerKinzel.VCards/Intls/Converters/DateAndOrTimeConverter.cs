@@ -11,6 +11,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
     /// <threadsafety static="true" instance="false" />
     internal sealed class DateAndOrTimeConverter
     {
+        private const int FIRST_LEAP_YEAR = 4;
+
         private readonly string[] _modelStrings = new string[]
         {
             "yyyyMMdd",
@@ -56,8 +58,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
             {
                 return false;
             }
-
-            //s = s.Trim();
 
             DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
@@ -148,7 +148,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 case VCdVersion.V2_1:
                 case VCdVersion.V3_0:
                     {
-                        _ = dt.Year > 4
+                        _ = dt.Year >= FIRST_LEAP_YEAR
                             ? builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}", dt.Year, dt.Month, dt.Day)
                             : builder.AppendFormat(CultureInfo.InvariantCulture, "--{0:00}-{1:00}", dt.Month, dt.Day);
 
@@ -173,8 +173,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                     }
                 default: // vCard 4.0
                     {
-                        // 4 == erstes Schaltjahr
-                        _ = dt.Year > 4
+                        _ = dt.Year >= FIRST_LEAP_YEAR
                             ? builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}{1:00}{2:00}", dt.Year, dt.Month, dt.Day)
                             : builder.AppendFormat(CultureInfo.InvariantCulture, "--{0:00}{1:00}", dt.Month, dt.Day);
 
