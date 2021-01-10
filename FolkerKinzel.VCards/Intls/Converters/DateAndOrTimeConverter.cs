@@ -61,6 +61,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
             DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
+
             if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
             {
                 s = s.Substring(0, s.Length - 1);
