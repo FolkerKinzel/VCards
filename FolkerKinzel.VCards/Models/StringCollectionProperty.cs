@@ -45,6 +45,7 @@ namespace FolkerKinzel.VCards.Models
             this.Value = new ReadOnlyCollection<string>(arr);
         }
 
+
         /// <summary>
         /// Initialisiert ein <see cref="StringCollectionProperty"/>-Objekt.
         /// </summary>
@@ -149,12 +150,7 @@ namespace FolkerKinzel.VCards.Models
             _ = builder.Append(worker);
         }
 
-
-        ///// <summary>
-        ///// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="StringCollectionProperty"/>-Objekts. (Nur zum 
-        ///// Debuggen.)
-        ///// </summary>
-        ///// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="StringCollectionProperty"/>-Objekts.</returns>
+                
         /// <inheritdoc/>
         public override string ToString()
         {

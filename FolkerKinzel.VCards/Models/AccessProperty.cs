@@ -36,11 +36,6 @@ namespace FolkerKinzel.VCards.Models
         }
 
         
-
-
-        ///// <summary>
-        ///// <c>true</c>, wenn das <see cref="AccessProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
         /// <inheritdoc/>
         public override bool IsEmpty => false;
 

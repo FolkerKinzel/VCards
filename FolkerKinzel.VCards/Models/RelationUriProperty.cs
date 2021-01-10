@@ -32,6 +32,7 @@ namespace FolkerKinzel.VCards.Models
             this.Value = uri;
         }
 
+
         /// <summary>
         /// Die von der <see cref="RelationUriProperty"/> zur Verfügung gestellten Daten.
         /// </summary>

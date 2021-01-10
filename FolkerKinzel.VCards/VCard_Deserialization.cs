@@ -146,7 +146,7 @@ namespace FolkerKinzel.VCards
 
                 Debug.WriteLine(s);
 
-            } while (!VCardBegin.IsMatch(s));
+            } while (!_vCardBegin.IsMatch(s));
 
 
             Queue<VcfRow>? vcfRows = ParseVcfRows();
@@ -215,7 +215,7 @@ namespace FolkerKinzel.VCards
                     {
                         if (info.Builder.Length != 0)
                         {
-                            if (VCardBegin.IsMatch(s)) //eingebettete VCard 2.1. AGENT-vCard:
+                            if (_vCardBegin.IsMatch(s)) //eingebettete VCard 2.1. AGENT-vCard:
                             {
                                 Debug.WriteLine("  == Embedded VCARD 2.1 vCard detected ==");
 
@@ -233,7 +233,7 @@ namespace FolkerKinzel.VCards
                         _ = info.Builder.Append(s);
                     }
 
-                } while (!VCardEnd.IsMatch(s));
+                } while (!_vCardEnd.IsMatch(s));
 
                 return parsedVcfRows;
 
@@ -331,7 +331,7 @@ namespace FolkerKinzel.VCards
                         _ = info.Builder.Append(VCard.NewLine);
                         _ = info.Builder.Append(s);
                     }
-                    while (!VCardEnd.IsMatch(s));
+                    while (!_vCardEnd.IsMatch(s));
 
                     s = string.Empty; //damit die äußere Schleife nicht endet
                 }

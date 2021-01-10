@@ -22,7 +22,9 @@ namespace FolkerKinzel.VCards.Models
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public KindProperty(VCdKind value, string? propertyGroup = null) : base(propertyGroup) => Value = value;
 
+
         internal KindProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = VCdKindConverter.Parse(vcfRow.Value);
+
 
         /// <summary>
         /// Die von der <see cref="KindProperty"/> zur Verfügung gestellten Daten.
@@ -40,9 +42,7 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetVCardPropertyValue() => Value;
 
 
-        ///// <summary>
-        ///// <c>true</c>, wenn das <see cref="KindProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
+        
         /// <inheritdoc/>
         public override bool IsEmpty => false;
 

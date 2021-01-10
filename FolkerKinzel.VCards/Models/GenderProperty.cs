@@ -39,10 +39,7 @@ namespace FolkerKinzel.VCards.Models
             get;
         }
 
-
-        ///// <summary>
-        ///// <c>true</c>, wenn das <see cref="GenderProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
+        
         /// <inheritdoc/>
         public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
 

@@ -44,12 +44,7 @@ namespace FolkerKinzel.VCards.Models
         private DataUrl(string uriString, MimeType? mimeType) : base(uriString) => this.MimeType = mimeType ?? new MimeType();
 
 
-        ///// <summary>
-        ///// Füllt eine <see cref="SerializationInfo"/> mit den Daten auf, die zum Serialisieren des Zielobjekts erforderlich sind.
-        ///// Die Methode wird während der Serialisierung des Objekts aufgerufen.
-        ///// </summary>
-        ///// <param name="info">Die mit Daten zu füllende <see cref="SerializationInfo"/>.</param>
-        ///// <param name="context">Das Ziel dieser Serialisierung.</param>
+        
         /// <inheritdoc/>
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         public new void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -65,11 +60,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        ///// <summary>
-        ///// Konstruktor, der während der Deserialisierung des Objekts aufgerufen wird.
-        ///// </summary>
-        ///// <param name="serializationInfo">Die zu deserialisierenden Daten.</param>
-        ///// <param name="streamingContext">Kontext der Deserialisierung.</param>
+        
         /// <inheritdoc/>
         protected DataUrl(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext)
         {

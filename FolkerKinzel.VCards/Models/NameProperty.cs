@@ -98,9 +98,7 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetVCardPropertyValue() => Value;
 
 
-        ///// <summary>
-        ///// <c>true</c>, wenn das <see cref="NameProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
+        
         /// <inheritdoc/>
         public override bool IsEmpty => Value.IsEmpty;
 

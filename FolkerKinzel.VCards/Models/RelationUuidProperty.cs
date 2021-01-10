@@ -31,6 +31,7 @@ namespace FolkerKinzel.VCards.Models
             this.Value = uuid;
         }
 
+
         /// <summary>
         /// Die von der <see cref="RelationUuidProperty"/> zur Verfügung gestellten Daten.
         /// </summary>
@@ -46,10 +47,7 @@ namespace FolkerKinzel.VCards.Models
 #endif
         protected override object? GetVCardPropertyValue() => Value;
 
-
-        ///// <summary>
-        ///// <c>true</c>, wenn das <see cref="RelationUuidProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
+        
         /// <inheritdoc/>
         public override bool IsEmpty => Value == Guid.Empty;
 

@@ -29,6 +29,7 @@ namespace FolkerKinzel.VCards.Models
                                     IEnumerable<string?>? organizationalUnits = null,
                                     string? propertyGroup = null) : base(propertyGroup) => Value = new Organization(organizationName, organizationalUnits);
 
+
         internal OrganizationProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
@@ -56,9 +57,6 @@ namespace FolkerKinzel.VCards.Models
 
 
 
-        ///// <summary>
-        ///// <c>true</c>, wenn das <see cref="OrganizationProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
         /// <inheritdoc/>
         public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
 

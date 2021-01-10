@@ -29,6 +29,7 @@ namespace FolkerKinzel.VCards.Models
             this.Value = (value is null) || value.IsUnknown ? null : value;
         }
 
+
         /// <summary>
         /// Die von der <see cref="GeoProperty"/> zur Verfügung gestellten Daten.
         /// </summary>

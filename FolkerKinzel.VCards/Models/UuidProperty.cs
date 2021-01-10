@@ -20,6 +20,7 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         public UuidProperty() : this(Guid.NewGuid()) { }
 
+
         /// <summary>
         /// Initialisiert ein neues <see cref="UuidProperty"/>-Objekt.
         /// </summary>
@@ -29,7 +30,9 @@ namespace FolkerKinzel.VCards.Models
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public UuidProperty(Guid uuid, string? propertyGroup = null) : base(propertyGroup) => Value = uuid;
 
+
         internal UuidProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = UuidConverter.ToGuid(vcfRow.Value);
+
 
         /// <summary>
         /// Die von der <see cref="UuidProperty"/> zur Verfügung gestellten Daten.
@@ -39,9 +42,7 @@ namespace FolkerKinzel.VCards.Models
             get;
         }
 
-        ///// <summary>
-        ///// <c>true</c>, wenn das <see cref="UuidProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
+        
         /// <inheritdoc/>
         public override bool IsEmpty => Value == Guid.Empty;
 

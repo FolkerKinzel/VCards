@@ -158,6 +158,7 @@ namespace FolkerKinzel.VCards.Models
         /// <inheritdoc/>
         public override bool IsEmpty => Value.IsEmpty;
 
+
         /// <inheritdoc/>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

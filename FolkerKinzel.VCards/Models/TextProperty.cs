@@ -26,6 +26,7 @@ namespace FolkerKinzel.VCards.Models
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public TextProperty(string? value, string? propertyGroup = null) : base(propertyGroup) => Value = string.IsNullOrWhiteSpace(value) ? null : value;
 
+
         internal TextProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
         {
             vcfRow.DecodeQuotedPrintable();
@@ -37,6 +38,7 @@ namespace FolkerKinzel.VCards.Models
 
             Value = vcfRow.Value;
         }
+
 
         /// <summary>
         /// Die von der <see cref="TextProperty"/> zur Verfügung gestellten Daten.
@@ -69,6 +71,7 @@ namespace FolkerKinzel.VCards.Models
                 this.Parameters.Charset = VCard.DEFAULT_CHARSET;
             }
         }
+
 
         [InternalProtected]
         internal override void AppendValue(VcfSerializer serializer)

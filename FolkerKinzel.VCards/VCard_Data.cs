@@ -23,11 +23,11 @@ namespace FolkerKinzel.VCards
         internal static string[] EmptyStringArray = new string[0];
 #endif
 
-        private static readonly Regex VCardBegin =
+        private static readonly Regex _vCardBegin =
             new Regex(@"\ABEGIN[ \t]*:[ \t]*VCARD[ \t]*\z",
                 RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
-        private static readonly Regex VCardEnd =
+        private static readonly Regex _vCardEnd =
             new Regex(@"\AEND[ \t]*:[ \t]*VCARD[ \t]*\z",
                 RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
@@ -561,9 +561,6 @@ namespace FolkerKinzel.VCards
         }
 
 
-
-
-
         /// <summary>
         /// <c>RELATED</c>: Andere Einheiten, zu der die Person Verbindung hat. <c>(4)</c>
         /// </summary>
@@ -572,7 +569,6 @@ namespace FolkerKinzel.VCards
             get => Get<IEnumerable<RelationProperty?>?>(VCdProp.Relations);
             set => Set(VCdProp.Relations, value);
         }
-
 
 
         /// <summary>
@@ -584,7 +580,6 @@ namespace FolkerKinzel.VCards
             get => Get<IEnumerable<TextProperty?>?>(VCdProp.Roles);
             set => Set(VCdProp.Roles, value);
         }
-
 
 
         /// <summary>

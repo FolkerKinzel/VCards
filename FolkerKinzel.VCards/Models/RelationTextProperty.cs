@@ -37,6 +37,7 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+
         internal RelationTextProperty(VcfRow row, VCardDeserializationInfo info, VCdVersion version) : base(row.Parameters, row.Group)
         {
             row.DecodeQuotedPrintable();
@@ -48,6 +49,7 @@ namespace FolkerKinzel.VCards.Models
 
             this.Value = row.Value;
         }
+
 
         /// <summary>
         /// Die von der <see cref="RelationTextProperty"/> zur Verfügung gestellten Daten.
@@ -90,6 +92,7 @@ namespace FolkerKinzel.VCards.Models
 
             this.Parameters.DataType = VCdDataType.Text;
         }
+
 
         [InternalProtected]
         internal override void AppendValue(VcfSerializer serializer)

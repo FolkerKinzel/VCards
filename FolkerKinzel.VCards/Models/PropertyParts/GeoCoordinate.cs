@@ -35,32 +35,17 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             Latitude < -90 || Latitude > 90 || Longitude < -180 || Longitude > 180;
 
 
-
-
-        ///// <summary>
-        ///// Stellt fest, ob das <see cref="GeoCoordinate"/>-Objekt dem Parameter entspricht.
-        ///// </summary>
-        ///// <param name="other">Ein anderes <see cref="GeoCoordinate"/>-Objekt, mit dem die Instanz verglichen wird.</param>
-        ///// <returns><c>true</c>, wenn das <see cref="GeoCoordinate"/>-Objekt dem Parameter entspricht.</returns>
         /// <inheritdoc/>
         public bool Equals(GeoCoordinate? other) => !(other is null) && (other.Latitude == this.Latitude) && (other.Longitude == this.Longitude);
 
-        ///// <summary>
-        ///// Stellt fest, ob der Parameter ein <see cref="GeoCoordinate"/>-Objekt ist, dessen Werte mit denen
-        ///// der vergleichenden Instanz übereinstimmen.
-        ///// </summary>
-        ///// <param name="obj">Ein beliebiges <see cref="object"/>.</param>
-        ///// <returns><c>true</c>, wenn der Parameter ein <see cref="GeoCoordinate"/>-Objekt ist, dessen Werte mit denen
-        ///// der vergleichenden Instanz übereinstimmen.</returns>
+        
         /// <inheritdoc/>
         public override bool Equals(object? obj) => Equals(obj as GeoCoordinate);
 
-        ///// <summary>
-        ///// Hashfunktion für das <see cref="GeoCoordinate"/>-Objekt.
-        ///// </summary>
-        ///// <returns>Ein Hashcode für das aktuelle <see cref="GeoCoordinate"/>-Objekt.</returns>
+        
         /// <inheritdoc/>
         public override int GetHashCode() => -1 ^ Latitude.GetHashCode() ^ Longitude.GetHashCode();
+
 
         /// <summary>
         /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="GeoCoordinate"/>-Objekts. 

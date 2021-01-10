@@ -23,7 +23,9 @@ namespace FolkerKinzel.VCards.Models
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public TimeZoneProperty(TimeZoneInfo? value, string? propertyGroup = null) : base(propertyGroup) => Value = value;
 
+
         internal TimeZoneProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = TimeZoneInfoConverter.Parse(vcfRow.Value);
+
 
         /// <summary>
         /// Die von der <see cref="TimeZoneProperty"/> zur Verfügung gestellten Daten.

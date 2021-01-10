@@ -44,6 +44,7 @@ namespace FolkerKinzel.VCards.Models
             Parameters.DataType = VCdDataType.Timestamp;
         }
 
+
         /// <summary>
         /// Die von der <see cref="TimeStampProperty"/> zur Verfügung gestellten Daten.
         /// </summary>
@@ -52,6 +53,7 @@ namespace FolkerKinzel.VCards.Models
             get;
         }
 
+
         /// <inheritdoc/>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -59,9 +61,6 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetVCardPropertyValue() => Value;
 
 
-        ///// <summary>
-        ///// <c>true</c>, wenn das <see cref="TimestampProperty"/>-Objekt keine Daten enthält.
-        ///// </summary>
         /// <inheritdoc/>
         public override bool IsEmpty => Value == DateTimeOffset.MinValue;
 

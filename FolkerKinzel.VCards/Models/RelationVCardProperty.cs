@@ -33,6 +33,7 @@ namespace FolkerKinzel.VCards.Models
             this.Parameters.DataType = VCdDataType.VCard;
         }
 
+
         /// <summary>
         /// Die von der <see cref="RelationVCardProperty"/> zur Verfügung gestellten Daten.
         /// </summary>
