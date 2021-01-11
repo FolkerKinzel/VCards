@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -8,40 +8,36 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Tests
 {
     [TestClass]
-    public class V3Test
+    public class V4Tests
     {
         [TestMethod]
         public void Parse()
         {
-            var vcard = VCard.Load(TestFiles.V3vcf);
-
+            List<VCard>? vcard = VCard.Load(TestFiles.V4vcf);
+          
             Assert.IsNotNull(vcard);
             Assert.AreNotEqual(0, vcard.Count);
-        }
 
+        }
 
         [TestMethod]
         public void WriteEmptyVCard()
         {
             var vcard = new VCard();
 
-            string s = vcard.ToVcfString(VCdVersion.V3_0);
+            string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-            var cards = VCard.Parse(s);
+            List<VCard>? cards = VCard.Parse(s);
 
             Assert.AreEqual(cards.Count, 1);
 
             vcard = cards[0];
 
-            Assert.AreEqual(vcard.Version, VCdVersion.V3_0);
+            Assert.AreEqual(vcard.Version, VCdVersion.V4_0);
 
             Assert.IsNotNull(vcard.DisplayNames);
             Assert.AreEqual(vcard.DisplayNames.Count(), 1);
             Assert.IsNotNull(vcard.DisplayNames.First());
-
-            Assert.IsNotNull(vcard.NameViews);
-            Assert.AreEqual(vcard.NameViews.Count(), 1);
-            Assert.IsNotNull(vcard.NameViews.First());
         }
 
 
@@ -55,7 +51,7 @@ namespace FolkerKinzel.VCards.Tests
                 "Um noch eine Zeile einzufügen, folgt hier noch ein Satz. ";
 
             const string ASCIITEXT = "This is really a very very long ASCII-Text. This is needed to test the " +
-                "LineWrapping. That's why I have to write so much even though I have nothing to say." + 
+                "LineWrapping. That's why I have to write so much even though I have nothing to say." +
                 "For a better test, I write the same again: " +
                 "This is really a very very long ASCII-Text. This is needed to test the " +
                 "LineWrapping. That's why I have to write so much even though I have nothing to say.";
@@ -71,7 +67,7 @@ namespace FolkerKinzel.VCards.Tests
 
             vcard.Photos = new DataProperty[] { new DataProperty(DataUrl.FromBytes(bytes, "image/jpeg")) };
 
-            string s = vcard.ToVcfString(VCdVersion.V3_0);
+            string s = vcard.ToVcfString(VCdVersion.V4_0);
 
 
             Assert.IsNotNull(s);
@@ -79,10 +75,10 @@ namespace FolkerKinzel.VCards.Tests
             Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
                 .All(x => x != null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
-            VCard.Parse(s);
+            _ = VCard.Parse(s);
 
             Assert.AreEqual(((DataUrl?)vcard.Keys?.First()?.Value)?.GetEmbeddedText(), ASCIITEXT);
-            Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
+            Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, null);
             Assert.IsTrue(((DataUrl?)vcard.Photos?.First()?.Value)?.GetEmbeddedBytes().SequenceEqual(bytes) ?? false);
 
 
@@ -100,34 +96,6 @@ namespace FolkerKinzel.VCards.Tests
                 return arr;
             }
 
-        }
-
-        [TestMethod]
-        public void SaveTest()
-        {
-            var vcard = new VCard();
-
-            string UNITEXT = "Dies ist ein wirklich sehr sehr sehr langer Text mit ü, Ö, und ä " + "" +
-                "damit das Line-Wrappping getestet werden kann. " + Environment.NewLine +
-                "Um noch eine Zeile einzufügen, folgt hier noch ein Satz. ";
-
-            vcard.NameViews = new NameProperty[]
-            {
-                new NameProperty("Test", "Paul", null, null, null)
-            };
-
-            vcard.DisplayNames = new TextProperty[]
-            {
-                new TextProperty("Paul Test")
-            };
-
-            vcard.Notes = new TextProperty[]
-            {
-                new TextProperty(UNITEXT)
-            };
-
-
-            vcard.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Paul Test.vcf"));
         }
 
     }

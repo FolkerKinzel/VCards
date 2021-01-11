@@ -4,7 +4,7 @@ using FolkerKinzel.VCards.Models.Enums;
 namespace FolkerKinzel.VCards.Models.Helpers.Tests
 {
     [TestClass()]
-    public class FlagsEnumExtensionsTest
+    public class FlagsEnumExtensionsTests
     {
         [TestMethod()]
         public void PropertyClassesHelperTest()

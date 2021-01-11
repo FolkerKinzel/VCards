@@ -5,14 +5,14 @@ using FolkerKinzel.VCards.Models.Enums;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests
 {
     [TestClass()]
-    public class InterestLevelConverterTest
+    public class InterestLevelConverterTests
     {
         [TestMethod()]
         public void Roundtrip()
         {
-            foreach (var kind in (InterestLevel[])Enum.GetValues(typeof(InterestLevel)))
+            foreach (InterestLevel kind in (InterestLevel[])Enum.GetValues(typeof(InterestLevel)))
             {
-                var kind2 = InterestLevelConverter.Parse(kind.ToString());
+                InterestLevel? kind2 = InterestLevelConverter.Parse(kind.ToString());
 
                 Assert.AreEqual(kind, kind2);
 

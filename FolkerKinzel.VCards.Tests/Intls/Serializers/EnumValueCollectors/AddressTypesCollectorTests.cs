@@ -7,22 +7,22 @@ using FolkerKinzel.VCards.Intls.Converters;
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
 {
     [TestClass()]
-    public class RelationTypesCollectorTest
+    public class AddressTypesCollectorTests
     {
         [TestMethod()]
         public void CollectValueStringsTest()
         {
-            RelationTypes? adr = RelationTypes.Spouse | RelationTypes.CoResident;
+            AddressTypes? adr = AddressTypes.Dom | AddressTypes.Parcel;
 
-            List<string> list = new List<string>();
+            var list = new List<string>();
 
 
-            var collector = new RelationTypesCollector();
+            var collector = new AddressTypesCollector();
 
             collector.CollectValueStrings(adr, list);
 
             Assert.AreEqual(2, list.Count);
-            Assert.IsTrue(list.Contains(RelationTypesConverter.RelationTypeValue.CO_RESIDENT));
+            Assert.IsTrue(list.Contains(AddressTypesConverter.AdrTypeValue.PARCEL));
 
             // collector darf die Liste nicht löschen!:
             collector.CollectValueStrings(adr, list);
@@ -37,11 +37,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
         }
 
 
+
         [TestMethod()]
         public void DetectAllEnumValues()
         {
-            RelationTypes[] arr = (RelationTypes[])Enum.GetValues(typeof(RelationTypes));
-            var collector = new RelationTypesCollector();
+            var arr = (AddressTypes[])Enum.GetValues(typeof(AddressTypes));
+            var collector = new AddressTypesCollector();
 
             var list = new List<string>(1);
 
@@ -51,6 +52,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
                 collector.CollectValueStrings(item, list);
 
                 Assert.AreEqual(1, list.Count);
+                Assert.IsNotNull(list[0]);
             }
         }
 
@@ -58,8 +60,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
         [TestMethod()]
         public void RoundTrip()
         {
-            RelationTypes[] arr = (RelationTypes[])Enum.GetValues(typeof(RelationTypes));
-            var collector = new RelationTypesCollector();
+            var arr = (AddressTypes[])Enum.GetValues(typeof(AddressTypes));
+            var collector = new AddressTypesCollector();
 
             var list = new List<string>(1);
 
@@ -71,18 +73,19 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
                 Assert.AreEqual(1, list.Count);
                 Assert.IsNotNull(list[0]);
 
-                RelationTypes? comp = null;
+                AddressTypes? comp = null;
 
-                comp = RelationTypesConverter.Parse(list[0], comp);
+                comp = AddressTypesConverter.Parse(list[0], comp);
 
                 Assert.IsTrue(comp.HasValue);
                 Assert.AreEqual(comp!.Value, item);
 
-                var comp2 = (RelationTypes)Enum.Parse(
-                    typeof(RelationTypes), list[0].Replace("-",""), true);
+                var comp2 = (AddressTypes)Enum.Parse(
+                    typeof(AddressTypes), list[0], true);
 
                 Assert.AreEqual(comp, comp2);
             }
         }
+
     }
 }

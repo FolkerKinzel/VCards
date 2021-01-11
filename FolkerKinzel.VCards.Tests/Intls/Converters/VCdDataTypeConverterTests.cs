@@ -5,16 +5,16 @@ using FolkerKinzel.VCards.Models.Enums;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests
 {
     [TestClass()]
-    public class VCdDataTypeConverterTest
+    public class VCdDataTypeConverterTests
     {
         [TestMethod()]
         public void Roundtrip()
         {
-            foreach (var kind in (VCdDataType[])Enum.GetValues(typeof(VCdDataType)))
+            foreach (VCdDataType kind in (VCdDataType[])Enum.GetValues(typeof(VCdDataType)))
             {
                 string s = GetValueString(kind);
 
-                var kind2 = VCdDataTypeConverter.Parse(s);
+                VCdDataType? kind2 = VCdDataTypeConverter.Parse(s);
 
                 Assert.AreEqual(kind, kind2);
 

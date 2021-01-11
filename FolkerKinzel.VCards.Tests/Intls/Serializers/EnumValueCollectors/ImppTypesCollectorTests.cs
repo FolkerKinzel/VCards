@@ -7,17 +7,17 @@ using FolkerKinzel.VCards.Intls.Converters;
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
 {
     [TestClass()]
-    public class ImppTypesCollectorTest
+    public class ImppTypesCollectorTests
     {
         [TestMethod()]
         public void CollectValueStringsTest()
         {
             ImppTypes? adr = ImppTypes.Mobile | ImppTypes.Personal;
 
-            List<string> list = new List<string>();
+            var list = new List<string>();
 
 
-            ImppTypesCollector collector = new ImppTypesCollector();
+            var collector = new ImppTypesCollector();
 
             collector.CollectValueStrings(adr, list);
 
@@ -41,12 +41,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
         [TestMethod()]
         public void DetectAllEnumValues()
         {
-            ImppTypes[] arr = (ImppTypes[])Enum.GetValues(typeof(ImppTypes));
+            var arr = (ImppTypes[])Enum.GetValues(typeof(ImppTypes));
             var collector = new ImppTypesCollector();
 
             var list = new List<string>(1);
 
-            foreach (var item in arr)
+            foreach (ImppTypes item in arr)
             {
                 list.Clear();
                 collector.CollectValueStrings(item, list);
@@ -60,12 +60,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
         [TestMethod()]
         public void RoundTrip()
         {
-            ImppTypes[] arr = (ImppTypes[])Enum.GetValues(typeof(ImppTypes));
+            var arr = (ImppTypes[])Enum.GetValues(typeof(ImppTypes));
             var collector = new ImppTypesCollector();
 
             var list = new List<string>(1);
 
-            foreach (var item in arr)
+            foreach (ImppTypes item in arr)
             {
                 list.Clear();
                 collector.CollectValueStrings(item, list);

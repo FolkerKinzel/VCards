@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace FolkerKinzel.VCards.Tests
 {
     [TestClass]
-    public class V2Test
+    public class V2Tests
     {
         [TestMethod]
         public void Parse()
@@ -70,7 +70,6 @@ namespace FolkerKinzel.VCards.Tests
         }
 
         [TestMethod]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
         public void TestLineWrapping()
         {
             var vcard = new VCard();
@@ -101,7 +100,7 @@ namespace FolkerKinzel.VCards.Tests
             Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
                 .All(x => x != null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
-            VCard.Parse(s);
+            _ = VCard.Parse(s);
 
             Assert.AreEqual(((DataUrl?)vcard.Keys?.First()?.Value)?.GetEmbeddedText(), ASCIITEXT);
             Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");

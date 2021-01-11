@@ -5,14 +5,14 @@ using FolkerKinzel.VCards.Models.Enums;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests
 {
     [TestClass()]
-    public class ExpertiseLevelConverterTest
+    public class ExpertiseLevelConverterTests
     {
         [TestMethod()]
         public void Roundtrip()
         {
-            foreach (var kind in (ExpertiseLevel[])Enum.GetValues(typeof(ExpertiseLevel)))
+            foreach (ExpertiseLevel kind in (ExpertiseLevel[])Enum.GetValues(typeof(ExpertiseLevel)))
             {
-                var kind2 = ExpertiseLevelConverter.Parse(kind.ToString());
+                ExpertiseLevel? kind2 = ExpertiseLevelConverter.Parse(kind.ToString());
 
                 Assert.AreEqual(kind, kind2);
 

@@ -9,7 +9,7 @@ using System.IO;
 namespace FolkerKinzel.VCards.Models.Tests
 {
     [TestClass]
-    public class DataUrlTest
+    public class DataUrlTests
     {
        // private const string DEFAULT_MIME_TYPE = "text/plain;charset=us-ascii";
         private const string DEFAULT_ENCODING = "UrlEncoding";

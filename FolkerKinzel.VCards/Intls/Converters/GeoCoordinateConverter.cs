@@ -18,14 +18,25 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 return null;
             }
 
-#if NET40
-            const string GEO_SCHEME = "geo:";
+            int startIndex = 0;
 
-            value = value.Trim();
-
-            if (value.StartsWith(GEO_SCHEME, true, CultureInfo.InvariantCulture))
+            while (startIndex < value.Length)
             {
-                value = value.Substring(GEO_SCHEME.Length);
+                char c = value[startIndex];
+
+                if (char.IsDigit(c) || c == '.')
+                {
+                    break;
+                }
+
+                startIndex++;
+            }
+
+#if NET40
+
+            if(startIndex != 0)
+            {
+                value = value.Substring(startIndex);
             }
 
             value = value.Replace(';', ','); // vCard 3.0
@@ -34,7 +45,10 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
             try
             {
-                NumberStyles numStyle = NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign;
+                NumberStyles numStyle = NumberStyles.AllowDecimalPoint
+                                      | NumberStyles.AllowLeadingSign 
+                                      | NumberStyles.AllowLeadingWhite 
+                                      | NumberStyles.AllowTrailingWhite;
                 CultureInfo culture = CultureInfo.InvariantCulture;
 
                 return new GeoCoordinate(
@@ -48,28 +62,14 @@ namespace FolkerKinzel.VCards.Intls.Converters
 #else
             ReadOnlySpan<char> roSpan = value.AsSpan();
 
-            int startIndex = 0;
-
-            while(startIndex < roSpan.Length)
-            {
-                char c = roSpan[startIndex];
-
-                if(char.IsDigit(c) || c == '.')
-                {
-                    break;
-                }
-
-                startIndex++;
-            }
-
-            if(startIndex != 0)
+            if (startIndex != 0)
             {
                 roSpan = roSpan.Slice(startIndex);
             }
 
             int splitIndex = MemoryExtensions.IndexOf(roSpan, ','); // vCard 4.0
 
-            if(splitIndex == -1)
+            if (splitIndex == -1)
             {
                 splitIndex = MemoryExtensions.IndexOf(roSpan, ';'); // vCard 3.0
             }
@@ -77,8 +77,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
             try
             {
                 NumberStyles numStyle = NumberStyles.AllowDecimalPoint
-                                      | NumberStyles.AllowLeadingSign 
-                                      | NumberStyles.AllowLeadingWhite 
+                                      | NumberStyles.AllowLeadingSign
+                                      | NumberStyles.AllowLeadingWhite
                                       | NumberStyles.AllowTrailingWhite;
 
                 CultureInfo culture = CultureInfo.InvariantCulture;
@@ -117,7 +117,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                     _ = builder.Append(coordinate.Longitude.ToString(culture));
                     break;
                 default:
-                    _ = builder.Append(GEO_SCHEME);
+                    _ = builder.Append("geo:");
                     _ = builder.Append(coordinate.Latitude.ToString(culture));
                     _ = builder.Append(',');
                     _ = builder.Append(coordinate.Longitude.ToString(culture));

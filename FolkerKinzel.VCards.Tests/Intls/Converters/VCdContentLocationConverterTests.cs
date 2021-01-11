@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Models.Enums;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests
 {
     [TestClass()]
-    public class VCdContentLocationConverterTest
+    public class VCdContentLocationConverterTests
     {
         [TestMethod()]
         public void Roundtrip()

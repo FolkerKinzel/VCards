@@ -6,32 +6,32 @@ using FolkerKinzel.VCards.Models.Enums;
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
 {
     [TestClass()]
-    public class PropertyClassTypesCollectorTest
+    public class TelTypesCollectorTests
     {
         [TestMethod()]
         public void CollectValueStringsTest()
         {
-            PropertyClassTypes? adr = PropertyClassTypes.Home | PropertyClassTypes.Work;
+            TelTypes? tel = TelTypes.Voice | TelTypes.Msg;
 
-            List<string> list = new List<string>();
+            var list = new List<string>();
 
 
-            PropertyClassTypesCollector collector = new PropertyClassTypesCollector();
+            var collector = new TelTypesCollector();
 
-            collector.CollectValueStrings(adr, list);
+            collector.CollectValueStrings(tel, list);
 
             Assert.AreEqual(2, list.Count);
-            Assert.IsTrue(list.Contains("WORK"));
+            Assert.IsTrue(list.Contains("MSG"));
 
             // collector darf die Liste nicht löschen!:
-            collector.CollectValueStrings(adr, list);
+            collector.CollectValueStrings(tel, list);
             Assert.AreEqual(4, list.Count);
 
             // auf null testen:
-            adr = null;
+            tel = null;
             list.Clear();
 
-            collector.CollectValueStrings(adr, list);
+            collector.CollectValueStrings(tel, list);
             Assert.AreEqual(0, list.Count);
         }
 
@@ -40,12 +40,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
         [TestMethod()]
         public void DetectAllEnumValues()
         {
-            PropertyClassTypes[] arr = (PropertyClassTypes[])Enum.GetValues(typeof(PropertyClassTypes));
-            var collector = new PropertyClassTypesCollector();
+            var arr = (TelTypes[])Enum.GetValues(typeof(TelTypes));
+            var collector = new TelTypesCollector();
 
             var list = new List<string>(1);
 
-            foreach (var item in arr)
+            foreach (TelTypes item in arr)
             {
                 list.Clear();
                 collector.CollectValueStrings(item, list);
@@ -59,12 +59,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
         [TestMethod()]
         public void RoundTrip()
         {
-            PropertyClassTypes[] arr = (PropertyClassTypes[])Enum.GetValues(typeof(PropertyClassTypes));
-            var collector = new PropertyClassTypesCollector();
+            var arr = (TelTypes[])Enum.GetValues(typeof(TelTypes));
+            var collector = new TelTypesCollector();
 
             var list = new List<string>(1);
 
-            foreach (var item in arr)
+            foreach (TelTypes item in arr)
             {
                 list.Clear();
                 collector.CollectValueStrings(item, list);
@@ -72,9 +72,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
                 Assert.AreEqual(1, list.Count);
                 Assert.IsNotNull(list[0]);
 
-                PropertyClassTypes? comp = null;
-
-                comp = (PropertyClassTypes)Enum.Parse(typeof(PropertyClassTypes), list[0], true);
+                TelTypes? comp = (TelTypes)Enum.Parse(typeof(TelTypes), list[0], true);
 
                 Assert.IsTrue(comp.HasValue);
                 Assert.AreEqual(comp.Value, item);

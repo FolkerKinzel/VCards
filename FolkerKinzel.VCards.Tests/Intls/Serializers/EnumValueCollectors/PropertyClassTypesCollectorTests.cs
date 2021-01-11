@@ -2,27 +2,27 @@
 using System;
 using System.Collections.Generic;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Intls.Converters;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
 {
     [TestClass()]
-    public class AddressTypesCollectorTest
+    public class PropertyClassTypesCollectorTests
+
     {
         [TestMethod()]
         public void CollectValueStringsTest()
         {
-            AddressTypes? adr = AddressTypes.Dom | AddressTypes.Parcel;
+            PropertyClassTypes? adr = PropertyClassTypes.Home | PropertyClassTypes.Work;
 
-            List<string> list = new List<string>();
+            var list = new List<string>();
 
 
-            AddressTypesCollector collector = new AddressTypesCollector();
+            var collector = new PropertyClassTypesCollector();
 
             collector.CollectValueStrings(adr, list);
 
             Assert.AreEqual(2, list.Count);
-            Assert.IsTrue(list.Contains(AddressTypesConverter.AdrTypeValue.PARCEL));
+            Assert.IsTrue(list.Contains("WORK"));
 
             // collector darf die Liste nicht löschen!:
             collector.CollectValueStrings(adr, list);
@@ -41,8 +41,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
         [TestMethod()]
         public void DetectAllEnumValues()
         {
-            AddressTypes[] arr = (AddressTypes[])Enum.GetValues(typeof(AddressTypes));
-            var collector = new AddressTypesCollector();
+            var arr = (PropertyClassTypes[])Enum.GetValues(typeof(PropertyClassTypes));
+            var collector = new PropertyClassTypesCollector();
 
             var list = new List<string>(1);
 
@@ -60,8 +60,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
         [TestMethod()]
         public void RoundTrip()
         {
-            AddressTypes[] arr = (AddressTypes[])Enum.GetValues(typeof(AddressTypes));
-            var collector = new AddressTypesCollector();
+            var arr = (PropertyClassTypes[])Enum.GetValues(typeof(PropertyClassTypes));
+            var collector = new PropertyClassTypesCollector();
 
             var list = new List<string>(1);
 
@@ -73,19 +73,13 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
                 Assert.AreEqual(1, list.Count);
                 Assert.IsNotNull(list[0]);
 
-                AddressTypes? comp = null;
+                PropertyClassTypes? comp = null;
 
-                comp = AddressTypesConverter.Parse(list[0], comp);
+                comp = (PropertyClassTypes)Enum.Parse(typeof(PropertyClassTypes), list[0], true);
 
                 Assert.IsTrue(comp.HasValue);
-                Assert.AreEqual(comp!.Value, item);
-
-                var comp2 = (AddressTypes)Enum.Parse(
-                    typeof(AddressTypes), list[0], true);
-
-                Assert.AreEqual(comp, comp2);
+                Assert.AreEqual(comp.Value, item);
             }
         }
-
     }
 }

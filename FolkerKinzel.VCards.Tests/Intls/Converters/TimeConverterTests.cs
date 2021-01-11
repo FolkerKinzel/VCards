@@ -5,12 +5,12 @@ using FolkerKinzel.VCards.Models.Enums;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests
 {
     [TestClass]
-    public class TimeConverterTest
+    public class TimeConverterTests
     {
         private readonly TimeConverter _conv = new TimeConverter();
 
         [TestMethod]
-        public void TestTimeConverter()
+        public void TimeConverterTest()
         {
             Roundtrip("16:58:00", false);
             Roundtrip("165800Z");

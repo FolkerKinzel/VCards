@@ -5,18 +5,18 @@ using FolkerKinzel.VCards.Models.Enums;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests
 {
     [TestClass()]
-    public class VCdSexConverterTest
+    public class VCdSexConverterTests
     {
         [TestMethod()]
         public void Roundtrip()
         {
-            foreach (var sex in (VCdSex[])Enum.GetValues(typeof(VCdSex)))
+            foreach (VCdSex sex in (VCdSex[])Enum.GetValues(typeof(VCdSex)))
             {
-                var sex2 = VCdSexConverter.Parse(sex.ToString().Substring(0,1));
+                VCdSex? sex2 = VCdSexConverter.Parse(sex.ToString().Substring(0,1));
 
                 Assert.AreEqual(sex, sex2);
 
-                var sex3 = VCdSexConverter.Parse(VCdSexConverter.ToVCardString(sex));
+                VCdSex? sex3 = VCdSexConverter.Parse(VCdSexConverter.ToVCardString(sex));
 
                 Assert.AreEqual(sex, sex3);
 

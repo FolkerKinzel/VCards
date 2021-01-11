@@ -6,14 +6,14 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
 {
 
     [TestClass()]
-    public class VCdAccessConverterTest
+    public class VCdAccessConverterTests
     {
         [TestMethod()]
         public void Roundtrip()
         {
-            foreach (var kind in (VCdAccess[])Enum.GetValues(typeof(VCdAccess)))
+            foreach (VCdAccess kind in (VCdAccess[])Enum.GetValues(typeof(VCdAccess)))
             {
-                var kind2 = VCdAccessConverter.Parse(kind.ToString());
+                VCdAccess kind2 = VCdAccessConverter.Parse(kind.ToString());
 
                 Assert.AreEqual(kind, kind2);
 
