@@ -53,7 +53,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
         internal bool TryParse(string? s, out DateTimeOffset offset)
         {
             offset = DateTimeOffset.MinValue;
-            
+
             if (s is null)
             {
                 return false;
@@ -61,7 +61,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
             DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
-
+#if NET40
             if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
             {
                 s = s.Substring(0, s.Length - 1);
@@ -86,6 +86,74 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
 
             return DateTimeOffset.TryParseExact(s, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+
+#else
+            ReadOnlySpan<char> roSpan = s.AsSpan();
+            if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
+            {
+                roSpan = roSpan.Slice(0, s.Length - 1);
+
+                styles |= DateTimeStyles.AssumeUniversal;
+            }
+            else
+            {
+                styles |= DateTimeStyles.AssumeLocal;
+            }
+
+            // date-noreduc zu date-complete
+            if (roSpan.StartsWith("---", StringComparison.Ordinal))
+            {
+                const string JANUARY_FIRST_LEAP_YEAR = "000401";
+                roSpan = roSpan.Slice(3);
+                Span<char> span = stackalloc char[JANUARY_FIRST_LEAP_YEAR.Length + roSpan.Length];
+                
+                JANUARY_FIRST_LEAP_YEAR.AsSpan().CopyTo(span);
+                Span<char> slice = span.Slice(JANUARY_FIRST_LEAP_YEAR.Length);
+                roSpan.CopyTo(slice);
+
+                return DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+
+                //s = "000401" + s.Substring(3); // 4 ist das erste Schaltjahr!
+            }
+            else if (s.StartsWith("--", StringComparison.Ordinal))
+            {
+                // "--MM" zu "yyyy-MM"
+                if (roSpan.Length == 4)
+                {
+                    //"0004-" + s.Substring(2)
+
+                    const string leapYear = "0004-";
+                    
+                    roSpan = roSpan.Slice(2);
+                    Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
+
+                    leapYear.AsSpan().CopyTo(span);
+                    Span<char> slice = span.Slice(leapYear.Length);
+                    roSpan.CopyTo(slice);
+
+                    return DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+                }
+                else
+                {
+                    //"0004" + s.Substring(2);
+
+                    const string leapYear = "0004";
+                    
+                    roSpan = roSpan.Slice(2);
+                    Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
+
+                    leapYear.AsSpan().CopyTo(span);
+                    Span<char> slice = span.Slice(leapYear.Length);
+                    roSpan.CopyTo(slice);
+                    
+                    return DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+                }
+            }
+            else
+            {
+                return DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+            }
+#endif
         }
 
 
@@ -201,9 +269,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
         }
 
 
-        internal static bool HasTimeComponent(DateTimeOffset? dt) 
+        internal static bool HasTimeComponent(DateTimeOffset? dt)
             => dt.HasValue && (dt.Value.TimeOfDay != TimeSpan.Zero);
-              //|| utcOffset != TimeSpan.Zero //nicht konsequent, aber sonst bei Geburtstagen meist komisch
+        //|| utcOffset != TimeSpan.Zero //nicht konsequent, aber sonst bei Geburtstagen meist komisch
 
     }
 }

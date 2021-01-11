@@ -18,12 +18,10 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
 
             Assert.IsTrue(conv.TryParse(s, out DateTimeOffset dt));
 
-            DateTime reference = new DateTime(1963, 8, 17);
+            var reference = new DateTime(1963, 8, 17);
             Assert.AreEqual(reference, dt.DateTime);
 
         }
-
-
 
 
         [TestMethod]
@@ -46,8 +44,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             RoundtripTimestamp("19961022T140000+0500", false, VCdVersion.V2_1);
         }
 
-
-        void Roundtrip(
+        private void Roundtrip(
             string s, bool stringRoundTrip = true, VCdVersion version = VCdVersion.V4_0)
         {
             Assert.IsTrue(conv.TryParse(s, out DateTimeOffset dt));
@@ -64,7 +61,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             Assert.AreEqual(dt, dt2);
         }
 
-        void RoundtripTimestamp(
+        private void RoundtripTimestamp(
             string s, bool stringRoundTrip = true, VCdVersion version = VCdVersion.V4_0)
         {
             Assert.IsTrue(conv.TryParse(s, out DateTimeOffset dt));
