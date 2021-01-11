@@ -122,31 +122,19 @@ namespace FolkerKinzel.VCards.Models.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
-        public void CtorExceptionTest1()
-        {
-            new PropertyID(0);
-        }
+        public void CtorExceptionTest1() => _ = new PropertyID(0);
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
-        public void CtorExceptionTest2()
-        {
-            new PropertyID(5, 0);
-        }
+        public void CtorExceptionTest2() => _ = new PropertyID(5, 0);
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
-        public void CtorExceptionTest3()
-        {
-            new PropertyID(10);
-        }
+        public void CtorExceptionTest3() => _ = new PropertyID(10);
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
-        public void CtorExceptionTest4()
-        {
-            new PropertyID(10, null);
-        }
+        public void CtorExceptionTest4() => _ = new PropertyID(10, null);
 
         [TestMethod]
         public void ToStringTest1()

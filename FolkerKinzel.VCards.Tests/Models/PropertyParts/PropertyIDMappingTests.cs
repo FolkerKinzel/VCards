@@ -21,11 +21,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes=false)]
-        public void CtorExceptionTest()
-        {
-            new PropertyIDMapping(0, Guid.Empty);
-        }
+        [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
+        public void CtorExceptionTest() => _ = new PropertyIDMapping(0, Guid.Empty);
 
 
         [TestMethod]

@@ -132,7 +132,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
 
             var sb = new StringBuilder();
 
-            sb.AppendUuid(guid2);
+            _ = sb.AppendUuid(guid2);
 
             Assert.AreEqual(sb.ToString(), guidString);
 
