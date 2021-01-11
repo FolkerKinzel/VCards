@@ -80,8 +80,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
             }
             else if (s.StartsWith("--", StringComparison.Ordinal))
             {
-                // "--MM" zu "yyyy-MM"
-                s = s.Length == 4 ? "0004-" + s.Substring(2) : "0004" + s.Substring(2);
+                s = s.Length == 4 
+                ? "0004-" + s.Substring(2) // "--MM" zu "0004-MM"
+                : "0004" + s.Substring(2); // "--MMdd" zu "0004MMdd"
             }
 
 
@@ -117,7 +118,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
             }
             else if (s.StartsWith("--", StringComparison.Ordinal))
             {
-                // "--MM" zu "yyyy-MM"
+                // "--MM" zu "0004-MM":
+                // Note the use of YYYY-MM in the second example above.  YYYYMM is
+                // disallowed to prevent confusion with YYMMDD.
                 if (roSpan.Length == 4)
                 {
                     //"0004-" + s.Substring(2)
@@ -135,7 +138,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 }
                 else
                 {
-                    //"0004" + s.Substring(2);
+                    // "--MMdd" zu "0004MMdd" ("0004" + s.Substring(2))
+                    // Note also that YYYY-MM-DD is disallowed since we are using the basic format instead
+                    // of the extended format.
 
                     const string leapYear = "0004";
                     

@@ -25,6 +25,39 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
 
 
         [TestMethod]
+        public void DateTest2()
+        {
+            string s = "--08";
+            Assert.IsTrue(conv.TryParse(s, out DateTimeOffset dt));
+
+            Assert.AreEqual(dt.Year, 4);
+            Assert.AreEqual(dt.Month, 8);
+        }
+
+        [TestMethod]
+        public void DateTest3()
+        {
+            string s = "--0803";
+            Assert.IsTrue(conv.TryParse(s, out DateTimeOffset dt));
+
+            Assert.AreEqual(dt.Year, 4);
+            Assert.AreEqual(dt.Month, 8);
+            Assert.AreEqual(dt.Day, 3);
+        }
+
+        [TestMethod]
+        public void DateTest4()
+        {
+            string s = "---03";
+            Assert.IsTrue(conv.TryParse(s, out DateTimeOffset dt));
+
+            Assert.AreEqual(dt.Year, 4);
+            Assert.AreEqual(dt.Month, 1);
+            Assert.AreEqual(dt.Day, 3);
+        }
+
+
+        [TestMethod]
         public void RountripsTest()
         {
             Roundtrip("19720131");
