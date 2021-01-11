@@ -46,6 +46,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
             DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
+#if NET40
             if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
             {
                 s = s.Substring(0, s.Length - 1);
@@ -58,6 +59,21 @@ namespace FolkerKinzel.VCards.Intls.Converters
             }
 
             return DateTimeOffset.TryParseExact(s, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#else
+            ReadOnlySpan<char> roSpan = s.AsSpan();
+
+            if (roSpan.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
+            {
+                roSpan = roSpan.Slice(0, roSpan.Length - 1);
+                styles |= DateTimeStyles.AssumeUniversal;
+            }
+            else
+            {
+                styles |= DateTimeStyles.AssumeLocal;
+            }
+
+            return DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#endif
         }
 
 

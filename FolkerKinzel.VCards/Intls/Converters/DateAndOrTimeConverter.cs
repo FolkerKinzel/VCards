@@ -92,7 +92,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
             ReadOnlySpan<char> roSpan = s.AsSpan();
             if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
             {
-                roSpan = roSpan.Slice(0, s.Length - 1);
+                roSpan = roSpan.Slice(0, roSpan.Length - 1);
 
                 styles |= DateTimeStyles.AssumeUniversal;
             }
@@ -104,12 +104,12 @@ namespace FolkerKinzel.VCards.Intls.Converters
             // date-noreduc zu date-complete
             if (roSpan.StartsWith("---", StringComparison.Ordinal))
             {
-                ReadOnlySpan<char> JANUARY_FIRST_LEAP_YEAR = "000401";
                 roSpan = roSpan.Slice(3);
-                Span<char> span = stackalloc char[JANUARY_FIRST_LEAP_YEAR.Length + roSpan.Length];
-                
-                JANUARY_FIRST_LEAP_YEAR.CopyTo(span);
-                Span<char> slice = span.Slice(JANUARY_FIRST_LEAP_YEAR.Length);
+                ReadOnlySpan<char> firstLeapYearJanuary = "000401";
+                Span<char> span = stackalloc char[firstLeapYearJanuary.Length + roSpan.Length];
+
+                firstLeapYearJanuary.CopyTo(span);
+                Span<char> slice = span.Slice(firstLeapYearJanuary.Length);
                 roSpan.CopyTo(slice);
 
                 return DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
@@ -121,9 +121,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 // disallowed to prevent confusion with YYMMDD.
                 if (roSpan.Length == 4)
                 {
-                    ReadOnlySpan<char> leapYear = "0004-";
-                    
                     roSpan = roSpan.Slice(2);
+                    ReadOnlySpan<char> leapYear = "0004-";
                     Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
 
                     leapYear.CopyTo(span);
@@ -137,10 +136,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
                     // "--MMdd" zu "0004MMdd" ("0004" + s.Substring(2))
                     // Note also that YYYY-MM-DD is disallowed since we are using the basic format instead
                     // of the extended format.
-
-                    ReadOnlySpan<char> leapYear = "0004";
-                    
                     roSpan = roSpan.Slice(2);
+                    ReadOnlySpan<char> leapYear = "0004";
                     Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
 
                     leapYear.CopyTo(span);
