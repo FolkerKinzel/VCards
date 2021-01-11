@@ -104,17 +104,15 @@ namespace FolkerKinzel.VCards.Intls.Converters
             // date-noreduc zu date-complete
             if (roSpan.StartsWith("---", StringComparison.Ordinal))
             {
-                const string JANUARY_FIRST_LEAP_YEAR = "000401";
+                ReadOnlySpan<char> JANUARY_FIRST_LEAP_YEAR = "000401";
                 roSpan = roSpan.Slice(3);
                 Span<char> span = stackalloc char[JANUARY_FIRST_LEAP_YEAR.Length + roSpan.Length];
                 
-                JANUARY_FIRST_LEAP_YEAR.AsSpan().CopyTo(span);
+                JANUARY_FIRST_LEAP_YEAR.CopyTo(span);
                 Span<char> slice = span.Slice(JANUARY_FIRST_LEAP_YEAR.Length);
                 roSpan.CopyTo(slice);
 
                 return DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-
-                //s = "000401" + s.Substring(3); // 4 ist das erste Schaltjahr!
             }
             else if (s.StartsWith("--", StringComparison.Ordinal))
             {
@@ -123,14 +121,12 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 // disallowed to prevent confusion with YYMMDD.
                 if (roSpan.Length == 4)
                 {
-                    //"0004-" + s.Substring(2)
-
-                    const string leapYear = "0004-";
+                    ReadOnlySpan<char> leapYear = "0004-";
                     
                     roSpan = roSpan.Slice(2);
                     Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
 
-                    leapYear.AsSpan().CopyTo(span);
+                    leapYear.CopyTo(span);
                     Span<char> slice = span.Slice(leapYear.Length);
                     roSpan.CopyTo(slice);
 
@@ -142,12 +138,12 @@ namespace FolkerKinzel.VCards.Intls.Converters
                     // Note also that YYYY-MM-DD is disallowed since we are using the basic format instead
                     // of the extended format.
 
-                    const string leapYear = "0004";
+                    ReadOnlySpan<char> leapYear = "0004";
                     
                     roSpan = roSpan.Slice(2);
                     Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
 
-                    leapYear.AsSpan().CopyTo(span);
+                    leapYear.CopyTo(span);
                     Span<char> slice = span.Slice(leapYear.Length);
                     roSpan.CopyTo(slice);
                     
