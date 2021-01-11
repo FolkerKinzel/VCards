@@ -7,7 +7,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
     [TestClass]
     public class TimeConverterTest
     {
-        private readonly TimeConverter conv = new TimeConverter();
+        private readonly TimeConverter _conv = new TimeConverter();
 
         [TestMethod]
         public void TestTimeConverter()
@@ -19,11 +19,10 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             Roundtrip("16:58:00+04", false);
         }
 
-
-        void Roundtrip(
+        private void Roundtrip(
             string s, bool stringRoundTrip = true, VCdVersion version = VCdVersion.V4_0)
         {
-            Assert.IsTrue(conv.TryParse(s, out DateTimeOffset dt));
+            Assert.IsTrue(_conv.TryParse(s, out DateTimeOffset dt));
 
             string s2 = TimeConverter.ToTimeString(dt, version);
 
@@ -32,7 +31,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
                 Assert.AreEqual(s, s2);
             }
 
-            Assert.IsTrue(conv.TryParse(s2, out DateTimeOffset dt2));
+            Assert.IsTrue(_conv.TryParse(s2, out DateTimeOffset dt2));
 
             Assert.AreEqual(dt, dt2);
         }

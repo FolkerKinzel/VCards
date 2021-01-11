@@ -10,7 +10,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
 {
     internal static class GeoCoordinateConverter
     {
-        private const string GEO_SCHEME = "geo:";
 
         internal static GeoCoordinate? Parse(string? value)
         {
@@ -18,6 +17,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
             {
                 return null;
             }
+
+#if NET40
+            const string GEO_SCHEME = "geo:";
 
             value = value.Trim();
 
@@ -28,11 +30,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
             value = value.Replace(';', ','); // vCard 3.0
 
-#if NET40
             string[] arr = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries); // vCard 4.0
-#else
-            string[] arr = value.Split(',', StringSplitOptions.RemoveEmptyEntries); // vCard 4.0
-#endif
 
             try
             {
@@ -47,6 +45,54 @@ namespace FolkerKinzel.VCards.Intls.Converters
             {
                 return null;
             }
+#else
+            ReadOnlySpan<char> roSpan = value.AsSpan();
+
+            int startIndex = 0;
+
+            while(startIndex < roSpan.Length)
+            {
+                char c = roSpan[startIndex];
+
+                if(char.IsDigit(c) || c == '.')
+                {
+                    break;
+                }
+
+                startIndex++;
+            }
+
+            if(startIndex != 0)
+            {
+                roSpan = roSpan.Slice(startIndex);
+            }
+
+            int splitIndex = MemoryExtensions.IndexOf(roSpan, ','); // vCard 4.0
+
+            if(splitIndex == -1)
+            {
+                splitIndex = MemoryExtensions.IndexOf(roSpan, ';'); // vCard 3.0
+            }
+
+            try
+            {
+                NumberStyles numStyle = NumberStyles.AllowDecimalPoint
+                                      | NumberStyles.AllowLeadingSign 
+                                      | NumberStyles.AllowLeadingWhite 
+                                      | NumberStyles.AllowTrailingWhite;
+
+                CultureInfo culture = CultureInfo.InvariantCulture;
+
+                return new GeoCoordinate(
+                    double.Parse(roSpan.Slice(0, splitIndex), numStyle, culture),
+                    double.Parse(roSpan.Slice(splitIndex + 1), numStyle, culture));
+            }
+            catch
+            {
+                return null;
+            }
+
+#endif
 
         }
 
