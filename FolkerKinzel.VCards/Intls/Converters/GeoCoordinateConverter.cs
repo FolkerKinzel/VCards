@@ -24,7 +24,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
             {
                 char c = value[startIndex];
 
-                if (char.IsDigit(c) || c == '.')
+                if (char.IsDigit(c) || c == '.') // ".8" == "0.8"
                 {
                     break;
                 }
