@@ -337,6 +337,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string MimeTypeFromImageTypeValue(string typeValue)
         {
+            Debug.Assert(StringComparer.Ordinal.Equals(typeValue, typeValue.ToUpperInvariant()));
+
             switch (typeValue)
             {
                 case ImageTypeValue.JPEG:
@@ -451,6 +453,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string MimeTypeFromEncryptionTypeValue(string typeValue)
         {
+            Debug.Assert(StringComparer.Ordinal.Equals(typeValue, typeValue.ToUpperInvariant()));
+
             return typeValue switch
             {
                 KeyTypeValue.X509 => MimeTypeString.EncryptionKey.X509,
@@ -472,8 +476,10 @@ namespace FolkerKinzel.VCards.Intls.Converters
         }
 
 
-        internal static string MimeTypeFromSoundTypeValue(string? typeValue)
+        internal static string MimeTypeFromSoundTypeValue(string typeValue)
         {
+            Debug.Assert(StringComparer.Ordinal.Equals(typeValue, typeValue.ToUpperInvariant()));
+
             switch (typeValue)
             {
                 case SoundTypeValue.AIFF:
