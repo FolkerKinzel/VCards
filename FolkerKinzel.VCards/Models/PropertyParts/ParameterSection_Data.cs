@@ -30,6 +30,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             }
         }
 
+        /// <summary>
+        /// Anzahl der gespeicherten Parameter (zum Testen und Debuggen)
+        /// </summary>
+        internal int Count => _propDic.Count;
+
 
         /// <summary>
         /// <c>TYPE</c>: Beschreibt die Art einer Adresse. <c>(2,3)</c>

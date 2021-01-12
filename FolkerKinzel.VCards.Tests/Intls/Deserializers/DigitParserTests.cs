@@ -3,6 +3,9 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+
+
 
 namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
 {
