@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Intls.Tests
         public void ParseTest(string input, bool rowIsNull, string key, string? group, int parametersCount)
         {
             var info = new VCardDeserializationInfo();
-            info.Builder.Append(input);
+            _ = info.Builder.Append(input);
             var row = VcfRow.Parse(info);
 
             if(rowIsNull)
