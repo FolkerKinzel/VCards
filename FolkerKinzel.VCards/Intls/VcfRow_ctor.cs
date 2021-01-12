@@ -27,8 +27,8 @@ namespace FolkerKinzel.VCards.Intls
             List<string> vCardRowParts = SplitKeySectionFromValue(vCardRow);
 
             return vCardRowParts.Count != 0 ? new VcfRow(vCardRowParts, info) : null; // eigentlich überfüssig (siebt Leerzeilen aus)
-
         }
+
 
         /// <summary>
         /// ctor
@@ -58,12 +58,9 @@ namespace FolkerKinzel.VCards.Intls
                 this.Key = keyParts[0].ToUpperInvariant();
             }
 
-
             this.Parameters = (keySectionParts.Length == 2)
                 ? new ParameterSection(this.Key, GetParameters(keySectionParts[1], info), info)
                 : new ParameterSection();
-
-
 
             this.Value = (vCardRowParts.Count == 2) ? vCardRowParts[1] : null;
             if (string.IsNullOrWhiteSpace(this.Value)) { this.Value = null; }
