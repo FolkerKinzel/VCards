@@ -25,13 +25,13 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         internal readonly char[] Comma = new char[] { ',' };
 #else
         internal readonly char Semicolon = ';';
-
+                 
         internal readonly char Dot = '.';
-
+                 
         internal readonly char EqualSign = '=';
-
+                 
         internal readonly char DoubleQuotes = '\"';
-
+                 
         internal readonly char Comma = ',';
 #endif
 

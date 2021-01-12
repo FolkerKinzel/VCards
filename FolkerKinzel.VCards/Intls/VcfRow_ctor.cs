@@ -16,17 +16,36 @@ namespace FolkerKinzel.VCards.Intls
         /// <returns><see cref="VcfRow"/>-Objekt</returns>
         internal static VcfRow? Parse(VCardDeserializationInfo info)
         {
-            StringBuilder builder = info.Builder;
-
             // vCardRow:
             // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part
-            string vCardRow = builder.ToString();
+            string vCardRow = info.Builder.ToString();
+
 
             // vCardRowParts:
             // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
-            List<string> vCardRowParts = SplitKeySectionFromValue(vCardRow);
+            int separatorIndex = GetValueSeparatorIndex(vCardRow);
 
-            return vCardRowParts.Count != 0 ? new VcfRow(vCardRowParts, info) : null; // eigentlich überfüssig (siebt Leerzeilen aus)
+
+            if (separatorIndex > -1)
+            {
+                string keySection;
+                string? value = null;
+
+                keySection = vCardRow.Substring(0, separatorIndex);
+
+                int valueStart = separatorIndex + 1;
+
+                if (valueStart < vCardRow.Length)
+                {
+                    value = vCardRow.Substring(valueStart);
+                }
+
+                return keySection.Length != 0 ? new VcfRow(keySection, value, info) : null;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
@@ -35,13 +54,13 @@ namespace FolkerKinzel.VCards.Intls
         /// </summary>
         /// <param name="vCardRowParts">vCard-Zeile, gesplittet in Key- und Value-Bereich</param>
         /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>-Objekt.</param>
-        private VcfRow(List<string> vCardRowParts, VCardDeserializationInfo info)
+        private VcfRow(string keySection, string? value, VCardDeserializationInfo info)
         {
-            Debug.Assert(vCardRowParts.Count >= 1);
+            this.Value = string.IsNullOrEmpty(value) ? null : value;
 
             // keySectionParts:
             // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
-            string[] keySectionParts = vCardRowParts[0].Split(info.Semicolon, 2, StringSplitOptions.RemoveEmptyEntries);
+            string[] keySectionParts = keySection.Split(info.Semicolon, 2, StringSplitOptions.RemoveEmptyEntries);
 
 
             // keyParts:
@@ -61,20 +80,15 @@ namespace FolkerKinzel.VCards.Intls
             this.Parameters = (keySectionParts.Length == 2)
                 ? new ParameterSection(this.Key, GetParameters(keySectionParts[1], info), info)
                 : new ParameterSection();
-
-            this.Value = (vCardRowParts.Count == 2) ? vCardRowParts[1] : null;
-            if (string.IsNullOrWhiteSpace(this.Value)) { this.Value = null; }
         }
 
 
 
         // Attribut-Values dürfen in vCard 4.0 :;, enthalten, wenn sie in doppelte Anführungszeichen
         // eingeschlossen sind!
-        private static List<string> SplitKeySectionFromValue(string vCardRow)
+        private static int GetValueSeparatorIndex(string vCardRow)
         {
             bool isInDoubleQuotes = false;
-
-            var propertyParts = new List<string>();
 
             for (int i = 0; i < vCardRow.Length; i++)
             {
@@ -86,20 +100,11 @@ namespace FolkerKinzel.VCards.Intls
                 }
                 else if (c == ':' && !isInDoubleQuotes)
                 {
-                    propertyParts.Add(vCardRow.Substring(0, i));
-
-                    int valueStart = i + 1;
-
-                    if (valueStart < vCardRow.Length)
-                    {
-                        propertyParts.Add(vCardRow.Substring(valueStart));
-                    }
-
-                    break;
+                    return i;
                 }
             }//for
 
-            return propertyParts;
+            return -1;
         }
 
 
