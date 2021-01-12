@@ -40,7 +40,21 @@ namespace FolkerKinzel.VCards.Intls
                     value = vCardRow.Substring(valueStart);
                 }
 
-                return keySection.Length != 0 ? new VcfRow(keySection, value, info) : null;
+                if (keySection.Length != 0)
+                {
+                    try
+                    {
+                        return new VcfRow(keySection, value, info);
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
@@ -60,26 +74,65 @@ namespace FolkerKinzel.VCards.Intls
 
             // keySectionParts:
             // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
-            string[] keySectionParts = keySection.Split(info.Semicolon, 2, StringSplitOptions.RemoveEmptyEntries);
 
+            int parameterSeparatorIndex;
+            int groupSeparatorIndex = -1;
+#if NET40
+            string[] keySectionParts = keySection.Split(info.Semicolon, 2, StringSplitOptions.RemoveEmptyEntries);
+            parameterSeparatorIndex = keySectionParts[0].Length == keySection.Length ? -1 : keySectionParts[0].Length;
+
+            for (int i = 0; i < parameterSeparatorIndex; i++)
+            {
+                if(keySectionParts[0][i] == '.')
+                {
+                    groupSeparatorIndex = i;
+                }
+            }
+#else
+            parameterSeparatorIndex = keySection.IndexOf(';');
+
+            ReadOnlySpan<char> keyPartSpan = keySection.AsSpan(0, parameterSeparatorIndex == -1 ? keySection.Length : parameterSeparatorIndex);
+            groupSeparatorIndex = keyPartSpan.IndexOf('.');
+#endif
 
             // keyParts:
             // group | key
-            string[] keyParts = keySectionParts[0].Split(info.Dot, 2, StringSplitOptions.RemoveEmptyEntries);
+            int startOfKey = groupSeparatorIndex + 1;
 
-            if (keyParts.Length == 2)
+#if NET40
+
+            if (groupSeparatorIndex > 0)
             {
-                this.Group = keyParts[0];
-                this.Key = keyParts[1].ToUpperInvariant();
+                this.Group = keySection.Substring(0, groupSeparatorIndex);
+
+                this.Key = keySection.Substring(startOfKey,
+                                                parameterSeparatorIndex == -1
+                                                    ? keySection.Length - startOfKey
+                                                    : parameterSeparatorIndex - startOfKey).ToUpperInvariant();
             }
             else
             {
-                this.Key = keyParts[0].ToUpperInvariant();
+                this.Key = keySection.Substring(0, parameterSeparatorIndex == -1 ? keySection.Length : parameterSeparatorIndex).ToUpperInvariant();
             }
+#else
+            this.Key = keyPartSpan.Slice(startOfKey).ToString();
 
-            this.Parameters = (keySectionParts.Length == 2)
-                ? new ParameterSection(this.Key, GetParameters(keySectionParts[1], info), info)
-                : new ParameterSection();
+            if (groupSeparatorIndex > 0)
+            {
+                this.Group = keySection.Substring(0, groupSeparatorIndex);
+            }
+#endif
+
+            if (parameterSeparatorIndex != -1 && parameterSeparatorIndex < keySection.Length - 1)
+            {
+                string parameters = keySection.Substring(parameterSeparatorIndex + 1);
+                this.Parameters = new ParameterSection(this.Key, GetParameters(parameters, info), info);
+            }
+            else
+            {
+                this.Parameters = new ParameterSection();
+
+            }
         }
 
 
