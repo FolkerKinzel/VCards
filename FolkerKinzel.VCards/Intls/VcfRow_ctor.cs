@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Intls
 {
@@ -70,7 +71,7 @@ namespace FolkerKinzel.VCards.Intls
         /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>-Objekt.</param>
         private VcfRow(string keySection, string? value, VCardDeserializationInfo info)
         {
-            this.Value = string.IsNullOrEmpty(value) ? null : value;
+            //this.Value = string.IsNullOrEmpty(value) ? null : value;
 
             // keySectionParts:
             // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
@@ -160,14 +161,11 @@ namespace FolkerKinzel.VCards.Intls
             return -1;
         }
 
-
         private static List<Tuple<string, string>> GetParameters(string parameterSection, VCardDeserializationInfo info)
         {
             var parameterTuples = new List<Tuple<string, string>>();
 
-            List<string> parameters = SplitParameters(parameterSection);
-
-            foreach (string parameter in parameters)
+            foreach (string parameter in new ParameterSplitter(parameterSection))
             {
                 if (string.IsNullOrWhiteSpace(parameter))
                 {
@@ -193,46 +191,54 @@ namespace FolkerKinzel.VCards.Intls
         }
 
 
-        // key=value;key="value,value,va;lue";key="val;ue" wird zu
-        // key=value | key="value,value,va;lue" | key="val;ue"
-        private static List<string> SplitParameters(string parameterSection)
-        {
-            bool isInDoubleQuotes = false;
-            int nextStringStartIndex = 0;
+        //// key=value;key="value,value,va;lue";key="val;ue" wird zu
+        //// key=value | key="value,value,va;lue" | key="val;ue"
+        //private static IEnumerator<string> SplitParameters(string parameterSection)
+        //{
+        //    bool isInDoubleQuotes = false;
+        //    int nextStringStartIndex = 0;
 
-            var splittedParameterSection = new List<string>();
+        //    string subString;
+        //    int i;
 
-            int i;
+        //    for (i = 0; i < parameterSection.Length; i++)
+        //    {
+        //        char c = parameterSection[i];
 
-            for (i = 0; i < parameterSection.Length; i++)
-            {
-                char c = parameterSection[i];
+        //        if (c == '"')
+        //        {
+        //            isInDoubleQuotes = !isInDoubleQuotes;
+        //        }
+        //        else if (c == ';' && !isInDoubleQuotes)
+        //        {
+        //            subString = parameterSection.Substring(nextStringStartIndex, i - nextStringStartIndex);
 
-                if (c == '"')
-                {
-                    isInDoubleQuotes = !isInDoubleQuotes;
-                }
-                else if (c == ';' && !isInDoubleQuotes)
-                {
-                    AddSubstring();
-                    nextStringStartIndex = i + 1;
-                }
-            }//for
+        //            if (!string.IsNullOrWhiteSpace(subString))
+        //            {
+        //                yield return subString;
+        //            }
+        //            nextStringStartIndex = i + 1;
+        //        }
+        //    }//for
 
-            AddSubstring();
-            return splittedParameterSection;
+        //    subString = parameterSection.Substring(nextStringStartIndex, i - nextStringStartIndex);
 
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //    if (!string.IsNullOrWhiteSpace(subString))
+        //    {
+        //        yield return subString;
+        //    }
 
-            void AddSubstring()
-            {
-                string subString = parameterSection.Substring(nextStringStartIndex, i - nextStringStartIndex);
+        //    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                if (!string.IsNullOrWhiteSpace(subString))
-                {
-                    splittedParameterSection.Add(subString);
-                }
-            }
-        }
+        //    //void AddSubstring()
+        //    //{
+        //    //    string subString = parameterSection.Substring(nextStringStartIndex, i - nextStringStartIndex);
+
+        //    //    if (!string.IsNullOrWhiteSpace(subString))
+        //    //    {
+        //    //        splittedParameterSection.Add(subString);
+        //    //    }
+        //    //}
+        //}
     }
 }
