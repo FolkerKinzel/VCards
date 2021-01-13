@@ -9,7 +9,7 @@ using System.Text;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-
+using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.Models
 {

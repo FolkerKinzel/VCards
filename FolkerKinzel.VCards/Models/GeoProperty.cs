@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Runtime.CompilerServices;
-
+using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.Models
 {

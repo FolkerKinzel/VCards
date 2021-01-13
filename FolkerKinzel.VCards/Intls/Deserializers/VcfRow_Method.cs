@@ -7,7 +7,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 
-namespace FolkerKinzel.VCards.Intls
+namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal sealed partial class VcfRow
     {

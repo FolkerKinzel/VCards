@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 
-namespace FolkerKinzel.VCards.Intls
+namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal sealed partial class VcfRow
     {

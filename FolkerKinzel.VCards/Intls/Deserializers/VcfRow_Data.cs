@@ -1,7 +1,7 @@
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 
-namespace FolkerKinzel.VCards.Intls
+namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     /// <summary>
     /// Eine <see cref="VcfRow"/> stellt eine zusammengehörende Datenzeile der Vcf-Datei dar.

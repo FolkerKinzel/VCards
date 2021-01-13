@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Attributes;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Resources;
 using System;

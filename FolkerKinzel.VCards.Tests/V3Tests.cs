@@ -34,7 +34,7 @@ namespace FolkerKinzel.VCards.Tests
 
             vcard = cards[0];
 
-            Assert.AreEqual(vcard.Version, VCdVersion.V3_0);
+            Assert.AreEqual(VCdVersion.V3_0, vcard.Version);
 
             Assert.IsNotNull(vcard.DisplayNames);
             Assert.AreEqual(vcard.DisplayNames.Count(), 1);

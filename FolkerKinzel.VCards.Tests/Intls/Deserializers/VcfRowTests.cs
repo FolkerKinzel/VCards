@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Intls.Deserializers;
 
-namespace FolkerKinzel.VCards.Intls.Tests
+namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
 {
     [TestClass]
     public class VcfRowTests

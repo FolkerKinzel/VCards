@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
 using System.Collections;
 
-namespace FolkerKinzel.VCards.Intls
+namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal sealed partial class VcfRow
     {
@@ -71,7 +71,7 @@ namespace FolkerKinzel.VCards.Intls
         /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>-Objekt.</param>
         private VcfRow(string keySection, string? value, VCardDeserializationInfo info)
         {
-            //this.Value = string.IsNullOrEmpty(value) ? null : value;
+            this.Value = value;
 
             // keySectionParts:
             // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
@@ -92,6 +92,8 @@ namespace FolkerKinzel.VCards.Intls
 #else
             parameterSeparatorIndex = keySection.IndexOf(';');
 
+
+            // TODO: Überarbeiten wenn keySection ein ReadOnlySpan<char> ist:
             ReadOnlySpan<char> keyPartSpan = keySection.AsSpan(0, parameterSeparatorIndex == -1 ? keySection.Length : parameterSeparatorIndex);
             groupSeparatorIndex = keyPartSpan.IndexOf('.');
 #endif
@@ -116,7 +118,10 @@ namespace FolkerKinzel.VCards.Intls
                 this.Key = keySection.Substring(0, parameterSeparatorIndex == -1 ? keySection.Length : parameterSeparatorIndex).ToUpperInvariant();
             }
 #else
-            this.Key = keyPartSpan.Slice(startOfKey).ToString();
+            Span<char> keySpan = stackalloc char[keyPartSpan.Length - startOfKey];
+            _ = startOfKey > 0 ? keyPartSpan.Slice(startOfKey).ToUpperInvariant(keySpan) : keyPartSpan.ToUpperInvariant(keySpan);
+
+            this.Key = keySpan.ToString();
 
             if (groupSeparatorIndex > 0)
             {
