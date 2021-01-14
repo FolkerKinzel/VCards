@@ -29,11 +29,11 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         public string? Value { get; private set; }
 
 
-        /// <summary>
-        /// Wird nur beim Lesen von vCard 2.1 benötigt, um fehlende Base64-Daten nachträglich hinzuzufügen.
-        /// </summary>
-        /// <param name="newValue">Der neue Wert für <see cref="Value"/>.</param>
-        internal void SetValue(string newValue) => Value = newValue;
+        ///// <summary>
+        ///// Wird nur beim Lesen von vCard 2.1 benötigt, um fehlende Base64-Daten nachträglich hinzuzufügen.
+        ///// </summary>
+        ///// <param name="newValue">Der neue Wert für <see cref="Value"/>.</param>
+        //internal void SetValue(string newValue) => Value = newValue;
 
 
 

@@ -82,7 +82,8 @@ namespace FolkerKinzel.VCards.Models
                                 Parameters.Encoding = VCdEncoding.Base64;
                             }
 
-                            Value = Parameters.Encoding == VCdEncoding.Base64 ? BuildDataUri(Parameters.MediaType, value) : BuildUri(value);
+                            // Outlook verwendet falsches Line-Wrapping, weshalb Leerzeichen im Base64 und im Uri enthalten sein können
+                            Value = Parameters.Encoding == VCdEncoding.Base64 ? BuildDataUri(Parameters.MediaType, value.Replace(" ", "")) : BuildUri(value.Replace(" ", ""));
                             return;
                         }
                     }

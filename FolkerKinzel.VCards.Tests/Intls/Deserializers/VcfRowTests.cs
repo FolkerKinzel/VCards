@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
         {
             var info = new VCardDeserializationInfo();
             _ = info.Builder.Append(input);
-            var row = VcfRow.Parse(info);
+            var row = VcfRow.Parse(info.Builder.ToString(), info);
 
             if(rowIsNull)
             {

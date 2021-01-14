@@ -187,6 +187,7 @@ namespace FolkerKinzel.VCards
                 do
                 {
                     s = reader.ReadLine();
+
                     if (s == null)
                     {
                         return null;  // Dateiende: Sollte END:VCARD fehlen, wird die vCard nicht gelesen.
@@ -270,7 +271,7 @@ namespace FolkerKinzel.VCards
 
                     Debug.WriteLine("  == QuotedPrintable Soft-Linebreak detected ==");
                     _ = info.Builder.Append(s);
-                    var vcfRow = VcfRow.Parse(info);
+                    var vcfRow = VcfRow.Parse(info.Builder.ToString(), info);
 
                     if (vcfRow?.Parameters.Encoding == VCdEncoding.QuotedPrintable)
                     {
@@ -279,10 +280,11 @@ namespace FolkerKinzel.VCards
                             s = reader.ReadLine();
                             if (s == null)
                             {
-                                return;
+                                return; // EOF
                             }
 
                             Debug.WriteLine(s);
+
                             if (s.Length == 0)
                             {
                                 continue;
@@ -341,11 +343,28 @@ namespace FolkerKinzel.VCards
 
                 bool AddVcfRow()
                 {
-                    var vcfRow = VcfRow.Parse(info);
+                    string tmp = info.Builder.ToString();
+                    var vcfRow = VcfRow.Parse(tmp, info);
 
-                    bool vCard2_1Base64Detected = isVcard_2_1 && ConcatVcard2_1Base64();
+                    bool vCard2_1Base64Detected = false;
 
-                    if (vcfRow != null) // null, wenn nicht lesbar
+
+                    if (vcfRow == null) // nicht lesbar
+                    {
+                        return vCard2_1Base64Detected;
+                    }
+
+
+                    if (isVcard_2_1 && vcfRow.Parameters.Encoding == VCdEncoding.Base64)
+                    {
+                        Debug.WriteLine("  == vCard 2.1 Base64 detected ==");
+
+                        vCard2_1Base64Detected = true;
+                        _ = info.Builder.Clear().Append(tmp);
+                        vcfRow = ConcatVcard2_1Base64(vcfRow);
+                    }
+
+                    if (vcfRow != null)
                     {
                         parsedVcfRows.Enqueue(vcfRow);
                     }
@@ -356,40 +375,32 @@ namespace FolkerKinzel.VCards
 
                     ///////////////////////////////////////////////////////////////
 
-                    bool ConcatVcard2_1Base64()
+                    VcfRow? ConcatVcard2_1Base64(VcfRow vcfRow)
                     {
-                        if (vcfRow is null)
+                        if(s.Length == 0) //wenn Base64 nur eine Zeile lang war
                         {
-                            return false;
+                            return vcfRow;
                         }
 
-                        if (vcfRow.Parameters.Encoding == VCdEncoding.Base64)
+                        while (s.Length != 0) // Leerzeile beendet Base64
                         {
-                            Debug.WriteLine("  == vCard 2.1 Base64 detected ==");
+                            _ = info.Builder.Append(s);
+                            s = reader.ReadLine();
 
-                            _ = info.Builder.Clear();
-                            _ = info.Builder.Append(vcfRow.Value);
-
-                            while (s.Length != 0)
+                            if (s == null) // EOF
                             {
-                                _ = info.Builder.Append(s);
-                                s = reader.ReadLine();
-                                if (s == null)
-                                {
-                                    return true;
-                                }
-                                Debug.WriteLine(s);
-                                if (s.StartsWith("END:", true, CultureInfo.InvariantCulture))
-                                {
-                                    break;
-                                }
+                                return VcfRow.Parse(info.Builder.ToString(), info); 
                             }
 
-                            vcfRow.SetValue(info.Builder.Replace(" ", "").ToString());
-                            return true;
+                            Debug.WriteLine(s);
+
+                            if (s.StartsWith("END:", true, CultureInfo.InvariantCulture))
+                            {
+                                break;
+                            }
                         }
 
-                        return false;
+                        return VcfRow.Parse(info.Builder.ToString(), info);
                     }
                 }
             }
