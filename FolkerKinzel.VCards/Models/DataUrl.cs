@@ -43,24 +43,42 @@ namespace FolkerKinzel.VCards.Models
         /// <exception cref="ArgumentNullException"><paramref name="uriString"/> ist <c>null</c>.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
         /// weil <paramref name="uriString"/> länger als 65519 Zeichen ist.</exception>
-        private DataUrl(string uriString, MimeType? mimeType) : base(uriString) => this.MimeType = mimeType ?? new MimeType();
-
-
-
-        /// <inheritdoc/>
-        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
-        public new void GetObjectData(SerializationInfo info, StreamingContext context)
+        internal DataUrl(string uriString, MimeType? mimeType, DataEncoding encoding) : base(uriString)
         {
-            base.GetObjectData(info, context);
-
-            if (info != null)
-            {
-                // Use the AddValue method to specify serialized values.
-                info?.AddValue("MimeType", this.MimeType, typeof(MimeType));
-                info?.AddValue("Encoding", this.Encoding, typeof(DataEncoding));
-            }
+            this.Encoding = encoding;
+            this.MimeType = mimeType ?? new MimeType();
         }
 
+
+        /// <summary>
+        /// MIME-Type der eingebetteten Daten. (nie <c>null</c>)
+        /// </summary>
+        public MimeType MimeType { get; }
+
+        /// <summary>
+        /// Encodierung der eingebetteten Daten.
+        /// </summary>
+        public DataEncoding Encoding { get; }
+
+        /// <summary>
+        /// Die eingebetteten encodierten Daten.
+        /// </summary>
+#if NET40
+        public string EncodedData => ToString().Split(new char[] { ',' }, 2, StringSplitOptions.None)[1];
+#else
+        public string EncodedData => ToString().Split(',', 2, StringSplitOptions.None)[1];
+#endif
+
+        /// <summary>
+        /// <c>true</c>, wenn der <see cref="DataUrl"/> eingebetteten Text enthält.
+        /// </summary>
+        public bool ContainsText => this.MimeType.MediaType.StartsWith("text", StringComparison.Ordinal);
+
+
+        /// <summary>
+        /// <c>true</c>, wenn der <see cref="DataUrl"/> eingebettete binäre Daten enthält.
+        /// </summary>
+        public bool ContainsBytes => !ContainsText;
 
 
         /// <inheritdoc/>
@@ -78,98 +96,17 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
-
-        /// <summary>
-        /// Initialisiert ein <see cref="Uri"/>-Objekt aus einem <see cref="string"/> und aktualisiert ein
-        /// <see cref="ParameterSection"/>-Objekt.
-        /// </summary>
-        /// <param name="value">Der zu parsende <see cref="string"/>.</param>
-        /// <param name="parameters"/>Das zu aktualisierende <see cref="ParameterSection"/>-Objekt.
-        /// <param name="builder">Ein <see cref="StringBuilder"/>.</param>
-        /// <param name="version">Version der VCF-Datei.</param>
-        /// <returns>Ein <see cref="Uri"/>- oder <see cref="DataUrl"/>-Objekt oder <c>null</c>, wenn .</returns>
-        /// <exception cref="ArgumentNullException">Der in <paramref name="vcfRow"/> gespeicherte <see cref="string"/> ist <c>null</c>.</exception>
-        /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
-        /// weil der in <paramref name="vcfRow"/> gespeicherte <see cref="string"/> länger als 65519 Zeichen ist.</exception>
-        internal static Uri? FromVcfRow(VcfRow vcfRow, VCdVersion version)
+        /// <inheritdoc/>
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+        public new void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            if (string.IsNullOrWhiteSpace(vcfRow.Value))
+            base.GetObjectData(info, context);
+
+            if (info != null)
             {
-                return null;
-            }
-
-            switch (version)
-            {
-                case VCdVersion.V2_1:
-                    {
-                        if (vcfRow.Parameters.MediaType is null) // die KEY- und Sound-Property von vCard 2.1 enthält per Standard freien Text
-                        {
-                            vcfRow.Parameters.DataType = VCdDataType.Text;
-
-                            vcfRow.DecodeQuotedPrintable();
-
-                            return  DataUrl.FromText(vcfRow.Value);
-                        }
-                        else
-                        {
-                            string value = vcfRow.Value;
-
-                            // vCard 2.1 ermöglicht noch andere Kodierungsarten als BASE64
-                            // wandle diese in BASE64 um: (vCard 2.1 kennt keinen DataUrl)
-                            if (vcfRow.Parameters.Encoding == VCdEncoding.QuotedPrintable)
-                            {
-                                byte[] bytes = QuotedPrintableConverter.DecodeData(value);
-                                value = Convert.ToBase64String(bytes);
-                                vcfRow.Parameters.Encoding = VCdEncoding.Base64;
-                            }
-
-                            return vcfRow.Parameters.Encoding == VCdEncoding.Base64 ? BuildDataUri(vcfRow.Parameters.MediaType, value) : BuildUri(value);
-                        }
-                    }
-                case VCdVersion.V3_0:
-                    {
-                        if (vcfRow.Parameters.Encoding == VCdEncoding.Base64)
-                        {
-                            return BuildDataUri(vcfRow.Parameters.MediaType, vcfRow.Value);
-                        }
-
-                        if (vcfRow.Parameters.DataType == VCdDataType.Text)
-                        {
-                            vcfRow.UnMask(version);
-                            return FromText(vcfRow.Value);
-                        }
-
-                        return BuildUri(vcfRow.Value);
-                    }
-                default:
-                    {
-                        // vCard 4.0:
-                        vcfRow.UnMask(version);
-
-                        return DataUrl.TryCreate(vcfRow.Value, out DataUrl? dataUri)
-                            ? dataUri
-                            : vcfRow.Parameters.DataType == VCdDataType.Text ? DataUrl.FromText(vcfRow.Value) : BuildUri(vcfRow.Value);
-                    }
-            }
-
-
-            // ================================
-
-
-
-            static DataUrl BuildDataUri(string? mediaType, string value)
-            {
-                var mType = new MimeType(mediaType);
-                return new DataUrl($"data:{mType};base64,{value}", mType)
-                {
-                    Encoding = DataEncoding.Base64
-                };
-            }
-
-
-            static Uri BuildUri(string value)
-            {
-                return Uri.TryCreate(value, UriKind.RelativeOrAbsolute, out Uri uri) ? uri : DataUrl.FromText(value);
+                // Use the AddValue method to specify serialized values.
+                info?.AddValue("MimeType", this.MimeType, typeof(MimeType));
+                info?.AddValue("Encoding", this.Encoding, typeof(DataEncoding));
             }
         }
 
@@ -185,7 +122,7 @@ namespace FolkerKinzel.VCards.Models
         {
             dataUrl = null;
 
-            if (string.IsNullOrWhiteSpace(value) || !value.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
+            if (value is null || !value.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
@@ -230,10 +167,7 @@ namespace FolkerKinzel.VCards.Models
 
             try
             {
-                dataUrl = new DataUrl(value, mime)
-                {
-                    Encoding = enc,
-                };
+                dataUrl = new DataUrl(value, mime, enc);
             }
             catch
             {
@@ -270,8 +204,6 @@ namespace FolkerKinzel.VCards.Models
 
                 return false;
             }
-
-
         }
 
 
@@ -287,7 +219,7 @@ namespace FolkerKinzel.VCards.Models
         /// weil der URI-String länger als 65519 Zeichen ist.</exception>
         public static DataUrl FromText(string text)
         {
-            if (text == null)
+            if (text is null)
             {
                 throw new ArgumentNullException(nameof(text));
             }
@@ -297,7 +229,7 @@ namespace FolkerKinzel.VCards.Models
                 throw new ArgumentException(Res.NoData, nameof(text));
             }
 
-            var dataUri = new DataUrl($"data:,{Uri.EscapeDataString(text)}", null);
+            var dataUri = new DataUrl($"data:,{Uri.EscapeDataString(text)}", null, DataEncoding.UrlEncoded);
 
 
             return dataUri;
@@ -329,13 +261,8 @@ namespace FolkerKinzel.VCards.Models
             }
 
             var mType = new MimeType(mimeType);
-            var dataUri =
-                new DataUrl($"data:{mType};base64,{Convert.ToBase64String(bytes)}", mType)
-                {
-                    Encoding = DataEncoding.Base64
-                };
 
-            return dataUri;
+            return new DataUrl($"data:{mType};base64,{Convert.ToBase64String(bytes)}", mType, DataEncoding.Base64);
         }
 
 
@@ -398,36 +325,6 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        /// <summary>
-        /// MIME-Type der eingebetteten Daten. (nie <c>null</c>)
-        /// </summary>
-        public MimeType MimeType { get; }
-
-        /// <summary>
-        /// Encodierung der eingebetteten Daten.
-        /// </summary>
-        public DataEncoding Encoding { get; private set; }
-
-        /// <summary>
-        /// Die eingebetteten encodierten Daten.
-        /// </summary>
-#if NET40
-        public string EncodedData => ToString().Split(new char[] { ',' }, 2, StringSplitOptions.None)[1];
-#else
-        public string EncodedData => ToString().Split(',', 2, StringSplitOptions.None)[1];
-#endif
-
-        /// <summary>
-        /// <c>true</c>, wenn der <see cref="DataUrl"/> eingebetteten Text enthält.
-        /// </summary>
-        public bool ContainsText => this.MimeType.MediaType.StartsWith("text", StringComparison.Ordinal);
-
-
-        /// <summary>
-        /// <c>true</c>, wenn der <see cref="DataUrl"/> eingebettete binäre Daten enthält.
-        /// </summary>
-        public bool ContainsBytes => !ContainsText;
-
 
         /// <summary>
         /// Gibt den im <see cref="DataUrl"/> eingebetteten Text zurück oder <c>null</c>,
@@ -444,7 +341,6 @@ namespace FolkerKinzel.VCards.Models
             if (Encoding == DataEncoding.Base64)
             {
                 // als Base64 codierter Text:
-
                 Encoding enc = TextEncodingConverter.GetEncoding(MimeType.Parameters.FirstOrDefault(x => x.Key == "charset").Value ?? "US-ASCII");
                 try
                 {
@@ -458,7 +354,6 @@ namespace FolkerKinzel.VCards.Models
             else
             {
                 // Url-Codierter UTF-8-String:
-
                 return Uri.UnescapeDataString(EncodedData ?? "");
             }
         }
@@ -472,10 +367,11 @@ namespace FolkerKinzel.VCards.Models
         /// <returns>Die eingebetteten binären Daten oder <c>null</c>.</returns>
         public byte[]? GetEmbeddedBytes()
         {
-            //if (!ContainsBytes) return null;
             try
             {
-                return this.Encoding == DataEncoding.Base64 ? Convert.FromBase64String(EncodedData) : null;
+                return this.Encoding == DataEncoding.Base64
+                    ? Convert.FromBase64String(EncodedData)
+                    : System.Text.Encoding.UTF8.GetBytes(Uri.UnescapeDataString(EncodedData ?? ""));
             }
             catch
             {

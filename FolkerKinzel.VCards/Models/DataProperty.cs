@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -48,7 +49,123 @@ namespace FolkerKinzel.VCards.Models
         {
             try
             {
-                Value = DataUrl.FromVcfRow(vcfRow, version);
+                if (string.IsNullOrWhiteSpace(vcfRow.Value))
+                {
+                    return;
+                }
+
+                switch (version)
+                {
+                    case VCdVersion.V2_1:
+                        {
+                            if (Parameters.MediaType is null) // die KEY- und Sound-Property von vCard 2.1 enthält per Standard freien Text
+                            {
+                                Parameters.DataType = VCdDataType.Text;
+
+                                vcfRow.DecodeQuotedPrintable();
+
+                                try
+                                {
+                                    Value = DataUrl.FromText(vcfRow.Value);
+                                }
+                                catch { }
+                                return;
+                            }
+                            else
+                            {
+                                string value = vcfRow.Value;
+
+                                // vCard 2.1 ermöglicht noch andere Kodierungsarten als BASE64
+                                // wandle diese in BASE64 um: (vCard 2.1 kennt keinen DataUrl)
+                                if (Parameters.Encoding == VCdEncoding.QuotedPrintable)
+                                {
+                                    byte[] bytes = QuotedPrintableConverter.DecodeData(value);
+                                    value = Convert.ToBase64String(bytes);
+                                    Parameters.Encoding = VCdEncoding.Base64;
+                                }
+
+                                Value = Parameters.Encoding == VCdEncoding.Base64 ? BuildDataUri(Parameters.MediaType, value) : BuildUri(value);
+                                return;
+                            }
+                        }
+                    case VCdVersion.V3_0:
+                        {
+                            if (Parameters.Encoding == VCdEncoding.Base64)
+                            {
+                                Value = BuildDataUri(Parameters.MediaType, vcfRow.Value);
+                                return;
+                            }
+
+                            if (Parameters.DataType == VCdDataType.Text)
+                            {
+                                vcfRow.UnMask(version);
+                                try
+                                {
+                                    Value = DataUrl.FromText(vcfRow.Value);
+                                }
+                                catch { }
+                                return;
+                            }
+
+                            Value = BuildUri(vcfRow.Value);
+                            return;
+                        }
+                    default:
+                        {
+                            // vCard 4.0:
+                            vcfRow.UnMask(version);
+
+                            if (Parameters.DataType == VCdDataType.Text)
+                            {
+                                try
+                                { 
+                                    Value = DataUrl.FromText(vcfRow.Value);
+                                } 
+                                catch { }
+                            }
+
+                            Value = DataUrl.TryCreate(vcfRow.Value, out DataUrl? dataUri) ? dataUri : BuildUri(vcfRow.Value);
+
+                            return;
+                        }
+                }
+
+
+                // ================================
+
+                static DataUrl? BuildDataUri(string? mediaType, string value)
+                {
+                    var mType = new MimeType(mediaType);
+
+                    try
+                    {
+                        return new DataUrl($"data:{mType};base64,{value}", mType, DataEncoding.Base64);
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+
+                static Uri? BuildUri(string value)
+                {
+                    if (Uri.TryCreate(value, UriKind.RelativeOrAbsolute, out Uri uri))
+                    {
+                        return uri;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            return DataUrl.FromText(value);
+                        }
+                        catch
+                        {
+                            return null;
+                        }
+                    }
+                }
+
             }
             catch { } // Value = null : not readable
         }
