@@ -176,7 +176,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
         /// <summary>
         /// Decodiert einen Quoted-Printable codierten String. Zeilenwechselzeichen werden an das auf dem System übliche Zeilenwechselzeichen angepasst.
         /// </summary>
-        /// <remarks>Wenn der übergebene String <c>null</c> oder Empty ist, wird string.Empty zurückgegeben.</remarks>
+        /// <remarks>Wenn der übergebene String <c>null</c> oder Empty ist, wird <c>null</c> zurückgegeben.</remarks>
         /// <param name="qpCoded">Der codierte String. Wird <c>null</c> übergeben, wird ein Leerstring zurückgegeben.</param>
         /// <param name="textEncoding">Die Textencodierung, der der codierte String entspricht. Als Standard wird Encoding.UTF-8 angenommen.
         /// (Wird auch gewählt, wenn dem Parameter <c>null</c> übergeben wird.)</param>

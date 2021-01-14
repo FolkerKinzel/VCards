@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Diagnostics;
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -23,7 +24,7 @@ namespace FolkerKinzel.VCards.Models
         public ProfileProperty(string? propertyGroup = null) : base(PROFILE_PROPERTY_VALUE, propertyGroup) { }
 
 
-        internal ProfileProperty(VcfRow row, VCardDeserializationInfo info, VCdVersion version) : base(row, info, version) { }
+        internal ProfileProperty(VcfRow row, VCdVersion version) : base(row, version) { }
 
 
         /// <summary>

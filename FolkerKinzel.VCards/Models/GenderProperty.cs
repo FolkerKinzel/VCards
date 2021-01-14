@@ -51,7 +51,7 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetVCardPropertyValue() => Value;
 
 
-        internal GenderProperty(VcfRow vcfRow, StringBuilder builder)
+        internal GenderProperty(VcfRow vcfRow)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             VCdSex? sex = null;
@@ -66,8 +66,7 @@ namespace FolkerKinzel.VCards.Models
 
             if (list.Count >= 2)
             {
-                _ = builder.Clear().Append(list[1]).UnMask(VCdVersion.V4_0).Trim();
-                genderIdentity = builder.ToString();
+                genderIdentity = vcfRow.Info.Builder.Clear().Append(list[1]).UnMask(VCdVersion.V4_0).Trim().ToString();
             }
 
             Value = new Gender(sex, genderIdentity);

@@ -27,13 +27,13 @@ namespace FolkerKinzel.VCards.Models
         public TextProperty(string? value, string? propertyGroup = null) : base(propertyGroup) => Value = string.IsNullOrWhiteSpace(value) ? null : value;
 
 
-        internal TextProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
+        internal TextProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
         {
             vcfRow.DecodeQuotedPrintable();
 
             if (version != VCdVersion.V2_1)
             {
-                vcfRow.UnMask(info, version);
+                vcfRow.UnMask(version);
             }
 
             Value = vcfRow.Value;

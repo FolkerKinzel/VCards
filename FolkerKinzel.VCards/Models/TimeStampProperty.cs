@@ -34,12 +34,12 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        internal TimeStampProperty(VcfRow vcfRow, VCardDeserializationInfo info)
+        internal TimeStampProperty(VcfRow vcfRow)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             // ein statischer DateAndOrTimeConverter kann nicht benutzt werden, da das die 
             // Threadsafety zerstören würde:
-            _ = info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset value);
+            _ = vcfRow.Info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset value);
             Value = value;
             Parameters.DataType = VCdDataType.Timestamp;
         }

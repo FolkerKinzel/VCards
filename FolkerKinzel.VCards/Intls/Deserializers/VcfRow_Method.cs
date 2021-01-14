@@ -20,51 +20,39 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             }
         }
 
-        internal void UnMask(VCardDeserializationInfo info, VCdVersion version)
+        internal void UnMask(VCdVersion version)
         {
-            StringBuilder builder = info.Builder;
+            this.Value = Info.Builder.Clear().Append(this.Value).UnMask(version).ToString();
 
-            _ = builder.Clear();
-            _ = builder.Append(this.Value);
-            _ = builder.UnMask(version);
-            this.Value = builder.ToString();
             if (this.Value.Length == 0)
             {
                 this.Value = null;
             }
         }
 
-        internal void UnMaskAndTrim(VCardDeserializationInfo info, VCdVersion version)
+        internal void UnMaskAndTrim(VCdVersion version)
         {
-            StringBuilder builder = info.Builder;
+            this.Value = Info.Builder.Clear().Append(this.Value).UnMask(version).Trim().RemoveQuotes().ToString();
 
-            _ = builder.Clear();
-            _ = builder.Append(this.Value);
-            _ = builder.UnMask(version).Trim().RemoveQuotes();
-            this.Value = builder.ToString();
             if (this.Value.Length == 0)
             {
                 this.Value = null;
             }
         }
 
-        internal void DecodeQuotedPrintableData()
-        {
-            Debug.Assert(this.Value != null);
+        //internal void DecodeQuotedPrintableData()
+        //{
+        //    Debug.Assert(this.Value != null);
 
-            // vCard 2.1 ermöglicht noch andere Kodierungsarten als BASE64
-            // wandle diese in BASE64 um: (vCard 2.1 kennt keine DataUri)
-            if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
-            {
-                byte[] bytes = QuotedPrintableConverter.DecodeData(this.Value);
-                this.Value = Convert.ToBase64String(bytes);
-                this.Parameters.Encoding = VCdEncoding.Base64;
-            }
-            //else if(vcfRow.Parameters.Encoding == VCardEncoding.Ansi)
-            //{
-            //    // ?? TODO
-            //}
-        }
+        //    // vCard 2.1 ermöglicht noch andere Kodierungsarten als BASE64
+        //    // wandle diese in BASE64 um: (vCard 2.1 kennt keinen DataUrl)
+        //    if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
+        //    {
+        //        byte[] bytes = QuotedPrintableConverter.DecodeData(this.Value);
+        //        this.Value = Convert.ToBase64String(bytes);
+        //        this.Parameters.Encoding = VCdEncoding.Base64;
+        //    }
+        //}
 
     }
 }

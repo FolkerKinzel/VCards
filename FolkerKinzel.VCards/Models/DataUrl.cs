@@ -12,6 +12,8 @@ using System.Security.Permissions;
 using System.Text;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
+using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
+using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -44,7 +46,7 @@ namespace FolkerKinzel.VCards.Models
         private DataUrl(string uriString, MimeType? mimeType) : base(uriString) => this.MimeType = mimeType ?? new MimeType();
 
 
-        
+
         /// <inheritdoc/>
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         public new void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -60,7 +62,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        
+
         /// <inheritdoc/>
         protected DataUrl(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext)
         {
@@ -78,26 +80,23 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// Initialisiert ein <see cref="Uri"/>-Objekt aus dem in einer <see cref="VcfRow"/> gespeicherten Text.
-        /// Wenn der Text dies hergibt, handelt es sich um ein <see cref="DataUrl"/>-Objekt.
+        /// Initialisiert ein <see cref="Uri"/>-Objekt aus einem <see cref="string"/> und aktualisiert ein
+        /// <see cref="ParameterSection"/>-Objekt.
         /// </summary>
-        /// <param name="vcfRow">Die zu parsende <see cref="VcfRow"/>.</param>
-        /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>-Objekt.</param>
+        /// <param name="value">Der zu parsende <see cref="string"/>.</param>
+        /// <param name="parameters"/>Das zu aktualisierende <see cref="ParameterSection"/>-Objekt.
+        /// <param name="builder">Ein <see cref="StringBuilder"/>.</param>
         /// <param name="version">Version der VCF-Datei.</param>
-        /// <returns>Ein <see cref="Uri"/>- oder <see cref="DataUrl"/>-Objekt.</returns>
+        /// <returns>Ein <see cref="Uri"/>- oder <see cref="DataUrl"/>-Objekt oder <c>null</c>, wenn .</returns>
         /// <exception cref="ArgumentNullException">Der in <paramref name="vcfRow"/> gespeicherte <see cref="string"/> ist <c>null</c>.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
         /// weil der in <paramref name="vcfRow"/> gespeicherte <see cref="string"/> länger als 65519 Zeichen ist.</exception>
-        internal static Uri? FromVcfRow(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
+        internal static Uri? FromVcfRow(VcfRow vcfRow, VCdVersion version)
         {
-            Debug.Assert(vcfRow != null);
-
             if (string.IsNullOrWhiteSpace(vcfRow.Value))
             {
                 return null;
             }
-
-            string value = vcfRow.Value;
 
             switch (version)
             {
@@ -105,63 +104,70 @@ namespace FolkerKinzel.VCards.Models
                     {
                         if (vcfRow.Parameters.MediaType is null) // die KEY- und Sound-Property von vCard 2.1 enthält per Standard freien Text
                         {
-                            vcfRow.DecodeQuotedPrintable();
                             vcfRow.Parameters.DataType = VCdDataType.Text;
-                            //vcfRow.UnMask(info);
-                            return DataUrl.FromText(value);
+
+                            vcfRow.DecodeQuotedPrintable();
+
+                            return  DataUrl.FromText(vcfRow.Value);
                         }
                         else
                         {
-                            vcfRow.DecodeQuotedPrintableData();
+                            string value = vcfRow.Value;
 
-                            return vcfRow.Parameters.Encoding == VCdEncoding.Base64 ? BuildDataUri() : BuildUri();
+                            // vCard 2.1 ermöglicht noch andere Kodierungsarten als BASE64
+                            // wandle diese in BASE64 um: (vCard 2.1 kennt keinen DataUrl)
+                            if (vcfRow.Parameters.Encoding == VCdEncoding.QuotedPrintable)
+                            {
+                                byte[] bytes = QuotedPrintableConverter.DecodeData(value);
+                                value = Convert.ToBase64String(bytes);
+                                vcfRow.Parameters.Encoding = VCdEncoding.Base64;
+                            }
+
+                            return vcfRow.Parameters.Encoding == VCdEncoding.Base64 ? BuildDataUri(vcfRow.Parameters.MediaType, value) : BuildUri(value);
                         }
                     }
                 case VCdVersion.V3_0:
                     {
                         if (vcfRow.Parameters.Encoding == VCdEncoding.Base64)
                         {
-                            return BuildDataUri();
+                            return BuildDataUri(vcfRow.Parameters.MediaType, vcfRow.Value);
                         }
-                        else if (vcfRow.Parameters.DataType == VCdDataType.Text)
+
+                        if (vcfRow.Parameters.DataType == VCdDataType.Text)
                         {
-                            vcfRow.UnMask(info, version);
-                            return FromText(value);
+                            vcfRow.UnMask(version);
+                            return FromText(vcfRow.Value);
                         }
-                        else
-                        {
-                            return BuildUri();
-                        }
+
+                        return BuildUri(vcfRow.Value);
                     }
-                //case VCdVersion.V4_0:
-                //    break;
                 default:
-                    break;
+                    {
+                        // vCard 4.0:
+                        vcfRow.UnMask(version);
+
+                        return DataUrl.TryCreate(vcfRow.Value, out DataUrl? dataUri)
+                            ? dataUri
+                            : vcfRow.Parameters.DataType == VCdDataType.Text ? DataUrl.FromText(vcfRow.Value) : BuildUri(vcfRow.Value);
+                    }
             }
 
 
             // ================================
-            // vCard 4.0:
-
-            vcfRow.UnMaskAndTrim(info, version);
 
 
-            return DataUrl.TryCreate(value, out DataUrl? dataUri)
-                ? dataUri
-                : vcfRow.Parameters.DataType == VCdDataType.Text ? DataUrl.FromText(value) : BuildUri();
 
-
-            DataUrl BuildDataUri()
+            static DataUrl BuildDataUri(string? mediaType, string value)
             {
-                var mType = new MimeType(vcfRow.Parameters.MediaType);
-                return new DataUrl($"data:{mType};base64,{vcfRow.Value}", mType)
+                var mType = new MimeType(mediaType);
+                return new DataUrl($"data:{mType};base64,{value}", mType)
                 {
                     Encoding = DataEncoding.Base64
                 };
             }
 
 
-            Uri BuildUri()
+            static Uri BuildUri(string value)
             {
                 return Uri.TryCreate(value, UriKind.RelativeOrAbsolute, out Uri uri) ? uri : DataUrl.FromText(value);
             }

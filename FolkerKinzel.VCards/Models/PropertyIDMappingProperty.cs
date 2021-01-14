@@ -37,7 +37,6 @@ namespace FolkerKinzel.VCards.Models
         {
             if (vcfRow.Value is null)
             {
-                //Value = new PropertyIDMapping();
                 return;
             }
 

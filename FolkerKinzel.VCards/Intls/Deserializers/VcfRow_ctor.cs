@@ -27,7 +27,11 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             int separatorIndex = GetValueSeparatorIndex(vCardRow);
 
 
-            if (separatorIndex > -1)
+            if (separatorIndex == -1)
+            {
+                return null;
+            }
+            else
             {
                 string keySection;
                 string? value = null;
@@ -41,7 +45,11 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                     value = vCardRow.Substring(valueStart);
                 }
 
-                if (keySection.Length != 0)
+                if (keySection.Length == 0)
+                {
+                    return null;
+                }
+                else
                 {
                     try
                     {
@@ -52,14 +60,6 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                         return null;
                     }
                 }
-                else
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                return null;
             }
         }
 
@@ -71,6 +71,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>-Objekt.</param>
         private VcfRow(string keySection, string? value, VCardDeserializationInfo info)
         {
+            this.Info = info;
             this.Value = value;
 
             // keySectionParts:
@@ -137,7 +138,6 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             else
             {
                 this.Parameters = new ParameterSection();
-
             }
         }
 
@@ -170,14 +170,57 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         {
             var parameterTuples = new List<Tuple<string, string>>();
 
-            foreach (string parameter in new ParameterSplitter(parameterSection))
+            //foreach (string parameter in new ParameterSplitter(parameterSection))
+            //{
+            //    if (string.IsNullOrWhiteSpace(parameter))
+            //    {
+            //        continue;
+            //    }
+
+            //    SplitParameterKeyAndValue(info, parameterTuples, parameter);
+
+            //}//foreach
+
+
+            int parameterStartIndex = 0;
+            int splitIndex;
+            string parameter;
+
+            while (-1 != (splitIndex = GetNextParameterSplitIndex(parameterStartIndex, parameterSection)))
             {
+                // key=value;key="value,value,va;lue";key="val;ue" wird zu
+                // key=value | key="value,value,va;lue" | key="val;ue"
+                parameter = parameterSection.Substring(parameterStartIndex, splitIndex - parameterStartIndex);
+                parameterStartIndex = splitIndex + 1;
+
                 if (string.IsNullOrWhiteSpace(parameter))
                 {
                     continue;
                 }
 
+                SplitParameterKeyAndValue(info, parameterTuples, parameter);
+            }
 
+            int length = parameterSection.Length - parameterStartIndex;
+
+            if (length > 0)
+            {
+                parameter = parameterSection.Substring(parameterStartIndex, parameterSection.Length - parameterStartIndex);
+
+                if (!string.IsNullOrWhiteSpace(parameter))
+                {
+                    SplitParameterKeyAndValue(info, parameterTuples, parameter);
+                }
+            }
+
+
+            return parameterTuples;
+
+
+            ////////////////////////////////////////////////////////////////////
+
+            static void SplitParameterKeyAndValue(VCardDeserializationInfo info, List<Tuple<string, string>> parameterTuples, string parameter)
+            {
                 string[] splitArr = parameter.Split(info.EqualSign, 2, StringSplitOptions.RemoveEmptyEntries);
 
                 if (splitArr.Length == 2)
@@ -189,61 +232,11 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                     // in vCard 2.1. kann direkt das Value angegeben werden, z.B. Note;Quoted-Printable;UTF-8:Text des Kommentars
                     parameterTuples.Add(new Tuple<string, string>(ParseAttributeKeyFromValue(splitArr[0]), splitArr[0]));
                 }
-
-            }//foreach
-
-            return parameterTuples;
+            }
         }
 
 
-        //// key=value;key="value,value,va;lue";key="val;ue" wird zu
-        //// key=value | key="value,value,va;lue" | key="val;ue"
-        //private static IEnumerator<string> SplitParameters(string parameterSection)
-        //{
-        //    bool isInDoubleQuotes = false;
-        //    int nextStringStartIndex = 0;
 
-        //    string subString;
-        //    int i;
 
-        //    for (i = 0; i < parameterSection.Length; i++)
-        //    {
-        //        char c = parameterSection[i];
-
-        //        if (c == '"')
-        //        {
-        //            isInDoubleQuotes = !isInDoubleQuotes;
-        //        }
-        //        else if (c == ';' && !isInDoubleQuotes)
-        //        {
-        //            subString = parameterSection.Substring(nextStringStartIndex, i - nextStringStartIndex);
-
-        //            if (!string.IsNullOrWhiteSpace(subString))
-        //            {
-        //                yield return subString;
-        //            }
-        //            nextStringStartIndex = i + 1;
-        //        }
-        //    }//for
-
-        //    subString = parameterSection.Substring(nextStringStartIndex, i - nextStringStartIndex);
-
-        //    if (!string.IsNullOrWhiteSpace(subString))
-        //    {
-        //        yield return subString;
-        //    }
-
-        //    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //    //void AddSubstring()
-        //    //{
-        //    //    string subString = parameterSection.Substring(nextStringStartIndex, i - nextStringStartIndex);
-
-        //    //    if (!string.IsNullOrWhiteSpace(subString))
-        //    //    {
-        //    //        splittedParameterSection.Add(subString);
-        //    //    }
-        //    //}
-        //}
     }
 }

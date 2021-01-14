@@ -40,8 +40,9 @@ namespace FolkerKinzel.VCards.Models.Tests
         [TestMethod()]
         public void XmlPropertyTest3()
         {
-            // null ist erlaubt:
-            _ = new XmlProperty(null);
+            // null ist erlaubt - Der cast ist nur im Test nötig, da hier eine Verwechslungsgefahr
+            // mit dem internal ctor besteht:
+            _ = new XmlProperty((XElement?)null);
 
             const string XML_TEXT1 =
                 "<Folker xmlns=\"https://www.folker-kinzel.de\">Kinzel</Folker>";

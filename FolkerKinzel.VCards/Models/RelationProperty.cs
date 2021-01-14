@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using FolkerKinzel.VCards.Models.PropertyParts;
-
+using System.Text;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -32,15 +32,14 @@ namespace FolkerKinzel.VCards.Models
         protected RelationProperty(RelationTypes? relation, string? propertyGroup) : base(propertyGroup) => this.Parameters.RelationType = relation;
 
 
-        internal static RelationProperty Parse(VcfRow row, VCardDeserializationInfo info, VCdVersion version)
+        internal static RelationProperty Parse(VcfRow row, VCdVersion version)
         {
-            row.UnMask(info, version);
-
             if (row.Value is null || row.Parameters.DataType == Enums.VCdDataType.Text)
             {
-                return new RelationTextProperty(row, info, version);
+                return new RelationTextProperty(row, version);
             }
 
+            row.UnMask(version);
 #if NET40
             if (row.Value.IsUuidUri())
 #else
@@ -69,7 +68,7 @@ namespace FolkerKinzel.VCards.Models
                 }
                 else
                 {
-                    return new RelationTextProperty(row, info, version);
+                    return new RelationTextProperty(row, version);
                 }
             }
         }

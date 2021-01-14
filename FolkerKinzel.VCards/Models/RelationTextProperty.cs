@@ -38,13 +38,13 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        internal RelationTextProperty(VcfRow row, VCardDeserializationInfo info, VCdVersion version) : base(row.Parameters, row.Group)
+        internal RelationTextProperty(VcfRow row, VCdVersion version) : base(row.Parameters, row.Group)
         {
             row.DecodeQuotedPrintable();
 
             if (version != VCdVersion.V2_1)
             {
-                row.UnMask(info, version);
+                row.UnMask(version);
             }
 
             this.Value = row.Value;

@@ -43,13 +43,12 @@ namespace FolkerKinzel.VCards.Models
             Parameters.DataType = VCdDataType.Uri;
         }
 
-        internal DataProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
+        internal DataProperty(VcfRow vcfRow, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             try
             {
-                Value = DataUrl.FromVcfRow(vcfRow, info, version);
-                Parameters.MediaType = vcfRow.Parameters.MediaType;
+                Value = DataUrl.FromVcfRow(vcfRow, version);
             }
             catch { } // Value = null : not readable
         }

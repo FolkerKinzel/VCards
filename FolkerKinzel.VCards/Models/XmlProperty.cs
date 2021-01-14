@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Resources;
 using System;
+using System.Text;
 using System.Xml.Linq;
 
 
@@ -47,6 +48,6 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        internal XmlProperty(VcfRow vcfRow, VCardDeserializationInfo info) : base(vcfRow, info, VCdVersion.V4_0) { }
+        internal XmlProperty(VcfRow vcfRow) : base(vcfRow, VCdVersion.V4_0) { }
     }
 }

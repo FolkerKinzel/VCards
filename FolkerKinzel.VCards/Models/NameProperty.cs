@@ -65,7 +65,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        internal NameProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
+        internal NameProperty(VcfRow vcfRow, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             if (vcfRow.Value == null)
@@ -78,7 +78,7 @@ namespace FolkerKinzel.VCards.Models
 
                 vcfRow.DecodeQuotedPrintable();
 
-                Value = new Name(vcfRow.Value, info.Builder, version);
+                Value = new Name(vcfRow.Value, vcfRow.Info.Builder, version);
             }
         }
 

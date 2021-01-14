@@ -89,7 +89,7 @@ namespace FolkerKinzel.VCards.Models
 
 
 
-        internal AddressProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
+        internal AddressProperty(VcfRow vcfRow, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             if (vcfRow.Value is null)
@@ -101,9 +101,10 @@ namespace FolkerKinzel.VCards.Models
                 Debug.Assert(!string.IsNullOrWhiteSpace(vcfRow.Value));
 
                 vcfRow.DecodeQuotedPrintable();
-                Value = new Address(vcfRow.Value, info.Builder, version);
+                Value = new Address(vcfRow.Value, vcfRow.Info.Builder, version);
             }
         }
+
 
         [InternalProtected]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)

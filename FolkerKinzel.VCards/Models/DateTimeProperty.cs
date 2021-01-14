@@ -29,10 +29,9 @@ namespace FolkerKinzel.VCards.Models
         protected DateTimeProperty(string? propertyGroup) : base(propertyGroup) { }
 
 
-        internal static DateTimeProperty Create(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
+        internal static DateTimeProperty Create(VcfRow vcfRow, VCdVersion version)
         {
             Debug.Assert(vcfRow != null);
-            Debug.Assert(info != null);
 
 
             switch (vcfRow.Parameters.DataType)
@@ -43,36 +42,29 @@ namespace FolkerKinzel.VCards.Models
                 case VCdDataType.Timestamp:
                 case null:
                     {
-                        return info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
+                        return vcfRow.Info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
                             ? BuildDateTimeOffsetProperty(dateTimeOffset)
                             : (DateTimeProperty)BuildDateTimeTextProperty();
                     }
                 case VCdDataType.Time:
                     {
 
-                        return info.TimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
+                        return vcfRow.Info.TimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
                             ? BuildDateTimeOffsetProperty(dateTimeOffset)
                             : (DateTimeProperty)BuildDateTimeTextProperty();
                     }
                 default:
                     {
+                        vcfRow.UnMask(version);
                         return BuildDateTimeTextProperty();
                     }
 
             }//switch
 
 
-            string UnMask()
-            {
-                StringBuilder builder = info.Builder;
-                _ = builder.Clear().Append(vcfRow.Value).UnMask(version);
-
-                return builder.ToString();
-            }
-
             DateTimeTextProperty BuildDateTimeTextProperty()
             {
-                var textProp = new DateTimeTextProperty(UnMask(), vcfRow.Group);
+                var textProp = new DateTimeTextProperty(vcfRow.Value, vcfRow.Group);
 
                 textProp.Parameters.AltID = vcfRow.Parameters.AltID;
                 textProp.Parameters.Language = vcfRow.Parameters.Language;

@@ -22,6 +22,8 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         // geparste Form der Parameter ;TYPE=HOME,WORK;PREF=1
         public readonly ParameterSection Parameters;
 
+        public readonly VCardDeserializationInfo Info;
+
 
         // Value: ;;Waldstr. 54;Kleinknuffelsdorf;Sachsen-Anhalt;06789;Germany
         public string? Value { get; private set; }

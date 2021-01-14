@@ -58,7 +58,7 @@ namespace FolkerKinzel.VCards.Models
         { }
 
 
-        internal StringCollectionProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
+        internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             vcfRow.DecodeQuotedPrintable();
@@ -76,7 +76,6 @@ namespace FolkerKinzel.VCards.Models
             string[] SplitValue()
             {
                 string? value = vcfRow.Value;
-                StringBuilder builder = info.Builder;
                 List<string> list = value.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
 
 
@@ -90,10 +89,7 @@ namespace FolkerKinzel.VCards.Models
 
                 string UnescapeString(string val)
                 {
-                    _ = builder.Clear();
-                    _ = builder.Append(val);
-                    _ = builder.UnMask(version);
-                    return builder.ToString();
+                    return vcfRow.Info.Builder.Clear().Append(val).UnMask(version).ToString();
                 }
             }
         }

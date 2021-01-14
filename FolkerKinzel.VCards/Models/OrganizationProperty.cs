@@ -30,14 +30,14 @@ namespace FolkerKinzel.VCards.Models
                                     string? propertyGroup = null) : base(propertyGroup) => Value = new Organization(organizationName, organizationalUnits);
 
 
-        internal OrganizationProperty(VcfRow vcfRow, VCardDeserializationInfo info, VCdVersion version)
+        internal OrganizationProperty(VcfRow vcfRow, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             Debug.Assert(vcfRow != null);
 
             vcfRow.DecodeQuotedPrintable();
 
-            Value = new Organization(vcfRow.Value, info.Builder, version);
+            Value = new Organization(vcfRow.Value, vcfRow.Info.Builder, version);
         }
 
         /// <summary>
