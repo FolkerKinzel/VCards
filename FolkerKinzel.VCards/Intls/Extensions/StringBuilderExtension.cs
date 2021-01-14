@@ -95,6 +95,12 @@ namespace FolkerKinzel.VCards.Intls.Extensions
         }
 
 
+        /// <summary>
+        /// Entfernt führenden und nachgestellten Leerraum vom Inhalt
+        /// von <paramref name="builder"/>.
+        /// </summary>
+        /// <param name="builder">Der <see cref="StringBuilder"/>, dessen Inhalt verändert wird.</param>
+        /// <returns>Gibt <paramref name="builder"/> zurück, damit Aufrufe verkettet werden können.</returns>
         internal static StringBuilder Trim(this StringBuilder builder)
         {
             Debug.Assert(builder != null);
@@ -113,6 +119,12 @@ namespace FolkerKinzel.VCards.Intls.Extensions
         }
 
 
+        /// <summary>
+        /// Entfernt einfache und doppelte Gänsefüßchen, die sich am Beginnn oder Ende des Inhalts
+        /// von <paramref name="builder"/> befinden.
+        /// </summary>
+        /// <param name="builder">Der <see cref="StringBuilder"/>, dessen Inhalt verändert wird.</param>
+        /// <returns>Gibt <paramref name="builder"/> zurück, damit Aufrufe verkettet werden können.</returns>
         internal static StringBuilder RemoveQuotes(this StringBuilder builder)
         {
             Debug.Assert(builder != null);

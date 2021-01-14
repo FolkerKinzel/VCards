@@ -11,6 +11,11 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal sealed partial class VcfRow
     {
+        /// <summary>
+        /// Dekodiert Quoted-Printable kodierten Text, der sich in <see cref="Value"/> befindet, wenn 
+        /// <see cref="VCards.Models.PropertyParts.ParameterSection.Encoding"/>
+        /// gleich <see cref="VCdEncoding.QuotedPrintable"/> ist.
+        /// </summary>
         internal void DecodeQuotedPrintable()
         {
             if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
@@ -20,6 +25,12 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             }
         }
 
+
+        /// <summary>
+        /// Unmaskiert maskierten Text, der sich in <see cref="Value"/> befindet, nach den Maßgaben des
+        /// verwendeten vCard-Standards.
+        /// </summary>
+        /// <param name="version">Die Versionsnummer des vCard-Standards.</param>
         internal void UnMask(VCdVersion version)
         {
             this.Value = Info.Builder.Clear().Append(this.Value).UnMask(version).ToString();
@@ -30,6 +41,13 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             }
         }
 
+
+        /// <summary>
+        /// Unmaskiert maskierten Text, der sich in <see cref="Value"/> befindet, nach den Maßgaben des
+        /// verwendeten vCard-Standards und entfernt führenden und nachgestellten Leerraum sowie einfache und doppelte Gänsefüßchen,
+        /// die sich am Beginn oder Ende von <see cref="Value"/> befinden.
+        /// </summary>
+        /// <param name="version">Die Versionsnummer des vCard-Standards.</param>
         internal void UnMaskAndTrim(VCdVersion version)
         {
             this.Value = Info.Builder.Clear().Append(this.Value).UnMask(version).Trim().RemoveQuotes().ToString();
@@ -40,19 +58,6 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             }
         }
 
-        //internal void DecodeQuotedPrintableData()
-        //{
-        //    Debug.Assert(this.Value != null);
-
-        //    // vCard 2.1 ermöglicht noch andere Kodierungsarten als BASE64
-        //    // wandle diese in BASE64 um: (vCard 2.1 kennt keinen DataUrl)
-        //    if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
-        //    {
-        //        byte[] bytes = QuotedPrintableConverter.DecodeData(this.Value);
-        //        this.Value = Convert.ToBase64String(bytes);
-        //        this.Parameters.Encoding = VCdEncoding.Base64;
-        //    }
-        //}
 
     }
 }
