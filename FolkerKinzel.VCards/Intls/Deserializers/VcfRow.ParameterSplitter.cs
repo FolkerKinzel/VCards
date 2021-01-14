@@ -7,28 +7,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal sealed partial class VcfRow
     {
-        // key=value;key="value,value,va;lue";key="val;ue" wird zu
-        // key=value | key="value,value,va;lue" | key="val;ue"
-        private static int GetNextParameterSplitIndex(int parameterStartIndex, string parameterSection)
-        {
-            bool isInDoubleQuotes = false;
-
-            for (int i = parameterStartIndex; i < parameterSection.Length; i++)
-            {
-                char c = parameterSection[i];
-
-                if (c == '"')
-                {
-                    isInDoubleQuotes = !isInDoubleQuotes;
-                }
-                else if (c == ';' && !isInDoubleQuotes)
-                {
-                    return i;
-                }
-            }//for
-
-            return -1;
-        }
+        
 
 
         // key=value;key="value,value,va;lue";key="val;ue" wird zu

@@ -47,6 +47,9 @@
     <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Intls\Deserializers\VcfRow.ParameterSplitter.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\..\..\Nuget-Logo\Logo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

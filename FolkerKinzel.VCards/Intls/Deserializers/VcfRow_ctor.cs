@@ -132,8 +132,8 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             if (parameterSeparatorIndex != -1 && parameterSeparatorIndex < keySection.Length - 1)
             {
-                string parameters = keySection.Substring(parameterSeparatorIndex + 1);
-                this.Parameters = new ParameterSection(this.Key, GetParameters(parameters, info), info);
+                string parameterSection = keySection.Substring(parameterSeparatorIndex + 1);
+                this.Parameters = new ParameterSection(this.Key, GetParameters(parameterSection), info);
             }
             else
             {
@@ -166,25 +166,13 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             return -1;
         }
 
-        private static List<Tuple<string, string>> GetParameters(string parameterSection, VCardDeserializationInfo info)
+
+        private static List<KeyValuePair<string, string>> GetParameters(string parameterSection)
         {
-            var parameterTuples = new List<Tuple<string, string>>();
-
-            //foreach (string parameter in new ParameterSplitter(parameterSection))
-            //{
-            //    if (string.IsNullOrWhiteSpace(parameter))
-            //    {
-            //        continue;
-            //    }
-
-            //    SplitParameterKeyAndValue(info, parameterTuples, parameter);
-
-            //}//foreach
-
-
-            int parameterStartIndex = 0;
             int splitIndex;
             string parameter;
+            int parameterStartIndex = 0;
+            var parameterTuples = new List<KeyValuePair<string, string>>();
 
             while (-1 != (splitIndex = GetNextParameterSplitIndex(parameterStartIndex, parameterSection)))
             {
@@ -198,7 +186,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                     continue;
                 }
 
-                SplitParameterKeyAndValue(info, parameterTuples, parameter);
+                SplitParameterKeyAndValue(parameterTuples, parameter);
             }
 
             int length = parameterSection.Length - parameterStartIndex;
@@ -209,7 +197,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
                 if (!string.IsNullOrWhiteSpace(parameter))
                 {
-                    SplitParameterKeyAndValue(info, parameterTuples, parameter);
+                    SplitParameterKeyAndValue(parameterTuples, parameter);
                 }
             }
 
@@ -219,19 +207,58 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             ////////////////////////////////////////////////////////////////////
 
-            static void SplitParameterKeyAndValue(VCardDeserializationInfo info, List<Tuple<string, string>> parameterTuples, string parameter)
+            // key=value;key="value,value,va;lue";key="val;ue" wird zu
+            // key=value | key="value,value,va;lue" | key="val;ue"
+            static int GetNextParameterSplitIndex(int parameterStartIndex, string parameterSection)
             {
-                string[] splitArr = parameter.Split(info.EqualSign, 2, StringSplitOptions.RemoveEmptyEntries);
+                bool isInDoubleQuotes = false;
 
-                if (splitArr.Length == 2)
+                for (int i = parameterStartIndex; i < parameterSection.Length; i++)
                 {
-                    parameterTuples.Add(new Tuple<string, string>(splitArr[0].ToUpperInvariant(), splitArr[1]));
+                    char c = parameterSection[i];
+
+                    if (c == '"')
+                    {
+                        isInDoubleQuotes = !isInDoubleQuotes;
+                    }
+                    else if (c == ';' && !isInDoubleQuotes)
+                    {
+                        return i;
+                    }
+                }//for
+
+                return -1;
+            }
+
+
+            static void SplitParameterKeyAndValue(List<KeyValuePair<string, string>> parameterTuples, string parameter)
+            {
+                int splitIndex = parameter.IndexOf('=');
+
+                if (splitIndex == -1)
+                {
+                    // in vCard 2.1. kann direkt das Value angegeben werden, z.B. Note;Quoted-Printable;UTF-8:Text des Kommentars
+                    parameterTuples.Add(new KeyValuePair<string, string>(ParseAttributeKeyFromValue(parameter), parameter));
                 }
                 else
                 {
-                    // in vCard 2.1. kann direkt das Value angegeben werden, z.B. Note;Quoted-Printable;UTF-8:Text des Kommentars
-                    parameterTuples.Add(new Tuple<string, string>(ParseAttributeKeyFromValue(splitArr[0]), splitArr[0]));
+                    parameterTuples.Add(
+                        new KeyValuePair<string, string>(
+                            parameter.Substring(0, splitIndex).ToUpperInvariant(),
+                            parameter.Substring(splitIndex + 1, parameter.Length - (splitIndex + 1))));
                 }
+
+                //string[] splitArr = parameter.Split(info.EqualSign, 2, StringSplitOptions.RemoveEmptyEntries);
+
+                //if (splitArr.Length == 2)
+                //{
+                //    parameterTuples.Add(new Tuple<string, string>(splitArr[0].ToUpperInvariant(), splitArr[1]));
+                //}
+                //else
+                //{
+                //    // in vCard 2.1. kann direkt das Value angegeben werden, z.B. Note;Quoted-Printable;UTF-8:Text des Kommentars
+                //    parameterTuples.Add(new Tuple<string, string>(ParseAttributeKeyFromValue(splitArr[0]), splitArr[0]));
+                //}
             }
         }
 

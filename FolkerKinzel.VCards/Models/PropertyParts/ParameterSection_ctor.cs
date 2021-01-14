@@ -15,26 +15,25 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     {
         internal ParameterSection() { }
 
-        internal ParameterSection(string propertyKey, IEnumerable<Tuple<string, string>> propertyParameters, VCardDeserializationInfo info)
+        internal ParameterSection(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters, VCardDeserializationInfo info)
         {
             Debug.Assert(propertyParameters != null);
-            Debug.Assert(propertyParameters.All(x => x != null));
-            Debug.Assert(propertyParameters.All(
-                x => !(string.IsNullOrWhiteSpace(x.Item1) || string.IsNullOrWhiteSpace(x.Item2))
+            Debug.Assert(!propertyParameters.Any(
+                x => string.IsNullOrWhiteSpace(x.Key) || string.IsNullOrWhiteSpace(x.Value)
                 ));
 
             StringBuilder builder = info.Builder;
 
-            foreach (Tuple<string, string>? parameter in propertyParameters)
+            foreach (KeyValuePair<string, string> parameter in propertyParameters)
             {
-                switch (parameter.Item1)
+                switch (parameter.Key)
                 {
                     case ParameterKey.LANGUAGE:
-                        this.Language = parameter.Item2;
+                        this.Language = parameter.Value;
                         break;
                     case ParameterKey.VALUE:
                         {
-                            string valValue = CleanParameterValue(parameter.Item2, builder);
+                            string valValue = CleanParameterValue(parameter.Value, builder);
                             VCdDataType? dataType = VCdDataTypeConverter.Parse(valValue);
                             this.DataType = dataType;
 
@@ -53,7 +52,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         }
                     case ParameterKey.PREF:
                         {
-                            if (int.TryParse(parameter.Item2.Trim().Trim(info.AllQuotes), out int intVal))
+                            if (int.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out int intVal))
                             {
                                 this.Preference = intVal;
                             }
@@ -64,13 +63,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             List<PropertyID> list = (List<PropertyID>?)this.PropertyIDs ?? new List<PropertyID>();
                             this.PropertyIDs = list;
                             
-                            PropertyID.ParseInto(list, parameter.Item2);
+                            PropertyID.ParseInto(list, parameter.Value);
 
                             break;
                         }
                     case ParameterKey.TYPE:
                         {
-                            List<string> values = parameter.Item2.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
+                            List<string> values = parameter.Value.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
 
                             for (int i = 0; i < values.Count; i++)
                             {
@@ -82,14 +81,14 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             break;
                         }
                     case ParameterKey.GEO:
-                        this.GeographicalPosition = GeoCoordinateConverter.Parse(parameter.Item2.Trim().Trim(info.AllQuotes));
+                        this.GeographicalPosition = GeoCoordinateConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));
                         break;
                     case ParameterKey.TZ:
-                        this.TimeZone = TimeZoneInfoConverter.Parse(parameter.Item2.Trim().Trim(info.AllQuotes));
+                        this.TimeZone = TimeZoneInfoConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));
                         break;
                     case ParameterKey.SORT_AS:
                         {
-                            List<string> list = parameter.Item2.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
+                            List<string> list = parameter.Value.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
 
                             for (int i = list.Count - 1; i >= 0; i--)
                             {
@@ -110,33 +109,33 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             break;
                         }
                     case ParameterKey.CALSCALE:
-                        this.Calendar = parameter.Item2.Trim().Trim(info.AllQuotes);
+                        this.Calendar = parameter.Value.Trim().Trim(info.AllQuotes);
                         break;
                     case ParameterKey.ENCODING:
-                        this.Encoding = VCdEncodingConverter.Parse(parameter.Item2);
+                        this.Encoding = VCdEncodingConverter.Parse(parameter.Value);
                         break;
                     case ParameterKey.CHARSET:
-                        this.Charset = parameter.Item2.Trim().Trim(info.AllQuotes);
+                        this.Charset = parameter.Value.Trim().Trim(info.AllQuotes);
                         break;
                     case ParameterKey.ALTID:
-                        this.AltID = parameter.Item2.Trim().Trim(info.AllQuotes);
+                        this.AltID = parameter.Value.Trim().Trim(info.AllQuotes);
                         break;
                     case ParameterKey.MEDIATYPE:
-                        this.MediaType = parameter.Item2.Trim().Trim(info.AllQuotes);
+                        this.MediaType = parameter.Value.Trim().Trim(info.AllQuotes);
                         break;
                     case ParameterKey.LABEL:
 #if NET40
-                        this.Label = parameter.Item2.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine).Replace(@"\N", Environment.NewLine);
+                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine).Replace(@"\N", Environment.NewLine);
 #else
-                        this.Label = parameter.Item2.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine, StringComparison.OrdinalIgnoreCase);
+                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine, StringComparison.OrdinalIgnoreCase);
 #endif
                         break;
                     case ParameterKey.CONTEXT:
-                        this.Context = parameter.Item2.Trim().Trim(info.AllQuotes);
+                        this.Context = parameter.Value.Trim().Trim(info.AllQuotes);
                         break;
                     case ParameterKey.INDEX:
                         {
-                            if (int.TryParse(parameter.Item2.Trim().Trim(info.AllQuotes), out int result))
+                            if (int.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out int result))
                             {
                                 this.Index = result;
                             }
@@ -145,11 +144,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                     case ParameterKey.LEVEL:
                         if (propertyKey == VCard.PropKeys.NonStandard.EXPERTISE)
                         {
-                            this.ExpertiseLevel = ExpertiseLevelConverter.Parse(parameter.Item2.Trim().Trim(info.AllQuotes));
+                            this.ExpertiseLevel = ExpertiseLevelConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));
                         }
                         else // HOBBY oder INTEREST
                         {
-                            this.InterestLevel = InterestLevelConverter.Parse(parameter.Item2.Trim().Trim(info.AllQuotes));
+                            this.InterestLevel = InterestLevelConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));
                         }//else
                         break;
 
@@ -158,8 +157,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         {
                             List<KeyValuePair<string, string>> userAttributes 
                                 = (List<KeyValuePair<string, string>>?)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
-                            userAttributes.Add(new KeyValuePair<string, string>(parameter.Item1, parameter.Item2));
                             this.NonStandardParameters = userAttributes;
+
+                            userAttributes.Add(parameter);
                             break;
                         }
 
