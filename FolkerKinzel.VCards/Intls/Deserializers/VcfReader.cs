@@ -11,7 +11,7 @@ using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers
 {
-    internal struct VCardReader : IEnumerable<VcfRow>
+    internal class VcfReader : IEnumerable<VcfRow>
     {
         private static readonly Regex _vCardBegin =
             new Regex(@"\ABEGIN[ \t]*:[ \t]*VCARD[ \t]*\z",
@@ -23,13 +23,15 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
         private readonly TextReader _reader;
         private readonly VCardDeserializationInfo _info;
+        private readonly VCdVersion _versionHint;
 
 
-        internal VCardReader(TextReader reader, VCardDeserializationInfo info)
+        internal VcfReader(TextReader reader, VCardDeserializationInfo info, VCdVersion versionHint = VCdVersion.V2_1)
         {
             this._reader = reader;
             this._info = info;
             this.EOF = false;
+            this._versionHint = versionHint;
         }
 
         public bool EOF { get; private set; }
@@ -70,7 +72,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
 
             bool isFirstLine = true;
-            bool isVcard_2_1 = true;
+            bool isVcard_2_1 = _versionHint == VCdVersion.V2_1;
 
             do
             {
@@ -84,7 +86,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
                 Debug.WriteLine(s);
 
-                if (isFirstLine && s.Length != 0)
+                if (isFirstLine && isVcard_2_1 && s.Length != 0)
                 {
                     isFirstLine = false;
                     isVcard_2_1 = GetIsVcard_2_1(s);
@@ -163,6 +165,8 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                     {
                         yield return tmpRow;
                     }
+
+                    _ = _info.Builder.Append(s);
                 }
                 else
                 {
@@ -214,7 +218,11 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
         private static bool GetIsVcard_2_1(string s)
         {
+#if NET40
+            if (s.StartsWith("VERSION", StringComparison.OrdinalIgnoreCase) && !s.Contains("2.1"))
+#else
             if (s.StartsWith("VERSION", StringComparison.OrdinalIgnoreCase) && !s.Contains("2.1", StringComparison.Ordinal))
+#endif
             {
                 Debug.WriteLine("  == No vCard 2.1 detected ==");
                 return false;

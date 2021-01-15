@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -11,5 +12,6 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         internal static int Parse(char c) => (int)c - 48;
+
     }
 }

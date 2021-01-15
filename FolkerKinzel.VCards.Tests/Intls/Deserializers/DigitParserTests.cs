@@ -22,5 +22,8 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 Assert.AreEqual(i, DigitParser.Parse(s[0]));
             }
         }
+
+
+        
     }
 }
