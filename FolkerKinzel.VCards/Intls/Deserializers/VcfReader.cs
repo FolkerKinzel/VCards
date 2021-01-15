@@ -48,7 +48,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             string s;
 
-            if(EOF)
+            if (EOF)
             {
                 yield break;
             }
@@ -112,10 +112,35 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
                     if (tmpRow is null)
                     {
+                        _ = _info.Builder.Append(s);
                         continue;
                     }
 
-                    if (tmpRow.Parameters.Encoding == VCdEncoding.Base64)
+
+                    if (tmpRow.Parameters.Encoding == VCdEncoding.QuotedPrintable && tmp[tmp.Length - 1] == '=') // QuotedPrintable Soft-Linebreak (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
+                    {
+                        Debug.WriteLine("  == QuotedPrintable Soft-Linebreak detected ==");
+
+                        _ = _info.Builder.Append(tmp);
+
+                        if (ConcatQuotedPrintableSoftLineBreak(s))
+                        {
+                            VcfRow? vcfRow = CreateVcfRow(out _);
+
+                            if (vcfRow != null)
+                            {
+                                yield return vcfRow;
+                            }
+
+                            s = "";
+                            continue;
+                        }
+                        else
+                        {
+                            yield break;
+                        }
+                    }
+                    else if (tmpRow.Parameters.Encoding == VCdEncoding.Base64)
                     {
                         Debug.WriteLine("  == vCard 2.1 Base64 detected ==");
 
@@ -127,7 +152,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                         else
                         {
                             _ = _info.Builder.Append(tmp);
-                            if (ConcatVcard2_1Base64(ref s))
+                            if (ConcatVcard2_1Base64(s))
                             {
                                 VcfRow? vcfRow = CreateVcfRow(out _);
 
@@ -135,30 +160,14 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                                 {
                                     yield return vcfRow;
                                 }
+
+                                s = "";
+                                continue;
                             }
                             else
                             {
                                 yield break;
                             }
-                        }
-                    }
-                    else if (tmpRow.Parameters.Encoding == VCdEncoding.QuotedPrintable && tmp[tmp.Length - 1] == '=') // QuotedPrintable Soft-Linebreak (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
-                    {
-                        Debug.WriteLine("  == QuotedPrintable Soft-Linebreak detected ==");
-
-                        _ = _info.Builder.Append(tmp);
-                        if (ConcatQuotedPrintableSoftLineBreak(ref s))
-                        {
-                            VcfRow? vcfRow = CreateVcfRow(out _);
-
-                            if (vcfRow != null)
-                            {
-                                yield return vcfRow;
-                            }
-                        }
-                        else
-                        {
-                            yield break;
                         }
                     }
                     else
@@ -232,11 +241,11 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         }
 
 
-        private bool ConcatQuotedPrintableSoftLineBreak(ref string s)
+        private bool ConcatQuotedPrintableSoftLineBreak(string s)
         {
             _ = _info.Builder.AppendLine().Append(s);
 
-            do
+            while (s.Length == 0 || s[s.Length - 1] == '=')
             {
                 s = _reader.ReadLine();
 
@@ -260,7 +269,31 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
                 _ = _info.Builder.AppendLine().Append(s);
             }
-            while (s.Length == 0 || s[s.Length - 1] == '=');
+
+            return true;
+        }
+
+        private bool ConcatVcard2_1Base64(string s)
+        {
+            while (s.Length != 0) // Leerzeile beendet Base64
+            {
+                _ = _info.Builder.Append(s);
+
+                s = _reader.ReadLine();
+
+                if (s is null) // EOF
+                {
+                    EOF = true;
+                    return false;
+                }
+
+                Debug.WriteLine(s);
+
+                if (_vCardEnd.IsMatch(s))
+                {
+                    return false;
+                }
+            }
 
             return true;
         }
@@ -305,30 +338,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         }
 
 
-        private bool ConcatVcard2_1Base64(ref string s)
-        {
-            while (s.Length != 0) // Leerzeile beendet Base64
-            {
-                _ = _info.Builder.Append(s);
 
-                s = _reader.ReadLine();
-
-                if (s is null) // EOF
-                {
-                    EOF = true;
-                    return false;
-                }
-
-                Debug.WriteLine(s);
-
-                if (_vCardEnd.IsMatch(s))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
 
     }
 }
