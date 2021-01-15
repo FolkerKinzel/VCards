@@ -139,6 +139,7 @@ namespace FolkerKinzel.VCards
             do //findet den Anfang der vCard
             {
                 s = reader.ReadLine();
+
                 if (s == null)
                 {
                     return false; //Dateiende
