@@ -23,13 +23,13 @@ namespace FolkerKinzel.VCards
         internal static string[] EmptyStringArray = new string[0];
 #endif
 
-        private static readonly Regex _vCardBegin =
-            new Regex(@"\ABEGIN[ \t]*:[ \t]*VCARD[ \t]*\z",
-                RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        //private static readonly Regex _vCardBegin =
+        //    new Regex(@"\ABEGIN[ \t]*:[ \t]*VCARD[ \t]*\z",
+        //        RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
-        private static readonly Regex _vCardEnd =
-            new Regex(@"\AEND[ \t]*:[ \t]*VCARD[ \t]*\z",
-                RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        //private static readonly Regex _vCardEnd =
+        //    new Regex(@"\AEND[ \t]*:[ \t]*VCARD[ \t]*\z",
+        //        RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
 
         private readonly Dictionary<VCdProp, object> _propDic = new Dictionary<VCdProp, object>();

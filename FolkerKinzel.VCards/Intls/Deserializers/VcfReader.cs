@@ -56,7 +56,15 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             do //findet den Anfang der vCard
             {
-                s = _reader.ReadLine();
+                try
+                {
+                    s = _reader.ReadLine();
+                }
+                catch
+                {
+                    EOF = true;
+                    yield break;
+                }
 
                 if (s is null) //Dateiende
                 {
@@ -77,7 +85,15 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             do
             {
-                s = _reader.ReadLine();
+                try
+                {
+                    s = _reader.ReadLine();
+                }
+                catch
+                {
+                    EOF = true;
+                    yield break;
+                }
 
                 if (s is null) // Dateiende: Sollte END:VCARD fehlen, wird die vCard nicht gelesen.
                 {
@@ -176,6 +192,16 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                     {
                         Debug.WriteLine("  == Embedded VCARD 2.1 vCard detected ==");
 
+                        // Achtung: Version 2.1. unterstützt solche eingebetteten VCards in der AGENT-Property:
+                        //
+                        // AGENT:
+                        // BEGIN:VCARD
+                        // VERSION:2.1
+                        // N:Friday;Fred
+                        // TEL; WORK;VOICE:+1-213-555-1234
+                        // TEL;WORK;FAX:+1-213-555-5678
+                        // END:VCARD
+
                         _ = _info.Builder.Append(tmp);
 
                         if (ConcatNested_2_1Vcard(s))
@@ -252,7 +278,15 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             while (s.Length == 0 || s[s.Length - 1] == '=')
             {
-                s = _reader.ReadLine();
+                try
+                {
+                    s = _reader.ReadLine();
+                }
+                catch
+                {
+                    EOF = true;
+                    return false;
+                }
 
                 if (s is null)
                 {
@@ -285,7 +319,15 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             {
                 _ = _info.Builder.Append(s);
 
-                s = _reader.ReadLine();
+                try
+                {
+                    s = _reader.ReadLine();
+                }
+                catch
+                {
+                    EOF = true;
+                    return false;
+                }
 
                 if (s is null) // EOF
                 {
@@ -311,7 +353,15 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             do
             {
-                s = _reader.ReadLine();
+                try
+                {
+                    s = _reader.ReadLine();
+                }
+                catch
+                {
+                    EOF = true;
+                    return false;
+                }
 
                 if (s is null)
                 {

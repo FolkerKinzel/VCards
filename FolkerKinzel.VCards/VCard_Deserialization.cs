@@ -82,29 +82,41 @@ namespace FolkerKinzel.VCards
         }
 
 
-        // Achtung: Version 2.1. unterstützt solche eingebetteten VCards in der AGENT-Property:
-        //
-        // AGENT:
-        // BEGIN:VCARD
-        // VERSION:2.1
-        // N:Friday;Fred
-        // TEL; WORK;VOICE:+1-213-555-1234
-        // TEL;WORK;FAX:+1-213-555-5678
-        // END:VCARD
-        private static List<VCard> DoParse(TextReader reader)
+
+        private static List<VCard> DoParse(TextReader reader, VCdVersion versionHint = VCdVersion.V2_1)
         {
             DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoParse) + "(TextReader)");
 
             var info = new VCardDeserializationInfo();
             var vCardList = new List<VCard>();
+            var vcfReader = new VcfReader(reader, info);
+            var queue = new Queue<VcfRow>(DESERIALIZER_QUEUE_INITIAL_CAPACITY);
 
-            while (GetVCard(reader, info, VCdVersion.V2_1, out VCard? vCard))
+            do
             {
-                if (vCard != null)
+                foreach (VcfRow vcfRow in vcfReader)
                 {
-                    vCardList.Add(vCard);
+                    queue.Enqueue(vcfRow);
                 }
-            }
+
+                if (queue.Count != 0)
+                {
+                    var vCard = new VCard(queue, info, versionHint);
+                    vCardList.Add(vCard);
+
+                    Debug.WriteLine("");
+                    Debug.WriteLine("", "Parsed " + nameof(VCard));
+                    Debug.WriteLine("");
+                    Debug.WriteLine(vCard);
+
+                    queue.Clear();
+
+                    if (info.Builder.Capacity > VCardDeserializationInfo.MAX_STRINGBUILDER_CAPACITY)
+                    {
+                        info.Builder.Clear().Capacity = VCardDeserializationInfo.INITIAL_STRINGBUILDER_CAPACITY;
+                    }
+                }
+            } while (vcfReader.EOF);
 
             SetReferences(vCardList);
 
@@ -119,293 +131,294 @@ namespace FolkerKinzel.VCards
             content = versionHint == VCdVersion.V2_1 ? content : info.Builder.Clear().Append(content).UnMask(versionHint).ToString();
 
             using var reader = new StringReader(content);
-            _ = GetVCard(reader, info, versionHint, out VCard? vCard);
 
-            return vCard;
+            List<VCard>? list = DoParse(reader, versionHint);
+
+            return list.FirstOrDefault();
         }
 
 
-        private static bool GetVCard(TextReader reader, VCardDeserializationInfo info, VCdVersion versionHint, out VCard? vCard)
-        {
-            // Die TextReader.ReadLine()-Methode normalisiert die Zeilenwechselzeichen!
-
-            Debug.WriteLine("");
-
-            string s;
-            //var builder = info.Builder;
-
-            vCard = null;
-
-            do //findet den Anfang der vCard
-            {
-                s = reader.ReadLine();
-
-                if (s == null)
-                {
-                    return false; //Dateiende
-                }
-
-                Debug.WriteLine(s);
-
-            } while (!_vCardBegin.IsMatch(s));
-
-
-            Queue<VcfRow>? vcfRows = ParseVcfRows();
-
-            if (vcfRows == null)
-            {
-                return false; //Dateiende
-            }
-
-            try
-            {
-                vCard = new VCard(vcfRows, info, versionHint);
-
-                Debug.WriteLine("");
-                Debug.WriteLine("", "Parsed " + nameof(VCard));
-                Debug.WriteLine("");
-                Debug.WriteLine(vCard);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-            return true; //Datei noch nicht zu Ende
-
-
-            //////////////////////////////////////////////////////////////////
-
-            Queue<VcfRow>? ParseVcfRows()
-            {
-
-                _ = info.Builder.Clear(); // nötig, wenn die vcf-Datei mehrere vCards enthält
-
-                var parsedVcfRows = new Queue<VcfRow>();
-
-                bool isFirstLine = true;
-                bool isVcard_2_1 = true;
-
-                do
-                {
-                    s = reader.ReadLine();
-
-                    if (s == null)
-                    {
-                        return null;  // Dateiende: Sollte END:VCARD fehlen, wird die vCard nicht gelesen.
-                    }
-
-                    Debug.WriteLine(s);
-
-                    if (isFirstLine && s.Length != 0)
-                    {
-                        isFirstLine = false;
-                        DetectVCardVersion();
-                    }
-
-                    if (isVcard_2_1 && s.Length != 0 && s[s.Length - 1] == '=')  // QuotedPrintable Soft-Linebreak (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
-                    {
-                        ConcatQuotedPrintableSoftLineBreak();
-                        continue;
-                    }
-                    else if (s.Length != 0 && char.IsWhiteSpace(s[0])) //vCard-Wrapping (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
-                    {
-                        Debug.WriteLine("  == vCard Line-Wrapping detected ==");
-                        ConcatVcardWrapping();
-                        continue;
-                    }
-                    else
-                    {
-                        if (info.Builder.Length != 0)
-                        {
-                            if (_vCardBegin.IsMatch(s)) //eingebettete VCard 2.1. AGENT-vCard:
-                            {
-                                Debug.WriteLine("  == Embedded VCARD 2.1 vCard detected ==");
-
-                                ConcatNestedVcard();
-                                _ = AddVcfRow();
-                            }
-                            else
-                            {
-                                // s stellt den Beginn einer neuen VcfRow dar. Deshalb enthält
-                                // builder bereits eine vollständige VcfRow, die erzeugt werden muss,
-                                // bevor s in builder geladen werden kann:
-                                _ = AddVcfRow();
-                            }
-                        }
-                        _ = info.Builder.Append(s);
-                    }
-
-                } while (!_vCardEnd.IsMatch(s));
-
-                return parsedVcfRows;
-
-                ///////////////////////////////////////////////
-
-                void DetectVCardVersion()
-                {
-                    if (s.StartsWith("VERSION", StringComparison.OrdinalIgnoreCase))
-                    {
-                        s = s.TrimEnd(null);
-                        if (!s.EndsWith("2.1", StringComparison.Ordinal))
-                        {
-                            isVcard_2_1 = false;
-
-                            Debug.WriteLine("  == No vCard 2.1 detected ==");
-                        }
-                    }
-                }
-
-
-                void ConcatQuotedPrintableSoftLineBreak()
-                {
-                    bool isBase64 = false;
-
-                    if (info.Builder.Length != 0)
-                    {
-                        isBase64 = AddVcfRow();
-                    }
-
-                    if (isBase64)
-                    {
-                        return;
-                    }
-
-                    Debug.WriteLine("  == QuotedPrintable Soft-Linebreak detected ==");
-                    _ = info.Builder.Append(s);
-                    var vcfRow = VcfRow.Parse(info.Builder.ToString(), info);
-
-                    if (vcfRow?.Parameters.Encoding == VCdEncoding.QuotedPrintable)
-                    {
-                        while (s.Length == 0 || s[s.Length - 1] == '=')
-                        {
-                            s = reader.ReadLine();
-                            if (s == null)
-                            {
-                                return; // EOF
-                            }
-
-                            Debug.WriteLine(s);
-
-                            if (s.Length == 0)
-                            {
-                                continue;
-                            }
-
-                            _ = info.Builder.Append(Environment.NewLine);
-                            _ = info.Builder.Append(s);
-                        }
-                    }
-                }
-
-
-                ///////////////////////////////////////////////////
-
-                void ConcatVcardWrapping()
-                {
-                    int insertPosition = info.Builder.Length;
-                    _ = info.Builder.Append(s);
-
-                    if (!isVcard_2_1)
-                    {
-                        _ = info.Builder.Remove(insertPosition, 1); //automatisch eingefügtes Leerzeichen wieder entfernen
-                    }
-                }
-
-
-                ///////////////////////////////////////////////////////
-
-                void ConcatNestedVcard()
-                {
-                    _ = info.Builder.Append(s);
-                    do
-                    {
-                        s = reader.ReadLine();
-                        if (s == null)
-                        {
-                            return;
-                        }
-
-                        Debug.WriteLine(s);
-                        if (s.Length == 0)
-                        {
-                            continue;
-                        }
-
-                        _ = info.Builder.Append(VCard.NewLine);
-                        _ = info.Builder.Append(s);
-                    }
-                    while (!_vCardEnd.IsMatch(s));
-
-                    s = string.Empty; //damit die äußere Schleife nicht endet
-                }
-
-
-                ////////////////////////////////////////////////
-
-                bool AddVcfRow()
-                {
-                    string tmp = info.Builder.ToString();
-                    var vcfRow = VcfRow.Parse(tmp, info);
-
-                    bool vCard2_1Base64Detected = false;
-
-
-                    if (vcfRow == null) // nicht lesbar
-                    {
-                        return vCard2_1Base64Detected;
-                    }
-
-
-                    if (isVcard_2_1 && vcfRow.Parameters.Encoding == VCdEncoding.Base64)
-                    {
-                        Debug.WriteLine("  == vCard 2.1 Base64 detected ==");
-
-                        vCard2_1Base64Detected = true;
-                        _ = info.Builder.Clear().Append(tmp);
-                        vcfRow = ConcatVcard2_1Base64(vcfRow);
-                    }
-
-                    if (vcfRow != null)
-                    {
-                        parsedVcfRows.Enqueue(vcfRow);
-                    }
-
-                    _ = info.Builder.Clear();
-
-                    return vCard2_1Base64Detected;
-
-                    ///////////////////////////////////////////////////////////////
-
-                    VcfRow? ConcatVcard2_1Base64(VcfRow vcfRow)
-                    {
-                        if(s.Length == 0) //wenn Base64 nur eine Zeile lang war
-                        {
-                            return vcfRow;
-                        }
-
-                        while (s.Length != 0) // Leerzeile beendet Base64
-                        {
-                            _ = info.Builder.Append(s);
-                            s = reader.ReadLine();
-
-                            if (s == null) // EOF
-                            {
-                                return VcfRow.Parse(info.Builder.ToString(), info); 
-                            }
-
-                            Debug.WriteLine(s);
-
-                            if (s.StartsWith("END:", true, CultureInfo.InvariantCulture))
-                            {
-                                break;
-                            }
-                        }
-
-                        return VcfRow.Parse(info.Builder.ToString(), info);
-                    }
-                }
-            }
-        }
+        //private static bool GetVCard(TextReader reader, VCardDeserializationInfo info, VCdVersion versionHint, out VCard? vCard)
+        //{
+        //    // Die TextReader.ReadLine()-Methode normalisiert die Zeilenwechselzeichen!
+
+        //    Debug.WriteLine("");
+
+        //    string s;
+        //    //var builder = info.Builder;
+
+        //    vCard = null;
+
+        //    do //findet den Anfang der vCard
+        //    {
+        //        s = reader.ReadLine();
+
+        //        if (s == null)
+        //        {
+        //            return false; //Dateiende
+        //        }
+
+        //        Debug.WriteLine(s);
+
+        //    } while (!_vCardBegin.IsMatch(s));
+
+
+        //    Queue<VcfRow>? vcfRows = ParseVcfRows();
+
+        //    if (vcfRows == null)
+        //    {
+        //        return false; //Dateiende
+        //    }
+
+        //    try
+        //    {
+        //        vCard = new VCard(vcfRows, info, versionHint);
+
+        //        Debug.WriteLine("");
+        //        Debug.WriteLine("", "Parsed " + nameof(VCard));
+        //        Debug.WriteLine("");
+        //        Debug.WriteLine(vCard);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Debug.WriteLine(e);
+        //    }
+        //    return true; //Datei noch nicht zu Ende
+
+
+        //    //////////////////////////////////////////////////////////////////
+
+        //    Queue<VcfRow>? ParseVcfRows()
+        //    {
+
+        //        _ = info.Builder.Clear(); // nötig, wenn die vcf-Datei mehrere vCards enthält
+
+        //        var parsedVcfRows = new Queue<VcfRow>();
+
+        //        bool isFirstLine = true;
+        //        bool isVcard_2_1 = true;
+
+        //        do
+        //        {
+        //            s = reader.ReadLine();
+
+        //            if (s == null)
+        //            {
+        //                return null;  // Dateiende: Sollte END:VCARD fehlen, wird die vCard nicht gelesen.
+        //            }
+
+        //            Debug.WriteLine(s);
+
+        //            if (isFirstLine && s.Length != 0)
+        //            {
+        //                isFirstLine = false;
+        //                DetectVCardVersion();
+        //            }
+
+        //            if (isVcard_2_1 && s.Length != 0 && s[s.Length - 1] == '=')  // QuotedPrintable Soft-Linebreak (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
+        //            {
+        //                ConcatQuotedPrintableSoftLineBreak();
+        //                continue;
+        //            }
+        //            else if (s.Length != 0 && char.IsWhiteSpace(s[0])) //vCard-Wrapping (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
+        //            {
+        //                Debug.WriteLine("  == vCard Line-Wrapping detected ==");
+        //                ConcatVcardWrapping();
+        //                continue;
+        //            }
+        //            else
+        //            {
+        //                if (info.Builder.Length != 0)
+        //                {
+        //                    if (_vCardBegin.IsMatch(s)) //eingebettete VCard 2.1. AGENT-vCard:
+        //                    {
+        //                        Debug.WriteLine("  == Embedded VCARD 2.1 vCard detected ==");
+
+        //                        ConcatNestedVcard();
+        //                        _ = AddVcfRow();
+        //                    }
+        //                    else
+        //                    {
+        //                        // s stellt den Beginn einer neuen VcfRow dar. Deshalb enthält
+        //                        // builder bereits eine vollständige VcfRow, die erzeugt werden muss,
+        //                        // bevor s in builder geladen werden kann:
+        //                        _ = AddVcfRow();
+        //                    }
+        //                }
+        //                _ = info.Builder.Append(s);
+        //            }
+
+        //        } while (!_vCardEnd.IsMatch(s));
+
+        //        return parsedVcfRows;
+
+        //        ///////////////////////////////////////////////
+
+        //        void DetectVCardVersion()
+        //        {
+        //            if (s.StartsWith("VERSION", StringComparison.OrdinalIgnoreCase))
+        //            {
+        //                s = s.TrimEnd(null);
+        //                if (!s.EndsWith("2.1", StringComparison.Ordinal))
+        //                {
+        //                    isVcard_2_1 = false;
+
+        //                    Debug.WriteLine("  == No vCard 2.1 detected ==");
+        //                }
+        //            }
+        //        }
+
+
+        //        void ConcatQuotedPrintableSoftLineBreak()
+        //        {
+        //            bool isBase64 = false;
+
+        //            if (info.Builder.Length != 0)
+        //            {
+        //                isBase64 = AddVcfRow();
+        //            }
+
+        //            if (isBase64)
+        //            {
+        //                return;
+        //            }
+
+        //            Debug.WriteLine("  == QuotedPrintable Soft-Linebreak detected ==");
+        //            _ = info.Builder.Append(s);
+        //            var vcfRow = VcfRow.Parse(info.Builder.ToString(), info);
+
+        //            if (vcfRow?.Parameters.Encoding == VCdEncoding.QuotedPrintable)
+        //            {
+        //                while (s.Length == 0 || s[s.Length - 1] == '=')
+        //                {
+        //                    s = reader.ReadLine();
+        //                    if (s == null)
+        //                    {
+        //                        return; // EOF
+        //                    }
+
+        //                    Debug.WriteLine(s);
+
+        //                    if (s.Length == 0)
+        //                    {
+        //                        continue;
+        //                    }
+
+        //                    _ = info.Builder.Append(Environment.NewLine);
+        //                    _ = info.Builder.Append(s);
+        //                }
+        //            }
+        //        }
+
+
+        //        ///////////////////////////////////////////////////
+
+        //        void ConcatVcardWrapping()
+        //        {
+        //            int insertPosition = info.Builder.Length;
+        //            _ = info.Builder.Append(s);
+
+        //            if (!isVcard_2_1)
+        //            {
+        //                _ = info.Builder.Remove(insertPosition, 1); //automatisch eingefügtes Leerzeichen wieder entfernen
+        //            }
+        //        }
+
+
+        //        ///////////////////////////////////////////////////////
+
+        //        void ConcatNestedVcard()
+        //        {
+        //            _ = info.Builder.Append(s);
+        //            do
+        //            {
+        //                s = reader.ReadLine();
+        //                if (s == null)
+        //                {
+        //                    return;
+        //                }
+
+        //                Debug.WriteLine(s);
+        //                if (s.Length == 0)
+        //                {
+        //                    continue;
+        //                }
+
+        //                _ = info.Builder.Append(VCard.NewLine);
+        //                _ = info.Builder.Append(s);
+        //            }
+        //            while (!_vCardEnd.IsMatch(s));
+
+        //            s = string.Empty; //damit die äußere Schleife nicht endet
+        //        }
+
+
+        //        ////////////////////////////////////////////////
+
+        //        bool AddVcfRow()
+        //        {
+        //            string tmp = info.Builder.ToString();
+        //            var vcfRow = VcfRow.Parse(tmp, info);
+
+        //            bool vCard2_1Base64Detected = false;
+
+
+        //            if (vcfRow == null) // nicht lesbar
+        //            {
+        //                return vCard2_1Base64Detected;
+        //            }
+
+
+        //            if (isVcard_2_1 && vcfRow.Parameters.Encoding == VCdEncoding.Base64)
+        //            {
+        //                Debug.WriteLine("  == vCard 2.1 Base64 detected ==");
+
+        //                vCard2_1Base64Detected = true;
+        //                _ = info.Builder.Clear().Append(tmp);
+        //                vcfRow = ConcatVcard2_1Base64(vcfRow);
+        //            }
+
+        //            if (vcfRow != null)
+        //            {
+        //                parsedVcfRows.Enqueue(vcfRow);
+        //            }
+
+        //            _ = info.Builder.Clear();
+
+        //            return vCard2_1Base64Detected;
+
+        //            ///////////////////////////////////////////////////////////////
+
+        //            VcfRow? ConcatVcard2_1Base64(VcfRow vcfRow)
+        //            {
+        //                if (s.Length == 0) //wenn Base64 nur eine Zeile lang war
+        //                {
+        //                    return vcfRow;
+        //                }
+
+        //                while (s.Length != 0) // Leerzeile beendet Base64
+        //                {
+        //                    _ = info.Builder.Append(s);
+        //                    s = reader.ReadLine();
+
+        //                    if (s == null) // EOF
+        //                    {
+        //                        return VcfRow.Parse(info.Builder.ToString(), info);
+        //                    }
+
+        //                    Debug.WriteLine(s);
+
+        //                    if (s.StartsWith("END:", true, CultureInfo.InvariantCulture))
+        //                    {
+        //                        break;
+        //                    }
+        //                }
+
+        //                return VcfRow.Parse(info.Builder.ToString(), info);
+        //            }
+        //        }
+        //    }
+        //}
 
 
         /// <summary>
@@ -421,7 +434,7 @@ namespace FolkerKinzel.VCards
         {
             Debug.Assert(vCardList != null);
 
-            foreach (VCard? vcard in vCardList)
+            foreach (VCard vcard in vCardList)
             {
                 Debug.Assert(vcard != null);
                 SetRelationReferences((List<RelationProperty?>?)vcard.Relations);
@@ -460,7 +473,6 @@ namespace FolkerKinzel.VCards
                         _ = relations.Remove(guidProp);
                     }
                 }
-
             }
         }
 
