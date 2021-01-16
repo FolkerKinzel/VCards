@@ -1,0 +1,9 @@
+# Rules in this file were initially inferred by Visual Studio IntelliCode from the C:\Users\fkinz\source\repos\FolkerKinzel.VCards\Benchmarks\ codebase based on best match to current usage at 16.01.2021
+# You can modify the rules from these initially generated values to suit your own policies
+# You can learn more about editorconfig here: https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+[*.cs]
+
+
+
+# IDE0022: Ausdruckskörper für Methoden verwenden
+dotnet_diagnostic.IDE0022.severity = none

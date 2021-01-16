@@ -37,9 +37,10 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="DataUrl"/>-Objekt.
         /// </summary>
-        /// <param name="uriString">Der String, aus dem die <see cref="DataUrl"/> initialisiert wird.</param>
+        /// <param name="uriString">Der String, aus dem der <see cref="DataUrl"/> initialisiert wird.</param>
         /// <param name="mimeType">Der MIME-Typ der eingebetteten Daten. Wenn <c>null</c> übergeben wird, 
         /// wird der Standard-MIME-Typ "text/plain;charset=US-ASCII" erzeugt.</param>
+        /// <param name="encoding">Beschreibt, in welcher Form die Daten im  <see cref="DataUrl"/> kodiert sind.</param>
         /// <exception cref="ArgumentNullException"><paramref name="uriString"/> ist <c>null</c>.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
         /// weil <paramref name="uriString"/> länger als 65519 Zeichen ist.</exception>

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
 [assembly: InternalsVisibleTo("FolkerKinzel.VCards.Tests")]
+[assembly: InternalsVisibleTo("Benchmarks")]
 //[assembly: NeutralResourcesLanguage("en")]
 
 // Allgemeine Informationen über eine Assembly werden über die folgenden

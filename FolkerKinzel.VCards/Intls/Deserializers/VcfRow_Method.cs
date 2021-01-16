@@ -12,6 +12,27 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
     internal sealed partial class VcfRow
     {
         /// <summary>
+        /// Parst eine Datenzeile der VCF-Datei.
+        /// </summary>
+        /// <param name="vCardRow">Die Datenzeile der vCard als <see cref="string"/>.</param>
+        /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>.</param>
+        /// <returns><see cref="VcfRow"/>-Objekt</returns>
+        internal static VcfRow? Parse(string vCardRow, VCardDeserializationInfo info)
+        {
+            // vCardRow:
+            // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part
+
+
+            // vCardRowParts:
+            // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
+            int valueSeparatorIndex = GetValueSeparatorIndex(vCardRow);
+
+
+            return valueSeparatorIndex > 0 ? new VcfRow(vCardRow, valueSeparatorIndex, info) : null;
+        }
+
+
+        /// <summary>
         /// Dekodiert Quoted-Printable kodierten Text, der sich in <see cref="Value"/> befindet, wenn 
         /// <see cref="VCards.Models.PropertyParts.ParameterSection.Encoding"/>
         /// gleich <see cref="VCdEncoding.QuotedPrintable"/> ist.
