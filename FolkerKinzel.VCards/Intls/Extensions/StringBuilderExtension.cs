@@ -119,6 +119,17 @@ namespace FolkerKinzel.VCards.Intls.Extensions
         }
 
 
+        internal static StringBuilder TrimEnd(this StringBuilder builder)
+        {
+            while (builder.Length >= 1 && char.IsWhiteSpace(builder[builder.Length - 1]))
+            {
+                _ = builder.Remove(builder.Length - 1, 1);
+            }
+
+            return builder;
+        }
+
+
         /// <summary>
         /// Entfernt einfache und doppelte Gänsefüßchen, die sich am Beginnn oder Ende des Inhalts
         /// von <paramref name="builder"/> befinden.

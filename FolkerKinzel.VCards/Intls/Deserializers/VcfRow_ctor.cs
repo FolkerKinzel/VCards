@@ -199,11 +199,11 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                     if (valueLength != 0)
                     {
                         Span<char> keySpan = stackalloc char[splitIndex];
-                        string key = parameter.Slice(0, splitIndex).ToUpperInvariant(keySpan).ToString();
+                        _ = parameter.Slice(0, splitIndex).ToUpperInvariant(keySpan);
 
                         parameterTuples.Add(
                             new KeyValuePair<string, string>(
-                                key,
+                                keySpan.ToString(),
                                 parameter.Slice(valueStart, valueLength).ToString()));
                     }
                 }

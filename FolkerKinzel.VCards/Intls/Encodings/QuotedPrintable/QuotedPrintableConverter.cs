@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Text;
-
+using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 {
@@ -167,7 +168,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
         /// </summary>
         /// <remarks>Wenn der übergebene String <c>null</c> oder Empty ist, wird <c>null</c> zurückgegeben.</remarks>
         /// <param name="qpCoded">Der codierte String. Wird <c>null</c> übergeben, wird ein Leerstring zurückgegeben.</param>
-        /// <param name="textEncoding">Die Textencodierung, der der codierte String entspricht. Als Standard wird Encoding.UTF-8 angenommen.
+        /// <param name="textEncoding">Die Textencodierung, der der codierte String entspricht. Als Standard wird <see cref="Encoding.UTF8"/> angenommen.
         /// (Wird auch gewählt, wenn dem Parameter <c>null</c> übergeben wird.)</param>
         /// <returns>Der decodierte String.</returns>
         public static string? Decode(
@@ -225,48 +226,49 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
             //Ausbessern illegaler Soft - Line - Breaks, die auf Unix - Systemen entstanden sein könnten.
             //qpCoded = qpCoded.Replace("=\n", "=\r\n");
 
-            // Zeilen splitten
-#if NET40
-            string[] zeilen = qpCoded.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-#else
-            string[] zeilen = qpCoded.Split(Environment.NewLine, StringSplitOptions.None);
-#endif
+            using var reader = new StringReader(qpCoded);
 
-            for (int i = 0; i < zeilen.Length; i++)
+            var sb = new StringBuilder(qpCoded.Length);
+
+            string? zeile;
+            while (null != (zeile = reader.ReadLine()))
             {
+                int last = zeile.Length - 1;
 
-                int last = zeilen[i].Length - 1;
+                //if (last == -1)
+                //{
+                //    continue; // unerlaubte Leerzeile
+                //}
 
-                if (last == -1)
-                {
-                    continue; // unerlaubte Leerzeile
-                }
+                sb.Append(zeile);
+                last = sb.Length - 1;
 
                 //Soft-Line-Break entfernen
-                if (zeilen[i][last] == '=')
+                if (sb[last] == '=')
                 {
-                    zeilen[i] = zeilen[i].Remove(last).TrimEnd(null);
+                    _ = sb.Remove(last, 1).TrimEnd();
                 }
                 else
                 {
-                    zeilen[i] = zeilen[i].TrimEnd(null);
+                    _ = sb.TrimEnd();
 
                     //Hard-Line-Break wiederherstellen
-                    if (i < zeilen.Length - 1)
-                    {
-                        zeilen[i] += Environment.NewLine;
-                    }
+                    sb.AppendLine();
                 }
             }
 
-            var bytes = new List<byte>(qpCoded.Length);
+            //letzten Hard-Line-Break wieder entfernen
+            sb.TrimEnd();
 
-            var sb = new StringBuilder();
-            foreach (string? zeile in zeilen)
-            {
-                sb.Append(zeile);
-            }
+#if NET40
+            var bytes = new byte[qpCoded.Length];
+#else
+            Span<byte> bytes = stackalloc byte[qpCoded.Length];
+#endif
 
+            char[] charr = new char[2];
+
+            int j = 0;
 
             for (int i = 0; i < sb.Length; i++)
             {
@@ -278,18 +280,25 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
                     }
                     else
                     {
-                        bytes.Add(HexToByte(new char[] { sb[++i], sb[++i] }));
+                        charr[0] = sb[++i];
+                        charr[1] = sb[++i];
+                        bytes[j++] = HexToByte(charr);
                     }
                 }
                 else
                 {
-                    bytes.Add((byte)sb[i]);
+                    bytes[j++] = (byte)sb[i];
                 }
             }
 
-            return bytes.ToArray();
+#if NET40
+            Array.Resize(ref bytes, j);
+            return bytes;
+#else
+            return bytes.Slice(0, j).ToArray();
+#endif
 
-
+#if NET40
             static byte HexToByte(char[] charr)
             {
                 string s = new string(charr);
@@ -303,9 +312,22 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
                     return (byte)'?';
                 }
             }
+#else
+            static byte HexToByte(char[] charr)
+            {
+                try
+                {
+                    return byte.Parse(charr, NumberStyles.AllowHexSpecifier);
+                }
+                catch (Exception)
+                {
+                    return (byte)'?';
+                }
+            }
+#endif
         }
 
-        #endregion
+#endregion
     }//class
 
 }//namespace
