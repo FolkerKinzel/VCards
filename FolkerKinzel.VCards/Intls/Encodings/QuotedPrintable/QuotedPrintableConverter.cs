@@ -52,7 +52,6 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
                 value = value.Replace(Environment.NewLine, STANDARD_LINEBREAK);
 #else
                 value = value.Replace(Environment.NewLine, STANDARD_LINEBREAK, StringComparison.Ordinal);
-
 #endif
             }
 
@@ -76,9 +75,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 
                 if (char.IsWhiteSpace(c))
                 {
-                    sb.Remove(sbLast, 1);
-                    sb.Append('=');
-                    sb.Append(((byte)c).ToString("X02", CultureInfo.InvariantCulture));
+                    _ = sb.Remove(sbLast, 1).Append('=').Append(((byte)c).ToString("X02", CultureInfo.InvariantCulture));
                 }
             }
         }
@@ -125,9 +122,9 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
             static int EncodeLastChar(StringBuilder sb, char lastChar, int lastCharIndex)
             {
 
-                _ = sb.Remove(lastCharIndex, 1);
-                _ = sb.Insert(lastCharIndex, '=')
-                    .Insert(lastCharIndex + 1, ((byte)lastChar).ToString("X02", CultureInfo.InvariantCulture));
+                _ = sb.Remove(lastCharIndex, 1)
+                      .Insert(lastCharIndex, '=')
+                      .Insert(lastCharIndex + 1, ((byte)lastChar).ToString("X02", CultureInfo.InvariantCulture));
 
                 return lastCharIndex - 1 + ENCODED_CHAR_LENGTH;
             }
@@ -147,15 +144,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 
             foreach (byte bt in data)
             {
-                if (HasToBeQuoted(bt))
-                {
-                    _ = sb.Append('=');
-                    _ = sb.Append(bt.ToString("X02", CultureInfo.InvariantCulture));
-                }
-                else
-                {
-                    _ = sb.Append((char)bt);
-                }
+                _ = HasToBeQuoted(bt) ? sb.Append('=').Append(bt.ToString("X02", CultureInfo.InvariantCulture)) : sb.Append((char)bt);
             }
             return sb;
 
@@ -241,7 +230,6 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
             string[] zeilen = qpCoded.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
 #else
             string[] zeilen = qpCoded.Split(Environment.NewLine, StringSplitOptions.None);
-
 #endif
 
             for (int i = 0; i < zeilen.Length; i++)

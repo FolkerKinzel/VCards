@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers
@@ -152,6 +153,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                         else
                         {
                             _ = _info.Builder.Append(tmp);
+
                             if (ConcatVcard2_1Base64(s))
                             {
                                 VcfRow? vcfRow = CreateVcfRow(out _);
@@ -170,6 +172,29 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                             }
                         }
                     }
+                    else if (_vCardBegin.IsMatch(s)) //eingebettete VCard 2.1. AGENT-vCard:
+                    {
+                        Debug.WriteLine("  == Embedded VCARD 2.1 vCard detected ==");
+
+                        _ = _info.Builder.Append(tmp);
+
+                        if (ConcatNested_2_1Vcard(s))
+                        {
+                            VcfRow? vcfRow = CreateVcfRow(out _);
+
+                            if (vcfRow != null)
+                            {
+                                yield return vcfRow;
+                            }
+
+                            s = "";
+                            continue;
+                        }
+                        else
+                        {
+                            yield break;
+                        }
+                    }
                     else
                     {
                         yield return tmpRow;
@@ -181,38 +206,15 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                 {
                     if (_info.Builder.Length != 0)
                     {
-                        if (_vCardBegin.IsMatch(s)) //eingebettete VCard 2.1. AGENT-vCard:
+                        // s stellt den Beginn einer neuen VcfRow dar. Deshalb enthält
+                        // builder bereits eine vollständige VcfRow, die erzeugt werden muss,
+                        // bevor s in builder geladen werden kann:
+
+                        VcfRow? vcfRow = CreateVcfRow(out _);
+
+                        if (vcfRow != null)
                         {
-                            Debug.WriteLine("  == Embedded VCARD 2.1 vCard detected ==");
-
-                            ConcatNestedVcard(s);
-
-                            if (EOF)
-                            {
-                                yield break;
-                            }
-
-                            s = string.Empty; //damit die äußere Schleife nicht endet
-
-                            VcfRow? vcfRow = CreateVcfRow(out _);
-
-                            if (vcfRow != null)
-                            {
-                                yield return vcfRow;
-                            }
-                        }
-                        else
-                        {
-                            // s stellt den Beginn einer neuen VcfRow dar. Deshalb enthält
-                            // builder bereits eine vollständige VcfRow, die erzeugt werden muss,
-                            // bevor s in builder geladen werden kann:
-
-                            VcfRow? vcfRow = CreateVcfRow(out _);
-
-                            if (vcfRow != null)
-                            {
-                                yield return vcfRow;
-                            }
+                            yield return vcfRow;
                         }
                     } //if
                     _ = _info.Builder.Append(s);
@@ -243,6 +245,9 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
         private bool ConcatQuotedPrintableSoftLineBreak(string s)
         {
+            // QuotedPrintableConverter arbeitet plattformunabhängig mit 
+            // Environment.NewLine
+
             _ = _info.Builder.AppendLine().Append(s);
 
             while (s.Length == 0 || s[s.Length - 1] == '=')
@@ -273,6 +278,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             return true;
         }
 
+
         private bool ConcatVcard2_1Base64(string s)
         {
             while (s.Length != 0) // Leerzeile beendet Base64
@@ -299,7 +305,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         }
 
 
-        private void ConcatNestedVcard(string s)
+        private bool ConcatNested_2_1Vcard(string s)
         {
             _ = _info.Builder.Append(s);
 
@@ -310,7 +316,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                 if (s is null)
                 {
                     EOF = true;
-                    return;
+                    return false;
                 }
 
                 Debug.WriteLine(s);
@@ -320,10 +326,12 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                     continue;
                 }
 
-                _ = _info.Builder.Append(VCard.NewLine);
-                _ = _info.Builder.Append(s);
+                _ = _info.Builder.Append(VCard.NewLine).Append(s);
             }
-            while (!_vCardEnd.IsMatch(s));
+            while (!_vCardEnd.IsMatch(s)); // wenn die eingebettete vCard eine weitere eingebettete vCard enthält,
+                                           // scheitert das Parsen
+
+            return true;
         }
 
 
