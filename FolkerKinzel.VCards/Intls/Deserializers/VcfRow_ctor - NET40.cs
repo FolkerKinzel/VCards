@@ -10,7 +10,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal sealed partial class VcfRow
     {
-# if !NET40
+#if NET40
         /// <summary>
         /// Parsed eine Datenzeile der VCF-Datei.
         /// </summary>
@@ -22,7 +22,11 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             // vCardRow:
             // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part
 
+
+            // vCardRowParts:
+            // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
             int valueSeparatorIndex = GetValueSeparatorIndex(vCardRow);
+
 
             return valueSeparatorIndex > 0 ? new VcfRow(vCardRow, valueSeparatorIndex, info) : null;
         }
@@ -41,8 +45,6 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             this.Info = info;
 
-            // vCardRowParts:
-            // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
             int valueStart = valueSeparatorIndex + 1;
 
             if (valueStart < vCardRow.Length)
@@ -53,30 +55,41 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             // keySection:
             // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
-            ReadOnlySpan<char> keySection = vCardRow.AsSpan(0, valueSeparatorIndex);
+            string keySection = vCardRow.Substring(0, valueSeparatorIndex);
             int parameterSeparatorIndex = keySection.IndexOf(';');
             int groupSeparatorIndex = -1;
             int keyPartLength = parameterSeparatorIndex == -1 ? keySection.Length : parameterSeparatorIndex;
-            ReadOnlySpan<char> keyPartSpan = keySection.Slice(0, keyPartLength);
-            groupSeparatorIndex = keyPartSpan.IndexOf('.');
+
+            for (int i = 0; i < keyPartLength; i++)
+            {
+                if (keySection[i] == '.')
+                {
+                    groupSeparatorIndex = i;
+                }
+            }
 
             // keyParts:
             // group | key
             int startOfKey = groupSeparatorIndex + 1;
 
-            Span<char> keySpan = stackalloc char[keyPartSpan.Length - startOfKey];
-            _ = startOfKey > 0 ? keyPartSpan.Slice(startOfKey).ToUpperInvariant(keySpan) : keyPartSpan.ToUpperInvariant(keySpan);
-
-            this.Key = keySpan.ToString();
 
             if (groupSeparatorIndex > 0)
             {
-                this.Group = keySection.Slice(0, groupSeparatorIndex).ToString();
+                this.Group = keySection.Substring(0, groupSeparatorIndex);
+
+                this.Key = keySection.Substring(startOfKey,
+                                                parameterSeparatorIndex == -1
+                                                    ? keySection.Length - startOfKey
+                                                    : parameterSeparatorIndex - startOfKey).ToUpperInvariant();
+            }
+            else
+            {
+                this.Key = keySection.Substring(0, parameterSeparatorIndex == -1 ? keySection.Length : parameterSeparatorIndex).ToUpperInvariant();
             }
 
             if (parameterSeparatorIndex != -1 && parameterSeparatorIndex < keySection.Length - 1)
             {
-                ReadOnlySpan<char> parameterSection = keySection.Slice(parameterSeparatorIndex + 1);
+                string parameterSection = keySection.Substring(parameterSeparatorIndex + 1);
                 this.Parameters = new ParameterSection(this.Key, GetParameters(parameterSection), info);
             }
             else
@@ -111,26 +124,26 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         }
 
 
-        private static List<KeyValuePair<string, string>> GetParameters(ReadOnlySpan<char> parameterSection)
+        private static List<KeyValuePair<string, string>> GetParameters(string parameterSection)
         {
             int splitIndex;
-            ReadOnlySpan<char> parameter;
+            string parameter;
             int parameterStartIndex = 0;
             var parameterTuples = new List<KeyValuePair<string, string>>();
 
-
-            // key=value;key="value,value,va;lue";key="val;ue" wird zu
-            // key=value | key="value,value,va;lue" | key="val;ue"
             while (-1 != (splitIndex = GetNextParameterSplitIndex(parameterStartIndex, parameterSection)))
             {
+                // key=value;key="value,value,va;lue";key="val;ue" wird zu
+                // key=value | key="value,value,va;lue" | key="val;ue"
+
                 int paramLength = splitIndex - parameterStartIndex;
 
                 if (paramLength != 0)
                 {
-                    parameter = parameterSection.Slice(parameterStartIndex, paramLength);
+                    parameter = parameterSection.Substring(parameterStartIndex, paramLength);
                     parameterStartIndex = splitIndex + 1;
 
-                    if (parameter.IsWhiteSpace())
+                    if (string.IsNullOrWhiteSpace(parameter))
                     {
                         continue;
                     }
@@ -143,9 +156,9 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             if (length > 0)
             {
-                parameter = parameterSection.Slice(parameterStartIndex, parameterSection.Length - parameterStartIndex);
+                parameter = parameterSection.Substring(parameterStartIndex, parameterSection.Length - parameterStartIndex);
 
-                if (!parameter.IsWhiteSpace())
+                if (!string.IsNullOrWhiteSpace(parameter))
                 {
                     SplitParameterKeyAndValue(parameterTuples, parameter);
                 }
@@ -159,7 +172,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             // key=value;key="value,value,va;lue";key="val;ue" wird zu
             // key=value | key="value,value,va;lue" | key="val;ue"
-            static int GetNextParameterSplitIndex(int parameterStartIndex, ReadOnlySpan<char> parameterSection)
+            static int GetNextParameterSplitIndex(int parameterStartIndex, string parameterSection)
             {
                 bool isInDoubleQuotes = false;
 
@@ -181,15 +194,14 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             }
 
 
-            static void SplitParameterKeyAndValue(List<KeyValuePair<string, string>> parameterTuples, ReadOnlySpan<char> parameter)
+            static void SplitParameterKeyAndValue(List<KeyValuePair<string, string>> parameterTuples, string parameter)
             {
                 int splitIndex = parameter.IndexOf('=');
 
                 if (splitIndex == -1)
                 {
                     // in vCard 2.1. kann direkt das Value angegeben werden, z.B. Note;Quoted-Printable;UTF-8:Text des Kommentars
-                    string parameterString = parameter.ToString();
-                    parameterTuples.Add(new KeyValuePair<string, string>(ParseAttributeKeyFromValue(parameterString), parameterString));
+                    parameterTuples.Add(new KeyValuePair<string, string>(ParseAttributeKeyFromValue(parameter), parameter));
                 }
                 else
                 {
@@ -198,18 +210,14 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
                     if (valueLength != 0)
                     {
-                        Span<char> keySpan = stackalloc char[splitIndex];
-                        string key = parameter.Slice(0, splitIndex).ToUpperInvariant(keySpan).ToString();
-
                         parameterTuples.Add(
                             new KeyValuePair<string, string>(
-                                key,
-                                parameter.Slice(valueStart, valueLength).ToString()));
+                                parameter.Substring(0, splitIndex).ToUpperInvariant(),
+                                parameter.Substring(valueStart, valueLength)));
                     }
                 }
             }
         }
 #endif
-
     }
 }
