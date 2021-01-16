@@ -24,43 +24,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             // vCardRowParts:
             // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
-            int separatorIndex = GetValueSeparatorIndex(vCardRow);
+            int valueSeparatorIndex = GetValueSeparatorIndex(vCardRow);
 
 
-            if (separatorIndex == -1)
-            {
-                return null;
-            }
-            else
-            {
-                string keySection;
-                string? value = null;
-
-                keySection = vCardRow.Substring(0, separatorIndex);
-
-                int valueStart = separatorIndex + 1;
-
-                if (valueStart < vCardRow.Length)
-                {
-                    value = vCardRow.Substring(valueStart);
-                }
-
-                if (keySection.Length == 0)
-                {
-                    return null;
-                }
-                else
-                {
-                    try
-                    {
-                        return new VcfRow(keySection, value, info);
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-                }
-            }
+            return valueSeparatorIndex > 0 ? new VcfRow(vCardRow, valueSeparatorIndex, info) : null;
         }
 
 
@@ -69,33 +36,43 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         /// </summary>
         /// <param name="vCardRowParts">vCard-Zeile, gesplittet in Key- und Value-Bereich</param>
         /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>-Objekt.</param>
-        private VcfRow(string keySection, string? value, VCardDeserializationInfo info)
+        private VcfRow(string vCardRow, int valueSeparatorIndex, VCardDeserializationInfo info)
         {
+            // vCardRow:
+            // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part
+            Debug.Assert(valueSeparatorIndex > 0);
+
             this.Info = info;
-            this.Value = value;
 
-            // keySectionParts:
-            // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
+            int valueStart = valueSeparatorIndex + 1;
 
-            int parameterSeparatorIndex;
-            int groupSeparatorIndex = -1;
-#if NET40
-            string[] keySectionParts = keySection.Split(info.Semicolon, 2, StringSplitOptions.RemoveEmptyEntries);
-            parameterSeparatorIndex = keySectionParts[0].Length == keySection.Length ? -1 : keySectionParts[0].Length;
-
-            for (int i = 0; i < parameterSeparatorIndex; i++)
+            if (valueStart < vCardRow.Length)
             {
-                if(keySectionParts[0][i] == '.')
+                this.Value = vCardRow.Substring(valueStart);
+            }
+
+
+            // keySection:
+            // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
+#if NET40
+            string keySection = vCardRow.Substring(0, valueSeparatorIndex);
+#else
+            ReadOnlySpan<char> keySection = vCardRow.AsSpan(0, valueSeparatorIndex);
+#endif
+            int parameterSeparatorIndex = keySection.IndexOf(';');
+            int groupSeparatorIndex = -1;
+            int keyPartLength = parameterSeparatorIndex == -1 ? keySection.Length : parameterSeparatorIndex;
+#if NET40
+
+            for (int i = 0; i < keyPartLength; i++)
+            {
+                if (keySection[i] == '.')
                 {
                     groupSeparatorIndex = i;
                 }
             }
 #else
-            parameterSeparatorIndex = keySection.IndexOf(';');
-
-
-            // TODO: Überarbeiten wenn keySection ein ReadOnlySpan<char> ist:
-            ReadOnlySpan<char> keyPartSpan = keySection.AsSpan(0, parameterSeparatorIndex == -1 ? keySection.Length : parameterSeparatorIndex);
+            ReadOnlySpan<char> keyPartSpan = keySection.Slice(0, keyPartLength);
             groupSeparatorIndex = keyPartSpan.IndexOf('.');
 #endif
 
@@ -126,13 +103,18 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             if (groupSeparatorIndex > 0)
             {
-                this.Group = keySection.Substring(0, groupSeparatorIndex);
+                this.Group = keySection.Slice(0, groupSeparatorIndex).ToString();
             }
 #endif
 
             if (parameterSeparatorIndex != -1 && parameterSeparatorIndex < keySection.Length - 1)
             {
+#if NET40
                 string parameterSection = keySection.Substring(parameterSeparatorIndex + 1);
+#else
+                // TODO: ÜBERARBEITEN
+                string parameterSection = keySection.Slice(parameterSeparatorIndex + 1).ToString();
+#endif
                 this.Parameters = new ParameterSection(this.Key, GetParameters(parameterSection), info);
             }
             else

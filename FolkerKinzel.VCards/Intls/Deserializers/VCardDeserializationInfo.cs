@@ -14,27 +14,6 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
         internal StringBuilder Builder { get; } = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY);
 
-#if NET40
-        internal readonly char[] Semicolon = new char[] { ';' };
-
-        internal readonly char[] Dot = new char[] { '.' };
-
-        internal readonly char[] EqualSign = new char[] { '=' };
-
-        internal readonly char[] DoubleQuotes = new char[] { '\"' };
-
-        internal readonly char[] Comma = new char[] { ',' };
-#else
-        internal readonly char Semicolon = ';';
-                 
-        internal readonly char Dot = '.';
-                 
-        internal readonly char EqualSign = '=';
-                 
-        internal readonly char DoubleQuotes = '\"';
-                 
-        internal readonly char Comma = ',';
-#endif
 
         internal readonly char[] AllQuotes = new char[] { '\"', '\'' };
 

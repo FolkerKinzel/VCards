@@ -92,8 +92,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                             for (int i = list.Count - 1; i >= 0; i--)
                             {
-                                builder.Clear();
-                                builder.Append(list[i]).Trim().RemoveQuotes().UnMask(VCdVersion.V4_0);
+                                _ = builder.Clear().Append(list[i]).Trim().RemoveQuotes().UnMask(VCdVersion.V4_0);
 
                                 if (builder.Length != 0)
                                 {
@@ -103,7 +102,6 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                                 {
                                     list.RemoveAt(i);
                                 }
-
                             }
 
                             break;
@@ -124,11 +122,18 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         this.MediaType = parameter.Value.Trim().Trim(info.AllQuotes);
                         break;
                     case ParameterKey.LABEL:
-#if NET40
-                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine).Replace(@"\N", Environment.NewLine);
-#else
-                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine, StringComparison.OrdinalIgnoreCase);
-#endif
+                        this.Label = builder
+                            .Clear()
+                            .Append(parameter.Value)
+                            .Trim().RemoveQuotes()
+                            .Replace(@"\n", Environment.NewLine)
+                            .Replace(@"\N", Environment.NewLine)
+                            .ToString();
+//#if NET40
+//                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine).Replace(@"\N", Environment.NewLine);
+//#else
+//                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine, StringComparison.OrdinalIgnoreCase);
+//#endif
                         break;
                     case ParameterKey.CONTEXT:
                         this.Context = parameter.Value.Trim().Trim(info.AllQuotes);
