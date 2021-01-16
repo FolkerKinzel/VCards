@@ -12,7 +12,7 @@ FolkerKinzel.VCards is used as a dependency in [FolkerKinzel.Contacts.IO](https:
 
 [Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/FolkerKinzel.VCards.Doku.de/Help/FolkerKinzel.VCards.de.chm)
 
-> IMPORTANT: On some systems, the content of the chm file is blocked. Before extracting it,  right click on the file, select Properties, and check the "Allow" checkbox (if it is present) in the lower right corner of the General tab in the Properties dialog.
+> IMPORTANT: On some systems the content of the .CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox (if it is present) in the lower right corner of the General tab in the Properties dialog.
 
 
 ## Overview
