@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace FolkerKinzel.VCards
@@ -16,12 +17,16 @@ namespace FolkerKinzel.VCards
     public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
         /// <summary>
-        /// Lädt eine vcf-Datei.
+        /// Lädt eine VCF-Datei.
         /// </summary>
-        /// <param name="fileName">Absoluter oder relativer Pfad zu einer vcf-Datei.</param>
+        /// 
+        /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
         /// <param name="textEncoding">Die zum Einlesen der Datei zu verwendende Textenkodierung oder <c>null</c>, um die Datei mit der 
         /// standardgerechten Enkodierung <see cref="Encoding.UTF8"/> einzulesen.</param>
-        /// <returns>Ein Collection geparster <see cref="VCard"/>-Objekte, die den Inhalt der vcf-Datei darstellen.</returns>
+        /// 
+        /// <returns>Eine Auflistung geparster <see cref="VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
+        /// 
+        /// 
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
@@ -66,7 +71,7 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// Parst einen <see cref="string"/>, der vCard-Daten enthält.
         /// </summary>
-        /// <param name="content">Ein <see cref="string"/>, der vCard-Daten enthält.</param>
+        /// <param name="content">Ein <see cref="string"/>, der VCF-Daten enthält.</param>
         /// <returns>Eine Collection geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="content"/> darstellen.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="content"/> ist <c>null</c>.</exception>
         public static List<VCard> Parse(string content)
@@ -82,8 +87,23 @@ namespace FolkerKinzel.VCards
 
 
 
+        /// <summary>
+        /// Deserialisiert eine Auflistung von <see cref="VCard"/>-Objekten mit einem <see cref="TextReader"/>.
+        /// </summary>
+        /// <param name="reader">Ein <see cref="TextReader"/>.</param>
+        /// <returns>Eine Auflistung deserialisierter <see cref="VCard"/>-Objekte.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reader"/> ist <c>null</c>.</exception>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public static List<VCard> Deserialize(TextReader reader)
+            => DoParse(reader ?? throw new ArgumentNullException(nameof(reader)));
+
+
+
         private static List<VCard> DoParse(TextReader reader, VCdVersion versionHint = VCdVersion.V2_1)
         {
+            Debug.Assert(reader != null);
             DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoParse) + "(TextReader)");
 
             var info = new VCardDeserializationInfo();
@@ -117,6 +137,7 @@ namespace FolkerKinzel.VCards
                 }
             } while (!vcfReader.EOF);
 
+            VCard.Dereference(vCardList!);
             return vCardList;
         }
 
@@ -135,68 +156,6 @@ namespace FolkerKinzel.VCards
         }
 
 
-
-        /// <summary>
-        /// Ersetzt die <see cref="RelationUuidProperty"/>-Objekte der in 
-        /// <paramref name="vCardList"/> enthaltenen <see cref="VCard"/>-Objekte durch 
-        /// <see cref="RelationVCardProperty"/>-Objekte, die die <see cref="VCard"/>s enthalten,
-        /// die durch die <see cref="Guid"/>s der <see cref="RelationUuidProperty"/>-Objekte 
-        /// referenziert wurden. Das geschieht nur, wenn sich die referenzierten <see cref="VCard"/>-Objekte in
-        /// <paramref name="vCardList"/> befinden.
-        /// </summary>
-        /// <param name="vCardList">Eine Liste mit <see cref="VCard"/>-Objekten.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
-        public static void DereferenceVCards(List<VCard> vCardList)
-        {
-            if(vCardList is null)
-            {
-                throw new ArgumentNullException(nameof(vCardList));
-            }
-
-            foreach (VCard vcard in vCardList)
-            {
-                if (vcard != null)
-                {
-                    if (vcard.Relations != null)
-                    {
-                        List<RelationProperty?> relations = vcard.Relations as List<RelationProperty?> ?? vcard.Relations.ToList();
-                        vcard.Relations = relations;
-                        SetRelationReferences(relations, vCardList);
-                    }
-
-                    if (vcard.Members != null)
-                    {
-                        List<RelationProperty?> members = vcard.Members as List<RelationProperty?> ?? vcard.Members.ToList();
-                        vcard.Members = members;
-                        SetRelationReferences(members, vCardList);
-                    }
-                }
-            }
-
-            static void SetRelationReferences(List<RelationProperty?> relations, List<VCard> vCardList)
-            {
-                IEnumerable<RelationUuidProperty> guidProps = relations
-                    .Select(x => x as RelationUuidProperty)
-                    .Where(x => x != null && !x.IsEmpty).ToArray()!;
-
-                foreach (RelationUuidProperty guidProp in guidProps)
-                {
-                    VCard? referencedVCard =
-                        vCardList.Where(x => x.UniqueIdentifier != null).FirstOrDefault(x => x.UniqueIdentifier!.Value == guidProp.Value);
-
-                    if (referencedVCard != null)
-                    {
-                        var vcardProp = new RelationVCardProperty(
-                                            referencedVCard,
-                                            propertyGroup: guidProp.Group);
-                        vcardProp.Parameters.Assign(guidProp.Parameters);
-
-                        _ = relations.Remove(guidProp);
-                        relations.Add(vcardProp);
-                    }
-                }
-            }
-        }
 
     }
 }

@@ -20,12 +20,14 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// Speichert eine Liste von <see cref="VCard"/>-Objekten in eine gemeinsame VCF-Datei.
         /// </summary>
+        /// 
         /// <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
         /// <param name="vCardList">Die zu speichernden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
         /// enthalten. Wenn die Auflistung kein <see cref="VCard"/>-Objekt enthält, wird keine Datei geschrieben.</param>
         /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
+        /// 
         /// <remarks>
         /// <note type="caution">
         /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
@@ -36,14 +38,23 @@ namespace FolkerKinzel.VCards
         /// vCards, wenn <paramref name="vCardList"/> nur ein <see cref="VCard"/>-Objekt enthielt - nämlich dann,
         /// wenn dieses <see cref="VCard"/>-Objekt in den Properties <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
         /// weitere <see cref="VCard"/>-Objekte referenziert hat.</para>
+        /// <para>
+        /// Die Methode ruft <see cref="VCard.SetReferences(List{VCard?})"/> auf. Falls Sie nach Ausführung der Methode lesend auf den 
+        /// Inhalt von <paramref name="vCardList"/> zugreifen möchten, sollten Sie <paramref name="vCardList"/> an die Methode 
+        /// <see cref="VCard.Dereference(List{VCard})"/> übergeben oder auf <paramref name="vCardList"/> die Erweiterungsmethode 
+        /// <see cref="VCardExtension.DereferenceVCards(List{VCard})"/> aus dem Namespace 
+        /// <see cref="FolkerKinzel.VCards.Models.Helpers">FolkerKinzel.VCards.Models.Helpers</see>
+        /// aufrufen.
+        /// </para>
         /// </remarks>
+        /// 
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> oder <paramref name="vCardList"/>
         /// ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
-#if !NET40
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+//#if !NET40
+//        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+//#endif
         public static void Save(
             string fileName,
             List<VCard?> vCardList,
@@ -99,29 +110,43 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten in einen <see cref="Stream"/>.
         /// </summary>
-        /// <remarks><para>Die Methode serialisiert möglicherweise auch dann mehrere
-        /// vCards, wenn <paramref name="vCardList"/> nur ein <see cref="VCard"/>-Objekt enthielt - nämlich dann,
-        /// wenn dieses <see cref="VCard"/>-Objekt in den Properties <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
-        /// weitere <see cref="VCard"/>-Objekte referenziert hat.</para>
-        /// <note type="caution">
-        /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
-        /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
-        /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
-        /// </note>
-        /// </remarks>
+        /// 
         /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden. <paramref name="stream"/>
         /// wird von der Methode geschlossen.</param>
         /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte.</param>
         /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
+        /// 
+        /// <remarks>
+        /// <note type="caution">
+        /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
+        /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
+        /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+        /// </note>
+        /// 
+        /// <para>Die Methode serialisiert möglicherweise auch dann mehrere
+        /// vCards, wenn <paramref name="vCardList"/> nur ein <see cref="VCard"/>-Objekt enthielt - nämlich dann,
+        /// wenn dieses <see cref="VCard"/>-Objekt in den Properties <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
+        /// weitere <see cref="VCard"/>-Objekte referenziert hat.
+        /// </para>
+        /// <para>
+        /// Die Methode ruft <see cref="VCard.SetReferences(List{VCard?})"/> auf. Falls Sie nach Ausführung der Methode lesend auf den 
+        /// Inhalt von <paramref name="vCardList"/> zugreifen möchten, sollten Sie <paramref name="vCardList"/> an die Methode 
+        /// <see cref="VCard.Dereference(List{VCard})"/> übergeben oder auf <paramref name="vCardList"/> die Erweiterungsmethode 
+        /// <see cref="VCardExtension.DereferenceVCards(List{VCard})"/> aus dem Namespace 
+        /// <see cref="FolkerKinzel.VCards.Models.Helpers">FolkerKinzel.VCards.Models.Helpers</see>
+        /// aufrufen.
+        /// </para>
+        /// </remarks>
+        /// 
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> oder <paramref name="vCardList"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge.</exception>
         /// <exception cref="IOException">E/A-Fehler.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
-#if !NET40
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+//#if !NET40
+//        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+//#endif
         public static void Serialize(Stream stream, List<VCard?> vCardList, VCdVersion version, VcfOptions options = VcfOptions.Default)
         {
             DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(Serialize)}({nameof(TextWriter)}, List<{nameof(VCard)}>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
@@ -140,11 +165,10 @@ namespace FolkerKinzel.VCards
                 throw new ArgumentNullException(nameof(vCardList));
             }
 
-            
 
             while (vCardList.Remove(null)) { }
 
-            SetVCardUuidReferences(vCardList);
+            SetReferences(vCardList);
 
             bool resetVCardUuidReferences = false;
 
@@ -216,7 +240,7 @@ namespace FolkerKinzel.VCards
 
             if (resetVCardUuidReferences)
             {
-                SetVCardUuidReferences(vCardList);
+                SetReferences(vCardList);
             }
         }
 
@@ -227,18 +251,27 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// Schreibt die <see cref="VCard"/> auf einen Datenträger.
         /// </summary>
+        /// 
         /// <param name="fileName">Der Dateipfad.</param>
         /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
+        /// 
         /// <remarks>
+        /// <note type="caution">
+        /// Obwohl die Methode selbst threadsafe ist, ist es das 
+        /// <see cref="VCard"/>-Objekt nicht. Sperren Sie den lesenden und schreibenden Zugriff auf das
+        /// <see cref="VCard"/>-Objekt während der Ausführung dieser Methode!
+        /// </note>
         /// <para>Die Methode serialisiert möglicherweise mehrere vCards - nämlich dann,
         /// wenn in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
         /// weitere <see cref="VCard"/>-Objekte referenziert waren.</para>
         /// <para>
         /// Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
         /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.
-        /// </para></remarks>
+        /// </para>
+        /// </remarks>
+        /// 
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
@@ -254,12 +287,19 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// Serialisiert die <see cref="VCard"/> mit einem <see cref="TextWriter"/>.
         /// </summary>
+        /// 
         /// <param name="stream">Der <see cref="Stream"/>, in den die <see cref="VCard"/> serialisiert wird. <paramref name="stream"/>
         /// wird von der Methode geschlossen.</param>
         /// <param name="version">Die vCard-Version, in die serialisiert wird.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
+        /// 
         /// <remarks>
+        /// <note type="caution">
+        /// Obwohl die Methode selbst threadsafe ist, ist es das 
+        /// <see cref="VCard"/>-Objekt nicht. Sperren Sie den lesenden und schreibenden Zugriff auf das
+        /// <see cref="VCard"/>-Objekt während der Ausführung dieser Methode!
+        /// </note>
         ///<para>Die Methode serialisiert möglicherweise mehrere
         /// vCards - nämlich dann,
         /// wenn in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
@@ -269,6 +309,7 @@ namespace FolkerKinzel.VCards
         /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.
         /// </para>
         /// </remarks>
+        /// 
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge.</exception>
         /// <exception cref="IOException">E/A-Fehler.</exception>
@@ -283,15 +324,25 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// Serialisiert die <see cref="VCard"/> als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
         /// </summary>
+        /// 
         /// <param name="version">Die vCard-Version, in die serialisiert wird.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
+        /// 
         /// <returns>Die <see cref="VCard"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
+        /// 
         /// <remarks>
+        /// <note type="caution">
+        /// Obwohl die Methode selbst threadsafe ist, ist es das 
+        /// <see cref="VCard"/>-Objekt nicht. Sperren Sie den lesenden und schreibenden Zugriff auf das
+        /// <see cref="VCard"/>-Objekt während der Ausführung dieser Methode!
+        /// </note>
+        /// <para>
         /// Die Methode serialisiert möglicherweise mehrere
-        /// vCards, nämlich dann,
+        /// vCards - nämlich dann,
         /// wenn in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
-        /// weitere VCards refenziert waren.
+        /// weitere VCards referenziert waren.
+        /// </para>
         /// </remarks>
         public string ToVcfString(VCdVersion version, VcfOptions options = VcfOptions.Default)
         {
@@ -306,87 +357,6 @@ namespace FolkerKinzel.VCards
         }
 
 
-        /// <summary>
-        /// Ersetzt bei den in <paramref name="vCardList"/> gespeicherten <see cref="VCard"/>-Objekten die <see cref="RelationVCardProperty"/>-Objekte 
-        /// in den Eigenschaften <see cref="VCard.Members"/> und
-        /// <see cref="VCard.Relations"/> durch <see cref="RelationUuidProperty"/>-Objekte und fügt die in den ersetzten <see cref="RelationVCardProperty"/>-Objekten
-        /// gespeicherten <see cref="VCard"/>-Objekte als separate Items an <paramref name="vCardList"/> an, falls sie nicht schon in der Liste enthalten waren. Falls
-        /// die zu referenzierenden <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen dabei automatisch
-        /// eine zugewiesen.
-        /// </summary>
-        /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
-        public static void SetVCardUuidReferences(List<VCard?> vCardList)
-        {
-            if(vCardList is null)
-            {
-                throw new ArgumentNullException(nameof(vCardList));
-            }
-
-            for (int i = 0; i < vCardList.Count; i++)
-            {
-                VCard? vcard = vCardList[i];
-
-                if (vcard is null)
-                {
-                    continue;
-                }
-
-                if (vcard.Members != null)
-                {
-                    List<RelationProperty?> members = vcard.Members as List<RelationProperty?> ?? vcard.Members.ToList();
-                    vcard.Members = members;
-
-                    SetReferences(vCardList, members);
-                }
-
-                if (vcard.Relations != null)
-                {
-                    List<RelationProperty?> relations = vcard.Relations as List<RelationProperty?> ?? vcard.Relations.ToList();
-                    vcard.Relations = relations;
-
-                    SetReferences(vCardList, relations);
-                }
-            }
-
-
-            static void SetReferences(List<VCard?> vCardList, List<RelationProperty?> members)
-            {
-                RelationVCardProperty[] vcdProps = members
-                                .Select(x => x as RelationVCardProperty)
-                                .Where(x => x != null)
-                                .ToArray()!;
-
-
-                foreach (RelationVCardProperty vcdProp in vcdProps)
-                {
-                    Debug.Assert(vcdProp != null);
-
-                    _ = members.Remove(vcdProp);
-
-                    VCard? vc = vcdProp.Value;
-
-                    if (vc != null)
-                    {
-                        if (!vCardList.Contains(vc))
-                        {
-                            vCardList.Add(vc);
-                        }
-
-                        if (vc.UniqueIdentifier is null)
-                        {
-                            vc.UniqueIdentifier = new UuidProperty();
-                        }
-
-
-                        var relationUuid = new RelationUuidProperty(vc.UniqueIdentifier.Value, propertyGroup: vcdProp.Group);
-                        relationUuid.Parameters.Assign(vcdProp.Parameters);
-                        members.Add(relationUuid);
-                    }
-                }
-            }
-
-        }
 
 
         #endregion
