@@ -115,7 +115,7 @@ namespace FolkerKinzel.VCards
                         info.Builder.Clear().Capacity = VCardDeserializationInfo.INITIAL_STRINGBUILDER_CAPACITY;
                     }
                 }
-            } while (vcfReader.EOF);
+            } while (!vcfReader.EOF);
 
             SetReferences(vCardList);
 

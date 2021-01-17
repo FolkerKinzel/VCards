@@ -17,10 +17,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         internal ParameterSection(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters, VCardDeserializationInfo info)
         {
+            Debug.Assert(propertyKey != null);
             Debug.Assert(propertyParameters != null);
             Debug.Assert(!propertyParameters.Any(
                 x => string.IsNullOrWhiteSpace(x.Key) || string.IsNullOrWhiteSpace(x.Value)
                 ));
+            Debug.Assert(StringComparer.Ordinal.Equals(propertyKey, propertyKey.ToUpperInvariant()));
+            Debug.Assert(propertyParameters.All(x => StringComparer.Ordinal.Equals(x.Key, x.Key.ToUpperInvariant())));
 
             StringBuilder builder = info.Builder;
 

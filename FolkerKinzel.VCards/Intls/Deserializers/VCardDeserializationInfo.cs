@@ -5,8 +5,8 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal sealed class VCardDeserializationInfo
     {
-        internal const int INITIAL_STRINGBUILDER_CAPACITY = 1024;
-        internal const int MAX_STRINGBUILDER_CAPACITY = 4096;
+        internal const int INITIAL_STRINGBUILDER_CAPACITY = 4096;
+        internal const int MAX_STRINGBUILDER_CAPACITY = 4096*2;
 
         private DateAndOrTimeConverter? _dateAndOrTimeConverter;
         private TimeConverter? _timeConverter;

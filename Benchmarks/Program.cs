@@ -7,7 +7,9 @@ namespace Benchmarks
     {
         private static void Main()
         {
-            _ = BenchmarkRunner.Run<QuotedPrintableBench>();
+            //_ = BenchmarkRunner.Run<QuotedPrintableBench>();
+            _ = BenchmarkRunner.Run<VCardBench>();
+
         }
     }
 }

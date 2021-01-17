@@ -11,7 +11,7 @@
         internal const int MAX_BYTES_PER_LINE = 75;
         internal const string DEFAULT_CHARSET = "UTF-8";
 
-        private const int DESERIALIZER_QUEUE_INITIAL_CAPACITY = 32;
+        private const int DESERIALIZER_QUEUE_INITIAL_CAPACITY = 64;
 
         internal static class PropKeys
         {

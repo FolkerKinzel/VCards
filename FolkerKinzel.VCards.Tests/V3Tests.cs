@@ -12,9 +12,28 @@ namespace FolkerKinzel.VCards.Tests
     public class V3Tests
     {
         [TestMethod]
-        public void Parse()
+        public void ParseTest()
         {
             List<VCard>? vcard = VCard.Load(TestFiles.V3vcf);
+
+            Assert.IsNotNull(vcard);
+            Assert.AreEqual(2, vcard.Count);
+        }
+
+
+        [TestMethod]
+        public void ParseTest2()
+        {
+            List<VCard>? vcard = VCard.Load(@"C:\Users\fkinz\OneDrive\Kontakte\Thunderbird\21-01-13.vcf");
+
+            Assert.IsNotNull(vcard);
+            Assert.AreNotEqual(0, vcard.Count);
+        }
+
+        [TestMethod]
+        public void ParseTest3()
+        {
+            List<VCard>? vcard = VCard.Load(TestFiles.PhotoV3vcf);
 
             Assert.IsNotNull(vcard);
             Assert.AreNotEqual(0, vcard.Count);
@@ -22,7 +41,7 @@ namespace FolkerKinzel.VCards.Tests
 
 
         [TestMethod]
-        public void WriteEmptyVCard()
+        public void WriteEmptyVCardTest()
         {
             var vcard = new VCard();
 
@@ -47,7 +66,7 @@ namespace FolkerKinzel.VCards.Tests
 
 
         [TestMethod]
-        public void TestLineWrapping()
+        public void LineWrappingTest()
         {
             var vcard = new VCard();
 
