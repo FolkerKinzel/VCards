@@ -117,8 +117,6 @@ namespace FolkerKinzel.VCards
                 }
             } while (!vcfReader.EOF);
 
-            SetReferences(vCardList);
-
             return vCardList;
         }
 
@@ -139,46 +137,52 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Ersetzt die <see cref="RelationUuidProperty"/>-Objekte jeder in 
-        /// <paramref name="vCardList"/> enthaltenen <see cref="VCard"/> durch 
+        /// Ersetzt die <see cref="RelationUuidProperty"/>-Objekte der in 
+        /// <paramref name="vCardList"/> enthaltenen <see cref="VCard"/>-Objekte durch 
         /// <see cref="RelationVCardProperty"/>-Objekte, die die <see cref="VCard"/>s enthalten,
         /// die durch die <see cref="Guid"/>s der <see cref="RelationUuidProperty"/>-Objekte 
-        /// referenziert wurden. Das ist nur möglich, wenn sich diese <see cref="VCard"/>s in
+        /// referenziert wurden. Das geschieht nur, wenn sich die referenzierten <see cref="VCard"/>-Objekte in
         /// <paramref name="vCardList"/> befinden.
         /// </summary>
         /// <param name="vCardList">Eine Liste mit <see cref="VCard"/>-Objekten.</param>
-        private static void SetReferences(List<VCard> vCardList)
+        /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
+        public static void DereferenceVCards(List<VCard> vCardList)
         {
-            Debug.Assert(vCardList != null);
+            if(vCardList is null)
+            {
+                throw new ArgumentNullException(nameof(vCardList));
+            }
 
             foreach (VCard vcard in vCardList)
             {
-                Debug.Assert(vcard != null);
-                SetRelationReferences((List<RelationProperty?>?)vcard.Relations);
-                SetRelationReferences((List<RelationProperty?>?)vcard.Members);
+                if (vcard != null)
+                {
+                    if (vcard.Relations != null)
+                    {
+                        List<RelationProperty?> relations = vcard.Relations as List<RelationProperty?> ?? vcard.Relations.ToList();
+                        vcard.Relations = relations;
+                        SetRelationReferences(relations, vCardList);
+                    }
+
+                    if (vcard.Members != null)
+                    {
+                        List<RelationProperty?> members = vcard.Members as List<RelationProperty?> ?? vcard.Members.ToList();
+                        vcard.Members = members;
+                        SetRelationReferences(members, vCardList);
+                    }
+                }
             }
 
-            void SetRelationReferences(List<RelationProperty?>? relations)
+            static void SetRelationReferences(List<RelationProperty?> relations, List<VCard> vCardList)
             {
-                if (relations is null)
-                {
-                    return;
-                }
-
-                RelationUuidProperty[] guidProps = relations
+                IEnumerable<RelationUuidProperty> guidProps = relations
                     .Select(x => x as RelationUuidProperty)
-                    .Where(x => x != null && !x.IsEmpty)
-                    .ToArray()!;
+                    .Where(x => x != null && !x.IsEmpty)!;
 
-                if (guidProps == null)
+                foreach (RelationUuidProperty guidProp in guidProps)
                 {
-                    return;
-                }
-
-                foreach (RelationUuidProperty? guidProp in guidProps)
-                {
-                    VCard referencedVCard =
-                        vCardList.FirstOrDefault(v => v.UniqueIdentifier?.Value == guidProp.Value);
+                    VCard? referencedVCard =
+                        vCardList.Where(x => x != null && x.UniqueIdentifier != null).FirstOrDefault(v => v!.UniqueIdentifier!.Value == guidProp.Value);
 
                     if (referencedVCard != null)
                     {
@@ -188,6 +192,7 @@ namespace FolkerKinzel.VCards
                         vcardProp.Parameters.Assign(guidProp.Parameters);
 
                         _ = relations.Remove(guidProp);
+                        relations.Add(vcardProp);
                     }
                 }
             }

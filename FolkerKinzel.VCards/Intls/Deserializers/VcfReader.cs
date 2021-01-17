@@ -14,13 +14,17 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal class VcfReader : IEnumerable<VcfRow>
     {
-        private static readonly Regex _vCardBegin =
-            new Regex(@"\ABEGIN[ \t]*:[ \t]*VCARD[ \t]*\z",
-                RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private const string BEGIN_VCARD = "BEGIN:VCARD";
+        private const string END_VCARD = "END:VCARD";
 
-        private static readonly Regex _vCardEnd =
-            new Regex(@"\AEND[ \t]*:[ \t]*VCARD[ \t]*\z",
-                RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+        //private static readonly Regex _vCardBegin =
+        //    new Regex(@"\ABEGIN[ \t]*:[ \t]*VCARD[ \t]*\z",
+        //        RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+        //private static readonly Regex _vCardEnd =
+        //    new Regex(@"\AEND[ \t]*:[ \t]*VCARD[ \t]*\z",
+        //        RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         private readonly TextReader _reader;
         private readonly VCardDeserializationInfo _info;
@@ -74,7 +78,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
                 Debug.WriteLine(s);
 
-            } while (!_vCardBegin.IsMatch(s));
+            } while (!s.StartsWith(BEGIN_VCARD, StringComparison.OrdinalIgnoreCase));
 
 
             _ = _info.Builder.Clear(); // nötig, wenn die vcf-Datei mehrere vCards enthält
@@ -188,7 +192,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                             }
                         }
                     }
-                    else if (_vCardBegin.IsMatch(s)) //eingebettete VCard 2.1. AGENT-vCard:
+                    else if (s.StartsWith(BEGIN_VCARD, StringComparison.OrdinalIgnoreCase)) //eingebettete VCard 2.1. AGENT-vCard:
                     {
                         Debug.WriteLine("  == Embedded VCARD 2.1 vCard detected ==");
 
@@ -246,7 +250,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                     _ = _info.Builder.Append(s);
                 }//else
 
-            } while (!_vCardEnd.IsMatch(s));
+            } while (!s.StartsWith(END_VCARD, StringComparison.OrdinalIgnoreCase));
 
             yield break;
         }
@@ -301,10 +305,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                     continue;
                 }
 
-                if (_vCardEnd.IsMatch(s))
-                {
-                    return false;
-                }
+                //if (_vCardEnd.IsMatch(s))
+                //{
+                //    return false;
+                //}
 
                 _ = _info.Builder.AppendLine().Append(s);
             }
@@ -337,10 +341,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
                 Debug.WriteLine(s);
 
-                if (_vCardEnd.IsMatch(s))
-                {
-                    return false;
-                }
+                //if (_vCardEnd.IsMatch(s))
+                //{
+                //    return false;
+                //}
             }
 
             return true;
@@ -378,7 +382,8 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
                 _ = _info.Builder.Append(VCard.NewLine).Append(s);
             }
-            while (!_vCardEnd.IsMatch(s)); // wenn die eingebettete vCard eine weitere eingebettete vCard enthält,
+            while (!s.StartsWith(END_VCARD, StringComparison.OrdinalIgnoreCase)); 
+                                           // wenn die eingebettete vCard eine weitere eingebettete vCard enthält,
                                            // scheitert das Parsen
 
             return true;

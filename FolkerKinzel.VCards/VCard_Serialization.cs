@@ -132,7 +132,7 @@ namespace FolkerKinzel.VCards
                 throw new ArgumentNullException(nameof(vcards));
             }
 
-            Dereference(vcards, version, options);
+            SetVCardUuidReferences(vcards, version, options);
 
             var serializer = VcfSerializer.GetSerializer(writer, version, options);
 
@@ -233,7 +233,7 @@ namespace FolkerKinzel.VCards
 
         #region private
 
-        private static void Dereference(List<VCard?> vcdList, VCdVersion version, VcfOptions options)
+        private static void SetVCardUuidReferences(List<VCard?> vcdList, VCdVersion version, VcfOptions options)
         {
             Debug.Assert(vcdList != null);
 
@@ -244,12 +244,12 @@ namespace FolkerKinzel.VCards
                     continue;
                 }
 
-                DereferenceMembers(vcard);
-                DereferenceRelations(vcard);
+                SetReferencesToMembers(vcard);
+                SetReferencesToRelations(vcard);
             }
 
 
-            void DereferenceMembers(VCard vcard)
+            void SetReferencesToMembers(VCard vcard)
             {
                 if (version < VCdVersion.V4_0)
                 {
@@ -285,7 +285,7 @@ namespace FolkerKinzel.VCards
                 }
             }
 
-            void DereferenceRelations(VCard vcard)
+            void SetReferencesToRelations(VCard vcard)
             {
                 RelationVCardProperty[]? vcdProps = vcard.Relations?
                                 .Select(x => x as RelationVCardProperty)

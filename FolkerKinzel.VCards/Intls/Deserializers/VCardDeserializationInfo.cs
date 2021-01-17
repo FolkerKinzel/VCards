@@ -8,6 +8,8 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
     {
         internal const int INITIAL_STRINGBUILDER_CAPACITY = 4096;
         internal const int MAX_STRINGBUILDER_CAPACITY = 4096*2;
+        internal const int INITIAL_PARAMETERLIST_CAPACITY = 8;
+
 
         private DateAndOrTimeConverter? _dateAndOrTimeConverter;
         private TimeConverter? _timeConverter;
