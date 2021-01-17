@@ -17,6 +17,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         internal ParameterSection(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters, VCardDeserializationInfo info)
         {
+            #region DebugAssert
+
             Debug.Assert(propertyKey != null);
             Debug.Assert(propertyParameters != null);
             Debug.Assert(!propertyParameters.Any(
@@ -24,6 +26,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 ));
             Debug.Assert(StringComparer.Ordinal.Equals(propertyKey, propertyKey.ToUpperInvariant()));
             Debug.Assert(propertyParameters.All(x => StringComparer.Ordinal.Equals(x.Key, x.Key.ToUpperInvariant())));
+
+            #endregion
 
             StringBuilder builder = info.Builder;
 

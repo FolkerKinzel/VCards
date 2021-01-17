@@ -71,7 +71,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             if (parameterSeparatorIndex != -1 && parameterSeparatorIndex < keySection.Length - 1)
             {
                 string parameterSection = keySection.Substring(parameterSeparatorIndex + 1);
-                this.Parameters = new ParameterSection(this.Key, GetParameters(parameterSection), info);
+                this.Parameters = new ParameterSection(this.Key, GetParameters(parameterSection, info.ParameterList), info);
             }
             else
             {
@@ -105,12 +105,13 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         }
 
 
-        private static List<KeyValuePair<string, string>> GetParameters(string parameterSection)
+        private static List<KeyValuePair<string, string>> GetParameters(string parameterSection, List<KeyValuePair<string, string>> parameterTuples)
         {
             int splitIndex;
             string parameter;
             int parameterStartIndex = 0;
-            var parameterTuples = new List<KeyValuePair<string, string>>();
+
+            parameterTuples.Clear();
 
             while (-1 != (splitIndex = GetNextParameterSplitIndex(parameterStartIndex, parameterSection)))
             {

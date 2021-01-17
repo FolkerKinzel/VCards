@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Converters;
+using System.Collections.Generic;
 using System.Text;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers
@@ -16,6 +17,9 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
 
         internal readonly char[] AllQuotes = new char[] { '\"', '\'' };
+
+
+        internal readonly List<KeyValuePair<string, string>> ParameterList = new List<KeyValuePair<string, string>>();
 
 
         internal DateAndOrTimeConverter DateAndOrTimeConverter

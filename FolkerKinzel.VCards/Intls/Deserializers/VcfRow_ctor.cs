@@ -62,7 +62,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             if (parameterSeparatorIndex != -1 && parameterSeparatorIndex < keySection.Length - 1)
             {
                 ReadOnlySpan<char> parameterSection = keySection.Slice(parameterSeparatorIndex + 1);
-                this.Parameters = new ParameterSection(this.Key, GetParameters(parameterSection), info);
+                this.Parameters = new ParameterSection(this.Key, GetParameters(parameterSection, info.ParameterList), info);
             }
             else
             {
@@ -96,13 +96,13 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         }
 
 
-        private static List<KeyValuePair<string, string>> GetParameters(ReadOnlySpan<char> parameterSection)
+        private static List<KeyValuePair<string, string>> GetParameters(ReadOnlySpan<char> parameterSection, List<KeyValuePair<string, string>> parameterTuples)
         {
             int splitIndex;
             ReadOnlySpan<char> parameter;
             int parameterStartIndex = 0;
-            var parameterTuples = new List<KeyValuePair<string, string>>();
 
+            parameterTuples.Clear();
 
             // key=value;key="value,value,va;lue";key="val;ue" wird zu
             // key=value | key="value,value,va;lue" | key="val;ue"
