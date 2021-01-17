@@ -177,12 +177,12 @@ namespace FolkerKinzel.VCards
             {
                 IEnumerable<RelationUuidProperty> guidProps = relations
                     .Select(x => x as RelationUuidProperty)
-                    .Where(x => x != null && !x.IsEmpty)!;
+                    .Where(x => x != null && !x.IsEmpty).ToArray()!;
 
                 foreach (RelationUuidProperty guidProp in guidProps)
                 {
                     VCard? referencedVCard =
-                        vCardList.Where(x => x != null && x.UniqueIdentifier != null).FirstOrDefault(v => v!.UniqueIdentifier!.Value == guidProp.Value);
+                        vCardList.Where(x => x.UniqueIdentifier != null).FirstOrDefault(x => x.UniqueIdentifier!.Value == guidProp.Value);
 
                     if (referencedVCard != null)
                     {

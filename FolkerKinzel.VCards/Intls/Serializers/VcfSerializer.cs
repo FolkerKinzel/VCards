@@ -114,7 +114,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                     case VCdProp.ProdID:
                         AppendProdID((TextProperty)kvp.Value);
                         break;
-                    case VCdProp.LastRevision:
+                    case VCdProp.LatestUpdate:
                         AppendLastRevision((TimeStampProperty)kvp.Value);
                         break;
                     case VCdProp.UniqueIdentifier:

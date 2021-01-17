@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
@@ -341,10 +342,22 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
         /// </summary>
+        [Obsolete("Use \"LatestUpdate\" instead!", VCardProperty.OBSOLETE_AS_ERROR)]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public TimeStampProperty? LastRevision
         {
-            get => Get<TimeStampProperty?>(VCdProp.LastRevision);
-            set => Set(VCdProp.LastRevision, value);
+            get => LatestUpdate;
+            set => LatestUpdate = value;
+        }
+
+        /// <summary>
+        /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
+        /// </summary>
+        public TimeStampProperty? LatestUpdate
+        {
+            get => Get<TimeStampProperty?>(VCdProp.LatestUpdate);
+            set => Set(VCdProp.LatestUpdate, value);
         }
 
 

@@ -21,7 +21,7 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// <summary>
         /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
         /// </summary>
-        LastRevision,
+        LatestUpdate,
 
 
         /// <summary>

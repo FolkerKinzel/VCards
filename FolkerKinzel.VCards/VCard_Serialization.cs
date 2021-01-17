@@ -36,6 +36,11 @@ namespace FolkerKinzel.VCards
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
         /// </note>
+        /// <para>Die Methode serialisiert möglicherweise auch dann mehrere
+        /// vCards, wenn <paramref name="vcards"/> nur ein <see cref="VCard"/>-Objekt enthielt - nämlich dann,
+        /// wenn dieses <see cref="VCard"/>-Objekt in den Properties <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
+        /// weitere <see cref="VCard"/>-Objekte referenziert hat.</para>
+        /// 
         /// </remarks>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -98,9 +103,9 @@ namespace FolkerKinzel.VCards
         /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten mit einem <see cref="TextWriter"/>.
         /// </summary>
         /// <remarks><para>Die Methode serialisiert möglicherweise auch dann mehrere
-        /// vCards, wenn <paramref name="vcards"/> nur ein <see cref="VCard"/>-Objekt enthielt, nämlich dann,
+        /// vCards, wenn <paramref name="vCardList"/> nur ein <see cref="VCard"/>-Objekt enthielt - nämlich dann,
         /// wenn dieses <see cref="VCard"/>-Objekt in den Properties <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
-        /// weitere VCards refenziert hat.</para>
+        /// weitere <see cref="VCard"/>-Objekte referenziert hat.</para>
         /// <note type="caution">
         /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
@@ -108,17 +113,17 @@ namespace FolkerKinzel.VCards
         /// </note>
         /// </remarks>
         /// <param name="writer">Ein <see cref="TextWriter"/>, mit dem die serialisierten <see cref="VCard"/>-Objekte geschrieben werden.</param>
-        /// <param name="vcards">Die zu serialisierenden <see cref="VCard"/>-Objekte.</param>
+        /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte.</param>
         /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="vcards"/> ist <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
         /// <exception cref="IOException">E/A-Fehler.</exception>
         /// <exception cref="ObjectDisposedException">Die Ressourcen von <paramref name="writer"/> sind bereits freigegeben.</exception>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static void Serialize(TextWriter writer, List<VCard?> vcards, VCdVersion version, VcfOptions options = VcfOptions.Default)
+        public static void Serialize(TextWriter writer, List<VCard?> vCardList, VCdVersion version, VcfOptions options = VcfOptions.Default)
         {
             DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(Serialize)}({nameof(TextWriter)}, List<{nameof(VCard)}>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
 
@@ -127,25 +132,86 @@ namespace FolkerKinzel.VCards
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (vcards is null)
+            if (vCardList is null)
             {
-                throw new ArgumentNullException(nameof(vcards));
+                throw new ArgumentNullException(nameof(vCardList));
             }
 
-            SetVCardUuidReferences(vcards, version, options);
+            while (vCardList.Remove(null)) { }
+
+            SetVCardUuidReferences(vCardList);
+
+            bool resetVCardUuidReferences = false;
+
+
+            if (version < VCdVersion.V4_0)
+            {
+                List<VCard>? agentsToRemove = null;
+                bool includeAgentAsSeparateVCard = options.IsSet(VcfOptions.IncludeAgentAsSeparateVCard);
+
+                for (int i = 0; i < vCardList.Count; i++)
+                {
+                    VCard vCard = vCardList[i]!;
+
+                    if (vCard.Relations is null)
+                    {
+                        continue;
+                    }
+
+                    Debug.Assert(vCard.Relations is List<RelationProperty?>);
+                    var relations = (List<RelationProperty?>)vCard.Relations;
+
+                    RelationUuidProperty? agentUuid = relations
+                        .Select(x => x as RelationUuidProperty)
+                        .Where(x => x != null && x.Parameters.RelationType.IsSet(RelationTypes.Agent) && !x.IsEmpty)
+                        .OrderBy(x => x!.Parameters.Preference)
+                        .FirstOrDefault();
+
+                    if (agentUuid != null)
+                    {
+                        VCard? agentVCard = vCardList
+                                            .Where(x => x!.UniqueIdentifier != null && x!.UniqueIdentifier.Value == agentUuid.Value)
+                                            .OrderBy(x => x!.LatestUpdate?.Value ?? DateTimeOffset.MinValue)
+                                            .LastOrDefault();
+
+                        if (agentVCard != null)
+                        {
+                            if (!includeAgentAsSeparateVCard)
+                            {
+                                agentsToRemove ??= new List<VCard>();
+                                agentsToRemove.Add(agentVCard);
+                            }
+
+                            var vcProp = new RelationVCardProperty(agentVCard, propertyGroup: agentUuid.Group);
+                            vcProp.Parameters.Assign(agentUuid.Parameters);
+                            relations.Add(vcProp);
+
+                            resetVCardUuidReferences = true;
+                        }
+                    } // if
+                }//for
+
+                if (agentsToRemove != null)
+                {
+                    for (int i = 0; i < agentsToRemove.Count; i++)
+                    {
+                        _ = vCardList.Remove(agentsToRemove[i]);
+                    }
+                }
+            }
 
             var serializer = VcfSerializer.GetSerializer(writer, version, options);
 
-            foreach (VCard? vCard in vcards)
+
+            foreach (VCard? vCard in vCardList)
             {
-                if (vCard is null)
-                {
-                    continue;
-                }
-
-                vCard.Version = version;
-
+                vCard!.Version = version;
                 serializer.Serialize(vCard);
+            }
+
+            if (resetVCardUuidReferences)
+            {
+                SetVCardUuidReferences(vCardList);
             }
         }
 
@@ -161,10 +227,9 @@ namespace FolkerKinzel.VCards
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
         /// <remarks>
-        /// <para>Die Methode serialisiert möglicherweise mehrere
-        /// vCards, nämlich dann,
+        /// <para>Die Methode serialisiert möglicherweise mehrere vCards - nämlich dann,
         /// wenn in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
-        /// weitere VCards refenziert waren.</para>
+        /// weitere <see cref="VCard"/>-Objekte referenziert waren.</para>
         /// <para>
         /// Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
         /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.
@@ -190,9 +255,9 @@ namespace FolkerKinzel.VCards
         /// kombiniert werden.</param>
         /// <remarks>
         ///<para>Die Methode serialisiert möglicherweise mehrere
-        /// vCards, nämlich dann,
+        /// vCards - nämlich dann,
         /// wenn in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
-        /// weitere VCards refenziert waren.</para>
+        /// weitere <see cref="VCard"/>-Objekte referenziert waren.</para>
         /// <para>
         /// Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
         /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.
@@ -201,7 +266,7 @@ namespace FolkerKinzel.VCards
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public void Serialize(TextWriter writer, VCdVersion version, VcfOptions options = VcfOptions.Default) 
+        public void Serialize(TextWriter writer, VCdVersion version, VcfOptions options = VcfOptions.Default)
             => VCard.Serialize(writer, new List<VCard?> { this }, version, options);
 
 
@@ -228,97 +293,83 @@ namespace FolkerKinzel.VCards
             return stringWriter.ToString();
         }
 
-        #endregion
 
-
-        #region private
-
-        private static void SetVCardUuidReferences(List<VCard?> vcdList, VCdVersion version, VcfOptions options)
+        /// <summary>
+        /// Ersetzt bei den in <paramref name="vCardList"/> gespeicherten <see cref="VCard"/>-Objekten die <see cref="RelationVCardProperty"/>-Objekte 
+        /// in den Eigenschaften <see cref="VCard.Members"/> und
+        /// <see cref="VCard.Relations"/> durch <see cref="RelationUuidProperty"/>-Objekte und fügt die in den ersetzten <see cref="RelationVCardProperty"/>-Objekten
+        /// gespeicherten <see cref="VCard"/>-Objekte als separate Items an <paramref name="vCardList"/> an, falls sie nicht schon in der Liste enthalten waren. Falls
+        /// die zu referenzierenden <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen dabei automatisch
+        /// eine zugewiesen.
+        /// </summary>
+        /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
+        public static void SetVCardUuidReferences(List<VCard?> vCardList)
         {
-            Debug.Assert(vcdList != null);
-
-            foreach (VCard? vcard in vcdList)
+            if(vCardList is null)
             {
+                throw new ArgumentNullException(nameof(vCardList));
+            }
+
+            for (int i = 0; i < vCardList.Count; i++)
+            {
+                VCard? vcard = vCardList[i];
+
                 if (vcard is null)
                 {
                     continue;
                 }
 
-                SetReferencesToMembers(vcard);
-                SetReferencesToRelations(vcard);
+                if (vcard.Members != null)
+                {
+                    List<RelationProperty?> members = vcard.Members as List<RelationProperty?> ?? vcard.Members.ToList();
+                    vcard.Members = members;
+
+                    SetReferences(vCardList, members);
+                }
+
+                if (vcard.Relations != null)
+                {
+                    List<RelationProperty?> relations = vcard.Relations as List<RelationProperty?> ?? vcard.Relations.ToList();
+                    vcard.Relations = relations;
+
+                    SetReferences(vCardList, relations);
+                }
             }
 
 
-            void SetReferencesToMembers(VCard vcard)
+            static void SetReferences(List<VCard?> vCardList, List<RelationProperty?> members)
             {
-                if (version < VCdVersion.V4_0)
-                {
-                    return;
-                }
-
-                RelationVCardProperty[]? vcdProps = vcard.Members?
+                RelationVCardProperty[] vcdProps = members
                                 .Select(x => x as RelationVCardProperty)
-                                .Where(x => x != null && !x.IsEmpty)
+                                .Where(x => x != null)
                                 .ToArray()!;
 
-                if (vcdProps is null || vcdProps.Length == 0)
-                {
-                    return;
-                }
 
                 foreach (RelationVCardProperty vcdProp in vcdProps)
                 {
                     Debug.Assert(vcdProp != null);
-                    Debug.Assert(vcdProp.Value != null);
 
-                    VCard vc = vcdProp.Value;
+                    _ = members.Remove(vcdProp);
 
-                    if (!vcdList.Contains(vc))
+                    VCard? vc = vcdProp.Value;
+
+                    if (vc != null)
                     {
-                        vcdList.Add(vc);
-                    }
-
-                    if (vc.UniqueIdentifier is null)
-                    {
-                        vc.UniqueIdentifier = new UuidProperty();
-                    }
-                }
-            }
-
-            void SetReferencesToRelations(VCard vcard)
-            {
-                RelationVCardProperty[]? vcdProps = vcard.Relations?
-                                .Select(x => x as RelationVCardProperty)
-                                .Where(x => x != null && !x.IsEmpty)
-                                .ToArray()!;
-
-                if (vcdProps is null || vcdProps.Length == 0)
-                {
-                    return;
-                }
-
-                foreach (RelationVCardProperty vcdProp in vcdProps)
-                {
-                    Debug.Assert(vcdProp != null);
-                    Debug.Assert(vcdProp.Value != null);
-
-                    VCard vc = vcdProp.Value;
-
-                    if (!vcdList.Contains(vc))
-                    {
-                        if (version < VCdVersion.V4_0
-                           && vcdProp.Parameters.RelationType.IsSet(RelationTypes.Agent)
-                           && !options.IsSet(VcfOptions.IncludeAgentAsSeparateVCard))
+                        if (!vCardList.Contains(vc))
                         {
-                            continue;
+                            vCardList.Add(vc);
                         }
 
-                        vcdList.Add(vc);
-                    }
+                        if (vc.UniqueIdentifier is null)
+                        {
+                            vc.UniqueIdentifier = new UuidProperty();
+                        }
 
-                    if (vc.UniqueIdentifier is null)
-                    {
-                        vc.UniqueIdentifier = new UuidProperty();
+
+                        var relationUuid = new RelationUuidProperty(vc.UniqueIdentifier.Value, propertyGroup: vcdProp.Group);
+                        relationUuid.Parameters.Assign(vcdProp.Parameters);
+                        members.Add(relationUuid);
                     }
                 }
             }
@@ -327,6 +378,9 @@ namespace FolkerKinzel.VCards
 
 
         #endregion
+
+
+       
 
     }
 }
