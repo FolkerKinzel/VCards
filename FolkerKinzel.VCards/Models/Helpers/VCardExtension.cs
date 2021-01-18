@@ -130,7 +130,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #endif
         public static void SerializeVCards(this List<VCard?> vCardList,
                                            Stream stream,
-                                           VCdVersion version,
+                                           VCdVersion version = VCdVersion.V3_0,
                                            VcfOptions options = VcfOptions.Default)
             => VCard.Serialize(stream, vCardList, version, options);
     }

@@ -15,7 +15,6 @@ namespace FolkerKinzel.VCards
 {
     public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
-
         #region static Methods
         /// <summary>
         /// Speichert eine Liste von <see cref="VCard"/>-Objekten in eine gemeinsame VCF-Datei.
@@ -133,7 +132,7 @@ namespace FolkerKinzel.VCards
         /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge.</exception>
         /// <exception cref="IOException">E/A-Fehler.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
-        public static void Serialize(Stream stream, List<VCard?> vCardList, VCdVersion version, VcfOptions options = VcfOptions.Default)
+        public static void Serialize(Stream stream, List<VCard?> vCardList, VCdVersion version = VCdVersion.V3_0, VcfOptions options = VcfOptions.Default)
         {
             DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(Serialize)}({nameof(TextWriter)}, List<{nameof(VCard)}>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
 

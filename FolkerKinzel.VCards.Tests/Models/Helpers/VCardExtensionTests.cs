@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Models.Helpers.Tests
     [TestClass()]
     public class VCardExtensionTests
     {
-        private List<VCard?> GenerateVCardList()
+        private static List<VCard?> GenerateVCardList()
         {
             var agent = new VCard()
             {
@@ -90,9 +90,7 @@ namespace FolkerKinzel.VCards.Models.Helpers.Tests
         }
 
         [TestMethod()]
-        public void SerializeVCardsTest()
-        {
-            Assert.Fail();
-        }
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SerializeVCardsTest() => new List<VCard?>().SerializeVCards(null!, VCdVersion.V3_0);
     }
 }
