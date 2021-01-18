@@ -45,9 +45,6 @@ namespace FolkerKinzel.VCards
         /// ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
-        //#if !NET40
-        //        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //#endif
         public static void Save(
             string fileName,
             List<VCard?> vCardList,
@@ -59,6 +56,7 @@ namespace FolkerKinzel.VCards
                 throw new ArgumentNullException(nameof(vCardList));
             }
 
+            // verhindert, dass eine leere Datei geschrieben wird
             if (!vCardList.Any(x => x != null))
             {
                 return;
@@ -104,14 +102,15 @@ namespace FolkerKinzel.VCards
         /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten in einen <see cref="Stream"/>.
         /// </summary>
         /// 
-        /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden. <paramref name="stream"/>
-        /// wird von der Methode geschlossen.</param>
+        /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden.</param>
         /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
         /// enthalten. Die Methode kann
         /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
         /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
+        /// <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
+        /// ist <c>false</c>.</param>
         /// 
         /// <remarks>
         /// <note type="caution">
@@ -132,7 +131,11 @@ namespace FolkerKinzel.VCards
         /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge.</exception>
         /// <exception cref="IOException">E/A-Fehler.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
-        public static void Serialize(Stream stream, List<VCard?> vCardList, VCdVersion version = VCdVersion.V3_0, VcfOptions options = VcfOptions.Default)
+        public static void Serialize(Stream stream,
+                                     List<VCard?> vCardList,
+                                     VCdVersion version = VCdVersion.V3_0,
+                                     VcfOptions options = VcfOptions.Default,
+                                     bool leaveStreamOpen = false)
         {
             DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(Serialize)}({nameof(TextWriter)}, List<{nameof(VCard)}>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
 
@@ -141,9 +144,6 @@ namespace FolkerKinzel.VCards
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            // UTF-8 muss ohne BOM geschrieben werden, da sonst nicht lesbar
-            // (vCard 2.1 kann UTF-8 verwenden, da nur ASCII-Zeichen geschrieben werden)
-            using var writer = new StreamWriter(stream, new UTF8Encoding(false));
 
             if (vCardList is null)
             {
@@ -187,12 +187,27 @@ namespace FolkerKinzel.VCards
                 SetReferences(vCardList);
             }
 
+
+            // UTF-8 muss ohne BOM geschrieben werden, da sonst nicht lesbar
+            // (vCard 2.1 kann UTF-8 verwenden, da nur ASCII-Zeichen geschrieben werden)
+            var encoding = new UTF8Encoding(false);
+
+
+            using StreamWriter? writer = leaveStreamOpen
+#if NET40
+                ? new StreamWriter(new Net40LeaveOpenStream(stream), encoding)
+#else
+                ? new StreamWriter(stream, encoding, 1024, true)
+#endif
+                : new StreamWriter(stream, encoding);
+
+
             var serializer = VcfSerializer.GetSerializer(writer, version, options);
 
 
             foreach (VCard? vCard in vCardList)
             {
-                if(vCard is null)
+                if (vCard is null)
                 {
                     continue;
                 }
@@ -250,11 +265,12 @@ namespace FolkerKinzel.VCards
         /// Serialisiert die <see cref="VCard"/> mit einem <see cref="TextWriter"/>.
         /// </summary>
         /// 
-        /// <param name="stream">Der <see cref="Stream"/>, in den die <see cref="VCard"/> serialisiert wird. <paramref name="stream"/>
-        /// wird von der Methode geschlossen.</param>
+        /// <param name="stream">Der <see cref="Stream"/>, in den die <see cref="VCard"/> serialisiert wird. </param>
         /// <param name="version">Die vCard-Version, in die serialisiert wird.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
+        /// <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
+        /// ist <c>false</c>.</param>
         /// 
         /// <remarks>
         /// <note type="caution">
@@ -279,8 +295,12 @@ namespace FolkerKinzel.VCards
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public void Serialize(Stream stream, VCdVersion version, VcfOptions options = VcfOptions.Default)
-            => VCard.Serialize(stream, new List<VCard?> { this }, version, options);
+        public void Serialize(Stream stream,
+                              VCdVersion version,
+                              VcfOptions options = VcfOptions.Default,
+                              bool leaveStreamOpen = false)
+
+            => VCard.Serialize(stream, new List<VCard?> { this }, version, options, leaveStreamOpen);
 
 
         /// <summary>
@@ -308,17 +328,12 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         public string ToVcfString(VCdVersion version, VcfOptions options = VcfOptions.Default)
         {
-            // kein Inlining, da schon VCard.Serialize ge-inlined ist und die Methode in Tests
-            // häufig aufgerufen wird
-
             using var stream = new MemoryStream();
 
             VCard.Serialize(stream, new List<VCard?> { this }, version, options);
 
             return Encoding.UTF8.GetString(stream.ToArray());
         }
-
-
 
 
         #endregion

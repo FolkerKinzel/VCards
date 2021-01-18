@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NET40
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Remoting;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FolkerKinzel.VCards.Intls
 {
-#if NET40
+
     internal class Net40LeaveOpenStream : Stream
     {
         private readonly Stream _stream;
@@ -69,5 +70,5 @@ namespace FolkerKinzel.VCards.Intls
 
         public override int WriteTimeout { get => _stream.WriteTimeout; set => _stream.WriteTimeout = value; }
     }
-#endif
 }
+#endif

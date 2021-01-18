@@ -100,11 +100,12 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
         /// enthalten. Die Methode kann
         /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
-        /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden. <paramref name="stream"/>
-        /// wird von der Methode geschlossen.</param>
+        /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden.</param>
         /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
+        /// <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
+        /// ist <c>false</c>.</param>
         /// 
         /// <remarks>
         /// <note type="caution">
@@ -131,7 +132,8 @@ namespace FolkerKinzel.VCards.Models.Helpers
         public static void SerializeVCards(this List<VCard?> vCardList,
                                            Stream stream,
                                            VCdVersion version = VCdVersion.V3_0,
-                                           VcfOptions options = VcfOptions.Default)
-            => VCard.Serialize(stream, vCardList, version, options);
+                                           VcfOptions options = VcfOptions.Default,
+                                           bool leaveStreamOpen = false)
+            => VCard.Serialize(stream, vCardList, version, options, leaveStreamOpen);
     }
 }
