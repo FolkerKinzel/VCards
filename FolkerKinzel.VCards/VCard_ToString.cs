@@ -58,7 +58,7 @@ namespace FolkerKinzel.VCards
 
             static string GetVersionString(VCdVersion version)
             {
-                return (version) switch
+                return version switch
                 {
                     VCdVersion.V2_1 => "2.1",
                     VCdVersion.V3_0 => "3.0",

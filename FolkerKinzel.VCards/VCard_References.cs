@@ -18,7 +18,9 @@ namespace FolkerKinzel.VCards
         /// die zu referenzierenden <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen dabei automatisch
         /// eine zugewiesen.
         /// </summary>
-        /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten.</param>
+        /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// enthalten. Die Methode kann
+        /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
         public static void SetReferences(List<VCard?> vCardList)
         {
@@ -54,9 +56,9 @@ namespace FolkerKinzel.VCards
             }
 
 
-            static void SetReferences(List<VCard?> vCardList, List<RelationProperty?> members)
+            static void SetReferences(List<VCard?> vCardList, List<RelationProperty?> relations)
             {
-                RelationVCardProperty[] vcdProps = members
+                RelationVCardProperty[] vcdProps = relations
                                 .Select(x => x as RelationVCardProperty)
                                 .Where(x => x != null)
                                 .ToArray()!;
@@ -66,7 +68,7 @@ namespace FolkerKinzel.VCards
                 {
                     Debug.Assert(vcdProp != null);
 
-                    _ = members.Remove(vcdProp);
+                    _ = relations.Remove(vcdProp);
 
                     VCard? vc = vcdProp.Value;
 
@@ -82,10 +84,18 @@ namespace FolkerKinzel.VCards
                             vc.UniqueIdentifier = new UuidProperty();
                         }
 
+                        if(relations.Any(x => x is RelationUuidProperty xUid && xUid.Value == vc.UniqueIdentifier.Value))
+                        {
+                            continue;
+                        }
 
-                        var relationUuid = new RelationUuidProperty(vc.UniqueIdentifier.Value, propertyGroup: vcdProp.Group);
+                        var relationUuid = new RelationUuidProperty(
+                            vc.UniqueIdentifier.Value,
+                            vcdProp.Parameters.RelationType ?? RelationTypes.Contact,
+                            propertyGroup: vcdProp.Group);
+
                         relationUuid.Parameters.Assign(vcdProp.Parameters);
-                        members.Add(relationUuid);
+                        relations.Add(relationUuid);
                     }
                 }
             }
@@ -102,7 +112,9 @@ namespace FolkerKinzel.VCards
         /// referenziert wurden. Das geschieht nur, wenn sich die referenzierten <see cref="VCard"/>-Objekte in
         /// <paramref name="vCardList"/> befinden.
         /// </summary>
-        /// <param name="vCardList">Eine Liste mit <see cref="VCard"/>-Objekten.</param>
+        /// <param name="vCardList">Eine Liste mit <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// enthalten. Die Methode kann
+        /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
         public static void Dereference(List<VCard?> vCardList)
         {
@@ -119,20 +131,20 @@ namespace FolkerKinzel.VCards
                     {
                         List<RelationProperty?> relations = vcard.Relations as List<RelationProperty?> ?? vcard.Relations.ToList();
                         vcard.Relations = relations;
-                        SetRelationReferences(relations, vCardList);
+                        DereferenceRelations(relations, vCardList);
                     }
 
                     if (vcard.Members != null)
                     {
                         List<RelationProperty?> members = vcard.Members as List<RelationProperty?> ?? vcard.Members.ToList();
                         vcard.Members = members;
-                        SetRelationReferences(members, vCardList);
+                        DereferenceRelations(members, vCardList);
                     }
                 }
             }
 
 
-            static void SetRelationReferences(List<RelationProperty?> relations, List<VCard?> vCardList)
+            static void DereferenceRelations(List<RelationProperty?> relations, List<VCard?> vCardList)
             {
                 IEnumerable<RelationUuidProperty> guidProps = relations
                     .Select(x => x as RelationUuidProperty)
@@ -145,8 +157,14 @@ namespace FolkerKinzel.VCards
 
                     if (referencedVCard != null)
                     {
+                        if(relations.Any(x => x is RelationVCardProperty xVc && xVc.Value == referencedVCard))
+                        {
+                            continue;
+                        }
+
                         var vcardProp = new RelationVCardProperty(
                                             referencedVCard,
+                                            guidProp.Parameters.RelationType ?? RelationTypes.Contact,
                                             propertyGroup: guidProp.Group);
                         vcardProp.Parameters.Assign(guidProp.Parameters);
 

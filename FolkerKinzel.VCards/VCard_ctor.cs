@@ -522,7 +522,7 @@ namespace FolkerKinzel.VCards
                             }
                             else
                             {
-                                if (vcfRow.Value.StartsWith("BEGIN", StringComparison.OrdinalIgnoreCase))
+                                if (vcfRow.Value.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                                 {
                                     relations.Add(new RelationVCardProperty(
                                         VCard.ParseNestedVcard(vcfRow.Value, info, this.Version),

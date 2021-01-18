@@ -20,7 +20,9 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// die zu referenzierenden <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen dabei automatisch
         /// eine zugewiesen.
         /// </summary>
-        /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten.</param>
+        /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// enthalten. Die Methode kann
+        /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -38,12 +40,14 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// referenziert wurden. Das geschieht nur, wenn sich die referenzierten <see cref="VCard"/>-Objekte in
         /// <paramref name="vCardList"/> befinden.
         /// </summary>
-        /// <param name="vCardList">Eine Liste mit <see cref="VCard"/>-Objekten.</param>
+        /// <param name="vCardList">Eine Liste mit <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// enthalten. Die Methode kann
+        /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static void DereferenceVCards(List<VCard?> vCardList)
+        public static void DereferenceVCards(this List<VCard?> vCardList)
             => VCard.Dereference(vCardList);
 
 
@@ -52,7 +56,9 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// </summary>
         /// 
         /// <param name="vCardList">Die zu speichernden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
-        /// enthalten. Wenn die Auflistung kein <see cref="VCard"/>-Objekt enthält, wird keine Datei geschrieben.</param>
+        /// enthalten. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// enthalten. Wenn die Auflistung kein <see cref="VCard"/>-Objekt enthält, wird keine Datei geschrieben. Die Methode kann
+        /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
         /// <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
         /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
@@ -65,17 +71,10 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
         /// </note>
         /// <para>Die Methode serialisiert möglicherweise auch dann mehrere
-        /// vCards, wenn <paramref name="vCardList"/> nur ein <see cref="VCard"/>-Objekt enthielt - nämlich dann,
+        /// vCards, wenn <paramref name="vCardList"/> nur ein <see cref="VCard"/>-Objekt enthält - nämlich dann,
         /// wenn dieses <see cref="VCard"/>-Objekt in den Properties <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
-        /// weitere <see cref="VCard"/>-Objekte referenziert hat.</para>
-        /// <para>
-        /// Die Methode ruft <see cref="VCard.SetReferences(List{VCard?})"/> auf. Falls Sie nach Ausführung der Methode lesend auf den 
-        /// Inhalt von <paramref name="vCardList"/> zugreifen möchten, sollten Sie <paramref name="vCardList"/> an die Methode 
-        /// <see cref="VCard.Dereference(List{VCard})"/> übergeben oder auf <paramref name="vCardList"/> die Erweiterungsmethode 
-        /// <see cref="VCardExtension.DereferenceVCards(List{VCard})"/> aus dem Namespace 
-        /// <see cref="FolkerKinzel.VCards.Models.Helpers">FolkerKinzel.VCards.Models.Helpers</see>
-        /// aufrufen.
-        /// </para>
+        /// weitere <see cref="VCard"/>-Objekte referenziert.</para>
+        /// 
         /// </remarks>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> oder <paramref name="vCardList"/>
@@ -98,7 +97,9 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten in einen <see cref="Stream"/>.
         /// </summary>
         /// 
-        /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte.</param>
+        /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// enthalten. Die Methode kann
+        /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
         /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden. <paramref name="stream"/>
         /// wird von der Methode geschlossen.</param>
         /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
@@ -113,18 +114,11 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise auch dann mehrere
-        /// vCards, wenn <paramref name="vCardList"/> nur ein <see cref="VCard"/>-Objekt enthielt - nämlich dann,
+        /// vCards, wenn <paramref name="vCardList"/> nur ein <see cref="VCard"/>-Objekt enthält - nämlich dann,
         /// wenn dieses <see cref="VCard"/>-Objekt in den Properties <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
-        /// weitere <see cref="VCard"/>-Objekte referenziert hat.
+        /// weitere <see cref="VCard"/>-Objekte referenziert.
         /// </para>
-        /// <para>
-        /// Die Methode ruft <see cref="VCard.SetReferences(List{VCard?})"/> auf. Falls Sie nach Ausführung der Methode lesend auf den 
-        /// Inhalt von <paramref name="vCardList"/> zugreifen möchten, sollten Sie <paramref name="vCardList"/> an die Methode 
-        /// <see cref="VCard.Dereference(List{VCard})"/> übergeben oder auf <paramref name="vCardList"/> die Erweiterungsmethode 
-        /// <see cref="VCardExtension.DereferenceVCards(List{VCard})"/> aus dem Namespace 
-        /// <see cref="FolkerKinzel.VCards.Models.Helpers">FolkerKinzel.VCards.Models.Helpers</see>
-        /// aufrufen.
-        /// </para>
+        /// 
         /// </remarks>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> oder <paramref name="vCardList"/> ist <c>null</c>.</exception>

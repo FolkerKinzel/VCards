@@ -29,7 +29,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        protected RelationProperty(RelationTypes? relation, string? propertyGroup) : base(propertyGroup) => this.Parameters.RelationType = relation;
+        protected RelationProperty(RelationTypes relation, string? propertyGroup) : base(propertyGroup) => this.Parameters.RelationType = relation;
 
 
         internal static RelationProperty Parse(VcfRow row, VCdVersion version)
@@ -48,6 +48,7 @@ namespace FolkerKinzel.VCards.Models
             {
                 var relation = new RelationUuidProperty(
                     UuidConverter.ToGuid(row.Value),
+                    row.Parameters.RelationType ?? RelationTypes.Contact,
                     propertyGroup: row.Group);
 
                 relation.Parameters.Assign(row.Parameters);
@@ -60,6 +61,7 @@ namespace FolkerKinzel.VCards.Models
                 {
                     var relation = new RelationUriProperty(
                         uri,
+                        row.Parameters.RelationType ?? RelationTypes.Contact,
                         propertyGroup: row.Group);
 
                     relation.Parameters.Assign(row.Parameters);

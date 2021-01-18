@@ -26,7 +26,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public RelationVCardProperty(VCard? vcard, RelationTypes? relation = null, string? propertyGroup = null)
+        public RelationVCardProperty(VCard? vcard, RelationTypes relation, string? propertyGroup = null)
             : base(relation, propertyGroup)
         {
             this.Value = vcard;

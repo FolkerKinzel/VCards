@@ -631,7 +631,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 }
 
 
-                return new RelationTextProperty(name, vcardProp.Parameters.RelationType, vcardProp.Group);
+                return new RelationTextProperty(name, vcardProp.Parameters.RelationType ?? RelationTypes.Spouse, vcardProp.Group);
             }
         }
 
