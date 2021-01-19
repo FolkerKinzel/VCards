@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards
     {
         /// <summary>
         /// Ersetzt <see cref="RelationVCardProperty"/>-Objekte durch <see cref="RelationUuidProperty"/>-Objekte und fügt die 
-        /// referenzierten <see cref="VCard"/>-Objekte als separate Items an <paramref name="vCardList"/> an.
+        /// referenzierten <see cref="VCard"/>-Objekte als Elemente an <paramref name="vCardList"/> an.
         /// </summary>
         /// 
         /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
@@ -123,7 +123,7 @@ namespace FolkerKinzel.VCards
         /// in <paramref name="vCardList"/> befinden.
         /// </summary>
         /// 
-        /// <param name="vCardList">Eine Liste mit <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
         /// enthalten.</param>
         /// 
         /// <remarks>
@@ -132,7 +132,7 @@ namespace FolkerKinzel.VCards
         /// zusammengeführt werden, um ihre Daten durchsuchbar zu machen.
         /// </para>
         /// 
-        /// <para>Die Methode entfernt keine <see cref="VCard"/>-Objekte aus <paramref name="vCardList"/> und erzeugt 
+        /// <para>Die Methode entfernt keine Elemente aus <paramref name="vCardList"/> und erzeugt 
         /// auch bei mehrfachem Aufruf keine Doubletten (<see cref="RelationVCardProperty"/>-Objekte, die dasselbe <see cref="VCard"/>-Objekt 
         /// enthalten).
         /// </para>

@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models.Helpers
 {
@@ -14,7 +15,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
     {
         /// <summary>
         /// Ersetzt <see cref="RelationVCardProperty"/>-Objekte durch <see cref="RelationUuidProperty"/>-Objekte und fügt die 
-        /// referenzierten <see cref="VCard"/>-Objekte als separate Items an <paramref name="vCardList"/> an.
+        /// referenzierten <see cref="VCard"/>-Objekte als Elemente an <paramref name="vCardList"/> an.
         /// </summary>
         /// 
         /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
@@ -52,7 +53,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// in <paramref name="vCardList"/> befinden.
         /// </summary>
         /// 
-        /// <param name="vCardList">Eine Liste mit <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
         /// enthalten.</param>
         /// 
         /// <remarks>
@@ -61,7 +62,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// zusammengeführt werden, um ihre Daten durchsuchbar zu machen.
         /// </para>
         /// 
-        /// <para>Die Methode entfernt keine <see cref="VCard"/>-Objekte aus <paramref name="vCardList"/> und erzeugt 
+        /// <para>Die Methode entfernt keine Elemente aus <paramref name="vCardList"/> und erzeugt 
         /// auch bei mehrfachem Aufruf keine Doubletten (<see cref="RelationVCardProperty"/>-Objekte, die dasselbe <see cref="VCard"/>-Objekt 
         /// enthalten).
         /// </para>
@@ -81,10 +82,9 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// </summary>
         /// 
         /// <param name="vCardList">Die zu speichernden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
-        /// enthalten. Wenn die Auflistung kein <see cref="VCard"/>-Objekt enthält, wird keine Datei geschrieben. Die Methode kann
-        /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
+        /// enthalten. Wenn die Auflistung kein <see cref="VCard"/>-Objekt enthält, wird keine Datei geschrieben.</param>
         /// <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
-        /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
+        /// <param name="version">Die vCard-Version der zu speichernden VCF-Datei.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
         /// 
@@ -95,18 +95,25 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
         /// </note>
         /// 
-        /// <para>Die Methode serialisiert möglicherweise auch dann mehr
-        /// vCards, als sich ursprünglich <see cref="VCard"/>-Objekte in <paramref name="vCardList"/> befanden. Dies geschieht, wenn eine
-        /// vCard 4.0 serialisiert wird und sich 
+        /// <para>Die Methode serialisiert möglicherweise mehr
+        /// vCards, als sich ursprünglich Elemente in <paramref name="vCardList"/> befanden. Dies geschieht, wenn eine VCF-Datei als
+        /// vCard 4.0 gespeichert wird und sich 
         /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
         /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
         /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCardList"/> angefügt.
         /// </para>
         /// 
-        /// <para>Die Methode verhält sich ebenso, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
+        /// <para>
+        /// Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
         /// serialisiert wird und wenn sich in der Eigenschaft <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts ein 
-        /// <see cref="RelationVCardProperty"/>-Objekt mit dem Parameter <see cref="RelationTypes.Agent"/> befindet.</para>
+        /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
+        /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
+        /// </para>
         /// 
+        /// <para>
+        /// Wenn eine VCF-Datei als vCard 4.0 gespeichert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
+        /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
+        /// </para>
         /// </remarks>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> oder <paramref name="vCardList"/>
@@ -130,11 +137,10 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// </summary>
         /// 
         /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
-        /// enthalten. Die Methode kann
-        /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
+        /// enthalten.</param>
         /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden.</param>
-        /// <param name="version">Die vCard-Version, in die die Datei serialisiert wird.</param>
-        /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
+        /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
+        /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
         /// <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
         /// ist <c>false</c>.</param>
@@ -146,10 +152,23 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
         /// </note>
         /// 
-        /// <para>Die Methode serialisiert möglicherweise auch dann mehrere
-        /// vCards, wenn <paramref name="vCardList"/> nur ein <see cref="VCard"/>-Objekt enthält - nämlich dann,
-        /// wenn dieses <see cref="VCard"/>-Objekt in den Properties <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> 
-        /// weitere <see cref="VCard"/>-Objekte referenziert.
+        /// <para>Die Methode serialisiert möglicherweise mehr
+        /// vCards, als sich ursprünglich Elemente in <paramref name="vCardList"/> befanden. Dies geschieht, wenn eine
+        /// vCard 4.0 serialisiert wird und sich 
+        /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
+        /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
+        /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCardList"/> angefügt.
+        /// </para>
+        /// 
+        /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
+        /// serialisiert wird und wenn sich in der Eigenschaft <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts ein 
+        /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
+        /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
+        /// </para>
+        /// 
+        /// <para>
+        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
+        /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
         /// </para>
         /// 
         /// </remarks>

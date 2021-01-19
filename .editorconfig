@@ -233,6 +233,8 @@ dotnet_naming_style.const_fields.word_separator = _
 
 # CA1303: Literale nicht als lokalisierte Parameter übergeben
 dotnet_diagnostic.CA1303.severity = warning
+dotnet_diagnostic.CA1303.excluded_type_names_with_derived_types =
+dotnet_code_quality.CA1303.use_naming_heuristic = true
 
 # CA2249: Erwägen Sie die Verwendung von "string.Contains" anstelle von "string.IndexOf"
 dotnet_diagnostic.CA2249.severity = none

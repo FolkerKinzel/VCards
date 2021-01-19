@@ -104,5 +104,14 @@ namespace FolkerKinzel.VCards.Resources {
                 return ResourceManager.GetString("ReservedNameSpace", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The Stream is not writable. ähnelt.
+        /// </summary>
+        internal static string StreamNotWritable {
+            get {
+                return ResourceManager.GetString("StreamNotWritable", resourceCulture);
+            }
+        }
     }
 }

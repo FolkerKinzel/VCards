@@ -132,4 +132,7 @@
   <data name="ReservedNameSpace" xml:space="preserve">
     <value>Das XML-Element befindet sich im reservierten vCard4.0-Namespace.</value>
   </data>
+  <data name="StreamNotWritable" xml:space="preserve">
+    <value>Der Stream unterstützt keine Schreibvorgänge.</value>
+  </data>
 </root>

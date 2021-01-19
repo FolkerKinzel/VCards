@@ -69,10 +69,10 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Parst einen <see cref="string"/>, der vCard-Daten enthält.
+        /// Parst einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
         /// </summary>
-        /// <param name="content">Ein <see cref="string"/>, der VCF-Daten enthält.</param>
-        /// <returns>Eine Collection geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="content"/> darstellen.</returns>
+        /// <param name="content">Ein <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</param>
+        /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="content"/> darstellen.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="content"/> ist <c>null</c>.</exception>
         public static List<VCard> Parse(string content)
         {
@@ -88,10 +88,10 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Deserialisiert eine Auflistung von <see cref="VCard"/>-Objekten mit einem <see cref="TextReader"/>.
+        /// Deserialisiert eine VCF-Datei mit einem <see cref="TextReader"/>.
         /// </summary>
         /// <param name="reader">Ein <see cref="TextReader"/>.</param>
-        /// <returns>Eine Auflistung deserialisierter <see cref="VCard"/>-Objekte.</returns>
+        /// <returns>Eine Sammlung von <see cref="VCard"/>-Objekten, die den Inhalt der deserialisierten VCF-Datei darstellen.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> ist <c>null</c>.</exception>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

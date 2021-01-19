@@ -24,7 +24,7 @@ namespace FolkerKinzel.VCards.Models
     public class DataUrl : Uri, ISerializable
     {
         /// <summary>
-        /// Gibt an, dass der URI ein Data-Url nach RFC 2397 ist. Dieses Feld ist schreibgeschützt.
+        /// Gibt an, dass der <see cref="Uri"/> ein <see cref="DataUrl"/> nach RFC 2397 ist. Dieses Feld ist schreibgeschützt.
         /// </summary>
         public const string UriSchemeData = "data";
 
@@ -37,9 +37,9 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="DataUrl"/>-Objekt.
         /// </summary>
-        /// <param name="uriString">Der String, aus dem der <see cref="DataUrl"/> initialisiert wird.</param>
+        /// <param name="uriString">Der <see cref="string"/>, aus dem der <see cref="DataUrl"/> initialisiert wird.</param>
         /// <param name="mimeType">Der MIME-Typ der eingebetteten Daten. Wenn <c>null</c> übergeben wird, 
-        /// wird der Standard-MIME-Typ "text/plain;charset=US-ASCII" erzeugt.</param>
+        /// wird der Standard-MIME-Typ <c>text/plain;charset=US-ASCII</c> erzeugt.</param>
         /// <param name="encoding">Beschreibt, in welcher Form die Daten im  <see cref="DataUrl"/> kodiert sind.</param>
         /// <exception cref="ArgumentNullException"><paramref name="uriString"/> ist <c>null</c>.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
@@ -52,7 +52,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// MIME-Type der eingebetteten Daten. (nie <c>null</c>)
+        /// MIME-Type der eingebetteten Daten. (Nie <c>null</c>.)
         /// </summary>
         public MimeType MimeType { get; }
 
@@ -117,7 +117,7 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="value">Ein <see cref="string"/>, der dem Data-URL-Schema nach RFC 2397 entspricht.</param>
         /// <param name="dataUrl">Enthält nach dem Beenden der Methode einen aus <paramref name="value"/> erstellten <see cref="DataUrl"/>.
-        /// Dieser Parameter wird nicht initialisiert übergeben.</param>
+        /// Dieser Parameter wird nicht-initialisiert übergeben.</param>
         /// <returns>Ein <see cref="bool"/>-Wert, der <c>true</c> ist, wenn der <see cref="DataUrl"/> erfolgreich erstellt wurde, andernfalls <c>false</c>.</returns>
         public static bool TryCreate(string? value, [NotNullWhen(true)] out DataUrl? dataUrl)
         {
