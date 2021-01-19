@@ -11,16 +11,30 @@ namespace FolkerKinzel.VCards
     public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
         /// <summary>
-        /// Ersetzt bei den in <paramref name="vCardList"/> gespeicherten <see cref="VCard"/>-Objekten die <see cref="RelationVCardProperty"/>-Objekte 
-        /// in den Eigenschaften <see cref="VCard.Members"/> und
-        /// <see cref="VCard.Relations"/> durch <see cref="RelationUuidProperty"/>-Objekte und fügt die in den ersetzten <see cref="RelationVCardProperty"/>-Objekten
-        /// gespeicherten <see cref="VCard"/>-Objekte als separate Items an <paramref name="vCardList"/> an, falls sie nicht schon in der Liste enthalten waren. Falls
-        /// die zu referenzierenden <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen dabei automatisch
-        /// eine zugewiesen.
+        /// Ersetzt <see cref="RelationVCardProperty"/>-Objekte durch <see cref="RelationUuidProperty"/>-Objekte und fügt die 
+        /// referenzierten <see cref="VCard"/>-Objekte als separate Items an <paramref name="vCardList"/> an.
         /// </summary>
+        /// 
         /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
-        /// enthalten. Die Methode kann
-        /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
+        /// enthalten.</param>
+        /// 
+        /// <remarks>
+        /// <para>
+        /// Die Methode wird bei Bedarf von den Serialisierungsmethoden von <see cref="VCard"/> automatisch verwendet. Die Verwendung in eigenem Code kann z.B. 
+        /// nützlich sein,
+        /// wenn ein einzelnes <see cref="VCard"/>-Objekt aus einer Sammlung von <see cref="VCard"/>-Objekten als separate VCF-Datei gespeichert werden soll.
+        /// </para>
+        /// 
+        /// <para>
+        /// Auch durch mehrfachen Aufruf der Methode werden keine 
+        /// Doubletten (im Sinne der mehrfachen Einfügung desselben <see cref="VCard"/>- oder <see cref="RelationUuidProperty"/>-Objekts) erzeugt.
+        /// </para>
+        /// 
+        /// <para>Wenn die angefügten <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen von der Methode
+        /// automatisch eine zugewiesen.
+        /// </para>
+        /// </remarks>
+        /// 
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
         public static void SetReferences(List<VCard?> vCardList)
         {
@@ -43,7 +57,7 @@ namespace FolkerKinzel.VCards
                     List<RelationProperty?> members = vcard.Members as List<RelationProperty?> ?? vcard.Members.ToList();
                     vcard.Members = members;
 
-                    SetReferences(vCardList, members);
+                    DoSetReferences(vCardList, members);
                 }
 
                 if (vcard.Relations != null)
@@ -51,12 +65,12 @@ namespace FolkerKinzel.VCards
                     List<RelationProperty?> relations = vcard.Relations as List<RelationProperty?> ?? vcard.Relations.ToList();
                     vcard.Relations = relations;
 
-                    SetReferences(vCardList, relations);
+                    DoSetReferences(vCardList, relations);
                 }
             }
 
 
-            static void SetReferences(List<VCard?> vCardList, List<RelationProperty?> relations)
+            static void DoSetReferences(List<VCard?> vCardList, List<RelationProperty?> relations)
             {
                 RelationVCardProperty[] vcdProps = relations
                                 .Select(x => x as RelationVCardProperty)
@@ -83,8 +97,7 @@ namespace FolkerKinzel.VCards
                         {
                             vc.UniqueIdentifier = new UuidProperty();
                         }
-
-                        if(relations.Any(x => x is RelationUuidProperty xUid && xUid.Value == vc.UniqueIdentifier.Value))
+                        else if(relations.Any(x => x is RelationUuidProperty xUid && xUid.Value == vc.UniqueIdentifier.Value))
                         {
                             continue;
                         }
@@ -105,16 +118,27 @@ namespace FolkerKinzel.VCards
 
         
         /// <summary>
-        /// Ersetzt die <see cref="RelationUuidProperty"/>-Objekte der in 
-        /// <paramref name="vCardList"/> enthaltenen <see cref="VCard"/>-Objekte durch 
-        /// <see cref="RelationVCardProperty"/>-Objekte, die die <see cref="VCard"/>s enthalten,
-        /// die durch die <see cref="Guid"/>s der <see cref="RelationUuidProperty"/>-Objekte 
-        /// referenziert wurden. Das geschieht nur, wenn sich die referenzierten <see cref="VCard"/>-Objekte in
-        /// <paramref name="vCardList"/> befinden.
+        /// Ersetzt <see cref="RelationUuidProperty"/>-Objekte durch
+        /// <see cref="RelationVCardProperty"/>-Objekte - sofern sich die referenzierten <see cref="VCard"/>-Objekte
+        /// in <paramref name="vCardList"/> befinden.
         /// </summary>
+        /// 
         /// <param name="vCardList">Eine Liste mit <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
-        /// enthalten. Die Methode kann
-        /// Anzahl und Reihenfolge der Elemente in <paramref name="vCardList"/> ändern!</param>
+        /// enthalten.</param>
+        /// 
+        /// <remarks>
+        /// <para>Die Methode wird von den Deserialisierungsmethoden von <see cref="VCard"/> automatisch aufgerufen. Die Verwendung in 
+        /// eigenem Code kann z.B. nützlich sein, wenn <see cref="VCard"/>-Objekte aus verschiedenen Quellen in einer gemeinsamen Liste 
+        /// zusammengeführt werden, um ihre Daten durchsuchbar zu machen.
+        /// </para>
+        /// 
+        /// <para>Die Methode entfernt keine <see cref="VCard"/>-Objekte aus <paramref name="vCardList"/> und erzeugt 
+        /// auch bei mehrfachem Aufruf keine Doubletten (<see cref="RelationVCardProperty"/>-Objekte, die dasselbe <see cref="VCard"/>-Objekt 
+        /// enthalten).
+        /// </para>
+        /// 
+        /// </remarks>
+        /// 
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
         public static void Dereference(List<VCard?> vCardList)
         {
@@ -131,20 +155,20 @@ namespace FolkerKinzel.VCards
                     {
                         List<RelationProperty?> relations = vcard.Relations as List<RelationProperty?> ?? vcard.Relations.ToList();
                         vcard.Relations = relations;
-                        DereferenceRelations(relations, vCardList);
+                        DoDereference(relations, vCardList);
                     }
 
                     if (vcard.Members != null)
                     {
                         List<RelationProperty?> members = vcard.Members as List<RelationProperty?> ?? vcard.Members.ToList();
                         vcard.Members = members;
-                        DereferenceRelations(members, vCardList);
+                        DoDereference(members, vCardList);
                     }
                 }
             }
 
 
-            static void DereferenceRelations(List<RelationProperty?> relations, List<VCard?> vCardList)
+            static void DoDereference(List<RelationProperty?> relations, List<VCard?> vCardList)
             {
                 IEnumerable<RelationUuidProperty> guidProps = relations
                     .Select(x => x as RelationUuidProperty)
