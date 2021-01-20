@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace FolkerKinzel.VCards.Models.Enums
 {
@@ -21,7 +22,17 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// <summary>
         /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
         /// </summary>
-        LatestUpdate,
+        TimeStamp,
+
+
+        /// <summary>
+        /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
+        /// </summary>
+        [Obsolete("Use \"TimeStamp\" instead!", VCardProperty.OBSOLETE_AS_ERROR)]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        LastRevision = TimeStamp,
+
 
 
         /// <summary>

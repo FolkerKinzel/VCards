@@ -342,22 +342,22 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
         /// </summary>
-        [Obsolete("Use \"LatestUpdate\" instead!", VCardProperty.OBSOLETE_AS_ERROR)]
+        [Obsolete("Use \"TimeStamp\" instead!", VCardProperty.OBSOLETE_AS_ERROR)]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public TimeStampProperty? LastRevision
         {
-            get => LatestUpdate;
-            set => LatestUpdate = value;
+            get => TimeStamp;
+            set => TimeStamp = value;
         }
 
         /// <summary>
         /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
         /// </summary>
-        public TimeStampProperty? LatestUpdate
+        public TimeStampProperty? TimeStamp
         {
-            get => Get<TimeStampProperty?>(VCdProp.LatestUpdate);
-            set => Set(VCdProp.LatestUpdate, value);
+            get => Get<TimeStampProperty?>(VCdProp.TimeStamp);
+            set => Set(VCdProp.TimeStamp, value);
         }
 
 

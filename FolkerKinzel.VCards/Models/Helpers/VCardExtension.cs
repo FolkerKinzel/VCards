@@ -48,8 +48,8 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static void SetVCardReferences(this List<VCard?> vCardList)
-            => VCard.SetReferences(vCardList);
+        public static void ReferenceVCards(this List<VCard?> vCardList)
+            => VCard.Reference(vCardList);
 
 
 

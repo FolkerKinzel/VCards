@@ -138,7 +138,7 @@ namespace FolkerKinzel.VCards
                         }
                         break;
                     case PropKeys.REV:
-                        LatestUpdate = new TimeStampProperty(vcfRow);
+                        TimeStamp = new TimeStampProperty(vcfRow);
                         break;
                     case PropKeys.CALURI:
                         {

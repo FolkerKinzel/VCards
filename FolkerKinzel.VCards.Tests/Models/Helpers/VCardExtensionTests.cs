@@ -43,7 +43,7 @@ namespace FolkerKinzel.VCards.Models.Helpers.Tests
         {
             List<VCard?>? list = GenerateVCardList();
 
-            list.SetVCardReferences();
+            list.ReferenceVCards();
 
             Assert.AreEqual(3, list.Count);
 
@@ -72,7 +72,7 @@ namespace FolkerKinzel.VCards.Models.Helpers.Tests
         {
             List<VCard?>? list = GenerateVCardList();
 
-            list.SetVCardReferences();
+            list.ReferenceVCards();
 
             Assert.AreEqual(3, list.Count);
             Assert.IsNull(list[1]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));

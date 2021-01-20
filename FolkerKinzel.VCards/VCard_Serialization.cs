@@ -227,7 +227,7 @@ namespace FolkerKinzel.VCards
             }
             else
             {
-                SetReferences(vCardList);
+                Reference(vCardList);
             }
 
             // UTF-8 muss ohne BOM geschrieben werden, da sonst nicht lesbar

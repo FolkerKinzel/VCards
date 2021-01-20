@@ -152,10 +152,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// <c>GEO</c>: Geografische Position. <c>(4)</c>
         /// </summary>
-        public GeoCoordinate? GeographicalPosition
+        public GeoCoordinate? GeoPosition
         {
-            get => Get<GeoCoordinate?>(VCdParam.GeographicalPosition);
-            set => Set(VCdParam.GeographicalPosition, value);
+            get => Get<GeoCoordinate?>(VCdParam.GeoPosition);
+            set => Set(VCdParam.GeoPosition, value);
         }
 
 
@@ -164,11 +164,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use \"GeographicalPosition\" instead!", VCardProperty.OBSOLETE_AS_ERROR)]
+        [Obsolete("Use \"GeoPosition\" instead!", VCardProperty.OBSOLETE_AS_ERROR)]
         public GeoCoordinate? GeographicPosition
         {
-            get => GeographicalPosition;
-            set => GeographicalPosition = value;
+            get => GeoPosition;
+            set => GeoPosition = value;
         }
 
 

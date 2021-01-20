@@ -42,7 +42,7 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
-        public static void SetReferences(List<VCard?> vCardList)
+        public static void Reference(List<VCard?> vCardList)
         {
             if (vCardList is null)
             {
