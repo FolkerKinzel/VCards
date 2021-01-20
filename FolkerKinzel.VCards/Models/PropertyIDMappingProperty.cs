@@ -27,9 +27,9 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// 
+        /// ctor
         /// </summary>
-        /// <param name="vcfRow"></param>
+        /// <param name="vcfRow"><see cref="VcfRow"/></param>
         /// <exception cref="ArgumentOutOfRangeException">Aus <paramref name="vcfRow"/> kann kein <see cref="PropertyIDMapping"/>
         /// geparst werden.</exception>
         internal PropertyIDMappingProperty(VcfRow vcfRow)

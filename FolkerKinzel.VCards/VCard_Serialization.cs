@@ -277,11 +277,6 @@ namespace FolkerKinzel.VCards
         /// kombiniert werden.</param>
         /// 
         /// <remarks>
-        /// <note type="caution">
-        /// Obwohl die Methode selbst threadsafe ist, ist es das 
-        /// <see cref="VCard"/>-Objekt nicht. Sperren Sie den lesenden und schreibenden Zugriff auf das
-        /// <see cref="VCard"/>-Objekt während der Ausführung dieser Methode!
-        /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehrere vCards. Dies geschieht, wenn eine VCF-Datei als
         /// vCard 4.0 gespeichert wird und sich 
@@ -326,11 +321,6 @@ namespace FolkerKinzel.VCards
         /// ist <c>false</c>.</param>
         /// 
         /// <remarks>
-        /// <note type="caution">
-        /// Obwohl die Methode selbst threadsafe ist, ist es das 
-        /// <see cref="VCard"/>-Objekt nicht. Sperren Sie den lesenden und schreibenden Zugriff auf das
-        /// <see cref="VCard"/>-Objekt während der Ausführung dieser Methode!
-        /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehrere vCards. Dies geschieht, wenn das <see cref="VCard"/>-Objekt als
         /// vCard 4.0 serialisiert wird und sich 
@@ -377,11 +367,6 @@ namespace FolkerKinzel.VCards
         /// <returns>Die <see cref="VCard"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
         /// 
         /// <remarks>
-        /// <note type="caution">
-        /// Obwohl die Methode selbst threadsafe ist, ist es das 
-        /// <see cref="VCard"/>-Objekt nicht. Sperren Sie den lesenden und schreibenden Zugriff auf das
-        /// <see cref="VCard"/>-Objekt während der Ausführung dieser Methode!
-        /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehrere vCards. Dies geschieht, wenn das <see cref="VCard"/>-Objekt als
         /// vCard 4.0 serialisiert wird und sich 

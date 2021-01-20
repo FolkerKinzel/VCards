@@ -22,6 +22,12 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// enthalten.</param>
         /// 
         /// <remarks>
+        /// <note type="caution">
+        /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
+        /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
+        /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+        /// </note>
+        /// 
         /// <para>
         /// Die Methode wird bei Bedarf von den Serialisierungsmethoden von <see cref="VCard"/> automatisch verwendet. Die Verwendung in eigenem Code kann z.B. 
         /// nützlich sein,
@@ -34,7 +40,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// </para>
         /// 
         /// <para>Wenn die angefügten <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen von der Methode
-        /// automatisch eine zugewiesen.
+        /// automatisch eine neue zugewiesen.
         /// </para>
         /// </remarks>
         /// 
@@ -57,6 +63,12 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// enthalten.</param>
         /// 
         /// <remarks>
+        /// <note type="caution">
+        /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
+        /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
+        /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+        /// </note>
+        /// 
         /// <para>Die Methode wird von den Deserialisierungsmethoden von <see cref="VCard"/> automatisch aufgerufen. Die Verwendung in 
         /// eigenem Code kann z.B. nützlich sein, wenn <see cref="VCard"/>-Objekte aus verschiedenen Quellen in einer gemeinsamen Liste 
         /// zusammengeführt werden, um ihre Daten durchsuchbar zu machen.
