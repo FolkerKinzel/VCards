@@ -45,6 +45,9 @@ In this example corresponds
 * `TEL;TYPE=home,voice;VALUE=uri` to VCardProperty.Parameters and
 * `tel:+49-123-4567` to VCardProperty.Value.
 
+(Derived classes hide the generic implementation of `VCardProperty.Value` in 
+order to return concrete classes instead of `System.Object`.)
+
 #### Naming Conventions
 
 Most properties of class `VCard` are collections. It has to do with, that many properties are allowed to have more than one instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.</para>
