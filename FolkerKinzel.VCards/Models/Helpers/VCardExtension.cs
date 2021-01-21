@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -135,7 +136,7 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static void SaveVCards(
+        public static void SaveVcf(
             this List<VCard?> vCardList,
             string fileName,
             VCdVersion version = VCdVersion.V3_0,
@@ -143,7 +144,22 @@ namespace FolkerKinzel.VCards.Models.Helpers
             => VCard.Save(fileName, vCardList, version, options);
 
 
-        
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
+        [Obsolete("Use SaveVcf instead!", VCardProperty.OBSOLETE_AS_ERROR)]
+#pragma warning disable CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
+        public static void SaveVCards(
+#pragma warning restore CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
+            this List<VCard?> vCardList,
+            string fileName,
+            VCdVersion version = VCdVersion.V3_0,
+            VcfOptions options = VcfOptions.Default)
+            => SaveVcf(vCardList, fileName, version, options);
+
+
         /// <summary>
         /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten in einen <see cref="Stream"/>.
         /// </summary>

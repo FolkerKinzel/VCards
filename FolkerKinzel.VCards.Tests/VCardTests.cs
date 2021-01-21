@@ -11,15 +11,29 @@ namespace FolkerKinzel.VCards.Tests
     public class VCardTests
     {
         [TestMethod()]
-        public void LoadTest()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void LoadTest_fileNameNull() => _ = VCard.Load(null!);
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void LoadTest_invalidFileName() => _ = VCard.Load("  ");
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ParseTest_contentNull() => _ = VCard.Parse(null!);
+
+        [TestMethod()]
+        public void ParseTest_contentEmpty()
         {
-            Assert.Fail();
+            List<VCard> list = VCard.Parse("");
+            Assert.AreEqual(0, list.Count);
         }
 
         [TestMethod()]
         public void ParseTest()
         {
-            Assert.Fail();
+            List<VCard> list = VCard.Parse("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
+            Assert.AreEqual(1, list.Count);
         }
 
         [TestMethod()]

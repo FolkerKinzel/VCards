@@ -7,6 +7,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace FolkerKinzel.VCards
     public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
         #region static Methods
+
         /// <summary>
         /// Speichert eine Liste von <see cref="VCard"/>-Objekten in eine gemeinsame VCF-Datei.
         /// </summary>
@@ -268,7 +270,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Speichert die <see cref="VCard"/> als VCF-Datei.
+        /// Speichert das <see cref="VCard"/>-Objekt als VCF-Datei.
         /// </summary>
         /// 
         /// <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
