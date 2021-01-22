@@ -137,7 +137,7 @@ namespace FolkerKinzel.VCards
                 }
             } while (!vcfReader.EOF);
 
-            VCard.Dereference(vCardList!);
+            VCard.Dereference(vCardList);
             return vCardList;
         }
 

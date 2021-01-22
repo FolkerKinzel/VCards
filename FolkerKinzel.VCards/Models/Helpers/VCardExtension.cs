@@ -49,7 +49,11 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static void ReferenceVCards(this List<VCard?> vCardList)
+        public static void ReferenceVCards(this List<
+#nullable disable
+            VCard
+#nullable restore
+            > vCardList)
             => VCard.Reference(vCardList);
 
 
@@ -86,7 +90,11 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static void DereferenceVCards(this List<VCard?> vCardList)
+        public static void DereferenceVCards(this List<
+#nullable disable
+            VCard
+#nullable restore
+            > vCardList)
             => VCard.Dereference(vCardList);
 
 
@@ -137,7 +145,11 @@ namespace FolkerKinzel.VCards.Models.Helpers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static void SaveVcf(
-            this List<VCard?> vCardList,
+            this List<
+#nullable disable
+                VCard
+#nullable restore
+                > vCardList,
             string fileName,
             VCdVersion version = VCdVersion.V3_0,
             VcfOptions options = VcfOptions.Default)
@@ -153,7 +165,11 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #pragma warning disable CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
         public static void SaveVCards(
 #pragma warning restore CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
-            this List<VCard?> vCardList,
+            this List<
+#nullable disable
+                VCard
+#nullable restore
+                > vCardList,
             string fileName,
             VCdVersion version = VCdVersion.V3_0,
             VcfOptions options = VcfOptions.Default)
@@ -208,7 +224,11 @@ namespace FolkerKinzel.VCards.Models.Helpers
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static void SerializeVCards(this List<VCard?> vCardList,
+        public static void SerializeVCards(this List<
+#nullable disable
+            VCard
+#nullable restore
+            > vCardList,
                                            Stream stream,
                                            VCdVersion version = VCdVersion.V3_0,
                                            VcfOptions options = VcfOptions.Default,

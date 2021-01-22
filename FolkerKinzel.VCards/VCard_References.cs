@@ -42,7 +42,11 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
-        public static void Reference(List<VCard?> vCardList)
+        public static void Reference(List<
+#nullable disable
+            VCard
+#nullable restore
+            > vCardList)
         {
             if (vCardList is null)
             {
@@ -152,7 +156,11 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
-        public static void Dereference(List<VCard?> vCardList)
+        public static void Dereference(List<
+#nullable disable
+            VCard
+#nullable restore
+            > vCardList)
         {
             if(vCardList is null)
             {

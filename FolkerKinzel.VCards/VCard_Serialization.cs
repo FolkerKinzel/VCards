@@ -65,7 +65,11 @@ namespace FolkerKinzel.VCards
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
         public static void Save(
             string fileName,
-            List<VCard?> vCardList,
+            List<
+#nullable disable
+                VCard
+#nullable restore
+                > vCardList,
             VCdVersion version = VCdVersion.V3_0,
             VcfOptions options = VcfOptions.Default)
         {
@@ -165,7 +169,11 @@ namespace FolkerKinzel.VCards
         /// <exception cref="IOException">E/A-Fehler.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
         public static void Serialize(Stream stream,
-                                     List<VCard?> vCardList,
+                                     List<
+#nullable disable
+                                         VCard
+#nullable restore
+                                         > vCardList,
                                      VCdVersion version = VCdVersion.V3_0,
                                      VcfOptions options = VcfOptions.Default,
                                      bool leaveStreamOpen = false)
@@ -308,7 +316,7 @@ namespace FolkerKinzel.VCards
         public void Save(
             string fileName,
             VCdVersion version = VCdVersion.V3_0,
-            VcfOptions options = VcfOptions.Default) => VCard.Save(fileName, new List<VCard?> { this }, version, options);
+            VcfOptions options = VcfOptions.Default) => VCard.Save(fileName, new List<VCard> { this }, version, options);
 
 
         /// <summary>
@@ -355,7 +363,7 @@ namespace FolkerKinzel.VCards
                               VcfOptions options = VcfOptions.Default,
                               bool leaveStreamOpen = false)
 
-            => VCard.Serialize(stream, new List<VCard?> { this }, version, options, leaveStreamOpen);
+            => VCard.Serialize(stream, new List<VCard> { this }, version, options, leaveStreamOpen);
 
 
         /// <summary>
