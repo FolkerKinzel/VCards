@@ -25,11 +25,11 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Konstruktor, der von abgeleiteten Klassen aufgerufen wird.
         /// </summary>
-        /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum.</param>
+        /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum oder <c>null</c>.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        protected RelationProperty(RelationTypes relation, string? propertyGroup) : base(propertyGroup) => this.Parameters.RelationType = relation;
+        protected RelationProperty(RelationTypes? relation, string? propertyGroup) : base(propertyGroup) => this.Parameters.RelationType = relation;
 
 
         internal static RelationProperty Parse(VcfRow row, VCdVersion version)
@@ -48,7 +48,7 @@ namespace FolkerKinzel.VCards.Models
             {
                 var relation = new RelationUuidProperty(
                     UuidConverter.ToGuid(row.Value),
-                    row.Parameters.RelationType ?? RelationTypes.Contact,
+                    row.Parameters.RelationType,
                     propertyGroup: row.Group);
 
                 relation.Parameters.Assign(row.Parameters);
@@ -61,7 +61,7 @@ namespace FolkerKinzel.VCards.Models
                 {
                     var relation = new RelationUriProperty(
                         uri,
-                        row.Parameters.RelationType ?? RelationTypes.Contact,
+                        row.Parameters.RelationType,
                         propertyGroup: row.Group);
 
                     relation.Parameters.Assign(row.Parameters);

@@ -11,6 +11,9 @@
     <Exec Command="if $(ConfigurationName) == Release if '$(TargetFramework)' == 'netcoreapp3.1' dotnet $(SolutionDir)IncVersion\IncVersion.dll $(ProjectDir)$(ProjectFileName) --revision" />
   </Target>
   <ItemGroup>
-    <PackageReference Include="FolkerKinzel.VCards" Version="2.0.0-beta" />
+    <Compile Remove="NullableTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
   </ItemGroup>
 </Project>

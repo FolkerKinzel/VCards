@@ -28,11 +28,14 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
         /// </note>
-        /// 
+        /// <note type="important">
+        /// Verwenden Sie diese Methode niemals, wenn Sie eine VCF-Datei als vCard 2.1 oder vCard 3.0 speichern möchten!
+        /// </note>
         /// <para>
-        /// Die Methode wird bei Bedarf von den Serialisierungsmethoden von <see cref="VCard"/> automatisch verwendet. Die Verwendung in eigenem Code kann z.B. 
-        /// nützlich sein,
-        /// wenn ein einzelnes <see cref="VCard"/>-Objekt aus einer Sammlung von <see cref="VCard"/>-Objekten als separate VCF-Datei gespeichert werden soll.
+        /// Die Methode wird bei Bedarf von den Serialisierungsmethoden von <see cref="VCard"/> automatisch verwendet. Die Verwendung in eigenem 
+        /// Code ist
+        /// nur dann sinnvoll, wenn ein <see cref="VCard"/>-Objekt als vCard 4.0 gespeichert werden soll und wenn dabei jede VCF-Datei nur
+        /// eine einzige vCard enthalten soll. (Dieses Vorgehen ist i.d.R. nicht vorteilhaft, da es die referentielle Integrität gefährdet.)
         /// </para>
         /// 
         /// <para>
@@ -44,6 +47,16 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// automatisch eine neue zugewiesen.
         /// </para>
         /// </remarks>
+        /// 
+        /// <example>
+        /// <para>
+        /// Das Beispiel demonstriert, wie ein <see cref="VCard"/>-Objekt als vCard 4.0 gespeichert werden kann, wenn beabsichtigt ist,
+        /// dass eine VCF-Datei jeweils nur eine einzige vCard enthalten soll. Das Beispiel zeigt möglicherweise auch, dass dieses Vorgehen i.d.R.
+        /// nicht vorteilhaft ist, da es die referentielle Integrität gefährdet.
+        /// </para>
+        /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
+        /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
+        /// </example>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
 #if !NET40
@@ -83,8 +96,15 @@ namespace FolkerKinzel.VCards.Models.Helpers
         /// auch bei mehrfachem Aufruf keine Doubletten (<see cref="RelationVCardProperty"/>-Objekte, die dasselbe <see cref="VCard"/>-Objekt 
         /// enthalten).
         /// </para>
-        /// 
         /// </remarks>
+        /// 
+        /// <example>
+        /// <para>
+        /// Das Beispiel zeigt das Deserialisieren und Auswerten einer VCF-Datei, deren Inhalt auf andere VCF-Dateien verweist.
+        /// </para>
+        /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
+        /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
+        /// </example>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
 #if !NET40

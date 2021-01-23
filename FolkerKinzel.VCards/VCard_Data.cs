@@ -392,16 +392,16 @@ namespace FolkerKinzel.VCards
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Der Standard erlaubt nur Uri-Werte. Daten, die nicht in eine Uri konvertiert werden können,
+        /// Der Standard erlaubt nur URI-Werte. Daten, die nicht in einen <see cref="Uri"/> konvertiert werden können,
         /// werden zwar gelesen und als <see cref="RelationTextProperty"/> eingefügt. Der Inhalt einer 
-        /// <see cref="RelationTextProperty"/> wird aber nur dann in die VCF-Datei geschrieben, wenn er in eine
+        /// <see cref="RelationTextProperty"/> wird aber nur dann in die VCF-Datei geschrieben, wenn er in einen
         /// <see cref="Uri"/> kovertiert werden kann.
         /// </para>
         /// <para>
         /// Der Inhalt einer <see cref="RelationUuidProperty"/> wird als <see cref="Uri"/> geschrieben (urn:uuid:...).
         /// Die von <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte, werden 
-        /// beim Schreiben als separate VCards an die VCF-Datei angehängt und der Wert ihrer <see cref="VCard.UniqueIdentifier"/>-Eigenschaft
-        /// wird in die "Mutter"-<see cref="VCard"/> als uuid-Uri geschrieben. Wenn die <see cref="VCard.UniqueIdentifier"/>-Eigenschaft
+        /// beim Schreiben als separate vCards an die VCF-Datei angehängt und der Wert ihrer <see cref="VCard.UniqueIdentifier"/>-Eigenschaft
+        /// wird in die "Mutter"-<see cref="VCard"/> als uuid-URI geschrieben. Wenn die <see cref="VCard.UniqueIdentifier"/>-Eigenschaft
         /// der eingefügten <see cref="VCard"/>s nicht gesetzt ist, wird ihnen automatisch eine neue <see cref="Guid"/>
         /// zugewiesen.
         /// </para>

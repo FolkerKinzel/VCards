@@ -21,11 +21,11 @@ namespace FolkerKinzel.VCards.Models
         /// Initialisiert ein neues <see cref="RelationUriProperty"/>-Objekt.
         /// </summary>
         /// <param name="uri"><see cref="System.Uri"/> einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
-        /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum.</param>
+        /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum oder <c>null</c>.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public RelationUriProperty(Uri uri, RelationTypes relation, string? propertyGroup = null)
+        public RelationUriProperty(Uri uri, RelationTypes? relation = null, string? propertyGroup = null)
             : base(relation, propertyGroup)
         {
             this.Parameters.DataType = VCdDataType.Uri;

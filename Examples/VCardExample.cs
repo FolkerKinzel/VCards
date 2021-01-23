@@ -47,7 +47,7 @@ namespace Examples
                     new VC::TextProperty("CEO")
                 },
 
-                LastRevision = new VC::TimeStampProperty(DateTimeOffset.UtcNow)
+                TimeStamp = new VC::TimeStampProperty(DateTimeOffset.UtcNow)
             };
 
             const string photoFileName = @"..\..\KätheMüller.jpg";
@@ -63,12 +63,16 @@ namespace Examples
             var telHome = new VC::TextProperty("tel:+49-123-9876543");
             telHome.Parameters.DataType = VC::Enums.VCdDataType.Uri;
             telHome.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Home;
-            telHome.Parameters.TelephoneType = VC.Enums.TelTypes.Voice | VC.Enums.TelTypes.BBS;
+            telHome.Parameters.TelephoneType = VC::Enums.TelTypes.Voice | VC::Enums.TelTypes.BBS;
 
             var telWork = new VC::TextProperty("tel:+49-321-1234567");
             telWork.Parameters.DataType = VC::Enums.VCdDataType.Uri;
             telWork.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
-            telWork.Parameters.TelephoneType = VC.Enums.TelTypes.Cell | VC.Enums.TelTypes.Text | VC.Enums.TelTypes.Msg | VC.Enums.TelTypes.BBS | VC.Enums.TelTypes.Voice;
+            telWork.Parameters.TelephoneType = VC::Enums.TelTypes.Cell
+                                             | VC::Enums.TelTypes.Text
+                                             | VC::Enums.TelTypes.Msg
+                                             | VC::Enums.TelTypes.BBS 
+                                             | VC::Enums.TelTypes.Voice;
 
             vcard.PhoneNumbers = new VC::TextProperty[]
             {
@@ -202,5 +206,5 @@ EmailAddresses: kaethe_mueller@internet.com
 [Encoding: Base64]
 [MediaType: image/jpeg]
 Photos: data:image/jpeg;base64,L5sLGTBPAwIB
-
+.
 */
