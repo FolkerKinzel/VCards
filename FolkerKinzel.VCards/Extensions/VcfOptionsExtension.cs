@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace FolkerKinzel.VCards.Models.Helpers
+namespace FolkerKinzel.VCards.Extensions
 {
     /// <summary>
     /// Erweiterungsmethoden, die die Arbeit mit der <see cref="VcfOptions"/>-Enum erleichtern.

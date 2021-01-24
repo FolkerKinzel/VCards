@@ -1,7 +1,7 @@
-﻿using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
+﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

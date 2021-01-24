@@ -2,10 +2,10 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Helpers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 

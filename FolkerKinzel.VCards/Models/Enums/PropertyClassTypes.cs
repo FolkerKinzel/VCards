@@ -1,4 +1,5 @@
 ﻿using System;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Models.Enums
 {
@@ -8,7 +9,7 @@ namespace FolkerKinzel.VCards.Models.Enums
     /// </summary>
     /// <remarks>
     /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
-    /// <see cref="Models.Helpers.PropertyClassTypesExtension"/>.</note>
+    /// <see cref="PropertyClassTypesExtension"/>.</note>
     /// </remarks>
     [Flags]
     public enum PropertyClassTypes

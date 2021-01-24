@@ -3,12 +3,12 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Helpers;
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.ComponentModel;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Models
 {

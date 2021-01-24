@@ -1,5 +1,5 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Helpers;
+﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models.Enums;
 using System.Diagnostics;
 
 namespace FolkerKinzel.VCards.Intls.Converters

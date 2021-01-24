@@ -4,15 +4,16 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards.Models.Helpers
+namespace FolkerKinzel.VCards.Extensions
 {
     /// <summary>
-    /// Erweiterungsmethoden, die die Arbeit mit <see cref="VCard"/>-Objekten erleichtern.
+    /// Erweiterungsmethoden, die die Arbeit mit <see cref="List{T}">List&lt;VCard&gt;</see>-Objekten erleichtern.
     /// </summary>
-    public static class VCardExtension
+    public static class VCardListExtension
     {
         /// <summary>
         /// Ersetzt <see cref="RelationVCardProperty"/>-Objekte durch <see cref="RelationUuidProperty"/>-Objekte und fügt die 

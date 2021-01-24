@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

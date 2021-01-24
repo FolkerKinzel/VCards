@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Models.Enums;
 
-namespace FolkerKinzel.VCards.Models.Helpers.Tests
+namespace FolkerKinzel.VCards.Extensions.Tests
 {
     [TestClass()]
     public class FlagsEnumExtensionsTests

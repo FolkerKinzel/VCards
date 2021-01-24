@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Models;
+﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
 
@@ -9,7 +10,7 @@ namespace FolkerKinzel.VCards
     /// </summary>
     /// <remarks>
     /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
-    /// <see cref="Models.Helpers.VcfOptionsExtension"/>.</note>
+    /// <see cref="VcfOptionsExtension"/>.</note>
     /// <para>Die Flags <see cref="WriteWabExtensions"/>,
     /// <see cref="WriteXExtensions"/>, <see cref="WriteEvolutionExtensions"/> und <see cref="WriteKAddressbookExtensions"/>
     /// steuern die automatische Verwendung von Non-Standard-Properties. Auch wenn diese Flags gesetzt sind,

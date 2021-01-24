@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FolkerKinzel.VCards;
-using FolkerKinzel.VCards.Models.Helpers;
+using FolkerKinzel.VCards.Extensions;
 
 // It's recommended to use a namespace-alias for better readability of
 // your code and better usability of Visual Studio IntelliSense:

@@ -1,8 +1,8 @@
-﻿using FolkerKinzel.VCards.Models.Helpers;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Collections.Generic;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {

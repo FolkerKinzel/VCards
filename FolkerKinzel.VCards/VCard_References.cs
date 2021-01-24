@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Helpers;
 
 namespace FolkerKinzel.VCards
 {
@@ -51,7 +51,7 @@ namespace FolkerKinzel.VCards
         /// dass eine VCF-Datei jeweils nur eine einzige vCard enthalten soll. Das Beispiel zeigt möglicherweise auch, dass dieses Vorgehen i.d.R.
         /// nicht vorteilhaft ist, da es die referentielle Integrität gefährdet.
         /// </para>
-        /// <para>In dem Beispiel wird die Erweiterungsmethode <see cref="VCardExtension.ReferenceVCards"/> verwendet, die <see cref="Reference(List{VCard})"/>
+        /// <para>In dem Beispiel wird die Erweiterungsmethode <see cref="VCardListExtension.ReferenceVCards"/> verwendet, die <see cref="Reference(List{VCard})"/>
         /// aufruft.</para>
         /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
         /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
@@ -172,7 +172,7 @@ namespace FolkerKinzel.VCards
         /// <example>
         /// <para>
         /// Das Beispiel zeigt das Deserialisieren und Auswerten einer VCF-Datei, deren Inhalt auf andere VCF-Dateien verweist. In dem 
-        /// Beispiel wird die Erweiterungsmethode <see cref="VCardExtension.DereferenceVCards(List{VCard})"/> verwendet, 
+        /// Beispiel wird die Erweiterungsmethode <see cref="VCardListExtension.DereferenceVCards(List{VCard})"/> verwendet, 
         /// die <see cref="Dereference(List{VCard})"/> aufruft.
         /// </para>
         /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>

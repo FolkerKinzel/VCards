@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.Helpers;
 
 namespace Examples
 {

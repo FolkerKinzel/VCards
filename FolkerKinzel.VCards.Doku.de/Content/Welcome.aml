@@ -6,10 +6,10 @@
       <para>Sie ermöglicht</para>
       <list class="bullet">
         <listItem>
-          <para>vcf-Dateien aus dem Dateisystem zu laden und dort zu speichern,</para>
+          <para>VCF-Dateien aus dem Dateisystem zu laden und dort zu speichern,</para>
         </listItem>
         <listItem>
-          <para>vcf-Dateien in Streams zu serialisieren und aus ihnen zu deserialisieren und</para>
+          <para>VCF-Dateien in Streams zu serialisieren und aus ihnen zu deserialisieren und</para>
         </listItem>
         <listItem>
           <para>vCard-Dateien der Versionen 2.1, 3.0 und 4.0 in die jeweils andere Version zu konvertieren.</para>
@@ -27,6 +27,13 @@
 
     </introduction>
 
+    <section address="NameSpaces">
+      <title>Verwendung der Namespaces</title>
+      <content>
+        <para>Das folgende Code-Beispiel gibt Tipps für die Verwendung der Namespaces.</para>
+        <code language="c#" source=".\Content\Namespaces.cs"/>
+      </content>
+    </section>
 
     <section address="DataModel">
       <title>Das VCard-Datenmodell</title>

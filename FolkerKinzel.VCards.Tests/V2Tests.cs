@@ -3,8 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Linq;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Helpers;
 using System.Collections.Generic;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Tests
 {

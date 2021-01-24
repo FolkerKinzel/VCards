@@ -1,16 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FolkerKinzel.VCards.Models.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using FolkerKinzel.VCards.Models.Enums;
 using System.Linq;
 using System.IO;
+using FolkerKinzel.VCards.Models;
 
-namespace FolkerKinzel.VCards.Models.Helpers.Tests
+namespace FolkerKinzel.VCards.Extensions.Tests
 {
     [TestClass()]
-    public class VCardExtensionTests
+    public class VCardListExtensionTests
     {
         public TestContext? TestContext { get; set; }
 

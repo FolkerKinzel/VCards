@@ -1,4 +1,5 @@
 using System;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Models.Enums
 {
@@ -7,7 +8,7 @@ namespace FolkerKinzel.VCards.Models.Enums
     /// </summary>
     /// <remarks>
     /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der
-    /// <see cref="Models.Helpers.TelTypesExtension"/>-Klasse.</note>
+    /// <see cref="TelTypesExtension"/>-Klasse.</note>
     /// </remarks>
     [Flags]
     public enum TelTypes
