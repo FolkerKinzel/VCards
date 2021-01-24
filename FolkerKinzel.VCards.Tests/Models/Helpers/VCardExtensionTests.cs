@@ -236,5 +236,22 @@ namespace FolkerKinzel.VCards.Models.Helpers.Tests
             _ = ms.Length;
 
         }
+
+        [DataTestMethod()]
+        [DataRow(VCdVersion.V2_1)]
+        [DataRow(VCdVersion.V3_0)]
+        [DataRow(VCdVersion.V4_0)]
+        public void ToVcfStringTest(VCdVersion version)
+        {
+            List<VCard?> list = GenerateVCardList();
+
+            string s = list.ToVcfString(version);
+
+            List<VCard> list2 = VCard.Parse(s);
+
+            Assert.AreNotEqual(0, list2.Count);
+            Assert.IsInstanceOfType(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value, typeof(VCard));
+            Assert.AreEqual(version, list2[0].Version);
+        }
     }
 }

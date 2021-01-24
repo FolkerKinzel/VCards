@@ -146,7 +146,9 @@ namespace FolkerKinzel.VCards
         private static VCard? ParseNestedVcard(string? content, VCardDeserializationInfo info, VCdVersion versionHint)
         {
             // Version 2.1 ist unmaskiert:
-            content = versionHint == VCdVersion.V2_1 ? content : info.Builder.Clear().Append(content).UnMask(versionHint).ToString();
+            content = versionHint == VCdVersion.V2_1
+                ? content 
+                : info.Builder.Clear().Append(content).UnMask(versionHint).ToString();
 
             using var reader = new StringReader(content);
 

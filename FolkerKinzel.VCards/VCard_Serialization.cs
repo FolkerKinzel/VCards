@@ -70,7 +70,7 @@ namespace FolkerKinzel.VCards
                 VCard
 #nullable restore
                 > vCardList,
-            VCdVersion version = VCdVersion.V3_0,
+            VCdVersion version = DEFAULT_VERSION,
             VcfOptions options = VcfOptions.Default)
         {
             if (vCardList is null)
@@ -174,7 +174,7 @@ namespace FolkerKinzel.VCards
                                          VCard
 #nullable restore
                                          > vCardList,
-                                     VCdVersion version = VCdVersion.V3_0,
+                                     VCdVersion version = DEFAULT_VERSION,
                                      VcfOptions options = VcfOptions.Default,
                                      bool leaveStreamOpen = false)
         {
@@ -315,7 +315,7 @@ namespace FolkerKinzel.VCards
 #endif
         public void Save(
             string fileName,
-            VCdVersion version = VCdVersion.V3_0,
+            VCdVersion version = DEFAULT_VERSION,
             VcfOptions options = VcfOptions.Default) => VCard.Save(fileName, new List<VCard> { this }, version, options);
 
 
@@ -346,6 +346,11 @@ namespace FolkerKinzel.VCards
         /// </para>
         /// 
         /// <para>
+        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
+        /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
+        /// </para>
+        /// 
+        /// <para>
         /// Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
         /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.
         /// </para>
@@ -359,7 +364,7 @@ namespace FolkerKinzel.VCards
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public void Serialize(Stream stream,
-                              VCdVersion version,
+                              VCdVersion version = DEFAULT_VERSION,
                               VcfOptions options = VcfOptions.Default,
                               bool leaveStreamOpen = false)
 
@@ -390,14 +395,84 @@ namespace FolkerKinzel.VCards
         /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
         /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
         /// </para>
+        /// 
+        /// 
+        /// <para>
+        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
+        /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
+        /// </para>
+        /// 
+        /// <para>
+        /// Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
+        /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.
+        /// </para>
+        /// 
         /// </remarks>
-        public string ToVcfString(VCdVersion version, VcfOptions options = VcfOptions.Default)
+        /// 
+        /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public string ToVcfString(VCdVersion version = DEFAULT_VERSION, VcfOptions options = VcfOptions.Default)
+            => VCard.ToVcfString(new List<VCard> { this }, version, options);
+
+
+        /// <summary>
+        /// Serialisiert <paramref name="vCardList"/> als einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
+        /// </summary>
+        /// 
+        /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// enthalten.</param>
+        /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
+        /// <param name="options">Optionen für das Serialisieren. Die Flags können
+        /// kombiniert werden.</param>
+        /// 
+        /// <returns><paramref name="vCardList"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
+        /// 
+        /// <remarks>
+        /// 
+        /// <para>Die Methode serialisiert möglicherweise mehr
+        /// vCards, als sich ursprünglich Elemente in <paramref name="vCardList"/> befanden. Dies geschieht, wenn eine
+        /// vCard 4.0 serialisiert wird und sich 
+        /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
+        /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
+        /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCardList"/> angefügt.
+        /// </para>
+        /// 
+        /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
+        /// serialisiert wird und wenn sich in der Eigenschaft <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts ein 
+        /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
+        /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
+        /// </para>
+        /// 
+        /// <para>
+        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
+        /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
+        /// </para>
+        /// 
+        /// </remarks>
+        /// 
+        /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
+        /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
+        public static string ToVcfString(List<
+#nullable disable
+            VCard
+#nullable restore
+            > vCardList, VCdVersion version = VCard.DEFAULT_VERSION, VcfOptions options = VcfOptions.Default)
         {
+            if (vCardList is null)
+            {
+                throw new ArgumentNullException(nameof(vCardList));
+            }
+
             using var stream = new MemoryStream();
 
-            VCard.Serialize(stream, new List<VCard?> { this }, version, options);
+            VCard.Serialize(stream, vCardList, version, options, leaveStreamOpen: true);
+            stream.Position = 0;
 
-            return Encoding.UTF8.GetString(stream.ToArray());
+            using var reader = new StreamReader(stream, Encoding.UTF8);
+
+            return reader.ReadToEnd();
         }
 
 
