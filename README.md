@@ -7,7 +7,7 @@
 It enables you
 * to load VCF files from the file system and to save them there,
 * to serialize VCF files from and to Streams and
-* to convert VCF files, that match the vCard-versions 2.1, 3.0 and 4.0, to each other.
+* to convert VCF files, that match the vCard versions 2.1, 3.0 and 4.0, to each other.
 
 It is used as a dependency in [FolkerKinzel.Contacts.IO](https://github.com/FolkerKinzel/Contacts.IO) - an easy to use .NET-API
 to manage contact data of organizations and natural persons.
@@ -27,30 +27,30 @@ paket add FolkerKinzel.VCards --version 1.4.4
 ```
 
 
-* [Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/FolkerKinzel.VCards.Reference.en/Help/FolkerKinzel.VCards.en.chm)
+* [Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.0.0-rc/FolkerKinzel.VCards.en.chm)
 
-* [Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/FolkerKinzel.VCards.Doku.de/Help/FolkerKinzel.VCards.de.chm)
+* [Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.0.0-rc/FolkerKinzel.VCards.de.chm)
 
 > IMPORTANT: On some systems the content of the .CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox (if it is present) in the lower right corner of the General tab in the Properties dialog.
 
 
 ## Overview
 
-1. [The data model explained](#the-data-model-explained)
-2. [How the library handles data errors](#how-the-library-handles-data-errors)
-3. [Example](#example)
+1. [The Data Model Explained](#the-data-model-explained)
+2. [Example](#example)
+3. [How the Library Handles Data Errors](#how-the-library-handles-data-errors)
 
-### The data model explained
+### The Data Model Explained
 
-The data model used by this API is aligned to the vCard 4.0 standard (RFC6350). This means, every read
+The data model used by this library is aligned to the vCard 4.0 standard (RFC6350). This means, every read
 vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are 
-converted back.
+converted back. A vCard is represented by the `VCard` class.
 
-#### Class `VCardProperty<T>`
+#### The `VCardProperty<T>` Class
 
-The data model of the class `VCard` based on classes, that are derived from `VCardProperty<T>`.
+The data model of the `VCard` class based on classes, that are derived from `VCardProperty<T>`.
 
-`VCardProperty<T>` exposes the following data:
+`VCardProperty<T>` exposes the following members:
 
 ```csharp
 public abstract class VCardProperty<T>
@@ -63,7 +63,7 @@ public abstract class VCardProperty<T>
 }
 ````
 
-This reflects the structure of a data row in a *.vcf-file:
+This reflects the structure of a data row in a VCF file:
 > group1.TEL;TYPE=home,voice;VALUE=uri:tel:+49-123-4567
 
 In this example corresponds
@@ -73,25 +73,46 @@ In this example corresponds
 
 #### Naming Conventions
 
-Most properties of class `VCard` are collections. It has to do with, that many properties are allowed to have more than one
+Most properties of the class `VCard` are collections. It has to do with, that many properties are allowed to have more than one
 instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.</para>
               
-A special feature are properties whose name ends with "Views": These are properties, which actually is only one instance per vCard allowed, but
+A special feature are properties, whose name ends with "Views": These are properties, which actually is only one instance per vCard allowed, but
 vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same `AltID` parameter
 on each of these versions.
 
-### How the library handles data errors
+#### Usage of the Namespaces
+The following code example provides tips for using the namespaces of the library.
 
-Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from such files.
+```csharp
+// Publish this namespace - it contains the VCard class:
+using FolkerKinzel.VCards;
 
-The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards are not 
-completely compliant, incompliant data is silently ignored when converting from one vCard standard to another. To minimize 
-this kind of data loss, the library tries to preserve incompliant data using well-known x-name properties. The usage of 
-such x-name properties can be controlled via options (VcfOptions).
+// It's recommended to publish also this namespace -
+// it contains useful extension methods:
+using FolkerKinzel.VCards.Models.Helpers;
+
+// These two namespaces may be published, but it's not
+// recommended as they contain lots of classes and enums:
+// using FolkerKinzel.VCards.Models;
+// using FolkerKinzel.VCards.Models.Enums;
+
+// Instead of publishing the two namespaces above
+// better use a namespace alias:
+using VC = FolkerKinzel.VCards.Models;
+
+namespace NameSpaceAliasDemos
+{
+    public static class NameSpaceAliasDemo
+    {
+        public static void HowToUseTheNameSpaceAlias() =>
+            _ = new VC::RelationTextProperty("Folker", VC::Enums.RelationTypes.Contact);
+    }
+}
+```
 
 ### Example
 
-**_(For better readability exception handling is ommitted in the following example.)_**
+**_(For the sake of better readability no exception handling is used in the following example.)_**
 
 ```csharp
 using FolkerKinzel.VCards;
@@ -302,3 +323,12 @@ Photos: data:image/jpeg;base64,L5sLGTBPAwIB
 */
 
 ```
+
+### How the Library Handles Data Errors
+
+Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from such files.
+
+The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards are not 
+completely compliant, incompliant data is silently ignored when converting from one vCard standard to another. To minimize 
+this kind of data loss, the library tries to preserve incompliant data using well-known x-name properties. The usage of 
+such x-name properties can be controlled via options (VcfOptions).

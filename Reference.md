@@ -4,27 +4,27 @@
 It enables you
 * to load VCF files from the file system and to save them there,
 * to serialize VCF files from and to Streams and
-* to convert VCF files, that match the vCard-versions 2.1, 3.0 and 4.0, to each other.
+* to convert VCF files, that match the vCard versions 2.1, 3.0 and 4.0, to each other.
 
 FolkerKinzel.VCards is used as a dependency in [FolkerKinzel.Contacts.IO](https://www.nuget.org/packages/FolkerKinzel.Contacts.IO/) - an easy to use .NET-API to manage contact data of organizations and natural persons.
 
-[Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/FolkerKinzel.VCards.Reference.en/Help/FolkerKinzel.VCards.en.chm)
+[Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.0.0-rc/FolkerKinzel.VCards.en.chm)
 
-[Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/FolkerKinzel.VCards.Doku.de/Help/FolkerKinzel.VCards.de.chm)
+[Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.0.0-rc/FolkerKinzel.VCards.de.chm)
 
 > IMPORTANT: On some systems the content of the .CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox (if it is present) in the lower right corner of the General tab in the Properties dialog.
 
 
 ## Overview
-### The Data model explained
+### The Data Model Explained
 
-The data model used by this API is aligned to the vCard 4.0 standard (RFC6350). This means, every read vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are converted back.
+The data model used by this API is aligned to the vCard 4.0 standard (RFC6350). This means, every read vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are converted back. A vCard is represented by the `VCard` class.
 
-#### Class VCardProperty
+#### The `VCardProperty` Class
 
-The data model of the class `VCard` based on classes, that are derived from VCardProperty.
+The data model of the `VCard` class based on classes, that are derived from `VCardProperty`.
 
-VCardProperty exposes the following members:
+`VCardProperty` exposes the following members:
 
 ```csharp
 public abstract class VCardProperty
@@ -37,7 +37,7 @@ public abstract class VCardProperty
 }
 ````
 
-This reflects the structure of a data row in a *.vcf-file:
+This reflects the structure of a data row in a VCF file:
 > group1.TEL;TYPE=home,voice;VALUE=uri:tel:+49-123-4567
 
 In this example corresponds
@@ -54,7 +54,7 @@ Most properties of class `VCard` are collections. It has to do with, that many p
               
 A special feature are properties whose name ends with "Views": These are properties, which actually is only one instance per vCard allowed, but vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same `AltID` parameter on each of these versions.
 
-### How the library handles data errors
+### How the Library Handles Data Errors
 
 Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from such files.
 
