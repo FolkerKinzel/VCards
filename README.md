@@ -86,7 +86,7 @@ Parse errors, caused by not well-formed VCF files, are silently ignored by the l
 
 The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards are not 
 completely compliant, incompliant data is silently ignored when converting from one vCard standard to another. To minimize 
-this kind of data loss, the API tries to preserve incompliant data using well-known x-name properties. The usage of 
+this kind of data loss, the library tries to preserve incompliant data using well-known x-name properties. The usage of 
 such x-name properties can be controlled via options (VcfOptions).
 
 ### Example

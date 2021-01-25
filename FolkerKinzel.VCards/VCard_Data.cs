@@ -395,7 +395,7 @@ namespace FolkerKinzel.VCards
         /// Der Standard erlaubt nur URI-Werte. Daten, die nicht in einen <see cref="Uri"/> konvertiert werden können,
         /// werden zwar gelesen und als <see cref="RelationTextProperty"/> eingefügt. Der Inhalt einer 
         /// <see cref="RelationTextProperty"/> wird aber nur dann in die VCF-Datei geschrieben, wenn er in einen
-        /// <see cref="Uri"/> kovertiert werden kann.
+        /// <see cref="Uri"/> umgewandelt werden kann.
         /// </para>
         /// <para>
         /// Der Inhalt einer <see cref="RelationUuidProperty"/> wird als <see cref="Uri"/> geschrieben (urn:uuid:...).

@@ -124,7 +124,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten in einen <see cref="Stream"/>.
+        /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten unter Verwendung des VCF-Formats in einen <see cref="Stream"/>.
         /// </summary>
         /// 
         /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
@@ -271,6 +271,72 @@ namespace FolkerKinzel.VCards
             }
         }
 
+        
+        /// <summary>
+        /// Serialisiert <paramref name="vCardList"/> als einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
+        /// </summary>
+        /// 
+        /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// enthalten.</param>
+        /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
+        /// <param name="options">Optionen für das Serialisieren. Die Flags können
+        /// kombiniert werden.</param>
+        /// 
+        /// <returns><paramref name="vCardList"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
+        /// 
+        /// <remarks>
+        /// <note type="caution">
+        /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
+        /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
+        /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+        /// </note>
+        /// 
+        /// <para>Die Methode serialisiert möglicherweise mehr
+        /// vCards, als sich ursprünglich Elemente in <paramref name="vCardList"/> befanden. Dies geschieht, wenn eine
+        /// vCard 4.0 serialisiert wird und sich 
+        /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
+        /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
+        /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCardList"/> angefügt.
+        /// </para>
+        /// 
+        /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
+        /// serialisiert wird und wenn sich in der Eigenschaft <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts ein 
+        /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
+        /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
+        /// </para>
+        /// 
+        /// <para>
+        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
+        /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
+        /// </para>
+        /// 
+        /// </remarks>
+        /// 
+        /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
+        /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
+        public static string ToVcfString(List<
+#nullable disable
+            VCard
+#nullable restore
+            > vCardList, VCdVersion version = VCard.DEFAULT_VERSION, VcfOptions options = VcfOptions.Default)
+        {
+            if (vCardList is null)
+            {
+                throw new ArgumentNullException(nameof(vCardList));
+            }
+
+            using var stream = new MemoryStream();
+
+            VCard.Serialize(stream, vCardList, version, options, leaveStreamOpen: true);
+            stream.Position = 0;
+
+            using var reader = new StreamReader(stream, Encoding.UTF8);
+
+            return reader.ReadToEnd();
+        }
+
+
+
         #endregion
 
         #region Instance Methods
@@ -278,7 +344,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Speichert das <see cref="VCard"/>-Objekt als VCF-Datei.
+        /// Speichert die <see cref="VCard"/>-Instanz als VCF-Datei.
         /// </summary>
         /// 
         /// <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
@@ -320,7 +386,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Serialisiert die <see cref="VCard"/> in einen <see cref="Stream"/>.
+        /// Serialisiert die <see cref="VCard"/>-Instanz unter Verwendung des VCF-Formats in einen <see cref="Stream"/>.
         /// </summary>
         /// 
         /// <param name="stream">Ein <see cref="Stream"/>, in den das serialisierte <see cref="VCard"/>-Objekt geschrieben wird.</param>
@@ -372,7 +438,7 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Serialisiert die <see cref="VCard"/> als einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
+        /// Serialisiert die <see cref="VCard"/>-Instanz als einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
         /// </summary>
         /// 
         /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
@@ -416,64 +482,6 @@ namespace FolkerKinzel.VCards
         public string ToVcfString(VCdVersion version = DEFAULT_VERSION, VcfOptions options = VcfOptions.Default)
             => VCard.ToVcfString(new List<VCard> { this }, version, options);
 
-
-        /// <summary>
-        /// Serialisiert <paramref name="vCardList"/> als einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
-        /// </summary>
-        /// 
-        /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
-        /// enthalten.</param>
-        /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
-        /// <param name="options">Optionen für das Serialisieren. Die Flags können
-        /// kombiniert werden.</param>
-        /// 
-        /// <returns><paramref name="vCardList"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
-        /// 
-        /// <remarks>
-        /// 
-        /// <para>Die Methode serialisiert möglicherweise mehr
-        /// vCards, als sich ursprünglich Elemente in <paramref name="vCardList"/> befanden. Dies geschieht, wenn eine
-        /// vCard 4.0 serialisiert wird und sich 
-        /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
-        /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
-        /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCardList"/> angefügt.
-        /// </para>
-        /// 
-        /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
-        /// serialisiert wird und wenn sich in der Eigenschaft <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts ein 
-        /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
-        /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
-        /// </para>
-        /// 
-        /// <para>
-        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
-        /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
-        /// </para>
-        /// 
-        /// </remarks>
-        /// 
-        /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
-        /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
-        public static string ToVcfString(List<
-#nullable disable
-            VCard
-#nullable restore
-            > vCardList, VCdVersion version = VCard.DEFAULT_VERSION, VcfOptions options = VcfOptions.Default)
-        {
-            if (vCardList is null)
-            {
-                throw new ArgumentNullException(nameof(vCardList));
-            }
-
-            using var stream = new MemoryStream();
-
-            VCard.Serialize(stream, vCardList, version, options, leaveStreamOpen: true);
-            stream.Position = 0;
-
-            using var reader = new StreamReader(stream, Encoding.UTF8);
-
-            return reader.ReadToEnd();
-        }
 
 
         #endregion

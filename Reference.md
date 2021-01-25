@@ -45,7 +45,8 @@ In this example corresponds
 * `TEL;TYPE=home,voice;VALUE=uri` to VCardProperty.Parameters and
 * `tel:+49-123-4567` to VCardProperty.Value.
 
-(Derived classes hide the generic implementation of `VCardProperty.Value` in order to return concrete classes instead of `System.Object`.)
+(Classes that are derived from `VCardProperty` hide the generic implementation of `VCardProperty.Value` in order to return derived classes instead of `System.Object`.) 
+
 
 #### Naming Conventions
 
@@ -57,4 +58,4 @@ A special feature are properties whose name ends with "Views": These are propert
 
 Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from such files.
 
-The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards are not completely compliant, incompliant data is silently ignored when converting from one vCard standard to another. To minimize this kind of data loss, the API tries to preserve incompliant data using well-known x-name properties. The usage of such x-name properties can be controlled via options (VcfOptions).
+The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards are not completely compliant, incompliant data is silently ignored when converting from one vCard standard to another. To minimize this kind of data loss, the library tries to preserve incompliant data using well-known x-name properties. The usage of such x-name properties can be controlled via options (VcfOptions).

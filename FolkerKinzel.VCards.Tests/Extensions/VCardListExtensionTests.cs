@@ -196,7 +196,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void SerializeVCardsTest1() => new List<VCard?>().SerializeVCards(null!, VCdVersion.V3_0);
+        public void SerializeVcfTest1() => new List<VCard?>().SerializeVcf(null!, VCdVersion.V3_0);
 
 
 
@@ -204,13 +204,13 @@ namespace FolkerKinzel.VCards.Extensions.Tests
         [DataRow(VCdVersion.V2_1)]
         [DataRow(VCdVersion.V3_0)]
         [DataRow(VCdVersion.V4_0)]
-        public void SerializeVCardsTest2(VCdVersion version)
+        public void SerializeVcfTest2(VCdVersion version)
         {
             List<VCard?> list = GenerateVCardList();
 
             using var ms = new MemoryStream();
 
-            list.SerializeVCards(ms, version, leaveStreamOpen: true);
+            list.SerializeVcf(ms, version, leaveStreamOpen: true);
 
             Assert.AreNotEqual(0, ms.Length);
 
@@ -225,13 +225,13 @@ namespace FolkerKinzel.VCards.Extensions.Tests
         [DataRow(VCdVersion.V3_0)]
         [DataRow(VCdVersion.V4_0)]
         [ExpectedException(typeof(ObjectDisposedException))]
-        public void SerializeVCardsTest3(VCdVersion version)
+        public void SerializeVcfTest3(VCdVersion version)
         {
             List<VCard?> list = GenerateVCardList();
 
             using var ms = new MemoryStream();
 
-            list.SerializeVCards(ms, version, leaveStreamOpen: false);
+            list.SerializeVcf(ms, version, leaveStreamOpen: false);
 
             _ = ms.Length;
 

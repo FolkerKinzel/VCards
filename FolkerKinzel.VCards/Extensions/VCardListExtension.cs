@@ -198,7 +198,7 @@ namespace FolkerKinzel.VCards.Extensions
 
 
         /// <summary>
-        /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten in einen <see cref="Stream"/>.
+        /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten unter Verwendung des VCF-Formats in einen <see cref="Stream"/>.
         /// </summary>
         /// 
         /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
@@ -245,7 +245,7 @@ namespace FolkerKinzel.VCards.Extensions
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static void SerializeVCards(this List<
+        public static void SerializeVcf(this List<
 #nullable disable
             VCard
 #nullable restore
@@ -255,6 +255,27 @@ namespace FolkerKinzel.VCards.Extensions
                                            VcfOptions options = VcfOptions.Default,
                                            bool leaveStreamOpen = false)
             => VCard.Serialize(stream, vCardList, version, options, leaveStreamOpen);
+
+
+
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
+        [Obsolete("Use SerializeVcf instead!", VCardProperty.OBSOLETE_AS_ERROR)]
+#pragma warning disable CS1591 // Fehledes XML-Kommentar für öffentlich sichtbaren Typ oder Element
+        public static void SerializeVCards(this List<
+#pragma warning restore CS1591 // Fehledes XML-Kommentar für öffentlich sichtbaren Typ oder Element
+#nullable disable
+            VCard
+#nullable restore
+            > vCardList,
+                                           Stream stream,
+                                           VCdVersion version = VCard.DEFAULT_VERSION,
+                                           VcfOptions options = VcfOptions.Default,
+                                           bool leaveStreamOpen = false)
+            => SerializeVcf(vCardList, stream, version, options, leaveStreamOpen);
 
 
 
@@ -271,6 +292,11 @@ namespace FolkerKinzel.VCards.Extensions
         /// <returns><paramref name="vCardList"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
         /// 
         /// <remarks>
+        /// <note type="caution">
+        /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
+        /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
+        /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+        /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehr
         /// vCards, als sich ursprünglich Elemente in <paramref name="vCardList"/> befanden. Dies geschieht, wenn eine
