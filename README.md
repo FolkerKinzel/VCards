@@ -73,12 +73,12 @@ In this example corresponds
 
 #### Naming Conventions
 
-Most properties of the class `VCard` are collections. It has to do with, that many properties are allowed to have more than one
+Most properties of the `VCard` class are collections. It has to do with, that many properties are allowed to have more than one
 instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.</para>
               
 A special feature are properties, whose name ends with "Views": These are properties, which actually is only one instance per vCard allowed, but
 vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same `AltID` parameter
-on each of these versions.
+on each of them.
 
 #### Usage of the Namespaces
 The following code example provides tips for using the namespaces of the library.

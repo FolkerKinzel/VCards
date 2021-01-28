@@ -45,14 +45,44 @@ In this example corresponds
 * `TEL;TYPE=home,voice;VALUE=uri` to VCardProperty.Parameters and
 * `tel:+49-123-4567` to VCardProperty.Value.
 
-(Classes that are derived from `VCardProperty` hide the generic implementation of `VCardProperty.Value` in order to return derived classes instead of `System.Object`.) 
+(Classes that are derived from `VCardProperty` hide the generic implementation of `VCardProperty.Value` in order to return derived classes instead of `System.Object?`.) 
 
 
 #### Naming Conventions
 
-Most properties of class `VCard` are collections. It has to do with, that many properties are allowed to have more than one instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.</para>
+Most properties of the `VCard` class are collections. It has to do with, that many properties are allowed to have more than one instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.</para>
               
-A special feature are properties whose name ends with "Views": These are properties, which actually is only one instance per vCard allowed, but vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same `AltID` parameter on each of these versions.
+A special feature are properties whose name ends with "Views": These are properties, which actually is only one instance per vCard allowed, but vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same `AltID` parameter on each of them.
+
+#### Usage of the Namespaces
+The following code example provides tips for using the namespaces of the library.
+
+```csharp
+// Publish this namespace - it contains the VCard class:
+using FolkerKinzel.VCards;
+
+// It's recommended to publish also this namespace -
+// it contains useful extension methods:
+using FolkerKinzel.VCards.Extensions;
+
+// These two namespaces may be published, but it's not
+// recommended as they contain lots of classes and enums:
+// using FolkerKinzel.VCards.Models;
+// using FolkerKinzel.VCards.Models.Enums;
+
+// Instead of publishing the two namespaces above
+// better use a namespace alias:
+using VC = FolkerKinzel.VCards.Models;
+
+namespace NameSpaceAliasDemos
+{
+    public static class NameSpaceAliasDemo
+    {
+        public static void HowToUseTheNameSpaceAlias() =>
+            _ = new VC::RelationTextProperty("Folker", VC::Enums.RelationTypes.Contact);
+    }
+}
+```
 
 ### How the Library Handles Data Errors
 
