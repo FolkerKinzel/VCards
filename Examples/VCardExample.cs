@@ -15,7 +15,7 @@ namespace Examples
             const string v2FileName = "VCard2.vcf";
             const string v3FileName = "VCard3.vcf";
             const string v4FileName = "VCard4.vcf";
-            const string underLine =  "----------";
+            const string underLine = "----------";
             const string photoFileName = "Example.jpg";
 
             var vcard = new VCard
