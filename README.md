@@ -46,7 +46,7 @@ The data model used by this library is aligned to the vCard 4.0 standard (RFC635
 vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are 
 converted back. A vCard is represented by the `VCard` class.
 
-#### The `VCardProperty<T>` Class
+#### The `VCardProperty` Class
 
 The data model of the `VCard` class based on classes, that are derived from `VCardProperty`.
 
