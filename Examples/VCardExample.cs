@@ -15,6 +15,7 @@ namespace Examples
             const string v2FileName = "VCard2.vcf";
             const string v3FileName = "VCard3.vcf";
             const string v4FileName = "VCard4.vcf";
+            const string underLine =  "----------";
             const string photoFileName = "Example.jpg";
 
             var vcard = new VCard
@@ -128,18 +129,22 @@ namespace Examples
             void WriteResultsToConsole(VCard vcard)
             {
                 Console.WriteLine($"{v2FileName}:");
+                Console.WriteLine(underLine);
                 Console.WriteLine(File.ReadAllText(v2FilePath));
                 Console.WriteLine();
 
                 Console.WriteLine($"{v3FileName}:");
+                Console.WriteLine(underLine);
                 Console.WriteLine(File.ReadAllText(v3FilePath));
                 Console.WriteLine();
 
                 Console.WriteLine($"{v4FileName}:");
+                Console.WriteLine(underLine);
                 Console.WriteLine(File.ReadAllText(v4FilePath));
                 Console.WriteLine();
 
                 Console.WriteLine("Read VCard:");
+                Console.WriteLine();
                 Console.WriteLine(vcard);
             }
         }
@@ -162,69 +167,97 @@ namespace Examples
 Console Output:
 
 VCard2.vcf:
+----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2020-05-04T22:09:25Z
-FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Dr. K=C3=A4the M=C3=BCller
-N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller;K=C3=A4the;;Dr.;
+REV:2021-01-30T18:09:27Z
+FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:K=C3=A4the M=C3=BCller-Risinows=
+ky
+N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
+e;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
+BDAY:1984-03-28
+X-ANNIVERSARY:2006-07-14
 TEL;HOME;VOICE;BBS:tel:+49-123-9876543
 TEL;WORK;VOICE;MSG;CELL;BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET:kaethe_mueller@internet.com
-PHOTO;ENCODING=BASE64;TYPE=JPEG:L5sLGTBPAwIB
+X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
+ky
+PHOTO;ENCODING=BASE64;TYPE=JPEG:
+ TVIxMVmCW9DQo8eo++o6a0WEonrUO+rfsCwXH7/CzwS/HKVpJhsbiDjU1EAJ0Bl
+ DZJ2U8kxa9xFoUYEs
 
 END:VCARD
 
 
 VCard3.vcf:
+----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2020-05-04T22:09:25Z
-FN:Dr. Käthe Müller
-N:Müller;Käthe;;Dr.;
+REV:2021-01-30T18:09:27Z
+FN:Käthe Müller-Risinowsky
+N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
+BDAY;VALUE=DATE:1984-03-28
+X-ANNIVERSARY:2006-07-14
 TEL;TYPE=HOME,VOICE,BBS:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
-PHOTO;ENCODING=b;TYPE=JPEG:L5sLGTBPAwIB
+X-SPOUSE:Paul Müller-Risinowsky
+PHOTO;ENCODING=b;TYPE=JPEG:TVIxMVmCW9DQo8eo++o6a0WEonrUO+rfsCwXH7/CzwS/HKVp
+ JhsbiDjU1EAJ0BlDZJ2U8kxa9xFoUYEs
 END:VCARD
 
 
 VCard4.vcf:
+----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20200504T220925Z
-FN:Dr. Käthe Müller
-N:Müller;Käthe;;Dr.;
+REV:20210130T180927Z
+FN:Käthe Müller-Risinowsky
+N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
+BDAY:19840328
+ANNIVERSARY:20060714
 TEL;TYPE=HOME,VOICE;VALUE=URI:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI:tel:+49-321-1234567
 EMAIL;TYPE=WORK;PREF=1:kaethe_mueller@internet.com
-PHOTO:data:image/jpeg\;base64\,L5sLGTBPAwIB
+RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT:Paul Müller-Risinowsk
+ y
+PHOTO:data:image/jpeg\;base64\,TVIxMVmCW9DQo8eo++o6a0WEonrUO+rfsCwXH7/CzwS/
+ HKVpJhsbiDjU1EAJ0BlDZJ2U8kxa9xFoUYEs
 END:VCARD
 
 
 Read VCard:
+
 Version: 3.0
 
 [DataType: Timestamp]
-LastRevision: 04.05.2020 22:09:25 +00:00
+TimeStamp: 30.01.2021 18:09:27 +00:00
 
-DisplayNames: Dr. Käthe Müller
+DisplayNames: Käthe Müller-Risinowsky
 
 NameViews:
-    LastName:  Müller
-    FirstName: Käthe
-    Prefix:    Dr.
+    LastName:   Müller-Risinowsky
+    FirstName:  Käthe
+    MiddleName: Alexandra Caroline
+    Prefix:     Prof. Dr.
 
 Titles: CEO
 
 Organizations:
     OrganizationName:    Millers Company
     OrganizationalUnits: C#; Webdesign
+
+[DataType: Date]
+BirthDayViews: 28.03.1984 00:00:00 +02:00
+
+[DataType: DateAndOrTime]
+AnniversaryViews: 14.07.2006 00:00:00 +02:00
 
 [PropertyClass: Home]
 [TelephoneType: Voice, BBS]
@@ -238,8 +271,12 @@ PhoneNumbers: tel:+49-321-1234567
 [Preference: 1]
 EmailAddresses: kaethe_mueller@internet.com
 
+[RelationType: Spouse]
+[DataType: Text]
+Relations: Paul Müller-Risinowsky
+
 [Encoding: Base64]
 [MediaType: image/jpeg]
-Photos: data:image/jpeg;base64,L5sLGTBPAwIB
+Photos: data:image/jpeg;base64,TVIxMVmCW9DQo8eo++o6a0WEonrUO+rfsCwXH7/CzwS/HKVpJhsbiDjU1EAJ0BlDZJ2U8kxa9xFoUYEs
 .
 */
