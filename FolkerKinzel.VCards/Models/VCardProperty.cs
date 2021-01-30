@@ -98,15 +98,11 @@ namespace FolkerKinzel.VCards.Models
         public override string ToString() => Value?.ToString() ?? "<null>";
 
 
-        internal void BuildProperty(VcfSerializer serializer)
+        internal bool BuildProperty(VcfSerializer serializer)
         {
             Debug.Assert(serializer != null);
             Debug.Assert(serializer.PropertyKey != null);
-
-            if (this.IsEmpty && !serializer.Options.IsSet(VcfOptions.WriteEmptyProperties))
-            {
-                return;
-            }
+            Debug.Assert(!this.IsEmpty || serializer.Options.IsSet(VcfOptions.WriteEmptyProperties));
 
             StringBuilder builder = serializer.Builder;
             Debug.Assert(builder != null);
@@ -127,6 +123,11 @@ namespace FolkerKinzel.VCards.Models
 
             _ = builder.Append(':');
             AppendValue(serializer);
+
+            // vermeidet, dass das Line-Wrapping in vCard 2.1 durchgeführt wird, wenn es schon wegen
+            // QuotedPrintable oder Base64 gemacht worden ist:
+            return !(serializer.Version == VCdVersion.V2_1 &&
+                (Parameters.Encoding == VCdEncoding.QuotedPrintable || Parameters.Encoding == VCdEncoding.Base64));
         }
 
 

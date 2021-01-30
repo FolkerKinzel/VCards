@@ -14,19 +14,27 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 {
     internal abstract class VcfSerializer
     {
+        private readonly TextWriter _writer;
+
+
         internal ParameterSerializer ParameterSerializer { get; }
 
         [NotNull]
         protected VCard? VCardToSerialize { get; private set; }
+
         internal readonly StringBuilder Builder = new StringBuilder();
+
         internal readonly StringBuilder Worker = new StringBuilder();
+
         internal abstract VCdVersion Version { get; }
+
         internal VcfOptions Options { get; }
 
         [NotNull]
         internal string? PropertyKey { get; private set; }
+
         internal bool IsPref { get; private set; }
-        private readonly TextWriter _writer;
+
 
 
 
@@ -249,13 +257,19 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected void BuildProperty(string propertyKey, VCardProperty prop, bool isPref = false)
         {
+            if (prop.IsEmpty && !Options.IsSet(VcfOptions.WriteEmptyProperties))
+            {
+                return;
+            }
+
             PropertyKey = propertyKey;
             //PropertyStartIndex = Builder.Length;
             IsPref = isPref;
 
-            prop.BuildProperty(this);
-
-            AppendLineFolding();
+            if (prop.BuildProperty(this))
+            {
+                AppendLineFolding();
+            }
 
             _writer.WriteLine(Builder);
         }

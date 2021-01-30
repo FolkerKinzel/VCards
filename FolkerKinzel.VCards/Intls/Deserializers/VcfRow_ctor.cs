@@ -49,10 +49,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             // group | key
             int startOfKey = groupSeparatorIndex + 1;
 
-            Span<char> keySpan = stackalloc char[keyPartSpan.Length - startOfKey];
-            _ = startOfKey > 0 ? keyPartSpan.Slice(startOfKey).ToUpperInvariant(keySpan) : keyPartSpan.ToUpperInvariant(keySpan);
+            this.Key = startOfKey > 0
+                ? keyPartSpan.Slice(startOfKey).ToString().ToUpperInvariant()
+                : keyPartSpan.ToString().ToUpperInvariant();
 
-            this.Key = keySpan.ToString();
 
             if (groupSeparatorIndex > 0)
             {
@@ -183,13 +183,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
                     if (valueLength != 0)
                     {
-                        Span<char> keySpan = stackalloc char[splitIndex];
-                        _ = parameter.Slice(0, splitIndex).ToUpperInvariant(keySpan);
-
                         parameterTuples.Add(
-                            new KeyValuePair<string, string>(
-                                keySpan.ToString(),
-                                parameter.Slice(valueStart, valueLength).ToString()));
+                                new KeyValuePair<string, string>(
+                                    parameter.Slice(0, splitIndex).ToString().ToUpperInvariant(),
+                                    parameter.Slice(valueStart, valueLength).ToString()));
                     }
                 }
             }

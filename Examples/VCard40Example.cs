@@ -13,14 +13,14 @@ namespace Examples
 {
     public static class VCard40Example
     {
-        public static void SaveSingleVCardAsVcf(string directoryName)
+        public static void SaveSingleVCardAsVcf(string directoryPath)
         {
             const string vcfExtension = ".vcf";
 
             // Note that argument validation and exception handling is completely omitted in this
             // example. The following "if" statement only ensures, that the method doesn't destroy
             // valueable data.
-            if (Directory.GetFiles(directoryName).Any(x => x.EndsWith(vcfExtension, StringComparison.OrdinalIgnoreCase)))
+            if (Directory.GetFiles(directoryPath).Any(x => x.EndsWith(vcfExtension, StringComparison.OrdinalIgnoreCase)))
             {
                 Console.WriteLine("The method \"SaveSingleVCardAsVcf(string)\" could not be executed");
                 Console.WriteLine("because the destination directory contains .VCF files, that might");
@@ -66,7 +66,7 @@ namespace Examples
             foreach (VCard vcard in vCardList)
             {
                 string fileName = Path.Combine(
-                    directoryName,
+                    directoryPath,
                     $"{vcard.DisplayNames!.First()!.Value}{vcfExtension}");
 
                 vcard.Save(fileName, VC::Enums.VCdVersion.V4_0);
@@ -75,7 +75,7 @@ namespace Examples
             // Clear the list and reload the .VCF files:
             vCardList.Clear();
 
-            foreach (string fileName in Directory.EnumerateFiles(directoryName, $"*{vcfExtension}"))
+            foreach (string fileName in Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"))
             {
                 vCardList.AddRange(VCard.Load(fileName));
             }

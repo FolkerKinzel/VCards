@@ -260,13 +260,14 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
             //letzten Hard-Line-Break wieder entfernen
             sb.TrimEnd();
 
-#if NET40
             var bytes = new byte[qpCoded.Length];
-#else
-            Span<byte> bytes = stackalloc byte[qpCoded.Length];
-#endif
 
+
+#if NET40
             char[] charr = new char[2];
+#else
+            Span<char> charr = stackalloc char[2];
+#endif
 
             int j = 0;
 
@@ -291,12 +292,9 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
                 }
             }
 
-#if NET40
             Array.Resize(ref bytes, j);
             return bytes;
-#else
-            return bytes.Slice(0, j).ToArray();
-#endif
+
 
 #if NET40
             static byte HexToByte(char[] charr)
@@ -313,7 +311,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
                 }
             }
 #else
-            static byte HexToByte(char[] charr)
+            static byte HexToByte(Span<char> charr)
             {
                 try
                 {

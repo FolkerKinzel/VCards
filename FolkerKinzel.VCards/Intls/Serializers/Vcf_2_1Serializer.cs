@@ -32,16 +32,32 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         }
 
 
-        internal void WrapBase64Data()
+        internal void AppendBase64Data(string base64Data)
         {
-            // mindestens 1 Zeichen muss in der letzten Datenzeile verbleiben
-            for (int i = VCard.MAX_BYTES_PER_LINE; i < Builder.Length - 1; i += VCard.MAX_BYTES_PER_LINE)
+            _ = Builder.Append(VCard.NewLine);
+            int i = Builder.Length;
+            _ = Builder.Append(base64Data);
+
+
+            while(i < Builder.Length)
             {
+                _ = Builder.Insert(i, ' ');
+
+                i = Math.Min(i + 64, Builder.Length);
+
                 _ = Builder.Insert(i, VCard.NewLine);
+
                 i += VCard.NewLine.Length;
             }
 
-            _ = Builder.Append(VCard.NewLine); //Leerzeile nach den Daten
+            //// mindestens 1 Zeichen muss in der letzten Datenzeile verbleiben
+            //for (int i = startOfBase64; i < Builder.Length - 1; i += VCard.MAX_BYTES_PER_LINE)
+            //{
+            //    _ = Builder.Insert(i, VCard.NewLine);
+            //    i += VCard.NewLine.Length;
+            //}
+
+            //_ = Builder.Append(VCard.NewLine); //Leerzeile nach den Daten
         }
 
 

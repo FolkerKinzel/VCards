@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Models.Enums;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 
@@ -12,6 +13,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
     internal sealed class DateAndOrTimeConverter
     {
         private const int FIRST_LEAP_YEAR = 4;
+        private const int MAX_DATE_TIME_STRING_LENGTH = 64;
 
         private readonly string[] _modelStrings = new string[]
         {
@@ -54,7 +56,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
         {
             offset = DateTimeOffset.MinValue;
 
-            if (s is null)
+            // Test auf Länge nötig, um StackOverflowException auszuschließen
+            if (s is null || s.Length > MAX_DATE_TIME_STRING_LENGTH)
             {
                 return false;
             }
@@ -89,6 +92,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
             return DateTimeOffset.TryParseExact(s, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
 
 #else
+            Debug.Assert(s.Length <= MAX_DATE_TIME_STRING_LENGTH);
+
             ReadOnlySpan<char> roSpan = s.AsSpan();
             if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
             {

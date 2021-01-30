@@ -696,6 +696,17 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             AppendNonStandardParameters();
         }
 
+
+        protected override void BuildXSpousePara() { }
+        protected override void BuildXMessengerPara(bool isPref) { }
+        protected override void BuildSortStringPara() { }
+        protected override void BuildProfilePara() { }
+        protected override void BuildNamePara() { }
+        protected override void BuildMailerPara() { }
+        protected override void BuildLabelPara(bool isPref) { }
+        protected override void BuildClassPara() { }
+        protected override void BuildAgentPara() { }
+
         #endregion
 
         #region Append
@@ -816,7 +827,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             foreach (Models.PropertyID pid in pids)
             {
-                if(pid.IsEmpty)
+                if (pid.IsEmpty)
                 {
                     continue;
                 }
@@ -985,5 +996,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
+        
     }
 }

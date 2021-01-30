@@ -58,7 +58,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
 
 
         [TestMethod]
-        public void RountripsTest()
+        public void RoundtripsTest()
         {
             Roundtrip("19720131");
             Roundtrip("19720131T15-07", false);
@@ -74,7 +74,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             RoundtripTimestamp("19961022T140000Z", false, VCdVersion.V2_1 );
             RoundtripTimestamp("19961022T140000-05", false, VCdVersion.V2_1);
             RoundtripTimestamp("19961022T140000-0500", false, VCdVersion.V2_1);
-            RoundtripTimestamp("19961022T140000+0500", false, VCdVersion.V2_1);
+            RoundtripTimestamp("19961022T140000+0532", false, VCdVersion.V2_1);
         }
 
         private void Roundtrip(

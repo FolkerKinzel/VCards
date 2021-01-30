@@ -255,6 +255,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             //AppendNonStandardParameters();
         }
 
+
+        protected override void BuildXSpousePara() => AppendEncodingAndCharset();
+
         protected override void BuildNonStandardPropertyPara(bool isPref)
         {
             _actionList.Clear();
@@ -268,13 +271,42 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         }
 
 
+        protected override void BuildOrgDirectoryPara() { }
+        protected override void BuildInterestPara() { }
+        protected override void BuildHobbyPara() { }
+        protected override void BuildExpertisePara() { }
+        protected override void BuildDeathPlacePara() { }
+        protected override void BuildDeathDatePara() { }
+        protected override void BuildBirthPlacePara() { }
+        protected override void BuildXmlPara() { }
+        protected override void BuildSourcePara() { }
+        protected override void BuildSortStringPara() { }
+        protected override void BuildRelatedPara() { }
+        protected override void BuildProfilePara() { }
+        protected override void BuildProdidPara() { }
+        protected override void BuildNicknamePara() { }
+        protected override void BuildNamePara() { }
+        protected override void BuildMemberPara() { }
+        protected override void BuildLangPara() { }
+        protected override void BuildKindPara() { }
+        protected override void BuildImppPara(bool isPref) { }
+        protected override void BuildGenderPara() { }
+        protected override void BuildFburlPara() { }
+        protected override void BuildClientpidmapPara() { }
+        protected override void BuildClassPara() { }
+        protected override void BuildCategoriesPara() { }
+        protected override void BuildCaluriPara() { }
+        protected override void BuildCaladruriPara() { }
+        protected override void BuildAnniversaryPara() { }
+
+
         #endregion
 
         #region Append
 
         private void AppendEncodingAndCharset()
         {
-            switch (ParaSection.Encoding)    
+            switch (ParaSection.Encoding)
             {
                 case VCdEncoding.Base64:
                     AppendParameter(ParameterSection.ParameterKey.ENCODING, "BASE64");
@@ -385,6 +417,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 AppendParameter(ParameterSection.ParameterKey.VALUE, contentLocation.ToVCardString());
             }
         }
+
+        
 
         //private void AppendContext()
         //{

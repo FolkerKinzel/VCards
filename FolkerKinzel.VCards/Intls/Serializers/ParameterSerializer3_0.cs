@@ -393,6 +393,26 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             AppendNonStandardParameters();
         }
 
+        protected override void BuildXSpousePara() { }
+        protected override void BuildOrgDirectoryPara() { }
+        protected override void BuildInterestPara() { }
+        protected override void BuildHobbyPara() { }
+        protected override void BuildExpertisePara() { }
+        protected override void BuildDeathPlacePara() { }
+        protected override void BuildDeathDatePara() { }
+        protected override void BuildBirthPlacePara() { }
+        protected override void BuildXmlPara() { }
+        protected override void BuildRelatedPara() { }
+        protected override void BuildMemberPara() { }
+        protected override void BuildLangPara() { }
+        protected override void BuildKindPara() { }
+        protected override void BuildGenderPara() { }
+        protected override void BuildFburlPara() { }
+        protected override void BuildClientpidmapPara() { }
+        protected override void BuildCaluriPara() { }
+        protected override void BuildCaladruriPara() { }
+        protected override void BuildAnniversaryPara() { }
+
         #endregion
 
         #region Append
@@ -541,5 +561,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             return _worker.ToString();
         }
 
+        
     }
 }

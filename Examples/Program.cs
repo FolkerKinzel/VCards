@@ -6,20 +6,20 @@ namespace Examples
 {
     internal class Program
     {
-        //static void Main() => VCardExample.ReadingAndWritingVCard();
-
         private static void Main()
         {
             string directoryPath = Path.GetFullPath("TestFiles");
 
-            if(Directory.Exists(directoryPath))
+            if (Directory.Exists(directoryPath))
             {
                 Directory.Delete(directoryPath, true);
             }
 
             _ = Directory.CreateDirectory(directoryPath);
 
-            VCard40Example.SaveSingleVCardAsVcf(directoryPath);
+
+            VCardExample.ReadingAndWritingVCard(directoryPath);
+            //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
         }
     }
 }

@@ -208,20 +208,23 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 case VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY:
                 case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY:
                 case VcfSerializer.X_KADDRESSBOOK_X_Anniversary:
-
+                    // kein Parameter-Teil
+                    break;
 
                 case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE:
                 case VCard.PropKeys.NonStandard.X_SPOUSE:
                 case VcfSerializer.X_KADDRESSBOOK_X_SpouseName:
                 case VCard.PropKeys.NonStandard.X_WAB_SPOUSE_NAME:
-
-                    //case VCard.PropKeys.NonStandard.KAddressbook.X_KADDRESSBOOK_X_ASSISTANTSNAME:
-                    //case VcfSerializer.X_KADDRESSBOOK_X_AssistantsName:
-                    //case VCard.PropKeys.NonStandard.X_ASSISTANT:
-                    //case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ASSISTANT:
-
-                    // kein Parameter-Teil
+                    BuildXSpousePara();
                     break;
+
+                //case VCard.PropKeys.NonStandard.KAddressbook.X_KADDRESSBOOK_X_ASSISTANTSNAME:
+                ////case VcfSerializer.X_KADDRESSBOOK_X_AssistantsName:
+                //case VCard.PropKeys.NonStandard.X_ASSISTANT:
+                //case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ASSISTANT:
+
+
+                //break;
                 default:
                     BuildNonStandardPropertyPara(isPref);
                     break;
@@ -233,109 +236,112 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         }
 
 
+
         #region BuildPara
 
-        protected virtual void BuildXMessengerPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
+        protected abstract void BuildXSpousePara();
 
-        protected virtual void BuildNonStandardPropertyPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
+        protected abstract void BuildXMessengerPara(bool isPref);
 
-        protected virtual void BuildOrgDirectoryPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildInterestPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildHobbyPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildExpertisePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildDeathPlacePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildDeathDatePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildBirthPlacePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildXmlPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildUrlPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildUidPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildTzPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildTitlePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildTelPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildSourcePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildSoundPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildSortStringPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildRolePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildRevPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildRelatedPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildProfilePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildProdidPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildPhotoPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildOrgPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildNotePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildNicknamePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildNamePara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildNPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildMemberPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildMailerPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildLogoPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildLangPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildLabelPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildKindPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildKeyPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildImppPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildGeoPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildGenderPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildFnPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildFburlPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildEmailPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildClientpidmapPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildClassPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildCategoriesPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildCaluriPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildCaladruriPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildBdayPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildAnniversaryPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildAgentPara() => Debug.Fail("Die Methode wurde nicht überschrieben.");
-
-        protected virtual void BuildAdrPara(bool isPref) => Debug.Fail("Die Methode wurde nicht überschrieben.");
+        protected abstract void BuildNonStandardPropertyPara(bool isPref);
+                  
+        protected abstract void BuildOrgDirectoryPara();
+                  
+        protected abstract void BuildInterestPara();
+                  
+        protected abstract void BuildHobbyPara();
+                  
+        protected abstract void BuildExpertisePara();
+                  
+        protected abstract void BuildDeathPlacePara();
+                  
+        protected abstract void BuildDeathDatePara();
+                  
+        protected abstract void BuildBirthPlacePara();
+                  
+        protected abstract void BuildXmlPara();
+                  
+        protected abstract void BuildUrlPara();
+                  
+        protected abstract void BuildUidPara();
+                  
+        protected abstract void BuildTzPara();
+                  
+        protected abstract void BuildTitlePara();
+                  
+        protected abstract void BuildTelPara(bool isPref);
+                  
+        protected abstract void BuildSourcePara();
+                  
+        protected abstract void BuildSoundPara();
+                  
+        protected abstract void BuildSortStringPara();
+                  
+        protected abstract void BuildRolePara();
+                  
+        protected abstract void BuildRevPara();
+                  
+        protected abstract void BuildRelatedPara();
+                  
+        protected abstract void BuildProfilePara();
+                  
+        protected abstract void BuildProdidPara();
+                  
+        protected abstract void BuildPhotoPara();
+                  
+        protected abstract void BuildOrgPara();
+                  
+        protected abstract void BuildNotePara();
+                  
+        protected abstract void BuildNicknamePara();
+                  
+        protected abstract void BuildNamePara();
+                  
+        protected abstract void BuildNPara();
+                  
+        protected abstract void BuildMemberPara();
+                  
+        protected abstract void BuildMailerPara();
+                  
+        protected abstract void BuildLogoPara();
+                  
+        protected abstract void BuildLangPara();
+                  
+        protected abstract void BuildLabelPara(bool isPref);
+                  
+        protected abstract void BuildKindPara();
+                  
+        protected abstract void BuildKeyPara();
+                  
+        protected abstract void BuildImppPara(bool isPref);
+                  
+        protected abstract void BuildGeoPara();
+                  
+        protected abstract void BuildGenderPara();
+                  
+        protected abstract void BuildFnPara();
+                  
+        protected abstract void BuildFburlPara();
+                  
+        protected abstract void BuildEmailPara(bool isPref);
+                  
+        protected abstract void BuildClientpidmapPara();
+                  
+        protected abstract void BuildClassPara();
+                  
+        protected abstract void BuildCategoriesPara();
+                  
+        protected abstract void BuildCaluriPara();
+                  
+        protected abstract void BuildCaladruriPara();
+                  
+        protected abstract void BuildBdayPara();
+                  
+        protected abstract void BuildAnniversaryPara();
+                  
+        protected abstract void BuildAgentPara();
+                  
+        protected abstract void BuildAdrPara(bool isPref);
 
         #endregion
 

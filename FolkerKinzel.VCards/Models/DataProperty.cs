@@ -350,8 +350,7 @@ namespace FolkerKinzel.VCards.Models
                         }
                         else // binary
                         {
-                            _ = builder.Append(dataUrl.EncodedData);
-                            ((Vcf_2_1Serializer)serializer).WrapBase64Data();
+                            ((Vcf_2_1Serializer)serializer).AppendBase64Data(dataUrl.EncodedData);
                         }
                     }
                     else // Value is Uri

@@ -10,27 +10,29 @@ namespace Examples
 {
     public static class VCardExample
     {
-        private const string v2FileName = "VCard2.vcf";
-        private const string v3FileName = "VCard3.vcf";
-        private const string v4FileName = "VCard4.vcf";
-
-        public static void ReadingAndWritingVCard()
+        public static void ReadingAndWritingVCard(string directoryPath)
         {
+            const string v2FileName = "VCard2.vcf";
+            const string v3FileName = "VCard3.vcf";
+            const string v4FileName = "VCard4.vcf";
+            const string photoFileName = "Example.jpg";
+
             var vcard = new VCard
             {
                 NameViews = new VC::NameProperty[]
                 {
                     new VC::NameProperty
                     (
-                        lastName: new string[] { "Müller" },
+                        lastName: new string[] { "Müller-Risinowsky" },
                         firstName: new string[] { "Käthe" },
-                        prefix: new string[] { "Dr." }
+                        middleName: new string[] {"Alexandra", "Caroline"},
+                        prefix: new string[] { "Prof.", "Dr." }
                     )
                 },
 
                 DisplayNames = new VC::TextProperty[]
                 {
-                    new VC.TextProperty("Dr. Käthe Müller")
+                    new VC.TextProperty("Käthe Müller-Risinowsky")
                 },
 
                 Organizations = new VC::OrganizationProperty[]
@@ -50,14 +52,14 @@ namespace Examples
                 TimeStamp = new VC::TimeStampProperty(DateTimeOffset.UtcNow)
             };
 
-            const string photoFileName = @"..\..\KätheMüller.jpg";
 
-            // Create a little "Photo" for demonstration purposes:
-            File.WriteAllBytes(photoFileName, new byte[] { 47, 155, 11, 25, 48, 79, 3, 2, 1 });
+            // Creates a small "Photo" file for demonstration purposes:
+            string photoFilePath = Path.Combine(directoryPath, photoFileName);
+            CreatePhoto(photoFilePath);
 
             vcard.Photos = new VC::DataProperty[]
             {
-                new VC::DataProperty(VC::DataUrl.FromFile(photoFileName))
+                new VC::DataProperty(VC::DataUrl.FromFile(photoFilePath))
             };
 
             var telHome = new VC::TextProperty("tel:+49-123-9876543");
@@ -71,7 +73,7 @@ namespace Examples
             telWork.Parameters.TelephoneType = VC::Enums.TelTypes.Cell
                                              | VC::Enums.TelTypes.Text
                                              | VC::Enums.TelTypes.Msg
-                                             | VC::Enums.TelTypes.BBS 
+                                             | VC::Enums.TelTypes.BBS
                                              | VC::Enums.TelTypes.Voice;
 
             vcard.PhoneNumbers = new VC::TextProperty[]
@@ -85,40 +87,73 @@ namespace Examples
 
             vcard.EmailAddresses = new VC::TextProperty[] { prefMail };
 
+            vcard.BirthDayViews = new VC::DateTimeProperty[]
+            {
+                // System.DateTime has an implicit conversion to
+                // System.DateTimeOffset
+                new VC::DateTimeOffsetProperty(new DateTime(1984, 3, 28))
+            };
+
+            vcard.Relations = new VC::RelationProperty[]
+            {
+                new VC::RelationTextProperty("Paul Müller-Risinowsky",
+                VC::Enums.RelationTypes.Spouse | VC::Enums.RelationTypes.CoResident | VC::Enums.RelationTypes.Colleague)
+            };
+
+            vcard.AnniversaryViews = new VC::DateTimeProperty[]
+            {
+                new VC::DateTimeOffsetProperty(new DateTime(2006, 7, 14))
+            };
+
             // Save vcard as vCard 2.1:
-            vcard.Save(v2FileName, VC::Enums.VCdVersion.V2_1);
+            string v2FilePath = Path.Combine(directoryPath, v2FileName);
+            vcard.Save(v2FilePath, VC::Enums.VCdVersion.V2_1);
 
             // Save vcard as vCard 3.0:
             // You don't need to specify the version: Version 3.0 is the default.
-            vcard.Save(v3FileName);
+            string v3FilePath = Path.Combine(directoryPath, v3FileName);
+            vcard.Save(v3FilePath);
 
             // Save vcard as vCard 4.0:
-            vcard.Save(v4FileName, VC::Enums.VCdVersion.V4_0);
+            string v4FilePath = Path.Combine(directoryPath, v4FileName);
+            vcard.Save(v4FilePath, VC::Enums.VCdVersion.V4_0);
 
             // Load vCard:
-            vcard = VCard.Load(v3FileName)[0];
+            vcard = VCard.Load(v3FilePath)[0];
 
             WriteResultsToConsole(vcard);
 
             ///////////////////////////////////////////////////////////////
 
-            static void WriteResultsToConsole(VCard vcard)
+            void WriteResultsToConsole(VCard vcard)
             {
                 Console.WriteLine($"{v2FileName}:");
-                Console.WriteLine(File.ReadAllText(v2FileName));
+                Console.WriteLine(File.ReadAllText(v2FilePath));
                 Console.WriteLine();
 
                 Console.WriteLine($"{v3FileName}:");
-                Console.WriteLine(File.ReadAllText(v3FileName));
+                Console.WriteLine(File.ReadAllText(v3FilePath));
                 Console.WriteLine();
 
                 Console.WriteLine($"{v4FileName}:");
-                Console.WriteLine(File.ReadAllText(v4FileName));
+                Console.WriteLine(File.ReadAllText(v4FilePath));
                 Console.WriteLine();
 
                 Console.WriteLine("Read VCard:");
                 Console.WriteLine(vcard);
             }
+        }
+
+        /// <summary>
+        /// Creates a small file, that simulates a photo.
+        /// </summary>
+        /// <param name="photoFilePath">Path to the created file.</param>
+        private static void CreatePhoto(string photoFilePath)
+        {
+            byte[] photo = new byte[60];
+            var rand = new Random();
+            rand.NextBytes(photo);
+            File.WriteAllBytes(photoFilePath, photo);
         }
     }
 }

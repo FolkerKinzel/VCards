@@ -417,36 +417,12 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 return null;
             }
 
-#if NET40
             const string imageType = @"image/";
 
             return mimeType.StartsWith(imageType, StringComparison.OrdinalIgnoreCase)
                 ? mimeType.Length == imageType.Length ? null : mimeType.Substring(imageType.Length).ToUpperInvariant()
                 : mimeType.ToUpperInvariant();
-#else
-            ReadOnlySpan<char> mime = mimeType.AsSpan();
-            ReadOnlySpan<char> imageType = @"image/";
 
-            if (mime.StartsWith(imageType, StringComparison.OrdinalIgnoreCase))
-            {
-                if (mime.Length == imageType.Length)
-                {
-                    return null;
-                }
-                else
-                {
-                    mime = mime.Slice(imageType.Length);
-
-                    Span<char> span = stackalloc char[mime.Length];
-                    mime.ToUpperInvariant(span);
-                    return span.ToString();
-                }
-            }
-            else
-            {
-                return mimeType.ToUpperInvariant();
-            }
-#endif
         }
 
 
@@ -528,36 +504,11 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 return null;
             }
 
-#if NET40
             const string audioType = @"audio/";
 
             return mimeType.StartsWith(audioType, StringComparison.OrdinalIgnoreCase)
                 ? mimeType.Length == audioType.Length ? null : mimeType.Substring(audioType.Length).ToUpperInvariant()
                 : mimeType.ToUpperInvariant();
-#else
-            ReadOnlySpan<char> mime = mimeType.AsSpan();
-            ReadOnlySpan<char> audioType = @"audio/";
-
-            if (mime.StartsWith(audioType, StringComparison.OrdinalIgnoreCase))
-            {
-                if (mime.Length == audioType.Length)
-                {
-                    return null;
-                }
-                else
-                {
-                    mime = mime.Slice(audioType.Length);
-
-                    Span<char> span = stackalloc char[mime.Length];
-                    mime.ToUpperInvariant(span);
-                    return span.ToString();
-                }
-            }
-            else
-            {
-                return mimeType.ToUpperInvariant();
-            }
-#endif
         }
     }
 }
