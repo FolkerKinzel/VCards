@@ -24,6 +24,9 @@ Package Reference (Visual Studio Project File):
 
 Paket CLI:
 paket add FolkerKinzel.VCards --version 2.0.0
+
+F# Interactive:
+> #r "nuget: FolkerKinzel.VCards, 2.0.0"
 ```
 
 
