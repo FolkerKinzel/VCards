@@ -78,6 +78,11 @@
                 </para>
               </listItem>
             </list>
+            <para>
+              (Klassen, die von <codeInline>VCardProperty</codeInline> abgeleitet sind, verdecken die generische Implementierung von
+              <codeInline>VCardProperty.Value</codeInline>, um abgeleitete Klassen anstatt <codeInline>System.Object?</codeInline>
+              zurückzugeben.)
+            </para>
           </content>
         </section>
       </sections>

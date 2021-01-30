@@ -85,7 +85,7 @@
             <para>
               (Classes that are derived from <codeInline>VCardProperty</codeInline> hide the generic implementation of 
               <codeInline>VCardProperty.Value</codeInline> in order to return 
-              derived classes instead of <codeInline>System.Object</codeInline>.)
+              derived classes instead of <codeInline>System.Object?</codeInline>.)
             </para>
           </content>
         </section>
