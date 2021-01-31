@@ -237,7 +237,7 @@ Read VCard:
 Version: 3.0
 
 [DataType: Timestamp]
-TimeStamp: 30.01.2021 18:09:27 +00:00
+TimeStamp: 01/31/2021 00:21:41 +00:00
 
 DisplayNames: Käthe Müller-Risinowsky
 
@@ -254,10 +254,10 @@ Organizations:
     OrganizationalUnits: C#; Webdesign
 
 [DataType: Date]
-BirthDayViews: 28.03.1984 00:00:00 +02:00
+BirthDayViews: 03/28/1984 00:00:00 +02:00
 
 [DataType: DateAndOrTime]
-AnniversaryViews: 14.07.2006 00:00:00 +02:00
+AnniversaryViews: 07/14/2006 00:00:00 +02:00
 
 [PropertyClass: Home]
 [TelephoneType: Voice, BBS]

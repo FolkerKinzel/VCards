@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
+using System.Threading;
 using FolkerKinzel.VCards.Models.Enums;
 
 namespace Examples
@@ -8,6 +10,10 @@ namespace Examples
     {
         private static void Main()
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+
+
             string directoryPath = Path.GetFullPath("TestFiles");
 
             if (Directory.Exists(directoryPath))
