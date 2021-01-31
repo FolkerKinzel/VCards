@@ -361,7 +361,7 @@ Read VCard:
 Version: 3.0
 
 [DataType: Timestamp]
-TimeStamp: 01/31/2021 00:21:41 +00:00
+TimeStamp: 01/30/2021 18:09:27 +00:00
 
 DisplayNames: Käthe Müller-Risinowsky
 
