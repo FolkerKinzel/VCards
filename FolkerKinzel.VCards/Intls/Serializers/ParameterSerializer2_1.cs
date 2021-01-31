@@ -101,7 +101,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void BuildEmailPara(bool isPref)
         {
-            AppendEmailType();
+            AppendEmailType(isPref);
             AppendEncodingAndCharset();
             //AppendNonStandardParameters();
         }
@@ -349,26 +349,31 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 _stringCollectionList.Add(ParameterSection.TypeValue.PREF);
             }
 
-            if (this._stringCollectionList.Count != 0)
+            //if (this._stringCollectionList.Count != 0)
+            //{
+            //    AppendV2_1Type(ConcatValues());
+            //}
+
+            for (int i = 0; i < _stringCollectionList.Count; i++)
             {
-                AppendV2_1Type(ConcatValues());
+                AppendV2_1Type(_stringCollectionList[i]);
             }
 
-            string ConcatValues()
-            {
-                _ = this._worker.Clear();
-                int count = this._stringCollectionList.Count;
+            //string ConcatValues()
+            //{
+            //    _ = this._worker.Clear();
+            //    int count = this._stringCollectionList.Count;
 
-                Debug.Assert(count != 0);
+            //    Debug.Assert(count != 0);
 
-                for (int i = 0; i < count - 1; i++)
-                {
-                    _ = _worker.Append(_stringCollectionList[i]).Append(';');
-                }
+            //    for (int i = 0; i < count - 1; i++)
+            //    {
+            //        _ = _worker.Append(_stringCollectionList[i]).Append(';');
+            //    }
 
-                _ = _worker.Append(_stringCollectionList[count - 1]);
-                return _worker.ToString();
-            }
+            //    _ = _worker.Append(_stringCollectionList[count - 1]);
+            //    return _worker.ToString();
+            //}
         }
 
         private void AppendImageType()
@@ -401,7 +406,16 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
-        private void AppendEmailType() => AppendParameter(ParameterSection.ParameterKey.TYPE, ParaSection.EmailType ?? EmailType.SMTP);
+        private void AppendEmailType(bool isPref)
+        {
+            // PREF ist im Standard nur für Telefonnummern vermerkt,
+            // wurde aber vom Windows-Addressbuch verwendet
+            if(isPref)
+            {
+                AppendV2_1Type(ParameterSection.TypeValue.PREF);
+            }
+            AppendV2_1Type(ParaSection.EmailType ?? EmailType.SMTP);
+        }
 
         private void AppendValue()
         {
@@ -418,7 +432,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
-        
+
 
         //private void AppendContext()
         //{
