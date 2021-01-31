@@ -218,6 +218,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                     BuildXSpousePara();
                     break;
 
+
+                // ASSISTENT wird zwar gelesen und als AGENT interpretiert, aber
+                // nicht geschrieben, da AGENT ein Standard-Pendant ist.
+
                 //case VCard.PropKeys.NonStandard.KAddressbook.X_KADDRESSBOOK_X_ASSISTANTSNAME:
                 ////case VcfSerializer.X_KADDRESSBOOK_X_AssistantsName:
                 //case VCard.PropKeys.NonStandard.X_ASSISTANT:

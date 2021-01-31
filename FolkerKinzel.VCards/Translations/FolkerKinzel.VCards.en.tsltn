@@ -148,10 +148,6 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="C3101466CBBA9915">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object.
              (For debugging only.)</T>
   <T ID="42D27235F6305DA0">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object.</T>
-  <T ID="445A4306E0DCDFC2">&lt;para&gt; &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt; saves all vCard properties, that could not be evaluated, when parsing the vCard. To serialize the content of &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt; into a vCard, the flag &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteNonStandardProperties"&gt;VcfOptions.WriteNonStandardProperties&lt;/see&gt; has to be set explicitly. &lt;/para&gt; &lt;para&gt; Some &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects are automatically added to the vCard to be written, if there is no standard equivalent for it. You can control this behavior with &lt;see cref ="T:FolkerKinzel.VCards.VcfOptions"/&gt;. It is therefore not recommended to assign instances of those
-            &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects to the property &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt;.&lt;/para&gt;
-&lt;para&gt; These vCard properties are the following: &lt;/para&gt;
-&lt;list type="bullet"&gt;&lt;item&gt;&lt;c&gt;X-AIM&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-ANNIVERSARY&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-ASSISTANT&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-EVOLUTION-SPOUSE&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-EVOLUTION-ANNIVERSARY&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-EVOLUTION-ASSISTANT&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-GADUGADU&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-GENDER&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-GOOGLE-TALK&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-GROUPWISE&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-GTALK&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-ICQ&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-JABBER&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-KADDRESSBOOK-X-ANNIVERSARY&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-KADDRESSBOOK-X-ASSISTANTSNAME&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-KADDRESSBOOK-X-IMADDRESS&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-KADDRESSBOOK-X-SPOUSENAME&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-MS-IMADDRESS&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-MSN&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-SKYPE&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-SKYPE-USERNAME&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-SPOUSE&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-TWITTER&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-WAB-GENDER&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-WAB-WEDDING_ANNIVERSARY&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-WAB-SPOUSE_NAME&lt;/c&gt;&lt;/item&gt;&lt;item&gt;&lt;c&gt;X-YAHOO&lt;/c&gt;&lt;/item&gt;&lt;/list&gt;</T>
   <T ID="93E7678FD0B2C2F5">All flags are set.</T>
   <T ID="3BB66FAA5B1FBBBD">All flags are unset.</T>
   <T ID="64FF9980766E44A8">Default setting (corresponds to &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteGroups"/&gt; | &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6474Extensions"/&gt;
@@ -1258,4 +1254,34 @@ When serializing as vCard 4.0, the method calls &lt;see cref ="M:FolkerKinzel.VC
   <T ID="8C3315B8078EEB51">Saves the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt; instance as a VCF file.</T>
   <T ID="BF71EB7D66C143E5">Serializes the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt; instance into a &lt;see cref="T:System.IO.Stream"/&gt; using the VCF format.</T>
   <T ID="A9F895B3B36BAF4D">Serializes the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; instance as a &lt;see cref ="T:System.String"/&gt;, which represents the content of a VCF file.</T>
+  <T ID="445A430638AC2797">&lt;para&gt; &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt; saves all vCard properties, that could not be evaluated, when parsing the vCard. To serialize the content of &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt; into a vCard, the flag &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteNonStandardProperties"&gt;VcfOptions.WriteNonStandardProperties&lt;/see&gt; has to be set explicitly. &lt;/para&gt; &lt;para&gt; Some &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects are automatically added to the vCard to be written, if there is no standard equivalent for it. You can control this behavior with &lt;see cref ="T:FolkerKinzel.VCards.VcfOptions"/&gt;. It is therefore not recommended to assign instances of those
+            &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects to the property &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt;.&lt;/para&gt;
+&lt;para&gt; These vCard properties are the following: 
+&lt;/para&gt;
+&lt;list type="bullet"&gt;
+&lt;item&gt;&lt;c&gt;X-AIM&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-ANNIVERSARY&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-EVOLUTION-SPOUSE&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-EVOLUTION-ANNIVERSARY&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-GADUGADU&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-GENDER&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-GOOGLE-TALK&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-GROUPWISE&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-GTALK&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-ICQ&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-JABBER&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-KADDRESSBOOK-X-ANNIVERSARY&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-KADDRESSBOOK-X-IMADDRESS&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-KADDRESSBOOK-X-SPOUSENAME&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-MS-IMADDRESS&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-MSN&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-SKYPE&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-SKYPE-USERNAME&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-SPOUSE&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-TWITTER&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-WAB-GENDER&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-WAB-WEDDING_ANNIVERSARY&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-WAB-SPOUSE_NAME&lt;/c&gt;&lt;/item&gt;
+&lt;item&gt;&lt;c&gt;X-YAHOO&lt;/c&gt;&lt;/item&gt;
+&lt;/list&gt;</T>
 </Tsltn>

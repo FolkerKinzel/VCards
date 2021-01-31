@@ -455,10 +455,8 @@ namespace FolkerKinzel.VCards
         /// <list type="bullet">
         /// <item><c>X-AIM</c></item>
         /// <item><c>X-ANNIVERSARY</c></item>
-        /// <item><c>X-ASSISTANT</c></item>
         /// <item><c>X-EVOLUTION-SPOUSE</c></item>
         /// <item><c>X-EVOLUTION-ANNIVERSARY</c></item>
-        /// <item><c>X-EVOLUTION-ASSISTANT</c></item>
         /// <item><c>X-GADUGADU</c></item>
         /// <item><c>X-GENDER</c></item>
         /// <item><c>X-GOOGLE-TALK</c></item>
@@ -467,7 +465,6 @@ namespace FolkerKinzel.VCards
         /// <item><c>X-ICQ</c></item>
         /// <item><c>X-JABBER</c></item>
         /// <item><c>X-KADDRESSBOOK-X-ANNIVERSARY</c></item>
-        /// <item><c>X-KADDRESSBOOK-X-ASSISTANTSNAME</c></item>
         /// <item><c>X-KADDRESSBOOK-X-IMADDRESS</c></item>
         /// <item><c>X-KADDRESSBOOK-X-SPOUSENAME</c></item>
         /// <item><c>X-MS-IMADDRESS</c></item>
