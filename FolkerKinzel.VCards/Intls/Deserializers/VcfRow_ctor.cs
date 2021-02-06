@@ -40,10 +40,9 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
             ReadOnlySpan<char> keySection = vCardRow.AsSpan(0, valueSeparatorIndex);
             int parameterSeparatorIndex = keySection.IndexOf(';');
-            int groupSeparatorIndex = -1;
             int keyPartLength = parameterSeparatorIndex == -1 ? keySection.Length : parameterSeparatorIndex;
             ReadOnlySpan<char> keyPartSpan = keySection.Slice(0, keyPartLength);
-            groupSeparatorIndex = keyPartSpan.IndexOf('.');
+            int groupSeparatorIndex = keyPartSpan.IndexOf('.');
 
             // keyParts:
             // group | key
