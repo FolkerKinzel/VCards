@@ -21,7 +21,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
         {
             Debug.Assert(value?.ToUpperInvariant() == value);
 
-            return (value) switch
+            return value switch
             {
                 Values.CID => VCdContentLocation.ContentID,
                 Values.CONTENT_ID => VCdContentLocation.ContentID,
@@ -33,7 +33,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string ToVCardString(this VCdContentLocation contentLocation)
         {
-            return (contentLocation) switch
+            return contentLocation switch
             {
                 VCdContentLocation.Inline => Values.INLINE,
                 VCdContentLocation.ContentID => Values.CID,

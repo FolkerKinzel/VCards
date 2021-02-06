@@ -185,6 +185,25 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         private static string CleanParameterValue(string parameterValue, StringBuilder builder)
         {
+            bool clean = false;
+
+            for (int i = 0; i < parameterValue.Length; i++)
+            {
+                char c = parameterValue[i];
+
+                if (char.IsLower(c) || char.IsWhiteSpace(c) || c == '\'' || c == '\"')
+                {
+                    clean = true;
+                    break;
+                }
+            }
+
+            if(!clean)
+            {
+                return parameterValue;
+            }
+
+
             _ = builder.Clear();
 
             for (int i = 0; i < parameterValue.Length; i++)
