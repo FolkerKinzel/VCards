@@ -255,7 +255,12 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                     }
                 case VCard.PropKeys.TEL:
                     {
-                        this.TelephoneType = TelTypesConverter.Parse(typeValue, this.TelephoneType);
+                        TelTypes? telType = TelTypesConverter.Parse(typeValue);
+
+                        if (telType.HasValue)
+                        {
+                            this.TelephoneType = this.TelephoneType.Set(telType.Value);
+                        }
                         break;
                     }
                 case VCard.PropKeys.RELATED:

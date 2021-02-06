@@ -23,26 +23,26 @@ namespace FolkerKinzel.VCards.Intls.Converters
             internal const string PCS = "PCS";
         }
 
-        internal static TelTypes? Parse(string? typeValue, TelTypes? telephoneType)
+        internal static TelTypes? Parse(string? typeValue)
         {
             Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
 
             return typeValue switch
             {
-                TelTypeValue.VOICE => telephoneType.Set(TelTypes.Voice),
-                TelTypeValue.FAX => telephoneType.Set(TelTypes.Fax),
-                TelTypeValue.MSG => telephoneType.Set(TelTypes.Msg),
-                TelTypeValue.CELL => telephoneType.Set(TelTypes.Cell),
-                TelTypeValue.PAGER => telephoneType.Set(TelTypes.Pager),
-                TelTypeValue.BBS => telephoneType.Set(TelTypes.BBS),
-                TelTypeValue.MODEM => telephoneType.Set(TelTypes.Modem),
-                TelTypeValue.CAR => telephoneType.Set(TelTypes.Car),
-                TelTypeValue.ISDN => telephoneType.Set(TelTypes.ISDN),
-                TelTypeValue.VIDEO => telephoneType.Set(TelTypes.Video),
-                TelTypeValue.PCS => telephoneType.Set(TelTypes.PCS),
-                TelTypeValue.TEXTPHONE => telephoneType.Set(TelTypes.TextPhone),
-                TelTypeValue.TEXT => telephoneType.Set(TelTypes.Text),
-                _ => telephoneType,
+                TelTypeValue.VOICE => TelTypes.Voice,
+                TelTypeValue.FAX => TelTypes.Fax,
+                TelTypeValue.MSG => TelTypes.Msg,
+                TelTypeValue.CELL => TelTypes.Cell,
+                TelTypeValue.PAGER => TelTypes.Pager,
+                TelTypeValue.BBS => TelTypes.BBS,
+                TelTypeValue.MODEM => TelTypes.Modem,
+                TelTypeValue.CAR => TelTypes.Car,
+                TelTypeValue.ISDN => TelTypes.ISDN,
+                TelTypeValue.VIDEO => TelTypes.Video,
+                TelTypeValue.PCS => TelTypes.PCS,
+                TelTypeValue.TEXTPHONE => TelTypes.TextPhone,
+                TelTypeValue.TEXT => TelTypes.Text,
+                _ => null
             };
         }
     }
