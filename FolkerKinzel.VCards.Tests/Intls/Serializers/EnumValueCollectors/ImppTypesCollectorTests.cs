@@ -73,9 +73,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
                 Assert.AreEqual(1, list.Count);
                 Assert.IsNotNull(list[0]);
 
-                ImppTypes? comp = null;
+                ImppTypes? comp = ImppTypesConverter.Parse(list[0]);
 
-                comp = ImppTypesConverter.Parse(list[0], comp);
 
                 Assert.IsTrue(comp.HasValue);
                 Assert.AreEqual(comp!.Value, item);

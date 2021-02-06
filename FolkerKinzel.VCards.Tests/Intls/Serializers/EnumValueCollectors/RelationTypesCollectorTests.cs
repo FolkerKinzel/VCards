@@ -63,7 +63,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
 
             var list = new List<string>(1);
 
-            foreach (var item in arr)
+            foreach (RelationTypes item in arr)
             {
                 list.Clear();
                 collector.CollectValueStrings(item, list);
@@ -71,9 +71,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
                 Assert.AreEqual(1, list.Count);
                 Assert.IsNotNull(list[0]);
 
-                RelationTypes? comp = null;
-
-                comp = RelationTypesConverter.Parse(list[0], comp);
+                RelationTypes? comp = RelationTypesConverter.Parse(list[0]);
 
                 Assert.IsTrue(comp.HasValue);
                 Assert.AreEqual(comp!.Value, item);
