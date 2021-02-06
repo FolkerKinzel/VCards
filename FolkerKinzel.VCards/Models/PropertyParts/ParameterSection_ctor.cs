@@ -265,7 +265,12 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                     }
                 case VCard.PropKeys.RELATED:
                     {
-                        this.RelationType = RelationTypesConverter.Parse(typeValue, this.RelationType);
+                        RelationTypes? relType = RelationTypesConverter.Parse(typeValue);
+
+                        if (relType.HasValue)
+                        {
+                            this.RelationType = this.RelationType.Set(relType.Value);
+                        }
                         break;
                     }
                 case VCard.PropKeys.EMAIL:
@@ -282,14 +287,15 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                     this.MediaType = MimeTypeConverter.MimeTypeFromImageTypeValue(typeValue);
                     break;
                 case VCard.PropKeys.IMPP:
-                    ImppTypes? imppType = ImppTypesConverter.Parse(typeValue);
-
-                    if (imppType.HasValue)
                     {
-                        this.InstantMessengerType = this.InstantMessengerType.Set(imppType.Value);
-                    }
-                    break;
+                        ImppTypes? imppType = ImppTypesConverter.Parse(typeValue);
 
+                        if (imppType.HasValue)
+                        {
+                            this.InstantMessengerType = this.InstantMessengerType.Set(imppType.Value);
+                        }
+                        break;
+                    }
                 default:
                     break;
             }//switch

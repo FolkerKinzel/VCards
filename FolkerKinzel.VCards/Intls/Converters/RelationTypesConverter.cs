@@ -31,33 +31,33 @@ namespace FolkerKinzel.VCards.Intls.Converters
         }
 
 
-        internal static RelationTypes? Parse(string? typeValue, RelationTypes? relationType)
+        internal static RelationTypes? Parse(string? typeValue)
         {
             Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
 
             return typeValue switch
             {
-                RelationTypeValue.CONTACT => relationType.Set(RelationTypes.Contact),
-                RelationTypeValue.ACQUAINTANCE => relationType.Set(RelationTypes.Acquaintance),
-                RelationTypeValue.FRIEND => relationType.Set(RelationTypes.Friend),
-                RelationTypeValue.MET => relationType.Set(RelationTypes.Met),
-                RelationTypeValue.CO_WORKER => relationType.Set(RelationTypes.CoWorker),
-                RelationTypeValue.COLLEAGUE => relationType.Set(RelationTypes.Colleague),
-                RelationTypeValue.CO_RESIDENT => relationType.Set(RelationTypes.CoResident),
-                RelationTypeValue.NEIGHBOR => relationType.Set(RelationTypes.Neighbor),
-                RelationTypeValue.CHILD => relationType.Set(RelationTypes.Child),
-                RelationTypeValue.PARENT => relationType.Set(RelationTypes.Parent),
-                RelationTypeValue.SIBLING => relationType.Set(RelationTypes.Sibling),
-                RelationTypeValue.SPOUSE => relationType.Set(RelationTypes.Spouse),
-                RelationTypeValue.KIN => relationType.Set(RelationTypes.Kin),
-                RelationTypeValue.MUSE => relationType.Set(RelationTypes.Muse),
-                RelationTypeValue.CRUSH => relationType.Set(RelationTypes.Crush),
-                RelationTypeValue.DATE => relationType.Set(RelationTypes.Date),
-                RelationTypeValue.SWEETHEART => relationType.Set(RelationTypes.Sweetheart),
-                RelationTypeValue.ME => relationType.Set(RelationTypes.Me),
-                RelationTypeValue.AGENT => relationType.Set(RelationTypes.Agent),
-                RelationTypeValue.EMERGENCY => relationType.Set(RelationTypes.Emergency),
-                _ => relationType,
+                RelationTypeValue.CONTACT => RelationTypes.Contact,
+                RelationTypeValue.ACQUAINTANCE => RelationTypes.Acquaintance,
+                RelationTypeValue.FRIEND => RelationTypes.Friend,
+                RelationTypeValue.MET => RelationTypes.Met,
+                RelationTypeValue.CO_WORKER => RelationTypes.CoWorker,
+                RelationTypeValue.COLLEAGUE => RelationTypes.Colleague,
+                RelationTypeValue.CO_RESIDENT => RelationTypes.CoResident,
+                RelationTypeValue.NEIGHBOR => RelationTypes.Neighbor,
+                RelationTypeValue.CHILD => RelationTypes.Child,
+                RelationTypeValue.PARENT => RelationTypes.Parent,
+                RelationTypeValue.SIBLING => RelationTypes.Sibling,
+                RelationTypeValue.SPOUSE => RelationTypes.Spouse,
+                RelationTypeValue.KIN => RelationTypes.Kin,
+                RelationTypeValue.MUSE => RelationTypes.Muse,
+                RelationTypeValue.CRUSH => RelationTypes.Crush,
+                RelationTypeValue.DATE => RelationTypes.Date,
+                RelationTypeValue.SWEETHEART => RelationTypes.Sweetheart,
+                RelationTypeValue.ME => RelationTypes.Me,
+                RelationTypeValue.AGENT => RelationTypes.Agent,
+                RelationTypeValue.EMERGENCY => RelationTypes.Emergency,
+                _ => null
             };
         }
     }
