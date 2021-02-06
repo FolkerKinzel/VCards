@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
-
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
@@ -104,7 +104,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             _actionList.Add(_collectAddressTypes);
 
 
-            AppendType(isPref);
+            AppendType(isPref, true);
             AppendValue(ParaSection.DataType);
             AppendLanguage();
             AppendNonStandardParameters();
@@ -144,7 +144,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             _actionList.Clear();
             _actionList.Add(_collectEmailType);
 
-            AppendType(isPref);
+            // EmailType ist eine string-Property.
+            // Deshalb können X-Values dort direkt eingegeben werden.
+            // Auch ist die Kombination mehrerer Values nicht erlaubt.
+            AppendType(isPref, false);
         }
 
         protected override void BuildFnPara()
@@ -165,7 +168,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             _actionList.Add(_collectPropertyClassTypes);
             _actionList.Add(_collectImppTypes);
 
-            AppendType(isPref);
+            AppendType(isPref, true);
         }
 
 
@@ -183,7 +186,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 AppendBase64Encoding();
             }
 
-            AppendType(false);
+            AppendType(false, true);
         }
 
 
@@ -194,7 +197,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             _actionList.Add(_collectAddressTypes);
 
 
-            AppendType(isPref);
+            AppendType(isPref, true);
             AppendValue(ParaSection.DataType);
             AppendLanguage();
             AppendNonStandardParameters();
@@ -216,7 +219,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 AppendBase64Encoding();
             }
 
-            AppendType(false);
+            AppendType(false, false);
         }
 
 
@@ -275,7 +278,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 AppendBase64Encoding();
             }
 
-            AppendType(false);
+            AppendType(false, false);
         }
 
         protected override void BuildProdidPara()
@@ -323,7 +326,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 AppendBase64Encoding();
             }
 
-            AppendType(false);
+            AppendType(false, false);
         }
 
 
@@ -340,7 +343,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             _actionList.Add(_collectPropertyClassTypes);
             _actionList.Add(_collectTelTypes);
 
-            AppendType(isPref);
+            AppendType(isPref, true);
         }
 
         protected override void BuildTitlePara()
@@ -371,7 +374,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             _actionList.Add(_collectPropertyClassTypes);
             _actionList.Add(_collectTelTypes);
 
-            AppendType(isPref);
+            AppendType(isPref, true);
         }
 
         protected override void BuildNonStandardPropertyPara(bool isPref)
@@ -387,7 +390,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 AppendBase64Encoding();
             }
 
-            AppendType(isPref);
+            AppendType(isPref, true);
             AppendLanguage();
             AppendContext();
             AppendNonStandardParameters();
@@ -457,7 +460,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
-        private void AppendType(bool isPref)
+        private void AppendType(bool isPref, bool appendXName)
         {
             this._stringCollectionList.Clear();
 
@@ -469,6 +472,18 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             if (isPref)
             {
                 _stringCollectionList.Add(ParameterSection.TypeValue.PREF);
+            }
+
+
+            if (appendXName && Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
+            {
+                foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandardParameters)
+                {
+                    if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) && !string.IsNullOrWhiteSpace(kvp.Value))
+                    {
+                        _stringCollectionList.Add(kvp.Value);
+                    }
+                }
             }
 
             if (this._stringCollectionList.Count != 0)
@@ -561,6 +576,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             return _worker.ToString();
         }
 
-        
+
     }
 }

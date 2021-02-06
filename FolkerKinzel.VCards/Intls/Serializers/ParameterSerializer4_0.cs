@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using FolkerKinzel.VCards.Models.PropertyParts;
-
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
@@ -739,6 +739,17 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             {
                 AppendParameter(ParameterSection.ParameterKey.LEVEL, exp);
             }
+            else if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
+            {
+                foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandardParameters)
+                {
+                    if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL) && !string.IsNullOrWhiteSpace(kvp.Value))
+                    {
+                        AppendParameter(ParameterSection.ParameterKey.LEVEL, kvp.Value);
+                        return;
+                    }
+                }
+            }
         }
 
         private void AppendGeo()
@@ -780,6 +791,17 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             if (interest != null)
             {
                 AppendParameter(ParameterSection.ParameterKey.LEVEL, interest);
+            }
+            else if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
+            {
+                foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandardParameters)
+                {
+                    if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL) && !string.IsNullOrWhiteSpace(kvp.Value))
+                    {
+                        AppendParameter(ParameterSection.ParameterKey.LEVEL, kvp.Value);
+                        return;
+                    }
+                }
             }
         }
 
@@ -892,6 +914,17 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             for (int i = 0; i < this._actionList.Count; i++)
             {
                 _actionList[i](this);
+            }
+
+            if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
+            {
+                foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandardParameters)
+                {
+                    if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) && !string.IsNullOrWhiteSpace(kvp.Value))
+                    {
+                        _stringCollectionList.Add(kvp.Value);
+                    }
+                }
             }
 
             if (this._stringCollectionList.Count != 0)

@@ -5,7 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
-
+using FolkerKinzel.VCards.Extensions;
+using System.Linq;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
@@ -315,9 +316,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                     AppendParameter(ParameterSection.ParameterKey.ENCODING, "QUOTED-PRINTABLE");
                     AppendParameter(ParameterSection.ParameterKey.CHARSET, VCard.DEFAULT_CHARSET);
                     break;
-                case VCdEncoding.Ansi:
-                    AppendParameter(ParameterSection.ParameterKey.ENCODING, "8BIT");
-                    break;
+                //case VCdEncoding.Ansi:
+                //    AppendParameter(ParameterSection.ParameterKey.ENCODING, "8BIT");
+                //    break;
                 default:
                     break;
             }
@@ -344,36 +345,26 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 _actionList[i](this);
             }
 
-            if (isPref)
-            {
-                _stringCollectionList.Add(ParameterSection.TypeValue.PREF);
-            }
-
-            //if (this._stringCollectionList.Count != 0)
-            //{
-            //    AppendV2_1Type(ConcatValues());
-            //}
-
             for (int i = 0; i < _stringCollectionList.Count; i++)
             {
                 AppendV2_1Type(_stringCollectionList[i]);
             }
 
-            //string ConcatValues()
-            //{
-            //    _ = this._worker.Clear();
-            //    int count = this._stringCollectionList.Count;
+            if (isPref)
+            {
+                AppendV2_1Type(ParameterSection.TypeValue.PREF);
+            }
 
-            //    Debug.Assert(count != 0);
-
-            //    for (int i = 0; i < count - 1; i++)
-            //    {
-            //        _ = _worker.Append(_stringCollectionList[i]).Append(';');
-            //    }
-
-            //    _ = _worker.Append(_stringCollectionList[count - 1]);
-            //    return _worker.ToString();
-            //}
+            if(Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
+            {
+                foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandardParameters)
+                {
+                    if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) && !string.IsNullOrWhiteSpace(kvp.Value))
+                    {
+                        AppendV2_1Type(kvp.Value);
+                    }
+                }
+            }
         }
 
         private void AppendImageType()
@@ -419,11 +410,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendValue()
         {
-            //if (ParaSection.DataType == VCdDataType.Uri && ParaSection.ContentLocation == VCdContentLocation.Inline)
-            //{
-            //    ParaSection.ContentLocation = VCdContentLocation.Url;
-            //}
-
             VCdContentLocation contentLocation = ParaSection.ContentLocation;
 
             if (contentLocation != VCdContentLocation.Inline)
@@ -432,17 +418,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
-
-
-        //private void AppendContext()
-        //{
-        //    string? s = ParaSection.Context;
-
-        //    if (s != null)
-        //    {
-        //        AppendParameter(ParameterSection.ParameterKey.CONTEXT, Mask(s));
-        //    }
-        //}
 
         #endregion
 
