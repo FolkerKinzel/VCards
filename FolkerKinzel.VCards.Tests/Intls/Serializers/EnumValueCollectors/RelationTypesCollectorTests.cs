@@ -45,7 +45,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
 
             var list = new List<string>(1);
 
-            foreach (var item in arr)
+            foreach (RelationTypes item in arr)
             {
                 list.Clear();
                 collector.CollectValueStrings(item, list);

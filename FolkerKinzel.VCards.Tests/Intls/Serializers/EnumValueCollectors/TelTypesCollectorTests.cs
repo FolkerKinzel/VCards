@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Intls.Converters;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
 {
@@ -72,10 +73,20 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
                 Assert.AreEqual(1, list.Count);
                 Assert.IsNotNull(list[0]);
 
-                TelTypes? comp = (TelTypes)Enum.Parse(typeof(TelTypes), list[0], true);
+                //TelTypes? comp = (TelTypes)Enum.Parse(typeof(TelTypes), list[0], true);
+
+                //Assert.IsTrue(comp.HasValue);
+                //Assert.AreEqual(comp.Value, item);
+
+
+                TelTypes? comp = TelTypesConverter.Parse(list[0]);
 
                 Assert.IsTrue(comp.HasValue);
-                Assert.AreEqual(comp.Value, item);
+                Assert.AreEqual(comp!.Value, item);
+
+                var comp2 = (TelTypes)Enum.Parse(typeof(TelTypes), list[0], true);
+
+                Assert.AreEqual(comp, comp2);
             }
         }
     }
