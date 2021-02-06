@@ -14,16 +14,16 @@ namespace FolkerKinzel.VCards.Intls.Converters
         }
 
 
-        internal static ImppTypes? Parse(string? typeValue, ImppTypes? imppType)
+        internal static ImppTypes? Parse(string? typeValue)
         {
             Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
 
             return typeValue switch
             {
-                TypeValue.Personal => imppType.Set(ImppTypes.Personal),
-                TypeValue.Business => imppType.Set(ImppTypes.Business),
-                TypeValue.Mobile => imppType.Set(ImppTypes.Mobile),
-                _ => imppType
+                TypeValue.Personal => ImppTypes.Personal,
+                TypeValue.Business => ImppTypes.Business,
+                TypeValue.Mobile => ImppTypes.Mobile,
+                _ => null
             };
         }
     }

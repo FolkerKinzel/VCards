@@ -69,7 +69,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         {
                             List<PropertyID> list = (List<PropertyID>?)this.PropertyIDs ?? new List<PropertyID>();
                             this.PropertyIDs = list;
-                            
+
                             PropertyID.ParseInto(list, parameter.Value);
 
                             break;
@@ -80,10 +80,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                             for (int i = 0; i < values.Count; i++)
                             {
-                                if (builder.Length != 0)
-                                {
-                                    ParseTypeParameter(CleanParameterValue(values[i], builder), propertyKey);
-                                }
+                                string typeValue = CleanParameterValue(values[i], builder);
+
+                                Debug.Assert(typeValue.Length != 0);
+                                ParseTypeParameter(typeValue, propertyKey);
                             }
                             break;
                         }
@@ -136,11 +136,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             .Replace(@"\n", Environment.NewLine)
                             .Replace(@"\N", Environment.NewLine)
                             .ToString();
-//#if NET40
-//                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine).Replace(@"\N", Environment.NewLine);
-//#else
-//                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine, StringComparison.OrdinalIgnoreCase);
-//#endif
+                        //#if NET40
+                        //                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine).Replace(@"\N", Environment.NewLine);
+                        //#else
+                        //                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine, StringComparison.OrdinalIgnoreCase);
+                        //#endif
                         break;
                     case ParameterKey.CONTEXT:
                         this.Context = parameter.Value.Trim().Trim(info.AllQuotes);
@@ -167,7 +167,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                     default:
                         {
-                            List<KeyValuePair<string, string>> userAttributes 
+                            List<KeyValuePair<string, string>> userAttributes
                                 = (List<KeyValuePair<string, string>>?)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
                             this.NonStandardParameters = userAttributes;
 
@@ -198,7 +198,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 }
             }
 
-            if(!clean)
+            if (!clean)
             {
                 return parameterValue;
             }
@@ -271,7 +271,12 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                     this.MediaType = MimeTypeConverter.MimeTypeFromImageTypeValue(typeValue);
                     break;
                 case VCard.PropKeys.IMPP:
-                    this.InstantMessengerType = ImppTypesConverter.Parse(typeValue, this.InstantMessengerType);
+                    ImppTypes? imppType = ImppTypesConverter.Parse(typeValue);
+
+                    if (imppType.HasValue)
+                    {
+                        this.InstantMessengerType = this.InstantMessengerType.Set(imppType.Value);
+                    }
                     break;
 
                 default:
