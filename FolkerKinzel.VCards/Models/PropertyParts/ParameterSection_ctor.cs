@@ -85,7 +85,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                                 Debug.Assert(typeValue.Length != 0);
                                 if (!ParseTypeParameter(typeValue, propertyKey))
                                 {
-                                    List<KeyValuePair<string, string>> nonStandardList = (List<KeyValuePair<string, string>>)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
+                                    List<KeyValuePair<string, string>> nonStandardList = (List<KeyValuePair<string, string>>?)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
                                     this.NonStandardParameters = nonStandardList;
 
                                     nonStandardList.Add(new KeyValuePair<string, string>(parameter.Key, values[i]));

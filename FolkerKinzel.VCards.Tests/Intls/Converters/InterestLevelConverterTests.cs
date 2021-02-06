@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         {
             foreach (InterestLevel kind in (InterestLevel[])Enum.GetValues(typeof(InterestLevel)))
             {
-                InterestLevel? kind2 = InterestLevelConverter.Parse(kind.ToString());
+                InterestLevel? kind2 = InterestLevelConverter.Parse(kind.ToString().ToLowerInvariant());
 
                 Assert.AreEqual(kind, kind2);
 

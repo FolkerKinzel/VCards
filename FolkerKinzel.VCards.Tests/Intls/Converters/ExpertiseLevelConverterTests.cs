@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         {
             foreach (ExpertiseLevel kind in (ExpertiseLevel[])Enum.GetValues(typeof(ExpertiseLevel)))
             {
-                ExpertiseLevel? kind2 = ExpertiseLevelConverter.Parse(kind.ToString());
+                ExpertiseLevel? kind2 = ExpertiseLevelConverter.Parse(kind.ToString().ToLowerInvariant());
 
                 Assert.AreEqual(kind, kind2);
 
