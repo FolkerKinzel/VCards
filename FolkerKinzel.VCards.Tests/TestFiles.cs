@@ -27,6 +27,8 @@ namespace FolkerKinzel.VCards.Tests
         internal static string V3vcf => Path.Combine(_testFileDirectory, "v3.vcf");
         internal static string V4vcf => Path.Combine(_testFileDirectory, "v4.vcf");
         internal static string PhotoV3vcf => Path.Combine(_testFileDirectory, "Photo v3.vcf");
+        internal static string WhatsAppIssueVcf => Path.Combine(_testFileDirectory, "WhatsAppIssue.vcf");
+
 
 
 

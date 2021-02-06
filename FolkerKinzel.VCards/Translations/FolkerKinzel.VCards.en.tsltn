@@ -1284,4 +1284,6 @@ When serializing as vCard 4.0, the method calls &lt;see cref ="M:FolkerKinzel.VC
 &lt;item&gt;&lt;c&gt;X-WAB-SPOUSE_NAME&lt;/c&gt;&lt;/item&gt;
 &lt;item&gt;&lt;c&gt;X-YAHOO&lt;/c&gt;&lt;/item&gt;
 &lt;/list&gt;</T>
+  <T ID="2CACFD58BC6102FF">&lt;see cref="P:FolkerKinzel.VCards.Models.TextProperty.Value"/&gt; should specify a URI for instant messaging and presence protocol communications with the object the vCard represents. If the URI can be used for voice
+      and/or video, the &lt;see cref="P:FolkerKinzel.VCards.VCard.PhoneNumbers"/&gt; property SHOULD be used in  addition to this property.</T>
 </Tsltn>

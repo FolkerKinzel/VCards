@@ -284,6 +284,12 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// <c>IMPP</c>: Liste von Instant-Messenger-Handles. <c>(3,4)</c>
         /// </summary>
+        /// <remarks>
+        /// <see cref="TextProperty.Value"/> sollte einen URI darstellen, der dem Instant Messenging
+        /// und der Präsenzprotokoll-Kommunikation mit dem Objekt dient, das durch die vCard repräsentiert wird.
+        /// Wenn der URI zusätzlich auch zum Austausch von gesprochenen Nachrichten oder Videos verwendet werden kann,
+        /// sollte zusätzlich ein Eintrag in <see cref="VCard.PhoneNumbers"/> vorgenommen werden.
+        /// </remarks>
         public IEnumerable<TextProperty?>? InstantMessengerHandles
         {
             get => Get<IEnumerable<TextProperty?>?>(VCdProp.InstantMessengerHandles);
