@@ -3,6 +3,7 @@ using System.Text;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Collections.Generic;
 using FolkerKinzel.VCards.Extensions;
+using System;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
@@ -364,15 +365,55 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             foreach (KeyValuePair<string, string> parameter in this.ParaSection.NonStandardParameters)
             {
-                if (string.IsNullOrWhiteSpace(parameter.Key) || string.IsNullOrWhiteSpace(parameter.Value))
+                string key = parameter.Key;
+
+                if (key is null)
                 {
                     continue;
                 }
 
-                AppendParameter(parameter.Key.Trim().ToUpperInvariant(), parameter.Value);
+                key = key.Trim();
+
+                if (key.Length == 0 || string.IsNullOrWhiteSpace(parameter.Value) || IsKnownParameter(key))
+                {
+                    continue;
+                }
+
+                AppendParameter(key, parameter.Value);
+            }
+
+            ////////////////////////////////////////////
+
+            static bool IsKnownParameter(string key)
+            {
+                Debug.Assert(key != null);
+                Debug.Assert(StringComparer.Ordinal.Equals(key, key.Trim()));
+
+                switch (key.ToUpperInvariant())
+                {
+                    case ParameterSection.ParameterKey.ALTID:
+                    case ParameterSection.ParameterKey.CALSCALE:
+                    case ParameterSection.ParameterKey.CHARSET:
+                    case ParameterSection.ParameterKey.CONTEXT:
+                    case ParameterSection.ParameterKey.ENCODING:
+                    case ParameterSection.ParameterKey.GEO:
+                    case ParameterSection.ParameterKey.INDEX:
+                    case ParameterSection.ParameterKey.LABEL:
+                    case ParameterSection.ParameterKey.LANGUAGE:
+                    case ParameterSection.ParameterKey.LEVEL:
+                    case ParameterSection.ParameterKey.MEDIATYPE:
+                    case ParameterSection.ParameterKey.PID:
+                    case ParameterSection.ParameterKey.PREF:
+                    case ParameterSection.ParameterKey.SORT_AS:
+                    case ParameterSection.ParameterKey.TYPE:
+                    case ParameterSection.ParameterKey.TZ:
+                    case ParameterSection.ParameterKey.VALUE:
+                        return true;
+                    default:
+                        return false;
+                }
             }
         }
-
 
     }
 }

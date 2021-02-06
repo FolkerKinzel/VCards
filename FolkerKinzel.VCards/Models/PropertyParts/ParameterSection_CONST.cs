@@ -7,6 +7,9 @@
 
         internal static class ParameterKey
         {
+            // Wenn die Klasse erweitert wird, muss 
+            // ParameterSerializer.AppendNonStandardParameters() angepasst werden!
+
             internal const string LANGUAGE = "LANGUAGE";
             internal const string VALUE = "VALUE";
             internal const string PREF = "PREF";
