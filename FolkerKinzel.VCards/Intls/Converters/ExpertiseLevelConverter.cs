@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models.Enums;
+using System;
 using System.Diagnostics;
 
 namespace FolkerKinzel.VCards.Intls.Converters
@@ -15,13 +16,14 @@ namespace FolkerKinzel.VCards.Intls.Converters
         internal static ExpertiseLevel? Parse(string val)
         {
             Debug.Assert(val != null);
+            Debug.Assert(StringComparer.Ordinal.Equals(val, val.ToLowerInvariant()));
 
-            return val.ToLowerInvariant() switch
+            return val switch
             {
                 Values.Beginner => ExpertiseLevel.Beginner,
                 Values.Average => ExpertiseLevel.Average,
                 Values.Expert => ExpertiseLevel.Expert,
-                _ => (ExpertiseLevel?)null,
+                _ => null
             };
         }
 
@@ -32,7 +34,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 ExpertiseLevel.Beginner => Values.Beginner,
                 ExpertiseLevel.Average => Values.Average,
                 ExpertiseLevel.Expert => Values.Expert,
-                _ => null,
+                _ => null
             };
         }
     }

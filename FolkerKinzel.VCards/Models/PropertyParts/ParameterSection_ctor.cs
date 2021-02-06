@@ -88,7 +88,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                                     List<KeyValuePair<string, string>> nonStandardList = (List<KeyValuePair<string, string>>)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
                                     this.NonStandardParameters = nonStandardList;
 
-                                    nonStandardList.Add(new KeyValuePair<string, string>(ParameterSection.ParameterKey.TYPE, values[i]));
+                                    nonStandardList.Add(new KeyValuePair<string, string>(parameter.Key, values[i]));
                                 }
                             }
                             break;
@@ -162,22 +162,36 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                     case ParameterKey.LEVEL:
                         if (propertyKey == VCard.PropKeys.NonStandard.EXPERTISE)
                         {
-                            this.ExpertiseLevel = ExpertiseLevelConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));
+                            ExpertiseLevel? expertise = ExpertiseLevelConverter.Parse(CleanLevelValue(parameter.Value, builder));
+
+                            if (expertise.HasValue)
+                            {
+                                this.ExpertiseLevel = expertise;
+                            }
+                            else
+                            {
+                                AddNonStandardParameter(parameter);
+                            }
                         }
                         else // HOBBY oder INTEREST
                         {
-                            this.InterestLevel = InterestLevelConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));
+                            InterestLevel? interest = InterestLevelConverter.Parse(CleanLevelValue(parameter.Value, builder));
+
+                            if (interest.HasValue)
+                            {
+                                this.InterestLevel = interest;
+                            }
+                            else
+                            {
+                                AddNonStandardParameter(parameter);
+                            }
                         }//else
                         break;
 
 
                     default:
                         {
-                            List<KeyValuePair<string, string>> userAttributes
-                                = (List<KeyValuePair<string, string>>?)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
-                            this.NonStandardParameters = userAttributes;
-
-                            userAttributes.Add(parameter);
+                            AddNonStandardParameter(parameter);
                             break;
                         }
 
@@ -188,6 +202,14 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
         }//ctor
 
+        private void AddNonStandardParameter(KeyValuePair<string, string> parameter)
+        {
+            List<KeyValuePair<string, string>> userAttributes
+                                            = (List<KeyValuePair<string, string>>?)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
+            this.NonStandardParameters = userAttributes;
+
+            userAttributes.Add(parameter);
+        }
 
         private static string CleanParameterValue(string parameterValue, StringBuilder builder)
         {
@@ -226,6 +248,46 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             return builder.ToString();
         }
+
+
+        private static string CleanLevelValue(string parameterValue, StringBuilder builder)
+        {
+            bool clean = false;
+
+            for (int i = 0; i < parameterValue.Length; i++)
+            {
+                char c = parameterValue[i];
+
+                if (char.IsUpper(c) || char.IsWhiteSpace(c) || c == '\'' || c == '\"')
+                {
+                    clean = true;
+                    break;
+                }
+            }
+
+            if (!clean)
+            {
+                return parameterValue;
+            }
+
+
+            _ = builder.Clear();
+
+            for (int i = 0; i < parameterValue.Length; i++)
+            {
+                char c = parameterValue[i];
+
+                if (char.IsWhiteSpace(c) || c == '\'' || c == '\"')
+                {
+                    continue;
+                }
+
+                _ = builder.Append(char.ToLowerInvariant(c));
+            }
+
+            return builder.ToString();
+        }
+
 
 
         private bool ParseTypeParameter(string typeValue, string propertyKey)

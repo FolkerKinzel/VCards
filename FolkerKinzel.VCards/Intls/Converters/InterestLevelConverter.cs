@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models.Enums;
+using System;
 using System.Diagnostics;
 
 namespace FolkerKinzel.VCards.Intls.Converters
@@ -15,13 +16,14 @@ namespace FolkerKinzel.VCards.Intls.Converters
         internal static InterestLevel? Parse(string val)
         {
             Debug.Assert(val != null);
+            Debug.Assert(StringComparer.Ordinal.Equals(val, val.ToLowerInvariant()));
 
-            return val.ToLowerInvariant() switch
+            return val switch
             {
                 Values.High => InterestLevel.High,
                 Values.Medium => InterestLevel.Medium,
                 Values.Low => InterestLevel.Low,
-                _ => (InterestLevel?)null,
+                _ => null
             };
         }
 
@@ -33,7 +35,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 InterestLevel.High => Values.High,
                 InterestLevel.Medium => Values.Medium,
                 InterestLevel.Low => Values.Low,
-                _ => null,
+                _ => null
             };
         }
     }
