@@ -244,7 +244,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             {
                 case VCard.PropKeys.ADR:
                     {
-                        this.AddressType = AddressTypesConverter.Parse(typeValue, this.AddressType);
+                        AddressTypes? addressType = AddressTypesConverter.Parse(typeValue);
+
+                        if (addressType.HasValue)
+                        {
+                            this.AddressType = this.AddressType.Set(addressType.Value);
+                        }
+
                         break;
                     }
                 case VCard.PropKeys.TEL:

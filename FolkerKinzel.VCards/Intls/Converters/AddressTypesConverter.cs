@@ -16,21 +16,21 @@ namespace FolkerKinzel.VCards.Intls.Converters
             internal const string PARCEL = "PARCEL";
         }
 
-        internal static AddressTypes? Parse(string typeValue, AddressTypes? addressType)
+        internal static AddressTypes? Parse(string typeValue)
         {
             Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
 
             return typeValue switch
             {
-                AdrTypeValue.DOM => addressType.Set(AddressTypes.Dom),
+                AdrTypeValue.DOM => AddressTypes.Dom,
 
-                AdrTypeValue.INTL => addressType.Set(AddressTypes.Intl),
+                AdrTypeValue.INTL => AddressTypes.Intl,
 
-                AdrTypeValue.POSTAL => addressType.Set(AddressTypes.Postal),
+                AdrTypeValue.POSTAL => AddressTypes.Postal,
 
-                AdrTypeValue.PARCEL => addressType.Set(AddressTypes.Parcel),
+                AdrTypeValue.PARCEL => AddressTypes.Parcel,
 
-                _ => addressType,
+                _ => null
             };
         }
 
