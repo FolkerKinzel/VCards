@@ -83,7 +83,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                                 string typeValue = CleanParameterValue(values[i], builder);
 
                                 Debug.Assert(typeValue.Length != 0);
-                                ParseTypeParameter(typeValue, propertyKey);
+                                if (!ParseTypeParameter(typeValue, propertyKey))
+                                {
+                                    List<KeyValuePair<string, string>> nonStandardList = (List<KeyValuePair<string, string>>)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
+                                    this.NonStandardParameters = nonStandardList;
+
+                                    nonStandardList.Add(new KeyValuePair<string, string>(ParameterSection.ParameterKey.TYPE, values[i]));
+                                }
                             }
                             break;
                         }
@@ -222,19 +228,19 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
 
-        private void ParseTypeParameter(string typeValue, string propertyKey)
+        private bool ParseTypeParameter(string typeValue, string propertyKey)
         {
             switch (typeValue)
             {
                 case TypeValue.PREF:
                     this.Preference = 1;
-                    return;
+                    return true;
                 case TypeValue.HOME:
                     this.PropertyClass = this.PropertyClass.Set(Enums.PropertyClassTypes.Home);
-                    return;
+                    return true;
                 case TypeValue.WORK:
                     this.PropertyClass = this.PropertyClass.Set(Enums.PropertyClassTypes.Work);
-                    return;
+                    return true;
                 default:
                     break;
             }
@@ -249,9 +255,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         if (addressType.HasValue)
                         {
                             this.AddressType = this.AddressType.Set(addressType.Value);
+                            return true;
                         }
 
-                        break;
+                        return false;
                     }
                 case VCard.PropKeys.TEL:
                     {
@@ -260,8 +267,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         if (telType.HasValue)
                         {
                             this.TelephoneType = this.TelephoneType.Set(telType.Value);
+                            return true;
                         }
-                        break;
+
+                        return false;
                     }
                 case VCard.PropKeys.RELATED:
                     {
@@ -270,8 +279,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         if (relType.HasValue)
                         {
                             this.RelationType = this.RelationType.Set(relType.Value);
+                            return true;
                         }
-                        break;
+
+                        return false;
                     }
                 case VCard.PropKeys.EMAIL:
                     this.EmailType = propertyKey;
@@ -293,12 +304,15 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         if (imppType.HasValue)
                         {
                             this.InstantMessengerType = this.InstantMessengerType.Set(imppType.Value);
+                            return true;
                         }
-                        break;
+                        return false;
                     }
                 default:
-                    break;
+                    return false;
             }//switch
+
+            return true;
         }
 
 
