@@ -24,7 +24,9 @@ namespace Examples
             _ = Directory.CreateDirectory(directoryPath);
 
 
-            VCardExample.ReadingAndWritingVCard(directoryPath);
+            //WhatsAppDemo1.IntegrateWhatsAppNumberUsingIMPP();
+            WhatsAppDemo2.UsingTheWhatsAppType();
+            //VCardExample.ReadingAndWritingVCard(directoryPath);
             //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
         }
     }

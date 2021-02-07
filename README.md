@@ -119,7 +119,8 @@ namespace NameSpaceAliasDemos
 
 ### Example
 
-**_(For the sake of better readability no exception handling and parameter validation is used in the following example.)_**
+**_(The example is in C# and with nullable reference types enabled. For the sake of 
+better readability no exception handling and parameter validation is used.)_**
 
 ```csharp
 using System;
