@@ -94,7 +94,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 {
                     _ = builder.Clear();
                     _ = builder.Append(currentList[j]);
-                    _ = builder.UnMask(version).Trim().RemoveQuotes();
+                    _ = builder.UnMask(version); //.Trim().RemoveQuotes();
 
                     if (builder.Length != 0)
                     {
