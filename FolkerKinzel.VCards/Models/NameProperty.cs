@@ -9,6 +9,7 @@ using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
 using System.Runtime.CompilerServices;
+using FolkerKinzel.VCards.Intls.Converters;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -34,7 +35,14 @@ namespace FolkerKinzel.VCards.Models
             IEnumerable<string?>? middleName = null,
             IEnumerable<string?>? prefix = null,
             IEnumerable<string?>? suffix = null,
-            string? propertyGroup = null) : base(propertyGroup) => Value = new Name(lastName, firstName, middleName, prefix, suffix);
+            string? propertyGroup = null) : base(propertyGroup)
+        {
+            Value = new Name(lastName: ReadOnlyCollectionConverter.ToReadOnlyCollection(lastName),
+                             firstName: ReadOnlyCollectionConverter.ToReadOnlyCollection(firstName),
+                             middleName: ReadOnlyCollectionConverter.ToReadOnlyCollection(middleName),
+                             prefix: ReadOnlyCollectionConverter.ToReadOnlyCollection(prefix),
+                             suffix: ReadOnlyCollectionConverter.ToReadOnlyCollection(suffix));
+        }
 
 
         /// <summary>
@@ -56,12 +64,11 @@ namespace FolkerKinzel.VCards.Models
             string? suffix = null,
             string? propertyGroup = null) : base(propertyGroup)
         {
-            Value = new Name(
-                lastName is null ? null : new string?[] { lastName },
-                firstName is null ? null : new string?[] { firstName },
-                middleName is null ? null : new string?[] { middleName },
-                prefix is null ? null : new string?[] { prefix },
-                suffix is null ? null : new string?[] { suffix });
+            Value = new Name(lastName: ReadOnlyCollectionConverter.ToReadOnlyCollection(lastName),
+                             firstName: ReadOnlyCollectionConverter.ToReadOnlyCollection(firstName),
+                             middleName: ReadOnlyCollectionConverter.ToReadOnlyCollection(middleName),
+                             prefix: ReadOnlyCollectionConverter.ToReadOnlyCollection(prefix),
+                             suffix: ReadOnlyCollectionConverter.ToReadOnlyCollection(suffix));
         }
 
 
