@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Extensions;
+﻿using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
@@ -15,8 +16,6 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// </summary>
     public sealed class Address
     {
-        private readonly ReadOnlyCollection<string>[] _data;
-
         private const int MAX_COUNT = 7;
 
         private const int POST_OFFICE_BOX = 0;
@@ -26,6 +25,14 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         private const int REGION = 4;
         private const int POSTAL_CODE = 5;
         private const int COUNTRY = 6;
+
+        private readonly ReadOnlyCollection<string> _postOfficeBox;
+        private readonly ReadOnlyCollection<string> _extendedAddress;
+        private readonly ReadOnlyCollection<string> _street;
+        private readonly ReadOnlyCollection<string> _locality;
+        private readonly ReadOnlyCollection<string> _region;
+        private readonly ReadOnlyCollection<string> _postalCode;
+        private readonly ReadOnlyCollection<string> _country;
 
 
         /// <summary>
@@ -38,49 +45,32 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <param name="country">Land (Staat)</param>
         /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
         /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-        internal Address(IEnumerable<string?>? street = null,
-                            IEnumerable<string?>? locality = null,
-                            IEnumerable<string?>? postalCode = null,
-                            IEnumerable<string?>? region = null,
-                            IEnumerable<string?>? country = null,
-                            IEnumerable<string?>? postOfficeBox = null,
-                            IEnumerable<string?>? extendedAddress = null)
+        internal Address(ReadOnlyCollection<string> street,
+                         ReadOnlyCollection<string> locality,
+                         ReadOnlyCollection<string> postalCode,
+                         ReadOnlyCollection<string> region,
+                         ReadOnlyCollection<string> country,
+                         ReadOnlyCollection<string> postOfficeBox,
+                         ReadOnlyCollection<string> extendedAddress)
         {
-#if NET40
-            string[] empty = VCard.EmptyStringArray;
-#else
-            string[] empty = Array.Empty<string>();
-#endif
-
-
-            var arr = new ReadOnlyCollection<string>[]
-            {
-#nullable disable
-                new ReadOnlyCollection<string>(postOfficeBox?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                new ReadOnlyCollection<string>(extendedAddress?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                new ReadOnlyCollection<string>(street?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                new ReadOnlyCollection<string>(locality?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                new ReadOnlyCollection<string>(region?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                new ReadOnlyCollection<string>(postalCode?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty),
-                new ReadOnlyCollection<string>(country?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? empty)
-#nullable restore
-            };
-
-            _data = arr;
+            _postOfficeBox = postOfficeBox;
+            _extendedAddress = extendedAddress;
+            _street = street;
+            _locality = locality;
+            _region = region;
+            _postalCode = postalCode;
+            _country = country;
         }
-
-
-        
 
 
         internal Address(string vCardValue, StringBuilder builder, VCdVersion version)
         {
             Debug.Assert(vCardValue != null);
 
-            var listList = vCardValue
+            List<List<string>?> listList = vCardValue
                 .SplitValueString(';')
                 .Select(x => x.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries))
-                .ToList();
+                .ToList()!;
 
             for (int i = 0; i < listList.Count; i++)
             {
@@ -109,53 +99,102 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             // Einträge, was zu Laufzeitfehlern führen kann:
             for (int i = listList.Count; i < MAX_COUNT; i++)
             {
-                listList.Add(new List<string>());
+                listList.Add(null);
             }
 
-            _data = listList.Select(x => new ReadOnlyCollection<string>(x)).ToArray();
+            _postOfficeBox = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[POST_OFFICE_BOX]);
+            _extendedAddress = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[EXTENDED_ADDRESS]);
+            _street = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[STREET]);
+            _locality = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[LOCALITY]);
+            _region = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[REGION]);
+            _postalCode = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[POSTAL_CODE]);
+            _country = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[COUNTRY]);
         }
 
         /// <summary>
         /// Postfach (nie <c>null</c>) (nicht verwenden)
         /// </summary>
         [Obsolete("Don't use this property.", false)]
-        public ReadOnlyCollection<string> PostOfficeBox => _data[POST_OFFICE_BOX];
+        public ReadOnlyCollection<string> PostOfficeBox => _postOfficeBox;
 
         /// <summary>
         /// Adresszusatz (nie <c>null</c>) (nicht verwenden)
         /// </summary>
         [Obsolete("Don't use this property.", false)]
-        public ReadOnlyCollection<string> ExtendedAddress => _data[EXTENDED_ADDRESS];
+        public ReadOnlyCollection<string> ExtendedAddress => _extendedAddress;
 
         /// <summary>
         /// Straße (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> Street => _data[STREET];
+        public ReadOnlyCollection<string> Street => _street;
 
         /// <summary>
         /// Ort (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> Locality => _data[LOCALITY];
+        public ReadOnlyCollection<string> Locality => _locality;
 
         /// <summary>
         /// Bundesland (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> Region => _data[REGION];
+        public ReadOnlyCollection<string> Region => _region;
 
         /// <summary>
         /// Postleitzahl (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> PostalCode => _data[POSTAL_CODE];
+        public ReadOnlyCollection<string> PostalCode => _postalCode;
 
         /// <summary>
         /// Land (Staat) (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> Country => _data[COUNTRY];
+        public ReadOnlyCollection<string> Country => _country;
+
 
         /// <summary>
         /// <c>true</c>, wenn das <see cref="Address"/>-Objekt keine verwertbaren Daten enthält.
         /// </summary>
-        public bool IsEmpty => !_data.Any(x => x.Count != 0);
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:In bedingten Ausdruck konvertieren", Justification = "<Ausstehend>")]
+        public bool IsEmpty
+        {
+            get
+            {
+                if (_locality.Count != 0)
+                {
+                    return false;
+                }
+
+                if (_street.Count != 0)
+                {
+                    return false;
+                }
+
+                if (_country.Count != 0)
+                {
+                    return false;
+                }
+
+                if (_region.Count != 0)
+                {
+                    return false;
+                }
+
+                if (_postalCode.Count != 0)
+                {
+                    return false;
+                }
+
+                if (_postOfficeBox.Count != 0)
+                {
+                    return false;
+                }
+
+                if (_extendedAddress.Count != 0)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
 
 
         internal void AppendVCardString(VcfSerializer serializer)
@@ -165,13 +204,26 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
 
-            for (int i = 0; i < _data.Length - 1; i++)
-            {
-                AppendProperty(_data[i]);
-                _ = builder.Append(';');
-            }
+            AppendProperty(_postOfficeBox);
+            _ = builder.Append(';');
 
-            AppendProperty(_data[_data.Length - 1]);
+            AppendProperty(_extendedAddress);
+            _ = builder.Append(';');
+
+            AppendProperty(_street);
+            _ = builder.Append(';');
+
+            AppendProperty(_locality);
+            _ = builder.Append(';');
+
+            AppendProperty(_region);
+            _ = builder.Append(';');
+
+            AppendProperty(_postalCode);
+            _ = builder.Append(';');
+
+            AppendProperty(_country);
+
 
             void AppendProperty(IList<string> strings)
             {
@@ -189,18 +241,44 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 _ = worker.Clear().Append(strings[strings.Count - 1]).Mask(serializer.Version);
                 _ = builder.Append(worker);
             }
-
         }
 
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:In bedingten Ausdruck konvertieren", Justification = "<Ausstehend>")]
         internal bool NeedsToBeQpEncoded()
         {
-            for (int i = 0; i < _data.Length; i++)
+            if (_locality.Any(x => x.NeedsToBeQpEncoded()))
             {
-                if (_data[i].Any(s => s.NeedsToBeQpEncoded()))
-                {
-                    return true;
-                }
+                return true;
+            }
+
+            if (_street.Any(x => x.NeedsToBeQpEncoded()))
+            {
+                return true;
+            }
+
+            if (_country.Any(x => x.NeedsToBeQpEncoded()))
+            {
+                return true;
+            }
+
+            if (_region.Any(x => x.NeedsToBeQpEncoded()))
+            {
+                return true;
+            }
+
+            if (_postalCode.Any(x => x.NeedsToBeQpEncoded()))
+            {
+                return true;
+            }
+
+            if (_postOfficeBox.Any(x => x.NeedsToBeQpEncoded()))
+            {
+                return true;
+            }
+
+            if (_extendedAddress.Any(x => x.NeedsToBeQpEncoded()))
+            {
+                return true;
             }
 
             return false;
@@ -220,28 +298,99 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             var worker = new StringBuilder();
             var dic = new List<Tuple<string, string>>();
 
-            for (int i = 0; i < _data.Length; i++)
+            for (int i = 0; i < MAX_COUNT; i++)
             {
-                string? s = BuildProperty(_data[i]);
-
-                if (s is null)
+                switch (i)
                 {
-                    continue;
-                }
+                    case POST_OFFICE_BOX:
+                        {
+                            string? s = BuildProperty(_postOfficeBox);
 
-                dic.Add(new Tuple<string, string>(i switch
-                {
+                            if (s is null)
+                            {
+                                continue;
+                            }
+
 #pragma warning disable CS0618 // Typ oder Element ist veraltet
-                    POST_OFFICE_BOX => nameof(PostOfficeBox),
-                    EXTENDED_ADDRESS => nameof(ExtendedAddress),
+                            dic.Add(new Tuple<string, string>(nameof(PostOfficeBox), s));
 #pragma warning restore CS0618 // Typ oder Element ist veraltet
-                    STREET => nameof(Street),
-                    LOCALITY => nameof(Locality),
-                    REGION => nameof(Region),
-                    POSTAL_CODE => nameof(PostalCode),
-                    COUNTRY => nameof(Country),
-                    _ => "Not Implemented"
-                }, s));
+                            break;
+                        }
+                    case EXTENDED_ADDRESS:
+                        {
+                            string? s = BuildProperty(_extendedAddress);
+
+                            if (s is null)
+                            {
+                                continue;
+                            }
+
+#pragma warning disable CS0618 // Typ oder Element ist veraltet
+                            dic.Add(new Tuple<string, string>(nameof(ExtendedAddress), s));
+#pragma warning restore CS0618 // Typ oder Element ist veraltet
+                            break;
+                        }
+                    case STREET:
+                        {
+                            string? s = BuildProperty(_street);
+
+                            if (s is null)
+                            {
+                                continue;
+                            }
+
+                            dic.Add(new Tuple<string, string>(nameof(Street), s));
+                            break;
+                        }
+                    case LOCALITY:
+                        {
+                            string? s = BuildProperty(_locality);
+
+                            if (s is null)
+                            {
+                                continue;
+                            }
+
+                            dic.Add(new Tuple<string, string>(nameof(Locality), s));
+                            break;
+                        }
+                    case REGION:
+                        {
+                            string? s = BuildProperty(_region);
+
+                            if (s is null)
+                            {
+                                continue;
+                            }
+
+                            dic.Add(new Tuple<string, string>(nameof(Region), s));
+                            break;
+                        }
+                    case POSTAL_CODE:
+                        {
+                            string? s = BuildProperty(_postalCode);
+
+                            if (s is null)
+                            {
+                                continue;
+                            }
+
+                            dic.Add(new Tuple<string, string>(nameof(PostalCode), s));
+                            break;
+                        }
+                    case COUNTRY:
+                        {
+                            string? s = BuildProperty(_country);
+
+                            if (s is null)
+                            {
+                                continue;
+                            }
+
+                            dic.Add(new Tuple<string, string>(nameof(Country), s));
+                            break;
+                        }
+                }
             }
 
             if (dic.Count == 0)
@@ -264,6 +413,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             worker.Length -= Environment.NewLine.Length;
             return worker.ToString();
 
+            ////////////////////////////////////////////
+
             string? BuildProperty(IList<string> strings)
             {
                 _ = worker.Clear();
@@ -283,7 +434,5 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 return worker.ToString();
             }
         }
-
-
     }
 }
