@@ -45,21 +45,21 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <param name="country">Land (Staat)</param>
         /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
         /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-        internal Address(ReadOnlyCollection<string> street,
-                         ReadOnlyCollection<string> locality,
-                         ReadOnlyCollection<string> postalCode,
-                         ReadOnlyCollection<string> region,
-                         ReadOnlyCollection<string> country,
-                         ReadOnlyCollection<string> postOfficeBox,
-                         ReadOnlyCollection<string> extendedAddress)
+        internal Address(ReadOnlyCollection<string> street = null,
+                         ReadOnlyCollection<string> locality = null,
+                         ReadOnlyCollection<string> postalCode = null,
+                         ReadOnlyCollection<string> region = null,
+                         ReadOnlyCollection<string> country = null,
+                         ReadOnlyCollection<string> postOfficeBox = null,
+                         ReadOnlyCollection<string> extendedAddress = null)
         {
-            _postOfficeBox = postOfficeBox;
-            _extendedAddress = extendedAddress;
-            _street = street;
-            _locality = locality;
-            _region = region;
-            _postalCode = postalCode;
-            _country = country;
+            _postOfficeBox = postOfficeBox ?? ReadOnlyCollectionConverter.Empty();
+            _extendedAddress = extendedAddress ?? ReadOnlyCollectionConverter.Empty();
+            _street = street ?? ReadOnlyCollectionConverter.Empty();
+            _locality = locality ?? ReadOnlyCollectionConverter.Empty();
+            _region = region ?? ReadOnlyCollectionConverter.Empty();
+            _postalCode = postalCode ?? ReadOnlyCollectionConverter.Empty();
+            _country = country ?? ReadOnlyCollectionConverter.Empty();
         }
 
 

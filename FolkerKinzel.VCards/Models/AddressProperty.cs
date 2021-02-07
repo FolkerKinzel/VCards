@@ -9,7 +9,7 @@ using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
 using System.Runtime.CompilerServices;
-
+using FolkerKinzel.VCards.Intls.Converters;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -44,8 +44,13 @@ namespace FolkerKinzel.VCards.Models
                                IEnumerable<string?>? extendedAddress = null,
                                string? propertyGroup = null) : base(propertyGroup)
         {
-            Value = new Address(street: street, locality: locality, postalCode: postalCode, region: region,
-                                     country: country, postOfficeBox: postOfficeBox, extendedAddress: extendedAddress);
+            Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
+                                locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
+                                postalCode: ReadOnlyCollectionConverter.ToReadOnlyCollection(postalCode),
+                                region: ReadOnlyCollectionConverter.ToReadOnlyCollection(region),
+                                country: ReadOnlyCollectionConverter.ToReadOnlyCollection(country),
+                                postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
+                                extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
         }
 
 
@@ -75,16 +80,15 @@ namespace FolkerKinzel.VCards.Models
             string? postOfficeBox = null,
             string? extendedAddress = null,
             string? propertyGroup = null)
-            : this(street: string.IsNullOrWhiteSpace(street) ? null : new string[] { street },
-                   locality: string.IsNullOrWhiteSpace(locality) ? null : new string[] { locality },
-                   postalCode: string.IsNullOrWhiteSpace(postalCode) ? null : new string[] { postalCode },
-                   region: string.IsNullOrWhiteSpace(region) ? null : new string[] { region },
-                   country: string.IsNullOrWhiteSpace(country) ? null : new string[] { country },
-                   postOfficeBox: string.IsNullOrWhiteSpace(postOfficeBox) ? null : new string[] { postOfficeBox },
-                   extendedAddress: string.IsNullOrWhiteSpace(extendedAddress) ? null : new string[] { extendedAddress },
-                   propertyGroup: propertyGroup)
+            : base(propertyGroup)
         {
-
+            Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
+                                locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
+                                postalCode: ReadOnlyCollectionConverter.ToReadOnlyCollection(postalCode),
+                                region: ReadOnlyCollectionConverter.ToReadOnlyCollection(region),
+                                country: ReadOnlyCollectionConverter.ToReadOnlyCollection(country),
+                                postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
+                                extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
         }
 
 

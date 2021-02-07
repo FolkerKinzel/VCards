@@ -20,13 +20,13 @@ namespace FolkerKinzel.VCards.Intls.Converters
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        internal static ReadOnlyCollection<string> ToReadOnlyCollection() => _emptyColl;
+        internal static ReadOnlyCollection<string> Empty() => _emptyColl;
 
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         internal static ReadOnlyCollection<string> ToReadOnlyCollection(string? s)
-            => string.IsNullOrWhiteSpace(s) ? ToReadOnlyCollection() : new ReadOnlyCollection<string>(new SingleStringList(s));
+            => string.IsNullOrWhiteSpace(s) ? Empty() : new ReadOnlyCollection<string>(new SingleStringList(s));
 
         internal static ReadOnlyCollection<string> ToReadOnlyCollection(IEnumerable<string?>? coll)
         {
