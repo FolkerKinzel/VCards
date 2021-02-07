@@ -104,7 +104,6 @@ namespace FolkerKinzel.VCards.Models
 #endif
         protected override object? GetVCardPropertyValue() => Value;
 
-
         
         /// <inheritdoc/>
         public override bool IsEmpty => Value.IsEmpty;

@@ -19,12 +19,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         internal Gender(VCdSex? sex, string? genderIdentity)
         {
             Sex = sex;
-
-            if (genderIdentity != null)
-            {
-                GenderIdentity = genderIdentity.Trim();
-                GenderIdentity = genderIdentity.Length != 0 ? genderIdentity : null;
-            }
+            GenderIdentity = string.IsNullOrWhiteSpace(genderIdentity) ? null : genderIdentity;
         }
 
         /// <summary>
@@ -55,10 +50,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             if (GenderIdentity != null)
             {
                 StringBuilder worker = serializer.Worker;
-                _ = worker.Clear().Append(GenderIdentity).Trim().Mask(serializer.Version);
+                _ = worker.Clear().Append(GenderIdentity).Mask(serializer.Version);
 
-                _ = builder.Append(';');
-                _ = builder.Append(worker);
+                _ = builder.Append(';').Append(worker);
             }
         }
 

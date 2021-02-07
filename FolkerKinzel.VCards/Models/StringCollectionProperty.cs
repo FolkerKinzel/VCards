@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Attributes;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -29,20 +30,12 @@ namespace FolkerKinzel.VCards.Models
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null) : base(propertyGroup)
         {
-            if (value == null)
+            this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
+
+            if(Value.Count == 0)
             {
-                return;
+                Value = null;
             }
-
-            // Die Überprüfungen könnten eine allgemeine Verwendbarkeit der Klasse einschränken:
-            string[] arr = value.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x!.Trim()).ToArray();
-
-            if (arr.Length == 0)
-            {
-                return;
-            }
-
-            this.Value = new ReadOnlyCollection<string>(arr);
         }
 
 
@@ -53,9 +46,15 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public StringCollectionProperty(string? value, string? propertyGroup = null) :
-            this(value is null ? null : new string?[] { value }, propertyGroup)
-        { }
+        public StringCollectionProperty(string? value, string? propertyGroup = null) : base(propertyGroup)
+        { 
+            this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
+
+            if(Value.Count == 0)
+            {
+                Value = null;
+            }
+        }
 
 
         internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version)
@@ -84,8 +83,9 @@ namespace FolkerKinzel.VCards.Models
                     list[i] = UnescapeString(list[i]);
                 }
 
-                return list.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
+                return list.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
+                ////////////////////////////////////////////////////////
 
                 string UnescapeString(string val)
                 {

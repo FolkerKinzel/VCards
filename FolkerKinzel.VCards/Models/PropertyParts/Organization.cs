@@ -23,15 +23,14 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <param name="organizationalUnits">Name(n) der Unterorganisation(en).</param>
         internal Organization(string? organizationName, IEnumerable<string?>? organizationalUnits = null)
         {
-            this.OrganizationName = string.IsNullOrWhiteSpace(organizationName) ? null : organizationName.Trim();
+            this.OrganizationName = string.IsNullOrWhiteSpace(organizationName) ? null : organizationName;
 
             if (organizationalUnits != null)
             {
                 this.OrganizationalUnits =
                     new ReadOnlyCollection<string>(organizationalUnits
                                                         .Where(x => !string.IsNullOrWhiteSpace(x))
-                                                        .Select(x => x!.Trim())
-                                                        .ToArray());
+                                                        .ToArray()!);
 
                 if (OrganizationalUnits.Count == 0)
                 {
@@ -52,7 +51,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                     _ = builder.Clear();
                     _ = builder.Append(list[i]);
-                    _ = builder.UnMask(version).Trim().RemoveQuotes();
+                    _ = builder.UnMask(version); //.Trim().RemoveQuotes();
 
                     if (builder.Length == 0)
                     {
