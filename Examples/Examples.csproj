@@ -5,7 +5,7 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <FileVersion>1.0.0.58</FileVersion>
+    <FileVersion>1.0.0.60</FileVersion>
   </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="if $(ConfigurationName) == Release if '$(TargetFramework)' == 'netcoreapp3.1' dotnet $(SolutionDir)IncVersion\IncVersion.dll $(ProjectDir)$(ProjectFileName) --revision" />
@@ -14,6 +14,6 @@
     <Compile Remove="NullableTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
+    <PackageReference Include="FolkerKinzel.VCards" Version="2.0.2-alpha" />
   </ItemGroup>
 </Project>
