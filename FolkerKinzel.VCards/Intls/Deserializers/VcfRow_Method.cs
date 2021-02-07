@@ -63,21 +63,21 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         }
 
 
-        /// <summary>
-        /// Unmaskiert maskierten Text, der sich in <see cref="Value"/> befindet, nach den Maßgaben des
-        /// verwendeten vCard-Standards und entfernt führenden und nachgestellten Leerraum sowie einfache und doppelte Gänsefüßchen,
-        /// die sich am Beginn oder Ende von <see cref="Value"/> befinden.
-        /// </summary>
-        /// <param name="version">Die Versionsnummer des vCard-Standards.</param>
-        internal void UnMaskAndTrim(VCdVersion version)
-        {
-            this.Value = Info.Builder.Clear().Append(this.Value).UnMask(version).Trim().RemoveQuotes().ToString();
+        ///// <summary>
+        ///// Unmaskiert maskierten Text, der sich in <see cref="Value"/> befindet, nach den Maßgaben des
+        ///// verwendeten vCard-Standards und entfernt führenden und nachgestellten Leerraum sowie einfache und doppelte Gänsefüßchen,
+        ///// die sich am Beginn oder Ende von <see cref="Value"/> befinden.
+        ///// </summary>
+        ///// <param name="version">Die Versionsnummer des vCard-Standards.</param>
+        //internal void UnMaskAndTrim(VCdVersion version)
+        //{
+        //    this.Value = Info.Builder.Clear().Append(this.Value).UnMask(version).Trim().RemoveQuotes().ToString();
 
-            if (this.Value.Length == 0)
-            {
-                this.Value = null;
-            }
-        }
+        //    if (this.Value.Length == 0)
+        //    {
+        //        this.Value = null;
+        //    }
+        //}
 
 
     }

@@ -66,7 +66,7 @@ namespace FolkerKinzel.VCards.Models
 
             if (list.Count >= 2)
             {
-                genderIdentity = vcfRow.Info.Builder.Clear().Append(list[1]).UnMask(VCdVersion.V4_0).Trim().ToString();
+                genderIdentity = vcfRow.Info.Builder.Clear().Append(list[1]).UnMask(VCdVersion.V4_0).ToString();
             }
 
             Value = new Gender(sex, genderIdentity);
