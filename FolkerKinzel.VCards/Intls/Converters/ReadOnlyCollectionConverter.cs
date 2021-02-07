@@ -28,17 +28,33 @@ namespace FolkerKinzel.VCards.Intls.Converters
         internal static ReadOnlyCollection<string> ToReadOnlyCollection(string? s)
             => string.IsNullOrWhiteSpace(s) ? Empty() : new ReadOnlyCollection<string>(new SingleStringList(s));
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:In bedingten Ausdruck konvertieren", Justification = "<Ausstehend>")]
         internal static ReadOnlyCollection<string> ToReadOnlyCollection(IEnumerable<string?>? coll)
         {
-            return coll is null || !coll.Any(x => !string.IsNullOrWhiteSpace(x))
-                    ? _emptyColl
-                    : coll.All(x => !string.IsNullOrWhiteSpace(x))
-                        ? coll is ReadOnlyCollection<string> roc
-                            ? roc
-                            : coll is IList<string> list
-                                ? new ReadOnlyCollection<string>(list) 
-                                : new ReadOnlyCollection<string>(coll.ToArray()!)
-                        : new ReadOnlyCollection<string>(coll.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()!);
+            if (coll is null || !coll.Any(x => !string.IsNullOrWhiteSpace(x)))
+            {
+                return _emptyColl;
+            }
+
+            if (coll.All(x => !string.IsNullOrWhiteSpace(x)))
+            {
+                if (coll is ReadOnlyCollection<string> roc)
+                {
+                    return roc;
+                }
+                else if (coll is IList<string> list)
+                {
+                    return new ReadOnlyCollection<string>(list);
+                }
+                else
+                {
+                    return new ReadOnlyCollection<string>(coll.ToArray()!);
+                }
+            }
+            else
+            {
+                return new ReadOnlyCollection<string>(coll.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()!);
+            }
         }
 
         //////////////////////////////////////////////
