@@ -51,22 +51,31 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetVCardPropertyValue() => Value;
 
 
-        internal GenderProperty(VcfRow vcfRow)
+        internal GenderProperty(VcfRow vcfRow, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             VCdSex? sex = null;
             string? genderIdentity = null;
 
-            List<string> list = vcfRow.Value.SplitValueString(';');
+            ValueSplitter semicolonSplitter = vcfRow.Info.ValueSplitter1;
+            semicolonSplitter.ValueString = vcfRow.Value;
+            semicolonSplitter.SplitChar = ';';
+            semicolonSplitter.Options = StringSplitOptions.None;
 
-            if (list.Count >= 1)
-            {
-                sex = VCdSexConverter.Parse(list[0]);
-            }
+            bool initGenderIdentity = false;
 
-            if (list.Count >= 2)
+            foreach (var s in semicolonSplitter)
             {
-                genderIdentity = list[1].UnMask(vcfRow.Info.Builder, VCdVersion.V4_0);
+                if (initGenderIdentity)
+                {
+                    genderIdentity = s.UnMask(vcfRow.Info.Builder, version);
+                    break;
+                }
+                else
+                {
+                    sex = VCdSexConverter.Parse(s);
+                    initGenderIdentity = true;
+                }
             }
 
             Value = new Gender(sex, genderIdentity);

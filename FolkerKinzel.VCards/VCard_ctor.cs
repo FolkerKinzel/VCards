@@ -218,7 +218,7 @@ namespace FolkerKinzel.VCards
                             var nickNames = (List<StringCollectionProperty?>?)NickNames ?? new List<StringCollectionProperty?>();
                             NickNames = nickNames;
 
-                            nickNames.Add(new StringCollectionProperty(vcfRow, this.Version));
+                            nickNames.Add(new StringCollectionProperty(vcfRow, this.Version, info.ValueSplitter1));
                             break;
                         }
                     case PropKeys.CATEGORIES:
@@ -226,7 +226,7 @@ namespace FolkerKinzel.VCards
                             var categories = (List<StringCollectionProperty?>?)Categories ?? new List<StringCollectionProperty?>();
                             Categories = categories;
 
-                            categories.Add(new StringCollectionProperty(vcfRow, this.Version));
+                            categories.Add(new StringCollectionProperty(vcfRow, this.Version, info.ValueSplitter1));
                             break;
                         }
                     case PropKeys.SOUND:
@@ -332,7 +332,7 @@ namespace FolkerKinzel.VCards
                             var genders = (List<GenderProperty?>?)this.GenderViews ?? new List<GenderProperty?>();
                             this.GenderViews = genders;
 
-                            genders.Add(new GenderProperty(vcfRow));
+                            genders.Add(new GenderProperty(vcfRow, this.Version));
                             break;
                         }
                     case PropKeys.NonStandard.X_GENDER:

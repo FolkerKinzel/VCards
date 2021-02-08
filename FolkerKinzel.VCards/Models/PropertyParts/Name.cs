@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
@@ -24,11 +25,6 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         private const int MIDDLE_NAME = 2;
         private const int PREFIX = 3;
         private const int SUFFIX = 4;
-        private readonly ReadOnlyCollection<string> _lastName;
-        private readonly ReadOnlyCollection<string> _firstName;
-        private readonly ReadOnlyCollection<string> _middleName;
-        private readonly ReadOnlyCollection<string> _prefix;
-        private readonly ReadOnlyCollection<string> _suffix;
 
         /// <summary>
         /// Initialisiert ein neues <see cref="Name"/>-Objekt.
@@ -45,91 +41,183 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             ReadOnlyCollection<string> prefix,
             ReadOnlyCollection<string> suffix)
         {
-            _lastName = lastName;
-            _firstName = firstName;
-            _middleName = middleName;
-            _prefix = prefix;
-            _suffix = suffix;
+            LastName = lastName;
+            FirstName = firstName;
+            MiddleName = middleName;
+            Prefix = prefix;
+            Suffix = suffix;
         }
 
         internal Name()
         {
-            _lastName =
-            _firstName =
-            _middleName =
-            _prefix =
-            _suffix = ReadOnlyCollectionConverter.Empty();
+            LastName =
+            FirstName =
+            MiddleName =
+            Prefix =
+            Suffix = ReadOnlyCollectionConverter.Empty();
         }
 
 
-        internal Name(string vCardValue, StringBuilder builder, VCdVersion version)
+        internal Name(string vCardValue, VCardDeserializationInfo info, VCdVersion version)
         {
             Debug.Assert(vCardValue != null);
 
-            List<List<string>?>? listList = vCardValue
-                .SplitValueString(';')
-                .Select(x => x.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries))
-                .ToList()!;
+            StringBuilder? builder = info.Builder;
 
-            for (int i = 0; i < listList.Count; i++)
+            ValueSplitter semicolonSplitter = info.ValueSplitter1;
+            semicolonSplitter.ValueString = vCardValue;
+            semicolonSplitter.SplitChar = ';';
+            semicolonSplitter.Options = StringSplitOptions.None;
+
+            ValueSplitter commaSplitter = info.ValueSplitter2;
+            commaSplitter.SplitChar = ',';
+            commaSplitter.Options = StringSplitOptions.RemoveEmptyEntries;
+
+            int index = 0;
+            foreach (var s in semicolonSplitter)
             {
-                List<string>? currentList = listList[i];
-
-                Debug.Assert(currentList != null);
-
-                for (int j = currentList.Count - 1; j >= 0; j--)
+                switch (index++)
                 {
-                    string? s = currentList[j].UnMask(builder, version);
+                    case LAST_NAME:
+                        {
+                            if (s.Length == 0)
+                            {
+                                LastName = ReadOnlyCollectionConverter.Empty();
+                            }
+                            else
+                            {
+                                var list = new List<string>();
+                                commaSplitter.ValueString = s;
 
-                    if(string.IsNullOrWhiteSpace(s))
-                    {
-                        currentList.RemoveAt(j);
-                    }
-                    else
-                    {
-                        currentList[j] = s;
-                    }
-                }
-            }//for
+                                foreach (var item in commaSplitter)
+                                {
+                                    list.Add(item.UnMask(builder, version));
+                                }
 
-            // wenn die vcf-Datei fehlerhaft ist, enthält listList zu wenige
-            // Einträge, was zu Laufzeitfehlern führen kann:
-            for (int i = listList.Count; i < MAX_COUNT; i++)
-            {
-                listList.Add(new List<string>());
-            }
+                                LastName = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
+                            }
 
-            _firstName = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[FIRST_NAME]);
-            _lastName = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[LAST_NAME]);
-            _middleName = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[MIDDLE_NAME]);
-            _prefix = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[PREFIX]);
-            _suffix = ReadOnlyCollectionConverter.ToReadOnlyCollection(listList[SUFFIX]);
+                            break;
+                        }
+                    case FIRST_NAME:
+                        {
+                            if (s.Length == 0)
+                            {
+                                FirstName = ReadOnlyCollectionConverter.Empty();
+                            }
+                            else
+                            {
+                                var list = new List<string>();
+                                commaSplitter.ValueString = s;
+
+                                foreach (var item in commaSplitter)
+                                {
+                                    list.Add(item.UnMask(builder, version));
+                                }
+
+                                FirstName = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
+                            }
+
+                            break;
+                        }
+                    case MIDDLE_NAME:
+                        {
+                            if (s.Length == 0)
+                            {
+                                MiddleName = ReadOnlyCollectionConverter.Empty();
+                            }
+                            else
+                            {
+                                var list = new List<string>();
+                                commaSplitter.ValueString = s;
+
+                                foreach (var item in commaSplitter)
+                                {
+                                    list.Add(item.UnMask(builder, version));
+                                }
+
+                                MiddleName = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
+                            }
+
+                            break;
+                        }
+                    case PREFIX:
+                        {
+                            if (s.Length == 0)
+                            {
+                                Prefix = ReadOnlyCollectionConverter.Empty();
+                            }
+                            else
+                            {
+                                var list = new List<string>();
+                                commaSplitter.ValueString = s;
+
+                                foreach (var item in commaSplitter)
+                                {
+                                    list.Add(item.UnMask(builder, version));
+                                }
+
+                                Prefix = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
+                            }
+
+                            break;
+                        }
+                    case SUFFIX:
+                        {
+                            if (s.Length == 0)
+                            {
+                                Suffix = ReadOnlyCollectionConverter.Empty();
+                            }
+                            else
+                            {
+                                var list = new List<string>();
+                                commaSplitter.ValueString = s;
+
+                                foreach (var item in commaSplitter)
+                                {
+                                    list.Add(item.UnMask(builder, version));
+                                }
+
+                                Suffix = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
+                            }
+
+                            break;
+                        }
+                }//switch
+            }//foreach
+
+            // Wenn die VCF-Datei fehlerhaft ist, könnten Properties null sein:
+            FirstName ??= ReadOnlyCollectionConverter.Empty();
+            LastName ??= ReadOnlyCollectionConverter.Empty();
+            MiddleName ??= ReadOnlyCollectionConverter.Empty();
+            Prefix ??= ReadOnlyCollectionConverter.Empty();
+            Suffix ??= ReadOnlyCollectionConverter.Empty();
         }
 
         /// <summary>
         /// Nachname (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> LastName => _lastName;
+        public ReadOnlyCollection<string> LastName { get; }
 
         /// <summary>
         /// Vorname (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> FirstName => _firstName;
+        public ReadOnlyCollection<string> FirstName { get; }
 
         /// <summary>
         /// zweiter Vorname (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> MiddleName => _middleName;
+        public ReadOnlyCollection<string> MiddleName { get; }
 
         /// <summary>
         /// Namenspräfix (z.B. "Prof. Dr.") (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> Prefix => _prefix;
+        public ReadOnlyCollection<string> Prefix { get; }
 
         /// <summary>
         /// Namenssuffix (z.B. "jr.") (nie <c>null</c>)
         /// </summary>
-        public ReadOnlyCollection<string> Suffix => _suffix;
+        public ReadOnlyCollection<string> Suffix { get; }
 
 
         /// <summary>
@@ -140,27 +228,27 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         {
             get
             {
-                if (_lastName.Count != 0)
+                if (LastName.Count != 0)
                 {
                     return false;
                 }
 
-                if (_firstName.Count != 0)
+                if (FirstName.Count != 0)
                 {
                     return false;
                 }
 
-                if (_middleName.Count != 0)
+                if (MiddleName.Count != 0)
                 {
                     return false;
                 }
 
-                if (_prefix.Count != 0)
+                if (Prefix.Count != 0)
                 {
                     return false;
                 }
 
-                if (_suffix.Count != 0)
+                if (Suffix.Count != 0)
                 {
                     return false;
                 }
@@ -177,19 +265,19 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
 
-            AppendProperty(_lastName);
+            AppendProperty(LastName);
             _ = builder.Append(';');
 
-            AppendProperty(_firstName);
+            AppendProperty(FirstName);
             _ = builder.Append(';');
 
-            AppendProperty(_middleName);
+            AppendProperty(MiddleName);
             _ = builder.Append(';');
 
-            AppendProperty(_prefix);
+            AppendProperty(Prefix);
             _ = builder.Append(';');
 
-            AppendProperty(_suffix);
+            AppendProperty(Suffix);
 
             ///////////////////////////////////
 
@@ -214,27 +302,27 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:In bedingten Ausdruck konvertieren", Justification = "<Ausstehend>")]
         internal bool NeedsToBeQpEncoded()
         {
-            if (_lastName.Any(x => x.NeedsToBeQpEncoded()))
+            if (LastName.Any(x => x.NeedsToBeQpEncoded()))
             {
                 return true;
             }
 
-            if (_firstName.Any(x => x.NeedsToBeQpEncoded()))
+            if (FirstName.Any(x => x.NeedsToBeQpEncoded()))
             {
                 return true;
             }
 
-            if (_middleName.Any(x => x.NeedsToBeQpEncoded()))
+            if (MiddleName.Any(x => x.NeedsToBeQpEncoded()))
             {
                 return true;
             }
 
-            if (_prefix.Any(x => x.NeedsToBeQpEncoded()))
+            if (Prefix.Any(x => x.NeedsToBeQpEncoded()))
             {
                 return true;
             }
 
-            if (_suffix.Any(x => x.NeedsToBeQpEncoded()))
+            if (Suffix.Any(x => x.NeedsToBeQpEncoded()))
             {
                 return true;
             }
@@ -258,7 +346,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 {
                     case LAST_NAME:
                         {
-                            string? s = BuildProperty(_lastName);
+                            string? s = BuildProperty(LastName);
 
                             if (s is null)
                             {
@@ -270,7 +358,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         }
                     case FIRST_NAME:
                         {
-                            string? s = BuildProperty(_firstName);
+                            string? s = BuildProperty(FirstName);
 
                             if (s is null)
                             {
@@ -282,7 +370,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         }
                     case MIDDLE_NAME:
                         {
-                            string? s = BuildProperty(_middleName);
+                            string? s = BuildProperty(MiddleName);
 
                             if (s is null)
                             {
@@ -294,7 +382,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         }
                     case PREFIX:
                         {
-                            string? s = BuildProperty(_prefix);
+                            string? s = BuildProperty(Prefix);
 
                             if (s is null)
                             {
@@ -306,7 +394,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         }
                     case SUFFIX:
                         {
-                            string? s = BuildProperty(_suffix);
+                            string? s = BuildProperty(Suffix);
 
                             if (s is null)
                             {

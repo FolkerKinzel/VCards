@@ -76,11 +76,14 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         }
                     case ParameterKey.TYPE:
                         {
-                            List<string> values = parameter.Value.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
+                            ValueSplitter valueSplitter = info.ValueSplitter1;
+                            valueSplitter.ValueString = parameter.Value;
+                            valueSplitter.SplitChar = ',';
+                            valueSplitter.Options = StringSplitOptions.RemoveEmptyEntries;
 
-                            for (int i = 0; i < values.Count; i++)
+                            foreach (var s in valueSplitter)
                             {
-                                string typeValue = CleanParameterValue(values[i], builder);
+                                string typeValue = CleanParameterValue(s, builder);
 
                                 Debug.Assert(typeValue.Length != 0);
                                 if (!ParseTypeParameter(typeValue, propertyKey))
@@ -88,7 +91,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                                     List<KeyValuePair<string, string>> nonStandardList = (List<KeyValuePair<string, string>>?)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
                                     this.NonStandardParameters = nonStandardList;
 
-                                    nonStandardList.Add(new KeyValuePair<string, string>(parameter.Key, values[i]));
+                                    nonStandardList.Add(new KeyValuePair<string, string>(parameter.Key, s));
                                 }
                             }
                             break;
@@ -101,20 +104,18 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         break;
                     case ParameterKey.SORT_AS:
                         {
-                            List<string> list = parameter.Value.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
+                            List<string> list = (List<string>?)this.SortAs ?? new List<string>();
+                            this.SortAs = list;
 
-                            for (int i = list.Count - 1; i >= 0; i--)
+                            ValueSplitter valueSplitter = info.ValueSplitter1;
+                            valueSplitter.ValueString = parameter.Value;
+                            valueSplitter.SplitChar = ',';
+                            valueSplitter.Options = StringSplitOptions.RemoveEmptyEntries;
+
+                            foreach (var s in valueSplitter)
                             {
-                                string? s = list[i].UnMask(builder, VCdVersion.V4_0);
-
-                                if (string.IsNullOrWhiteSpace(s))
-                                {
-                                    list.RemoveAt(i);
-                                }
-                                else
-                                {
-                                    list[i] = s;
-                                }
+                                string sortString = s.UnMask(builder, VCdVersion.V4_0);
+                                list.Add(sortString);
                             }
 
                             break;
@@ -142,11 +143,6 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             .Replace(@"\n", Environment.NewLine)
                             .Replace(@"\N", Environment.NewLine)
                             .ToString();
-                        //#if NET40
-                        //                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine).Replace(@"\N", Environment.NewLine);
-                        //#else
-                        //                        this.Label = parameter.Value.Trim().Trim(info.DoubleQuotes).Replace(@"\n", Environment.NewLine, StringComparison.OrdinalIgnoreCase);
-                        //#endif
                         break;
                     case ParameterKey.CONTEXT:
                         this.Context = parameter.Value.Trim().Trim(info.AllQuotes);

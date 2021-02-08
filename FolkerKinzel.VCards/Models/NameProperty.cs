@@ -85,7 +85,7 @@ namespace FolkerKinzel.VCards.Models
 
                 vcfRow.DecodeQuotedPrintable();
 
-                Value = new Name(vcfRow.Value, vcfRow.Info.Builder, version);
+                Value = new Name(vcfRow.Value, vcfRow.Info, version);
             }
         }
 

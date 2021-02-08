@@ -14,6 +14,7 @@
     <PackageReleaseNotes>
       Enables TYPE=PREF in the vCard 2.1 EMAIL property. (Although this is not mentioned in the standard, nevertheless it is widely supported.)
       Fixes an issue that non-standardized parameter values in standardized parameters are not recognized by the library.
+      Fixes the issue that SORT-AS parameter is not read.
 </PackageReleaseNotes>
     <PackageTags>vcard vcf</PackageTags>
     <Description>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using FolkerKinzel.VCards.Models.Enums;
 
@@ -8,6 +9,7 @@ namespace FolkerKinzel.VCards.Intls.Extensions
 {
     internal static class StringExtension
     {
+        [return: NotNullIfNotNull("value")]
         internal static string? UnMask(this string? value, StringBuilder sb, VCdVersion version)
         {
             Debug.Assert(sb != null);
@@ -50,59 +52,59 @@ namespace FolkerKinzel.VCards.Intls.Extensions
         }
 
 
-        /// <summary>
-        /// Splittet den Value-Teil einer vCard-Property unter Berücksichtigung der maskierten Zeichen.
-        /// Kann auch auf <c>null</c> aufgerufen werden: Gibt dann eine leere Liste zurück.
-        /// </summary>
-        /// <param name="valueString">Der zu splittende String.</param>
-        /// <param name="splitChar">Das Trennzeichen.</param>
-        /// <param name="options"><see cref="StringSplitOptions"/>: Der Standardwert ist <see cref="StringSplitOptions.None"/>.</param>
-        /// <returns>Den gesplitteten String als Liste oder eine leere Liste, wenn <paramref name="valueString"/>
-        /// <c>null</c> war.</returns>
-        internal static List<string> SplitValueString(
-            this string? valueString, char splitChar, StringSplitOptions options = StringSplitOptions.None)
-        {
-            // wichtig: NIE ändern!
-            if (valueString is null)
-            {
-                return new List<string>();
-            }
+//        /// <summary>
+//        /// Splittet den Value-Teil einer vCard-Property unter Berücksichtigung der maskierten Zeichen.
+//        /// Kann auch auf <c>null</c> aufgerufen werden: Gibt dann eine leere Liste zurück.
+//        /// </summary>
+//        /// <param name="valueString">Der zu splittende String.</param>
+//        /// <param name="splitChar">Das Trennzeichen.</param>
+//        /// <param name="options"><see cref="StringSplitOptions"/>: Der Standardwert ist <see cref="StringSplitOptions.None"/>.</param>
+//        /// <returns>Den gesplitteten String als Liste oder eine leere Liste, wenn <paramref name="valueString"/>
+//        /// <c>null</c> war.</returns>
+//        internal static List<string> SplitValueString(
+//            this string? valueString, char splitChar, StringSplitOptions options = StringSplitOptions.None)
+//        {
+//            // wichtig: NIE ändern!
+//            if (valueString is null)
+//            {
+//                return new List<string>();
+//            }
 
-#if NET40
-            string[] arr = valueString.Split(new char[] { splitChar }, options);
-#else
-            string[] arr = valueString.Split(splitChar, options);
-#endif
+//#if NET40
+//            string[] arr = valueString.Split(new char[] { splitChar }, options);
+//#else
+//            string[] arr = valueString.Split(splitChar, options);
+//#endif
 
-            var list = new List<string>(arr.Length);
+//            var list = new List<string>(arr.Length);
 
-            const string MASK = @"\";
-            const string MASKED_BACKSLASH = @"\\";
+//            const string MASK = @"\";
+//            const string MASKED_BACKSLASH = @"\\";
 
-            for (int i = 0; i < arr.Length; i++)
-            {
-                string current = arr[i];
+//            for (int i = 0; i < arr.Length; i++)
+//            {
+//                string current = arr[i];
 
-                if (current != null &&
-                    current.EndsWith(MASK, StringComparison.Ordinal) &&
-                    !current.EndsWith(MASKED_BACKSLASH, StringComparison.Ordinal))
-                {
-                    if (++i < arr.Length)
-                    {
-                        string next = arr[i];
-                        current += splitChar + next; // Verkettung funktioniert auch mit null
-                    }
-                    else
-                    {
-                        current += splitChar; // maskiertes Zeichen am Stringende
-                    }
-                }
+//                if (current != null &&
+//                    current.EndsWith(MASK, StringComparison.Ordinal) &&
+//                    !current.EndsWith(MASKED_BACKSLASH, StringComparison.Ordinal))
+//                {
+//                    if (++i < arr.Length)
+//                    {
+//                        string next = arr[i];
+//                        current += splitChar + next; // Verkettung funktioniert auch mit null
+//                    }
+//                    else
+//                    {
+//                        current += splitChar; // maskiertes Zeichen am Stringende
+//                    }
+//                }
 
-                list.Add(current ?? string.Empty);
-            }//for
+//                list.Add(current ?? string.Empty);
+//            }//for
 
-            return list;
-        }
+//            return list;
+//        }
 
 
         /// <summary>

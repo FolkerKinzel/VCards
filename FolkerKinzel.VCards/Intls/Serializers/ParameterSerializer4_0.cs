@@ -983,16 +983,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         #endregion
 
-        //private bool IsValueDateAndOrTime()
-        //{
-        //    var value = this.ParaSection.DataType;
-        //    return !value.HasValue ||
-        //        value == VCdDataType.DateAndOrTime ||
-        //        value == VCdDataType.DateTime ||
-        //        value == VCdDataType.Date ||
-        //        value == VCdDataType.Time ||
-        //        value == VCdDataType.Timestamp;
-        //}
 
 
         private string EscapeAndQuote(string s)

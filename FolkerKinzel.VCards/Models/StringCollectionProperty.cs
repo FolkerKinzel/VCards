@@ -32,7 +32,7 @@ namespace FolkerKinzel.VCards.Models
         {
             this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
 
-            if(Value.Count == 0)
+            if (Value.Count == 0)
             {
                 Value = null;
             }
@@ -47,42 +47,43 @@ namespace FolkerKinzel.VCards.Models
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public StringCollectionProperty(string? value, string? propertyGroup = null) : base(propertyGroup)
-        { 
+        {
             this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
 
-            if(Value.Count == 0)
+            if (Value.Count == 0)
             {
                 Value = null;
             }
         }
 
 
-        internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version)
+        internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version, ValueSplitter valueSplitter)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
-            vcfRow.DecodeQuotedPrintable();
-            string[] arr = SplitValue();
+            string? value = vcfRow.Value;
 
-            if (arr.Length == 0)
+            if (value is null)
             {
                 return;
             }
 
-            this.Value = new ReadOnlyCollection<string>(arr);
+            vcfRow.DecodeQuotedPrintable();
 
-            //////////////////////////////////////////////////////
+            var list = new List<string>();
+            StringBuilder builder = vcfRow.Info.Builder;
 
-            string[] SplitValue()
+            valueSplitter.ValueString = vcfRow.Value;
+            valueSplitter.SplitChar = ',';
+            valueSplitter.Options = StringSplitOptions.RemoveEmptyEntries;
+
+            foreach (string s in valueSplitter)
             {
-                string? value = vcfRow.Value;
-                List<string?> list = value.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries)!;
+                list.Add(s.UnMask(builder, version));
+            }
 
-                for (int i = 0; i < list.Count; i++)
-                {
-                    list[i] = list[i].UnMask(vcfRow.Info.Builder, version);
-                }
-
-                return list.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()!;
+            if (list.Count != 0)
+            {
+                this.Value = new ReadOnlyCollection<string>(list);
             }
         }
 
@@ -138,7 +139,7 @@ namespace FolkerKinzel.VCards.Models
             _ = builder.Append(worker);
         }
 
-                
+
         /// <inheritdoc/>
         public override string ToString()
         {

@@ -1,14 +1,16 @@
-﻿using FolkerKinzel.VCards.Intls;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
 using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
-using System.Collections.Generic;
-using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using System.Text;
-using System.Runtime.CompilerServices;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -37,7 +39,27 @@ namespace FolkerKinzel.VCards.Models
 
             vcfRow.DecodeQuotedPrintable();
 
-            Value = new Organization(vcfRow.Value, vcfRow.Info.Builder, version);
+            ValueSplitter semicolonSplitter = vcfRow.Info.ValueSplitter1;
+            semicolonSplitter.ValueString = vcfRow.Value;
+            semicolonSplitter.SplitChar = ';';
+            semicolonSplitter.Options = StringSplitOptions.RemoveEmptyEntries;
+
+            StringBuilder? builder = vcfRow.Info.Builder;
+
+            var list = semicolonSplitter.Select(x => x.UnMask(builder, version)).ToList();
+
+            if (list.Count != 0)
+            {
+                string organizationName = list[0];
+                list.RemoveAt(0);
+
+                Value = new Organization(organizationName, list);
+            }
+            else
+            {
+                Value = new Organization();
+            }
+
         }
 
         /// <summary>

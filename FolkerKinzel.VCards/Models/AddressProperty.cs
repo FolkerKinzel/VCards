@@ -105,7 +105,7 @@ namespace FolkerKinzel.VCards.Models
                 Debug.Assert(!string.IsNullOrWhiteSpace(vcfRow.Value));
 
                 vcfRow.DecodeQuotedPrintable();
-                Value = new Address(vcfRow.Value, vcfRow.Info.Builder, version);
+                Value = new Address(vcfRow.Value, vcfRow.Info, version);
             }
         }
 

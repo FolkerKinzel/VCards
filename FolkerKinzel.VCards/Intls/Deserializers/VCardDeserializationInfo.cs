@@ -43,5 +43,11 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             }
         }
 
+        internal ValueSplitter ValueSplitter1 { get; } = new ValueSplitter();
+
+
+        internal ValueSplitter ValueSplitter2 { get; } = new ValueSplitter();
+        
+
     }
 }

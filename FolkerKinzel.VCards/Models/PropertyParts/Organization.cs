@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Extensions;
+﻿using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
@@ -16,6 +17,12 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// </summary>
     public sealed class Organization
     {
+
+        public Organization()
+        {
+
+        }
+
         /// <summary>
         /// Initialisiert ein neues <see cref="Organization"/>-Objekt.
         /// </summary>
@@ -27,10 +34,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             if (organizationalUnits != null)
             {
-                this.OrganizationalUnits =
-                    new ReadOnlyCollection<string>(organizationalUnits
-                                                        .Where(x => !string.IsNullOrWhiteSpace(x))
-                                                        .ToArray()!);
+                this.OrganizationalUnits = ReadOnlyCollectionConverter.ToReadOnlyCollection(organizationalUnits);
 
                 if (OrganizationalUnits.Count == 0)
                 {
@@ -39,40 +43,40 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             }
         }
 
-        internal Organization(string? propertyValue, StringBuilder builder, VCdVersion version)
-        {
-            List<string>? list = propertyValue.SplitValueString(';', StringSplitOptions.RemoveEmptyEntries);
+        //internal Organization(string? propertyValue, StringBuilder builder, VCdVersion version)
+        //{
+        //    List<string>? list = propertyValue.SplitValueString(';', StringSplitOptions.RemoveEmptyEntries);
 
-            if (list.Count != 0)
-            {
-                for (int i = list.Count - 1; i >= 0; i--)
-                {
-                    Debug.Assert(list[i] != null);
+        //    if (list.Count != 0)
+        //    {
+        //        for (int i = list.Count - 1; i >= 0; i--)
+        //        {
+        //            Debug.Assert(list[i] != null);
 
-                    string? s = list[i].UnMask(builder, version);
+        //            string? s = list[i].UnMask(builder, version);
 
-                    if(string.IsNullOrWhiteSpace(s))
-                    {
-                        list.RemoveAt(i);
-                    }
-                    else
-                    {
-                        list[i] = s;
-                    }
-                }
+        //            if(string.IsNullOrWhiteSpace(s))
+        //            {
+        //                list.RemoveAt(i);
+        //            }
+        //            else
+        //            {
+        //                list[i] = s;
+        //            }
+        //        }
 
-                if (list.Count != 0)
-                {
-                    OrganizationName = list[0];
-                }
+        //        if (list.Count != 0)
+        //        {
+        //            OrganizationName = list[0];
+        //        }
 
-                if (list.Count > 1)
-                {
-                    list.RemoveAt(0);
-                    OrganizationalUnits = new ReadOnlyCollection<string>(list);
-                }
-            }
-        }
+        //        if (list.Count > 1)
+        //        {
+        //            list.RemoveAt(0);
+        //            OrganizationalUnits = new ReadOnlyCollection<string>(list);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Name der Organisation
