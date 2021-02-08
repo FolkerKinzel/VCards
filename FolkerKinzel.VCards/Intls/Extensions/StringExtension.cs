@@ -109,8 +109,8 @@ namespace FolkerKinzel.VCards.Intls.Extensions
         /// Gibt <c>true</c> zurück, wenn <paramref name="s"/> NON-ASCII-Zeichen oder Zeilenwechsel enthält.
         /// Benötigt keine NULL-Prüfung.
         /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
+        /// <param name="s">Ein <see cref="string"/> oder <c>null</c>.</param>
+        /// <returns><c>true</c>, wenn <paramref name="s"/> enkodiert werden muss.</returns>
         public static bool NeedsToBeQpEncoded(this string? s)
         {
             if (s is null)

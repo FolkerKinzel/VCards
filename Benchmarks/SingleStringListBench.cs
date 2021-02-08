@@ -9,9 +9,9 @@ namespace Benchmarks
     public class SingleStringListBench
     {
         [Benchmark]
-        public void StructVsClass()
+        public AddressProperty StructVsClass()
         {
-            _ = new AddressProperty("eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben");
+            return new AddressProperty("eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben");
         }
 
     }

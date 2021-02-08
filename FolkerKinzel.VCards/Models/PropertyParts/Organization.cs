@@ -68,7 +68,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                 if (list.Count > 1)
                 {
-                    OrganizationalUnits = new ReadOnlyCollection<string>(list.Skip(1).ToArray());
+                    list.RemoveAt(0);
+                    OrganizationalUnits = new ReadOnlyCollection<string>(list);
                 }
             }
         }
