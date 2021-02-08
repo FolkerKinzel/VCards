@@ -42,7 +42,7 @@ namespace FolkerKinzel.VCards.Models
             ValueSplitter semicolonSplitter = vcfRow.Info.ValueSplitter1;
             semicolonSplitter.ValueString = vcfRow.Value;
             semicolonSplitter.SplitChar = ';';
-            semicolonSplitter.Options = StringSplitOptions.RemoveEmptyEntries;
+            semicolonSplitter.Options = StringSplitOptions.None;
 
             StringBuilder? builder = vcfRow.Info.Builder;
 
