@@ -26,7 +26,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         internal static ReadOnlyCollection<string> ToReadOnlyCollection(string? s)
-            => string.IsNullOrWhiteSpace(s) ? Empty() : new ReadOnlyCollection<string>(new SingleStringList(s));
+            => string.IsNullOrWhiteSpace(s) ? _emptyColl :  new ReadOnlyCollection<string>(new string[] { s });
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:In bedingten Ausdruck konvertieren", Justification = "<Ausstehend>")]
         internal static ReadOnlyCollection<string> ToReadOnlyCollection(IEnumerable<string?>? coll)
@@ -59,57 +59,57 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         //////////////////////////////////////////////
 
-        private readonly struct SingleStringList : IList<string>
-        {
-            private readonly string _s;
+        //        private readonly struct SingleStringList : IList<string>
+        //        {
+        //            private readonly string _s;
 
-            internal SingleStringList(string s) => _s = s;
+        //            internal SingleStringList(string s) => _s = s;
 
-            public string this[int index]
-            {
-#if !NET40
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-                get => index == 0 ? _s : OutOfBounds();
-                set => throw new NotImplementedException();
-            }
+        //            public string this[int index]
+        //            {
+        //#if !NET40
+        //                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //#endif
+        //                get => index == 0 ? _s : OutOfBounds();
+        //                set => throw new NotImplementedException();
+        //            }
 
-            private static string OutOfBounds() => throw new IndexOutOfRangeException();
-
-
-            public int Count => 1;
-
-            public bool IsReadOnly => true;
+        //            private static string OutOfBounds() => throw new IndexOutOfRangeException();
 
 
-            public bool Contains(string item) => StringComparer.Ordinal.Equals(item, _s);
+        //            public int Count => 1;
 
-            public void CopyTo(string[] array, int arrayIndex)
-            {
-                if (array is null)
-                {
-                    throw new ArgumentNullException(nameof(array));
-                }
-
-                array[arrayIndex] = _s;
-            }
-
-            public int IndexOf(string item) => StringComparer.Ordinal.Equals(item, _s) ? 0 : -1;
+        //            public bool IsReadOnly => true;
 
 
+        //            public bool Contains(string item) => StringComparer.Ordinal.Equals(item, _s);
 
-            public IEnumerator<string> GetEnumerator()
-            {
-                yield return _s;
-            }
+        //            public void CopyTo(string[] array, int arrayIndex)
+        //            {
+        //                if (array is null)
+        //                {
+        //                    throw new ArgumentNullException(nameof(array));
+        //                }
 
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        //                array[arrayIndex] = _s;
+        //            }
 
-            public void Add(string item) => throw new NotImplementedException();
-            public void Clear() => throw new NotImplementedException();
-            public void Insert(int index, string item) => throw new NotImplementedException();
-            public bool Remove(string item) => throw new NotImplementedException();
-            public void RemoveAt(int index) => throw new NotImplementedException();
-        }
+        //            public int IndexOf(string item) => StringComparer.Ordinal.Equals(item, _s) ? 0 : -1;
+
+
+
+        //            public IEnumerator<string> GetEnumerator()
+        //            {
+        //                yield return _s;
+        //            }
+
+        //            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        //            public void Add(string item) => throw new NotImplementedException();
+        //            public void Clear() => throw new NotImplementedException();
+        //            public void Insert(int index, string item) => throw new NotImplementedException();
+        //            public bool Remove(string item) => throw new NotImplementedException();
+        //            public void RemoveAt(int index) => throw new NotImplementedException();
+        //        }
     }
 }
