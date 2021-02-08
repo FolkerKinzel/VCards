@@ -105,15 +105,15 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                             for (int i = list.Count - 1; i >= 0; i--)
                             {
-                                _ = builder.Clear().Append(list[i]).Trim().RemoveQuotes().UnMask(VCdVersion.V4_0);
+                                string? s = list[i].UnMask(builder, VCdVersion.V4_0);
 
-                                if (builder.Length != 0)
+                                if (string.IsNullOrWhiteSpace(s))
                                 {
-                                    list[i] = builder.ToString();
+                                    list.RemoveAt(i);
                                 }
                                 else
                                 {
-                                    list.RemoveAt(i);
+                                    list[i] = s;
                                 }
                             }
 

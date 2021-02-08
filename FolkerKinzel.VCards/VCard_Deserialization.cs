@@ -148,9 +148,9 @@ namespace FolkerKinzel.VCards
             // Version 2.1 ist unmaskiert:
             content = versionHint == VCdVersion.V2_1
                 ? content 
-                : info.Builder.Clear().Append(content).UnMask(versionHint).ToString();
+                : content.UnMask(info.Builder, versionHint);
 
-            using var reader = new StringReader(content);
+            using var reader = new StringReader(content ?? string.Empty);
 
             List<VCard>? list = DoParse(reader, versionHint);
 

@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers
@@ -52,15 +53,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         /// verwendeten vCard-Standards.
         /// </summary>
         /// <param name="version">Die Versionsnummer des vCard-Standards.</param>
-        internal void UnMask(VCdVersion version)
-        {
-            this.Value = Info.Builder.Clear().Append(this.Value).UnMask(version).ToString();
-
-            if (this.Value.Length == 0)
-            {
-                this.Value = null;
-            }
-        }
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        internal void UnMask(VCdVersion version) => this.Value = this.Value.UnMask(Info.Builder, version);
 
 
         ///// <summary>

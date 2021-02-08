@@ -92,17 +92,15 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
                 for (int j = currentList.Count - 1; j >= 0; j--)
                 {
-                    _ = builder.Clear();
-                    _ = builder.Append(currentList[j]);
-                    _ = builder.UnMask(version); //.Trim().RemoveQuotes();
+                    string? s = currentList[j].UnMask(builder, version);
 
-                    if (builder.Length != 0)
+                    if(string.IsNullOrWhiteSpace(s))
                     {
-                        currentList[j] = builder.ToString();
+                        currentList.RemoveAt(j);
                     }
                     else
                     {
-                        currentList.RemoveAt(j); // wenn ein Eintrag nur Whitespace enthielt
+                        currentList[j] = s;
                     }
                 }
             }//for

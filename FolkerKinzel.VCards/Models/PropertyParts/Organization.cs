@@ -49,17 +49,15 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 {
                     Debug.Assert(list[i] != null);
 
-                    _ = builder.Clear();
-                    _ = builder.Append(list[i]);
-                    _ = builder.UnMask(version); //.Trim().RemoveQuotes();
+                    string? s = list[i].UnMask(builder, version);
 
-                    if (builder.Length == 0)
+                    if(string.IsNullOrWhiteSpace(s))
                     {
                         list.RemoveAt(i);
                     }
                     else
                     {
-                        list[i] = builder.ToString();
+                        list[i] = s;
                     }
                 }
 

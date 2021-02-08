@@ -75,22 +75,14 @@ namespace FolkerKinzel.VCards.Models
             string[] SplitValue()
             {
                 string? value = vcfRow.Value;
-                List<string> list = value.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries);
-
+                List<string?> list = value.SplitValueString(',', StringSplitOptions.RemoveEmptyEntries)!;
 
                 for (int i = 0; i < list.Count; i++)
                 {
-                    list[i] = UnescapeString(list[i]);
+                    list[i] = list[i].UnMask(vcfRow.Info.Builder, version);
                 }
 
-                return list.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-
-                ////////////////////////////////////////////////////////
-
-                string UnescapeString(string val)
-                {
-                    return vcfRow.Info.Builder.Clear().Append(val).UnMask(version).ToString();
-                }
+                return list.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()!;
             }
         }
 

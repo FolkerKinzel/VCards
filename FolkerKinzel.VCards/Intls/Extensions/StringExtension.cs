@@ -1,10 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Extensions
 {
     internal static class StringExtension
     {
+        internal static string? UnMask(this string? value, StringBuilder sb, VCdVersion version)
+        {
+            Debug.Assert(sb != null);
+
+            if (value is null)
+            {
+                return null;
+            }
+
+            if(value.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            _ = sb.Clear().Append(value).UnMask(version);
+
+            if (sb.Length == value.Length)
+            {
+                if (version < VCdVersion.V4_0)
+                {
+                    return value;
+                }
+                else
+                {
+                    for (int i = 0; i < sb.Length; i++)
+                    {
+                        if(sb[i] != value[i])
+                        {
+                            return sb.ToString();
+                        }
+                    }
+
+                    return value;
+                }
+            }
+            else
+            {
+                return sb.ToString();
+            }
+        }
+
+
         /// <summary>
         /// Splittet den Value-Teil einer vCard-Property unter Berücksichtigung der maskierten Zeichen.
         /// Kann auch auf <c>null</c> aufgerufen werden: Gibt dann eine leere Liste zurück.
