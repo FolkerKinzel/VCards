@@ -57,7 +57,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version, ValueSplitter valueSplitter)
+        internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
             string? value = vcfRow.Value;
@@ -72,6 +72,7 @@ namespace FolkerKinzel.VCards.Models
             var list = new List<string>();
             StringBuilder builder = vcfRow.Info.Builder;
 
+            ValueSplitter? valueSplitter = vcfRow.Info.ValueSplitter1;
             valueSplitter.ValueString = vcfRow.Value;
             valueSplitter.SplitChar = ',';
             valueSplitter.Options = StringSplitOptions.RemoveEmptyEntries;

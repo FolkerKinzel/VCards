@@ -218,7 +218,7 @@ namespace FolkerKinzel.VCards
                             var nickNames = (List<StringCollectionProperty?>?)NickNames ?? new List<StringCollectionProperty?>();
                             NickNames = nickNames;
 
-                            nickNames.Add(new StringCollectionProperty(vcfRow, this.Version, info.ValueSplitter1));
+                            nickNames.Add(new StringCollectionProperty(vcfRow, this.Version));
                             break;
                         }
                     case PropKeys.CATEGORIES:
@@ -226,7 +226,7 @@ namespace FolkerKinzel.VCards
                             var categories = (List<StringCollectionProperty?>?)Categories ?? new List<StringCollectionProperty?>();
                             Categories = categories;
 
-                            categories.Add(new StringCollectionProperty(vcfRow, this.Version, info.ValueSplitter1));
+                            categories.Add(new StringCollectionProperty(vcfRow, this.Version));
                             break;
                         }
                     case PropKeys.SOUND:
