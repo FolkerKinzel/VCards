@@ -48,10 +48,11 @@ namespace FolkerKinzel.VCards.Tests
                 Assert.IsNotNull(item);
             }
 
-            Assert.IsNotNull(vc.XmlProperties.FirstOrDefault());
+            Assert.IsNotNull(vc.BirthPlaceViews.FirstOrDefault());
         }
 
         [TestMethod]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>")]
         public void IEnumerableTest3()
         {
             var vc = new VCard

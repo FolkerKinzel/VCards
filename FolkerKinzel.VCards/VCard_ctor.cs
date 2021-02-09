@@ -62,51 +62,32 @@ namespace FolkerKinzel.VCards
                         }
                     case PropKeys.TEL:
                         {
-                            var telephones = (List<TextProperty?>?)PhoneNumbers ?? new List<TextProperty?>();
-                            PhoneNumbers = telephones;
-
-                            telephones.Add(new TextProperty(vcfRow, this.Version));
+                            PhoneNumbers = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), PhoneNumbers);
                             break;
                         }
                     case PropKeys.EMAIL:
                         {
-                            var emails = (List<TextProperty?>?)this.EmailAddresses ?? new List<TextProperty?>();
-                            this.EmailAddresses = emails;
-
-                            emails.Add(new TextProperty(vcfRow, this.Version));
+                            this.EmailAddresses = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), EmailAddresses);
                             break;
                         }
                     case PropKeys.N:  //LastName, FirstName, MiddleName, Prefix, Suffix
                         {
-                            var names = (List<NameProperty?>?)this.NameViews ?? new List<NameProperty?>();
-                            this.NameViews = names;
-
-                            names.Add(new NameProperty(vcfRow, this.Version));
+                            this.NameViews = Assigner.GetAssignment(new NameProperty(vcfRow, this.Version), NameViews);
                             break;
                         }
-
                     case PropKeys.FN:
                         {
-                            var displayNames = (List<TextProperty?>?)DisplayNames ?? new List<TextProperty?>();
-                            DisplayNames = displayNames;
-
-                            displayNames.Add(new TextProperty(vcfRow, this.Version));
+                            DisplayNames = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), DisplayNames);
                             break;
                         }
                     case PropKeys.BDAY:
                         {
-                            var birthDays = (List<DateTimeProperty?>?)this.BirthDayViews ?? new List<DateTimeProperty?>();
-                            BirthDayViews = birthDays;
-
-                            birthDays.Add(DateTimeProperty.Create(vcfRow, this.Version));
+                            BirthDayViews = Assigner.GetAssignment(DateTimeProperty.Create(vcfRow, this.Version), BirthDayViews);
                             break;
                         }
                     case PropKeys.ADR: // PoBox, ExtendedAddress, Street, Locality, Region, PostalCode, Country
                         {
-                            var addresses = (List<AddressProperty?>?)this.Addresses ?? new List<AddressProperty?>();
-                            Addresses = addresses;
-
-                            addresses.Add(new AddressProperty(vcfRow, this.Version));
+                            Addresses = Assigner.GetAssignment(new AddressProperty(vcfRow, this.Version), Addresses);
                             break;
                         }
                     case PropKeys.LABEL:
@@ -123,17 +104,56 @@ namespace FolkerKinzel.VCards
                                 vcfRow.UnMask(Version);
                             }
 
-                            var addresses = (List<AddressProperty?>?)this.Addresses ?? new List<AddressProperty?>();
-                            Addresses = addresses;
+                            var addresses = Addresses;
 
-                            if (addresses.Count != 0)
+                            if (addresses is null)
                             {
-                                addresses[0]!.Parameters.Label = vcfRow.Value;
+                                var adrProp = new AddressProperty();
+                                adrProp.Parameters.Label = vcfRow.Value;
+                                Addresses = adrProp;
                             }
                             else
                             {
-                                addresses.Add(new AddressProperty());
-                                addresses[0]!.Parameters.Label = vcfRow.Value;
+                                if (vcfRow.Parameters.PropertyClass.HasValue && vcfRow.Parameters.AddressType.HasValue)
+                                {
+                                    var address = addresses.OrderBy(x => x!.Parameters.Preference)
+                                        .FirstOrDefault(
+                                        x => x!.Parameters.PropertyClass.IsSet(vcfRow.Parameters.PropertyClass.Value) &&
+                                             x.Parameters.AddressType.IsSet(vcfRow.Parameters.AddressType.Value));
+
+                                    if(address != null)
+                                    {
+                                        address.Parameters.Label = vcfRow.Value;
+                                        break;
+                                    }
+                                }
+                                else if (vcfRow.Parameters.PropertyClass.HasValue)
+                                {
+                                    var address = addresses.OrderBy(x => x!.Parameters.Preference)
+                                        .FirstOrDefault(
+                                        x => x!.Parameters.PropertyClass.IsSet(vcfRow.Parameters.PropertyClass.Value));
+
+                                    if(address != null)
+                                    {
+                                        address.Parameters.Label = vcfRow.Value;
+                                        break;
+                                    }
+                                }
+                                else if (vcfRow.Parameters.AddressType.HasValue)
+                                {
+                                    var address = addresses.OrderBy(x => x!.Parameters.Preference)
+                                        .FirstOrDefault(
+                                        x => x!.Parameters.AddressType.IsSet(vcfRow.Parameters.AddressType.Value));
+
+                                    if(address != null)
+                                    {
+                                        address.Parameters.Label = vcfRow.Value;
+                                        break;
+                                    }
+                                }
+
+                                var first = addresses.OrderBy(x => x!.Parameters.Preference).First();
+                                first!.Parameters.Label = vcfRow.Value;
                             }
                         }
                         break;
@@ -142,51 +162,32 @@ namespace FolkerKinzel.VCards
                         break;
                     case PropKeys.CALURI:
                         {
-                            var urls = (List<TextProperty?>?)CalendarAddresses ?? new List<TextProperty?>();
-                            CalendarAddresses = urls;
-
-                            urls.Add(new TextProperty(vcfRow, this.Version));
+                            CalendarAddresses = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), CalendarAddresses);
                             break;
                         }
                     case PropKeys.CALADRURI:
                         {
-                            var urls = (List<TextProperty?>?)CalendarUserAddresses ?? new List<TextProperty?>();
-                            CalendarUserAddresses = urls;
-
-                            urls.Add(new TextProperty(vcfRow, this.Version));
-
+                            CalendarUserAddresses = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), CalendarUserAddresses);
                             break;
                         }
                     case PropKeys.TITLE:
                         {
-                            var titles = (List<TextProperty?>?)Titles ?? new List<TextProperty?>();
-                            Titles = titles;
-
-                            titles.Add(new TextProperty(vcfRow, this.Version));
+                            Titles = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Titles);
                             break;
                         }
                     case PropKeys.ROLE:
                         {
-                            var roles = (List<TextProperty?>?)Roles ?? new List<TextProperty?>();
-                            Roles = roles;
-
-                            roles.Add(new TextProperty(vcfRow, this.Version));
+                            Roles = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Roles);
                             break;
                         }
                     case PropKeys.NOTE:
                         {
-                            var notes = (List<TextProperty?>?)Notes ?? new List<TextProperty?>();
-                            Notes = notes;
-
-                            notes.Add(new TextProperty(vcfRow, this.Version));
+                            Notes = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Notes);
                             break;
                         }
                     case PropKeys.URL:
                         {
-                            var urls = (List<TextProperty?>?)URLs ?? new List<TextProperty?>();
-                            URLs = urls;
-
-                            urls.Add(new TextProperty(vcfRow, Version));
+                            URLs = Assigner.GetAssignment(new TextProperty(vcfRow, Version), URLs);
                             break;
                         }
                     case PropKeys.UID:
@@ -198,67 +199,43 @@ namespace FolkerKinzel.VCards
                         break;
                     case PropKeys.ORG:
                         {
-                            var org = (List<OrganizationProperty?>?)Organizations ?? new List<OrganizationProperty?>();
-                            Organizations = org;
-
-                            org.Add(new OrganizationProperty(vcfRow, this.Version));
+                            Organizations = Assigner.GetAssignment(new OrganizationProperty(vcfRow, this.Version), Organizations);
                             break;
                         }
                     case PropKeys.GEO:
                         {
-                            var geo = (List<GeoProperty?>?)GeoCoordinates ?? new List<GeoProperty?>();
-                            GeoCoordinates = geo;
-
-                            geo.Add(new GeoProperty(vcfRow));
+                            GeoCoordinates = Assigner.GetAssignment(new GeoProperty(vcfRow), GeoCoordinates);
                             break;
                         }
 
                     case PropKeys.NICKNAME:
                         {
-                            var nickNames = (List<StringCollectionProperty?>?)NickNames ?? new List<StringCollectionProperty?>();
-                            NickNames = nickNames;
-
-                            nickNames.Add(new StringCollectionProperty(vcfRow, this.Version));
+                            NickNames = Assigner.GetAssignment(new StringCollectionProperty(vcfRow, this.Version), NickNames);
                             break;
                         }
                     case PropKeys.CATEGORIES:
                         {
-                            var categories = (List<StringCollectionProperty?>?)Categories ?? new List<StringCollectionProperty?>();
-                            Categories = categories;
-
-                            categories.Add(new StringCollectionProperty(vcfRow, this.Version));
+                            Categories = Assigner.GetAssignment(new StringCollectionProperty(vcfRow, this.Version), Categories);
                             break;
                         }
                     case PropKeys.SOUND:
                         {
-                            var sounds = (List<DataProperty?>?)Sounds ?? new List<DataProperty?>();
-                            Sounds = sounds;
-
-                            sounds.Add(new DataProperty(vcfRow, this.Version));
+                            Sounds = Assigner.GetAssignment(new DataProperty(vcfRow, this.Version), Sounds);
                             break;
                         }
                     case PropKeys.PHOTO:
                         {
-                            var photos = (List<DataProperty?>?)Photos ?? new List<DataProperty?>();
-                            Photos = photos;
-
-                            photos.Add(new DataProperty(vcfRow, this.Version));
+                            Photos = Assigner.GetAssignment(new DataProperty(vcfRow, this.Version), Photos);
                             break;
                         }
                     case PropKeys.LOGO:
                         {
-                            var logos = (List<DataProperty?>?)Logos ?? new List<DataProperty?>();
-                            Logos = logos;
-
-                            logos.Add(new DataProperty(vcfRow, this.Version));
+                            Logos = Assigner.GetAssignment(new DataProperty(vcfRow, this.Version), Logos);
                             break;
                         }
                     case PropKeys.KEY:
                         {
-                            var keys = (List<DataProperty?>?)Keys ?? new List<DataProperty?>();
-                            Keys = keys;
-
-                            keys.Add(new DataProperty(vcfRow, this.Version));
+                            Keys = Assigner.GetAssignment(new DataProperty(vcfRow, this.Version), Keys);
                             break;
                         }
                     case PropKeys.SORT_STRING: // nur vCard 3.0: dort keine zusammengesetzte Property
@@ -278,12 +255,9 @@ namespace FolkerKinzel.VCards
                                 }
                                 else
                                 {
-                                    var names = new List<NameProperty>();
-                                    this.NameViews = names;
-
                                     var name = new NameProperty();
                                     name.Parameters.SortAs = new string?[] { textProp.Value };
-                                    names.Add(name);
+                                    NameViews = name;
                                 }
                             }
                         }
@@ -291,20 +265,13 @@ namespace FolkerKinzel.VCards
 
                     case PropKeys.SOURCE:
                         {
-                            var sources = (List<TextProperty?>?)Sources ?? new List<TextProperty?>();
-                            Sources = sources;
-
-                            sources.Add(new TextProperty(vcfRow, this.Version));
-
+                            Sources = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Sources);
                             break;
                         }
 
                     case PropKeys.ANNIVERSARY:
                         {
-                            var anniversaries = (List<DateTimeProperty?>?)this.AnniversaryViews ?? new List<DateTimeProperty?>();
-                            this.AnniversaryViews = anniversaries;
-
-                            anniversaries.Add(DateTimeProperty.Create(vcfRow, this.Version));
+                            this.AnniversaryViews = Assigner.GetAssignment(DateTimeProperty.Create(vcfRow, this.Version), AnniversaryViews);
                             break;
                         }
                     case PropKeys.NonStandard.X_ANNIVERSARY:
@@ -318,10 +285,7 @@ namespace FolkerKinzel.VCards
                             }
                             else if (AnniversaryViews is null)
                             {
-                                var anniversaries = new List<DateTimeProperty?>();
-                                this.AnniversaryViews = anniversaries;
-
-                                anniversaries.Add(DateTimeProperty.Create(vcfRow, this.Version));
+                                this.AnniversaryViews = DateTimeProperty.Create(vcfRow, this.Version);
                             }
 
                             break;
@@ -329,32 +293,23 @@ namespace FolkerKinzel.VCards
 
                     case PropKeys.GENDER:
                         {
-                            var genders = (List<GenderProperty?>?)this.GenderViews ?? new List<GenderProperty?>();
-                            this.GenderViews = genders;
-
-                            genders.Add(new GenderProperty(vcfRow, this.Version));
+                            this.GenderViews = Assigner.GetAssignment(new GenderProperty(vcfRow, this.Version), GenderViews);
                             break;
                         }
                     case PropKeys.NonStandard.X_GENDER:
-                        if (vcfRowsParsed < vcfRowsToParse)
                         {
-                            queue.Enqueue(vcfRow);
-                        }
-                        else if (GenderViews is null && vcfRow.Value != null)
-                        {
-                            var genders = new List<GenderProperty?>();
-                            this.GenderViews = genders;
-
-                            if (vcfRow.Value.StartsWith("F", true, CultureInfo.InvariantCulture))
+                            if (vcfRowsParsed < vcfRowsToParse)
                             {
-                                genders.Add(new GenderProperty(VCdSex.Female));
+                                queue.Enqueue(vcfRow);
                             }
-                            else
+                            else if (GenderViews is null && vcfRow.Value != null)
                             {
-                                genders.Add(new GenderProperty(VCdSex.Male));
+                                GenderViews = vcfRow.Value.StartsWith("F", true, CultureInfo.InvariantCulture)
+                                    ? new GenderProperty(VCdSex.Female)
+                                    : new GenderProperty(VCdSex.Male);
                             }
+                            break;
                         }
-                        break;
                     case PropKeys.NonStandard.X_WAB_GENDER:
                         if (vcfRowsParsed < vcfRowsToParse)
                         {
@@ -362,9 +317,6 @@ namespace FolkerKinzel.VCards
                         }
                         else if (GenderViews is null && vcfRow.Value != null)
                         {
-                            var genders = new List<GenderProperty?>();
-                            this.GenderViews = genders;
-
                             if (
 #if NET40
                                 vcfRow.Value.Contains("1"))
@@ -372,20 +324,17 @@ namespace FolkerKinzel.VCards
                                 vcfRow.Value.Contains('1', StringComparison.Ordinal))
 #endif
                             {
-                                genders.Add(new GenderProperty(VCdSex.Female));
+                                GenderViews = new GenderProperty(VCdSex.Female);
                             }
                             else
                             {
-                                genders.Add(new GenderProperty(VCdSex.Male));
+                                GenderViews = new GenderProperty(VCdSex.Male);
                             }
                         }
                         break;
                     case PropKeys.IMPP:
                         {
-                            var impps = (List<TextProperty?>?)InstantMessengerHandles ?? new List<TextProperty?>();
-                            InstantMessengerHandles = impps;
-
-                            impps.Add(new TextProperty(vcfRow, this.Version));
+                            InstantMessengerHandles = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), InstantMessengerHandles);
                             break;
                         }
                     case PropKeys.NonStandard.InstantMessenger.X_AIM:
@@ -413,10 +362,7 @@ namespace FolkerKinzel.VCards
 
                                 if (InstantMessengerHandles?.All(x => x!.Value != textProp.Value) ?? true)
                                 {
-                                    var impps = (List<TextProperty?>?)InstantMessengerHandles ?? new List<TextProperty?>();
-                                    InstantMessengerHandles = impps;
-
-                                    impps.Add(textProp);
+                                    InstantMessengerHandles = Assigner.GetAssignment(textProp, InstantMessengerHandles);
 
                                     textProp.Parameters.Assign(vcfRow.Parameters); // die meisten diese Properties enthalten
                                                                                    // Telefon-Type-Informationen.
@@ -427,10 +373,7 @@ namespace FolkerKinzel.VCards
                         }
                     case PropKeys.LANG:
                         {
-                            var languages = (List<TextProperty?>?)Languages ?? new List<TextProperty?>();
-                            Languages = languages;
-
-                            languages.Add(new TextProperty(vcfRow, this.Version));
+                            Languages = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Languages);
                             break;
                         }
                     case PropKeys.MAILER:
@@ -438,33 +381,20 @@ namespace FolkerKinzel.VCards
                         break;
                     case PropKeys.TZ:
                         {
-                            var tz = (List<TimeZoneProperty?>?)TimeZones ?? new List<TimeZoneProperty?>();
-                            TimeZones = tz;
-
-                            tz.Add(new TimeZoneProperty(vcfRow));
+                            TimeZones = Assigner.GetAssignment(new TimeZoneProperty(vcfRow), TimeZones);
                             break;
                         }
                     case PropKeys.CLASS:
                         Access = new AccessProperty(vcfRow);
                         break;
-
-
                     case PropKeys.MEMBER:
                         {
-                            var relations = (List<RelationProperty?>?)Members ?? new List<RelationProperty?>();
-                            Members = relations;
-
-                            relations.Add(RelationProperty.Parse(vcfRow, this.Version));
+                            Members = Assigner.GetAssignment(RelationProperty.Parse(vcfRow, this.Version), Members);
                             break;
                         }
-
-
                     case PropKeys.RELATED:
                         {
-                            var relations = (List<RelationProperty?>?)Relations ?? new List<RelationProperty?>();
-                            Relations = relations;
-
-                            relations.Add(RelationProperty.Parse(vcfRow, this.Version));
+                            Relations = Assigner.GetAssignment(RelationProperty.Parse(vcfRow, this.Version), Relations);
                             break;
                         }
                     case PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE:
@@ -478,13 +408,11 @@ namespace FolkerKinzel.VCards
                             }
                             else if (Relations?.All(x => x!.Parameters.RelationType != RelationTypes.Spouse) ?? true)
                             {
-                                var relations = (List<RelationProperty?>?)Relations ?? new List<RelationProperty?>();
-                                Relations = relations;
-
                                 vcfRow.DecodeQuotedPrintable(); // RelationProperty gehört zu ´vCard 4.0
                                 vcfRow.Parameters.DataType = VCdDataType.Text; // führt dazu, dass eine RelationTextProperty erzeugt wird
                                 vcfRow.Parameters.RelationType = RelationTypes.Spouse;
-                                relations.Add(RelationProperty.Parse(vcfRow, this.Version));
+
+                                Relations = Assigner.GetAssignment(RelationProperty.Parse(vcfRow, this.Version), Relations);
                             }
 
                             break;
@@ -499,80 +427,80 @@ namespace FolkerKinzel.VCards
                             }
                             else if (Relations?.All(x => !x!.Parameters.RelationType.IsSet(RelationTypes.Agent)) ?? true)
                             {
-                                var relations = (List<RelationProperty?>?)Relations ?? new List<RelationProperty?>();
-                                Relations = relations;
-
                                 vcfRow.DecodeQuotedPrintable();
                                 vcfRow.Parameters.DataType ??= VCdDataType.Text;
                                 vcfRow.Parameters.RelationType = RelationTypes.Agent;
-                                relations.Add(RelationProperty.Parse(vcfRow, this.Version));
+
+                                Relations = Assigner.GetAssignment(RelationProperty.Parse(vcfRow, this.Version), Relations);
                             }
 
                             break;
                         }
                     case PropKeys.AGENT:
                         {
-                            var relations = (List<RelationProperty?>?)Relations ?? new List<RelationProperty?>();
-                            Relations = relations;
-
                             if (vcfRow.Value is null)
                             {
-                                relations.Add(new RelationTextProperty(
-                                    null, RelationTypes.Agent, vcfRow.Group));
+                                Relations = Assigner.GetAssignment
+                                    (
+                                        new RelationTextProperty(null, RelationTypes.Agent, vcfRow.Group), 
+                                        Relations
+                                    );
                             }
                             else
                             {
                                 if (vcfRow.Value.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                                 {
-                                    relations.Add(new RelationVCardProperty(
-                                        VCard.ParseNestedVcard(vcfRow.Value, info, this.Version),
-                                        RelationTypes.Agent,
-                                        vcfRow.Group));
+                                    Relations = Assigner.GetAssignment
+                                        (
+                                            new RelationVCardProperty(VCard.ParseNestedVcard(vcfRow.Value, info, this.Version),
+                                                                      RelationTypes.Agent,
+                                                                      vcfRow.Group),
+                                            Relations
+                                        );
                                 }
                                 else
                                 {
                                     vcfRow.DecodeQuotedPrintable();
                                     vcfRow.Parameters.DataType ??= VCdDataType.Text;
                                     vcfRow.Parameters.RelationType = RelationTypes.Agent;
-                                    relations.Add(RelationProperty.Parse(vcfRow, this.Version));
+
+                                    Relations = Assigner.GetAssignment
+                                        (
+                                            RelationProperty.Parse(vcfRow, this.Version),
+                                            Relations
+                                        );
                                 }
                             }
 
                             break;
                         }
-
                     case PropKeys.PROFILE:
                         this.Profile = new ProfileProperty(vcfRow, this.Version);
                         break;
-
                     case PropKeys.XML:
                         {
-                            var xmlProps = (List<XmlProperty?>?)XmlProperties ?? new List<XmlProperty?>();
-                            XmlProperties = xmlProps;
-
-                            xmlProps.Add(new XmlProperty(vcfRow));
+                            XmlProperties = Assigner.GetAssignment(new XmlProperty(vcfRow), XmlProperties);
                             break;
                         }
-
                     case PropKeys.CLIENTPIDMAP:
                         {
-                            var pidMappings = (List<PropertyIDMappingProperty?>?)PropertyIDMappings ?? new List<PropertyIDMappingProperty?>();
-                            PropertyIDMappings = pidMappings;
-
+                            PropertyIDMappingProperty prop;
                             try
                             {
-                                pidMappings.Add(new PropertyIDMappingProperty(vcfRow));
+                                prop = new PropertyIDMappingProperty(vcfRow);
                             }
-                            catch { }
+                            catch
+                            {
+                                break;
+                            }
+
+                            PropertyIDMappings = Assigner.GetAssignment(prop, PropertyIDMappings);
 
                             break;
-
                         }
-
                     case PropKeys.PRODID:
                         ProdID = new TextProperty(vcfRow, this.Version);
                         break;
-
                     case PropKeys.NAME:
                         {
                             this.DirectoryName = new TextProperty(vcfRow, this.Version);
@@ -582,66 +510,49 @@ namespace FolkerKinzel.VCards
                     // Erweiterungen:
                     case PropKeys.NonStandard.DEATHDATE:
                         {
-                            var deathDates = (List<DateTimeProperty?>?)this.DeathDateViews ?? new List<DateTimeProperty?>();
-                            this.DeathDateViews = deathDates;
-
-                            deathDates.Add(DateTimeProperty.Create(vcfRow, this.Version));
+                            this.DeathDateViews = 
+                                Assigner.GetAssignment(DateTimeProperty.Create(vcfRow, this.Version), DeathDateViews);
                             break;
                         }
                     case PropKeys.NonStandard.BIRTHPLACE:
                         {
-                            var birthPlaces = (List<TextProperty?>?)this.BirthPlaceViews ?? new List<TextProperty?>();
-                            this.BirthPlaceViews = birthPlaces;
-
-                            birthPlaces.Add(new TextProperty(vcfRow, this.Version));
+                            this.BirthPlaceViews = 
+                                Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), BirthPlaceViews);
                             break;
                         }
                     case PropKeys.NonStandard.DEATHPLACE:
                         {
-                            var deathPlaces = (List<TextProperty?>?)this.DeathPlaceViews ?? new List<TextProperty?>();
-                            this.DeathPlaceViews = deathPlaces;
-
-                            deathPlaces.Add(new TextProperty(vcfRow, this.Version));
+                            this.DeathPlaceViews = 
+                                Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), DeathPlaceViews);
                             break;
                         }
                     case PropKeys.NonStandard.EXPERTISE:
                         {
-                            var expertises = (List<TextProperty?>?)Expertises ?? new List<TextProperty?>();
-                            Expertises = expertises;
-
-                            expertises.Add(new TextProperty(vcfRow, this.Version));
+                            Expertises = 
+                                Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Expertises);
                             break;
                         }
                     case PropKeys.NonStandard.INTEREST:
                         {
-                            var interests = (List<TextProperty?>?)Interests ?? new List<TextProperty?>();
-                            Interests = interests;
-
-                            interests.Add(new TextProperty(vcfRow, this.Version));
+                            Interests = 
+                                Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Interests);
                             break;
                         }
                     case PropKeys.NonStandard.HOBBY:
                         {
-                            var hobbies = (List<TextProperty?>?)Hobbies ?? new List<TextProperty?>();
-                            Hobbies = hobbies;
-
-                            hobbies.Add(new TextProperty(vcfRow, this.Version));
+                            Hobbies = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Hobbies);
                             break;
                         }
                     case PropKeys.NonStandard.ORG_DIRECTORY:
                         {
-                            var orgDirectories = (List<TextProperty?>?)OrgDirectories ?? new List<TextProperty?>();
-                            OrgDirectories = orgDirectories;
-
-                            orgDirectories.Add(new TextProperty(vcfRow, this.Version));
+                            OrgDirectories = 
+                                Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), OrgDirectories);
                             break;
                         }
                     default:
                         {
-                            var extensions = (List<NonStandardProperty?>?)NonStandardProperties ?? new List<NonStandardProperty?>();
-                            NonStandardProperties = extensions;
-
-                            extensions.Add(new NonStandardProperty(vcfRow));
+                            NonStandardProperties = 
+                                Assigner.GetAssignment(new NonStandardProperty(vcfRow), NonStandardProperties);
                             break;
                         }
                 };//switch

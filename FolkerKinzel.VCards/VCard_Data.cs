@@ -84,7 +84,7 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<AddressProperty?>? Addresses
         {
-            get => Get<IList<AddressProperty?>?>(VCdProp.Addresses);
+            get => Get<IEnumerable<AddressProperty?>?>(VCdProp.Addresses);
             set => Set(VCdProp.Addresses, value);
         }
 
@@ -507,7 +507,7 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public IEnumerable<OrganizationProperty?>? Organizations
         {
-            get => Get<IList<OrganizationProperty?>?>(VCdProp.Organizations);
+            get => Get<IEnumerable<OrganizationProperty?>?>(VCdProp.Organizations);
             set => Set(VCdProp.Organizations, value);
         }
 

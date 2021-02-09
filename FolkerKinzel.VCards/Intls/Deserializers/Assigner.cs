@@ -6,7 +6,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal static class Assigner
     {
-        internal static IEnumerable<T>? GetAssignment<T>(T newElement, IEnumerable<T?>? currentElement) where T : IEnumerable<T>
+        internal static IEnumerable<T> GetAssignment<T>(T newElement, IEnumerable<T?>? currentElement) where T : IEnumerable<T>
         {
             switch (currentElement)
             {
@@ -19,7 +19,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                     return list;
 
                 default:
-                    return null;
+                    throw new ArgumentOutOfRangeException(nameof(currentElement));
             };
         }
     }
