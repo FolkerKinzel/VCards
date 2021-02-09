@@ -15,7 +15,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         private readonly Dictionary<VCdParam, object> _propDic = new Dictionary<VCdParam, object>();
 
         [return: MaybeNull]
-        private T Get<T>(VCdParam prop) => _propDic.ContainsKey(prop) ? (T)_propDic[prop] : default;
+        private T Get<T>(VCdParam prop)
+            => _propDic.ContainsKey(prop) ? (T)_propDic[prop] : default;
 
         private void Set<T>(VCdParam prop, T value)
         {
