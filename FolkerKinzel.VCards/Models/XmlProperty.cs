@@ -4,6 +4,8 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Resources;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
 
@@ -13,7 +15,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Die Klasse kapselt die Daten der vCard-Property <c>XML</c>, die eingebettete XML-Daten ermöglicht.
     /// </summary>
-    public sealed class XmlProperty : TextProperty
+    public sealed class XmlProperty : TextProperty, IEnumerable<XmlProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="XmlProperty"/>-Objekt.
@@ -49,5 +51,13 @@ namespace FolkerKinzel.VCards.Models
 
 
         internal XmlProperty(VcfRow vcfRow) : base(vcfRow, VCdVersion.V4_0) { }
+
+
+        IEnumerator<XmlProperty> IEnumerable<XmlProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<XmlProperty>)this).GetEnumerator();
     }
 }

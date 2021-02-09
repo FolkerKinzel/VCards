@@ -4,6 +4,8 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -15,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit einem
     /// <see cref="System.Uri"/> dieser Person zu beschreiben.
     /// </summary>
-    public sealed class RelationUriProperty : RelationProperty
+    public sealed class RelationUriProperty : RelationProperty, IEnumerable<RelationUriProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationUriProperty"/>-Objekt.
@@ -108,5 +110,11 @@ namespace FolkerKinzel.VCards.Models
                 : builder.Append(this.Value);
         }
 
+        IEnumerator<RelationUriProperty> IEnumerable<RelationUriProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationUriProperty>)this).GetEnumerator();
     }
 }

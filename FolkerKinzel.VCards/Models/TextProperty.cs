@@ -5,6 +5,8 @@ using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -15,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert vCard-Properties, deren Inhalt aus Text besteht.
     /// </summary>
-    public class TextProperty : VCardProperty
+    public class TextProperty : VCardProperty, IEnumerable<TextProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="TextProperty"/>-Objekt.
@@ -97,5 +99,11 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+        IEnumerator<TextProperty> IEnumerable<TextProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TextProperty>)this).GetEnumerator();
     }
 }

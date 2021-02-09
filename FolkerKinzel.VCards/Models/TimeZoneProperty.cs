@@ -4,6 +4,8 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -13,7 +15,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert die vCard-Property <c>TZ</c>, die die Zeitzone der vCard speichert.
     /// </summary>
-    public sealed class TimeZoneProperty : VCardProperty
+    public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="TimeZoneProperty"/>-Objekt.
@@ -57,5 +59,11 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+        IEnumerator<TimeZoneProperty> IEnumerable<TimeZoneProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TimeZoneProperty>)this).GetEnumerator();
     }
 }

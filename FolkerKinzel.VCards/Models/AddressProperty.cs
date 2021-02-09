@@ -10,13 +10,14 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
 using System.Runtime.CompilerServices;
 using FolkerKinzel.VCards.Intls.Converters;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Kapselt die Daten einer vCard-Property, die Informationen über die Postanschrift enthält.
     /// </summary>
-    public sealed class AddressProperty : VCardProperty
+    public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
@@ -170,5 +171,12 @@ namespace FolkerKinzel.VCards.Models
 #endif
         protected override object? GetVCardPropertyValue() => Value;
 
+
+        IEnumerator<AddressProperty> IEnumerable<AddressProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<AddressProperty>)this).GetEnumerator();
     }
 }

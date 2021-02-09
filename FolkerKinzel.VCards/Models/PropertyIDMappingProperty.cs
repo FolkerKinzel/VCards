@@ -7,6 +7,8 @@ using System;
 using System.Globalization;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -14,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// Kapselt Informationen, die dazu dienen, verschiedene Bearbeitungsstände einer <see cref="VCardProperty"/> plattformübergreifend
     /// zwischen verschiedenen vCards zu synchronisieren.
     /// </summary>
-    public sealed class PropertyIDMappingProperty : VCardProperty
+    public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<PropertyIDMappingProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="PropertyIDMappingProperty"/>-Objekt.
@@ -72,5 +74,11 @@ namespace FolkerKinzel.VCards.Models
             Value.AppendTo(serializer.Builder);
         }
 
+        IEnumerator<PropertyIDMappingProperty> IEnumerable<PropertyIDMappingProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PropertyIDMappingProperty>)this).GetEnumerator();
     }
 }

@@ -6,6 +6,8 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -16,7 +18,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um den Namen einer Person, zu der eine Beziehung besteht, anzugeben.
     /// </summary>
-    public sealed class RelationTextProperty : RelationProperty
+    public sealed class RelationTextProperty : RelationProperty, IEnumerable<RelationTextProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationTextProperty"/>-Objekt.
@@ -116,5 +118,11 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+        IEnumerator<RelationTextProperty> IEnumerable<RelationTextProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationTextProperty>)this).GetEnumerator();
     }
 }

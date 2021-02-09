@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert die vCard-Property <c>ORG</c>, die Informationen über die Organisation speichert, der das vCard-Objekt zugeordnet ist.
     /// </summary>
-    public sealed class OrganizationProperty : VCardProperty
+    public sealed class OrganizationProperty : VCardProperty, IEnumerable<OrganizationProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="OrganizationProperty"/>-Objekt.
@@ -122,5 +123,11 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+        IEnumerator<OrganizationProperty> IEnumerable<OrganizationProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<OrganizationProperty>)this).GetEnumerator();
     }
 }

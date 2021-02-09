@@ -6,6 +6,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -19,7 +20,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Repräsentiert vCard-Properties, die eine Sammlung von <see cref="string"/>s speichern.
     /// </summary>
-    public sealed class StringCollectionProperty : VCardProperty
+    public sealed class StringCollectionProperty : VCardProperty, IEnumerable<StringCollectionProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="StringCollectionProperty"/>-Objekt.
@@ -162,5 +163,11 @@ namespace FolkerKinzel.VCards.Models
             return s;
         }
 
+        IEnumerator<StringCollectionProperty> IEnumerable<StringCollectionProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<StringCollectionProperty>)this).GetEnumerator();
     }
 }

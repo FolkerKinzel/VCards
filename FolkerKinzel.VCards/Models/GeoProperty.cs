@@ -6,13 +6,15 @@ using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Runtime.CompilerServices;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert die vCard-Property <c>GEO</c>, die eine geographische Position speichert.
     /// </summary>
-    public sealed class GeoProperty : VCardProperty
+    public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="GeoProperty"/>-Objekt.
@@ -55,5 +57,11 @@ namespace FolkerKinzel.VCards.Models
             GeoCoordinateConverter.AppendTo(serializer.Builder, Value, serializer.Version);
         }
 
+        IEnumerator<GeoProperty> IEnumerable<GeoProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GeoProperty>)this).GetEnumerator();
     }
 }

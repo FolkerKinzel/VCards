@@ -7,6 +7,8 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -28,7 +30,7 @@ namespace FolkerKinzel.VCards.Models
     /// einzubettende Binärdaten oder freien Text zu übergeben oder diese Informationen aus der Property
     /// wieder auszulesen.</para>
     /// </remarks>
-    public sealed class DataProperty : VCardProperty
+    public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DataProperty"/>-Objekt.
@@ -401,5 +403,11 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+        IEnumerator<DataProperty> IEnumerable<DataProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DataProperty>)this).GetEnumerator();
     }
 }

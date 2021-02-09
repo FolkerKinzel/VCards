@@ -6,6 +6,8 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -13,7 +15,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit der UUID ihrer <see cref="VCard"/>
     /// zu beschreiben.
     /// </summary>
-    public sealed class RelationUuidProperty : RelationProperty
+    public sealed class RelationUuidProperty : RelationProperty, IEnumerable<RelationUuidProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationUuidProperty"/>-Objekt.
@@ -83,6 +85,11 @@ namespace FolkerKinzel.VCards.Models
             _ = serializer.Builder.AppendUuid(this.Value, serializer.Version);
         }
 
-        
+        IEnumerator<RelationUuidProperty> IEnumerable<RelationUuidProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationUuidProperty>)this).GetEnumerator();
     }
 }

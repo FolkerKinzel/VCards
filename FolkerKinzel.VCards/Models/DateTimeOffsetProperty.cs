@@ -4,6 +4,8 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -14,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Eine von <see cref="DateTimeProperty"/> abgeleitete Klasse, die darauf spezialisiert ist <see cref="System.DateTimeOffset"/>-Werte zu speichern.
     /// </summary>
-    public sealed class DateTimeOffsetProperty : DateTimeProperty
+    public sealed class DateTimeOffsetProperty : DateTimeProperty, IEnumerable<DateTimeOffsetProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DateTimeOffsetProperty"/>-Objekt, bei dem der <see cref="ParameterSection.DataType"/>-Parameter
@@ -85,5 +87,12 @@ namespace FolkerKinzel.VCards.Models
             //serializer.Worker.Mask(serializer.Version);
             _ = serializer.Builder.Append(worker);
         }
+
+        IEnumerator<DateTimeOffsetProperty> IEnumerable<DateTimeOffsetProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateTimeOffsetProperty>)this).GetEnumerator();
     }
 }

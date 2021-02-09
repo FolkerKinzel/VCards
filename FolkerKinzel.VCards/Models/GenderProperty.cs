@@ -10,6 +10,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -17,7 +18,7 @@ namespace FolkerKinzel.VCards.Models
     /// Repräsentiert die in vCard 4.0 eingeführte vCard-Property <c>GENDER</c>, die Informationen über das Geschlecht
     /// und die Geschlechtsidentität speichert.
     /// </summary>
-    public sealed class GenderProperty : VCardProperty
+    public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="GenderProperty"/>-Objekt.
@@ -86,5 +87,13 @@ namespace FolkerKinzel.VCards.Models
             Value.AppendVCardStringTo(serializer);
         }
 
+
+        IEnumerator<GenderProperty> IEnumerable<GenderProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GenderProperty>)this).GetEnumerator();
     }
 }

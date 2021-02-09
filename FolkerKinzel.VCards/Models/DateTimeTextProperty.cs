@@ -4,6 +4,8 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -15,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="DateTimeProperty"/>-Klasse, die es erlaubt eine Zeit- und/oder Datumsangabe
     /// als freien Text zu speichern.
     /// </summary>
-    public sealed class DateTimeTextProperty : DateTimeProperty
+    public sealed class DateTimeTextProperty : DateTimeProperty, IEnumerable<DateTimeTextProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="DateTimeTextProperty"/>-Objekt, bei dem der 
@@ -81,5 +83,12 @@ namespace FolkerKinzel.VCards.Models
             _ = worker.Clear().Append(this.Value).Mask(serializer.Version);
             _ = builder.Append(worker);
         }
+
+        IEnumerator<DateTimeTextProperty> IEnumerable<DateTimeTextProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateTimeTextProperty>)this).GetEnumerator();
     }
 }

@@ -4,6 +4,8 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Resources;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -21,7 +23,7 @@ namespace FolkerKinzel.VCards.Models
     /// Daten selbst kümmern müssen.</para>
     /// </note>
     /// </remarks>
-    public sealed class NonStandardProperty : VCardProperty
+    public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandardProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="NonStandardProperty"/>-Objekt, das eine benutzerdefinierte
@@ -121,5 +123,11 @@ namespace FolkerKinzel.VCards.Models
             _ = serializer.Builder.Append(Value);
         }
 
+        IEnumerator<NonStandardProperty> IEnumerable<NonStandardProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<NonStandardProperty>)this).GetEnumerator();
     }
 }

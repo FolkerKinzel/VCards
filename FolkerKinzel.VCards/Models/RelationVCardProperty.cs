@@ -9,6 +9,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.ComponentModel;
 using FolkerKinzel.VCards.Extensions;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -16,7 +18,7 @@ namespace FolkerKinzel.VCards.Models
     /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, 
     /// mit ihrer <see cref="VCards.VCard"/> zu beschreiben.
     /// </summary>
-    public sealed class RelationVCardProperty : RelationProperty
+    public sealed class RelationVCardProperty : RelationProperty, IEnumerable<RelationVCardProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="RelationVCardProperty"/>-Objekt.
@@ -114,5 +116,11 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+        IEnumerator<RelationVCardProperty> IEnumerable<RelationVCardProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationVCardProperty>)this).GetEnumerator();
     }
 }

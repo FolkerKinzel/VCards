@@ -10,13 +10,14 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
 using System.Runtime.CompilerServices;
 using FolkerKinzel.VCards.Intls.Converters;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Repräsentiert die vCard-Property <c>N</c>, die den Namen des vCard-Subjekts speichert.
     /// </summary>
-    public sealed class NameProperty : VCardProperty
+    public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     {
         /// <summary>
         /// Initialisiert ein neues <see cref="NameProperty"/>-Objekt.
@@ -150,5 +151,11 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+        IEnumerator<NameProperty> IEnumerable<NameProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<NameProperty>)this).GetEnumerator();
     }
 }
