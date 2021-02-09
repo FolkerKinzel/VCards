@@ -25,8 +25,8 @@ namespace Examples
 
 
             //WhatsAppDemo1.IntegrateWhatsAppNumberUsingIMPP();
-            WhatsAppDemo2.UsingTheWhatsAppType();
-            //VCardExample.ReadingAndWritingVCard(directoryPath);
+            //WhatsAppDemo2.UsingTheWhatsAppType();
+            VCardExample.ReadingAndWritingVCard(directoryPath);
             //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
         }
     }

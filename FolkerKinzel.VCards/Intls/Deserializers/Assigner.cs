@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers
@@ -19,8 +20,14 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                     return list;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(currentElement));
+                    OutOfRange(nameof(currentElement));
+                    return newElement;
             };
         }
+
+        [DoesNotReturn]
+        private static void OutOfRange(string argumentName)
+            => throw new ArgumentOutOfRangeException(argumentName);
+
     }
 }

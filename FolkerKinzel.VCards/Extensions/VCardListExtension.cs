@@ -264,9 +264,9 @@ namespace FolkerKinzel.VCards.Extensions
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
         [Obsolete("Use SerializeVcf instead!", VCardProperty.OBSOLETE_AS_ERROR)]
-#pragma warning disable CS1591 // Fehledes XML-Kommentar für öffentlich sichtbaren Typ oder Element
+#pragma warning disable CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
         public static void SerializeVCards(this List<
-#pragma warning restore CS1591 // Fehledes XML-Kommentar für öffentlich sichtbaren Typ oder Element
+#pragma warning restore CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
 #nullable disable
             VCard
 #nullable restore

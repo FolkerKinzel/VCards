@@ -25,7 +25,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string ToVCardString(this VCdAccess kind)
         {
-            return (kind) switch
+            return kind switch
             {
                 VCdAccess.Public => VCdAccessValue.Public,
                 VCdAccess.Private => VCdAccessValue.Private,

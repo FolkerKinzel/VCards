@@ -1,7 +1,8 @@
 ﻿[*.cs]
 
+# IDE0066: Switch-Anweisung in Ausdruck konvertieren
+csharp_style_prefer_switch_expression = true:silent
 
+# IDE0078: Use Pattern Matching
+csharp_style_prefer_pattern_Matching = true:silent
 
-[VCardExtension.cs]
-# IDE0079: Unnötige Unterdrückung entfernen
-dotnet_diagnostic.IDE0079.severity = none

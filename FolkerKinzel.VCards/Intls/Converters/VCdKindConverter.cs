@@ -29,7 +29,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string ToVCardString(this VCdKind kind)
         {
-            return (kind) switch
+            return kind switch
             {
                 VCdKind.Individual => VCdKindValues.Individual,
                 VCdKind.Group => VCdKindValues.Group,
