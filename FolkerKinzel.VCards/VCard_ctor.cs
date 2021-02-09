@@ -110,6 +110,7 @@ namespace FolkerKinzel.VCards
                             {
                                 var adrProp = new AddressProperty();
                                 adrProp.Parameters.Label = vcfRow.Value;
+                                adrProp.Parameters.Assign(vcfRow.Parameters);
                                 Addresses = adrProp;
                             }
                             else
@@ -154,7 +155,7 @@ namespace FolkerKinzel.VCards
 
                                 var first = addresses.OrderBy(x => x!.Parameters.Preference).First();
                                 first!.Parameters.Label = vcfRow.Value;
-                            }
+                            }//else
                         }
                         break;
                     case PropKeys.REV:
@@ -238,7 +239,7 @@ namespace FolkerKinzel.VCards
                             Keys = Assigner.GetAssignment(new DataProperty(vcfRow, this.Version), Keys);
                             break;
                         }
-                    case PropKeys.SORT_STRING: // nur vCard 3.0: dort keine zusammengesetzte Property
+                    case PropKeys.SORT_STRING: // nur vCard 3.0
                         if (vcfRowsParsed < vcfRowsToParse)
                         {
                             queue.Enqueue(vcfRow);
@@ -360,12 +361,19 @@ namespace FolkerKinzel.VCards
                             {
                                 var textProp = new TextProperty(vcfRow, this.Version);
 
-                                if (InstantMessengerHandles?.All(x => x!.Value != textProp.Value) ?? true)
+                                if (textProp.Value != null && (InstantMessengerHandles?.All(x => x?.Value != textProp.Value) ?? true))
                                 {
                                     InstantMessengerHandles = Assigner.GetAssignment(textProp, InstantMessengerHandles);
 
                                     textProp.Parameters.Assign(vcfRow.Parameters); // die meisten diese Properties enthalten
                                                                                    // Telefon-Type-Informationen.
+
+                                    if((textProp.Parameters.TelephoneType.IsSet(TelTypes.Voice) ||
+                                        textProp.Parameters.TelephoneType.IsSet(TelTypes.Video)) &&
+                                        (!PhoneNumbers?.Any(x => x?.Value == textProp.Value) ?? true))
+                                    {
+                                        PhoneNumbers = Assigner.GetAssignment(textProp, PhoneNumbers);
+                                    }
                                 }
                             }
 
