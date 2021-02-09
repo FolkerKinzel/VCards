@@ -7,6 +7,8 @@ using FolkerKinzel.VCards.Models.Enums;
 using System;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Text;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -15,7 +17,7 @@ namespace FolkerKinzel.VCards.Models
     /// beschreiben. Dies sind insbesondere die vCard-4.0-Property <c>RELATED</c>, die vCard-2.1- und -3.0-Property <c>AGENT</c> sowie
     /// Non-Standard-Properties zur Angabe des Namens des Ehepartners (wie z.B. <c>X-SPOUSE</c>).
     /// </summary>
-    public abstract class RelationProperty : VCardProperty
+    public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProperty>
     {
         [InternalProtected]
         internal RelationProperty(ParameterSection parameters, string? propertyGroup)
@@ -75,5 +77,11 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+        IEnumerator<RelationProperty> IEnumerable<RelationProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationProperty>)this).GetEnumerator();
     }
 }
