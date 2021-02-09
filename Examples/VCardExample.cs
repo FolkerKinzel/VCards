@@ -20,36 +20,24 @@ namespace Examples
 
             var vcard = new VCard
             {
-                NameViews = new VC::NameProperty[]
-                {
-                    new VC::NameProperty
+                // Although NameViews is of Type IEnumerable<NameProperty?>
+                // you can assign a single NameProperty instance because NameProperty
+                // (like almost all classes derived from VCardProperty) has an explicit
+                // implementation of IEnumerable<T>
+                NameViews = new VC::NameProperty
                     (
                         lastName: new string[] { "Müller-Risinowsky" },
                         firstName: new string[] { "Käthe" },
-                        middleName: new string[] {"Alexandra", "Caroline"},
+                        middleName: new string[] { "Alexandra", "Caroline" },
                         prefix: new string[] { "Prof.", "Dr." }
-                    )
-                },
-
-                DisplayNames = new VC::TextProperty[]
-                {
-                    new VC.TextProperty("Käthe Müller-Risinowsky")
-                },
-
-                Organizations = new VC::OrganizationProperty[]
-                {
-                    new VC::OrganizationProperty
+                    ),
+                DisplayNames = new VC.TextProperty("Käthe Müller-Risinowsky"),
+                Organizations = new VC::OrganizationProperty
                     (
                         "Millers Company",
                         new string[] { "C#", "Webdesign" }
-                    )
-                },
-
-                Titles = new VC::TextProperty[]
-                {
-                    new VC::TextProperty("CEO")
-                },
-
+                    ),
+                Titles = new VC::TextProperty("CEO"),
                 TimeStamp = new VC::TimeStampProperty(DateTimeOffset.UtcNow)
             };
 
@@ -58,10 +46,7 @@ namespace Examples
             string photoFilePath = Path.Combine(directoryPath, photoFileName);
             CreatePhoto(photoFilePath);
 
-            vcard.Photos = new VC::DataProperty[]
-            {
-                new VC::DataProperty(VC::DataUrl.FromFile(photoFilePath))
-            };
+            vcard.Photos = new VC::DataProperty(VC::DataUrl.FromFile(photoFilePath));
 
             var telHome = new VC::TextProperty("tel:+49-123-9876543");
             telHome.Parameters.DataType = VC::Enums.VCdDataType.Uri;
@@ -86,25 +71,21 @@ namespace Examples
             prefMail.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
             prefMail.Parameters.Preference = 1;
 
-            vcard.EmailAddresses = new VC::TextProperty[] { prefMail };
+            vcard.EmailAddresses = prefMail;
 
-            vcard.BirthDayViews = new VC::DateTimeProperty[]
-            {
-                // System.DateTime has an implicit conversion to
-                // System.DateTimeOffset
-                new VC::DateTimeOffsetProperty(new DateTime(1984, 3, 28))
-            };
+            // System.DateTime has an implicit conversion to
+            // System.DateTimeOffset:
+            vcard.BirthDayViews = new VC::DateTimeOffsetProperty(new DateTime(1984, 3, 28));
 
-            vcard.Relations = new VC::RelationProperty[]
-            {
-                new VC::RelationTextProperty("Paul Müller-Risinowsky",
-                VC::Enums.RelationTypes.Spouse | VC::Enums.RelationTypes.CoResident | VC::Enums.RelationTypes.Colleague)
-            };
+            vcard.Relations = new VC::RelationTextProperty
+                (
+                    "Paul Müller-Risinowsky",
+                    VC::Enums.RelationTypes.Spouse 
+                    | VC::Enums.RelationTypes.CoResident 
+                    | VC::Enums.RelationTypes.Colleague
+                );
 
-            vcard.AnniversaryViews = new VC::DateTimeProperty[]
-            {
-                new VC::DateTimeOffsetProperty(new DateTime(2006, 7, 14))
-            };
+            vcard.AnniversaryViews = new VC::DateTimeOffsetProperty(new DateTime(2006, 7, 14));
 
             // Save vcard as vCard 2.1:
             string v2FilePath = Path.Combine(directoryPath, v2FileName);

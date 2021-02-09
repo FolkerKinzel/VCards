@@ -42,7 +42,7 @@ namespace Examples
 
             var composersVCard = new VCard
             {
-                DisplayNames = new VC::TextProperty[] { new VC::TextProperty("Composers") },
+                DisplayNames = new VC::TextProperty("Composers"),
                 Kind = new VC::KindProperty(VC::Enums.VCdKind.Group),
                 Members = members
             };
@@ -115,9 +115,9 @@ namespace Examples
         {
             var vCard = new VCard
             {
-                DisplayNames = new VC::TextProperty[] { new VC::TextProperty(composersName) },
-                BirthDayViews = new VC::DateTimeOffsetProperty[] { new VC::DateTimeOffsetProperty(birthDate) },
-                DeathDateViews = new VC::DateTimeOffsetProperty[] { new VC::DateTimeOffsetProperty(deathDate) }
+                DisplayNames = new VC::TextProperty(composersName),
+                BirthDayViews = new VC::DateTimeOffsetProperty(birthDate),
+                DeathDateViews = new VC::DateTimeOffsetProperty(deathDate)
             };
 
             return vCard;
