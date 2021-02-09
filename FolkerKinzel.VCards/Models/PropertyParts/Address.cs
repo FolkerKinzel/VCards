@@ -76,17 +76,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             Debug.Assert(vCardValue != null);
 
             StringBuilder builder = info.Builder;
-
-            ValueSplitter semicolonSplitter = info.ValueSplitter1;
-            semicolonSplitter.ValueString = vCardValue;
-            semicolonSplitter.SplitChar = ';';
-            semicolonSplitter.Options = StringSplitOptions.None;
-
-            ValueSplitter commaSplitter = info.ValueSplitter2;
-            commaSplitter.SplitChar = ',';
-            commaSplitter.Options = StringSplitOptions.RemoveEmptyEntries;
+            ValueSplitter semicolonSplitter = info.SemiColonSplitter;
+            ValueSplitter commaSplitter = info.CommaSplitter;
 
             int index = 0;
+            semicolonSplitter.ValueString = vCardValue;
             foreach (var s in semicolonSplitter)
             {
                 switch (index++)

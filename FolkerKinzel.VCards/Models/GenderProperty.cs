@@ -56,14 +56,10 @@ namespace FolkerKinzel.VCards.Models
         {
             VCdSex? sex = null;
             string? genderIdentity = null;
-
-            ValueSplitter semicolonSplitter = vcfRow.Info.ValueSplitter1;
-            semicolonSplitter.ValueString = vcfRow.Value;
-            semicolonSplitter.SplitChar = ';';
-            semicolonSplitter.Options = StringSplitOptions.None;
+            ValueSplitter semicolonSplitter = vcfRow.Info.SemiColonSplitter;
 
             bool initGenderIdentity = false;
-
+            semicolonSplitter.ValueString = vcfRow.Value;
             foreach (var s in semicolonSplitter)
             {
                 if (initGenderIdentity)

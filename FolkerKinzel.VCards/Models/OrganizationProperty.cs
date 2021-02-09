@@ -39,13 +39,10 @@ namespace FolkerKinzel.VCards.Models
 
             vcfRow.DecodeQuotedPrintable();
 
-            ValueSplitter semicolonSplitter = vcfRow.Info.ValueSplitter1;
-            semicolonSplitter.ValueString = vcfRow.Value;
-            semicolonSplitter.SplitChar = ';';
-            semicolonSplitter.Options = StringSplitOptions.None;
-
+            ValueSplitter semicolonSplitter = vcfRow.Info.SemiColonSplitter;
             StringBuilder? builder = vcfRow.Info.Builder;
 
+            semicolonSplitter.ValueString = vcfRow.Value;
             var list = semicolonSplitter.Select(x => x.UnMask(builder, version)).ToList();
 
             if (list.Count != 0)

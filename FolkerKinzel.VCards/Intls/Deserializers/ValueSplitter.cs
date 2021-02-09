@@ -1,29 +1,24 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal class ValueSplitter : IEnumerable<string>
     {
-        public ValueSplitter()
+        internal ValueSplitter(char splitChar, StringSplitOptions options)
         {
-
+            this.SplitChar = splitChar;
+            this.Options = options;
         }
 
-        //public ValueSplitter(string? valueString, char splitChar, StringSplitOptions options = StringSplitOptions.None)
-        //{
-        //    this.ValueString = valueString;
-        //    this.SplitChar = splitChar;
-        //    this.Options = options;
-        //}
+        internal string? ValueString { get; set; }
 
-        public string? ValueString { get; set; }
+        internal char SplitChar { get; }
 
-        public char SplitChar { get; set; }
-
-        public StringSplitOptions Options { get; set; }
+        internal StringSplitOptions Options { get; }
 
 
         public IEnumerator<string> GetEnumerator()

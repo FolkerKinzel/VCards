@@ -39,11 +39,9 @@ namespace FolkerKinzel.VCards.Tests.Intls.Deserializers
         {
             int count = 0;
 
-            var valueSplitter = new ValueSplitter
+            var valueSplitter = new ValueSplitter(splitChar, options)
             {
-                ValueString = valueString,
-                SplitChar = splitChar,
-                Options = options
+                ValueString = valueString
             };
 
             foreach (var s in valueSplitter)
@@ -61,10 +59,9 @@ namespace FolkerKinzel.VCards.Tests.Intls.Deserializers
         [DataRow(@"Bun\,go,Bon\;go;Banga", ';', new string[] { @"Bun\,go,Bon\;go", "Banga" })]
         public void GetEnumeratorTest2(string? valueString, char splitChar, string[] expected)
         {
-            var valueSplitter = new ValueSplitter
+            var valueSplitter = new ValueSplitter(splitChar, StringSplitOptions.None)
             {
-                ValueString = valueString,
-                SplitChar = splitChar,
+                ValueString = valueString
             };
 
             var arr = valueSplitter.ToArray();

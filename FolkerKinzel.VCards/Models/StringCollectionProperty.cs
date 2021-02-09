@@ -72,12 +72,10 @@ namespace FolkerKinzel.VCards.Models
             var list = new List<string>();
             StringBuilder builder = vcfRow.Info.Builder;
 
-            ValueSplitter? valueSplitter = vcfRow.Info.ValueSplitter1;
-            valueSplitter.ValueString = vcfRow.Value;
-            valueSplitter.SplitChar = ',';
-            valueSplitter.Options = StringSplitOptions.RemoveEmptyEntries;
+            ValueSplitter? commaSplitter = vcfRow.Info.CommaSplitter;
 
-            foreach (string s in valueSplitter)
+            commaSplitter.ValueString = vcfRow.Value;
+            foreach (string s in commaSplitter)
             {
                 list.Add(s.UnMask(builder, version));
             }

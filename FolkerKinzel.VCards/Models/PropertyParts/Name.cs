@@ -62,17 +62,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         {
             Debug.Assert(vCardValue != null);
 
-            StringBuilder? builder = info.Builder;
+            StringBuilder builder = info.Builder;
+            ValueSplitter semicolonSplitter = info.SemiColonSplitter;
+            ValueSplitter commaSplitter = info.CommaSplitter;
 
-            ValueSplitter semicolonSplitter = info.ValueSplitter1;
             semicolonSplitter.ValueString = vCardValue;
-            semicolonSplitter.SplitChar = ';';
-            semicolonSplitter.Options = StringSplitOptions.None;
-
-            ValueSplitter commaSplitter = info.ValueSplitter2;
-            commaSplitter.SplitChar = ',';
-            commaSplitter.Options = StringSplitOptions.RemoveEmptyEntries;
-
             int index = 0;
             foreach (var s in semicolonSplitter)
             {
@@ -87,8 +81,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             else
                             {
                                 var list = new List<string>();
-                                commaSplitter.ValueString = s;
 
+                                commaSplitter.ValueString = s;
                                 foreach (var item in commaSplitter)
                                 {
                                     list.Add(item.UnMask(builder, version));
@@ -108,8 +102,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             else
                             {
                                 var list = new List<string>();
-                                commaSplitter.ValueString = s;
 
+                                commaSplitter.ValueString = s;
                                 foreach (var item in commaSplitter)
                                 {
                                     list.Add(item.UnMask(builder, version));
@@ -129,8 +123,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             else
                             {
                                 var list = new List<string>();
-                                commaSplitter.ValueString = s;
 
+                                commaSplitter.ValueString = s;
                                 foreach (var item in commaSplitter)
                                 {
                                     list.Add(item.UnMask(builder, version));
@@ -150,8 +144,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             else
                             {
                                 var list = new List<string>();
-                                commaSplitter.ValueString = s;
 
+                                commaSplitter.ValueString = s;
                                 foreach (var item in commaSplitter)
                                 {
                                     list.Add(item.UnMask(builder, version));
@@ -171,8 +165,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             else
                             {
                                 var list = new List<string>();
-                                commaSplitter.ValueString = s;
 
+                                commaSplitter.ValueString = s;
                                 foreach (var item in commaSplitter)
                                 {
                                     list.Add(item.UnMask(builder, version));

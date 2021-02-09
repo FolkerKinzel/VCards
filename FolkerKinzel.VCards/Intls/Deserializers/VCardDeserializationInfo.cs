@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Converters;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -43,10 +44,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             }
         }
 
-        internal ValueSplitter ValueSplitter1 { get; } = new ValueSplitter();
+        internal ValueSplitter SemiColonSplitter { get; } = new ValueSplitter(';', StringSplitOptions.None);
 
 
-        internal ValueSplitter ValueSplitter2 { get; } = new ValueSplitter();
+        internal ValueSplitter CommaSplitter { get; } = new ValueSplitter(',', StringSplitOptions.RemoveEmptyEntries);
         
 
     }

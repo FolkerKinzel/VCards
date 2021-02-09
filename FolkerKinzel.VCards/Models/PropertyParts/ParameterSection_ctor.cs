@@ -76,12 +76,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         }
                     case ParameterKey.TYPE:
                         {
-                            ValueSplitter valueSplitter = info.ValueSplitter1;
-                            valueSplitter.ValueString = parameter.Value;
-                            valueSplitter.SplitChar = ',';
-                            valueSplitter.Options = StringSplitOptions.RemoveEmptyEntries;
+                            ValueSplitter commaSplitter = info.CommaSplitter;
 
-                            foreach (var s in valueSplitter)
+                            commaSplitter.ValueString = parameter.Value;
+                            foreach (var s in commaSplitter)
                             {
                                 string typeValue = CleanParameterValue(s, builder);
 
@@ -107,12 +105,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             List<string> list = (List<string>?)this.SortAs ?? new List<string>();
                             this.SortAs = list;
 
-                            ValueSplitter valueSplitter = info.ValueSplitter1;
-                            valueSplitter.ValueString = parameter.Value;
-                            valueSplitter.SplitChar = ',';
-                            valueSplitter.Options = StringSplitOptions.RemoveEmptyEntries;
+                            ValueSplitter commaSplitter = info.CommaSplitter;
 
-                            foreach (var s in valueSplitter)
+                            commaSplitter.ValueString = parameter.Value;
+                            foreach (var s in commaSplitter)
                             {
                                 string sortString = s.UnMask(builder, VCdVersion.V4_0);
                                 list.Add(sortString);
