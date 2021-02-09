@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace FolkerKinzel.VCards
@@ -36,7 +37,14 @@ namespace FolkerKinzel.VCards
         private readonly Dictionary<VCdProp, object> _propDic = new Dictionary<VCdProp, object>();
 
         [return: MaybeNull]
-        private T Get<T>(VCdProp prop) => _propDic.ContainsKey(prop) ? (T)_propDic[prop] : default;
+        private T Get<T>(VCdProp prop) where T: class?
+            => _propDic.ContainsKey(prop)
+#if NET40
+            ? (T)_propDic[prop]
+#else
+            ? Unsafe.As<T>(_propDic[prop])
+#endif
+            : default;
 
 
         private void Set(VCdProp prop, object? value)

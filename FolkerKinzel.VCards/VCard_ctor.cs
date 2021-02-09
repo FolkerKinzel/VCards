@@ -85,7 +85,7 @@ namespace FolkerKinzel.VCards
                             BirthDayViews = Assigner.GetAssignment(DateTimeProperty.Create(vcfRow, this.Version), BirthDayViews);
                             break;
                         }
-                    case PropKeys.ADR: // PoBox, ExtendedAddress, Street, Locality, Region, PostalCode, Country
+                    case PropKeys.ADR: // PostOfficeBox, ExtendedAddress, Street, Locality, Region, PostalCode, Country
                         {
                             Addresses = Assigner.GetAssignment(new AddressProperty(vcfRow, this.Version), Addresses);
                             break;
