@@ -5,6 +5,8 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -18,7 +20,7 @@ namespace FolkerKinzel.VCards.Models
     /// <remarks>Die Informationen könnnen in verschiedenen Formaten vorliegen. So ist z.B. in vCard 4.0 auch
     /// freier Text wie "dienstags nach Mitternacht" möglich. Um herauszufinden, welcher Art die enthaltene Information ist,
     /// ist die <see cref="ParameterSection.DataType">Parameters.DataType</see>-Eigenschaft hilfreich.</remarks>
-    public abstract class DateTimeProperty : VCardProperty
+    public abstract class DateTimeProperty : VCardProperty, IEnumerable<DateTimeProperty>
     {
         /// <summary>
         /// Konstruktor, der abgeleiteten Klassen erlaubt, ein neues <see cref="DateTimeProperty"/>-Objekt zu initialisieren.
@@ -86,5 +88,13 @@ namespace FolkerKinzel.VCards.Models
             }
 
         }
+
+        IEnumerator<DateTimeProperty> IEnumerable<DateTimeProperty>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateTimeProperty>)this).GetEnumerator();
+
     }// class DateTimeProperty
 }
