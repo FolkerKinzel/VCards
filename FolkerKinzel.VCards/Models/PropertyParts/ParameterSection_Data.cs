@@ -274,7 +274,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// deren Zahlenwert für <see cref="Preference"/> am geringsten ist.</remarks>
         public int Preference
         {
-            get => _propDic.ContainsKey(VCdParam.Preference) ? (int)_propDic[VCdParam.Preference] : 100;
+            get => _propDic.ContainsKey(VCdParam.Preference) ? (int)_propDic[VCdParam.Preference] : PREF_MAX_VALUE;
 
             set
             {
@@ -287,7 +287,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                     value = PREF_MAX_VALUE;
                 }
 
-                Set(VCdParam.Preference, value);
+                Set(VCdParam.Preference, value == PREF_MAX_VALUE ? default : value);
             }
         }
 
