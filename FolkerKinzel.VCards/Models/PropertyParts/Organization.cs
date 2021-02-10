@@ -18,7 +18,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     public sealed class Organization
     {
 
-        public Organization()
+        internal Organization()
         {
 
         }
