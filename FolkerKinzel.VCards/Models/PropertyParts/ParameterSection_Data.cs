@@ -287,6 +287,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                     value = PREF_MAX_VALUE;
                 }
 
+                // Diskussion ein Wert von 100 (PREF_MAX_VALUE) wird nun nicht mehr gespeichert:
                 Set(VCdParam.Preference, value == PREF_MAX_VALUE ? default : value);
             }
         }
