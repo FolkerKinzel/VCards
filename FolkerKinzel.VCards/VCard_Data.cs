@@ -39,11 +39,11 @@ namespace FolkerKinzel.VCards
         [return: MaybeNull]
         private T Get<T>(VCdProp prop) where T: class?
             => _propDic.ContainsKey(prop)
-#if NET40
+//#if NET40
             ? (T)_propDic[prop]
-#else
-            ? Unsafe.As<T>(_propDic[prop])
-#endif
+//#else
+//            ? Unsafe.As<T>(_propDic[prop])
+//#endif
             : default;
 
 
