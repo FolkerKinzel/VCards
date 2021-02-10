@@ -99,11 +99,13 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+
         IEnumerator<TextProperty> IEnumerable<TextProperty>.GetEnumerator()
         {
             yield return this;
         }
 
+        
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TextProperty>)this).GetEnumerator();
     }
 }

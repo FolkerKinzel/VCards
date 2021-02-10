@@ -109,6 +109,10 @@
               nur eine Instanz geben darf. vCard 4.0 erlaubt es aber, mehrere Versionen derselben Eigenschaft in einer vCard zu speichern
               (z.B. in verschiedenen Sprachen). Dabei muss aber auf allen Versionen dieser Eigenschaft derselbe <codeInline>AltID</codeInline>-Parameter gesetzt sein.
             </para>
+            <para>
+              Die meisten von <codeInline>VCardProperty</codeInline> abgeleiteten Klassen implementieren <codeInline>IEnumerable&lt;T&gt;</codeInline>,
+              damit auch einzelne Instanzen von ihnen Eigenschaften zugewiesen werden können, die Collections erwarten.
+            </para>
           </content>
         </section>
 

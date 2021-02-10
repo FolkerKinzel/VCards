@@ -111,6 +111,10 @@
               vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same <codeInline>AltID</codeInline> parameter
               on each of these versions.
             </para>
+            <para>
+              Most classes that are derived from <codeInline>VCardProperty</codeInline> implement <codeInline>IEnumerable&lt;T&gt;</codeInline> in
+              order to be assignable to collection properties without having to be wrapped in an Array or List.
+            </para>
           </content>
         </section>
         
