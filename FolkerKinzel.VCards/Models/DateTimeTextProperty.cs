@@ -89,6 +89,6 @@ namespace FolkerKinzel.VCards.Models
             yield return this;
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateTimeTextProperty>)this).GetEnumerator();
+        //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateTimeTextProperty>)this).GetEnumerator();
     }
 }

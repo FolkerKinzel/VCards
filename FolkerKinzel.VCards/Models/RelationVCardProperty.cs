@@ -121,6 +121,6 @@ namespace FolkerKinzel.VCards.Models
             yield return this;
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationVCardProperty>)this).GetEnumerator();
+        //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationVCardProperty>)this).GetEnumerator();
     }
 }

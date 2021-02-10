@@ -58,6 +58,6 @@ namespace FolkerKinzel.VCards.Models
             yield return this;
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<XmlProperty>)this).GetEnumerator();
+        //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<XmlProperty>)this).GetEnumerator();
     }
 }
