@@ -20,7 +20,7 @@ Fixes an issue that non-standardized parameter values in standardized parameters
       
 Fixes the issue that the SORT-AS parameter was not read.
 </PackageReleaseNotes>
-    <PackageTags>.net vcard vcf</PackageTags>
+    <PackageTags>.net vcard vcf c#</PackageTags>
     <Description>
       .NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
     </Description>
