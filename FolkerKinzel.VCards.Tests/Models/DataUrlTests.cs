@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Runtime.Serialization;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models.Tests
 {
@@ -139,7 +140,7 @@ namespace FolkerKinzel.VCards.Models.Tests
 
 
         [TestMethod]
-        public void GetobjectDataTest()
+        public void GetObjectDataTest()
         {
             const string MEDIA_TYPE = "image/jpeg";
             byte[] data = new byte[] { 1, 2, 3 };
@@ -152,6 +153,9 @@ namespace FolkerKinzel.VCards.Models.Tests
             var context = new StreamingContext();
 
             serializable.GetObjectData(info, context);
+
+            Assert.IsNotNull(info.GetValue("MimeType", typeof(MimeType)));
+            Assert.IsNotNull(info.GetValue("Encoding", typeof(DataEncoding)));
         }
     }
 }
