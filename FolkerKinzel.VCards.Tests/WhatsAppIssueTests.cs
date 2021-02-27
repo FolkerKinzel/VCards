@@ -20,7 +20,7 @@ namespace FolkerKinzel.VCards.Tests
 
             Assert.IsNotNull(phoneNumbers);
 
-            Models.TextProperty? whatsAppNumber = phoneNumbers.ElementAtOrDefault(1);
+            Models.TextProperty? whatsAppNumber = phoneNumbers!.ElementAtOrDefault(1);
 
             Assert.IsNotNull(whatsAppNumber);
 

@@ -42,7 +42,7 @@ namespace FolkerKinzel.VCards.Tests
 
             Assert.IsNotNull(list[0].DisplayNames);
 
-            TextProperty? dispNameProp = list[0].DisplayNames.FirstOrDefault();
+            TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
             Assert.IsNotNull(dispNameProp);
             Assert.AreEqual("Folker", dispNameProp?.Value);
         }
@@ -68,7 +68,7 @@ namespace FolkerKinzel.VCards.Tests
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0].DisplayNames);
 
-            TextProperty? dispNameProp = list[0].DisplayNames.FirstOrDefault();
+            TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
             Assert.IsNotNull(dispNameProp);
             Assert.AreEqual("Folker", dispNameProp?.Value);
 
@@ -204,7 +204,7 @@ namespace FolkerKinzel.VCards.Tests
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0].DisplayNames);
 
-            TextProperty? dispNameProp = list[0].DisplayNames.FirstOrDefault();
+            TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
             Assert.IsNotNull(dispNameProp);
             Assert.AreEqual("Folker", dispNameProp?.Value);
 
@@ -235,7 +235,7 @@ namespace FolkerKinzel.VCards.Tests
 
             Assert.IsNotNull(list[0].DisplayNames);
 
-            TextProperty? dispNameProp = list[0].DisplayNames.FirstOrDefault();
+            TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
             Assert.IsNotNull(dispNameProp);
             Assert.AreEqual("Folker", dispNameProp?.Value);
 

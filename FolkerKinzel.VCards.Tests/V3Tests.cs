@@ -56,12 +56,12 @@ namespace FolkerKinzel.VCards.Tests
             Assert.AreEqual(VCdVersion.V3_0, vcard.Version);
 
             Assert.IsNotNull(vcard.DisplayNames);
-            Assert.AreEqual(vcard.DisplayNames.Count(), 1);
-            Assert.IsNotNull(vcard.DisplayNames.First());
+            Assert.AreEqual(vcard.DisplayNames!.Count(), 1);
+            Assert.IsNotNull(vcard.DisplayNames!.First());
 
             Assert.IsNotNull(vcard.NameViews);
-            Assert.AreEqual(vcard.NameViews.Count(), 1);
-            Assert.IsNotNull(vcard.NameViews.First());
+            Assert.AreEqual(vcard.NameViews!.Count(), 1);
+            Assert.IsNotNull(vcard.NameViews!.First());
         }
 
 
@@ -103,7 +103,7 @@ namespace FolkerKinzel.VCards.Tests
 
             Assert.AreEqual(((DataUrl?)vcard.Keys?.First()?.Value)?.GetEmbeddedText(), ASCIITEXT);
             Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-            Assert.IsTrue(((DataUrl?)vcard.Photos?.First()?.Value)?.GetEmbeddedBytes().SequenceEqual(bytes) ?? false);
+            Assert.IsTrue(((DataUrl?)vcard.Photos?.First()?.Value)?.GetEmbeddedBytes()?.SequenceEqual(bytes) ?? false);
 
 
             static byte[] CreateBytes()

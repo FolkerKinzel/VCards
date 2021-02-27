@@ -8,3 +8,8 @@
 dotnet_diagnostic.CA1303.severity = none
 
 
+
+
+[DataUrlTests.cs]
+# SYSLIB0011: Typ oder Element ist veraltet
+dotnet_diagnostic.SYSLIB0011.severity = none

@@ -75,7 +75,7 @@ namespace FolkerKinzel.VCards.Models.Tests
 
             Assert.AreEqual(dataUrl2?.MimeType.MediaType, MIME_TYPE);
             Assert.AreEqual(dataUrl2?.GetFileExtension(), ".json");
-            Assert.IsTrue(dataUrl2?.GetEmbeddedBytes().SequenceEqual(DATA) ?? false);
+            Assert.IsTrue(dataUrl2?.GetEmbeddedBytes()?.SequenceEqual(DATA) ?? false);
 
 
             dataUrl1 = DataUrl.FromBytes(Encoding.GetEncoding("iso-8859-1").GetBytes(TEXT), ";charset=ISO-8859-1");
@@ -115,7 +115,7 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.IsNotNull(dataUri);
             Assert.AreEqual(dataUri.MimeType.MediaType, MEDIA_TYPE);
             Assert.AreEqual(dataUri.Encoding, DataEncoding.Base64);
-            Assert.IsTrue(data.SequenceEqual(dataUri.GetEmbeddedBytes()));
+            Assert.IsTrue(data.SequenceEqual(dataUri.GetEmbeddedBytes()!));
 
 
             var formatter = new BinaryFormatter();
@@ -132,7 +132,7 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.IsNotNull(dataUri);
             Assert.AreEqual(dataUri.MimeType.MediaType, MEDIA_TYPE);
             Assert.AreEqual(dataUri.Encoding, DataEncoding.Base64);
-            Assert.IsTrue(data.SequenceEqual(dataUri.GetEmbeddedBytes()));
+            Assert.IsTrue(data.SequenceEqual(dataUri.GetEmbeddedBytes()!));
 
         }
     }
