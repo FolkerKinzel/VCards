@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// </summary>
     public abstract class VCardProperty
     {
-        internal const bool OBSOLETE_AS_ERROR = false;
+        internal const bool OBSOLETE_AS_ERROR = true;
         internal const string OBSOLETE_MESSAGE = "Use \"Value\" instead!";
         private string? _group;
 

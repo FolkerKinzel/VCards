@@ -8,7 +8,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>2.1.0-rc</Version>
-    <FileVersion>2.1.0.7</FileVersion>
+    <FileVersion>2.1.0.8</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReleaseNotes>
@@ -20,7 +20,7 @@ Fixes an issue that non-standardized parameter values in standardized parameters
       
 Fixes the issue that the SORT-AS parameter was not read.
 
-The usage of most symbols which are marked as &quot;Obsolete&quot; is now treated as error.
+The usage of most symbols which are marked as "Obsolete" is now treated as error.
 </PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
     <Description>
