@@ -21,15 +21,6 @@ namespace FolkerKinzel.VCards
     /// </example>
     public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
-        //private static readonly Regex _vCardBegin =
-        //    new Regex(@"\ABEGIN[ \t]*:[ \t]*VCARD[ \t]*\z",
-        //        RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-
-        //private static readonly Regex _vCardEnd =
-        //    new Regex(@"\AEND[ \t]*:[ \t]*VCARD[ \t]*\z",
-        //        RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-
-
         private readonly Dictionary<VCdProp, object> _propDic = new Dictionary<VCdProp, object>();
 
         [return: MaybeNull]
