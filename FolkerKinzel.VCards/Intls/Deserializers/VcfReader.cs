@@ -51,7 +51,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             Debug.WriteLine("");
 
-            string s;
+            string? s;
 
             if (EOF)
             {
@@ -273,8 +273,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         }
 
 
-        private bool ConcatQuotedPrintableSoftLineBreak(string s)
+        private bool ConcatQuotedPrintableSoftLineBreak(string? s)
         {
+            Debug.Assert(s is not null);
+
             // QuotedPrintableConverter arbeitet plattformunabhängig mit 
             // Environment.NewLine
 
@@ -317,8 +319,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         }
 
 
-        private bool ConcatVcard2_1Base64(string s)
+        private bool ConcatVcard2_1Base64(string? s)
         {
+            Debug.Assert(s is not null);
+
             while (s.Length != 0) // Leerzeile beendet Base64
             {
                 _ = _info.Builder.Append(s);
@@ -351,8 +355,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         }
 
 
-        private bool ConcatNested_2_1Vcard(string s)
+        private bool ConcatNested_2_1Vcard(string? s)
         {
+            Debug.Assert(s is not null);
+
             _ = _info.Builder.Append(s);
 
             do

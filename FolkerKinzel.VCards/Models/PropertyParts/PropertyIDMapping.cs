@@ -128,7 +128,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         #region IEquatable
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => obj is PropertyIDMapping other && Equals(other);
+        public override bool Equals(object? obj) => obj is PropertyIDMapping other && Equals(other);
 
         
         /// <inheritdoc/>

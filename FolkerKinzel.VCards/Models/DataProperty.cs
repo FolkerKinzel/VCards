@@ -150,7 +150,7 @@ namespace FolkerKinzel.VCards.Models
 
             static Uri? BuildUri(string value)
             {
-                if (Uri.TryCreate(value, UriKind.RelativeOrAbsolute, out Uri uri))
+                if (Uri.TryCreate(value, UriKind.RelativeOrAbsolute, out Uri? uri))
                 {
                     return uri;
                 }

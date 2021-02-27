@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -37,14 +38,14 @@ namespace FolkerKinzel.VCards.Intls.Attributes
         public static void Run()
         {
             var sfCallee = new StackFrame(1, false);
-            MethodBase calleeMethod = sfCallee.GetMethod();
-            Type calleeType = calleeMethod.DeclaringType;
+            MethodBase? calleeMethod = sfCallee.GetMethod();
+            Type? calleeType = calleeMethod?.DeclaringType;
 
             var sfCaller = new StackFrame(2, false);
-            MethodBase callerMethod = sfCaller.GetMethod();
-            Type callerType = callerMethod.DeclaringType;
+            MethodBase? callerMethod = sfCaller.GetMethod();
+            Type? callerType = callerMethod?.DeclaringType;
 
-            Debug.Assert(calleeMethod.IsAssembly, "Die Verwendung des Attributs \"InternalProtected\" ist nur auf Methoden, " +
+            Debug.Assert(calleeMethod?.IsAssembly ?? false, "Die Verwendung des Attributs \"InternalProtected\" ist nur auf Methoden, " +
                 "Eigenschaften und Konstruktoren sinnvoll, die den Zugriffsmodifizierer \"internal\" verwenden.");
 
             if (IsAssignableFrom(callerType, calleeType) || IsAssignableFrom(calleeType, callerType))
@@ -52,25 +53,32 @@ namespace FolkerKinzel.VCards.Intls.Attributes
                 return;
             }
 
+            const string unknown = "<unbekannt>";
+
             const string format = "Die Methode \"{0}.{1}\" wurde von der Methode \"{2}.{3}\" aufgerufen. " +
                 "Sie ist aber \"InternalProtected\" deklariert und darf nur von abgeleiteten Typen oder Basistypen aufgerufen werden.";
             string message = string.Format(CultureInfo.CurrentCulture, format,
 
-                calleeMethod.DeclaringType.Name,
+                calleeMethod.DeclaringType?.Name ?? unknown,
 
                 calleeMethod.Name,
 
-                callerMethod.DeclaringType.Name,
+                callerMethod?.DeclaringType?.Name ?? unknown,
 
-                callerMethod.Name);
+                callerMethod?.Name ?? unknown);
 
             throw new InvalidOperationException(message);
         }
 
 
         [DebuggerStepThrough()]
-        private static bool IsAssignableFrom(Type extendType, Type baseType)
+        private static bool IsAssignableFrom(Type? extendType, Type? baseType)
         {
+            if(extendType is null || baseType is null)
+            {
+                return false;
+            }
+
             while (!baseType.IsAssignableFrom(extendType))
             {
                 if (extendType.Equals(typeof(object)))
@@ -81,7 +89,7 @@ namespace FolkerKinzel.VCards.Intls.Attributes
                 extendType = 
                     extendType.IsGenericType && !extendType.IsGenericTypeDefinition
                     ? extendType.GetGenericTypeDefinition()
-                    : extendType.BaseType;
+                    : extendType.BaseType ?? typeof(object);
             }
             return true;
         }

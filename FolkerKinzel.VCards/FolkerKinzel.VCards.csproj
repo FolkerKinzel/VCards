@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net40</TargetFrameworks>
+    <TargetFrameworks>net5.0;netstandard2.1;net40</TargetFrameworks>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <NeutralLanguage>en</NeutralLanguage>
@@ -8,7 +8,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>2.1.0-rc</Version>
-    <FileVersion>2.1.0.9</FileVersion>
+    <FileVersion>2.1.0.14</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReleaseNotes>
@@ -23,6 +23,8 @@ Fixes the issue that the SORT-AS parameter was not read.
 Added a default constructor to TimeStampProperty.
 
 The usage of most symbols which are marked as "Obsolete" is now treated as error.
+
+.NET 5.0 dll
 </PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
     <Description>

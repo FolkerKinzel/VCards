@@ -59,7 +59,7 @@ namespace FolkerKinzel.VCards.Models
             }
             else
             {
-                if (Uri.TryCreate(row.Value, UriKind.RelativeOrAbsolute, out Uri uri))
+                if (Uri.TryCreate(row.Value, UriKind.RelativeOrAbsolute, out Uri? uri))
                 {
                     var relation = new RelationUriProperty(
                         uri,

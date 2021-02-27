@@ -98,8 +98,10 @@ namespace FolkerKinzel.VCards.Models
         }
 
         /// <inheritdoc/>
+#if NET40
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
-        public new void GetObjectData(SerializationInfo info, StreamingContext context)
+#endif
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
 
@@ -342,7 +344,7 @@ namespace FolkerKinzel.VCards.Models
             if (Encoding == DataEncoding.Base64)
             {
                 // als Base64 codierter Text:
-                Encoding enc = TextEncodingConverter.GetEncoding(MimeType.Parameters.FirstOrDefault(x => x.Key == "charset").Value ?? "US-ASCII");
+                Encoding enc = TextEncodingConverter.GetEncoding(MimeType.Parameters?.FirstOrDefault(x => x.Key == "charset").Value ?? "US-ASCII");
                 try
                 {
                     return enc.GetString(Convert.FromBase64String(EncodedData));
