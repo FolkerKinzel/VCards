@@ -971,7 +971,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             const VCdDataType DEFINED_DATA_TYPES =
                 VCdDataType.Boolean | VCdDataType.Date | VCdDataType.DateAndOrTime |
                 VCdDataType.DateTime | VCdDataType.Float | VCdDataType.Integer | VCdDataType.LanguageTag |
-                VCdDataType.Text | VCdDataType.Time | VCdDataType.Timestamp | VCdDataType.Uri | VCdDataType.UtcOffset;
+                VCdDataType.Text | VCdDataType.Time | VCdDataType.TimeStamp | VCdDataType.Uri | VCdDataType.UtcOffset;
 
             string? s = (dataType & DEFINED_DATA_TYPES).ToVCardString();
 

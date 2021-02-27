@@ -1,4 +1,7 @@
-﻿namespace FolkerKinzel.VCards.Models.Enums
+﻿using System;
+using System.ComponentModel;
+
+namespace FolkerKinzel.VCards.Models.Enums
 {
     /// <summary>
     /// Benannte Konstanten, um den Datentyp des Inhalts einer vCard-Property anzugeben.
@@ -64,9 +67,17 @@
         /// <summary>
         /// <c>TIMESTAMP</c>: Zeitstempel <c>(4)</c>
         /// </summary>
-        Timestamp = 1 << 6,
+        TimeStamp = 1 << 6,
         // yyyymmddThhmmss[+/-hh[mm]]
         // yyyymmddThhmmss[Z]          // "Z" bedeutet UTC
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
+        [Obsolete("Use \"TimeStamp\" instead.", false)]
+        [CLSCompliant(false)]
+#pragma warning disable CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
+        Timestamp = TimeStamp,
+#pragma warning restore CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
 
 
         /// <summary>

@@ -68,7 +68,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
                 PropValue.TIME => VCdDataType.Time,
 
-                PropValue.TIMESTAMP => VCdDataType.Timestamp,
+                PropValue.TIMESTAMP => VCdDataType.TimeStamp,
 
                 PropValue.URI => VCdDataType.Uri,
 
@@ -106,7 +106,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
                 VCdDataType.Time => PropValue.TIME,
 
-                VCdDataType.Timestamp => PropValue.TIMESTAMP,
+                VCdDataType.TimeStamp => PropValue.TIMESTAMP,
 
                 VCdDataType.Uri => PropValue.URI,
 

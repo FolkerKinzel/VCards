@@ -41,7 +41,7 @@ namespace FolkerKinzel.VCards.Models
                 case VCdDataType.DateAndOrTime:
                 case VCdDataType.DateTime:
                 case VCdDataType.Date:
-                case VCdDataType.Timestamp:
+                case VCdDataType.TimeStamp:
                 case null:
                     {
                         return vcfRow.Info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)

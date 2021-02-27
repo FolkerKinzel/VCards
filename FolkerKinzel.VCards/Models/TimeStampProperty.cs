@@ -20,17 +20,34 @@ namespace FolkerKinzel.VCards.Models
     public sealed class TimeStampProperty : VCardProperty
     {
         /// <summary>
-        /// Initialisiert ein neues <see cref="TimeStampProperty"/>-Objekt, bei dem der <see cref="ParameterSection.DataType"/>-Parameter
-        /// auf <see cref="VCdDataType.Timestamp"/> gesetzt ist.
+        /// Initialisiert ein neues <see cref="TimeStampProperty"/>-Objekt, das den Zeitpunkt des 
+        /// Konstruktoraufrufs als Zeitstempel kapselt.
+        /// </summary>
+        /// <param name="propertyGroup">Bezeichner der Gruppe,
+        /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+        /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+        /// <remarks>
+        /// Der Konstruktor setzt den <see cref="ParameterSection.DataType"/>-Parameter automatisch
+        /// auf den Wert <see cref="VCdDataType.TimeStamp"/>.
+        /// </remarks>
+        public TimeStampProperty(string? propertyGroup = null) : this(DateTimeOffset.UtcNow, propertyGroup) { }
+
+
+        /// <summary>
+        /// Initialisiert ein neues <see cref="TimeStampProperty"/>-Objekt mit dem angegebenen Zeitstempel.
         /// </summary>
         /// <param name="value">Ein <see cref="DateTimeOffset"/>-Objekt.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+        /// <remarks>
+        /// Der Konstruktor setzt den <see cref="ParameterSection.DataType"/>-Parameter automatisch
+        /// auf den Wert <see cref="VCdDataType.TimeStamp"/>.
+        /// </remarks>
         public TimeStampProperty(DateTimeOffset value, string? propertyGroup = null) : base(propertyGroup)
         {
             Value = value;
-            Parameters.DataType = VCdDataType.Timestamp;
+            Parameters.DataType = VCdDataType.TimeStamp;
         }
 
 
@@ -41,7 +58,7 @@ namespace FolkerKinzel.VCards.Models
             // Threadsafety zerstören würde:
             _ = vcfRow.Info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset value);
             Value = value;
-            Parameters.DataType = VCdDataType.Timestamp;
+            Parameters.DataType = VCdDataType.TimeStamp;
         }
 
 
