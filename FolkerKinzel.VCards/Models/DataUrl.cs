@@ -108,8 +108,8 @@ namespace FolkerKinzel.VCards.Models
             if (info != null)
             {
                 // Use the AddValue method to specify serialized values.
-                info?.AddValue("MimeType", this.MimeType, typeof(MimeType));
-                info?.AddValue("Encoding", this.Encoding, typeof(DataEncoding));
+                info.AddValue("MimeType", this.MimeType, typeof(MimeType));
+                info.AddValue("Encoding", this.Encoding, typeof(DataEncoding));
             }
         }
 

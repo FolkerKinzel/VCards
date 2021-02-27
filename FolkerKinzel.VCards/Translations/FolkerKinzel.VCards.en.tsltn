@@ -324,8 +324,6 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="BCB3DBB82C5D2C12">&lt;c&gt;TIME&lt;/c&gt;: A time of day. &lt;c&gt;(3,4)&lt;/c&gt;</T>
   <T ID="E87BCAF9D7A38A8D">&lt;c&gt;DATE-TIME&lt;/c&gt;: A date and time of day combination. &lt;c&gt;(3,4)&lt;/c&gt;</T>
   <T ID="FBEFF9CCB5B70B0C">&lt;c&gt;DATE-AND-OR-TIME&lt;/c&gt;: Either a &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.DateTime"/&gt;, a &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.Date"/&gt;, or a &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.Time"/&gt; value. &lt;c&gt;(4)&lt;/c&gt;</T>
-  <T ID="ED6DE4A3E7F02218">&lt;c&gt;TIMESTAMP&lt;/c&gt;: A complete date and time of day combination as specified in
-   [ISO.8601.2004], Section 4.3.2. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="1BAC97B986BA14B1">&lt;c&gt;BOOLEAN&lt;/c&gt;: A boolean value. &lt;c&gt;(3,4)&lt;/c&gt;</T>
   <T ID="AD14D52E2C3C47BB">&lt;c&gt;INTEGER&lt;/c&gt;: Signed integer values in decimal format. &lt;c&gt;(3,4)&lt;/c&gt;</T>
   <T ID="DAE1EDE9EF711203">&lt;c&gt;FLOAT&lt;/c&gt;: Real numbers. &lt;c&gt;(3,4)&lt;/c&gt;</T>
@@ -717,7 +715,6 @@ Please note, that when using the class, yourself is responsible for the standard
   <T ID="D5444A4FDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="B08B1013915C6471">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.TextProperty"/&gt;.</T>
   <T ID="C872FD7E2D03F016">Encapsulates the vCard property &lt;c&gt;REV&lt;/c&gt;, which represents a timestamp of the last update of the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
-  <T ID="D12A7033EF599EEE">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.TimeStampProperty"/&gt; object in which the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType"/&gt; parameter is set to &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.Timestamp"/&gt;.</T>
   <T ID="D55A88A00329D5CD">An instance of the &lt;see cref="T:System.DateTimeOffset"/&gt; struct.</T>
   <T ID="188A9B1FDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="22FEADBA23C51692">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.TimeStampProperty"/&gt;.</T>
@@ -1279,4 +1276,11 @@ When serializing as vCard 4.0, the method calls &lt;see cref ="M:FolkerKinzel.VC
 &lt;/list&gt;</T>
   <T ID="2CACFD58BC6102FF">&lt;see cref="P:FolkerKinzel.VCards.Models.TextProperty.Value"/&gt; should specify a URI for instant messaging and presence protocol communications with the object the vCard represents. If the URI can be used for voice
       and/or video, the &lt;see cref="P:FolkerKinzel.VCards.VCard.PhoneNumbers"/&gt; property SHOULD be used in  addition to this property.</T>
+  <T ID="7B4C5AFCE7F02218">&lt;c&gt;TIMESTAMP&lt;/c&gt;: A complete date and time of day combination as specified in
+   [ISO.8601.2004], Section 4.3.2. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="85190D2ABDBE73DA">Initializes a new &lt;see cref ="T:FolkerKinzel.VCards.Models.TimeStampProperty"/&gt; object that encapsulates the time of the constructor call as a UTC time stamp.</T>
+  <T ID="95374DF4DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="622BE8D0B75E334">The constructor automatically sets the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType"/&gt; parameter to the value &lt;see cref ="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.TimeStamp"/&gt;.</T>
+  <T ID="D12A7033A0635AC3">Initializes a new &lt;see cref ="T:FolkerKinzel.VCards.Models.TimeStampProperty"/&gt; object with the specified time stamp.</T>
+  <T ID="200929DE0B75E334">The constructor automatically sets the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType"/&gt; parameter to the value &lt;see cref ="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.TimeStamp"/&gt;.</T>
 </Tsltn>

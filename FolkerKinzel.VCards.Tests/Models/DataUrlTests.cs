@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Models.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace FolkerKinzel.VCards.Models.Tests
 {
@@ -134,6 +135,23 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.AreEqual(dataUri.Encoding, DataEncoding.Base64);
             Assert.IsTrue(data.SequenceEqual(dataUri.GetEmbeddedBytes()!));
 
+        }
+
+
+        [TestMethod]
+        public void GetobjectDataTest()
+        {
+            const string MEDIA_TYPE = "image/jpeg";
+            byte[] data = new byte[] { 1, 2, 3 };
+
+            var dataUri = DataUrl.FromBytes(data, MEDIA_TYPE);
+
+            ISerializable serializable = dataUri;
+
+            var info = new SerializationInfo(typeof(DataUrl), new FormatterConverter());
+            var context = new StreamingContext();
+
+            serializable.GetObjectData(info, context);
         }
     }
 }
