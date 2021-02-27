@@ -10,9 +10,13 @@ namespace FolkerKinzel.VCards.Intls.Converters
 {
     internal static class ReadOnlyCollectionConverter
     {
+#if NET40
+        private static readonly string[] _emptyStringArray = new string[0];
+#endif
+
         private static readonly ReadOnlyCollection<string> _emptyColl = new ReadOnlyCollection<string>(
 #if NET40
-            VCard.EmptyStringArray);
+            _emptyStringArray);
 #else
             Array.Empty<string>());
 #endif

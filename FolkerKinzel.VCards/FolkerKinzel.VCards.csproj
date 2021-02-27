@@ -7,11 +7,11 @@
     <!-- .nuget-Package: -->
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
-    <Version>2.1.0-beta</Version>
-    <FileVersion>2.1.0.0</FileVersion>
+    <Version>2.1.0-rc</Version>
+    <FileVersion>2.1.0.7</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-<PackageReleaseNotes>
+    <PackageReleaseNotes>
 Most classes derived from VCard property have now an explicit implementation of IEnumerable{T} that enables them to be assigned to collection properties directly without being wrapped in an Array or List. This avoids the creation of most temporary collections and enables you to write shorter code when using the library.
       
 Enables TYPE=PREF in the vCard 2.1 EMAIL property. (Although this is not mentioned in the standard, nevertheless it is widely supported.)
@@ -19,6 +19,8 @@ Enables TYPE=PREF in the vCard 2.1 EMAIL property. (Although this is not mention
 Fixes an issue that non-standardized parameter values in standardized parameters are not recognized by the library.
       
 Fixes the issue that the SORT-AS parameter was not read.
+
+The usage of most symbols which are marked as &quot;Obsolete&quot; is now treated as error.
 </PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
     <Description>
