@@ -9,7 +9,6 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <summary>
     /// Kapselt Informationen über einen MIME-Type. ("Multipurpose Internet Mail Extensions")
     /// </summary>
-    [Serializable]
     public sealed class MimeType
     {
         private const string TEXT_PLAIN = "text/plain";

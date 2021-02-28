@@ -70,6 +70,15 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The input does not represent a DataUrl. ähnelt.
+        /// </summary>
+        internal static string NoDataUrl {
+            get {
+                return ResourceManager.GetString("NoDataUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The XML element did not explicitly specify an own namespace. ähnelt.
         /// </summary>
         internal static string NoNameSpace {

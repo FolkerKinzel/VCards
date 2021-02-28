@@ -120,6 +120,9 @@
   <data name="NoData" xml:space="preserve">
     <value>The argument contains no data.</value>
   </data>
+  <data name="NoDataUrl" xml:space="preserve">
+    <value>The input does not represent a DataUrl.</value>
+  </data>
   <data name="NoNameSpace" xml:space="preserve">
     <value>The XML element did not explicitly specify an own namespace.</value>
   </data>

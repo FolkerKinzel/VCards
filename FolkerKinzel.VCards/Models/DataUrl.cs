@@ -23,6 +23,13 @@ namespace FolkerKinzel.VCards.Models
     [Serializable]
     public class DataUrl : Uri, ISerializable
     {
+        [NonSerialized]
+        private readonly MimeType _mimeType;
+
+        [NonSerialized]
+        private readonly DataEncoding _encoding;
+
+
         /// <summary>
         /// Gibt an, dass der <see cref="Uri"/> ein <see cref="DataUrl"/> nach RFC 2397 ist. Dieses Feld ist schreibgeschützt.
         /// </summary>
@@ -32,7 +39,6 @@ namespace FolkerKinzel.VCards.Models
         /// Gibt das Zeichen an, das das Schema des Kommunikationsprotokolls vom Adressteil des URIs trennt. Dieses Feld ist schreibgeschützt.
         /// </summary>
         public static new readonly string SchemeDelimiter = ":";
-
 
         /// <summary>
         /// Initialisiert ein neues <see cref="DataUrl"/>-Objekt.
@@ -46,20 +52,20 @@ namespace FolkerKinzel.VCards.Models
         /// weil <paramref name="uriString"/> länger als 65519 Zeichen ist.</exception>
         internal DataUrl(string uriString, MimeType? mimeType, DataEncoding encoding) : base(uriString)
         {
-            this.Encoding = encoding;
-            this.MimeType = mimeType ?? new MimeType();
+            this._encoding = encoding;
+            this._mimeType = mimeType ?? new MimeType();
         }
 
 
         /// <summary>
         /// MIME-Type der eingebetteten Daten. (Nie <c>null</c>.)
         /// </summary>
-        public MimeType MimeType { get; }
+        public MimeType MimeType => _mimeType;
 
         /// <summary>
         /// Encodierung der eingebetteten Daten.
         /// </summary>
-        public DataEncoding Encoding { get; }
+        public DataEncoding Encoding => _encoding;
 
         /// <summary>
         /// Die eingebetteten encodierten Daten.
@@ -85,33 +91,68 @@ namespace FolkerKinzel.VCards.Models
         /// <inheritdoc/>
         protected DataUrl(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext)
         {
-            if (serializationInfo != null)
+            if(serializationInfo is null)
             {
-                // Reset the property value using the GetValue method.
-                this.MimeType = (MimeType)(serializationInfo.GetValue("MimeType", typeof(MimeType)) ?? new MimeType());
-                this.Encoding = (DataEncoding)(serializationInfo.GetValue("Encoding", typeof(DataEncoding)) ?? DataEncoding.UrlEncoded);
+                throw new ArgumentNullException(nameof(serializationInfo));
+            }
+
+            if(TryCreate(OriginalString, out DataUrl? tmpUrl))
+            {
+                this._mimeType = tmpUrl.MimeType;
+                this._encoding = tmpUrl.Encoding;
             }
             else
             {
-                this.MimeType = new MimeType();
+                throw new UriFormatException(Res.NoDataUrl);
             }
+
+            //if (serializationInfo != null)
+            //{
+            //    // Reset the property value using the GetValue method.
+            //    this._mimeType = (MimeType)(serializationInfo.GetValue("MimeType", typeof(MimeType)) ?? new MimeType());
+            //    this._encoding = (DataEncoding)(serializationInfo.GetValue("Encoding", typeof(DataEncoding)) ?? DataEncoding.UrlEncoded);
+            //}
+            //else
+            //{
+            //    this._mimeType = new MimeType();
+            //}
         }
 
-        /// <inheritdoc/>
-#if NET40
-        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
-#endif
-        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
+//        /// <inheritdoc/>
+//#if NET40
+//        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+//#endif
+//        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+//        {
+//            GetObjectData(info, context);
+//            //base.GetObjectData(info, context);
 
-            if (info != null)
-            {
-                // Use the AddValue method to specify serialized values.
-                info.AddValue("MimeType", this.MimeType, typeof(MimeType));
-                info.AddValue("Encoding", this.Encoding, typeof(DataEncoding));
-            }
-        }
+//            //if (info != null)
+//            //{
+//            //    // Use the AddValue method to specify serialized values.
+//            //    info.AddValue("MimeType", this.MimeType, typeof(MimeType));
+//            //    info.AddValue("Encoding", this.Encoding, typeof(DataEncoding));
+//            //}
+//        }
+
+//        /// <summary>
+//        /// Gibt die Daten zurück, die zum Serialisieren der aktuellen Instanz benötigt werden.
+//        /// </summary>
+//        /// <param name="serializationInfo">Die zum Serialisieren erforderlichen Informationen.</param>
+//        /// <param name="streamingContext">Ein Objekt, das die Quelle und das Ziel des serialisierten Streams enthält.</param>
+//        /// <exception cref="ArgumentNullException"><paramref name="serializationInfo"/> ist <c>null</c>.</exception>
+//        protected new void GetObjectData(SerializationInfo serializationInfo, StreamingContext streamingContext)
+//        {
+//            if (serializationInfo is null)
+//            {
+//                throw new ArgumentNullException(nameof(serializationInfo));
+//            }
+
+//            serializationInfo.AddValue("MimeType", this.MimeType, typeof(MimeType));
+//            serializationInfo.AddValue("Encoding", this.Encoding, typeof(DataEncoding));
+
+//            base.GetObjectData(serializationInfo, streamingContext);
+//        }
 
 
         /// <summary>

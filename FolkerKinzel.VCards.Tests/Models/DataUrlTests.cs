@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Runtime.Serialization;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using System.Xml.Serialization;
 
 namespace FolkerKinzel.VCards.Models.Tests
 {
@@ -107,7 +108,7 @@ namespace FolkerKinzel.VCards.Models.Tests
 
 
         [TestMethod]
-        public void SerializationTest()
+        public void SerializationTest1()
         {
             const string MEDIA_TYPE = "image/jpeg";
             byte[] data = new byte[] { 1, 2, 3 };
@@ -135,27 +136,64 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.AreEqual(dataUri.MimeType.MediaType, MEDIA_TYPE);
             Assert.AreEqual(dataUri.Encoding, DataEncoding.Base64);
             Assert.IsTrue(data.SequenceEqual(dataUri.GetEmbeddedBytes()!));
-
         }
 
 
-        [TestMethod]
-        public void GetObjectDataTest()
-        {
-            const string MEDIA_TYPE = "image/jpeg";
-            byte[] data = new byte[] { 1, 2, 3 };
+        // [TestMethod]
+        //public void SerializationTest2()
+        //{
+        //    const string MEDIA_TYPE = "image/jpeg";
+        //    byte[] data = new byte[] { 1, 2, 3 };
 
-            var dataUri = DataUrl.FromBytes(data, MEDIA_TYPE);
+        //    var dataUri = DataUrl.FromBytes(data, MEDIA_TYPE);
 
-            ISerializable serializable = dataUri;
+        //    Assert.IsNotNull(dataUri);
+        //    Assert.AreEqual(dataUri.MimeType.MediaType, MEDIA_TYPE);
+        //    Assert.AreEqual(dataUri.Encoding, DataEncoding.Base64);
+        //    Assert.IsTrue(data.SequenceEqual(dataUri.GetEmbeddedBytes()!));
 
-            var info = new SerializationInfo(typeof(DataUrl), new FormatterConverter());
-            var context = new StreamingContext();
 
-            serializable.GetObjectData(info, context);
+        //    var formatter = new XmlSerializer(typeof(DataUrl));
 
-            Assert.IsNotNull(info.GetValue("MimeType", typeof(MimeType)));
-            Assert.IsNotNull(info.GetValue("Encoding", typeof(DataEncoding)));
-        }
+        //    using(var stream = new MemoryStream())
+        //    {
+        //        formatter.Serialize(stream, dataUri);
+
+        //        stream.Position = 0;
+
+        //        using var reader = new StreamReader(stream);
+
+        //        string s = reader.ReadToEnd();
+        //        Assert.AreNotEqual(0, s.Length);
+
+        //        stream.Position = 0;
+
+        //        dataUri = (DataUrl?)formatter.Deserialize(stream);
+        //    }
+
+        //    Assert.IsNotNull(dataUri);
+        //    Assert.AreEqual(dataUri!.MimeType.MediaType, MEDIA_TYPE);
+        //    Assert.AreEqual(dataUri.Encoding, DataEncoding.Base64);
+        //    Assert.IsTrue(data.SequenceEqual(dataUri.GetEmbeddedBytes()!));
+        //}
+
+        //[TestMethod]
+        //public void GetObjectDataTest()
+        //{
+        //    const string MEDIA_TYPE = "image/jpeg";
+        //    byte[] data = new byte[] { 1, 2, 3 };
+
+        //    var dataUri = DataUrl.FromBytes(data, MEDIA_TYPE);
+
+        //    ISerializable serializable = dataUri;
+
+        //    var info = new SerializationInfo(typeof(DataUrl), new FormatterConverter());
+        //    var context = new StreamingContext();
+
+        //    serializable.GetObjectData(info, context);
+
+        //    Assert.IsNotNull(info.GetValue("MimeType", typeof(MimeType)));
+        //    Assert.IsNotNull(info.GetValue("Encoding", typeof(DataEncoding)));
+        //}
     }
 }
