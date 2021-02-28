@@ -89,13 +89,9 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        protected DataUrl(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext)
+        protected DataUrl(SerializationInfo serializationInfo, StreamingContext streamingContext)
+            : base(serializationInfo, streamingContext)
         {
-            if(serializationInfo is null)
-            {
-                throw new ArgumentNullException(nameof(serializationInfo));
-            }
-
             if(TryCreate(OriginalString, out DataUrl? tmpUrl))
             {
                 this._mimeType = tmpUrl.MimeType;
@@ -105,54 +101,7 @@ namespace FolkerKinzel.VCards.Models
             {
                 throw new UriFormatException(Res.NoDataUrl);
             }
-
-            //if (serializationInfo != null)
-            //{
-            //    // Reset the property value using the GetValue method.
-            //    this._mimeType = (MimeType)(serializationInfo.GetValue("MimeType", typeof(MimeType)) ?? new MimeType());
-            //    this._encoding = (DataEncoding)(serializationInfo.GetValue("Encoding", typeof(DataEncoding)) ?? DataEncoding.UrlEncoded);
-            //}
-            //else
-            //{
-            //    this._mimeType = new MimeType();
-            //}
         }
-
-//        /// <inheritdoc/>
-//#if NET40
-//        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
-//#endif
-//        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-//        {
-//            GetObjectData(info, context);
-//            //base.GetObjectData(info, context);
-
-//            //if (info != null)
-//            //{
-//            //    // Use the AddValue method to specify serialized values.
-//            //    info.AddValue("MimeType", this.MimeType, typeof(MimeType));
-//            //    info.AddValue("Encoding", this.Encoding, typeof(DataEncoding));
-//            //}
-//        }
-
-//        /// <summary>
-//        /// Gibt die Daten zurück, die zum Serialisieren der aktuellen Instanz benötigt werden.
-//        /// </summary>
-//        /// <param name="serializationInfo">Die zum Serialisieren erforderlichen Informationen.</param>
-//        /// <param name="streamingContext">Ein Objekt, das die Quelle und das Ziel des serialisierten Streams enthält.</param>
-//        /// <exception cref="ArgumentNullException"><paramref name="serializationInfo"/> ist <c>null</c>.</exception>
-//        protected new void GetObjectData(SerializationInfo serializationInfo, StreamingContext streamingContext)
-//        {
-//            if (serializationInfo is null)
-//            {
-//                throw new ArgumentNullException(nameof(serializationInfo));
-//            }
-
-//            serializationInfo.AddValue("MimeType", this.MimeType, typeof(MimeType));
-//            serializationInfo.AddValue("Encoding", this.Encoding, typeof(DataEncoding));
-
-//            base.GetObjectData(serializationInfo, streamingContext);
-//        }
 
 
         /// <summary>
