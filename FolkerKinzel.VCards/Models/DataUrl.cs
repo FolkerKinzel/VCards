@@ -1,19 +1,13 @@
-﻿using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Models.Enums;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Text;
+using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
-using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
-using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -92,7 +86,7 @@ namespace FolkerKinzel.VCards.Models
         protected DataUrl(SerializationInfo serializationInfo, StreamingContext streamingContext)
             : base(serializationInfo, streamingContext)
         {
-            if(TryCreate(OriginalString, out DataUrl? tmpUrl))
+            if (TryCreate(OriginalString, out DataUrl? tmpUrl))
             {
                 this._mimeType = tmpUrl.MimeType;
                 this._encoding = tmpUrl.Encoding;
