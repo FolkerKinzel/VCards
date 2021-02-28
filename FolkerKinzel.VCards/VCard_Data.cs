@@ -1,13 +1,11 @@
-﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Models.PropertyParts;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards
 {
@@ -24,7 +22,7 @@ namespace FolkerKinzel.VCards
         private readonly Dictionary<VCdProp, object> _propDic = new Dictionary<VCdProp, object>();
 
         [return: MaybeNull]
-        private T Get<T>(VCdProp prop) where T: class?
+        private T Get<T>(VCdProp prop) where T : class?
             => _propDic.ContainsKey(prop)
             ? (T)_propDic[prop]
             : default;
