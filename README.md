@@ -14,19 +14,19 @@ to manage contact data of organizations and natural persons.
 
 ```
 nuget Package Manager:
-PM> Install-Package FolkerKinzel.VCards -Version 2.0.0
+PM> Install-Package FolkerKinzel.VCards -Version 2.1.0
 
 .NET CLI:
-> dotnet add package FolkerKinzel.VCards --version 2.0.0
+> dotnet add package FolkerKinzel.VCards --version 2.1.0
 
 Package Reference (Visual Studio Project File):
-<PackageReference Include="FolkerKinzel.VCards" Version="2.0.0" />
+<PackageReference Include="FolkerKinzel.VCards" Version="2.1.0" />
 
 Paket CLI:
-paket add FolkerKinzel.VCards --version 2.0.0
+paket add FolkerKinzel.VCards --version 2.1.0
 
 F# Interactive:
-> #r "nuget: FolkerKinzel.VCards, 2.0.0"
+> #r "nuget: FolkerKinzel.VCards, 2.1.0"
 ```
 
 
@@ -145,36 +145,24 @@ namespace Examples
 
             var vcard = new VCard
             {
-                NameViews = new VC::NameProperty[]
-                {
-                    new VC::NameProperty
+                // Although NameViews is of Type IEnumerable<NameProperty?>
+                // you can assign a single NameProperty instance because NameProperty
+                // (like almost all classes derived from VCardProperty) has an explicit
+                // implementation of IEnumerable<T>
+                NameViews = new VC::NameProperty
                     (
                         lastName: new string[] { "Müller-Risinowsky" },
                         firstName: new string[] { "Käthe" },
-                        middleName: new string[] {"Alexandra", "Caroline"},
+                        middleName: new string[] { "Alexandra", "Caroline" },
                         prefix: new string[] { "Prof.", "Dr." }
-                    )
-                },
-
-                DisplayNames = new VC::TextProperty[]
-                {
-                    new VC.TextProperty("Käthe Müller-Risinowsky")
-                },
-
-                Organizations = new VC::OrganizationProperty[]
-                {
-                    new VC::OrganizationProperty
+                    ),
+                DisplayNames = new VC.TextProperty("Käthe Müller-Risinowsky"),
+                Organizations = new VC::OrganizationProperty
                     (
                         "Millers Company",
                         new string[] { "C#", "Webdesign" }
-                    )
-                },
-
-                Titles = new VC::TextProperty[]
-                {
-                    new VC::TextProperty("CEO")
-                },
-
+                    ),
+                Titles = new VC::TextProperty("CEO"),
                 TimeStamp = new VC::TimeStampProperty(DateTimeOffset.UtcNow)
             };
 
@@ -183,10 +171,7 @@ namespace Examples
             string photoFilePath = Path.Combine(directoryPath, photoFileName);
             CreatePhoto(photoFilePath);
 
-            vcard.Photos = new VC::DataProperty[]
-            {
-                new VC::DataProperty(VC::DataUrl.FromFile(photoFilePath))
-            };
+            vcard.Photos = new VC::DataProperty(VC::DataUrl.FromFile(photoFilePath));
 
             var telHome = new VC::TextProperty("tel:+49-123-9876543");
             telHome.Parameters.DataType = VC::Enums.VCdDataType.Uri;
@@ -211,25 +196,21 @@ namespace Examples
             prefMail.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
             prefMail.Parameters.Preference = 1;
 
-            vcard.EmailAddresses = new VC::TextProperty[] { prefMail };
+            vcard.EmailAddresses = prefMail;
 
-            vcard.BirthDayViews = new VC::DateTimeProperty[]
-            {
-                // System.DateTime has an implicit conversion to
-                // System.DateTimeOffset
-                new VC::DateTimeOffsetProperty(new DateTime(1984, 3, 28))
-            };
+            // System.DateTime has an implicit conversion to
+            // System.DateTimeOffset:
+            vcard.BirthDayViews = new VC::DateTimeOffsetProperty(new DateTime(1984, 3, 28));
 
-            vcard.Relations = new VC::RelationProperty[]
-            {
-                new VC::RelationTextProperty("Paul Müller-Risinowsky",
-                VC::Enums.RelationTypes.Spouse | VC::Enums.RelationTypes.CoResident | VC::Enums.RelationTypes.Colleague)
-            };
+            vcard.Relations = new VC::RelationTextProperty
+                (
+                    "Paul Müller-Risinowsky",
+                    VC::Enums.RelationTypes.Spouse
+                    | VC::Enums.RelationTypes.CoResident
+                    | VC::Enums.RelationTypes.Colleague
+                );
 
-            vcard.AnniversaryViews = new VC::DateTimeProperty[]
-            {
-                new VC::DateTimeOffsetProperty(new DateTime(2006, 7, 14))
-            };
+            vcard.AnniversaryViews = new VC::DateTimeOffsetProperty(new DateTime(2006, 7, 14));
 
             // Save vcard as vCard 2.1:
             string v2FilePath = Path.Combine(directoryPath, v2FileName);
@@ -404,6 +385,7 @@ Relations: Paul Müller-Risinowsky
 [MediaType: image/jpeg]
 Photos: data:image/jpeg;base64,TVIxMVmCW9DQo8eo++o6a0WEonrUO+rfsCwXH7/CzwS/HKVpJhsbiDjU1EAJ0BlDZJ2U8kxa9xFoUYEs
 */
+
 ```
 
 ### How the Library Handles Data Errors

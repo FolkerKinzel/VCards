@@ -80,8 +80,8 @@ namespace Examples
             vcard.Relations = new VC::RelationTextProperty
                 (
                     "Paul Müller-Risinowsky",
-                    VC::Enums.RelationTypes.Spouse 
-                    | VC::Enums.RelationTypes.CoResident 
+                    VC::Enums.RelationTypes.Spouse
+                    | VC::Enums.RelationTypes.CoResident
                     | VC::Enums.RelationTypes.Colleague
                 );
 
