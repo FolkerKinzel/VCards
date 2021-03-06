@@ -7,8 +7,8 @@
     <!-- .nuget-Package: -->
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
-    <Version>2.1.0-rc</Version>
-    <FileVersion>2.1.0.19</FileVersion>
+    <Version>2.1.0</Version>
+    <FileVersion>2.1.0.21</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReleaseNotes>
