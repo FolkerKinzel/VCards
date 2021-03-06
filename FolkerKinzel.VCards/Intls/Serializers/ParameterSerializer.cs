@@ -9,9 +9,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 {
     internal abstract class ParameterSerializer
     {
-        private readonly StringBuilder _builder = new StringBuilder();
+        private readonly StringBuilder _builder = new();
 
-        protected readonly StringBuilder _worker = new StringBuilder();
+        protected readonly StringBuilder _worker = new();
 
         /// <summary>
         /// ctor

@@ -19,7 +19,7 @@ namespace FolkerKinzel.VCards
     /// </example>
     public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
-        private readonly Dictionary<VCdProp, object> _propDic = new Dictionary<VCdProp, object>();
+        private readonly Dictionary<VCdProp, object> _propDic = new();
 
         [return: MaybeNull]
         private T Get<T>(VCdProp prop) where T : class?

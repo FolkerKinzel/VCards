@@ -6,7 +6,6 @@ namespace FolkerKinzel.VCards.Models.Enums
     /// <summary>
     /// Benannte Konstanten, um den Datentyp des Inhalts einer vCard-Property anzugeben.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1720:Bezeichner enthält Typnamen", Justification = "<Ausstehend>")]
     public enum VCdDataType
     {
         // ACHTUNG: Wenn die Enum erweitert wird, muss

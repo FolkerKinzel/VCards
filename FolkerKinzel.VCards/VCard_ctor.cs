@@ -30,7 +30,6 @@ namespace FolkerKinzel.VCards
         /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>-Objekt, das Daten für den Deserialisierungsvorgang zur Verfügung stellt.</param>
         /// <param name="versionHint">Ein Hinweis, welche vCard-Version angenommen wird. (Eingebettete
         /// vCards haben manchmal keinen "VERSION:"-Tag.)</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0008:Expliziten Typ verwenden", Justification = "<Ausstehend>")]
         private VCard(Queue<VcfRow> queue, VCardDeserializationInfo info, VCdVersion versionHint)
         {
             Debug.Assert(queue != null);
@@ -104,7 +103,7 @@ namespace FolkerKinzel.VCards
                                 vcfRow.UnMask(Version);
                             }
 
-                            var addresses = Addresses;
+                            IEnumerable<AddressProperty?>? addresses = Addresses;
 
                             if (addresses is null)
                             {
@@ -117,7 +116,7 @@ namespace FolkerKinzel.VCards
                             {
                                 if (vcfRow.Parameters.PropertyClass.HasValue && vcfRow.Parameters.AddressType.HasValue)
                                 {
-                                    var address = addresses.OrderBy(x => x!.Parameters.Preference)
+                                    AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
                                         .FirstOrDefault(
                                         x => x!.Parameters.PropertyClass.IsSet(vcfRow.Parameters.PropertyClass.Value) &&
                                              x.Parameters.AddressType.IsSet(vcfRow.Parameters.AddressType.Value));
@@ -130,7 +129,7 @@ namespace FolkerKinzel.VCards
                                 }
                                 else if (vcfRow.Parameters.PropertyClass.HasValue)
                                 {
-                                    var address = addresses.OrderBy(x => x!.Parameters.Preference)
+                                    AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
                                         .FirstOrDefault(
                                         x => x!.Parameters.PropertyClass.IsSet(vcfRow.Parameters.PropertyClass.Value));
 
@@ -142,7 +141,7 @@ namespace FolkerKinzel.VCards
                                 }
                                 else if (vcfRow.Parameters.AddressType.HasValue)
                                 {
-                                    var address = addresses.OrderBy(x => x!.Parameters.Preference)
+                                    AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
                                         .FirstOrDefault(
                                         x => x!.Parameters.AddressType.IsSet(vcfRow.Parameters.AddressType.Value));
 
@@ -153,8 +152,11 @@ namespace FolkerKinzel.VCards
                                     }
                                 }
 
-                                var first = addresses.OrderBy(x => x!.Parameters.Preference).First();
-                                first!.Parameters.Label = vcfRow.Value;
+                                Debug.Assert(addresses.Any());
+                                Debug.Assert(!addresses.Any(x => x is null));
+
+                                AddressProperty first = addresses.OrderBy(x => x!.Parameters.Preference).First()!;
+                                first.Parameters.Label = vcfRow.Value;
                             }//else
                         }
                         break;

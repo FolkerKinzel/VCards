@@ -12,19 +12,21 @@
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReleaseNotes>
-Most classes derived from VCard property have now an explicit implementation of IEnumerable{T} that enables them to be assigned to collection properties directly without being wrapped in an Array or List. This avoids the creation of most temporary collections and enables you to write shorter code when using the library.
+Most classes derived from VCard property have now an explicit implementation of IEnumerable{T} which enables them to be assigned to collection properties directly without being wrapped in an Array or List. This avoids the creation of most temporary collections and enables you to write shorter code when using the library.
       
 Enables TYPE=PREF in the vCard 2.1 EMAIL property. (Although this is not mentioned in the standard, nevertheless it is widely supported.)
       
-Fixes an issue that non-standardized parameter values in standardized parameters are not recognized by the library.
+Fixed an issue that non-standardized parameter values in standardized parameters are not recognized by the library.
       
-Fixes the issue that the SORT-AS parameter was not read.
+Fixed the issue that the SORT-AS parameter was not read.
+
+Fixed an issue with the implementation of ISerializable in the DataUrl class.
 
 Added a default constructor to TimeStampProperty.
 
 The usage of most symbols which are marked as "Obsolete" is now treated as error.
 
-.NET 5.0 dll
+Added a .NET 5.0 dll to the package.
 </PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
     <Description>

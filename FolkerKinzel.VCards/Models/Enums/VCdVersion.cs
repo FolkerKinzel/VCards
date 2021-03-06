@@ -3,7 +3,6 @@
     /// <summary>
     /// Benannte Konstanten, um die VCF-Version anzugeben.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Bezeichner dürfen keine Unterstriche enthalten", Justification = "<Ausstehend>")]
     public enum VCdVersion
     {
         /// <summary>

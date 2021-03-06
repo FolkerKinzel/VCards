@@ -22,7 +22,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         internal readonly char[] AllQuotes = new char[] { '\"', '\'' };
 
 
-        internal readonly List<KeyValuePair<string, string>> ParameterList = new List<KeyValuePair<string, string>>();
+        internal readonly List<KeyValuePair<string, string>> ParameterList = new();
 
 
         internal DateAndOrTimeConverter DateAndOrTimeConverter

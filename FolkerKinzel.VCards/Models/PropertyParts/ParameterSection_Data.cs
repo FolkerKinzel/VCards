@@ -12,11 +12,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     /// <threadsafety static="true" instance="false" />
     public sealed partial class ParameterSection
     {
-        private readonly Dictionary<VCdParam, object> _propDic = new Dictionary<VCdParam, object>();
+        private readonly Dictionary<VCdParam, object> _propDic = new();
+
 
         [return: MaybeNull]
         private T Get<T>(VCdParam prop)
             => _propDic.ContainsKey(prop) ? (T)_propDic[prop] : default;
+
 
         private void Set<T>(VCdParam prop, T value)
         {

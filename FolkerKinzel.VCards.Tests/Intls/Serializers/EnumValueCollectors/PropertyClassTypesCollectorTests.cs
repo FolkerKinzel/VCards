@@ -46,7 +46,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
 
             var list = new List<string>(1);
 
-            foreach (var item in arr)
+            foreach (PropertyClassTypes item in arr)
             {
                 list.Clear();
                 collector.CollectValueStrings(item, list);
@@ -65,7 +65,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
 
             var list = new List<string>(1);
 
-            foreach (var item in arr)
+            foreach (PropertyClassTypes item in arr)
             {
                 list.Clear();
                 collector.CollectValueStrings(item, list);
@@ -73,12 +73,11 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
                 Assert.AreEqual(1, list.Count);
                 Assert.IsNotNull(list[0]);
 
-                PropertyClassTypes? comp = null;
+                PropertyClassTypes comp;
 
                 comp = (PropertyClassTypes)Enum.Parse(typeof(PropertyClassTypes), list[0], true);
 
-                Assert.IsTrue(comp.HasValue);
-                Assert.AreEqual(comp.Value, item);
+                Assert.AreEqual(comp, item);
             }
         }
     }

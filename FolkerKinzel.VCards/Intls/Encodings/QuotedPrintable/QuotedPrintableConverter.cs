@@ -299,7 +299,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 #if NET40
             static byte HexToByte(char[] charr)
             {
-                string s = new string(charr);
+                string s = new(charr);
 
                 try
                 {

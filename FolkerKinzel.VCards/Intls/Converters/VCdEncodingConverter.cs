@@ -17,7 +17,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
                 if (char.IsLetterOrDigit(c))
                 {
-                    return (char.ToUpperInvariant(c)) switch
+                    return char.ToUpperInvariant(c) switch
                     {
                         'B' => VCdEncoding.Base64,
                         'Q' => VCdEncoding.QuotedPrintable,

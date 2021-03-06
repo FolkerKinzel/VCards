@@ -17,11 +17,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         private ImppTypesCollector? _imppTypesCollector;
 
 
-        private PropertyClassTypesCollector PropertyClassTypesCollector { get; }
-            = new PropertyClassTypesCollector();
+        private readonly PropertyClassTypesCollector _propertyClassTypesCollector = new();
 
-        private readonly List<string> _stringCollectionList = new List<string>();
-        private readonly List<Action<ParameterSerializer3_0>> _actionList = new List<Action<ParameterSerializer3_0>>(2);
+        private readonly List<string> _stringCollectionList = new();
+        private readonly List<Action<ParameterSerializer3_0>> _actionList = new(2);
 
 
         private AddressTypesCollector AddressTypesCollector
@@ -54,7 +53,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes =
         serializer =>
-            serializer.PropertyClassTypesCollector.CollectValueStrings(
+            serializer._propertyClassTypesCollector.CollectValueStrings(
                 serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
 
 

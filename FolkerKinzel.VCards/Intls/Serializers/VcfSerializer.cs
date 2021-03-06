@@ -22,9 +22,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         [NotNull]
         protected VCard? VCardToSerialize { get; private set; }
 
-        internal readonly StringBuilder Builder = new StringBuilder();
+        internal readonly StringBuilder Builder = new();
 
-        internal readonly StringBuilder Worker = new StringBuilder();
+        internal readonly StringBuilder Worker = new();
 
         internal abstract VCdVersion Version { get; }
 
