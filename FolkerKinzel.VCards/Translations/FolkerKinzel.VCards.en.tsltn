@@ -1283,4 +1283,5 @@ When serializing as vCard 4.0, the method calls &lt;see cref ="M:FolkerKinzel.VC
   <T ID="622BE8D0B75E334">The constructor automatically sets the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType"/&gt; parameter to the value &lt;see cref ="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.TimeStamp"/&gt;.</T>
   <T ID="D12A7033A0635AC3">Initializes a new &lt;see cref ="T:FolkerKinzel.VCards.Models.TimeStampProperty"/&gt; object with the specified time stamp.</T>
   <T ID="200929DE0B75E334">The constructor automatically sets the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType"/&gt; parameter to the value &lt;see cref ="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.TimeStamp"/&gt;.</T>
+  <T ID="BB67E0CB99CE75B5"></T>
 </Tsltn>
