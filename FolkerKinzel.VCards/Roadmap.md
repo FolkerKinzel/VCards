@@ -24,6 +24,6 @@ VCard.Save, VCard.Serialize, VCard.ToVcfString, VCard.Reference and VCard.Derefe
 - [ ] Cleanup: Remove VCdDataType.Timestamp and all other Symbols marked as Obsolete errors in 3.0.0.
 
 ### 4.0.0
-- [ ] Replace net4.0 support through net4.5 support.
-- [ ] Remove the DataUrl class and the MimeType class and replace it with something new like
+- [ ] Replace net4.0 support by net4.5 support.
+- [ ] Remove the DataUrl class and the MimeType class and replace it with something new and better like
 FolkerKinzel.URIs.DataUrlHelper.
