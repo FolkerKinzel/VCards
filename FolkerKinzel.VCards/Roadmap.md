@@ -6,7 +6,7 @@
 
 ### 3.0.0  
 - [ ] Move FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate to 
-FolkerKinzel.VCards.Models.GeoCoordinate
+FolkerKinzel.VCards.Models.GeoCoordinate.
 - [ ] Mark the usage of VCdDataType.Timestamp as Obsolete-Error.
 - [ ] Change the parameter List&lt;VCard&gt; vCardList to IEnumerable&lt;VCard?&gt; vCards.
 - [ ] Add extension methods for IEnumerable&lt;VCard?&gt; to serialize this as VCF.
