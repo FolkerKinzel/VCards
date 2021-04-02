@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Resources;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -71,10 +72,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             return version switch
             {
-                VCdVersion.V2_1 => new Vcf_2_1Serializer(writer, options),
-                VCdVersion.V3_0 => new Vcf_3_0Serializer(writer, options),
-                VCdVersion.V4_0 => new Vcf_4_0Serializer(writer, options),
-                _ => new Vcf_3_0Serializer(writer, options),
+            VCdVersion.V2_1 => new Vcf_2_1Serializer(writer, options),
+            VCdVersion.V3_0 => new Vcf_3_0Serializer(writer, options),
+            VCdVersion.V4_0 => new Vcf_4_0Serializer(writer, options),
+            _ => throw new ArgumentException(Res.UndefinedEnumValue, nameof(version))
             };
         }
 

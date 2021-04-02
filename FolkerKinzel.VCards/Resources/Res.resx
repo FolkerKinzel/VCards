@@ -138,4 +138,7 @@
   <data name="StreamNotWritable" xml:space="preserve">
     <value>The Stream is not writable.</value>
   </data>
+  <data name="UndefinedEnumValue" xml:space="preserve">
+    <value>The value is not defined.</value>
+  </data>
 </root>

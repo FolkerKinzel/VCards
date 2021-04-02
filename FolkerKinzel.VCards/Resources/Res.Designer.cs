@@ -122,5 +122,14 @@ namespace FolkerKinzel.VCards.Resources {
                 return ResourceManager.GetString("StreamNotWritable", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The value is not defined. ähnelt.
+        /// </summary>
+        internal static string UndefinedEnumValue {
+            get {
+                return ResourceManager.GetString("UndefinedEnumValue", resourceCulture);
+            }
+        }
     }
 }

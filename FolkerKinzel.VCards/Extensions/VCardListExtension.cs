@@ -160,7 +160,7 @@ namespace FolkerKinzel.VCards.Extensions
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> oder <paramref name="vCardList"/>
         /// ist <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
+        /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -239,7 +239,7 @@ namespace FolkerKinzel.VCards.Extensions
         /// </remarks>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> oder <paramref name="vCardList"/> ist <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge.</exception>
+        /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
         /// <exception cref="IOException">E/A-Fehler.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
 #if !NET40
@@ -320,6 +320,7 @@ namespace FolkerKinzel.VCards.Extensions
         /// </remarks>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
         /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
