@@ -8,12 +8,10 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>2.1.1</Version>
-    <FileVersion>2.1.0.23</FileVersion>
+    <FileVersion>2.1.0.24</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <PackageReleaseNotes>
-
-</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
     <Description>
       .NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.

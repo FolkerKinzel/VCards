@@ -13,7 +13,7 @@
     <RootNamespace>FolkerKinzel.VCardsDocumentation</RootNamespace>
     <Name>FolkerKinzel.VCards.Documentation</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
+    <FrameworkVersion>.NET Core/.NET Standard/.NET 5.0+</FrameworkVersion>
     <OutputPath>.\Help\</OutputPath>
     <HtmlHelpName>FolkerKinzel.VCards.en</HtmlHelpName>
     <Language>en-US</Language>
@@ -30,14 +30,13 @@
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <NamingMethod>Guid</NamingMethod>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
-    <RootNamespaceContainer>False</RootNamespaceContainer>
+    <RootNamespaceContainer>True</RootNamespaceContainer>
     <NamespaceGrouping>True</NamespaceGrouping>
     <MaximumGroupParts>4</MaximumGroupParts>
     <Preliminary>False</Preliminary>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net40\FolkerKinzel.VCards.xml" />
-      <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net40\FolkerKinzel.VCards.dll" />
+      <DocumentationSource sourceFile="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
     </DocumentationSources>
     <HelpFileFormat>HtmlHelp1</HelpFileFormat>
     <SyntaxFilters>Standard</SyntaxFilters>
@@ -59,6 +58,7 @@
       <NamespaceSummaryItem name="FolkerKinzel.VCards.Extensions" isDocumented="True">Extension methods, that i.a. makes working with the flags enums from the namespace FolkerKinzel.VCards.Models.Enums more comfortable.</NamespaceSummaryItem>
     </NamespaceSummaries>
     <VisibleItems>ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, ProtectedInternalAsProtected, NonBrowsable</VisibleItems>
+    <RootNamespaceTitle>FolkerKinzel.VCards Namespaces</RootNamespaceTitle>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
