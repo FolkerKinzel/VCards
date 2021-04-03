@@ -52,14 +52,6 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetVCardPropertyValue() => Value;
 
 
-        /// <summary>
-        /// <see cref="VCards.VCard"/> einer Person, zu der eine Beziehung besteht.
-        /// </summary>
-        [Obsolete(OBSOLETE_MESSAGE, OBSOLETE_AS_ERROR)]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public VCard? VCard => Value;
-
 
         [InternalProtected]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)

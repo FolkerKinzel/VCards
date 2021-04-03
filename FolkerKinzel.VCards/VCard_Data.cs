@@ -337,18 +337,6 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
         /// </summary>
-        [Obsolete("Use \"TimeStamp\" instead!", VCardProperty.OBSOLETE_AS_ERROR)]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public TimeStampProperty? LastRevision
-        {
-            get => TimeStamp;
-            set => TimeStamp = value;
-        }
-
-        /// <summary>
-        /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
-        /// </summary>
         public TimeStampProperty? TimeStamp
         {
             get => Get<TimeStampProperty?>(VCdProp.TimeStamp);

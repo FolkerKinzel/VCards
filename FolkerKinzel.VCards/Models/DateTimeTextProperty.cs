@@ -50,14 +50,6 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetVCardPropertyValue() => Value;
 
 
-        /// <summary>
-        /// Die als freier Text gespeicherte Zeit- und/oder Datumsangabe.
-        /// </summary>
-        [Obsolete(OBSOLETE_MESSAGE, OBSOLETE_AS_ERROR)]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string? Text => Value;
-
 
         [InternalProtected]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)

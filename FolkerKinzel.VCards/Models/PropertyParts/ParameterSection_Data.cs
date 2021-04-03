@@ -162,19 +162,6 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// deprecated
-        /// </summary>
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use \"GeoPosition\" instead!", VCardProperty.OBSOLETE_AS_ERROR)]
-        public GeoCoordinate? GeographicPosition
-        {
-            get => GeoPosition;
-            set => GeoPosition = value;
-        }
-
-
-        /// <summary>
         /// <c>TYPE</c>: Nähere Beschreibung einer Instant-Messenger-Adresse. <c>(3 - RFC 4770)</c>
         /// </summary>
         public ImppTypes? InstantMessengerType

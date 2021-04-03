@@ -54,14 +54,6 @@ namespace FolkerKinzel.VCards.Models
         public override bool IsEmpty => Value == Guid.Empty;
 
 
-        /// <summary>
-        /// Uuid einer Person, zu der eine Beziehung besteht.
-        /// </summary>
-        [Obsolete(OBSOLETE_MESSAGE, OBSOLETE_AS_ERROR)]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Guid Uuid => Value;
-        
 
         [InternalProtected]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)

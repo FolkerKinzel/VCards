@@ -51,13 +51,6 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetVCardPropertyValue() => Value;
 
 
-        /// <summary>
-        /// <see cref="System.Uri"/> einer Person, zu der eine Beziehung besteht.
-        /// </summary>
-        [Obsolete(OBSOLETE_MESSAGE, OBSOLETE_AS_ERROR)]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri? Uri => Value;
 
 
         [InternalProtected]

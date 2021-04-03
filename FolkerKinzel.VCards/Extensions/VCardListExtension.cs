@@ -177,26 +177,6 @@ namespace FolkerKinzel.VCards.Extensions
             => VCard.Save(fileName, vCardList, version, options);
 
 
-#if !NET40
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Browsable(false)]
-        [Obsolete("Use SaveVcf instead!", VCardProperty.OBSOLETE_AS_ERROR)]
-#pragma warning disable CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
-        public static void SaveVCards(
-#pragma warning restore CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
-            this List<
-#nullable disable
-                VCard
-#nullable restore
-                > vCardList,
-            string fileName,
-            VCdVersion version = VCard.DEFAULT_VERSION,
-            VcfOptions options = VcfOptions.Default)
-            => SaveVcf(vCardList, fileName, version, options);
-
-
         /// <summary>
         /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten unter Verwendung des VCF-Formats in einen <see cref="Stream"/>.
         /// </summary>
@@ -257,25 +237,6 @@ namespace FolkerKinzel.VCards.Extensions
             => VCard.Serialize(stream, vCardList, version, options, leaveStreamOpen);
 
 
-
-#if !NET40
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Browsable(false)]
-        [Obsolete("Use SerializeVcf instead!", VCardProperty.OBSOLETE_AS_ERROR)]
-#pragma warning disable CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
-        public static void SerializeVCards(this List<
-#pragma warning restore CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
-#nullable disable
-            VCard
-#nullable restore
-            > vCardList,
-                                           Stream stream,
-                                           VCdVersion version = VCard.DEFAULT_VERSION,
-                                           VcfOptions options = VcfOptions.Default,
-                                           bool leaveStreamOpen = false)
-            => SerializeVcf(vCardList, stream, version, options, leaveStreamOpen);
 
 
 

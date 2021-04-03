@@ -48,14 +48,6 @@ namespace FolkerKinzel.VCards.Models
         protected override object? GetVCardPropertyValue() => Value;
 
 
-        /// <summary>
-        /// Der gespeicherte <see cref="System.DateTimeOffset"/>-Wert oder <c>null</c>.
-        /// </summary>
-        [Obsolete(OBSOLETE_MESSAGE, OBSOLETE_AS_ERROR)]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? DateTimeOffset => Value;
-        
 
         [InternalProtected]
         internal override void PrepareForVcfSerialization(VcfSerializer serializer)
