@@ -46,14 +46,14 @@ namespace FolkerKinzel.VCards.Models
                 case null:
                     {
                         return vcfRow.Info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
-                            ? BuildDateTimeOffsetProperty(dateTimeOffset)
+                            ? new DateTimeOffsetProperty(dateTimeOffset, vcfRow)
                             : new DateTimeTextProperty(vcfRow, version);
                     }
                 case VCdDataType.Time:
                     {
 
                         return vcfRow.Info.TimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
-                            ? BuildDateTimeOffsetProperty(dateTimeOffset)
+                            ? new DateTimeOffsetProperty(dateTimeOffset, vcfRow)
                             : new DateTimeTextProperty(vcfRow, version);
                     }
                 default:
@@ -62,17 +62,6 @@ namespace FolkerKinzel.VCards.Models
                     }
 
             }//switch
-
-
-            DateTimeProperty BuildDateTimeOffsetProperty(DateTimeOffset dateTimeOffset)
-            {
-                var dtProp = new DateTimeOffsetProperty(dateTimeOffset, vcfRow.Group);
-
-                dtProp.Parameters.Assign(vcfRow.Parameters);
-                dtProp.Parameters.DataType = vcfRow.Parameters.DataType ?? VCdDataType.DateAndOrTime;
-
-                return dtProp;
-            }
         }
 
         IEnumerator<DateTimeProperty> IEnumerable<DateTimeProperty>.GetEnumerator()

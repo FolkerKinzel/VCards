@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -30,6 +31,13 @@ namespace FolkerKinzel.VCards.Models
         {
             this.Value = (value == System.DateTimeOffset.MinValue) ? null : value;
             Parameters.DataType = VCdDataType.DateAndOrTime;
+        }
+
+
+        internal DateTimeOffsetProperty(DateTimeOffset value, VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
+        {
+            Value = value;
+            Parameters.DataType ??= VCdDataType.DateAndOrTime;
         }
 
         /// <summary>

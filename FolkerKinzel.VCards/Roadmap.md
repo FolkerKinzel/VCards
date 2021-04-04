@@ -8,10 +8,14 @@
 ### 3.0.0  
 - [ ] Move FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate to 
 FolkerKinzel.VCards.Models.GeoCoordinate.
-- [ ] Mark the usage of VCdDataType.Timestamp as Obsolete-Error.
+- [ ] Move FolkerKinzel.VCards.Models.PropertyParts.PropertyIdMapping to
+FolkerKinzel.VCards.Models.PropertyIdMapping and **make it a class**.
+- [ ] Add a constructor to the PropertyIdMappingProperty class, which takes a PropertyIdMapping as 
+argument.
+- [ ] Mark the usage of VCdDataType.Timestamp as Obsolete-**Error**.
 - [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
 VCard.Save, VCard.Serialize, VCard.ToVcfString, VCard.Reference and VCard.Dereference.
-- [ ] VCard.Reference should copy the input data and return its result as IEnumerable&lt;VCard&gt;.
+- [ ] `VCard.Reference` should copy the input data and return its result as IEnumerable&lt;VCard&gt;.
 - [ ] VCard.Load, VCard.Deserialize and VCard.Parse should return a ReadOnlyCollection&lt;VCard&gt;.
 - [ ] Add extension methods for IEnumerable&lt;VCard?&gt; to serialize it as VCF in a class named VCardCollectionExtension.
 - [ ] Remove VCardListExtension.
