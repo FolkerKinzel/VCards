@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Models.Enums;
+using System.Linq;
 
 namespace FolkerKinzel.VCards.Models.Tests
 {
@@ -60,6 +61,39 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.AreEqual(expectedGroup, genderProp.Group);
             Assert.AreEqual(expectedSex, genderProp.Value.Sex);
             Assert.AreEqual(expectedGenderIdentity, genderProp.Value.GenderIdentity);
+        }
+
+
+        [TestMethod]
+        public void GenderPropertyTest3()
+        {
+            var prop = new GenderProperty(VCdSex.Female, IDENTITY, GROUP);
+
+            var vcard = new VCard
+            {
+                GenderViews = prop
+            };
+
+            string s = vcard.ToVcfString(VCdVersion.V4_0);
+
+            List<VCard> list = VCard.Parse(s);
+
+            Assert.IsNotNull(list);
+
+            Assert.AreEqual(1, list.Count);
+
+            vcard = list[0];
+
+            Assert.IsNotNull(vcard.GenderViews);
+
+            prop = vcard.GenderViews!.First() as GenderProperty;
+
+            Assert.IsNotNull(prop);
+            Assert.AreEqual(VCdSex.Female, prop!.Value.Sex);
+            Assert.AreEqual(IDENTITY, prop!.Value.GenderIdentity);
+            Assert.AreEqual(GROUP, prop.Group);
+            Assert.IsFalse(prop.IsEmpty);
+
         }
     }
 }

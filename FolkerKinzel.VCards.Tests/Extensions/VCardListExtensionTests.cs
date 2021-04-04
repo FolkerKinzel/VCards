@@ -95,7 +95,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void SaveVcfTest_InvalidFilename(VCdVersion version)
         {
-            var list = new List<VCard?>();
+            var list = new List<VCard?>() { new VCard() };
 
             string path = "   ";
 
@@ -143,7 +143,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void SaveVcfTest_fileNameNull(VCdVersion version)
         {
-            var list = new List<VCard?>();
+            var list = new List<VCard?>() { new VCard() };
 
             list.SaveVcf(null!, version);
         }

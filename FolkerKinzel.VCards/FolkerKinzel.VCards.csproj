@@ -21,7 +21,9 @@ Fixes an issue in ParameterSection.ContentLocation.
 
 Fixes an issue in RelationProperty.
 
-Fixes an issue in ParameterSection.Assign.</PackageReleaseNotes>
+Fixes an issue in ParameterSection.Assign.
+
+Fixes an issue in TimeZoneInfoConverter.</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
     <Description>
       .NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.

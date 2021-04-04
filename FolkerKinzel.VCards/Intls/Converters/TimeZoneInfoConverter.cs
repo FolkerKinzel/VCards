@@ -23,18 +23,38 @@ namespace FolkerKinzel.VCards.Intls.Converters
             }
             catch { }
 
+            TimeSpan timeSpan;
 
             if (
 #if NET40
-                value.Contains(":") 
+                value.Contains(":"))
 #else
-                value.Contains(':', StringComparison.Ordinal)
+             
+                value.Contains(':', StringComparison.Ordinal)) // vCard 3.0
 #endif
-                && TimeSpan.TryParse(value, CultureInfo.InvariantCulture, out TimeSpan timeSpan)) // vCard 3.0
             {
-                goto done;
+                if (value.StartsWith("-", StringComparison.Ordinal))
+                {
+                    if (TimeSpan.TryParseExact(
+                        value,
+                        new string[] { @"\-hh\:mm" },
+                        CultureInfo.InvariantCulture,
+                        TimeSpanStyles.AssumeNegative, out timeSpan))
+                    {
+                        goto done;
+                    }
+                }
+                else if (TimeSpan.TryParseExact(
+                        value,
+                        new string[] { @"\+hh\:mm" },
+                        CultureInfo.InvariantCulture,
+                        TimeSpanStyles.None, out timeSpan))
+                {
+                    goto done;
+                }
+                
             }
-            else if (Regex.IsMatch(value, @"^[\+-][01][0-4]([0-5][0-9])?")) // UTC-Timespan
+            else if (Regex.IsMatch(value, @"^[-\+](0[0-9]|1[0-4])([0-5][0-9])?")) // UTC-Timespan
             {
                 if (value.StartsWith("-", StringComparison.Ordinal))
                 {
