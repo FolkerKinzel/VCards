@@ -1,18 +1,17 @@
-﻿using FolkerKinzel.VCards.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace FolkerKinzel.VCards
 {
@@ -78,48 +77,15 @@ namespace FolkerKinzel.VCards
                 throw new ArgumentNullException(nameof(vCardList));
             }
 
+            // verhindert, dass eine leere Datei geschrieben wird
+            if (!vCardList.Any(x => x != null))
+            {
+                //File.Delete(fileName);
+                return;
+            }
 
-
-            try
-            {
-                // verhindert, dass eine leere Datei geschrieben wird
-                if (!vCardList.Any(x => x != null))
-                {
-                    File.Delete(fileName);
-                    return;
-                }
-
-                using var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
-                Serialize(stream, vCardList, version, options);
-            }
-            catch (ArgumentNullException)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            catch (ArgumentException e)
-            {
-                throw new ArgumentException(e.Message, nameof(fileName), e);
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                throw new IOException(e.Message, e);
-            }
-            catch (NotSupportedException e)
-            {
-                throw new ArgumentException(e.Message, nameof(fileName), e);
-            }
-            catch (System.Security.SecurityException e)
-            {
-                throw new IOException(e.Message, e);
-            }
-            catch (PathTooLongException e)
-            {
-                throw new ArgumentException(e.Message, nameof(fileName), e);
-            }
-            catch (Exception e)
-            {
-                throw new IOException(e.Message, e);
-            }
+            using FileStream stream = InitializeFileStream(fileName, vCardList, version, options);
+            Serialize(stream, vCardList, version, options);
         }
 
 
@@ -271,7 +237,7 @@ namespace FolkerKinzel.VCards
             }
         }
 
-        
+
         /// <summary>
         /// Serialisiert <paramref name="vCardList"/> als einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
         /// </summary>
@@ -488,6 +454,44 @@ namespace FolkerKinzel.VCards
 
 
         #endregion
+
+
+        [ExcludeFromCodeCoverage]
+        private static FileStream InitializeFileStream(string fileName, List<VCard> vCardList, VCdVersion version, VcfOptions options)
+        {
+            try
+            {
+                return new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+            catch (ArgumentException e)
+            {
+                throw new ArgumentException(e.Message, nameof(fileName), e);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                throw new IOException(e.Message, e);
+            }
+            catch (NotSupportedException e)
+            {
+                throw new ArgumentException(e.Message, nameof(fileName), e);
+            }
+            catch (System.Security.SecurityException e)
+            {
+                throw new IOException(e.Message, e);
+            }
+            catch (PathTooLongException e)
+            {
+                throw new ArgumentException(e.Message, nameof(fileName), e);
+            }
+            catch (Exception e)
+            {
+                throw new IOException(e.Message, e);
+            }
+        }
 
 
 
