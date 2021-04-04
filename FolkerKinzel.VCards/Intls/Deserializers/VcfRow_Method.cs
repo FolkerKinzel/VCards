@@ -1,12 +1,8 @@
-﻿using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using System.Runtime.CompilerServices;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
-using System;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers
 {
@@ -32,6 +28,30 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             return valueSeparatorIndex > 0 ? new VcfRow(vCardRow, valueSeparatorIndex, info) : null;
         }
 
+        
+
+        
+
+
+        /// <summary>
+        /// Unmaskiert maskierten Text, der sich in <see cref="Value"/> befindet, nach den Maßgaben des
+        /// verwendeten vCard-Standards und dekodiert ihn, falls er Quoted-Printable-kodiert ist.
+        /// </summary>
+        /// <param name="version">Die Versionsnummer des vCard-Standards.</param>
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        internal void UnMask(VCdVersion version)
+        {
+            if (!_unMasked)
+            {
+                this.Value = this.Value.UnMask(Info.Builder, version);
+                _unMasked = true; // Unmask nicht 2x
+
+                DecodeQuotedPrintable();
+            }
+        }
+
 
         /// <summary>
         /// Dekodiert Quoted-Printable kodierten Text, der sich in <see cref="Value"/> befindet, wenn 
@@ -40,26 +60,15 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         /// </summary>
         internal void DecodeQuotedPrintable()
         {
-            if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable)
+            if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable && !_quotedPrintableDecoded)
             {
                 this.Value = QuotedPrintableConverter.Decode(this.Value, // null-Prüfung nicht erforderlich
                     TextEncodingConverter.GetEncoding(this.Parameters.Charset)); // null-Prüfung nicht erforderlich
 
-                this.Parameters.Encoding = null; // Encoding nicht 2x durchführen
+                _quotedPrintableDecoded = true; // Encoding nicht 2x durchführen
 
             }
         }
-
-
-        /// <summary>
-        /// Unmaskiert maskierten Text, der sich in <see cref="Value"/> befindet, nach den Maßgaben des
-        /// verwendeten vCard-Standards.
-        /// </summary>
-        /// <param name="version">Die Versionsnummer des vCard-Standards.</param>
-#if !NET40
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        internal void UnMask(VCdVersion version) => this.Value = this.Value.UnMask(Info.Builder, version);
 
 
         ///// <summary>

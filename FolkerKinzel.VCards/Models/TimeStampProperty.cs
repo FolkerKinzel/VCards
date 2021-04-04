@@ -44,7 +44,7 @@ namespace FolkerKinzel.VCards.Models
         /// Der Konstruktor setzt den <see cref="ParameterSection.DataType"/>-Parameter automatisch
         /// auf den Wert <see cref="VCdDataType.TimeStamp"/>.
         /// </remarks>
-        public TimeStampProperty(DateTimeOffset value, string? propertyGroup = null) : base(propertyGroup)
+        public TimeStampProperty(DateTimeOffset value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
         {
             Value = value;
             Parameters.DataType = VCdDataType.TimeStamp;

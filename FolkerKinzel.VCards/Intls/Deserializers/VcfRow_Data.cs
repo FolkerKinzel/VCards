@@ -8,6 +8,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
     /// </summary>
     internal sealed partial class VcfRow
     {
+        private bool _unMasked;
+        private bool _quotedPrintableDecoded;
+
+
         // Bsp. Vcf-Datenzeile:
         // item1.ADR;TYPE=HOME,WORK;PREF=1:;;Waldstr. 54;Kleinknuffelsdorf;Sachsen-Anhalt;06789;Germany
 

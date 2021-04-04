@@ -96,12 +96,7 @@ namespace FolkerKinzel.VCards
                         }
                         else
                         {
-                            vcfRow.DecodeQuotedPrintable();
-
-                            if (Version != VCdVersion.V2_1)
-                            {
-                                vcfRow.UnMask(Version);
-                            }
+                            vcfRow.UnMask(Version);
 
                             IEnumerable<AddressProperty?>? addresses = Addresses;
 
@@ -418,7 +413,6 @@ namespace FolkerKinzel.VCards
                             }
                             else if (Relations?.All(x => x!.Parameters.RelationType != RelationTypes.Spouse) ?? true)
                             {
-                                vcfRow.DecodeQuotedPrintable(); // RelationProperty gehört zu ´vCard 4.0
                                 vcfRow.Parameters.DataType = VCdDataType.Text; // führt dazu, dass eine RelationTextProperty erzeugt wird
                                 vcfRow.Parameters.RelationType = RelationTypes.Spouse;
 
@@ -437,7 +431,6 @@ namespace FolkerKinzel.VCards
                             }
                             else if (Relations?.All(x => !x!.Parameters.RelationType.IsSet(RelationTypes.Agent)) ?? true)
                             {
-                                vcfRow.DecodeQuotedPrintable();
                                 vcfRow.Parameters.DataType ??= VCdDataType.Text;
                                 vcfRow.Parameters.RelationType = RelationTypes.Agent;
 

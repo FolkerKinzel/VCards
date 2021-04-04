@@ -25,10 +25,12 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Konstruktor, der abgeleiteten Klassen erlaubt, ein neues <see cref="DateTimeProperty"/>-Objekt zu initialisieren.
         /// </summary>
+        /// <param name="parameters">Ein <see cref="ParameterSection"/>-Objekt, das den Parameter-Teil einer
+        /// vCard-Property repräsentiert.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        protected DateTimeProperty(string? propertyGroup) : base(propertyGroup) { }
+        protected DateTimeProperty(ParameterSection parameters, string? propertyGroup) : base(parameters, propertyGroup) { }
 
 
         internal static DateTimeProperty Create(VcfRow vcfRow, VCdVersion version)
@@ -46,34 +48,24 @@ namespace FolkerKinzel.VCards.Models
                     {
                         return vcfRow.Info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
                             ? BuildDateTimeOffsetProperty(dateTimeOffset)
-                            : (DateTimeProperty)BuildDateTimeTextProperty();
+                            : (DateTimeProperty)new DateTimeTextProperty(vcfRow, version);
                     }
                 case VCdDataType.Time:
                     {
 
                         return vcfRow.Info.TimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
                             ? BuildDateTimeOffsetProperty(dateTimeOffset)
-                            : (DateTimeProperty)BuildDateTimeTextProperty();
+                            : (DateTimeProperty)new DateTimeTextProperty(vcfRow, version);
                     }
                 default:
                     {
-                        vcfRow.UnMask(version);
-                        return BuildDateTimeTextProperty();
+                        return new DateTimeTextProperty(vcfRow, version);
                     }
 
             }//switch
 
 
-            DateTimeTextProperty BuildDateTimeTextProperty()
-            {
-                var textProp = new DateTimeTextProperty(vcfRow.Value, vcfRow.Group);
-
-                textProp.Parameters.AltID = vcfRow.Parameters.AltID;
-                textProp.Parameters.Language = vcfRow.Parameters.Language;
-                textProp.Parameters.NonStandardParameters = vcfRow.Parameters.NonStandardParameters;
-
-                return textProp;
-            }
+            
 
             DateTimeOffsetProperty BuildDateTimeOffsetProperty(DateTimeOffset dateTimeOffset)
             {

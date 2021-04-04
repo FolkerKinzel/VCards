@@ -36,7 +36,7 @@ namespace FolkerKinzel.VCards.Models
             IEnumerable<string?>? middleName = null,
             IEnumerable<string?>? prefix = null,
             IEnumerable<string?>? suffix = null,
-            string? propertyGroup = null) : base(propertyGroup)
+            string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
         {
             Value = new Name(lastName: ReadOnlyCollectionConverter.ToReadOnlyCollection(lastName),
                              firstName: ReadOnlyCollectionConverter.ToReadOnlyCollection(firstName),
@@ -63,7 +63,7 @@ namespace FolkerKinzel.VCards.Models
             string? middleName = null,
             string? prefix = null,
             string? suffix = null,
-            string? propertyGroup = null) : base(propertyGroup)
+            string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
         {
             Value = new Name(lastName: ReadOnlyCollectionConverter.ToReadOnlyCollection(lastName),
                              firstName: ReadOnlyCollectionConverter.ToReadOnlyCollection(firstName),
@@ -76,6 +76,8 @@ namespace FolkerKinzel.VCards.Models
         internal NameProperty(VcfRow vcfRow, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
+            vcfRow.DecodeQuotedPrintable();
+
             if (vcfRow.Value == null)
             {
                 Value = new Name();
@@ -83,9 +85,6 @@ namespace FolkerKinzel.VCards.Models
             else
             {
                 Debug.Assert(!string.IsNullOrWhiteSpace(vcfRow.Value));
-
-                vcfRow.DecodeQuotedPrintable();
-
                 Value = new Name(vcfRow.Value, vcfRow.Info, version);
             }
         }
@@ -105,7 +104,7 @@ namespace FolkerKinzel.VCards.Models
 #endif
         protected override object? GetVCardPropertyValue() => Value;
 
-        
+
         /// <inheritdoc/>
         public override bool IsEmpty => Value.IsEmpty;
 

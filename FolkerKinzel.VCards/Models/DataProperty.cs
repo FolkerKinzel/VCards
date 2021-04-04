@@ -40,7 +40,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public DataProperty(Uri? value, string? propertyGroup = null) : base(propertyGroup)
+        public DataProperty(Uri? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
         {
             Value = value;
             Parameters.DataType = VCdDataType.Uri;
@@ -49,7 +49,9 @@ namespace FolkerKinzel.VCards.Models
         internal DataProperty(VcfRow vcfRow, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
-            if (string.IsNullOrWhiteSpace(vcfRow.Value))
+            vcfRow.UnMask(version);
+
+            if (vcfRow.Value is null)
             {
                 return;
             }
@@ -61,8 +63,6 @@ namespace FolkerKinzel.VCards.Models
                         if (Parameters.MediaType is null) // die KEY- und Sound-Property von vCard 2.1 enthält per Standard freien Text
                         {
                             Parameters.DataType = VCdDataType.Text;
-
-                            vcfRow.DecodeQuotedPrintable();
 
                             try
                             {
@@ -99,7 +99,6 @@ namespace FolkerKinzel.VCards.Models
 
                         if (Parameters.DataType == VCdDataType.Text)
                         {
-                            vcfRow.UnMask(version);
                             try
                             {
                                 Value = DataUrl.FromText(vcfRow.Value);
@@ -114,7 +113,6 @@ namespace FolkerKinzel.VCards.Models
                 default:
                     {
                         // vCard 4.0:
-                        vcfRow.UnMask(version);
 
                         if (Parameters.DataType == VCdDataType.Text)
                         {

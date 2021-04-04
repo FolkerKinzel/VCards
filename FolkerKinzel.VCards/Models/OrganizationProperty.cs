@@ -30,7 +30,7 @@ namespace FolkerKinzel.VCards.Models
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public OrganizationProperty(string? organizationName,
                                     IEnumerable<string?>? organizationalUnits = null,
-                                    string? propertyGroup = null) : base(propertyGroup) => Value = new Organization(organizationName, organizationalUnits);
+                                    string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = new Organization(organizationName, organizationalUnits);
 
 
         internal OrganizationProperty(VcfRow vcfRow, VCdVersion version)
@@ -57,7 +57,6 @@ namespace FolkerKinzel.VCards.Models
             {
                 Value = new Organization();
             }
-
         }
 
         /// <summary>

@@ -43,7 +43,7 @@ namespace FolkerKinzel.VCards.Models
                                IEnumerable<string?>? country = null,
                                IEnumerable<string?>? postOfficeBox = null,
                                IEnumerable<string?>? extendedAddress = null,
-                               string? propertyGroup = null) : base(propertyGroup)
+                               string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
         {
             Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
                                 locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
@@ -81,7 +81,7 @@ namespace FolkerKinzel.VCards.Models
             string? postOfficeBox = null,
             string? extendedAddress = null,
             string? propertyGroup = null)
-            : base(propertyGroup)
+            : base(new ParameterSection(), propertyGroup)
         {
             Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
                                 locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
@@ -97,6 +97,8 @@ namespace FolkerKinzel.VCards.Models
         internal AddressProperty(VcfRow vcfRow, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
+            vcfRow.DecodeQuotedPrintable();
+
             if (vcfRow.Value is null)
             {
                 Value = new Address();
@@ -104,8 +106,6 @@ namespace FolkerKinzel.VCards.Models
             else
             {
                 Debug.Assert(!string.IsNullOrWhiteSpace(vcfRow.Value));
-
-                vcfRow.DecodeQuotedPrintable();
                 Value = new Address(vcfRow.Value, vcfRow.Info, version);
             }
         }

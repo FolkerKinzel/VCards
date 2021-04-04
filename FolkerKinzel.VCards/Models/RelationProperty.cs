@@ -31,54 +31,49 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        protected RelationProperty(RelationTypes? relation, string? propertyGroup) : base(propertyGroup) => this.Parameters.RelationType = relation;
+        protected RelationProperty(RelationTypes? relation, string? propertyGroup) : base(new ParameterSection(), propertyGroup) => this.Parameters.RelationType = relation;
 
 
-        internal static RelationProperty Parse(VcfRow row, VCdVersion version)
+        internal static RelationProperty Parse(VcfRow vcfRow, VCdVersion version)
         {
-            row.DecodeQuotedPrintable();
+            vcfRow.UnMask(version);
 
-            if (version != VCdVersion.V2_1)
+            if (vcfRow.Value is null || vcfRow.Parameters.DataType == Enums.VCdDataType.Text)
             {
-                row.UnMask(version);
-            }
-
-            if (row.Value is null || row.Parameters.DataType == Enums.VCdDataType.Text)
-            {
-                return new RelationTextProperty(row, version);
+                return new RelationTextProperty(vcfRow);
             }
 
 #if NET40
-            if (row.Value.IsUuidUri())
+            if (vcfRow.Value.IsUuidUri())
 #else
-            if (row.Value?.AsSpan().IsUuidUri() ?? false)
+            if (vcfRow.Value?.AsSpan().IsUuidUri() ?? false)
 #endif
             {
                 var relation = new RelationUuidProperty(
-                    UuidConverter.ToGuid(row.Value),
-                    row.Parameters.RelationType,
-                    propertyGroup: row.Group);
+                    UuidConverter.ToGuid(vcfRow.Value),
+                    vcfRow.Parameters.RelationType,
+                    propertyGroup: vcfRow.Group);
 
-                relation.Parameters.Assign(row.Parameters);
+                relation.Parameters.Assign(vcfRow.Parameters);
 
                 return relation;
             }
             else
             {
-                if (Uri.TryCreate(row.Value, UriKind.RelativeOrAbsolute, out Uri? uri))
+                if (Uri.TryCreate(vcfRow.Value, UriKind.RelativeOrAbsolute, out Uri? uri))
                 {
                     var relation = new RelationUriProperty(
                         uri,
-                        row.Parameters.RelationType,
-                        propertyGroup: row.Group);
+                        vcfRow.Parameters.RelationType,
+                        propertyGroup: vcfRow.Group);
 
-                    relation.Parameters.Assign(row.Parameters);
+                    relation.Parameters.Assign(vcfRow.Parameters);
 
                     return relation;
                 }
                 else
                 {
-                    return new RelationTextProperty(row, version);
+                    return new RelationTextProperty(vcfRow);
                 }
             }
         }

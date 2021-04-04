@@ -26,7 +26,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public DateTimeOffsetProperty(DateTimeOffset? value, string? propertyGroup = null) : base(propertyGroup)
+        public DateTimeOffsetProperty(DateTimeOffset? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
         {
             this.Value = (value == System.DateTimeOffset.MinValue) ? null : value;
             Parameters.DataType = VCdDataType.DateAndOrTime;

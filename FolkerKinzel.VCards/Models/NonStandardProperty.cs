@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 using System;
 using System.Collections;
@@ -36,7 +37,8 @@ namespace FolkerKinzel.VCards.Models
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         /// <exception cref="ArgumentNullException"><paramref name="propertyKey"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="propertyKey"/> ist kein X-Name.</exception>
-        public NonStandardProperty(string propertyKey, string? value, string? propertyGroup = null) : base(propertyGroup)
+        public NonStandardProperty(string propertyKey, string? value, string? propertyGroup = null)
+            : base(new ParameterSection(), propertyGroup)
         { 
             if (propertyKey == null)
             {

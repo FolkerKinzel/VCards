@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,18 +27,12 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public TextProperty(string? value, string? propertyGroup = null) : base(propertyGroup) => Value = string.IsNullOrWhiteSpace(value) ? null : value;
+        public TextProperty(string? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = string.IsNullOrWhiteSpace(value) ? null : value;
 
 
         internal TextProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
         {
-            vcfRow.DecodeQuotedPrintable();
-
-            if (version != VCdVersion.V2_1)
-            {
-                vcfRow.UnMask(version);
-            }
-
+            vcfRow.UnMask(version);
             Value = vcfRow.Value;
         }
 
@@ -105,7 +100,7 @@ namespace FolkerKinzel.VCards.Models
             yield return this;
         }
 
-        
+
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TextProperty>)this).GetEnumerator();
     }
 }

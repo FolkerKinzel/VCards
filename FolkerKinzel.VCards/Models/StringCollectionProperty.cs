@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null) : base(propertyGroup)
+        public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null) : base(new ParameterSection(),  propertyGroup)
         {
             this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
 
@@ -47,7 +48,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public StringCollectionProperty(string? value, string? propertyGroup = null) : base(propertyGroup)
+        public StringCollectionProperty(string? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
         {
             this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
 
@@ -61,24 +62,21 @@ namespace FolkerKinzel.VCards.Models
         internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version)
             : base(vcfRow.Parameters, vcfRow.Group)
         {
-            string? value = vcfRow.Value;
+            vcfRow.DecodeQuotedPrintable();
 
-            if (value is null)
+            if (vcfRow.Value is null)
             {
                 return;
             }
 
-            vcfRow.DecodeQuotedPrintable();
-
             var list = new List<string>();
-            StringBuilder builder = vcfRow.Info.Builder;
 
             ValueSplitter? commaSplitter = vcfRow.Info.CommaSplitter;
 
             commaSplitter.ValueString = vcfRow.Value;
             foreach (string s in commaSplitter)
             {
-                list.Add(s.UnMask(builder, version));
+                list.Add(s.UnMask(vcfRow.Info.Builder, version));
             }
 
             if (list.Count != 0)

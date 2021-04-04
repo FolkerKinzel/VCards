@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Attributes;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
@@ -28,10 +29,21 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public DateTimeTextProperty(string? value, string? propertyGroup = null) : base(propertyGroup)
+        public DateTimeTextProperty(string? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
         {
             this.Value = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
             Parameters.DataType = VCdDataType.Text;
+        }
+
+
+        internal DateTimeTextProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
+        {
+            vcfRow.UnMask(version);
+
+            if(vcfRow.Value != null)
+            {
+                Value = vcfRow.Value;
+            }
         }
 
         /// <summary>
