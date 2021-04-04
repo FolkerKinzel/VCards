@@ -37,7 +37,6 @@ namespace FolkerKinzel.VCards.Models
         {
             Debug.Assert(vcfRow != null);
 
-
             switch (vcfRow.Parameters.DataType)
             {
                 case VCdDataType.DateAndOrTime:
@@ -48,14 +47,14 @@ namespace FolkerKinzel.VCards.Models
                     {
                         return vcfRow.Info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
                             ? BuildDateTimeOffsetProperty(dateTimeOffset)
-                            : (DateTimeProperty)new DateTimeTextProperty(vcfRow, version);
+                            : new DateTimeTextProperty(vcfRow, version);
                     }
                 case VCdDataType.Time:
                     {
 
                         return vcfRow.Info.TimeConverter.TryParse(vcfRow.Value, out DateTimeOffset dateTimeOffset)
                             ? BuildDateTimeOffsetProperty(dateTimeOffset)
-                            : (DateTimeProperty)new DateTimeTextProperty(vcfRow, version);
+                            : new DateTimeTextProperty(vcfRow, version);
                     }
                 default:
                     {
@@ -65,20 +64,15 @@ namespace FolkerKinzel.VCards.Models
             }//switch
 
 
-            
-
-            DateTimeOffsetProperty BuildDateTimeOffsetProperty(DateTimeOffset dateTimeOffset)
+            DateTimeProperty BuildDateTimeOffsetProperty(DateTimeOffset dateTimeOffset)
             {
                 var dtProp = new DateTimeOffsetProperty(dateTimeOffset, vcfRow.Group);
 
+                dtProp.Parameters.Assign(vcfRow.Parameters);
                 dtProp.Parameters.DataType = vcfRow.Parameters.DataType ?? VCdDataType.DateAndOrTime;
-                dtProp.Parameters.AltID = vcfRow.Parameters.AltID;
-                dtProp.Parameters.Language = vcfRow.Parameters.Calendar;
-                dtProp.Parameters.NonStandardParameters = vcfRow.Parameters.NonStandardParameters;
 
                 return dtProp;
             }
-
         }
 
         IEnumerator<DateTimeProperty> IEnumerable<DateTimeProperty>.GetEnumerator()

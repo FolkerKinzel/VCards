@@ -25,6 +25,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 throw new ArgumentNullException(nameof(other));
             }
 
+            if(object.ReferenceEquals(this, other))
+            {
+                return;
+            }
+
             Clear();
 
             foreach (KeyValuePair<VCdParam, object> kvp in other._propDic)
