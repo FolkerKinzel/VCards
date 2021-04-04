@@ -5,6 +5,8 @@
 - [x] Cleanup: Remove obsolete symbols that are marked as errors.
 - [x] Increase the code coverage of the unit tests.
 
+### 2.2.0
+- [ ] Implement FBURL.
 
 ### 3.0.0  
 - [ ] Move FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate to 

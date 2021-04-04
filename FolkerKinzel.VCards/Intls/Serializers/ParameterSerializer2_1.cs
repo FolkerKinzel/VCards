@@ -273,29 +273,38 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         [ExcludeFromCodeCoverage]
         protected override void BuildOrgDirectoryPara() { }
+
         [ExcludeFromCodeCoverage]
         protected override void BuildInterestPara() { }
+
         [ExcludeFromCodeCoverage]
         protected override void BuildHobbyPara() { }
+
         [ExcludeFromCodeCoverage]
         protected override void BuildExpertisePara() { }
+
         [ExcludeFromCodeCoverage]
         protected override void BuildDeathPlacePara() { }
+
         [ExcludeFromCodeCoverage]
         protected override void BuildDeathDatePara() { }
+
         [ExcludeFromCodeCoverage]
         protected override void BuildBirthPlacePara() { }
+
         [ExcludeFromCodeCoverage]
         protected override void BuildXmlPara() { }
 
+        [ExcludeFromCodeCoverage]
         protected override void BuildSourcePara() { }
 
-
+        [ExcludeFromCodeCoverage]
         protected override void BuildSortStringPara() { }
 
         [ExcludeFromCodeCoverage]
         protected override void BuildRelatedPara() { }
 
+        [ExcludeFromCodeCoverage]
         protected override void BuildProfilePara() { }
 
         [ExcludeFromCodeCoverage]
@@ -331,6 +340,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         [ExcludeFromCodeCoverage]
         protected override void BuildClassPara() { }
 
+        [ExcludeFromCodeCoverage]
         protected override void BuildCategoriesPara() { }
 
         [ExcludeFromCodeCoverage]

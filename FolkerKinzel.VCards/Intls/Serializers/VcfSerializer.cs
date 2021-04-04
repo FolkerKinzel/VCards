@@ -403,8 +403,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         #region Append
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendAccess(AccessProperty value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendAddresses(IEnumerable<AddressProperty?> value) { }
 
 
@@ -451,26 +453,37 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendBirthDayViews(IEnumerable<DateTimeProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendBirthPlaceViews(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendCalendarUserAddresses(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendCalendarAddresses(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendCategories(IEnumerable<StringCollectionProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendDeathDateViews(IEnumerable<DateTimeProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendDeathPlaceViews(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendDirectoryName(TextProperty value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendDisplayNames(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendEmailAddresses(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendExpertises(IEnumerable<TextProperty?> value) { }
 
 
@@ -512,28 +525,40 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendGeoCoordinates(IEnumerable<GeoProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendHobbies(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendInstantMessengerHandles(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendInterests(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendKeys(IEnumerable<DataProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendKind(KindProperty value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendLanguages(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendLastRevision(TimeStampProperty value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendLogos(IEnumerable<DataProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendMailer(TextProperty value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendMembers(IEnumerable<RelationProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendNameViews(IEnumerable<NameProperty?> value) { }
 
         protected void AppendNonStandardProperties(IEnumerable<NonStandardProperty?> value)
@@ -556,22 +581,31 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendNotes(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendNickNames(IEnumerable<StringCollectionProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendOrganizations(IEnumerable<OrganizationProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendOrgDirectories(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendPhoneNumbers(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendPhotos(IEnumerable<DataProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendProdID(TextProperty value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendProfile(ProfileProperty value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendPropertyIDMappings(IEnumerable<PropertyIDMappingProperty?> value) { }
 
         protected virtual void AppendRelations(IEnumerable<RelationProperty?> value)
@@ -650,20 +684,28 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendRoles(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendSounds(IEnumerable<DataProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendSources(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendTimeZones(IEnumerable<TimeZoneProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendTitles(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendUniqueIdentifier(UuidProperty value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendURLs(IEnumerable<TextProperty?> value) { }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AppendXmlProperties(IEnumerable<XmlProperty?> value) { }
 
         #endregion

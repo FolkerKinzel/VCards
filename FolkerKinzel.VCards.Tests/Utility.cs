@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 
@@ -44,12 +46,47 @@ namespace FolkerKinzel.VCards.Tests
             var sound1 = new DataProperty(new Uri("https://folker-kinzel.de/audio.mp3"));
             logo1.Parameters.MediaType = "audio/mpeg";
 
+            var key1 = new DataProperty(new Uri("https://folker-kinzel.de/pgp"));
+            logo1.Parameters.MediaType = "application/pgp-keys";
+
 
             var email1 = new TextProperty("email@folker.com");
             email1.Parameters.EmailType = EmailType.SMTP;
 
             var name1 = new NameProperty("Kinzel", "Folker");
             name1.Parameters.SortAs = new string[] { "Kinzel", "Folker" };
+
+
+            var impp1 = new TextProperty("aim:uri.com");
+            impp1.Parameters.InstantMessengerType = ImppTypes.Personal;
+
+            var impp2 = new TextProperty("gg:uri.com");
+            impp1.Parameters.InstantMessengerType = ImppTypes.Business;
+
+            var impp3 = new TextProperty("gtalk:uri.com");
+            impp1.Parameters.InstantMessengerType = ImppTypes.Mobile;
+
+            var impp4 = new TextProperty("com.google.hangouts:uri.com");
+            var impp5 = new TextProperty("icq:uri.com");
+            var impp6 = new TextProperty("icq:uri.com");
+            var impp7 = new TextProperty("xmpp:uri.com");
+            var impp8 = new TextProperty("msnim:uri.com");
+            var impp9 = new TextProperty("sip:uri.com");
+            var impp10 = new TextProperty("skype:uri.com");
+            var impp11 = new TextProperty("twitter:uri.com");
+            var impp12 = new TextProperty("ymsgr:uri.com");
+
+            var rel1 = new RelationTextProperty("Agent", RelationTypes.Agent);
+            var rel2 = new RelationTextProperty("Spouse", RelationTypes.Spouse | RelationTypes.CoResident);
+
+
+            var nonStandard1 = new NonStandardProperty("X-NON-STANDARD", "The value");
+            nonStandard1.Parameters.NonStandardParameters
+                = new KeyValuePair<string, string>[] { new KeyValuePair<string, string>("X-NONSTD", "para-value") };
+
+            var xName = XName.Get("{TheNs}TheLocal");
+            var xEl = new XElement(xName, "The content");
+            var xml1 = new XmlProperty(xEl);
 
             return new VCard
             {
@@ -72,6 +109,8 @@ namespace FolkerKinzel.VCards.Tests
                 Photos = photo1,
 
                 Sounds = sound1,
+
+                Keys = key1,
 
                 DeathDateViews = new DateTimeTextProperty("Later"),
 
@@ -119,7 +158,7 @@ namespace FolkerKinzel.VCards.Tests
 
                 GeoCoordinates = new GeoProperty(new Models.PropertyParts.GeoCoordinate(23.456, 49.654)),
 
-                NickNames = new StringCollectionProperty(new string[] {"Genius", "The Brain"}),
+                NickNames = new StringCollectionProperty(new string[] { "Genius", "The Brain" }),
 
                 Kind = new KindProperty(VCdKind.Organization),
 
@@ -127,9 +166,24 @@ namespace FolkerKinzel.VCards.Tests
 
                 Languages = new TextProperty("de"),
 
-                Notes = new TextProperty("Kommentar")
+                Notes = new TextProperty("Kommentar"),
 
+                PropertyIDMappings = new PropertyIDMappingProperty(7, Guid.NewGuid()),
 
+                InstantMessengerHandles = new TextProperty[]
+                {
+                    impp1, impp2, impp3, impp4, impp5, impp6, impp7, impp8, impp9, impp10, impp11, impp12
+                },
+
+                Relations = new RelationProperty[] { rel1, rel2 },
+
+                Organizations = new OrganizationProperty("The Organization", new string[] {"Department", "Office"}),
+
+                NonStandardProperties = nonStandard1,
+
+                XmlProperties = xml1,
+
+                
             };
         }
     }
