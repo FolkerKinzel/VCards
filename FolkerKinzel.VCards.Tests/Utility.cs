@@ -63,6 +63,8 @@ namespace FolkerKinzel.VCards.Tests
 
                 Expertises = expertise1,
 
+                BirthDayViews = new DateTimeOffsetProperty(new DateTime(1972, 11, 11)),
+
                 AnniversaryViews = new DateTimeOffsetProperty(new DateTime(2001, 9, 11)),
 
                 Logos = logo1,
