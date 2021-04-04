@@ -6,6 +6,7 @@ using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -32,39 +33,8 @@ namespace FolkerKinzel.VCards
         /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
         public static List<VCard> Load(string fileName, Encoding? textEncoding = null)
         {
-            try
-            {
-                using var reader = new StreamReader(fileName, textEncoding ?? Encoding.UTF8, true);
-                return DoParse(reader);
-            }
-            catch (ArgumentNullException)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            catch (ArgumentException e)
-            {
-                throw new ArgumentException(e.Message, nameof(fileName), e);
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                throw new IOException(e.Message, e);
-            }
-            catch (NotSupportedException e)
-            {
-                throw new ArgumentException(e.Message, nameof(fileName), e);
-            }
-            catch (System.Security.SecurityException e)
-            {
-                throw new IOException(e.Message, e);
-            }
-            catch (PathTooLongException e)
-            {
-                throw new ArgumentException(e.Message, nameof(fileName), e);
-            }
-            catch (Exception e)
-            {
-                throw new IOException(e.Message, e);
-            }
+            using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
+            return DoParse(reader);
         }
 
 
@@ -147,7 +117,7 @@ namespace FolkerKinzel.VCards
         {
             // Version 2.1 ist unmaskiert:
             content = versionHint == VCdVersion.V2_1
-                ? content 
+                ? content
                 : content.UnMask(info.Builder, versionHint);
 
             using var reader = new StringReader(content ?? string.Empty);
@@ -158,6 +128,42 @@ namespace FolkerKinzel.VCards
         }
 
 
+        [ExcludeFromCodeCoverage]
+        private static StreamReader InitializeStreamReader(string fileName, Encoding? textEncoding)
+        {
+            try
+            {
+                return new StreamReader(fileName, textEncoding ?? Encoding.UTF8, true);
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+            catch (ArgumentException e)
+            {
+                throw new ArgumentException(e.Message, nameof(fileName), e);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                throw new IOException(e.Message, e);
+            }
+            catch (NotSupportedException e)
+            {
+                throw new ArgumentException(e.Message, nameof(fileName), e);
+            }
+            catch (System.Security.SecurityException e)
+            {
+                throw new IOException(e.Message, e);
+            }
+            catch (PathTooLongException e)
+            {
+                throw new ArgumentException(e.Message, nameof(fileName), e);
+            }
+            catch (Exception e)
+            {
+                throw new IOException(e.Message, e);
+            }
+        }
 
     }
 }
