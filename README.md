@@ -14,25 +14,25 @@ to manage contact data of organizations and natural persons.
 
 ```
 nuget Package Manager:
-PM> Install-Package FolkerKinzel.VCards -Version 2.1.0
+PM> Install-Package FolkerKinzel.VCards -Version 2.1.1
 
 .NET CLI:
-> dotnet add package FolkerKinzel.VCards --version 2.1.0
+> dotnet add package FolkerKinzel.VCards --version 2.1.1
 
 Package Reference (Visual Studio Project File):
-<PackageReference Include="FolkerKinzel.VCards" Version="2.1.0" />
+<PackageReference Include="FolkerKinzel.VCards" Version="2.1.1" />
 
 Paket CLI:
-paket add FolkerKinzel.VCards --version 2.1.0
+paket add FolkerKinzel.VCards --version 2.1.1
 
 F# Interactive:
-> #r "nuget: FolkerKinzel.VCards, 2.1.0"
+> #r "nuget: FolkerKinzel.VCards, 2.1.1"
 ```
 
 
-* [Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.1.0/FolkerKinzel.VCards.en.chm)
+* [Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.1.1/FolkerKinzel.VCards.en.chm)
 
-* [Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.1.0/FolkerKinzel.VCards.de.chm)
+* [Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.1.1/FolkerKinzel.VCards.de.chm)
 
 > IMPORTANT: On some systems the content of the .CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox (if it is present) in the lower right corner of the General tab in the Properties dialog.
 

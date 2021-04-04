@@ -93,7 +93,6 @@
   <T ID="A2E5EB2A666AA3D2">It may point to an external URL, may be plain text, or may be embedded in the vCard as a Base64 encoded block of text.</T>
   <T ID="F63A91544E6DCF6B">&lt;c&gt;KIND&lt;/c&gt;: Defines the type of entity the vCard represents. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="1DA3B5F69D30FA2F">&lt;c&gt;LANG&lt;/c&gt;: Defines languages, that the person speaks. &lt;c&gt;(4)&lt;/c&gt;</T>
-  <T ID="ABBA8D7C8E2CD5F">&lt;c&gt;REV&lt;/c&gt;: A timestamp for the last time the vCard was updated. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="6A198E63B53DBA58">&lt;c&gt;LOGO&lt;/c&gt;: Images or graphics of the logo of the organization that is associated with the individual, to which the vCard belongs. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="A671919AD8F069F9">It may point to an external URL or may be embedded in the vCard as a Base64 encoded block of text.</T>
   <T ID="868C3DF54955EC25">&lt;c&gt;MAILER&lt;/c&gt;: Type of email program used. &lt;c&gt;(2,3)&lt;/c&gt;</T>
@@ -333,7 +332,6 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="FAC83DB9909BB93F">&lt;c&gt;B&lt;/c&gt;, &lt;c&gt;BASE64&lt;/c&gt;: Base64 &lt;c&gt;(2,3)&lt;/c&gt;</T>
   <T ID="CC93485C4804002E">&lt;c&gt;QUOTED-PRINTABLE&lt;/c&gt;: Quoted Printable &lt;c&gt;(2)&lt;/c&gt;</T>
   <T ID="5204896A0FC1B70">&lt;c&gt;8BIT&lt;/c&gt;: 8-Bit charset &lt;c&gt;(2)&lt;/c&gt;</T>
-  <T ID="C5F69008708CD878">7-Bit charset (Default in vCard 2.1) &lt;c&gt;(2)&lt;/c&gt;</T>
   <T ID="DD725D8E30CCE050">&lt;c&gt;INDIVIDUAL&lt;/c&gt;: The vCard represents a single person or entity. (Default) &lt;c&gt;4&lt;/c&gt;</T>
   <T ID="1C5F0BB2531C9DA7">&lt;c&gt;GROUP&lt;/c&gt;: The vCard represents a group of persons or entities. &lt;c&gt;4&lt;/c&gt;</T>
   <T ID="AADF6839E798039D">&lt;c&gt;ORGANIZATION&lt;/c&gt;: The vCard represents an organization. &lt;c&gt;4&lt;/c&gt;</T>
@@ -353,7 +351,6 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="302E8A23782FABD2">Abstract base class of all classes that represent vCard properties.</T>
   <T ID="B3F60A8ECBB1CFF1">A &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/&gt; object that represents the parameter part of a vCard property.</T>
   <T ID="798D539DBA323989">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
-  <T ID="81B3B486735BE7B6">&lt;paramref name="parameters"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="AFED563658F5170C">Corresponds to the Group identifier of a vCard property or is &lt;c&gt;null&lt;/c&gt;, if the vCard property has no group identifier.</T>
   <T ID="6585BEE95E613631">Contains the data of the parameter section of a vCard property. (Never &lt;c&gt;null&lt;/c&gt;.)</T>
   <T ID="8DCF9A4C77DDBC9E">Overload of the &lt;see cref ="M:System.Object.ToString"/&gt; method. For debugging only.</T>
@@ -439,8 +436,6 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="F53B64AB0F519F05">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to point to a person, with whom there is a relationship, with their &lt;see cref="T:System.Uri"/&gt;.</T>
   <T ID="C6C077365C5092">Specialization of the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; class to describe a person, with whom there is a relationship, with their &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
   <T ID="4B3BC8E08D6F1D9F">Constructor called by derived classes.</T>
-  <T ID="B038D948D6F1D9F">Constructor called by derived classes.</T>
-  <T ID="A1212A6EBA323989">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="3F61C689BA4A94D2">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt;.</T>
   <T ID="A3F34D6E500561B">The post office box. (Don't use this property!)</T>
   <T ID="2A78EF7A0478DCEF">The extended address (e.g. apartment or suite number).  (Don't use this property!)</T>
@@ -477,13 +472,11 @@ Use the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; class to embed
   <T ID="16B605B2F1CD1C08">An instance of the &lt;see cref="T:System.DateTimeOffset"/&gt; struct or &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="589F5930DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="CE7CF5925EDB4041">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeOffsetProperty"/&gt;.</T>
-  <T ID="8BF396C02A1141A5"></T>
   <T ID="3D9031A578A3C56A">The information can be in various formats. E.g. in vCard 4.0 also free text such as "Tuesdays after midnight" is possible . The &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType"&gt;Parameters.DataType&lt;/see&gt; property is helpful, to find out what type of data the &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/&gt; contains.</T>
   <T ID="BB51B890C5A9ACD9">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeTextProperty"/&gt; object in which the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType"/&gt; parameter is set to &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.Text"/&gt;.</T>
   <T ID="7F9C66FE4CAAC018">Any &lt;see cref ="T:System.String"/&gt; describing a time or date, or &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="A7D462D7DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="EB5AB3E2D16E6CF7">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeTextProperty"/&gt;.</T>
-  <T ID="90919AB566E27F04">The time and / or date stored as free text.</T>
   <T ID="672CE274844FCB10">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.GenderProperty"/&gt; object.</T>
   <T ID="D95BEE05897756A4">Standardized information about the sex of a person.</T>
   <T ID="C9CE097A8CCC0E00">Free text describing the gender identity.</T>
@@ -531,8 +524,6 @@ This parameter is passed uninitialized; any value originally supplied in &lt;par
   <T ID="DB1E23B17F443EB8">The embedded binary data or &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="F6940A72A812E856">Returns a suitable file type extension for the data embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;.</T>
   <T ID="BD5D18705B62B62">A suitable file type extension for the data embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; (including the period ".").</T>
-  <T ID="A9D15250B13FBA28">Constructor called by derived classes to initialize a new &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/&gt; object.</T>
-  <T ID="EE08DFF5DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="B878D5A2FC43CEB6">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.KindProperty"/&gt; object.</T>
   <T ID="7233594A4F0233B">A member of the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.VCdKind"/&gt; enum.</T>
   <T ID="4EB31A73DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
@@ -574,7 +565,6 @@ This parameter is passed uninitialized; any value originally supplied in &lt;par
   <T ID="74F7CF7AF5100CE6">Returns &lt;c&gt;true&lt;/c&gt;, if the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Organization"/&gt; object does not contain any usable data.</T>
   <T ID="F4ADF71BE9DC7AF5">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Organization"/&gt; object. (For debugging only.)</T>
   <T ID="F2911A9AD0D9614E">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Organization"/&gt; object.</T>
-  <T ID="11ACEEC6AEE547FD"></T>
   <T ID="48CBDDD4368F451D">&lt;c&gt;TYPE&lt;/c&gt;: Specifies in a &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationProperty"/&gt; (&lt;c&gt;RELATED&lt;/c&gt;) the type of relationship with a person. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="C9A6AAAB31F64278"></T>
   <T ID="BB278CFAC24F0309"></T>
@@ -693,13 +683,9 @@ Please note, that when using the class, yourself is responsible for the standard
   <T ID="F50828322D2816FE"></T>
   <T ID="10D1D9B095916333"></T>
   <T ID="CB7B40586AC443E9">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationTextProperty"/&gt;.</T>
-  <T ID="FC502CC8CDAB81D4"></T>
   <T ID="CE872D98858C9BE6">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationUriProperty"/&gt;.</T>
-  <T ID="7CF4C18A5560F816">A &lt;see cref="T:System.Uri"/&gt; of a person, with whom there is a relationship.</T>
   <T ID="E62658C08913BDE9">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/&gt;.</T>
-  <T ID="2D30C1FF8CCDA031"></T>
   <T ID="1F234CC31BB3824F">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/&gt;.</T>
-  <T ID="FB45D4D92227F6AD"></T>
   <T ID="6B0C88ECFC4BF923">Represents vCard properties that store a collection of &lt;see cref="T:System.String"/&gt;s .</T>
   <T ID="9B458A4F7D7530FE">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.StringCollectionProperty"/&gt; object.</T>
   <T ID="45BD08978C1C3EBD">A collection of &lt;see cref="T:System.String"/&gt;s or &lt;c&gt;null&lt;/c&gt;.</T>
@@ -833,7 +819,6 @@ Please note, that when using the class, yourself is responsible for the standard
   <T ID="C005916E203E9755"></T>
   <T ID="AE8924835B50BA09"></T>
   <T ID="AD23D6F1C58B3AF3"></T>
-  <T ID="C16E967DD001F445"></T>
   <T ID="96016051AF68EF7C"></T>
   <T ID="41706FBAF3537DEF"></T>
   <T ID="5B1E686BE401F4DB"></T>
@@ -938,7 +923,6 @@ The method is automatically called by the deserialization methods of the &lt;see
 The method does not remove any elements from &lt;paramref name ="vCardList"/&gt; and does not create doublettes even when called several times (i.e. &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/&gt; objects that have the same &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object included).
 &lt;/para&gt;</T>
   <T ID="647B32B1C8E2CD5F">&lt;c&gt;REV&lt;/c&gt;: A timestamp for the last time the vCard was updated. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
-  <T ID="ACE443F6C8E2CD5F">&lt;c&gt;REV&lt;/c&gt;: A timestamp for the last time the vCard was updated. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="D7AB6FCC756D71CA">&lt;c&gt;GEO&lt;/c&gt;: Geographical position. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="2D5CD3E6756D71CA">&lt;c&gt;GEO&lt;/c&gt;: Geographical position. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="A6BCA752C8E2CD5F">&lt;c&gt;REV&lt;/c&gt;: A timestamp for the last time the vCard was updated. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
@@ -1288,4 +1272,8 @@ When serializing as vCard 4.0, the method calls &lt;see cref ="M:FolkerKinzel.VC
   <T ID="5A3EEE48604FFFF1">&lt;paramref name ="fileName"/&gt; is not a valid file path or &lt;paramref name ="version"/&gt; has an undefined value.</T>
   <T ID="AFCCF3F2A192EFE3">&lt;paramref name ="stream"/&gt; does not support write operations or &lt;paramref name ="version"/&gt; has an undefined value.</T>
   <T ID="9F48F21E6039589E">&lt;paramref name ="version"/&gt; has an undefined value.</T>
+  <T ID="C16E967D5C76F9FE"></T>
+  <T ID="5C35E8E0B13FBA28">Constructor that allows derived classes to initialize a new &lt;see cref ="T:FolkerKinzel.VCards.Models.DateTimeProperty"/&gt; object.</T>
+  <T ID="731AB9E2CBB1CFF1">A &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/&gt; object that represents the parameter part of a vCard property.</T>
+  <T ID="4243AACCDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
 </Tsltn>

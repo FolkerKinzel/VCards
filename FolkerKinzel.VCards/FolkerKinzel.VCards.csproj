@@ -8,12 +8,12 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>2.1.1</Version>
-    <FileVersion>2.1.0.31</FileVersion>
+    <FileVersion>2.1.1.2</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReleaseNotes>Cleanup: Symbols that were marked as Obsolete errors in 2.0.0 are removed now.
     
-Passing an undefined value of VCdVersion as method argument throws an ArgumentException now.
+Passing an undefined value of VCdVersion as method argument now throws an ArgumentException.
       
 Fixes an issue in MimeTypeConverter.
 
