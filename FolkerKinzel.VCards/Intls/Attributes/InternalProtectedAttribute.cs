@@ -22,6 +22,7 @@ namespace FolkerKinzel.VCards.Intls.Attributes
         AttributeTargets.Constructor | AttributeTargets.Method |
         AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     [Conditional("DEBUG")]
+    [ExcludeFromCodeCoverage]
     internal sealed class InternalProtectedAttribute : Attribute
     {
         /// <summary>

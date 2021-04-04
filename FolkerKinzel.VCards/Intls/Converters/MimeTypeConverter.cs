@@ -164,7 +164,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                     return ".cgm";
                 case MimeTypeString.Image.PICT:
                 case "image/pict":
-                    return "pic";
+                    return ".pic";
                 case MimeTypeString.Image.QTIME:
                 case "video/quicktime":
                     return ".mov";
@@ -231,6 +231,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
         internal static string GetMimeTypeFromFileExtension(string path)
         {
+            Debug.Assert(path != null);
+
             switch (Path.GetExtension(path).ToLowerInvariant())
             {
                 // Verchlüsselung
@@ -297,7 +299,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                     return MimeTypeString.Image.CGM;
                 case ".pic":
                 case ".pict":
-                case "pct":
+                case ".pct":
                     return MimeTypeString.Image.PICT;
                 case ".mov":
                     return MimeTypeString.Image.QTIME;
@@ -329,6 +331,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 case ".oga":
                 case ".spx":
                     return MimeTypeString.Audio.OGG;
+                case ".wav":
+                    return MimeTypeString.Audio.WAVE;
 
                 default:
                     return MimeTypeString.OCTET_STREAM;

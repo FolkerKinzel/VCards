@@ -25,6 +25,9 @@
     <Compile Remove="UnitTestsInitialize.cs" />
     <Compile Remove="VcfPaths.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Code coverage.htm.lnk" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="coverlet.msbuild" Version="3.0.3">

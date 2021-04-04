@@ -36,12 +36,18 @@ namespace FolkerKinzel.VCards.Models
 
         internal static RelationProperty Parse(VcfRow row, VCdVersion version)
         {
+            row.DecodeQuotedPrintable();
+
+            if (version != VCdVersion.V2_1)
+            {
+                row.UnMask(version);
+            }
+
             if (row.Value is null || row.Parameters.DataType == Enums.VCdDataType.Text)
             {
                 return new RelationTextProperty(row, version);
             }
 
-            row.UnMask(version);
 #if NET40
             if (row.Value.IsUuidUri())
 #else

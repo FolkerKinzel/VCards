@@ -1,8 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FolkerKinzel.VCards.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace FolkerKinzel.VCards.Models.Tests
@@ -10,10 +7,11 @@ namespace FolkerKinzel.VCards.Models.Tests
     [TestClass()]
     public class ProfilePropertyTests
     {
+        private const string GROUP = "myGroup";
+
         [TestMethod()]
-        public void ProfilePropertyTest()
+        public void ProfilePropertyTest1()
         {
-            const string GROUP = "myGroup";
 
             var prop = new ProfileProperty(GROUP);
 
@@ -30,5 +28,36 @@ namespace FolkerKinzel.VCards.Models.Tests
             TextProperty textProp = prop;
             Assert.AreEqual(textProp.Value, s);
         }
+
+
+        [TestMethod()]
+        public void ProfilePropertyTest2()
+        {
+
+            var prop = new ProfileProperty(GROUP);
+
+            var vcard = new VCard
+            {
+                Profile = prop
+            };
+
+            string s = vcard.ToVcfString();
+
+            List<VCard> list = VCard.Parse(s);
+
+            Assert.IsNotNull(list);
+
+            Assert.AreEqual(1, list.Count);
+
+            vcard = list[0];
+
+            Assert.IsNotNull(vcard.Profile);
+
+            prop = vcard.Profile;
+
+            Assert.AreEqual(GROUP, prop!.Group);
+            Assert.IsFalse(prop.IsEmpty);
+        }
+
     }
 }

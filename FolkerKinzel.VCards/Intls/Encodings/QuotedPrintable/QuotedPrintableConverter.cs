@@ -267,6 +267,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
             char[] charr = new char[2];
 #else
             Span<char> charr = stackalloc char[2];
+            //charr.Clear();
 #endif
 
             int j = 0;

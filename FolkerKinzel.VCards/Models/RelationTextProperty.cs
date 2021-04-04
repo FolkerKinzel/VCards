@@ -40,17 +40,8 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        internal RelationTextProperty(VcfRow row, VCdVersion version) : base(row.Parameters, row.Group)
-        {
-            row.DecodeQuotedPrintable();
-
-            if (version != VCdVersion.V2_1)
-            {
-                row.UnMask(version);
-            }
-
-            this.Value = row.Value;
-        }
+        internal RelationTextProperty(VcfRow row, VCdVersion version) : base(row.Parameters, row.Group) 
+            => this.Value = string.IsNullOrWhiteSpace(row.Value) ? null : row.Value;
 
 
         /// <summary>

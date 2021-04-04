@@ -88,7 +88,15 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         public VCdContentLocation ContentLocation
         {
             get => Get<VCdContentLocation>(VCdParam.ContentLocation);
-            set => Set(VCdParam.ContentLocation, value);
+            set
+            {
+                Set(VCdParam.ContentLocation, value);
+
+                if(value != VCdContentLocation.Inline)
+                {
+                    DataType = VCdDataType.Uri;
+                }
+            }
         }
 
         /// <summary>

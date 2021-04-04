@@ -44,6 +44,9 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             {
                 this.Value = QuotedPrintableConverter.Decode(this.Value, // null-Prüfung nicht erforderlich
                     TextEncodingConverter.GetEncoding(this.Parameters.Charset)); // null-Prüfung nicht erforderlich
+
+                this.Parameters.Encoding = null; // Encoding nicht 2x durchführen
+
             }
         }
 

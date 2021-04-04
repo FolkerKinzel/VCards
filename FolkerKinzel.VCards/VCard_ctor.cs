@@ -470,7 +470,6 @@ namespace FolkerKinzel.VCards
                                 }
                                 else
                                 {
-                                    vcfRow.DecodeQuotedPrintable();
                                     vcfRow.Parameters.DataType ??= VCdDataType.Text;
                                     vcfRow.Parameters.RelationType = RelationTypes.Agent;
 
