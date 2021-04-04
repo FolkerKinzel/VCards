@@ -150,5 +150,25 @@ namespace FolkerKinzel.VCards.Tests
             vcard.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Paul Test.vcf"));
         }
 
+
+        [TestMethod]
+        public void SerializeVCard()
+        {
+            string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0);
+
+            Assert.IsNotNull(s);
+
+            List<VCard> list = VCard.Parse(s);
+
+            Assert.IsNotNull(list);
+
+            Assert.AreEqual(1, list.Count);
+
+            VCard vcard = list[0];
+
+            Assert.AreEqual(VCdVersion.V3_0, vcard.Version);
+        }
+
+
     }
 }

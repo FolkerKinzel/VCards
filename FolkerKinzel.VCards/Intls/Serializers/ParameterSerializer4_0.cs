@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Extensions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
@@ -695,15 +696,31 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             AppendNonStandardParameters();
         }
 
-
+        [ExcludeFromCodeCoverage]
         protected override void BuildXSpousePara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildXMessengerPara(bool isPref) { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildSortStringPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildProfilePara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildNamePara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildMailerPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildLabelPara(bool isPref) { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildClassPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildAgentPara() { }
 
         #endregion

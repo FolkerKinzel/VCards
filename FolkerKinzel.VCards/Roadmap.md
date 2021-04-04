@@ -3,7 +3,8 @@
 
 ### 2.1.1
 - [x] Cleanup: Remove obsolete symbols that are marked as errors.
-- [ ] Increase the code coverage of the unit tests.
+- [x] Increase the code coverage of the unit tests.
+
 
 ### 3.0.0  
 - [ ] Move FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate to 

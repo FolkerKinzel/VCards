@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Tests
         public void Parse()
         {
             List<VCard>? vcard = VCard.Load(TestFiles.V4vcf);
-          
+
             Assert.IsNotNull(vcard);
             Assert.AreNotEqual(0, vcard.Count);
 
@@ -98,5 +98,25 @@ namespace FolkerKinzel.VCards.Tests
 
         }
 
+
+        [TestMethod]
+        public void SerializeVCard()
+        {
+            string s = Utility.CreateVCard().ToVcfString(VCdVersion.V4_0);
+
+            Assert.IsNotNull(s);
+
+            List<VCard> list = VCard.Parse(s);
+
+            Assert.IsNotNull(list);
+
+            Assert.AreEqual(1, list.Count);
+
+            VCard vcard = list[0];
+
+            Assert.AreEqual(VCdVersion.V4_0, vcard.Version);
+        }
+
     }
 }
+

@@ -123,5 +123,24 @@ namespace FolkerKinzel.VCards.Tests
 
         }
 
+
+        [TestMethod]
+        public void SerializeVCard()
+        {
+            string s = Utility.CreateVCard().ToVcfString(VCdVersion.V2_1);
+
+            Assert.IsNotNull(s);
+
+            List<VCard> list = VCard.Parse(s);
+
+            Assert.IsNotNull(list);
+
+            Assert.AreEqual(1, list.Count);
+
+            VCard vcard = list[0];
+
+            Assert.AreEqual(VCdVersion.V2_1, vcard.Version);
+        }
+
     }
 }

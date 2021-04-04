@@ -7,6 +7,7 @@ using System.Diagnostics;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Extensions;
 using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
@@ -270,33 +271,75 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             AppendNonStandardParameters();
         }
 
-
+        [ExcludeFromCodeCoverage]
         protected override void BuildOrgDirectoryPara() { }
+        [ExcludeFromCodeCoverage]
         protected override void BuildInterestPara() { }
+        [ExcludeFromCodeCoverage]
         protected override void BuildHobbyPara() { }
+        [ExcludeFromCodeCoverage]
         protected override void BuildExpertisePara() { }
+        [ExcludeFromCodeCoverage]
         protected override void BuildDeathPlacePara() { }
+        [ExcludeFromCodeCoverage]
         protected override void BuildDeathDatePara() { }
+        [ExcludeFromCodeCoverage]
         protected override void BuildBirthPlacePara() { }
+        [ExcludeFromCodeCoverage]
         protected override void BuildXmlPara() { }
+
         protected override void BuildSourcePara() { }
+
+
         protected override void BuildSortStringPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildRelatedPara() { }
+
         protected override void BuildProfilePara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildProdidPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildNicknamePara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildNamePara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildMemberPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildLangPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildKindPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildImppPara(bool isPref) { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildGenderPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildFburlPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildClientpidmapPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildClassPara() { }
+
         protected override void BuildCategoriesPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildCaluriPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildCaladruriPara() { }
+
+        [ExcludeFromCodeCoverage]
         protected override void BuildAnniversaryPara() { }
 
 
