@@ -8,6 +8,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Xml.Serialization;
+using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Tests
 {
@@ -17,6 +18,9 @@ namespace FolkerKinzel.VCards.Models.Tests
        // private const string DEFAULT_MIME_TYPE = "text/plain;charset=us-ascii";
         private const string DEFAULT_ENCODING = "UrlEncoding";
         private const string DATA_PROTOCOL = "data:";
+
+        [TestMethod]
+        public void SchemeDelimiterTest() => Assert.AreEqual(":", DataUrl.SchemeDelimiter);
 
         [TestMethod]
         public void TestDataUri()
@@ -138,6 +142,13 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.IsTrue(data.SequenceEqual(dataUri.GetEmbeddedBytes()!));
         }
 
+
+        [TestMethod]
+        public void FromFileTest()
+        {
+            var url = DataUrl.FromFile(TestFiles.PhotoOutlookV2vcf);
+            Assert.IsNotNull(url);
+        }
 
         // [TestMethod]
         //public void SerializationTest2()

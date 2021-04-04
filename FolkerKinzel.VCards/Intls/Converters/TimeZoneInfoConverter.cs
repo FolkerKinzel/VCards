@@ -54,7 +54,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 }
                 
             }
-            else if (Regex.IsMatch(value, @"^[-\+](0[0-9]|1[0-4])([0-5][0-9])?")) // UTC-Timespan
+            else if (IsUtcTimespan(value)) // UTC-Timespan
             {
                 if (value.StartsWith("-", StringComparison.Ordinal))
                 {
@@ -84,7 +84,24 @@ namespace FolkerKinzel.VCards.Intls.Converters
             return TimeZoneInfo.GetSystemTimeZones().FirstOrDefault(x => x.BaseUtcOffset == timeSpan);
         }
 
+        private static bool IsUtcTimespan(string value)
+        {
+            const string pattern = @"^[-\+][01][0-9]([0-5][0-9])?";
+            const RegexOptions options = RegexOptions.CultureInvariant | RegexOptions.Singleline;
 
+#if NET40
+                return Regex.IsMatch(value, pattern, options);
+#else
+            try
+            {
+                return Regex.IsMatch(value, pattern, options, TimeSpan.FromMilliseconds(50));
+            }
+            catch(RegexMatchTimeoutException)
+            {
+                return false;
+            }
+#endif
+        }
 
         internal static void AppendTo(StringBuilder builder, TimeZoneInfo tzInfo, VCdVersion version)
         {
