@@ -7,6 +7,7 @@
 
 ### 2.2.0
 - [ ] Implement FBURL.
+- [ ] Use the nuget package TimeZoneConverter for converting TimeZoneInfo objects.
 
 ### 3.0.0  
 - [ ] Move FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate to 
