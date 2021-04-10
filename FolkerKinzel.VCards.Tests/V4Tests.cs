@@ -117,6 +117,75 @@ namespace FolkerKinzel.VCards.Tests
             Assert.AreEqual(VCdVersion.V4_0, vcard.Version);
         }
 
+
+        [TestMethod]
+        public void FburlTest()
+        {
+            const string workUrl = "WorkUrl";
+            const string homeUrl = "HomeUrl";
+
+            const string calendar = "text/calendar";
+            const string plain = "text/plain";
+
+            var fburl1 = new TextProperty(workUrl);
+            fburl1.Parameters.PropertyClass = PropertyClassTypes.Work;
+            fburl1.Parameters.Preference = 1;
+            fburl1.Parameters.DataType = VCdDataType.Uri;
+            fburl1.Parameters.MediaType = calendar;
+
+            var fburl2 = new TextProperty(homeUrl);
+            fburl2.Parameters.PropertyClass = PropertyClassTypes.Home;
+            fburl2.Parameters.Preference = 2;
+            fburl2.Parameters.DataType = VCdDataType.Text;
+            fburl2.Parameters.MediaType = plain;
+
+
+            var vc = new VCard
+            {
+                FreeBusyUrls = new TextProperty[] { fburl1, fburl2 }
+            };
+
+            string s = vc.ToVcfString(VCdVersion.V4_0);
+
+            Assert.IsNotNull(s);
+
+            List<VCard> list = VCard.Parse(s);
+
+            Assert.IsNotNull(list);
+            Assert.AreEqual(1, list.Count);
+
+            VCard vc2 = list[0];
+
+            Assert.IsNotNull(vc2);
+
+
+            IEnumerable<TextProperty?>? fburls = vc2.FreeBusyUrls;
+
+            Assert.IsNotNull(fburls);
+            Assert.AreEqual(2, fburls!.Count());
+
+            TextProperty fb1 = fburls!.FirstOrDefault(x => x != null && x.Parameters.Preference == 1)!;
+
+            Assert.IsNotNull(fb1);
+
+            Assert.AreEqual(workUrl, fb1.Value);
+            Assert.AreEqual(PropertyClassTypes.Work, fb1.Parameters.PropertyClass);
+            Assert.AreEqual(calendar, fb1.Parameters.MediaType);
+            Assert.AreEqual(VCdDataType.Uri, fb1.Parameters.DataType);
+
+
+            TextProperty fb2 = fburls!.FirstOrDefault(x => x != null && x.Parameters.Preference == 2)!;
+
+            Assert.IsNotNull(fb2);
+
+            Assert.AreEqual(homeUrl, fb2.Value);
+            Assert.AreEqual(PropertyClassTypes.Home, fb2.Parameters.PropertyClass);
+            Assert.AreEqual(plain, fb2.Parameters.MediaType);
+            Assert.AreEqual(VCdDataType.Text, fb2.Parameters.DataType);
+
+        }
+
+
     }
 }
 
