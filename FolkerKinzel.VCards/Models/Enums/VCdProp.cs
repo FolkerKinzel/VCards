@@ -18,12 +18,10 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// </summary>
         Kind,
 
-
         /// <summary>
         /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
         /// </summary>
         TimeStamp,
-
 
         /// <summary>
         /// <c>UID</c>: UUID, die eine persistente, global eindeutige Kennung des verbundenen Objekts darstellt. <c>(2,3,4)</c>
@@ -55,7 +53,6 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// erhalten. <c>(3,4)</c>
         /// </summary>
         Sources,
-
 
         /// <summary>
         /// <c>NAME</c>: 
@@ -137,7 +134,6 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// </summary>
         DeathPlaceViews,
 
-
         /// <summary>
         /// <c>ADR</c>: Adressen <c>(2,3,4)</c>
         /// </summary>
@@ -168,17 +164,20 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// </summary>
         Keys,
 
-
         /// <summary>
         /// <c>CALURI</c>: URLs zum Kalender der Person. <c>(4)</c>
         /// </summary>
         CalendarAddresses,
 
-
         /// <summary>
         /// <c>CALADRURI</c>: URLs für das Senden einer Terminanforderung an die Person oder Organisation. <c>(4)</c>
         /// </summary>
         CalendarUserAddresses,
+
+        /// <summary>
+        /// <c>FBURL</c>: URLs, die beschreiben, ob auf dem Kalender der Person "frei" oder "besetzt" angezeigt wird. <c>(4)</c>
+        /// </summary>
+        FreeBusyUrls,
 
         /// <summary>
         /// <c>RELATED</c>: Andere Einheiten, zu der die Person Verbindung hat. <c>(4)</c>
@@ -192,13 +191,11 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// </summary>
         Members,
 
-
         /// <summary>
         /// <c>ORG-DIRECTORY</c>: URIs, die die Arbeitsplätze der Person repräsentieren. Damit können Informationen 
         /// über Mitarbeiter der Person eingeholt werden. <c>(RFC 6715)</c>
         /// </summary>
         OrgDirectories,
-
 
         /// <summary>
         /// <c>EXPERTISE</c>: Fachgebiete, über die die Person Kenntnisse hat. <c>(RFC 6715)</c>
@@ -231,7 +228,6 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// </summary>
         XmlProperties,
 
-
         /// <summary>
         /// <c>LOGO</c>: Logo(s) der Organisation, mit der die Person in Beziehung steht, der die vCard gehört. <c>(2,3,4)</c>
         /// </summary>
@@ -247,7 +243,6 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// </summary>
         Sounds,
 
-
         /// <summary>
         /// <c>CLIENTPIDMAP</c>: Mappings für <see cref="PropertyID"/>s. Wird verwendet,
         /// um verschiedene Bearbeitungsstände derselben vCard zu synchronisieren. <c>(4)</c>
@@ -258,7 +253,6 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// vCard-Properties, die nicht dem Standard entsprechen.
         /// </summary>
         NonStandardProperties
-
 
     }
 }

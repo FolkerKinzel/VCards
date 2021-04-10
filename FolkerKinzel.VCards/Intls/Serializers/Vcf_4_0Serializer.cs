@@ -166,6 +166,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             BuildPropertyCollection(VCard.PropKeys.NonStandard.EXPERTISE, value);
         }
 
+
+        protected override void AppendFreeBusyUrls(IEnumerable<TextProperty?> value) => BuildPropertyCollection(VCard.PropKeys.FBURL, value);
+
+
         protected override void AppendGenderViews(IEnumerable<GenderProperty?> value)
         {
             SetAltID(value);

@@ -207,6 +207,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                     case VCdProp.CalendarUserAddresses:
                         AppendCalendarUserAddresses((IEnumerable<TextProperty?>)kvp.Value);
                         break;
+                    case VCdProp.FreeBusyUrls:
+                        AppendFreeBusyUrls((IEnumerable<TextProperty?>)kvp.Value);
+                        break;
                     case VCdProp.Relations:
                         AppendRelations((IEnumerable<RelationProperty?>)kvp.Value);
                         break;
@@ -485,6 +488,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         [ExcludeFromCodeCoverage]
         protected virtual void AppendExpertises(IEnumerable<TextProperty?> value) { }
+
+        [ExcludeFromCodeCoverage]
+        protected virtual void AppendFreeBusyUrls(IEnumerable<TextProperty?> value) { }
 
 
         protected virtual void AppendGenderViews(IEnumerable<GenderProperty?> value)

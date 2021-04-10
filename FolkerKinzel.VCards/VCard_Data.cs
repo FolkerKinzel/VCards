@@ -146,6 +146,22 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
+        /// <c>FBURL</c>: URLs, die beschreiben, ob auf dem Kalender der Person "frei" oder "besetzt" angezeigt wird. <c>(4)</c>
+        /// </summary>
+        /// <remarks>
+        /// Wenn mehrere <see cref="TextProperty"/>-Objekte zugewiesen sind, wird die Standardeigenschaft durch den Wert von 
+        /// <see cref="ParameterSection.Preference"/> bestimmt. URLs vom Typ FTP [RFC1738] oder HTTP [RFC2616] verweisen auf ein iCalendar-Objekt [RFC5545],
+        /// das einen Snapshot der nächsten Wochen oder Monate mit Daten zur ausgelasteten Zeit darstellt. Wenn das iCalendar-Objekt eine Datei ist, sollte
+        /// seine Dateierweiterung ".ifb" sein.
+        /// </remarks>
+        public IEnumerable<TextProperty?>? FreeBusyUrls
+        {
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.FreeBusyUrls);
+            set => Set(VCdProp.FreeBusyUrls, value);
+        }
+
+
+        /// <summary>
         /// <c>CATEGORIES</c>: Liste(n) von Eigenschaften, die das Objekt der vCard beschreiben. <c>(3,4)</c>
         /// </summary>
         public IEnumerable<StringCollectionProperty?>? Categories
