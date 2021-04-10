@@ -126,6 +126,8 @@ namespace FolkerKinzel.VCards.Tests
 
                 CalendarUserAddresses = new TextProperty("Calendar user address"),
 
+                FreeBusyUrls = new TextProperty("Free Busy"),
+
                 Sources = new TextProperty("http://neu.de/"),
 
                 TimeZones = new TimeZoneProperty(TimeZoneInfo.Local),

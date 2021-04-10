@@ -26,15 +26,15 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe von <see cref="VCardProperty"/>-Objekten,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        ///// <exception cref="ArgumentNullException"><paramref name="parameters"/> ist <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="parameters"/> ist <c>null</c>.</exception>
         protected VCardProperty(ParameterSection parameters, string? propertyGroup)
         {
-            Debug.Assert(parameters != null);
+            //Debug.Assert(parameters != null);
 
-            //if (parameters is null)
-            //{
-            //    throw new ArgumentNullException(nameof(parameters));
-            //}
+            if (parameters is null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
             Parameters = parameters;
             Group = propertyGroup;
 
