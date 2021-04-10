@@ -19,6 +19,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         /// <param name="options"></param>
 #pragma warning disable CS8618 // Das Feld lässt keine NULL-Werte zu und ist nicht initialisiert. Deklarieren Sie das Feld ggf. als "Nullable".
         protected ParameterSerializer(VcfOptions options) => this.Options = options;
+#pragma warning restore CS8618
 
         protected ParameterSection ParaSection { get; private set; }
 
