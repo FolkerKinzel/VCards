@@ -151,7 +151,7 @@ namespace FolkerKinzel.VCards
                         CalendarUserAddresses = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), CalendarUserAddresses);
                         break;
                     case PropKeys.FBURL:
-                        FreeBusyUrls = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), FreeBusyUrls);
+                        FreeOrBusyUrls = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), FreeOrBusyUrls);
                         break;
                     case PropKeys.TITLE:
                         Titles = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Titles);

@@ -177,7 +177,7 @@ namespace FolkerKinzel.VCards.Models.Enums
         /// <summary>
         /// <c>FBURL</c>: URLs, die beschreiben, ob auf dem Kalender der Person "frei" oder "besetzt" angezeigt wird. <c>(4)</c>
         /// </summary>
-        FreeBusyUrls,
+        FreeOrBusyUrls,
 
         /// <summary>
         /// <c>RELATED</c>: Andere Einheiten, zu der die Person Verbindung hat. <c>(4)</c>

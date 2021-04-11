@@ -123,7 +123,6 @@ namespace FolkerKinzel.VCards
         }
 
 
-
         /// <summary>
         /// <c>CALURI</c>: URLs zum Kalender der Person. <c>(4)</c>
         /// </summary>
@@ -134,7 +133,6 @@ namespace FolkerKinzel.VCards
         }
 
 
-
         /// <summary>
         /// <c>CALADRURI</c>: URLs für das Senden einer Terminanforderung an die Person oder Organisation. <c>(4)</c>
         /// </summary>
@@ -143,23 +141,7 @@ namespace FolkerKinzel.VCards
             get => Get<IEnumerable<TextProperty?>?>(VCdProp.CalendarUserAddresses);
             set => Set(VCdProp.CalendarUserAddresses, value);
         }
-
-
-        /// <summary>
-        /// <c>FBURL</c>: URLs, die beschreiben, ob auf dem Kalender der Person "frei" oder "besetzt" angezeigt wird. <c>(4)</c>
-        /// </summary>
-        /// <remarks>
-        /// Wenn mehrere <see cref="TextProperty"/>-Objekte zugewiesen sind, wird die Standardeigenschaft durch den Wert von 
-        /// <see cref="ParameterSection.Preference"/> bestimmt. URLs vom Typ FTP [RFC1738] oder HTTP [RFC2616] verweisen auf ein iCalendar-Objekt [RFC5545],
-        /// das einen Snapshot der nächsten Wochen oder Monate mit Daten zur ausgelasteten Zeit darstellt. Wenn das iCalendar-Objekt eine Datei ist, sollte
-        /// seine Dateierweiterung ".ifb" sein.
-        /// </remarks>
-        public IEnumerable<TextProperty?>? FreeBusyUrls
-        {
-            get => Get<IEnumerable<TextProperty?>?>(VCdProp.FreeBusyUrls);
-            set => Set(VCdProp.FreeBusyUrls, value);
-        }
-
+        
 
         /// <summary>
         /// <c>CATEGORIES</c>: Liste(n) von Eigenschaften, die das Objekt der vCard beschreiben. <c>(3,4)</c>
@@ -212,8 +194,6 @@ namespace FolkerKinzel.VCards
         }
 
 
-
-
         /// <summary>
         /// <c>FN</c>: Formatierte Zeichenfolge mit dem/den vollständigen Namen des vCard-Objekts. <c>(2,3,4)</c>
         /// </summary>
@@ -222,7 +202,6 @@ namespace FolkerKinzel.VCards
             get => Get<IEnumerable<TextProperty?>?>(VCdProp.DisplayNames);
             set => Set(VCdProp.DisplayNames, value);
         }
-
 
 
         /// <summary>
@@ -247,6 +226,23 @@ namespace FolkerKinzel.VCards
             set => Set(VCdProp.Expertises, value);
         }
 
+
+        /// <summary>
+        /// <c>FBURL</c>: URLs, die beschreiben, ob auf dem Kalender der Person "frei" oder "besetzt" angezeigt wird. <c>(4)</c>
+        /// </summary>
+        /// <remarks>
+        /// Wenn mehrere <see cref="TextProperty"/>-Objekte zugewiesen sind, wird die Standardeigenschaft durch den Wert von 
+        /// <see cref="ParameterSection.Preference"/> bestimmt. URLs vom Typ FTP [RFC1738] oder HTTP [RFC2616] verweisen auf ein iCalendar-Objekt [RFC5545],
+        /// das einen Snapshot der nächsten Wochen oder Monate mit Daten zur ausgelasteten Zeit darstellt. Wenn das iCalendar-Objekt eine Datei ist, sollte
+        /// seine Dateierweiterung ".ifb" sein.
+        /// </remarks>
+        public IEnumerable<TextProperty?>? FreeOrBusyUrls
+        {
+            get => Get<IEnumerable<TextProperty?>?>(VCdProp.FreeOrBusyUrls);
+            set => Set(VCdProp.FreeOrBusyUrls, value);
+        }
+
+
         /// <summary>
         /// <c>GENDER</c>: Geschlecht <c>(4)</c>
         /// </summary>
@@ -270,7 +266,6 @@ namespace FolkerKinzel.VCards
             get => Get<IEnumerable<GeoProperty?>?>(VCdProp.GeoCoordinates);
             set => Set(VCdProp.GeoCoordinates, value);
         }
-
 
 
         /// <summary>
@@ -505,7 +500,6 @@ namespace FolkerKinzel.VCards
         }
 
 
-
         /// <summary>
         /// <c>ORG-DIRECTORY</c>: URIs, die die Arbeitsplätze der Person repräsentieren. Damit können Informationen 
         /// über Mitarbeiter der Person eingeholt werden. <c>(RFC 6715)</c>
@@ -550,6 +544,7 @@ namespace FolkerKinzel.VCards
             set => Set(VCdProp.ProdID, value);
         }
 
+
         /// <summary>
         /// <c>PROFILE</c>: Legt fest, dass die VCF-Datei eine vCard ist. <c>(3)</c>
         /// </summary>
@@ -558,6 +553,7 @@ namespace FolkerKinzel.VCards
             get => Get<ProfileProperty?>(VCdProp.Profile);
             set => Set(VCdProp.Profile, value);
         }
+
 
         /// <summary>
         /// <c>CLIENTPIDMAP</c>: Mappings für <see cref="PropertyID"/>s. Wird verwendet,
@@ -651,7 +647,6 @@ namespace FolkerKinzel.VCards
         }
 
 
-
         /// <summary>
         /// <c>URL</c>: URLs, die die Person repräsentieren (Webseiten, Blogs, Social-Media-Seiten). <c>(2,3,4)</c>
         /// </summary>
@@ -670,8 +665,6 @@ namespace FolkerKinzel.VCards
             get => Get<IEnumerable<XmlProperty?>?>(VCdProp.XmlProperties);
             set => Set(VCdProp.XmlProperties, value);
         }
-
-
 
     }
 }

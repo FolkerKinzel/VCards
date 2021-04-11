@@ -126,7 +126,7 @@ namespace FolkerKinzel.VCards.Tests
 
                 CalendarUserAddresses = new TextProperty("Calendar user address"),
 
-                FreeBusyUrls = new TextProperty("Free Busy"),
+                FreeOrBusyUrls = new TextProperty("Free Busy"),
 
                 Sources = new TextProperty("http://neu.de/"),
 

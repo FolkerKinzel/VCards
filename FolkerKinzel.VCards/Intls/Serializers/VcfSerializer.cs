@@ -207,7 +207,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                     case VCdProp.CalendarUserAddresses:
                         AppendCalendarUserAddresses((IEnumerable<TextProperty?>)kvp.Value);
                         break;
-                    case VCdProp.FreeBusyUrls:
+                    case VCdProp.FreeOrBusyUrls:
                         AppendFreeBusyUrls((IEnumerable<TextProperty?>)kvp.Value);
                         break;
                     case VCdProp.Relations:

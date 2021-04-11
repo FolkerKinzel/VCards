@@ -142,7 +142,7 @@ namespace FolkerKinzel.VCards.Tests
 
             var vc = new VCard
             {
-                FreeBusyUrls = new TextProperty[] { fburl1, fburl2 }
+                FreeOrBusyUrls = new TextProperty[] { fburl1, fburl2 }
             };
 
             string s = vc.ToVcfString(VCdVersion.V4_0);
@@ -159,7 +159,7 @@ namespace FolkerKinzel.VCards.Tests
             Assert.IsNotNull(vc2);
 
 
-            IEnumerable<TextProperty?>? fburls = vc2.FreeBusyUrls;
+            IEnumerable<TextProperty?>? fburls = vc2.FreeOrBusyUrls;
 
             Assert.IsNotNull(fburls);
             Assert.AreEqual(2, fburls!.Count());
