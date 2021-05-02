@@ -28,7 +28,9 @@ namespace FolkerKinzel.VCards.Models
         public TimeZoneProperty(TimeZoneInfo? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = value;
 
 
-        internal TimeZoneProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = TimeZoneInfoConverter.Parse(vcfRow.Value);
+        internal TimeZoneProperty(VcfRow vcfRow, TimeZoneInfoConverter conv) 
+            : base(vcfRow.Parameters, vcfRow.Group) 
+            => Value = conv.Parse(vcfRow.Value);
 
 
         /// <summary>

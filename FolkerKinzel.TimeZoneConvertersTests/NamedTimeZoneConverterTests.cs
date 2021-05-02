@@ -11,17 +11,23 @@ namespace FolkerKinzel.TimeZoneConverters.Tests
     [TestClass()]
     public class NamedTimeZoneConverterTests
     {
-        private readonly NamedTimeZoneConverter _conv = new NamedTimeZoneConverter();
+        private readonly NamedTimeZoneConverter _conv = new();
 
         [DataTestMethod()]
         [DataRow("", false)]
         [DataRow(" ", false)]
         [DataRow("blabla", false)]
         [DataRow("America/Sao_Paulo", true)]
-        public void TryGetUtcOffsetFromTimeZoneNameTest1(string? input, bool expectedResult)
+        [DataRow("Asia/Ulan_Bator", true)]
+        public void TryGetUtcOffsetFromTimeZoneNameTest1(string input, bool expectedResult)
         {
             var result = _conv.TryGetUtcOffsetFromTimeZoneName(input, null!, out TimeSpan offset);
-            Assert.AreEqual(expectedResult, result);
+            
+            
+            if (result)
+            {
+                Assert.AreNotEqual(default, offset);
+            }
         }
 
 
@@ -31,7 +37,6 @@ namespace FolkerKinzel.TimeZoneConverters.Tests
 
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TryGetUtcOffsetFromTimeZoneNameTest3()
         {
             string id = TimeZoneInfo.Local.Id;

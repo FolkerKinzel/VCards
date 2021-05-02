@@ -8,16 +8,49 @@ using System.Text.RegularExpressions;
 
 namespace FolkerKinzel.VCards.Intls.Converters
 {
-    internal static class TimeZoneInfoConverter
+    internal class TimeZoneInfoConverter
     {
-        internal static TimeZoneInfo? Parse(string? value)
+        private readonly string[] _patterns = new string[] { @"hh\:mm", @"hhmm", @"hh" };
+
+        internal TimeZoneInfo? Parse(string? value)
         {
             if (value is null)
             {
                 return null;
             }
 
+            if (IsUtcOffset(value))
+            {
+                int startIndex = 0;
 
+                TimeSpanStyles styles = TimeSpanStyles.None;
+
+
+                if (value.StartsWith("-", StringComparison.Ordinal))
+                {
+                    startIndex = 1;
+                    styles = TimeSpanStyles.AssumeNegative;
+                }
+                else if (value.StartsWith("+", StringComparison.Ordinal))
+                {
+                    startIndex = 1;
+                }
+
+#if NET40
+                string input = value.Substring(startIndex);
+#else
+                ReadOnlySpan<char> input = value.AsSpan(startIndex);
+#endif
+
+                if (TimeSpan.TryParseExact(
+                    input,
+                    _patterns,
+                    CultureInfo.InvariantCulture,
+                    styles, out TimeSpan timeSpan))
+                {
+                    return TimeZoneInfo.GetSystemTimeZones().FirstOrDefault(x => x.BaseUtcOffset == timeSpan);
+                }
+            }
 
 
             try
@@ -26,70 +59,13 @@ namespace FolkerKinzel.VCards.Intls.Converters
             }
             catch { }
 
-            TimeSpan timeSpan;
-
-            if (
-#if NET40
-                value.Contains(":"))
-#else
-             
-                value.Contains(':', StringComparison.Ordinal)) // vCard 3.0
-#endif
-            {
-                if (value.StartsWith("-", StringComparison.Ordinal))
-                {
-                    if (TimeSpan.TryParseExact(
-                        value,
-                        new string[] { @"\-hh\:mm" },
-                        CultureInfo.InvariantCulture,
-                        TimeSpanStyles.AssumeNegative, out timeSpan))
-                    {
-                        goto done;
-                    }
-                }
-                else if (TimeSpan.TryParseExact(
-                        value,
-                        new string[] { @"\+hh\:mm" },
-                        CultureInfo.InvariantCulture,
-                        TimeSpanStyles.None, out timeSpan))
-                {
-                    goto done;
-                }
-                
-            }
-            else if (IsUtcTimespan(value)) // UTC-Timespan
-            {
-                if (value.StartsWith("-", StringComparison.Ordinal))
-                {
-                    if (TimeSpan.TryParseExact(
-                        value,
-                        new string[] { @"\-hhmm", @"\-hh" },
-                        CultureInfo.InvariantCulture,
-                        TimeSpanStyles.AssumeNegative, out timeSpan))
-                    {
-                        goto done;
-                    }
-                }
-                else if (TimeSpan.TryParseExact(
-                        value,
-                        new string[] { @"\+hh", @"\+hhmm" },
-                        CultureInfo.InvariantCulture,
-                        TimeSpanStyles.None, out timeSpan))
-                {
-                    goto done;
-                }
-            }
-
             return null;
-
-
-        done:
-            return TimeZoneInfo.GetSystemTimeZones().FirstOrDefault(x => x.BaseUtcOffset == timeSpan);
         }
 
-        private static bool IsUtcTimespan(string value)
+
+        internal static bool IsUtcOffset(string value)
         {
-            const string pattern = @"^[-\+][01][0-9]([0-5][0-9])?";
+            const string pattern = @"^[-\+]?[01][0-9]:?([0-5][0-9])?";
             const RegexOptions options = RegexOptions.CultureInvariant | RegexOptions.Singleline;
 
 #if NET40
@@ -99,7 +75,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
             {
                 return Regex.IsMatch(value, pattern, options, TimeSpan.FromMilliseconds(50));
             }
-            catch(RegexMatchTimeoutException)
+            catch (RegexMatchTimeoutException)
             {
                 return false;
             }
@@ -116,7 +92,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 case VCdVersion.V2_1:
                 case VCdVersion.V3_0:
                     TimeSpan timeSpan = tzInfo.BaseUtcOffset;
-                    string format = timeSpan < TimeSpan.Zero ? @"\-hh\:mm" : @"hh\:mm";
+                    string format = timeSpan < TimeSpan.Zero ? @"\-hh\:mm" : @"\+hh\:mm";
                     _ = builder.Append(timeSpan.ToString(format, CultureInfo.InvariantCulture));
                     break;
                 default:

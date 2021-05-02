@@ -326,7 +326,7 @@ namespace FolkerKinzel.VCards
                         Mailer = new TextProperty(vcfRow, this.Version);
                         break;
                     case PropKeys.TZ:
-                        TimeZones = Assigner.GetAssignment(new TimeZoneProperty(vcfRow), TimeZones);
+                        TimeZones = Assigner.GetAssignment(new TimeZoneProperty(vcfRow, info.TimeZoneInfoConverter), TimeZones);
                         break;
                     case PropKeys.CLASS:
                         Access = new AccessProperty(vcfRow);

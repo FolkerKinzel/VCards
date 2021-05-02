@@ -98,7 +98,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         this.GeoPosition = GeoCoordinateConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));
                         break;
                     case ParameterKey.TZ:
-                        this.TimeZone = TimeZoneInfoConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));
+                        this.TimeZone = info.TimeZoneInfoConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));
                         break;
                     case ParameterKey.SORT_AS:
                         {

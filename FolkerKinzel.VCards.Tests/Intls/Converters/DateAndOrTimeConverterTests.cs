@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
     [TestClass]
     public class DateAndOrTimeConverterTests
     {
-        private readonly DateAndOrTimeConverter _conv = new DateAndOrTimeConverter();
+        private readonly DateAndOrTimeConverter _conv = new();
 
         [TestMethod]
         public void DateTest()
