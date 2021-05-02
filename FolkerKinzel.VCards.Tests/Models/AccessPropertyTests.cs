@@ -27,7 +27,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         [TestMethod()]
         public void AccessPropertyTest2()
         {
-            var row = VcfRow.Parse($"{GROUP}.{VCard.PropKeys.CLASS}:private", new VCardDeserializationInfo());
+            var row = VcfRow.Parse($"{GROUP}.{VCard.PropKeys.CLASS}:private", new VcfDeserializationInfo());
             Assert.IsNotNull(row);
 
             var prop = new AccessProperty(row!);

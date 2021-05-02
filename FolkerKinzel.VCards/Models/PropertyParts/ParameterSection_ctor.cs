@@ -15,7 +15,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     {
         internal ParameterSection() { }
 
-        internal ParameterSection(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters, VCardDeserializationInfo info)
+        internal ParameterSection(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters, VcfDeserializationInfo info)
         {
             #region DebugAssert
 

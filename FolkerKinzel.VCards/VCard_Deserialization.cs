@@ -76,7 +76,7 @@ namespace FolkerKinzel.VCards
             Debug.Assert(reader != null);
             DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoParse) + "(TextReader)");
 
-            var info = new VCardDeserializationInfo();
+            var info = new VcfDeserializationInfo();
             var vCardList = new List<VCard>();
             var vcfReader = new VcfReader(reader, info);
             var queue = new Queue<VcfRow>(DESERIALIZER_QUEUE_INITIAL_CAPACITY);
@@ -100,9 +100,9 @@ namespace FolkerKinzel.VCards
 
                     queue.Clear();
 
-                    if (info.Builder.Capacity > VCardDeserializationInfo.MAX_STRINGBUILDER_CAPACITY)
+                    if (info.Builder.Capacity > VcfDeserializationInfo.MAX_STRINGBUILDER_CAPACITY)
                     {
-                        info.Builder.Clear().Capacity = VCardDeserializationInfo.INITIAL_STRINGBUILDER_CAPACITY;
+                        info.Builder.Clear().Capacity = VcfDeserializationInfo.INITIAL_STRINGBUILDER_CAPACITY;
                     }
                 }
             } while (!vcfReader.EOF);
@@ -113,7 +113,7 @@ namespace FolkerKinzel.VCards
 
 
 
-        private static VCard? ParseNestedVcard(string? content, VCardDeserializationInfo info, VCdVersion versionHint)
+        private static VCard? ParseNestedVcard(string? content, VcfDeserializationInfo info, VCdVersion versionHint)
         {
             // Version 2.1 ist unmaskiert:
             content = versionHint == VCdVersion.V2_1

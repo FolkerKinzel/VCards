@@ -15,7 +15,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
         public void VcfReaderCtorTest()
         {
             using var reader = new StringReader("");
-            _ = new VcfReader(reader, new VCardDeserializationInfo());
+            _ = new VcfReader(reader, new VcfDeserializationInfo());
         }
 
 
@@ -23,7 +23,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
         public void SequenceOfTwoV3_0VcardsTest()
         {
             using StreamReader reader = File.OpenText(TestFiles.V3vcf);
-            var info = new VCardDeserializationInfo();
+            var info = new VcfDeserializationInfo();
 
             var list = new List<VcfRow>();
 
@@ -76,7 +76,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -108,7 +108,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -138,7 +138,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -166,7 +166,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -199,7 +199,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -232,7 +232,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -260,7 +260,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -289,7 +289,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -320,7 +320,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -353,7 +353,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -380,7 +380,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -407,7 +407,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -438,7 +438,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -463,7 +463,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 
@@ -489,7 +489,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests
                 .AppendLine("END:VCARD");
 
             using var reader = new StringReader(sb.ToString());
-            var vcReader = new VcfReader(reader, new VCardDeserializationInfo());
+            var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
             var list = new List<VcfRow>();
 

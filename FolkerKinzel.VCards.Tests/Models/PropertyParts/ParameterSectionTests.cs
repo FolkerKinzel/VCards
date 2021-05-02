@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts.Tests
         [DataRow("\'Date\'")]
         public void CleanParameterValueTest(string value)
         {
-            var info = new VCardDeserializationInfo();
+            var info = new VcfDeserializationInfo();
             var para = new ParameterSection("BDAY", new Dictionary<string, string>() { { "VALUE", value } }, info);
 
             Assert.AreEqual(para.DataType, Enums.VCdDataType.Date);

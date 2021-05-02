@@ -49,7 +49,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         public void OrganizationPropertyTest2(
             string s, string? expectedGroup, string? expectedOrganizationName, string[] expectedOrganizationalUnits)
         {
-            var vcfRow = VcfRow.Parse(s, new VCardDeserializationInfo());
+            var vcfRow = VcfRow.Parse(s, new VcfDeserializationInfo());
             Assert.IsNotNull(vcfRow);
 
             var orgProp = new OrganizationProperty(vcfRow!, Enums.VCdVersion.V4_0);

@@ -27,11 +27,11 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         //        RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         private readonly TextReader _reader;
-        private readonly VCardDeserializationInfo _info;
+        private readonly VcfDeserializationInfo _info;
         private readonly VCdVersion _versionHint;
 
 
-        internal VcfReader(TextReader reader, VCardDeserializationInfo info, VCdVersion versionHint = VCdVersion.V2_1)
+        internal VcfReader(TextReader reader, VcfDeserializationInfo info, VCdVersion versionHint = VCdVersion.V2_1)
         {
             this._reader = reader;
             this._info = info;

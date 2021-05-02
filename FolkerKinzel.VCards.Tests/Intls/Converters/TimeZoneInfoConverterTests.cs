@@ -24,7 +24,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         [DataRow("04")]
         [DataRow("09")]
         [DataRow("-12")]
-        public void ParseTest1(string? s, TimeSpan expected)
+        public void ParseTest1(string? s)
         {
             TimeZoneInfo? tzInfo = _timeZoneInfoConverter.Parse(s);
 

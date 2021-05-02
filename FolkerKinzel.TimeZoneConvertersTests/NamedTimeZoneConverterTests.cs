@@ -19,7 +19,7 @@ namespace FolkerKinzel.TimeZoneConverters.Tests
         [DataRow("blabla", false)]
         [DataRow("America/Sao_Paulo", true)]
         [DataRow("Asia/Ulan_Bator", true)]
-        public void TryGetUtcOffsetFromTimeZoneNameTest1(string input, bool expectedResult)
+        public void TryGetUtcOffsetFromTimeZoneNameTest1(string input)
         {
             var result = _conv.TryGetUtcOffsetFromTimeZoneName(input, null!, out TimeSpan offset);
             

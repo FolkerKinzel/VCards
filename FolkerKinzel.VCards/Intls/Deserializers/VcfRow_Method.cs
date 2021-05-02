@@ -12,9 +12,9 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         /// Parst eine Datenzeile der VCF-Datei.
         /// </summary>
         /// <param name="vCardRow">Die Datenzeile der vCard als <see cref="string"/>.</param>
-        /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>.</param>
+        /// <param name="info">Ein <see cref="VcfDeserializationInfo"/>.</param>
         /// <returns><see cref="VcfRow"/>-Objekt</returns>
-        internal static VcfRow? Parse(string vCardRow, VCardDeserializationInfo info)
+        internal static VcfRow? Parse(string vCardRow, VcfDeserializationInfo info)
         {
             // vCardRow:
             // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part

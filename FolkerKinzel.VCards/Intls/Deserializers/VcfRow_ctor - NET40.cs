@@ -17,8 +17,8 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
         /// <param name="vCardRow">vCard-Zeile</param>
         /// <param name="valueSeparatorIndex">Index des des Trennzeichens <c>':'</c>, das den Wert von
         /// <paramref name="vCardRow"/> vom Schlüssel- und Parameterteil trennt.</param>
-        /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>-Objekt.</param>
-        private VcfRow(string vCardRow, int valueSeparatorIndex, VCardDeserializationInfo info)
+        /// <param name="info">Ein <see cref="VcfDeserializationInfo"/>-Objekt.</param>
+        private VcfRow(string vCardRow, int valueSeparatorIndex, VcfDeserializationInfo info)
         {
             // vCardRow:
             // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part

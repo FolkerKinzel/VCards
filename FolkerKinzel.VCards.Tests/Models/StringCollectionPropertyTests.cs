@@ -56,7 +56,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         [DataRow(@"NICKNAME:Dumbo, ", null, new string[] { "Dumbo" })]
         public void StringCollectionPropertyTest3(string s, string? expectedGroup, string[]? expectedNickNames)
         {
-           var vcfRow = VcfRow.Parse(s, new VCardDeserializationInfo());
+           var vcfRow = VcfRow.Parse(s, new VcfDeserializationInfo());
             Assert.IsNotNull(vcfRow);
 
             var nickNameProp = new StringCollectionProperty(vcfRow!, Enums.VCdVersion.V4_0);

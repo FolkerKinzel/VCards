@@ -71,7 +71,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         }
 
 
-        internal Address(string vCardValue, VCardDeserializationInfo info, VCdVersion version)
+        internal Address(string vCardValue, VcfDeserializationInfo info, VCdVersion version)
         {
             Debug.Assert(vCardValue != null);
 

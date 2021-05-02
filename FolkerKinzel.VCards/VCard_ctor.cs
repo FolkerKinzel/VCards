@@ -27,10 +27,10 @@ namespace FolkerKinzel.VCards
         /// </summary>
         /// <param name="queue">Eine Queue von <see cref="VcfRow"/>-Objekten, deren Value-Property
         /// den rohen Textinhalt der vCard-Zeile darstellt.</param>
-        /// <param name="info">Ein <see cref="VCardDeserializationInfo"/>-Objekt, das Daten für den Deserialisierungsvorgang zur Verfügung stellt.</param>
+        /// <param name="info">Ein <see cref="VcfDeserializationInfo"/>-Objekt, das Daten für den Deserialisierungsvorgang zur Verfügung stellt.</param>
         /// <param name="versionHint">Ein Hinweis, welche vCard-Version angenommen wird. (Eingebettete
         /// vCards haben manchmal keinen "VERSION:"-Tag.)</param>
-        private VCard(Queue<VcfRow> queue, VCardDeserializationInfo info, VCdVersion versionHint)
+        private VCard(Queue<VcfRow> queue, VcfDeserializationInfo info, VCdVersion versionHint)
         {
             Debug.Assert(queue != null);
             Debug.Assert(info.Builder != null);

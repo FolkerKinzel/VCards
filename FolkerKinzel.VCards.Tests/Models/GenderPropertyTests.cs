@@ -51,7 +51,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         [DataRow(GROUP + ".GENDER:F;", GROUP, VCdSex.Female, null)]
         public void GenderPropertyTest2(string s, string? expectedGroup, VCdSex? expectedSex, string? expectedGenderIdentity)
         {
-            var vcfRow = VcfRow.Parse(s, new VCardDeserializationInfo());
+            var vcfRow = VcfRow.Parse(s, new VcfDeserializationInfo());
 
             Assert.IsNotNull(vcfRow);
 
