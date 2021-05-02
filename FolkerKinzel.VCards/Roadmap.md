@@ -14,8 +14,8 @@
 - [ ] Rename Load to `LoadVcf`.
 - [ ] Rename Deserialize to `DeserializeVcf`.
 - [ ] Rename Parse to `ParseVcf`. 
-- [ ] Make the Value of `TimeZoneProperty` a String.
-- [ ] Make `ParameterSection.TimeZone` a String property.
+- [ ] Make the Value of `TimeZoneProperty` a new class `TzInfo`.
+- [ ] Make `ParameterSection.TimeZone` a new class `TzInfo`.
 - [ ] Add an interface `ITimeZoneConverter` that allows users to inject an object which converts named time zones
 (e.g. IANA names) to TimeSpan offsets when converting from vCard 4.0 to vCard 3.0.
 - [ ] Move `FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate` to 

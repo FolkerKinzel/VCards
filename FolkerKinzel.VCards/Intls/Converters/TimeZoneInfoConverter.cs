@@ -17,6 +17,9 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 return null;
             }
 
+
+
+
             try
             {
                 return TimeZoneInfo.FindSystemTimeZoneById(value);
