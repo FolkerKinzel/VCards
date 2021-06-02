@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models;
 
 
 namespace FolkerKinzel.VCards.Intls.Converters

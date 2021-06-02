@@ -1,4 +1,5 @@
 ﻿using System;
+using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -36,13 +37,15 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public bool Equals(GeoCoordinate? other) => !(other is null) && (other.Latitude == this.Latitude) && (other.Longitude == this.Longitude);
+        public bool Equals(GeoCoordinate? other) => other is GeoCoordinate
+                                                 && other.Latitude.Equals2DigitPrecision(Latitude)
+                                                 && other.Longitude.Equals2DigitPrecision(Longitude);
 
-        
+
         /// <inheritdoc/>
         public override bool Equals(object? obj) => Equals(obj as GeoCoordinate);
 
-        
+
         /// <inheritdoc/>
         public override int GetHashCode() => -1 ^ Latitude.GetHashCode() ^ Longitude.GetHashCode();
 
@@ -53,5 +56,6 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="GeoCoordinate"/>-Objekts.</returns>
         public override string ToString() => $"Latitude:  {Latitude}{ Environment.NewLine}Longitude: {Longitude}";
+
     }
 }

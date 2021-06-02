@@ -17,7 +17,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         [TestMethod()]
         public void GeoPropertyTest1()
         {
-            var geo = new PropertyParts.GeoCoordinate(17.44, 8.33);
+            var geo = new GeoCoordinate(17.44, 8.33);
 
             var prop = new GeoProperty(geo, GROUP);
 
@@ -29,7 +29,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         [TestMethod()]
         public void GeoPropertyTest2()
         {
-            var geo = new PropertyParts.GeoCoordinate(17.44, 8.33);
+            var geo = new GeoCoordinate(17.44, 8.33);
 
             var prop = new GeoProperty(geo, GROUP);
 

@@ -27,7 +27,7 @@ namespace FolkerKinzel.VCards.Tests
 
             var adr1 = new AddressProperty("Elmstreet 13", "Entenhausen", "01234");
             adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
-            adr1.Parameters.GeoPosition = new Models.PropertyParts.GeoCoordinate(12.98, 7.86);
+            adr1.Parameters.GeoPosition = new Models.GeoCoordinate(12.98, 7.86);
             adr1.Parameters.TimeZone = TimeZoneInfo.Local;
             adr1.Parameters.AltID = "Address";
             adr1.Parameters.Calendar = "GREGORIAN";
@@ -158,7 +158,7 @@ namespace FolkerKinzel.VCards.Tests
 
                 GenderViews = new GenderProperty(VCdSex.NonOrNotApplicable),
 
-                GeoCoordinates = new GeoProperty(new Models.PropertyParts.GeoCoordinate(23.456, 49.654)),
+                GeoCoordinates = new GeoProperty(new Models.GeoCoordinate(23.456, 49.654)),
 
                 NickNames = new StringCollectionProperty(new string[] { "Genius", "The Brain" }),
 
