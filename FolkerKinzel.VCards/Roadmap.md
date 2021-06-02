@@ -24,7 +24,7 @@
 `FolkerKinzel.VCards.Models.PropertyIdMapping` and **make it a class**.
 - [ ] Add a constructor to the `PropertyIdMappingProperty` class, which takes a PropertyIdMapping as 
 argument.
-- [ ] Mark the usage of `VCdDataType.Timestamp`  as Obsolete-**Error**.
+- [x] Mark the usage of `VCdDataType.Timestamp`  as Obsolete-**Error**.
 - [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
 VCard.SaveVcf, VCard.SerializeVcf, VCard.ToVcfString, VCard.Reference and VCard.Dereference.
 - [ ] `VCard.Reference` should copy the input data and return its result as IEnumerable&lt;VCard&gt;.

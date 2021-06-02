@@ -72,7 +72,7 @@ namespace FolkerKinzel.VCards.Models.Enums
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
-        [Obsolete("Use \"TimeStamp\" instead.", false)]
+        [Obsolete("Use \"TimeStamp\" instead.", true)]
         [CLSCompliant(false)]
 #pragma warning disable CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
         Timestamp = TimeStamp,
