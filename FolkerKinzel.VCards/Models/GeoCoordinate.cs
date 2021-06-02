@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts
+namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
     /// Kapselt Informationen über die geographische Position.
