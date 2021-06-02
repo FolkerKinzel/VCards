@@ -17,7 +17,6 @@ namespace FolkerKinzel.VCards.Intls.Extensions.Tests
         [TestMethod()]
         public void Equals2DigitPrecisionTest2() => Assert.IsTrue(5.2.Equals2DigitPrecision(5.201));
 
-
         [TestMethod()]
         public void Equals2DigitPrecisionTest3() => Assert.IsFalse(5.02.Equals2DigitPrecision(5.03));
 
@@ -26,7 +25,6 @@ namespace FolkerKinzel.VCards.Intls.Extensions.Tests
 
         [TestMethod()]
         public void Equals2DigitPrecisionTest5() => Assert.IsTrue(double.NegativeInfinity.Equals2DigitPrecision(double.NegativeInfinity));
-
 
         [TestMethod()]
         public void Equals2DigitPrecisionTest6() => Assert.IsTrue(double.PositiveInfinity.Equals2DigitPrecision(double.PositiveInfinity));
