@@ -12,10 +12,21 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert ein neues <see cref="GeoCoordinate"/>-Objekt.
         /// </summary>
-        /// <param name="latitude">Breitengrad (sollte zwischen -90 und 90 liegen).</param>
-        /// <param name="longitude">Längengrad (sollte zwischen -180 und 180 liegen).</param>
+        /// <param name="latitude">Breitengrad (muss zwischen -90 und 90 liegen).</param>
+        /// <param name="longitude">Längengrad (muss zwischen -180 und 180 liegen).</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="latitude"/> oder <paramref name="longitude"/> hat keinen gültigen Wert.</exception>
         public GeoCoordinate(double latitude, double longitude)
         {
+            if((latitude != 0 && !latitude.IsNormal()) ||  latitude < -90.0000001 || latitude > 90.0000001)
+            {
+                throw new ArgumentOutOfRangeException(nameof(latitude));
+            }
+
+            if((longitude != 0 && !longitude.IsNormal()) || longitude < -180.0000001 || longitude > 180.0000001)
+            {
+                throw new ArgumentOutOfRangeException(nameof(longitude));
+            }
+
             Latitude = latitude;
             Longitude = longitude;
         }
@@ -30,12 +41,12 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         public double Longitude { get; }
 
-        /// <summary>
-        /// <c>true</c>, wenn das <see cref="GeoCoordinate"/>-Objekt keine gültige geographische Position beschreibt.
-        /// </summary>
-        public bool IsUnknown => (Latitude != 0 && !Latitude.IsNormal()) 
-                              || (Longitude != 0 && !Longitude.IsNormal())
-                              ||  Latitude < -90 || Latitude > 90 || Longitude < -180 || Longitude > 180;
+        ///// <summary>
+        ///// <c>true</c>, wenn das <see cref="GeoCoordinate"/>-Objekt keine gültige geographische Position beschreibt.
+        ///// </summary>
+        //public bool IsUnknown => (Latitude != 0 && !Latitude.IsNormal()) 
+        //                      || (Longitude != 0 && !Longitude.IsNormal())
+        //                      ||  Latitude < -90.0000001 || Latitude > 90.0000001 || Longitude < -180.0000001 || Longitude > 180.0000001;
 
 
         /// <inheritdoc/>
@@ -43,10 +54,7 @@ namespace FolkerKinzel.VCards.Models
         {
             const double _6 = 0.000001;
 
-            return other is not null
-                   && (this.IsUnknown
-                        ? other.IsUnknown
-                        : !other.IsUnknown && (Math.Abs(this.Latitude - other.Latitude) < _6) && (Math.Abs(this.Longitude - other.Longitude) < _6));
+            return other is not null && (Math.Abs(this.Latitude - other.Latitude) < _6) && (Math.Abs(this.Longitude - other.Longitude) < _6);
         }
 
 
@@ -59,9 +67,7 @@ namespace FolkerKinzel.VCards.Models
         {
             const int prec = 1000000;
 
-            return this.IsUnknown
-                ? double.NaN.GetHashCode()
-                : -1 ^ Math.Floor(Latitude * prec).GetHashCode() ^ Math.Floor(Longitude * prec).GetHashCode();
+            return -1 ^ Math.Floor(Latitude * prec).GetHashCode() ^ Math.Floor(Longitude * prec).GetHashCode();
         }
 
 
@@ -72,11 +78,6 @@ namespace FolkerKinzel.VCards.Models
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="GeoCoordinate"/>-Objekts.</returns>
         public override string ToString()
         {
-            if (IsUnknown)
-            {
-                return Res.UnknownPosition;
-            }
-
             string latitude = Latitude.ToString("F7");
             string longitude = Longitude.ToString("F7");
 

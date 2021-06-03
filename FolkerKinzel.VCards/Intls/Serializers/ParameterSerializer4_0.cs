@@ -773,7 +773,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             GeoCoordinate? geo = ParaSection.GeoPosition;
 
-            if (geo is null || geo.IsUnknown)
+            if (geo is null)
             {
                 return;
             }

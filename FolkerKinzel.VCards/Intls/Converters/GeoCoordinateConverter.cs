@@ -101,7 +101,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
         {
             Debug.Assert(builder != null);
 
-            if (coordinate is null || coordinate.IsUnknown)
+            if (coordinate is null)
             {
                 return;
             }

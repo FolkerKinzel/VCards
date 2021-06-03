@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.Models.Tests
     public class GeoCoordinateTests
     {
         [TestMethod()]
-        public void GeoCoordinateTest()
+        public void GeoCoordinateTest1()
         {
             double latitude = 17.5;
             double longitude = 4.2;
@@ -24,8 +24,19 @@ namespace FolkerKinzel.VCards.Models.Tests
         }
 
         [DataTestMethod()]
-        [DataRow(double.NaN, 15, 27, double.NaN, true)]
-        [DataRow(double.NegativeInfinity, 15, 27, double.PositiveInfinity, true)]
+        [DataRow(double.NaN, 15)]
+        [DataRow(15, double.NegativeInfinity)]
+        [DataRow(double.PositiveInfinity, 15)]
+        [DataRow(-91, 15)]
+        [DataRow(91, 15)]
+        [DataRow(15, 181)]
+        [DataRow(15, -181)]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GeoCoordinateTest2(double latitude, double longitude) => _ = new GeoCoordinate(latitude, longitude);
+
+        [DataTestMethod()]
+        //[DataRow(double.NaN, 15, 27, double.NaN, true)]
+        //[DataRow(double.NegativeInfinity, 15, 27, double.PositiveInfinity, true)]
         [DataRow(5.123456, 0, 5.1234561, 0, true)]
         [DataRow(0, 5.1234568, 0, 5.1234561, true)]
         [DataRow(0, 0, 0, 0, true)]
@@ -59,7 +70,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         //}
 
         [DataTestMethod()]
-        [DataRow(double.NaN, 15)]
+        //[DataRow(double.NaN, 15)]
         [DataRow(5.1234561, 0)]
         [DataRow(5.1234568, 5.1234561)]
         [DataRow(0, 0)]

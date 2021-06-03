@@ -131,14 +131,5 @@ namespace FolkerKinzel.VCards.Resources {
                 return ResourceManager.GetString("UndefinedEnumValue", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Not a valid geographical position. ähnelt.
-        /// </summary>
-        internal static string UnknownPosition {
-            get {
-                return ResourceManager.GetString("UnknownPosition", resourceCulture);
-            }
-        }
     }
 }

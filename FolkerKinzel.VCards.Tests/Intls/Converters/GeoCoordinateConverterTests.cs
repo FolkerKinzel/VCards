@@ -81,9 +81,9 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
 
 
         [DataTestMethod()]
-        [DataRow(VCdVersion.V4_0, "geo:0.8,0.7")]
-        [DataRow(VCdVersion.V3_0, "0.8;0.7")]
-        [DataRow(VCdVersion.V2_1, "0.8;0.7")]
+        [DataRow(VCdVersion.V4_0, "geo:0.800000,0.700000")]
+        [DataRow(VCdVersion.V3_0, "0.800000;0.700000")]
+        [DataRow(VCdVersion.V2_1, "0.800000;0.700000")]
         public void AppendToTest1(VCdVersion version, string expected)
         {
             var sb = new StringBuilder();
@@ -114,7 +114,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
 
             GeoCoordinateConverter.AppendTo(sb, new GeoCoordinate(0.8, 0.7), VCdVersion.V3_0);
 
-            Assert.AreEqual("0.8;0.7", sb.ToString());
+            Assert.AreEqual("0.800000;0.700000", sb.ToString());
         }
     }
 }
