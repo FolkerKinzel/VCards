@@ -23,28 +23,54 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.AreEqual(longitude, geo.Longitude);
         }
 
-        [TestMethod()]
-        public void EqualsTest()
+        [DataTestMethod()]
+        [DataRow(double.NaN, 15, 27, double.NaN, true)]
+        [DataRow(double.NegativeInfinity, 15, 27, double.PositiveInfinity, true)]
+        [DataRow(5.123456, 0, 5.1234561, 0, true)]
+        [DataRow(0, 5.1234568, 0, 5.1234561, true)]
+        [DataRow(0, 0, 0, 0, true)]
+        [DataRow(5.123456, 17, 5.123457, 17, false)]
+        public void EqualsTest(double latitude1, double longitude1, double latitude2, double longitude2, bool expected)
         {
-            Assert.Fail();
+            var geo1 = new GeoCoordinate(latitude1, longitude1);
+            var geo2 = new GeoCoordinate(latitude2, longitude2);
+
+            Assert.AreEqual(expected, geo1.Equals(geo2));
+
+            if(expected)
+            {
+                Assert.AreEqual(geo1.GetHashCode(), geo2.GetHashCode());
+            }
         }
 
         [TestMethod()]
         public void EqualsTest1()
         {
-            Assert.Fail();
+            var geo = new GeoCoordinate(1, 1);
+
+            Assert.IsFalse(geo.Equals(null));
+            Assert.IsFalse(geo!.Equals(new object()));
         }
 
-        [TestMethod()]
-        public void GetHashCodeTest()
-        {
-            Assert.Fail();
-        }
+        //[TestMethod()]
+        //public void GetHashCodeTest()
+        //{
+        //    Assert.Fail();
+        //}
 
-        [TestMethod()]
-        public void ToStringTest()
+        [DataTestMethod()]
+        [DataRow(double.NaN, 15)]
+        [DataRow(5.1234561, 0)]
+        [DataRow(5.1234568, 5.1234561)]
+        [DataRow(0, 0)]
+        [DataRow(5.123456, -170.123457)]
+        public void ToStringTest(double latitude, double longitude)
         {
-            Assert.Fail();
+            var geo = new GeoCoordinate(latitude, longitude);
+
+            string s = geo.ToString();
+
+            Console.WriteLine(s);
         }
     }
 }

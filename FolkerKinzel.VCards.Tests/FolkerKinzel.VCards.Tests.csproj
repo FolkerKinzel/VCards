@@ -22,6 +22,7 @@
     <None Remove="reports\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Intls\Extensions\DoubleExtensionsTests.cs" />
     <Compile Remove="UnitTestsInitialize.cs" />
     <Compile Remove="VcfPaths.cs" />
   </ItemGroup>
@@ -64,6 +65,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Intls\Extensions\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net5.0'">

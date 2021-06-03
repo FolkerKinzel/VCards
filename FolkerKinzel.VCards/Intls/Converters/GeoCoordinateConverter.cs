@@ -101,26 +101,24 @@ namespace FolkerKinzel.VCards.Intls.Converters
         {
             Debug.Assert(builder != null);
 
-            if (coordinate is null)
+            if (coordinate is null || coordinate.IsUnknown)
             {
                 return;
             }
 
             CultureInfo culture = CultureInfo.InvariantCulture;
 
+            string latitude = coordinate.Latitude.ToString("F7", culture);
+            string longitude = coordinate.Longitude.ToString("F7", culture);
+
             switch (version)
             {
                 case VCdVersion.V2_1:
                 case VCdVersion.V3_0:
-                    _ = builder.Append(coordinate.Latitude.ToString(culture));
-                    _ = builder.Append(';');
-                    _ = builder.Append(coordinate.Longitude.ToString(culture));
+                    _ = builder.Append(latitude).Remove(builder.Length - 1, 1).Append(';').Append(longitude).Remove(builder.Length - 1, 1);
                     break;
                 default:
-                    _ = builder.Append("geo:");
-                    _ = builder.Append(coordinate.Latitude.ToString(culture));
-                    _ = builder.Append(',');
-                    _ = builder.Append(coordinate.Longitude.ToString(culture));
+                    _ = builder.Append("geo:").Append(latitude).Remove(builder.Length - 1, 1).Append(',').Append(longitude).Remove(builder.Length - 1, 1);
                     break;
             }//switch
         }

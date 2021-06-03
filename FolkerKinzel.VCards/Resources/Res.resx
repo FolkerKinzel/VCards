@@ -141,4 +141,7 @@
   <data name="UndefinedEnumValue" xml:space="preserve">
     <value>The value is not defined.</value>
   </data>
+  <data name="UnknownPosition" xml:space="preserve">
+    <value>Not a valid geographical position.</value>
+  </data>
 </root>

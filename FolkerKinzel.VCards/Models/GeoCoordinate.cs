@@ -1,5 +1,6 @@
 ﻿using System;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -32,14 +33,21 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// <c>true</c>, wenn das <see cref="GeoCoordinate"/>-Objekt keine gültige geographische Position beschreibt.
         /// </summary>
-        public bool IsUnknown => double.IsNaN(Latitude) || double.IsNaN(Longitude) ||
-            Latitude < -90 || Latitude > 90 || Longitude < -180 || Longitude > 180;
+        public bool IsUnknown => (Latitude != 0 && !Latitude.IsNormal()) 
+                              || (Longitude != 0 && !Longitude.IsNormal())
+                              ||  Latitude < -90 || Latitude > 90 || Longitude < -180 || Longitude > 180;
 
 
         /// <inheritdoc/>
-        public bool Equals(GeoCoordinate? other) => other is GeoCoordinate
-                                                 && other.Latitude.Equals2DigitPrecision(Latitude)
-                                                 && other.Longitude.Equals2DigitPrecision(Longitude);
+        public bool Equals(GeoCoordinate? other)
+        {
+            const double _6 = 0.000001;
+
+            return other is not null
+                   && (this.IsUnknown
+                        ? other.IsUnknown
+                        : !other.IsUnknown && (Math.Abs(this.Latitude - other.Latitude) < _6) && (Math.Abs(this.Longitude - other.Longitude) < _6));
+        }
 
 
         /// <inheritdoc/>
@@ -47,7 +55,14 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public override int GetHashCode() => -1 ^ Latitude.GetHashCode() ^ Longitude.GetHashCode();
+        public override int GetHashCode()
+        {
+            const int prec = 1000000;
+
+            return this.IsUnknown
+                ? double.NaN.GetHashCode()
+                : -1 ^ Math.Floor(Latitude * prec).GetHashCode() ^ Math.Floor(Longitude * prec).GetHashCode();
+        }
 
 
         /// <summary>
@@ -55,7 +70,18 @@ namespace FolkerKinzel.VCards.Models
         /// (Nur zum Debugging.)
         /// </summary>
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="GeoCoordinate"/>-Objekts.</returns>
-        public override string ToString() => $"Latitude:  {Latitude}{ Environment.NewLine}Longitude: {Longitude}";
+        public override string ToString()
+        {
+            if (IsUnknown)
+            {
+                return Res.UnknownPosition;
+            }
 
+            string latitude = Latitude.ToString("F7");
+            string longitude = Longitude.ToString("F7");
+
+            
+            return $"Latitude:  {latitude.Substring(0, latitude.Length - 1), 11}{ Environment.NewLine }Longitude: {longitude.Substring(0, longitude.Length-1), 11}";
+        }
     }
 }
