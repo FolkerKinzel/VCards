@@ -45,7 +45,7 @@
   <T ID="B8BFC69E4C7AD753">&lt;note type ="note"&gt;To make it easier to read, exception handling has been omitted in the following example.&lt;/note&gt;&lt;code/&gt;</T>
   <T ID="513ADC31CA8565">Newline used in VCF files ("\r\n").</T>
   <T ID="56CAFD77B801D12C">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt; object.</T>
-  <T ID="F6C7F408C1421939">Returns an enumerator, that iterates through the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
+  <T ID="F6C7F408C1421939">Returns an enumerator that iterates through the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
   <T ID="B3773CE3732BF6EB">An Enumerator for the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.</T>
   <T ID="D66DB8E33E2BD2B8">&lt;c&gt;VERSION&lt;/c&gt;: Version of the vCard standard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="6D0A14EE55BF6C87">&lt;c&gt;CLASS&lt;/c&gt;: Describes the sensitivity of the information in the vCard. &lt;c&gt;(3)&lt;/c&gt;</T>
@@ -80,42 +80,42 @@
             Provides a textual representation of the &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdProp.Sources"/&gt; property. &lt;c&gt;(3)&lt;/c&gt;</T>
   <T ID="96C5299871EF2391">&lt;c&gt;FN&lt;/c&gt;: The formatted name string associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="9D5B3B61AE638C67">&lt;c&gt;EMAIL&lt;/c&gt;: The addresses for electronic mail communication with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
-  <T ID="AF210802ACEE169C">&lt;c&gt;EXPERTISE&lt;/c&gt;: A professional subject area, that the person has knowledge of. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
+  <T ID="AF210802ACEE169C">&lt;c&gt;EXPERTISE&lt;/c&gt;: A professional subject area that the person has knowledge of. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
   <T ID="BA4444F22C4FD885">&lt;c&gt;GENDER&lt;/c&gt;: Defines the person's gender. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="EE6512D78FF78106">Multiple instances are only allowed, if they
              have the same &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.AltID"/&gt; parameters. This can e.g.
              be useful, if the property is displayed in different languages.</T>
   <T ID="E808E5B087749C0E">&lt;c&gt;GEO&lt;/c&gt;: Specifies latitudes and longitudes. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
-  <T ID="B29B07D6DD4FC9F0">&lt;c&gt;HOBBY&lt;/c&gt;: Recreational activities, that the person actively engages in. &lt;c&gt;(4 - RFC 6715)&lt;/c&gt;</T>
+  <T ID="B29B07D6DD4FC9F0">&lt;c&gt;HOBBY&lt;/c&gt;: Recreational activities that the person actively engages in. &lt;c&gt;(4 - RFC 6715)&lt;/c&gt;</T>
   <T ID="D41FE1153FC2ED13">&lt;c&gt;IMPP&lt;/c&gt;: List of instant messenger handles. &lt;c&gt;(3,4)&lt;/c&gt;</T>
-  <T ID="4B168945CE1260AB">&lt;c&gt;INTEREST&lt;/c&gt;: Recreational activities, that the person is interested in, but does not necessarily take part in. &lt;c&gt;(4 - RFC 6715)&lt;/c&gt;</T>
+  <T ID="4B168945CE1260AB">&lt;c&gt;INTEREST&lt;/c&gt;: Recreational activities that the person is interested in, but does not necessarily take part in. &lt;c&gt;(4 - RFC 6715)&lt;/c&gt;</T>
   <T ID="27BC4A5340684AF0">&lt;c&gt;KEY&lt;/c&gt;: Public encryption keys, associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="A2E5EB2A666AA3D2">It may point to an external URL, may be plain text, or may be embedded in the vCard as a Base64 encoded block of text.</T>
   <T ID="F63A91544E6DCF6B">&lt;c&gt;KIND&lt;/c&gt;: Defines the type of entity the vCard represents. &lt;c&gt;(4)&lt;/c&gt;</T>
-  <T ID="1DA3B5F69D30FA2F">&lt;c&gt;LANG&lt;/c&gt;: Defines languages, that the person speaks. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="1DA3B5F69D30FA2F">&lt;c&gt;LANG&lt;/c&gt;: Defines languages that the person speaks. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="6A198E63B53DBA58">&lt;c&gt;LOGO&lt;/c&gt;: Images or graphics of the logo of the organization that is associated with the individual, to which the vCard belongs. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="A671919AD8F069F9">It may point to an external URL or may be embedded in the vCard as a Base64 encoded block of text.</T>
   <T ID="868C3DF54955EC25">&lt;c&gt;MAILER&lt;/c&gt;: Type of email program used. &lt;c&gt;(2,3)&lt;/c&gt;</T>
-  <T ID="BABA6FD59E6C2A03">&lt;c&gt;MEMBER&lt;/c&gt;: Defines a member, that is part of the group that this vCard represents. 
+  <T ID="BABA6FD59E6C2A03">&lt;c&gt;MEMBER&lt;/c&gt;: Defines a member that is part of the group that this vCard represents. 
 The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to &lt;see cref="F:FolkerKinzel.VCards.Models.Enums.VCdKind.Group"/&gt; in order to use this property.  &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="C4D735E29F38ACD2">&lt;c&gt;N&lt;/c&gt;: A structured representation of the name of the person, place or thing associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="6277EED13F003D3E">Multiple instances are only allowed in vCard 4.0, and only, if they all 
              have the same &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.AltID"/&gt; parameter. This can e.g.
              be useful, if the property is displayed in different languages.</T>
   <T ID="1CD65695528709F3">&lt;c&gt;NICKNAME&lt;/c&gt;: One or more descriptive/familiar names for the object represented by this vCard. &lt;c&gt;(3,4)&lt;/c&gt;</T>
-  <T ID="F1D49B3FF36FCFFB">vCard-Properties, that don't belong to the standard.</T>
-  <T ID="14BE48FE75AA1943">&lt;c&gt;NOTE&lt;/c&gt;: Specifies supplemental informations or comments, that are associated with the vCard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="F1D49B3FF36FCFFB">vCard-Properties that don't belong to the standard.</T>
+  <T ID="14BE48FE75AA1943">&lt;c&gt;NOTE&lt;/c&gt;: Specifies supplemental informations or comments that are associated with the vCard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="ECC5853265D06E0F">&lt;c&gt;ORG&lt;/c&gt;: The name and optionally the unit(s) of the organization associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="56E94619CCEA015C">&lt;c&gt;ORG-DIRECTORY&lt;/c&gt;: A URI representing the person's work place, which can be used to look up information on the person's co-workers. &lt;c&gt;(RFC 6715)&lt;/c&gt;</T>
   <T ID="24E4B1922AA8047">&lt;c&gt;TEL&lt;/c&gt;: Canonical number strings for a telephone numbers for telephony communication with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="7B8397591C20DD89">&lt;c&gt;PHOTO&lt;/c&gt;: Image(s) or photograph(s) of the individual, associated with the vCard. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="717A907A292AD231">It may point to an external URL or may be embedded in the vCard as a Base64 encoded block of text.</T>
-  <T ID="1FFDFE985C1478A2">&lt;c&gt;PRODID&lt;/c&gt;: The identifier for the product, that created the vCard object. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="1FFDFE985C1478A2">&lt;c&gt;PRODID&lt;/c&gt;: The identifier for the product that created the vCard object. &lt;c&gt;(3,4)&lt;/c&gt;</T>
   <T ID="B1773CAB411B7ABB">The name should be unique worldwide. It should therefore conform to the specification for
              Formal Public Identifiers [ISO9070] or Universal Resource Names in RFC 3406.</T>
-  <T ID="20BFAD6B34A48AB8">&lt;c&gt;PROFILE&lt;/c&gt;: States, that the vCard is a vCard. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="20BFAD6B34A48AB8">&lt;c&gt;PROFILE&lt;/c&gt;: States that the vCard is a vCard. &lt;c&gt;(3)&lt;/c&gt;</T>
   <T ID="9ED6A5CE2C418E26">&lt;c&gt;CLIENTPIDMAP&lt;/c&gt;: Mappings for &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt;s. It is used for synchronizing different revisions of the same vCard. &lt;c&gt;(4)&lt;/c&gt;</T>
-  <T ID="E2BA1BA081D94B0B">&lt;c&gt;RELATED&lt;/c&gt;: Other entities, that the person is related to. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="E2BA1BA081D94B0B">&lt;c&gt;RELATED&lt;/c&gt;: Other entities that the person is related to. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="C175DE890370F765">&lt;c&gt;ROLE&lt;/c&gt;: The role, occupation, or business category of the vCard object within an organization. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="F0F591B9ADCB5F8E">&lt;c&gt;SOUND&lt;/c&gt;: Specifies the pronunciation of the &lt;see cref="P:FolkerKinzel.VCards.VCard.DisplayNames"/&gt; property of the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;-object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="989C135DD8F069F9">It may point to an external URL or may be embedded in the vCard as a Base64 encoded block of text.</T>
@@ -123,10 +123,10 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="9A08BC4340544A7">vCard 3.0 only allows one instance of this property.</T>
   <T ID="72CEEDCB5306E7A4">&lt;c&gt;TZ&lt;/c&gt;: The time zone(s) of the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="9BD1CCDF1273786F">&lt;c&gt;TITLE&lt;/c&gt;: Specifies the job title, functional position or function of the individual, associated with the vCard object, within an organization. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
-  <T ID="5BF5400146E07157">&lt;c&gt;UID&lt;/c&gt;: Specifies a value, that represents a persistent, globally unique identifier, associated with the object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="5BF5400146E07157">&lt;c&gt;UID&lt;/c&gt;: Specifies a value that represents a persistent, globally unique identifier, associated with the object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="9CB2B521F5243D5A">Although the standard allows any strings for identification, the library only supports UUIDs.</T>
-  <T ID="3C345CEB79CA7F4D">&lt;c&gt;URL&lt;/c&gt;: URLs, pointing to websites, that represent the person in some way. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
-  <T ID="DFBC8943AC37BA08">&lt;c&gt;XML&lt;/c&gt;: Any XML data, that is attached to the vCard. &lt;c&gt;(4)&lt;/c&gt;</T>
+  <T ID="3C345CEB79CA7F4D">&lt;c&gt;URL&lt;/c&gt;: URLs, pointing to websites that represent the person in some way. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="DFBC8943AC37BA08">&lt;c&gt;XML&lt;/c&gt;: Any XML data that is attached to the vCard. &lt;c&gt;(4)&lt;/c&gt;</T>
   <T ID="9A539F24A4CD5A51">Loads a VCF file.</T>
   <T ID="907855A934CE9713">Absolute or relative path to a VCF file.</T>
   <T ID="180CF8F5DE7D1B3F">The text encoding to use to read the file or &lt;c&gt;null&lt;/c&gt;, to read the file with the standard-compliant text encoding &lt;see cref ="P:System.Text.Encoding.UTF8"/&gt;.</T>
@@ -154,7 +154,7 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="24DA0906324D2AA">Set the flag to append in vCard 2.1 and vCard 3.0 embedded 
              &lt;c&gt;AGENT&lt;/c&gt;-vCards additionally to the main vCard.</T>
   <T ID="EE5C7AC7E140AAA6">Set the flag to write Non-Standard-Parameters of the property &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.NonStandardParameters"&gt;ParameterSection.NonStandardParameters&lt;/see&gt;.</T>
-  <T ID="FF9AC4A7DF14AE2A">Set the flag to serialize &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; - objects, that are stored in the property &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"&gt;VCard.NonStandardProperties&lt;/see&gt;.</T>
+  <T ID="FF9AC4A7DF14AE2A">Set the flag to serialize &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; - objects that are stored in the property &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"&gt;VCard.NonStandardProperties&lt;/see&gt;.</T>
   <T ID="5A86F58AE214453D">Set the flag to write the extensions from RFC 6474 (&lt;c&gt;BIRTHPLACE&lt;/c&gt;, &lt;c&gt;DEATHPLACE&lt;/c&gt;, &lt;c&gt;DEATHDATE&lt;/c&gt;). (Beginning from vCard 4.0.)</T>
   <T ID="E154D6C4A110F7F">Set the flag to write the extensions from RFC 6715 (&lt;c&gt;EXPERTISE&lt;/c&gt;, &lt;c&gt;HOBBY&lt;/c&gt;, &lt;c&gt;INTEREST&lt;/c&gt;, &lt;c&gt;ORG-DIRECTORY&lt;/c&gt;). (Beginning from vCard 4.0.)</T>
   <T ID="743EB6383B3D953D">Set the flag to write the extension &lt;c&gt;IMPP&lt;/c&gt; from RFC 4770 in vCard 3.0.</T>
@@ -163,15 +163,15 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="92F2B1279AD6661">Set the flag to write the following vCard properties if necessary: &lt;c&gt;X-EVOLUTION-ANNIVERSARY&lt;/c&gt;, &lt;c&gt;X-EVOLUTION-SPOUSE&lt;/c&gt;.</T>
   <T ID="EA755E614F5CADF9">Set the flag to write the following vCard properties if necessary: &lt;c&gt;X-KADDRESSBOOK-X-IMAddress&lt;/c&gt;, &lt;c&gt;X-KADDRESSBOOK-X-Anniversary&lt;/c&gt;, &lt;c&gt;X-KADDRESSBOOK-X-SpouseName&lt;/c&gt;.</T>
   <T ID="598590065D7E7DA">Set the flag to write the following vCard properties if necessary: &lt;c&gt;X-WAB-GENDER&lt;/c&gt;, &lt;c&gt;X-WAB-WEDDING-ANNIVERSARY&lt;/c&gt;, &lt;c&gt;X-WAB-SPOUSE-NAME&lt;/c&gt;.</T>
-  <T ID="7B9D144334A48AB8">&lt;c&gt;PROFILE&lt;/c&gt;: States, that the vCard is a vCard. &lt;c&gt;(3)&lt;/c&gt;</T>
+  <T ID="7B9D144334A48AB8">&lt;c&gt;PROFILE&lt;/c&gt;: States that the vCard is a vCard. &lt;c&gt;(3)&lt;/c&gt;</T>
   <T ID="250E5CAE4E6DCF6B">&lt;c&gt;KIND&lt;/c&gt;: Defines the type of entity, that this vCard represents. &lt;c&gt;(4)&lt;/c&gt;</T>
-  <T ID="4F2CCD446E07157">&lt;c&gt;UID&lt;/c&gt;: Specifies a value, that represents a persistent, globally unique identifier, associated with the object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
-  <T ID="1D3DC57594B89F59">&lt;c&gt;CATEGORIES&lt;/c&gt;: Lists of "tags", that can be used to describe the object represented by this vCard. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="4F2CCD446E07157">&lt;c&gt;UID&lt;/c&gt;: Specifies a value that represents a persistent, globally unique identifier, associated with the object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
+  <T ID="1D3DC57594B89F59">&lt;c&gt;CATEGORIES&lt;/c&gt;: Lists of "tags" that can be used to describe the object represented by this vCard. &lt;c&gt;(3,4)&lt;/c&gt;</T>
   <T ID="CBCFB9DD5306E7A4">&lt;c&gt;TZ&lt;/c&gt;: The time zone(s) of the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="D7E0AFD587749C0E">&lt;c&gt;GEO&lt;/c&gt;: Specifies latitudes and longitudes. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="87C2C32855BF6C87">&lt;c&gt;CLASS&lt;/c&gt;: Describes the sensitivity of the information in the vCard. &lt;c&gt;(3)&lt;/c&gt;</T>
-  <T ID="96B91E8FC18B1910">&lt;c&gt;SOURCE&lt;/c&gt;: URLs, that can be used to get the latest version of this vCard.&lt;c&gt;(3,4)&lt;/c&gt;</T>
-  <T ID="CD87FC03DC4CEDBE">&lt;c&gt;PRODID&lt;/c&gt;: The identifier for the product, that created the vCard object. &lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="96B91E8FC18B1910">&lt;c&gt;SOURCE&lt;/c&gt;: URLs that can be used to get the latest version of this vCard.&lt;c&gt;(3,4)&lt;/c&gt;</T>
+  <T ID="CD87FC03DC4CEDBE">&lt;c&gt;PRODID&lt;/c&gt;: The identifier for the product that created the vCard object. &lt;c&gt;(3,4)&lt;/c&gt;</T>
   <T ID="FA2BE91F71EF2391">&lt;c&gt;FN&lt;/c&gt;: The formatted name string associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="76AAC83A9F38ACD2">&lt;c&gt;N&lt;/c&gt;: A structured representation of the name of the person, place or thing associated with the vCard object. &lt;c&gt;(2,3,4)&lt;/c&gt;</T>
   <T ID="37C69FA32C4FD885">&lt;c&gt;GENDER&lt;/c&gt;: Defines the person's gender. &lt;c&gt;(4)&lt;/c&gt;</T>
@@ -225,7 +225,7 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="25F007BF04C435D3">&lt;para&gt; The value is set automatically -
              only for &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects this has to be done manually. &lt;/para&gt; &lt;para&gt; In vCard 3.0 only &lt;see cref ="F:FolkerKinzel.VCards.Models.Enums.VCdEncoding.Base64"/&gt; is permitted. &lt;/para&gt;</T>
   <T ID="36583F3656FAEA27">&lt;c&gt;TYPE&lt;/c&gt;: Description of an instant messenger address. &lt;c&gt;(3 - RFC 4770)&lt;/c&gt;</T>
-  <T ID="2CB7FC70098D6315">&lt;c&gt;LABEL&lt;/c&gt;: Represents the actual text, that should be put on the mailing label, when delivering a physical package to the person/object associated with the vCard. &lt;c&gt;([2],[3],4)&lt;/c&gt;</T>
+  <T ID="2CB7FC70098D6315">&lt;c&gt;LABEL&lt;/c&gt;: Represents the actual text that should be put on the mailing label, when delivering a physical package to the person/object associated with the vCard. &lt;c&gt;([2],[3],4)&lt;/c&gt;</T>
   <T ID="4029DFE929F19427">In vCard 2.1 and vCard 3.0, the content is automatically inserted into the vCard as a separate &lt;c&gt;LABEL&lt;/c&gt; property.</T>
   <T ID="4812CE27D263E682">&lt;c&gt; INDEX &lt;/c&gt;: 1-based index of a property if several instances of the same property are possible. &lt;c&gt; (4 - RFC 6715) &lt;/c&gt;</T>
   <T ID="1DFE7250A32A96C4">An IETF Language Tag as defined in Section 2 of RFC 5646.</T>
@@ -277,7 +277,7 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="662E6F18A106EED5">&lt;c&gt;HOME&lt;/c&gt;: Implies that the property is related to an individual's personal life.</T>
   <T ID="826BB66BC8C58DFD">&lt;c&gt;CONTACT&lt;/c&gt;: Someone you know how to get in touch with. Often symmetric.</T>
   <T ID="BEE34847BBD27652">&lt;c&gt;ACQUAINTANCE&lt;/c&gt;: Someone who you have exchanged greetings and not much (if any) more — maybe a short conversation or two. Often symmetric.</T>
-  <T ID="542B3CE5B55881B7">&lt;c&gt;FRIEND&lt;/c&gt;: Someone you are a friend to. A compatriot, buddy, home(boy|girl), that you know. Often symmetric.</T>
+  <T ID="542B3CE5B55881B7">&lt;c&gt;FRIEND&lt;/c&gt;: Someone you are a friend to. A compatriot, buddy, home(boy|girl) that you know. Often symmetric.</T>
   <T ID="10153739AC9F6088">&lt;c&gt;MET&lt;/c&gt;: Someone who you have actually met in person. Symmetric.</T>
   <T ID="8DB718F02F32DB7D">&lt;c&gt;CO-WORKER&lt;/c&gt;: Someone a person works with, or works at the same organization as. Symmetric. Usually transitive.</T>
   <T ID="48E31D5F29E6A418">&lt;c&gt;COLLEAGUE&lt;/c&gt;: Someone in the same field of study/activity. Symmetric. Often transitive.</T>
@@ -308,7 +308,7 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="8A2D69FCE00FDEF4">&lt;c&gt;CAR&lt;/c&gt;: Indicates a car-phone telephone number.&lt;c&gt;(2,3)&lt;/c&gt;</T>
   <T ID="F59C06DBBE402D0A">&lt;c&gt;MODEM&lt;/c&gt;: Indicates a MODEM connected telephone number. &lt;c&gt;(2,3)&lt;/c&gt;</T>
   <T ID="F28A42F1E4EA52E3">&lt;c&gt;BBS&lt;/c&gt;: Indicates a bulletin board system telephone number. &lt;c&gt;(2,3)&lt;/c&gt;</T>
-  <T ID="B2D633BB22D3EECA">&lt;c&gt;MSG&lt;/c&gt;: Indicates, that the telephone number has voice messaging support. &lt;c&gt;(2,3)&lt;/c&gt;</T>
+  <T ID="B2D633BB22D3EECA">&lt;c&gt;MSG&lt;/c&gt;: Indicates that the telephone number has voice messaging support. &lt;c&gt;(2,3)&lt;/c&gt;</T>
   <T ID="E9177BD324E2CFBB">Public</T>
   <T ID="58DB071B713DCD65">Private</T>
   <T ID="824C9C608B5650FD">Confidential</T>
@@ -494,21 +494,21 @@ This parameter is passed uninitialized; any value originally supplied in &lt;par
   <T ID="E8C0B0D2EBAA6012">&lt;c&gt;true&lt;/c&gt; if &lt;paramref name="dataUrl"/&gt; was converted successfully; otherwise, &lt;c&gt;false&lt;/c&gt;.</T>
   <T ID="EC6A01B1886936E8">Generates a &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; to embed any text.</T>
   <T ID="D240BB25BC5B1F38">The text to be embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;.</T>
-  <T ID="2E48061232BFF43D">A &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; which holds embedded text.</T>
+  <T ID="2E48061232BFF43D">A &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;, which holds embedded text.</T>
   <T ID="BB29E13429EA124E">&lt;paramref name="text"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="F5D94EED401676D9">&lt;paramref name="text"/&gt; is an empty &lt;see cref ="T:System.String"/&gt; oder only contains white space.</T>
   <T ID="5D4DEBA6C5DF2033">A &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; cannot be initialized, e.g. because the URI string is longer than 65519 characters.</T>
   <T ID="C51075E5E22F1BC2">Generates a &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; to embed binary data.</T>
   <T ID="9C1ECC6D609AFC10">The binary data to be embedded in the &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;.</T>
   <T ID="B3298A57FE3AE928">The MIME type of the data contained in &lt;paramref name ="bytes"/&gt; or &lt;c&gt;null&lt;/c&gt; for "text/plain;charset=US-ASCII".</T>
-  <T ID="E97BE67285357329">A &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; which holds the binary data supplied by &lt;paramref name="bytes"/&gt;.</T>
+  <T ID="E97BE67285357329">A &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;, which holds the binary data supplied by &lt;paramref name="bytes"/&gt;.</T>
   <T ID="213D9A30FD8B2F43">&lt;paramref name="bytes"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="DA16DE578FD72CED">&lt;paramref name="bytes"/&gt; is an empty array.</T>
   <T ID="D0FF58E9C5DF2033">A &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; cannot be initialized, e.g. because the resulting URI string is longer than 65519 characters.</T>
   <T ID="C3918FAAFBC14B68">Creates a &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; from an existing file.</T>
   <T ID="913C3732F62F6B75">Absolute path to the file whose content is to be embedded.</T>
   <T ID="60BB48BE34A1B2D1">MIME type of the file to be embedded. If &lt;c&gt;null&lt;/c&gt; is specified, an attempt is made to determine the MIME type automatically from the file extension.</T>
-  <T ID="80ABFC5729FD4105">A &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; which holds the binary data of the file referenced by &lt;paramref name="path"/&gt;.</T>
+  <T ID="80ABFC5729FD4105">A &lt;see cref="T:FolkerKinzel.VCards.Models.DataUrl"/&gt;, which holds the binary data of the file referenced by &lt;paramref name="path"/&gt;.</T>
   <T ID="B382F709CB931A6F">&lt;paramref name="path"/&gt; or &lt;paramref name="mimeType"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="E1D66025E5F8357">&lt;paramref name ="path"/&gt; is not a valid file path or &lt;paramref name ="mimeType"/&gt; is not in a valid format.</T>
   <T ID="57339611C5DF2033">A &lt;see cref ="T:FolkerKinzel.VCards.Models.DataUrl"/&gt; cannot be initialized, e.g. because the resulting URI string is longer than 65519 characters.</T>
@@ -594,7 +594,7 @@ This parameter is passed uninitialized; any value originally supplied in &lt;par
 To write objects of the class &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; into a vCard, the flag &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteNonStandardProperties"&gt;VcfOptions.WriteNonStandardProperties&lt;/see&gt; must be set explicitly.
 &lt;/para&gt;
 &lt;para&gt;
-Please note, that when using the class, yourself is responsible for the standard-compliant masking, unmasking, encoding and decoding of the data.
+Please note that when using the class, yourself is responsible for the standard-compliant masking, unmasking, encoding and decoding of the data.
 &lt;/para&gt;
 &lt;/note&gt;</T>
   <T ID="D39E1DAB7281E564">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; object.</T>
@@ -846,8 +846,8 @@ Please note, that when using the class, yourself is responsible for the standard
   <T ID="F1CDE4DE841117C8"></T>
   <T ID="108EC82CA32FFD93"></T>
   <T ID="848127736D751B39"></T>
-  <T ID="F978DF73FB6E05B4">A collection of parsed &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects, that represent the content of the VCF file.</T>
-  <T ID="A44474F08FDB922A">Parses a &lt;see cref ="T:System.String"/&gt;, that represents the content of a VCF file.</T>
+  <T ID="F978DF73FB6E05B4">A collection of parsed &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects that represent the content of the VCF file.</T>
+  <T ID="A44474F08FDB922A">Parses a &lt;see cref ="T:System.String"/&gt; that represents the content of a VCF file.</T>
   <T ID="35FDC32598B455A6">A &lt;see cref ="T:System.String"/&gt; that represents the content of a VCF file.</T>
   <T ID="909F0F19DF189E4A">A collection of parsed &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects that represent the content of &lt;paramref name ="content"/&gt;.</T>
   <T ID="15E2FC95D02843FD">Deserializes a VCF file using a &lt;see cref ="T:System.IO.TextReader"/&gt;.</T>
@@ -933,9 +933,9 @@ The method does not remove any elements from &lt;paramref name ="vCardList"/&gt;
   <T ID="1D248AED3578B8E9">Sets all the flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
   <T ID="CACEFE6590CBBFE8">The value to which all the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
   <T ID="4EFD04E95BE26F6E">A single &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; value or a combination of several &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; values.</T>
-  <T ID="35FFDFF6EE4DFCC4">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
+  <T ID="35FFDFF6EE4DFCC4">A value, which has all flags set that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
   <T ID="56656DEE6C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
-  <T ID="2C576A35C3BB1B3A">The value which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="2C576A35C3BB1B3A">The value, which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
   <T ID="774923C35BE26F6E">A single &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; value or a combination of several &lt;see cref ="T:FolkerKinzel.VCards.Models.Enums.AddressTypes"/&gt; values.</T>
   <T ID="D0448275164C4D15">Returns &lt;c&gt;true&lt;/c&gt;, if all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;false&lt;/c&gt; is returned.</T>
   <T ID="59EB8EE45226B55B">Unsets all flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
@@ -980,18 +980,18 @@ The method does not remove any elements from &lt;paramref name ="vCardList"/&gt;
   <T ID="DA85EEDC421A81EC">The value to which all the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
   <T ID="8B1D691EBE865E60">The value to which all the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
   <T ID="8074F0157BD5DDD4">The value to which all the flags set in &lt;paramref name ="flags"/&gt; are added.</T>
-  <T ID="14DBC04856F273A8">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
-  <T ID="AFE58AE16AE58911">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
-  <T ID="D8EDA853E9EAC849">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
-  <T ID="2F764DF950488EDA">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
+  <T ID="14DBC04856F273A8">A value, which has all flags set that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
+  <T ID="AFE58AE16AE58911">A value, which has all flags set that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
+  <T ID="D8EDA853E9EAC849">A value, which has all flags set that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
+  <T ID="2F764DF950488EDA">A value, which has all flags set that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;paramref name ="flags"/&gt; is returned.</T>
   <T ID="D2DDF6FE6C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
   <T ID="7ED538436C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
   <T ID="C934E5616C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
   <T ID="2943E3956C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
-  <T ID="5009730A9982B932">The value which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
-  <T ID="B5E3F223B258473F">The value which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
-  <T ID="3B9254CB37E850E0">The value which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
-  <T ID="1F6CDE8A37C504F8">The value which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="5009730A9982B932">The value, which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="B5E3F223B258473F">The value, which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="3B9254CB37E850E0">The value, which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="1F6CDE8A37C504F8">The value, which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
   <T ID="CCD9953D164C4D15">Returns &lt;c&gt;true&lt;/c&gt;, if all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;false&lt;/c&gt; is returned.</T>
   <T ID="10330864164C4D15">Returns &lt;c&gt;true&lt;/c&gt;, if all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;false&lt;/c&gt; is returned.</T>
   <T ID="3C92F8E4164C4D15">Returns &lt;c&gt;true&lt;/c&gt;, if all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;false&lt;/c&gt; is returned.</T>
@@ -1023,17 +1023,17 @@ The method does not remove any elements from &lt;paramref name ="vCardList"/&gt;
   <T ID="4C54A88B95EEC9C6">Extension methods that make working with &lt;see cref="T:System.Collections.Generic.List`1"&gt;List&amp;lt;VCard&amp;gt;&lt;/see&gt; objects easier.</T>
   <T ID="444B9627BFE8E59B">Extension methods that make working with the &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; enum easier.</T>
   <T ID="B0ED626F99268DEA">A single &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; values.</T>
-  <T ID="F5755D3C1D9B6C47">A value which has all flags set, that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;.</T>
+  <T ID="F5755D3C1D9B6C47">A value, which has all flags set that are set in &lt;paramref name ="value"/&gt; and &lt;paramref name ="flags"/&gt;.</T>
   <T ID="E2CA039599268DEA">A single &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; values.</T>
   <T ID="C1EE540299268DEA">A single &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; value or a combination of several &lt;see cref="T:FolkerKinzel.VCards.VcfOptions"/&gt; values.</T>
   <T ID="8EC53F676C2CAE5A">Checks whether all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;.</T>
-  <T ID="DCC8DCDFB7A6164B">The value which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
+  <T ID="DCC8DCDFB7A6164B">The value, which is checked to see whether all flags set in &lt;paramref name ="flags"/&gt; are set on it.</T>
   <T ID="3266EE4C8D46A6CD">Returns &lt;c&gt;true&lt;/c&gt;, if all flags set in &lt;paramref name ="flags"/&gt; are also set in &lt;paramref name ="value"/&gt;. If &lt;paramref name ="value"/&gt; is &lt;c&gt;null&lt;/c&gt;, &lt;c&gt;false&lt;/c&gt; is returned. (If &lt;paramref name ="flags"/&gt; is &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.None"/&gt;, &lt;c&gt;true&lt;/c&gt; is only returned if &lt;paramref name ="value"/&gt; is also &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.None"/&gt;. The same applies to &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.All"/&gt;.)</T>
   <T ID="CC26A3475226B55B">Unsets all flags set in &lt;paramref name ="flags"/&gt; in &lt;paramref name ="value"/&gt;.</T>
   <T ID="29B3AD2A55A5D5BC">The value from which the flags set in &lt;paramref name ="flags"/&gt; are removed.</T>
   <T ID="FD5405F5DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
   <T ID="A5BB7B48E036795E">&lt;para&gt;
-            The standard only allows URI values. Data, that cannot be converted to a &lt;see cref="T:System.Uri"/&gt;, are read and inserted as &lt;see cref="T:FolkerKinzel.VCards.Models.RelationTextProperty"/&gt;, but the content of a &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationTextProperty"/&gt; is only written to the VCF file, if its value can be converted to a &lt;see cref ="T:System.Uri"/&gt;.
+            The standard only allows URI values. Data that cannot be converted to a &lt;see cref="T:System.Uri"/&gt;, are read and inserted as &lt;see cref="T:FolkerKinzel.VCards.Models.RelationTextProperty"/&gt;, but the content of a &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationTextProperty"/&gt; is only written to the VCF file, if its value can be converted to a &lt;see cref ="T:System.Uri"/&gt;.
 &lt;/para&gt;
  &lt;para&gt;
             The content of a &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/&gt; is written as &lt;see cref ="T:System.Uri"/&gt; (urn: uuid: ...). The &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects in the &lt;see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/&gt; objects are appended to the VCF file as separate vCards when writing the VCF file and the value of their &lt;see cref ="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/&gt; property is written in the "mother"-&lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; as uuid-URI. If the attached &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects did not yet have a &lt;see cref ="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/&gt; property, automatically a new &lt;see cref ="T:System.Guid"/&gt; is assigned to them in the serialization process.
@@ -1056,7 +1056,7 @@ Even calling this method several times causes no duplicates (in the sense of the
 If the added &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects did not yet have a &lt;see cref ="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/&gt; property, the method automatically assigns them a new one.
 &lt;/para&gt;</T>
   <T ID="38E895FB56062043">&lt;para&gt;
-The example demonstrates how a &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object can be saved as a vCard 4.0, if it is intended, that a VCF file should only contain a single vCard at a time. The example may also show, that this approach is generally not advantageous, because it endangers referential integrity.
+The example demonstrates how a &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object can be saved as a vCard 4.0, if it is intended that a VCF file should only contain a single vCard at a time. The example may also show that this approach is generally not advantageous, because it endangers referential integrity.
 &lt;/para&gt;
 &lt;note type ="note"&gt;
 For the sake of easier readability, exception handling has not been used in the example.
@@ -1136,7 +1136,7 @@ Even calling this method several times causes no duplicates (in the sense of the
 If the added &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects did not yet have a &lt;see cref ="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/&gt; property, the method automatically assigns them a new one.
 &lt;/para&gt;</T>
   <T ID="5678152E2FF991BC">&lt;para&gt;
-The example demonstrates how a &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object can be saved as a vCard 4.0, if it is intended, that a VCF file should only contain a single vCard at a time. The example may also show, that this approach is generally not advantageous, because it endangers referential integrity.
+The example demonstrates how a &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object can be saved as a vCard 4.0, if it is intended that a VCF file should only contain a single vCard at a time. The example may also show that this approach is generally not advantageous, because it endangers referential integrity.
 &lt;/para&gt;
 &lt;para&gt;
 In the example the extension method &lt;see cref ="M:FolkerKinzel.VCards.Extensions.VCardListExtension.ReferenceVCards(System.Collections.Generic.List{FolkerKinzel.VCards.VCard})"/&gt; is used, which calls &lt;see cref ="M:FolkerKinzel.VCards.VCard.Reference(System.Collections.Generic.List{FolkerKinzel.VCards.VCard})"/&gt;.
@@ -1222,7 +1222,7 @@ When serializing as vCard 4.0, the method calls &lt;see cref ="M:FolkerKinzel.VC
   <T ID="8C3315B8078EEB51">Saves the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt; instance as a VCF file.</T>
   <T ID="BF71EB7D66C143E5">Serializes the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt; instance into a &lt;see cref="T:System.IO.Stream"/&gt; using the VCF format.</T>
   <T ID="A9F895B3B36BAF4D">Serializes the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; instance as a &lt;see cref ="T:System.String"/&gt;, which represents the content of a VCF file.</T>
-  <T ID="445A430638AC2797">&lt;para&gt; &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt; saves all vCard properties, that could not be evaluated, when parsing the vCard. To serialize the content of &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt; into a vCard, the flag &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteNonStandardProperties"&gt;VcfOptions.WriteNonStandardProperties&lt;/see&gt; has to be set explicitly. &lt;/para&gt; &lt;para&gt; Some &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects are automatically added to the vCard to be written, if there is no standard equivalent for it. You can control this behavior with &lt;see cref ="T:FolkerKinzel.VCards.VcfOptions"/&gt;. It is therefore not recommended to assign instances of those
+  <T ID="445A430638AC2797">&lt;para&gt; &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt; saves all vCard properties that could not be evaluated, when parsing the vCard. To serialize the content of &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt; into a vCard, the flag &lt;see cref ="F:FolkerKinzel.VCards.VcfOptions.WriteNonStandardProperties"&gt;VcfOptions.WriteNonStandardProperties&lt;/see&gt; has to be set explicitly. &lt;/para&gt; &lt;para&gt; Some &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects are automatically added to the vCard to be written, if there is no standard equivalent for it. You can control this behavior with &lt;see cref ="T:FolkerKinzel.VCards.VcfOptions"/&gt;. It is therefore not recommended to assign instances of those
             &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects to the property &lt;see cref ="P:FolkerKinzel.VCards.VCard.NonStandardProperties"/&gt;.&lt;/para&gt;
 &lt;para&gt; These vCard properties are the following: 
 &lt;/para&gt;
