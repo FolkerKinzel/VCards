@@ -38,7 +38,8 @@ namespace FolkerKinzel.VCards.Models.Tests
         //[DataRow(double.NaN, 15, 27, double.NaN, true)]
         //[DataRow(double.NegativeInfinity, 15, 27, double.PositiveInfinity, true)]
         [DataRow(5.123456, 0, 5.1234561, 0, true)]
-        [DataRow(0, 5.1234568, 0, 5.1234561, true)]
+        [DataRow(0, 5.1234568, 0, 5.1234561, false)]
+        [DataRow(0, 5.1234563, 0, 5.1234561, true)]
         [DataRow(0, 0, 0, 0, true)]
         [DataRow(5.123456, 17, 5.123457, 17, false)]
         public void EqualsTest(double latitude1, double longitude1, double latitude2, double longitude2, bool expected)

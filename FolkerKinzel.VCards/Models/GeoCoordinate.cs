@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Resources;
 
@@ -27,8 +28,8 @@ namespace FolkerKinzel.VCards.Models
                 throw new ArgumentOutOfRangeException(nameof(longitude));
             }
 
-            Latitude = latitude;
-            Longitude = longitude;
+            Latitude = Math.Round(latitude, 6, MidpointRounding.ToEven);
+            Longitude = Math.Round(longitude, 6, MidpointRounding.ToEven);
         }
 
         /// <summary>
@@ -44,9 +45,10 @@ namespace FolkerKinzel.VCards.Models
         ///// <summary>
         ///// <c>true</c>, wenn das <see cref="GeoCoordinate"/>-Objekt keine gültige geographische Position beschreibt.
         ///// </summary>
-        //public bool IsUnknown => (Latitude != 0 && !Latitude.IsNormal()) 
-        //                      || (Longitude != 0 && !Longitude.IsNormal())
-        //                      ||  Latitude < -90.0000001 || Latitude > 90.0000001 || Longitude < -180.0000001 || Longitude > 180.0000001;
+        [Obsolete("This property has been removed.", true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
+        public bool IsUnknown => false;
 
 
         /// <inheritdoc/>
@@ -78,11 +80,11 @@ namespace FolkerKinzel.VCards.Models
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="GeoCoordinate"/>-Objekts.</returns>
         public override string ToString()
         {
-            string latitude = Latitude.ToString("F7");
-            string longitude = Longitude.ToString("F7");
+            string latitude = Latitude.ToString("F6");
+            string longitude = Longitude.ToString("F6");
 
             
-            return $"Latitude:  {latitude.Substring(0, latitude.Length - 1), 11}{ Environment.NewLine }Longitude: {longitude.Substring(0, longitude.Length-1), 11}";
+            return $"Latitude:  {latitude, 11}{ Environment.NewLine }Longitude: {longitude, 11}";
         }
     }
 }

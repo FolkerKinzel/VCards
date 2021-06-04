@@ -108,17 +108,17 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
             CultureInfo culture = CultureInfo.InvariantCulture;
 
-            string latitude = coordinate.Latitude.ToString("F7", culture);
-            string longitude = coordinate.Longitude.ToString("F7", culture);
+            string latitude = coordinate.Latitude.ToString("F6", culture);
+            string longitude = coordinate.Longitude.ToString("F6", culture);
 
             switch (version)
             {
                 case VCdVersion.V2_1:
                 case VCdVersion.V3_0:
-                    _ = builder.Append(latitude).Remove(builder.Length - 1, 1).Append(';').Append(longitude).Remove(builder.Length - 1, 1);
+                    _ = builder.Append(latitude).Append(';').Append(longitude);
                     break;
                 default:
-                    _ = builder.Append("geo:").Append(latitude).Remove(builder.Length - 1, 1).Append(',').Append(longitude).Remove(builder.Length - 1, 1);
+                    _ = builder.Append("geo:").Append(latitude).Append(',').Append(longitude);
                     break;
             }//switch
         }

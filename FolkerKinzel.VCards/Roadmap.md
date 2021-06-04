@@ -20,6 +20,8 @@
 (e.g. IANA names) to TimeSpan offsets when converting from vCard 4.0 to vCard 3.0.
 - [x] Move `FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate` to 
 `FolkerKinzel.VCards.Models.GeoCoordinate`.
+- [x] Remove the Property `GeoCoordinate.IsUnknown` and make sure that 
+GeoCoordinate always points to a valid geographical position.
 - [ ] Move `FolkerKinzel.VCards.Models.PropertyParts.PropertyIdMapping` to
 `FolkerKinzel.VCards.Models.PropertyIdMapping` and **make it a class**.
 - [ ] Add a constructor to the `PropertyIdMappingProperty` class, which takes a PropertyIdMapping as 
