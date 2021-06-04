@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Resources;
 
@@ -86,5 +87,97 @@ namespace FolkerKinzel.VCards.Models
             
             return $"Latitude:  {latitude, 11}{ Environment.NewLine }Longitude: {longitude, 11}";
         }
+
+
+        internal static bool TryParse(string? value, out GeoCoordinate? coordinate)
+        {
+            coordinate = null;
+
+            if (value is null)
+            {
+                return false;
+            }
+
+            int startIndex = 0;
+
+            while (startIndex < value.Length)
+            {
+                char c = value[startIndex];
+
+                if (char.IsDigit(c) || c == '.') // ".8" == "0.8"
+                {
+                    break;
+                }
+
+                startIndex++;
+            }
+
+#if NET40
+
+            if(startIndex != 0)
+            {
+                value = value.Substring(startIndex);
+            }
+
+            value = value.Replace(';', ','); // vCard 3.0
+
+            string[] arr = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries); // vCard 4.0
+
+            try
+            {
+                NumberStyles numStyle = NumberStyles.AllowDecimalPoint
+                                      | NumberStyles.AllowLeadingSign 
+                                      | NumberStyles.AllowLeadingWhite 
+                                      | NumberStyles.AllowTrailingWhite;
+                CultureInfo culture = CultureInfo.InvariantCulture;
+
+                coordinate = new GeoCoordinate(
+                    double.Parse(arr[0].Trim(), numStyle, culture),
+                    double.Parse(arr[1].Trim(), numStyle, culture));
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+#else
+            ReadOnlySpan<char> roSpan = value.AsSpan();
+
+            if (startIndex != 0)
+            {
+                roSpan = roSpan.Slice(startIndex);
+            }
+
+            int splitIndex = MemoryExtensions.IndexOf(roSpan, ','); // vCard 4.0
+
+            if (splitIndex == -1)
+            {
+                splitIndex = MemoryExtensions.IndexOf(roSpan, ';'); // vCard 3.0
+            }
+
+            try
+            {
+                NumberStyles numStyle = NumberStyles.AllowDecimalPoint
+                                      | NumberStyles.AllowLeadingSign
+                                      | NumberStyles.AllowLeadingWhite
+                                      | NumberStyles.AllowTrailingWhite;
+
+                CultureInfo culture = CultureInfo.InvariantCulture;
+
+                coordinate = new GeoCoordinate(
+                    double.Parse(roSpan.Slice(0, splitIndex), numStyle, culture),
+                    double.Parse(roSpan.Slice(splitIndex + 1), numStyle, culture));
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+#endif
+        }
+
     }
 }

@@ -25,7 +25,13 @@ namespace FolkerKinzel.VCards.Models
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
         public GeoProperty(GeoCoordinate? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => this.Value = value;
 
-        internal GeoProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => this.Value = GeoCoordinateConverter.Parse(vcfRow.Value);
+        internal GeoProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
+        {
+            if (GeoCoordinate.TryParse(vcfRow.Value, out GeoCoordinate? geo))
+            {
+                this.Value = geo;
+            }
+        }
 
 
         /// <summary>

@@ -11,90 +11,90 @@ namespace FolkerKinzel.VCards.Intls.Converters
     internal static class GeoCoordinateConverter
     {
 
-        internal static GeoCoordinate? Parse(string? value)
-        {
-            if (value is null)
-            {
-                return null;
-            }
+//        internal static GeoCoordinate? Parse(string? value)
+//        {
+//            if (value is null)
+//            {
+//                return null;
+//            }
 
-            int startIndex = 0;
+//            int startIndex = 0;
 
-            while (startIndex < value.Length)
-            {
-                char c = value[startIndex];
+//            while (startIndex < value.Length)
+//            {
+//                char c = value[startIndex];
 
-                if (char.IsDigit(c) || c == '.') // ".8" == "0.8"
-                {
-                    break;
-                }
+//                if (char.IsDigit(c) || c == '.') // ".8" == "0.8"
+//                {
+//                    break;
+//                }
 
-                startIndex++;
-            }
+//                startIndex++;
+//            }
 
-#if NET40
+//#if NET40
 
-            if(startIndex != 0)
-            {
-                value = value.Substring(startIndex);
-            }
+//            if(startIndex != 0)
+//            {
+//                value = value.Substring(startIndex);
+//            }
 
-            value = value.Replace(';', ','); // vCard 3.0
+//            value = value.Replace(';', ','); // vCard 3.0
 
-            string[] arr = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries); // vCard 4.0
+//            string[] arr = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries); // vCard 4.0
 
-            try
-            {
-                NumberStyles numStyle = NumberStyles.AllowDecimalPoint
-                                      | NumberStyles.AllowLeadingSign 
-                                      | NumberStyles.AllowLeadingWhite 
-                                      | NumberStyles.AllowTrailingWhite;
-                CultureInfo culture = CultureInfo.InvariantCulture;
+//            try
+//            {
+//                NumberStyles numStyle = NumberStyles.AllowDecimalPoint
+//                                      | NumberStyles.AllowLeadingSign 
+//                                      | NumberStyles.AllowLeadingWhite 
+//                                      | NumberStyles.AllowTrailingWhite;
+//                CultureInfo culture = CultureInfo.InvariantCulture;
 
-                return new GeoCoordinate(
-                    double.Parse(arr[0].Trim(), numStyle, culture),
-                    double.Parse(arr[1].Trim(), numStyle, culture));
-            }
-            catch
-            {
-                return null;
-            }
-#else
-            ReadOnlySpan<char> roSpan = value.AsSpan();
+//                return new GeoCoordinate(
+//                    double.Parse(arr[0].Trim(), numStyle, culture),
+//                    double.Parse(arr[1].Trim(), numStyle, culture));
+//            }
+//            catch
+//            {
+//                return null;
+//            }
+//#else
+//            ReadOnlySpan<char> roSpan = value.AsSpan();
 
-            if (startIndex != 0)
-            {
-                roSpan = roSpan.Slice(startIndex);
-            }
+//            if (startIndex != 0)
+//            {
+//                roSpan = roSpan.Slice(startIndex);
+//            }
 
-            int splitIndex = MemoryExtensions.IndexOf(roSpan, ','); // vCard 4.0
+//            int splitIndex = MemoryExtensions.IndexOf(roSpan, ','); // vCard 4.0
 
-            if (splitIndex == -1)
-            {
-                splitIndex = MemoryExtensions.IndexOf(roSpan, ';'); // vCard 3.0
-            }
+//            if (splitIndex == -1)
+//            {
+//                splitIndex = MemoryExtensions.IndexOf(roSpan, ';'); // vCard 3.0
+//            }
 
-            try
-            {
-                NumberStyles numStyle = NumberStyles.AllowDecimalPoint
-                                      | NumberStyles.AllowLeadingSign
-                                      | NumberStyles.AllowLeadingWhite
-                                      | NumberStyles.AllowTrailingWhite;
+//            try
+//            {
+//                NumberStyles numStyle = NumberStyles.AllowDecimalPoint
+//                                      | NumberStyles.AllowLeadingSign
+//                                      | NumberStyles.AllowLeadingWhite
+//                                      | NumberStyles.AllowTrailingWhite;
 
-                CultureInfo culture = CultureInfo.InvariantCulture;
+//                CultureInfo culture = CultureInfo.InvariantCulture;
 
-                return new GeoCoordinate(
-                    double.Parse(roSpan.Slice(0, splitIndex), numStyle, culture),
-                    double.Parse(roSpan.Slice(splitIndex + 1), numStyle, culture));
-            }
-            catch
-            {
-                return null;
-            }
+//                return new GeoCoordinate(
+//                    double.Parse(roSpan.Slice(0, splitIndex), numStyle, culture),
+//                    double.Parse(roSpan.Slice(splitIndex + 1), numStyle, culture));
+//            }
+//            catch
+//            {
+//                return null;
+//            }
 
-#endif
+//#endif
 
-        }
+//        }
 
 
         internal static void AppendTo(StringBuilder builder, GeoCoordinate? coordinate, VCdVersion version)

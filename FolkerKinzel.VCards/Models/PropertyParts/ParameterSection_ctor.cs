@@ -95,7 +95,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             break;
                         }
                     case ParameterKey.GEO:
-                        this.GeoPosition = GeoCoordinateConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));
+                        if (GeoCoordinate.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out GeoCoordinate? geo))
+                        {
+                            this.GeoPosition = geo;
+                        }
                         break;
                     case ParameterKey.TZ:
                         this.TimeZone = info.TimeZoneInfoConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));

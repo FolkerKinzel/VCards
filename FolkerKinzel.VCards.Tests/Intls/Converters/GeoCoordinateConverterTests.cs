@@ -30,54 +30,6 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         //}
 
 
-        [DataTestMethod()]
-        [DataRow("0.8,0.7")]
-        [DataRow("geo:0.8,0.7")]
-        [DataRow("0.8;0.7")]
-        [DataRow(".8,0.7")]
-        [DataRow("geo:.8,0.7")]
-        [DataRow(".8,.7")]
-        [DataRow("geo:.8,.7")]
-        [DataRow("0.8,.7")]
-        [DataRow("geo:0.8,.7")]
-        [DataRow(".8;0.7")]
-        [DataRow(".8;.7")]
-        [DataRow("0.8;.7")]
-        [DataRow("  0.8  ,  0.7  ")]
-        [DataRow("  0.8  ; 0.7  ")]
-        [DataRow("  .8  ,  0.7  ")]
-        [DataRow("  .8  ,  .7  ")]
-        [DataRow("  0.8  ,  .7  ")]
-        [DataRow("  .8  ;  0.7  ")]
-        [DataRow("  .8  ;  .7  ")]
-        [DataRow("  0.8  ;  .7  ")]
-        public void ParseTest1(string? s)
-        {
-            GeoCoordinate? geo = GeoCoordinateConverter.Parse(s);
-
-            Assert.IsNotNull(geo);
-            Assert.AreEqual(new GeoCoordinate(0.8, 0.7), geo);
-        }
-
-        [DataTestMethod()]
-        [DataRow(",0.7")]
-        [DataRow("geo:,0.7")]
-        [DataRow("0.8;")]
-        [DataRow(".8 0.7")]
-        [DataRow("")]
-        [DataRow("geo:")]
-        [DataRow("0.8 0.7")]
-        [DataRow("  ,  0.7  ")]
-        [DataRow("  0.8 ;  ")]
-        [DataRow("  .8 0.7  ")]
-        [DataRow("   ")]
-        [DataRow("  0.8  0.7  ")]
-        public void ParseTest2(string? s)
-        {
-            GeoCoordinate? geo = GeoCoordinateConverter.Parse(s);
-
-            Assert.IsNull(geo);
-        }
 
 
         [DataTestMethod()]
