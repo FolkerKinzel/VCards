@@ -9,7 +9,7 @@
 - [x] Implement FBURL property.
 
 ### 3.0.0  
-- [ ] Rename Save to `SaveVcf`.
+- [x] Rename Save to `SaveVcf`.
 - [ ] Rename Serialize to `SerializeVcf`.
 - [ ] Rename Load to `LoadVcf`.
 - [ ] Rename Deserialize to `DeserializeVcf`.
