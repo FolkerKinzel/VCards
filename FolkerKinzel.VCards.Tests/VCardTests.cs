@@ -17,11 +17,11 @@ namespace FolkerKinzel.VCards.Tests
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void LoadTest_fileNameNull() => _ = VCard.Load(null!);
+        public void LoadTest_fileNameNull() => _ = VCard.LoadVcf(null!);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
-        public void LoadTest_invalidFileName() => _ = VCard.Load("  ");
+        public void LoadTest_invalidFileName() => _ = VCard.LoadVcf("  ");
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -63,7 +63,7 @@ namespace FolkerKinzel.VCards.Tests
 
             vcard.SaveVcf(path, version);
 
-            List<VCard> list = VCard.Load(path);
+            List<VCard> list = VCard.LoadVcf(path);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0].DisplayNames);

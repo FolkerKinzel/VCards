@@ -101,7 +101,7 @@ namespace Examples
             vcard.SaveVcf(v4FilePath, VC::Enums.VCdVersion.V4_0);
 
             // Load vCard:
-            vcard = VCard.Load(v3FilePath)[0];
+            vcard = VCard.LoadVcf(v3FilePath)[0];
 
             WriteResultsToConsole(vcard);
 

@@ -11,7 +11,7 @@
 ### 3.0.0  
 - [x] Rename Save to `SaveVcf`.
 - [x] Rename Serialize to `SerializeVcf`.
-- [ ] Rename Load to `LoadVcf`.
+- [x] Rename Load to `LoadVcf`.
 - [ ] Rename Deserialize to `DeserializeVcf`.
 - [ ] Rename Parse to `ParseVcf`. 
 - [ ] Make the Value of `TimeZoneProperty` a new class `TzInfo`.

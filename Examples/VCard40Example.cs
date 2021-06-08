@@ -77,7 +77,7 @@ namespace Examples
 
             foreach (string fileName in Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"))
             {
-                vCardList.AddRange(VCard.Load(fileName));
+                vCardList.AddRange(VCard.LoadVcf(fileName));
             }
 
             // Make the reloaded VCard objects searchable:

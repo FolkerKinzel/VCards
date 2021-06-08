@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -31,11 +32,17 @@ namespace FolkerKinzel.VCards
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
-        public static List<VCard> Load(string fileName, Encoding? textEncoding = null)
+        public static List<VCard> LoadVcf(string fileName, Encoding? textEncoding = null)
         {
             using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
             return DoParse(reader);
         }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use LoadVcf instead.", true)]
+        public static List<VCard> Load(string fileName, Encoding? textEncoding = null)
+            => LoadVcf(fileName, textEncoding);
 
 
         /// <summary>

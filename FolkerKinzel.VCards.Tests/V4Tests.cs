@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void Parse()
         {
-            List<VCard>? vcard = VCard.Load(TestFiles.V4vcf);
+            List<VCard>? vcard = VCard.LoadVcf(TestFiles.V4vcf);
 
             Assert.IsNotNull(vcard);
             Assert.AreNotEqual(0, vcard.Count);

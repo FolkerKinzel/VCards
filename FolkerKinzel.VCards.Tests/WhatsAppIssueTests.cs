@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void WhatsAppIssueTest1()
         {
-            List<VCard> list = VCard.Load(TestFiles.WhatsAppIssueVcf);
+            List<VCard> list = VCard.LoadVcf(TestFiles.WhatsAppIssueVcf);
 
             Assert.AreNotEqual(0, list.Count);
 

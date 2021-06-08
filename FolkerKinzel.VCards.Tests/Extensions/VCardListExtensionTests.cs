@@ -158,7 +158,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
 
             list.SaveVcf(path, VCdVersion.V2_1);
 
-            List<VCard> list2 = VCard.Load(path);
+            List<VCard> list2 = VCard.LoadVcf(path);
 
             Assert.AreNotEqual(list.Count, list2.Count);
             Assert.IsInstanceOfType(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value, typeof(VCard));
@@ -173,7 +173,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
 
             list.SaveVcf(path, VCdVersion.V3_0);
 
-            List<VCard> list2 = VCard.Load(path);
+            List<VCard> list2 = VCard.LoadVcf(path);
 
             Assert.AreNotEqual(list.Count, list2.Count);
             Assert.IsInstanceOfType(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value, typeof(VCard));
@@ -188,7 +188,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
 
             list.SaveVcf(path, VCdVersion.V4_0);
 
-            List<VCard> list2 = VCard.Load(path);
+            List<VCard> list2 = VCard.LoadVcf(path);
 
             Assert.AreNotEqual(list.Count, list2.Count);
             Assert.IsInstanceOfType(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value, typeof(VCard));
