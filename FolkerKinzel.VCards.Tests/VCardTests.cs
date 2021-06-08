@@ -199,7 +199,7 @@ namespace FolkerKinzel.VCards.Tests
             ms.Position = 0;
 
             using var reader = new StreamReader(ms);
-            List<VCard> list = VCard.Deserialize(reader);
+            List<VCard> list = VCard.DeserializeVcf(reader);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0].DisplayNames);
@@ -213,7 +213,7 @@ namespace FolkerKinzel.VCards.Tests
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void DeserializeTest_readerNull() => _ = VCard.Deserialize(null!);
+        public void DeserializeTest_readerNull() => _ = VCard.DeserializeVcf(null!);
 
 
         [DataTestMethod()]

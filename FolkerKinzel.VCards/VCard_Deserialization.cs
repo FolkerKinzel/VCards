@@ -78,10 +78,14 @@ namespace FolkerKinzel.VCards
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static List<VCard> Deserialize(TextReader reader)
+        public static List<VCard> DeserializeVcf(TextReader reader)
             => DoParse(reader ?? throw new ArgumentNullException(nameof(reader)));
 
 
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use DeserializeVcf instead.", true)]
+        public static List<VCard> Deserialize(TextReader reader) => DeserializeVcf(reader);
 
         private static List<VCard> DoParse(TextReader reader, VCdVersion versionHint = VCdVersion.V2_1)
         {
