@@ -35,7 +35,7 @@ namespace FolkerKinzel.VCards
         public static List<VCard> LoadVcf(string fileName, Encoding? textEncoding = null)
         {
             using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
-            return DoParse(reader);
+            return DoParseVcf(reader);
         }
 
         [Browsable(false)]
@@ -59,7 +59,7 @@ namespace FolkerKinzel.VCards
             }
 
             using var reader = new StringReader(content);
-            return DoParse(reader);
+            return DoParseVcf(reader);
         }
 
         [Browsable(false)]
@@ -79,7 +79,7 @@ namespace FolkerKinzel.VCards
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static List<VCard> DeserializeVcf(TextReader reader)
-            => DoParse(reader ?? throw new ArgumentNullException(nameof(reader)));
+            => DoParseVcf(reader ?? throw new ArgumentNullException(nameof(reader)));
 
 
         [Browsable(false)]
@@ -87,10 +87,11 @@ namespace FolkerKinzel.VCards
         [Obsolete("Use DeserializeVcf instead.", true)]
         public static List<VCard> Deserialize(TextReader reader) => DeserializeVcf(reader);
 
-        private static List<VCard> DoParse(TextReader reader, VCdVersion versionHint = VCdVersion.V2_1)
+
+        private static List<VCard> DoParseVcf(TextReader reader, VCdVersion versionHint = VCdVersion.V2_1)
         {
             Debug.Assert(reader != null);
-            DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoParse) + "(TextReader)");
+            DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoParseVcf) + "(TextReader)");
 
             var info = new VcfDeserializationInfo();
             var vCardList = new List<VCard>();
@@ -138,7 +139,7 @@ namespace FolkerKinzel.VCards
 
             using var reader = new StringReader(content ?? string.Empty);
 
-            List<VCard>? list = DoParse(reader, versionHint);
+            List<VCard>? list = DoParseVcf(reader, versionHint);
 
             return list.FirstOrDefault();
         }
