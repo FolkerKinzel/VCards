@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,20 @@ namespace FolkerKinzel.VCards
     public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
         #region static Methods
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use SaveVcf instead!", true)]
+        public static void Save(
+            string fileName,
+            List<
+#nullable disable
+                VCard
+#nullable restore
+                > vCardList,
+            VCdVersion version = DEFAULT_VERSION,
+            VcfOptions options = VcfOptions.Default) => SaveVcf(fileName, vCardList, version, options);
+
 
         /// <summary>
         /// Speichert eine Liste von <see cref="VCard"/>-Objekten in eine gemeinsame VCF-Datei.
@@ -62,7 +77,7 @@ namespace FolkerKinzel.VCards
         /// ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
-        public static void Save(
+        public static void SaveVcf(
             string fileName,
             List<
 #nullable disable
@@ -347,10 +362,18 @@ namespace FolkerKinzel.VCards
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
+        public void SaveVcf(
+            string fileName,
+            VCdVersion version = DEFAULT_VERSION,
+            VcfOptions options = VcfOptions.Default) => VCard.SaveVcf(fileName, new List<VCard> { this }, version, options);
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use SaveVcf instead!", true)]
         public void Save(
             string fileName,
             VCdVersion version = DEFAULT_VERSION,
-            VcfOptions options = VcfOptions.Default) => VCard.Save(fileName, new List<VCard> { this }, version, options);
+            VcfOptions options = VcfOptions.Default) => SaveVcf(fileName, version, options);
 
 
         /// <summary>

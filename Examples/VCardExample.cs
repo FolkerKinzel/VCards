@@ -89,16 +89,16 @@ namespace Examples
 
             // Save vcard as vCard 2.1:
             string v2FilePath = Path.Combine(directoryPath, v2FileName);
-            vcard.Save(v2FilePath, VC::Enums.VCdVersion.V2_1);
+            vcard.SaveVcf(v2FilePath, VC::Enums.VCdVersion.V2_1);
 
             // Save vcard as vCard 3.0:
             // You don't need to specify the version: Version 3.0 is the default.
             string v3FilePath = Path.Combine(directoryPath, v3FileName);
-            vcard.Save(v3FilePath);
+            vcard.SaveVcf(v3FilePath);
 
             // Save vcard as vCard 4.0:
             string v4FilePath = Path.Combine(directoryPath, v4FileName);
-            vcard.Save(v4FilePath, VC::Enums.VCdVersion.V4_0);
+            vcard.SaveVcf(v4FilePath, VC::Enums.VCdVersion.V4_0);
 
             // Load vCard:
             vcard = VCard.Load(v3FilePath)[0];

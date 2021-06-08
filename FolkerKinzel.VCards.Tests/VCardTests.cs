@@ -61,7 +61,7 @@ namespace FolkerKinzel.VCards.Tests
 
             string path = Path.Combine(TestContext!.TestRunResultsDirectory, $"SaveTest_{version}.vcf");
 
-            vcard.Save(path, version);
+            vcard.SaveVcf(path, version);
 
             List<VCard> list = VCard.Load(path);
 
@@ -85,7 +85,7 @@ namespace FolkerKinzel.VCards.Tests
                 DisplayNames = new TextProperty[] { new TextProperty("Folker") }
             };
 
-            vcard.Save(null!);
+            vcard.SaveVcf(null!);
         }
 
 
@@ -98,7 +98,7 @@ namespace FolkerKinzel.VCards.Tests
                 DisplayNames = new TextProperty[] { new TextProperty("Folker") }
             };
 
-            vcard.Save("   ");
+            vcard.SaveVcf("   ");
         }
 
 

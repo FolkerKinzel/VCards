@@ -69,7 +69,7 @@ namespace Examples
                     directoryPath,
                     $"{vcard.DisplayNames!.First()!.Value}{vcfExtension}");
 
-                vcard.Save(fileName, VC::Enums.VCdVersion.V4_0);
+                vcard.SaveVcf(fileName, VC::Enums.VCdVersion.V4_0);
             }
 
             // Clear the list and reload the .VCF files:

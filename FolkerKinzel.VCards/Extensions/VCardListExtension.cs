@@ -174,7 +174,7 @@ namespace FolkerKinzel.VCards.Extensions
             string fileName,
             VCdVersion version = VCard.DEFAULT_VERSION,
             VcfOptions options = VcfOptions.Default)
-            => VCard.Save(fileName, vCardList, version, options);
+            => VCard.SaveVcf(fileName, vCardList, version, options);
 
 
         /// <summary>

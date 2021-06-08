@@ -43,7 +43,7 @@ namespace FolkerKinzel.VCards.Tests
                 Assert.Fail();
             }
 
-            VCard.Save(System.IO.Path.Combine(
+            VCard.SaveVcf(System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"),
                 vcard!, VCdVersion.V2_1, VcfOptions.Default.Set(VcfOptions.WriteNonStandardProperties));
         }

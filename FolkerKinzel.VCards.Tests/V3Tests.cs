@@ -147,7 +147,7 @@ namespace FolkerKinzel.VCards.Tests
             };
 
 
-            vcard.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Paul Test.vcf"));
+            vcard.SaveVcf(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Paul Test.vcf"));
         }
 
 
