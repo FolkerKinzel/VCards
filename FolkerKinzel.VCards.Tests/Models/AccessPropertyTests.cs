@@ -50,7 +50,7 @@ namespace FolkerKinzel.VCards.Models.Tests
 
             string serialized = vcard.ToVcfString();
 
-            List<VCard> list = VCard.Parse(serialized);
+            List<VCard> list = VCard.ParseVcf(serialized);
 
             Assert.AreEqual(1, list.Count);
 

@@ -13,7 +13,7 @@
 - [x] Rename Serialize to `SerializeVcf`.
 - [x] Rename Load to `LoadVcf`.
 - [ ] Rename Deserialize to `DeserializeVcf`.
-- [ ] Rename Parse to `ParseVcf`. 
+- [x] Rename Parse to `ParseVcf`. 
 - [ ] Make the Value of `TimeZoneProperty` a new class `TzInfo`.
 - [ ] Make `ParameterSection.TimeZone` a new class `TzInfo`.
 - [ ] Add an interface `ITimeZoneConverter` that allows users to inject an object which converts named time zones

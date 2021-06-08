@@ -247,7 +247,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
 
             string s = list.ToVcfString(version);
 
-            List<VCard> list2 = VCard.Parse(s);
+            List<VCard> list2 = VCard.ParseVcf(s);
 
             Assert.AreNotEqual(0, list2.Count);
             Assert.IsInstanceOfType(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value, typeof(VCard));

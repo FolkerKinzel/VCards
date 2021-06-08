@@ -56,7 +56,7 @@ namespace FolkerKinzel.VCards.Tests
 
             string s = vcard.ToVcfString(VCdVersion.V2_1);
 
-            List<VCard> cards = VCard.Parse(s);
+            List<VCard> cards = VCard.ParseVcf(s);
 
             Assert.AreEqual(cards.Count, 1);
 
@@ -100,7 +100,7 @@ namespace FolkerKinzel.VCards.Tests
             Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
                 .All(x => x != null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
-            _ = VCard.Parse(s);
+            _ = VCard.ParseVcf(s);
 
             Assert.AreEqual(((DataUrl?)vcard.Keys?.First()?.Value)?.GetEmbeddedText(), ASCIITEXT);
             Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
@@ -131,7 +131,7 @@ namespace FolkerKinzel.VCards.Tests
 
             Assert.IsNotNull(s);
 
-            List<VCard> list = VCard.Parse(s);
+            List<VCard> list = VCard.ParseVcf(s);
 
             Assert.IsNotNull(list);
 

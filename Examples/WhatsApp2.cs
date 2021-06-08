@@ -43,7 +43,7 @@ namespace Examples
             Console.WriteLine(vcfString);
 
             // Parse the VCF string:
-            vcard = VCard.Parse(vcfString)[0];
+            vcard = VCard.ParseVcf(vcfString)[0];
 
             // Find the WhatsApp number:
             string? whatsAppNumber = vcard.PhoneNumbers?

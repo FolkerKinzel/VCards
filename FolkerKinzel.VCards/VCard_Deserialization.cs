@@ -51,7 +51,7 @@ namespace FolkerKinzel.VCards
         /// <param name="content">Ein <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</param>
         /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="content"/> darstellen.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="content"/> ist <c>null</c>.</exception>
-        public static List<VCard> Parse(string content)
+        public static List<VCard> ParseVcf(string content)
         {
             if (content == null)
             {
@@ -61,6 +61,11 @@ namespace FolkerKinzel.VCards
             using var reader = new StringReader(content);
             return DoParse(reader);
         }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use ParseVcf instead.", true)]
+        public static List<VCard> Parse(string content) => ParseVcf(content);
 
 
 

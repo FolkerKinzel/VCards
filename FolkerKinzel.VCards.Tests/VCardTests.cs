@@ -25,19 +25,19 @@ namespace FolkerKinzel.VCards.Tests
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ParseTest_contentNull() => _ = VCard.Parse(null!);
+        public void ParseTest_contentNull() => _ = VCard.ParseVcf(null!);
 
         [TestMethod()]
         public void ParseTest_contentEmpty()
         {
-            List<VCard> list = VCard.Parse("");
+            List<VCard> list = VCard.ParseVcf("");
             Assert.AreEqual(0, list.Count);
         }
 
         [TestMethod()]
         public void ParseTest()
         {
-            List<VCard> list = VCard.Parse("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
+            List<VCard> list = VCard.ParseVcf("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
             Assert.AreEqual(1, list.Count);
 
             Assert.IsNotNull(list[0].DisplayNames);
@@ -229,7 +229,7 @@ namespace FolkerKinzel.VCards.Tests
 
             string s = vcard.ToVcfString(version);
 
-            List<VCard> list = VCard.Parse(s);
+            List<VCard> list = VCard.ParseVcf(s);
 
             Assert.AreEqual(1, list.Count);
 
