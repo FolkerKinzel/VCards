@@ -84,7 +84,7 @@ namespace FolkerKinzel.VCards
                 return;
             }
 
-            using FileStream stream = InitializeFileStream(fileName, vCardList, version, options);
+            using FileStream stream = InitializeFileStream(fileName);
             Serialize(stream, vCardList, version, options);
         }
 
@@ -457,7 +457,7 @@ namespace FolkerKinzel.VCards
 
 
         [ExcludeFromCodeCoverage]
-        private static FileStream InitializeFileStream(string fileName, List<VCard> vCardList, VCdVersion version, VcfOptions options)
+        private static FileStream InitializeFileStream(string fileName)
         {
             try
             {
