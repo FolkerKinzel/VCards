@@ -12,7 +12,7 @@
 - [x] Rename Save to `SaveVcf`.
 - [x] Rename Serialize to `SerializeVcf`.
 - [x] Rename Load to `LoadVcf`.
-- [ ] Rename Deserialize to `DeserializeVcf`.
+- [x] Rename Deserialize to `DeserializeVcf`.
 - [x] Rename Parse to `ParseVcf`. 
 - [ ] Make the Value of `TimeZoneProperty` a new class `TzInfo`.
 - [ ] Make `ParameterSection.TimeZone` a new class `TzInfo`.
