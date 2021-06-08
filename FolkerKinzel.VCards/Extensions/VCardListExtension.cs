@@ -234,7 +234,7 @@ namespace FolkerKinzel.VCards.Extensions
                                            VCdVersion version = VCard.DEFAULT_VERSION,
                                            VcfOptions options = VcfOptions.Default,
                                            bool leaveStreamOpen = false)
-            => VCard.Serialize(stream, vCardList, version, options, leaveStreamOpen);
+            => VCard.SerializeVcf(stream, vCardList, version, options, leaveStreamOpen);
 
 
 

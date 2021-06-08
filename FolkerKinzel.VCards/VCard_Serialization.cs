@@ -22,7 +22,7 @@ namespace FolkerKinzel.VCards
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use SaveVcf instead!", true)]
+        [Obsolete("Use SaveVcf instead.", true)]
         public static void Save(
             string fileName,
             List<
@@ -100,8 +100,21 @@ namespace FolkerKinzel.VCards
             }
 
             using FileStream stream = InitializeFileStream(fileName, vCardList, version, options);
-            Serialize(stream, vCardList, version, options);
+            SerializeVcf(stream, vCardList, version, options);
         }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use SerializeVcf instead.", true)]
+        public static void Serialize(Stream stream,
+                                     List<
+#nullable disable
+                                         VCard
+#nullable restore
+                                         > vCardList,
+                                     VCdVersion version = DEFAULT_VERSION,
+                                     VcfOptions options = VcfOptions.Default,
+                                     bool leaveStreamOpen = false) => SerializeVcf(stream, vCardList, version, options, leaveStreamOpen);
 
 
         /// <summary>
@@ -149,7 +162,7 @@ namespace FolkerKinzel.VCards
         /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
         /// <exception cref="IOException">E/A-Fehler.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
-        public static void Serialize(Stream stream,
+        public static void SerializeVcf(Stream stream,
                                      List<
 #nullable disable
                                          VCard
@@ -159,7 +172,7 @@ namespace FolkerKinzel.VCards
                                      VcfOptions options = VcfOptions.Default,
                                      bool leaveStreamOpen = false)
         {
-            DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(Serialize)}({nameof(TextWriter)}, List<{nameof(VCard)}>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
+            DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(SerializeVcf)}({nameof(TextWriter)}, List<{nameof(VCard)}>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
 
             if (stream is null)
             {
@@ -310,7 +323,7 @@ namespace FolkerKinzel.VCards
 
             using var stream = new MemoryStream();
 
-            VCard.Serialize(stream, vCardList, version, options, leaveStreamOpen: true);
+            VCard.SerializeVcf(stream, vCardList, version, options, leaveStreamOpen: true);
             stream.Position = 0;
 
             using var reader = new StreamReader(stream, Encoding.UTF8);
@@ -367,6 +380,7 @@ namespace FolkerKinzel.VCards
             VCdVersion version = DEFAULT_VERSION,
             VcfOptions options = VcfOptions.Default) => VCard.SaveVcf(fileName, new List<VCard> { this }, version, options);
 
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("Use SaveVcf instead!", true)]
@@ -420,12 +434,21 @@ namespace FolkerKinzel.VCards
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public void Serialize(Stream stream,
+        public void SerializeVcf(Stream stream,
                               VCdVersion version = DEFAULT_VERSION,
                               VcfOptions options = VcfOptions.Default,
                               bool leaveStreamOpen = false)
 
-            => VCard.Serialize(stream, new List<VCard> { this }, version, options, leaveStreamOpen);
+            => VCard.SerializeVcf(stream, new List<VCard> { this }, version, options, leaveStreamOpen);
+
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use SerializeVcf instead.", true)]
+        public void Serialize(Stream stream,
+                              VCdVersion version = DEFAULT_VERSION,
+                              VcfOptions options = VcfOptions.Default,
+                              bool leaveStreamOpen = false) => SerializeVcf(stream, version, options, leaveStreamOpen);
 
 
         /// <summary>

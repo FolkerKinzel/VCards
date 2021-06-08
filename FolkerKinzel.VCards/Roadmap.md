@@ -10,7 +10,7 @@
 
 ### 3.0.0  
 - [x] Rename Save to `SaveVcf`.
-- [ ] Rename Serialize to `SerializeVcf`.
+- [x] Rename Serialize to `SerializeVcf`.
 - [ ] Rename Load to `LoadVcf`.
 - [ ] Rename Deserialize to `DeserializeVcf`.
 - [ ] Rename Parse to `ParseVcf`. 

@@ -116,7 +116,7 @@ namespace FolkerKinzel.VCards.Tests
                 DisplayNames = new TextProperty[] { new TextProperty("Folker") }
             };
 
-            vcard.Serialize(null!, version);
+            vcard.SerializeVcf(null!, version);
         }
 
 
@@ -134,7 +134,7 @@ namespace FolkerKinzel.VCards.Tests
 
             using var ms = new MemoryStream();
 
-            vcard.Serialize(ms, version, leaveStreamOpen: true);
+            vcard.SerializeVcf(ms, version, leaveStreamOpen: true);
 
             Assert.AreNotEqual(0, ms.Length);
 
@@ -158,7 +158,7 @@ namespace FolkerKinzel.VCards.Tests
 
             using var ms = new MemoryStream();
 
-            vcard.Serialize(ms, version, leaveStreamOpen: false);
+            vcard.SerializeVcf(ms, version, leaveStreamOpen: false);
 
             _ = ms.Length;
         }
@@ -178,7 +178,7 @@ namespace FolkerKinzel.VCards.Tests
             using var ms = new MemoryStream();
             ms.Close();
 
-            vcard.Serialize(ms, version);
+            vcard.SerializeVcf(ms, version);
         }
 
 
@@ -195,7 +195,7 @@ namespace FolkerKinzel.VCards.Tests
 
             using var ms = new MemoryStream();
 
-            vcard.Serialize(ms, version, leaveStreamOpen: true);
+            vcard.SerializeVcf(ms, version, leaveStreamOpen: true);
             ms.Position = 0;
 
             using var reader = new StreamReader(ms);
