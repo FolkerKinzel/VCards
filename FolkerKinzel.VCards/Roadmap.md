@@ -29,6 +29,7 @@ argument.
 - [x] Mark the usage of `VCdDataType.Timestamp`  as Obsolete-**Error**.
 - [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
 VCard.SaveVcf, VCard.SerializeVcf, VCard.ToVcfString, VCard.Reference and VCard.Dereference.
+- [ ] Implement `IEnumerable<VCard>` in `VCard`
 - [ ] `VCard.Reference` should copy the input data and return its result as IEnumerable&lt;VCard&gt;.
 - [ ] VCard.LoadVcf, VCard.DeserializeVcf and VCard.ParseVcf should return a `ReadOnlyCollection&lt;VCard&gt;`.
 - [ ] Add extension methods for IEnumerable&lt;VCard?&gt; to serialize it as VCF in a class named `VCardCollectionExtension`.
