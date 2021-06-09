@@ -8,7 +8,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>2.2.0-alpha</Version>
-    <FileVersion>2.2.0.0</FileVersion>
+    <FileVersion>2.2.0.1</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReleaseNotes>Added the property VCard.FreeOrBusyUrls which implements the vCard 4.0 FBURL property.
