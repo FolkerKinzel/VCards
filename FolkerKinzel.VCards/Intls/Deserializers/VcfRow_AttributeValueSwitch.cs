@@ -27,9 +27,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
                 return CHARSET_PROPERTY;
             }
 
-            string upperCase = value.ToUpperInvariant();
-
-            switch (upperCase)
+            switch (value.ToUpperInvariant())
             {
                 case "BASE64":
                 case "B":
