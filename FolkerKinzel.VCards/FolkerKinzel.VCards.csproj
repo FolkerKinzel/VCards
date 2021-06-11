@@ -7,11 +7,11 @@
     <!-- .nuget-Package: -->
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
-    <Version>2.2.0-alpha</Version>
-    <FileVersion>2.2.0.4</FileVersion>
+    <Version>2.2.0</Version>
+    <FileVersion>2.2.0.6</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <PackageReleaseNotes>Added the property VCard.FreeOrBusyUrls which implements the vCard 4.0 FBURL property.
+    <PackageReleaseNotes>Adds the property VCard.FreeOrBusyUrls which implements the vCard 4.0 FBURL property.
       
     </PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>

@@ -810,14 +810,6 @@ Please note, that when using the class, yourself is responsible for the standard
   <T ID="D31C1DABDCE61F48"></T>
   <T ID="947C6C83D2CE14D2"></T>
   <T ID="468997B1D38B8035"></T>
-  <T ID="28295E153C74E9BC"></T>
-  <T ID="CE0ADA755D2385E9"></T>
-  <T ID="624B950F1A2F85AF"></T>
-  <T ID="8DEC07686A370594"></T>
-  <T ID="649CF2B6EDCC141A"></T>
-  <T ID="C0CBCB8788543451"></T>
-  <T ID="C005916E203E9755"></T>
-  <T ID="AE8924835B50BA09"></T>
   <T ID="AD23D6F1C58B3AF3"></T>
   <T ID="96016051AF68EF7C"></T>
   <T ID="41706FBAF3537DEF"></T>
@@ -842,10 +834,6 @@ Please note, that when using the class, yourself is responsible for the standard
   <T ID="57745A5E318097BB"></T>
   <T ID="BBE7204C782DEF5F"></T>
   <T ID="9618E22FAA516C4C"></T>
-  <T ID="201B0F284C9D669"></T>
-  <T ID="F1CDE4DE841117C8"></T>
-  <T ID="108EC82CA32FFD93"></T>
-  <T ID="848127736D751B39"></T>
   <T ID="F978DF73FB6E05B4">A collection of parsed &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects, that represent the content of the VCF file.</T>
   <T ID="A44474F08FDB922A">Parses a &lt;see cref ="T:System.String"/&gt;, that represents the content of a VCF file.</T>
   <T ID="35FDC32598B455A6">A &lt;see cref ="T:System.String"/&gt; that represents the content of a VCF file.</T>
