@@ -39,7 +39,7 @@ argument.
 
 =
 - [ ] Store the value of `PropertyID` in one `byte`.
-- [ ] Make `PropertyId` a class.
+- [ ] Make `PropertyID` a class.
 
 =
 - [x] Mark the usage of `VCdDataType.Timestamp` as Obsolete-**Error**.
