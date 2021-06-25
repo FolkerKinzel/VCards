@@ -28,17 +28,16 @@
 GeoCoordinate always points to a valid geographical position.
 
 =
-- [ ] Move `FolkerKinzel.VCards.Models.PropertyParts.PropertyIdMapping` to
-`FolkerKinzel.VCards.Models.PropertyIdMapping`.
-- [ ] Make `FolkerKinzel.VCards.Models.PropertyIdMapping` a class.
-- [ ] Replace `Guid PropertyIdMapping.Uuid` by `Uri PropertyIdMapping.Identifier`.
+- [ ] Move `FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping` to
+`FolkerKinzel.VCards.Models.PropertyIDMapping`.
+- [ ] Make `FolkerKinzel.VCards.Models.PropertyIDMapping` a class.
+- [ ] Replace `Guid PropertyIdMapping.Uuid` by `Uri PropertyIDMapping.Identifier`.
 
 =
-- [ ] Add a constructor to the `PropertyIdMappingProperty` class, which takes a PropertyIdMapping as 
+- [ ] Add a constructor to the `PropertyIDMappingProperty` class, which takes a PropertyIdMapping as 
 argument.
 
 =
-- [ ] Rename `PropertyID` to `PropertyId`.
 - [ ] Store the value of `PropertyID` in one `byte`.
 - [ ] Make `PropertyId` a class.
 
