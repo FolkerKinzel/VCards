@@ -9,6 +9,10 @@
 - [x] Implement FBURL property.
 
 ### 3.0.0  
+- [ ] Add netstandard 2.0 support
+
+=
+
 - [x] Rename VCard.Save() to `SaveVcf`.
 - [x] Rename VCard.Serialize() to `SerializeVcf`.
 - [x] Rename VCard.Load() to `LoadVcf`.
