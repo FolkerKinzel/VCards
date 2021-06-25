@@ -8,6 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9AB21EE1-519D-416F-B363-4D1F3EF54AC8}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.github\ISSUE_TEMPLATE\bug_report.md = .github\ISSUE_TEMPLATE\bug_report.md
+		.github\ISSUE_TEMPLATE\feature_request.md = .github\ISSUE_TEMPLATE\feature_request.md
 		README.md = README.md
 		Reference.md = Reference.md
 		WhatsAppIssue.md = WhatsAppIssue.md
@@ -23,9 +25,9 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "FolkerKinzel.VCards.Doku.de
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{03CA0779-41BB-4F0F-9124-713CB2344F49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FolkerKinzel.TimeZoneConverters", "FolkerKinzel.TimeZoneConverters\FolkerKinzel.TimeZoneConverters.csproj", "{7AF65024-FE27-4F66-9431-F0CFBD6B42BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FolkerKinzel.TimeZoneConverters", "FolkerKinzel.TimeZoneConverters\FolkerKinzel.TimeZoneConverters.csproj", "{7AF65024-FE27-4F66-9431-F0CFBD6B42BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FolkerKinzel.TimeZoneConvertersTests", "FolkerKinzel.TimeZoneConvertersTests\FolkerKinzel.TimeZoneConvertersTests.csproj", "{5DAB06F3-CA87-4BC4-9AF7-D8B368EEEADA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FolkerKinzel.TimeZoneConvertersTests", "FolkerKinzel.TimeZoneConvertersTests\FolkerKinzel.TimeZoneConvertersTests.csproj", "{5DAB06F3-CA87-4BC4-9AF7-D8B368EEEADA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
