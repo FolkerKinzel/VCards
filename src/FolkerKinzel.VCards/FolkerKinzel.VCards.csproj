@@ -26,6 +26,7 @@
     <RepositoryUrl>https://github.com/FolkerKinzel/VCards.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/FolkerKinzel/VCards</PackageProjectUrl>
+    <PackageIconUrl />
   </PropertyGroup>
   <!-- 👇 disable the nullable warnings when compiling for .NET 4.0 -->
   <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
@@ -49,7 +50,7 @@
     <Compile Remove="Intls\Deserializers\VcfRow.ParameterSplitter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Nuget-Logo\Logo.png">
+    <None Include="..\..\..\..\Nuget-Logo\Logo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
