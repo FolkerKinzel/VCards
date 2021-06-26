@@ -95,7 +95,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                             break;
                         }
                     case ParameterKey.GEO:
-                        if (GeoCoordinate.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out GeoCoordinate? geo))
+                        if (FolkerKinzel.VCards.Models.GeoCoordinate.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out FolkerKinzel.VCards.Models.GeoCoordinate? geo))
                         {
                             this.GeoPosition = geo;
                         }

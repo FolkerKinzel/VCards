@@ -162,9 +162,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// <c>GEO</c>: Geografische Position. <c>(4)</c>
         /// </summary>
-        public GeoCoordinate? GeoPosition
+        public FolkerKinzel.VCards.Models.GeoCoordinate? GeoPosition
         {
-            get => Get<GeoCoordinate?>(VCdParam.GeoPosition);
+            get => Get<FolkerKinzel.VCards.Models.GeoCoordinate?>(VCdParam.GeoPosition);
             set => Set(VCdParam.GeoPosition, value);
         }
 
