@@ -12,23 +12,6 @@ It enables you
 It is used as a dependency in [FolkerKinzel.Contacts.IO](https://github.com/FolkerKinzel/Contacts.IO) - an easy to use .NET-API
 to manage contact data of organizations and natural persons.
 
-```
-nuget Package Manager:
-PM> Install-Package FolkerKinzel.VCards -Version 2.1.1
-
-.NET CLI:
-> dotnet add package FolkerKinzel.VCards --version 2.1.1
-
-Package Reference (Visual Studio Project File):
-<PackageReference Include="FolkerKinzel.VCards" Version="2.1.1" />
-
-Paket CLI:
-paket add FolkerKinzel.VCards --version 2.1.1
-
-F# Interactive:
-> #r "nuget: FolkerKinzel.VCards, 2.1.1"
-```
-
 
 * [Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.1.1/FolkerKinzel.VCards.en.chm)
 
@@ -37,7 +20,7 @@ F# Interactive:
 > IMPORTANT: On some systems the content of the .CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox (if it is present) in the lower right corner of the General tab in the Properties dialog.
 
 
-## Overview
+## Get Started
 
 1. [The Data Model Explained](#the-data-model-explained)
 2. [Example](#example)
