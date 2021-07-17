@@ -10,7 +10,6 @@
 
 ### 3.0.0  
 - [ ] Add .NET Standard 2.0 support
-- [ ] Add .NET Framework 4.5 support
 
 =
 
@@ -74,6 +73,7 @@ VCard.SaveVcf, VCard.SerializeVcf, VCard.ToVcfString, VCard.Reference and VCard.
 - [ ] Implement `ICloneable` to the `VCard` class.
 
 ### 4.0.0
-- [ ] End net4.0 support.
+- [ ] End .NET Framework 4.0 support.
+- [ ] Add .NET Framework 4.5 support
 - [ ] Remove the `DataUrl` class and the `MimeType` class and replace it with something new and better like
-`FolkerKinzel.URIs.DataUrlHelper`.
+`FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.Uris.MimeType`.
