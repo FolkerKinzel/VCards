@@ -11,6 +11,10 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 return Encoding.UTF8;
             }
 
+#if !NET40
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+#endif
+
             try
             {
                 return Encoding.GetEncoding(s);

@@ -9,7 +9,8 @@
 - [x] Implement FBURL property.
 
 ### 3.0.0  
-- [ ] Add netstandard 2.0 support
+- [ ] Add .NET Standard 2.0 support
+- [ ] Add .NET Framework 4.5 support
 
 =
 
@@ -63,6 +64,8 @@ VCard.SaveVcf, VCard.SerializeVcf, VCard.ToVcfString, VCard.Reference and VCard.
 =
 - [ ] VCard.LoadVcf, VCard.DeserializeVcf and VCard.ParseVcf should return a `ReadOnlyCollection&lt;VCard&gt;`.
 
+=
+- [x] Use `System.Text.CodePagesEncodingProvider` to retrieve text encoding instances in .NET Standard and .NET 5.0
 
 ### 3.0.1
 - [ ] Cleanup: Remove `VCdDataType.Timestamp` and all other Symbols marked as Obsolete errors in 3.0.0.
@@ -71,6 +74,6 @@ VCard.SaveVcf, VCard.SerializeVcf, VCard.ToVcfString, VCard.Reference and VCard.
 - [ ] Implement `ICloneable` to the `VCard` class.
 
 ### 4.0.0
-- [ ] Replace net4.0 support by net4.5 support.
+- [ ] End net4.0 support.
 - [ ] Remove the `DataUrl` class and the `MimeType` class and replace it with something new and better like
 `FolkerKinzel.URIs.DataUrlHelper`.
