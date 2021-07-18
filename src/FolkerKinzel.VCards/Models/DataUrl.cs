@@ -216,7 +216,7 @@ namespace FolkerKinzel.VCards.Models
                 throw new ArgumentException(Res.NoData, nameof(text));
             }
 
-            var dataUri = new DataUrl($"data:,{Uri.EscapeDataString(text)}", null, DataEncoding.UrlEncoded);
+            var dataUri = new DataUrl($"data:,{Uri.EscapeDataString(Uri.UnescapeDataString(text))}", null, DataEncoding.UrlEncoded);
 
 
             return dataUri;
