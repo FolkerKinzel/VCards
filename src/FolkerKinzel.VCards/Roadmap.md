@@ -10,6 +10,7 @@
 
 ### 3.0.0  
 - [ ] Add .NET Standard 2.0 support
+- [ ] Add .NET Framework 4.6.1 support
 
 =
 
@@ -22,14 +23,22 @@
 =
 - [ ] Make the Value of `TimeZoneProperty` a new class `TzInfo`.
 - [ ] Make `ParameterSection.TimeZone` a new class `TzInfo`.
-- [ ] Add an interface `ITimeZoneConverter` that allows users to inject an object which converts named time zones
-(e.g. IANA names) to UTC offsets (TimeSpan) when converting from vCard 4.0 to vCard 3.0.
+- [ ] Add an interface `ITimeZoneConverter` that allows users to inject an object which 
+converts named time zones (e.g. IANA names) to UTC offsets (TimeSpan) when converting from 
+vCard 4.0 to vCard 3.0. Make an option for this conversion.
+- [ ] Preserve time zone Parameters in vCard 3.0 and 2.1 using TZ properties and automatic group identifiers. 
+ Make an option for it.
+- [ ] Collect TZ properties with groups as TimeZone parameters when parsing.
 
 =
 - [x] Move `FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate` to 
 `FolkerKinzel.VCards.Models.GeoCoordinate`.
 - [x] Remove the Property `GeoCoordinate.IsUnknown` and make sure instead that 
 GeoCoordinate always points to a valid geographical position.
+- [ ] Preserve geo parameters in vCard 3.0 and 2.1 using GEO properties and automatic group identifiers. 
+ Make an option for it.
+- [ ] Collect GEO properties with groups as GeoCoordinate parameters when parsing.
+
 
 =
 - [ ] Move `FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping` to
@@ -81,7 +90,7 @@ as input for the data to embed.
 
 ### 4.0.0
 - [ ] End .NET Framework 4.0 support.
-- [ ] Add .NET Framework 4.6.1 support
+- [ ] Use the HashCode struct to compute hash codes.
 - [ ] Remove the `DataUrl` class and the `MimeType` class and replace it with something new and better like
 `FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
 - [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`
