@@ -38,12 +38,14 @@ GeoCoordinate always points to a valid geographical position.
 - [ ] Replace `Guid PropertyIdMapping.Uuid` by `Uri PropertyIDMapping.Identifier`.
 
 =
-- [ ] Add a constructor to the `PropertyIDMappingProperty` class, which takes a PropertyIdMapping as 
-argument.
 
 =
 - [ ] Store the value of `PropertyID` in one `byte`.
-- [ ] Make `PropertyID` a class.
+- [ ] Make `PropertyID` a class in order to have better validation.
+- [ ] Give `PropertyID` only one public ctor:
+```csharp
+public PropertyID(int propertyNumber, PropertyIDMapping? pidMap = null);
+```
 
 =
 - [x] Mark the usage of `VCdDataType.Timestamp` as Obsolete-**Error**.
@@ -81,4 +83,5 @@ as input for the data to embed.
 - [ ] End .NET Framework 4.0 support.
 - [ ] Add .NET Framework 4.6.1 support
 - [ ] Remove the `DataUrl` class and the `MimeType` class and replace it with something new and better like
-`FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.Uris.MimeType`.
+`FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
+- [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`
