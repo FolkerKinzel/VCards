@@ -41,19 +41,30 @@ GeoCoordinate always points to a valid geographical position.
 
 
 =
-- [ ] Move `FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping` to
+- [x] Move `FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping` to
 `FolkerKinzel.VCards.Models.PropertyIDMapping`.
-- [ ] Make `FolkerKinzel.VCards.Models.PropertyIDMapping` a class.
-- [ ] Replace `Guid PropertyIdMapping.Uuid` by `Uri PropertyIDMapping.Identifier`.
+- [ ] Replace in `PropertyIDMapping.Parse` the method char.IsDigit(char) 
+with FolkerKinzel.Strings `char.IsDecimalDigit()`
+- [x] Make `FolkerKinzel.VCards.Models.PropertyIDMapping` a class.
+- [x] Rename `PropertyIdMapping.MappingNumber` to `PropertyIdMapping.ID`
+- [x] Replace `Guid PropertyIdMapping.Uuid` by `Uri PropertyIDMapping.Mapping`.
+- [x] Remove `IEquatable<PropertyIDMapping`.
 
 =
 
+- [x] `PropertyIDMappingProperty`: Ctor, which takes `PropertyIDMapping` as 
+argument.
+
 =
-- [ ] Store the value of `PropertyID` in one `byte`.
-- [ ] Make `PropertyID` a class in order to have better validation.
-- [ ] Give `PropertyID` only one public ctor:
+- [x] Store the value of `PropertyID` in one `byte`.
+- [ ] Replace in `PropertyID.ParseInto` the method char.IsDigit(char) 
+with FolkerKinzel.Strings `char.IsDecimalDigit()`
+- [x] Make `PropertyID` a class in order to have better validation.
+- [x] Rename `PropertyID.PropertyNumber` to `PropertyID.ID`
+- [x] Rename `PropertyID.MappingNumber` to `PropertyID.Mapping`
+- [x] Give `PropertyID` only one public ctor:
 ```csharp
-public PropertyID(int propertyNumber, PropertyIDMapping? pidMap = null);
+public PropertyID(int id, PropertyIDMapping? mapping = null);
 ```
 
 =

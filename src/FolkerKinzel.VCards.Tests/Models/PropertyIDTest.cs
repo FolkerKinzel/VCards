@@ -13,18 +13,18 @@ namespace FolkerKinzel.VCards.Models.Tests
             var pid = new PropertyID();
 
             Assert.IsTrue(pid.IsEmpty);
-            Assert.AreEqual(0, pid.PropertyNumber);
-            Assert.IsNull(pid.MappingNumber);
+            Assert.AreEqual(0, pid.ID);
+            Assert.IsNull(pid.Mapping);
 
             pid = new PropertyID(5, 7);
 
-            Assert.AreEqual(5, pid.PropertyNumber);
-            Assert.AreEqual(7, pid.MappingNumber);
+            Assert.AreEqual(5, pid.ID);
+            Assert.AreEqual(7, pid.Mapping);
 
             pid = new PropertyID(5);
 
-            Assert.AreEqual(5, pid.PropertyNumber);
-            Assert.IsNull(pid.MappingNumber);
+            Assert.AreEqual(5, pid.ID);
+            Assert.IsNull(pid.Mapping);
         }
 
         [TestMethod]

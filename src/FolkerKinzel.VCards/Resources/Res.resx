@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="IdentifierTooLong" xml:space="preserve">
+    <value>The length of the identifier is more than one digit.</value>
+  </data>
+  <data name="MissingUri" xml:space="preserve">
+    <value>No URI is specified.</value>
+  </data>
   <data name="NoData" xml:space="preserve">
     <value>The argument contains no data.</value>
   </data>

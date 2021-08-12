@@ -61,6 +61,24 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The length of the identifier is more than one digit. ähnelt.
+        /// </summary>
+        internal static string IdentifierTooLong {
+            get {
+                return ResourceManager.GetString("IdentifierTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No URI is specified. ähnelt.
+        /// </summary>
+        internal static string MissingUri {
+            get {
+                return ResourceManager.GetString("MissingUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The argument contains no data. ähnelt.
         /// </summary>
         internal static string NoData {

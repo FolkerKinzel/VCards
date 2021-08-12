@@ -12,12 +12,12 @@ namespace FolkerKinzel.VCards.Models.PropertyParts.Tests
             var pidMap = new PropertyIDMapping();
 
             Assert.IsTrue(pidMap.IsEmpty);
-            Assert.AreEqual(0, pidMap.MappingNumber);
+            Assert.AreEqual(0, pidMap.ID);
 
             pidMap = new PropertyIDMapping(5, Guid.NewGuid());
 
             Assert.IsFalse(pidMap.IsEmpty);
-            Assert.AreEqual(5, pidMap.MappingNumber);
+            Assert.AreEqual(5, pidMap.ID);
         }
 
         [TestMethod]
@@ -32,8 +32,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts.Tests
 
             var mapping = PropertyIDMapping.Parse(pidMap);
 
-            Assert.AreEqual(2, mapping.MappingNumber);
-            Assert.AreEqual(Guid.Parse("d89c9c7a-2e1b-4832-82de-7e992d95faa5"), mapping.Uuid);
+            Assert.AreEqual(2, mapping.ID);
+            Assert.AreEqual(Guid.Parse("d89c9c7a-2e1b-4832-82de-7e992d95faa5"), mapping.Mapping);
         }
 
         [TestMethod]
@@ -43,8 +43,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts.Tests
 
             var mapping = PropertyIDMapping.Parse(pidMap);
 
-            Assert.AreEqual(2, mapping.MappingNumber);
-            Assert.AreEqual(Guid.Parse("d89c9c7a-2e1b-4832-82de-7e992d95faa5"), mapping.Uuid);
+            Assert.AreEqual(2, mapping.ID);
+            Assert.AreEqual(Guid.Parse("d89c9c7a-2e1b-4832-82de-7e992d95faa5"), mapping.Mapping);
         }
 
         [TestMethod]
