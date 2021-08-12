@@ -72,12 +72,20 @@ public PropertyID(int id, PropertyIDMapping? mapping = null);
 
 =
 - [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
-VCard.SaveVcf, VCard.SerializeVcf, VCard.ToVcfString, VCard.Reference and VCard.Dereference.
+VCard.SaveVcf.
+- [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
+VCard.SerializeVcf.
+- [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
+VCard.ToVcfString.
+- [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
+VCard.Reference.
+- [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
+VCard.Dereference.
 - [ ] Add a new class `VCardCollectionExtension` with extension methods for IEnumerable&lt;VCard?&gt;.
 - [ ] Remove `VCardListExtension` instead.
 
 =
-- [ ] Implement `IEnumerable<VCard>` in `VCard`
+- [x] Implement `IEnumerable<VCard>` in `VCard`
 
 =
 - [ ] `VCard.Reference` should copy the input data and return its result as IEnumerable&lt;VCard&gt;.

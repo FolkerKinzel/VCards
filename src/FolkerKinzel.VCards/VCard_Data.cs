@@ -17,7 +17,7 @@ namespace FolkerKinzel.VCards
     /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
+    public sealed partial class VCard
     {
         private readonly Dictionary<VCdProp, object> _propDic = new();
 
@@ -40,13 +40,6 @@ namespace FolkerKinzel.VCards
             }
         }
 
-        /// <summary>
-        /// Gibt einen Enumerator zurück, der die <see cref="VCard"/> durchläuft.
-        /// </summary>
-        /// <returns>Ein Enumerator für die <see cref="VCard"/>.</returns>
-        public IEnumerator<KeyValuePair<VCdProp, object>> GetEnumerator() => ((IEnumerable<KeyValuePair<VCdProp, object>>)_propDic).GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<KeyValuePair<VCdProp, object>>)_propDic).GetEnumerator();
 
 
         /// <summary>
