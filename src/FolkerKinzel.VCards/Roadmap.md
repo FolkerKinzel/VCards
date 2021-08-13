@@ -90,6 +90,7 @@ Remove `VCardListExtension` instead.
 - [x] Implement `IEnumerable<VCard>` in `VCard`.
 - [ ] Implement `IEquatable<VCard>` in `VCard`.
 - [x] Implement `ICloneable` in `VCard`.
+- [x] Implement `ICloneable` in `ParameterSection`.
 - [ ] Implement `ICloneable` in `VCardProperty`.
 
 =

@@ -23,6 +23,12 @@ namespace FolkerKinzel.VCards.Models
     public abstract class DateTimeProperty : VCardProperty, IEnumerable<DateTimeProperty>
     {
         /// <summary>
+        /// Kopierkonstruktor
+        /// </summary>
+        /// <param name="prop">Das zu klonende <see cref="DateTimeProperty"/>-Objekt.</param>
+        protected DateTimeProperty(DateTimeProperty prop) : base(prop) { }
+
+        /// <summary>
         /// Konstruktor, der abgeleiteten Klassen erlaubt, ein neues <see cref="DateTimeProperty"/>-Objekt zu initialisieren.
         /// </summary>
         /// <param name="parameters">Ein <see cref="ParameterSection"/>-Objekt, das den Parameter-Teil einer

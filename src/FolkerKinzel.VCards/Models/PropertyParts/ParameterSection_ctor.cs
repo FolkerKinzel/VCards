@@ -15,6 +15,25 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
     {
         internal ParameterSection() { }
 
+        /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="paraSec">The <see cref="ParameterSection"/> object to clone.</param>
+        private ParameterSection(ParameterSection paraSec)
+        {
+            foreach (var kvp in paraSec._propDic)
+            {
+                Set(kvp.Key, kvp.Value switch
+                {
+                    ICloneable cloneable => cloneable.Clone(),
+                    IEnumerable<ICloneable?> cloneables => cloneables.Select(x => x?.Clone()).ToArray(),
+                    IEnumerable<object?> enumerable => enumerable.ToArray(),
+                    _ => kvp.Value
+                });
+            }
+        }
+
+
         internal ParameterSection(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters, VcfDeserializationInfo info)
         {
             #region DebugAssert

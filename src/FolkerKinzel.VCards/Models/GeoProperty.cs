@@ -17,6 +17,14 @@ namespace FolkerKinzel.VCards.Models
     public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
     {
         /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="prop"></param>
+        private GeoProperty(GeoProperty prop) : base(prop)
+            => Value = prop.Value;
+        
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="GeoProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein <see cref="GeoCoordinate"/>-Objekt oder <c>null</c>.</param>
@@ -65,5 +73,8 @@ namespace FolkerKinzel.VCards.Models
         }
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GeoProperty>)this).GetEnumerator();
+
+
+        public override object Clone() => new GeoProperty(this);
     }
 }

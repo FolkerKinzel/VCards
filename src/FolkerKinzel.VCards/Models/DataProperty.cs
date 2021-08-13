@@ -33,6 +33,12 @@ namespace FolkerKinzel.VCards.Models
     public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
     {
         /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="prop">The <see cref="DataProperty"/> object to clone.</param>
+        private DataProperty(DataProperty prop) : base(prop) => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="DataProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein <see cref="Uri"/>: Verwenden Sie die statischen Methoden der <see cref="DataUrl"/>-Klasse,
@@ -407,5 +413,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DataProperty>)this).GetEnumerator();
+
+        public override object Clone() => new DataProperty(this);
     }
 }

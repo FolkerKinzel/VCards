@@ -20,6 +20,12 @@ namespace FolkerKinzel.VCards.Models
     public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty>
     {
         /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="prop">The <see cref="AddressProperty"/> object to clone.</param>
+        private AddressProperty(AddressProperty prop) : base(prop) => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
         /// </summary>
         /// <param name="street">Straße</param>
@@ -178,5 +184,8 @@ namespace FolkerKinzel.VCards.Models
         }
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<AddressProperty>)this).GetEnumerator();
+
+
+        public override object Clone() => new AddressProperty(this);
     }
 }

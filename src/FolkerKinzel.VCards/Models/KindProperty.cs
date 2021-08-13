@@ -15,6 +15,8 @@ namespace FolkerKinzel.VCards.Models
     /// </summary>
     public sealed class KindProperty : VCardProperty
     {
+
+
         /// <summary>
         /// Initialisiert ein neues <see cref="KindProperty"/>-Objekt.
         /// </summary>

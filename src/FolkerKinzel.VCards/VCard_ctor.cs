@@ -29,7 +29,7 @@ namespace FolkerKinzel.VCards
         {
             Version = vCard.Version;
 
-            foreach (KeyValuePair<VCdProp, object> kvp in vCard)
+            foreach (KeyValuePair<VCdProp, object> kvp in vCard._propDic)
             {
                 Set(kvp.Key, kvp.Value switch
                 {

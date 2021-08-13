@@ -14,9 +14,19 @@ namespace FolkerKinzel.VCards.Models
     /// <summary>
     /// Abstrakte Basisklasse aller Klassen, die vCard-Properties repräsentieren.
     /// </summary>
-    public abstract class VCardProperty
+    public abstract class VCardProperty : ICloneable
     {
         private string? _group;
+
+        /// <summary>
+        /// Kopierkonstruktor.
+        /// </summary>
+        /// <param name="prop">Das zu klonende <see cref="VCardProperty"/>-Objekt.</param>
+        protected VCardProperty(VCardProperty prop)
+        {
+            Parameters = prop.Parameters.Clone();
+            Group = prop.Group;
+        }
 
         /// <summary>
         /// Konstruktor, der von abgeleiteten Klassen aufgerufen wird.
@@ -148,5 +158,7 @@ namespace FolkerKinzel.VCards.Models
 
         internal abstract void AppendValue(VcfSerializer serializer);
 
+
+        public abstract object Clone();
     }
 }

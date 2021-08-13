@@ -21,6 +21,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class DateTimeTextProperty : DateTimeProperty, IEnumerable<DateTimeTextProperty>
     {
         /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="prop"></param>
+        private DateTimeTextProperty(DateTimeTextProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="DateTimeTextProperty"/>-Objekt, bei dem der 
         /// <see cref="ParameterSection.DataType"/>-Parameter
         /// auf <see cref="VCdDataType.Text"/> gesetzt ist.
@@ -92,6 +99,8 @@ namespace FolkerKinzel.VCards.Models
         {
             yield return this;
         }
+
+        public override object Clone() => new DateTimeTextProperty(this);
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateTimeTextProperty>)this).GetEnumerator();
     }

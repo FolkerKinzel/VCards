@@ -21,6 +21,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     {
         /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="prop"></param>
+        private GenderProperty(GenderProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="GenderProperty"/>-Objekt.
         /// </summary>
         /// <param name="sex">Standardisierte Geschlechtsangabe.</param>
@@ -95,5 +102,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GenderProperty>)this).GetEnumerator();
+
+        public override object Clone() => new GenderProperty(this);
     }
 }

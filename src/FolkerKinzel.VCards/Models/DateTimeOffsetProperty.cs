@@ -20,6 +20,12 @@ namespace FolkerKinzel.VCards.Models
     public sealed class DateTimeOffsetProperty : DateTimeProperty, IEnumerable<DateTimeOffsetProperty>
     {
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private DateTimeOffsetProperty(DateTimeOffsetProperty prop) : base(prop) => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="DateTimeOffsetProperty"/>-Objekt, bei dem der <see cref="ParameterSection.DataType"/>-Parameter
         /// auf <see cref="VCdDataType.DateAndOrTime"/> gesetzt ist.
         /// </summary>
@@ -92,6 +98,8 @@ namespace FolkerKinzel.VCards.Models
         {
             yield return this;
         }
+
+        public override object Clone() => new DateTimeOffsetProperty(this);
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateTimeOffsetProperty>)this).GetEnumerator();
     }

@@ -17,13 +17,21 @@ namespace FolkerKinzel.VCards.Models
     public sealed class AccessProperty : VCardProperty
     {
         /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="prop">The <see cref="AccessProperty"/> object to clone.</param>
+        private AccessProperty(AccessProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="AccessProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein Member der <see cref="VCdAccess"/>-Enumeration.</param>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public AccessProperty(VCdAccess value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = value;
+        public AccessProperty(VCdAccess value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+            => Value = value;
 
         internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = VCdAccessConverter.Parse(vcfRow.Value);
 
@@ -57,5 +65,6 @@ namespace FolkerKinzel.VCards.Models
         protected override object GetVCardPropertyValue() => Value;
 
 
+        public override object Clone() => new AccessProperty(this);
     }
 }

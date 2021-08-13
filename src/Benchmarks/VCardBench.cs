@@ -21,7 +21,7 @@ namespace Benchmarks
         [Benchmark]
         public string ParseAndSerialize()
         {
-            List<VCard>? list = VCard.ParseVcf(_vcardString);
+            IList<VCard> list = VCard.ParseVcf(_vcardString);
             return list.ToVcfString();
         }
 
