@@ -25,10 +25,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             {
                 Set(kvp.Key, kvp.Value switch
                 {
-                    IEnumerable<KeyValuePair<string, string>> kvpEnumerable => kvpEnumerable.ToArray(),
                     PropertyID pid => pid,
                     IEnumerable<PropertyID?> pidEnumerable => pidEnumerable.ToArray(),
                     IEnumerable<string?> stringEnumerable => stringEnumerable.ToArray(),
+                    IEnumerable<KeyValuePair<string, string>> kvpEnumerable => kvpEnumerable.ToArray(),
+
                     _ => kvp.Value
                 });
             }

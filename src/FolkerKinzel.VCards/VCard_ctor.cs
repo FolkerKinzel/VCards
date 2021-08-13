@@ -33,12 +33,39 @@ namespace FolkerKinzel.VCards
             {
                 Set(kvp.Key, kvp.Value switch
                 {
-                    RelationProperty relProp => (RelationProperty)relProp.Clone(),
-                    IEnumerable<RelationProperty?> relPropEnumerable => relPropEnumerable.Select(x => x?.Clone()).Cast<RelationProperty>().ToArray(),
+                    XmlProperty xmlProp => xmlProp.Clone(),
+                    IEnumerable<XmlProperty?> xmlPropEnumerable => xmlPropEnumerable.Select(x => x?.Clone()).Cast<XmlProperty?>().ToArray(),
+                    ProfileProperty profProp => profProp.Clone(),
+                    TextProperty txtProp => txtProp.Clone(),
+                    IEnumerable<TextProperty?> txtPropEnumerable => txtPropEnumerable.Select(x => x?.Clone()).Cast<TextProperty?>().ToArray(),
+                    DateTimeProperty dtTimeProp => dtTimeProp.Clone(),
+                    IEnumerable<DateTimeProperty?> dtTimePropEnumerable => dtTimePropEnumerable.Select(x => x?.Clone()).Cast<DateTimeProperty?>().ToArray(),
+                    AddressProperty adrProp => adrProp.Clone(),
+                    IEnumerable<AddressProperty?> adrPropEnumerable => adrPropEnumerable.Select(x => x?.Clone()).Cast<AddressProperty?>().ToArray(),
+                    NameProperty nameProp => nameProp.Clone(),
+                    IEnumerable<NameProperty?> namePropEnumerable => namePropEnumerable.Select(x => x?.Clone()).Cast<NameProperty?>().ToArray(),
+                    RelationProperty relProp => relProp.Clone(),
+                    IEnumerable<RelationProperty?> relPropEnumerable => relPropEnumerable.Select(x => x?.Clone()).Cast<RelationProperty?>().ToArray(),
+                    OrganizationProperty orgProp => orgProp.Clone(),
+                    IEnumerable<OrganizationProperty?> orgPropEnumerable => orgPropEnumerable.Select(x => x?.Clone()).Cast<OrganizationProperty?>().ToArray(),
+                    StringCollectionProperty strCollProp => strCollProp.Clone(),
+                    IEnumerable<StringCollectionProperty?> strCollPropEnumerable => strCollPropEnumerable.Select(x => x?.Clone()).Cast<StringCollectionProperty?>().ToArray(),
+                    GenderProperty sexProp => sexProp.Clone(),
+                    IEnumerable<GenderProperty?> sexPropEnumerable => sexPropEnumerable.Select(x => x?.Clone()).Cast<GenderProperty?>().ToArray(),
+                    GeoProperty geoProp => geoProp.Clone(),
+                    IEnumerable<GeoProperty?> geoPropEnumerable => geoPropEnumerable.Select(x => x?.Clone()).Cast<GeoProperty?>().ToArray(),
+                    DataProperty dataProp => dataProp.Clone(),
+                    IEnumerable<DataProperty?> dataPropEnumerable => dataPropEnumerable.Select(x => x?.Clone()).Cast<DataProperty?>().ToArray(),
+                    NonStandardProperty nStdProp => nStdProp.Clone(),
+                    IEnumerable<NonStandardProperty?> nStdPropEnumerable => nStdPropEnumerable.Select(x => x?.Clone()).Cast<NonStandardProperty?>().ToArray(),
+                    PropertyIDMappingProperty pidMapProp => pidMapProp.Clone(),
+                    IEnumerable<PropertyIDMappingProperty?> pidMapPropEnumerable => pidMapPropEnumerable.Select(x => x?.Clone()).Cast<PropertyIDMappingProperty?>().ToArray(),
+                    TimeZoneProperty tzProp => tzProp.Clone(),
+                    IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(x => x?.Clone()).Cast<TimeZoneProperty?>().ToArray(),
 
-                    ICloneable cloneable => cloneable.Clone(),
+                    ICloneable cloneable => cloneable.Clone(), // AccessProperty, KindProperty, TimeStampProperty, UuidProperty
                     _ => kvp.Value
-                }); 
+                }) ;
             }
         }
 
