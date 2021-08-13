@@ -90,12 +90,12 @@ namespace FolkerKinzel.VCards
 
                 if (vcard.Members != null || vcard.Relations != null)
                 {
-                    vcard = vcard.Clone();
+                    vcard = (VCard)vcard.Clone();
                     list[i] = vcard;
 
                     if (vcard.Members != null)
                     {
-                        List<RelationProperty?> members = vcard.Members as List<RelationProperty?> ?? vcard.Members.ToList();
+                        List<RelationProperty?> members = vcard.Members.ToList();
                         vcard.Members = members;
 
                         DoSetReferences(list, members);
@@ -103,7 +103,7 @@ namespace FolkerKinzel.VCards
 
                     if (vcard.Relations != null)
                     {
-                        List<RelationProperty?> relations = vcard.Relations as List<RelationProperty?> ?? vcard.Relations.ToList();
+                        List<RelationProperty?> relations = vcard.Relations.ToList();
                         vcard.Relations = relations;
 
                         DoSetReferences(list, relations);
@@ -220,7 +220,7 @@ namespace FolkerKinzel.VCards
                 {
                     if (vcard.Relations != null || vcard.Members != null)
                     {
-                        var clone = vcard.Clone();
+                        VCard clone = (VCard)vcard.Clone();
                         if (clone.Relations != null)
                         {
                             List<RelationProperty?> relations = clone.Relations.ToList();

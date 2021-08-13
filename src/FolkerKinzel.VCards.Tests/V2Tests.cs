@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void Parse()
         {
-            List<VCard> vcard = VCard.LoadVcf(fileName: TestFiles.V2vcf);
+            IList<VCard> vcard = VCard.LoadVcf(fileName: TestFiles.V2vcf);
 
             Assert.IsNotNull(vcard);
             Assert.AreNotEqual(0, vcard.Count);
@@ -23,7 +23,7 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void ParseOutlook()
         {
-            List<VCard> vcard = VCard.LoadVcf(fileName: TestFiles.OutlookV2vcf);
+            IList<VCard> vcard = VCard.LoadVcf(fileName: TestFiles.OutlookV2vcf);
 
             Assert.IsNotNull(vcard);
             Assert.IsNotNull(vcard.FirstOrDefault());
@@ -56,7 +56,7 @@ namespace FolkerKinzel.VCards.Tests
 
             string s = vcard.ToVcfString(VCdVersion.V2_1);
 
-            List<VCard> cards = VCard.ParseVcf(s);
+            IList<VCard> cards = VCard.ParseVcf(s);
 
             Assert.AreEqual(cards.Count, 1);
 
@@ -131,7 +131,7 @@ namespace FolkerKinzel.VCards.Tests
 
             Assert.IsNotNull(s);
 
-            List<VCard> list = VCard.ParseVcf(s);
+            IList<VCard> list = VCard.ParseVcf(s);
 
             Assert.IsNotNull(list);
 

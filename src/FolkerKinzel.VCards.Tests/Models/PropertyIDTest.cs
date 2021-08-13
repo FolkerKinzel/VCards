@@ -10,13 +10,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         [TestMethod]
         public void CtorTest()
         {
-            var pid = new PropertyID();
-
-            Assert.IsTrue(pid.IsEmpty);
-            Assert.AreEqual(0, pid.ID);
-            Assert.IsNull(pid.Mapping);
-
-            pid = new PropertyID(5, 7);
+            var pid = new PropertyID(5, new PropertyIDMapping(7, new Uri("http://folkerkinzel.de/")));
 
             Assert.AreEqual(5, pid.ID);
             Assert.AreEqual(7, pid.Mapping);
@@ -56,7 +50,9 @@ namespace FolkerKinzel.VCards.Models.Tests
             PropertyID.ParseInto(list, "4.9");
 
             Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(new PropertyID(4, 9), list[0]);
+            var pidMap = new PropertyIDMapping(9, new Uri("http://folkerkinzel.de/"));
+
+            Assert.AreEqual(new PropertyID(4, pidMap), list[0]);
         }
 
         [TestMethod]
@@ -67,8 +63,9 @@ namespace FolkerKinzel.VCards.Models.Tests
             PropertyID.ParseInto(list, "4.9,7.5");
 
             Assert.AreEqual(2, list.Count);
-            Assert.AreEqual(new PropertyID(4, 9), list[0]);
-            Assert.AreEqual(new PropertyID(7, 5), list[1]);
+            var uri = new Uri("http://folker.de/");
+            Assert.AreEqual(new PropertyID(4, new PropertyIDMapping(9, uri)), list[0]);
+            Assert.AreEqual(new PropertyID(7, new PropertyIDMapping(5, uri)), list[1]);
         }
 
 
@@ -80,8 +77,9 @@ namespace FolkerKinzel.VCards.Models.Tests
             PropertyID.ParseInto(list, " 4 . 9 , 7 . 5 ");
 
             Assert.AreEqual(2, list.Count);
-            Assert.AreEqual(new PropertyID(4, 9), list[0]);
-            Assert.AreEqual(new PropertyID(7, 5), list[1]);
+            var uri = new Uri("http://folker.de/");
+            Assert.AreEqual(new PropertyID(4, new PropertyIDMapping(9, uri)), list[0]);
+            Assert.AreEqual(new PropertyID(7, new PropertyIDMapping(5, uri)), list[1]);
         }
 
         [TestMethod]
@@ -92,8 +90,9 @@ namespace FolkerKinzel.VCards.Models.Tests
             PropertyID.ParseInto(list, "4.9,6.0,7.5");
 
             Assert.AreEqual(2, list.Count);
-            Assert.AreEqual(new PropertyID(4, 9), list[0]);
-            Assert.AreEqual(new PropertyID(7, 5), list[1]);
+            var uri = new Uri("http://folker.de/");
+            Assert.AreEqual(new PropertyID(4, new PropertyIDMapping(9, uri)), list[0]);
+            Assert.AreEqual(new PropertyID(7, new PropertyIDMapping(5, uri)), list[1]);
         }
 
         [TestMethod]
@@ -117,16 +116,16 @@ namespace FolkerKinzel.VCards.Models.Tests
             PropertyID.ParseInto(list, " \"4.9\"");
 
             Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(new PropertyID(4, 9), list[0]);
+
+            var uri = new Uri("http://folker.de/");
+            Assert.AreEqual(new PropertyID(4, new PropertyIDMapping(9, uri)), list[0]);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
         public void CtorExceptionTest1() => _ = new PropertyID(0);
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
-        public void CtorExceptionTest2() => _ = new PropertyID(5, 0);
+        
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
@@ -139,7 +138,8 @@ namespace FolkerKinzel.VCards.Models.Tests
         [TestMethod]
         public void ToStringTest1()
         {
-            var pid = new PropertyID(5, 7);
+            var uri = new Uri("http://folker.de/");
+            var pid = new PropertyID(5, new PropertyIDMapping(7, uri));
 
             string s = pid.ToString();
 
@@ -151,7 +151,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         [TestMethod]
         public void ToStringTest2()
         {
-            
+
 
 
             var pid = new PropertyID(5);
@@ -162,19 +162,9 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.IsFalse(s.Contains("."));
             Assert.AreEqual(1, s.Length);
 
-            
+
         }
 
-        [TestMethod]
-        public void ToStringTest3()
-        {
-            var pid = new PropertyID();
-
-            var s = pid.ToString();
-
-            Assert.IsNotNull(s);
-            Assert.IsFalse(s.Contains("."));
-            Assert.AreEqual(0, s.Length);
-        }
+        
     }
 }

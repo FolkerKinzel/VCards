@@ -14,9 +14,8 @@ namespace FolkerKinzel.VCards.Models.Tests
         [TestMethod()]
         public void PropertyIDMappingPropertyTest1()
         {
-            var prop = new PropertyIDMappingProperty(7, Guid.NewGuid());
-
-            PropertyParts.PropertyIDMapping pidMap = prop.Value;
+            var pidMap = new PropertyIDMapping(7, new Uri("http://folkerkinzel.de/"));
+            var prop = new PropertyIDMappingProperty(pidMap);
 
             var vcard = new VCard
             {
@@ -25,7 +24,7 @@ namespace FolkerKinzel.VCards.Models.Tests
 
             string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
 
-            List<VCard> list = VCard.ParseVcf(s);
+            IList<VCard> list = VCard.ParseVcf(s);
 
             Assert.IsNotNull(list);
 
@@ -44,11 +43,6 @@ namespace FolkerKinzel.VCards.Models.Tests
         }
 
 
-        [DataTestMethod()]
-        [DataRow(-1)]
-        [DataRow(10)]
-        [DataRow(0)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void PropertyIDMappingPropertyTest2(int mappingNumber) => _ = new PropertyIDMappingProperty(mappingNumber, Guid.NewGuid());
+        
     }
 }

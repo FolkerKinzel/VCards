@@ -35,7 +35,8 @@ namespace FolkerKinzel.VCards.Tests
             adr1.Parameters.Index = 1;
             adr1.Parameters.Language = "de";
             adr1.Parameters.SortAs = sortAs;
-            adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, 5), new PropertyID(2) };
+            var pidMap = new PropertyIDMapping(5, new Uri("http://folkerkinzel.de"));
+            adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, pidMap), new PropertyID(2) };
 
             var logo1 = new DataProperty(new Uri("https://folker-kinzel.de/logo.jpg"));
             logo1.Parameters.MediaType = "image/jpeg";
@@ -170,7 +171,7 @@ namespace FolkerKinzel.VCards.Tests
 
                 Notes = new TextProperty("Kommentar"),
 
-                PropertyIDMappings = new PropertyIDMappingProperty(7, Guid.NewGuid()),
+                PropertyIDMappings = new PropertyIDMappingProperty(new PropertyIDMapping(7, new Uri("http://folkerkinzel.de"))),
 
                 InstantMessengerHandles = new TextProperty[]
                 {

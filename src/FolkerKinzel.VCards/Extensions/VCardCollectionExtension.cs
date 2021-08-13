@@ -133,7 +133,7 @@ namespace FolkerKinzel.VCards.Extensions
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static void DereferenceVCards(this IEnumerable<VCard?> vCards)
+        public static IEnumerable<VCard> DereferenceVCards(this IEnumerable<VCard?> vCards)
             => VCard.Dereference(vCards);
 
 

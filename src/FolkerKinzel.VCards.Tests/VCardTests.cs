@@ -30,14 +30,14 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod()]
         public void ParseTest_contentEmpty()
         {
-            List<VCard> list = VCard.ParseVcf("");
+            IList<VCard> list = VCard.ParseVcf("");
             Assert.AreEqual(0, list.Count);
         }
 
         [TestMethod()]
         public void ParseTest()
         {
-            List<VCard> list = VCard.ParseVcf("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
+            IList<VCard> list = VCard.ParseVcf("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
             Assert.AreEqual(1, list.Count);
 
             Assert.IsNotNull(list[0].DisplayNames);
@@ -63,7 +63,7 @@ namespace FolkerKinzel.VCards.Tests
 
             vcard.SaveVcf(path, version);
 
-            List<VCard> list = VCard.LoadVcf(path);
+            IList<VCard> list = VCard.LoadVcf(path);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0].DisplayNames);
@@ -199,7 +199,7 @@ namespace FolkerKinzel.VCards.Tests
             ms.Position = 0;
 
             using var reader = new StreamReader(ms);
-            List<VCard> list = VCard.DeserializeVcf(reader);
+            IList<VCard> list = VCard.DeserializeVcf(reader);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0].DisplayNames);
@@ -229,7 +229,7 @@ namespace FolkerKinzel.VCards.Tests
 
             string s = vcard.ToVcfString(version);
 
-            List<VCard> list = VCard.ParseVcf(s);
+            IList<VCard> list = VCard.ParseVcf(s);
 
             Assert.AreEqual(1, list.Count);
 

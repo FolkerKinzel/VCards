@@ -88,10 +88,10 @@ Remove `VCardListExtension` instead.
 
 =
 - [x] Implement `IEnumerable<VCard>` in `VCard`.
-- [ ] Implement `IEquatable<VCard>` in `VCard`.
+- [x] Implement `IEquatable<VCard>` in `VCard`.
 - [x] Implement `ICloneable` in `VCard`.
 - [x] Implement `ICloneable` in `ParameterSection`.
-- [ ] Implement `ICloneable` in `VCardProperty`.
+- [x] Implement `ICloneable` in `VCardProperty`.
 
 =
 - [x] Let VCard.LoadVcf should return `IList&lt;VCard&gt;`.
@@ -114,6 +114,6 @@ as input for the data to embed.
 ### 4.0.0
 - [ ] End .NET Framework 4.0 support.
 - [ ] Use the HashCode struct to compute hash codes.
-- [ ] Remove the `DataUrl` class and the `MimeType` class and replace it with something new and better like
+- [ ] Remove the `DataUrl` class and the `MimeType` classes and replace it with something new and better like
 `FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
 - [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts.Tests
+namespace FolkerKinzel.VCards.Models.Tests
 {
     [TestClass]
     public class PropertyIDMappingTests
@@ -9,20 +9,24 @@ namespace FolkerKinzel.VCards.Models.PropertyParts.Tests
         [TestMethod]
         public void CtorTest()
         {
-            var pidMap = new PropertyIDMapping();
-
-            Assert.IsTrue(pidMap.IsEmpty);
-            Assert.AreEqual(0, pidMap.ID);
-
-            pidMap = new PropertyIDMapping(5, Guid.NewGuid());
-
-            Assert.IsFalse(pidMap.IsEmpty);
+            var pidMap = new PropertyIDMapping(5, new Uri("http://folkerkinzel.de/"));
             Assert.AreEqual(5, pidMap.ID);
+        }
+
+        [DataTestMethod()]
+        [DataRow(-1)]
+        [DataRow(10)]
+        [DataRow(0)]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void PropertyIDMappingTest2(int mappingNumber)
+        {
+            var uri = new Uri("http://folker.de/");
+            _ = new PropertyIDMapping(mappingNumber, uri);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
-        public void CtorExceptionTest() => _ = new PropertyIDMapping(0, Guid.Empty);
+        public void CtorExceptionTest() => _ = new PropertyIDMapping(0, new Uri("http://folkerkinzel.de/"));
 
 
         [TestMethod]
@@ -87,29 +91,18 @@ namespace FolkerKinzel.VCards.Models.PropertyParts.Tests
         public void ToStringTest1()
         {
             int i = 4;
-            var guid = Guid.NewGuid();
 
-            var pidmap = new PropertyIDMapping(i, guid);
+            var pidmap = new PropertyIDMapping(i, new Uri("http://folkerkinzel.de/"));
 
             string s = pidmap.ToString();
 
             Assert.IsNotNull(s);
             Assert.IsTrue(s.Contains(";"));
-            Assert.AreEqual(47, s.Length);
+            Assert.IsTrue(5 < s.Length);
         }
 
 
-        [TestMethod]
-        public void ToStringTest2()
-        {
-            var pidmap = new PropertyIDMapping();
 
-            string s = pidmap.ToString();
 
-            Assert.IsNotNull(s);
-            Assert.IsFalse(s.Contains(";"));
-            Assert.AreEqual(0, s.Length);
-        }
-        
     }
 }

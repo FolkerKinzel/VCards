@@ -76,7 +76,7 @@ namespace FolkerKinzel.VCards.Models.Tests
 
             string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-            List<VCard> list = VCard.ParseVcf(s);
+            IList<VCard> list = VCard.ParseVcf(s);
 
             Assert.IsNotNull(list);
 
