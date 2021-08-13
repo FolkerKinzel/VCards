@@ -49,18 +49,20 @@ namespace FolkerKinzel.VCards.Extensions.Tests
 
             list = list.ReferenceVCards().ToList()!;
 
-            Assert.AreEqual(3, list.Count);
+            Assert.AreEqual(2, list.Count);
 
-            VCard? vc1 = list[1];
+            VCard? vc1 = list[0];
 
             Assert.IsInstanceOfType(vc1, typeof(VCard));
             Assert.IsNotNull(vc1?.Relations);
 
-            object? o1 = vc1?.Relations?.FirstOrDefault(x => x is RelationUuidProperty)?.Value;
+            RelationUuidProperty? uuidProp = vc1?.Relations?.FirstOrDefault(x => x is RelationUuidProperty) as RelationUuidProperty;
+            Assert.IsNotNull(uuidProp);
+            Guid o1 = uuidProp!.Value;
 
-            Assert.IsTrue(o1 is Guid);
+            Assert.IsFalse(uuidProp.IsEmpty);
 
-            VCard? vc2 = list[2];
+            VCard? vc2 = list[1];
 
             Assert.IsInstanceOfType(vc2, typeof(VCard));
             Assert.IsNotNull(vc2?.UniqueIdentifier);
@@ -78,13 +80,13 @@ namespace FolkerKinzel.VCards.Extensions.Tests
 
             list = list.ReferenceVCards().ToList()!;
 
-            Assert.AreEqual(3, list.Count);
-            Assert.IsNull(list[1]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
+            Assert.AreEqual(2, list.Count);
+            Assert.IsNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
 
             list = list.DereferenceVCards().ToList()!;
 
-            Assert.AreEqual(3, list.Count);
-            Assert.IsNotNull(list[1]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
+            Assert.AreEqual(2, list.Count);
+            Assert.IsNotNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
         }
 
 
@@ -190,7 +192,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
 
             IList<VCard> list2 = VCard.LoadVcf(path);
 
-            Assert.AreNotEqual(list.Count, list2.Count);
+            Assert.AreEqual(2, list2.Count);
             Assert.IsInstanceOfType(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value, typeof(VCard));
         }
 

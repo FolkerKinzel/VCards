@@ -25,9 +25,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             {
                 Set(kvp.Key, kvp.Value switch
                 {
-                    IEnumerable<ICloneable?> cloneables => cloneables.Select(x => x?.Clone()).ToArray(),
-                    ICloneable cloneable => cloneable.Clone(),
-                    IEnumerable<object?> enumerable => enumerable.ToArray(),
+                    IEnumerable<KeyValuePair<string, string>> kvpEnumerable => kvpEnumerable.ToArray(),
+                    PropertyID pid => pid,
+                    IEnumerable<PropertyID?> pidEnumerable => pidEnumerable.ToArray(),
+                    IEnumerable<string?> stringEnumerable => stringEnumerable.ToArray(),
                     _ => kvp.Value
                 });
             }

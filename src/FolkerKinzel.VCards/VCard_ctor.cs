@@ -33,12 +33,12 @@ namespace FolkerKinzel.VCards
             {
                 Set(kvp.Key, kvp.Value switch
                 {
-                    
-                    IEnumerable<ICloneable?> cloneables => cloneables.Select(x => x?.Clone()).ToArray(),
+                    RelationProperty relProp => (RelationProperty)relProp.Clone(),
+                    IEnumerable<RelationProperty?> relPropEnumerable => relPropEnumerable.Select(x => x?.Clone()).Cast<RelationProperty>().ToArray(),
+
                     ICloneable cloneable => cloneable.Clone(),
-                    IEnumerable<object?> enumerable => enumerable.ToArray(),
                     _ => kvp.Value
-                });
+                }); 
             }
         }
 

@@ -37,7 +37,7 @@ namespace FolkerKinzel.VCards.Models.Tests
             var mapping = PropertyIDMapping.Parse(pidMap);
 
             Assert.AreEqual(2, mapping.ID);
-            Assert.AreEqual(Guid.Parse("d89c9c7a-2e1b-4832-82de-7e992d95faa5"), mapping.Mapping);
+            Assert.AreEqual(new Uri(pidMap.Substring(2)), mapping.Mapping);
         }
 
         [TestMethod]
@@ -48,11 +48,11 @@ namespace FolkerKinzel.VCards.Models.Tests
             var mapping = PropertyIDMapping.Parse(pidMap);
 
             Assert.AreEqual(2, mapping.ID);
-            Assert.AreEqual(Guid.Parse("d89c9c7a-2e1b-4832-82de-7e992d95faa5"), mapping.Mapping);
+            Assert.AreEqual(new Uri(pidMap.Substring(6)), mapping.Mapping);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void ParseTest3()
         {
             string pidMap = "22;urn:uuid:d89c9c7a-2e1b-4832-82de-7e992d95faa5";
@@ -61,7 +61,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        //[ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ParseTest4()
         {
             string pidMap = "2;http://d89c9c7a-2e1b-4832-82de-7e992d95faa5";
@@ -70,7 +70,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void ParseTest5()
         {
             string pidMap = "2";

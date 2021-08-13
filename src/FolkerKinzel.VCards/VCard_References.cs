@@ -117,7 +117,7 @@ namespace FolkerKinzel.VCards
             {
                 RelationVCardProperty[] vcdProps = relations
                                 .Select(x => x as RelationVCardProperty)
-                                .Where(x => x != null && x.IsEmpty)
+                                .Where(x => x != null && !x.IsEmpty)
                                 .ToArray()!;
 
 

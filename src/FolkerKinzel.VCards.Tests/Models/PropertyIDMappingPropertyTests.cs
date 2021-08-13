@@ -37,7 +37,8 @@ namespace FolkerKinzel.VCards.Models.Tests
             prop = vcard.PropertyIDMappings!.First() as PropertyIDMappingProperty;
 
             Assert.IsNotNull(prop);
-            Assert.AreEqual(pidMap, prop!.Value);
+            Assert.AreEqual(pidMap.ID, prop!.Value?.ID);
+            Assert.AreEqual(pidMap.Mapping, prop!.Value?.Mapping);
             Assert.IsNull(prop.Group);
             Assert.IsFalse(prop.IsEmpty);
         }

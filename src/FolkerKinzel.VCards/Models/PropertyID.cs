@@ -8,6 +8,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using System.Collections.Generic;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Models
 {
@@ -15,7 +16,7 @@ namespace FolkerKinzel.VCards.Models
     /// Kapselt Informationen, die dazu dienen, eine Instanz einer <see cref="VCardProperty"/> eindeutig
     /// zu identifizieren.
     /// </summary>
-    public sealed class PropertyID : IEquatable<PropertyID>
+    public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     {
         private const int MAPPING_SHIFT = 4;
         private readonly byte _data;
@@ -76,7 +77,7 @@ namespace FolkerKinzel.VCards.Models
         /// Namen der vCard-Property, dem dieses Objekt zugeordnet ist, und dem Wert der <see cref="PropertyID.ID"/>
         /// des <see cref="PropertyID"/>-Objekts, das diesem <see cref="VCardProperty"/>-Objekt zugeordnet ist.
         /// </remarks>
-        public int ID => _data & 0xFF;
+        public int ID => _data & 0xF;
 
         /// <summary>
         /// Gibt die <see cref="PropertyIDMapping.ID"/> des <see cref="PropertyIDMapping"/>-Objekts
@@ -229,5 +230,11 @@ namespace FolkerKinzel.VCards.Models
             }
         }
 
+        IEnumerator<PropertyID> IEnumerable<PropertyID>.GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PropertyID>)this).GetEnumerator();
     }
 }
