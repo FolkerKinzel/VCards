@@ -12,7 +12,8 @@ namespace FolkerKinzel.VCards
     public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
         /// <summary>
-        /// Gibt eine Sammlung zurück, in der die <see cref="RelationVCardProperty"/>-Objekte der als Argument übergebenen
+        /// Gibt eine Sammlung von <see cref="VCard"/>-Objekten zurück, in der die <see cref="RelationVCardProperty"/>-Objekte 
+        /// der als Argument übergebenen
         /// Sammlung von <see cref="VCard"/>-Objekten durch 
         /// <see cref="RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
         /// <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte als 
@@ -22,6 +23,15 @@ namespace FolkerKinzel.VCards
         /// <param name="vCards">Sammlung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein und <c>null</c>-Werte
         /// enthalten.</param>
         /// 
+        /// <returns>
+        /// Eine Sammlung von <see cref="VCard"/>-Objekten, in der die <see cref="RelationVCardProperty"/>-Objekte 
+        /// der als Argument übergebenen
+        /// Sammlung von <see cref="VCard"/>-Objekten durch 
+        /// <see cref="RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
+        /// <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte als 
+        /// separate Elemente angefügt sind.
+        /// </returns>
+        /// 
         /// <remarks>
         /// <note type="caution">
         /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
@@ -30,6 +40,10 @@ namespace FolkerKinzel.VCards
         /// </note>
         /// <note type="important">
         /// Verwenden Sie diese Methode niemals, wenn Sie eine VCF-Datei als vCard 2.1 oder vCard 3.0 speichern möchten. Es droht Datenverlust.
+        /// </note>
+        /// <note type="tip">
+        /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
+        /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
         /// </note>
         /// <para>
         /// Die Methode wird bei Bedarf von den Serialisierungsmethoden von <see cref="VCard"/> automatisch verwendet. Die Verwendung in eigenem 
@@ -53,7 +67,7 @@ namespace FolkerKinzel.VCards
         /// dass eine VCF-Datei jeweils nur eine einzige vCard enthalten soll. Das Beispiel zeigt möglicherweise auch, dass dieses Vorgehen i.d.R.
         /// nicht vorteilhaft ist, da es die referentielle Integrität gefährdet.
         /// </para>
-        /// <para>In dem Beispiel wird die Erweiterungsmethode <see cref="VCardListExtension.ReferenceVCards"/> verwendet, die 
+        /// <para>In dem Beispiel wird die Erweiterungsmethode <see cref="VCardCollectionExtension.ReferenceVCards"/> verwendet, die 
         /// <see cref="Reference(List{VCard})"/>
         /// aufruft.</para>
         /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
@@ -146,7 +160,8 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Gibt eine Sammlung zurück, in der <see cref="RelationUuidProperty"/>-Objekte der als Argument übergebenen Sammlung von
+        /// Gibt eine Sammlung von <see cref="VCard"/>-Objekten zurück, in der <see cref="RelationUuidProperty"/>-Objekte der als 
+        /// Argument übergebenen Sammlung von
         /// <see cref="VCard"/>-Objekten durch
         /// <see cref="RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="VCard"/>-Objekte
         /// in der als Argument übergebenen Sammlung befinden.
@@ -155,11 +170,23 @@ namespace FolkerKinzel.VCards
         /// <param name="vCards">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein und <c>null</c>-Werte
         /// enthalten.</param>
         /// 
+        /// <returns>
+        /// Eine Sammlung von <see cref="VCard"/>-Objekten, in der <see cref="RelationUuidProperty"/>-Objekte der als 
+        /// Argument übergebenen Sammlung von
+        /// <see cref="VCard"/>-Objekten durch
+        /// <see cref="RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="VCard"/>-Objekte
+        /// in der als Argument übergebenen Sammlung befinden.
+        /// </returns>
+        /// 
         /// <remarks>
         /// <note type="caution">
         /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+        /// </note>
+        /// <note type="tip">
+        /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
+        /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
         /// </note>
         /// 
         /// <para>Die Methode wird von den Deserialisierungsmethoden von <see cref="VCard"/> automatisch aufgerufen. Die Verwendung in 
@@ -172,7 +199,7 @@ namespace FolkerKinzel.VCards
         /// <example>
         /// <para>
         /// Das Beispiel zeigt das Deserialisieren und Auswerten einer VCF-Datei, deren Inhalt auf andere VCF-Dateien verweist. In dem 
-        /// Beispiel wird die Erweiterungsmethode <see cref="VCardListExtension.DereferenceVCards(List{VCard})"/> verwendet, 
+        /// Beispiel wird die Erweiterungsmethode <see cref="VCardCollectionExtension.DereferenceVCards(List{VCard})"/> verwendet, 
         /// die <see cref="Dereference(List{VCard})"/> aufruft.
         /// </para>
         /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>

@@ -38,7 +38,7 @@ namespace FolkerKinzel.VCards
         /// Speichert eine Sammlung von <see cref="VCard"/>-Objekten in eine gemeinsame VCF-Datei.
         /// </summary>
         /// 
-        /// <param name="vCards">Die zu speichernden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein oder <c>null</c>-Werte
+        /// <param name="vCards">Die zu speichernden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein und <c>null</c>-Werte
         /// enthalten. Wenn die Sammlung kein <see cref="VCard"/>-Objekt enthält, wird keine Datei geschrieben.</param>
         /// <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
         /// <param name="version">Die vCard-Version der zu speichernden VCF-Datei.</param>
@@ -51,13 +51,17 @@ namespace FolkerKinzel.VCards
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
         /// </note>
+        /// <note type="tip">
+        /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
+        /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
+        /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehr
         /// vCards, als die Anzahl der Elemente in der Sammlung, die an den Parameter <paramref name="vCards"/> übergeben wird.
         /// Dies geschieht, wenn eine VCF-Datei als
         /// vCard 4.0 gespeichert wird und sich 
         /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
-        /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
+        /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befinden. 
         /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
         /// </para>
         /// 
@@ -113,7 +117,7 @@ namespace FolkerKinzel.VCards
         /// Serialisiert eine Sammlung von <see cref="VCard"/>-Objekten unter Verwendung des VCF-Formats in einen <see cref="Stream"/>.
         /// </summary>
         /// 
-        /// <param name="vCards">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein oder <c>null</c>-Werte
+        /// <param name="vCards">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein und <c>null</c>-Werte
         /// enthalten.</param>
         /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden.</param>
         /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
@@ -127,6 +131,10 @@ namespace FolkerKinzel.VCards
         /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+        /// </note>
+        /// <note type="tip">
+        /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
+        /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
         /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehr
@@ -251,7 +259,7 @@ namespace FolkerKinzel.VCards
         /// Serialisiert <paramref name="vCards"/> als einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
         /// </summary>
         /// 
-        /// <param name="vCards">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein oder <c>null</c>-Werte
+        /// <param name="vCards">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein und <c>null</c>-Werte
         /// enthalten.</param>
         /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
@@ -264,6 +272,10 @@ namespace FolkerKinzel.VCards
         /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+        /// </note>
+        /// <note type="tip">
+        /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
+        /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
         /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehr
@@ -340,10 +352,7 @@ namespace FolkerKinzel.VCards
         /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
         /// </para>
         /// 
-        /// <para>
-        /// Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
-        /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.
-        /// </para>
+        /// 
         /// </remarks>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
@@ -398,10 +407,7 @@ namespace FolkerKinzel.VCards
         /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
         /// </para>
         /// 
-        /// <para>
-        /// Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
-        /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.
-        /// </para>
+        /// 
         /// </remarks>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> ist <c>null</c>.</exception>
@@ -459,10 +465,7 @@ namespace FolkerKinzel.VCards
         /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
         /// </para>
         /// 
-        /// <para>
-        /// Wenn mehrere <see cref="VCard"/>-Objekte zu serialisieren sind, empfiehlt 
-        /// sich aus Performancegründen die Verwendung der statischen Methoden der Klasse <see cref="VCard"/>.
-        /// </para>
+        /// 
         /// 
         /// </remarks>
         /// 

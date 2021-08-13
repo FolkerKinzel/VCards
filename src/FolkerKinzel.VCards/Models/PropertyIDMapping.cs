@@ -47,7 +47,7 @@ namespace FolkerKinzel.VCards.Models
             {
                 char c = s[index];
 
-                if (char.IsDigit(c))
+                if (c.IsDecimalDigit())
                 {
                     mappingNumber = DigitParser.Parse(c);
                     index++;

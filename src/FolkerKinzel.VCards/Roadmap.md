@@ -43,8 +43,8 @@ GeoCoordinate always points to a valid geographical position.
 =
 - [x] Move `FolkerKinzel.VCards.Models.PropertyParts.PropertyIDMapping` to
 `FolkerKinzel.VCards.Models.PropertyIDMapping`.
-- [ ] Replace in `PropertyIDMapping.Parse` the method char.IsDigit(char) 
-with FolkerKinzel.Strings `char.IsDecimalDigit()`
+- [x] Replace in `PropertyIDMapping.Parse` the method char.IsDigit(char) 
+with an extension method `char.IsDecimalDigit()`
 - [x] Make `FolkerKinzel.VCards.Models.PropertyIDMapping` a class.
 - [x] Rename `PropertyIdMapping.MappingNumber` to `PropertyIdMapping.ID`
 - [x] Replace `Guid PropertyIdMapping.Uuid` by `Uri PropertyIDMapping.Mapping`.
@@ -57,8 +57,8 @@ argument.
 
 =
 - [x] Store the value of `PropertyID` in one `byte`.
-- [ ] Replace in `PropertyID.ParseInto` the method char.IsDigit(char) 
-with FolkerKinzel.Strings `char.IsDecimalDigit()`
+- [x] Replace in `PropertyID.ParseInto` the method char.IsDigit(char) 
+with an extension method `char.IsDecimalDigit()`
 - [x] Make `PropertyID` a class in order to have better validation.
 - [x] Rename `PropertyID.PropertyNumber` to `PropertyID.ID`
 - [x] Rename `PropertyID.MappingNumber` to `PropertyID.Mapping`
@@ -83,22 +83,14 @@ VCard.Reference.
 - [x] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
 VCard.Dereference.
 - [x] Let VCard.Dereference return `IEnumerable<VCard>`.
-- [ ] Add a new class `VCardCollectionExtension` with extension methods for IEnumerable&lt;VCard?&gt;.
-- [ ] Remove `VCardListExtension` instead.
+- [x] Add a new class `VCardCollectionExtension` with extension methods for IEnumerable&lt;VCard?&gt;.
+Remove `VCardListExtension` instead.
 
 =
 - [x] Implement `IEnumerable<VCard>` in `VCard`
-
-=
-
 - [ ] Implement in VCard `IEquatable<VCard>`
-
-=
-
-- [x] Implement VCard `ICloneable` for a shallow copy.
-
-=
-- [ ] `VCard.Reference` should copy the input data and return its result as IEnumerable&lt;VCard&gt;.
+- [x] Implement VCard `ICloneable`.
+- [ ] Implement in VCardProperty `ICloneable` to make a deep copy.
 
 =
 - [ ] VCard.LoadVcf, VCard.DeserializeVcf and VCard.ParseVcf should return a `ReadOnlyCollection&lt;VCard&gt;`.
@@ -114,8 +106,7 @@ as input for the data to embed.
 ### 3.0.1
 - [ ] Cleanup: Remove `VCdDataType.Timestamp` and all other Symbols marked as Obsolete errors in 3.0.0.
 
-### 3.1.0
-- [ ] Implement in VCardProperty `ICloneable` to make a deep copy.
+
 
 ### 4.0.0
 - [ ] End .NET Framework 4.0 support.

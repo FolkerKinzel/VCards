@@ -132,7 +132,7 @@ namespace FolkerKinzel.VCards.Models
                 {
                     parseMapping = true;
                 }
-                else if (char.IsDigit(c))
+                else if (c.IsDecimalDigit())
                 {
                     if (parseMapping)
                     {
