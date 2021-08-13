@@ -8,6 +8,7 @@ namespace FolkerKinzel.VCards
 {
     public sealed partial class VCard : ICloneable
     {
-        public object Clone() => new VCard(this);
+        public object Clone()
+            => new VCard(this);
     }
 }

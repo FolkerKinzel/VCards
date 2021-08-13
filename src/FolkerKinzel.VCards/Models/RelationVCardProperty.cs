@@ -120,7 +120,8 @@ namespace FolkerKinzel.VCards.Models
             yield return this;
         }
 
-        public override object Clone() => new RelationVCardProperty(this);
+        public override object Clone()
+            => new RelationVCardProperty(this);
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationVCardProperty>)this).GetEnumerator();
     }

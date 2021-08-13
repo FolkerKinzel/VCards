@@ -33,8 +33,9 @@ namespace FolkerKinzel.VCards
             {
                 Set(kvp.Key, kvp.Value switch
                 {
-                    ICloneable cloneable => cloneable.Clone(),
+                    
                     IEnumerable<ICloneable?> cloneables => cloneables.Select(x => x?.Clone()).ToArray(),
+                    ICloneable cloneable => cloneable.Clone(),
                     IEnumerable<object?> enumerable => enumerable.ToArray(),
                     _ => kvp.Value
                 });
