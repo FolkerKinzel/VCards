@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -20,7 +21,10 @@ namespace FolkerKinzel.VCards
         /// </summary>
         public VCard() { }
 
-
+        /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="vCard">The vCard to clone.</param>
         private VCard(VCard vCard)
         {
             Version = vCard.Version;
@@ -30,7 +34,8 @@ namespace FolkerKinzel.VCards
                 Set(kvp.Key, kvp.Value switch
                 {
                     ICloneable cloneable => cloneable.Clone(),
-                    IEnumerable<VCardProperty> enumerable => enumerable.ToArray(),
+                    IEnumerable<ICloneable?> cloneables => cloneables.Select(x => x?.Clone()).ToArray(),
+                    IEnumerable<object?> enumerable => enumerable.ToArray(),
                     _ => kvp.Value
                 });
             }

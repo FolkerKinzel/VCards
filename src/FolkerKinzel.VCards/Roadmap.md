@@ -79,10 +79,10 @@ VCard.SerializeVcf.
 VCard.ToVcfString.
 - [x] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
 VCard.Reference.
-- [x] Let VCard.Reference return `IEnumerable<VCard?>`.
-- [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
+- [x] Let VCard.Reference return `IEnumerable<VCard>`.
+- [x] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
 VCard.Dereference.
-- [ ] Let VCard.Dereference return `IEnumerable<VCard?>`.
+- [x] Let VCard.Dereference return `IEnumerable<VCard>`.
 - [ ] Add a new class `VCardCollectionExtension` with extension methods for IEnumerable&lt;VCard?&gt;.
 - [ ] Remove `VCardListExtension` instead.
 

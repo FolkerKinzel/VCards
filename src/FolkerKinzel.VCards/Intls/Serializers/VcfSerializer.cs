@@ -107,7 +107,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendProperties()
         {
-            foreach (KeyValuePair<VCdProp, object> kvp in VCardToSerialize.OrderBy(x => x.Key))
+            foreach (KeyValuePair<VCdProp, object> kvp in ((IEnumerable<KeyValuePair<VCdProp, object>>)VCardToSerialize).OrderBy(x => x.Key))
             {
                 switch (kvp.Key)
                 {

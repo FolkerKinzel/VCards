@@ -75,11 +75,6 @@ namespace FolkerKinzel.VCards
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
         public static void SaveVcf(
             string fileName,
-//            List<
-//#nullable disable
-//                VCard
-//#nullable restore
-//                > vCardList,
             IEnumerable<VCard?> vCards,
             VCdVersion version = DEFAULT_VERSION,
             VcfOptions options = VcfOptions.Default)
@@ -156,15 +151,10 @@ namespace FolkerKinzel.VCards
         /// <exception cref="IOException">E/A-Fehler.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
         public static void SerializeVcf(Stream stream,
-//                                     List<
-//#nullable disable
-//                                         VCard
-//#nullable restore
-//                                         > vCardList,
-                                     IEnumerable<VCard?> vCards,
-                                     VCdVersion version = DEFAULT_VERSION,
-                                     VcfOptions options = VcfOptions.Default,
-                                     bool leaveStreamOpen = false)
+                                        IEnumerable<VCard?> vCards,
+                                        VCdVersion version = DEFAULT_VERSION,
+                                        VcfOptions options = VcfOptions.Default,
+                                        bool leaveStreamOpen = false)
         {
             DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(SerializeVcf)}({nameof(Stream)}, IEnumerable<{nameof(VCard)}?>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
 
@@ -254,11 +244,6 @@ namespace FolkerKinzel.VCards
                 vCard.Version = version;
                 serializer.Serialize(vCard);
             }
-
-            //if (version >= VCdVersion.V4_0)
-            //{
-            //    Dereference(vCards);
-            //}
         }
 
 
@@ -307,11 +292,6 @@ namespace FolkerKinzel.VCards
         /// <exception cref="ArgumentException"><paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
         /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
         public static string ToVcfString(
-//            List<
-//#nullable disable
-//            VCard
-//#nullable restore
-//            > vCardList,
             IEnumerable<VCard?> vCards,
             VCdVersion version = VCard.DEFAULT_VERSION,
             VcfOptions options = VcfOptions.Default)
@@ -324,10 +304,9 @@ namespace FolkerKinzel.VCards
             using var stream = new MemoryStream();
 
             VCard.SerializeVcf(stream, vCards, version, options, leaveStreamOpen: true);
+
             stream.Position = 0;
-
             using var reader = new StreamReader(stream, Encoding.UTF8);
-
             return reader.ReadToEnd();
         }
 

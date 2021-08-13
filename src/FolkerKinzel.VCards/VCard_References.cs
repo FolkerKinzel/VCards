@@ -13,13 +13,13 @@ namespace FolkerKinzel.VCards
     {
         /// <summary>
         /// Gibt eine Sammlung zurück, in der die <see cref="RelationVCardProperty"/>-Objekte der als Argument übergebenen
-        /// Sammlung durch 
+        /// Sammlung von <see cref="VCard"/>-Objekten durch 
         /// <see cref="RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
         /// <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte als 
-        /// separate Objekte angefügt sind.
+        /// separate Elemente angefügt sind.
         /// </summary>
         /// 
-        /// <param name="vCards">Sammlung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// <param name="vCards">Sammlung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein und <c>null</c>-Werte
         /// enthalten.</param>
         /// 
         /// <remarks>
@@ -29,7 +29,7 @@ namespace FolkerKinzel.VCards
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
         /// </note>
         /// <note type="important">
-        /// Verwenden Sie diese Methode niemals, wenn Sie eine VCF-Datei als vCard 2.1 oder vCard 3.0 speichern möchten!
+        /// Verwenden Sie diese Methode niemals, wenn Sie eine VCF-Datei als vCard 2.1 oder vCard 3.0 speichern möchten. Es droht Datenverlust.
         /// </note>
         /// <para>
         /// Die Methode wird bei Bedarf von den Serialisierungsmethoden von <see cref="VCard"/> automatisch verwendet. Die Verwendung in eigenem 
@@ -40,7 +40,8 @@ namespace FolkerKinzel.VCards
         /// 
         /// 
         /// 
-        /// <para>Wenn die angefügten <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen 
+        /// <para>Wenn die angefügten <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, 
+        /// wird ihnen 
         /// von der Methode
         /// automatisch eine neue zugewiesen.
         /// </para>
@@ -60,30 +61,18 @@ namespace FolkerKinzel.VCards
         /// </example>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
-        public static IEnumerable<VCard?> Reference(
-//            List<
-//#nullable disable
-//            VCard
-//#nullable restore
-//            > vCardList
-            IEnumerable<VCard?> vCards
-            )
+        public static IEnumerable<VCard> Reference(IEnumerable<VCard?> vCards)
         {
             if (vCards is null)
             {
                 throw new ArgumentNullException(nameof(vCards));
             }
 
-            List<VCard?> list = vCards.ToList();
+            List<VCard> list = vCards.Where(x => x is not null).ToList()!;
 
-            for (int i = 0; i < list.Count; i++)
+            for (int i = list.Count - 1; i >= 0; i--)
             {
-                VCard? vcard = list[i];
-
-                if (vcard is null)
-                {
-                    continue;
-                }
+                VCard vcard = list[i];
 
                 if (vcard.Members != null || vcard.Relations != null)
                 {
@@ -110,11 +99,11 @@ namespace FolkerKinzel.VCards
 
             return list;
 
-            static void DoSetReferences(List<VCard?> vCardList, List<RelationProperty?> relations)
+            static void DoSetReferences(List<VCard> vCardList, List<RelationProperty?> relations)
             {
                 RelationVCardProperty[] vcdProps = relations
                                 .Select(x => x as RelationVCardProperty)
-                                .Where(x => x != null)
+                                .Where(x => x != null && x.IsEmpty)
                                 .ToArray()!;
 
 
@@ -124,37 +113,32 @@ namespace FolkerKinzel.VCards
 
                     _ = relations.Remove(vcdProp);
 
-                    VCard? vc = vcdProp.Value;
+                    VCard vc = vcdProp.Value!;
 
-                    if (vc != null)
+                    if (!vCardList.Contains(vc))
                     {
-                        vc = vc.Clone();
-
-                        if (vc.UniqueIdentifier is null)
-                        {
-                            vc.UniqueIdentifier = new UuidProperty();
-                        }
-                        
-                        if (!vCardList.Contains(vc))
-                        {
-                            vCardList.Add(vc);
-                        }
-                        
-                        if (relations.Any(x => x is RelationUuidProperty xUid 
-                        && xUid.Value == vc.UniqueIdentifier.Value 
-                        && xUid.Parameters.RelationType == vcdProp.Parameters.RelationType))
-                        {
-                            continue;
-                        }
-
-                        var relationUuid = new RelationUuidProperty(
-                            vc.UniqueIdentifier.Value,
-                            vcdProp.Parameters.RelationType,
-                            propertyGroup: vcdProp.Group);
-
-                        relationUuid.Parameters.Assign(vcdProp.Parameters);
-                        relations.Add(relationUuid);
+                        vCardList.Add(vc);
                     }
+
+                    if (vc.UniqueIdentifier is null || vc.UniqueIdentifier.IsEmpty)
+                    {
+                        vc.UniqueIdentifier = new UuidProperty();
+                    }
+
+                    if (relations.Any(x => x is RelationUuidProperty xUid
+                    && xUid.Value == vc.UniqueIdentifier.Value
+                    && xUid.Parameters.RelationType == vcdProp.Parameters.RelationType))
+                    {
+                        continue;
+                    }
+
+                    var relationUuid = new RelationUuidProperty(
+                        vc.UniqueIdentifier.Value,
+                        vcdProp.Parameters.RelationType,
+                        propertyGroup: vcdProp.Group);
+
+                    relationUuid.Parameters.Assign(vcdProp.Parameters);
+                    relations.Add(relationUuid);
                 }
             }
         }
@@ -162,12 +146,13 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Gibt eine Sammlung zurück, in der <see cref="RelationUuidProperty"/>-Objekte der als Argument übergebenen Sammlung durch
+        /// Gibt eine Sammlung zurück, in der <see cref="RelationUuidProperty"/>-Objekte der als Argument übergebenen Sammlung von
+        /// <see cref="VCard"/>-Objekten durch
         /// <see cref="RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="VCard"/>-Objekte
         /// in der als Argument übergebenen Sammlung befinden.
         /// </summary>
         /// 
-        /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// <param name="vCards">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein und <c>null</c>-Werte
         /// enthalten.</param>
         /// 
         /// <remarks>
@@ -182,10 +167,6 @@ namespace FolkerKinzel.VCards
         /// zusammengeführt werden, um ihre Daten durchsuchbar zu machen.
         /// </para>
         /// 
-        /// <para>Die Methode entfernt keine Elemente aus <paramref name="vCardList"/> und erzeugt 
-        /// auch bei mehrfachem Aufruf keine Doubletten (<see cref="RelationVCardProperty"/>-Objekte, die dasselbe <see cref="VCard"/>-Objekt 
-        /// enthalten).
-        /// </para>
         /// </remarks>
         /// 
         /// <example>
@@ -198,40 +179,46 @@ namespace FolkerKinzel.VCards
         /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
         /// </example>
         /// 
-        /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
-        public static void Dereference(List<
-#nullable disable
-            VCard
-#nullable restore
-            > vCardList)
+        /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
+        public static IEnumerable<VCard> Dereference(IEnumerable<VCard?> vCards)
         {
-            if (vCardList is null)
+            if (vCards is null)
             {
-                throw new ArgumentNullException(nameof(vCardList));
+                throw new ArgumentNullException(nameof(vCards));
             }
 
-            foreach (VCard? vcard in vCardList)
+            foreach (VCard? vcard in vCards)
             {
                 if (vcard != null)
                 {
-                    if (vcard.Relations != null)
+                    if (vcard.Relations != null || vcard.Members != null)
                     {
-                        List<RelationProperty?> relations = vcard.Relations as List<RelationProperty?> ?? vcard.Relations.ToList();
-                        vcard.Relations = relations;
-                        DoDereference(relations, vCardList);
-                    }
+                        var clone = vcard.Clone();
+                        if (clone.Relations != null)
+                        {
+                            List<RelationProperty?> relations = clone.Relations.ToList();
+                            clone.Relations = relations;
+                            DoDereference(relations, vCards);
+                        }
 
-                    if (vcard.Members != null)
+                        if (clone.Members != null)
+                        {
+                            List<RelationProperty?> members = clone.Members.ToList();
+                            clone.Members = members;
+                            DoDereference(members, vCards);
+                        }
+
+                        yield return clone;
+                    }
+                    else
                     {
-                        List<RelationProperty?> members = vcard.Members as List<RelationProperty?> ?? vcard.Members.ToList();
-                        vcard.Members = members;
-                        DoDereference(members, vCardList);
+                        yield return vcard;
                     }
                 }
             }
 
 
-            static void DoDereference(List<RelationProperty?> relations, List<VCard?> vCardList)
+            static void DoDereference(List<RelationProperty?> relations, IEnumerable<VCard?> vCards)
             {
                 IEnumerable<RelationUuidProperty> guidProps = relations
                     .Select(x => x as RelationUuidProperty)
@@ -240,7 +227,7 @@ namespace FolkerKinzel.VCards
                 foreach (RelationUuidProperty guidProp in guidProps)
                 {
                     VCard? referencedVCard =
-                        vCardList.Where(x => x?.UniqueIdentifier != null).FirstOrDefault(x => x!.UniqueIdentifier!.Value == guidProp.Value);
+                        vCards.Where(x => x?.UniqueIdentifier != null).FirstOrDefault(x => x!.UniqueIdentifier!.Value == guidProp.Value);
 
                     if (referencedVCard != null)
                     {

@@ -305,11 +305,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>PID</c>: Property-ID zur Identifizierung einer bestimmten vCard-Property unter verschiedenen Instanzen mit demselben Bezeichner. <c>(4)</c>
+        /// <c>PID</c>: Property-IDs zur Identifizierung der vCard-Property. <c>(4)</c>
         /// </summary>
-        public IEnumerable<PropertyID>? PropertyIDs
+        public IEnumerable<PropertyID?>? PropertyIDs
         {
-            get => Get<IEnumerable<PropertyID>?>(VCdParam.PropertyIDs);
+            get => Get<IEnumerable<PropertyID?>?>(VCdParam.PropertyIDs);
             set => Set(VCdParam.PropertyIDs, value);
         }
 

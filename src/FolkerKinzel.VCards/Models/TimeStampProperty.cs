@@ -79,7 +79,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <inheritdoc/>
-        public override bool IsEmpty => Value == DateTimeOffset.MinValue;
+        public override bool IsEmpty => Value < new DateTimeOffset(1900, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
         [InternalProtected]
         internal override void AppendValue(VcfSerializer serializer)

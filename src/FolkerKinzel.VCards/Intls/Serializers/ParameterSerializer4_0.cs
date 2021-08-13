@@ -855,7 +855,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendPid()
         {
-            IEnumerable<Models.PropertyID>? pids = ParaSection.PropertyIDs;
+            IEnumerable<Models.PropertyID?>? pids = ParaSection.PropertyIDs;
 
             if (pids is null)
             {
@@ -864,9 +864,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             _ = _worker.Clear();
 
-            foreach (Models.PropertyID pid in pids)
+            foreach (Models.PropertyID? pid in pids)
             {
-                if (pid.IsEmpty)
+                if (pid is null)
                 {
                     continue;
                 }
