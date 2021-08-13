@@ -37,7 +37,7 @@ vCard 4.0 to vCard 3.0. Make an option for this conversion.
 GeoCoordinate always points to a valid geographical position.
 - [ ] Preserve geo parameters in vCard 3.0 and 2.1 using GEO properties and automatic group identifiers. 
  Make an option for it.
-- [ ] Collect GEO properties with groups as GeoCoordinate parameters when parsing.
+- [ ] Collect GEO properties with groups as parameters when parsing.
 
 
 =
@@ -87,13 +87,15 @@ VCard.Dereference.
 Remove `VCardListExtension` instead.
 
 =
-- [x] Implement `IEnumerable<VCard>` in `VCard`
-- [ ] Implement in VCard `IEquatable<VCard>`
-- [x] Implement VCard `ICloneable`.
-- [ ] Implement in VCardProperty `ICloneable` to make a deep copy.
+- [x] Implement `IEnumerable<VCard>` in `VCard`.
+- [ ] Implement `IEquatable<VCard>` in `VCard`.
+- [x] Implement `ICloneable` in `VCard`.
+- [ ] Implement `ICloneable` in `VCardProperty`.
 
 =
-- [ ] VCard.LoadVcf, VCard.DeserializeVcf and VCard.ParseVcf should return a `ReadOnlyCollection&lt;VCard&gt;`.
+- [x] Let VCard.LoadVcf should return `IList&lt;VCard&gt;`.
+- [x] Let VCard.DeserializeVcf return `IList&lt;VCard&gt;`.
+- [x] Let VCard.ParseVcf return `IList&lt;VCard&gt;`.
 
 =
 - [x] Use `System.Text.CodePagesEncodingProvider` to retrieve text encoding instances in .NET Standard and .NET 5.0.

@@ -32,7 +32,7 @@ namespace FolkerKinzel.VCards
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
-        public static List<VCard> LoadVcf(string fileName, Encoding? textEncoding = null)
+        public static IList<VCard> LoadVcf(string fileName, Encoding? textEncoding = null)
         {
             using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
             return DoParseVcf(reader);
@@ -42,16 +42,16 @@ namespace FolkerKinzel.VCards
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("Use LoadVcf instead.", true)]
         public static List<VCard> Load(string fileName, Encoding? textEncoding = null)
-            => LoadVcf(fileName, textEncoding);
+            => (List<VCard>)LoadVcf(fileName, textEncoding);
 
 
         /// <summary>
         /// Parst einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
         /// </summary>
         /// <param name="content">Ein <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</param>
-        /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="content"/> darstellen.</returns>
+        /// <returns>Eine Auflistung geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="content"/> darstellen.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="content"/> ist <c>null</c>.</exception>
-        public static List<VCard> ParseVcf(string content)
+        public static IList<VCard> ParseVcf(string content)
         {
             if (content == null)
             {
@@ -65,7 +65,7 @@ namespace FolkerKinzel.VCards
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("Use ParseVcf instead.", true)]
-        public static List<VCard> Parse(string content) => ParseVcf(content);
+        public static List<VCard> Parse(string content) => (List<VCard>)ParseVcf(content);
 
 
 
@@ -73,19 +73,19 @@ namespace FolkerKinzel.VCards
         /// Deserialisiert eine VCF-Datei mit einem <see cref="TextReader"/>.
         /// </summary>
         /// <param name="reader">Ein <see cref="TextReader"/>.</param>
-        /// <returns>Eine Sammlung von <see cref="VCard"/>-Objekten, die den Inhalt der deserialisierten VCF-Datei darstellen.</returns>
+        /// <returns>Eine Auflistung von <see cref="VCard"/>-Objekten, die den Inhalt der deserialisierten VCF-Datei darstellen.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> ist <c>null</c>.</exception>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static List<VCard> DeserializeVcf(TextReader reader)
+        public static IList<VCard> DeserializeVcf(TextReader reader)
             => DoParseVcf(reader ?? throw new ArgumentNullException(nameof(reader)));
 
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("Use DeserializeVcf instead.", true)]
-        public static List<VCard> Deserialize(TextReader reader) => DeserializeVcf(reader);
+        public static List<VCard> Deserialize(TextReader reader) => (List<VCard>)DeserializeVcf(reader);
 
 
         private static List<VCard> DoParseVcf(TextReader reader, VCdVersion versionHint = VCdVersion.V2_1)
@@ -124,8 +124,7 @@ namespace FolkerKinzel.VCards
                 }
             } while (!vcfReader.EOF);
 
-            VCard.Dereference(vCardList);
-            return vCardList;
+            return VCard.Dereference(vCardList).ToList();
         }
 
 
@@ -139,7 +138,7 @@ namespace FolkerKinzel.VCards
 
             using var reader = new StringReader(content ?? string.Empty);
 
-            List<VCard>? list = DoParseVcf(reader, versionHint);
+            List<VCard> list = DoParseVcf(reader, versionHint);
 
             return list.FirstOrDefault();
         }
