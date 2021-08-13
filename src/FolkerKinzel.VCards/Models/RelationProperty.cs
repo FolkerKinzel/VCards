@@ -19,6 +19,12 @@ namespace FolkerKinzel.VCards.Models
     /// </summary>
     public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProperty>
     {
+        /// <summary>
+        /// Kopierkonstruktor.
+        /// </summary>
+        /// <param name="prop">Das zu klonende <see cref="RelationProperty"/>-Objekt.</param>
+        protected RelationProperty(RelationProperty prop) : base(prop) { }
+
         [InternalProtected]
         internal RelationProperty(ParameterSection parameters, string? propertyGroup)
             : base(parameters, propertyGroup) => InternalProtectedAttribute.Run();

@@ -17,6 +17,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class UuidProperty : VCardProperty
     {
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private UuidProperty(UuidProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="UuidProperty"/>-Objekt mit einer automatisch erzeugten
         /// <see cref="Guid"/>.
         /// </summary>
@@ -66,5 +73,6 @@ namespace FolkerKinzel.VCards.Models
             _ = serializer.Builder.AppendUuid(this.Value, serializer.Version);
         }
 
+        public override object Clone() => new UuidProperty(this);
     }
 }

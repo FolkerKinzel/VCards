@@ -24,7 +24,7 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="prop">Das zu klonende <see cref="VCardProperty"/>-Objekt.</param>
         protected VCardProperty(VCardProperty prop)
         {
-            Parameters = prop.Parameters.Clone();
+            Parameters = (ParameterSection)prop.Parameters.Clone();
             Group = prop.Group;
         }
 

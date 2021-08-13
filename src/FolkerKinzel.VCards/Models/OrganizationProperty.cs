@@ -21,6 +21,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class OrganizationProperty : VCardProperty, IEnumerable<OrganizationProperty>
     {
         /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="prop"></param>
+        private OrganizationProperty(OrganizationProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="OrganizationProperty"/>-Objekt.
         /// </summary>
         /// <param name="organizationName">Name der Organisation oder <c>null</c>.</param>
@@ -128,5 +135,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<OrganizationProperty>)this).GetEnumerator();
+
+        public override object Clone() => new OrganizationProperty(this);
     }
 }

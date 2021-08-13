@@ -16,6 +16,12 @@ namespace FolkerKinzel.VCards.Models
         private const string PROFILE_PROPERTY_VALUE = "VCARD";
 
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private ProfileProperty(ProfileProperty prop) : base(prop) { }
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="ProfileProperty"/>-Objekt.
         /// </summary>
         /// <param name="propertyGroup">Bezeichner der Gruppe,
@@ -52,5 +58,7 @@ namespace FolkerKinzel.VCards.Models
 
             _ = serializer.Builder.Append(PROFILE_PROPERTY_VALUE);
         }
+
+        public override object Clone() => new ProfileProperty(this);
     }
 }

@@ -21,6 +21,13 @@ namespace FolkerKinzel.VCards.Models
     public class TextProperty : VCardProperty, IEnumerable<TextProperty>
     {
         /// <summary>
+        /// Kopierkonstruktor.
+        /// </summary>
+        /// <param name="prop">Das zu klonende <see cref="TextProperty"/>-Objekt.</param>
+        protected TextProperty(TextProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="TextProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein <see cref="string"/> oder <c>null</c>.</param>
@@ -102,5 +109,7 @@ namespace FolkerKinzel.VCards.Models
 
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TextProperty>)this).GetEnumerator();
+
+        public override object Clone() => new TextProperty(this);
     }
 }

@@ -18,6 +18,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class XmlProperty : TextProperty, IEnumerable<XmlProperty>
     {
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private XmlProperty(XmlProperty prop) : base(prop) { }
+        
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="XmlProperty"/>-Objekt.
         /// </summary>
         /// <param name="xmlContent">Ein <see cref="XElement"/> oder <c>null</c>. Das Element muss einem XML-Namespace
@@ -59,5 +66,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<XmlProperty>)this).GetEnumerator();
+
+        public override object Clone() => new XmlProperty(this);
     }
 }

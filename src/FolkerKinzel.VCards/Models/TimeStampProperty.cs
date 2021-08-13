@@ -20,6 +20,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class TimeStampProperty : VCardProperty
     {
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private TimeStampProperty(TimeStampProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="TimeStampProperty"/>-Objekt, das den Zeitpunkt des 
         /// Konstruktoraufrufs als Zeitstempel kapselt.
         /// </summary>
@@ -94,5 +101,6 @@ namespace FolkerKinzel.VCards.Models
             _ = serializer.Builder.Append(worker);
         }
 
+        public override object Clone() => new TimeStampProperty(this);
     }
 }

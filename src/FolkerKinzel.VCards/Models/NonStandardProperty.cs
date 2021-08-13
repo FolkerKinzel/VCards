@@ -27,6 +27,17 @@ namespace FolkerKinzel.VCards.Models
     public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandardProperty>
     {
         /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="prop"></param>
+        private NonStandardProperty(NonStandardProperty prop) : base(prop)
+        {
+            PropertyKey = prop.PropertyKey;
+            Value = prop.Value;
+        }
+
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="NonStandardProperty"/>-Objekt, das eine benutzerdefinierte
         /// Erweiterung des vCard-Standards darstellt.
         /// </summary>
@@ -131,5 +142,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<NonStandardProperty>)this).GetEnumerator();
+
+        public override object Clone() => new NonStandardProperty(this);
     }
 }

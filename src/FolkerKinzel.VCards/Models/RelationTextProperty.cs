@@ -21,6 +21,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class RelationTextProperty : RelationProperty, IEnumerable<RelationTextProperty>
     {
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private RelationTextProperty(RelationTextProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="RelationTextProperty"/>-Objekt.
         /// </summary>
         /// <param name="text">Name einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
@@ -104,6 +111,8 @@ namespace FolkerKinzel.VCards.Models
         {
             yield return this;
         }
+
+        public override object Clone() => new RelationTextProperty(this);
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationTextProperty>)this).GetEnumerator();
     }

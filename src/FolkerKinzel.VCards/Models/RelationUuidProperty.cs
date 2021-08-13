@@ -18,6 +18,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class RelationUuidProperty : RelationProperty, IEnumerable<RelationUuidProperty>
     {
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private RelationUuidProperty(RelationUuidProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="RelationUuidProperty"/>-Objekt.
         /// </summary>
         /// <param name="uuid">UUID einer Person, zu der eine Beziehung besteht. Das kann zum Beispiel der Wert der 
@@ -81,6 +88,8 @@ namespace FolkerKinzel.VCards.Models
         {
             yield return this;
         }
+
+        public override object Clone() => new RelationUuidProperty(this);
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationUuidProperty>)this).GetEnumerator();
     }

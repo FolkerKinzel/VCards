@@ -19,6 +19,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProperty>
     {
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private TimeZoneProperty(TimeZoneProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="TimeZoneProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein <see cref="TimeZoneInfo"/>-Objekt oder <c>null</c>.</param>
@@ -68,5 +75,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TimeZoneProperty>)this).GetEnumerator();
+
+        public override object Clone() => new TimeZoneProperty(this);
     }
 }

@@ -24,6 +24,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class StringCollectionProperty : VCardProperty, IEnumerable<StringCollectionProperty>
     {
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private StringCollectionProperty(StringCollectionProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="StringCollectionProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Eine Sammlung von <see cref="string"/>s oder <c>null</c>.</param>
@@ -167,5 +174,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<StringCollectionProperty>)this).GetEnumerator();
+
+        public override object Clone() => new StringCollectionProperty(this);
     }
 }

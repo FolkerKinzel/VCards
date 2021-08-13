@@ -16,6 +16,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<PropertyIDMappingProperty>
     {
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private PropertyIDMappingProperty(PropertyIDMappingProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="PropertyIDMappingProperty"/>-Objekt.
         /// </summary>
         /// <param name="value">Ein <see cref="PropertyIDMapping"/>-Objekt oder <c>null</c>.</param>
@@ -75,5 +82,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PropertyIDMappingProperty>)this).GetEnumerator();
+
+        public override object Clone() => new PropertyIDMappingProperty(this);
     }
 }

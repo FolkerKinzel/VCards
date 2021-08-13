@@ -15,6 +15,12 @@ namespace FolkerKinzel.VCards.Models
     /// </summary>
     public sealed class KindProperty : VCardProperty
     {
+        /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="prop"></param>
+        private KindProperty(KindProperty prop) : base(prop)
+            => Value = prop.Value;
 
 
         /// <summary>
@@ -60,5 +66,6 @@ namespace FolkerKinzel.VCards.Models
             _ = serializer.Builder.Append(Value.ToVCardString());
         }
 
+        public override object Clone() => new KindProperty(this);
     }
 }

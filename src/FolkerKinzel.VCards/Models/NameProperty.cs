@@ -20,6 +20,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     {
         /// <summary>
+        /// Copy ctor
+        /// </summary>
+        /// <param name="prop"></param>
+        private NameProperty(NameProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="NameProperty"/>-Objekt.
         /// </summary>
         /// <param name="lastName">Nachname</param>
@@ -156,5 +163,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<NameProperty>)this).GetEnumerator();
+
+        public override object Clone() => new NameProperty(this);
     }
 }

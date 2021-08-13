@@ -20,6 +20,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class RelationUriProperty : RelationProperty, IEnumerable<RelationUriProperty>
     {
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private RelationUriProperty(RelationUriProperty prop) : base(prop)
+            => Value = prop.Value;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="RelationUriProperty"/>-Objekt.
         /// </summary>
         /// <param name="uri"><see cref="System.Uri"/> einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
@@ -107,6 +114,8 @@ namespace FolkerKinzel.VCards.Models
         {
             yield return this;
         }
+
+        public override object Clone() => new RelationUriProperty(this);
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationUriProperty>)this).GetEnumerator();
     }

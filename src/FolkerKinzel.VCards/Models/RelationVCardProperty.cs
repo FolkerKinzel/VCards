@@ -21,6 +21,13 @@ namespace FolkerKinzel.VCards.Models
     public sealed class RelationVCardProperty : RelationProperty, IEnumerable<RelationVCardProperty>
     {
         /// <summary>
+        /// Copy ctor.
+        /// </summary>
+        /// <param name="prop"></param>
+        private RelationVCardProperty(RelationVCardProperty prop) : base(prop)
+            => Value = prop.Value?.Clone() as VCard;
+
+        /// <summary>
         /// Initialisiert ein neues <see cref="RelationVCardProperty"/>-Objekt.
         /// </summary>
         /// <param name="vcard"><see cref="VCards.VCard"/> einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
@@ -112,6 +119,8 @@ namespace FolkerKinzel.VCards.Models
         {
             yield return this;
         }
+
+        public override object Clone() => new RelationVCardProperty(this);
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationVCardProperty>)this).GetEnumerator();
     }
