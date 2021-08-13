@@ -35,11 +35,11 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Speichert eine Liste von <see cref="VCard"/>-Objekten in eine gemeinsame VCF-Datei.
+        /// Speichert eine Sammlung von <see cref="VCard"/>-Objekten in eine gemeinsame VCF-Datei.
         /// </summary>
         /// 
-        /// <param name="vCardList">Die zu speichernden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
-        /// enthalten. Wenn die Auflistung kein <see cref="VCard"/>-Objekt enthält, wird keine Datei geschrieben.</param>
+        /// <param name="vCards">Die zu speichernden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein oder <c>null</c>-Werte
+        /// enthalten. Wenn die Sammlung kein <see cref="VCard"/>-Objekt enthält, wird keine Datei geschrieben.</param>
         /// <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
         /// <param name="version">Die vCard-Version der zu speichernden VCF-Datei.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
@@ -53,11 +53,12 @@ namespace FolkerKinzel.VCards
         /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehr
-        /// vCards, als sich ursprünglich Elemente in <paramref name="vCardList"/> befanden. Dies geschieht, wenn eine VCF-Datei als
+        /// vCards, als die Anzahl der Elemente in der Sammlung, die an den Parameter <paramref name="vCards"/> übergeben wird.
+        /// Dies geschieht, wenn eine VCF-Datei als
         /// vCard 4.0 gespeichert wird und sich 
         /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
         /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
-        /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCardList"/> angefügt.
+        /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
         /// </para>
         /// 
         /// <para>
@@ -66,41 +67,37 @@ namespace FolkerKinzel.VCards
         /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
         /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
         /// </para>
-        /// 
-        /// <para>
-        /// Wenn eine VCF-Datei als vCard 4.0 gespeichert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
-        /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
-        /// </para>
         /// </remarks>
         /// 
-        /// <exception cref="ArgumentNullException"><paramref name="fileName"/> oder <paramref name="vCardList"/>
+        /// <exception cref="ArgumentNullException"><paramref name="fileName"/> oder <paramref name="vCards"/>
         /// ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
         public static void SaveVcf(
             string fileName,
-            List<
-#nullable disable
-                VCard
-#nullable restore
-                > vCardList,
+//            List<
+//#nullable disable
+//                VCard
+//#nullable restore
+//                > vCardList,
+            IEnumerable<VCard?> vCards,
             VCdVersion version = DEFAULT_VERSION,
             VcfOptions options = VcfOptions.Default)
         {
-            if (vCardList is null)
+            if (vCards is null)
             {
-                throw new ArgumentNullException(nameof(vCardList));
+                throw new ArgumentNullException(nameof(vCards));
             }
 
             // verhindert, dass eine leere Datei geschrieben wird
-            if (!vCardList.Any(x => x != null))
+            if (!vCards.Any(x => x != null))
             {
                 //File.Delete(fileName);
                 return;
             }
 
-            using FileStream stream = InitializeFileStream(fileName, vCardList, version, options);
-            SerializeVcf(stream, vCardList, version, options);
+            using FileStream stream = InitializeFileStream(fileName);
+            SerializeVcf(stream, vCards, version, options);
         }
 
         [Browsable(false)]
@@ -118,10 +115,10 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Serialisiert eine Liste von <see cref="VCard"/>-Objekten unter Verwendung des VCF-Formats in einen <see cref="Stream"/>.
+        /// Serialisiert eine Sammlung von <see cref="VCard"/>-Objekten unter Verwendung des VCF-Formats in einen <see cref="Stream"/>.
         /// </summary>
         /// 
-        /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// <param name="vCards">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein oder <c>null</c>-Werte
         /// enthalten.</param>
         /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden.</param>
         /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
@@ -138,11 +135,12 @@ namespace FolkerKinzel.VCards
         /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehr
-        /// vCards, als sich ursprünglich Elemente in <paramref name="vCardList"/> befanden. Dies geschieht, wenn eine
+        /// vCards, als die Anzahl der Elemente in der Sammlung, die an den Parameter <paramref name="vCards"/> übergeben wird.
+        /// Dies geschieht, wenn eine
         /// vCard 4.0 serialisiert wird und sich 
         /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
         /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
-        /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCardList"/> angefügt.
+        /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
         /// </para>
         /// 
         /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
@@ -151,28 +149,24 @@ namespace FolkerKinzel.VCards
         /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
         /// </para>
         /// 
-        /// <para>
-        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
-        /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
-        /// </para>
-        /// 
         /// </remarks>
         /// 
-        /// <exception cref="ArgumentNullException"><paramref name="stream"/> oder <paramref name="vCardList"/> ist <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="stream"/> oder <paramref name="vCards"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
         /// <exception cref="IOException">E/A-Fehler.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
         public static void SerializeVcf(Stream stream,
-                                     List<
-#nullable disable
-                                         VCard
-#nullable restore
-                                         > vCardList,
+//                                     List<
+//#nullable disable
+//                                         VCard
+//#nullable restore
+//                                         > vCardList,
+                                     IEnumerable<VCard?> vCards,
                                      VCdVersion version = DEFAULT_VERSION,
                                      VcfOptions options = VcfOptions.Default,
                                      bool leaveStreamOpen = false)
         {
-            DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(SerializeVcf)}({nameof(TextWriter)}, List<{nameof(VCard)}>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
+            DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(SerializeVcf)}({nameof(Stream)}, IEnumerable<{nameof(VCard)}?>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
 
             if (stream is null)
             {
@@ -189,22 +183,24 @@ namespace FolkerKinzel.VCards
                 throw new ArgumentException(Res.StreamNotWritable, nameof(stream));
             }
 
-            if (vCardList is null)
+            if (vCards is null)
             {
                 if (!leaveStreamOpen)
                 {
                     stream.Close();
                 }
-                throw new ArgumentNullException(nameof(vCardList));
+                throw new ArgumentNullException(nameof(vCards));
             }
 
             if (version < VCdVersion.V4_0)
             {
                 if (options.IsSet(VcfOptions.IncludeAgentAsSeparateVCard))
                 {
-                    for (int i = 0; i < vCardList.Count; i++)
+                    List<VCard?> list = vCards.ToList();
+                    vCards = list;
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        VCard? vCard = vCardList[i];
+                        VCard? vCard = list[i];
 
                         if (vCard?.Relations is null)
                         {
@@ -220,9 +216,9 @@ namespace FolkerKinzel.VCards
 
                         if (agent != null)
                         {
-                            if (!vCardList.Contains(agent.Value))
+                            if (!list.Contains(agent.Value))
                             {
-                                vCardList.Add(agent.Value);
+                                list.Add(agent.Value);
                             }
                         }
 
@@ -231,7 +227,7 @@ namespace FolkerKinzel.VCards
             }
             else
             {
-                Reference(vCardList);
+                vCards = Reference(vCards);
             }
 
             // UTF-8 muss ohne BOM geschrieben werden, da sonst nicht lesbar
@@ -249,7 +245,7 @@ namespace FolkerKinzel.VCards
 
             var serializer = VcfSerializer.GetSerializer(writer, version, options);
 
-            foreach (VCard? vCard in vCardList)
+            foreach (VCard? vCard in vCards)
             {
                 if (vCard is null)
                 {
@@ -259,24 +255,24 @@ namespace FolkerKinzel.VCards
                 serializer.Serialize(vCard);
             }
 
-            if (version >= VCdVersion.V4_0)
-            {
-                Dereference(vCardList);
-            }
+            //if (version >= VCdVersion.V4_0)
+            //{
+            //    Dereference(vCards);
+            //}
         }
 
 
         /// <summary>
-        /// Serialisiert <paramref name="vCardList"/> als einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
+        /// Serialisiert <paramref name="vCards"/> als einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
         /// </summary>
         /// 
-        /// <param name="vCardList">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// <param name="vCards">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein oder <c>null</c>-Werte
         /// enthalten.</param>
         /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
         /// 
-        /// <returns><paramref name="vCardList"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
+        /// <returns><paramref name="vCards"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
         /// 
         /// <remarks>
         /// <note type="caution">
@@ -286,11 +282,11 @@ namespace FolkerKinzel.VCards
         /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehr
-        /// vCards, als sich ursprünglich Elemente in <paramref name="vCardList"/> befanden. Dies geschieht, wenn eine
+        /// vCards, als sich ursprünglich Elemente in <paramref name="vCards"/> befanden. Dies geschieht, wenn eine
         /// vCard 4.0 serialisiert wird und sich 
         /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
         /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
-        /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCardList"/> angefügt.
+        /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
         /// </para>
         /// 
         /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
@@ -307,23 +303,27 @@ namespace FolkerKinzel.VCards
         /// </remarks>
         /// 
         /// 
-        /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
         /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
-        public static string ToVcfString(List<
-#nullable disable
-            VCard
-#nullable restore
-            > vCardList, VCdVersion version = VCard.DEFAULT_VERSION, VcfOptions options = VcfOptions.Default)
+        public static string ToVcfString(
+//            List<
+//#nullable disable
+//            VCard
+//#nullable restore
+//            > vCardList,
+            IEnumerable<VCard?> vCards,
+            VCdVersion version = VCard.DEFAULT_VERSION,
+            VcfOptions options = VcfOptions.Default)
         {
-            if (vCardList is null)
+            if (vCards is null)
             {
-                throw new ArgumentNullException(nameof(vCardList));
+                throw new ArgumentNullException(nameof(vCards));
             }
 
             using var stream = new MemoryStream();
 
-            VCard.SerializeVcf(stream, vCardList, version, options, leaveStreamOpen: true);
+            VCard.SerializeVcf(stream, vCards, version, options, leaveStreamOpen: true);
             stream.Position = 0;
 
             using var reader = new StreamReader(stream, Encoding.UTF8);
@@ -336,8 +336,6 @@ namespace FolkerKinzel.VCards
         #endregion
 
         #region Instance Methods
-
-
 
         /// <summary>
         /// Speichert die <see cref="VCard"/>-Instanz als VCF-Datei.
@@ -378,7 +376,7 @@ namespace FolkerKinzel.VCards
         public void SaveVcf(
             string fileName,
             VCdVersion version = DEFAULT_VERSION,
-            VcfOptions options = VcfOptions.Default) => VCard.SaveVcf(fileName, new List<VCard> { this }, version, options);
+            VcfOptions options = VcfOptions.Default) => VCard.SaveVcf(fileName, this, version, options);
 
 
         [Browsable(false)]
@@ -439,7 +437,7 @@ namespace FolkerKinzel.VCards
                               VcfOptions options = VcfOptions.Default,
                               bool leaveStreamOpen = false)
 
-            => VCard.SerializeVcf(stream, new List<VCard> { this }, version, options, leaveStreamOpen);
+            => VCard.SerializeVcf(stream, this, version, options, leaveStreamOpen);
 
 
         [Browsable(false)]
@@ -495,7 +493,7 @@ namespace FolkerKinzel.VCards
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public string ToVcfString(VCdVersion version = DEFAULT_VERSION, VcfOptions options = VcfOptions.Default)
-            => VCard.ToVcfString(new List<VCard> { this }, version, options);
+            => VCard.ToVcfString(this, version, options);
 
 
 
@@ -503,7 +501,7 @@ namespace FolkerKinzel.VCards
 
 
         [ExcludeFromCodeCoverage]
-        private static FileStream InitializeFileStream(string fileName, List<VCard> vCardList, VCdVersion version, VcfOptions options)
+        private static FileStream InitializeFileStream(string fileName)
         {
             try
             {

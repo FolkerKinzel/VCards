@@ -71,21 +71,31 @@ public PropertyID(int id, PropertyIDMapping? mapping = null);
 - [x] Mark the usage of `VCdDataType.Timestamp` as Obsolete-**Error**.
 
 =
-- [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
+- [x] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
 VCard.SaveVcf.
-- [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
+- [x] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
 VCard.SerializeVcf.
-- [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
+- [x] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
 VCard.ToVcfString.
-- [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
+- [x] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
 VCard.Reference.
+- [x] Let VCard.Reference return `IEnumerable<VCard?>`.
 - [ ] Change the parameter `List<VCard> vCardList` to `IEnumerable<VCard?> vCards` in
 VCard.Dereference.
+- [ ] Let VCard.Dereference return `IEnumerable<VCard?>`.
 - [ ] Add a new class `VCardCollectionExtension` with extension methods for IEnumerable&lt;VCard?&gt;.
 - [ ] Remove `VCardListExtension` instead.
 
 =
 - [x] Implement `IEnumerable<VCard>` in `VCard`
+
+=
+
+- [ ] Implement in VCard `IEquatable<VCard>`
+
+=
+
+- [x] Implement VCard `ICloneable` for a shallow copy.
 
 =
 - [ ] `VCard.Reference` should copy the input data and return its result as IEnumerable&lt;VCard&gt;.
@@ -105,7 +115,7 @@ as input for the data to embed.
 - [ ] Cleanup: Remove `VCdDataType.Timestamp` and all other Symbols marked as Obsolete errors in 3.0.0.
 
 ### 3.1.0
-- [ ] Implement `ICloneable` to the `VCard` class.
+- [ ] Implement in VCardProperty `ICloneable` to make a deep copy.
 
 ### 4.0.0
 - [ ] End .NET Framework 4.0 support.

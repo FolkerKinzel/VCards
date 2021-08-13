@@ -21,6 +21,21 @@ namespace FolkerKinzel.VCards
         public VCard() { }
 
 
+        private VCard(VCard vCard)
+        {
+            Version = vCard.Version;
+
+            foreach (KeyValuePair<VCdProp, object> kvp in vCard)
+            {
+                Set(kvp.Key, kvp.Value switch
+                {
+                    ICloneable cloneable => cloneable.Clone(),
+                    IEnumerable<VCardProperty> enumerable => enumerable.ToArray(),
+                    _ => kvp.Value
+                });
+            }
+        }
+
 
         /// <summary>
         /// Initialisiert ein <see cref="VCard"/>-Objekt aus einer Queue von <see cref="VcfRow"/>-Objekten.

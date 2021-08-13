@@ -9,3 +9,9 @@ csharp_style_prefer_pattern_Matching = true:silent
 
 # IDE0090: "new(...)" verwenden
 csharp_style_implicit_object_creation_when_type_is_apparent = true:silent
+
+# IDE0007: Impliziten Typ verwenden
+csharp_style_var_when_type_is_apparent = true
+
+# IDE0007: Impliziten Typ verwenden
+csharp_style_var_elsewhere = false

@@ -12,11 +12,14 @@ namespace FolkerKinzel.VCards
     public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
     {
         /// <summary>
-        /// Ersetzt <see cref="RelationVCardProperty"/>-Objekte durch <see cref="RelationUuidProperty"/>-Objekte und fügt die 
-        /// referenzierten <see cref="VCard"/>-Objekte als Elemente an <paramref name="vCardList"/> an.
+        /// Gibt eine Sammlung zurück, in der die <see cref="RelationVCardProperty"/>-Objekte der als Argument übergebenen
+        /// Sammlung durch 
+        /// <see cref="RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
+        /// <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte als 
+        /// separate Objekte angefügt sind.
         /// </summary>
         /// 
-        /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
+        /// <param name="vCards">Sammlung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
         /// enthalten.</param>
         /// 
         /// <remarks>
@@ -35,12 +38,10 @@ namespace FolkerKinzel.VCards
         /// eine einzige vCard enthalten soll. (Dieses Vorgehen ist i.d.R. nicht vorteilhaft, da es die referentielle Integrität gefährdet.)
         /// </para>
         /// 
-        /// <para>
-        /// Auch durch mehrfachen Aufruf der Methode werden keine 
-        /// Doubletten (im Sinne der mehrfachen Einfügung desselben <see cref="VCard"/>- oder <see cref="RelationUuidProperty"/>-Objekts) erzeugt.
-        /// </para>
         /// 
-        /// <para>Wenn die angefügten <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen von der Methode
+        /// 
+        /// <para>Wenn die angefügten <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen 
+        /// von der Methode
         /// automatisch eine neue zugewiesen.
         /// </para>
         /// </remarks>
@@ -51,50 +52,63 @@ namespace FolkerKinzel.VCards
         /// dass eine VCF-Datei jeweils nur eine einzige vCard enthalten soll. Das Beispiel zeigt möglicherweise auch, dass dieses Vorgehen i.d.R.
         /// nicht vorteilhaft ist, da es die referentielle Integrität gefährdet.
         /// </para>
-        /// <para>In dem Beispiel wird die Erweiterungsmethode <see cref="VCardListExtension.ReferenceVCards"/> verwendet, die <see cref="Reference(List{VCard})"/>
+        /// <para>In dem Beispiel wird die Erweiterungsmethode <see cref="VCardListExtension.ReferenceVCards"/> verwendet, die 
+        /// <see cref="Reference(List{VCard})"/>
         /// aufruft.</para>
         /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
         /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
         /// </example>
         /// 
-        /// <exception cref="ArgumentNullException"><paramref name="vCardList"/> ist <c>null</c>.</exception>
-        public static void Reference(List<
-#nullable disable
-            VCard
-#nullable restore
-            > vCardList)
+        /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
+        public static IEnumerable<VCard?> Reference(
+//            List<
+//#nullable disable
+//            VCard
+//#nullable restore
+//            > vCardList
+            IEnumerable<VCard?> vCards
+            )
         {
-            if (vCardList is null)
+            if (vCards is null)
             {
-                throw new ArgumentNullException(nameof(vCardList));
+                throw new ArgumentNullException(nameof(vCards));
             }
 
-            for (int i = 0; i < vCardList.Count; i++)
+            List<VCard?> list = vCards.ToList();
+
+            for (int i = 0; i < list.Count; i++)
             {
-                VCard? vcard = vCardList[i];
+                VCard? vcard = list[i];
 
                 if (vcard is null)
                 {
                     continue;
                 }
 
-                if (vcard.Members != null)
+                if (vcard.Members != null || vcard.Relations != null)
                 {
-                    List<RelationProperty?> members = vcard.Members as List<RelationProperty?> ?? vcard.Members.ToList();
-                    vcard.Members = members;
+                    vcard = vcard.Clone();
+                    list[i] = vcard;
 
-                    DoSetReferences(vCardList, members);
-                }
+                    if (vcard.Members != null)
+                    {
+                        List<RelationProperty?> members = vcard.Members as List<RelationProperty?> ?? vcard.Members.ToList();
+                        vcard.Members = members;
 
-                if (vcard.Relations != null)
-                {
-                    List<RelationProperty?> relations = vcard.Relations as List<RelationProperty?> ?? vcard.Relations.ToList();
-                    vcard.Relations = relations;
+                        DoSetReferences(list, members);
+                    }
 
-                    DoSetReferences(vCardList, relations);
+                    if (vcard.Relations != null)
+                    {
+                        List<RelationProperty?> relations = vcard.Relations as List<RelationProperty?> ?? vcard.Relations.ToList();
+                        vcard.Relations = relations;
+
+                        DoSetReferences(list, relations);
+                    }
                 }
             }
 
+            return list;
 
             static void DoSetReferences(List<VCard?> vCardList, List<RelationProperty?> relations)
             {
@@ -114,16 +128,21 @@ namespace FolkerKinzel.VCards
 
                     if (vc != null)
                     {
-                        if (!vCardList.Contains(vc))
-                        {
-                            vCardList.Add(vc);
-                        }
+                        vc = vc.Clone();
 
                         if (vc.UniqueIdentifier is null)
                         {
                             vc.UniqueIdentifier = new UuidProperty();
                         }
-                        else if (relations.Any(x => x is RelationUuidProperty xUid && xUid.Value == vc.UniqueIdentifier.Value))
+                        
+                        if (!vCardList.Contains(vc))
+                        {
+                            vCardList.Add(vc);
+                        }
+                        
+                        if (relations.Any(x => x is RelationUuidProperty xUid 
+                        && xUid.Value == vc.UniqueIdentifier.Value 
+                        && xUid.Parameters.RelationType == vcdProp.Parameters.RelationType))
                         {
                             continue;
                         }
@@ -143,9 +162,9 @@ namespace FolkerKinzel.VCards
 
 
         /// <summary>
-        /// Ersetzt <see cref="RelationUuidProperty"/>-Objekte durch
-        /// <see cref="RelationVCardProperty"/>-Objekte - sofern sich die referenzierten <see cref="VCard"/>-Objekte
-        /// in <paramref name="vCardList"/> befinden.
+        /// Gibt eine Sammlung zurück, in der <see cref="RelationUuidProperty"/>-Objekte der als Argument übergebenen Sammlung durch
+        /// <see cref="RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="VCard"/>-Objekte
+        /// in der als Argument übergebenen Sammlung befinden.
         /// </summary>
         /// 
         /// <param name="vCardList">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein oder <c>null</c>-Werte
