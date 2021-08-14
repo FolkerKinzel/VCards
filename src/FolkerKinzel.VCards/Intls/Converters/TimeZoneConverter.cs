@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace FolkerKinzel.VCards.Intls.Converters
 {
-    internal class TimeZoneInfoConverter
+    internal class TimeZoneConverter
     {
         private readonly string[] _patterns = new string[] { @"hh\:mm", @"hhmm", @"hh" };
 

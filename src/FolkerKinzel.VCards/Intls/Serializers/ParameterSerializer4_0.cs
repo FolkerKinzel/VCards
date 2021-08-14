@@ -978,7 +978,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             _ = _worker.Clear();
 
-            TimeZoneInfoConverter.AppendTo(_worker, tz, VCdVersion.V4_0);
+            TimeZoneConverter.AppendTo(_worker, tz, VCdVersion.V4_0);
 
             AppendParameter(ParameterSection.ParameterKey.TZ, EscapeAndQuote(_worker.ToString()));
         }

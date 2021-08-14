@@ -35,7 +35,7 @@ namespace FolkerKinzel.VCards.Models
         public TimeZoneProperty(TimeZoneInfo? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = value;
 
 
-        internal TimeZoneProperty(VcfRow vcfRow, TimeZoneInfoConverter conv) 
+        internal TimeZoneProperty(VcfRow vcfRow, TimeZoneConverter conv) 
             : base(vcfRow.Parameters, vcfRow.Group) 
             => Value = conv.Parse(vcfRow.Value);
 
@@ -65,7 +65,7 @@ namespace FolkerKinzel.VCards.Models
 
             if (Value != null)
             {
-                TimeZoneInfoConverter.AppendTo(serializer.Builder, Value, serializer.Version);
+                TimeZoneConverter.AppendTo(serializer.Builder, Value, serializer.Version);
             }
         }
 

@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
     [TestClass]
     public class TimeZoneInfoConverterTests
     {
-        private readonly TimeZoneInfoConverter _timeZoneInfoConverter = new();
+        private readonly TimeZoneConverter _timeZoneInfoConverter = new();
 
         [DataTestMethod]
         [DataRow("-0700")]
@@ -38,7 +38,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             TimeZoneInfo tz1 = TimeZoneInfo.Local;
 
             var sb = new StringBuilder();
-            TimeZoneInfoConverter.AppendTo(sb, tz1, Models.Enums.VCdVersion.V4_0);
+            TimeZoneConverter.AppendTo(sb, tz1, Models.Enums.VCdVersion.V4_0);
 
             string s = sb.ToString();
 
@@ -64,7 +64,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         [DataRow("-22", false)]
         [DataRow("Text-07:00Text", false)]
         public void IsUtcOffsetTest(string input, bool expected)
-            => Assert.AreEqual(expected, TimeZoneInfoConverter.IsUtcOffset(input));
+            => Assert.AreEqual(expected, TimeZoneConverter.IsUtcOffset(input));
 
     }
 }
