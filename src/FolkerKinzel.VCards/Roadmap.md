@@ -21,23 +21,19 @@
 - [x] Rename VCard.Parse() to `ParseVcf`. 
 
 =
-- [ ] Make the Value of `TimeZoneProperty` a new class `NamedTimeZone`.
-- [ ] Make `ParameterSection.TimeZone` a new class `NamedTimeZone`.
-- [ ] Add an interface `INamedTimeZoneConverter` that allows users to inject an object which 
+- [x] Make the Value of `TimeZoneProperty` a new class `TimeZoneID`.
+- [x] Make `ParameterSection.TimeZone` a new class `TimeZoneID`.
+- [x] Add an interface `ITimeZoneIDConverter` that allows users to inject an object which 
 converts named time zones (e.g. IANA names) to UTC offsets (TimeSpan) when converting from 
 vCard 4.0 to vCard 3.0. Make an option for this conversion.
-- [ ] Preserve time zone Parameters in vCard 3.0 and 2.1 using TZ properties and automatic group identifiers. 
- Make an option for it.
-- [ ] Collect TZ properties with groups as TimeZone parameters when parsing.
+
 
 =
 - [x] Move `FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate` to 
 `FolkerKinzel.VCards.Models.GeoCoordinate`.
 - [x] Remove the Property `GeoCoordinate.IsUnknown` and make sure instead that 
 GeoCoordinate always points to a valid geographical position.
-- [ ] Preserve geo parameters in vCard 3.0 and 2.1 using GEO properties and automatic group identifiers. 
- Make an option for it.
-- [ ] Collect GEO properties with groups as parameters when parsing.
+
 
 
 =
