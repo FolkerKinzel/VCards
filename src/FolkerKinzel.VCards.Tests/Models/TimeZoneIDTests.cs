@@ -4,13 +4,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
-namespace FolkerKinzel.VCards.Intls.Converters.Tests
+namespace FolkerKinzel.VCards.Models.Tests
 {
     [TestClass]
-    public class TimeZoneInfoConverterTests
+    public class TimeZoneIDTests
     {
-        private readonly TimeZoneConverter _timeZoneInfoConverter = new();
-
         [DataTestMethod]
         [DataRow("-0700")]
         [DataRow("-07:00")]
@@ -24,28 +22,27 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         [DataRow("04")]
         [DataRow("09")]
         [DataRow("-12")]
-        public void ParseTest1(string? s)
+        public void TryGetUtcOffsetTest1(string s)
         {
-            TimeZoneInfo? tzInfo = _timeZoneInfoConverter.Parse(s);
-
-            Assert.IsNotNull(tzInfo);
+            var tzInfo = new TimeZoneID(s);
+            Assert.IsTrue(tzInfo.TryGetUtcOffset(out _));
         }
 
 
-        [TestMethod]
-        public void ParseTest2()
-        {
-            TimeZoneInfo tz1 = TimeZoneInfo.Local;
+        //[TestMethod]
+        //public void ParseTest2()
+        //{
+        //    TimeZoneInfo tz1 = TimeZoneInfo.Local;
 
-            var sb = new StringBuilder();
-            TimeZoneConverter.AppendTo(sb, tz1, Models.Enums.VCdVersion.V4_0);
+        //    var sb = new StringBuilder();
+        //    TimeZoneConverter.AppendTo(sb, tz1, Models.Enums.VCdVersion.V4_0);
 
-            string s = sb.ToString();
+        //    string s = sb.ToString();
 
-            TimeZoneInfo? tz2 = _timeZoneInfoConverter.Parse(s);
+        //    TimeZoneInfo? tz2 = _timeZoneInfoConverter.Parse(s);
 
-            Assert.AreEqual(tz1, tz2);
-        }
+        //    Assert.AreEqual(tz1, tz2);
+        //}
 
 
         [DataTestMethod]
@@ -63,8 +60,10 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         [DataRow("-12", true)]
         [DataRow("-22", false)]
         [DataRow("Text-07:00Text", false)]
-        public void IsUtcOffsetTest(string input, bool expected)
-            => Assert.AreEqual(expected, TimeZoneConverter.IsUtcOffset(input));
-
+        public void TryGetUtcOffsetTest2(string input, bool expected)
+        {
+            var tz = new TimeZoneID(input);
+            Assert.AreEqual(expected, tz.TryGetUtcOffset(out _));
+        }
     }
 }

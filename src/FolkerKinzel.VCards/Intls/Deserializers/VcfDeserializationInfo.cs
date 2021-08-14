@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
         private DateAndOrTimeConverter? _dateAndOrTimeConverter;
         private TimeConverter? _timeConverter;
-        private TimeZoneConverter? _timeZoneInfoConverter;
+        //private TimeZoneConverter? _timeZoneInfoConverter;
 
         internal StringBuilder Builder { get; } = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY);
 
@@ -44,14 +44,14 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             }
         }
 
-        internal TimeZoneConverter TimeZoneInfoConverter
-        {
-            get
-            {
-                this._timeZoneInfoConverter ??= new TimeZoneConverter();
-                return this._timeZoneInfoConverter;
-            }
-        }
+        //internal TimeZoneConverter TimeZoneInfoConverter
+        //{
+        //    get
+        //    {
+        //        this._timeZoneInfoConverter ??= new TimeZoneConverter();
+        //        return this._timeZoneInfoConverter;
+        //    }
+        //}
 
         internal ValueSplitter SemiColonSplitter { get; } = new ValueSplitter(';', StringSplitOptions.None);
 

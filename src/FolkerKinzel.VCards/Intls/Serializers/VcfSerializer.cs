@@ -23,9 +23,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         [NotNull]
         protected VCard? VCardToSerialize { get; private set; }
 
-        internal readonly StringBuilder Builder = new();
+        internal StringBuilder Builder { get; } = new();
 
-        internal readonly StringBuilder Worker = new();
+        internal StringBuilder Worker { get; } = new();
 
         internal abstract VCdVersion Version { get; }
 
@@ -36,14 +36,15 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         internal bool IsPref { get; private set; }
 
+        internal ITimeZoneIDConverter? TimeZoneConverter { get; }
 
 
-
-        protected VcfSerializer(TextWriter writer, VcfOptions options, ParameterSerializer parameterSerializer)
+        protected VcfSerializer(TextWriter writer, VcfOptions options, ParameterSerializer parameterSerializer, ITimeZoneIDConverter? tzConverter)
         {
             this.Options = options;
             this.ParameterSerializer = parameterSerializer;
             this._writer = writer;
+            this.TimeZoneConverter = tzConverter;
             writer.NewLine = VCard.NewLine;
         }
 
@@ -68,14 +69,15 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         /// </summary>
         internal const string X_KADDRESSBOOK_X_IMAddress = "X-KADDRESSBOOK-X-IMAddress";
 
-        internal static VcfSerializer GetSerializer(TextWriter writer, VCdVersion version, VcfOptions options)
+
+        internal static VcfSerializer GetSerializer(TextWriter writer, VCdVersion version, VcfOptions options, ITimeZoneIDConverter? tzConverter)
         {
             return version switch
             {
-            VCdVersion.V2_1 => new Vcf_2_1Serializer(writer, options),
-            VCdVersion.V3_0 => new Vcf_3_0Serializer(writer, options),
-            VCdVersion.V4_0 => new Vcf_4_0Serializer(writer, options),
-            _ => throw new ArgumentException(Res.UndefinedEnumValue, nameof(version))
+                VCdVersion.V2_1 => new Vcf_2_1Serializer(writer, options, tzConverter),
+                VCdVersion.V3_0 => new Vcf_3_0Serializer(writer, options, tzConverter),
+                VCdVersion.V4_0 => new Vcf_4_0Serializer(writer, options),
+                _ => throw new ArgumentException(Res.UndefinedEnumValue, nameof(version))
             };
         }
 
@@ -104,6 +106,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         protected abstract void ReplenishRequiredProperties();
 
         protected abstract string VersionString { get; }
+
+        
 
         private void AppendProperties()
         {

@@ -366,9 +366,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// <c>TZ</c>: Zeitzone <c>(4)</c>
         /// </summary>
-        public TimeZoneInfo? TimeZone
+        public TimeZoneID? TimeZone
         {
-            get => Get<TimeZoneInfo?>(VCdParam.TimeZone);
+            get => Get<TimeZoneID?>(VCdParam.TimeZone);
             set => Set(VCdParam.TimeZone, value);
         }
 

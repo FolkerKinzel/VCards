@@ -32,18 +32,27 @@ namespace FolkerKinzel.VCards.Models
         /// <param name="propertyGroup">Bezeichner der Gruppe,
         /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
         /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-        public TimeZoneProperty(TimeZoneInfo? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = value;
+        public TimeZoneProperty(TimeZoneID? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = value;
 
 
-        internal TimeZoneProperty(VcfRow vcfRow, TimeZoneConverter conv) 
-            : base(vcfRow.Parameters, vcfRow.Group) 
-            => Value = conv.Parse(vcfRow.Value);
+        internal TimeZoneProperty(VcfRow vcfRow)
+            : base(vcfRow.Parameters, vcfRow.Group)
+        {
+            if (!string.IsNullOrWhiteSpace(vcfRow.Value))
+            {
+                try
+                {
+                    Value = new TimeZoneID(vcfRow.Value);
+                }
+                catch { }
+            }
+        }
 
 
         /// <summary>
         /// Die von der <see cref="TimeZoneProperty"/> zur Verfügung gestellten Daten.
         /// </summary>
-        public new TimeZoneInfo? Value
+        public new TimeZoneID? Value
         {
             get;
         }
@@ -65,7 +74,7 @@ namespace FolkerKinzel.VCards.Models
 
             if (Value != null)
             {
-                TimeZoneConverter.AppendTo(serializer.Builder, Value, serializer.Version);
+                Value.AppendTo(serializer.Builder, serializer.Version, serializer.TimeZoneConverter);
             }
         }
 

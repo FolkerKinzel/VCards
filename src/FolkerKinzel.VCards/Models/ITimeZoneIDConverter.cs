@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FolkerKinzel.VCards.Models
 {
-    public interface INamedTimeZoneConverter
+    public interface ITimeZoneIDConverter
     {
         bool TryGetUtcOffset(string timeZoneID, out TimeSpan utcOffset);
     }

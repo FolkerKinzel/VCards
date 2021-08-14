@@ -12,7 +12,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 {
     internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
-        internal Vcf_2_1Serializer(TextWriter writer, VcfOptions options) : base(writer, options, new ParameterSerializer2_1(options)) { }
+        internal Vcf_2_1Serializer(TextWriter writer, VcfOptions options, ITimeZoneIDConverter? tzConverter)
+            : base(writer, options, new ParameterSerializer2_1(options), tzConverter) { }
 
         internal override VCdVersion Version => VCdVersion.V2_1;
 

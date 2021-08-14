@@ -47,6 +47,7 @@
     <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Intls\Converters\TimeZoneConverter.cs" />
     <Compile Remove="Intls\Deserializers\VcfRow.ParameterSplitter.cs" />
   </ItemGroup>
   <ItemGroup>

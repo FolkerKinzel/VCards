@@ -28,7 +28,7 @@ namespace FolkerKinzel.VCards.Tests
             var adr1 = new AddressProperty("Elmstreet 13", "Entenhausen", "01234");
             adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
             adr1.Parameters.GeoPosition = new Models.GeoCoordinate(12.98, 7.86);
-            adr1.Parameters.TimeZone = TimeZoneInfo.Local;
+            adr1.Parameters.TimeZone = new Models.TimeZoneID(TimeZoneInfo.Local.Id);
             adr1.Parameters.AltID = "Address";
             adr1.Parameters.Calendar = "GREGORIAN";
             adr1.Parameters.ContentLocation = VCdContentLocation.Inline;
@@ -131,7 +131,7 @@ namespace FolkerKinzel.VCards.Tests
 
                 Sources = new TextProperty("http://neu.de/"),
 
-                TimeZones = new TimeZoneProperty(TimeZoneInfo.Local),
+                TimeZones = new TimeZoneProperty(new TimeZoneID(TimeZoneInfo.Local.Id)),
 
                 DisplayNames = new TextProperty("Folker"),
 

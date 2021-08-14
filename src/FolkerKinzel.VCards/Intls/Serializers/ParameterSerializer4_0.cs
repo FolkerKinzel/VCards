@@ -969,7 +969,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         private void AppendTz()
         {
-            TimeZoneInfo? tz = ParaSection.TimeZone;
+            Models.TimeZoneID? tz = ParaSection.TimeZone;
 
             if (tz is null)
             {
@@ -978,7 +978,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             _ = _worker.Clear();
 
-            TimeZoneConverter.AppendTo(_worker, tz, VCdVersion.V4_0);
+            tz.AppendTo(_worker, VCdVersion.V4_0, null);
 
             AppendParameter(ParameterSection.ParameterKey.TZ, EscapeAndQuote(_worker.ToString()));
         }

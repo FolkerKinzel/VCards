@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         [TestMethod()]
         public void TimeZonePropertyTest1()
         {
-            TimeZoneInfo tz = TimeZoneInfo.GetSystemTimeZones()[7];
+            var tz = new TimeZoneID(TimeZoneInfo.GetSystemTimeZones()[7].Id);
 
             var prop = new TimeZoneProperty(tz, GROUP);
 
@@ -25,7 +25,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         [TestMethod()]
         public void TimeZonePropertyTest2()
         {
-            TimeZoneInfo tz = TimeZoneInfo.GetSystemTimeZones()[4];
+            var tz = new TimeZoneID(TimeZoneInfo.GetSystemTimeZones()[4].Id);
 
             var prop = new TimeZoneProperty(tz, GROUP);
 
@@ -47,10 +47,16 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.IsNotNull(vcard.TimeZones);
 
             prop = vcard.TimeZones!.First();
+            Assert.IsFalse(prop!.IsEmpty);
 
-            Assert.AreEqual(tz, prop!.Value);
             Assert.AreEqual(GROUP, prop.Group);
-            Assert.IsFalse(prop.IsEmpty);
+
+            Assert.IsTrue(tz.TryGetUtcOffset(out TimeSpan utc1));
+            Assert.IsTrue(prop.Value!.TryGetUtcOffset(out TimeSpan utc2));
+
+
+            Assert.AreEqual(utc1, utc2);
+
         }
 
     }

@@ -122,7 +122,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                         }
                         break;
                     case ParameterKey.TZ:
-                        this.TimeZone = info.TimeZoneInfoConverter.Parse(parameter.Value.Trim().Trim(info.AllQuotes));
+                        try
+                        {
+                            this.TimeZone = new TimeZoneID(parameter.Value.Trim().Trim(info.AllQuotes));
+                        }
+                        catch { }
                         break;
                     case ParameterKey.SORT_AS:
                         {

@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 {
     internal sealed class Vcf_4_0Serializer : VcfSerializer
     {
-        internal Vcf_4_0Serializer(TextWriter writer, VcfOptions options) : base(writer, options, new ParameterSerializer4_0(options)) { }
+        internal Vcf_4_0Serializer(TextWriter writer, VcfOptions options) : base(writer, options, new ParameterSerializer4_0(options), null) { }
 
         internal override VCdVersion Version => VCdVersion.V4_0;
 
