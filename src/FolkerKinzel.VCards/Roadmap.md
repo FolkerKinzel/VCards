@@ -21,9 +21,9 @@
 - [x] Rename VCard.Parse() to `ParseVcf`. 
 
 =
-- [ ] Make the Value of `TimeZoneProperty` a new class `TzInfo`.
-- [ ] Make `ParameterSection.TimeZone` a new class `TzInfo`.
-- [ ] Add an interface `ITimeZoneConverter` that allows users to inject an object which 
+- [ ] Make the Value of `TimeZoneProperty` a new class `NamedTimeZone`.
+- [ ] Make `ParameterSection.TimeZone` a new class `NamedTimeZone`.
+- [ ] Add an interface `INamedTimeZoneConverter` that allows users to inject an object which 
 converts named time zones (e.g. IANA names) to UTC offsets (TimeSpan) when converting from 
 vCard 4.0 to vCard 3.0. Make an option for this conversion.
 - [ ] Preserve time zone Parameters in vCard 3.0 and 2.1 using TZ properties and automatic group identifiers. 
@@ -58,10 +58,11 @@ argument.
 =
 - [x] Store the value of `PropertyID` in one `byte`.
 - [x] Replace in `PropertyID.ParseInto` the method char.IsDigit(char) 
-with an extension method `char.IsDecimalDigit()`
+with an extension method `char.IsDecimalDigit()`.
 - [x] Make `PropertyID` a class in order to have better validation.
-- [x] Rename `PropertyID.PropertyNumber` to `PropertyID.ID`
-- [x] Rename `PropertyID.MappingNumber` to `PropertyID.Mapping`
+- [x] Rename `PropertyID.PropertyNumber` to `PropertyID.ID`.
+- [x] Rename `PropertyID.MappingNumber` to `PropertyID.Mapping`.
+- [x] Make an explicit implementation of `IEnumerable<PropertyID>` in `PropertyID`.
 - [x] Give `PropertyID` only one public ctor:
 ```csharp
 public PropertyID(int id, PropertyIDMapping? mapping = null);
@@ -103,7 +104,7 @@ Remove `VCardListExtension` instead.
 
 =
 - [x] DataUrl.FromText(string) should work even if the passed string is url encoded yet.
-- [ ] DataUrl should accept null, empty strings, empty byte arrays, empty files or whitespace
+- [x] DataUrl should accept null, empty strings, empty byte arrays, empty files or whitespace
 as input for the data to embed.
 
 ### 3.0.1

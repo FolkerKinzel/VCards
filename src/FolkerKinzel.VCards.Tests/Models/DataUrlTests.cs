@@ -44,14 +44,14 @@ namespace FolkerKinzel.VCards.Models.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        //[ExpectedException(typeof(ArgumentNullException))]
         public void FromTextOnNull()
         {
             var _ = DataUrl.FromText(null!);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        //[ExpectedException(typeof(ArgumentException))]
         public void FromTextOnStringEmpty()
         {
             var _ = DataUrl.FromText("");

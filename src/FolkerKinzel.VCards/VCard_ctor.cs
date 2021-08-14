@@ -70,6 +70,7 @@ namespace FolkerKinzel.VCards
                 }) ;
             }
 
+            /////////////////////////////////////////////////
             static object? Cloned(ICloneable? x) => x?.Clone();
         }
 

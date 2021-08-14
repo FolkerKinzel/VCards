@@ -199,25 +199,12 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         /// <param name="text">Der in den <see cref="DataUrl"/> einzubettende Text.</param>
         /// <returns>Ein <see cref="DataUrl"/>, in den <paramref name="text"/> eingebettet ist.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="text"/> ist <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="text"/> ist ein Leerstring oder
-        /// enthält nur Whitespace.</exception>
-        /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
+        /// <exception cref="FormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
         /// weil der URI-String länger als 65519 Zeichen ist.</exception>
-        public static DataUrl FromText(string text)
+        public static DataUrl FromText(string? text)
         {
-            if (text is null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                throw new ArgumentException(Res.NoData, nameof(text));
-            }
-
-            var dataUri = new DataUrl($"data:,{Uri.EscapeDataString(Uri.UnescapeDataString(text))}", null, DataEncoding.UrlEncoded);
-
+            string dataString = text is null ? "" : Uri.EscapeDataString(Uri.UnescapeDataString(text));
+            var dataUri = new DataUrl($"data:,{dataString}", null, DataEncoding.UrlEncoded);
 
             return dataUri;
         }
@@ -231,23 +218,17 @@ namespace FolkerKinzel.VCards.Models
         /// Daten oder <c>null</c> für "text/plain;charset=US-ASCII".</param>
         /// <returns>Ein <see cref="DataUrl"/>, in den die in <paramref name="bytes"/> enthaltenen 
         /// binären Daten eingebettet sind.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="bytes"/> ist <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="bytes"/> ist ein leeres Array.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
         /// weil der URI-String länger als 65519 Zeichen ist.</exception>
-        public static DataUrl FromBytes(byte[] bytes, string? mimeType)
+        public static DataUrl FromBytes(byte[]? bytes, string? mimeType)
         {
-            if (bytes == null)
-            {
-                throw new ArgumentNullException(nameof(bytes));
-            }
-
-            if (bytes.Length == 0)
-            {
-                throw new ArgumentException(Res.NoData, nameof(bytes));
-            }
-
             var mType = new MimeType(mimeType);
+
+#if NET40
+            bytes ??= new byte[0];
+#else
+            bytes ??= Array.Empty<byte>();
+#endif
 
             return new DataUrl($"data:{mType};base64,{Convert.ToBase64String(bytes)}", mType, DataEncoding.Base64);
         }
@@ -261,7 +242,7 @@ namespace FolkerKinzel.VCards.Models
         /// wird versucht, den MIME-Typ aus der Dateiendung automatisch zu ermitteln.</param>
         /// <returns>Ein <see cref="DataUrl"/>, in den die Daten der mit <paramref name="path"/> referenzierten Datei
         /// eingebettet sind.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="path"/> oder <paramref name="mimeType"/> ist <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="path"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="path"/> ist kein gültiger Dateipfad oder
         /// <paramref name="mimeType"/> hat kein gültiges Format.</exception>
         /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
