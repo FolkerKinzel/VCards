@@ -47,23 +47,23 @@ namespace Examples
                 Members = members
             };
 
-            var vCardList = new List<VCard>() { composersVCard };
 
             // Replace the embedded VCards in composersVCard.Members with Guid references in order
             // to save them as separate vCard 4.0 .VCF files.
             // IMPORTANT: Never call ReferenceVCards() if you intend to serialize a vCard 2.1 or vCard 3.0 !
-            vCardList.ReferenceVCards();
+            IEnumerable<VCard> referenced = composersVCard.ReferenceVCards();
+            // (The extension method can be called on a single VCard because VCard implements IEnumerable<VCard>.)
 
             Console.WriteLine();
-            Console.WriteLine($"After ReferenceVCards() vCardList contains {vCardList.Count} VCard objects.");
+            Console.WriteLine($"After ReferenceVCards() vCardList contains {referenced.Count()} VCard objects.");
             Console.WriteLine();
             Console.WriteLine("composersVCard:");
             Console.WriteLine();
             Console.WriteLine(composersVCard.ToVcfString(VC::Enums.VCdVersion.V4_0));
 
-            // Make sure to save ALL VCard objects in vCard list - otherwise the information
+            // Make sure to save ALL VCard objects in referenced - otherwise the information
             // originally stored in composersVCard will be irrevocably lost.
-            foreach (VCard vcard in vCardList)
+            foreach (VCard vcard in referenced)
             {
                 string fileName = Path.Combine(
                     directoryPath,
@@ -72,8 +72,8 @@ namespace Examples
                 vcard.SaveVcf(fileName, VC::Enums.VCdVersion.V4_0);
             }
 
-            // Clear the list and reload the .VCF files:
-            vCardList.Clear();
+            // Reload the .VCF files:
+            var vCardList = new List<VCard>();
 
             foreach (string fileName in Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"))
             {
@@ -81,10 +81,10 @@ namespace Examples
             }
 
             // Make the reloaded VCard objects searchable:
-            vCardList.DereferenceVCards();
+            IEnumerable<VCard> dereferenced = vCardList.DereferenceVCards();
 
             // Find the parsed result from "Composers.vcf":
-            composersVCard = vCardList.FirstOrDefault(x => x.DisplayNames?.Any(x => x?.Value == "Composers") ?? false);
+            composersVCard = dereferenced.FirstOrDefault(x => x.DisplayNames?.Any(x => x?.Value == "Composers") ?? false);
 
             if (composersVCard is null)
             {

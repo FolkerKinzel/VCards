@@ -126,14 +126,11 @@ namespace FolkerKinzel.VCards.Models
             return false;
         }
 
-#if DEBUG
         /// <summary>
         /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="TimeZoneID"/>-Objekts. (Nur zum Debuggen.)
         /// </summary>
         /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="TimeZoneID"/>-Objekts.</returns>
-        [ExcludeFromCodeCoverage]
         public override string ToString() => Value;
-#endif
 
         internal void AppendTo(StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter)
         {

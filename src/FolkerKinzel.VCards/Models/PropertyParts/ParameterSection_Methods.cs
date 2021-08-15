@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,43 +52,20 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             }
 
             var sb = new StringBuilder(64);
-            const string INDENT = "    ";
 
             foreach (KeyValuePair<VCdParam, object> para in this._propDic.OrderBy(x => x.Key))
             {
-                sb.Append('[').Append(para.Key).Append(": ");
-
-                string? valStr = para.Value?.ToString();
-
-                if (valStr != null &&
-#if NET40
-                    valStr.Contains(Environment.NewLine))
-#else
-                    valStr.Contains(Environment.NewLine, StringComparison.Ordinal))
-#endif
+                if (para.Value is IEnumerable enumerable)
                 {
-#if NET40
-                    string?[] arr = valStr.Split(
-                        new string[] { Environment.NewLine }, StringSplitOptions.None);
-#else
-                    string?[] arr = valStr.Split(Environment.NewLine, StringSplitOptions.None);
-#endif
-
-                    sb.Append(Environment.NewLine);
-
-                    foreach (string? str in arr)
+                    foreach (var value in enumerable)
                     {
-                        sb.Append(INDENT).AppendLine(str);
+                        AppendValue(sb, new KeyValuePair<VCdParam, object>(para.Key, value));
                     }
-
-                    sb.Length -= Environment.NewLine.Length;
                 }
                 else
                 {
-                    sb.Append(para.Value);
+                    AppendValue(sb, para);
                 }
-                sb.AppendLine("]");
-
             }
 
             sb.Length -= Environment.NewLine.Length;
@@ -95,6 +73,42 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
             return sb.ToString();
         }
 
+        private static void AppendValue(StringBuilder sb, KeyValuePair<VCdParam, object> para)
+        {
+            const string INDENT = "    ";
 
+            sb.Append('[').Append(para.Key).Append(": ");
+
+            string? valStr = para.Value?.ToString();
+
+            if (valStr != null &&
+#if NET40
+                valStr.Contains(Environment.NewLine))
+#else
+                valStr.Contains(Environment.NewLine, StringComparison.Ordinal))
+#endif
+            {
+#if NET40
+                string?[] arr = valStr.Split(
+                        new string[] { Environment.NewLine }, StringSplitOptions.None);
+#else
+                string?[] arr = valStr.Split(Environment.NewLine, StringSplitOptions.None);
+#endif
+
+                sb.Append(Environment.NewLine);
+
+                foreach (string? str in arr)
+                {
+                    sb.Append(INDENT).AppendLine(str);
+                }
+
+                sb.Length -= Environment.NewLine.Length;
+            }
+            else
+            {
+                sb.Append(para.Value);
+            }
+            sb.AppendLine("]");
+        }
     }
 }

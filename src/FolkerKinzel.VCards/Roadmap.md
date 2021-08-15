@@ -97,6 +97,7 @@ Remove `VCardListExtension` instead.
 
 =
 - [x] Use `System.Text.CodePagesEncodingProvider` to retrieve text encoding instances in .NET Standard and .NET 5.0.
+- [x] Let Parameter.ToString view collections better.
 
 =
 - [x] DataUrl.FromText(string) should work even if the passed string is url encoded yet.
