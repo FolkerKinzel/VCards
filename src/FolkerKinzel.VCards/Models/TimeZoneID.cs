@@ -1,0 +1,196 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Resources;
+
+namespace FolkerKinzel.VCards.Models
+{
+    public class TimeZoneID
+    {
+        //private static readonly string[] _patterns = new string[] { @"hh\:mm", @"hhmm", @"hh" };
+
+        /// <summary>
+        /// Initialisiert ein neues <see cref="TimeZoneID"/>-Objekt.
+        /// </summary>
+        /// <param name="timeZoneID">Bezeichner der Zeitzone. Es sollte sich um einen Bezeichner aus der 
+        /// "IANA Time Zone Database" handeln. (Siehe https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
+        /// <exception cref="ArgumentNullException"><paramref name="timeZoneID"/> ist <c>null</c>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="timeZoneID"/> ist ein leerer <see cref="string"/> oder 
+        /// enthält nur Leerraum.</exception>
+        public TimeZoneID(string timeZoneID)
+        {
+            Value = timeZoneID ?? throw new ArgumentNullException(nameof(timeZoneID));
+
+            if (string.IsNullOrWhiteSpace(Value))
+            {
+                throw new ArgumentException(Res.NoData, nameof(timeZoneID));
+            }
+
+            //ID = Regex.Replace(ID, @"\s+", "");
+
+        }
+
+
+        /// <summary>
+        /// ID der Zeitzone.
+        /// </summary>
+        /// <remarks>
+        /// Das ist der <see cref="string"/>, mit dem das <see cref="TimeZoneID"/>-Objekt initialisiert wurde - von Leerraum befreit.
+        /// </remarks>
+        public string Value { get; }
+
+        public bool TryGetUtcOffset(out TimeSpan utcOffset, ITimeZoneIDConverter? converter = null)
+        {
+            if (IsUtcOffset())
+            {
+                int startIndex = 0;
+
+                TimeSpanStyles styles = TimeSpanStyles.None;
+
+
+                if (Value.StartsWith("-", StringComparison.Ordinal))
+                {
+                    startIndex = 1;
+                    styles = TimeSpanStyles.AssumeNegative;
+                }
+                else if (Value.StartsWith("+", StringComparison.Ordinal))
+                {
+                    startIndex = 1;
+                }
+
+#if NET40
+                string input = Value.Substring(startIndex);
+
+                return TimeSpan.TryParseExact(
+                    input,
+                    @"hh\:mm",
+                    CultureInfo.InvariantCulture,
+                    styles, out utcOffset) || 
+                    
+                    TimeSpan.TryParseExact(
+                    input,
+                     @"hhmm",
+                    CultureInfo.InvariantCulture,
+                    styles, out utcOffset) || 
+
+                    TimeSpan.TryParseExact(
+                    input,
+                     @"hh",
+                    CultureInfo.InvariantCulture,
+                    styles, out utcOffset);
+#else
+                ReadOnlySpan<char> input = Value.AsSpan(startIndex);
+
+                return TimeSpan.TryParseExact(
+                    input,
+                    @"hh\:mm",
+                    CultureInfo.InvariantCulture,
+                    styles, out utcOffset) ||
+
+                    TimeSpan.TryParseExact(
+                    input,
+                    @"hhmm",
+                    CultureInfo.InvariantCulture,
+                    styles, out utcOffset) ||
+
+                    TimeSpan.TryParseExact(
+                    input,
+                    @"hh",
+                    CultureInfo.InvariantCulture,
+                    styles, out utcOffset);
+#endif
+
+            }
+
+            if (converter is not null && converter.TryGetUtcOffset(Value, out utcOffset))
+            {
+                return true;
+            }
+
+            try
+            {
+                var tzInfo = TimeZoneInfo.FindSystemTimeZoneById(Value);
+                utcOffset = tzInfo.BaseUtcOffset;
+                return true;
+            }
+            catch { }
+
+            utcOffset = default;
+            return false;
+        }
+
+#if DEBUG
+        /// <summary>
+        /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="TimeZoneID"/>-Objekts. (Nur zum Debuggen.)
+        /// </summary>
+        /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="TimeZoneID"/>-Objekts.</returns>
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Value;
+#endif
+
+        internal void AppendTo(StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter)
+        {
+            Debug.Assert(builder != null);
+
+            switch (version)
+            {
+                case VCdVersion.V2_1:
+                case VCdVersion.V3_0:
+                    {
+                        if (TryGetUtcOffset(out TimeSpan utcOffset, converter))
+                        {
+                            string format = utcOffset < TimeSpan.Zero ? @"\-hh\:mm" : @"\+hh\:mm";
+                            _ = builder.Append(utcOffset.ToString(format, CultureInfo.InvariantCulture));
+                        }
+                        else
+                        {
+                            _ = builder.Append(Value);
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        if (IsUtcOffset() && TryGetUtcOffset(out TimeSpan utcOffset))
+                        {
+                            string format = utcOffset < TimeSpan.Zero ? @"\-hhmm" : @"\+hhmm";
+                            _ = builder.Append(utcOffset.ToString(format, CultureInfo.InvariantCulture));
+                        }
+                        else
+                        {
+                            _ = builder.Append(Value);
+                        }
+                        break;
+                    }
+            }
+        }
+
+
+
+
+        private bool IsUtcOffset()
+        {
+            const string pattern = @"^[-\+]?[01][0-9]:?([0-5][0-9])?";
+            const RegexOptions options = RegexOptions.CultureInvariant | RegexOptions.Singleline;
+
+#if NET40
+                return Regex.IsMatch(Value, pattern, options);
+#else
+            try
+            {
+                return Regex.IsMatch(Value, pattern, options, TimeSpan.FromMilliseconds(50));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+#endif
+        }
+    }
+}

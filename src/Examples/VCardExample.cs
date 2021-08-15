@@ -1,112 +1,4 @@
-# FolkerKinzel.VCards
-[![NuGet](https://img.shields.io/nuget/v/FolkerKinzel.VCards)](https://www.nuget.org/packages/FolkerKinzel.VCards/)
-[![GitHub](https://img.shields.io/github/license/FolkerKinzel/VCards)](https://github.com/FolkerKinzel/VCards/blob/master/LICENSE)
-
-.NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
-
-It enables you
-* to load VCF files from the file system and to save them there,
-* to serialize VCF files from and to Streams and
-* to convert VCF files, that match the vCard versions 2.1, 3.0 and 4.0, to each other.
-
-It is used as a dependency in [FolkerKinzel.Contacts.IO](https://github.com/FolkerKinzel/Contacts.IO) - an easy to use .NET-API
-to manage contact data of organizations and natural persons.
-
-
-* [Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.1.1/FolkerKinzel.VCards.en.chm)
-
-* [Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.1.1/FolkerKinzel.VCards.de.chm)
-
-> IMPORTANT: On some systems the content of the .CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox (if it is present) in the lower right corner of the General tab in the Properties dialog.
-
-
-## Get Started
-
-1. [The Data Model Explained](#the-data-model-explained)
-2. [Example](#example)
-3. [How the Library Handles Data Errors](#how-the-library-handles-data-errors)
-
-### The Data Model Explained
-
-The data model used by this library is aligned to the vCard 4.0 standard (RFC6350). This means, every read
-vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are 
-converted back. A vCard is represented by the `VCard` class.
-
-#### The `VCardProperty` Class
-
-The data model of the `VCard` class based on classes, that are derived from `VCardProperty`.
-
-`VCardProperty` exposes the following members:
-
-```csharp
-public abstract class VCardProperty
-{
-    public string? Group { get; set; }
-
-    public ParameterSection Parameters { get; }
-
-    public virtual object? Value { get; protected set; }
-}
-````
-
-This reflects the structure of a data row in a VCF file:
-> group1.TEL;TYPE=home,voice;VALUE=uri:tel:+49-123-4567
-
-In this example corresponds
-* `group1` to VCardProperty.Group,
-* `TEL;TYPE=home,voice;VALUE=uri` to VCardProperty.Parameters and
-* `tel:+49-123-4567` to VCardProperty.Value.
-
-(Classes that are derived from `VCardProperty` hide the generic implementation of `VCardProperty.Value` in order to return derived classes instead of `System.Object?`.) 
-
-
-
-#### Naming Conventions
-
-Most properties of the `VCard` class are collections. It has to do with, that many properties are allowed to have more than one
-instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.</para>
-              
-A special feature are properties, whose name ends with "Views": These are properties, which actually is only one instance per vCard allowed, but
-vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same `AltID` parameter
-on each of them.
-
-#### Usage of the Namespaces
-The following code example provides tips for using the namespaces of the library.
-
-```csharp
-// Publish this namespace - it contains the VCard class:
-using FolkerKinzel.VCards;
-
-// It's recommended to publish also this namespace -
-// it contains useful extension methods:
-using FolkerKinzel.VCards.Extensions;
-
-// These two namespaces may be published, but it's not
-// recommended as they contain lots of classes and enums:
-// using FolkerKinzel.VCards.Models;
-// using FolkerKinzel.VCards.Models.Enums;
-
-// Instead of publishing the two namespaces above
-// better use a namespace alias:
-using VC = FolkerKinzel.VCards.Models;
-
-namespace NameSpaceAliasDemos
-{
-    public static class NameSpaceAliasDemo
-    {
-        public static void HowToUseTheNameSpaceAlias() =>
-            _ = new VC::RelationTextProperty("Folker", VC::Enums.RelationTypes.Contact);
-    }
-}
-```
-
-### Example
-
-**_(The example is in C# and with nullable reference types enabled. For the sake of 
-better readability no exception handling and parameter validation is used.)_**
-
-```csharp
-using System;
+ï»¿using System;
 using System.IO;
 using FolkerKinzel.VCards;
 
@@ -134,12 +26,12 @@ namespace Examples
                 // implementation of IEnumerable<T>
                 NameViews = new VC::NameProperty
                     (
-                        lastName: new string[] { "Müller-Risinowsky" },
-                        firstName: new string[] { "Käthe" },
+                        lastName: new string[] { "MÃ¼ller-Risinowsky" },
+                        firstName: new string[] { "KÃ¤the" },
                         middleName: new string[] { "Alexandra", "Caroline" },
                         prefix: new string[] { "Prof.", "Dr." }
                     ),
-                DisplayNames = new VC.TextProperty("Käthe Müller-Risinowsky"),
+                DisplayNames = new VC.TextProperty("KÃ¤the MÃ¼ller-Risinowsky"),
                 Organizations = new VC::OrganizationProperty
                     (
                         "Millers Company",
@@ -187,7 +79,7 @@ namespace Examples
 
             vcard.Relations = new VC::RelationTextProperty
                 (
-                    "Paul Müller-Risinowsky",
+                    "Paul MÃ¼ller-Risinowsky",
                     VC::Enums.RelationTypes.Spouse
                     | VC::Enums.RelationTypes.CoResident
                     | VC::Enums.RelationTypes.Colleague
@@ -197,19 +89,19 @@ namespace Examples
 
             // Save vcard as vCard 2.1:
             string v2FilePath = Path.Combine(directoryPath, v2FileName);
-            vcard.Save(v2FilePath, VC::Enums.VCdVersion.V2_1);
+            vcard.SaveVcf(v2FilePath, VC::Enums.VCdVersion.V2_1);
 
             // Save vcard as vCard 3.0:
             // You don't need to specify the version: Version 3.0 is the default.
             string v3FilePath = Path.Combine(directoryPath, v3FileName);
-            vcard.Save(v3FilePath);
+            vcard.SaveVcf(v3FilePath);
 
             // Save vcard as vCard 4.0:
             string v4FilePath = Path.Combine(directoryPath, v4FileName);
-            vcard.Save(v4FilePath, VC::Enums.VCdVersion.V4_0);
+            vcard.SaveVcf(v4FilePath, VC::Enums.VCdVersion.V4_0);
 
             // Load vCard:
-            vcard = VCard.Load(v3FilePath)[0];
+            vcard = VCard.LoadVcf(v3FilePath)[0];
 
             WriteResultsToConsole(vcard);
 
@@ -285,8 +177,8 @@ VCard3.vcf:
 BEGIN:VCARD
 VERSION:3.0
 REV:2021-01-30T18:09:27Z
-FN:Käthe Müller-Risinowsky
-N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
+FN:KÃ¤the MÃ¼ller-Risinowsky
+N:MÃ¼ller-Risinowsky;KÃ¤the;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
 BDAY;VALUE=DATE:1984-03-28
@@ -294,7 +186,7 @@ X-ANNIVERSARY:2006-07-14
 TEL;TYPE=HOME,VOICE,BBS:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
-X-SPOUSE:Paul Müller-Risinowsky
+X-SPOUSE:Paul MÃ¼ller-Risinowsky
 PHOTO;ENCODING=b;TYPE=JPEG:TVIxMVmCW9DQo8eo++o6a0WEonrUO+rfsCwXH7/CzwS/HKVp
  JhsbiDjU1EAJ0BlDZJ2U8kxa9xFoUYEs
 END:VCARD
@@ -305,8 +197,8 @@ VCard4.vcf:
 BEGIN:VCARD
 VERSION:4.0
 REV:20210130T180927Z
-FN:Käthe Müller-Risinowsky
-N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
+FN:KÃ¤the MÃ¼ller-Risinowsky
+N:MÃ¼ller-Risinowsky;KÃ¤the;Alexandra,Caroline;Prof.,Dr.;
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
 BDAY:19840328
@@ -314,7 +206,7 @@ ANNIVERSARY:20060714
 TEL;TYPE=HOME,VOICE;VALUE=URI:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI:tel:+49-321-1234567
 EMAIL;TYPE=WORK;PREF=1:kaethe_mueller@internet.com
-RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT:Paul Müller-Risinowsk
+RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT:Paul MÃ¼ller-Risinowsk
  y
 PHOTO:data:image/jpeg\;base64\,TVIxMVmCW9DQo8eo++o6a0WEonrUO+rfsCwXH7/CzwS/
  HKVpJhsbiDjU1EAJ0BlDZJ2U8kxa9xFoUYEs
@@ -328,11 +220,11 @@ Version: 3.0
 [DataType: Timestamp]
 TimeStamp: 01/30/2021 18:09:27 +00:00
 
-DisplayNames: Käthe Müller-Risinowsky
+DisplayNames: KÃ¤the MÃ¼ller-Risinowsky
 
 NameViews:
-    LastName:   Müller-Risinowsky
-    FirstName:  Käthe
+    LastName:   MÃ¼ller-Risinowsky
+    FirstName:  KÃ¤the
     MiddleName: Alexandra Caroline
     Prefix:     Prof. Dr.
 
@@ -362,20 +254,10 @@ EmailAddresses: kaethe_mueller@internet.com
 
 [RelationType: Spouse]
 [DataType: Text]
-Relations: Paul Müller-Risinowsky
+Relations: Paul MÃ¼ller-Risinowsky
 
 [Encoding: Base64]
 [MediaType: image/jpeg]
 Photos: data:image/jpeg;base64,TVIxMVmCW9DQo8eo++o6a0WEonrUO+rfsCwXH7/CzwS/HKVpJhsbiDjU1EAJ0BlDZJ2U8kxa9xFoUYEs
+.
 */
-
-```
-
-### How the Library Handles Data Errors
-
-Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from such files.
-
-The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards are not 
-completely compliant, incompliant data is silently ignored when converting from one vCard standard to another. To minimize 
-this kind of data loss, the library tries to preserve incompliant data using well-known x-name properties. The usage of 
-such x-name properties can be controlled via options (VcfOptions).
