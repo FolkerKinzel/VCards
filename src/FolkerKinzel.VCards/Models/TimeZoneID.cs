@@ -46,7 +46,6 @@ namespace FolkerKinzel.VCards.Models
         /// </remarks>
         public string Value { get; }
 
-        [SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
         public bool TryGetUtcOffset(out TimeSpan utcOffset, ITimeZoneIDConverter? converter = null)
         {
             if (IsUtcOffset())

@@ -56,7 +56,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
             Assert.IsInstanceOfType(vc1, typeof(VCard));
             Assert.IsNotNull(vc1?.Relations);
 
-            RelationUuidProperty? uuidProp = vc1?.Relations?.FirstOrDefault(x => x is RelationUuidProperty) as RelationUuidProperty;
+            var uuidProp = vc1?.Relations?.FirstOrDefault(x => x is RelationUuidProperty) as RelationUuidProperty;
             Assert.IsNotNull(uuidProp);
             Guid o1 = uuidProp!.Value;
 
