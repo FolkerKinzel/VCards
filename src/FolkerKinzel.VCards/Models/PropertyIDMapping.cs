@@ -7,6 +7,10 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 
+#if !NET40
+using FolkerKinzel.Strings;
+#endif
+
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>

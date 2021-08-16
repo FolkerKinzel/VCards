@@ -31,7 +31,7 @@ namespace FolkerKinzel.VCards
 #nullable restore
                 > vCardList,
             VCdVersion version = DEFAULT_VERSION,
-            VcfOptions options = VcfOptions.Default) => SaveVcf(fileName, vCardList, version, options);
+            VcfOptions options = VcfOptions.Default) => SaveVcf(fileName, vCardList, version, options: options);
 
 
         /// <summary>
@@ -83,8 +83,8 @@ namespace FolkerKinzel.VCards
             string fileName,
             IEnumerable<VCard?> vCards,
             VCdVersion version = DEFAULT_VERSION,
-            VcfOptions options = VcfOptions.Default,
-            ITimeZoneIDConverter? tzConverter = null)
+            ITimeZoneIDConverter? tzConverter = null,
+            VcfOptions options = VcfOptions.Default)
         {
             if (vCards is null)
             {
@@ -99,7 +99,7 @@ namespace FolkerKinzel.VCards
             }
 
             using FileStream stream = InitializeFileStream(fileName);
-            SerializeVcf(stream, vCards, version, options, false, tzConverter);
+            SerializeVcf(stream, vCards, version, tzConverter, options, false);
         }
 
         [Browsable(false)]
@@ -113,7 +113,7 @@ namespace FolkerKinzel.VCards
                                          > vCardList,
                                      VCdVersion version = DEFAULT_VERSION,
                                      VcfOptions options = VcfOptions.Default,
-                                     bool leaveStreamOpen = false) => SerializeVcf(stream, vCardList, version, options, leaveStreamOpen);
+                                     bool leaveStreamOpen = false) => SerializeVcf(stream, vCardList, version, options: options, leaveStreamOpen: leaveStreamOpen);
 
 
         /// <summary>
@@ -166,9 +166,9 @@ namespace FolkerKinzel.VCards
         public static void SerializeVcf(Stream stream,
                                         IEnumerable<VCard?> vCards,
                                         VCdVersion version = DEFAULT_VERSION,
+                                        ITimeZoneIDConverter? tzConverter = null,
                                         VcfOptions options = VcfOptions.Default,
-                                        bool leaveStreamOpen = false,
-                                        ITimeZoneIDConverter? tzConverter = null)
+                                        bool leaveStreamOpen = false)
         {
             DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(SerializeVcf)}({nameof(Stream)}, IEnumerable<{nameof(VCard)}?>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
 
@@ -268,10 +268,10 @@ namespace FolkerKinzel.VCards
         /// <param name="vCards">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein und <c>null</c>-Werte
         /// enthalten.</param>
         /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
-        /// <param name="options">Optionen für das Serialisieren. Die Flags können
-        /// kombiniert werden.</param>
         /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
         /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>.</param>
+        /// <param name="options">Optionen für das Serialisieren. Die Flags können
+        /// kombiniert werden.</param>
         /// 
         /// <returns><paramref name="vCards"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
         /// 
@@ -314,8 +314,8 @@ namespace FolkerKinzel.VCards
         public static string ToVcfString(
             IEnumerable<VCard?> vCards,
             VCdVersion version = VCard.DEFAULT_VERSION,
-            VcfOptions options = VcfOptions.Default,
-            ITimeZoneIDConverter? tzConverter = null)
+            ITimeZoneIDConverter? tzConverter = null,
+            VcfOptions options = VcfOptions.Default)
         {
             if (vCards is null)
             {
@@ -324,7 +324,7 @@ namespace FolkerKinzel.VCards
 
             using var stream = new MemoryStream();
 
-            VCard.SerializeVcf(stream, vCards, version, options, leaveStreamOpen: true, tzConverter);
+            VCard.SerializeVcf(stream, vCards, version, tzConverter, options, leaveStreamOpen: true);
 
             stream.Position = 0;
             using var reader = new StreamReader(stream, Encoding.UTF8);
@@ -343,10 +343,10 @@ namespace FolkerKinzel.VCards
         /// 
         /// <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
         /// <param name="version">Die vCard-Version der zu speichernden VCF-Datei.</param>
-        /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
-        /// kombiniert werden.</param>
         /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
         /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>.</param>
+        /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
+        /// kombiniert werden.</param>
         /// 
         /// <remarks>
         /// 
@@ -375,8 +375,8 @@ namespace FolkerKinzel.VCards
         public void SaveVcf(
             string fileName,
             VCdVersion version = DEFAULT_VERSION,
-            VcfOptions options = VcfOptions.Default,
-            ITimeZoneIDConverter? tzConverter = null) => VCard.SaveVcf(fileName, this, version, options, tzConverter);
+            ITimeZoneIDConverter? tzConverter = null,
+            VcfOptions options = VcfOptions.Default) => VCard.SaveVcf(fileName, this, version, tzConverter, options);
 
 
         [Browsable(false)]
@@ -385,7 +385,7 @@ namespace FolkerKinzel.VCards
         public void Save(
             string fileName,
             VCdVersion version = DEFAULT_VERSION,
-            VcfOptions options = VcfOptions.Default) => SaveVcf(fileName, version, options);
+            VcfOptions options = VcfOptions.Default) => SaveVcf(fileName, version, options: options);
 
 
         /// <summary>
@@ -394,12 +394,12 @@ namespace FolkerKinzel.VCards
         /// 
         /// <param name="stream">Ein <see cref="Stream"/>, in den das serialisierte <see cref="VCard"/>-Objekt geschrieben wird.</param>
         /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
+        /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
+        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
         /// <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
         /// ist <c>false</c>.</param>
-        /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>.</param>
         /// 
         /// <remarks>
         /// 
@@ -433,11 +433,11 @@ namespace FolkerKinzel.VCards
 #endif
         public void SerializeVcf(Stream stream,
                               VCdVersion version = DEFAULT_VERSION,
+                              ITimeZoneIDConverter? tzConverter = null,
                               VcfOptions options = VcfOptions.Default,
-                              bool leaveStreamOpen = false,
-                              ITimeZoneIDConverter? tzConverter = null)
+                              bool leaveStreamOpen = false)
 
-            => VCard.SerializeVcf(stream, this, version, options, leaveStreamOpen, tzConverter);
+            => VCard.SerializeVcf(stream, this, version, tzConverter, options, leaveStreamOpen);
 
 
         [Browsable(false)]
@@ -446,7 +446,7 @@ namespace FolkerKinzel.VCards
         public void Serialize(Stream stream,
                               VCdVersion version = DEFAULT_VERSION,
                               VcfOptions options = VcfOptions.Default,
-                              bool leaveStreamOpen = false) => SerializeVcf(stream, version, options, leaveStreamOpen);
+                              bool leaveStreamOpen = false) => SerializeVcf(stream, version, options: options, leaveStreamOpen: leaveStreamOpen);
 
 
         /// <summary>
@@ -454,10 +454,10 @@ namespace FolkerKinzel.VCards
         /// </summary>
         /// 
         /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
-        /// <param name="options">Optionen für das Serialisieren. Die Flags können
-        /// kombiniert werden.</param>
         /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
         /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>.</param>
+        /// <param name="options">Optionen für das Serialisieren. Die Flags können
+        /// kombiniert werden.</param>
         /// 
         /// <returns>Die <see cref="VCard"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
         /// 
@@ -491,8 +491,8 @@ namespace FolkerKinzel.VCards
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public string ToVcfString(VCdVersion version = DEFAULT_VERSION, VcfOptions options = VcfOptions.Default, ITimeZoneIDConverter? tzConverter = null)
-            => VCard.ToVcfString(this, version, options, tzConverter);
+        public string ToVcfString(VCdVersion version = DEFAULT_VERSION, ITimeZoneIDConverter? tzConverter = null, VcfOptions options = VcfOptions.Default)
+            => VCard.ToVcfString(this, version, tzConverter, options);
 
 
 

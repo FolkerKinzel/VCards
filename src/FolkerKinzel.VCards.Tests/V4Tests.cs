@@ -102,7 +102,7 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void SerializeVCard()
         {
-            string s = Utility.CreateVCard().ToVcfString(VCdVersion.V4_0, VcfOptions.All);
+            string s = Utility.CreateVCard().ToVcfString(VCdVersion.V4_0, options: VcfOptions.All);
 
             Assert.IsNotNull(s);
 

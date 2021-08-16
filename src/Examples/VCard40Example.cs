@@ -59,7 +59,11 @@ namespace Examples
             Console.WriteLine();
             Console.WriteLine("composersVCard:");
             Console.WriteLine();
-            Console.WriteLine(composersVCard.ToVcfString(VC::Enums.VCdVersion.V4_0));
+            Console.WriteLine(
+                referenced
+                    .Where(x => x.DisplayNames?.Any(x => StringComparer.Ordinal.Equals(x?.Value, "Composers")) ?? false)
+                    .First()
+                    .ToVcfString(VC::Enums.VCdVersion.V4_0));
 
             // Make sure to save ALL VCard objects in referenced - otherwise the information
             // originally stored in composersVCard will be irrevocably lost.
@@ -136,9 +140,9 @@ BEGIN:VCARD
 VERSION:4.0
 KIND:group
 FN:Composers
-MEMBER;VALUE=URI:urn:uuid:71cd4a7c-a8de-4a94-bc4d-8f567bc901fb
-MEMBER;VALUE=URI:urn:uuid:e7a63731-c8cb-4177-a02b-8ed18864ef48
-MEMBER;VALUE=URI:urn:uuid:6a3245b9-3e4d-4baa-9c50-02a0731755fd
+MEMBER;VALUE=URI:urn:uuid:f3f879b0-b1fb-481d-8a6b-44b8989b1a58
+MEMBER;VALUE=URI:urn:uuid:dca80599-cece-4cac-ae9f-a18f08fe6e1b
+MEMBER;VALUE=URI:urn:uuid:6ce8b30e-2750-45a1-9e61-4041505400fa
 END:VCARD
 
 What year was Beethoven born?: 1770

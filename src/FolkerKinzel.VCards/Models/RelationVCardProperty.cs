@@ -97,7 +97,7 @@ namespace FolkerKinzel.VCards.Models
             }
 
 
-            string vc = this.Value.ToVcfString(serializer.Version, serializer.Options.Unset(VcfOptions.IncludeAgentAsSeparateVCard));
+            string vc = this.Value.ToVcfString(serializer.Version, options: serializer.Options.Unset(VcfOptions.IncludeAgentAsSeparateVCard));
 
             if (serializer.Version == VCdVersion.V3_0)
             {

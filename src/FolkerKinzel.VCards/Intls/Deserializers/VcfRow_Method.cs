@@ -4,6 +4,11 @@ using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
 
+#if !NET40
+using FolkerKinzel.Strings;
+#endif
+
+
 namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal sealed partial class VcfRow
@@ -28,9 +33,9 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
             return valueSeparatorIndex > 0 ? new VcfRow(vCardRow, valueSeparatorIndex, info) : null;
         }
 
-        
 
-        
+
+
 
 
         /// <summary>

@@ -188,7 +188,7 @@ namespace FolkerKinzel.VCards.Extensions
             string fileName,
             VCdVersion version = VCard.DEFAULT_VERSION,
             VcfOptions options = VcfOptions.Default)
-            => VCard.SaveVcf(fileName, vCards, version, options);
+            => VCard.SaveVcf(fileName, vCards, version, options: options);
 
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace FolkerKinzel.VCards.Extensions
             VCdVersion version = VCard.DEFAULT_VERSION,
             VcfOptions options = VcfOptions.Default,
             bool leaveStreamOpen = false)
-            => VCard.SerializeVcf(stream, vCards, version, options, leaveStreamOpen);
+            => VCard.SerializeVcf(stream, vCards, version, options: options, leaveStreamOpen: leaveStreamOpen);
 
 
         /// <summary>
@@ -302,6 +302,6 @@ namespace FolkerKinzel.VCards.Extensions
             this IEnumerable<VCard?> vCards,
             VCdVersion version = VCard.DEFAULT_VERSION,
             VcfOptions options = VcfOptions.Default)
-        => VCard.ToVcfString(vCards, version, options);
+        => VCard.ToVcfString(vCards, version, options: options);
     }
 }

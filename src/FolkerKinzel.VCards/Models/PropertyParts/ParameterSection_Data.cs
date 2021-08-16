@@ -162,6 +162,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// <c>GEO</c>: Geografische Position. <c>(4)</c>
         /// </summary>
+        /// <remarks>
+        /// Dieser Parameter wird nur geschrieben, wenn er an ein <see cref="AddressProperty"/>-Objekt
+        /// angehängt ist.
+        /// </remarks>
         public FolkerKinzel.VCards.Models.GeoCoordinate? GeoPosition
         {
             get => Get<FolkerKinzel.VCards.Models.GeoCoordinate?>(VCdParam.GeoPosition);
@@ -366,6 +370,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         /// <summary>
         /// <c>TZ</c>: Zeitzone <c>(4)</c>
         /// </summary>
+        /// <remarks>
+        /// Dieser Parameter wird nur geschrieben, wenn er an ein <see cref="AddressProperty"/>-Objekt
+        /// angehängt ist.
+        /// </remarks>
         public TimeZoneID? TimeZone
         {
             get => Get<TimeZoneID?>(VCdParam.TimeZone);

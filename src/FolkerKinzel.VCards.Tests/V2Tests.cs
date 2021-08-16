@@ -45,7 +45,7 @@ namespace FolkerKinzel.VCards.Tests
 
             VCard.SaveVcf(System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"),
-                vcard!, VCdVersion.V2_1, VcfOptions.Default.Set(VcfOptions.WriteNonStandardProperties));
+                vcard!, VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.WriteNonStandardProperties));
         }
 
 
@@ -127,7 +127,7 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void SerializeVCard()
         {
-            string s = Utility.CreateVCard().ToVcfString(VCdVersion.V2_1, VcfOptions.All);
+            string s = Utility.CreateVCard().ToVcfString(VCdVersion.V2_1, options: VcfOptions.All);
 
             Assert.IsNotNull(s);
 

@@ -9,6 +9,10 @@ using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 
+#if !NET40
+using FolkerKinzel.Strings;
+#endif
+
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
@@ -309,10 +313,29 @@ namespace FolkerKinzel.VCards.Models
             if (Encoding == DataEncoding.Base64)
             {
                 // als Base64 codierter Text:
-                Encoding enc = TextEncodingConverter.GetEncoding(MimeType.Parameters?.FirstOrDefault(x => x.Key == "charset").Value ?? "US-ASCII");
+                byte[] data;
                 try
                 {
-                    return enc.GetString(Convert.FromBase64String(EncodedData));
+                    data = Convert.FromBase64String(EncodedData);
+                }
+                catch
+                {
+                    return null;
+                }
+
+                string? charsetValue = MimeType.Parameters?.FirstOrDefault(x => x.Key == "charset").Value;
+
+                int codePage = TextEncodingConverter.ParseBom(data, out int bomLength);
+
+                Encoding enc = bomLength != 0
+                                ? TextEncodingConverter.GetEncoding(codePage)
+                                : StringComparer.OrdinalIgnoreCase.Equals(charsetValue, "US-ASCII")
+                                    ? System.Text.Encoding.UTF8
+                                    : TextEncodingConverter.GetEncoding(charsetValue);
+
+                try
+                {
+                    return enc.GetString(data, bomLength, data.Length - bomLength);
                 }
                 catch
                 {

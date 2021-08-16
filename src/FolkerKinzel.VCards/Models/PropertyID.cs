@@ -10,6 +10,10 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using System.Collections;
 
+#if !NET40
+using FolkerKinzel.Strings;
+#endif
+
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>

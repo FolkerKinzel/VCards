@@ -103,6 +103,8 @@ Remove `VCardListExtension` instead.
 - [x] DataUrl.FromText(string) should work even if the passed string is url encoded yet.
 - [x] DataUrl should accept null, empty strings, empty byte arrays, empty files or whitespace
 as input for the data to embed.
+- [x] Fix the issue that DataUrl doesn't remove the BOM if created from an embedded text file when
+retrieving the embedded text.
 
 ### 3.0.1
 - [ ] Cleanup: Remove `VCdDataType.Timestamp` and all other Symbols marked as Obsolete errors in 3.0.0.

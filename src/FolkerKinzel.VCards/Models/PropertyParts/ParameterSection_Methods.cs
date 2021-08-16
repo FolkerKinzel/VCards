@@ -55,7 +55,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
             foreach (KeyValuePair<VCdParam, object> para in this._propDic.OrderBy(x => x.Key))
             {
-                if (para.Value is IEnumerable enumerable)
+                if (para.Value is not string && para.Value is IEnumerable enumerable)
                 {
                     foreach (var value in enumerable)
                     {
