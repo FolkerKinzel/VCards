@@ -9,8 +9,8 @@
 - [x] Implement FBURL property.
 
 ### 3.0.0  
-- [ ] Add .NET Standard 2.0 support
-- [ ] Add .NET Framework 4.6.1 support
+- [x] Add .NET Standard 2.0 support
+- [x] Add .NET Framework 4.6.1 support
 
 =
 
