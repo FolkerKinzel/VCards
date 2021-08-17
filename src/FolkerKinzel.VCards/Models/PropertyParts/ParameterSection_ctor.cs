@@ -9,6 +9,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
+#if !NET40
+using FolkerKinzel.Strings;
+#endif
+
 namespace FolkerKinzel.VCards.Models.PropertyParts
 {
     public sealed partial class ParameterSection

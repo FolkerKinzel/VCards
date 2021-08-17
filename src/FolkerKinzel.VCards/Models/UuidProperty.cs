@@ -40,7 +40,12 @@ namespace FolkerKinzel.VCards.Models
         public UuidProperty(Guid uuid, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = uuid;
 
 
-        internal UuidProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = UuidConverter.ToGuid(vcfRow.Value);
+        internal UuidProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
+#if NET40
+            => Value = UuidConverter.ToGuid(vcfRow.Value);
+#else
+            => Value = UuidConverter.ToGuid(vcfRow.Value.AsSpan());
+#endif
 
 
         /// <summary>

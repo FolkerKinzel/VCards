@@ -6,6 +6,11 @@ using System.IO;
 using System.Text;
 using FolkerKinzel.VCards.Intls.Extensions;
 
+#if !NET40
+using FolkerKinzel.Strings;
+using FolkerKinzel.Strings.Polyfills;
+#endif
+
 namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 {
     /// <summary>
@@ -49,11 +54,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 
             if (Environment.NewLine != STANDARD_LINEBREAK)
             {
-#if NET40
-                value = value.Replace(Environment.NewLine, STANDARD_LINEBREAK);
-#else
                 value = value.Replace(Environment.NewLine, STANDARD_LINEBREAK, StringComparison.Ordinal);
-#endif
             }
 
 
@@ -193,11 +194,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
             //Anpassen des NewLine-Zeichens für Unix-Systeme
             if (Environment.NewLine != STANDARD_LINEBREAK) // notwendig, wenn Hard-Linebreaks codiert waren
             {
-#if NET40
-                s = s.Replace(STANDARD_LINEBREAK, Environment.NewLine);
-#else
                 s = s.Replace(STANDARD_LINEBREAK, Environment.NewLine, StringComparison.Ordinal);
-#endif
             }
 
             return s;
@@ -300,7 +297,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 #if NET40
             static byte HexToByte(char[] charr)
             {
-                string s = new(charr);
+                var s = new string(charr);
 
                 try
                 {
@@ -312,11 +309,15 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
                 }
             }
 #else
-            static byte HexToByte(Span<char> charr)
+            static byte HexToByte(ReadOnlySpan<char> charr)
             {
                 try
                 {
+#if NETSTANDARD2_0 || NET461
+                    return byte.Parse(charr.ToString(), NumberStyles.AllowHexSpecifier);
+#else
                     return byte.Parse(charr, NumberStyles.AllowHexSpecifier);
+#endif
                 }
                 catch (Exception)
                 {

@@ -65,7 +65,7 @@ namespace FolkerKinzel.VCards.Models
                     startIndex = 1;
                 }
 
-#if NET40
+#if NET40 || NET461 || NETSTANDARD2_0
                 string input = Value.Substring(startIndex);
 
                 return TimeSpan.TryParseExact(

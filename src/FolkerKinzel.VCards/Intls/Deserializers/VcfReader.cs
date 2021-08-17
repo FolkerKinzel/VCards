@@ -9,6 +9,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Intls.Extensions;
+
+#if !NET40
+using FolkerKinzel.Strings.Polyfills;
+#endif
 
 namespace FolkerKinzel.VCards.Intls.Deserializers
 {
@@ -259,11 +264,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
         private static bool GetIsVcard_2_1(string s)
         {
-#if NET40
-            if (s.StartsWith("VERSION", StringComparison.OrdinalIgnoreCase) && !s.Contains("2.1"))
-#else
             if (s.StartsWith("VERSION", StringComparison.OrdinalIgnoreCase) && !s.Contains("2.1", StringComparison.Ordinal))
-#endif
             {
                 Debug.WriteLine("  == No vCard 2.1 detected ==");
                 return false;

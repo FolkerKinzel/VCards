@@ -55,7 +55,6 @@ namespace FolkerKinzel.VCards.Intls.Converters
         {
             if (uuid.IsWhiteSpace() || uuid.Length < GUID_MIN_LENGTH)
 #endif
-
             {
                 return Guid.Empty;
             }
@@ -73,6 +72,8 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
 #if NET40
             _ = Guid.TryParse(uuid.Substring(startOfGuid), out Guid guid);
+#elif NET461 || NETSTANDARD2_0
+            _ = Guid.TryParse(uuid.Slice(startOfGuid).ToString(), out Guid guid);
 #else
             _ = Guid.TryParse(uuid.Slice(startOfGuid), out Guid guid);
 #endif

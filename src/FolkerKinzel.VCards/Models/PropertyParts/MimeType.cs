@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using FolkerKinzel.VCards.Intls.Extensions;
+
+#if !NET40
+using FolkerKinzel.Strings.Polyfills;
+#endif
 
 namespace FolkerKinzel.VCards.Models.PropertyParts
 {
@@ -26,10 +31,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
                 return;
             }
 
+            string[] arr = value.Replace(" ", "", StringComparison.Ordinal)
 #if NET40
-            string[] arr = value.Replace(" ", "").Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);;
+                .Split(";", StringSplitOptions.RemoveEmptyEntries);
 #else
-            string[] arr = value.Replace(" ", "", StringComparison.Ordinal).Split(';', StringSplitOptions.RemoveEmptyEntries); ;
+                .Split(';', StringSplitOptions.RemoveEmptyEntries);
 #endif
             int start;
 

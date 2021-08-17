@@ -11,6 +11,7 @@ using FolkerKinzel.VCards.Resources;
 
 #if !NET40
 using FolkerKinzel.Strings;
+using FolkerKinzel.Strings.Polyfills;
 #endif
 
 namespace FolkerKinzel.VCards.Models

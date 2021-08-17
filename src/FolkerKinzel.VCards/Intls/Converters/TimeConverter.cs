@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
+﻿using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Globalization;
 using System.Text;
@@ -72,7 +73,11 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 styles |= DateTimeStyles.AssumeLocal;
             }
 
+#if NET461 || NETSTANDARD2_0
+            return DateTimeOffset.TryParseExact(roSpan.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#else
             return DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#endif
 #endif
         }
 

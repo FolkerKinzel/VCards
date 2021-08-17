@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
+﻿using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -50,10 +51,12 @@ namespace FolkerKinzel.VCards.Intls.Converters
             "T--sszzz"
         };
 
-
-
+#if !(NET40 || NET461 || NETSTANDARD2_0)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
+#endif
         internal bool TryParse(string? s, out DateTimeOffset offset)
         {
+
             offset = DateTimeOffset.MinValue;
 
             // Test auf Länge nötig, um StackOverflowException auszuschließen
@@ -110,14 +113,19 @@ namespace FolkerKinzel.VCards.Intls.Converters
             if (roSpan.StartsWith("---", StringComparison.Ordinal))
             {
                 roSpan = roSpan.Slice(3);
-                ReadOnlySpan<char> firstLeapYearJanuary = "000401";
+                ReadOnlySpan<char> firstLeapYearJanuary = "000401".AsSpan();
+
                 Span<char> span = stackalloc char[firstLeapYearJanuary.Length + roSpan.Length];
 
                 firstLeapYearJanuary.CopyTo(span);
                 Span<char> slice = span.Slice(firstLeapYearJanuary.Length);
                 roSpan.CopyTo(slice);
 
+#if NET461 || NETSTANDARD2_0
+                return DateTimeOffset.TryParseExact(span.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#else
                 return DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#endif
             }
             else if (s.StartsWith("--", StringComparison.Ordinal))
             {
@@ -127,14 +135,19 @@ namespace FolkerKinzel.VCards.Intls.Converters
                 if (roSpan.Length == 4)
                 {
                     roSpan = roSpan.Slice(2);
-                    ReadOnlySpan<char> leapYear = "0004-";
+                    ReadOnlySpan<char> leapYear = "0004-".AsSpan();
+
                     Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
 
                     leapYear.CopyTo(span);
                     Span<char> slice = span.Slice(leapYear.Length);
                     roSpan.CopyTo(slice);
 
+#if NET461 || NETSTANDARD2_0
+                    return DateTimeOffset.TryParseExact(span.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#else
                     return DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#endif
                 }
                 else
                 {
@@ -142,19 +155,28 @@ namespace FolkerKinzel.VCards.Intls.Converters
                     // Note also that YYYY-MM-DD is disallowed since we are using the basic format instead
                     // of the extended format.
                     roSpan = roSpan.Slice(2);
-                    ReadOnlySpan<char> leapYear = "0004";
+                    ReadOnlySpan<char> leapYear = "0004".AsSpan();
+
                     Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
 
                     leapYear.CopyTo(span);
                     Span<char> slice = span.Slice(leapYear.Length);
                     roSpan.CopyTo(slice);
-                    
+
+#if NET461 || NETSTANDARD2_0
+                    return DateTimeOffset.TryParseExact(span.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#else
                     return DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#endif
                 }
             }
             else
             {
+#if NET461 || NETSTANDARD2_0
+                return DateTimeOffset.TryParseExact(roSpan.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#else
                 return DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+#endif
             }
 #endif
         }

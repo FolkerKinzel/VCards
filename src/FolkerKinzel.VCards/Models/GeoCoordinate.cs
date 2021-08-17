@@ -165,9 +165,15 @@ namespace FolkerKinzel.VCards.Models
 
                 CultureInfo culture = CultureInfo.InvariantCulture;
 
+#if NET461 || NETSTANDARD2_0
+                coordinate = new GeoCoordinate(
+                    double.Parse(roSpan.Slice(0, splitIndex).ToString(), numStyle, culture),
+                    double.Parse(roSpan.Slice(splitIndex + 1).ToString(), numStyle, culture));
+#else
                 coordinate = new GeoCoordinate(
                     double.Parse(roSpan.Slice(0, splitIndex), numStyle, culture),
                     double.Parse(roSpan.Slice(splitIndex + 1), numStyle, culture));
+#endif
 
                 return true;
             }
@@ -177,7 +183,7 @@ namespace FolkerKinzel.VCards.Models
             }
 
 #endif
-        }
+            }
 
     }
 }

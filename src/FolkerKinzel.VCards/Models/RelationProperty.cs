@@ -56,7 +56,11 @@ namespace FolkerKinzel.VCards.Models
 #endif
             {
                 var relation = new RelationUuidProperty(
+#if NET40
                     UuidConverter.ToGuid(vcfRow.Value),
+#else
+                    UuidConverter.ToGuid(vcfRow.Value.AsSpan()),
+#endif
                     vcfRow.Parameters.RelationType,
                     propertyGroup: vcfRow.Group);
 

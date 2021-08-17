@@ -120,13 +120,7 @@ namespace FolkerKinzel.VCards.Intls.Extensions
                 return false;
             }
 
-            if (
-#if NET40
-                s.Contains(Environment.NewLine)
-#else
-                s.Contains(Environment.NewLine, StringComparison.Ordinal)
-#endif
-                )
+            if (s.Contains(Environment.NewLine, StringComparison.Ordinal))
             {
                 return true;
             }

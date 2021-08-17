@@ -10,7 +10,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 {
     internal sealed partial class VcfRow
     {
-# if !NET40
+#if !NET40
         /// <summary>
         /// ctor
         /// </summary>

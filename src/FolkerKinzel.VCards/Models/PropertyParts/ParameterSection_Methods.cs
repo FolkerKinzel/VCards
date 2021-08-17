@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FolkerKinzel.VCards.Intls.Extensions;
+
+#if !NET40
+using FolkerKinzel.Strings.Polyfills;
+#endif
 
 namespace FolkerKinzel.VCards.Models.PropertyParts
 {
@@ -77,38 +82,29 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
         {
             const string INDENT = "    ";
 
-            sb.Append('[').Append(para.Key).Append(": ");
+            _ = sb.Append('[').Append(para.Key).Append(": ");
 
             string? valStr = para.Value?.ToString();
 
             if (valStr != null &&
-#if NET40
-                valStr.Contains(Environment.NewLine))
-#else
                 valStr.Contains(Environment.NewLine, StringComparison.Ordinal))
-#endif
             {
-#if NET40
-                string?[] arr = valStr.Split(
-                        new string[] { Environment.NewLine }, StringSplitOptions.None);
-#else
-                string?[] arr = valStr.Split(Environment.NewLine, StringSplitOptions.None);
-#endif
+                string[] arr = valStr.Split(Environment.NewLine, StringSplitOptions.None);
 
-                sb.Append(Environment.NewLine);
+                _ = sb.Append(Environment.NewLine);
 
-                foreach (string? str in arr)
+                foreach (string str in arr)
                 {
-                    sb.Append(INDENT).AppendLine(str);
+                    _ = sb.Append(INDENT).AppendLine(str);
                 }
 
                 sb.Length -= Environment.NewLine.Length;
             }
             else
             {
-                sb.Append(para.Value);
+                _ = sb.Append(para.Value);
             }
-            sb.AppendLine("]");
+            _ = sb.AppendLine("]");
         }
     }
 }

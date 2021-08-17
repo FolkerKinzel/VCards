@@ -94,7 +94,7 @@ namespace FolkerKinzel.VCards.Intls.Extensions
             return builder;
         }
 
-
+#if NET40
         /// <summary>
         /// Entfernt führenden und nachgestellten Leerraum vom Inhalt
         /// von <paramref name="builder"/>.
@@ -129,6 +129,18 @@ namespace FolkerKinzel.VCards.Intls.Extensions
             return builder;
         }
 
+        internal static StringBuilder ToLowerInvariant(this StringBuilder builder)
+        {
+            Debug.Assert(builder != null);
+
+            for (int i = 0; i < builder.Length; i++)
+            {
+                builder[i] = char.ToLowerInvariant(builder[i]);
+            }
+
+            return builder;
+        }
+#endif
 
         /// <summary>
         /// Entfernt einfache und doppelte Gänsefüßchen, die sich am Beginnn oder Ende des Inhalts
@@ -154,16 +166,6 @@ namespace FolkerKinzel.VCards.Intls.Extensions
         }
 
 
-        internal static StringBuilder ToLowerInvariant(this StringBuilder builder)
-        {
-            Debug.Assert(builder != null);
 
-            for (int i = 0; i < builder.Length; i++)
-            {
-                builder[i] = char.ToLowerInvariant(builder[i]);
-            }
-
-            return builder;
-        }
     }
 }

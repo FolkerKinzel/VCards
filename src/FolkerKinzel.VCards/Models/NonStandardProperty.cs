@@ -11,6 +11,10 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
+#if !NET40
+using FolkerKinzel.Strings.Polyfills;
+#endif
+
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>

@@ -12,6 +12,10 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
+#if !NET40
+using FolkerKinzel.Strings.Polyfills;
+#endif
+
 namespace FolkerKinzel.VCards
 {
     public sealed partial class VCard

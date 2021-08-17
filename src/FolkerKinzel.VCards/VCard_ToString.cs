@@ -6,6 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using FolkerKinzel.VCards.Intls.Extensions;
+
+#if !NET40
+using FolkerKinzel.Strings.Polyfills;
+#endif
 
 namespace FolkerKinzel.VCards
 {
@@ -20,7 +25,7 @@ namespace FolkerKinzel.VCards
         {
             var sb = new StringBuilder();
 
-            sb.Append("Version: ").Append(GetVersionString(this.Version))
+            _ = sb.Append("Version: ").Append(GetVersionString(this.Version))
                 .Append(Environment.NewLine);
 
 
@@ -76,45 +81,36 @@ namespace FolkerKinzel.VCards
                 string s = vcdProp.Parameters.ToString();
 
 
-                sb.AppendLine(); //Leerzeile
+                _ = sb.AppendLine(); //Leerzeile
 
                 if (s.Length != 0)
                 {
-                    sb.AppendLine(s);
+                    _ = sb.AppendLine(s);
                 }
 
 
                 if (vcdProp.Group != null)
                 {
-                    sb.Append('[').Append("Group: ").Append(vcdProp.Group).AppendLine("]");
+                    _ = sb.Append('[').Append("Group: ").Append(vcdProp.Group).AppendLine("]");
                 }
 
                 string propStr = vcdProp.IsEmpty ? "<EMPTY>" : vcdProp.ToString();
 
                 if (propStr != null &&
-#if NET40
-                    propStr.Contains(Environment.NewLine))
-#else
                     propStr.Contains(Environment.NewLine, StringComparison.Ordinal))
-#endif
                 {
-#if NET40
-                    string?[] arr = propStr.Split(
-                        new string[] { Environment.NewLine }, StringSplitOptions.None);
-#else
                     string?[] arr = propStr.Split(Environment.NewLine, StringSplitOptions.None);
-#endif
 
-                    sb.Append(key).AppendLine(":");
+                    _ = sb.Append(key).AppendLine(":");
 
                     foreach (string? str in arr)
                     {
-                        sb.Append(INDENT).AppendLine(str);
+                        _ = sb.Append(INDENT).AppendLine(str);
                     }
                 }
                 else
                 {
-                    sb.Append(key).Append(": ").AppendLine(propStr);
+                    _ = sb.Append(key).Append(": ").AppendLine(propStr);
                 }
             }
         }
