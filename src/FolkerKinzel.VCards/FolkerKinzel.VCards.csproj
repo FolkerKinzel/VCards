@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net5.0;netstandard2.1;net40;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net5.0;netstandard2.1;net40;netstandard2.0;net461</TargetFrameworks>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <NeutralLanguage>en</NeutralLanguage>
@@ -27,7 +27,7 @@
     <PackageIconUrl />
   </PropertyGroup>
   <!-- 👇 disable the nullable warnings when compiling for .NET 4.0 -->
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net40' Or '$(TargetFramework)' == 'netstandard2.0'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net40' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net461'">
     <NoWarn>$(NoWarn);8600;8601;8602;8603;8604</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">

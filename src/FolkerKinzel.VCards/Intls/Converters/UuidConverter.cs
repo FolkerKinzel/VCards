@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Models.Enums;
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace FolkerKinzel.VCards.Intls.Converters
@@ -45,6 +46,12 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
             return false;
         }
+
+#if NET461 || NETSTANDARD2_0
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static Guid ToGuid(string? uuid)
+            => ToGuid(uuid.AsSpan());
+#endif
 
 #if NET40
         internal static Guid ToGuid(string? uuid)

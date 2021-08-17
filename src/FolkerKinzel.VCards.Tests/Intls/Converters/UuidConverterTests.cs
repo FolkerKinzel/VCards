@@ -142,7 +142,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         [TestMethod()]
         public void ToGuidTest3()
         {
-            var guid3 = UuidConverter.ToGuid(null);
+            var guid3 = UuidConverter.ToGuid((string?)null);
 
             Assert.AreEqual(Guid.Empty, guid3);
         }
