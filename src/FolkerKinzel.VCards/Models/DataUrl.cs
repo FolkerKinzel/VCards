@@ -326,7 +326,7 @@ namespace FolkerKinzel.VCards.Models
 
                 string? charsetValue = MimeType.Parameters?.FirstOrDefault(x => x.Key == "charset").Value;
 
-                int codePage = TextEncodingConverter.ParseBom(data, out int bomLength);
+                int codePage = TextEncodingConverter.GetCodePage(data, out int bomLength);
 
                 Encoding enc = bomLength != 0
                                 ? TextEncodingConverter.GetEncoding(codePage)

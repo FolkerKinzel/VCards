@@ -90,7 +90,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
         /// Daten erkannt werden, wenn kein Byte Order Mark vorliegt.
         /// </para>
         /// </remarks>
-        internal static int ParseBom(byte[] data, out int bomLength)
+        internal static int GetCodePage(byte[] data, out int bomLength)
         {
             Debug.Assert(data != null);
 

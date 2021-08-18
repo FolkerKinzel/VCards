@@ -5,6 +5,10 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 
+#if !NET40
+using FolkerKinzel.Strings.Polyfills;
+#endif
+
 namespace FolkerKinzel.VCards.Intls.Converters
 {
     /// <summary>
@@ -51,7 +55,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
             "T--sszzz"
         };
 
-#if !(NET40 || NET461 || NETSTANDARD2_0)
+#if !NET40
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
 #endif
         internal bool TryParse(string? s, out DateTimeOffset offset)

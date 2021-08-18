@@ -75,7 +75,7 @@
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
     <PackageReference Include="FolkerKinzel.Strings">
-      <Version>3.2.0-alpha.2</Version>
+      <Version>3.2.0-alpha.3</Version>
     </PackageReference>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -4,6 +4,10 @@ using System;
 using System.Globalization;
 using System.Text;
 
+#if !NET40
+using FolkerKinzel.Strings.Polyfills;
+#endif
+
 namespace FolkerKinzel.VCards.Intls.Converters
 {
     /// <summary>
