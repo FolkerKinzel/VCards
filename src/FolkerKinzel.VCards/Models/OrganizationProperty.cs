@@ -136,6 +136,7 @@ namespace FolkerKinzel.VCards.Models
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<OrganizationProperty>)this).GetEnumerator();
 
+        /// <inheritdoc/>
         public override object Clone() => new OrganizationProperty(this);
     }
 }

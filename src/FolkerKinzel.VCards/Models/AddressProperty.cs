@@ -185,7 +185,7 @@ namespace FolkerKinzel.VCards.Models
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<AddressProperty>)this).GetEnumerator();
 
-
+        /// <inheritdoc/>
         public override object Clone() => new AddressProperty(this);
     }
 }

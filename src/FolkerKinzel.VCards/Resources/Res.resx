@@ -120,6 +120,9 @@
   <data name="IdentifierTooLong" xml:space="preserve">
     <value>The length of the identifier is more than one digit.</value>
   </data>
+  <data name="MissingMappingID" xml:space="preserve">
+    <value>The ID of the property mapping is missing.</value>
+  </data>
   <data name="MissingUri" xml:space="preserve">
     <value>No URI is specified.</value>
   </data>

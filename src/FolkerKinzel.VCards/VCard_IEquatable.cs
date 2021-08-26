@@ -45,8 +45,11 @@ namespace FolkerKinzel.VCards
                 !thisTimeStampProp.IsEmpty &&
                 thisTimeStampProp.Value.EqualsExact(otherTimeStampProp.Value));
 
+
+        /// <inheritdoc/>
         public override bool Equals(object? obj) => obj is VCard vcard && Equals(vcard);
 
+        /// <inheritdoc/>
         public override int GetHashCode()
             => this.UniqueIdentifier is UuidProperty uuidProp &&
                 !uuidProp.IsEmpty &&

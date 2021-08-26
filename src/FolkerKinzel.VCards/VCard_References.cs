@@ -9,7 +9,7 @@ using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards
 {
-    public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
+    public sealed partial class VCard
     {
         /// <summary>
         /// Gibt eine Sammlung von <see cref="VCard"/>-Objekten zurück, in der die <see cref="RelationVCardProperty"/>-Objekte 
@@ -68,7 +68,7 @@ namespace FolkerKinzel.VCards
         /// nicht vorteilhaft ist, da es die referentielle Integrität gefährdet.
         /// </para>
         /// <para>In dem Beispiel wird die Erweiterungsmethode <see cref="VCardCollectionExtension.ReferenceVCards"/> verwendet, die 
-        /// <see cref="Reference(List{VCard})"/>
+        /// <see cref="Reference(IEnumerable{VCard})"/>
         /// aufruft.</para>
         /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
         /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
@@ -199,8 +199,8 @@ namespace FolkerKinzel.VCards
         /// <example>
         /// <para>
         /// Das Beispiel zeigt das Deserialisieren und Auswerten einer VCF-Datei, deren Inhalt auf andere VCF-Dateien verweist. In dem 
-        /// Beispiel wird die Erweiterungsmethode <see cref="VCardCollectionExtension.DereferenceVCards(List{VCard})"/> verwendet, 
-        /// die <see cref="Dereference(List{VCard})"/> aufruft.
+        /// Beispiel wird die Erweiterungsmethode <see cref="VCardCollectionExtension.DereferenceVCards(IEnumerable{VCard?})"/> verwendet, 
+        /// die <see cref="Dereference(IEnumerable{VCard?})"/> aufruft.
         /// </para>
         /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
         /// <code language="cs" source="..\Examples\VCard40Example.cs"/>

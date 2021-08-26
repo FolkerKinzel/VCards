@@ -112,6 +112,7 @@ namespace FolkerKinzel.VCards.Models
             yield return this;
         }
 
+        /// <inheritdoc/>
         public override object Clone() => new RelationTextProperty(this);
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationTextProperty>)this).GetEnumerator();

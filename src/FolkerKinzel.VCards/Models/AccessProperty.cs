@@ -65,6 +65,7 @@ namespace FolkerKinzel.VCards.Models
         protected override object GetVCardPropertyValue() => Value;
 
 
+        /// <inheritdoc/>
         public override object Clone() => new AccessProperty(this);
     }
 }

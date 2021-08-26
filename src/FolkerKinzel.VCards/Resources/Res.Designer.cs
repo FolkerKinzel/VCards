@@ -70,6 +70,15 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The ID of the property mapping is missing. ähnelt.
+        /// </summary>
+        internal static string MissingMappingID {
+            get {
+                return ResourceManager.GetString("MissingMappingID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No URI is specified. ähnelt.
         /// </summary>
         internal static string MissingUri {

@@ -101,6 +101,7 @@ namespace FolkerKinzel.VCards.Models
             _ = serializer.Builder.Append(worker);
         }
 
+        /// <inheritdoc/>
         public override object Clone() => new TimeStampProperty(this);
     }
 }

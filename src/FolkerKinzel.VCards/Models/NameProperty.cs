@@ -164,6 +164,7 @@ namespace FolkerKinzel.VCards.Models
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<NameProperty>)this).GetEnumerator();
 
+        /// <inheritdoc/>
         public override object Clone() => new NameProperty(this);
     }
 }

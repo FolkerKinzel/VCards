@@ -120,6 +120,7 @@ namespace FolkerKinzel.VCards.Models
             yield return this;
         }
 
+        /// <inheritdoc/>
         public override object Clone()
             => new RelationVCardProperty(this);
 

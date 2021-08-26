@@ -79,7 +79,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void ParseTest6()
         {
             string pidMap = "";

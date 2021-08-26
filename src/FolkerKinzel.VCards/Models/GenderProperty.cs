@@ -103,6 +103,7 @@ namespace FolkerKinzel.VCards.Models
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GenderProperty>)this).GetEnumerator();
 
+        /// <inheritdoc/>
         public override object Clone() => new GenderProperty(this);
     }
 }

@@ -100,6 +100,7 @@ namespace FolkerKinzel.VCards.Models
             yield return this;
         }
 
+        /// <inheritdoc/>
         public override object Clone() => new DateTimeTextProperty(this);
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateTimeTextProperty>)this).GetEnumerator();

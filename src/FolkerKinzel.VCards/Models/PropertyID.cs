@@ -1,14 +1,10 @@
-﻿using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Resources;
-using System;
+﻿using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.Text;
-using FolkerKinzel.VCards.Intls.Serializers;
 using System.Collections.Generic;
-using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using System.Collections;
+using FolkerKinzel.VCards.Intls.Converters;
 
 #if !NET40
 using FolkerKinzel.Strings;
@@ -142,12 +138,12 @@ namespace FolkerKinzel.VCards.Models
                     if (parseMapping)
                     {
                         // Exception bei mehrstelligen Nummern:
-                        mapping = mapping.HasValue ? 0 : DigitParser.Parse(c);
+                        mapping = mapping.HasValue ? 0 : c.ParseDecimalDigit();
                     }
                     else
                     {
                         // Exception bei mehrstelligen Nummern:
-                        id = id == 0 ? DigitParser.Parse(c) : 0;
+                        id = id == 0 ? c.ParseDecimalDigit() : 0;
                     }
                 }//else
             }//while
@@ -195,7 +191,7 @@ namespace FolkerKinzel.VCards.Models
         /// <returns><c>true</c>, wenn die Werte der beiden <see cref="PropertyID"/>-Objekte gleich sind,
         /// andernfalls <c>false</c>.</returns>
         public static bool operator ==(PropertyID? pid1, PropertyID? pid2)
-            => object.ReferenceEquals(pid1, pid2) ||  (pid1?.Equals(pid2) ?? false);
+            => object.ReferenceEquals(pid1, pid2) || (pid1?.Equals(pid2) ?? false);
 
         /// <summary>
         /// Vergleicht zwei <see cref="PropertyID"/>-Objekte. Das Ergebnis gibt an, ob die Werte der beiden 

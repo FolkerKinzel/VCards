@@ -38,31 +38,38 @@ namespace FolkerKinzel.VCards.Models
         }
 
         /// <summary>
-        /// 
+        /// Parses a <see cref="string"/> that represents a vCard 4.0 Property ID Mapping.
         /// </summary>
         /// <param name="s"></param>
-        /// <returns></returns>
+        /// <returns>A <see cref="PropertyIDMapping"/> instance.</returns>
         /// <exception cref="ArgumentException"><paramref name="s"/> ist kein <see cref="PropertyIDMapping"/>.</exception>
         internal static PropertyIDMapping Parse(string s)
         {
-            int mappingNumber = 0;
+            int? mappingNumber = null;
             int index;
             for (index = 0; index < s.Length; index++)
             {
                 char c = s[index];
 
-                if (c.IsDecimalDigit())
+                if(char.IsWhiteSpace(c))
                 {
-                    mappingNumber = DigitParser.Parse(c);
+                    continue;
+                }
+
+                if (c.TryParseDecimalDigit(out mappingNumber))
+                {
                     index++;
                     break;
                 }
+
+                // keine MappingNumber
+                throw new ArgumentException(Res.MissingMappingID, nameof(s));
             }
 
-            if (mappingNumber == 0)
+            if (!mappingNumber.HasValue)
             {
                 // keine MappingNumber
-                throw new ArgumentOutOfRangeException(nameof(s));
+                throw new ArgumentException(Res.MissingMappingID, nameof(s));
             }
 
             while (index < s.Length)
@@ -70,11 +77,11 @@ namespace FolkerKinzel.VCards.Models
                 char c = s[index++];
                 if (c == ';')
                 {
-                    string guid = s.Substring(index);
+                    string url = s.Substring(index);
 
                     try
                     {
-                        return new PropertyIDMapping(mappingNumber, new Uri(guid, UriKind.RelativeOrAbsolute));
+                        return new PropertyIDMapping(mappingNumber.Value, new Uri(url, UriKind.RelativeOrAbsolute));
                     }
                     catch (Exception e)
                     {

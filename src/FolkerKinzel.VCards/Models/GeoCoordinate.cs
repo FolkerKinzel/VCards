@@ -43,9 +43,9 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         public double Longitude { get; }
 
-        ///// <summary>
-        ///// <c>true</c>, wenn das <see cref="GeoCoordinate"/>-Objekt keine gültige geographische Position beschreibt.
-        ///// </summary>
+        /// <summary>
+        /// Obsolete
+        /// </summary>
         [Obsolete("This property has been removed.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]

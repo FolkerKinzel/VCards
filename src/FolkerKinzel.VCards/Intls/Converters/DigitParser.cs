@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace FolkerKinzel.VCards.Intls.Deserializers
+namespace FolkerKinzel.VCards.Intls.Converters
 {
     internal static class DigitParser
     {

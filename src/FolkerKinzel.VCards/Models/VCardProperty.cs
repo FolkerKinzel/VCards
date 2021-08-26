@@ -159,6 +159,8 @@ namespace FolkerKinzel.VCards.Models
         internal abstract void AppendValue(VcfSerializer serializer);
 
 
+        
+        /// <inheritdoc/>
         public abstract object Clone();
     }
 }

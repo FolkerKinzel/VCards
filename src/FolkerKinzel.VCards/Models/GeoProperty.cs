@@ -74,7 +74,7 @@ namespace FolkerKinzel.VCards.Models
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GeoProperty>)this).GetEnumerator();
 
-
+        /// <inheritdoc/>
         public override object Clone() => new GeoProperty(this);
     }
 }

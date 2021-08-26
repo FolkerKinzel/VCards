@@ -16,7 +16,7 @@ using System.Text;
 
 namespace FolkerKinzel.VCards
 {
-    public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
+    public sealed partial class VCard
     {
         /// <summary>
         /// Lädt eine VCF-Datei.
@@ -38,12 +38,7 @@ namespace FolkerKinzel.VCards
             return DoParseVcf(reader);
         }
 
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use LoadVcf instead.", true)]
-        public static List<VCard> Load(string fileName, Encoding? textEncoding = null)
-            => (List<VCard>)LoadVcf(fileName, textEncoding);
-
+ 
 
         /// <summary>
         /// Parst einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
@@ -62,11 +57,7 @@ namespace FolkerKinzel.VCards
             return DoParseVcf(reader);
         }
 
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use ParseVcf instead.", true)]
-        public static List<VCard> Parse(string content) => (List<VCard>)ParseVcf(content);
-
+        
 
 
         /// <summary>
@@ -82,10 +73,7 @@ namespace FolkerKinzel.VCards
             => DoParseVcf(reader ?? throw new ArgumentNullException(nameof(reader)));
 
 
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use DeserializeVcf instead.", true)]
-        public static List<VCard> Deserialize(TextReader reader) => (List<VCard>)DeserializeVcf(reader);
+        
 
 
         private static List<VCard> DoParseVcf(TextReader reader, VCdVersion versionHint = VCdVersion.V2_1)

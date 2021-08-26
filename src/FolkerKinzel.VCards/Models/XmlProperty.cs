@@ -67,6 +67,7 @@ namespace FolkerKinzel.VCards.Models
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<XmlProperty>)this).GetEnumerator();
 
+        /// <inheritdoc/>
         public override object Clone() => new XmlProperty(this);
     }
 }

@@ -115,6 +115,7 @@ namespace FolkerKinzel.VCards.Models
             yield return this;
         }
 
+        /// <inheritdoc/>
         public override object Clone() => new RelationUriProperty(this);
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationUriProperty>)this).GetEnumerator();

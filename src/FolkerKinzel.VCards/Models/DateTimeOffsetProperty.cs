@@ -99,6 +99,7 @@ namespace FolkerKinzel.VCards.Models
             yield return this;
         }
 
+        /// <inheritdoc/>
         public override object Clone() => new DateTimeOffsetProperty(this);
 
         //IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateTimeOffsetProperty>)this).GetEnumerator();

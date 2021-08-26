@@ -16,23 +16,9 @@ using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards
 {
-    public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
+    public sealed partial class VCard
     {
         #region static Methods
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use SaveVcf instead.", true)]
-        public static void Save(
-            string fileName,
-            List<
-#nullable disable
-                VCard
-#nullable restore
-                > vCardList,
-            VCdVersion version = DEFAULT_VERSION,
-            VcfOptions options = VcfOptions.Default) => SaveVcf(fileName, vCardList, version, options: options);
-
 
         /// <summary>
         /// Speichert eine Sammlung von <see cref="VCard"/>-Objekten in eine gemeinsame VCF-Datei.
@@ -45,7 +31,8 @@ namespace FolkerKinzel.VCards
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
         /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>.</param>
+        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+        /// auf eine Umwandlung zu verzichten.</param>
         /// 
         /// <remarks>
         /// <note type="caution">
@@ -75,6 +62,8 @@ namespace FolkerKinzel.VCards
         /// </para>
         /// </remarks>
         /// 
+        /// <seealso cref="ITimeZoneIDConverter"/>
+        /// 
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> oder <paramref name="vCards"/>
         /// ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
@@ -102,19 +91,6 @@ namespace FolkerKinzel.VCards
             SerializeVcf(stream, vCards, version, tzConverter, options, false);
         }
 
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use SerializeVcf instead.", true)]
-        public static void Serialize(Stream stream,
-                                     List<
-#nullable disable
-                                         VCard
-#nullable restore
-                                         > vCardList,
-                                     VCdVersion version = DEFAULT_VERSION,
-                                     VcfOptions options = VcfOptions.Default,
-                                     bool leaveStreamOpen = false) => SerializeVcf(stream, vCardList, version, options: options, leaveStreamOpen: leaveStreamOpen);
-
 
         /// <summary>
         /// Serialisiert eine Sammlung von <see cref="VCard"/>-Objekten unter Verwendung des VCF-Formats in einen <see cref="Stream"/>.
@@ -129,7 +105,8 @@ namespace FolkerKinzel.VCards
         /// <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
         /// ist <c>false</c>.</param>
         /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>.</param>
+        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+        /// auf eine Umwandlung zu verzichten.</param>
         /// 
         /// <remarks>
         /// <note type="caution">
@@ -158,6 +135,9 @@ namespace FolkerKinzel.VCards
         /// </para>
         /// 
         /// </remarks>
+        /// 
+        /// 
+        /// <seealso cref="ITimeZoneIDConverter"/>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> oder <paramref name="vCards"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
@@ -269,7 +249,8 @@ namespace FolkerKinzel.VCards
         /// enthalten.</param>
         /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
         /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>.</param>
+        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+        /// auf eine Umwandlung zu verzichten.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
         /// 
@@ -301,12 +282,14 @@ namespace FolkerKinzel.VCards
         /// </para>
         /// 
         /// <para>
-        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
+        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(IEnumerable{VCard?})"/> auf bevor sie erfolgreich
         /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
         /// </para>
         /// 
         /// </remarks>
         /// 
+        /// 
+        /// <seealso cref="ITimeZoneIDConverter"/>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
@@ -344,7 +327,8 @@ namespace FolkerKinzel.VCards
         /// <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
         /// <param name="version">Die vCard-Version der zu speichernden VCF-Datei.</param>
         /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>.</param>
+        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+        /// auf eine Umwandlung zu verzichten.</param>
         /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
         /// kombiniert werden.</param>
         /// 
@@ -366,6 +350,9 @@ namespace FolkerKinzel.VCards
         /// 
         /// </remarks>
         /// 
+        /// 
+        /// <seealso cref="ITimeZoneIDConverter"/>
+        /// 
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
         /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
@@ -379,15 +366,6 @@ namespace FolkerKinzel.VCards
             VcfOptions options = VcfOptions.Default) => VCard.SaveVcf(fileName, this, version, tzConverter, options);
 
 
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use SaveVcf instead!", true)]
-        public void Save(
-            string fileName,
-            VCdVersion version = DEFAULT_VERSION,
-            VcfOptions options = VcfOptions.Default) => SaveVcf(fileName, version, options: options);
-
-
         /// <summary>
         /// Serialisiert die <see cref="VCard"/>-Instanz unter Verwendung des VCF-Formats in einen <see cref="Stream"/>.
         /// </summary>
@@ -395,7 +373,8 @@ namespace FolkerKinzel.VCards
         /// <param name="stream">Ein <see cref="Stream"/>, in den das serialisierte <see cref="VCard"/>-Objekt geschrieben wird.</param>
         /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
         /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>.</param>
+        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+        /// auf eine Umwandlung zu verzichten.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
         /// <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
@@ -417,12 +396,15 @@ namespace FolkerKinzel.VCards
         /// </para>
         /// 
         /// <para>
-        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
+        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(IEnumerable{VCard?})"/> auf bevor sie erfolgreich
         /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
         /// </para>
         /// 
         /// 
         /// </remarks>
+        /// 
+        /// 
+        /// <seealso cref="ITimeZoneIDConverter"/>
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> ist <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
@@ -440,22 +422,14 @@ namespace FolkerKinzel.VCards
             => VCard.SerializeVcf(stream, this, version, tzConverter, options, leaveStreamOpen);
 
 
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use SerializeVcf instead.", true)]
-        public void Serialize(Stream stream,
-                              VCdVersion version = DEFAULT_VERSION,
-                              VcfOptions options = VcfOptions.Default,
-                              bool leaveStreamOpen = false) => SerializeVcf(stream, version, options: options, leaveStreamOpen: leaveStreamOpen);
-
-
         /// <summary>
         /// Serialisiert die <see cref="VCard"/>-Instanz als einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
         /// </summary>
         /// 
         /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
         /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>.</param>
+        /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+        /// auf eine Umwandlung zu verzichten.</param>
         /// <param name="options">Optionen für das Serialisieren. Die Flags können
         /// kombiniert werden.</param>
         /// 
@@ -478,13 +452,14 @@ namespace FolkerKinzel.VCards
         /// 
         /// 
         /// <para>
-        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
+        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(IEnumerable{VCard?})"/> auf bevor sie erfolgreich
         /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
         /// </para>
         /// 
-        /// 
-        /// 
         /// </remarks>
+        /// 
+        /// 
+        /// <seealso cref="ITimeZoneIDConverter"/>
         /// 
         /// <exception cref="ArgumentException"><paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
         /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
@@ -493,8 +468,6 @@ namespace FolkerKinzel.VCards
 #endif
         public string ToVcfString(VCdVersion version = DEFAULT_VERSION, ITimeZoneIDConverter? tzConverter = null, VcfOptions options = VcfOptions.Default)
             => VCard.ToVcfString(this, version, tzConverter, options);
-
-
 
         #endregion
 

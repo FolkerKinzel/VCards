@@ -14,7 +14,7 @@ using FolkerKinzel.Strings.Polyfills;
 
 namespace FolkerKinzel.VCards
 {
-    public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>
+    public sealed partial class VCard
     {
         /// <summary>
         /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="VCard"/>-Objekts. 

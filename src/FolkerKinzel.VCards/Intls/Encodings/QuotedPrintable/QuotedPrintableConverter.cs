@@ -297,11 +297,9 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 #if NET40
             static byte HexToByte(char[] charr)
             {
-                var s = new string(charr);
-
                 try
                 {
-                    return Convert.ToByte(s, 16);
+                    return (byte)(Uri.FromHex(charr[1]) + Uri.FromHex(charr[0]) * 16);
                 }
                 catch (Exception)
                 {
@@ -314,7 +312,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
                 try
                 {
 #if NETSTANDARD2_0 || NET461
-                    return byte.Parse(charr.ToString(), NumberStyles.AllowHexSpecifier);
+                    return (byte)(Uri.FromHex(charr[1]) + Uri.FromHex(charr[0]) * 16);
 #else
                     return byte.Parse(charr, NumberStyles.AllowHexSpecifier);
 #endif
@@ -327,7 +325,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable
 #endif
         }
 
-#endregion
+        #endregion
     }//class
 
 }//namespace

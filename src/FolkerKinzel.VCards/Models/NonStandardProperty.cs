@@ -147,6 +147,7 @@ namespace FolkerKinzel.VCards.Models
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<NonStandardProperty>)this).GetEnumerator();
 
+        /// <inheritdoc/>
         public override object Clone() => new NonStandardProperty(this);
     }
 }

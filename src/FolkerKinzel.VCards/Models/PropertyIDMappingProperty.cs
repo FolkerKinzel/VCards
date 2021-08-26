@@ -83,6 +83,7 @@ namespace FolkerKinzel.VCards.Models
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PropertyIDMappingProperty>)this).GetEnumerator();
 
+        /// <inheritdoc/>
         public override object Clone() => new PropertyIDMappingProperty(this);
     }
 }

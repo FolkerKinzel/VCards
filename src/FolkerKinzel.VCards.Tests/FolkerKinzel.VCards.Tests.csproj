@@ -22,6 +22,7 @@
     <None Remove="reports\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Intls\Deserializers\DigitParserTests.cs" />
     <Compile Remove="Intls\Extensions\DoubleExtensionsTests.cs" />
     <Compile Remove="UnitTestsInitialize.cs" />
     <Compile Remove="VcfPaths.cs" />

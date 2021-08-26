@@ -286,7 +286,7 @@ namespace FolkerKinzel.VCards.Extensions
         /// </para>
         /// 
         /// <para>
-        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(List{VCard?})"/> auf bevor sie erfolgreich
+        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(IEnumerable{VCard?})"/> auf bevor sie erfolgreich
         /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
         /// </para>
         /// 

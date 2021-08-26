@@ -14,8 +14,11 @@ namespace FolkerKinzel.VCards
     /// </summary>
     /// <threadsafety static="true" instance="false" />
     /// <example>
-    /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
+    /// <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
+    /// <para>Schreiben, Lesen und Umwandeln von VCF-Dateien:</para>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// <para>Beispiel-Implementierung für <see cref="ITimeZoneIDConverter"/>:</para>
+    /// <code language="cs" source="..\Examples\TimeZoneIDConverter.cs"/>
     /// </example>
     public sealed partial class VCard
     {

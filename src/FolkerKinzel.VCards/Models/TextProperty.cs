@@ -110,6 +110,7 @@ namespace FolkerKinzel.VCards.Models
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TextProperty>)this).GetEnumerator();
 
+        /// <inheritdoc/>
         public override object Clone() => new TextProperty(this);
     }
 }

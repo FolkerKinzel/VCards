@@ -59,6 +59,7 @@ namespace FolkerKinzel.VCards.Models
             _ = serializer.Builder.Append(PROFILE_PROPERTY_VALUE);
         }
 
+        /// <inheritdoc/>
         public override object Clone() => new ProfileProperty(this);
     }
 }

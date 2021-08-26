@@ -66,6 +66,7 @@ namespace FolkerKinzel.VCards.Models
             _ = serializer.Builder.Append(Value.ToVCardString());
         }
 
+        /// <inheritdoc/>
         public override object Clone() => new KindProperty(this);
     }
 }

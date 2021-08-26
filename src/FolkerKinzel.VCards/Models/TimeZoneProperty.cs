@@ -85,6 +85,7 @@ namespace FolkerKinzel.VCards.Models
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TimeZoneProperty>)this).GetEnumerator();
 
+        /// <inheritdoc/>
         public override object Clone() => new TimeZoneProperty(this);
     }
 }

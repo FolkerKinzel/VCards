@@ -8,7 +8,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>3.0.0-alpha.1</Version>
-    <FileVersion>3.0.0.0</FileVersion>
+    <FileVersion>3.0.0.10</FileVersion>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReleaseNotes>Adds the property VCard.FreeOrBusyUrls, which implements the vCard 4.0 FBURL property.</PackageReleaseNotes>
@@ -45,8 +45,10 @@
     <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Intls\Converters\DigitParser.cs" />
     <Compile Remove="Intls\Converters\TimeZoneConverter.cs" />
     <Compile Remove="Intls\Deserializers\VcfRow.ParameterSplitter.cs" />
+    <Compile Remove="Intls\Extensions\CharExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\Nuget-Logo\Logo.png">
@@ -75,7 +77,7 @@
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
     <PackageReference Include="FolkerKinzel.Strings">
-      <Version>3.2.0-alpha.3</Version>
+      <Version>3.2.0-alpha.4</Version>
     </PackageReference>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

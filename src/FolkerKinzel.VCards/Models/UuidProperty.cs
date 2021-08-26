@@ -78,6 +78,7 @@ namespace FolkerKinzel.VCards.Models
             _ = serializer.Builder.AppendUuid(this.Value, serializer.Version);
         }
 
+        /// <inheritdoc/>
         public override object Clone() => new UuidProperty(this);
     }
 }
