@@ -10,7 +10,7 @@ namespace FolkerKinzel.VCards.Intls.Extensions
     internal static class IntExtension
     {
         /// <summary>
-        /// Testet, ob id eine Zahl zwischen 1 und 9 ist.
+        /// Testet, ob <paramref name="id"/> eine Zahl zwischen 1 und 9 ist.
         /// </summary>
         /// <param name="id">Die zu überprüfende Zahl.</param>
         /// <param name="idName">Name des überprüften Parameters.</param>

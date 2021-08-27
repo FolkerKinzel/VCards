@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Definiert eine Methode zur Umwandlung eines <see cref="string"/>s, der eine benannte Zeitzone
-    /// (IANA time zone ID) darstellt, in einen entsprechenden UTC-Offset.
-    /// in einen UTC-Offset.
+    /// Definiert eine Methode, die einen <see cref="string"/>, der eine benannte Zeitzone
+    /// (IANA time zone ID) darstellt, in einen entsprechenden UTC-Offset umwandelt.
     /// </summary>
     /// 
     /// <remarks>
@@ -33,11 +32,12 @@ namespace FolkerKinzel.VCards.Models
     public interface ITimeZoneIDConverter
     {
         /// <summary>
-        /// Wandelt einen <see cref="string"/>, der einen Zeitzonennamen darstellt (IANA time zone ID) in einen 
-        /// zu dieser Zeitzone gehörenden UTC-Offset um.
+        /// Versucht, einen <see cref="string"/>, der einen Zeitzonennamen (IANA time zone ID) darstellt, in einen 
+        /// zu dieser Zeitzone gehörenden UTC-Offset umzuwandeln.
         /// </summary>
-        /// <param name="timeZoneID"></param>
-        /// <param name="utcOffset"></param>
+        /// <param name="timeZoneID">Ein <see cref="string"/>, der den Namen einer Zeitzone darstellt.</param>
+        /// <param name="utcOffset">Enthält nach erfolgreicher Beendigung der Methode den UTC-Offset. Das Argument
+        /// wird uninitialisiert übergeben.</param>
         /// <returns><c>true</c>, wenn <paramref name="timeZoneID"/> in einen UTC-Offset umgewandelt werden konnte,
         /// andernfalls <c>false</c>.</returns>
         /// 
