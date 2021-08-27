@@ -23,7 +23,7 @@ namespace FolkerKinzel.VCards.Models
         /// <summary>
         /// Initialisiert eine neues <see cref="PropertyIDMapping"/>-Objekt.
         /// </summary>
-        /// <param name="id">ID des Mappings (Wert: zwischen 1 und 9).</param>
+        /// <param name="id">Lokale ID des Mappings (Wert: zwischen 1 und 9).</param>
         /// <param name="mapping">Ein <see cref="Uri"/>, der die vCard-Property über 
         /// verschiedene Versionszustände derselben vCard hinweg
         /// eindeutig identifiziert.</param>
@@ -35,6 +35,22 @@ namespace FolkerKinzel.VCards.Models
 
             ID = id;
             Mapping = mapping ?? throw new ArgumentNullException(nameof(mapping));
+        }
+
+        /// <summary>
+        /// Lokale ID des Mappings.
+        /// </summary>
+        public int ID
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Ein <see cref="Uri"/>, der als plattformübergreifender Bezeichner des Mappings dient.
+        /// </summary>
+        public Uri Mapping
+        {
+            get;
         }
 
         /// <summary>
@@ -104,23 +120,7 @@ namespace FolkerKinzel.VCards.Models
         }
 
 
-        /// <summary>
-        /// Lokale ID des Mappings.
-        /// </summary>
-        public int ID
-        {
-            get;
-        }
-
-
-
-        /// <summary>
-        /// Ein <see cref="Uri"/>, der als plattformübergreifender Bezeichner des Mappings dient.
-        /// </summary>
-        public Uri Mapping
-        {
-            get;
-        }
+        
 
 
         /// <summary>

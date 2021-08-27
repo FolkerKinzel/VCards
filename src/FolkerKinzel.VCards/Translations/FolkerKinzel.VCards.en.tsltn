@@ -1426,4 +1426,63 @@ Example implementation for &lt;see cref ="T:FolkerKinzel.VCards.Models.ITimeZone
   <T ID="35C8F63F3572F37D">Tries to convert a &lt;see cref ="T:System.String"/&gt;, which represents a time zone name (IANA time zone ID), into a UTC offset belonging to this time zone.</T>
   <T ID="C8A327615BB0BBE3">A &lt;see cref ="T:System.String"/&gt; representing the name of a time zone.</T>
   <T ID="981B97D968619E12">Contains the UTC offset after the method has been successfully returned. The argument is passed uninitialized.</T>
+  <T ID="D7A655C204AA6BDF">&lt;c&gt;true&lt;/c&gt;, if &lt;paramref name ="timeZoneID"/&gt; could be converted into a UTC offset, otherwise &lt;c&gt;false&lt;/c&gt;.</T>
+  <T ID="945A28BEC4610670">&lt;note type ="implement"&gt;
+&lt;para&gt;
+The method &lt;see cref ="M:FolkerKinzel.VCards.Models.ITimeZoneIDConverter.TryConvertToUtcOffset(System.String,System.TimeSpan@)"/&gt; should at least be able to convert IANA time zone IDs into UTC offsets. (You could also convert POSIX time zone identifiers, for example.) It makes sense to use a 3rd party NuGet package for the task, as .NET is currently not able to do this itself.
+&lt;/para&gt;
+&lt;para&gt;
+It is not necessary for the method to convert &lt;see cref ="T:System.String"/&gt;s that already represent a UTC offset, since the library &lt;see cref ="N:FolkerKinzel.VCards"/&gt; already does this itself.
+&lt;/para&gt;
+&lt;/note&gt;</T>
+  <T ID="7A02A33827160AFD"></T>
+  <T ID="23DE51C82D2816FE"></T>
+  <T ID="314D911C27160AFD"></T>
+  <T ID="62C5C92D2D2816FE"></T>
+  <T ID="F5222C8827160AFD"></T>
+  <T ID="211F65A72D2816FE"></T>
+  <T ID="C6A1894927160AFD"></T>
+  <T ID="4A6657272D2816FE"></T>
+  <T ID="12367D4B27160AFD"></T>
+  <T ID="62AA24A82D2816FE"></T>
+  <T ID="1679E96A7CB72AAB">Initializes a new &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; object with the local ID of the vCard property and - optionally - a &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyIDMapping"/&gt; object that allows the identification of the vCard property across different version states of the same vCard.</T>
+  <T ID="F9C0BED4B18BFCAA">The local ID of the vCard property.</T>
+  <T ID="2F3DCBC4D089826">A &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyIDMapping"/&gt; object or &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="68A51750D380A3A">&lt;paramref name="id"/&gt; is less than 1 or greater than 9.</T>
+  <T ID="549A0E44AE572B3"></T>
+  <T ID="DF01CAFAB9FA5783"></T>
+  <T ID="16C1777F8B45E04E"></T>
+  <T ID="2972C9F28C998024"></T>
+  <T ID="BAD9F11C9BE342F5">Gets the local ID of the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; to which the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; object is assigned.</T>
+  <T ID="769589CF7BD45136">The local key for identifying a &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; object consists of the name of the vCard property to which this object is assigned and the value of the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyID.ID"/&gt; of the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; object, which is assigned to this &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; object.</T>
+  <T ID="C0537A6851F7871F">Gets the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyIDMapping.ID"/&gt; of the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyIDMapping"/&gt; object with which the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; object is connected, or &lt;c&gt;null&lt;/c&gt; if the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; object is not connected with any &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyIDMapping"/&gt;.</T>
+  <T ID="B1C641580FBB409A">Compares two &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; objects. The result indicates whether the values of the two &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; objects are equal.</T>
+  <T ID="4E62CEEFC31E07B9">A &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; object to compare.</T>
+  <T ID="4E62CEF2C31E07B9">A &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; object to compare.</T>
+  <T ID="D9B14E03C31E07B9">A &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; object to compare.</T>
+  <T ID="D9B14E04C31E07B9">A &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; object to compare.</T>
+  <T ID="8906D2711A86CE24">&lt;c&gt;true&lt;/c&gt; if the values of the two &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; objects are equal, otherwise &lt;c&gt;false&lt;/c&gt;.</T>
+  <T ID="B38CA7DAA4BA78E4">&lt;c&gt;true&lt;/c&gt; if the values of the two &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; objects are not equal, otherwise &lt;c&gt;false&lt;/c&gt;.</T>
+  <T ID="112929993D0D8A1C">Compares two &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; objects. The result indicates whether the values of the two &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; objects are not equal.</T>
+  <T ID="EC7F8CC72D707EB5">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; object. (For debugging only.)</T>
+  <T ID="C4632624BD20A77F">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyID"/&gt; object.</T>
+  <T ID="11F53B4E55686B27">Connects the local &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyID.Mapping"/&gt; of a &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; with a &lt;see cref ="T:System.Uri"/&gt;, which uniquely identifies the vCard property across different versions of the same vCard.</T>
+  <T ID="F59573338F1B70CB">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyIDMapping"/&gt; object.</T>
+  <T ID="BD534B2BAF820D6A">ID of the mapping (value: between 1 and 9).</T>
+  <T ID="ABEFC4A436DE1694">A &lt;see cref ="T:System.Uri"/&gt; that uniquely identifies the vCard property across different versions of the same vCard.</T>
+  <T ID="5F008E7F0D380A3A">&lt;paramref name="id"/&gt; is less than 1 or greater than 9.</T>
+  <T ID="4AB201CB8F9E326D">&lt;paramref name="mapping"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="C592E87EA5A88AFB"></T>
+  <T ID="BD534B2BF3898200">Local ID of the mapping (value: between 1 and 9).</T>
+  <T ID="C2D79ED0575C82BA">Gets the Local ID of the mapping.</T>
+  <T ID="D9B63E47CC51ED44">Gets the &lt;see cref ="T:System.Uri"/&gt; that serves as a cross-platform identifier for the mapping.</T>
+  <T ID="3BA8A1F32D2816FE"></T>
+  <T ID="E0CCE70F1EF7D006"></T>
+  <T ID="D33B1BABBFB2962B"></T>
+  <T ID="82B9A7F1A90DA38D">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyIDMapping"/&gt; object. (For debugging only.)</T>
+  <T ID="2DCD9D9EEE361038">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyIDMapping"/&gt; object.</T>
+  <T ID="7B6F2C1493AD9A82">Encapsulates information that is used to identify vCard properties across different versions of the same vCard.</T>
+  <T ID="657ACEE127160AFD"></T>
+  <T ID="7631694E2D2816FE"></T>
+  <T ID="515A9A161C293989">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyIDMappingProperty"/&gt; object.</T>
 </Tsltn>

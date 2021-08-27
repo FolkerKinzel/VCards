@@ -81,7 +81,7 @@ namespace FolkerKinzel.VCards.Models
 
         /// <summary>
         /// Gibt die <see cref="PropertyIDMapping.ID"/> des <see cref="PropertyIDMapping"/>-Objekts
-        /// zurück, mit dem das <see cref="PropertyID"/>-Objekt verbunden ist oder <c>null</c>, wenn das 
+        /// zurück, mit dem das <see cref="PropertyID"/>-Objekt verbunden ist, oder <c>null</c>, wenn das 
         /// <see cref="PropertyID"/>-Objekt mit keinem <see cref="PropertyIDMapping"/> verbunden ist.
         /// </summary>
         public int? Mapping
