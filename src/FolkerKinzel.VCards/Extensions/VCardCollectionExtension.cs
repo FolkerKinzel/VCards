@@ -16,9 +16,7 @@ namespace FolkerKinzel.VCards.Extensions
     public static class VCardCollectionExtension
     {
         /// <summary>
-        /// Gibt eine Sammlung von <see cref="VCard"/>-Objekten zurück, in der die <see cref="RelationVCardProperty"/>-Objekte 
-        /// der als Argument übergebenen
-        /// Sammlung von <see cref="VCard"/>-Objekten durch 
+        /// Gibt eine Sammlung von <see cref="VCard"/>-Objekten zurück, in der die <see cref="RelationVCardProperty"/>-Objekte durch
         /// <see cref="RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
         /// <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte als 
         /// separate Elemente angefügt sind.
@@ -29,11 +27,11 @@ namespace FolkerKinzel.VCards.Extensions
         /// 
         /// <returns>
         /// Eine Sammlung von <see cref="VCard"/>-Objekten, in der die <see cref="RelationVCardProperty"/>-Objekte 
-        /// der als Argument übergebenen
-        /// Sammlung von <see cref="VCard"/>-Objekten durch 
+        /// durch 
         /// <see cref="RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
         /// <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte als 
-        /// separate Elemente angefügt sind.
+        /// separate Elemente angefügt sind. (Wenn die angefügten <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, 
+        /// wird ihnen von der Methode automatisch eine neue zugewiesen.)
         /// </returns>
         /// 
         /// <remarks>
@@ -45,23 +43,11 @@ namespace FolkerKinzel.VCards.Extensions
         /// <note type="important">
         /// Verwenden Sie diese Methode niemals, wenn Sie eine VCF-Datei als vCard 2.1 oder vCard 3.0 speichern möchten. Es droht Datenverlust.
         /// </note>
-        /// <note type="tip">
-        /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
-        /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
-        /// </note>
         /// <para>
         /// Die Methode wird bei Bedarf von den Serialisierungsmethoden von <see cref="VCard"/> automatisch verwendet. Die Verwendung in eigenem 
         /// Code ist
         /// nur dann sinnvoll, wenn ein <see cref="VCard"/>-Objekt als vCard 4.0 gespeichert werden soll und wenn dabei jede VCF-Datei nur
         /// eine einzige vCard enthalten soll. (Dieses Vorgehen ist i.d.R. nicht vorteilhaft, da es die referentielle Integrität gefährdet.)
-        /// </para>
-        /// 
-        /// 
-        /// 
-        /// <para>Wenn die angefügten <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, 
-        /// wird ihnen 
-        /// von der Methode
-        /// automatisch eine neue zugewiesen.
         /// </para>
         /// </remarks>
         /// 
@@ -85,20 +71,16 @@ namespace FolkerKinzel.VCards.Extensions
 
 
         /// <summary>
-        /// Gibt eine Sammlung von <see cref="VCard"/>-Objekten zurück, in der <see cref="RelationUuidProperty"/>-Objekte der als 
-        /// Argument übergebenen Sammlung von
-        /// <see cref="VCard"/>-Objekten durch
+        /// Gibt eine Sammlung von <see cref="VCard"/>-Objekten zurück, in der <see cref="RelationUuidProperty"/>-Objekte durch
         /// <see cref="RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="VCard"/>-Objekte
-        /// in der als Argument übergebenen Sammlung befinden.
+        /// in der Sammlung befinden.
         /// </summary>
         /// 
         /// <param name="vCards">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein und <c>null</c>-Werte
         /// enthalten.</param>
         /// 
         /// <returns>
-        /// Eine Sammlung von <see cref="VCard"/>-Objekten, in der <see cref="RelationUuidProperty"/>-Objekte der als 
-        /// Argument übergebenen Sammlung von
-        /// <see cref="VCard"/>-Objekten durch
+        /// Eine Sammlung von <see cref="VCard"/>-Objekten, in der <see cref="RelationUuidProperty"/>-Objekte durch
         /// <see cref="RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="VCard"/>-Objekte
         /// in der als Argument übergebenen Sammlung befinden.
         /// </returns>
@@ -109,10 +91,7 @@ namespace FolkerKinzel.VCards.Extensions
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
         /// </note>
-        /// <note type="tip">
-        /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
-        /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
-        /// </note>
+        /// 
         /// 
         /// <para>Die Methode wird von den Deserialisierungsmethoden von <see cref="VCard"/> automatisch aufgerufen. Die Verwendung in 
         /// eigenem Code kann z.B. nützlich sein, wenn <see cref="VCard"/>-Objekte aus verschiedenen Quellen in einer gemeinsamen Liste 
@@ -154,10 +133,7 @@ namespace FolkerKinzel.VCards.Extensions
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
         /// </note>
-        /// <note type="tip">
-        /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
-        /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
-        /// </note>
+        /// 
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehr
         /// vCards, als die Anzahl der Elemente in der Sammlung, die an den Parameter <paramref name="vCards"/> übergeben wird.
@@ -209,10 +185,6 @@ namespace FolkerKinzel.VCards.Extensions
         /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
-        /// </note>
-        /// <note type="tip">
-        /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
-        /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
         /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehr
@@ -266,10 +238,6 @@ namespace FolkerKinzel.VCards.Extensions
         /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
         /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
         /// </note>
-        /// <note type="tip">
-        /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
-        /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
-        /// </note>
         /// 
         /// <para>Die Methode serialisiert möglicherweise mehr
         /// vCards, als sich ursprünglich Elemente in <paramref name="vCards"/> befanden. Dies geschieht, wenn eine
@@ -283,11 +251,6 @@ namespace FolkerKinzel.VCards.Extensions
         /// serialisiert wird und wenn sich in der Eigenschaft <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts ein 
         /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
         /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
-        /// </para>
-        /// 
-        /// <para>
-        /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(IEnumerable{VCard?})"/> auf bevor sie erfolgreich
-        /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
         /// </para>
         /// 
         /// </remarks>

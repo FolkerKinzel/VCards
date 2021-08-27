@@ -29,7 +29,9 @@ namespace FolkerKinzel.VCards
         /// Sammlung von <see cref="VCard"/>-Objekten durch 
         /// <see cref="RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
         /// <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte als 
-        /// separate Elemente angefügt sind.
+        /// separate Elemente angefügt sind. (Wenn die angefügten <see cref="VCard"/>-Objekte noch keine 
+        /// <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen 
+        /// von der Methode automatisch eine neue zugewiesen.)
         /// </returns>
         /// 
         /// <remarks>
@@ -50,14 +52,6 @@ namespace FolkerKinzel.VCards
         /// Code ist
         /// nur dann sinnvoll, wenn ein <see cref="VCard"/>-Objekt als vCard 4.0 gespeichert werden soll und wenn dabei jede VCF-Datei nur
         /// eine einzige vCard enthalten soll. (Dieses Vorgehen ist i.d.R. nicht vorteilhaft, da es die referentielle Integrität gefährdet.)
-        /// </para>
-        /// 
-        /// 
-        /// 
-        /// <para>Wenn die angefügten <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, 
-        /// wird ihnen 
-        /// von der Methode
-        /// automatisch eine neue zugewiesen.
         /// </para>
         /// </remarks>
         /// 
