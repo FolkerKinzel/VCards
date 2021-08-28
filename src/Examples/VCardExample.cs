@@ -25,7 +25,7 @@ namespace Examples
             VCard vcard = InitializeTheVCardAndFillItWithData(directoryPath, photoFileName);
 
             // Implements ITimeZoneIDConverter to convert IANA time zone names to UTC-Offsets.
-            // (See the example implementation in the Project Reference at ITimeZoneIDConverter.)
+            // (See the implementation in the example below.)
             VC::ITimeZoneIDConverter tzConverter = new TimeZoneIDConverter();
 
             // Save vcard as vCard 2.1:

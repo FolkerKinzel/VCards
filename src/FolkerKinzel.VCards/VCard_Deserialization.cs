@@ -26,7 +26,7 @@ namespace FolkerKinzel.VCards
         /// <param name="textEncoding">Die zum Einlesen der Datei zu verwendende Textenkodierung oder <c>null</c>, um die Datei mit der 
         /// standardgerechten Enkodierung <see cref="Encoding.UTF8"/> einzulesen.</param>
         /// 
-        /// <returns>Eine Auflistung geparster <see cref="VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
+        /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
         /// 
         /// 
         /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
@@ -44,7 +44,7 @@ namespace FolkerKinzel.VCards
         /// Parst einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
         /// </summary>
         /// <param name="vcf">Ein <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</param>
-        /// <returns>Eine Auflistung geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="vcf"/> darstellen.</returns>
+        /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="vcf"/> darstellen.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="vcf"/> ist <c>null</c>.</exception>
         public static IList<VCard> ParseVcf(string vcf)
         {
@@ -64,7 +64,7 @@ namespace FolkerKinzel.VCards
         /// Deserialisiert eine VCF-Datei mit einem <see cref="TextReader"/>.
         /// </summary>
         /// <param name="reader">Ein <see cref="TextReader"/>.</param>
-        /// <returns>Eine Auflistung von <see cref="VCard"/>-Objekten, die den Inhalt der deserialisierten VCF-Datei darstellen.</returns>
+        /// <returns>Eine Sammlung von <see cref="VCard"/>-Objekten, die den Inhalt der deserialisierten VCF-Datei darstellen.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> ist <c>null</c>.</exception>
 #if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

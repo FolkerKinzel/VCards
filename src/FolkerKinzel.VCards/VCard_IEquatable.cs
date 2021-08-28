@@ -12,8 +12,8 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// Bestimmt, ob zwei <see cref="VCard"/>-Referenzen als gleich betrachtet werden.
         /// </summary>
-        /// <param name="other">Die zu vergleichende <see cref="VCard"/>-Referenz.</param>
-        /// <returns><c>true</c>, wenn <paramref name="other"/> auf eine identische <see cref="VCard"/>
+        /// <param name="other">Die zu vergleichende <see cref="VCard"/>-Referenz oder <c>null</c>.</param>
+        /// <returns><c>true</c>, wenn <paramref name="other"/> auf eine identische vCard
         /// verweist.</returns>
         /// <remarks>
         /// <paramref name="other"/> wird als identisch betrachtet, wenn
