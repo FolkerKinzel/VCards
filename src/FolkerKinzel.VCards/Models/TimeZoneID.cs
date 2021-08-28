@@ -13,7 +13,7 @@ using FolkerKinzel.VCards.Resources;
 namespace FolkerKinzel.VCards.Models
 {
     /// <summary>
-    /// Repräsentiert eine benannte Zeitzone.
+    /// Repräsentiert den standardisierten Namen einer Zeitzone.
     /// </summary>
     public class TimeZoneID
     {
@@ -42,19 +42,19 @@ namespace FolkerKinzel.VCards.Models
 
 
         /// <summary>
-        /// ID der Zeitzone.
+        /// Standardisierter Name der Zeitzone.
         /// </summary>
         /// <remarks>
-        /// Das ist der <see cref="string"/>, mit dem das <see cref="TimeZoneID"/>-Objekt initialisiert wurde - von Leerraum befreit.
+        /// Das ist der <see cref="string"/>, mit dem das <see cref="TimeZoneID"/>-Objekt initialisiert wurde.
         /// </remarks>
         public string Value { get; }
 
 
         /// <summary>
-        /// Versucht, einen entsprechenden UTC-Offset für das <see cref="TimeZoneID"/>-Objekt zurückzugeben.
+        /// Versucht, einen entsprechenden UTC-Offset für das <see cref="TimeZoneID"/>-Objekt zu finden.
         /// </summary>
-        /// <param name="utcOffset">Enthält nach erfolgreicher Beendigung der Methode den UTC-Offset. Der Parameter
-        /// wird unitialisiert übergeben.</param>
+        /// <param name="utcOffset">Enthält nach erfolgreicher Beendigung der Methode den UTC-Offset. Das Argument
+        /// wird uninitialisiert übergeben.</param>
         /// <param name="converter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um IANA time zone IDs
         /// in UTC-Offsets umzuwandeln, oder <c>null</c>.</param>
         /// <returns><c>true</c>, wenn ein geeigneter UTC-Offset gefunden werden konnte, andernfalls <c>false</c>.</returns>

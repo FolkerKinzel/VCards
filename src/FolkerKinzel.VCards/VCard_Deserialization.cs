@@ -43,17 +43,17 @@ namespace FolkerKinzel.VCards
         /// <summary>
         /// Parst einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
         /// </summary>
-        /// <param name="content">Ein <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</param>
-        /// <returns>Eine Auflistung geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="content"/> darstellen.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="content"/> ist <c>null</c>.</exception>
-        public static IList<VCard> ParseVcf(string content)
+        /// <param name="vcf">Ein <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</param>
+        /// <returns>Eine Auflistung geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="vcf"/> darstellen.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="vcf"/> ist <c>null</c>.</exception>
+        public static IList<VCard> ParseVcf(string vcf)
         {
-            if (content == null)
+            if (vcf == null)
             {
-                throw new ArgumentNullException(nameof(content));
+                throw new ArgumentNullException(nameof(vcf));
             }
 
-            using var reader = new StringReader(content);
+            using var reader = new StringReader(vcf);
             return DoParseVcf(reader);
         }
 

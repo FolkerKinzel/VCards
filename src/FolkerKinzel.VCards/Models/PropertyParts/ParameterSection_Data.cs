@@ -309,7 +309,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts
 
 
         /// <summary>
-        /// <c>PID</c>: Property-IDs zur Identifizierung der vCard-Property. <c>(4)</c>
+        /// <c>PID</c>: <see cref="PropertyID"/>s zur Identifizierung der <see cref="VCardProperty"/>. <c>(4)</c>
         /// </summary>
         public IEnumerable<PropertyID?>? PropertyIDs
         {
