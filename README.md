@@ -4,7 +4,7 @@
 
 .NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
 
-It enables you
+It allows
 * to load VCF files from the file system and to save them there,
 * to serialize VCF files from and to Streams and
 * to convert VCF files, that match the vCard versions 2.1, 3.0 and 4.0, to each other.

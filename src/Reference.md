@@ -1,16 +1,16 @@
 # FolkerKinzel.VCards
 .NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
 
-It enables you
+It allows
 * to load VCF files from the file system and to save them there,
 * to serialize VCF files from and to Streams and
 * to convert VCF files, that match the vCard versions 2.1, 3.0 and 4.0, to each other.
 
 FolkerKinzel.VCards is used as a dependency in [FolkerKinzel.Contacts.IO](https://www.nuget.org/packages/FolkerKinzel.Contacts.IO/) - an easy to use .NET-API to manage contact data of organizations and natural persons.
 
-[Project Reference (English)](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.2.0/FolkerKinzel.VCards.en.chm)
+[Project Reference (English)](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/3.0.0-alpha.1/FolkerKinzel.VCards.en.chm)
 
-[Projektdokumentation (Deutsch)](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/2.2.0/FolkerKinzel.VCards.de.chm)
+[Projektdokumentation (Deutsch)](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/3.0.0-alpha.1/FolkerKinzel.VCards.de.chm)
 
 > IMPORTANT: On some systems the content of the .CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox (if it is present) in the lower right corner of the General tab in the Properties dialog.
 
