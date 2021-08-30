@@ -123,7 +123,7 @@ namespace Examples
 
                 vcard.PhoneNumbers = new VC::TextProperty[]
                 {
-                telHome, telWork
+                    telHome, telWork
                 };
 
                 var prefMail = new VC::TextProperty("kaethe_mueller@internet.com");
@@ -327,5 +327,4 @@ Relations: Paul Müller-Risinowsky
 [Encoding: Base64]
 [MediaType: image/jpeg]
 Photos: data:image/jpeg;base64,z0c3+eZfci51dmt+X8PzZhKTI7zewFWBd22F9E0YtuExj04QehEa/jKgzo5a/U3cLTW+JkpZGA7xtoJ5
-.
-*/
+ */
