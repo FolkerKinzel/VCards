@@ -13,9 +13,9 @@ It is used as a dependency in [FolkerKinzel.Contacts.IO](https://github.com/Folk
 to manage contact data of organizations and natural persons.
 
 
-* [Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/3.0.0-alpha.1/FolkerKinzel.VCards.en.chm)
+* [Download Project Reference English](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/3.0.0-alpha.2/FolkerKinzel.VCards.en.chm)
 
-* [Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/3.0.0-alpha.1/FolkerKinzel.VCards.de.chm)
+* [Projektdokumentation (Deutsch) herunterladen](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/3.0.0-alpha.2/FolkerKinzel.VCards.de.chm)
 
 > IMPORTANT: On some systems the content of the .CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox (if it is present) in the lower right corner of the General tab in the Properties dialog.
 
