@@ -20,7 +20,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors
         /// geleert.
         /// </summary>
         /// <param name="imppType"><see cref="ImppTypes"/>-Objekt oder <c>null</c>.</param>
-        /// <param name="list">Eine Liste zum sammeln.</param>
+        /// <param name="list">Eine Liste zum Sammeln.</param>
         internal void CollectValueStrings(ImppTypes? imppType, List<string> list)
         {
             Debug.Assert(list != null);

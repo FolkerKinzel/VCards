@@ -96,7 +96,7 @@ namespace FolkerKinzel.VCards.Models
 
             StringBuilder worker = serializer.Worker;
             _ = worker.Clear();
-            DateAndOrTimeConverter.AppendTimestampTo(worker, this.Value, serializer.Version);
+            DateAndOrTimeConverter.AppendTimeStampTo(worker, this.Value, serializer.Version);
             _ = worker.Mask(serializer.Version);
             _ = serializer.Builder.Append(worker);
         }

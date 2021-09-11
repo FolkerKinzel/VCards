@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Models.Enums;
-
+using System.Text;
 
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests
@@ -60,29 +60,38 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         [TestMethod]
         public void RoundtripsTest()
         {
-            Roundtrip("19720131");
-            Roundtrip("19720131T15-07", false);
-            Roundtrip("19720131T15+04", false);
+            Roundtrip("1972-01-31", true, VCdVersion.V3_0);
+            Roundtrip("19720131T15-07", false, VCdVersion.V3_0);
+            Roundtrip("19720131T15+04", false, VCdVersion.V3_0);
 
-            RoundtripTimestamp("19961022T140000", false);
-            RoundtripTimestamp("19961022T140000Z", true);
-            RoundtripTimestamp("19961022T140000-05", false);
-            RoundtripTimestamp("19961022T140000-0500", false);
-            RoundtripTimestamp("19961022T140000+0500", false);
+            Roundtrip("19720131", true, VCdVersion.V4_0);
+            Roundtrip("19720131T15-07", false, VCdVersion.V4_0);
+            Roundtrip("19720131T15+04", false, VCdVersion.V4_0);
+
+            Roundtrip("1996-10-22T14:00:00Z", true, VCdVersion.V3_0);
+
+            Roundtrip("19961022T140000Z", true, VCdVersion.V4_0);
+
+
+            RoundtripTimestamp("19961022T140000", false, VCdVersion.V4_0);
+            RoundtripTimestamp("19961022T140000Z", true, VCdVersion.V4_0);
+            RoundtripTimestamp("19961022T140000-05", false, VCdVersion.V4_0);
+            RoundtripTimestamp("19961022T140000-0500", false, VCdVersion.V4_0);
+            RoundtripTimestamp("19961022T140000+0500", false, VCdVersion.V4_0);
 
             RoundtripTimestamp("19961022T140000", false, VCdVersion.V2_1);
-            RoundtripTimestamp("19961022T140000Z", false, VCdVersion.V2_1 );
+            RoundtripTimestamp("19961022T140000Z", false, VCdVersion.V2_1);
             RoundtripTimestamp("19961022T140000-05", false, VCdVersion.V2_1);
             RoundtripTimestamp("19961022T140000-0500", false, VCdVersion.V2_1);
             RoundtripTimestamp("19961022T140000+0532", false, VCdVersion.V2_1);
         }
 
         private void Roundtrip(
-            string s, bool stringRoundTrip = true, VCdVersion version = VCdVersion.V4_0)
+            string s, bool stringRoundTrip, VCdVersion version)
         {
             Assert.IsTrue(_conv.TryParse(s, out DateTimeOffset dt));
 
-            string s2 = DateAndOrTimeConverter.ToDateTimeString(dt, version);
+            string s2 = ToDateTimeString(dt, version);
 
             if (stringRoundTrip)
             {
@@ -92,6 +101,13 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             Assert.IsTrue(_conv.TryParse(s2, out DateTimeOffset dt2));
 
             Assert.AreEqual(dt, dt2);
+
+            static string ToDateTimeString(DateTimeOffset dt, VCdVersion version)
+            {
+                var builder = new StringBuilder();
+                DateAndOrTimeConverter.AppendDateTimeStringTo(builder, dt, version);
+                return builder.ToString();
+            }
         }
 
         private void RoundtripTimestamp(
@@ -99,7 +115,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         {
             Assert.IsTrue(_conv.TryParse(s, out DateTimeOffset dt));
 
-            string s2 = DateAndOrTimeConverter.ToTimestamp(dt, version);
+            string s2 = ToTimeStamp(dt, version);
 
             if (stringRoundTrip)
             {
@@ -109,6 +125,55 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             Assert.IsTrue(_conv.TryParse(s2, out DateTimeOffset dt2));
 
             Assert.AreEqual(dt, dt2);
+
+            static string ToTimeStamp(DateTimeOffset dt, VCdVersion version)
+            {
+                var builder = new StringBuilder();
+                DateAndOrTimeConverter.AppendTimeStampTo(builder, dt, version);
+                return builder.ToString();
+            }
+        }
+
+
+        [TestMethod]
+        public void AppendTimeStampToTest1()
+        {
+            var builder = new StringBuilder();
+            DateAndOrTimeConverter.AppendTimeStampTo(builder, null, VCdVersion.V3_0);
+            Assert.AreEqual(0, builder.Length);
+        }
+
+        [TestMethod]
+        public void AppendDateTimeStringToTest1()
+        {
+            var builder = new StringBuilder();
+            DateAndOrTimeConverter.AppendDateTimeStringTo(builder, null, VCdVersion.V3_0);
+            Assert.AreEqual(0, builder.Length);
+        }
+
+        [TestMethod]
+        public void AppendDateTimeStringToTest2()
+        {
+            var builder = new StringBuilder();
+            DateAndOrTimeConverter.AppendDateTimeStringTo(builder, new DateTime(2, 1, 1), VCdVersion.V4_0);
+            Assert.IsTrue(builder[0] == '-' && builder[1] == '-');
+        }
+
+        [TestMethod]
+        public void AppendDateTimeStringToTest3()
+        {
+            var builder = new StringBuilder();
+            DateAndOrTimeConverter.AppendDateTimeStringTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0);
+            Assert.IsTrue(builder.ToString().StartsWith("0004"));
+        }
+
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("This is a very very long string that is longer than 64 characters.")]
+        public void TryParseTest1(string? input)
+        {
+            Assert.IsFalse(new DateAndOrTimeConverter().TryParse(input, out _));
         }
     }
 }
+

@@ -72,7 +72,7 @@ namespace FolkerKinzel.VCards.Models
             if (serializer.Version < VCdVersion.V4_0)
             {
                 this.Parameters.DataType =
-                    DateAndOrTimeConverter.HasTimeComponent(this.Value)
+                    this.Value.HasValue && DateAndOrTimeConverter.HasTimeComponent(this.Value.Value)
                     ? VCdDataType.DateTime : VCdDataType.Date;
             }
         }

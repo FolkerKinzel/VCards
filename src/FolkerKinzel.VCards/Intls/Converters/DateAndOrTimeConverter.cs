@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
+using System.Runtime.CompilerServices;
 
 #if !NET40
 using FolkerKinzel.Strings.Polyfills;
@@ -186,26 +187,7 @@ namespace FolkerKinzel.VCards.Intls.Converters
         }
 
 
-        internal static string ToDateTimeString(DateTimeOffset dt, VCdVersion version)
-        {
-            var builder = new StringBuilder();
-
-            AppendDateTimeStringTo(builder, dt, version);
-
-            return builder.ToString();
-        }
-
-        internal static string ToTimestamp(DateTimeOffset dt, VCdVersion version)
-        {
-            var builder = new StringBuilder();
-
-            AppendTimestampTo(builder, dt, version);
-
-            return builder.ToString();
-        }
-
-
-        internal static void AppendTimestampTo(StringBuilder builder,
+        internal static void AppendTimeStampTo(StringBuilder builder,
             DateTimeOffset? dto, VCdVersion version)
         {
             if (!dto.HasValue)
@@ -297,9 +279,11 @@ namespace FolkerKinzel.VCards.Intls.Converters
             }//switch
         }
 
-
-        internal static bool HasTimeComponent(DateTimeOffset? dt)
-            => dt.HasValue && (dt.Value.TimeOfDay != TimeSpan.Zero);
+#if !NET40
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        internal static bool HasTimeComponent(DateTimeOffset dt)
+            => dt.TimeOfDay != TimeSpan.Zero;
         //|| utcOffset != TimeSpan.Zero //nicht konsequent, aber sonst bei Geburtstagen meist komisch
 
     }

@@ -27,5 +27,11 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
                 Assert.AreEqual(null, ((InterestLevel?)4711).ToVCardString());
             }
         }
+
+        [TestMethod]
+        public void ParseTest()
+        {
+            Assert.IsNull(ExpertiseLevelConverter.Parse("nichtvorhanden"));
+        }
     }
 }
