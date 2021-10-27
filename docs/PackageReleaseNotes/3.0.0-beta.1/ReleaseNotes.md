@@ -1,6 +1,7 @@
-# FolkerKinzel.VCards 3.0.0-alpha.2
+# FolkerKinzel.VCards 3.0.0-beta.1
 ## Package Release Notes
 - Dependency update.
+- Higher code coverage of the unit tests.
 - .NET Standard 2.0 support and .NET Framework 4.6.1 support has been added.
 - Some methods have been renamed:
   - VCard.Save to `SaveVcf`.
