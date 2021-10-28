@@ -87,14 +87,15 @@ namespace FolkerKinzel.VCards.Models
             StringBuilder builder = serializer.Builder;
             StringBuilder worker = serializer.Worker;
 
-            if (serializer.Version >= VCdVersion.V4_0)
-            {
-                Debug.Assert(this.Value.UniqueIdentifier != null);
-                Debug.Assert(!this.Value.UniqueIdentifier.IsEmpty);
+            Debug.Assert(serializer.Version < VCdVersion.V4_0);
+            //if (serializer.Version >= VCdVersion.V4_0)
+            //{
+            //    Debug.Assert(this.Value.UniqueIdentifier != null);
+            //    Debug.Assert(!this.Value.UniqueIdentifier.IsEmpty);
 
-                _ = builder.AppendUuid(this.Value.UniqueIdentifier.Value);
-                return;
-            }
+            //    _ = builder.AppendUuid(this.Value.UniqueIdentifier.Value);
+            //    return;
+            //}
 
 
             string vc = this.Value.ToVcfString(serializer.Version, options: serializer.Options.Unset(VcfOptions.IncludeAgentAsSeparateVCard));

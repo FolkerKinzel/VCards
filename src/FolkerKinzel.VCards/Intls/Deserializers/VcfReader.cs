@@ -46,7 +46,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
         public bool EOF { get; private set; }
 
-
+        [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 

@@ -85,6 +85,11 @@ namespace FolkerKinzel.VCards.Tests
             nonStandard1.Parameters.NonStandardParameters
                 = new KeyValuePair<string, string>[] { new KeyValuePair<string, string>("X-NONSTD", "para-value") };
 
+            var nonStandard2 = new NonStandardProperty("X-WAKEUP", "07:00:00");
+            nonStandard2.Parameters.DataType = VCdDataType.Time;
+
+            var nonStandard = new NonStandardProperty[] { nonStandard1, nonStandard2 };
+
             var xName = XName.Get("{TheNs}TheLocal");
             var xEl = new XElement(xName, "The content");
             var xml1 = new XmlProperty(xEl);
@@ -182,7 +187,7 @@ namespace FolkerKinzel.VCards.Tests
 
                 Organizations = new OrganizationProperty("The Organization", new string[] {"Department", "Office"}),
 
-                NonStandardProperties = nonStandard1,
+                NonStandardProperties = nonStandard,
 
                 XmlProperties = xml1,
 

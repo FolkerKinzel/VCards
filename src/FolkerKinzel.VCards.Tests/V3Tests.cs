@@ -170,5 +170,32 @@ namespace FolkerKinzel.VCards.Tests
         }
 
 
+        [TestMethod]
+        public void TimeDataTypeTest()
+        {
+            const string vcardString = @"BEGIN:VCARD
+VERSION:3.0
+BDAY;Value=Time:05:30:00
+END:VCARD";
+
+            VCard vcard = VCard.ParseVcf(vcardString)[0];
+
+            Assert.IsNotNull(vcard.BirthDayViews);
+
+            DateTimeProperty? bday = vcard.BirthDayViews!.First();
+
+            if(bday is DateTimeOffsetProperty prop)
+            {
+                Assert.AreEqual(prop?.Value?.TimeOfDay, new TimeSpan(5, 30, 0));
+            }
+            else
+            {
+                Assert.Fail();
+            }
+
+
+        }
+
+
     }
 }

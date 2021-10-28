@@ -19,7 +19,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers
 
             if (value.StartsWith("QUOTED", true, CultureInfo.InvariantCulture))
             {
-                return ENCODING_PROPERTY; // "QUOTED-PRINTABLE" oder "Q"
+                return ENCODING_PROPERTY; // "QUOTED-PRINTABLE"
             }
 
             if (value.StartsWith("UTF", true, CultureInfo.InvariantCulture) || value.StartsWith("ISO", true, CultureInfo.InvariantCulture))
