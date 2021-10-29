@@ -8,7 +8,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>3.0.0-beta.1</Version>
-    <FileVersion>3.0.0.35</FileVersion>
+    <FileVersion>3.0.0.36</FileVersion>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/blob/master/docs/PackageReleaseNotes/3.0.0-beta.1/ReleaseNotes.md</PackageReleaseNotes>
