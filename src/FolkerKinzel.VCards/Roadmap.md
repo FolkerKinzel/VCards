@@ -106,8 +106,9 @@ as input for the data to embed.
 - [x] Fix the issue that DataUrl doesn't remove the BOM if created from an embedded text file when
 retrieving the embedded text.
 
-### 3.0.1
+### 3.1.0
 - [ ] Cleanup: Remove `VCdDataType.Timestamp` and all other Symbols marked as Obsolete errors in 3.0.0.
+- [ ] .NET 6.0 support.
 
 
 

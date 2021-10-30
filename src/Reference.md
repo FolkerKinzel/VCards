@@ -1,4 +1,5 @@
-# FolkerKinzel.VCards
+[![GitHub](https://img.shields.io/github/license/FolkerKinzel/VCards)](https://github.com/FolkerKinzel/VCards/blob/master/LICENSE)
+
 .NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
 
 It allows
