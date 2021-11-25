@@ -108,12 +108,12 @@ retrieving the embedded text.
 
 ### 3.1.0
 - [ ] Cleanup: Remove `VCdDataType.Timestamp` and all other Symbols marked as Obsolete errors in 3.0.0.
-
+- [x] Add .NET 6.0 support.
 
 ### 4.0.0
-- [ ] Add .NET 6.0 support.
 - [ ] End .NET Framework 4.0 support.
 - [ ] Use the HashCode struct to compute hash codes.
+- [ ] Add DateOnlyProperty. (Use nuget package Portable.System.DateTimeOnly.)
 - [ ] Remove the `DataUrl` class and the `MimeType` classes and replace it with something new and better like
 `FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
 - [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`

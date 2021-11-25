@@ -5,54 +5,53 @@ using FolkerKinzel.VCards;
 
 using VC = FolkerKinzel.VCards.Models;
 
-namespace Examples
+namespace Examples;
+
+internal static class WhatsAppDemo2
 {
-    internal static class WhatsAppDemo2
+    public static void UsingTheWhatsAppType()
     {
-        public static void UsingTheWhatsAppType()
+        var xiamoiMobilePhone = new VC::TextProperty("+1-234-567-89");
+        xiamoiMobilePhone.Parameters.NonStandardParameters = new KeyValuePair<string, string>[]
         {
-            var xiamoiMobilePhone = new VC::TextProperty("+1-234-567-89");
-            xiamoiMobilePhone.Parameters.NonStandardParameters = new KeyValuePair<string, string>[]
-            {
                 new KeyValuePair<string, string>("TYPE", "WhatsApp")
-            };
+        };
 
-            // Initialize the VCard:
-            var vcard = new VCard
+        // Initialize the VCard:
+        var vcard = new VCard
+        {
+            NameViews = new VC::NameProperty[]
             {
-                NameViews = new VC::NameProperty[]
-                {
                     new VC::NameProperty(lastName: null, firstName: "zzMad Perla 45")
-                },
+            },
 
-                DisplayNames = new VC::TextProperty[]
-                {
+            DisplayNames = new VC::TextProperty[]
+            {
                     new VC::TextProperty("zzMad Perla 45")
-                },
+            },
 
-                PhoneNumbers = new VC::TextProperty[]
-                {
+            PhoneNumbers = new VC::TextProperty[]
+            {
                     xiamoiMobilePhone
-                }
-            };
+            }
+        };
 
-            // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
-            // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
-            string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
+        // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
+        // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
+        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
 
-            Console.WriteLine(vcfString);
+        Console.WriteLine(vcfString);
 
-            // Parse the VCF string:
-            vcard = VCard.ParseVcf(vcfString)[0];
+        // Parse the VCF string:
+        vcard = VCard.ParseVcf(vcfString)[0];
 
-            // Find the WhatsApp number:
-            string? whatsAppNumber = vcard.PhoneNumbers?
-                .FirstOrDefault(x => x?.Parameters.NonStandardParameters?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
-                .Value;
+        // Find the WhatsApp number:
+        string? whatsAppNumber = vcard.PhoneNumbers?
+            .FirstOrDefault(x => x?.Parameters.NonStandardParameters?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
+            .Value;
 
-            Console.Write("The WhatsApp number is: ");
-            Console.WriteLine(whatsAppNumber ?? "Don't know.");
-        }
+        Console.Write("The WhatsApp number is: ");
+        Console.WriteLine(whatsAppNumber ?? "Don't know.");
     }
 }
 /*
