@@ -8,6 +8,7 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
+using FolkerKinzel.VCards.Intls;
 
 #if !NET40
 using FolkerKinzel.Strings;
@@ -16,6 +17,8 @@ using FolkerKinzel.Strings.Polyfills;
 
 namespace FolkerKinzel.VCards.Models
 {
+#pragma warning disable CS0618 // Typ oder Element ist veraltet
+
     /// <summary>
     /// Repräsentiert einen Data-URL nach RFC 2397.
     /// </summary>
@@ -317,7 +320,7 @@ namespace FolkerKinzel.VCards.Models
                 byte[] data;
                 try
                 {
-                    data = Convert.FromBase64String(EncodedData);
+                    data = Base64Parser.ParseBase64(EncodedData);
                 }
                 catch
                 {
@@ -362,7 +365,7 @@ namespace FolkerKinzel.VCards.Models
             try
             {
                 return this.Encoding == DataEncoding.Base64
-                    ? Convert.FromBase64String(EncodedData)
+                    ? Base64Parser.ParseBase64(EncodedData)
                     : System.Text.Encoding.UTF8.GetBytes(Uri.UnescapeDataString(EncodedData ?? ""));
             }
             catch
@@ -379,5 +382,8 @@ namespace FolkerKinzel.VCards.Models
         /// <returns>Eine geeignete Dateiendung für die in den <see cref="DataUrl"/>
         /// eingebetteten Daten. Die Dateiendung enthält den Punkt "." als Trennzeichen.</returns>
         public string GetFileExtension() => MimeTypeConverter.GetFileExtension(this.MimeType);
+
     }
+#pragma warning restore CS0618 // Typ oder Element ist veraltet
+
 }
