@@ -8,7 +8,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>3.0.0</Version>
-    <FileVersion>3.0.0.51</FileVersion>
+    <FileVersion>3.0.0.52</FileVersion>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/blob/master/docs/PackageReleaseNotes/3.0.0/ReleaseNotes.md</PackageReleaseNotes>
@@ -36,13 +36,10 @@
   <ItemGroup>
     <Compile Remove="Intls\Serializers\Interfaces\**" />
     <Compile Remove="Models\Interfaces\**" />
-    <Compile Remove="Translations\**" />
     <EmbeddedResource Remove="Intls\Serializers\Interfaces\**" />
     <EmbeddedResource Remove="Models\Interfaces\**" />
-    <EmbeddedResource Remove="Translations\**" />
     <None Remove="Intls\Serializers\Interfaces\**" />
     <None Remove="Models\Interfaces\**" />
-    <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Intls\Converters\DigitParser.cs" />
