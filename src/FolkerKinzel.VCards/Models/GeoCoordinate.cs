@@ -43,14 +43,6 @@ namespace FolkerKinzel.VCards.Models
         /// </summary>
         public double Longitude { get; }
 
-        /// <summary>
-        /// Obsolete
-        /// </summary>
-        [Obsolete("This property has been removed.", true)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Browsable(false)]
-        public bool IsUnknown => false;
-
 
         /// <inheritdoc/>
         public bool Equals(GeoCoordinate? other)

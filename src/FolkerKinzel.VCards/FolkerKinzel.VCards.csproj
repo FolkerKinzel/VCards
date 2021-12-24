@@ -49,6 +49,8 @@
     <Compile Remove="Intls\Converters\TimeZoneConverter.cs" />
     <Compile Remove="Intls\Deserializers\VcfRow.ParameterSplitter.cs" />
     <Compile Remove="Intls\Extensions\CharExtension.cs" />
+    <Compile Remove="Models\PropertyParts\GeoCoordinate.cs" />
+    <Compile Remove="VCard_Obsolete.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\Nuget-Logo\Logo.png">

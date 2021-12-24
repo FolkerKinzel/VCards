@@ -70,14 +70,6 @@ namespace FolkerKinzel.VCards.Models.Enums
         // yyyymmddThhmmss[+/-hh[mm]]
         // yyyymmddThhmmss[Z]          // "Z" bedeutet UTC
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Browsable(false)]
-        [Obsolete("Use \"TimeStamp\" instead.", true)]
-        [CLSCompliant(false)]
-#pragma warning disable CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
-        Timestamp = TimeStamp,
-#pragma warning restore CS1591 // Fehlender XML-Kommentar für öffentlich sichtbaren Typ oder Element
-
 
         /// <summary>
         /// <c>BOOLEAN</c>: Boolscher Wert <c>(3,4)</c>
