@@ -107,7 +107,7 @@ as input for the data to embed.
 retrieving the embedded text.
 
 ### 3.1.0
-- [ ] Cleanup: Remove `VCdDataType.Timestamp` and all other Symbols marked as Obsolete errors in 3.0.0.
+- [x] Cleanup: Remove `VCdDataType.Timestamp` and all other Symbols marked as Obsolete errors in 3.0.0.
 - [x] Add .NET 6.0 support.
 - [x] DataUrl can parse "Data" URLs, which use the Base64Url format.
 - [x] Dependency update.
