@@ -110,6 +110,7 @@ retrieving the embedded text.
 - [ ] Cleanup: Remove `VCdDataType.Timestamp` and all other Symbols marked as Obsolete errors in 3.0.0.
 - [x] Add .NET 6.0 support.
 - [x] DataUrl can parse "Data" URLs, which use the Base64Url format.
+- [x] Dependency update.
 
 ### 4.0.0
 - [ ] End .NET Framework 4.0 support.

@@ -8,7 +8,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>3.0.0</Version>
-    <FileVersion>3.0.0.48</FileVersion>
+    <FileVersion>3.0.0.50</FileVersion>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/blob/master/docs/PackageReleaseNotes/3.0.0/ReleaseNotes.md</PackageReleaseNotes>
@@ -77,7 +77,7 @@
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
     <PackageReference Include="FolkerKinzel.Strings">
-      <Version>3.3.0</Version>
+      <Version>4.1.0</Version>
     </PackageReference>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
