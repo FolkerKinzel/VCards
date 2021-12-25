@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>3.1.0</Version>
-    <FileVersion>3.1.0.4</FileVersion>
+    <FileVersion>3.1.0.11</FileVersion>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/blob/master/docs/PackageReleaseNotes/3.0.0/ReleaseNotes.md</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
@@ -35,6 +35,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Using Remove="System.Net.Http" />
+    <Using Include="System.Diagnostics" />
+    <Using Include="System.Diagnostics.CodeAnalysis" />
+    <Using Include="System.Runtime.CompilerServices" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Intls\Serializers\Interfaces\**" />

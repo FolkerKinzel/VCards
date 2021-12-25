@@ -1,23 +1,21 @@
-﻿using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.Enums;
-using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
+using FolkerKinzel.VCards.Models.Enums;
 
 #if !NET40
 using FolkerKinzel.Strings.Polyfills;
 #endif
 
-namespace FolkerKinzel.VCards.Intls.Converters
+namespace FolkerKinzel.VCards.Intls.Converters;
+
+/// <summary>
+/// Konvertiert das vCard-Value "Time".
+/// </summary>
+/// <threadsafety static="true" instance="false" />
+internal sealed class TimeConverter
 {
-    /// <summary>
-    /// Konvertiert das vCard-Value "Time".
-    /// </summary>
-    /// <threadsafety static="true" instance="false" />
-    internal sealed class TimeConverter
+    private readonly string[] _modelStrings = new string[]
     {
-        private readonly string[] _modelStrings = new string[]
-        {
             "HH",
             "HHmm",
             "HHmmss",
@@ -36,20 +34,19 @@ namespace FolkerKinzel.VCards.Intls.Converters
             "--ss",
             "--sszz",
             "--sszzz"
-        };
+    };
 
 
+    internal bool TryParse(string? s, out DateTimeOffset offset)
+    {
+        offset = DateTimeOffset.MinValue;
 
-        internal bool TryParse(string? s, out DateTimeOffset offset)
+        if (s is null)
         {
-            offset = DateTimeOffset.MinValue;
+            return false;
+        }
 
-            if (s is null)
-            {
-                return false;
-            }
-
-            DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
+        DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
 #if NET40
             if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
@@ -65,82 +62,81 @@ namespace FolkerKinzel.VCards.Intls.Converters
 
             return DateTimeOffset.TryParseExact(s, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
 #else
-            ReadOnlySpan<char> roSpan = s.AsSpan();
+        ReadOnlySpan<char> roSpan = s.AsSpan();
 
-            if (roSpan.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
-            {
-                roSpan = roSpan.Slice(0, roSpan.Length - 1);
-                styles |= DateTimeStyles.AssumeUniversal;
-            }
-            else
-            {
-                styles |= DateTimeStyles.AssumeLocal;
-            }
+        if (roSpan.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
+        {
+            roSpan = roSpan.Slice(0, roSpan.Length - 1);
+            styles |= DateTimeStyles.AssumeUniversal;
+        }
+        else
+        {
+            styles |= DateTimeStyles.AssumeLocal;
+        }
 
 #if NET461 || NETSTANDARD2_0
             return DateTimeOffset.TryParseExact(roSpan.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
 #else
-            return DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+        return DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
 #endif
 #endif
-        }
+    }
 
 
-        internal static string ToTimeString(DateTimeOffset dt, VCdVersion version)
+    internal static string ToTimeString(DateTimeOffset dt, VCdVersion version)
+    {
+        var builder = new StringBuilder();
+
+        AppendTo(builder, dt, version);
+
+        return builder.ToString();
+    }
+
+
+    internal static void AppendTo(StringBuilder builder, DateTimeOffset dt, VCdVersion version)
+    {
+        switch (version)
         {
-            var builder = new StringBuilder();
+            case VCdVersion.V2_1:
+            case VCdVersion.V3_0:
+                {
+                    _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}:{2:00}",
+                        dt.Hour, dt.Minute, dt.Second);
 
-            AppendTo(builder, dt, version);
+                    TimeSpan utcOffset = dt.Offset;
 
-            return builder.ToString();
-        }
-
-
-        internal static void AppendTo(StringBuilder builder, DateTimeOffset dt, VCdVersion version)
-        {
-            switch (version)
-            {
-                case VCdVersion.V2_1:
-                case VCdVersion.V3_0:
+                    if (utcOffset == TimeSpan.Zero)
                     {
-                        _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}:{2:00}",
-                            dt.Hour, dt.Minute, dt.Second);
-
-                        TimeSpan utcOffset = dt.Offset;
-
-                        if (utcOffset == TimeSpan.Zero)
-                        {
-                            _ = builder.Append('Z');
-                        }
-                        else
-                        {
-                            string sign = utcOffset < TimeSpan.Zero ? "" : "+";
-
-                            _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
-                        }
-
-                        break;
+                        _ = builder.Append('Z');
                     }
-                default: // vCard 4.0
+                    else
                     {
-                        _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}{1:00}{2:00}",
-                            dt.Hour, dt.Minute, dt.Second);
+                        string sign = utcOffset < TimeSpan.Zero ? "" : "+";
 
-                        TimeSpan utcOffset = dt.Offset;
-
-                        if (utcOffset == TimeSpan.Zero)
-                        {
-                            _ = builder.Append('Z');
-                        }
-                        else
-                        {
-                            string sign = utcOffset < TimeSpan.Zero ? "" : "+";
-
-                            _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
-                        }
-                        break;
+                        _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
                     }
-            }
+
+                    break;
+                }
+            default: // vCard 4.0
+                {
+                    _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}{1:00}{2:00}",
+                        dt.Hour, dt.Minute, dt.Second);
+
+                    TimeSpan utcOffset = dt.Offset;
+
+                    if (utcOffset == TimeSpan.Zero)
+                    {
+                        _ = builder.Append('Z');
+                    }
+                    else
+                    {
+                        string sign = utcOffset < TimeSpan.Zero ? "" : "+";
+
+                        _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
+                    }
+                    break;
+                }
         }
     }
 }

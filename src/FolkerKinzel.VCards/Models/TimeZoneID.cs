@@ -1,82 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Resources;
 
-namespace FolkerKinzel.VCards.Models
+namespace FolkerKinzel.VCards.Models;
+
+/// <summary>
+/// Repräsentiert den standardisierten Namen einer Zeitzone.
+/// </summary>
+public class TimeZoneID
 {
     /// <summary>
-    /// Repräsentiert den standardisierten Namen einer Zeitzone.
+    /// Initialisiert ein neues <see cref="TimeZoneID"/>-Objekt.
     /// </summary>
-    public class TimeZoneID
+    /// <param name="timeZoneID">Bezeichner der Zeitzone. Es sollte sich um einen Bezeichner aus der 
+    /// "IANA Time Zone Database" handeln. (Siehe https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
+    /// <exception cref="ArgumentNullException"><paramref name="timeZoneID"/> ist <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="timeZoneID"/> ist ein leerer <see cref="string"/> oder 
+    /// enthält nur Leerraum.</exception>
+    public TimeZoneID(string timeZoneID)
     {
-        //private static readonly string[] _patterns = new string[] { @"hh\:mm", @"hhmm", @"hh" };
+        Value = timeZoneID ?? throw new ArgumentNullException(nameof(timeZoneID));
 
-        /// <summary>
-        /// Initialisiert ein neues <see cref="TimeZoneID"/>-Objekt.
-        /// </summary>
-        /// <param name="timeZoneID">Bezeichner der Zeitzone. Es sollte sich um einen Bezeichner aus der 
-        /// "IANA Time Zone Database" handeln. (Siehe https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
-        /// <exception cref="ArgumentNullException"><paramref name="timeZoneID"/> ist <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="timeZoneID"/> ist ein leerer <see cref="string"/> oder 
-        /// enthält nur Leerraum.</exception>
-        public TimeZoneID(string timeZoneID)
+        if (string.IsNullOrWhiteSpace(Value))
         {
-            Value = timeZoneID ?? throw new ArgumentNullException(nameof(timeZoneID));
-
-            if (string.IsNullOrWhiteSpace(Value))
-            {
-                throw new ArgumentException(Res.NoData, nameof(timeZoneID));
-            }
-
-            //ID = Regex.Replace(ID, @"\s+", "");
-
+            throw new ArgumentException(Res.NoData, nameof(timeZoneID));
         }
+    }
 
 
-        /// <summary>
-        /// Standardisierter Name der Zeitzone.
-        /// </summary>
-        /// <remarks>
-        /// Das ist der <see cref="string"/>, mit dem das <see cref="TimeZoneID"/>-Objekt initialisiert wurde.
-        /// </remarks>
-        public string Value { get; }
+    /// <summary>
+    /// Standardisierter Name der Zeitzone.
+    /// </summary>
+    /// <remarks>
+    /// Das ist der <see cref="string"/>, mit dem das <see cref="TimeZoneID"/>-Objekt initialisiert wurde.
+    /// </remarks>
+    public string Value { get; }
 
 
-        /// <summary>
-        /// Versucht, einen entsprechenden UTC-Offset für das <see cref="TimeZoneID"/>-Objekt zu finden.
-        /// </summary>
-        /// <param name="utcOffset">Enthält nach erfolgreicher Beendigung der Methode den UTC-Offset. Das Argument
-        /// wird uninitialisiert übergeben.</param>
-        /// <param name="converter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um IANA time zone IDs
-        /// in UTC-Offsets umzuwandeln, oder <c>null</c>.</param>
-        /// <returns><c>true</c>, wenn ein geeigneter UTC-Offset gefunden werden konnte, andernfalls <c>false</c>.</returns>
-        /// <seealso cref="ITimeZoneIDConverter"/>
-        public bool TryGetUtcOffset(out TimeSpan utcOffset, ITimeZoneIDConverter? converter = null)
+    /// <summary>
+    /// Versucht, einen entsprechenden UTC-Offset für das <see cref="TimeZoneID"/>-Objekt zu finden.
+    /// </summary>
+    /// <param name="utcOffset">Enthält nach erfolgreicher Beendigung der Methode den UTC-Offset. Das Argument
+    /// wird uninitialisiert übergeben.</param>
+    /// <param name="converter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um IANA time zone IDs
+    /// in UTC-Offsets umzuwandeln, oder <c>null</c>.</param>
+    /// <returns><c>true</c>, wenn ein geeigneter UTC-Offset gefunden werden konnte, andernfalls <c>false</c>.</returns>
+    /// <seealso cref="ITimeZoneIDConverter"/>
+    public bool TryGetUtcOffset(out TimeSpan utcOffset, ITimeZoneIDConverter? converter = null)
+    {
+        if (IsUtcOffset())
         {
-            if (IsUtcOffset())
+            int startIndex = 0;
+
+            TimeSpanStyles styles = TimeSpanStyles.None;
+
+
+            if (Value.StartsWith("-", StringComparison.Ordinal))
             {
-                int startIndex = 0;
-                
-                TimeSpanStyles styles = TimeSpanStyles.None;
-
-
-                if (Value.StartsWith("-", StringComparison.Ordinal))
-                {
-                    startIndex = 1;
-                    styles = TimeSpanStyles.AssumeNegative;
-                }
-                else if (Value.StartsWith("+", StringComparison.Ordinal))
-                {
-                    startIndex = 1;
-                }
+                startIndex = 1;
+                styles = TimeSpanStyles.AssumeNegative;
+            }
+            else if (Value.StartsWith("+", StringComparison.Ordinal))
+            {
+                startIndex = 1;
+            }
 
 #if NET40 || NET461 || NETSTANDARD2_0
                 string input = Value.Substring(startIndex);
@@ -99,108 +88,105 @@ namespace FolkerKinzel.VCards.Models
                     CultureInfo.InvariantCulture,
                     styles, out utcOffset);
 #else
-                ReadOnlySpan<char> input = Value.AsSpan(startIndex);
+            ReadOnlySpan<char> input = Value.AsSpan(startIndex);
 
-                return TimeSpan.TryParseExact(
-                    input,
-                    @"hh\:mm",
-                    CultureInfo.InvariantCulture,
-                    styles, out utcOffset) ||
+            return TimeSpan.TryParseExact(
+                input,
+                @"hh\:mm",
+                CultureInfo.InvariantCulture,
+                styles, out utcOffset) ||
 
-                    TimeSpan.TryParseExact(
-                    input,
-                    @"hhmm",
-                    CultureInfo.InvariantCulture,
-                    styles, out utcOffset) ||
+                TimeSpan.TryParseExact(
+                input,
+                @"hhmm",
+                CultureInfo.InvariantCulture,
+                styles, out utcOffset) ||
 
-                    TimeSpan.TryParseExact(
-                    input,
-                    @"hh",
-                    CultureInfo.InvariantCulture,
-                    styles, out utcOffset);
+                TimeSpan.TryParseExact(
+                input,
+                @"hh",
+                CultureInfo.InvariantCulture,
+                styles, out utcOffset);
 #endif
 
-            }
-
-            if (converter is not null && converter.TryConvertToUtcOffset(Value, out utcOffset))
-            {
-                return true;
-            }
-
-            try
-            {
-                var tzInfo = TimeZoneInfo.FindSystemTimeZoneById(Value);
-                utcOffset = tzInfo.BaseUtcOffset;
-                return true;
-            }
-            catch { }
-
-            utcOffset = default;
-            return false;
         }
 
-        /// <summary>
-        /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="TimeZoneID"/>-Objekts. (Nur zum Debuggen.)
-        /// </summary>
-        /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="TimeZoneID"/>-Objekts.</returns>
-        public override string ToString() => Value;
-
-        internal void AppendTo(StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter)
+        if (converter is not null && converter.TryConvertToUtcOffset(Value, out utcOffset))
         {
-            Debug.Assert(builder != null);
-
-            switch (version)
-            {
-                case VCdVersion.V2_1:
-                case VCdVersion.V3_0:
-                    {
-                        if (TryGetUtcOffset(out TimeSpan utcOffset, converter))
-                        {
-                            string format = utcOffset < TimeSpan.Zero ? @"\-hh\:mm" : @"\+hh\:mm";
-                            _ = builder.Append(utcOffset.ToString(format, CultureInfo.InvariantCulture));
-                        }
-                        else
-                        {
-                            _ = builder.Append(Value);
-                        }
-                        break;
-                    }
-                default:
-                    {
-                        if (IsUtcOffset() && TryGetUtcOffset(out TimeSpan utcOffset))
-                        {
-                            string format = utcOffset < TimeSpan.Zero ? @"\-hhmm" : @"\+hhmm";
-                            _ = builder.Append(utcOffset.ToString(format, CultureInfo.InvariantCulture));
-                        }
-                        else
-                        {
-                            _ = builder.Append(Value);
-                        }
-                        break;
-                    }
-            }
+            return true;
         }
 
-
-
-
-        private bool IsUtcOffset()
+        try
         {
-            const string pattern = @"^[-\+]?[01][0-9]:?([0-5][0-9])?";
-            const RegexOptions options = RegexOptions.CultureInvariant | RegexOptions.Singleline;
+            var tzInfo = TimeZoneInfo.FindSystemTimeZoneById(Value);
+            utcOffset = tzInfo.BaseUtcOffset;
+            return true;
+        }
+        catch { }
+
+        utcOffset = default;
+        return false;
+    }
+
+    /// <summary>
+    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="TimeZoneID"/>-Objekts. (Nur zum Debuggen.)
+    /// </summary>
+    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="TimeZoneID"/>-Objekts.</returns>
+    public override string ToString() => Value;
+
+    internal void AppendTo(StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter)
+    {
+        Debug.Assert(builder != null);
+
+        switch (version)
+        {
+            case VCdVersion.V2_1:
+            case VCdVersion.V3_0:
+                {
+                    if (TryGetUtcOffset(out TimeSpan utcOffset, converter))
+                    {
+                        string format = utcOffset < TimeSpan.Zero ? @"\-hh\:mm" : @"\+hh\:mm";
+                        _ = builder.Append(utcOffset.ToString(format, CultureInfo.InvariantCulture));
+                    }
+                    else
+                    {
+                        _ = builder.Append(Value);
+                    }
+                    break;
+                }
+            default:
+                {
+                    if (IsUtcOffset() && TryGetUtcOffset(out TimeSpan utcOffset))
+                    {
+                        string format = utcOffset < TimeSpan.Zero ? @"\-hhmm" : @"\+hhmm";
+                        _ = builder.Append(utcOffset.ToString(format, CultureInfo.InvariantCulture));
+                    }
+                    else
+                    {
+                        _ = builder.Append(Value);
+                    }
+                    break;
+                }
+        }
+    }
+
+
+    private bool IsUtcOffset()
+    {
+        const string pattern = @"^[-\+]?[01][0-9]:?([0-5][0-9])?";
+        const RegexOptions options = RegexOptions.CultureInvariant | RegexOptions.Singleline;
 
 #if NET40
                 return Regex.IsMatch(Value, pattern, options);
 #else
-            try
-            {
-                return Regex.IsMatch(Value, pattern, options, TimeSpan.FromMilliseconds(50));
-            }
-            catch (RegexMatchTimeoutException)
-            {
-                return false;
-            }
-#endif
+        try
+        {
+            return Regex.IsMatch(Value, pattern, options, TimeSpan.FromMilliseconds(50));
         }
+        catch (RegexMatchTimeoutException)
+        {
+            return false;
+        }
+#endif
     }
 }
