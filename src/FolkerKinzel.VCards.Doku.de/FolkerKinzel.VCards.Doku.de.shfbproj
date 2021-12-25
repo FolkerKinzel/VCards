@@ -37,7 +37,7 @@
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
-      <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net5.0\de\FolkerKinzel.VCards.xml" />
+      <DocumentationSource sourceFile="..\FolkerKinzel.VCards\bin\Release\net6.0\de\FolkerKinzel.VCards.xml" />
     </DocumentationSources>
     <HelpFileFormat>HtmlHelp1</HelpFileFormat>
     <SyntaxFilters>Standard</SyntaxFilters>

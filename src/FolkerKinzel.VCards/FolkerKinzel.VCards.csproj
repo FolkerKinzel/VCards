@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>3.1.0</Version>
-    <FileVersion>3.1.0.11</FileVersion>
+    <FileVersion>3.1.0.13</FileVersion>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/blob/master/docs/PackageReleaseNotes/3.1.0/ReleaseNotes.md</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
@@ -86,6 +86,6 @@
     </PackageReference>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="if $(ConfigurationName) == Release copy /v /b /y &quot;$(OutDir)$(ProjectName).xml&quot; &quot;$(OutDir)de/$(ProjectName).xml&quot;&#xD;&#xA;if $(ConfigurationName) == Release if '$(TargetFramework)' == 'netstandard2.1' dotnet $(SolutionDir)IncVersion\IncVersion.dll $(ProjectDir)$(ProjectFileName) --revision" />
+    <Exec Command="if $(ConfigurationName) == Release copy /v /b /y &quot;$(OutDir)$(ProjectName).xml&quot; &quot;$(OutDir)de/$(ProjectName).xml&quot;&#xD;&#xA;if $(ConfigurationName) == Release if '$(TargetFramework)' == 'net6.0' dotnet $(SolutionDir)IncVersion\IncVersion.dll $(ProjectDir)$(ProjectFileName) --revision" />
   </Target>
 </Project>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Tsltn Version="1.0" SourceFile="..\bin\Release\net5.0\de\FolkerKinzel.VCards.xml" SourceLanguage="de" TargetLanguage="en">
+<Tsltn Version="1.0" SourceFile="..\bin\Release\net6.0\de\FolkerKinzel.VCards.xml" SourceLanguage="de" TargetLanguage="en">
   <T ID="BFFD14FCD3080F13">Encapsulates the data of a vCard property that contains information about the postal address.</T>
   <T ID="F57CB4C7BFCE564A">Encapsulates embedded binary data, references to binary data (e.g. URLs) or information available as free text.</T>
   <T ID="D3277A646C71EBF6">Represents a data URL according to RFC 2397.</T>
@@ -18,7 +18,6 @@
   <T ID="6BA720ED79A95997">Named constants to indicate the VCF version.</T>
   <T ID="90207E9BAE441F16">Represents a vCard property that is not defined by the official standards.</T>
   <T ID="53229C164BC6D573">Encapsulates information about a postal delivery address.</T>
-  <T ID="65FCFA7EEC304F2D">Encapsulates information about the geographical position.</T>
   <T ID="3681B171B1795491">Encapsulates information about a MIME type ("Multipurpose Internet Mail Extensions").</T>
   <T ID="D5B3EC49BD7FF1F6">Encapsulates information about the name of the person the vCard represents.</T>
   <T ID="4560CEC4719E4F42">Encapsulates information about the organization (or company) of the subject the vCard represents.</T>
@@ -598,14 +597,6 @@ Please note that when using the class, yourself is responsible for the standard-
   <T ID="BA421BC1332CA640">Returns &lt;c&gt;true&lt;/c&gt;, if the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Gender"/&gt; object does not contain any usable data.</T>
   <T ID="D0831EC46A66DE0B">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Gender"/&gt; object. (For debugging only.)</T>
   <T ID="18DB323546721EC">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Gender"/&gt; object. (For debugging only.)</T>
-  <T ID="BD28C11809340B62">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate"/&gt; object.</T>
-  <T ID="CD9429C8DD0F1BC">Latitude (value between -90 and 90).</T>
-  <T ID="A10EA26AB13BF4BD">Longitude (value between -180 and 180).</T>
-  <T ID="C04A269696034F26">Latitude.</T>
-  <T ID="EFC3079811B357F0">Longitude.</T>
-  <T ID="C446015A2B5553FB">Returns &lt;c&gt;true&lt;/c&gt;, if the &lt;see cref ="T:FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate"/&gt; object does not describe a valid geographical position.</T>
-  <T ID="F1480BFA08D1833E">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate"/&gt; object. (For debugging only.)</T>
-  <T ID="C0CD5EEB376BC8EF">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.GeoCoordinate"/&gt; object. (For debugging only.)</T>
   <T ID="6DA6DA02D25EC8F7">Internet Media Type (Never &lt;c&gt;null&lt;/c&gt;.)</T>
   <T ID="DE7DC616F2E143E">Parameters</T>
   <T ID="69A72DF2A7EA044C">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref="T:FolkerKinzel.VCards.Models.PropertyParts.MimeType"/&gt; object. (For debugging only.)</T>
@@ -1039,7 +1030,6 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
   <T ID="1D34FD63279C871E">&lt;paramref name ="latitude"/&gt; or &lt;paramref name ="longitude"/&gt; does not have a valid value.</T>
   <T ID="D9E90C4F96034F26">Latitude.</T>
   <T ID="2B2BAC3811B357F0">Longitude.</T>
-  <T ID="68E43874DED2B06F"></T>
   <T ID="DF9B27C340E0130E">Creates a &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref ="T:FolkerKinzel.VCards.Models.GeoCoordinate"/&gt; object. (For debugging only.)</T>
   <T ID="3BF8579E95493EE4">A &lt;see cref ="T:System.String"/&gt; representation of the &lt;see cref ="T:FolkerKinzel.VCards.Models.GeoCoordinate"/&gt; object.</T>
   <T ID="92A582F427160AFD"></T>
@@ -1240,36 +1230,6 @@ if both have a set &lt;see cref ="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/
 if also &lt;c&gt;this&lt;/c&gt; and &lt;paramref name ="other"/&gt; have a set &lt;see cref ="P:FolkerKinzel.VCards.VCard.TimeStamp"/&gt; property and if the values of this property match . (&lt;see cref ="M:System.DateTimeOffset.EqualsExact(System.DateTimeOffset)"/&gt; is used for the comparison .)
 &lt;/item&gt;
 &lt;/list&gt;</T>
-  <T ID="9A539F24DED2B06F"></T>
-  <T ID="907855A92D2816FE"></T>
-  <T ID="180CF8F52D2816FE"></T>
-  <T ID="F978DF732D2816FE"></T>
-  <T ID="A44474F0DED2B06F"></T>
-  <T ID="35FDC3252D2816FE"></T>
-  <T ID="909F0F192D2816FE"></T>
-  <T ID="15E2FC95DED2B06F"></T>
-  <T ID="4B5E8F142D2816FE"></T>
-  <T ID="B1C18E822D2816FE"></T>
-  <T ID="8F7D1083DED2B06F"></T>
-  <T ID="D7A2D6002D2816FE"></T>
-  <T ID="84537B602D2816FE"></T>
-  <T ID="B4FF27522D2816FE"></T>
-  <T ID="FB5076262D2816FE"></T>
-  <T ID="BC342B2FDED2B06F"></T>
-  <T ID="AD80238B2D2816FE"></T>
-  <T ID="A3A998712D2816FE"></T>
-  <T ID="8127AE2E2D2816FE"></T>
-  <T ID="2AE9DBC82D2816FE"></T>
-  <T ID="D3DE70852D2816FE"></T>
-  <T ID="8C3315B8DED2B06F"></T>
-  <T ID="B326F6F32D2816FE"></T>
-  <T ID="9F5016642D2816FE"></T>
-  <T ID="B23935A82D2816FE"></T>
-  <T ID="BF71EB7DDED2B06F"></T>
-  <T ID="862E080F2D2816FE"></T>
-  <T ID="BFC679BF2D2816FE"></T>
-  <T ID="74FCD8532D2816FE"></T>
-  <T ID="AA19AD192D2816FE"></T>
   <T ID="C62F7CB40C21DAF6">Returns a collection of &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects in which the &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/&gt; objects of the source collection are replaced with &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/&gt; objects  and in which the formerly referenced &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects are attached as separate elements.</T>
   <T ID="88E3582610D96784">A collection of &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects. The collection may be empty or may contain &lt;c&gt;null&lt;/c&gt; values.</T>
   <T ID="A176909CBEAB5D7">A collection of &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects. The collection may be empty or may contain &lt;c&gt;null&lt;/c&gt; values.</T>
@@ -1428,4 +1388,9 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
   <T ID="F11081322D2816FE"></T>
   <T ID="9145E2706039589E">&lt;paramref name ="version"/&gt; has an undefined value.</T>
   <T ID="2B899AC375CB9383">The system is out of memory.</T>
+  <T ID="8293677298B10A01">Parses a Base64 &lt;see cref="T:System.String"/&gt; as byte array - even if it is in the Base64Url format (RFC 4648 § 5).</T>
+  <T ID="38CEAAE900CD4AE5">A Base64 or Base64Url &lt;see cref="T:System.String"/&gt;.</T>
+  <T ID="C242D033E8E43D18">A byte array containing the data that was encoded in &lt;paramref name="base64"/&gt;.</T>
+  <T ID="C12662A5D057F519">&lt;paramref name="base64"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="56FAD97B664DF15A">&lt;paramref name="base64"/&gt; has an invalid format.</T>
 </Tsltn>
