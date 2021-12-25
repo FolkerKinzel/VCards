@@ -29,9 +29,6 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         }
 
         [TestMethod]
-        public void ParseTest()
-        {
-            Assert.IsNull(ExpertiseLevelConverter.Parse("nichtvorhanden"));
-        }
+        public void ParseTest() => Assert.IsNull(ExpertiseLevelConverter.Parse("nichtvorhanden"));
     }
 }

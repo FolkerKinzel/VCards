@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+#if !NETCOREAPP3_1
+using FolkerKinzel.Strings.Polyfills;
+#endif
+
 namespace FolkerKinzel.VCards.Models.Tests
 {
     [TestClass]
@@ -144,7 +148,7 @@ namespace FolkerKinzel.VCards.Models.Tests
             string s = pid.ToString();
 
             Assert.IsNotNull(s);
-            Assert.IsTrue(s.Contains("."));
+            Assert.IsTrue(s.Contains('.'));
             Assert.AreEqual(3, s.Length);
         }
 
@@ -159,7 +163,7 @@ namespace FolkerKinzel.VCards.Models.Tests
             var s = pid.ToString();
 
             Assert.IsNotNull(s);
-            Assert.IsFalse(s.Contains("."));
+            Assert.IsFalse(s.Contains('.'));
             Assert.AreEqual(1, s.Length);
 
 

@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net6.0;net5.0;netstandard2.1;net40;netstandard2.0;net461</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     <NeutralLanguage>en</NeutralLanguage>
+    <ImplicitUsings>enable</ImplicitUsings>
     <!-- .nuget-Package: -->
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
-    <Version>3.0.0</Version>
-    <FileVersion>3.0.0.52</FileVersion>
+    <Version>3.1.0</Version>
+    <FileVersion>3.1.0.4</FileVersion>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/blob/master/docs/PackageReleaseNotes/3.0.0/ReleaseNotes.md</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
     <Description>
-      .NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
-    </Description>
+			.NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
+		</Description>
     <Authors>Folker Kinzel</Authors>
     <Copyright>Copyright © 2020 Folker Kinzel</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -33,6 +33,9 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+  <ItemGroup>
+    <Using Remove="System.Net.Http" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Remove="Intls\Serializers\Interfaces\**" />
     <Compile Remove="Models\Interfaces\**" />

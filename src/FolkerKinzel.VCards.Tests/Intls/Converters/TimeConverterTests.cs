@@ -7,7 +7,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
     [TestClass]
     public class TimeConverterTests
     {
-        private readonly TimeConverter _conv = new TimeConverter();
+        private readonly TimeConverter _conv = new();
 
         [TestMethod]
         public void TimeConverterTest()

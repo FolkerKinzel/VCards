@@ -1,6 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+#if !NETCOREAPP3_1
+using FolkerKinzel.Strings.Polyfills;
+#endif
+
 namespace FolkerKinzel.VCards.Models.Tests
 {
     [TestClass]
@@ -97,7 +101,7 @@ namespace FolkerKinzel.VCards.Models.Tests
             string s = pidmap.ToString();
 
             Assert.IsNotNull(s);
-            Assert.IsTrue(s.Contains(";"));
+            Assert.IsTrue(s.Contains(';'));
             Assert.IsTrue(5 < s.Length);
         }
 

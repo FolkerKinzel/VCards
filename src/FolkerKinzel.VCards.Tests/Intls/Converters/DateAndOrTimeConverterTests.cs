@@ -170,10 +170,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         [TestMethod]
         [DataRow(null)]
         [DataRow("This is a very very long string that is longer than 64 characters.")]
-        public void TryParseTest1(string? input)
-        {
-            Assert.IsFalse(new DateAndOrTimeConverter().TryParse(input, out _));
-        }
+        public void TryParseTest1(string? input) => Assert.IsFalse(new DateAndOrTimeConverter().TryParse(input, out _));
     }
 }
 

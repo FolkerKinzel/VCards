@@ -75,13 +75,12 @@ using FolkerKinzel.VCards.Extensions;
 // better use a namespace alias:
 using VC = FolkerKinzel.VCards.Models;
 
-namespace NameSpaceAliasDemos
+namespace NameSpaceAliasDemos;
+
+public static class NameSpaceAliasDemo
 {
-    public static class NameSpaceAliasDemo
-    {
-        public static void HowToUseTheNameSpaceAlias() =>
-            _ = new VC::RelationTextProperty("Folker", VC::Enums.RelationTypes.Contact);
-    }
+    public static void HowToUseTheNameSpaceAlias() =>
+        _ = new VC::RelationTextProperty("Folker", VC::Enums.RelationTypes.Contact);
 }
 ```
 
