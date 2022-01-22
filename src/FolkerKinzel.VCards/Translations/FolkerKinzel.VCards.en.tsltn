@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Tsltn Version="1.0" SourceFile="..\bin\Release\net6.0\de\FolkerKinzel.VCards.xml" SourceLanguage="de" TargetLanguage="en">
+<Tsltn Version="1.0" SourceFile="de\FolkerKinzel.VCards.xml" SourceLanguage="de" TargetLanguage="en">
   <T ID="BFFD14FCD3080F13">Encapsulates the data of a vCard property that contains information about the postal address.</T>
   <T ID="F57CB4C7BFCE564A">Encapsulates embedded binary data, references to binary data (e.g. URLs) or information available as free text.</T>
   <T ID="D3277A646C71EBF6">Represents a data URL according to RFC 2397.</T>
