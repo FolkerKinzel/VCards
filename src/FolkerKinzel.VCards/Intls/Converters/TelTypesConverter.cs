@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class TelTypesConverter
 {
-    private static class TelTypeValue
+    internal static class TelTypeValue
     {
         internal const string VOICE = "VOICE";
         internal const string FAX = "FAX";
@@ -79,7 +79,7 @@ internal static class TelTypesConverter
             TelTypes.PCS => TelTypeValue.PCS,
             TelTypes.TextPhone => TelTypeValue.TEXTPHONE,
             TelTypes.Text => TelTypeValue.TEXT,
-            _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            _ => throw new ArgumentOutOfRangeException(nameof(value))
         };
 
 }

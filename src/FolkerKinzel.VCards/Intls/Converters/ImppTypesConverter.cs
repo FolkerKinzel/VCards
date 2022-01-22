@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
+﻿using System.Collections.Generic;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -10,6 +11,11 @@ internal static class ImppTypesConverter
         internal const string Business = "BUSINESS";
         internal const string Mobile = "MOBILE";
     }
+
+    internal const ImppTypes DEFINED_IMPP_TYPES_VALUES = ImppTypes.Business | ImppTypes.Mobile | ImppTypes.Personal;
+
+    internal const int ImppTypesMinBit = 0;
+    internal const int ImppTypesMaxBit = 2;
 
 
     internal static ImppTypes? Parse(string? typeValue)
@@ -24,4 +30,13 @@ internal static class ImppTypesConverter
             _ => null
         };
     }
+
+    internal static string ToVcfString(ImppTypes value)
+        => value switch
+        {
+            ImppTypes.Business => TypeValue.Business,
+            ImppTypes.Mobile => TypeValue.Mobile,
+            ImppTypes.Personal => TypeValue.Personal,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
+        };
 }

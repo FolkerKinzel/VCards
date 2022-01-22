@@ -9,36 +9,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal sealed class ParameterSerializer3_0 : ParameterSerializer
 {
-    private AddressTypesCollector? _addressTypesCollector;
-    private ImppTypesCollector? _imppTypesCollector;
-
     private readonly List<string> _stringCollectionList = new();
     private readonly List<Action<ParameterSerializer3_0>> _actionList = new(2);
 
-
-    private AddressTypesCollector AddressTypesCollector
-    {
-        get
-        {
-            _addressTypesCollector ??= new AddressTypesCollector();
-            return _addressTypesCollector;
-        }
-    }
-
-    private ImppTypesCollector ImppTypesCollector
-    {
-        get
-        {
-            _imppTypesCollector ??= new EnumValueCollectors.ImppTypesCollector();
-            return _imppTypesCollector;
-        }
-    }
-
     private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes =
-    serializer =>
-        PropertyClassTypesCollector.CollectValueStrings(
+    serializer => PropertyClassTypesCollector.CollectValueStrings(
             serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
-
 
     private readonly Action<ParameterSerializer3_0> _collectTelTypes =
     serializer =>
@@ -51,26 +27,18 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
                 serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
     };
 
-
     private readonly Action<ParameterSerializer3_0> _collectAddressTypes =
-    serializer =>
-        serializer.AddressTypesCollector.CollectValueStrings(
+    serializer => AddressTypesCollector.CollectValueStrings(
             serializer.ParaSection.AddressType, serializer._stringCollectionList);
 
     private readonly Action<ParameterSerializer3_0> _collectImppTypes =
-    serializer =>
-        serializer.ImppTypesCollector.CollectValueStrings(
+    serializer => ImppTypesCollector.CollectValueStrings(
             serializer.ParaSection.InstantMessengerType, serializer._stringCollectionList);
 
-
     private readonly Action<ParameterSerializer3_0> _collectKeyType = serializer => serializer.DoCollectKeyType();
-
     private readonly Action<ParameterSerializer3_0> _collectImageType = serializer => serializer.DoCollectImageType();
-
     private readonly Action<ParameterSerializer3_0> _collectEmailType = serializer => serializer.DoCollectEmailType();
-
     private readonly Action<ParameterSerializer3_0> _collectSoundType = serializer => serializer.DoCollectSoundType();
-
     private readonly Action<ParameterSerializer3_0> _collectMediaType = serializer => serializer.DoCollectMediaType();
 
 

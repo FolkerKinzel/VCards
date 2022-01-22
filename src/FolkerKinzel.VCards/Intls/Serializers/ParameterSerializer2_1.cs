@@ -8,26 +8,12 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal sealed class ParameterSerializer2_1 : ParameterSerializer
 {
-    private AddressTypesCollector? _addressTypesCollector;
-
-    private AddressTypesCollector AddressTypesCollector
-    {
-        get
-        {
-            _addressTypesCollector ??= new EnumValueCollectors.AddressTypesCollector();
-            return _addressTypesCollector;
-        }
-    }
-
     private readonly List<string> _stringCollectionList = new();
     private readonly List<Action<ParameterSerializer2_1>> _actionList = new(2);
 
-
     private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes =
-    serializer =>
-        PropertyClassTypesCollector.CollectValueStrings(
+    serializer => PropertyClassTypesCollector.CollectValueStrings(
             serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
-
 
     private readonly Action<ParameterSerializer2_1> _collectTelTypes =
     serializer =>
@@ -39,10 +25,8 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
                 serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
     };
 
-
     private readonly Action<ParameterSerializer2_1> _collectAddressTypes =
-    serializer =>
-        serializer.AddressTypesCollector.CollectValueStrings(
+    serializer => AddressTypesCollector.CollectValueStrings(
             serializer.ParaSection.AddressType, serializer._stringCollectionList);
 
     public ParameterSerializer2_1(VcfOptions options) : base(options) { }
@@ -60,7 +44,6 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         AppendEncodingAndCharset();
         AppendLanguage();
         //AppendNonStandardParameters();
-
     }
 
     protected override void BuildAgentPara()
@@ -236,7 +219,6 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         AppendEncodingAndCharset();
         //AppendNonStandardParameters();
     }
-
 
     protected override void BuildXSpousePara() => AppendEncodingAndCharset();
 

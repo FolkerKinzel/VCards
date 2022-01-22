@@ -29,25 +29,25 @@ internal static class RelationTypesConverter
     }
 
     internal const RelationTypes DEFINED_RELATION_TYPES_VALUES = RelationTypes.Contact
-                                                            | RelationTypes.Acquaintance
-                                                            | RelationTypes.Friend
-                                                            | RelationTypes.Met
-                                                            | RelationTypes.CoWorker
-                                                            | RelationTypes.Colleague
-                                                            | RelationTypes.CoResident
-                                                            | RelationTypes.Neighbor
-                                                            | RelationTypes.Child
-                                                            | RelationTypes.Parent
-                                                            | RelationTypes.Sibling
-                                                            | RelationTypes.Spouse
-                                                            | RelationTypes.Kin
-                                                            | RelationTypes.Muse
-                                                            | RelationTypes.Crush
-                                                            | RelationTypes.Date
-                                                            | RelationTypes.Sweetheart
-                                                            | RelationTypes.Me
-                                                            | RelationTypes.Agent
-                                                            | RelationTypes.Emergency;
+                                                               | RelationTypes.Acquaintance
+                                                               | RelationTypes.Friend
+                                                               | RelationTypes.Met
+                                                               | RelationTypes.CoWorker
+                                                               | RelationTypes.Colleague
+                                                               | RelationTypes.CoResident
+                                                               | RelationTypes.Neighbor
+                                                               | RelationTypes.Child
+                                                               | RelationTypes.Parent
+                                                               | RelationTypes.Sibling
+                                                               | RelationTypes.Spouse
+                                                               | RelationTypes.Kin
+                                                               | RelationTypes.Muse
+                                                               | RelationTypes.Crush
+                                                               | RelationTypes.Date
+                                                               | RelationTypes.Sweetheart
+                                                               | RelationTypes.Me
+                                                               | RelationTypes.Agent
+                                                               | RelationTypes.Emergency;
 
 
     internal const int RelationTypesMinBit = 0;
@@ -106,7 +106,7 @@ internal static class RelationTypesConverter
             RelationTypes.Me => RelationTypeValue.ME,
             RelationTypes.Agent => RelationTypeValue.AGENT,
             RelationTypes.Emergency => RelationTypeValue.EMERGENCY,
-            _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            _ => throw new ArgumentOutOfRangeException(nameof(value))
         };
     
 }

@@ -3,15 +3,8 @@ using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;
 
-internal sealed class ImppTypesCollector
+internal static class ImppTypesCollector
 {
-    private readonly
-        ImppTypes[] _definedEnumValues = new ImppTypes[] { ImppTypes.Business,
-                                                               ImppTypes.Mobile,
-                                                               ImppTypes.Personal
-                                                         };
-
-
     /// <summary>
     /// Sammelt die Namen der in <paramref name="imppType"/> gesetzten Flags in
     /// <paramref name="list"/>. <paramref name="list"/> wird von der Methode nicht
@@ -19,31 +12,24 @@ internal sealed class ImppTypesCollector
     /// </summary>
     /// <param name="imppType"><see cref="ImppTypes"/>-Objekt oder <c>null</c>.</param>
     /// <param name="list">Eine Liste zum Sammeln.</param>
-    internal void CollectValueStrings(ImppTypes? imppType, List<string> list)
+    internal static void CollectValueStrings(ImppTypes? imppType, List<string> list)
     {
         Debug.Assert(list != null);
 
-
-        for (int i = 0; i < _definedEnumValues.Length; i++)
+        if (!imppType.HasValue)
         {
-            ImppTypes value = _definedEnumValues[i];
+            return;
+        }
 
-            if ((imppType & value) == value)
+        ImppTypes value = imppType.Value & ImppTypesConverter.DEFINED_IMPP_TYPES_VALUES;
+
+        for (int i = ImppTypesConverter.ImppTypesMinBit; i <= ImppTypesConverter.ImppTypesMaxBit; i++)
+        {
+            ImppTypes flag = (ImppTypes)(1 << i);
+
+            if (value.HasFlag(flag))
             {
-                switch (value)
-                {
-                    case ImppTypes.Business:
-                        list.Add(ImppTypesConverter.TypeValue.Business);
-                        break;
-                    case ImppTypes.Mobile:
-                        list.Add(ImppTypesConverter.TypeValue.Mobile);
-                        break;
-                    case ImppTypes.Personal:
-                        list.Add(ImppTypesConverter.TypeValue.Personal);
-                        break;
-                    default:
-                        break;
-                }
+                list.Add(ImppTypesConverter.ToVcfString(flag));
             }
         }
     }
