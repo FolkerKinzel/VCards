@@ -12,23 +12,23 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
         [TestMethod()]
         public void CollectValueStringsTest()
         {
-            RelationTypes? adr = RelationTypes.Spouse | RelationTypes.CoResident;
+            RelationTypes? rel = RelationTypes.Spouse | RelationTypes.CoResident;
 
             var list = new List<string>();
 
-            RelationTypesCollector.CollectValueStrings(adr, list);
+            RelationTypesCollector.CollectValueStrings(rel, list);
 
             Assert.AreEqual(2, list.Count);
 
             // collector darf die Liste nicht löschen!:
-            RelationTypesCollector.CollectValueStrings(adr, list);
+            RelationTypesCollector.CollectValueStrings(rel, list);
             Assert.AreEqual(4, list.Count);
 
             // auf null testen:
-            adr = null;
+            rel = null;
             list.Clear();
 
-            RelationTypesCollector.CollectValueStrings(adr, list);
+            RelationTypesCollector.CollectValueStrings(rel, list);
             Assert.AreEqual(0, list.Count);
         }
 

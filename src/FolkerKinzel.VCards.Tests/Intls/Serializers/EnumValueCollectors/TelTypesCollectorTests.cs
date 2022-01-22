@@ -1,93 +1,84 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
+﻿using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Intls.Converters;
 
-namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests
+namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests;
+
+[TestClass()]
+public class TelTypesCollectorTests
 {
-    [TestClass()]
-    public class TelTypesCollectorTests
+    [TestMethod()]
+    public void CollectValueStringsTest()
     {
-        [TestMethod()]
-        public void CollectValueStringsTest()
+        TelTypes? tel = TelTypes.Voice | TelTypes.Msg;
+
+        var list = new List<string>();
+
+        TelTypesCollector.CollectValueStrings(tel, list);
+
+        Assert.AreEqual(2, list.Count);
+        Assert.IsTrue(list.Contains("MSG"));
+
+        // collector darf die Liste nicht löschen!:
+        TelTypesCollector.CollectValueStrings(tel, list);
+        Assert.AreEqual(4, list.Count);
+
+        // auf null testen:
+        tel = null;
+        list.Clear();
+
+        TelTypesCollector.CollectValueStrings(tel, list);
+        Assert.AreEqual(0, list.Count);
+    }
+
+
+
+    [TestMethod()]
+    public void DetectAllEnumValues()
+    {
+        var arr = (TelTypes[])Enum.GetValues(typeof(TelTypes));
+
+        var list = new List<string>(1);
+
+        foreach (TelTypes item in arr)
         {
-            TelTypes? tel = TelTypes.Voice | TelTypes.Msg;
-
-            var list = new List<string>();
-
-
-            var collector = new TelTypesCollector();
-
-            collector.CollectValueStrings(tel, list);
-
-            Assert.AreEqual(2, list.Count);
-            Assert.IsTrue(list.Contains("MSG"));
-
-            // collector darf die Liste nicht löschen!:
-            collector.CollectValueStrings(tel, list);
-            Assert.AreEqual(4, list.Count);
-
-            // auf null testen:
-            tel = null;
             list.Clear();
+            TelTypesCollector.CollectValueStrings(item, list);
 
-            collector.CollectValueStrings(tel, list);
-            Assert.AreEqual(0, list.Count);
+            Assert.AreEqual(1, list.Count);
+            Assert.IsNotNull(list[0]);
         }
+    }
 
 
+    [TestMethod()]
+    public void RoundTrip()
+    {
+        var arr = (TelTypes[])Enum.GetValues(typeof(TelTypes));
 
-        [TestMethod()]
-        public void DetectAllEnumValues()
+        var list = new List<string>(1);
+
+        foreach (TelTypes item in arr)
         {
-            var arr = (TelTypes[])Enum.GetValues(typeof(TelTypes));
-            var collector = new TelTypesCollector();
+            list.Clear();
+            TelTypesCollector.CollectValueStrings(item, list);
 
-            var list = new List<string>(1);
+            Assert.AreEqual(1, list.Count);
+            Assert.IsNotNull(list[0]);
 
-            foreach (TelTypes item in arr)
-            {
-                list.Clear();
-                collector.CollectValueStrings(item, list);
+            //TelTypes? comp = (TelTypes)Enum.Parse(typeof(TelTypes), list[0], true);
 
-                Assert.AreEqual(1, list.Count);
-                Assert.IsNotNull(list[0]);
-            }
-        }
+            //Assert.IsTrue(comp.HasValue);
+            //Assert.AreEqual(comp.Value, item);
 
 
-        [TestMethod()]
-        public void RoundTrip()
-        {
-            var arr = (TelTypes[])Enum.GetValues(typeof(TelTypes));
-            var collector = new TelTypesCollector();
+            TelTypes? comp = TelTypesConverter.Parse(list[0]);
 
-            var list = new List<string>(1);
+            Assert.IsTrue(comp.HasValue);
+            Assert.AreEqual(comp!.Value, item);
 
-            foreach (TelTypes item in arr)
-            {
-                list.Clear();
-                collector.CollectValueStrings(item, list);
+            var comp2 = (TelTypes)Enum.Parse(typeof(TelTypes), list[0], true);
 
-                Assert.AreEqual(1, list.Count);
-                Assert.IsNotNull(list[0]);
-
-                //TelTypes? comp = (TelTypes)Enum.Parse(typeof(TelTypes), list[0], true);
-
-                //Assert.IsTrue(comp.HasValue);
-                //Assert.AreEqual(comp.Value, item);
-
-
-                TelTypes? comp = TelTypesConverter.Parse(list[0]);
-
-                Assert.IsTrue(comp.HasValue);
-                Assert.AreEqual(comp!.Value, item);
-
-                var comp2 = (TelTypes)Enum.Parse(typeof(TelTypes), list[0], true);
-
-                Assert.AreEqual(comp, comp2);
-            }
+            Assert.AreEqual(comp, comp2);
         }
     }
 }

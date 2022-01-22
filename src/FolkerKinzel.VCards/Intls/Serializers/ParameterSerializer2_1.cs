@@ -9,9 +9,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 internal sealed class ParameterSerializer2_1 : ParameterSerializer
 {
     private AddressTypesCollector? _addressTypesCollector;
-    private TelTypesCollector? _telTypesCollector;
-
-    private readonly PropertyClassTypesCollector _propertyClassTypesCollector = new();
 
     private AddressTypesCollector AddressTypesCollector
     {
@@ -22,24 +19,13 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         }
     }
 
-
-    private TelTypesCollector TelTypesCollector
-    {
-        get
-        {
-            _telTypesCollector ??= new EnumValueCollectors.TelTypesCollector();
-            return _telTypesCollector;
-        }
-    }
-
     private readonly List<string> _stringCollectionList = new();
     private readonly List<Action<ParameterSerializer2_1>> _actionList = new(2);
 
 
-
     private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes =
     serializer =>
-        serializer._propertyClassTypesCollector.CollectValueStrings(
+        PropertyClassTypesCollector.CollectValueStrings(
             serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
 
 
@@ -49,7 +35,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         const TelTypes DEFINED_TELTYPES = TelTypes.Voice | TelTypes.Fax | TelTypes.Msg | TelTypes.Cell |
         TelTypes.Pager | TelTypes.BBS | TelTypes.Modem | TelTypes.Car | TelTypes.ISDN | TelTypes.Video;
 
-        serializer.TelTypesCollector.CollectValueStrings(
+        TelTypesCollector.CollectValueStrings(
                 serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
     };
 

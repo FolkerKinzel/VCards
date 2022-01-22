@@ -10,51 +10,28 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal sealed class ParameterSerializer4_0 : ParameterSerializer
 {
-    //private RelationTypesCollector? _relationTypesCollector;
-    private TelTypesCollector? _telTypesCollector;
-
-    private const TelTypes DEFINED_TELTYPES
-        = TelTypes.Voice | TelTypes.Text | TelTypes.Fax | TelTypes.Cell
-        | TelTypes.Video | TelTypes.Pager | TelTypes.TextPhone;
-
-    private readonly PropertyClassTypesCollector _propertyClassTypesCollector = new();
-
     private readonly List<string> _stringCollectionList = new();
     private readonly List<Action<ParameterSerializer4_0>> _actionList = new(2);
 
     private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes =
-        serializer => serializer._propertyClassTypesCollector.CollectValueStrings(
+        serializer => PropertyClassTypesCollector.CollectValueStrings(
             serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
 
 
     private readonly Action<ParameterSerializer4_0> _collectTelTypes =
-        serializer => serializer.TelTypesCollector.CollectValueStrings(
-            serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
+        serializer =>
+        {
+            const TelTypes DEFINED_TELTYPES = TelTypes.Voice | TelTypes.Text | TelTypes.Fax | TelTypes.Cell
+                                            | TelTypes.Video | TelTypes.Pager | TelTypes.TextPhone;
+
+            TelTypesCollector.CollectValueStrings(
+                serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
+        };
 
 
     private readonly Action<ParameterSerializer4_0> _collectRelationTypes =
         serializer => RelationTypesCollector.CollectValueStrings(
             serializer.ParaSection.RelationType, serializer._stringCollectionList);
-
-
-    //private RelationTypesCollector RelationTypesCollector
-    //{
-    //    get
-    //    {
-    //        _relationTypesCollector ??= new EnumValueCollectors.RelationTypesCollector();
-    //        return _relationTypesCollector;
-    //    }
-    //}
-
-
-    private TelTypesCollector TelTypesCollector
-    {
-        get
-        {
-            _telTypesCollector ??= new TelTypesCollector();
-            return _telTypesCollector;
-        }
-    }
 
 
     public ParameterSerializer4_0(VcfOptions options) : base(options) { }

@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 internal static class AddressTypesConverter
 {
     //Post
-    internal static class AdrTypeValue
+    private static class AdrTypeValue
     {
         internal const string DOM = "DOM";
         internal const string INTL = "INTL";

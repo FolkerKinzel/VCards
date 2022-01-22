@@ -84,51 +84,29 @@ internal static class RelationTypesConverter
     }
 
     internal static string ToVcfString(RelationTypes value)
-    {
-        switch (value)
+        => value switch
         {
-            case RelationTypes.Contact:
-                return RelationTypeValue.CONTACT;
-            case RelationTypes.Acquaintance:
-                return RelationTypeValue.ACQUAINTANCE;
-            case RelationTypes.Friend:
-                return RelationTypeValue.FRIEND;
-            case RelationTypes.Met:
-                return RelationTypeValue.MET;
-            case RelationTypes.CoWorker:
-                return RelationTypeValue.CO_WORKER;
-            case RelationTypes.Colleague:
-                return RelationTypeValue.COLLEAGUE;
-            case RelationTypes.CoResident:
-                return RelationTypeValue.CO_RESIDENT;
-            case RelationTypes.Neighbor:
-                return RelationTypeValue.NEIGHBOR;
-            case RelationTypes.Child:
-                return RelationTypeValue.CHILD;
-            case RelationTypes.Parent:
-                return RelationTypeValue.PARENT;
-            case RelationTypes.Sibling:
-                return RelationTypeValue.SIBLING;
-            case RelationTypes.Spouse:
-                return RelationTypeValue.SPOUSE;
-            case RelationTypes.Kin:
-                return RelationTypeValue.KIN;
-            case RelationTypes.Muse:
-                return RelationTypeValue.MUSE;
-            case RelationTypes.Crush:
-                return RelationTypeValue.CRUSH;
-            case RelationTypes.Date:
-                return RelationTypeValue.DATE;
-            case RelationTypes.Sweetheart:
-                return RelationTypeValue.SWEETHEART;
-            case RelationTypes.Me:
-                return RelationTypeValue.ME;
-            case RelationTypes.Agent:
-                return RelationTypeValue.AGENT;
-            case RelationTypes.Emergency:
-                return RelationTypeValue.EMERGENCY;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(value));
-        }
-    }
+            RelationTypes.Contact => RelationTypeValue.CONTACT,
+            RelationTypes.Acquaintance => RelationTypeValue.ACQUAINTANCE,
+            RelationTypes.Friend => RelationTypeValue.FRIEND,
+            RelationTypes.Met => RelationTypeValue.MET,
+            RelationTypes.CoWorker => RelationTypeValue.CO_WORKER,
+            RelationTypes.Colleague => RelationTypeValue.COLLEAGUE,
+            RelationTypes.CoResident => RelationTypeValue.CO_RESIDENT,
+            RelationTypes.Neighbor => RelationTypeValue.NEIGHBOR,
+            RelationTypes.Child => RelationTypeValue.CHILD,
+            RelationTypes.Parent => RelationTypeValue.PARENT,
+            RelationTypes.Sibling => RelationTypeValue.SIBLING,
+            RelationTypes.Spouse => RelationTypeValue.SPOUSE,
+            RelationTypes.Kin => RelationTypeValue.KIN,
+            RelationTypes.Muse => RelationTypeValue.MUSE,
+            RelationTypes.Crush => RelationTypeValue.CRUSH,
+            RelationTypes.Date => RelationTypeValue.DATE,
+            RelationTypes.Sweetheart => RelationTypeValue.SWEETHEART,
+            RelationTypes.Me => RelationTypeValue.ME,
+            RelationTypes.Agent => RelationTypeValue.AGENT,
+            RelationTypes.Emergency => RelationTypeValue.EMERGENCY,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
+        };
+    
 }
