@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net5.0;netcoreapp3.1;net45;netcoreapp2.1;net461</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
+	  <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
     <NeutralLanguage>en</NeutralLanguage>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 	
   <!-- 👇 disable the nullable warnings when compiling for .NET Standard 2.0 -->
@@ -14,13 +14,15 @@
     <NoWarn>$(NoWarn);8600;8601;8602;8603;8604</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Intls\Extensions\**" />
     <Compile Remove="reports\**" />
+    <EmbeddedResource Remove="Intls\Extensions\**" />
     <EmbeddedResource Remove="reports\**" />
+    <None Remove="Intls\Extensions\**" />
     <None Remove="reports\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Intls\Deserializers\DigitParserTests.cs" />
-    <Compile Remove="Intls\Extensions\DoubleExtensionsTests.cs" />
     <Compile Remove="UnitTestsInitialize.cs" />
     <Compile Remove="VcfPaths.cs" />
   </ItemGroup>
@@ -65,6 +67,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+	<ItemGroup>
+		<Using Remove="System.Net.Http" />
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+	</ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net6.0'">
     <Exec Command="echo $(ProjectDir) &gt; &quot;$(ProjectDir)\Resources\ProjDir.txt&quot;" />

@@ -21,13 +21,13 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
                 //var kind3 = Enum.Parse(typeof(VCdDataType), ((VCdDataType?)kind).ToVCardString(), true);
 
                 //Assert.AreEqual(kind, kind3);
-
-                // Test auf null
-                Assert.AreEqual(null, VCdDataTypeConverter.Parse(null));
-
-                // Test auf nicht definiert
-                Assert.AreEqual(null, ((VCdDataType?)4711).ToVCardString());
             }
+
+            // Test auf null
+            Assert.AreEqual(null, VCdDataTypeConverter.Parse(null));
+
+            // Test auf nicht definiert
+            Assert.AreEqual(null, ((VCdDataType?)4711).ToVCardString());
 
             static string GetValueString(VCdDataType kind)
             {

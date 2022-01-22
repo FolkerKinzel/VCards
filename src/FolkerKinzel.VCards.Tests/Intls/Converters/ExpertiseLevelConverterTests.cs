@@ -19,13 +19,13 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
                 var kind3 = Enum.Parse(typeof(ExpertiseLevel), ((ExpertiseLevel?)kind).ToVCardString() ?? "", true);
 
                 Assert.AreEqual(kind, kind3);
-
-                // Test auf null
-                //Assert.AreEqual(null, ExpertiseLevelConverter.Parse(null));
-
-                // Test auf nicht definiert
-                Assert.AreEqual(null, ((ExpertiseLevel?)4711).ToVCardString());
             }
+
+            // Test auf null
+            //Assert.AreEqual(null, ExpertiseLevelConverter.Parse(null));
+
+            // Test auf nicht definiert
+            Assert.AreEqual(null, ((ExpertiseLevel?)4711).ToVCardString());
         }
 
         [TestMethod]

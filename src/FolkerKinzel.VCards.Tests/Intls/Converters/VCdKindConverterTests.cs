@@ -19,13 +19,13 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
                 var kind3 = Enum.Parse(typeof(VCdKind), kind.ToVCardString(), true);
 
                 Assert.AreEqual(kind, kind3);
-
-                // Test auf null
-                Assert.AreEqual(VCdKind.Individual, VCdKindConverter.Parse(null));
-
-                // Test auf nicht definiert
-                Assert.AreEqual(VCdKind.Individual.ToVCardString(), ((VCdKind)4711).ToVCardString());
             }
+
+            // Test auf null
+            Assert.AreEqual(VCdKind.Individual, VCdKindConverter.Parse(null));
+
+            // Test auf nicht definiert
+            Assert.AreEqual(VCdKind.Individual.ToVCardString(), ((VCdKind)4711).ToVCardString());
         }
     }
 }

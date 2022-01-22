@@ -26,13 +26,13 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
                 object kind3 = Enum.Parse(typeof(VCdContentLocation), cIdString, true);
 
                 Assert.AreEqual(kind, kind3);
-
-                // Test auf null
-                Assert.AreEqual(VCdContentLocation.Inline, VCdContentLocationConverter.Parse(null));
-
-                // Test auf nicht definiert
-                Assert.AreEqual(VCdContentLocation.Inline.ToVCardString(), ((VCdContentLocation)4711).ToVCardString());
             }
+
+            // Test auf null
+            Assert.AreEqual(VCdContentLocation.Inline, VCdContentLocationConverter.Parse(null));
+
+            // Test auf nicht definiert
+            Assert.AreEqual(VCdContentLocation.Inline.ToVCardString(), ((VCdContentLocation)4711).ToVCardString());
         }
     }
 }

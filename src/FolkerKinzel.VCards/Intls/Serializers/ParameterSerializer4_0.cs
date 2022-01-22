@@ -10,7 +10,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal sealed class ParameterSerializer4_0 : ParameterSerializer
 {
-    private RelationTypesCollector? _relationTypesCollector;
+    //private RelationTypesCollector? _relationTypesCollector;
     private TelTypesCollector? _telTypesCollector;
 
     private const TelTypes DEFINED_TELTYPES
@@ -33,25 +33,25 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
 
     private readonly Action<ParameterSerializer4_0> _collectRelationTypes =
-        serializer => serializer.RelationTypesCollector.CollectValueStrings(
+        serializer => RelationTypesCollector.CollectValueStrings(
             serializer.ParaSection.RelationType, serializer._stringCollectionList);
 
 
-    private RelationTypesCollector RelationTypesCollector
-    {
-        get
-        {
-            _relationTypesCollector ??= new EnumValueCollectors.RelationTypesCollector();
-            return _relationTypesCollector;
-        }
-    }
+    //private RelationTypesCollector RelationTypesCollector
+    //{
+    //    get
+    //    {
+    //        _relationTypesCollector ??= new EnumValueCollectors.RelationTypesCollector();
+    //        return _relationTypesCollector;
+    //    }
+    //}
 
 
     private TelTypesCollector TelTypesCollector
     {
         get
         {
-            _telTypesCollector ??= new EnumValueCollectors.TelTypesCollector();
+            _telTypesCollector ??= new TelTypesCollector();
             return _telTypesCollector;
         }
     }
