@@ -17,9 +17,7 @@
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/blob/master/docs/PackageReleaseNotes/3.1.1/ReleaseNotes.md</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
-    <Description>
-			.NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
-		</Description>
+    <Description>.NET library that allows to read, write and convert VCF files, which match the vCard standards 2.1, 3.0 and 4.0.</Description>
     <Authors>Folker Kinzel</Authors>
     <Copyright>Copyright © 2020 Folker Kinzel</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
