@@ -29,7 +29,7 @@ internal static class TelTypesCollector
 
             if (value.HasFlag(flag))
             {
-                list.Add(TelTypesConverter.ToVcfString(flag));
+                list.Add(flag.ToVcfString());
             }
         }
     }

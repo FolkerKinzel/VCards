@@ -8,19 +8,17 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
     public class VCdContentLocationConverterTests
     {
         [TestMethod()]
-        public void Roundtrip()
+        public void Roundtrip1()
         {
             foreach (VCdContentLocation kind in (VCdContentLocation[])Enum.GetValues(typeof(VCdContentLocation)))
             {
-                string cIdString = kind.ToString().ToUpperInvariant();
-
-                cIdString = cIdString == "CONTENTID" ? "CID" : cIdString;
+                string cIdString = kind.ToVcfString();
 
                 VCdContentLocation kind2 = VCdContentLocationConverter.Parse(cIdString);
 
                 Assert.AreEqual(kind, kind2);
 
-                cIdString = kind.ToVCardString();
+                cIdString = kind.ToVcfString();
                 cIdString = cIdString == "CID" ? "ContentId" : cIdString;
 
                 object kind3 = Enum.Parse(typeof(VCdContentLocation), cIdString, true);
@@ -32,7 +30,15 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             Assert.AreEqual(VCdContentLocation.Inline, VCdContentLocationConverter.Parse(null));
 
             // Test auf nicht definiert
-            Assert.AreEqual(VCdContentLocation.Inline.ToVCardString(), ((VCdContentLocation)4711).ToVCardString());
+            Assert.AreEqual(VCdContentLocation.Inline.ToVcfString(), ((VCdContentLocation)4711).ToVcfString());
+        }
+
+        [TestMethod()]
+        public void Roundtrip2()
+        {
+            string cIdString = "CONTENT-ID";
+            VCdContentLocation kind = VCdContentLocationConverter.Parse(cIdString);
+            Assert.AreEqual(VCdContentLocation.ContentID, kind);
         }
     }
 }

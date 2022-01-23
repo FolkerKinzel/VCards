@@ -27,7 +27,7 @@ internal static class VCdKindConverter
     }
 
 
-    internal static string ToVCardString(this VCdKind kind)
+    internal static string ToVcfString(this VCdKind kind)
     {
         return kind switch
         {

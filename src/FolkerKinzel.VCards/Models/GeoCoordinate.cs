@@ -78,6 +78,8 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     }
 
 
+
+
     internal static bool TryParse(string? value, out GeoCoordinate? coordinate)
     {
         coordinate = null;

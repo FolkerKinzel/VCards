@@ -16,7 +16,14 @@ public class ImppTypesConverterTest
         }
 
         Assert.IsNull(ImppTypesConverter.Parse("NICHT_VORHANDEN"));
+        Assert.IsNull(ImppTypesConverter.Parse(null));
     }
+
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentOutOfRangeException))]
+    public void ToVcfStringTest() => _ = ImppTypesConverter.ToVcfString((ImppTypes)4711);
+
 
 
 }

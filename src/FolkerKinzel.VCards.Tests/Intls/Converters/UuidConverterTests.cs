@@ -32,18 +32,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         }
 #endif
 
-        [TestMethod]
-        public void IsUuidUriTest6()
-        {
-            string guidString = "550e8400e29b11d4a716446655440000";
-            guidString = "   urn:uuid:" + guidString;
 
-#if NET45
-            Assert.IsTrue(guidString.IsUuidUri());
-#else
-            Assert.IsTrue(guidString.AsSpan().IsUuidUri());
-#endif
-        }
 
         [TestMethod]
         public void IsUuidUriTest2()
@@ -73,6 +62,32 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         public void IsUuidUriTest5()
         {
             string guidString = "550e8400";
+#if NET45
+            Assert.IsFalse(guidString.IsUuidUri());
+#else
+            Assert.IsFalse(guidString.AsSpan().IsUuidUri());
+#endif
+        }
+
+        [TestMethod]
+        public void IsUuidUriTest6()
+        {
+            string guidString = "550e8400e29b11d4a716446655440000";
+            guidString = "   urn:uuid:" + guidString;
+
+#if NET45
+            Assert.IsTrue(guidString.IsUuidUri());
+#else
+            Assert.IsTrue(guidString.AsSpan().IsUuidUri());
+#endif
+        }
+
+        [TestMethod]
+        public void IsUuidUriTest7()
+        {
+            string guidString = " ";
+            //guidString = "   urn:uuid:" + guidString;
+
 #if NET45
             Assert.IsFalse(guidString.IsUuidUri());
 #else

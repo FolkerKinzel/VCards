@@ -23,7 +23,7 @@ internal static class AddressTypesConverter
     internal const int AddressTypesMaxBit = 3;
 
 
-    internal static AddressTypes? Parse(string typeValue)
+    internal static AddressTypes? Parse(string? typeValue)
     {
         Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
 
@@ -38,7 +38,7 @@ internal static class AddressTypesConverter
     }
 
 
-    internal static string ToVcfString(AddressTypes value)
+    internal static string ToVcfString(this AddressTypes value)
         => value switch
         {
             AddressTypes.Dom => AdrTypeValue.DOM,

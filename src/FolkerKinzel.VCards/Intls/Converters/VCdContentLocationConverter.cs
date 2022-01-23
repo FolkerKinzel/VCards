@@ -30,7 +30,7 @@ internal static class VCdContentLocationConverter
     }
 
 
-    internal static string ToVCardString(this VCdContentLocation contentLocation)
+    internal static string ToVcfString(this VCdContentLocation contentLocation)
     {
         return contentLocation switch
         {

@@ -29,7 +29,7 @@ internal static class AddressTypesCollector
 
             if (value.HasFlag(flag))
             {
-                list.Add(AddressTypesConverter.ToVcfString(flag));
+                list.Add(flag.ToVcfString());
             }
         }
     }

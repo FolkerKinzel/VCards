@@ -1,42 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FolkerKinzel.VCards.Tests.Intls.Deserializers
+namespace FolkerKinzel.VCards.Tests.Intls.Deserializers;
+
+[TestClass]
+public class AssignerTests
 {
-    [TestClass]
-    public class AssignerTests
+    [TestMethod]
+    public void AssignerTest1()
     {
-        [TestMethod]
-        public void AssignerTest1()
-        {
-            var vcard = new VCard();
-            var textProp = new RelationTextProperty("Hallo");
+        var vcard = new VCard();
+        var textProp = new RelationTextProperty("Hallo");
 
-            IEnumerable<RelationProperty>? assignment = Assigner.GetAssignment(textProp, vcard.Relations);
+        IEnumerable<RelationProperty>? assignment = Assigner.GetAssignment(textProp, vcard.Relations);
 
-            Assert.AreSame(textProp, assignment);
+        Assert.AreSame(textProp, assignment);
 
-            vcard.Relations = assignment;
+        vcard.Relations = assignment;
 
-            assignment = Assigner.GetAssignment(textProp, vcard.Relations);
+        assignment = Assigner.GetAssignment(textProp, vcard.Relations);
 
-            Assert.AreNotSame(textProp, assignment);
-            Assert.IsInstanceOfType(assignment, typeof(List<RelationProperty>));
+        Assert.AreNotSame(textProp, assignment);
+        Assert.IsInstanceOfType(assignment, typeof(List<RelationProperty>));
 
-            IEnumerable<RelationProperty>? list = assignment;
+        IEnumerable<RelationProperty>? list = assignment;
 
-            vcard.Relations = assignment;
+        vcard.Relations = assignment;
 
-            assignment = Assigner.GetAssignment(textProp, vcard.Relations);
+        assignment = Assigner.GetAssignment(textProp, vcard.Relations);
 
-            Assert.IsInstanceOfType(assignment, typeof(List<RelationProperty>));
-            Assert.AreSame(list, assignment);
-            Assert.AreEqual(3, assignment.Count());
-        }
+        Assert.IsInstanceOfType(assignment, typeof(List<RelationProperty>));
+        Assert.AreSame(list, assignment);
+        Assert.AreEqual(3, assignment.Count());
     }
+
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentOutOfRangeException))]
+    public void AssignTest2() => _ = new TextProperty("test").GetAssignment(new TextProperty[1]);
 }

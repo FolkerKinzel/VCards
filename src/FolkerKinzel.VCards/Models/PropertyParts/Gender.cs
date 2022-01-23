@@ -43,7 +43,7 @@ public sealed class Gender
         StringBuilder builder = serializer.Builder;
         if (Sex.HasValue)
         {
-            _ = builder.Append(Sex.ToVCardString());
+            _ = builder.Append(Sex.ToVcfString());
         }
 
 

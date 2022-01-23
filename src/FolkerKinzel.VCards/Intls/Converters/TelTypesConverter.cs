@@ -63,7 +63,7 @@ internal static class TelTypesConverter
         };
     }
 
-    internal static string ToVcfString(TelTypes value)
+    internal static string ToVcfString(this TelTypes value)
         => value switch
         {
             TelTypes.Voice => TelTypeValue.VOICE,

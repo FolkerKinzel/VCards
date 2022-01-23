@@ -25,7 +25,7 @@ internal static class ExpertiseLevelConverter
         };
     }
 
-    internal static string? ToVCardString(this ExpertiseLevel? expertise)
+    internal static string? ToVcfString(this ExpertiseLevel? expertise)
     {
         return expertise switch
         {

@@ -83,7 +83,7 @@ internal static class RelationTypesConverter
         };
     }
 
-    internal static string ToVcfString(RelationTypes value)
+    internal static string ToVcfString(this RelationTypes value)
         => value switch
         {
             RelationTypes.Contact => RelationTypeValue.CONTACT,

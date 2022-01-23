@@ -31,7 +31,7 @@ internal static class ImppTypesConverter
         };
     }
 
-    internal static string ToVcfString(ImppTypes value)
+    internal static string ToVcfString(this ImppTypes value)
         => value switch
         {
             ImppTypes.Business => TypeValue.Business,

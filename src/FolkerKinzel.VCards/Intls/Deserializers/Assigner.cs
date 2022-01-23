@@ -2,7 +2,7 @@
 
 internal static class Assigner
 {
-    internal static IEnumerable<T> GetAssignment<T>(T newElement, IEnumerable<T?>? currentElement) where T : IEnumerable<T>
+    internal static IEnumerable<T> GetAssignment<T>(this T newElement, IEnumerable<T?>? currentElement) where T : IEnumerable<T>
     {
         switch (currentElement)
         {
@@ -15,13 +15,8 @@ internal static class Assigner
                 return list;
 
             default:
-                OutOfRange(nameof(currentElement));
-                return newElement;
+                throw new ArgumentOutOfRangeException(nameof(currentElement));
         };
     }
-
-    [DoesNotReturn]
-    private static void OutOfRange(string argumentName)
-        => throw new ArgumentOutOfRangeException(argumentName);
 
 }

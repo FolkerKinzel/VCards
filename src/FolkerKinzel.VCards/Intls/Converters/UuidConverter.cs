@@ -35,7 +35,7 @@ internal static class UuidConverter
                 return true;
             }
 
-            if (!char.ToLowerInvariant(uri[j]).Equals(UUID_PROTOCOL[k]))
+            if (char.ToLowerInvariant(uri[j]) != UUID_PROTOCOL[k])
             {
                 return false;
             }

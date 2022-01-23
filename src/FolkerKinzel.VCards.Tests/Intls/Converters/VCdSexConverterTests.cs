@@ -17,7 +17,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
 
                 Assert.AreEqual(sex, sex2);
 
-                VCdSex? sex3 = VCdSexConverter.Parse(VCdSexConverter.ToVCardString(sex));
+                VCdSex? sex3 = VCdSexConverter.Parse(VCdSexConverter.ToVcfString(sex));
 
                 Assert.AreEqual(sex, sex3);
             }
@@ -26,7 +26,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             Assert.AreEqual(null, VCdSexConverter.Parse(null));
 
             // Test auf nicht definiert
-            Assert.AreEqual(null, ((VCdSex?)4711).ToVCardString());
+            Assert.AreEqual(null, ((VCdSex?)4711).ToVcfString());
         }
 
 

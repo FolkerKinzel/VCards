@@ -15,8 +15,12 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             Roundtrip("16:58:00", false);
             Roundtrip("165800Z");
             Roundtrip("16:58:00Z", true, VCdVersion.V2_1);
-            Roundtrip("16:58:00-04:00", false);
-            Roundtrip("16:58:00+04", false);
+            Roundtrip("16:58:00-04:00", false, VCdVersion.V4_0);
+            Roundtrip("16:58:00+04", false, VCdVersion.V4_0);
+            Roundtrip("16:58:00-04:00", true, VCdVersion.V3_0);
+            Roundtrip("16:58:00+04:00", true, VCdVersion.V3_0);
+            Roundtrip("16:58:00+04", false, VCdVersion.V3_0);
+
         }
 
         private void Roundtrip(
@@ -36,6 +40,8 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             Assert.AreEqual(dt, dt2);
         }
 
-        
+        [TestMethod]
+        public void TryParseTest() => Assert.IsFalse(_conv.TryParse(null, out _));
+
     }
 }

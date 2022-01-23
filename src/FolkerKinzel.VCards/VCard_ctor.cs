@@ -109,22 +109,22 @@ public sealed partial class VCard
                     Kind = new KindProperty(vcfRow);
                     break;
                 case PropKeys.TEL:
-                    PhoneNumbers = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), PhoneNumbers);
+                    PhoneNumbers = new TextProperty(vcfRow, this.Version).GetAssignment(PhoneNumbers);
                     break;
                 case PropKeys.EMAIL:
-                    this.EmailAddresses = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), EmailAddresses);
+                    this.EmailAddresses = new TextProperty(vcfRow, this.Version).GetAssignment(EmailAddresses);
                     break;
                 case PropKeys.N:  //LastName, FirstName, MiddleName, Prefix, Suffix
-                    this.NameViews = Assigner.GetAssignment(new NameProperty(vcfRow, this.Version), NameViews);
+                    this.NameViews = new NameProperty(vcfRow, this.Version).GetAssignment(NameViews);
                     break;
                 case PropKeys.FN:
-                    DisplayNames = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), DisplayNames);
+                    DisplayNames = new TextProperty(vcfRow, this.Version).GetAssignment(DisplayNames);
                     break;
                 case PropKeys.BDAY:
-                    BirthDayViews = Assigner.GetAssignment(DateTimeProperty.Create(vcfRow, this.Version), BirthDayViews);
+                    BirthDayViews = DateTimeProperty.Create(vcfRow, this.Version).GetAssignment(BirthDayViews);
                     break;
                 case PropKeys.ADR: // PostOfficeBox, ExtendedAddress, Street, Locality, Region, PostalCode, Country
-                    Addresses = Assigner.GetAssignment(new AddressProperty(vcfRow, this.Version), Addresses);
+                    Addresses = new AddressProperty(vcfRow, this.Version).GetAssignment(Addresses);
                     break;
                 case PropKeys.LABEL:
                     if (vcfRowsParsed < vcfRowsToParse)
@@ -196,25 +196,25 @@ public sealed partial class VCard
                     TimeStamp = new TimeStampProperty(vcfRow);
                     break;
                 case PropKeys.CALURI:
-                    CalendarAddresses = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), CalendarAddresses);
+                    CalendarAddresses = new TextProperty(vcfRow, this.Version).GetAssignment(CalendarAddresses);
                     break;
                 case PropKeys.CALADRURI:
-                    CalendarUserAddresses = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), CalendarUserAddresses);
+                    CalendarUserAddresses = new TextProperty(vcfRow, this.Version).GetAssignment(CalendarUserAddresses);
                     break;
                 case PropKeys.FBURL:
-                    FreeOrBusyUrls = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), FreeOrBusyUrls);
+                    FreeOrBusyUrls = new TextProperty(vcfRow, this.Version).GetAssignment(FreeOrBusyUrls);
                     break;
                 case PropKeys.TITLE:
-                    Titles = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Titles);
+                    Titles = new TextProperty(vcfRow, this.Version).GetAssignment(Titles);
                     break;
                 case PropKeys.ROLE:
-                    Roles = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Roles);
+                    Roles = new TextProperty(vcfRow, this.Version).GetAssignment(Roles);
                     break;
                 case PropKeys.NOTE:
-                    Notes = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Notes);
+                    Notes = new TextProperty(vcfRow, this.Version).GetAssignment(Notes);
                     break;
                 case PropKeys.URL:
-                    URLs = Assigner.GetAssignment(new TextProperty(vcfRow, Version), URLs);
+                    URLs = new TextProperty(vcfRow, Version).GetAssignment(URLs);
                     break;
                 case PropKeys.UID:
                     try
@@ -224,28 +224,28 @@ public sealed partial class VCard
                     catch { }
                     break;
                 case PropKeys.ORG:
-                    Organizations = Assigner.GetAssignment(new OrganizationProperty(vcfRow, this.Version), Organizations);
+                    Organizations = new OrganizationProperty(vcfRow, this.Version).GetAssignment(Organizations);
                     break;
                 case PropKeys.GEO:
-                    GeoCoordinates = Assigner.GetAssignment(new GeoProperty(vcfRow), GeoCoordinates);
+                    GeoCoordinates = new GeoProperty(vcfRow).GetAssignment(GeoCoordinates);
                     break;
                 case PropKeys.NICKNAME:
-                    NickNames = Assigner.GetAssignment(new StringCollectionProperty(vcfRow, this.Version), NickNames);
+                    NickNames = new StringCollectionProperty(vcfRow, this.Version).GetAssignment(NickNames);
                     break;
                 case PropKeys.CATEGORIES:
-                    Categories = Assigner.GetAssignment(new StringCollectionProperty(vcfRow, this.Version), Categories);
+                    Categories = new StringCollectionProperty(vcfRow, this.Version).GetAssignment(Categories);
                     break;
                 case PropKeys.SOUND:
-                    Sounds = Assigner.GetAssignment(new DataProperty(vcfRow, this.Version), Sounds);
+                    Sounds = new DataProperty(vcfRow, this.Version).GetAssignment(Sounds);
                     break;
                 case PropKeys.PHOTO:
-                    Photos = Assigner.GetAssignment(new DataProperty(vcfRow, this.Version), Photos);
+                    Photos = new DataProperty(vcfRow, this.Version).GetAssignment(Photos);
                     break;
                 case PropKeys.LOGO:
-                    Logos = Assigner.GetAssignment(new DataProperty(vcfRow, this.Version), Logos);
+                    Logos = new DataProperty(vcfRow, this.Version).GetAssignment(Logos);
                     break;
                 case PropKeys.KEY:
-                    Keys = Assigner.GetAssignment(new DataProperty(vcfRow, this.Version), Keys);
+                    Keys = new DataProperty(vcfRow, this.Version).GetAssignment(Keys);
                     break;
                 case PropKeys.SORT_STRING: // nur vCard 3.0
                     if (vcfRowsParsed < vcfRowsToParse)
@@ -272,10 +272,10 @@ public sealed partial class VCard
                     }
                     break;
                 case PropKeys.SOURCE:
-                    Sources = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Sources);
+                    Sources = new TextProperty(vcfRow, this.Version).GetAssignment(Sources);
                     break;
                 case PropKeys.ANNIVERSARY:
-                    this.AnniversaryViews = Assigner.GetAssignment(DateTimeProperty.Create(vcfRow, this.Version), AnniversaryViews);
+                    this.AnniversaryViews = DateTimeProperty.Create(vcfRow, this.Version).GetAssignment(AnniversaryViews);
                     break;
                 case PropKeys.NonStandard.X_ANNIVERSARY:
                 case PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY:
@@ -292,7 +292,7 @@ public sealed partial class VCard
 
                     break;
                 case PropKeys.GENDER:
-                    this.GenderViews = Assigner.GetAssignment(new GenderProperty(vcfRow, this.Version), GenderViews);
+                    this.GenderViews = new GenderProperty(vcfRow, this.Version).GetAssignment(GenderViews);
                     break;
                 case PropKeys.NonStandard.X_GENDER:
                     if (vcfRowsParsed < vcfRowsToParse)
@@ -329,7 +329,7 @@ public sealed partial class VCard
                     }
                     break;
                 case PropKeys.IMPP:
-                    InstantMessengerHandles = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), InstantMessengerHandles);
+                    InstantMessengerHandles = new TextProperty(vcfRow, this.Version).GetAssignment(InstantMessengerHandles);
                     break;
                 case PropKeys.NonStandard.InstantMessenger.X_AIM:
                 case PropKeys.NonStandard.InstantMessenger.X_GADUGADU:
@@ -355,7 +355,7 @@ public sealed partial class VCard
 
                         if (textProp.Value != null && (InstantMessengerHandles?.All(x => x?.Value != textProp.Value) ?? true))
                         {
-                            InstantMessengerHandles = Assigner.GetAssignment(textProp, InstantMessengerHandles);
+                            InstantMessengerHandles = textProp.GetAssignment(InstantMessengerHandles);
 
                             textProp.Parameters.Assign(vcfRow.Parameters); // die meisten diese Properties enthalten
                                                                            // Telefon-Type-Informationen.
@@ -364,29 +364,29 @@ public sealed partial class VCard
                                 textProp.Parameters.TelephoneType.IsSet(TelTypes.Video)) &&
                                 (!PhoneNumbers?.Any(x => x?.Value == textProp.Value) ?? true))
                             {
-                                PhoneNumbers = Assigner.GetAssignment(textProp, PhoneNumbers);
+                                PhoneNumbers = textProp.GetAssignment(PhoneNumbers);
                             }
                         }
                     }
 
                     break;
                 case PropKeys.LANG:
-                    Languages = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Languages);
+                    Languages = new TextProperty(vcfRow, this.Version).GetAssignment(Languages);
                     break;
                 case PropKeys.MAILER:
                     Mailer = new TextProperty(vcfRow, this.Version);
                     break;
                 case PropKeys.TZ:
-                    TimeZones = Assigner.GetAssignment(new TimeZoneProperty(vcfRow), TimeZones);
+                    TimeZones = new TimeZoneProperty(vcfRow).GetAssignment(TimeZones);
                     break;
                 case PropKeys.CLASS:
                     Access = new AccessProperty(vcfRow);
                     break;
                 case PropKeys.MEMBER:
-                    Members = Assigner.GetAssignment(RelationProperty.Parse(vcfRow, this.Version), Members);
+                    Members = RelationProperty.Parse(vcfRow, this.Version).GetAssignment(Members);
                     break;
                 case PropKeys.RELATED:
-                    Relations = Assigner.GetAssignment(RelationProperty.Parse(vcfRow, this.Version), Relations);
+                    Relations = RelationProperty.Parse(vcfRow, this.Version).GetAssignment(Relations);
                     break;
                 case PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE:
                 case PropKeys.NonStandard.KAddressbook.X_KADDRESSBOOK_X_SPOUSENAME:
@@ -401,7 +401,7 @@ public sealed partial class VCard
                         vcfRow.Parameters.DataType = VCdDataType.Text; // führt dazu, dass eine RelationTextProperty erzeugt wird
                         vcfRow.Parameters.RelationType = RelationTypes.Spouse;
 
-                        Relations = Assigner.GetAssignment(RelationProperty.Parse(vcfRow, this.Version), Relations);
+                        Relations = RelationProperty.Parse(vcfRow, this.Version).GetAssignment(Relations);
                     }
 
                     break;
@@ -417,41 +417,28 @@ public sealed partial class VCard
                         vcfRow.Parameters.DataType ??= VCdDataType.Text;
                         vcfRow.Parameters.RelationType = RelationTypes.Agent;
 
-                        Relations = Assigner.GetAssignment(RelationProperty.Parse(vcfRow, this.Version), Relations);
+                        Relations = RelationProperty.Parse(vcfRow, this.Version).GetAssignment(Relations);
                     }
 
                     break;
                 case PropKeys.AGENT:
                     if (vcfRow.Value is null)
                     {
-                        Relations = Assigner.GetAssignment
-                            (
-                                new RelationTextProperty(null, RelationTypes.Agent, vcfRow.Group),
-                                Relations
-                            );
+                        Relations = new RelationTextProperty(null, RelationTypes.Agent, vcfRow.Group).GetAssignment(Relations);
                     }
                     else
                     {
                         if (vcfRow.Value.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                         {
-                            Relations = Assigner.GetAssignment
-                                (
-                                    new RelationVCardProperty(VCard.ParseNestedVcard(vcfRow.Value, info, this.Version),
-                                                              RelationTypes.Agent,
-                                                              vcfRow.Group),
-                                    Relations
-                                );
+                            var nested = VCard.ParseNestedVcard(vcfRow.Value, info, this.Version);
+                            Relations = new RelationVCardProperty(nested, RelationTypes.Agent, vcfRow.Group).GetAssignment(Relations);
                         }
                         else
                         {
                             vcfRow.Parameters.DataType ??= VCdDataType.Text;
                             vcfRow.Parameters.RelationType = RelationTypes.Agent;
 
-                            Relations = Assigner.GetAssignment
-                                (
-                                    RelationProperty.Parse(vcfRow, this.Version),
-                                    Relations
-                                );
+                            Relations = RelationProperty.Parse(vcfRow, this.Version).GetAssignment(Relations);
                         }
                     }
                     break;
@@ -459,7 +446,7 @@ public sealed partial class VCard
                     this.Profile = new ProfileProperty(vcfRow, this.Version);
                     break;
                 case PropKeys.XML:
-                    XmlProperties = Assigner.GetAssignment(new XmlProperty(vcfRow), XmlProperties);
+                    XmlProperties = new XmlProperty(vcfRow).GetAssignment(XmlProperties);
                     break;
                 case PropKeys.CLIENTPIDMAP:
                     PropertyIDMappingProperty prop;
@@ -472,7 +459,7 @@ public sealed partial class VCard
                         break;
                     }
 
-                    PropertyIDMappings = Assigner.GetAssignment(prop, PropertyIDMappings);
+                    PropertyIDMappings = prop.GetAssignment(PropertyIDMappings);
 
                     break;
                 case PropKeys.PRODID:
@@ -485,34 +472,30 @@ public sealed partial class VCard
                 // Erweiterungen:
                 case PropKeys.NonStandard.DEATHDATE:
                     this.DeathDateViews =
-                        Assigner.GetAssignment(DateTimeProperty.Create(vcfRow, this.Version), DeathDateViews);
+                        DateTimeProperty.Create(vcfRow, this.Version).GetAssignment(DeathDateViews);
                     break;
                 case PropKeys.NonStandard.BIRTHPLACE:
                     this.BirthPlaceViews =
-                        Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), BirthPlaceViews);
+                        new TextProperty(vcfRow, this.Version).GetAssignment(BirthPlaceViews);
                     break;
                 case PropKeys.NonStandard.DEATHPLACE:
                     this.DeathPlaceViews =
-                        Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), DeathPlaceViews);
+                        new TextProperty(vcfRow, this.Version).GetAssignment(DeathPlaceViews);
                     break;
                 case PropKeys.NonStandard.EXPERTISE:
-                    Expertises =
-                        Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Expertises);
+                    Expertises = new TextProperty(vcfRow, this.Version).GetAssignment(Expertises);
                     break;
                 case PropKeys.NonStandard.INTEREST:
-                    Interests =
-                        Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Interests);
+                    Interests = new TextProperty(vcfRow, this.Version).GetAssignment(Interests);
                     break;
                 case PropKeys.NonStandard.HOBBY:
-                    Hobbies = Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), Hobbies);
+                    Hobbies = new TextProperty(vcfRow, this.Version).GetAssignment(Hobbies);
                     break;
                 case PropKeys.NonStandard.ORG_DIRECTORY:
-                    OrgDirectories =
-                        Assigner.GetAssignment(new TextProperty(vcfRow, this.Version), OrgDirectories);
+                    OrgDirectories = new TextProperty(vcfRow, this.Version).GetAssignment(OrgDirectories);
                     break;
                 default:
-                    NonStandardProperties =
-                        Assigner.GetAssignment(new NonStandardProperty(vcfRow), NonStandardProperties);
+                    NonStandardProperties = new NonStandardProperty(vcfRow).GetAssignment(NonStandardProperties);
                     break;
             };//switch
 

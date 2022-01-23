@@ -29,7 +29,7 @@ internal static class RelationTypesCollector
 
             if (value.HasFlag(flag))
             {
-                list.Add(RelationTypesConverter.ToVcfString(flag));
+                list.Add(flag.ToVcfString());
             }
         }
     }

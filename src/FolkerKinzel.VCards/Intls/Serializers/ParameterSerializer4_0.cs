@@ -718,7 +718,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     private void AppendExpertiseLevel()
     {
-        string? exp = ParaSection.ExpertiseLevel.ToVCardString();
+        string? exp = ParaSection.ExpertiseLevel.ToVcfString();
 
         if (exp != null)
         {
@@ -956,7 +956,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
             VCdDataType.DateTime | VCdDataType.Float | VCdDataType.Integer | VCdDataType.LanguageTag |
             VCdDataType.Text | VCdDataType.Time | VCdDataType.TimeStamp | VCdDataType.Uri | VCdDataType.UtcOffset;
 
-        string? s = (dataType & DEFINED_DATA_TYPES).ToVCardString();
+        string? s = (dataType & DEFINED_DATA_TYPES).ToVcfString();
 
         if (s != null)
         {

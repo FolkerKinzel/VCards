@@ -413,7 +413,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
             VCdDataType.Integer | VCdDataType.Boolean | VCdDataType.Float | VCdDataType.Binary |
             VCdDataType.PhoneNumber | VCdDataType.VCard | VCdDataType.UtcOffset;
 
-        string? s = (dataType & DEFINED_DATA_TYPES).ToVCardString();
+        string? s = (dataType & DEFINED_DATA_TYPES).ToVcfString();
 
         if (s != null)
         {

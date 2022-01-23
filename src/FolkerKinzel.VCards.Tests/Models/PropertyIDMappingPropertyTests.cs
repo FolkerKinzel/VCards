@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Intls.Serializers;
 
 namespace FolkerKinzel.VCards.Models.Tests
 {
@@ -43,7 +46,20 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.IsFalse(prop.IsEmpty);
         }
 
+        [TestMethod]
+        public void GetValueTest()
+        {
+            VcfRow row = VcfRow.Parse("PidMap:", new VcfDeserializationInfo())!;
+            var prop = new PropertyIDMappingProperty(row);
 
-        
+            Assert.IsNull(prop.Value);
+
+            //using var writer = new StringWriter();
+            //var serializer = new Vcf_3_0Serializer(writer, VcfOptions.WriteEmptyProperties, null);
+            //serializer.
+            //prop.BuildProperty(serializer);
+            //Assert.AreEqual(0, writer.ToString().Length);
+        }
+
     }
 }

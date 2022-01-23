@@ -29,7 +29,7 @@ internal static class ImppTypesCollector
 
             if (value.HasFlag(flag))
             {
-                list.Add(ImppTypesConverter.ToVcfString(flag));
+                list.Add(flag.ToVcfString());
             }
         }
     }

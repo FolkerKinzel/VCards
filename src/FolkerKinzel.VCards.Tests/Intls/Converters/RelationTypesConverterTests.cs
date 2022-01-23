@@ -16,4 +16,11 @@ public class RelationTypesConverterTests
 
         Assert.IsNull(RelationTypesConverter.Parse("NICHT_VORHANDEN"));
     }
+
+    [TestMethod]
+    public void ParseTest2() => Assert.IsNull(RelationTypesConverter.Parse(null));
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentOutOfRangeException))]
+    public void ToVcfStringTest() => _ = RelationTypesConverter.ToVcfString((RelationTypes)4711);
 }

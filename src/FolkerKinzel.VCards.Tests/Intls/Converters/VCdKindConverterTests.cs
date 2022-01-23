@@ -16,7 +16,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
 
                 Assert.AreEqual(kind, kind2);
 
-                var kind3 = Enum.Parse(typeof(VCdKind), kind.ToVCardString(), true);
+                var kind3 = Enum.Parse(typeof(VCdKind), kind.ToVcfString(), true);
 
                 Assert.AreEqual(kind, kind3);
             }
@@ -25,7 +25,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
             Assert.AreEqual(VCdKind.Individual, VCdKindConverter.Parse(null));
 
             // Test auf nicht definiert
-            Assert.AreEqual(VCdKind.Individual.ToVCardString(), ((VCdKind)4711).ToVCardString());
+            Assert.AreEqual(VCdKind.Individual.ToVcfString(), ((VCdKind)4711).ToVcfString());
         }
     }
 }

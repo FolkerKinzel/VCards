@@ -429,7 +429,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
 
         if (contentLocation != VCdContentLocation.Inline)
         {
-            AppendParameter(ParameterSection.ParameterKey.VALUE, contentLocation.ToVCardString());
+            AppendParameter(ParameterSection.ParameterKey.VALUE, contentLocation.ToVcfString());
         }
     }
 

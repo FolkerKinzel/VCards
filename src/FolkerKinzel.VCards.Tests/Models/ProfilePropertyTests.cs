@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Models.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
@@ -57,6 +59,16 @@ namespace FolkerKinzel.VCards.Models.Tests
 
             Assert.AreEqual(GROUP, prop!.Group);
             Assert.IsFalse(prop.IsEmpty);
+        }
+
+
+        [TestMethod]
+        public void GetValueTest()
+        {
+            VcfRow row = VcfRow.Parse("Profile:", new VcfDeserializationInfo())!;
+            var prop = new ProfileProperty(row, VCdVersion.V3_0);
+
+            Assert.AreEqual("VCARD", prop.Value);
         }
 
     }

@@ -28,7 +28,7 @@ internal static class VCdSexConverter
             });
     }
 
-    internal static string? ToVCardString(this VCdSex? sex)
+    internal static string? ToVcfString(this VCdSex? sex)
     {
         return sex switch
         {

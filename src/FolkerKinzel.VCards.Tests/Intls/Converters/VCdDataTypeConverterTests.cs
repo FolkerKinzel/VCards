@@ -12,35 +12,16 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests
         {
             foreach (VCdDataType kind in (VCdDataType[])Enum.GetValues(typeof(VCdDataType)))
             {
-                string s = GetValueString(kind);
-
+                string? s = VCdDataTypeConverter.ToVcfString(kind);
                 VCdDataType? kind2 = VCdDataTypeConverter.Parse(s);
-
                 Assert.AreEqual(kind, kind2);
-
-                //var kind3 = Enum.Parse(typeof(VCdDataType), ((VCdDataType?)kind).ToVCardString(), true);
-
-                //Assert.AreEqual(kind, kind3);
             }
 
             // Test auf null
             Assert.AreEqual(null, VCdDataTypeConverter.Parse(null));
 
             // Test auf nicht definiert
-            Assert.AreEqual(null, ((VCdDataType?)4711).ToVCardString());
-
-            static string GetValueString(VCdDataType kind)
-            {
-                return kind switch
-                {
-                    VCdDataType.PhoneNumber => "PHONE-NUMBER",
-                    VCdDataType.UtcOffset => "UTC-OFFSET",
-                    VCdDataType.LanguageTag => "LANGUAGE-TAG",
-                    VCdDataType.DateTime => "DATE-TIME",
-                    VCdDataType.DateAndOrTime => "DATE-AND-OR-TIME",
-                    _ => kind.ToString().ToUpperInvariant()
-                };
-            }
+            Assert.AreEqual(null, ((VCdDataType?)4711).ToVcfString());
         }
     }
 }

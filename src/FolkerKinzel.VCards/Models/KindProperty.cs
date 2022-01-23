@@ -59,7 +59,7 @@ public sealed class KindProperty : VCardProperty
         InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
-        _ = serializer.Builder.Append(Value.ToVCardString());
+        _ = serializer.Builder.Append(Value.ToVcfString());
     }
 
     /// <inheritdoc/>
