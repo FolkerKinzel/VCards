@@ -12,7 +12,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>3.1.1</Version>
-    <FileVersion>3.1.1.8</FileVersion>
+    <FileVersion>3.1.1.9</FileVersion>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/blob/master/docs/PackageReleaseNotes/3.1.1/ReleaseNotes.md</PackageReleaseNotes>
