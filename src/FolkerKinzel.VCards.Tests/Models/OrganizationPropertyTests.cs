@@ -60,5 +60,15 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.AreEqual(expectedOrganizationName, orgProp.Value.OrganizationName);
             CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.OrganizationalUnits);
         }
+
+
+        [TestMethod]
+        public void OrganizationPropertyTest3()
+        {
+            VcfRow row = VcfRow.Parse("ORG:", new VcfDeserializationInfo())!;
+            var prop = new OrganizationProperty(row, Enums.VCdVersion.V3_0);
+
+            Assert.IsNotNull(prop.Value);
+        }
     }
 }

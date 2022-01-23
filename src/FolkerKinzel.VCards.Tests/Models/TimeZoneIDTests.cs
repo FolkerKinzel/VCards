@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using FolkerKinzel.VCards.Models.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
@@ -69,6 +70,32 @@ namespace FolkerKinzel.VCards.Models.Tests
         {
             var tz = new TimeZoneID(input);
             Assert.AreEqual(expected, tz.TryGetUtcOffset(out _));
+        }
+
+
+        [TestMethod]
+        public void AppendToTest1()
+        {
+            const string input = "unknown";
+            var id = new TimeZoneID(input);
+            var builder = new StringBuilder();
+
+            id.AppendTo(builder, VCdVersion.V3_0, null);
+
+            Assert.AreEqual(input, builder.ToString());
+        }
+
+        [DataTestMethod]
+        [DataRow("-0100")]
+        [DataRow("+0100")]
+        public void AppendToTest2(string input)
+        {
+            var id = new TimeZoneID(input);
+            var builder = new StringBuilder();
+
+            id.AppendTo(builder, VCdVersion.V4_0, null);
+
+            Assert.AreEqual(input, builder.ToString());
         }
     }
 }

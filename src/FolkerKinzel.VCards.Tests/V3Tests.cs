@@ -167,6 +167,9 @@ namespace FolkerKinzel.VCards.Tests
             VCard vcard = list[0];
 
             Assert.AreEqual(VCdVersion.V3_0, vcard.Version);
+
+            Assert.IsNotNull(vcard.DirectoryName);
+            Assert.IsNotNull(vcard.Mailer);
         }
 
 

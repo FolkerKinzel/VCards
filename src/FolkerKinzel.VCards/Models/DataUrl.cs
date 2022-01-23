@@ -249,48 +249,11 @@ public class DataUrl : Uri, ISerializable
     /// <exception cref="IOException">E/A-Fehler.</exception>
     public static DataUrl FromFile(string path, string? mimeType = null)
     {
-        try
-        {
-            byte[] bytes = File.ReadAllBytes(path);
+        byte[] bytes = LoadFile(path);
+        mimeType ??= MimeTypeConverter.GetMimeTypeFromFileExtension(path);
 
-            mimeType ??= MimeTypeConverter.GetMimeTypeFromFileExtension(path);
-
-            return DataUrl.FromBytes(bytes, mimeType);
-        }
-        catch (ArgumentNullException)
-        {
-            throw new ArgumentNullException(nameof(path));
-        }
-        catch (ArgumentException e)
-        {
-            throw new ArgumentException(e.Message, nameof(path), e);
-        }
-        catch (UriFormatException)
-        {
-            throw;
-        }
-        catch (UnauthorizedAccessException e)
-        {
-            throw new IOException(e.Message, e);
-        }
-        catch (NotSupportedException e)
-        {
-            throw new ArgumentException(e.Message, nameof(path), e);
-        }
-        catch (System.Security.SecurityException e)
-        {
-            throw new IOException(e.Message, e);
-        }
-        catch (PathTooLongException e)
-        {
-            throw new ArgumentException(e.Message, nameof(path), e);
-        }
-        catch (Exception e)
-        {
-            throw new IOException(e.Message, e);
-        }
+        return DataUrl.FromBytes(bytes, mimeType);
     }
-
 
     /// <summary>
     /// Gibt den im <see cref="DataUrl"/> eingebetteten Text zurück oder <c>null</c>,
@@ -372,5 +335,56 @@ public class DataUrl : Uri, ISerializable
     /// <returns>Eine geeignete Dateiendung für die in den <see cref="DataUrl"/>
     /// eingebetteten Daten. Die Dateiendung enthält den Punkt "." als Trennzeichen.</returns>
     public string GetFileExtension() => MimeTypeConverter.GetFileExtension(this.MimeType);
+
+
+    /// <summary>
+    /// Loads the file from <paramref name="path"/>.
+    /// </summary>
+    /// <param name="path">The file path.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"><paramref name="path"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="path"/> is not a valid file path.</exception>
+    /// <exception cref="IOException">I/O error</exception>
+    [ExcludeFromCodeCoverage]
+    private static byte[] LoadFile(string path)
+    {
+        try
+        {
+            return File.ReadAllBytes(Path.GetFullPath(path));
+        }
+        catch (ArgumentNullException)
+        {
+            throw new ArgumentNullException(nameof(path));
+        }
+        catch (ArgumentException e)
+        {
+            throw new ArgumentException(e.Message, nameof(path), e);
+        }
+        catch (UriFormatException)
+        {
+            throw;
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            throw new IOException(e.Message, e);
+        }
+        catch (NotSupportedException e)
+        {
+            throw new ArgumentException(e.Message, nameof(path), e);
+        }
+        catch (System.Security.SecurityException e)
+        {
+            throw new IOException(e.Message, e);
+        }
+        catch (PathTooLongException e)
+        {
+            throw new ArgumentException(e.Message, nameof(path), e);
+        }
+        catch (Exception e)
+        {
+            throw new IOException(e.Message, e);
+        }
+    }
+
 
 }

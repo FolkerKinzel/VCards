@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,5 +69,27 @@ namespace FolkerKinzel.VCards.Tests.Intls.Deserializers
             CollectionAssert.AreEqual(arr, expected, StringComparer.Ordinal);
         }
 
+
+        [DataTestMethod]
+        [DataRow(@"Bun\,go,Bon\;go;Banga", ',', new string[] { @"Bun\,go", @"Bon\;go;Banga" })]
+        [DataRow(@"Bun\,go,Bon\;go;Banga", ';', new string[] { @"Bun\,go,Bon\;go", "Banga" })]
+        public void GetEnumeratorTest3(string? valueString, char splitChar, string[] expected)
+        {
+            var valueSplitter = new ValueSplitter(splitChar, StringSplitOptions.None)
+            {
+                ValueString = valueString
+            };
+
+            IEnumerable enumerable = valueSplitter;
+
+            int count = 0;
+
+            foreach (var item in enumerable)
+            {
+                count++;
+            }
+            
+            Assert.AreEqual(count, expected.Length);
+        }
     }
 }

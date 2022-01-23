@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Models.Tests
     public class PropertyIDMappingTests
     {
         [TestMethod]
-        public void CtorTest()
+        public void PropertyIDMappingTest1()
         {
             var pidMap = new PropertyIDMapping(5, new Uri("http://folkerkinzel.de/"));
             Assert.AreEqual(5, pidMap.ID);
@@ -30,7 +30,11 @@ namespace FolkerKinzel.VCards.Models.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
-        public void CtorExceptionTest() => _ = new PropertyIDMapping(0, new Uri("http://folkerkinzel.de/"));
+        public void PropertyIDMappingTest3() => _ = new PropertyIDMapping(0, new Uri("http://folkerkinzel.de/"));
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), AllowDerivedTypes = false)]
+        public void PropertyIDMappingTest4() => _ = new PropertyIDMapping(3, null!);
 
 
         [TestMethod]
@@ -90,6 +94,25 @@ namespace FolkerKinzel.VCards.Models.Tests
 
             _ = PropertyIDMapping.Parse(pidMap);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ParseTest7()
+        {
+            string pidMap = "a";
+
+            _ = PropertyIDMapping.Parse(pidMap);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ParseTest8()
+        {
+            string pidMap = "2;http:////////////////// ";
+            _ = PropertyIDMapping.Parse(pidMap);
+        }
+
+
 
         [TestMethod]
         public void ToStringTest1()

@@ -3,6 +3,8 @@ using FolkerKinzel.VCards.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Models.Tests
 {
@@ -76,6 +78,14 @@ namespace FolkerKinzel.VCards.Models.Tests
 
         }
 
+        [TestMethod]
+        public void AddressPropertyTest3()
+        {
+            VcfRow row = VcfRow.Parse("ADR:", new VcfDeserializationInfo())!;
+            var prop = new AddressProperty(row, VCdVersion.V3_0);
+
+            Assert.IsNotNull(prop.Value);
+        }
 
     }
 #pragma warning restore CS0618 // Typ oder Element ist veraltet

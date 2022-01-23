@@ -115,8 +115,23 @@ namespace FolkerKinzel.VCards.Tests
             VCard vcard = list[0];
 
             Assert.AreEqual(VCdVersion.V4_0, vcard.Version);
+
+            Assert.IsNull(vcard.DirectoryName);
+            Assert.IsNotNull(vcard.TimeStamp);
+            Assert.IsNull(vcard.Mailer);
+            Assert.IsNotNull(vcard.ProdID);
+            vcard.ProdID = null;
+            Assert.IsNull(vcard.ProdID);
         }
 
+        [TestMethod]
+        public void MembersTest()
+        {
+            var vc = new VCard();
+            vc.Members = new RelationTextProperty("");
+
+            Assert.IsNotNull(vc.Members);
+        }
 
         [TestMethod]
         public void FburlTest()

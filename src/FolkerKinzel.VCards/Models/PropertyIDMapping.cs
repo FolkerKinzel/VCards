@@ -67,20 +67,13 @@ public sealed class PropertyIDMapping
                 continue;
             }
 
-            if (c.TryParseDecimalDigit(out mappingNumber))
+            if (!c.TryParseDecimalDigit(out mappingNumber))
             {
-                index++;
-                break;
+                throw new ArgumentException(Res.MissingMappingID, nameof(s));
             }
 
-            // keine MappingNumber
-            throw new ArgumentException(Res.MissingMappingID, nameof(s));
-        }
-
-        if (!mappingNumber.HasValue)
-        {
-            // keine MappingNumber
-            throw new ArgumentException(Res.MissingMappingID, nameof(s));
+            index++;
+            break;
         }
 
         while (index < s.Length)
@@ -92,7 +85,7 @@ public sealed class PropertyIDMapping
 
                 try
                 {
-                    return new PropertyIDMapping(mappingNumber.Value, new Uri(url, UriKind.RelativeOrAbsolute));
+                    return new PropertyIDMapping(mappingNumber!.Value, new Uri(url, UriKind.RelativeOrAbsolute));
                 }
                 catch (Exception e)
                 {

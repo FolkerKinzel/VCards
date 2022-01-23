@@ -3,6 +3,8 @@ using FolkerKinzel.VCards.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Models.Tests
 {
@@ -18,7 +20,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         private const string GROUP = "myGroup";
 
         [TestMethod()]
-        public void AddressPropertyTest()
+        public void NamePropertyTest1()
         {
             var adr = new NameProperty(LAST_NAME, FIRST_NAME, MIDDLE_NAME, PREFIX, SUFFIX, propertyGroup: GROUP);
 
@@ -33,7 +35,7 @@ namespace FolkerKinzel.VCards.Models.Tests
         }
 
         [TestMethod()]
-        public void AddressPropertyTest1()
+        public void NamePropertyTest2()
         {
             var adr = new NameProperty(
                 new string[] { LAST_NAME },
@@ -52,6 +54,15 @@ namespace FolkerKinzel.VCards.Models.Tests
             Assert.AreEqual(SUFFIX, adr.Value.Suffix[0]);
             Assert.AreEqual(GROUP, adr.Group);
             Assert.IsFalse(adr.IsEmpty);
+        }
+
+        [TestMethod]
+        public void NamePropertyTest3()
+        {
+            VcfRow row = VcfRow.Parse("FN:", new VcfDeserializationInfo())!;
+            var prop = new NameProperty(row, VCdVersion.V3_0);
+
+            Assert.IsNotNull(prop.Value);
         }
 
         [TestMethod()]

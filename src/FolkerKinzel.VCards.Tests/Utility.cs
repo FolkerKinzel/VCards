@@ -25,7 +25,7 @@ namespace FolkerKinzel.VCards.Tests
             var expertise1 = new TextProperty("C#");
             expertise1.Parameters.ExpertiseLevel = ExpertiseLevel.Average;
 
-            var adr1 = new AddressProperty("Elmstreet 13", "Entenhausen", "01234");
+            var adr1 = new AddressProperty("Elmstraße 13", "Entenhausen", "01234");
             adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
             adr1.Parameters.GeoPosition = new Models.GeoCoordinate(12.98, 7.86);
             adr1.Parameters.TimeZone = new Models.TimeZoneID(TimeZoneInfo.Local.Id);
@@ -54,7 +54,7 @@ namespace FolkerKinzel.VCards.Tests
             var email1 = new TextProperty("email@folker.com");
             email1.Parameters.EmailType = EmailType.SMTP;
 
-            var name1 = new NameProperty("Kinzel", "Folker");
+            var name1 = new NameProperty("Künzel", "Folker");
             name1.Parameters.SortAs = new string[] { "Kinzel", "Folker" };
 
 
@@ -185,7 +185,7 @@ namespace FolkerKinzel.VCards.Tests
 
                 Relations = new RelationProperty[] { rel1, rel2 },
 
-                Organizations = new OrganizationProperty("The Organization", new string[] {"Department", "Office"}),
+                Organizations = new OrganizationProperty("The ÄÖÜ Organization", new string[] {"Department", "Office"}),
 
                 NonStandardProperties = nonStandard,
 
