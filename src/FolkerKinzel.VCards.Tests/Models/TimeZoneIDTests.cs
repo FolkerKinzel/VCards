@@ -9,6 +9,11 @@ namespace FolkerKinzel.VCards.Models.Tests
     [TestClass]
     public class TimeZoneIDTests
     {
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TimeZoneIdTest() => _ = new TimeZoneID("  ");
+
+
         [DataTestMethod]
         [DataRow("-0700")]
         [DataRow("-07:00")]
