@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup Condition="True And '$(TargetFramework)' == 'net6.0' And '$(Configuration)'=='Release'">
+  <PropertyGroup Condition="False And '$(TargetFramework)' == 'net6.0' And '$(Configuration)'=='Release'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
@@ -12,7 +12,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>3.1.1</Version>
-    <FileVersion>3.1.1.7</FileVersion>
+    <FileVersion>3.1.1.8</FileVersion>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/blob/master/docs/PackageReleaseNotes/3.1.1/ReleaseNotes.md</PackageReleaseNotes>
