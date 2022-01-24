@@ -113,6 +113,9 @@ retrieving the embedded text.
 - [x] Dependency update.
 
 ### 4.0.0
+- [ ] Remove `VCard: IEquatable<VCard>` and `VCard.GetHashCode`
+
+### 5.0.0
 - [ ] End .NET Framework 4.0 support.
 - [ ] Use the HashCode struct to compute hash codes.
 - [ ] Add DateOnlyProperty. (Use nuget package Portable.System.DateTimeOnly.)
