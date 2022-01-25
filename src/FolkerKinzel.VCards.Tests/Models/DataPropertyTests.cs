@@ -1,6 +1,7 @@
-﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Models.Enums;
+
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class DataPropertyTests

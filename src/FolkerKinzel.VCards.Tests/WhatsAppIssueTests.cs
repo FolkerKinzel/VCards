@@ -1,38 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿namespace FolkerKinzel.VCards.Tests;
 
-namespace FolkerKinzel.VCards.Tests
+[TestClass]
+public class WhatsAppIssueTests
 {
-    [TestClass]
-    public class WhatsAppIssueTests
+    [TestMethod]
+    public void WhatsAppIssueTest1()
     {
-        [TestMethod]
-        public void WhatsAppIssueTest1()
-        {
-            IList<VCard> list = VCard.LoadVcf(TestFiles.WhatsAppIssueVcf);
+        IList<VCard> list = VCard.LoadVcf(TestFiles.WhatsAppIssueVcf);
+        Assert.AreNotEqual(0, list.Count);
 
-            Assert.AreNotEqual(0, list.Count);
+        IEnumerable<Models.TextProperty?>? phoneNumbers = list[0].PhoneNumbers;
+        Assert.IsNotNull(phoneNumbers);
 
-            IEnumerable<Models.TextProperty?>? phoneNumbers = list[0].PhoneNumbers;
+        Models.TextProperty? whatsAppNumber = phoneNumbers!.ElementAtOrDefault(1);
+        Assert.IsNotNull(whatsAppNumber);
 
-            Assert.IsNotNull(phoneNumbers);
+        KeyValuePair<string, string>? parameter = whatsAppNumber!.Parameters.NonStandardParameters?.FirstOrDefault();
 
-            Models.TextProperty? whatsAppNumber = phoneNumbers!.ElementAtOrDefault(1);
-
-            Assert.IsNotNull(whatsAppNumber);
-
-            KeyValuePair<string, string>? parameter = whatsAppNumber!.Parameters.NonStandardParameters?.FirstOrDefault();
-
-            Assert.IsTrue(parameter.HasValue);
-
-            Assert.AreEqual("TYPE", parameter!.Value.Key);
-            Assert.AreEqual("WhatsApp", parameter!.Value.Value);
-
-        }
+        Assert.IsTrue(parameter.HasValue);
+        Assert.AreEqual("TYPE", parameter!.Value.Key);
+        Assert.AreEqual("WhatsApp", parameter!.Value.Value);
     }
-
-   
 }

@@ -11,7 +11,6 @@ public class ImppTypesConverterTest
         foreach (ImppTypes kind in (ImppTypes[])Enum.GetValues(typeof(ImppTypes)))
         {
             ImppTypes? kind2 = ImppTypesConverter.Parse(kind.ToString().ToUpperInvariant());
-
             Assert.AreEqual(kind, kind2);
         }
 

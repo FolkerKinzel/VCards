@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FolkerKinzel.VCards.Intls.Deserializers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FolkerKinzel.VCards.Intls.Deserializers;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts.Tests
+namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+
+[TestClass]
+public class ParameterSectionTests
 {
-    [TestClass]
-    public class ParameterSectionTests
+    [DataTestMethod]
+    [DataRow("Date")]
+    [DataRow("DATE")]
+    [DataRow("\"Date\"")]
+    [DataRow("\'Date\'")]
+    public void CleanParameterValueTest(string value)
     {
-        [DataTestMethod]
-        [DataRow("Date")]
-        [DataRow("DATE")]
-        [DataRow("\"Date\"")]
-        [DataRow("\'Date\'")]
-        public void CleanParameterValueTest(string value)
-        {
-            var info = new VcfDeserializationInfo();
-            var para = new ParameterSection("BDAY", new Dictionary<string, string>() { { "VALUE", value } }, info);
+        var info = new VcfDeserializationInfo();
+        var para = new ParameterSection("BDAY", new Dictionary<string, string>() { { "VALUE", value } }, info);
 
-            Assert.AreEqual(para.DataType, Enums.VCdDataType.Date);
-        }
+        Assert.AreEqual(para.DataType, Enums.VCdDataType.Date);
     }
-
-    
 }

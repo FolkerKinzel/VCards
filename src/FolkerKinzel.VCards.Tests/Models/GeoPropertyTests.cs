@@ -1,60 +1,49 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FolkerKinzel.VCards.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace FolkerKinzel.VCards.Models.Tests;
 
-namespace FolkerKinzel.VCards.Models.Tests
+[TestClass()]
+public class GeoPropertyTests
 {
-    [TestClass()]
-    public class GeoPropertyTests
+    private const string GROUP = "MyGroup";
+
+    [TestMethod()]
+    public void GeoPropertyTest1()
     {
-        private const string GROUP = "MyGroup";
+        var geo = new GeoCoordinate(17.44, 8.33);
 
+        var prop = new GeoProperty(geo, GROUP);
 
-        [TestMethod()]
-        public void GeoPropertyTest1()
+        Assert.AreEqual(geo, prop.Value);
+        Assert.AreEqual(GROUP, prop.Group);
+        Assert.IsFalse(prop.IsEmpty);
+    }
+
+    [TestMethod()]
+    public void GeoPropertyTest2()
+    {
+        var geo = new GeoCoordinate(17.44, 8.33);
+
+        var prop = new GeoProperty(geo, GROUP);
+
+        var vcard = new VCard
         {
-            var geo = new GeoCoordinate(17.44, 8.33);
+            GeoCoordinates = prop
+        };
 
-            var prop = new GeoProperty(geo, GROUP);
+        string s = vcard.ToVcfString();
 
-            Assert.AreEqual(geo, prop.Value);
-            Assert.AreEqual(GROUP, prop.Group);
-            Assert.IsFalse(prop.IsEmpty);
-        }
+        IList<VCard> list = VCard.ParseVcf(s);
 
-        [TestMethod()]
-        public void GeoPropertyTest2()
-        {
-            var geo = new GeoCoordinate(17.44, 8.33);
+        Assert.IsNotNull(list);
+        Assert.AreEqual(1, list.Count);
 
-            var prop = new GeoProperty(geo, GROUP);
+        vcard = list[0];
 
-            var vcard = new VCard
-            {
-                GeoCoordinates = prop
-            };
+        Assert.IsNotNull(vcard.GeoCoordinates);
 
-            string s = vcard.ToVcfString();
+        prop = vcard.GeoCoordinates!.First();
 
-            IList<VCard> list = VCard.ParseVcf(s);
-
-            Assert.IsNotNull(list);
-
-            Assert.AreEqual(1, list.Count);
-
-            vcard = list[0];
-
-            Assert.IsNotNull(vcard.GeoCoordinates);
-
-            prop = vcard.GeoCoordinates!.First();
-
-            Assert.AreEqual(geo, prop!.Value);
-            Assert.AreEqual(GROUP, prop.Group);
-            Assert.IsFalse(prop.IsEmpty);
-        }
+        Assert.AreEqual(geo, prop!.Value);
+        Assert.AreEqual(GROUP, prop.Group);
+        Assert.IsFalse(prop.IsEmpty);
     }
 }

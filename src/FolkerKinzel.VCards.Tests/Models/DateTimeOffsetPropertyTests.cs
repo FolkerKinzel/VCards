@@ -19,7 +19,6 @@ public class DateTimeOffsetPropertyTests
         DateTimeOffset dto = prop.Value!.Value;
 
         VCardProperty vcProp = prop;
-
         Assert.AreEqual(vcProp.Value, dto);
     }
 
@@ -41,7 +40,6 @@ public class DateTimeOffsetPropertyTests
         IList<VCard> list = VCard.ParseVcf(s);
 
         Assert.IsNotNull(list);
-
         Assert.AreEqual(1, list.Count);
 
         vcard = list[0];

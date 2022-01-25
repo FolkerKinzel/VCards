@@ -1,8 +1,6 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FolkerKinzel.VCards.Models;
 
-namespace FolkerKinzel.VCards.Tests.Intls.Deserializers;
+namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
 
 [TestClass]
 public class AssignerTests
@@ -14,13 +12,11 @@ public class AssignerTests
         var textProp = new RelationTextProperty("Hallo");
 
         IEnumerable<RelationProperty>? assignment = Assigner.GetAssignment(textProp, vcard.Relations);
-
         Assert.AreSame(textProp, assignment);
 
         vcard.Relations = assignment;
 
         assignment = Assigner.GetAssignment(textProp, vcard.Relations);
-
         Assert.AreNotSame(textProp, assignment);
         Assert.IsInstanceOfType(assignment, typeof(List<RelationProperty>));
 
@@ -29,7 +25,6 @@ public class AssignerTests
         vcard.Relations = assignment;
 
         assignment = Assigner.GetAssignment(textProp, vcard.Relations);
-
         Assert.IsInstanceOfType(assignment, typeof(List<RelationProperty>));
         Assert.AreSame(list, assignment);
         Assert.AreEqual(3, assignment.Count());

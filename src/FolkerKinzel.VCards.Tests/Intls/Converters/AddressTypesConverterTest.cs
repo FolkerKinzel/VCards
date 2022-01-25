@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models.Enums;
 
-
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 [TestClass]

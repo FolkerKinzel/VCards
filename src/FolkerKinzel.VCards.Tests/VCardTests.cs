@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -65,10 +64,9 @@ public class VCardTests
         TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
         Assert.IsNotNull(dispNameProp);
         Assert.AreEqual("Folker", dispNameProp?.Value);
-
         Assert.AreEqual(version, list[0].Version);
-
     }
+
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -96,8 +94,6 @@ public class VCardTests
     }
 
 
-
-
     [DataTestMethod()]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
@@ -112,7 +108,6 @@ public class VCardTests
 
         vcard.SerializeVcf(null!, version);
     }
-
 
 
     [DataTestMethod()]
@@ -156,6 +151,7 @@ public class VCardTests
 
         _ = ms.Length;
     }
+
 
     [DataTestMethod()]
     [DataRow(VCdVersion.V2_1)]
@@ -201,9 +197,9 @@ public class VCardTests
         TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
         Assert.IsNotNull(dispNameProp);
         Assert.AreEqual("Folker", dispNameProp?.Value);
-
         Assert.AreEqual(version, list[0].Version);
     }
+
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -226,13 +222,11 @@ public class VCardTests
         IList<VCard> list = VCard.ParseVcf(s);
 
         Assert.AreEqual(1, list.Count);
-
         Assert.IsNotNull(list[0].DisplayNames);
 
         TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
         Assert.IsNotNull(dispNameProp);
         Assert.AreEqual("Folker", dispNameProp?.Value);
-
         Assert.AreEqual(version, list[0].Version);
     }
 
@@ -269,34 +263,34 @@ public class VCardTests
         Assert.IsFalse(string.IsNullOrWhiteSpace(s));
     }
 
-    [TestMethod]
-    public void EqualsTest1()
-    {
-        object vc1 = new VCard();
-        object vc2 = new VCard();
+    //[TestMethod]
+    //public void EqualsTest1()
+    //{
+    //    object vc1 = new VCard();
+    //    object vc2 = new VCard();
 
-        Assert.IsFalse(vc1.Equals(vc2));
-        Assert.AreNotEqual(vc1.GetHashCode(), vc2.GetHashCode());
-    }
+    //    Assert.IsFalse(vc1.Equals(vc2));
+    //    Assert.AreNotEqual(vc1.GetHashCode(), vc2.GetHashCode());
+    //}
 
-    [TestMethod]
-    public void EqualsTest2()
-    {
-        var timestamp = DateTimeOffset.UtcNow;
-        var uuid = Guid.NewGuid();
-        VCard vc1 = new VCard();
-        VCard vc2 = new VCard();
+    //[TestMethod]
+    //public void EqualsTest2()
+    //{
+    //    var timestamp = DateTimeOffset.UtcNow;
+    //    var uuid = Guid.NewGuid();
+    //    VCard vc1 = new VCard();
+    //    VCard vc2 = new VCard();
 
-        vc1.TimeStamp = new TimeStampProperty(timestamp);
-        vc1.UniqueIdentifier = new UuidProperty(uuid);
+    //    vc1.TimeStamp = new TimeStampProperty(timestamp);
+    //    vc1.UniqueIdentifier = new UuidProperty(uuid);
 
-        vc2.TimeStamp = new TimeStampProperty(timestamp);
-        vc2.UniqueIdentifier = new UuidProperty(uuid);
+    //    vc2.TimeStamp = new TimeStampProperty(timestamp);
+    //    vc2.UniqueIdentifier = new UuidProperty(uuid);
 
-        object o1 = vc1;
-        object o2 = vc2;
+    //    object o1 = vc1;
+    //    object o2 = vc2;
 
-        Assert.IsTrue(o1.Equals(o2));
-        Assert.AreEqual(o1.GetHashCode(), o2.GetHashCode());
-    }
+    //    Assert.IsTrue(o1.Equals(o2));
+    //    Assert.AreEqual(o1.GetHashCode(), o2.GetHashCode());
+    //}
 }

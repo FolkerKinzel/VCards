@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using FolkerKinzel.VCards.Models.Enums;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
@@ -18,7 +17,6 @@ public class DateAndOrTimeConverterTests
 
         var reference = new DateTime(1963, 8, 17);
         Assert.AreEqual(reference, dt.DateTime);
-
     }
 
 
@@ -32,6 +30,7 @@ public class DateAndOrTimeConverterTests
         Assert.AreEqual(dt.Month, 8);
     }
 
+
     [TestMethod]
     public void DateTest3()
     {
@@ -42,6 +41,7 @@ public class DateAndOrTimeConverterTests
         Assert.AreEqual(dt.Month, 8);
         Assert.AreEqual(dt.Day, 3);
     }
+
 
     [TestMethod]
     public void DateTest4()
@@ -70,7 +70,6 @@ public class DateAndOrTimeConverterTests
 
         Roundtrip("19961022T140000Z", true, VCdVersion.V4_0);
 
-
         RoundtripTimestamp("19961022T140000", false, VCdVersion.V4_0);
         RoundtripTimestamp("19961022T140000Z", true, VCdVersion.V4_0);
         RoundtripTimestamp("19961022T140000-05", false, VCdVersion.V4_0);
@@ -83,6 +82,7 @@ public class DateAndOrTimeConverterTests
         RoundtripTimestamp("19961022T140000-0500", false, VCdVersion.V2_1);
         RoundtripTimestamp("19961022T140000+0532", false, VCdVersion.V2_1);
     }
+
 
     private void Roundtrip(
         string s, bool stringRoundTrip, VCdVersion version)
@@ -141,6 +141,7 @@ public class DateAndOrTimeConverterTests
         Assert.AreEqual(0, builder.Length);
     }
 
+
     [TestMethod]
     public void AppendDateTimeStringToTest1()
     {
@@ -148,6 +149,7 @@ public class DateAndOrTimeConverterTests
         DateAndOrTimeConverter.AppendDateTimeStringTo(builder, null, VCdVersion.V3_0);
         Assert.AreEqual(0, builder.Length);
     }
+
 
     [TestMethod]
     public void AppendDateTimeStringToTest2()
@@ -157,6 +159,7 @@ public class DateAndOrTimeConverterTests
         Assert.IsTrue(builder[0] == '-' && builder[1] == '-');
     }
 
+
     [TestMethod]
     public void AppendDateTimeStringToTest2b()
     {
@@ -165,6 +168,7 @@ public class DateAndOrTimeConverterTests
         Assert.IsTrue(builder[0] == '-' && builder[1] == '-');
     }
 
+
     [TestMethod]
     public void AppendDateTimeStringToTest3()
     {
@@ -172,6 +176,7 @@ public class DateAndOrTimeConverterTests
         DateAndOrTimeConverter.AppendDateTimeStringTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0);
         Assert.IsTrue(builder.ToString().StartsWith("0004"));
     }
+
 
     [TestMethod]
     [DataRow(null)]
