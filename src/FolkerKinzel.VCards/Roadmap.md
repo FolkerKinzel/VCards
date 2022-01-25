@@ -113,7 +113,7 @@ retrieving the embedded text.
 - [x] Dependency update.
 
 ### 4.0.0
-- [ ] Remove `VCard: IEquatable<VCard>` and `VCard.GetHashCode`
+- [x] Remove `VCard: IEquatable<VCard>` and `VCard.GetHashCode()`
 
 ### 5.0.0
 - [ ] End .NET Framework 4.0 support.

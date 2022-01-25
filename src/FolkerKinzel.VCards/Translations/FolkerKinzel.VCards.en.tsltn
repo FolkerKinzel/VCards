@@ -1393,4 +1393,10 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
   <T ID="C242D033E8E43D18">A byte array containing the data that was encoded in &lt;paramref name="base64"/&gt;.</T>
   <T ID="C12662A5D057F519">&lt;paramref name="base64"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="56FAD97B664DF15A">&lt;paramref name="base64"/&gt; has an invalid format.</T>
+  <T ID="95C6A096B38EC754"></T>
+  <T ID="9ADDCE37B10F19DB"></T>
+  <T ID="C11CBF2F2D2816FE"></T>
+  <T ID="4030C9F1A9ECEEA1"></T>
+  <T ID="5FB11E322751E2CA"></T>
+  <T ID="7F9717DF771F236F"></T>
 </Tsltn>

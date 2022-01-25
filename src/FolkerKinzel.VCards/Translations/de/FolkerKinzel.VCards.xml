@@ -926,6 +926,16 @@
             <returns>Eine geeignete Dateiendung für die in den <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>
             eingebetteten Daten. Die Dateiendung enthält den Punkt "." als Trennzeichen.</returns>
         </member>
+        <member name="M:FolkerKinzel.VCards.Models.DataUrl.LoadFile(System.String)">
+            <summary>
+            Loads the file from <paramref name="path"/>.
+            </summary>
+            <param name="path">The file path.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="path"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="path"/> is not a valid file path.</exception>
+            <exception cref="T:System.IO.IOException">I/O error</exception>
+        </member>
         <member name="T:FolkerKinzel.VCards.Models.DateTimeOffsetProperty">
             <summary>
             Eine von <see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/> abgeleitete Klasse, die darauf spezialisiert ist <see cref="T:System.DateTimeOffset"/>-Werte zu speichern.
@@ -4332,38 +4342,6 @@
             von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten verlangt.
             </summary>
             <returns>Ein Enumerator, der das <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekt selbst zurückgibt.</returns>
-        </member>
-        <member name="M:FolkerKinzel.VCards.VCard.Equals(FolkerKinzel.VCards.VCard)">
-            <summary>
-            Bestimmt, ob zwei <see cref="T:FolkerKinzel.VCards.VCard"/>-Referenzen als gleich betrachtet werden.
-            </summary>
-            <param name="other">Die zu vergleichende <see cref="T:FolkerKinzel.VCards.VCard"/>-Referenz oder <c>null</c>.</param>
-            <returns><c>true</c>, wenn <paramref name="other"/> auf eine identische vCard
-            verweist.</returns>
-            <remarks>
-            <paramref name="other"/> wird als identisch betrachtet, wenn
-            <list type="bullet">
-            <item><c>this</c> und <paramref name="other"/> auf dasselbe <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekt
-            verweisen</item>
-            </list>
-            <para>- oder -</para>
-            <list type="number">
-            <item>wenn sowohl <c>this</c> als auch <paramref name="other"/> eine gesetzte <see cref="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/>-
-            Eigenschaft haben und wenn die Werte dieser Eigenschaft übereinstimmen, und
-            </item>
-            <item>wenn außerdem <c>this</c> als auch <paramref name="other"/> eine gesetzte <see cref="P:FolkerKinzel.VCards.VCard.TimeStamp"/>-
-            Eigenschaft haben und wenn die Werte dieser Eigenschaft übereinstimmen. (Zum Vergleich wird
-            <see cref="M:System.DateTimeOffset.EqualsExact(System.DateTimeOffset)"/> verwendet.)
-            
-            </item>
-            </list>
-            </remarks>
-        </member>
-        <member name="M:FolkerKinzel.VCards.VCard.Equals(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FolkerKinzel.VCards.VCard.GetHashCode">
-            <inheritdoc/>
         </member>
         <member name="M:FolkerKinzel.VCards.VCard.Reference(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard})">
             <summary>

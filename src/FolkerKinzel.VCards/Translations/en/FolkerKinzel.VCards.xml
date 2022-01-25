@@ -575,6 +575,14 @@ This argument is passed uninitialized; any value originally supplied in <paramre
       <summary>Returns a suitable file type extension for the data embedded in the <see cref="T:FolkerKinzel.VCards.Models.DataUrl" />.</summary>
       <returns>A suitable file type extension for the data embedded in the <see cref="T:FolkerKinzel.VCards.Models.DataUrl" /> (including the period ".").</returns>
     </member>
+    <member name="M:FolkerKinzel.VCards.Models.DataUrl.LoadFile(System.String)">
+      <summary />
+      <param name="path" />
+      <returns />
+      <exception cref="T:System.ArgumentNullException" />
+      <exception cref="T:System.ArgumentException" />
+      <exception cref="T:System.IO.IOException" />
+    </member>
     <member name="T:FolkerKinzel.VCards.Models.DateTimeOffsetProperty">
       <summary>A class derived from <see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty" /> that specializes in encapsulating <see cref="T:System.DateTimeOffset" /> values.</summary>
     </member>
@@ -2934,28 +2942,6 @@ The <see cref="P:FolkerKinzel.VCards.VCard.Kind" />-property must be set to <see
     <member name="M:FolkerKinzel.VCards.VCard.System#Collections#Generic#IEnumerable{FolkerKinzel#VCards#VCard}#GetEnumerator">
       <summary>Explicit implementation of <see cref="T:System.Collections.Generic.IEnumerable`1"> IEnumerable&lt;VCard&gt;</see>, which enables to pass a single <see cref="T:FolkerKinzel.VCards.VCard" /> object to a method or property that requires a collection of <see cref="T:FolkerKinzel.VCards.VCard" /> objects.</summary>
       <returns>An enumerator, which returns the <see cref="T:FolkerKinzel.VCards.VCard" /> object itself.</returns>
-    </member>
-    <member name="M:FolkerKinzel.VCards.VCard.Equals(FolkerKinzel.VCards.VCard)">
-      <summary>Determines whether two <see cref="T:FolkerKinzel.VCards.VCard" /> references are considered as equal.</summary>
-      <param name="other">The <see cref="T:FolkerKinzel.VCards.VCard" /> reference to compare with, or <c>null</c>.</param>
-      <returns>
-        <c>true</c>, if <paramref name="other" /> refers to an identical vCard.</returns>
-      <remarks>
-        <paramref name="other" /> is considered identical if
-<list type="bullet"><item><c>this</c> and <paramref name="other" /> refer to the same <see cref="T:FolkerKinzel.VCards.VCard" /> object
-</item></list><para>
-- or -
-</para><list type="number"><item>
-if both have a set <see cref="P:FolkerKinzel.VCards.VCard.UniqueIdentifier" /> property and if the values of this property match, and
-</item><item>
-if also <c>this</c> and <paramref name="other" /> have a set <see cref="P:FolkerKinzel.VCards.VCard.TimeStamp" /> property and if the values of this property match . (<see cref="M:System.DateTimeOffset.EqualsExact(System.DateTimeOffset)" /> is used for the comparison .)
-</item></list></remarks>
-    </member>
-    <member name="M:FolkerKinzel.VCards.VCard.Equals(System.Object)">
-      <inheritdoc />
-    </member>
-    <member name="M:FolkerKinzel.VCards.VCard.GetHashCode">
-      <inheritdoc />
     </member>
     <member name="M:FolkerKinzel.VCards.VCard.Reference(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard})">
       <summary>Returns a collection of <see cref="T:FolkerKinzel.VCards.VCard" /> objects in which the <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects of the source collection are replaced with <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty" /> objects  and in which the formerly referenced <see cref="T:FolkerKinzel.VCards.VCard" /> objects are attached as separate elements.</summary>
