@@ -11,8 +11,13 @@ internal static class Utility
         var sortAs = new string[] { "Entenhausen", "Elmstreet" };
 
         var tel1 = new TextProperty("123");
+        tel1.Parameters.TelephoneType = default(TelTypes);
         tel1.Parameters.TelephoneType = TelTypes.Voice | TelTypes.Cell | TelTypes.Text | TelTypes.Msg;
+
+        tel1.Parameters.Preference = -50;
+        tel1.Parameters.Preference = 500;
         tel1.Parameters.Preference = 1;
+        tel1.Parameters.PropertyClass = default(PropertyClassTypes);
         tel1.Parameters.PropertyClass = PropertyClassTypes.Home | PropertyClassTypes.Work;
 
 
@@ -23,17 +28,19 @@ internal static class Utility
         expertise1.Parameters.ExpertiseLevel = ExpertiseLevel.Average;
 
         var adr1 = new AddressProperty("Elmstraße 13", "Entenhausen", "01234");
+        adr1.Parameters.Label = "  ";
         adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
         adr1.Parameters.GeoPosition = new Models.GeoCoordinate(12.98, 7.86);
         adr1.Parameters.TimeZone = new Models.TimeZoneID(TimeZoneInfo.Local.Id);
         adr1.Parameters.AltID = "Address";
         adr1.Parameters.Calendar = "GREGORIAN";
         adr1.Parameters.ContentLocation = VCdContentLocation.Inline;
-        adr1.Parameters.Index = 1;
+        adr1.Parameters.Index = 0;
         adr1.Parameters.Language = "de";
         adr1.Parameters.SortAs = sortAs;
         var pidMap = new PropertyIDMapping(5, new Uri("http://folkerkinzel.de"));
         adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, pidMap), new PropertyID(2) };
+        adr1.Parameters.AddressType = AddressTypes.Dom | AddressTypes.Intl | AddressTypes.Parcel | AddressTypes.Postal;
 
         var logo1 = new DataProperty(new Uri("https://folker-kinzel.de/logo.jpg"));
         logo1.Parameters.MediaType = "image/jpeg";
@@ -49,10 +56,18 @@ internal static class Utility
 
 
         var email1 = new TextProperty("email@folker.com");
+        email1.Parameters.EmailType = "  ";
         email1.Parameters.EmailType = EmailType.SMTP;
 
         var name1 = new NameProperty("Künzel", "Folker");
         name1.Parameters.SortAs = new string[] { "Kinzel", "Folker" };
+
+        var name2 = new NameProperty("Кинцэл", "Фолкер");
+        name2.Parameters.SortAs = new string[] { "Kinzel", "Folker" };
+        name2.Parameters.Language = "ru-RU";
+        name2.Parameters.AltID = "  ";
+
+        var names = new NameProperty[] {name1, name2}; 
 
 
         var impp1 = new TextProperty("aim:uri.com");
@@ -75,7 +90,9 @@ internal static class Utility
         var impp12 = new TextProperty("ymsgr:uri.com");
 
         var rel1 = new RelationTextProperty("Agent", RelationTypes.Agent);
-        var rel2 = new RelationTextProperty("Spouse", RelationTypes.Spouse | RelationTypes.CoResident);
+        var rel2 = new RelationTextProperty("Spouse");
+        rel2.Parameters.RelationType = default(RelationTypes);
+        rel2.Parameters.RelationType = RelationTypes.Spouse | RelationTypes.CoResident;
 
 
         var nonStandard1 = new NonStandardProperty("X-NON-STANDARD", "The value");
@@ -91,14 +108,21 @@ internal static class Utility
         var xEl = new XElement(xName, "The content");
         var xml1 = new XmlProperty(xEl);
 
+        var bday = new DateTimeOffsetProperty(new DateTime(1977, 11, 11));
+        bday.Parameters.Calendar = "  ";
+
+        var source = new TextProperty("http://neu.de/");
+        source.Parameters.Context = " ";
+        source.Parameters.Context = "VCARD";
+
         return new VCard
         {
-            NameViews = name1,
+            NameViews = names,
             PhoneNumbers = tel1,
             Hobbies = hobby1,
             Interests = hobby1,
             Expertises = expertise1,
-            BirthDayViews = new DateTimeOffsetProperty(new DateTime(1972, 11, 11)),
+            BirthDayViews = bday,
             AnniversaryViews = new DateTimeOffsetProperty(new DateTime(2001, 9, 11)),
             Logos = logo1,
             Photos = photo1,
@@ -112,7 +136,7 @@ internal static class Utility
             CalendarAddresses = new TextProperty("Calender address"),
             CalendarUserAddresses = new TextProperty("Calendar user address"),
             FreeOrBusyUrls = new TextProperty("Free Busy"),
-            Sources = new TextProperty("http://neu.de/"),
+            Sources = source,
             TimeZones = new TimeZoneProperty(new TimeZoneID(TimeZoneInfo.Local.Id)),
             DisplayNames = new TextProperty("Folker"),
             OrgDirectories = new TextProperty("OrgDirectory"),

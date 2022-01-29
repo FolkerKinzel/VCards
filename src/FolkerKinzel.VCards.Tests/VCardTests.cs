@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -261,6 +262,34 @@ public class VCardTests
 
         Assert.IsNotNull(s);
         Assert.IsFalse(string.IsNullOrWhiteSpace(s));
+    }
+
+
+    [TestMethod]
+    public void GetEnumeratorTest()
+    {
+        var vc = new VCard
+        {
+            DisplayNames = new TextProperty("Folker")
+        };
+
+        System.Collections.IEnumerable enumerable = vc;
+
+        foreach (var _ in enumerable)
+        {
+            return;
+        }
+
+        Assert.Fail();
+    }
+
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void SeralizeVcfTest()
+    {
+        using var stream = new MemoryStream();
+        VCard.SerializeVcf(stream, null!);
     }
 
     //[TestMethod]

@@ -1,4 +1,5 @@
-﻿namespace FolkerKinzel.VCards.Models.Tests;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass()]
 public class DateTimeTextPropertyTests
@@ -35,5 +36,12 @@ public class DateTimeTextPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(Enums.VCdDataType.Text, prop.Parameters.DataType);
+    }
+
+    [TestMethod]
+    public void DateTimeTextPropertyTest2()
+    {
+        var prop = new DateTimeTextProperty("   ");
+        Assert.IsNull(prop.Value);
     }
 }

@@ -1,5 +1,7 @@
 ﻿#if !NETCOREAPP3_1
+using System.Collections;
 using FolkerKinzel.Strings.Polyfills;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 #endif
 
 namespace FolkerKinzel.VCards.Models.Tests;
@@ -106,7 +108,7 @@ public class PropertyIDTest
     {
         var list = new List<PropertyID>();
 
-        PropertyID.ParseInto(list, "9,22.15,7");
+        PropertyID.ParseInto(list, "9,22.15,7,2.0");
 
         Assert.AreEqual(2, list.Count);
         Assert.AreEqual(new PropertyID(9), list[0]);
@@ -141,6 +143,54 @@ public class PropertyIDTest
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
     public void CtorExceptionTest4() => _ = new PropertyID(10, null);
+
+
+    [TestMethod]
+    public void EqualsTest1()
+    {
+        const string uriStr = "http://folkers-website.de";
+        var id1 = new PropertyID(7);
+        var id2 = new PropertyID(7, new PropertyIDMapping(5, new Uri(uriStr)));
+        var id3 = new PropertyID(7, new PropertyIDMapping(5, new Uri(uriStr)));
+        var id4 = new PropertyID(5, new PropertyIDMapping(5, new Uri(uriStr)));
+        var id5 = new PropertyID(7, new PropertyIDMapping(5, new Uri("http://other-website")));
+        var id6 = new PropertyID(5);
+
+        Assert.AreNotEqual(id1, id2);
+        Assert.AreNotEqual(id1.GetHashCode(), id2.GetHashCode());
+
+        Assert.AreEqual(id2, id2);
+
+        Assert.AreEqual(id2, id3);
+        Assert.AreEqual(id2.GetHashCode(), id3.GetHashCode());
+
+        Assert.AreNotEqual(id3, id4);
+        Assert.AreNotEqual(id3.GetHashCode(), id4.GetHashCode());
+
+        Assert.AreEqual(id3, id5);
+        Assert.AreEqual(id3.GetHashCode(), id5.GetHashCode());
+
+        Assert.AreNotEqual(id1, id6);
+        Assert.AreNotEqual(id1.GetHashCode(), id6.GetHashCode());
+    }
+
+    [TestMethod]
+    public void IEnumerableTest()
+    {
+        var id1 = new PropertyID(7);
+        PropertyID? id2 = id1;
+        Assert.IsTrue(id1 == id2);
+        id2 = null;
+        Assert.IsFalse(id2 == id1);
+
+        System.Collections.IEnumerable numerable = id1;
+
+        foreach (object? item in numerable)
+        {
+            Assert.IsTrue((item as PropertyID) == id1);
+            Assert.IsFalse((item as PropertyID) != id1);
+        }
+    }
 
 
     [TestMethod]

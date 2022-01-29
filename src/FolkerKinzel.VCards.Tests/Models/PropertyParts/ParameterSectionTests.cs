@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 
@@ -17,4 +18,13 @@ public class ParameterSectionTests
 
         Assert.AreEqual(para.DataType, Enums.VCdDataType.Date);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AssignTest()
+    {
+        var sec = new ParameterSection();
+        sec.Assign(null!);
+    }
+    
 }

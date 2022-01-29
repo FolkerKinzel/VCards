@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -35,6 +36,8 @@ public class PropertyIDMappingPropertyTests
         Assert.IsNull(prop.Group);
         Assert.IsFalse(prop.IsEmpty);
     }
+
+    
 
     [TestMethod]
     public void GetValueTest()

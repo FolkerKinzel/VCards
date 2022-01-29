@@ -42,7 +42,7 @@ public sealed partial class ParameterSection
         get => Get<AddressTypes?>(VCdParam.AddressType);
         set
         {
-            value = (value == (AddressTypes)0) ? null : value;
+            value = (value == default(AddressTypes)) ? null : value;
             Set(VCdParam.AddressType, value);
         }
     }
@@ -58,6 +58,7 @@ public sealed partial class ParameterSection
         set => Set(VCdParam.AltID, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
+
     /// <summary>
     /// <c>CALSCALE</c>: Gibt die Art des Kalenders an, der für Datumsangaben verwendet wird. <c>(4)</c>
     /// </summary>
@@ -69,6 +70,7 @@ public sealed partial class ParameterSection
         set => Set<string?>(VCdParam.Calendar, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
+
     /// <summary>
     /// <c>CHARSET</c>: Gibt den Zeichensatz an, der für die Property verwendet wurde. <c>(2)</c>
     /// </summary>
@@ -77,6 +79,7 @@ public sealed partial class ParameterSection
         get => Get<string?>(VCdParam.Charset);
         set => Set(VCdParam.Charset, value);
     }
+
 
     /// <summary>
     /// <c>VALUE</c>: Gibt an, wo sich der eigentiche Inhalt der Property befindet. <c>(2)</c>
@@ -94,6 +97,7 @@ public sealed partial class ParameterSection
             }
         }
     }
+
 
     /// <summary>
     /// <c>CONTEXT</c>: Gibt den Kontext der Daten an, z.B. <c>VCARD</c> oder <c>LDAP</c>. <c>(3)</c>
@@ -115,7 +119,6 @@ public sealed partial class ParameterSection
         get => Get<VCdDataType?>(VCdParam.DataType);
         set => Set(VCdParam.DataType, value);
     }
-
 
 
     /// <summary>
@@ -298,7 +301,7 @@ public sealed partial class ParameterSection
         get => Get<PropertyClassTypes?>(VCdParam.PropertyClass);
         set
         {
-            value = (value == (PropertyClassTypes)0) ? null : value;
+            value = (value == default(PropertyClassTypes)) ? null : value;
             Set(VCdParam.PropertyClass, value);
         }
     }
@@ -323,7 +326,7 @@ public sealed partial class ParameterSection
         get => Get<RelationTypes?>(VCdParam.RelationType);
         set
         {
-            value = (value == (RelationTypes)0) ? null : value;
+            value = (value == default(RelationTypes)) ? null : value;
             Set(VCdParam.RelationType, value);
         }
     }
@@ -357,7 +360,7 @@ public sealed partial class ParameterSection
         get => Get<TelTypes?>(VCdParam.TelephoneType);
         set
         {
-            value = (value == (TelTypes)0) ? null : value;
+            value = (value == default(TelTypes)) ? null : value;
             Set(VCdParam.TelephoneType, value);
         }
     }

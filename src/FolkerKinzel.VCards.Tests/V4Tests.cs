@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -91,6 +92,8 @@ public class V4Tests
         }
     }
 
+    
+
 
     [TestMethod]
     public void SerializeVCard()
@@ -117,10 +120,52 @@ public class V4Tests
     }
 
     [TestMethod]
+    public void Rfc6474Test()
+    {
+        VCard vc = Utility.CreateVCard();
+
+        Assert.IsNotNull(vc.BirthPlaceViews);
+        Assert.IsNotNull(vc.DeathPlaceViews);
+        Assert.IsNotNull(vc.DeathDateViews);
+
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOptions.WriteRfc6474Extensions));
+
+        Assert.IsNotNull(list);
+        Assert.AreEqual(1, list.Count);
+        vc = list[0];
+
+        Assert.IsNotNull(vc.BirthPlaceViews);
+        Assert.IsNotNull(vc.DeathPlaceViews);
+        Assert.IsNotNull(vc.DeathDateViews);
+
+
+        list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOptions.None));
+
+        Assert.IsNotNull(list);
+        Assert.AreEqual(1, list.Count);
+        vc = list[0];
+
+        Assert.IsNull(vc.BirthPlaceViews);
+        Assert.IsNull(vc.DeathPlaceViews);
+        Assert.IsNull(vc.DeathDateViews);
+    }
+
+    [TestMethod]
     public void MembersTest()
     {
-        var vc = new VCard();
-        vc.Members = new RelationTextProperty("");
+        var vc = new VCard
+        {
+            Members = new RelationTextProperty("http://folkers-website.de"),
+            Kind = new KindProperty(VCdKind.Group)
+        };
+
+        Assert.IsNotNull(vc.Members);
+
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+
+        Assert.IsNotNull(list);
+        Assert.AreEqual(1, list.Count);
+        vc = list[0];
 
         Assert.IsNotNull(vc.Members);
     }
