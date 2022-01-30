@@ -12,7 +12,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>4.0.0</Version>
-    <FileVersion>4.0.0.3</FileVersion>
+    <FileVersion>4.0.0.5</FileVersion>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/blob/master/docs/PackageReleaseNotes/4.0.0/ReleaseNotes.md</PackageReleaseNotes>
@@ -40,9 +40,6 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'net40' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net461'">
     <NoWarn>$(NoWarn);8600;8601;8602;8603;8604</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="VCard_IEquatable.cs" />
-  </ItemGroup>
   <ItemGroup>
     <None Remove="Translations\FolkerKinzel.VCards.en.tsltn" />
   </ItemGroup>
