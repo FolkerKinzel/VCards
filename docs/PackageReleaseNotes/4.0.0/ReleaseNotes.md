@@ -10,8 +10,8 @@ some cases, it can also cause these methods to produce unexpected results.
 
 On the other hand, a strict comparison of all the data in a `VCard` would in most cases be a 
 pointless waste of resources. It would be better if the application would provide its own 
-implementation of `IEqualityComparer<VCard>` that takes the specific requirements
-of the application into account. Therefore, the implementations of `VCard.Equals(VCard?)`, 
+implementation of `IEqualityComparer<VCard>`, which fits the specific requirements
+of the application. Therefore, the implementations of `VCard.Equals(VCard?)`, 
 `VCard.Equals(Object?)` and `VCard.GetHashCode()` are removed in the current version: 
 The `VCard` class now provides the default implementations of the `System.Object` class.
 
