@@ -1,12 +1,27 @@
 ﻿# FolkerKinzel.VCards
 ## Roadmap
 
-### 2.1.1
-- [x] Cleanup: Remove obsolete symbols which are marked as errors.
-- [x] Increase the code coverage of the unit tests.
+### 5.0.0
+- [ ] End .NET Framework 4.0 support.
+- [ ] Use the HashCode struct to compute hash codes.
+- [ ] Add DateOnlyProperty. (Use nuget package Portable.System.DateTimeOnly.)
+- [ ] Remove the `DataUrl` class and the `MimeType` classes and replace it with something new and better like
+`FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
+- [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`
+- [ ] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`
+- [ ] Rename `VCdParam.Charset` to `VCdParam.CharSet`
+- [ ] Let `VCard` implement `IEnumerable<KeyValuePair<VCdProp, IEnumerable<VCardProperty>>` instead of `IEnumerable<KeyValuePair<VCdProp, object>>`
+- [ ] `VCard.LoadVcf` and `VCard.SaveVcf` should not eat each exception
 
-### 2.2.0
-- [x] Implement FBURL property.
+### 4.0.0
+- [x] Remove `VCard: IEquatable<VCard>` and `VCard.GetHashCode()`
+
+### 3.1.0
+- [x] Cleanup: Remove `VCdDataType.Timestamp` and all other Symbols marked as Obsolete errors in 3.0.0.
+- [x] Add .NET 6.0 support.
+- [x] DataUrl can parse "Data" URLs, which use the Base64Url format.
+- [x] Dependency update.
+
 
 ### 3.0.0  
 - [x] Add .NET Standard 2.0 support
@@ -106,19 +121,13 @@ as input for the data to embed.
 - [x] Fix the issue that DataUrl doesn't remove the BOM if created from an embedded text file when
 retrieving the embedded text.
 
-### 3.1.0
-- [x] Cleanup: Remove `VCdDataType.Timestamp` and all other Symbols marked as Obsolete errors in 3.0.0.
-- [x] Add .NET 6.0 support.
-- [x] DataUrl can parse "Data" URLs, which use the Base64Url format.
-- [x] Dependency update.
+### 2.2.0
+- [x] Implement FBURL property.
 
-### 4.0.0
-- [x] Remove `VCard: IEquatable<VCard>` and `VCard.GetHashCode()`
+### 2.1.1
+- [x] Cleanup: Remove obsolete symbols which are marked as errors.
+- [x] Increase the code coverage of the unit tests.
 
-### 5.0.0
-- [ ] End .NET Framework 4.0 support.
-- [ ] Use the HashCode struct to compute hash codes.
-- [ ] Add DateOnlyProperty. (Use nuget package Portable.System.DateTimeOnly.)
-- [ ] Remove the `DataUrl` class and the `MimeType` classes and replace it with something new and better like
-`FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
-- [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`
+
+
+

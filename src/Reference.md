@@ -9,9 +9,9 @@ It allows
 
 FolkerKinzel.VCards is used as a dependency in [FolkerKinzel.Contacts.IO](https://www.nuget.org/packages/FolkerKinzel.Contacts.IO/) - an easy to use .NET-API to manage contact data of organizations and natural persons.
 
-[Project Reference (English)](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/3.1.0/FolkerKinzel.VCards.en.chm)
+[Project Reference (English)](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/4.0.0/FolkerKinzel.VCards.en.chm)
 
-[Projektdokumentation (Deutsch)](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/3.1.0/FolkerKinzel.VCards.de.chm)
+[Projektdokumentation (Deutsch)](https://github.com/FolkerKinzel/VCards/blob/master/ProjectReference/4.0.0/FolkerKinzel.VCards.de.chm)
 
 > IMPORTANT: On some systems the content of the .CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox (if it is present) in the lower right corner of the General tab in the Properties dialog.
 
