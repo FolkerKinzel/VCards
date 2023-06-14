@@ -1,16 +1,17 @@
 ﻿# FolkerKinzel.VCards
 ## Roadmap
 
-### 5.0.0
+### 6.0.0
 - [ ] End .NET Framework 4.0 support.
 - [ ] Use the HashCode struct to compute hash codes.
 - [ ] Add DateOnlyProperty. (Use nuget package Portable.System.DateTimeOnly.)
 - [ ] Remove the `DataUrl` class and the `MimeType` classes and replace it with something new and better like
 `FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
 - [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`
-- [ ] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`
+
+### 5.0.0
+- [x] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`
 - [x] Rename `VCdParam.Charset` to `VCdParam.CharSet`
-- [ ] Let `VCard` implement `IEnumerable<KeyValuePair<VCdProp, IEnumerable<VCardProperty>>` instead of `IEnumerable<KeyValuePair<VCdProp, object>>`
 - [x] `VCard.LoadVcf` should not eat every exception
 - [x] Add `AnsiFilter` class
 
