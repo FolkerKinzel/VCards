@@ -40,6 +40,15 @@ internal class VcfReader : IEnumerable<VcfRow>
     [ExcludeFromCodeCoverage]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+    private bool HandleException(Exception e)
+    {
+        if (e is ArgumentOutOfRangeException or OutOfMemoryException)
+        {
+            this.EOF = true;
+            return true;
+        }
+        return false;
+    }
 
     public IEnumerator<VcfRow> GetEnumerator()
     {
@@ -60,10 +69,16 @@ internal class VcfReader : IEnumerable<VcfRow>
             {
                 s = _reader.ReadLine();
             }
-            catch
+            catch(Exception e)
             {
-                EOF = true;
-                yield break;
+                if (HandleException(e))
+                {
+                    yield break;
+                }
+                else
+                {
+                    throw;
+                }
             }
 
             if (s is null) //Dateiende
@@ -76,6 +91,7 @@ internal class VcfReader : IEnumerable<VcfRow>
 
         } while (!s.StartsWith(BEGIN_VCARD, StringComparison.OrdinalIgnoreCase));
 
+       
 
         _ = _info.Builder.Clear(); // nötig, wenn die vcf-Datei mehrere vCards enthält
 
@@ -89,10 +105,16 @@ internal class VcfReader : IEnumerable<VcfRow>
             {
                 s = _reader.ReadLine();
             }
-            catch
+            catch(Exception e)
             {
-                EOF = true;
-                yield break;
+                if (HandleException(e))
+                {
+                    yield break;
+                }
+                else
+                {
+                    throw;
+                }
             }
 
             if (s is null) // Dateiende: Sollte END:VCARD fehlen, wird die vCard nicht gelesen.

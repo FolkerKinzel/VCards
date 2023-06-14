@@ -151,7 +151,7 @@ public sealed partial class ParameterSection
                     this.Encoding = VCdEncodingConverter.Parse(parameter.Value);
                     break;
                 case ParameterKey.CHARSET:
-                    this.Charset = parameter.Value.Trim().Trim(info.AllQuotes);
+                    this.CharSet = parameter.Value.Trim().Trim(info.AllQuotes);
                     break;
                 case ParameterKey.ALTID:
                     this.AltID = parameter.Value.Trim().Trim(info.AllQuotes);

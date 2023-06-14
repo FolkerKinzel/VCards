@@ -126,7 +126,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
             this.Parameters.Encoding = VCdEncoding.QuotedPrintable;
-            this.Parameters.Charset = VCard.DEFAULT_CHARSET;
+            this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
     }
 

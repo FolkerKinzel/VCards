@@ -62,7 +62,7 @@ internal sealed partial class VcfRow
         if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable && !_quotedPrintableDecoded)
         {
             this.Value = QuotedPrintableConverter.Decode(this.Value, // null-Prüfung nicht erforderlich
-                TextEncodingConverter.GetEncoding(this.Parameters.Charset)); // null-Prüfung nicht erforderlich
+                TextEncodingConverter.GetEncoding(this.Parameters.CharSet)); // null-Prüfung nicht erforderlich
 
             _quotedPrintableDecoded = true; // Encoding nicht 2x durchführen
 

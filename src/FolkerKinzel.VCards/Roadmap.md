@@ -9,9 +9,10 @@
 `FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
 - [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`
 - [ ] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`
-- [ ] Rename `VCdParam.Charset` to `VCdParam.CharSet`
+- [x] Rename `VCdParam.Charset` to `VCdParam.CharSet`
 - [ ] Let `VCard` implement `IEnumerable<KeyValuePair<VCdProp, IEnumerable<VCardProperty>>` instead of `IEnumerable<KeyValuePair<VCdProp, object>>`
-- [ ] `VCard.LoadVcf` and `VCard.SaveVcf` should not eat each exception
+- [x] `VCard.LoadVcf` should not eat every exception
+- [x] Add `AnsiFilter` class
 
 ### 4.0.0
 - [x] Remove `VCard: IEquatable<VCard>` and `VCard.GetHashCode()`

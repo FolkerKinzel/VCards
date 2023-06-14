@@ -83,7 +83,7 @@ public sealed class RelationUriProperty : RelationProperty, IEnumerable<Relation
             if (uri.ToString().NeedsToBeQpEncoded())
             {
                 Parameters.Encoding = VCdEncoding.QuotedPrintable;
-                Parameters.Charset = VCard.DEFAULT_CHARSET;
+                Parameters.CharSet = VCard.DEFAULT_CHARSET;
             }
         }
     }

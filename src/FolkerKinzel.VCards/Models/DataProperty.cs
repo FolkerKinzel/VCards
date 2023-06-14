@@ -231,7 +231,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
                             if (dataUri.GetEmbeddedText().NeedsToBeQpEncoded())
                             {
                                 Parameters.Encoding = VCdEncoding.QuotedPrintable;
-                                Parameters.Charset = VCard.DEFAULT_CHARSET;
+                                Parameters.CharSet = VCard.DEFAULT_CHARSET;
                             }
                         }
 
@@ -251,7 +251,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
                         if (uri.ToString().NeedsToBeQpEncoded())
                         {
                             Parameters.Encoding = VCdEncoding.QuotedPrintable;
-                            Parameters.Charset = VCard.DEFAULT_CHARSET;
+                            Parameters.CharSet = VCard.DEFAULT_CHARSET;
                         }
                         break;
                     }

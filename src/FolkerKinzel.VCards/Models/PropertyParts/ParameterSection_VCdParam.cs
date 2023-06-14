@@ -62,7 +62,7 @@ public sealed partial class ParameterSection
         /// <summary>
         /// <c>CHARSET</c>: Gibt den Zeichensatz an, der für die Property verwendet wurde. <c>(2)</c>
         /// </summary>
-        Charset,
+        CharSet,
 
         /// <summary>
         /// <c>ENCODING</c>: Gibt die Encodierung der <see cref="VCardProperty"/> an. <c>(2,3)</c>

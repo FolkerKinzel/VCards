@@ -132,7 +132,7 @@ public abstract class VCardProperty : ICloneable
         {
             this.Parameters.Encoding = null;
         }
-        this.Parameters.Charset = null;
+        this.Parameters.CharSet = null;
     }
 
 
