@@ -12,8 +12,9 @@
 ### 5.0.0
 - [x] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`
 - [x] Rename `VCdParam.Charset` to `VCdParam.CharSet`
-- [x] `VCard.LoadVcf` should not eat every exception
+- [x] `VCard.LoadVcf` and `VCard.DeserializeVcf` should not eat too many exceptions
 - [x] Add `AnsiFilter` class
+- [ ] Add `MultiAnsiFilter` class
 
 ### 4.0.0
 - [x] Remove `VCard: IEquatable<VCard>` and `VCard.GetHashCode()`
