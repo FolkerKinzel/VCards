@@ -19,8 +19,6 @@ namespace FolkerKinzel.VCards
         {
             try
             {
-                //using var reader = new StreamReader(fileName, _utf8);
-                //reader.ReadToEnd();
                 vCards = VCard.LoadVcf(fileName, _utf8);
                 return false;
             }
@@ -29,8 +27,6 @@ namespace FolkerKinzel.VCards
                 vCards = VCard.LoadVcf(fileName, _ansi);
                 return true;
             }
-
-            
         }
     }
 }
