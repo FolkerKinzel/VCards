@@ -53,6 +53,8 @@ public sealed partial class VCard
     /// <param name="reader">Ein <see cref="TextReader"/>.</param>
     /// <returns>Eine Sammlung von <see cref="VCard"/>-Objekten, die den Inhalt der deserialisierten VCF-Datei darstellen.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="reader"/> ist <c>null</c>.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="reader"/> wurde geschlossen.</exception>
+    /// <exception cref="IOException"><paramref name="reader"/> konnte nicht aus dem <see cref="Stream"/> lesen.</exception>
 #if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
