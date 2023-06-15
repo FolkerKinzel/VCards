@@ -224,7 +224,27 @@ public sealed partial class ParameterSection
     /// <summary>
     /// <c>LABEL</c>: Gibt die formatierte Textdarstellung einer Adresse an. <c>([2],[3],4)</c>
     /// </summary>
-    /// <remarks>In vCard 2.1 und vCard 3.0 wird der Inhalt automatisch als separate <c>LABEL</c>-Property in die vCard eingefügt.</remarks>
+    /// <remarks>
+    /// Im vCard-Standard 2.1 und 3.0 sind <c>ADR</c> und <c>Label</c> separate vCard-Properties. Erst ab vCard 4.0 sind sie fest 
+    /// miteinander verknüpft.
+    /// Beim Speichern einer vCard 2.1 und vCard 3.0 wird der Inhalt dieser Eigenschaft automatisch als separate <c>LABEL</c>-Property in die 
+    /// vCard eingefügt.
+    /// 
+    /// <note type="warning">
+    /// <para>
+    /// Beim Einlesen einer vCard 2.1 oder 3.0 versucht die Library, die Verküpfung zwischen <c>Label</c> und <c>ADR</c> aufgrund
+    /// von Übereinstimmungen der Parameter beider Properties herzustellen. Ein Textvergleich der Inhalte von <c>ADR</c> und <c>Label</c>
+    /// findet aber aus Performancegründen nicht statt.
+    /// </para>
+    /// <para>
+    /// Obwohl die korrekte Zuordnung auf diese Weise meist gelingt, kann dies nicht für jedes Szenario garantiert werden. Wenn die 
+    /// Zuordnung von <c>ADR</c> und <c>Label</c> für die Anwendung eine Rolle spielt, sollte die Anwendung diese im Falle von vCard 2.1 
+    /// oder vCard 3.0 durch 
+    /// Textvergleich überprüfen oder aus den Adressdaten eigene Labels erstellen.
+    /// </para>
+    /// </note>
+    /// 
+    /// </remarks>
     public string? Label
     {
         get => Get<string?>(VCdParam.Label);
