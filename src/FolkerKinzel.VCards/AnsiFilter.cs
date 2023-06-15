@@ -1,5 +1,10 @@
 ﻿using System.Text;
+
+#if NET40
+using FolkerKinzel.VCards.Intls.Converters;
+#else
 using FolkerKinzel.Strings;
+#endif
 
 namespace FolkerKinzel.VCards;
 

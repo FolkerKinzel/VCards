@@ -133,63 +133,7 @@ public sealed partial class VCard
                     }
                     else
                     {
-                        vcfRow.UnMask(Version);
-
-                        IEnumerable<AddressProperty?>? addresses = Addresses;
-
-                        if (addresses is null)
-                        {
-                            var adrProp = new AddressProperty();
-                            adrProp.Parameters.Label = vcfRow.Value;
-                            adrProp.Parameters.Assign(vcfRow.Parameters);
-                            Addresses = adrProp;
-                        }
-                        else
-                        {
-                            if (vcfRow.Parameters.PropertyClass.HasValue && vcfRow.Parameters.AddressType.HasValue)
-                            {
-                                AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
-                                    .FirstOrDefault(
-                                    x => x!.Parameters.PropertyClass.IsSet(vcfRow.Parameters.PropertyClass.Value) &&
-                                         x.Parameters.AddressType.IsSet(vcfRow.Parameters.AddressType.Value));
-
-                                if (address != null)
-                                {
-                                    address.Parameters.Label = vcfRow.Value;
-                                    break;
-                                }
-                            }
-                            else if (vcfRow.Parameters.PropertyClass.HasValue)
-                            {
-                                AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
-                                    .FirstOrDefault(
-                                    x => x!.Parameters.PropertyClass.IsSet(vcfRow.Parameters.PropertyClass.Value));
-
-                                if (address != null)
-                                {
-                                    address.Parameters.Label = vcfRow.Value;
-                                    break;
-                                }
-                            }
-                            else if (vcfRow.Parameters.AddressType.HasValue)
-                            {
-                                AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
-                                    .FirstOrDefault(
-                                    x => x!.Parameters.AddressType.IsSet(vcfRow.Parameters.AddressType.Value));
-
-                                if (address != null)
-                                {
-                                    address.Parameters.Label = vcfRow.Value;
-                                    break;
-                                }
-                            }
-
-                            Debug.Assert(addresses.Any());
-                            Debug.Assert(!addresses.Any(x => x is null));
-
-                            AddressProperty first = addresses.OrderBy(x => x!.Parameters.Preference).First()!;
-                            first.Parameters.Label = vcfRow.Value;
-                        }//else
+                        AssignLabelToAddress(vcfRow);
                     }
                     break;
                 case PropKeys.REV:
@@ -504,4 +448,86 @@ public sealed partial class VCard
 
     }//ctor
 
+    private void AssignLabelToAddress(VcfRow labelRow)
+    {
+        labelRow.UnMask(Version);
+
+        IEnumerable<AddressProperty?>? addresses = Addresses;
+
+        if (addresses is null)
+        {
+            Addresses = CreateEmptyAddressPropertyWithLabel(labelRow);
+            return;
+        }
+
+        if (labelRow.Parameters.PropertyClass.HasValue && labelRow.Parameters.AddressType.HasValue)
+        {
+            AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
+                .FirstOrDefault(
+                x => x!.Parameters.PropertyClass.IsSet(labelRow.Parameters.PropertyClass.Value) &&
+                     x.Parameters.AddressType.IsSet(labelRow.Parameters.AddressType.Value));
+
+            if (address != null)
+            {
+                Assign(labelRow, address);
+                return;
+            }
+        }
+        else if (labelRow.Parameters.PropertyClass.HasValue)
+        {
+            AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
+                .FirstOrDefault(
+                x => x!.Parameters.PropertyClass.IsSet(labelRow.Parameters.PropertyClass.Value));
+
+            if (address != null)
+            {
+                Assign(labelRow, address);
+                return;
+            }
+        }
+        else if (labelRow.Parameters.AddressType.HasValue)
+        {
+            AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
+                .FirstOrDefault(
+                x => x!.Parameters.AddressType.IsSet(labelRow.Parameters.AddressType.Value));
+
+            if (address != null)
+            {
+                Assign(labelRow, address);
+                return;
+            }
+        }
+
+        Debug.Assert(addresses.Any());
+        Debug.Assert(!addresses.Any(x => x is null));
+
+        AddressProperty? addressWithEmptyLabel = addresses.OrderBy(x => x!.Parameters.Preference).FirstOrDefault(x => x!.Parameters.Label is null);
+
+        if (addressWithEmptyLabel is null)
+        {
+            Addresses = CreateEmptyAddressPropertyWithLabel(labelRow).GetAssignment(Addresses);
+        }
+        else
+        {
+            Assign(labelRow, addressWithEmptyLabel);
+        }
+
+
+        static AddressProperty CreateEmptyAddressPropertyWithLabel(VcfRow vcfRow)
+        {
+            var adrProp = new AddressProperty();
+            adrProp.Parameters.Label = vcfRow.Value;
+            adrProp.Parameters.Assign(vcfRow.Parameters);
+            return adrProp;
+        }
+
+        static void Assign(VcfRow labelRow, AddressProperty address)
+        {
+            address.Parameters.Label = labelRow.Value;
+            if (address.Parameters.CharSet is null)
+            {
+                address.Parameters.CharSet = labelRow.Parameters.CharSet;
+            }
+        }
+    }
 }

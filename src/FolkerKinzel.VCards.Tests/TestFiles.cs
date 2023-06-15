@@ -27,5 +27,7 @@ internal static class TestFiles
     internal static string WhatsAppIssueVcf => Path.Combine(_testFileDirectory, "WhatsAppIssue.vcf");
 
     internal static string AnsiIssuevcf => Path.Combine(_testFileDirectory, "AnsiIssue.vcf");
+    internal static string LabelIssuevcf => Path.Combine(_testFileDirectory, "LabelIssue.vcf");
+
 
 }

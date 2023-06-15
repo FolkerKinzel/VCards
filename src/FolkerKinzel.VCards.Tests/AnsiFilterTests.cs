@@ -37,6 +37,16 @@ public class AnsiFilterTests
         Assert.AreEqual("utf-8", filter.FallbackEncoding.WebName);
     }
 
+    [TestMethod]
+    public void AnsiFilterTest4()
+    {
+        var filter = new AnsiFilter();
+        Assert.AreEqual(1252, filter.FallbackEncoding.CodePage);
+        Assert.IsTrue(filter.LoadVcf(TestFiles.LabelIssuevcf, out IList<VCard> vCards));
+        Assert.IsNotNull(vCards);
+        Assert.AreEqual(1, vCards.Count);
+    }
+
 
     //[TestMethod]
     //public void AnsiTest1() 
@@ -73,5 +83,5 @@ public class AnsiFilterTests
     //}
 
 
-    
+
 }

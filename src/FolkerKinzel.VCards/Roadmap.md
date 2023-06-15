@@ -15,6 +15,8 @@
 - [x] `VCard.LoadVcf` and `VCard.DeserializeVcf` should not eat too many exceptions
 - [x] Add `AnsiFilter` class
 - [ ] Add `MultiAnsiFilter` class
+- [x] Fix an issue that LABEL properties from vCard 2.1 might be assigned to the false Address
+- [x] Preserve the CHARSET parameter of vCard 2.1 LABEL properties if possible
 
 ### 4.0.0
 - [x] Remove `VCard: IEquatable<VCard>` and `VCard.GetHashCode()`
