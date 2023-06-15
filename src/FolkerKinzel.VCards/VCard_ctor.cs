@@ -448,6 +448,7 @@ public sealed partial class VCard
 
     }//ctor
 
+
     private void AssignLabelToAddress(VcfRow labelRow)
     {
         labelRow.UnMask(Version);

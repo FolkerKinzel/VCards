@@ -16,7 +16,7 @@ public class AnsiFilterTests
     {
         var filter = new AnsiFilter();
         Assert.AreEqual(1252, filter.FallbackEncoding.CodePage);
-        Assert.IsTrue(filter.LoadVcf(TestFiles.AnsiIssuevcf, out IList<VCard> vCards));
+        Assert.IsTrue(filter.LoadVcf(TestFiles.AnsiIssueVcf, out IList<VCard> vCards));
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
     }
@@ -42,7 +42,17 @@ public class AnsiFilterTests
     {
         var filter = new AnsiFilter();
         Assert.AreEqual(1252, filter.FallbackEncoding.CodePage);
-        Assert.IsTrue(filter.LoadVcf(TestFiles.LabelIssuevcf, out IList<VCard> vCards));
+        Assert.IsTrue(filter.LoadVcf(TestFiles.LabelIssueVcf, out IList<VCard> vCards));
+        Assert.IsNotNull(vCards);
+        Assert.AreEqual(1, vCards.Count);
+    }
+
+    [TestMethod]
+    public void AnsiFilterTest5()
+    {
+        var filter = new AnsiFilter(1253);
+        Assert.AreEqual(1253, filter.FallbackEncoding.CodePage);
+        Assert.IsTrue(filter.LoadVcf(TestFiles.MultiAnsiFilterTests_GreekVcf, out IList<VCard> vCards));
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
     }

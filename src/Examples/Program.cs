@@ -24,5 +24,18 @@ internal class Program
         //WhatsAppDemo2.UsingTheWhatsAppType();
         VCardExample.ReadingAndWritingVCard(directoryPath);
         //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
+
+        string sourcePath = Path.GetFullPath(@"..\..\..\MultiAnsiFilterTests");
+        string destinationPath = Path.Combine(sourcePath, "Ansi");
+
+        string fileName = "Hebrew.vcf";
+        int codePage = 1255;
+        System.Text.Encoding enc = FolkerKinzel.Strings.TextEncodingConverter.GetEncoding(codePage);
+        string s = File.ReadAllText(Path.Combine(sourcePath, fileName));
+        File.WriteAllText(Path.Combine(destinationPath, fileName), s, enc);
+
+
+
+
     }
 }
