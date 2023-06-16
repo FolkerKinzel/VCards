@@ -126,6 +126,9 @@
   <data name="MissingUri" xml:space="preserve">
     <value>No URI is specified.</value>
   </data>
+  <data name="NoAnsiEncoding" xml:space="preserve">
+    <value>The value references not an ANSI encoding.</value>
+  </data>
   <data name="NoData" xml:space="preserve">
     <value>The argument contains no data.</value>
   </data>

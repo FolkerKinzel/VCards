@@ -88,6 +88,15 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The value references not an ANSI encoding. ähnelt.
+        /// </summary>
+        internal static string NoAnsiEncoding {
+            get {
+                return ResourceManager.GetString("NoAnsiEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The argument contains no data. ähnelt.
         /// </summary>
         internal static string NoData {

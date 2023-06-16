@@ -57,6 +57,27 @@ public class AnsiFilterTests
         Assert.AreEqual(1, vCards.Count);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void AnsiFilterTest6()
+    {
+        var filter = new AnsiFilter(4711);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void AnsiFilterTest7()
+    {
+        var filter = new AnsiFilter("Nixda");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AnsiFilterTest8()
+    {
+        var filter = new AnsiFilter(null!);
+    }
+
 
     //[TestMethod]
     //public void AnsiTest1() 
