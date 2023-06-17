@@ -40,13 +40,24 @@ public sealed class AnsiFilter
     /// <param name="fallbackCodePage">Die Codepagenummer
     /// der für das Lesen von ANSI-VCF-Dateien zu verwendenden Codepage.</param>
     /// <exception cref="ArgumentException">Die für <paramref name="fallbackCodePage"/> angegebene Nummer
-    /// war 65001 (utf-8) oder die Nummer konnte keiner ANSI-Codepage zugeordnet werden.</exception>
+    /// konnte keiner ANSI-Codepage zugeordnet werden.</exception>
     public AnsiFilter(int fallbackCodePage = 1252)
     {
         _ansi = TextEncodingConverter.GetEncoding(fallbackCodePage);
         ThrowArgumentExceptionIfUtf8(nameof(fallbackCodePage));
     }
 
+    /// <summary>
+    /// Initialisiert eine Instanz der <see cref="AnsiFilter"/>-Klasse mit dem <see cref="Encoding.WebName"/> des 
+    /// <see cref="Encoding"/>-Objekts, das zum Lesen von
+    /// ANSI-VCF-Dateien verwendet werden soll.
+    /// </summary>
+    /// <param name="fallbackEncodingWebName"><see cref="Encoding.WebName"/> des 
+    /// <see cref="Encoding"/>-Objekts, das zum Lesen von
+    /// ANSI-VCF-Dateien verwendet werden soll.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="fallbackEncodingWebName"/> ist <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">Der für <paramref name="fallbackEncodingWebName"/> angegebene Bezeichner
+    /// konnte keiner ANSI-Codepage zugeordnet werden.</exception>
     public AnsiFilter(string fallbackEncodingWebName)
     {
         if (fallbackEncodingWebName is null)
@@ -59,25 +70,44 @@ public sealed class AnsiFilter
 
     private void ThrowArgumentExceptionIfUtf8(string parameterName)
     {
-        if(_ansi.CodePage == 65001)
+        if (_ansi.CodePage == 65001)
         {
             throw new ArgumentException(Res.NoAnsiEncoding, parameterName);
         }
     }
 
+    /// <summary>
+    /// <see cref="Encoding"/>-Objekt, das zum Laden von VCF-Dateien verwendet wird, die nicht
+    /// als UTF-8 gespeichert sind.
+    /// </summary>
     public Encoding FallbackEncoding => _ansi;
 
-    public bool LoadVcf(string fileName, out IList<VCard> vCards)
+
+    /// <summary>
+    /// Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit <see cref="FallbackEncoding"/>.
+    /// </summary>
+    /// 
+    /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
+    /// <param name="isAnsi"><c>true</c>, wenn die VCF-Datei mit <see cref="FallbackEncoding"/> geladen wurde,
+    /// andernfalls <c>false</c>. Der Parameter wird uninitialisiert übergeben.</param>
+    ///  
+    /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
+    /// 
+    /// 
+    /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
+    /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
+    public IList<VCard> LoadVcf(string fileName, out bool isAnsi)
     {
+        isAnsi = false;
         try
         {
-            vCards = VCard.LoadVcf(fileName, _utf8);
-            return false;
+            return VCard.LoadVcf(fileName, _utf8);
         }
         catch (DecoderFallbackException)
         {
-            vCards = VCard.LoadVcf(fileName, _ansi);
-            return true;
+            isAnsi = true;
+            return VCard.LoadVcf(fileName, _ansi);
         }
     }
 }

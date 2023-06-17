@@ -16,7 +16,8 @@ public class AnsiFilterTests
     {
         var filter = new AnsiFilter();
         Assert.AreEqual(1252, filter.FallbackEncoding.CodePage);
-        Assert.IsTrue(filter.LoadVcf(TestFiles.AnsiIssueVcf, out IList<VCard> vCards));
+        IList<VCard> vCards = filter.LoadVcf(TestFiles.AnsiIssueVcf, out bool isAnsi);
+        Assert.IsTrue(isAnsi);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
     }
@@ -25,16 +26,10 @@ public class AnsiFilterTests
     public void AnsiFilterTest2()
     {
         var filter = new AnsiFilter();
-        Assert.IsFalse(filter.LoadVcf(TestFiles.V4vcf, out IList<VCard> vCards));
+        IList<VCard> vCards = filter.LoadVcf(TestFiles.V4vcf, out bool isAnsi);
+        Assert.IsFalse(isAnsi);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(2, vCards.Count);
-    }
-
-    [TestMethod]
-    public void AnsiFilterTest3()
-    {
-        var filter = new AnsiFilter("Nixda");
-        Assert.AreEqual("utf-8", filter.FallbackEncoding.WebName);
     }
 
     [TestMethod]
@@ -42,8 +37,8 @@ public class AnsiFilterTests
     {
         var filter = new AnsiFilter();
         Assert.AreEqual(1252, filter.FallbackEncoding.CodePage);
-        Assert.IsTrue(filter.LoadVcf(TestFiles.LabelIssueVcf, out IList<VCard> vCards));
-        Assert.IsNotNull(vCards);
+        IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelIssueVcf, out bool isAnsi);
+        Assert.IsTrue(isAnsi);
         Assert.AreEqual(1, vCards.Count);
     }
 
@@ -52,31 +47,23 @@ public class AnsiFilterTests
     {
         var filter = new AnsiFilter(1253);
         Assert.AreEqual(1253, filter.FallbackEncoding.CodePage);
-        Assert.IsTrue(filter.LoadVcf(TestFiles.MultiAnsiFilterTests_GreekVcf, out IList<VCard> vCards));
+        IList<VCard> vCards = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_GreekVcf, out bool isAnsi);
+        Assert.IsTrue(isAnsi);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void AnsiFilterTest6()
-    {
-        var filter = new AnsiFilter(4711);
-    }
+    public void AnsiFilterTest6() => _ = new AnsiFilter(4711);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void AnsiFilterTest7()
-    {
-        var filter = new AnsiFilter("Nixda");
-    }
+    public void AnsiFilterTest7() => _ = new AnsiFilter("Nixda");
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AnsiFilterTest8()
-    {
-        var filter = new AnsiFilter(null!);
-    }
+    public void AnsiFilterTest8() => _ = new AnsiFilter(null!);
 
 
     //[TestMethod]
