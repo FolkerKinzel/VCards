@@ -12,7 +12,14 @@ namespace FolkerKinzel.VCards;
 /// <summary>
 /// Hilfsklasse, die dem korrekten Laden von VCF-Dateien dient, die in einer ANSI-Codepage gespeichert wurden.
 /// </summary>
+/// <threadsafety static="true" instance="false"/>
 /// <remarks>
+/// <para>
+/// VCF-Dateien des Standards vCard 2.1 wurden von Outlook und Outlook Express früher in der ANSI-Kodierung des jeweiligen Windows-Systems gespeichert, 
+/// ohne in jedem Fall die erweiterten Zeichen mit Quoted-Printable-Kodierung zu kodieren. Auch VCF-Dateien des Standards vCard 3.0 können prinzipiell
+/// ANSI-kodiert sein, wenn sie z.B. in einer E-Mail übertragen wurden, die in ihrem Content-Header die Kodierung festlegte. Erst seit vCard 4.0 ist die 
+/// Kodierung UTF-8 verbindlich festgelegt.
+/// </para>
 /// <para>
 /// Die Klasse ist ein Wrapper um die <see cref="VCard"/>.<see cref="VCard.LoadVcf(string, Encoding?)"/>-Methode, der zunächst prüft, ob die zu
 /// ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut in einer als <see cref="AnsiFilter.FallbackEncoding"/>
@@ -23,11 +30,16 @@ namespace FolkerKinzel.VCards;
 /// abgefangen und Dateien müssen ggf. zweimal geladen werden.
 /// </para>
 /// <para>
-/// Verwenden Sie die Klasse direkt, wenn Sie mit relativer Sicherheit vorhersagen können, welche ANSI-Codepage ggf. verwendet worden ist. Falls Sie es mit
-/// vCard 2.1-Dateien zu tun haben, die in verschiedenen ANSI-Codepages gespeichert worden sind, können Sie stattdessen auf die Klasse <see cref="MultiAnsiFilter"/>
+/// Verwenden Sie die Klasse, wenn Sie mit relativer Sicherheit vorhersagen können, welche ANSI-Codepage ggf. verwendet worden ist oder wenn Sie nicht mit 
+/// vCard 2.1 - Dateien arbeiten. Falls Sie es mit
+/// vCard 2.1-Dateien zu tun haben, die in verschiedenen ANSI-Codepages gespeichert worden sind, können Sie auf die Klasse <see cref="MultiAnsiFilter"/>
 /// zurückgreifen, die zusätzlich in den eingelesenen vCard-Dateien noch nach <c>CHARSET</c>-Parametern fahndet.
 /// </para>
 /// </remarks>
+/// <example>
+/// <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
+/// <code language="cs" source="..\Examples\MultiAnsiFilterExample.cs"/>
+/// </example>
 public sealed class AnsiFilter
 {
     private readonly UTF8Encoding _utf8 = new(false, true);

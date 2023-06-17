@@ -25,7 +25,9 @@ internal class Program
         VCardExample.ReadingAndWritingVCard(directoryPath);
         //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
 
-        //string sourcePath = Path.GetFullPath(@"..\..\..\MultiAnsiFilterTests");
+        string sourcePath = Path.GetFullPath(@"..\..\..\MultiAnsiFilterTests");
+        MultiAnsiFilterExample.LoadVcfFilesWhichHaveDifferentAnsiEncodings(sourcePath);
+
         //string destinationPath = Path.Combine(sourcePath, "Ansi");
 
         //string fileName = "Hebrew.vcf";

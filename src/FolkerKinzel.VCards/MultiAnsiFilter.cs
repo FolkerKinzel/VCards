@@ -17,23 +17,39 @@ namespace FolkerKinzel.VCards;
 /// <summary>
 /// Hilfsklasse, die dem korrekten Laden von VCF-Dateien dient, die in ANSI-Codepages gespeichert wurden.
 /// </summary>
+/// <threadsafety static="true" instance="false"/>
 /// <remarks>
 /// <para>
-/// Die Klasse ist ein Wrapper um die <see cref="VCard"/>.<see cref="VCard.LoadVcf(string, Encoding?)"/>-Methode, der zunächst prüft, ob die zu
+/// VCF-Dateien des Standards vCard 2.1 wurden von Outlook und Outlook Express früher in der ANSI-Kodierung des jeweiligen Windows-Systems gespeichert, 
+/// ohne dass in jedem Fall die erweiterten Zeichen mit Quoted-Printable-Kodierung kodiert worden wären. Solche Dateien enthalten aber mitunter an irgendeiner Stelle
+/// einen <c>CHARSET</c>-Parameter, der Rückschlüsse auf die verwendete Enkodierung zulässt. Die Wirkungsweise der Klasse beruht auf der Annahme, dass innerhalb einer 
+/// VCF-Datei jeweils nur eine ANSI-Kodierung Verwendung fand.
+/// </para>
+/// 
+/// <para>
+/// Die Klasse ist ein Wrapper um die <see cref="VCard"/>.<see cref="VCard.LoadVcf(string, Encoding?)"/>-Methode, der zunächst
+/// prüft, ob die zu
 /// ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut mit <see cref="FallbackEncoding"/> geladen. Anschließend 
 /// wird der Inhalt der so geladenen VCF-Datei
 /// nach <c>CHARSET</c>-Parametern durchsucht, die einen Anhaltspunkt über die verwendete Kodierung geben. Erweist sich bei dieser Untersuchung, dass diese
 /// Kodierung von der Kodierung abweicht, mit der die VCF-Datei geladen wurde, wird sie mit der ermittelten Kodierung erneut geladen.
 /// </para>
+/// 
 /// <para>
 /// Die Verwendung der Klasse eignet sich nicht für Code, bei dem es auf Performance ankommt, denn zur Auswertung werden <see cref="DecoderFallbackException"/>s 
 /// abgefangen und Dateien müssen ggf. dreimal geladen werden.
 /// </para>
 /// <para>
-/// Die Verwendung der Klasse ist nur dann sinnvoll, wenn Sie es mit vCard 2.1 - Dateien zu tun haben, denn nur in diesem Standard existieren 
-/// <c>CHARSET</c>-Parameter. Die Wirkungsweise der Klasse beruht auf der Annahme, dass innerhalb einer VCF-Datei jeweils nur eine ANSI-Kodierung Verwendung fand.
+/// Verwenden Sie die Klasse nur dann, wenn Sie es auch mit vCard 2.1 - Dateien zu tun haben, denn nur in diesem Standard existieren 
+/// <c>CHARSET</c>-Parameter. Zwar können auch VCF-Dateien des Standards vCard 3.0
+/// ANSI-kodiert sein, aber diese enthalten eben keinen 
+/// <c>CHARSET</c>-Parameter. Deshalb ist zum Erkennen ANSI-kodierter vCard 3.0 - Dateien die Klasse <see cref="AnsiFilter"/> effizienter. 
 /// </para>
 /// </remarks>
+/// <example>
+/// <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
+/// <code language="cs" source="..\Examples\MultiAnsiFilterExample.cs"/>
+/// </example>
 public sealed class MultiAnsiFilter
 {
     private class EncodingCache
@@ -94,14 +110,14 @@ public sealed class MultiAnsiFilter
 
     /// <summary>
     /// Das <see cref="Encoding"/>-Objekt, das zum Laden von VCF-Dateien verwendet wird, die nicht
-    /// als UTF-8 gespeichert sind, wenn in der VCF-Datei kein Hinweis gefunden wird, ein anderes
-    /// zu verwenden.
+    /// als UTF-8 gespeichert sind, wenn in der VCF-Datei kein <c>CHARSET</c>-Parameter gefunden wurde, der einen anderen
+    /// Zeichensatz verlangt.
     /// </summary>
     public Encoding FallbackEncoding => _filter.FallbackEncoding;
 
     /// <summary>
     /// Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit <see cref="FallbackEncoding"/>
-    /// oder - falls die VCF-Datei entsprechende Hinweise enthält - mit einer entsprechenden Kodierung.
+    /// oder - falls die VCF-Datei einen <c>CHARSET</c>-Parameter enthält - mit einer entsprechenden Kodierung.
     /// </summary>
     /// 
     /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
