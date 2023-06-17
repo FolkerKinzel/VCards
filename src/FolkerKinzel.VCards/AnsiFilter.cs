@@ -33,6 +33,8 @@ public sealed class AnsiFilter
     private readonly UTF8Encoding _utf8 = new(false, true);
     private readonly Encoding _ansi;
 
+    internal const int UTF8_CODEPAGE = 65001;
+
     /// <summary>
     /// Initialisiert eine Instanz der <see cref="AnsiFilter"/>-Klasse mit der Nummer
     /// der für das Lesen von ANSI-VCF-Dateien zu verwendenden Codepage.
@@ -107,7 +109,7 @@ public sealed class AnsiFilter
 
     private void ThrowArgumentExceptionIfUtf8(string parameterName)
     {
-        if (_ansi.CodePage == 65001)
+        if (_ansi.CodePage == UTF8_CODEPAGE)
         {
             throw new ArgumentException(Res.NoAnsiEncoding, parameterName);
         }
