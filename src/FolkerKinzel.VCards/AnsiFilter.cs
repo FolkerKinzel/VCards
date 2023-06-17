@@ -10,7 +10,7 @@ using FolkerKinzel.Strings;
 namespace FolkerKinzel.VCards;
 
 /// <summary>
-/// Hilfsklasse, die dem Ausfiltern und korrekten Einlesen vCard-Dateien dient, die in einer ANSI-Codepage gespeichert wurden.
+/// Hilfsklasse, die dem korrekten Laden von VCF-Dateien dient, die in einer ANSI-Codepage gespeichert wurden.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -68,13 +68,7 @@ public sealed class AnsiFilter
         ThrowArgumentExceptionIfUtf8(nameof(fallbackEncodingWebName));
     }
 
-    private void ThrowArgumentExceptionIfUtf8(string parameterName)
-    {
-        if (_ansi.CodePage == 65001)
-        {
-            throw new ArgumentException(Res.NoAnsiEncoding, parameterName);
-        }
-    }
+   
 
     /// <summary>
     /// <see cref="Encoding"/>-Objekt, das zum Laden von VCF-Dateien verwendet wird, die nicht
@@ -108,6 +102,14 @@ public sealed class AnsiFilter
         {
             isAnsi = true;
             return VCard.LoadVcf(fileName, _ansi);
+        }
+    }
+
+    private void ThrowArgumentExceptionIfUtf8(string parameterName)
+    {
+        if (_ansi.CodePage == 65001)
+        {
+            throw new ArgumentException(Res.NoAnsiEncoding, parameterName);
         }
     }
 }
