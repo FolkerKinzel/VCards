@@ -11,7 +11,8 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
-/// Kapselt eingebettete Binärdaten, Verweise auf Binärdaten (z.B. Urls) oder als freier Text vorliegende Information.
+/// Kapselt eingebettete Binärdaten, Verweise auf Binärdaten (z.B. Urls) oder als freier Text 
+/// vorliegende Information.
 /// </summary>
 /// <remarks>
 /// <para>Die Informationen könnnen in verschiedenen Formaten vorliegen:</para>
@@ -21,8 +22,8 @@ namespace FolkerKinzel.VCards.Models;
 /// <item>als freier Text vorliegende Information</item>
 /// </list>
 /// <para>Verwenden Sie die <see cref="DataUrl"/>-Klasse, um
-/// einzubettende Binärdaten oder freien Text zu übergeben oder diese Informationen aus der Property
-/// wieder auszulesen.</para>
+/// einzubettende Binärdaten oder freien Text zu übergeben oder diese Informationen aus der 
+/// Property wieder auszulesen.</para>
 /// </remarks>
 public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 {
@@ -113,7 +114,6 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
             default:
                 {
                     // vCard 4.0:
-
                     if (Parameters.DataType == VCdDataType.Text)
                     {
                         try
@@ -124,7 +124,6 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
                     }
 
                     Value = DataUrl.TryCreate(vcfRow.Value, out DataUrl? dataUri) ? dataUri : BuildUri(vcfRow.Value);
-
                     return;
                 }
         }
