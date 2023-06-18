@@ -16,7 +16,7 @@ public static class MultiAnsiFilterExample
     /// https://github.com/FolkerKinzel/VCards/tree/31a5d5a88ad2ae5a6b27b4fb212ab53a9f8c8f92/src/Examples/MultiAnsiFilterTests
     /// </remarks>
     /// <param name="directoryPath">Path to the directory containing the example files.</param>
-    public static async Task LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
+    public static void LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
     {
         // To load VCF files that could be ANSI encoded automatically with the right encoding,
         // use the AnsiFilter class with the ANSI codepage which is most likely. In our example
@@ -29,7 +29,7 @@ public static class MultiAnsiFilterExample
         // vCard 2.1 files into account. Keep in mind that CHARSET parameters exist only in
         // vCard 2.1. 
         var multiAnsiFilter = new MultiAnsiFilter(ansiFilter);
-        
+
         var outFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
         using (StreamWriter writer = File.AppendText(outFileName))
         {
@@ -41,13 +41,9 @@ public static class MultiAnsiFilterExample
                 WriteToTextFile(vcfFileName, vCards, enc, writer);
             }
         }
-
-        Process.Start(new ProcessStartInfo { FileName = outFileName, UseShellExecute = true });
-        await Task.Delay(10000);
-        File.Delete(outFileName);
+        ShowInTextEditorAndDelete(outFileName);
     }
-
-
+           
     private static void WriteToTextFile(string vcfFileName, IList<VCard> vCards, Encoding enc, TextWriter writer)
     {
         const string indent = "    ";
@@ -59,6 +55,13 @@ public static class MultiAnsiFilterExample
         writer.Write("Encoding: ");
         writer.WriteLine(enc.WebName);
         writer.WriteLine();
+    }
+
+    private static void ShowInTextEditorAndDelete(string outFileName)
+    {
+        Process.Start(new ProcessStartInfo { FileName = outFileName, UseShellExecute = true })?
+               .WaitForExit();
+        File.Delete(outFileName);
     }
 }
 
