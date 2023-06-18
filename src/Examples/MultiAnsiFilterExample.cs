@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿// Compile for .NET 6.0 or above and FolkerKinzel.VCards 5.0.0 or above
+using System.Diagnostics;
 using System.Text;
 using FolkerKinzel.VCards;
 
@@ -14,7 +15,7 @@ public static class MultiAnsiFilterExample
     /// Download the example files at
     /// https://github.com/FolkerKinzel/VCards/tree/31a5d5a88ad2ae5a6b27b4fb212ab53a9f8c8f92/src/Examples/MultiAnsiFilterTests
     /// </remarks>
-    /// <param name="directoryPath">Path to the directory with the example files.</param>
+    /// <param name="directoryPath">Path to the directory containing the example files.</param>
     public static async Task LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
     {
         // To load VCF files that could be ANSI encoded automatically with the right encoding,
@@ -24,30 +25,31 @@ public static class MultiAnsiFilterExample
 
         // In most cases the AnsiFilter class is the best choice. In our example we have the
         // special case of vCard 2.1 files with different ANSI encodings. So we wrap the 
-        // AnsiFilter object with a MultiAnsiFilter to examine the CHARSET parameters of the
-        // vCard 2.1 files. Keep in mind, that CHARSET parameters exist only in vCard 2.1. 
+        // AnsiFilter object with a MultiAnsiFilter to take the CHARSET parameters of the
+        // vCard 2.1 files into account. Keep in mind that CHARSET parameters exist only in
+        // vCard 2.1. 
         var multiAnsiFilter = new MultiAnsiFilter(ansiFilter);
-
-        var outFileName = Guid.NewGuid().ToString() + ".txt";
-
-        foreach (string vcfFileName in Directory
-            .EnumerateFiles(directoryPath)
-            .Where(x => StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(x), ".vcf")))
+        
+        var outFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
+        using (StreamWriter writer = File.AppendText(outFileName))
         {
-            IList<VCard> vCards = multiAnsiFilter.LoadVcf(vcfFileName, out Encoding enc);
-            WriteToTextFile(vcfFileName, vCards, enc, outFileName);
+            foreach (string vcfFileName in Directory
+                .EnumerateFiles(directoryPath)
+                .Where(x => StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(x), ".vcf")))
+            {
+                IList<VCard> vCards = multiAnsiFilter.LoadVcf(vcfFileName, out Encoding enc);
+                WriteToTextFile(vcfFileName, vCards, enc, writer);
+            }
         }
 
         Process.Start(new ProcessStartInfo { FileName = outFileName, UseShellExecute = true });
-
         await Task.Delay(10000);
         File.Delete(outFileName);
     }
 
 
-    private static void WriteToTextFile(string vcfFileName, IList<VCard> vCards, Encoding enc, string outFileName)
+    private static void WriteToTextFile(string vcfFileName, IList<VCard> vCards, Encoding enc, TextWriter writer)
     {
-        using StreamWriter writer = File.AppendText(outFileName);
         const string indent = "    ";
         writer.Write(Path.GetFileName(vcfFileName));
         writer.WriteLine(':');
