@@ -208,7 +208,6 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
              only for &lt;see cref ="T:FolkerKinzel.VCards.Models.NonStandardProperty"/&gt; objects this has to be done manually. &lt;/para&gt; &lt;para&gt; In vCard 3.0 only &lt;see cref ="F:FolkerKinzel.VCards.Models.Enums.VCdEncoding.Base64"/&gt; is permitted. &lt;/para&gt;</T>
   <T ID="36583F3656FAEA27">&lt;c&gt;TYPE&lt;/c&gt;: Description of an instant messenger address. &lt;c&gt;(3 - RFC 4770)&lt;/c&gt;</T>
   <T ID="2CB7FC70098D6315">&lt;c&gt;LABEL&lt;/c&gt;: Represents the actual text that should be put on the mailing label, when delivering a physical package to the person/object associated with the vCard. &lt;c&gt;([2],[3],4)&lt;/c&gt;</T>
-  <T ID="4029DFE929F19427">In vCard 2.1 and vCard 3.0, the content is automatically inserted into the vCard as a separate &lt;c&gt;LABEL&lt;/c&gt; property.</T>
   <T ID="4812CE27D263E682">&lt;c&gt; INDEX &lt;/c&gt;: 1-based index of a property if several instances of the same property are possible. &lt;c&gt; (4 - RFC 6715) &lt;/c&gt;</T>
   <T ID="1DFE7250A32A96C4">An IETF Language Tag as defined in Section 2 of RFC 5646.</T>
   <T ID="BB39AFA3DC7C5C7A">&lt;c&gt; MEDIATYPE &lt;/c&gt;: Specifies the MIME type for the data to which a URI refers (e.g. &lt;c&gt;text/plain&lt;/c&gt;). &lt;c&gt;(4)&lt;/c&gt;</T>
@@ -548,7 +547,6 @@ This argument is passed uninitialized; any value originally supplied in &lt;para
   <T ID="970464CE3E0346B5"></T>
   <T ID="5F695C02098D6315"></T>
   <T ID="D912C7774BBD9B6B"></T>
-  <T ID="31C7B54632537723"></T>
   <T ID="6A77CD1D034FC692"></T>
   <T ID="B2BEF6AAAF61F1FC"></T>
   <T ID="D6AFEF42A51D88E1"></T>
@@ -1210,26 +1208,6 @@ Example implementation for &lt;see cref ="T:FolkerKinzel.VCards.Models.ITimeZone
   <T ID="F6C7F408AAC128B9">Returns an enumerator, which iterates through the properties of the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object.</T>
   <T ID="E9446B39AE061144">Explicit implementation of &lt;see cref ="T:System.Collections.Generic.IEnumerable`1"&gt; IEnumerable&amp;lt;VCard&amp;gt;&lt;/see&gt;, which enables to pass a single &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object to a method or property that requires a collection of &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects.</T>
   <T ID="2C95632C88CFCE6C">An enumerator, which returns the &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object itself.</T>
-  <T ID="642D8841537A4FE1">Determines whether two &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; references are considered as equal.</T>
-  <T ID="A8BE043E088211CC">The &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; reference to compare with, or &lt;c&gt;null&lt;/c&gt;.</T>
-  <T ID="247CA01C7B3A5B68">&lt;c&gt;true&lt;/c&gt;, if &lt;paramref name ="other"/&gt; refers to an identical vCard.</T>
-  <T ID="5E97E72A71993A35">&lt;paramref name ="other"/&gt; is considered identical if
-&lt;list type ="bullet"&gt;
-&lt;item&gt;
-&lt;c&gt;this&lt;/c&gt; and &lt;paramref name ="other"/&gt; refer to the same &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; object
-&lt;/item&gt;
-&lt;/list&gt;
-&lt;para&gt;
-- or -
-&lt;/para&gt;
-&lt;list type ="number"&gt;
-&lt;item&gt;
-if both have a set &lt;see cref ="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/&gt; property and if the values of this property match, and
-&lt;/item&gt;
-&lt;item&gt;
-if also &lt;c&gt;this&lt;/c&gt; and &lt;paramref name ="other"/&gt; have a set &lt;see cref ="P:FolkerKinzel.VCards.VCard.TimeStamp"/&gt; property and if the values of this property match . (&lt;see cref ="M:System.DateTimeOffset.EqualsExact(System.DateTimeOffset)"/&gt; is used for the comparison .)
-&lt;/item&gt;
-&lt;/list&gt;</T>
   <T ID="C62F7CB40C21DAF6">Returns a collection of &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects in which the &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/&gt; objects of the source collection are replaced with &lt;see cref ="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/&gt; objects  and in which the formerly referenced &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects are attached as separate elements.</T>
   <T ID="88E3582610D96784">A collection of &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects. The collection may be empty or may contain &lt;c&gt;null&lt;/c&gt; values.</T>
   <T ID="A176909CBEAB5D7">A collection of &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects. The collection may be empty or may contain &lt;c&gt;null&lt;/c&gt; values.</T>
@@ -1399,4 +1377,78 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
   <T ID="4030C9F1A9ECEEA1"></T>
   <T ID="5FB11E322751E2CA"></T>
   <T ID="7F9717DF771F236F"></T>
+  <T ID="90453D30190EFF4B">Helper class used for correct loading of VCF files saved in an ANSI code page.</T>
+  <T ID="DE0C4D7F9B47EC6F">&lt;para&gt;
+VCF files of the vCard 2.1 standard were previously saved by Outlook and Outlook Express in the ANSI encoding of the current Windows system, without always encoding the extended characters with quoted printable encoding. In principle, VCF files of the vCard 3.0 standard can also be ANSI encoded if, e.g., they had been transmitted as an attachment of an e-mail which specified the encoding in its content header. The UTF-8 encoding has been the standard for VCF files only since vCard 4.0.
+&lt;/para&gt;
+&lt;para&gt;
+The class is a wrapper around the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.&lt;see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)"/&gt; method. First does it check whether the file to be loaded represents correct UTF-8. If the check fails, the VCF file is reloaded using the &lt;see cref="T:System.Text.Encoding"/&gt; specified as &lt;see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncoding"/&gt;.
+&lt;/para&gt;
+&lt;para&gt;
+The use of the class is not suitable for code that depends on performance, because &lt;see cref="T:System.Text.DecoderFallbackException"/&gt;s are caught for evaluation and files may have to be loaded twice.
+&lt;/para&gt;
+&lt;para&gt;
+Use the class if you can predict with reasonable certainty what ANSI code page might have been used, or when you are not working with vCard 2.1 files. If you are dealing with vCard 2.1 files that have been saved with different ANSI code pages, you can use the &lt;see cref="T:FolkerKinzel.VCards.MultiAnsiFilter"/&gt; class, which additionally examines the &lt;c&gt;CHARSET&lt;/c&gt; parameters of the read VCF files.
+&lt;/para&gt;</T>
+  <T ID="5474DEFAA2572CEA">&lt;note type="note"&gt;
+To make the code more readable, exception handling has been omitted from the examples.
+&lt;/note&gt;
+&lt;code/&gt;</T>
+  <T ID="EB9D226AA2572CEA">&lt;note type="note"&gt;
+To make the code more readable, exception handling has been omitted from the examples.
+&lt;/note&gt;
+&lt;code/&gt;</T>
+  <T ID="540F8551F5DE5F48">Initializes a &lt;see cref="T:FolkerKinzel.VCards.MultiAnsiFilter"/&gt; object with a &lt;see cref="T:FolkerKinzel.VCards.AnsiFilter"/&gt; object.</T>
+  <T ID="92923A62BA26D65C">A &lt;see cref="T:FolkerKinzel.VCards.AnsiFilter"/&gt; object providing a &lt;see cref="P:FolkerKinzel.VCards.MultiAnsiFilter.FallbackEncoding"/&gt; used to load a VCF file if it cannot be loaded as UTF-8 and there are no hints in the file to use another &lt;see cref="T:System.Text.Encoding"/&gt; object.</T>
+  <T ID="A79C5F16C886354A">&lt;paramref name="filter"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="F495BF6F29284230">The &lt;see cref="T:System.Text.Encoding"/&gt; object used to load VCF files which are not saved as UTF-8 if there was no &lt;c&gt;CHARSET&lt;/c&gt;  parameter  found in these files requiring a different character set.</T>
+  <T ID="749A651311DD02FD">First tries to load a VCF file as UTF-8 and - if this fails - loads it with &lt;see cref="P:FolkerKinzel.VCards.MultiAnsiFilter.FallbackEncoding"/&gt; or - if the VCF file contains a &lt;c&gt;CHARSET &lt;/c&gt; parameter - with an appropriate encoding.</T>
+  <T ID="B12EA1D334CE9713">Absolute or relative path to a VCF file.</T>
+  <T ID="93074DF8859AC9CE">The &lt;see cref="T:System.Text.Encoding"/&gt; object used to load the file. The parameter is passed uninitialized.</T>
+  <T ID="EFD29D28B2933661">A collection of parsed &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects, which represents the content of the VCF file.</T>
+  <T ID="BB390911C46C7EAE">&lt;paramref name="fileName"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="B869010C32DE2369">&lt;paramref name="fileName"/&gt; is not a valid file path.</T>
+  <T ID="2759F4A0D1E0AAAB">The file could not be loaded.</T>
+  <T ID="A2E7ACDF3921F9BF">&lt;paramref name="reader"/&gt; was closed.</T>
+  <T ID="832E1F616D67FB28">&lt;paramref name="reader"/&gt;could not read from the &lt;see cref="T:System.IO.Stream"/&gt;.</T>
+  <T ID="A96342B14E3CFEE9">Initializes an instance of the &lt;see cref="T:FolkerKinzel.VCards.AnsiFilter"/&gt; class with the number of the code page to use for the reading of ANSI encoded VCF files.</T>
+  <T ID="875FE97BA4047D42">The number of the code page to use for the reading of ANSI encoded VCF files.</T>
+  <T ID="5802BB11CD528B1A">The number specified for &lt;paramref name="fallbackCodePage"/&gt; could not be mapped to an ANSI code page.</T>
+  <T ID="CFAB0901E99CECA0">Initializes an instance of the &lt;see cref="T:FolkerKinzel.VCards.AnsiFilter"/&gt; class with the &lt;see cref="P:System.Text.Encoding.WebName"/&gt; of the &lt;see cref="T:System.Text.Encoding"/&gt; class that shall be used for the reading of ANSI encoded VCF files.</T>
+  <T ID="CFD9210717C84003">The &lt;see cref="P:System.Text.Encoding.WebName"/&gt; of the &lt;see cref="T:System.Text.Encoding"/&gt; class to use for the reading of ANSI encoded VCF files.</T>
+  <T ID="AF6776C5DF8C3FD8">&lt;paramref name="fallbackEncodingWebName"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="9810B4915DA24D20">The identifier specified for &lt;paramref name="fallbackEncodingWebName"/&gt; could not be mapped to an ANSI code page.</T>
+  <T ID="9EFC1AF9BA4D0F89">The &lt;see cref="T:System.Text.Encoding"/&gt; object to use for the reading of VCF files, which are not saved as UTF-8.</T>
+  <T ID="331ED9F9295B7A2A">First tries to load a VCF file as UTF-8 and - if this fails - loads it with &lt;see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncoding"/&gt;.</T>
+  <T ID="37A7A2934CE9713">Absolute or relative path to a VCF file.</T>
+  <T ID="C8673B8360C22565">&lt;c&gt;true&lt;/c&gt; if the VCF file has been loaded using &lt;see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncoding"/&gt;, otherwise &lt;c&gt;false&lt;/c&gt;. The parameter is passed uninitialized.</T>
+  <T ID="5D93DD52B2933661">A collection of parsed &lt;see cref ="T:FolkerKinzel.VCards.VCard"/&gt; objects, which represents the content of the VCF file.</T>
+  <T ID="61AC3EAEC46C7EAE">&lt;paramref name="fileName"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
+  <T ID="11B2304A32DE2369">&lt;paramref name="fileName"/&gt; is not a valid file path.</T>
+  <T ID="7354FE66D1E0AAAB">The file could not be loaded.</T>
+  <T ID="E381CCB32537723">&lt;c&gt;CHARSET&lt;/c&gt;: Indicates the character set that was used for the property. &lt;c&gt;(2)&lt;/c&gt;</T>
+  <T ID="4029DFE9B750563C">In the vCard standards 2.1 and 3.0, &lt;c&gt;ADR&lt;/c&gt; and &lt;c&gt;Label&lt;/c&gt; are separate vCard properties. Only as of vCard 4.0 they are permanently linked to one another. When saving a vCard 2.1 and vCard 3.0, the content of &lt;see cref="Label"/&gt; is automatically inserted into the vCard as a separate &lt;c&gt;LABEL&lt;/c&gt; property.
+&lt;note type="warning"&gt;
+&lt;para&gt;
+When loading a vCard 2.1 or 3.0, the library tries to create the link between &lt;c&gt;Label&lt;/c&gt; and &lt;c&gt;ADR&lt;/c&gt; based on matching parameters of both properties. A text comparison of the content of &lt;c&gt;ADR&lt;/c&gt; and &lt;c&gt;Label&lt;/c&gt; does not take place for performance reasons.
+&lt;/para&gt;
+&lt;para&gt;
+Although the correct assignment is usually successful in this way, this cannot be guaranteed for every scenario. If the assignment of &lt;c&gt;ADR&lt;/c&gt; and &lt;c&gt;Label&lt;/c&gt; plays a role for the application, the application should check this in the case of vCard 2.1 or vCard 3.0 by text comparison or create its own labels from the address data .
+&lt;/para&gt;
+&lt;/note&gt;</T>
+  <T ID="8E30514132537723">&lt;c&gt;CHARSET&lt;/c&gt;: Indicates the character set that was used for the property. &lt;c&gt;(2)&lt;/c&gt;</T>
+  <T ID="D706782C987D0AEE">Helper class used for the correct loading of VCF files saved in an different ANSI code pages.</T>
+  <T ID="ACFD420B927D7855">&lt;para&gt;
+VCF files of the vCard 2.1 standard were previously saved by Outlook and Outlook Express in the ANSI encoding of the current Windows system, without the extended characters having been encoded with quoted printable encoding in every case. However, such files sometimes contain a &lt;c&gt;CHARSET&lt;/c&gt; parameter at some point, which allows conclusions to be drawn about the encoding used. The way the class works is based on the assumption that only one ANSI encoding was used within a VCF file.
+&lt;/para&gt;
+&lt;para&gt;
+The class is a wrapper around the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.&lt;see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)"/&gt; method that first checks whether the file to be loaded represents correct UTF-8. If the check fails, the VCF file is loaded again with &lt;see cref="P:FolkerKinzel.VCards.MultiAnsiFilter.FallbackEncoding"/&gt;. The content of the VCF file loaded in this way is then searched for &lt;c&gt;CHARSET&lt;/c&gt; parameters that provide an indication of the originally used encoding. If this examination shows that this encoding differs from the encoding with which the VCF file was loaded, it is reloaded with the determined encoding.
+&lt;/para&gt;
+&lt;para&gt;
+The use of the class is not suitable for code that depends on performance, because &lt;see cref="T:System.Text.DecoderFallbackException"/&gt;s are caught for evaluation and files may have to be loaded three times.
+&lt;/para&gt;
+&lt;para&gt;
+Only use the class if you are also dealing with vCard 2.1 files, because &lt;c&gt;CHARSET&lt;/c&gt; parameters only exist in this standard. Although VCF files of the vCard 3.0 standard can also be ANSI encoded, but they do not contain a &lt;c&gt;CHARSET&lt;/c&gt; parameter. Therefore, to recognize ANSI encoded vCard 3.0 files, the class &lt;see cref="T:FolkerKinzel.VCards.AnsiFilter"/&gt; is more efficient.
+&lt;/para&gt;</T>
+  <T ID="BB27F7531DBD9F60"></T>
 </Tsltn>
