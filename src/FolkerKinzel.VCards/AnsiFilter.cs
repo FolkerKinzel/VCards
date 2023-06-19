@@ -40,7 +40,7 @@ namespace FolkerKinzel.VCards;
 /// <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
 /// <code language="cs" source="..\Examples\MultiAnsiFilterExample.cs"/>
 /// </example>
-public sealed class AnsiFilter
+public class AnsiFilter
 {
     private readonly UTF8Encoding _utf8 = new(false, true);
     private readonly Encoding _ansi;
@@ -82,13 +82,13 @@ public sealed class AnsiFilter
         ThrowArgumentExceptionIfUtf8(nameof(fallbackEncodingWebName));
     }
 
-   
+
 
     /// <summary>
-    /// <see cref="Encoding"/>-Objekt, das zum Laden von VCF-Dateien verwendet wird, die nicht
-    /// als UTF-8 gespeichert sind.
+    /// <see cref="Encoding.WebName"/>-Eigenschaft des <see cref="Encoding"/>-Objekts, das zum Laden von VCF-Dateien verwendet wird, 
+    /// die nicht als UTF-8 gespeichert sind.
     /// </summary>
-    public Encoding FallbackEncoding => _ansi;
+    public string FallbackEncodingWebName => _ansi.WebName;
 
 
     /// <summary>
@@ -96,25 +96,24 @@ public sealed class AnsiFilter
     /// </summary>
     /// 
     /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
-    /// <param name="isAnsi"><c>true</c>, wenn die VCF-Datei mit <see cref="FallbackEncoding"/> geladen wurde,
-    /// andernfalls <c>false</c>. Der Parameter wird uninitialisiert übergeben.</param>
+    /// <param name="encodingWebName"><see cref="Encoding.WebName"/>-Eigenschaft des <see cref="Encoding"/>-Objekts,
+    /// mit dem die VCF-Datei geladen wurde. Der Parameter wird uninitialisiert übergeben.</param>
     ///  
     /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
-    /// 
     /// 
     /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
     /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
-    public IList<VCard> LoadVcf(string fileName, out bool isAnsi)
+    public virtual IList<VCard> LoadVcf(string fileName, out string encodingWebName)
     {
-        isAnsi = false;
+        encodingWebName = _utf8.WebName;
         try
         {
             return VCard.LoadVcf(fileName, _utf8);
         }
         catch (DecoderFallbackException)
         {
-            isAnsi = true;
+            encodingWebName = _ansi.WebName;
             return VCard.LoadVcf(fileName, _ansi);
         }
     }

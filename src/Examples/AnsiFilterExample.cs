@@ -5,7 +5,7 @@ using FolkerKinzel.VCards;
 
 namespace Examples;
 
-public static class MultiAnsiFilterExample
+public static class AnsiFilterExample
 {
     /// <summary>
     /// The example loads several vCard 2.1 files which have different encodings and 
@@ -18,14 +18,19 @@ public static class MultiAnsiFilterExample
     /// <param name="directoryPath">Path to the directory containing the example files.</param>
     public static void LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
     {
-        // If you have to read vCard 2.1 files with different ANSI encodings, use the 
-        // MultiAnsiFilter class to take the CHARSET parameters of the
-        // vCard 2.1 files into account. Keep in mind that CHARSET parameters exist only in
-        // vCard 2.1.
-        // Give the constructor the ANSI codepage which is most likely as an argument. This will
-        // be the fallback code page if a VCF file couldn't be loaded as UTF-8 and didn't 
-        // contain a CHARSET parameter. In our example we choose windows-1255 (Hebrew).
-        var multiAnsiFilter = new MultiAnsiFilter(1255);
+        // To load VCF files that could be ANSI encoded automatically with the right encoding,
+        // use the AnsiFilter class with the ANSI codepage which is most likely. In our example
+        // we choose windows-1255 (Hebrew).
+        // AnsiFilter switches - depending of the content of the VCF file - automatically between
+        // UTF-8 and this code page.
+        var ansiFilter = new AnsiFilter(1255);
+
+        //// In most cases the AnsiFilter class is the best choice. In our example we have the
+        //// special case of vCard 2.1 files with different ANSI encodings. So we wrap the 
+        //// AnsiFilter object with a MultiAnsiFilter to take the CHARSET parameters of the
+        //// vCard 2.1 files into account. Keep in mind that CHARSET parameters exist only in
+        //// vCard 2.1. 
+        //var multiAnsiFilter = new MultiAnsiFilter(ansiFilter);
 
         var outFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
         using (StreamWriter writer = File.AppendText(outFileName))
@@ -34,7 +39,7 @@ public static class MultiAnsiFilterExample
                 .EnumerateFiles(directoryPath)
                 .Where(x => StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(x), ".vcf")))
             {
-                IList<VCard> vCards = multiAnsiFilter.LoadVcf(vcfFileName, out string encodingWebName);
+                IList<VCard> vCards = ansiFilter.LoadVcf(vcfFileName, out string encodingWebName);
                 WriteToTextFile(vcfFileName, vCards, encodingWebName, writer);
             }
         }

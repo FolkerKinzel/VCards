@@ -50,7 +50,7 @@ namespace FolkerKinzel.VCards;
 /// <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
 /// <code language="cs" source="..\Examples\MultiAnsiFilterExample.cs"/>
 /// </example>
-public sealed class MultiAnsiFilter
+public sealed class MultiAnsiFilter : AnsiFilter
 {
     private class EncodingCache
     {
@@ -85,35 +85,64 @@ public sealed class MultiAnsiFilter
     }
     /// ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private readonly AnsiFilter _filter;
     private readonly EncodingCache _encodingCache;
 
-    /// <summary>
-    /// Initialisiert ein ein <see cref="MultiAnsiFilter"/>-Objekt mit einem <see cref="AnsiFilter"/>-Objekt.
-    /// </summary>
-    /// <param name="filter">Ein <see cref="AnsiFilter"/>-Objekt,
-    /// das ein <see cref="FallbackEncoding"/> zur Verfügung stellt, das zum Laden einer VCF-Datei verwendet wird,
-    /// wenn diese nicht als UTF-8
-    /// geladen werden kann und sich in der Datei keine Hinweise zur Verwendung eines anderen <see cref="Encoding"/>-Objekts
-    /// finden.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="filter"/> ist <c>null</c>.</exception>
-    public MultiAnsiFilter(AnsiFilter filter)
-    {
-        if (filter is null)
-        {
-            throw new ArgumentNullException(nameof(filter));
-        }
+    ///// <summary>
+    ///// Initialisiert ein ein <see cref="MultiAnsiFilter"/>-Objekt mit einem <see cref="AnsiFilter"/>-Objekt.
+    ///// </summary>
+    ///// <param name="filter">Ein <see cref="AnsiFilter"/>-Objekt,
+    ///// das ein <see cref="FallbackEncoding"/> zur Verfügung stellt, das zum Laden einer VCF-Datei verwendet wird,
+    ///// wenn diese nicht als UTF-8
+    ///// geladen werden kann und sich in der Datei keine Hinweise zur Verwendung eines anderen <see cref="Encoding"/>-Objekts
+    ///// finden.</param>
+    ///// <exception cref="ArgumentNullException"><paramref name="filter"/> ist <c>null</c>.</exception>
+    //public MultiAnsiFilter(AnsiFilter filter)
+    //{
+    //    if (filter is null)
+    //    {
+    //        throw new ArgumentNullException(nameof(filter));
+    //    }
 
-        _filter = filter;
-        _encodingCache = new EncodingCache(FallbackEncoding.WebName);
-    }
+    //    _filter = filter;
+    //    _encodingCache = new EncodingCache(FallbackEncodingWebName);
+    //}
 
     /// <summary>
-    /// Das <see cref="Encoding"/>-Objekt, das zum Laden von VCF-Dateien verwendet wird, die nicht
-    /// als UTF-8 gespeichert sind, wenn in der VCF-Datei kein <c>CHARSET</c>-Parameter gefunden wurde, der einen anderen
-    /// Zeichensatz verlangt.
+    /// Initialisiert eine Instanz der <see cref="MultiAnsiFilter"/>-Klasse mit der Nummer
+    /// der Codepage des <see cref="Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, 
+    /// die kein gültiges UTF-8 darstellen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, 
+    /// der die Verwendung eines anderen <see cref="Encoding"/>s nahelegt.
     /// </summary>
-    public Encoding FallbackEncoding => _filter.FallbackEncoding;
+    /// <param name="fallbackCodePage">Die Codepagenummer
+    /// der für das Lesen von ANSI-VCF-Dateien zu verwendenden Codepage.</param>
+    /// <exception cref="ArgumentException">Die für <paramref name="fallbackCodePage"/> angegebene Nummer
+    /// konnte keiner ANSI-Codepage zugeordnet werden.</exception>
+    public MultiAnsiFilter(int fallbackCodePage = 1252) : base(fallbackCodePage) 
+        => _encodingCache = new EncodingCache(FallbackEncodingWebName);
+
+
+    /// <summary>
+    /// Initialisiert eine Instanz der <see cref="MultiAnsiFilter"/>-Klasse mit dem <see cref="Encoding.WebName"/> des 
+    /// <see cref="Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die kein gültiges UTF-8
+    /// darstellen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, der die Verwendung eines anderen
+    /// <see cref="Encoding"/>s nahelegt.
+    /// </summary>
+    /// <param name="fallbackEncodingWebName"><see cref="Encoding.WebName"/> des <see cref="Encoding"/>-Objekts.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="fallbackEncodingWebName"/> ist <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">Der für <paramref name="fallbackEncodingWebName"/> angegebene Bezeichner
+    /// konnte keiner ANSI-Codepage zugeordnet werden.</exception>
+    public MultiAnsiFilter(string fallbackEncodingWebName) : base(fallbackEncodingWebName) 
+        => _encodingCache = new EncodingCache(FallbackEncodingWebName);
+
+
+
+
+    ///// <summary>
+    ///// Das <see cref="Encoding"/>-Objekt, das zum Laden von VCF-Dateien verwendet wird, die nicht
+    ///// als UTF-8 gespeichert sind, wenn in der VCF-Datei kein <c>CHARSET</c>-Parameter gefunden wurde, der einen anderen
+    ///// Zeichensatz verlangt.
+    ///// </summary>
+    //public override Encoding FallbackEncoding => base.FallbackEncoding;
 
     /// <summary>
     /// Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit <see cref="FallbackEncoding"/>
@@ -121,8 +150,8 @@ public sealed class MultiAnsiFilter
     /// </summary>
     /// 
     /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
-    /// <param name="enc">Das <see cref="Encoding"/>-Objekt, das zum Laden der VCF-Datei verwendet wurde. Der Parameter 
-    /// wird uninitialisiert übergeben.</param>
+    /// <param name="encodingWebName"><see cref="Encoding.WebName"/>-Eigenschaft des <see cref="Encoding"/>-Objekts,
+    /// mit dem die VCF-Datei geladen wurde. Der Parameter wird uninitialisiert übergeben.</param>
     ///  
     /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
     /// 
@@ -130,11 +159,11 @@ public sealed class MultiAnsiFilter
     /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
     /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
-    public IList<VCard> LoadVcf(string fileName, out Encoding enc)
+    public override IList<VCard> LoadVcf(string fileName, out string encodingWebName)
     {
-        var vCards = _filter.LoadVcf(fileName, out bool isAnsi);
+        var vCards = base.LoadVcf(fileName, out encodingWebName);
 
-        if (isAnsi)
+        if (StringComparer.Ordinal.Equals(encodingWebName, FallbackEncodingWebName))
         {
             IEnumerable<IEnumerable<KeyValuePair<VCdProp, object>>> keyValuePairs = vCards;
 
@@ -147,7 +176,7 @@ public sealed class MultiAnsiFilter
 
             if (vCardProperty is null)
             {
-                enc = FallbackEncoding;
+                encodingWebName = FallbackEncodingWebName;
                 return vCards;
             }
 
@@ -155,15 +184,15 @@ public sealed class MultiAnsiFilter
 
             if (newEncoding is null)
             {
-                enc = FallbackEncoding;
+                encodingWebName = FallbackEncodingWebName;
                 return vCards;
             }
 
-            enc = newEncoding;
+            encodingWebName = newEncoding.WebName;
             return VCard.LoadVcf(fileName, newEncoding);
         }
 
-        enc = Encoding.UTF8;
+        encodingWebName = Encoding.UTF8.WebName;
         return vCards;
     }
 
