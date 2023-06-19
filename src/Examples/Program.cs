@@ -25,8 +25,9 @@ internal class Program
         VCardExample.ReadingAndWritingVCard(directoryPath);
         //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
 
-        string sourcePath = Path.GetFullPath(@"..\..\..\MultiAnsiFilterTests");
-        MultiAnsiFilterExample.LoadVcfFilesWhichHaveDifferentAnsiEncodings(sourcePath);
+        StartAnsiFilterExample();
+
+        //StartMultiAnsiFilterExample();
 
         //string destinationPath = Path.Combine(sourcePath, "Ansi");
 
@@ -36,8 +37,17 @@ internal class Program
         //string s = File.ReadAllText(Path.Combine(sourcePath, fileName));
         //File.WriteAllText(Path.Combine(destinationPath, fileName), s, enc);
 
+    }
 
+    private static void StartAnsiFilterExample()
+    {
+        string sourcePath = Path.GetFullPath(@"..\..\..\AnsiFilterExamples");
+        MultiAnsiFilterExample.LoadVcfFilesWhichHaveDifferentAnsiEncodings(sourcePath);
+    }
 
-
+    private static void StartMultiAnsiFilterExample()
+    {
+        string sourcePath = Path.GetFullPath(@"..\..\..\MultiAnsiFilterExamples");
+        MultiAnsiFilterExample.LoadVcfFilesWhichHaveDifferentAnsiEncodings(sourcePath);
     }
 }
