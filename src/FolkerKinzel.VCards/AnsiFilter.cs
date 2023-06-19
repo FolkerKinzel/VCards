@@ -22,8 +22,7 @@ namespace FolkerKinzel.VCards;
 /// </para>
 /// <para>
 /// Die Klasse ist ein Wrapper um die <see cref="VCard"/>.<see cref="VCard.LoadVcf(string, Encoding?)"/>-Methode, der zunächst prüft, ob die zu
-/// ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut in einer als <see cref="AnsiFilter.FallbackEncoding"/>
-/// angegebenen Kodierung geladen.
+/// ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut mit einer als Fallback angegebenen Kodierung geladen.
 /// </para>
 /// <para>
 /// Die Verwendung der Klasse eignet sich nicht für Code, bei dem es auf Performance ankommt, denn zur Auswertung werden <see cref="DecoderFallbackException"/>s 
@@ -36,10 +35,6 @@ namespace FolkerKinzel.VCards;
 /// zurückgreifen, die zusätzlich in den eingelesenen vCard-Dateien noch nach <c>CHARSET</c>-Parametern fahndet.
 /// </para>
 /// </remarks>
-/// <example>
-/// <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
-/// <code language="cs" source="..\Examples\AnsiFilterExample.cs"/>
-/// </example>
 public class AnsiFilter
 {
     private readonly UTF8Encoding _utf8 = new(false, true);
