@@ -187,7 +187,6 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
         InternalProtectedAttribute.Run();
         base.PrepareForVcfSerialization(serializer);
 
-
         switch (serializer.Version)
         {
             case VCdVersion.V2_1:

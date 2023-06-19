@@ -1,7 +1,9 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -137,6 +139,17 @@ public class DataUrlTests
     {
         var url = DataUrl.FromFile(TestFiles.PhotoOutlookV2vcf);
         Assert.IsNotNull(url);
+    }
+
+    [TestMethod]
+    public void SizeLimitTest1()
+    {
+        var bytes = new byte[49000];
+        var rnd = new Random();
+        rnd.NextBytes(bytes);
+
+        var dataUrl = DataUrl.FromBytes(bytes, "image/jpeg");
+        Assert.IsNotNull(dataUrl);
     }
 
     // [TestMethod]

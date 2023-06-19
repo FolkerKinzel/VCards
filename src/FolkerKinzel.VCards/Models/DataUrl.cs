@@ -246,7 +246,7 @@ public class DataUrl : Uri, ISerializable
     /// <exception cref="ArgumentException"><paramref name="path"/> ist kein gültiger Dateipfad oder
     /// <paramref name="mimeType"/> hat kein gültiges Format.</exception>
     /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
-    /// weil <paramref name="path"/> eine zu große Datei (> 45 KB) referenziert und der URI-String deshalb länger als 
+    /// weil <paramref name="path"/> eine zu große Datei (> 47 KB) referenziert und der URI-String deshalb länger als 
     /// 65519 Zeichen wäre.</exception>
     /// <exception cref="IOException">E/A-Fehler.</exception>
     public static DataUrl FromFile(string path, string? mimeType = null)
