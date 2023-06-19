@@ -13,7 +13,7 @@ public static class MultiAnsiFilterExample
     /// </summary>
     /// <remarks>
     /// Download the example files at
-    /// https://github.com/FolkerKinzel/VCards/tree/31a5d5a88ad2ae5a6b27b4fb212ab53a9f8c8f92/src/Examples/MultiAnsiFilterTests
+    /// https://github.com/FolkerKinzel/VCards/tree/1ac0a8ee718c18a3c0e187a955773ebae845ec8f/src/Examples/MultiAnsiFilterExamples
     /// </remarks>
     /// <param name="directoryPath">Path to the directory containing the example files.</param>
     public static void LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
@@ -22,7 +22,7 @@ public static class MultiAnsiFilterExample
         // MultiAnsiFilter class to take the CHARSET parameters of the
         // vCard 2.1 files into account. Keep in mind that CHARSET parameters exist only in
         // vCard 2.1.
-        // Give the constructor the ANSI codepage which is most likely as an argument. This will
+        // Give the constructor the ANSI code page as an argument which is most likely. This will
         // be the fallback code page if a VCF file couldn't be loaded as UTF-8 and didn't 
         // contain a CHARSET parameter. In our example we choose windows-1255 (Hebrew).
         var multiAnsiFilter = new MultiAnsiFilter(1255);
@@ -86,8 +86,8 @@ utf-8.vcf:
     Encoding: utf-8
 
 Please note that Hebrew.vcf and utf-8.vcf have been read properly without
-any CHARSET parameter in the VCF files: UTF-8 is the default charset and 
-windows-1255 (Hebrew) had been set as the default fallback value in the 
-AnsiFilter constructor.
+any CHARSET parameter in the VCF files: UTF-8 is the default character set 
+and windows-1255 (Hebrew) had been set as the default fallback value in the 
+constructor.
  */
 

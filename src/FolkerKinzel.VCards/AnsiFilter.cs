@@ -38,7 +38,7 @@ namespace FolkerKinzel.VCards;
 /// </remarks>
 /// <example>
 /// <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
-/// <code language="cs" source="..\Examples\MultiAnsiFilterExample.cs"/>
+/// <code language="cs" source="..\Examples\AnsiFilterExample.cs"/>
 /// </example>
 public class AnsiFilter
 {
@@ -83,7 +83,6 @@ public class AnsiFilter
     }
 
 
-
     /// <summary>
     /// <see cref="Encoding.WebName"/>-Eigenschaft des <see cref="Encoding"/>-Objekts, das zum Laden von VCF-Dateien verwendet wird, 
     /// die nicht als UTF-8 gespeichert sind.
@@ -117,6 +116,7 @@ public class AnsiFilter
             return VCard.LoadVcf(fileName, _ansi);
         }
     }
+
 
     private void ThrowArgumentExceptionIfUtf8(string parameterName)
     {

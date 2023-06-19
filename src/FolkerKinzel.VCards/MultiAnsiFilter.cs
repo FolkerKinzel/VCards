@@ -15,7 +15,7 @@ using FolkerKinzel.Strings;
 namespace FolkerKinzel.VCards;
 
 /// <summary>
-/// Hilfsklasse, die dem korrekten Laden von VCF-Dateien dient, die in ANSI-Codepages gespeichert wurden.
+/// Hilfsklasse, die dem korrekten Laden von VCF-Dateien des vCard-Standards 2.1 dient, die in verschiedenen ANSI-Codepages gespeichert wurden.
 /// </summary>
 /// <threadsafety static="true" instance="false"/>
 /// <remarks>

@@ -8,12 +8,12 @@ namespace Examples;
 public static class AnsiFilterExample
 {
     /// <summary>
-    /// The example loads several vCard 2.1 files which have different encodings and 
+    /// The example loads VCF files which have different encodings and 
     /// shows their content in the text editor. The encoding is selected automatically.
     /// </summary>
     /// <remarks>
     /// Download the example files at
-    /// https://github.com/FolkerKinzel/VCards/tree/31a5d5a88ad2ae5a6b27b4fb212ab53a9f8c8f92/src/Examples/MultiAnsiFilterTests
+    /// https://github.com/FolkerKinzel/VCards/tree/1ac0a8ee718c18a3c0e187a955773ebae845ec8f/src/Examples/AnsiFilterExamples
     /// </remarks>
     /// <param name="directoryPath">Path to the directory containing the example files.</param>
     public static void LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
