@@ -46,7 +46,7 @@ public class DataUrl : Uri, ISerializable
     /// <param name="encoding">Beschreibt, in welcher Form die Daten im  <see cref="DataUrl"/> kodiert sind.</param>
     /// <exception cref="ArgumentNullException"><paramref name="uriString"/> ist <c>null</c>.</exception>
     /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
-    /// weil <paramref name="uriString"/> länger als 65519 Zeichen ist.</exception>
+    /// weil der resultierende <paramref name="uriString"/> länger als 65519 Zeichen wäre.</exception>
     internal DataUrl(string uriString, MimeType? mimeType, DataEncoding encoding) : base(uriString)
     {
         this._encoding = encoding;
@@ -199,7 +199,7 @@ public class DataUrl : Uri, ISerializable
     /// <param name="text">Der in den <see cref="DataUrl"/> einzubettende Text.</param>
     /// <returns>Ein <see cref="DataUrl"/>, in den <paramref name="text"/> eingebettet ist.</returns>
     /// <exception cref="FormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
-    /// weil der URI-String länger als 65519 Zeichen ist.</exception>
+    /// weil <paramref name="text"/> zu lang ist und deshalb der URI-String länger als 65519 Zeichen wäre.</exception>
     public static DataUrl FromText(string? text)
     {
         string dataString = text is null ? "" : Uri.EscapeDataString(Uri.UnescapeDataString(text));
@@ -218,7 +218,8 @@ public class DataUrl : Uri, ISerializable
     /// <returns>Ein <see cref="DataUrl"/>, in den die in <paramref name="bytes"/> enthaltenen 
     /// binären Daten eingebettet sind.</returns>
     /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
-    /// weil der URI-String länger als 65519 Zeichen ist.</exception>
+    /// weil <paramref name="bytes"/> ein zu langes <see cref="Array"/> ist (länger als 49000 Bytes) und der resultierende 
+    /// URI-<see cref="string"/> deshalb länger als 65519 Zeichen wäre.</exception>
     public static DataUrl FromBytes(byte[]? bytes, string? mimeType)
     {
         var mType = new MimeType(mimeType);
@@ -245,7 +246,8 @@ public class DataUrl : Uri, ISerializable
     /// <exception cref="ArgumentException"><paramref name="path"/> ist kein gültiger Dateipfad oder
     /// <paramref name="mimeType"/> hat kein gültiges Format.</exception>
     /// <exception cref="UriFormatException">Es kann kein <see cref="DataUrl"/> initialisiert werden, z.B.
-    /// weil der URI-String länger als 65519 Zeichen ist.</exception>
+    /// weil <paramref name="path"/> eine zu große Datei (> 45 KB) referenziert und der URI-String deshalb länger als 
+    /// 65519 Zeichen wäre.</exception>
     /// <exception cref="IOException">E/A-Fehler.</exception>
     public static DataUrl FromFile(string path, string? mimeType = null)
     {
