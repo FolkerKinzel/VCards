@@ -29,10 +29,10 @@ namespace FolkerKinzel.VCards;
 /// <para>
 /// Die Klasse ist ein Wrapper um die <see cref="VCard"/>.<see cref="VCard.LoadVcf(string, Encoding?)"/>-Methode, der zunächst
 /// prüft, ob die zu
-/// ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut mit <see cref="FallbackEncoding"/> geladen. Anschließend 
-/// wird der Inhalt der so geladenen VCF-Datei
-/// nach <c>CHARSET</c>-Parametern durchsucht, die einen Anhaltspunkt über die verwendete Kodierung geben. Erweist sich bei dieser Untersuchung, dass diese
-/// Kodierung von der Kodierung abweicht, mit der die VCF-Datei geladen wurde, wird sie mit der ermittelten Kodierung erneut geladen.
+/// ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut mit dem durch <see cref="AnsiFilter.FallbackEncodingWebName"/> 
+/// spezifizierten <see cref="Encoding"/> geladen. Anschließend wird der Inhalt der so geladenen VCF-Datei
+/// nach <c>CHARSET</c>-Parametern durchsucht, die einen Hinweis auf die tatsächlich verwendete Kodierung geben. Erweist sich bei dieser Untersuchung, 
+/// dass diese Kodierung von der Kodierung abweicht, mit der die VCF-Datei geladen wurde, wird die Datei mit der ermittelten Kodierung erneut geladen.
 /// </para>
 /// 
 /// <para>
@@ -43,7 +43,7 @@ namespace FolkerKinzel.VCards;
 /// Verwenden Sie die Klasse nur dann, wenn Sie es auch mit vCard 2.1 - Dateien zu tun haben, denn nur in diesem Standard existieren 
 /// <c>CHARSET</c>-Parameter. Zwar können auch VCF-Dateien des Standards vCard 3.0
 /// ANSI-kodiert sein, aber diese enthalten eben keinen 
-/// <c>CHARSET</c>-Parameter. Deshalb ist zum Erkennen ANSI-kodierter vCard 3.0 - Dateien die Klasse <see cref="AnsiFilter"/> effizienter. 
+/// <c>CHARSET</c>-Parameter. Deshalb ist zum Erkennen ANSI-kodierter vCard 3.0 - Dateien die Verwendung der Klasse <see cref="AnsiFilter"/> effizienter. 
 /// </para>
 /// </remarks>
 /// <example>
@@ -87,34 +87,14 @@ public sealed class MultiAnsiFilter : AnsiFilter
 
     private readonly EncodingCache _encodingCache;
 
-    ///// <summary>
-    ///// Initialisiert ein ein <see cref="MultiAnsiFilter"/>-Objekt mit einem <see cref="AnsiFilter"/>-Objekt.
-    ///// </summary>
-    ///// <param name="filter">Ein <see cref="AnsiFilter"/>-Objekt,
-    ///// das ein <see cref="FallbackEncoding"/> zur Verfügung stellt, das zum Laden einer VCF-Datei verwendet wird,
-    ///// wenn diese nicht als UTF-8
-    ///// geladen werden kann und sich in der Datei keine Hinweise zur Verwendung eines anderen <see cref="Encoding"/>-Objekts
-    ///// finden.</param>
-    ///// <exception cref="ArgumentNullException"><paramref name="filter"/> ist <c>null</c>.</exception>
-    //public MultiAnsiFilter(AnsiFilter filter)
-    //{
-    //    if (filter is null)
-    //    {
-    //        throw new ArgumentNullException(nameof(filter));
-    //    }
-
-    //    _filter = filter;
-    //    _encodingCache = new EncodingCache(FallbackEncodingWebName);
-    //}
-
     /// <summary>
     /// Initialisiert eine Instanz der <see cref="MultiAnsiFilter"/>-Klasse mit der Nummer
     /// der Codepage des <see cref="Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, 
-    /// die kein gültiges UTF-8 darstellen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, 
+    /// die nicht im UTF-8-Format vorliegen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, 
     /// der die Verwendung eines anderen <see cref="Encoding"/>s nahelegt.
     /// </summary>
-    /// <param name="fallbackCodePage">Die Codepagenummer
-    /// der für das Lesen von ANSI-VCF-Dateien zu verwendenden Codepage.</param>
+    /// <param name="fallbackCodePage">Die Nummer der Codepage des <see cref="Encoding"/>-Objekts. Default ist
+    /// 1252 für windows-1252.</param>
     /// <exception cref="ArgumentException">Die für <paramref name="fallbackCodePage"/> angegebene Nummer
     /// konnte keiner ANSI-Codepage zugeordnet werden.</exception>
     public MultiAnsiFilter(int fallbackCodePage = 1252) : base(fallbackCodePage) 
@@ -123,8 +103,8 @@ public sealed class MultiAnsiFilter : AnsiFilter
 
     /// <summary>
     /// Initialisiert eine Instanz der <see cref="MultiAnsiFilter"/>-Klasse mit dem <see cref="Encoding.WebName"/> des 
-    /// <see cref="Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die kein gültiges UTF-8
-    /// darstellen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, der die Verwendung eines anderen
+    /// <see cref="Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die kein nicht im UTF-8-Format
+    /// vorliegen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, der die Verwendung eines anderen
     /// <see cref="Encoding"/>s nahelegt.
     /// </summary>
     /// <param name="fallbackEncodingWebName"><see cref="Encoding.WebName"/> des <see cref="Encoding"/>-Objekts.</param>
@@ -135,17 +115,9 @@ public sealed class MultiAnsiFilter : AnsiFilter
         => _encodingCache = new EncodingCache(FallbackEncodingWebName);
 
 
-
-
-    ///// <summary>
-    ///// Das <see cref="Encoding"/>-Objekt, das zum Laden von VCF-Dateien verwendet wird, die nicht
-    ///// als UTF-8 gespeichert sind, wenn in der VCF-Datei kein <c>CHARSET</c>-Parameter gefunden wurde, der einen anderen
-    ///// Zeichensatz verlangt.
-    ///// </summary>
-    //public override Encoding FallbackEncoding => base.FallbackEncoding;
-
     /// <summary>
-    /// Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit <see cref="FallbackEncoding"/>
+    /// Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit dem durch 
+    /// <see cref="AnsiFilter.FallbackEncodingWebName"/> spezifizierten <see cref="Encoding"/>
     /// oder - falls die VCF-Datei einen <c>CHARSET</c>-Parameter enthält - mit einer entsprechenden Kodierung.
     /// </summary>
     /// 

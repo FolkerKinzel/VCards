@@ -15,9 +15,9 @@ public class AnsiFilterTests
     public void AnsiFilterTest1()
     {
         var filter = new AnsiFilter();
-        Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName);
+        Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName, true);
         IList<VCard> vCards = filter.LoadVcf(TestFiles.AnsiIssueVcf, out string encodingWebName);
-        Assert.AreEqual(filter.FallbackEncodingWebName, encodingWebName);
+        Assert.AreEqual(filter.FallbackEncodingWebName, encodingWebName, true);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
     }
@@ -36,7 +36,7 @@ public class AnsiFilterTests
     public void AnsiFilterTest4()
     {
         var filter = new AnsiFilter();
-        Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName);
+        Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName, true);
         IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelIssueVcf, out string encodingWebName);
         Assert.AreEqual(filter.FallbackEncodingWebName, encodingWebName);
         Assert.AreEqual(1, vCards.Count);
@@ -46,7 +46,7 @@ public class AnsiFilterTests
     public void AnsiFilterTest5()
     {
         var filter = new AnsiFilter(1253);
-        Assert.AreEqual("windows-1253", filter.FallbackEncodingWebName);
+        Assert.AreEqual("windows-1253", filter.FallbackEncodingWebName, true);
         IList<VCard> vCards = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_GreekVcf, out string encodingWebName);
         Assert.AreEqual(filter.FallbackEncodingWebName, encodingWebName);
         Assert.IsNotNull(vCards);
@@ -70,7 +70,7 @@ public class AnsiFilterTests
     {
         var filter = new MultiAnsiFilter("windows-1252");
         Assert.IsNotNull(filter);
-        Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName);
+        Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName, true);
     }
 
 

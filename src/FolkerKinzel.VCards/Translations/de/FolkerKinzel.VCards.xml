@@ -18,8 +18,7 @@
             </para>
             <para>
             Die Klasse ist ein Wrapper um die <see cref="T:FolkerKinzel.VCards.VCard"/>.<see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)"/>-Methode, der zunächst prüft, ob die zu
-            ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut in einer als <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncoding"/>
-            angegebenen Kodierung geladen.
+            ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut mit einer als Fallback angegebenen Kodierung geladen.
             </para>
             <para>
             Die Verwendung der Klasse eignet sich nicht für Code, bei dem es auf Performance ankommt, denn zur Auswertung werden <see cref="T:System.Text.DecoderFallbackException"/>s 
@@ -34,49 +33,47 @@
             </remarks>
             <example>
             <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
-            <code language="cs" source="..\Examples\MultiAnsiFilterExample.cs"/>
+            <code language="cs" source="..\Examples\AnsiFilterExample.cs"/>
             </example>
         </member>
         <member name="M:FolkerKinzel.VCards.AnsiFilter.#ctor(System.Int32)">
             <summary>
             Initialisiert eine Instanz der <see cref="T:FolkerKinzel.VCards.AnsiFilter"/>-Klasse mit der Nummer
-            der für das Lesen von ANSI-VCF-Dateien zu verwendenden Codepage.
+            der Codepage, die für das Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format vorliegen.
             </summary>
-            <param name="fallbackCodePage">Die Codepagenummer
-            der für das Lesen von ANSI-VCF-Dateien zu verwendenden Codepage.</param>
+            <param name="fallbackCodePage">Die Nummer der Codepage, die für das Lesen von VCF-Dateien verwendet werden soll, 
+            die nicht im UTF-8-Format vorliegen.</param>
             <exception cref="T:System.ArgumentException">Die für <paramref name="fallbackCodePage"/> angegebene Nummer
             konnte keiner ANSI-Codepage zugeordnet werden.</exception>
         </member>
         <member name="M:FolkerKinzel.VCards.AnsiFilter.#ctor(System.String)">
             <summary>
             Initialisiert eine Instanz der <see cref="T:FolkerKinzel.VCards.AnsiFilter"/>-Klasse mit dem <see cref="P:System.Text.Encoding.WebName"/> des 
-            <see cref="T:System.Text.Encoding"/>-Objekts, das zum Lesen von
-            ANSI-VCF-Dateien verwendet werden soll.
+            <see cref="T:System.Text.Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format vorliegen.
             </summary>
             <param name="fallbackEncodingWebName"><see cref="P:System.Text.Encoding.WebName"/> des 
-            <see cref="T:System.Text.Encoding"/>-Objekts, das zum Lesen von
-            ANSI-VCF-Dateien verwendet werden soll.</param>
+            <see cref="T:System.Text.Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format vorliegen.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="fallbackEncodingWebName"/> ist <c>null</c>.</exception>
             <exception cref="T:System.ArgumentException">Der für <paramref name="fallbackEncodingWebName"/> angegebene Bezeichner
             konnte keiner ANSI-Codepage zugeordnet werden.</exception>
         </member>
-        <member name="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncoding">
+        <member name="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName">
             <summary>
-            <see cref="T:System.Text.Encoding"/>-Objekt, das zum Laden von VCF-Dateien verwendet wird, die nicht
-            als UTF-8 gespeichert sind.
+            <see cref="P:System.Text.Encoding.WebName"/>-Eigenschaft des <see cref="T:System.Text.Encoding"/>-Objekts, das zum Laden von VCF-Dateien verwendet wird, 
+            die nicht im UTF-8-Format vorliegen.
             </summary>
         </member>
-        <member name="M:FolkerKinzel.VCards.AnsiFilter.LoadVcf(System.String,System.Boolean@)">
+        <member name="M:FolkerKinzel.VCards.AnsiFilter.LoadVcf(System.String,System.String@)">
             <summary>
-            Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncoding"/>.
+            Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit dem durch <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName"/>
+            spezifizierten <see cref="T:System.Text.Encoding"/>.
             </summary>
             
             <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
-            <param name="isAnsi"><c>true</c>, wenn die VCF-Datei mit <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncoding"/> geladen wurde,
-            andernfalls <c>false</c>. Der Parameter wird uninitialisiert übergeben.</param>
+            <param name="encodingWebName"><see cref="P:System.Text.Encoding.WebName"/>-Eigenschaft des <see cref="T:System.Text.Encoding"/>-Objekts,
+            mit dem die VCF-Datei geladen wurde. Der Parameter wird uninitialisiert übergeben.</param>
              
             <returns>Eine Sammlung geparster <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
-            
             
             <exception cref="T:System.ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
             <exception cref="T:System.ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
@@ -906,7 +903,7 @@
             <param name="encoding">Beschreibt, in welcher Form die Daten im  <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> kodiert sind.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="uriString"/> ist <c>null</c>.</exception>
             <exception cref="T:System.UriFormatException">Es kann kein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> initialisiert werden, z.B.
-            weil <paramref name="uriString"/> länger als 65519 Zeichen ist.</exception>
+            weil der resultierende <paramref name="uriString"/> länger als 65519 Zeichen wäre.</exception>
         </member>
         <member name="P:FolkerKinzel.VCards.Models.DataUrl.MimeType">
             <summary>
@@ -952,7 +949,7 @@
             <param name="text">Der in den <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> einzubettende Text.</param>
             <returns>Ein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>, in den <paramref name="text"/> eingebettet ist.</returns>
             <exception cref="T:System.FormatException">Es kann kein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> initialisiert werden, z.B.
-            weil der URI-String länger als 65519 Zeichen ist.</exception>
+            weil <paramref name="text"/> zu lang ist und deshalb der URI-String länger als 65519 Zeichen wäre.</exception>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.DataUrl.FromBytes(System.Byte[],System.String)">
             <summary>
@@ -964,7 +961,8 @@
             <returns>Ein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>, in den die in <paramref name="bytes"/> enthaltenen 
             binären Daten eingebettet sind.</returns>
             <exception cref="T:System.UriFormatException">Es kann kein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> initialisiert werden, z.B.
-            weil der URI-String länger als 65519 Zeichen ist.</exception>
+            weil <paramref name="bytes"/> ein zu langes <see cref="T:System.Array"/> ist (länger als 49000 Bytes) und der resultierende 
+            URI-<see cref="T:System.String"/> deshalb länger als 65519 Zeichen wäre.</exception>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.DataUrl.FromFile(System.String,System.String)">
             <summary>
@@ -979,7 +977,8 @@
             <exception cref="T:System.ArgumentException"><paramref name="path"/> ist kein gültiger Dateipfad oder
             <paramref name="mimeType"/> hat kein gültiges Format.</exception>
             <exception cref="T:System.UriFormatException">Es kann kein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> initialisiert werden, z.B.
-            weil der URI-String länger als 65519 Zeichen ist.</exception>
+            weil <paramref name="path"/> eine zu große Datei (> 47 KB) referenziert und der URI-String deshalb länger als 
+            65519 Zeichen wäre.</exception>
             <exception cref="T:System.IO.IOException">E/A-Fehler.</exception>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.DataUrl.GetEmbeddedText">
@@ -3488,7 +3487,7 @@
         </member>
         <member name="T:FolkerKinzel.VCards.MultiAnsiFilter">
             <summary>
-            Hilfsklasse, die dem korrekten Laden von VCF-Dateien dient, die in ANSI-Codepages gespeichert wurden.
+            Hilfsklasse, die dem korrekten Laden von VCF-Dateien des vCard-Standards 2.1 dient, die in verschiedenen ANSI-Codepages gespeichert wurden.
             </summary>
             <threadsafety static="true" instance="false"/>
             <remarks>
@@ -3502,10 +3501,10 @@
             <para>
             Die Klasse ist ein Wrapper um die <see cref="T:FolkerKinzel.VCards.VCard"/>.<see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)"/>-Methode, der zunächst
             prüft, ob die zu
-            ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut mit <see cref="P:FolkerKinzel.VCards.MultiAnsiFilter.FallbackEncoding"/> geladen. Anschließend 
-            wird der Inhalt der so geladenen VCF-Datei
-            nach <c>CHARSET</c>-Parametern durchsucht, die einen Anhaltspunkt über die verwendete Kodierung geben. Erweist sich bei dieser Untersuchung, dass diese
-            Kodierung von der Kodierung abweicht, mit der die VCF-Datei geladen wurde, wird sie mit der ermittelten Kodierung erneut geladen.
+            ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut mit dem durch <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName"/> 
+            spezifizierten <see cref="T:System.Text.Encoding"/> geladen. Anschließend wird der Inhalt der so geladenen VCF-Datei
+            nach <c>CHARSET</c>-Parametern durchsucht, die einen Hinweis auf die tatsächlich verwendete Kodierung geben. Erweist sich bei dieser Untersuchung, 
+            dass diese Kodierung von der Kodierung abweicht, mit der die VCF-Datei geladen wurde, wird die Datei mit der ermittelten Kodierung erneut geladen.
             </para>
             
             <para>
@@ -3516,7 +3515,7 @@
             Verwenden Sie die Klasse nur dann, wenn Sie es auch mit vCard 2.1 - Dateien zu tun haben, denn nur in diesem Standard existieren 
             <c>CHARSET</c>-Parameter. Zwar können auch VCF-Dateien des Standards vCard 3.0
             ANSI-kodiert sein, aber diese enthalten eben keinen 
-            <c>CHARSET</c>-Parameter. Deshalb ist zum Erkennen ANSI-kodierter vCard 3.0 - Dateien die Klasse <see cref="T:FolkerKinzel.VCards.AnsiFilter"/> effizienter. 
+            <c>CHARSET</c>-Parameter. Deshalb ist zum Erkennen ANSI-kodierter vCard 3.0 - Dateien die Verwendung der Klasse <see cref="T:FolkerKinzel.VCards.AnsiFilter"/> effizienter. 
             </para>
             </remarks>
             <example>
@@ -3524,36 +3523,42 @@
             <code language="cs" source="..\Examples\MultiAnsiFilterExample.cs"/>
             </example>
         </member>
-        <member name="F:FolkerKinzel.VCards.MultiAnsiFilter._filter">
+        <member name="F:FolkerKinzel.VCards.MultiAnsiFilter._encodingCache">
             ///////////////////////////////////////////////////////////////////////////////////////////////////
         </member>
-        <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.#ctor(FolkerKinzel.VCards.AnsiFilter)">
+        <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.#ctor(System.Int32)">
             <summary>
-            Initialisiert ein ein <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter"/>-Objekt mit einem <see cref="T:FolkerKinzel.VCards.AnsiFilter"/>-Objekt.
+            Initialisiert eine Instanz der <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter"/>-Klasse mit der Nummer
+            der Codepage des <see cref="T:System.Text.Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, 
+            die nicht im UTF-8-Format vorliegen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, 
+            der die Verwendung eines anderen <see cref="T:System.Text.Encoding"/>s nahelegt.
             </summary>
-            <param name="filter">Ein <see cref="T:FolkerKinzel.VCards.AnsiFilter"/>-Objekt,
-            das ein <see cref="P:FolkerKinzel.VCards.MultiAnsiFilter.FallbackEncoding"/> zur Verfügung stellt, das zum Laden einer VCF-Datei verwendet wird,
-            wenn diese nicht als UTF-8
-            geladen werden kann und sich in der Datei keine Hinweise zur Verwendung eines anderen <see cref="T:System.Text.Encoding"/>-Objekts
-            finden.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="filter"/> ist <c>null</c>.</exception>
+            <param name="fallbackCodePage">Die Nummer der Codepage des <see cref="T:System.Text.Encoding"/>-Objekts.</param>
+            <exception cref="T:System.ArgumentException">Die für <paramref name="fallbackCodePage"/> angegebene Nummer
+            konnte keiner ANSI-Codepage zugeordnet werden.</exception>
         </member>
-        <member name="P:FolkerKinzel.VCards.MultiAnsiFilter.FallbackEncoding">
+        <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.#ctor(System.String)">
             <summary>
-            Das <see cref="T:System.Text.Encoding"/>-Objekt, das zum Laden von VCF-Dateien verwendet wird, die nicht
-            als UTF-8 gespeichert sind, wenn in der VCF-Datei kein <c>CHARSET</c>-Parameter gefunden wurde, der einen anderen
-            Zeichensatz verlangt.
+            Initialisiert eine Instanz der <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter"/>-Klasse mit dem <see cref="P:System.Text.Encoding.WebName"/> des 
+            <see cref="T:System.Text.Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die kein nicht im UTF-8-Format
+            vorliegen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, der die Verwendung eines anderen
+            <see cref="T:System.Text.Encoding"/>s nahelegt.
             </summary>
+            <param name="fallbackEncodingWebName"><see cref="P:System.Text.Encoding.WebName"/> des <see cref="T:System.Text.Encoding"/>-Objekts.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="fallbackEncodingWebName"/> ist <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">Der für <paramref name="fallbackEncodingWebName"/> angegebene Bezeichner
+            konnte keiner ANSI-Codepage zugeordnet werden.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.LoadVcf(System.String,System.Text.Encoding@)">
+        <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.LoadVcf(System.String,System.String@)">
             <summary>
-            Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit <see cref="P:FolkerKinzel.VCards.MultiAnsiFilter.FallbackEncoding"/>
+            Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit dem durch 
+            <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName"/> spezifizierten <see cref="T:System.Text.Encoding"/>
             oder - falls die VCF-Datei einen <c>CHARSET</c>-Parameter enthält - mit einer entsprechenden Kodierung.
             </summary>
             
             <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
-            <param name="enc">Das <see cref="T:System.Text.Encoding"/>-Objekt, das zum Laden der VCF-Datei verwendet wurde. Der Parameter 
-            wird uninitialisiert übergeben.</param>
+            <param name="encodingWebName"><see cref="P:System.Text.Encoding.WebName"/>-Eigenschaft des <see cref="T:System.Text.Encoding"/>-Objekts,
+            mit dem die VCF-Datei geladen wurde. Der Parameter wird uninitialisiert übergeben.</param>
              
             <returns>Eine Sammlung geparster <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
             

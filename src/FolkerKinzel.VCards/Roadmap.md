@@ -8,6 +8,7 @@
 - [ ] Remove the `DataUrl` class and the `MimeType` classes and replace it with something new and better like
 `FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
 - [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`
+- [ ] Review `DataProperty` completely. Let the user via `VcfOptions` decide whether to have a length restriction for embedded data or not
 
 ### 5.0.0
 - [x] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`

@@ -35,6 +35,10 @@ namespace FolkerKinzel.VCards;
 /// zurückgreifen, die zusätzlich in den eingelesenen vCard-Dateien noch nach <c>CHARSET</c>-Parametern fahndet.
 /// </para>
 /// </remarks>
+/// <example>
+/// <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
+/// <code language="cs" source="..\Examples\AnsiFilterExample.cs"/>
+/// </example>
 public class AnsiFilter
 {
     private readonly UTF8Encoding _utf8 = new(false, true);
@@ -44,10 +48,10 @@ public class AnsiFilter
 
     /// <summary>
     /// Initialisiert eine Instanz der <see cref="AnsiFilter"/>-Klasse mit der Nummer
-    /// der für das Lesen von ANSI-VCF-Dateien zu verwendenden Codepage.
+    /// der Codepage, die für das Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format vorliegen.
     /// </summary>
-    /// <param name="fallbackCodePage">Die Codepagenummer
-    /// der für das Lesen von ANSI-VCF-Dateien zu verwendenden Codepage.</param>
+    /// <param name="fallbackCodePage">Die Nummer der Codepage. Default ist
+    /// 1252 für windows-1252.</param>
     /// <exception cref="ArgumentException">Die für <paramref name="fallbackCodePage"/> angegebene Nummer
     /// konnte keiner ANSI-Codepage zugeordnet werden.</exception>
     public AnsiFilter(int fallbackCodePage = 1252)
@@ -58,12 +62,9 @@ public class AnsiFilter
 
     /// <summary>
     /// Initialisiert eine Instanz der <see cref="AnsiFilter"/>-Klasse mit dem <see cref="Encoding.WebName"/> des 
-    /// <see cref="Encoding"/>-Objekts, das zum Lesen von
-    /// ANSI-VCF-Dateien verwendet werden soll.
+    /// <see cref="Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format vorliegen.
     /// </summary>
-    /// <param name="fallbackEncodingWebName"><see cref="Encoding.WebName"/> des 
-    /// <see cref="Encoding"/>-Objekts, das zum Lesen von
-    /// ANSI-VCF-Dateien verwendet werden soll.</param>
+    /// <param name="fallbackEncodingWebName"><see cref="Encoding.WebName"/> des <see cref="Encoding"/>-Objekts.</param>
     /// <exception cref="ArgumentNullException"><paramref name="fallbackEncodingWebName"/> ist <c>null</c>.</exception>
     /// <exception cref="ArgumentException">Der für <paramref name="fallbackEncodingWebName"/> angegebene Bezeichner
     /// konnte keiner ANSI-Codepage zugeordnet werden.</exception>
@@ -80,13 +81,14 @@ public class AnsiFilter
 
     /// <summary>
     /// <see cref="Encoding.WebName"/>-Eigenschaft des <see cref="Encoding"/>-Objekts, das zum Laden von VCF-Dateien verwendet wird, 
-    /// die nicht als UTF-8 gespeichert sind.
+    /// die nicht im UTF-8-Format vorliegen.
     /// </summary>
     public string FallbackEncodingWebName => _ansi.WebName;
 
 
     /// <summary>
-    /// Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit <see cref="FallbackEncoding"/>.
+    /// Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit dem durch <see cref="FallbackEncodingWebName"/>
+    /// spezifizierten <see cref="Encoding"/>.
     /// </summary>
     /// 
     /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
