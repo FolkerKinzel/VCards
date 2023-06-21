@@ -292,6 +292,24 @@ public class VCardTests
         VCard.SerializeVcf(stream, null!);
     }
 
+    [TestMethod]
+    public void DeserializeTest2()
+    {
+        var stream = new FailStream(new ArgumentOutOfRangeException());
+        using var reader = new StreamReader(stream);
+        IList<VCard> vCards = VCard.DeserializeVcf(reader);
+        Assert.IsNotNull(vCards);
+    }
+
+    [TestMethod]
+    public void DeserializeTest3()
+    {
+        var stream = new FailStream(new OutOfMemoryException());
+        using var reader = new StreamReader(stream);
+        IList<VCard> vCards = VCard.DeserializeVcf(reader);
+        Assert.IsNotNull(vCards);
+    }
+
     //[TestMethod]
     //public void EqualsTest1()
     //{

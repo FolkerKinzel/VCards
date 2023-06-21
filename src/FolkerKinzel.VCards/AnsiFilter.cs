@@ -46,6 +46,7 @@ public class AnsiFilter
 
     internal const int UTF8_CODEPAGE = 65001;
 
+
     /// <summary>
     /// Initialisiert eine Instanz der <see cref="AnsiFilter"/>-Klasse mit der Nummer
     /// der Codepage, die für das Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format vorliegen.
@@ -59,6 +60,7 @@ public class AnsiFilter
         _ansi = TextEncodingConverter.GetEncoding(fallbackCodePage);
         ThrowArgumentExceptionIfUtf8(nameof(fallbackCodePage));
     }
+
 
     /// <summary>
     /// Initialisiert eine Instanz der <see cref="AnsiFilter"/>-Klasse mit dem <see cref="Encoding.WebName"/> des 

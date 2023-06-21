@@ -50,76 +50,77 @@ internal class VcfReader : IEnumerable<VcfRow>
         return false;
     }
 
-    public IEnumerator<VcfRow> GetEnumerator()
+    private bool ReadNextLine([NotNullWhen(true)] out string? s)
     {
-        // Die TextReader.ReadLine()-Methode normalisiert die Zeilenwechselzeichen!
-
-        Debug.WriteLine("");
-
-        string? s;
-
-        if (EOF)
+        try
         {
-            yield break;
+            s = _reader.ReadLine();
         }
+        catch (Exception e)
+        {
+            if (!HandleException(e))
+            {
+                throw;
+            }
+            EOF = true;
+            s = null;
+            return false;
+        }
+
+        if (s is null)
+        {
+            EOF = true;
+            return false;
+        }
+        return true;
+    }
+
+    private bool FindBeginVcard()
+    {
+        string? s;
 
         do //findet den Anfang der vCard
         {
-            try
+            if (!ReadNextLine(out s))
             {
-                s = _reader.ReadLine();
-            }
-            catch(Exception e)
-            {
-                if (HandleException(e))
-                {
-                    yield break;
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            if (s is null) //Dateiende
-            {
-                this.EOF = true;
-                yield break;
+                return false;
             }
 
             Debug.WriteLine(s);
 
         } while (!s.StartsWith(BEGIN_VCARD, StringComparison.OrdinalIgnoreCase));
 
-       
+        return true;
+    }
+
+    public IEnumerator<VcfRow> GetEnumerator()
+    {
+        // Die TextReader.ReadLine()-Methode normalisiert die Zeilenwechselzeichen!
+
+        Debug.WriteLine("");
+
+
+        if (EOF)
+        {
+            yield break;
+        }
+
+        if (!FindBeginVcard())
+        {
+            yield break;
+        }
 
         _ = _info.Builder.Clear(); // nötig, wenn die vcf-Datei mehrere vCards enthält
-
 
         bool isFirstLine = true;
         bool isVcard_2_1 = _versionHint == VCdVersion.V2_1;
 
+        string? s;
         do
         {
-            try
+            if(!ReadNextLine(out s))
             {
-                s = _reader.ReadLine();
-            }
-            catch(Exception e)
-            {
-                if (HandleException(e))
-                {
-                    yield break;
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            if (s is null) // Dateiende: Sollte END:VCARD fehlen, wird die vCard nicht gelesen.
-            {
-                EOF = true;
+                // Dateiende: Sollte END:VCARD fehlen, wird die vCard nicht gelesen.
                 yield break;
             }
 
@@ -298,19 +299,8 @@ internal class VcfReader : IEnumerable<VcfRow>
 
         while (s.Length == 0 || s[s.Length - 1] == '=')
         {
-            try
+            if(!ReadNextLine(out s))
             {
-                s = _reader.ReadLine();
-            }
-            catch
-            {
-                EOF = true;
-                return false;
-            }
-
-            if (s is null)
-            {
-                EOF = true;
                 return false;
             }
 
@@ -341,19 +331,8 @@ internal class VcfReader : IEnumerable<VcfRow>
         {
             _ = _info.Builder.Append(s);
 
-            try
+            if(!ReadNextLine(out s))
             {
-                s = _reader.ReadLine();
-            }
-            catch
-            {
-                EOF = true;
-                return false;
-            }
-
-            if (s is null) // EOF
-            {
-                EOF = true;
                 return false;
             }
 
@@ -368,6 +347,7 @@ internal class VcfReader : IEnumerable<VcfRow>
         return true;
     }
 
+ 
 
     private bool ConcatNested_2_1Vcard(string? s)
     {
@@ -377,19 +357,8 @@ internal class VcfReader : IEnumerable<VcfRow>
 
         do
         {
-            try
+            if(!ReadNextLine(out s))
             {
-                s = _reader.ReadLine();
-            }
-            catch
-            {
-                EOF = true;
-                return false;
-            }
-
-            if (s is null)
-            {
-                EOF = true;
                 return false;
             }
 

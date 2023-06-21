@@ -21,10 +21,10 @@ namespace FolkerKinzel.VCards.Tests
             Assert.IsNotNull(vCards[0]);
             IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
             Assert.IsNotNull(addresses);
-            Assert.AreEqual(3, addresses.Count());
+            Assert.AreEqual(3, addresses!.Count());
             const string street = "Business-Straße 19";
-            Assert.IsNotNull(addresses.FirstOrDefault(
-                x => x.Parameters.Label.Contains(street) &&
+            Assert.IsNotNull(addresses!.FirstOrDefault(
+                x => x!.Parameters!.Label!.Contains(street) &&
                      x.Value.Street.Contains(street)));
         }
     }

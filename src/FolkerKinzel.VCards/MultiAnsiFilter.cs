@@ -56,11 +56,14 @@ public sealed class MultiAnsiFilter : AnsiFilter
     {
         private readonly Dictionary<string, Encoding?> _cache = new(StringComparer.OrdinalIgnoreCase);
 
+
         public EncodingCache(string fallbackEncodingWebName)
         {
             _cache[fallbackEncodingWebName] = null;
             _cache["utf-8"] = null;
         }
+
+
         internal Encoding? GetEncoding(string charSet)
         {
             if(_cache.ContainsKey(charSet))
