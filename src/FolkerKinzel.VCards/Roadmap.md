@@ -8,7 +8,10 @@
 - [ ] Remove the `DataUrl` class and the `MimeType` classes and replace it with something new and better like
 `FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
 - [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`
-- [ ] Review `DataProperty` completely. Let the user via `VcfOptions` decide whether to have a length restriction for embedded data or not
+- [ ] Review `DataProperty` completely:
+     - Let the users set the length restriction for embedded content themselves independently for reading and writing
+     - Embedded binary content should be parsed as a Byte-Array, embedded text as text (More memory efficient)
+     - Add methods `static DataProperty.FromFile(string fileName, bool embedAsText = false, Encoding? textEncoding = null)` and `DataProperty.SaveFile(string)`
 
 ### 5.0.0
 - [x] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`
