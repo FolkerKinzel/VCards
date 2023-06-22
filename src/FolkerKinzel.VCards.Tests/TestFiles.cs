@@ -30,7 +30,9 @@ internal static class TestFiles
 
     internal static string AnsiIssueVcf => Path.Combine(_testFileDirectory, "AnsiIssue.vcf");
     internal static string LabelIssueVcf => Path.Combine(_testFileDirectory, "LabelIssue.vcf");
-    internal static string LabelTestVcf => Path.Combine(_testFileDirectory, "LabelTest.vcf");
+    internal static string LabelTest1Vcf => Path.Combine(_testFileDirectory, "LabelTest1.vcf");
+    internal static string LabelTest2Vcf => Path.Combine(_testFileDirectory, "LabelTest2.vcf");
+
 
     internal static string MultiAnsiFilterTests_HebrewVcf => Path.Combine(_testFileDirectory, "MultiAnsiFilterTests", "Hebrew.vcf");
     internal static string MultiAnsiFilterTests_GreekVcf => Path.Combine(_testFileDirectory, "MultiAnsiFilterTests", "Greek.vcf");

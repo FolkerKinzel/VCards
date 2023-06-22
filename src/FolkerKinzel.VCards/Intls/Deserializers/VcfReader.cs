@@ -52,6 +52,7 @@ internal class VcfReader : IEnumerable<VcfRow>
 
     private bool ReadNextLine([NotNullWhen(true)] out string? s)
     {
+        // Die TextReader.ReadLine()-Methode normalisiert die Zeilenwechselzeichen!
         try
         {
             s = _reader.ReadLine();
@@ -95,10 +96,7 @@ internal class VcfReader : IEnumerable<VcfRow>
 
     public IEnumerator<VcfRow> GetEnumerator()
     {
-        // Die TextReader.ReadLine()-Methode normalisiert die Zeilenwechselzeichen!
-
         Debug.WriteLine("");
-
 
         if (EOF)
         {

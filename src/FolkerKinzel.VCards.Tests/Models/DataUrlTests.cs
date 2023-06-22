@@ -26,13 +26,20 @@ public class DataUrlTests
         string test = DATA_PROTOCOL + "text/plain;charset=utf-8" + ";" + DEFAULT_ENCODING + "," + Uri.EscapeDataString(text);
 
         Assert.IsTrue(DataUrl.TryCreate(test, out DataUrl? dataUri));
-        Assert.AreEqual(text, dataUri?.GetEmbeddedText());
+        Assert.AreEqual(text, dataUri!.GetEmbeddedText());
+        //Assert.IsNull(dataUri.GetEmbeddedBytes());
+
 
         dataUri = DataUrl.FromText(text);
         Assert.IsNotNull(dataUri);
+        Assert.AreEqual(text, dataUri.GetEmbeddedText());
 
-        dataUri = DataUrl.FromBytes(new byte[] { 1, 2, 3 }, "application/x-octet");
+
+        var bytes = new byte[] { 1, 2, 3 };
+        dataUri = DataUrl.FromBytes(bytes, "application/x-octet");
         Assert.IsNotNull(dataUri);
+        CollectionAssert.AreEqual(bytes, dataUri.GetEmbeddedBytes());
+        Assert.IsNull(dataUri.GetEmbeddedText());
     }
 
 
