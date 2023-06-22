@@ -21,6 +21,8 @@ internal static class TestFiles
     internal static string PhotoOutlookV2vcf => Path.Combine(_testFileDirectory, "Photo Outlook v2.vcf");
     internal static string OutlookV2vcf => Path.Combine(_testFileDirectory, "Outlook v2.vcf");
     internal static string V2vcf => Path.Combine(_testFileDirectory, "v2_1.vcf");
+    internal static string Cropped_2_1vcf => Path.Combine(_testFileDirectory, "Cropped_2_1.vcf");
+
     internal static string V3vcf => Path.Combine(_testFileDirectory, "v3.vcf");
     internal static string V4vcf => Path.Combine(_testFileDirectory, "v4.vcf");
     internal static string PhotoV3vcf => Path.Combine(_testFileDirectory, "Photo v3.vcf");
@@ -28,6 +30,7 @@ internal static class TestFiles
 
     internal static string AnsiIssueVcf => Path.Combine(_testFileDirectory, "AnsiIssue.vcf");
     internal static string LabelIssueVcf => Path.Combine(_testFileDirectory, "LabelIssue.vcf");
+    internal static string LabelTestVcf => Path.Combine(_testFileDirectory, "LabelTest.vcf");
 
     internal static string MultiAnsiFilterTests_HebrewVcf => Path.Combine(_testFileDirectory, "MultiAnsiFilterTests", "Hebrew.vcf");
     internal static string MultiAnsiFilterTests_GreekVcf => Path.Combine(_testFileDirectory, "MultiAnsiFilterTests", "Greek.vcf");

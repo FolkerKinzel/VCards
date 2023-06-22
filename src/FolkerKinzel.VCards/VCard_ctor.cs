@@ -463,10 +463,12 @@ public sealed partial class VCard
 
         if (labelRow.Parameters.PropertyClass.HasValue && labelRow.Parameters.AddressType.HasValue)
         {
-            AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
-                .FirstOrDefault(
-                x => x!.Parameters.PropertyClass.IsSet(labelRow.Parameters.PropertyClass.Value) &&
-                     x.Parameters.AddressType.IsSet(labelRow.Parameters.AddressType.Value));
+            AddressProperty? address = addresses
+                .Where(x => x!.Parameters.Label is null &&
+                            x.Parameters.PropertyClass.IsSet(labelRow.Parameters.PropertyClass.Value) &&
+                            x.Parameters.AddressType.IsSet(labelRow.Parameters.AddressType.Value) &&
+                            x.Parameters.Preference == labelRow.Parameters.Preference)
+                .FirstOrDefault();
 
             if (address != null)
             {
@@ -476,9 +478,11 @@ public sealed partial class VCard
         }
         else if (labelRow.Parameters.PropertyClass.HasValue)
         {
-            AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
-                .FirstOrDefault(
-                x => x!.Parameters.PropertyClass.IsSet(labelRow.Parameters.PropertyClass.Value));
+            AddressProperty? address = addresses
+                .Where(x => x!.Parameters.Label is null && 
+                            x.Parameters.PropertyClass.IsSet(labelRow.Parameters.PropertyClass.Value) &&
+                            x.Parameters.Preference == labelRow.Parameters.Preference)
+                .FirstOrDefault();
 
             if (address != null)
             {
@@ -488,9 +492,11 @@ public sealed partial class VCard
         }
         else if (labelRow.Parameters.AddressType.HasValue)
         {
-            AddressProperty? address = addresses.OrderBy(x => x!.Parameters.Preference)
-                .FirstOrDefault(
-                x => x!.Parameters.AddressType.IsSet(labelRow.Parameters.AddressType.Value));
+            AddressProperty? address = addresses
+                .Where(x => x!.Parameters.Label is null && 
+                            x.Parameters.AddressType.IsSet(labelRow.Parameters.AddressType.Value) &&
+                            x.Parameters.Preference == labelRow.Parameters.Preference)
+                .FirstOrDefault();
 
             if (address != null)
             {
@@ -502,7 +508,10 @@ public sealed partial class VCard
         Debug.Assert(addresses.Any());
         Debug.Assert(!addresses.Any(x => x is null));
 
-        AddressProperty? addressWithEmptyLabel = addresses.OrderBy(x => x!.Parameters.Preference).FirstOrDefault(x => x!.Parameters.Label is null);
+        AddressProperty? addressWithEmptyLabel = addresses
+            .Where(x => x!.Parameters.Label is null &&
+                        x.Parameters.Preference == labelRow.Parameters.Preference)
+            .FirstOrDefault();
 
         if (addressWithEmptyLabel is null)
         {
@@ -517,8 +526,8 @@ public sealed partial class VCard
         static AddressProperty CreateEmptyAddressPropertyWithLabel(VcfRow vcfRow)
         {
             var adrProp = new AddressProperty();
-            adrProp.Parameters.Label = vcfRow.Value;
             adrProp.Parameters.Assign(vcfRow.Parameters);
+            adrProp.Parameters.Label = vcfRow.Value;
             return adrProp;
         }
 

@@ -310,6 +310,14 @@ public class VCardTests
         Assert.IsNotNull(vCards);
     }
 
+    [TestMethod]
+    public void LoadCropped_2_1Test()
+    {
+        var vCards = VCard.LoadVcf(TestFiles.Cropped_2_1vcf);
+        Assert.IsNotNull(vCards);
+        Assert.AreEqual(1, vCards.Count);
+    }
+
     //[TestMethod]
     //public void EqualsTest1()
     //{

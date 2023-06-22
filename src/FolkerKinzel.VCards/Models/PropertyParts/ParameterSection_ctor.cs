@@ -326,6 +326,7 @@ public sealed partial class ParameterSection
 
         switch (propertyKey)
         {
+            case VCard.PropKeys.LABEL:
             case VCard.PropKeys.ADR:
                 {
                     AddressTypes? addressType = AddressTypesConverter.Parse(typeValue);

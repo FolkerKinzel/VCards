@@ -27,5 +27,19 @@ namespace FolkerKinzel.VCards.Tests
                 x => x!.Parameters!.Label!.Contains(street) &&
                      x.Value.Street.Contains(street)));
         }
+
+        [TestMethod]
+        public void LabelTest()
+        {
+            var filter = new AnsiFilter();
+            IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelTestVcf, out string enc);
+            Assert.IsNotNull(vCards);
+            Assert.AreEqual(1, vCards.Count);
+            Assert.IsNotNull(vCards[0]);
+            IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
+            Assert.IsNotNull(addresses);
+            Assert.AreEqual(3, addresses!.Count());
+
+        }
     }
 }

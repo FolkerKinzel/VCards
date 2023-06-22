@@ -120,7 +120,6 @@ internal class VcfReader : IEnumerable<VcfRow>
         {
             if(!ReadNextLine(out s))
             {
-                // Dateiende: Sollte END:VCARD fehlen, wird die vCard nicht gelesen.
                 yield break;
             }
 
@@ -131,7 +130,6 @@ internal class VcfReader : IEnumerable<VcfRow>
                 isFirstLine = false;
                 isVcard_2_1 = GetIsVcard_2_1(s);
             }
-
 
             if (s.Length != 0 && char.IsWhiteSpace(s[0])) //vCard-Wrapping (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
             {
