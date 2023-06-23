@@ -3,16 +3,24 @@
 
 ### 6.0.0
 - [ ] End .NET Framework 4.0 support.
+- [ ] Think of a consistent naming of enums.
 - [ ] Use the HashCode struct to compute hash codes.
 - [ ] Add DateOnlyProperty. (Use nuget package Portable.System.DateTimeOnly.)
 - [ ] Remove the `DataUrl` class and the `MimeType` classes and replace it with something new and better like
 `FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
 - [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`
 - [ ] Review `DataProperty` completely:
-     - Let the users set the length restriction for embedded content themselves independently for reading and writing
-     - Embedded binary content should be parsed as a Byte-Array, embedded text as text (More memory efficient)
-     - Add methods `static DataProperty.FromFile(string fileName, bool embedAsText = false, Encoding? textEncoding = null)` and `DataProperty.SaveFile(string)`
-
+     - `DataProperty` should be the abstract base class of `EmbeddedBytesProperty`, `EmbeddedTextProperty` and `ReferencedContentProperty`
+        - The value of `EmbeddedBytesProperty` should be `ReadOnlyCollection<byte>`.
+        - The value of `EmbeddedTextProperty` should be `string`.
+        - The value of `ReferencedContentProperty` should be `System.Uri`.
+     - The `VCard` parse and serialize methods should have an optional parameter `embeddedContentSize` which defaults to the enum value `VCdSizeRestriction.UriLength` to enable the users to set or remove the size restriction for embedded content themselves.
+     - Add methods
+       -  `static EmbeddedBytesProperty.FromFile(string fileName)`
+       -  `EmbeddedBytesProperty.SaveFile(string fileName)`
+       -  `static EmbeddedTextProperty.FromFile(string fileName, Encoding? textEncoding = null)`
+       -  `EmbeddedTextProperty.SaveFile(string fileName, Encoding? textEncoding = null)`
+       
 ### 5.0.0
 - [x] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`
 - [x] Rename `VCdParam.Charset` to `VCdParam.CharSet`
