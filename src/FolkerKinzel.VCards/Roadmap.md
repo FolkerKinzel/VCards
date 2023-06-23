@@ -24,7 +24,7 @@
 ### 5.0.0
 - [x] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`
 - [x] Rename `VCdParam.Charset` to `VCdParam.CharSet`
-- [x] `VCard.LoadVcf` and `VCard.DeserializeVcf` should not eat too many exceptions
+- [x] `VCard.LoadVcf`, `VCard.ParseVcf` and `VCard.DeserializeVcf` should not eat too many exceptions
 - [x] Add `AnsiFilter` class
 - [x] Add `MultiAnsiFilter` class
 - [x] Fix an issue that LABEL properties from vCard 2.1 might be assigned to the false Address
