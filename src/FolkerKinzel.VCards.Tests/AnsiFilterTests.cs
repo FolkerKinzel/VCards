@@ -20,6 +20,16 @@ public class AnsiFilterTests
         Assert.AreEqual(filter.FallbackEncodingWebName, encodingWebName, true);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
+        Assert.AreEqual("Lämmerweg 12", vCards[0].Addresses!.First()!.Value.Street.First());
+    }
+
+    [TestMethod]
+    public void AnsiFilterTest10()
+    {
+        IList<VCard> vCards = new AnsiFilter().LoadVcf(TestFiles.AnsiIssueVcf);
+        Assert.IsNotNull(vCards);
+        Assert.AreEqual(1, vCards.Count);
+        Assert.AreEqual("Lämmerweg 12", vCards[0].Addresses!.First()!.Value.Street.First());
     }
 
     [TestMethod]

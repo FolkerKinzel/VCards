@@ -73,6 +73,34 @@ namespace FolkerKinzel.VCards.Tests
         }
 
         [TestMethod]
+        public void LoadVcfTest2()
+        {
+            var filter = new MultiAnsiFilter();
+            Assert.IsNotNull(filter);
+            Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName, true);
+            IList<VCard> vCards = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_Utf8Vcf);
+            Assert.IsNotNull(vCards);
+            Assert.AreEqual(1, vCards.Count);
+            Assert.AreEqual(UTF8, vCards[0]!.DisplayNames!.First()!.Value);
+
+            vCards = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_HebrewVcf);
+            Assert.AreEqual(1, vCards.Count);
+            Assert.AreNotEqual(WIN1255, vCards[0]!.DisplayNames!.First()!.Value);
+
+            vCards = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_GreekVcf);
+            Assert.AreEqual(1, vCards.Count);
+            Assert.AreEqual(WIN1253, vCards[0]!.DisplayNames!.First()!.Value);
+
+            vCards = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_GreekVcf);
+            Assert.AreEqual(1, vCards.Count);
+            Assert.AreEqual(WIN1253, vCards[0]!.DisplayNames!.First()!.Value);
+
+            vCards = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_MurksVcf);
+            Assert.AreEqual(1, vCards.Count);
+            Assert.AreEqual(WIN1252, vCards[0]!.DisplayNames!.First()!.Value);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void MultiAnsiFilterTest2() => _ = new AnsiFilter(4711);
 

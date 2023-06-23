@@ -117,6 +117,21 @@ public sealed class MultiAnsiFilter : AnsiFilter
     public MultiAnsiFilter(string fallbackEncodingWebName) : base(fallbackEncodingWebName) 
         => _encodingCache = new EncodingCache(FallbackEncodingWebName);
 
+    /// <summary>
+    /// Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit dem durch 
+    /// <see cref="AnsiFilter.FallbackEncodingWebName"/> spezifizierten <see cref="Encoding"/>
+    /// oder - falls die VCF-Datei einen <c>CHARSET</c>-Parameter enthält - mit einer entsprechenden Kodierung.
+    /// </summary>
+    /// 
+    /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
+    ///  
+    /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
+    /// 
+    /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
+    /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
+    public override IList<VCard> LoadVcf(string fileName) => LoadVcf(fileName, out _);
+
 
     /// <summary>
     /// Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit dem durch 

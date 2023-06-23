@@ -94,6 +94,21 @@ public class AnsiFilter
     /// </summary>
     /// 
     /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
+    ///  
+    /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
+    /// 
+    /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
+    /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
+    public virtual IList<VCard> LoadVcf(string fileName) => LoadVcf(fileName, out _);
+
+
+    /// <summary>
+    /// Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit dem durch <see cref="FallbackEncodingWebName"/>
+    /// spezifizierten <see cref="Encoding"/>.
+    /// </summary>
+    /// 
+    /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
     /// <param name="encodingWebName"><see cref="Encoding.WebName"/>-Eigenschaft des <see cref="Encoding"/>-Objekts,
     /// mit dem die VCF-Datei geladen wurde. Der Parameter wird uninitialisiert übergeben.</param>
     ///  
