@@ -10,16 +10,20 @@
 `FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
 - [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`
 - [ ] Review `DataProperty` completely:
-     - `DataProperty` should be the abstract base class of `EmbeddedBytesProperty`, `EmbeddedTextProperty` and `ReferencedContentProperty`
-        - The value of `EmbeddedBytesProperty` should be `ReadOnlyCollection<byte>`.
-        - The value of `EmbeddedTextProperty` should be `string`.
-        - The value of `ReferencedContentProperty` should be `System.Uri`.
-     - The `VCard` parse and serialize methods should have an optional parameter `embeddedContentSize` which defaults to the enum value `VCdSizeRestriction.UriLength` to enable the users to set or remove the size restriction for embedded content themselves.
-     - Add methods
-       -  `static EmbeddedBytesProperty.FromFile(string fileName)`
-       -  `EmbeddedBytesProperty.SaveFile(string fileName)`
-       -  `static EmbeddedTextProperty.FromFile(string fileName, Encoding? textEncoding = null)`
-       -  `EmbeddedTextProperty.SaveFile(string fileName, Encoding? textEncoding = null)`
+     - [ ] `DataProperty` should be the abstract base class of `EmbeddedBytesProperty`, `EmbeddedTextProperty` and `ReferencedContentProperty`
+        - [ ] The value of `EmbeddedBytesProperty` should be `ReadOnlyCollection<byte>`.
+        - [ ] The value of `EmbeddedTextProperty` should be `string`.
+        - [ ] The value of `ReferencedContentProperty` should be `System.Uri`.
+     - [ ] The `VCard` parse and serialize methods should have an optional parameter `embeddedContentSize` which defaults to the enum value `VCdSizeRestriction.UriLength` to enable the users to set or remove the size restriction for embedded content themselves.
+     - [ ] Add methods
+       -  [ ] `static EmbeddedBytesProperty.FromFile(string fileName)`
+       -  [ ] `EmbeddedBytesProperty.SaveFile(string fileName)`
+       -  [ ] `static EmbeddedTextProperty.FromFile(string fileName, Encoding? textEncoding = null)`
+       -  [ ] `EmbeddedTextProperty.SaveFile(string fileName, Encoding? textEncoding = null)`
+     - [ ] `DataProperty` should provide an error message (shown in the debugger) if its `Value` could not be parsed.
+- [ ] Implement `VCard.IsEmpty`.
+- [ ] Implement `VCard.Clean()`.
+- [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
        
 ### 5.0.0
 - [x] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`
