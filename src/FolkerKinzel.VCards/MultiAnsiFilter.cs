@@ -106,7 +106,7 @@ public sealed class MultiAnsiFilter : AnsiFilter
 
     /// <summary>
     /// Initialisiert eine Instanz der <see cref="MultiAnsiFilter"/>-Klasse mit dem <see cref="Encoding.WebName"/> des 
-    /// <see cref="Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die kein nicht im UTF-8-Format
+    /// <see cref="Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format
     /// vorliegen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, der die Verwendung eines anderen
     /// <see cref="Encoding"/>s nahelegt.
     /// </summary>

@@ -9,45 +9,57 @@
       <threadsafety static="true" instance="false" />
       <remarks>
         <para>
-VCF files of the vCard 2.1 standard were previously saved by Outlook and Outlook Express in the ANSI encoding of the current Windows system, without always encoding the extended characters with quoted printable encoding. In principle, VCF files of the vCard 3.0 standard can also be ANSI encoded if, e.g., they had been transmitted as an attachment of an e-mail which specified the encoding in its content header. The UTF-8 encoding has been the standard for VCF files only since vCard 4.0.
+VCF files of the vCard 2.1 standard were previously saved by Outlook and Outlook Express in the ANSI encoding of the current Windows system, without always encoding the extended characters with quoted printable encoding. In principle, VCF files of the vCard 3.0 standard can also be ANSI-encoded if, for example, they were transmitted in an e-mail that specified the encoding in its content header. UTF-8 encoding has only been mandatory since vCard 4.0.
 </para>
         <para>
-The class is a wrapper around the <see cref="T:FolkerKinzel.VCards.VCard" />.<see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)" /> method. First does it check whether the file to be loaded represents correct UTF-8. If the check fails, the VCF file is reloaded using the <see cref="T:System.Text.Encoding" /> specified as <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncoding" />.
+The class is a wrapper around the <see cref="T:FolkerKinzel.VCards.VCard" />.<see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)" /> method that first checks whether the file to be loaded represents correct UTF-8. If the check fails, the VCF file is reloaded with an encoding specified as a fallback.
 </para>
         <para>
 The use of the class is not suitable for code that depends on performance, because <see cref="T:System.Text.DecoderFallbackException" />s are caught for evaluation and files may have to be loaded twice.
 </para>
         <para>
-Use the class if you can predict with reasonable certainty what ANSI code page might have been used, or when you are not working with vCard 2.1 files. If you are dealing with vCard 2.1 files that have been saved with different ANSI code pages, you can use the <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter" /> class, which additionally examines the <c>CHARSET</c> parameters of the read VCF files.
+Use the class when you can predict with reasonable certainty what ANSI code page might have been used, or when you are not working with vCard 2.1 files. If you are dealing with vCard 2.1 files that have been saved in different ANSI code pages, you can use the <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter" /> class, which additionally examines the <c>CHARSET</c> parameters.
 </para>
       </remarks>
       <example>
         <note type="note">
 To make the code more readable, exception handling has been omitted from the examples.
 </note>
-        <code language="cs" source="..\Examples\MultiAnsiFilterExample.cs" />
+        <code language="cs" source="..\Examples\AnsiFilterExample.cs" />
       </example>
     </member>
     <member name="M:FolkerKinzel.VCards.AnsiFilter.#ctor(System.Int32)">
-      <summary>Initializes an instance of the <see cref="T:FolkerKinzel.VCards.AnsiFilter" /> class with the number of the code page to use for the reading of ANSI encoded VCF files.</summary>
-      <param name="fallbackCodePage">The number of the code page to use for the reading of ANSI encoded VCF files.</param>
+      <summary>Initializes an instance of the <see cref="T:FolkerKinzel.VCards.AnsiFilter" /> class with the number of the code page to use for the reading of VCF files that are not saved as UTF-8.</summary>
+      <param name="fallbackCodePage">The number of the code page. The default value is 1252 (for windows-1252).</param>
       <exception cref="T:System.ArgumentException">The number specified for <paramref name="fallbackCodePage" /> could not be mapped to an ANSI code page.</exception>
     </member>
     <member name="M:FolkerKinzel.VCards.AnsiFilter.#ctor(System.String)">
-      <summary>Initializes an instance of the <see cref="T:FolkerKinzel.VCards.AnsiFilter" /> class with the <see cref="P:System.Text.Encoding.WebName" /> of the <see cref="T:System.Text.Encoding" /> class that shall be used for the reading of ANSI encoded VCF files.</summary>
-      <param name="fallbackEncodingWebName">The <see cref="P:System.Text.Encoding.WebName" /> of the <see cref="T:System.Text.Encoding" /> class to use for the reading of ANSI encoded VCF files.</param>
+      <summary>Initializes an instance of the <see cref="T:FolkerKinzel.VCards.AnsiFilter" /> class with the <see cref="P:System.Text.Encoding.WebName" /> property of the <see cref="T:System.Text.Encoding" /> object that shall be used for the reading of VCF files that are not UTF-8.</summary>
+      <param name="fallbackEncodingWebName">
+        <see cref="P:System.Text.Encoding.WebName" /> property of the <see cref="T:System.Text.Encoding" /> object.</param>
       <exception cref="T:System.ArgumentNullException">
         <paramref name="fallbackEncodingWebName" /> is <c>null</c>.</exception>
       <exception cref="T:System.ArgumentException">The identifier specified for <paramref name="fallbackEncodingWebName" /> could not be mapped to an ANSI code page.</exception>
     </member>
-    <member name="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncoding">
-      <summary>The <see cref="T:System.Text.Encoding" /> object to use for the reading of VCF files, which are not saved as UTF-8.</summary>
+    <member name="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName">
+      <summary>
+        <see cref="P:System.Text.Encoding.WebName" /> property of the <see cref="T:System.Text.Encoding" /> object, which is used to load VCF files that are not UTF-8.</summary>
     </member>
-    <member name="M:FolkerKinzel.VCards.AnsiFilter.LoadVcf(System.String,System.Boolean@)">
-      <summary>First tries to load a VCF file as UTF-8 and - if this fails - loads it with <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncoding" />.</summary>
+    <member name="M:FolkerKinzel.VCards.AnsiFilter.LoadVcf(System.String)">
+      <summary>Tries to load a VCF file as UTF-8 first and - if that fails - loads it with the <see cref="T:System.Text.Encoding" /> specified with <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName" />.</summary>
       <param name="fileName">Absolute or relative path to a VCF file.</param>
-      <param name="isAnsi">
-        <c>true</c> if the VCF file has been loaded using <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncoding" />, otherwise <c>false</c>. The parameter is passed uninitialized.</param>
+      <returns>A collection of parsed <see cref="T:FolkerKinzel.VCards.VCard" /> objects, which represents the content of the VCF file.</returns>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="fileName" /> is <c>null</c>.</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="fileName" /> is not a valid file path.</exception>
+      <exception cref="T:System.IO.IOException">The file could not be loaded.</exception>
+    </member>
+    <member name="M:FolkerKinzel.VCards.AnsiFilter.LoadVcf(System.String,System.String@)">
+      <summary>Tries to load a VCF file as UTF-8 first and - if that fails - loads it with the <see cref="T:System.Text.Encoding" /> specified with <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName" />.</summary>
+      <param name="fileName">Absolute or relative path to a VCF file.</param>
+      <param name="encodingWebName">
+        <see cref="P:System.Text.Encoding.WebName" /> property of the <see cref="T:System.Text.Encoding" /> object, which had been used to load the VCF file. The parameter is passed uninitialized.</param>
       <returns>A collection of parsed <see cref="T:FolkerKinzel.VCards.VCard" /> objects, which represents the content of the VCF file.</returns>
       <exception cref="T:System.ArgumentNullException">
         <paramref name="fileName" /> is <c>null</c>.</exception>
@@ -557,8 +569,7 @@ Use the <see cref="T:FolkerKinzel.VCards.Models.DataUrl" /> class to embed binar
       <param name="encoding">Specifies the encoding of the data embedded in the <see cref="T:FolkerKinzel.VCards.Models.DataUrl" />.</param>
       <exception cref="T:System.ArgumentNullException">
         <paramref name="uriString" /> is <c>null</c>.</exception>
-      <exception cref="T:System.UriFormatException">
-        <See cref="T:FolkerKinzel.VCards.Models.DataUrl" /> cannot be initialized, e.g. because <paramref name="uriString" /> is longer than 65519 characters.</exception>
+      <exception cref="T:System.UriFormatException">A <see cref="T:FolkerKinzel.VCards.Models.DataUrl" /> cannot be initialized, e.g. because the resulting URI string is longer than 65519 characters.</exception>
     </member>
     <member name="P:FolkerKinzel.VCards.Models.DataUrl.MimeType">
       <summary>Returns the MIME type of the embedded data. (Never <c>null</c>.)</summary>
@@ -592,15 +603,14 @@ This argument is passed uninitialized; any value originally supplied in <paramre
       <summary>Generates a <see cref="T:FolkerKinzel.VCards.Models.DataUrl" /> to embed any text.</summary>
       <param name="text">The text to be embedded in the <see cref="T:FolkerKinzel.VCards.Models.DataUrl" />.</param>
       <returns>A <see cref="T:FolkerKinzel.VCards.Models.DataUrl" />, which holds embedded text.</returns>
-      <exception cref="T:System.FormatException">
-        <See cref="T:FolkerKinzel.VCards.Models.DataUrl" /> cannot be initialized, e.g. because the URI string is longer than 65519 characters.</exception>
+      <exception cref="T:System.FormatException">A <see cref="T:FolkerKinzel.VCards.Models.DataUrl" /> cannot be initialized, e.g., because <paramref name="text" /> is too long and therefore the resulting URI string is longer than 65519 characters.</exception>
     </member>
     <member name="M:FolkerKinzel.VCards.Models.DataUrl.FromBytes(System.Byte[],System.String)">
       <summary>Generates a <see cref="T:FolkerKinzel.VCards.Models.DataUrl" /> to embed binary data.</summary>
       <param name="bytes">The binary data to be embedded in the <see cref="T:FolkerKinzel.VCards.Models.DataUrl" />.</param>
       <param name="mimeType">The MIME type of the data contained in <paramref name="bytes" /> or <c>null</c> for "text/plain;charset=US-ASCII".</param>
       <returns>A <see cref="T:FolkerKinzel.VCards.Models.DataUrl" />, which holds the binary data supplied by <paramref name="bytes" />.</returns>
-      <exception cref="T:System.UriFormatException">A <see cref="T:FolkerKinzel.VCards.Models.DataUrl" /> cannot be initialized, e.g. because the resulting URI string is longer than 65519 characters.</exception>
+      <exception cref="T:System.UriFormatException">A <see cref="T:FolkerKinzel.VCards.Models.DataUrl" /> cannot be initialized, e.g., because <paramref name="bytes" /> is a too long array and therefore the resulting URI string is longer than 65519 characters.</exception>
     </member>
     <member name="M:FolkerKinzel.VCards.Models.DataUrl.FromFile(System.String,System.String)">
       <summary>Creates a <see cref="T:FolkerKinzel.VCards.Models.DataUrl" /> from an existing file.</summary>
@@ -611,7 +621,7 @@ This argument is passed uninitialized; any value originally supplied in <paramre
         <paramref name="path" /> is <c>null</c>.</exception>
       <exception cref="T:System.ArgumentException">
         <paramref name="path" /> is not a valid file path or <paramref name="mimeType" /> is not in a valid format.</exception>
-      <exception cref="T:System.UriFormatException">A <see cref="T:FolkerKinzel.VCards.Models.DataUrl" /> cannot be initialized, e.g. because the resulting URI string is longer than 65519 characters.</exception>
+      <exception cref="T:System.UriFormatException">A <see cref="T:FolkerKinzel.VCards.Models.DataUrl" /> cannot be initialized, e.g., because <paramref name="path" /> references a file that is too large (&gt; 47 KB) and therefore the resulting URI string is longer than 65519 characters.</exception>
       <exception cref="T:System.IO.IOException">I/O error.</exception>
     </member>
     <member name="M:FolkerKinzel.VCards.Models.DataUrl.GetEmbeddedText">
@@ -2334,20 +2344,20 @@ Although the correct assignment is usually successful in this way, this cannot b
       <inheritdoc />
     </member>
     <member name="T:FolkerKinzel.VCards.MultiAnsiFilter">
-      <summary>Helper class used for the correct loading of VCF files saved in an different ANSI code pages.</summary>
+      <summary>Helper class used for the correct loading of vCard 2.1 VCF files that might have been saved in different code pages.</summary>
       <threadsafety static="true" instance="false" />
       <remarks>
         <para>
-VCF files of the vCard 2.1 standard were previously saved by Outlook and Outlook Express in the ANSI encoding of the current Windows system, without the extended characters having been encoded with quoted printable encoding in every case. However, such files sometimes contain a <c>CHARSET</c> parameter at some point, which allows conclusions to be drawn about the encoding used. The way the class works is based on the assumption that only one ANSI encoding was used within a VCF file.
+VCF files of the vCard 2.1 standard were previously saved by Outlook and Outlook Express in the ANSI encoding of the current Windows system, without the extended characters having always been encoded with quoted printable encoding. However, such files sometimes contain a <c>CHARSET</c> parameter at some point, which allows conclusions to be drawn about the encoding used. The way the class works is based on the assumption that only one ANSI encoding was used within a VCF file.
 </para>
         <para>
-The class is a wrapper around the <see cref="T:FolkerKinzel.VCards.VCard" />.<see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)" /> method that first checks whether the file to be loaded represents correct UTF-8. If the check fails, the VCF file is loaded again with <see cref="P:FolkerKinzel.VCards.MultiAnsiFilter.FallbackEncoding" />. The content of the VCF file loaded in this way is then searched for <c>CHARSET</c> parameters that provide an indication of the originally used encoding. If this examination shows that this encoding differs from the encoding with which the VCF file was loaded, it is reloaded with the determined encoding.
+The class is a wrapper around the <see cref="T:FolkerKinzel.VCards.VCard" />.<see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)" /> method that first checks whether the file to be loaded represents correct UTF-8. If the check fails, the VCF file is reloaded with the <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName" /> specified by <see cref="T:System.Text.Encoding" />. Then the content of the VCF file loaded in this way is searched for <c>CHARSET</c> parameters that give an indication of the encoding actually used. If this analysis shows that this encoding differs from the encoding with which the VCF file was loaded, the file is reloaded with the determined encoding.
 </para>
         <para>
 The use of the class is not suitable for code that depends on performance, because <see cref="T:System.Text.DecoderFallbackException" />s are caught for evaluation and files may have to be loaded three times.
 </para>
         <para>
-Only use the class if you are also dealing with vCard 2.1 files, because <c>CHARSET</c> parameters only exist in this standard. Although VCF files of the vCard 3.0 standard can also be ANSI encoded, but they do not contain a <c>CHARSET</c> parameter. Therefore, to recognize ANSI encoded vCard 3.0 files, the class <see cref="T:FolkerKinzel.VCards.AnsiFilter" /> is more efficient.
+Only use the class if you are also dealing with vCard 2.1 files, because <c>CHARSET</c> parameters only exist in this standard. Although VCF files of the vCard 3.0 standard can also be ANSI encoded, they do not contain a <c>CHARSET</c> parameter. Therefore, to recognize ANSI encoded vCard 3.0 files, using the class <see cref="T:FolkerKinzel.VCards.AnsiFilter" /> is more efficient.
 </para>
       </remarks>
       <example>
@@ -2357,22 +2367,37 @@ To make the code more readable, exception handling has been omitted from the exa
         <code language="cs" source="..\Examples\MultiAnsiFilterExample.cs" />
       </example>
     </member>
-    <member name="F:FolkerKinzel.VCards.MultiAnsiFilter._filter">
+    <member name="F:FolkerKinzel.VCards.MultiAnsiFilter._encodingCache">
             ///////////////////////////////////////////////////////////////////////////////////////////////////
         </member>
-    <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.#ctor(FolkerKinzel.VCards.AnsiFilter)">
-      <summary>Initializes a <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter" /> object with a <see cref="T:FolkerKinzel.VCards.AnsiFilter" /> object.</summary>
-      <param name="filter">A <see cref="T:FolkerKinzel.VCards.AnsiFilter" /> object providing a <see cref="P:FolkerKinzel.VCards.MultiAnsiFilter.FallbackEncoding" /> used to load a VCF file if it cannot be loaded as UTF-8 and there are no hints in the file to use another <see cref="T:System.Text.Encoding" /> object.</param>
+    <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.#ctor(System.Int32)">
+      <summary>Initializes an instance of the <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter" /> class with the code page number of the <see cref="T:System.Text.Encoding" /> object to use for the reading of VCF files, which are not UTF-8 and which do not contain a hint in their <c>CHARSET</c> parameters that suggests the use of a different <see cref="T:System.Text.Encoding" />.</summary>
+      <param name="fallbackCodePage">The number of the code page. The default value is 1252 (for windows-1252).</param>
+      <exception cref="T:System.ArgumentException">The number specified for <paramref name="fallbackCodePage" /> could not be mapped to an ANSI code page.</exception>
+    </member>
+    <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.#ctor(System.String)">
+      <summary>Initializes an instance of the <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter" /> class with the <see cref="P:System.Text.Encoding.WebName" /> of the <see cref="T:System.Text.Encoding" /> object to be used for reading VCF files that are UTF-8 and that do not contain a hint in their <c>CHARSET</c> parameters to indicate the usage of a different <see cref="T:System.Text.Encoding" />.</summary>
+      <param name="fallbackEncodingWebName">
+        <see cref="P:System.Text.Encoding.WebName" /> property of the <see cref="T:System.Text.Encoding" /> object.</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="filter" /> is <c>null</c>.</exception>
+        <paramref name="fallbackEncodingWebName" /> is <c>null</c>.</exception>
+      <exception cref="T:System.ArgumentException">The identifier specified for <paramref name="fallbackEncodingWebName" /> could not be mapped to an ANSI code page.</exception>
     </member>
-    <member name="P:FolkerKinzel.VCards.MultiAnsiFilter.FallbackEncoding">
-      <summary>The <see cref="T:System.Text.Encoding" /> object used to load VCF files which are not saved as UTF-8 if there was no <c>CHARSET</c>  parameter  found in these files requiring a different character set.</summary>
-    </member>
-    <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.LoadVcf(System.String,System.Text.Encoding@)">
-      <summary>First tries to load a VCF file as UTF-8 and - if this fails - loads it with <see cref="P:FolkerKinzel.VCards.MultiAnsiFilter.FallbackEncoding" /> or - if the VCF file contains a <c>CHARSET </c> parameter - with an appropriate encoding.</summary>
+    <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.LoadVcf(System.String)">
+      <summary>Tries to load a VCF file as UTF-8 first and - if that fails - loads it with the <see cref="T:System.Text.Encoding" /> specified with <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName" /> or - if the VCF file contains a <c>CHARSET</c> parameter - with a corresponding <see cref="T:System.Text.Encoding" />.</summary>
       <param name="fileName">Absolute or relative path to a VCF file.</param>
-      <param name="enc">The <see cref="T:System.Text.Encoding" /> object used to load the file. The parameter is passed uninitialized.</param>
+      <returns>A collection of parsed <see cref="T:FolkerKinzel.VCards.VCard" /> objects, which represents the content of the VCF file.</returns>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="fileName" /> is <c>null</c>.</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="fileName" /> is not a valid file path.</exception>
+      <exception cref="T:System.IO.IOException">The file could not be loaded.</exception>
+    </member>
+    <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.LoadVcf(System.String,System.String@)">
+      <summary>Tries to load a VCF file as UTF-8 first and - if that fails - loads it with the <see cref="T:System.Text.Encoding" /> specified with <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName" /> or - if the VCF file contains a <c>CHARSET</c> parameter - with a corresponding <see cref="T:System.Text.Encoding" />.</summary>
+      <param name="fileName">Absolute or relative path to a VCF file.</param>
+      <param name="encodingWebName">
+        <see cref="P:System.Text.Encoding.WebName" /> property of the <see cref="T:System.Text.Encoding" /> object, which had been used to load the VCF file. The parameter is passed uninitialized.</param>
       <returns>A collection of parsed <see cref="T:FolkerKinzel.VCards.VCard" /> objects, which represents the content of the VCF file.</returns>
       <exception cref="T:System.ArgumentNullException">
         <paramref name="fileName" /> is <c>null</c>.</exception>

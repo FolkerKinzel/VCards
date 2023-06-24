@@ -3554,7 +3554,7 @@
         <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.#ctor(System.String)">
             <summary>
             Initialisiert eine Instanz der <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter"/>-Klasse mit dem <see cref="P:System.Text.Encoding.WebName"/> des 
-            <see cref="T:System.Text.Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die kein nicht im UTF-8-Format
+            <see cref="T:System.Text.Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format
             vorliegen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, der die Verwendung eines anderen
             <see cref="T:System.Text.Encoding"/>s nahelegt.
             </summary>
