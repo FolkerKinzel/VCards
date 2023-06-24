@@ -12,7 +12,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>5.0.0-beta.1</Version>
-    <FileVersion>5.0.0.53</FileVersion>
+    <FileVersion>5.0.0.57</FileVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v5.0.0-beta.1</PackageReleaseNotes>
@@ -35,7 +35,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageReadmeFile>NugetReadme.md</PackageReadmeFile>
   </PropertyGroup>
   <!-- 👇 disable the nullable warnings when compiling for .NET 4.0 -->
   <PropertyGroup Condition="'$(TargetFramework)' == 'net40' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net461'">
@@ -54,6 +54,10 @@
     <None Include="..\..\..\..\Nuget-Logo\Logo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\NugetReadme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -134,12 +138,6 @@
     <None Include="Translations\de\FolkerKinzel.VCards.xml">
       <Pack>True</Pack>
       <PackagePath>lib\net40\de</PackagePath>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="readme.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
