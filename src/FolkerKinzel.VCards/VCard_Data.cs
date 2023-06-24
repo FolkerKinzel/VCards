@@ -38,6 +38,19 @@ public sealed partial class VCard
         }
     }
 
+    private static bool IsPropertyEmpty(VCardProperty prop) =>
+        prop.IsEmpty && (prop is not AddressProperty || prop.Parameters.Label is null);
+
+
+    public bool IsEmpty =>
+        !_propDic
+            .Select(x => x.Value)
+            .Any(x => x switch
+            {
+                VCardProperty prop => !IsPropertyEmpty(prop),
+                IEnumerable<VCardProperty?> numerable => numerable.Where(x => x is not null).Any(x => !IsPropertyEmpty(x)),
+                _ => false
+            });
 
 
     /// <summary>

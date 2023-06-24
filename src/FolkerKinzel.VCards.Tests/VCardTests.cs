@@ -318,6 +318,42 @@ public class VCardTests
         Assert.AreEqual(1, vCards.Count);
     }
 
+    [TestMethod]
+    public void IsEmptyTest1()
+    {
+        var vc = new VCard();
+        Assert.IsTrue(vc.IsEmpty);
+
+        var adr = new AddressProperty("  ", null, "");
+        adr.Parameters.Label = "  ";
+
+        vc.Addresses = new AddressProperty?[] { null, adr};
+        Assert.IsTrue(vc.IsEmpty);
+
+        vc.BirthDayViews = new DateTimeOffsetProperty(null);
+        Assert.IsTrue(vc.IsEmpty);
+
+        var text = new TextProperty("  ");
+        var names = new TextProperty?[] { null, text, new TextProperty(null) };
+        vc.DisplayNames = names;
+        Assert.IsTrue(vc.IsEmpty);
+
+        adr.Parameters.Label = "Label";
+        Assert.IsFalse(vc.IsEmpty);
+
+        adr.Parameters.Label = null;
+        Assert.IsTrue(vc.IsEmpty);
+
+        text.Parameters.Label = "Label";
+        Assert.IsTrue(vc.IsEmpty);
+
+
+        names[0] = new TextProperty("Name");
+        Assert.IsFalse(vc.IsEmpty);
+
+
+    }
+
     //[TestMethod]
     //public void EqualsTest1()
     //{

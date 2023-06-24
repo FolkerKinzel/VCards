@@ -21,11 +21,14 @@
        -  [ ] `static EmbeddedTextProperty.FromFile(string fileName, Encoding? textEncoding = null)`
        -  [ ] `EmbeddedTextProperty.SaveFile(string fileName, Encoding? textEncoding = null)`
      - [ ] `DataProperty` should provide an error message (shown in the debugger) if its `Value` could not be parsed.
-- [ ] Implement `VCard.IsEmpty`.
+
+
+### 5.0.0-beta.2       
+- [x] Implement `VCard.IsEmpty`.
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
-       
-### 5.0.0
+
+### 5.0.0-beta.1
 - [x] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`
 - [x] Rename `VCdParam.Charset` to `VCdParam.CharSet`
 - [x] `VCard.LoadVcf`, `VCard.ParseVcf` and `VCard.DeserializeVcf` should not eat too many exceptions
