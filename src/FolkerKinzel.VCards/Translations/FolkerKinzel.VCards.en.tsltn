@@ -1451,4 +1451,17 @@ The use of the class is not suitable for code that depends on performance, becau
 Only use the class if you are also dealing with vCard 2.1 files, because &lt;c&gt;CHARSET&lt;/c&gt; parameters only exist in this standard. Although VCF files of the vCard 3.0 standard can also be ANSI encoded, but they do not contain a &lt;c&gt;CHARSET&lt;/c&gt; parameter. Therefore, to recognize ANSI encoded vCard 3.0 files, the class &lt;see cref="T:FolkerKinzel.VCards.AnsiFilter"/&gt; is more efficient.
 &lt;/para&gt;</T>
   <T ID="BB27F7531DBD9F60"></T>
+  <T ID="DE0C4D7F754C5858">&lt;para&gt;
+VCF files of the vCard 2.1 standard were previously saved by Outlook and Outlook Express in the ANSI encoding of the current Windows system, without always encoding the extended characters with quoted printable encoding. In principle, VCF files of the vCard 3.0 standard can also be ANSI-encoded if, for example, they were transmitted in an e-mail that specified the encoding in its content header. UTF-8 encoding has only been mandatory since vCard 4.0.
+&lt;/para&gt;
+&lt;para&gt;
+The class is a wrapper around the &lt;see cref="T:FolkerKinzel.VCards.VCard"/&gt;.&lt;see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)"/&gt; method that first checks whether the file to be loaded represents correct UTF-8. If the check fails, the VCF file is reloaded with an encoding specified as a fallback.
+&lt;/para&gt;
+&lt;para&gt;
+The use of the class is not suitable for code that depends on performance, because &lt;see cref="T:System.Text.DecoderFallbackException"/&gt;s are caught for evaluation and files may have to be loaded twice.
+&lt;/para&gt;
+&lt;para&gt;
+Use the class when you can predict with reasonable certainty what ANSI code page might have been used, or when you are not working with vCard 2.1 files. If you are dealing with vCard 2.1 files that have been saved in different ANSI code pages, you can use the &lt;see cref="T:FolkerKinzel.VCards.MultiAnsiFilter"/&gt; class, which additionally examines the &lt;c&gt;CHARSET&lt;/c&gt; parameters.
+&lt;/para&gt;</T>
+  <T ID="A96342B1BE6B703B">Initializes an instance of the &lt;see cref="T:FolkerKinzel.VCards.AnsiFilter"/&gt; class with the number of the code page to use for the reading of VCF files that are not saved as UTF-8.</T>
 </Tsltn>
