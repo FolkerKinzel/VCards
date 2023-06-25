@@ -24,7 +24,7 @@
 
 
 ### 5.0.0-beta.2       
-- [x] Implement `VCard.IsEmpty`.
+- [x] Implement `VCard.IsEmpty()`.
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 

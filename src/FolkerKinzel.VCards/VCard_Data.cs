@@ -42,7 +42,7 @@ public sealed partial class VCard
         prop.IsEmpty && (prop is not AddressProperty || prop.Parameters.Label is null);
 
 
-    public bool IsEmpty =>
+    public bool IsEmpty() =>
         !_propDic
             .Select(x => x.Value)
             .Any(x => x switch
