@@ -40,7 +40,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         _actionList.Add(_collectAddressTypes);
         _actionList.Add(_collectPropertyClassTypes);
 
-        AppendType(false);
+        AppendType(isPref);
         AppendEncodingAndCharset();
         AppendLanguage();
         //AppendNonStandardParameters();
@@ -96,7 +96,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         _actionList.Add(_collectAddressTypes);
         _actionList.Add(_collectPropertyClassTypes);
 
-        AppendType(false);
+        AppendType(isPref);
         AppendEncodingAndCharset();
         AppendLanguage();
         //AppendNonStandardParameters();

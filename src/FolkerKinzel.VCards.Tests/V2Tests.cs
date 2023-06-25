@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -132,6 +133,41 @@ public class V2Tests
 
         VCard vcard = list[0];
         Assert.AreEqual(VCdVersion.V2_1, vcard.Version);
+    }
+
+
+    [TestMethod]
+    public void MoreThanOneAddress()
+    {
+        const string label0 = "Elmstreet 13";
+        const string label1 = "Sackgasse 5";
+
+        var addr0 = new AddressProperty(label0, "Entenhausen", "01234");
+        addr0.Parameters.Preference = 1;
+        addr0.Parameters.Label = label0;
+        addr0.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
+        addr0.Parameters.PropertyClass = PropertyClassTypes.Home;
+
+        var addr1 = new AddressProperty(label1, "Borna", "43210");
+        addr1.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
+        addr1.Parameters.PropertyClass = PropertyClassTypes.Work;
+        addr1.Parameters.Label = label1;
+
+        var vc = new VCard
+        {
+            Addresses = new AddressProperty?[] { addr1, null, addr0 }
+        };
+
+        string vcf = vc.ToVcfString(VCdVersion.V2_1);
+        IList<VCard> vCards = VCard.ParseVcf(vcf);
+        Assert.IsNotNull(vCards);
+        Assert.AreEqual(1, vCards.Count);
+        IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
+        Assert.IsNotNull(addresses);
+        Assert.AreEqual(2, addresses!.Count());
+        Assert.IsNotNull(addresses!.FirstOrDefault( x => x!.Parameters.Label == label0 && x.Value.Street[0] == label0));
+        Assert.IsNotNull(addresses!.FirstOrDefault(x => x!.Parameters.Label == label1 && x.Value.Street[0] == label1));
+
     }
 
 }

@@ -63,8 +63,7 @@ namespace FolkerKinzel.VCards.Tests
 
             const string street3 = "Sonstgasse 44";
             Assert.IsNotNull(addresses!.FirstOrDefault(
-                x => x!.Parameters!.Label!.Contains(street3) &&
-                     x.IsEmpty));
+                x => x!.Parameters!.Label!.Contains(street3) && x.Value.IsEmpty));
 
         }
 
@@ -84,22 +83,21 @@ namespace FolkerKinzel.VCards.Tests
             const string street1 = "Business-Straße 19";
             Assert.IsNotNull(addresses!.FirstOrDefault(
                 x => x!.Parameters!.Label!.Contains(street1) &&
-                     x.IsEmpty));
+                     x.Value.IsEmpty));
 
             const string street2 = "Freizeitweg 4";
             Assert.IsNotNull(addresses!.FirstOrDefault(
                 x => x!.Parameters!.Label!.Contains(street2) &&
-                     x.IsEmpty));
+                     x.Value.IsEmpty));
 
             const string street3 = "Sonstgasse 44";
             Assert.IsNotNull(addresses!.FirstOrDefault(
                 x => x!.Parameters!.Label!.Contains(street3) &&
-                     x.IsEmpty));
+                     x.Value.IsEmpty));
 
             const string street4 = "Fabrikstraße 1";
             Assert.IsNotNull(addresses!.FirstOrDefault(
-                x => x!.Parameters!.Label!.Contains(street4) &&
-                     x.IsEmpty));
+                x => x!.Parameters!.Label!.Contains(street4)));
 
         }
     }
