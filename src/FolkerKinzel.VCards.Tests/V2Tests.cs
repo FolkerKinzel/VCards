@@ -192,6 +192,8 @@ public class V2Tests
             Addresses = new AddressProperty?[] { addr1, null, addr0 }
         };
 
+        var arr = new VCard[] { vc };
+
         string vcf = vc.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Unset(VcfOptions.AllowMultipleAdrAndLabelInVCard21));
         IList<VCard> vCards = VCard.ParseVcf(vcf);
         Assert.IsNotNull(vCards);
