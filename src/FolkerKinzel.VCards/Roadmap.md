@@ -21,14 +21,21 @@
        -  [ ] `static EmbeddedTextProperty.FromFile(string fileName, Encoding? textEncoding = null)`
        -  [ ] `EmbeddedTextProperty.SaveFile(string fileName, Encoding? textEncoding = null)`
      - [ ] `DataProperty` should provide an error message (shown in the debugger) if its `Value` could not be parsed.
+- [ ] Implement `VCard.Clean()`.
+- [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
+### 5.0.1
+- Cleanup: Remove identifiers that are marked as obsolete errors.
+
+### 5.0.0
+- [ ] Higher code coverage of the unit tests.
 
 ### 5.0.0-beta.2       
 - [x] Implement `VCard.IsEmpty()`.
 - [x] Change the behavior of `AddressProperty.IsEmpty`: Return `false` if only `AddressProperty.Parameters.Label` is not `null`.
-- [x] Allow in vCard 2.1 to write more than one `ADR` property an `LABEL`
-- [ ] Implement `VCard.Clean()`.
-- [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
+- [x] Allow to write more than one `ADR`- and `LABEL`-property into a vCard 2.1. Make this optional with `VcfOptions.AllowMultipleAdrAndLabelInVCard21` and set this option as default.
+- [x] Extension methods `VCardCollectionExtension.SaveVcf(...)`, `VCardCollectionExtension.SerializeVcf(...)` and `VCardCollectionExtension.ToVcfString(...)` get an additional optional parameter: `ITimeZoneIDConverter? tzConverter = null`.
+
 
 ### 5.0.0-beta.1
 - [x] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`

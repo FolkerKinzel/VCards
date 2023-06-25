@@ -118,6 +118,9 @@ public static class VCardCollectionExtension
     /// enthalten. Wenn die Sammlung kein <see cref="VCard"/>-Objekt enthält, wird keine Datei geschrieben.</param>
     /// <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
     /// <param name="version">Die vCard-Version der zu speichernden VCF-Datei.</param>
+    /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
+    /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+    /// auf eine Umwandlung zu verzichten.</param>
     /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
     /// kombiniert werden.</param>
     /// 
@@ -146,6 +149,8 @@ public static class VCardCollectionExtension
     /// </para>
     /// </remarks>
     /// 
+    /// <seealso cref="ITimeZoneIDConverter"/>
+    /// 
     /// <exception cref="ArgumentNullException"><paramref name="fileName"/> oder <paramref name="vCards"/>
     /// ist <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
@@ -157,8 +162,9 @@ public static class VCardCollectionExtension
         this IEnumerable<VCard?> vCards,
         string fileName,
         VCdVersion version = VCard.DEFAULT_VERSION,
+        ITimeZoneIDConverter? tzConverter = null,
         VcfOptions options = VcfOptions.Default)
-        => VCard.SaveVcf(fileName, vCards, version, options: options);
+        => VCard.SaveVcf(fileName, vCards, version, tzConverter, options);
 
 
     /// <summary>
@@ -169,6 +175,9 @@ public static class VCardCollectionExtension
     /// enthalten.</param>
     /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden.</param>
     /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
+    /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
+    /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+    /// auf eine Umwandlung zu verzichten.</param>
     /// <param name="options">Optionen für das Serialisieren. Die Flags können
     /// kombiniert werden.</param>
     /// <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
@@ -198,6 +207,8 @@ public static class VCardCollectionExtension
     /// 
     /// </remarks>
     /// 
+    /// <seealso cref="ITimeZoneIDConverter"/>
+    /// 
     /// <exception cref="ArgumentNullException"><paramref name="stream"/> oder <paramref name="vCards"/> ist <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
     /// <exception cref="IOException">E/A-Fehler.</exception>
@@ -209,9 +220,10 @@ public static class VCardCollectionExtension
         this IEnumerable<VCard?> vCards,
         Stream stream,
         VCdVersion version = VCard.DEFAULT_VERSION,
+        ITimeZoneIDConverter? tzConverter = null,
         VcfOptions options = VcfOptions.Default,
         bool leaveStreamOpen = false)
-        => VCard.SerializeVcf(stream, vCards, version, options: options, leaveStreamOpen: leaveStreamOpen);
+        => VCard.SerializeVcf(stream, vCards, version, tzConverter, options, leaveStreamOpen);
 
 
     /// <summary>
@@ -221,6 +233,9 @@ public static class VCardCollectionExtension
     /// <param name="vCards">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein und <c>null</c>-Werte
     /// enthalten.</param>
     /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
+    /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
+    /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+    /// auf eine Umwandlung zu verzichten.</param>
     /// <param name="options">Optionen für das Serialisieren. Die Flags können
     /// kombiniert werden.</param>
     /// 
@@ -249,6 +264,8 @@ public static class VCardCollectionExtension
     /// 
     /// </remarks>
     /// 
+    ///  <seealso cref="ITimeZoneIDConverter"/>
+    /// 
     /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
     /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
@@ -258,6 +275,7 @@ public static class VCardCollectionExtension
     public static string ToVcfString(
         this IEnumerable<VCard?> vCards,
         VCdVersion version = VCard.DEFAULT_VERSION,
+        ITimeZoneIDConverter? tzConverter = null,
         VcfOptions options = VcfOptions.Default)
-    => VCard.ToVcfString(vCards, version, options: options);
+    => VCard.ToVcfString(vCards, version, tzConverter, options);
 }

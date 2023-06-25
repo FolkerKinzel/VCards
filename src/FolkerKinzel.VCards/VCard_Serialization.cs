@@ -93,13 +93,14 @@ public sealed partial class VCard
     /// enthalten.</param>
     /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden.</param>
     /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
+    /// 
+    /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
+    /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+    /// auf eine Umwandlung zu verzichten.</param>
     /// <param name="options">Optionen für das Serialisieren. Die Flags können
     /// kombiniert werden.</param>
     /// <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
     /// ist <c>false</c>.</param>
-    /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-    /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
-    /// auf eine Umwandlung zu verzichten.</param>
     /// 
     /// <remarks>
     /// <note type="caution">

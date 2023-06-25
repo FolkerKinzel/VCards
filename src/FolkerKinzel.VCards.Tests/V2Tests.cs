@@ -137,7 +137,7 @@ public class V2Tests
 
 
     [TestMethod]
-    public void MoreThanOneAddress()
+    public void MoreThanOneAddressTest1()
     {
         const string label0 = "Elmstreet 13";
         const string label1 = "Sackgasse 5";
@@ -167,6 +167,40 @@ public class V2Tests
         Assert.AreEqual(2, addresses!.Count());
         Assert.IsNotNull(addresses!.FirstOrDefault( x => x!.Parameters.Label == label0 && x.Value.Street[0] == label0));
         Assert.IsNotNull(addresses!.FirstOrDefault(x => x!.Parameters.Label == label1 && x.Value.Street[0] == label1));
+
+    }
+
+    [TestMethod]
+    public void MoreThanOneAddressTest2()
+    {
+        const string label0 = "Elmstreet 13";
+        const string label1 = "Sackgasse 5";
+
+        var addr0 = new AddressProperty(label0, "Entenhausen", "01234");
+        addr0.Parameters.Preference = 1;
+        addr0.Parameters.Label = label0;
+        addr0.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
+        addr0.Parameters.PropertyClass = PropertyClassTypes.Home;
+
+        var addr1 = new AddressProperty(label1, "Borna", "43210");
+        addr1.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
+        addr1.Parameters.PropertyClass = PropertyClassTypes.Work;
+        addr1.Parameters.Label = label1;
+
+        var vc = new VCard
+        {
+            Addresses = new AddressProperty?[] { addr1, null, addr0 }
+        };
+
+        string vcf = vc.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Unset(VcfOptions.AllowMultipleAdrAndLabelInVCard21));
+        IList<VCard> vCards = VCard.ParseVcf(vcf);
+        Assert.IsNotNull(vCards);
+        Assert.AreEqual(1, vCards.Count);
+        IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
+        Assert.IsNotNull(addresses);
+        Assert.AreEqual(1, addresses!.Count());
+        Assert.AreEqual(100, addresses!.First()!.Parameters.Preference);
+        Assert.IsNotNull(addresses!.FirstOrDefault(x => x!.Parameters.Label == label0 && x.Value.Street[0] == label0));
 
     }
 

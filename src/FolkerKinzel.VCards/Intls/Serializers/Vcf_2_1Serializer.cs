@@ -139,26 +139,36 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         }
     }
 
-    //protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
-    //{
-    //    Debug.Assert(value != null);
+    protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
+    {
+        Debug.Assert(value != null);
 
-    //    AddressProperty? adr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
+        bool multiple = Options.IsSet(VcfOptions.AllowMultipleAdrAndLabelInVCard21);
+        bool first = true;
+        foreach (AddressProperty? prop in value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference))
+        {
+            bool isPref = first && multiple && prop!.Parameters.Preference < 100;
+            first = false;
 
-    //    if (adr != null)
-    //    {
-    //        BuildProperty(VCard.PropKeys.ADR, adr, false);
+            // AddressProperty.IsEmpty ist auch dann false, wenn lediglich
+            // AddressProperty.Parameters.Label != null ist:
+            if (!prop!.Value.IsEmpty || Options.IsSet(VcfOptions.WriteEmptyProperties))
+            {
+                BuildProperty(VCard.PropKeys.ADR, prop, isPref);
+            }
 
-    //        string? label = adr.Parameters.Label;
+            string? label = prop.Parameters.Label;
 
-    //        if (label != null)
-    //        {
-    //            var labelProp = new TextProperty(label, adr.Group);
-    //            labelProp.Parameters.Assign(adr.Parameters);
-    //            BuildProperty(VCard.PropKeys.LABEL, labelProp);
-    //        }
-    //    }
-    //}
+            if (label != null)
+            {
+                var labelProp = new TextProperty(label, prop.Group);
+                labelProp.Parameters.Assign(prop.Parameters);
+                BuildProperty(VCard.PropKeys.LABEL, labelProp, isPref);
+            }
+
+            if(!multiple) { break; }
+        }
+    }
 
     protected override void AppendAnniversaryViews(IEnumerable<DateTimeProperty?> value) => base.AppendAnniversaryViews(value);
 

@@ -31,9 +31,9 @@ public enum VcfOptions
 
     /// <summary>
     /// Standardeinstellung (entspricht <see cref="WriteGroups"/> | <see cref="WriteRfc6474Extensions"/>
-    /// | <see cref="WriteRfc6715Extensions"/> | <see cref="WriteImppExtension"/> | <see cref="WriteXExtensions"/>)
+    /// | <see cref="WriteRfc6715Extensions"/> | <see cref="WriteImppExtension"/> | <see cref="WriteXExtensions"/> | <see cref="AllowMultipleAdrAndLabelInVCard21"/>)
     /// </summary>
-    Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions | WriteImppExtension | WriteXExtensions,
+    Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions | WriteImppExtension | WriteXExtensions | AllowMultipleAdrAndLabelInVCard21,
 
     /// <summary>
     /// Flag setzen, um Property-Gruppenbezeichner zu schreiben.
@@ -104,5 +104,11 @@ public enum VcfOptions
     /// Flag setzen, um bei Bedarf die folgenden vCard-Properties zu schreiben:
     /// <c>X-WAB-GENDER</c>, <c>X-WAB-WEDDING-ANNIVERSARY</c>, <c>X-WAB-SPOUSE-NAME</c>.
     /// </summary>
-    WriteWabExtensions = 1 << 11
+    WriteWabExtensions = 1 << 11,
+
+    /// <summary>
+    /// Flag setzen, um in einer vCard 2.1 das Schreiben mehrerer "ADR"- und "LABEL"-Properties 
+    /// zu ermöglichen.
+    /// </summary>
+    AllowMultipleAdrAndLabelInVCard21 = 1 << 12
 }
