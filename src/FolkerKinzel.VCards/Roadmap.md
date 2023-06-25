@@ -26,7 +26,7 @@
 ### 5.0.0-beta.2       
 - [x] Implement `VCard.IsEmpty()`.
 - [x] Change the behavior of `AddressProperty.IsEmpty`: Return `false` if only `AddressProperty.Parameters.Label` is not `null`.
-- [ ] Allow in vCard 2.1 to write more than one `ADR` property an `LABEL`
+- [x] Allow in vCard 2.1 to write more than one `ADR` property an `LABEL`
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
