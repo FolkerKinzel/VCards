@@ -69,27 +69,27 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void AppendAccess(AccessProperty value) => BuildProperty(VCard.PropKeys.CLASS, value, false);
 
-        protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
-        {
-            Debug.Assert(value != null);
+        //protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
+        //{
+        //    Debug.Assert(value != null);
 
-            AddressProperty[] arr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray()!;
+        //    AddressProperty[] arr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray()!;
 
-            for (int i = 0; i < arr.Length; i++)
-            {
-                AddressProperty prop = arr[i];
-                BuildProperty(VCard.PropKeys.ADR, prop, i == 0 && prop.Parameters.Preference < 100);
+        //    for (int i = 0; i < arr.Length; i++)
+        //    {
+        //        AddressProperty prop = arr[i];
+        //        BuildProperty(VCard.PropKeys.ADR, prop, i == 0 && prop.Parameters.Preference < 100);
 
-                string? label = prop.Parameters.Label;
+        //        string? label = prop.Parameters.Label;
 
-                if (label != null)
-                {
-                    var labelProp = new TextProperty(label, prop.Group);
-                    labelProp.Parameters.Assign(prop.Parameters);
-                    BuildProperty(VCard.PropKeys.LABEL, labelProp);
-                }
-            }
-        }
+        //        if (label != null)
+        //        {
+        //            var labelProp = new TextProperty(label, prop.Group);
+        //            labelProp.Parameters.Assign(prop.Parameters);
+        //            BuildProperty(VCard.PropKeys.LABEL, labelProp);
+        //        }
+        //    }
+        //}
 
         protected override void AppendAnniversaryViews(IEnumerable<DateTimeProperty?> value) => base.AppendAnniversaryViews(value);
 

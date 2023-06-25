@@ -313,7 +313,7 @@ public class VCardTests
     [TestMethod]
     public void LoadCropped_2_1Test()
     {
-        var vCards = VCard.LoadVcf(TestFiles.Cropped_2_1vcf);
+        IList<VCard> vCards = VCard.LoadVcf(TestFiles.Cropped_2_1vcf);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
     }

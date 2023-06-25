@@ -38,17 +38,19 @@ public sealed partial class VCard
         }
     }
 
-    private static bool IsPropertyEmpty(VCardProperty prop) =>
-        prop.IsEmpty && (prop is not AddressProperty || prop.Parameters.Label is null);
 
 
+    /// <summary>
+    /// Gibt <c>true</c> zurück, wenn das <see cref="VCard"/>-Objekt keine verwertbaren Daten enthält.
+    /// </summary>
+    /// <returns><c>true</c>, wenn das <see cref="VCard"/>-Objekt keine verwertbaren Daten enthält, sonst <c>false</c>.</returns>
     public bool IsEmpty() =>
         !_propDic
             .Select(x => x.Value)
             .Any(x => x switch
             {
-                VCardProperty prop => !IsPropertyEmpty(prop),
-                IEnumerable<VCardProperty?> numerable => numerable.Where(x => x is not null).Any(x => !IsPropertyEmpty(x)),
+                VCardProperty prop => !prop.IsEmpty,
+                IEnumerable<VCardProperty?> numerable => numerable.Any(x => !(x?.IsEmpty ?? true)),
                 _ => false
             });
 

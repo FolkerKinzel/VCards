@@ -139,26 +139,26 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         }
     }
 
-    protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
-    {
-        Debug.Assert(value != null);
+    //protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
+    //{
+    //    Debug.Assert(value != null);
 
-        AddressProperty? adr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
+    //    AddressProperty? adr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
 
-        if (adr != null)
-        {
-            BuildProperty(VCard.PropKeys.ADR, adr, false);
+    //    if (adr != null)
+    //    {
+    //        BuildProperty(VCard.PropKeys.ADR, adr, false);
 
-            string? label = adr.Parameters.Label;
+    //        string? label = adr.Parameters.Label;
 
-            if (label != null)
-            {
-                var labelProp = new TextProperty(label, adr.Group);
-                labelProp.Parameters.Assign(adr.Parameters);
-                BuildProperty(VCard.PropKeys.LABEL, labelProp);
-            }
-        }
-    }
+    //        if (label != null)
+    //        {
+    //            var labelProp = new TextProperty(label, adr.Group);
+    //            labelProp.Parameters.Assign(adr.Parameters);
+    //            BuildProperty(VCard.PropKeys.LABEL, labelProp);
+    //        }
+    //    }
+    //}
 
     protected override void AppendAnniversaryViews(IEnumerable<DateTimeProperty?> value) => base.AppendAnniversaryViews(value);
 

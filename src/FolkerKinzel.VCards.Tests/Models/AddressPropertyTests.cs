@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Models.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -80,6 +81,133 @@ public class AddressPropertyTests
         var prop = new AddressProperty(row, VCdVersion.V3_0);
 
         Assert.IsNotNull(prop.Value);
+    }
+
+
+    [TestMethod]
+    public void IsEmptyTest_v2_1()
+    {
+        const VCdVersion version = VCdVersion.V2_1;
+        const string labelText = "Nice Label";
+
+        AddressProperty adr = new ("", null, null);
+        Assert.IsTrue(adr.IsEmpty);
+
+        var vc = new VCard
+        {
+            Addresses = adr
+        };
+
+        Assert.IsTrue(vc.IsEmpty());
+
+        string vcf = vc.ToVcfString(version);
+        IList<VCard> cards = VCard.ParseVcf(vcf);
+        Assert.IsNotNull(cards);
+        Assert.AreEqual(1, cards.Count);
+        vc = cards[0];
+        Assert.IsNull(vc.Addresses);
+
+        adr.Parameters.Label = labelText;
+        Assert.IsFalse(adr.IsEmpty);
+
+        vc.Addresses = adr;
+
+        vcf = vc.ToVcfString(version);
+        cards = VCard.ParseVcf(vcf);
+
+        Assert.IsNotNull(cards);
+        Assert.AreEqual(1, cards.Count);
+        vc = cards[0];
+        Assert.IsNotNull(vc.Addresses);
+
+        adr = vc.Addresses!.First()!;
+        Assert.IsTrue(adr.Value.IsEmpty);
+        Assert.IsFalse(adr.IsEmpty);
+        Assert.AreEqual(labelText, adr.Parameters.Label);
+    }
+
+    [TestMethod]
+    public void IsEmptyTest_v3_0()
+    {
+        const VCdVersion version = VCdVersion.V3_0;
+        const string labelText = "Nice Label";
+
+        AddressProperty adr = new ("", null, null);
+        Assert.IsTrue(adr.IsEmpty);
+
+        var vc = new VCard
+        {
+            Addresses = adr
+        };
+
+        Assert.IsTrue(vc.IsEmpty());
+
+        string vcf = vc.ToVcfString(version);
+        IList<VCard> cards = VCard.ParseVcf(vcf);
+        Assert.IsNotNull(cards);
+        Assert.AreEqual(1, cards.Count);
+        vc = cards[0];
+        Assert.IsNull(vc.Addresses);
+
+        adr.Parameters.Label = labelText;
+        Assert.IsFalse(adr.IsEmpty);
+
+        vc.Addresses = adr;
+
+        vcf = vc.ToVcfString(version);
+        cards = VCard.ParseVcf(vcf);
+
+        Assert.IsNotNull(cards);
+        Assert.AreEqual(1, cards.Count);
+        vc = cards[0];
+        Assert.IsNotNull(vc.Addresses);
+
+        adr = vc.Addresses!.First()!;
+        Assert.IsTrue(adr.Value.IsEmpty);
+        Assert.IsFalse(adr.IsEmpty);
+        Assert.AreEqual(labelText, adr.Parameters.Label);
+    }
+
+    [TestMethod]
+    public void IsEmptyTest_v4_0()
+    {
+        const VCdVersion version = VCdVersion.V4_0;
+        const string labelText = "Nice Label";
+
+        AddressProperty adr = new("", null, null);
+        Assert.IsTrue(adr.IsEmpty);
+
+        var vc = new VCard
+        {
+            Addresses = adr
+        };
+
+        Assert.IsTrue(vc.IsEmpty());
+
+        string vcf = vc.ToVcfString(version);
+        IList<VCard> cards = VCard.ParseVcf(vcf);
+        Assert.IsNotNull(cards);
+        Assert.AreEqual(1, cards.Count);
+        vc = cards[0];
+        Assert.IsNull(vc.Addresses);
+
+        adr.Parameters.Label = labelText;
+        Assert.IsFalse(adr.IsEmpty);
+
+        vc.Addresses = adr;
+
+        vcf = vc.ToVcfString(version);
+        cards = VCard.ParseVcf(vcf);
+
+        Assert.IsNotNull(cards);
+        Assert.AreEqual(1, cards.Count);
+        vc = cards[0];
+        Assert.IsNotNull(vc.Addresses);
+
+        adr = vc.Addresses!.First()!;
+        Assert.IsTrue(adr.Value.IsEmpty);
+        Assert.IsFalse(adr.IsEmpty);
+        Assert.AreEqual(labelText, adr.Parameters.Label);
     }
 
 }

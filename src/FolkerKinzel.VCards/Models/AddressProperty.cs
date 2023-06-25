@@ -163,8 +163,22 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         get;
     }
 
+
+    /// <summary>
     /// <inheritdoc/>
-    public override bool IsEmpty => Value.IsEmpty;
+    /// </summary>
+    /// <remarks>
+    /// <note type="important">
+    /// <para>
+    /// Das Verhalten der Eigenschaft hat sich seit Version 5.0.0-beta.2 geändert:
+    /// </para>
+    /// <para>
+    /// Wenn lediglich der Parameter <see cref="ParameterSection.Label"/>
+    /// ungleich <c>null</c> ist, wird <c>false</c> zurückgegeben.
+    /// </para>
+    /// </note>
+    /// </remarks>
+    public override bool IsEmpty => Value.IsEmpty && Parameters.Label is null;
 
 
     /// <inheritdoc/>

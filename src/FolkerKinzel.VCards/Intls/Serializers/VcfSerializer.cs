@@ -403,8 +403,32 @@ internal abstract class VcfSerializer
     [ExcludeFromCodeCoverage]
     protected virtual void AppendAccess(AccessProperty value) { }
 
-    [ExcludeFromCodeCoverage]
-    protected virtual void AppendAddresses(IEnumerable<AddressProperty?> value) { }
+
+    protected virtual void AppendAddresses(IEnumerable<AddressProperty?> value)
+    {
+        Debug.Assert(value != null);
+
+        bool first = true;
+        foreach (AddressProperty? prop in value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference))
+        {
+            bool isPref = first && prop!.Parameters.Preference < 100;
+            first = false;
+
+            if (!prop!.Value.IsEmpty || Options.IsSet(VcfOptions.WriteEmptyProperties))
+            {
+                BuildProperty(VCard.PropKeys.ADR, prop, isPref);
+            }
+
+            string? label = prop.Parameters.Label;
+
+            if (label != null)
+            {
+                var labelProp = new TextProperty(label, prop.Group);
+                labelProp.Parameters.Assign(prop.Parameters);
+                BuildProperty(VCard.PropKeys.LABEL, labelProp, isPref);
+            }
+        }
+    }
 
 
     protected virtual void AppendAnniversaryViews(IEnumerable<DateTimeProperty?> value)
