@@ -1,6 +1,5 @@
-﻿// Compile for .NET 6.0 or above and FolkerKinzel.VCards 5.0.0 or above
+﻿// Compile for .NET 7.0 or above and FolkerKinzel.VCards 5.0.0 or above
 using System.Diagnostics;
-using System.Text;
 using FolkerKinzel.VCards;
 
 namespace Examples;
