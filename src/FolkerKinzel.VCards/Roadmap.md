@@ -35,8 +35,8 @@
 - [x] Change the behavior of `AddressProperty.IsEmpty`: Return `false` if only `AddressProperty.Parameters.Label` is not `null`.
 - [x] Allow to write more than one `ADR`- and `LABEL`-property into a vCard 2.1. Make this optional with `VcfOptions.AllowMultipleAdrAndLabelInVCard21` and set this option as default.
 - [x] Extension methods `VCardCollectionExtension.SaveVcf(...)`, `VCardCollectionExtension.SerializeVcf(...)` and `VCardCollectionExtension.ToVcfString(...)` get an additional optional parameter: `ITimeZoneIDConverter? tzConverter = null`.
-- [ ] .NET 7 support.
-- [ ] Dependency update.
+- [x] .NET 7 support.
+- [x] Dependency update.
 
 ### 5.0.0-beta.1
 - [x] Rename `ParameterSection.Charset` to `ParameterSection.CharSet`

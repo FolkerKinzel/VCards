@@ -377,7 +377,7 @@
             
             <exception cref="T:System.ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SaveVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.String,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.VcfOptions)">
+        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SaveVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.String,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
             <summary>
             Speichert eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten in eine gemeinsame VCF-Datei.
             </summary>
@@ -386,6 +386,9 @@
             enthalten. Wenn die Sammlung kein <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekt enthält, wird keine Datei geschrieben.</param>
             <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
             <param name="version">Die vCard-Version der zu speichernden VCF-Datei.</param>
+            <param name="tzConverter">Ein Objekt, das <see cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
+            vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+            auf eine Umwandlung zu verzichten.</param>
             <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
             kombiniert werden.</param>
             
@@ -414,12 +417,14 @@
             </para>
             </remarks>
             
+            <seealso cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter"/>
+            
             <exception cref="T:System.ArgumentNullException"><paramref name="fileName"/> oder <paramref name="vCards"/>
             ist <c>null</c>.</exception>
             <exception cref="T:System.ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
             <exception cref="T:System.IO.IOException">Die Datei konnte nicht geschrieben werden.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SerializeVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.IO.Stream,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.VcfOptions,System.Boolean)">
+        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SerializeVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.IO.Stream,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions,System.Boolean)">
             <summary>
             Serialisiert eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten unter Verwendung des VCF-Formats in einen <see cref="T:System.IO.Stream"/>.
             </summary>
@@ -428,6 +433,9 @@
             enthalten.</param>
             <param name="stream">Ein <see cref="T:System.IO.Stream"/>, in den die serialisierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte geschrieben werden.</param>
             <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
+            <param name="tzConverter">Ein Objekt, das <see cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
+            vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+            auf eine Umwandlung zu verzichten.</param>
             <param name="options">Optionen für das Serialisieren. Die Flags können
             kombiniert werden.</param>
             <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
@@ -457,12 +465,14 @@
             
             </remarks>
             
+            <seealso cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter"/>
+            
             <exception cref="T:System.ArgumentNullException"><paramref name="stream"/> oder <paramref name="vCards"/> ist <c>null</c>.</exception>
             <exception cref="T:System.ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
             <exception cref="T:System.IO.IOException">E/A-Fehler.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.ToVcfString(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.VcfOptions)">
+        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.ToVcfString(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
             <summary>
             Serialisiert <paramref name="vCards"/> als einen <see cref="T:System.String"/>, der den Inhalt einer VCF-Datei darstellt.
             </summary>
@@ -470,6 +480,9 @@
             <param name="vCards">Die zu serialisierenden <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte. Die Sammlung darf leer sein und <c>null</c>-Werte
             enthalten.</param>
             <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
+            <param name="tzConverter">Ein Objekt, das <see cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
+            vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+            auf eine Umwandlung zu verzichten.</param>
             <param name="options">Optionen für das Serialisieren. Die Flags können
             kombiniert werden.</param>
             
@@ -497,6 +510,8 @@
             </para>
             
             </remarks>
+            
+             <seealso cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter"/>
             
             <exception cref="T:System.ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
             <exception cref="T:System.ArgumentException"><paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
@@ -839,7 +854,20 @@
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Models.AddressProperty.IsEmpty">
+            <summary>
             <inheritdoc/>
+            </summary>
+            <remarks>
+            <note type="important">
+            <para>
+            Das Verhalten der Eigenschaft hat sich seit Version 5.0.0-beta.2 geändert:
+            </para>
+            <para>
+            Wenn lediglich der Parameter <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/>
+            ungleich <c>null</c> ist, wird <c>false</c> zurückgegeben.
+            </para>
+            </note>
+            </remarks>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.AddressProperty.GetVCardPropertyValue">
             <inheritdoc/>
@@ -4133,6 +4161,12 @@
             <param name="versionHint">Ein Hinweis, welche vCard-Version angenommen wird. (Eingebettete
             vCards haben manchmal keinen "VERSION:"-Tag.)</param>
         </member>
+        <member name="M:FolkerKinzel.VCards.VCard.IsEmpty">
+            <summary>
+            Gibt <c>true</c> zurück, wenn das <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekt keine verwertbaren Daten enthält.
+            </summary>
+            <returns><c>true</c>, wenn das <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekt keine verwertbaren Daten enthält, sonst <c>false</c>.</returns>
+        </member>
         <member name="P:FolkerKinzel.VCards.VCard.Version">
             <summary>
             <c>VERSION</c>: Version der vCard-Spezifikation. <c>(2,3,4)</c>
@@ -4733,13 +4767,14 @@
             enthalten.</param>
             <param name="stream">Ein <see cref="T:System.IO.Stream"/>, in den die serialisierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte geschrieben werden.</param>
             <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
+            
+            <param name="tzConverter">Ein Objekt, das <see cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
+            vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
+            auf eine Umwandlung zu verzichten.</param>
             <param name="options">Optionen für das Serialisieren. Die Flags können
             kombiniert werden.</param>
             <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
             ist <c>false</c>.</param>
-            <param name="tzConverter">Ein Objekt, das <see cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-            vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
-            auf eine Umwandlung zu verzichten.</param>
             
             <remarks>
             <note type="caution">
@@ -4993,7 +5028,7 @@
         <member name="F:FolkerKinzel.VCards.VcfOptions.Default">
             <summary>
             Standardeinstellung (entspricht <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteGroups"/> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6474Extensions"/>
-            | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6715Extensions"/> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteImppExtension"/> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteXExtensions"/>)
+            | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6715Extensions"/> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteImppExtension"/> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteXExtensions"/> | <see cref="F:FolkerKinzel.VCards.VcfOptions.AllowMultipleAdrAndLabelInVCard21"/>)
             </summary>
         </member>
         <member name="F:FolkerKinzel.VCards.VcfOptions.WriteGroups">
@@ -5061,6 +5096,12 @@
             <summary>
             Flag setzen, um bei Bedarf die folgenden vCard-Properties zu schreiben:
             <c>X-WAB-GENDER</c>, <c>X-WAB-WEDDING-ANNIVERSARY</c>, <c>X-WAB-SPOUSE-NAME</c>.
+            </summary>
+        </member>
+        <member name="F:FolkerKinzel.VCards.VcfOptions.AllowMultipleAdrAndLabelInVCard21">
+            <summary>
+            Flag setzen, um in einer vCard 2.1 das Schreiben mehrerer "ADR"- und "LABEL"-Properties 
+            zu ermöglichen.
             </summary>
         </member>
     </members>
