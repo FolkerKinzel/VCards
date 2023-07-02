@@ -137,8 +137,7 @@ public static class VCardCollectionExtension
     /// Dies geschieht, wenn eine VCF-Datei als
     /// vCard 4.0 gespeichert wird und sich 
     /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
-    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befinden. 
-    /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
+    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befinden.
     /// </para>
     /// 
     /// <para>
@@ -195,8 +194,7 @@ public static class VCardCollectionExtension
     /// Dies geschieht, wenn eine
     /// vCard 4.0 serialisiert wird und sich 
     /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
-    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
-    /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
+    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden.
     /// </para>
     /// 
     /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
@@ -252,8 +250,7 @@ public static class VCardCollectionExtension
     /// vCards, als sich ursprünglich Elemente in <paramref name="vCards"/> befanden. Dies geschieht, wenn eine
     /// vCard 4.0 serialisiert wird und sich 
     /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
-    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
-    /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
+    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden.
     /// </para>
     /// 
     /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 

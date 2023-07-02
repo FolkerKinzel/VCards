@@ -227,34 +227,37 @@ For the sake of easier readability, exception handling has not been used in the 
       <exception cref="T:System.ArgumentNullException">
         <paramref name="vCards" /> is <c>null</c>.</exception>
     </member>
-    <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SaveVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.String,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.VcfOptions)">
+    <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SaveVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.String,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
       <summary>Saves a collection of <see cref="T:FolkerKinzel.VCards.VCard" /> objects in a common VCF file.</summary>
       <param name="vCards">The <see cref="T:FolkerKinzel.VCards.VCard" /> objects to be saved. The collection may be empty or  may contain <c>null</c> values. If the collection does not contain any <see cref="T:FolkerKinzel.VCards.VCard" /> object, no file will be written.</param>
       <param name="fileName">The file path. If the file exists, it will be overwritten.</param>
       <param name="version">The vCard version of the VCF file to be written.</param>
+      <param name="tzConverter">An object that implements <see cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter" /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
       <param name="options">Options for writing the VCF file. The flags can be combined.</param>
       <remarks>
         <note type="caution">
 Although the method itself is thread-safe, the <see cref="T:FolkerKinzel.VCards.VCard" /> objects passed to the method are not. Block read and write access to these <see cref="T:FolkerKinzel.VCards.VCard" /> objects, while this method is being executed!
 </note>
         <para>
-The method may serialize more vCards than were originally elements in <paramref name="vCardList" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found. These <see cref="T:FolkerKinzel.VCards.VCard" /> objects are added to <paramref name="vCardList" /> by the method.
+The method may serialize more vCards than were originally elements in <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found.
 </para>
         <para>
 The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the property <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object a <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> object is located on whose <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection" /> in the property <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType" /> the flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent" /> is set.
 </para>
       </remarks>
+      <seealso cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter" />
       <exception cref="T:System.ArgumentNullException">
         <paramref name="fileName" /> or <paramref name="vCards" /> is <c>null</c>.</exception>
       <exception cref="T:System.ArgumentException">
         <paramref name="fileName" /> is not a valid file path or <paramref name="version" /> has an undefined value.</exception>
       <exception cref="T:System.IO.IOException">The file could not be written.</exception>
     </member>
-    <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SerializeVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.IO.Stream,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.VcfOptions,System.Boolean)">
-      <summary>Serializes a List of <see cref="T:FolkerKinzel.VCards.VCard" /> objects into a <see cref="T:System.IO.Stream" /> using the VCF format.</summary>
+    <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SerializeVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.IO.Stream,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions,System.Boolean)">
+      <summary>Serializes a collection of <see cref="T:FolkerKinzel.VCards.VCard" /> objects into a <see cref="T:System.IO.Stream" /> using the VCF format.</summary>
       <param name="vCards">The <see cref="T:FolkerKinzel.VCards.VCard" /> objects to be serialized. The collection may be empty or may contain <c>null</c> values.</param>
       <param name="stream">A <see cref="T:System.IO.Stream" /> into which the serialized <see cref="T:FolkerKinzel.VCards.VCard" /> objects are written.</param>
       <param name="version">The vCard version used for the serialization.</param>
+      <param name="tzConverter">An object that implements <see cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter" /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
       <param name="options">Options for serializing VCF. The flags can be combined.</param>
       <param name="leaveStreamOpen">
         <c>true</c> means that the method does not close the underlying <see cref="T:System.IO.Stream" />. The default value is <c>false</c>.</param>
@@ -263,12 +266,13 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
 Although the method itself is thread-safe, the <see cref="T:FolkerKinzel.VCards.VCard" /> objects passed to the method are not. Block read and write access to these <see cref="T:FolkerKinzel.VCards.VCard" /> objects, while this method is being executed!
 </note>
         <para>
-The method may serialize more vCards than were originally elements in <paramref name="vCardList" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found. These <see cref="T:FolkerKinzel.VCards.VCard" /> objects are added to <paramref name="vCardList" /> by the method.
+The method may serialize more vCards than were originally elements in <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found.
 </para>
         <para>
 The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the property <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object a <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> object is located on whose <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection" /> in the property <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType" /> the flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent" /> is set.
 </para>
       </remarks>
+      <seealso cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter" />
       <exception cref="T:System.ArgumentNullException">
         <paramref name="stream" /> or <paramref name="vCards" /> is <c>null</c>.</exception>
       <exception cref="T:System.ArgumentException">
@@ -277,10 +281,11 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
       <exception cref="T:System.ObjectDisposedException">
         <paramref name="stream" /> was already closed.</exception>
     </member>
-    <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.ToVcfString(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.VcfOptions)">
+    <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.ToVcfString(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
       <summary>Serializes <paramref name="vCards" /> as a <see cref="T:System.String" />, which represents the content of a VCF file.</summary>
       <param name="vCards">The <see cref="T:FolkerKinzel.VCards.VCard" /> objects to be serialized. The collection may be empty or may contain <c>null</c> values.</param>
       <param name="version">The vCard version used for the serialization.</param>
+      <param name="tzConverter">An object that implements <see cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter" /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
       <param name="options">Options for serializing VCF. The flags can be combined.</param>
       <returns>
         <paramref name="vCards" />, serialized as a <see cref="T:System.String" />, which represents the content of a VCF file.</returns>
@@ -289,12 +294,13 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
 Although the method itself is thread-safe, the <see cref="T:FolkerKinzel.VCards.VCard" /> objects passed to the method are not. Block read and write access to these <see cref="T:FolkerKinzel.VCards.VCard" /> objects, while this method is being executed!
 </note>
         <para>
-The method may serialize more vCards than were originally elements in <paramref name="vCardList" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found. These <see cref="T:FolkerKinzel.VCards.VCard" /> objects are added to <paramref name="vCards" /> by the method.
+The method may serialize more vCards than were originally elements in <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found.
 </para>
         <para>
 The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the property <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object a <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> object is located on whose <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection" /> in the property <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType" /> the flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent" /> is set.
 </para>
       </remarks>
+      <seealso cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter" />
       <exception cref="T:System.ArgumentNullException">
         <paramref name="vCards" /> is <c>null</c>.</exception>
       <exception cref="T:System.ArgumentException">
@@ -505,7 +511,19 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
       <summary>The data provided by the <see cref="T:FolkerKinzel.VCards.Models.AddressProperty" />.</summary>
     </member>
     <member name="P:FolkerKinzel.VCards.Models.AddressProperty.IsEmpty">
-      <inheritdoc />
+      <summary>
+        <inheritdoc />
+      </summary>
+      <remarks>
+        <note type="important">
+          <para>
+The behavior of the property has changed since version 5.0.0-beta.2:
+</para>
+          <para>
+If only the parameter <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label" /> is not equal to <c>null</c>, <c>false</c> is returned.
+</para>
+        </note>
+      </remarks>
     </member>
     <member name="M:FolkerKinzel.VCards.Models.AddressProperty.GetVCardPropertyValue">
       <inheritdoc />
@@ -2721,6 +2739,11 @@ Example implementation for <see cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDCo
       <param name="info" />
       <param name="versionHint" />
     </member>
+    <member name="M:FolkerKinzel.VCards.VCard.IsEmpty">
+      <summary>Returns <c>true</c>, if the <see cref="T:FolkerKinzel.VCards.VCard" /> object does not contain any usable data.</summary>
+      <returns>
+        <c>true</c> if the <see cref="T:FolkerKinzel.VCards.VCard" /> object contains no usable data, <c>false</c> otherwise.</returns>
+    </member>
     <member name="P:FolkerKinzel.VCards.VCard.Version">
       <summary>
         <c>VERSION</c>: Version of the vCard standard. <c>(2,3,4)</c></summary>
@@ -3155,8 +3178,11 @@ For the sake of easier readability, exception handling has not been used in the 
         <note type="caution">
 Although the method itself is thread-safe, the <see cref="T:FolkerKinzel.VCards.VCard" /> objects passed to the method are not. Block read and write access to these <see cref="T:FolkerKinzel.VCards.VCard" /> objects, while this method is being executed!
 </note>
+        <note type="tip">
+You can pass a single <see cref="T:FolkerKinzel.VCards.VCard" /> object to the method, since the <see cref="T:FolkerKinzel.VCards.VCard" /> class has an explicit implementation of <see cref="T:System.Collections.Generic.IEnumerable`1">IEnumerable&lt;VCard&gt;</see>.
+</note>
         <para>
-The method may serialize more vCards than were originally elements in <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found. These <see cref="T:FolkerKinzel.VCards.VCard" /> objects are appended to the saved file by the method.
+The method may serialize more vCards than were originally elements in <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found.
 </para>
         <para>
 The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the property <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object a <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> object is located on whose <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection" /> in the property <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType" /> the flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent" /> is set.
@@ -3174,10 +3200,10 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
       <param name="vCards">The <see cref="T:FolkerKinzel.VCards.VCard" /> objects to be serialized. The collection may be empty or may contain <c>null</c> values.</param>
       <param name="stream">A <see cref="T:System.IO.Stream" /> into which the serialized <see cref="T:FolkerKinzel.VCards.VCard" /> objects are written.</param>
       <param name="version">The vCard version used for the serialization.</param>
+      <param name="tzConverter">An object that implements <see cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter" /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
       <param name="options">Options for serializing VCF. The flags can be combined.</param>
       <param name="leaveStreamOpen">
         <c>true</c> means that the method does not close the underlying <see cref="T:System.IO.Stream" />. The default value is <c>false</c>.</param>
-      <param name="tzConverter">An object that implements <see cref="T:FolkerKinzel.VCards.Models.ITimeZoneIDConverter" /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
       <remarks>
         <note type="caution">
 Although the method itself is thread-safe, the <see cref="T:FolkerKinzel.VCards.VCard" /> objects passed to the method are not. Block read and write access to these <see cref="T:FolkerKinzel.VCards.VCard" /> objects, while this method is being executed!
@@ -3186,7 +3212,7 @@ Although the method itself is thread-safe, the <see cref="T:FolkerKinzel.VCards.
 You can pass a single <see cref="T:FolkerKinzel.VCards.VCard" /> object to the method, since the <see cref="T:FolkerKinzel.VCards.VCard" /> class has an explicit implementation of <see cref="T:System.Collections.Generic.IEnumerable`1">IEnumerable&lt;VCard&gt;</see>.
 </note>
         <para>
-The method may serialize more vCards than were originally elements in <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found. These <see cref="T:FolkerKinzel.VCards.VCard" /> objects are appended to the <see cref="T:System.IO.Stream" />.
+The method may serialize more vCards than were originally elements in <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found.
 </para>
         <para>
 The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the property <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object a <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> object is located on whose <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection" /> in the property <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType" /> the flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent" /> is set.
@@ -3217,7 +3243,7 @@ Although the method itself is thread-safe, the <see cref="T:FolkerKinzel.VCards.
 You can pass a single <see cref="T:FolkerKinzel.VCards.VCard" /> object to the method, since the <see cref="T:FolkerKinzel.VCards.VCard" /> class has an explicit implementation of <see cref="T:System.Collections.Generic.IEnumerable`1">IEnumerable&lt;VCard&gt;</see>.
 </note>
         <para>
-The method may serialize more vCards than were originally elements in <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found. These <see cref="T:FolkerKinzel.VCards.VCard" /> objects are appended to the <see cref="T:System.String" />.
+The method may serialize more vCards than were originally elements in <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found.
 </para>
         <para>
 The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the property <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object a <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> object is located on whose <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection" /> in the property <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType" /> the flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent" /> is set.
@@ -3261,7 +3287,7 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
         <c>true</c> means that the method does not close the underlying <see cref="T:System.IO.Stream" />. The default value is <c>false</c>.</param>
       <remarks>
         <para>
-The method may serialize more than one vCard into the <see cref="T:System.IO.Stream" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found. These <see cref="T:FolkerKinzel.VCards.VCard" /> objects are appended to the <see cref="T:System.IO.Stream" />.
+The method may serialize more vCards than were originally elements in <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found.
 </para>
         <para>
 The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the property <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object a <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> object is located on whose <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection" /> in the property <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType" /> the flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent" /> is set.
@@ -3284,7 +3310,7 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
       <returns>The <see cref="T:FolkerKinzel.VCards.VCard" />, serialized as <see cref="T:System.String" />, which has the format of a VCF file.</returns>
       <remarks>
         <para>
-The method may serialize more than one vCard into the <see cref="T:System.String" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found. These <see cref="T:FolkerKinzel.VCards.VCard" /> objects are appended to the <see cref="T:System.String" />.
+The method may serialize more vCards than were originally elements in <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and when in the properties <see cref="P:FolkerKinzel.VCards.VCard.Members" /> or <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object further <see cref="T:FolkerKinzel.VCards.VCard" /> objects in the form of <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> objects can be found.
 </para>
         <para>
 The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the property <see cref="P:FolkerKinzel.VCards.VCard.Relations" /> of a <see cref="T:FolkerKinzel.VCards.VCard" /> object a <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty" /> object is located on whose <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection" /> in the property <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType" /> the flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent" /> is set.
@@ -3317,8 +3343,7 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
       <summary>All flags are unset.</summary>
     </member>
     <member name="F:FolkerKinzel.VCards.VcfOptions.Default">
-      <summary>Default setting (corresponds to <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteGroups" /> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6474Extensions" />
-             | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6715Extensions" /> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteImppExtension" /> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteXExtensions" />)</summary>
+      <summary>Default setting (corresponds to <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteGroups" /> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6474Extensions" /> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6715Extensions" /> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteImppExtension" /> | <see cref="F:FolkerKinzel.VCards.VcfOptions.WriteXExtensions" /> | <see cref="F:FolkerKinzel.VCards.VcfOptions.AllowMultipleAdrAndLabelInVCard21" />)</summary>
     </member>
     <member name="F:FolkerKinzel.VCards.VcfOptions.WriteGroups">
       <summary>Set the flag to write property group identifiers.</summary>
@@ -3357,6 +3382,9 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
     </member>
     <member name="F:FolkerKinzel.VCards.VcfOptions.WriteWabExtensions">
       <summary>Set the flag to write the following vCard properties if necessary: <c>X-WAB-GENDER</c>, <c>X-WAB-WEDDING-ANNIVERSARY</c>, <c>X-WAB-SPOUSE-NAME</c>.</summary>
+    </member>
+    <member name="F:FolkerKinzel.VCards.VcfOptions.AllowMultipleAdrAndLabelInVCard21">
+      <summary>Set the flag to allow multiple "ADR" and "LABEL" properties to be written into a vCard 2.1.</summary>
     </member>
   </members>
 </doc>

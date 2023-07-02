@@ -44,7 +44,6 @@ public sealed partial class VCard
     /// vCard 4.0 gespeichert wird und sich 
     /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
     /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befinden. 
-    /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
     /// </para>
     /// 
     /// <para>
@@ -118,8 +117,7 @@ public sealed partial class VCard
     /// Dies geschieht, wenn eine
     /// vCard 4.0 serialisiert wird und sich 
     /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
-    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
-    /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
+    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden.
     /// </para>
     /// 
     /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
@@ -264,19 +262,13 @@ public sealed partial class VCard
     /// vCards, als sich ursprünglich Elemente in <paramref name="vCards"/> befanden. Dies geschieht, wenn eine
     /// vCard 4.0 serialisiert wird und sich 
     /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
-    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden. 
-    /// Diese <see cref="VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
+    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden.
     /// </para>
     /// 
     /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
     /// serialisiert wird und wenn sich in der Eigenschaft <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts ein 
     /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
     /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
-    /// </para>
-    /// 
-    /// <para>
-    /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(IEnumerable{VCard?})"/> auf bevor sie erfolgreich
-    /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
     /// </para>
     /// 
     /// </remarks>
@@ -388,12 +380,6 @@ public sealed partial class VCard
     /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
     /// </para>
     /// 
-    /// <para>
-    /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(IEnumerable{VCard?})"/> auf bevor sie erfolgreich
-    /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
-    /// </para>
-    /// 
-    /// 
     /// </remarks>
     /// 
     /// 
@@ -441,12 +427,6 @@ public sealed partial class VCard
     /// serialisiert wird und wenn sich in der Eigenschaft <see cref="VCard.Relations"/> des <see cref="VCard"/>-Objekts ein 
     /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
     /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
-    /// </para>
-    /// 
-    /// 
-    /// <para>
-    /// Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="VCard.Dereference(IEnumerable{VCard?})"/> auf bevor sie erfolgreich
-    /// zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
     /// </para>
     /// 
     /// </remarks>

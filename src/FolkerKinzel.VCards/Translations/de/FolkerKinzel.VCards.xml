@@ -405,8 +405,7 @@
             Dies geschieht, wenn eine VCF-Datei als
             vCard 4.0 gespeichert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befinden. 
-            Diese <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befinden.
             </para>
             
             <para>
@@ -453,8 +452,7 @@
             Dies geschieht, wenn eine
             vCard 4.0 serialisiert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden. 
-            Diese <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden.
             </para>
             
             <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
@@ -499,8 +497,7 @@
             vCards, als sich ursprünglich Elemente in <paramref name="vCards"/> befanden. Dies geschieht, wenn eine
             vCard 4.0 serialisiert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden. 
-            Diese <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden.
             </para>
             
             <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
@@ -4740,7 +4737,6 @@
             vCard 4.0 gespeichert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
             weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befinden. 
-            Diese <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
             </para>
             
             <para>
@@ -4792,8 +4788,7 @@
             Dies geschieht, wenn eine
             vCard 4.0 serialisiert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden. 
-            Diese <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden.
             </para>
             
             <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
@@ -4843,19 +4838,13 @@
             vCards, als sich ursprünglich Elemente in <paramref name="vCards"/> befanden. Dies geschieht, wenn eine
             vCard 4.0 serialisiert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden. 
-            Diese <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte werden von der Methode an <paramref name="vCards"/> angefügt.
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden.
             </para>
             
             <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
             serialisiert wird und wenn sich in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts ein 
             <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
-            </para>
-            
-            <para>
-            Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="M:FolkerKinzel.VCards.VCard.Dereference(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard})"/> auf bevor sie erfolgreich
-            zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
             </para>
             
             </remarks>
@@ -4935,12 +4924,6 @@
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
             </para>
             
-            <para>
-            Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="M:FolkerKinzel.VCards.VCard.Dereference(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard})"/> auf bevor sie erfolgreich
-            zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
-            </para>
-            
-            
             </remarks>
             
             
@@ -4978,12 +4961,6 @@
             serialisiert wird und wenn sich in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> des <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts ein 
             <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
-            </para>
-            
-            
-            <para>
-            Wenn eine vCard 4.0 serialisiert wird, ruft die Methode <see cref="M:FolkerKinzel.VCards.VCard.Dereference(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard})"/> auf bevor sie erfolgreich
-            zurückkehrt. Im Fall, dass die Methode eine Ausnahme wirft, ist dies nicht garantiert.
             </para>
             
             </remarks>
