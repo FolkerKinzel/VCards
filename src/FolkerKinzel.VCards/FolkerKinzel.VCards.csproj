@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup Condition="True And '$(TargetFramework)' == 'net7.0' And '$(Configuration)'=='Release'">
+  <PropertyGroup Condition="False And '$(TargetFramework)' == 'net7.0' And '$(Configuration)'=='Release'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
@@ -12,7 +12,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>5.0.0-beta.2</Version>
-    <FileVersion>5.0.0.61</FileVersion>
+    <FileVersion>5.0.0.65</FileVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v5.0.0-beta.2</PackageReleaseNotes>

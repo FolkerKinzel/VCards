@@ -64,7 +64,7 @@ public class VCdTextEncodingConverterTests
     [TestMethod]
     public void GetEncodingTest5()
     {
-        const int defaultCodePage = 1252;
+        const int defaultCodePage = 65001;
         Encoding enc = TextEncodingConverter.GetEncoding(0);
         Assert.AreEqual(defaultCodePage, enc.CodePage);
         Assert.IsNotInstanceOfType(enc.EncoderFallback, EncoderFallback.ExceptionFallback.GetType());

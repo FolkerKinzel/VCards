@@ -30,7 +30,7 @@ internal static class TextEncodingConverter
     /// zurück, bei dem <see cref="Encoding.EncoderFallback"/> und <see cref="Encoding.DecoderFallback"/>
     /// auf ReplacementFallback eingestellt sind. <see cref="Encoding.UTF8"/> ist der Fallback-Wert.
     /// </summary>
-    /// <param name="codepage">Die Nummer der Codepage oder 0 für <see cref="Encoding.Default"/>.</param>
+    /// <param name="codepage">Die Nummer der Codepage.</param>
     /// <returns>Ein <see cref="Encoding"/>-Objekt, das der angegebenen Nummer der Codepage
     /// entspricht oder <see cref="Encoding.UTF8"/>, falls keine Entsprechung gefunden wurde.</returns>
     /// <remarks>
@@ -39,7 +39,7 @@ internal static class TextEncodingConverter
     /// </remarks>
     internal static Encoding GetEncoding(int codepage)
     {
-        if (codepage is < 0 or > CODEPAGE_MAX)
+        if (codepage is < 1 or > CODEPAGE_MAX)
         {
             return Encoding.UTF8;
         }
