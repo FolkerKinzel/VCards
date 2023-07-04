@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Text;
 using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
@@ -499,4 +500,41 @@ public class VcfReaderTests
     }
 
     #endregion
+
+
+    [TestMethod]
+    public void IEnumerableTest()
+    {
+        StringBuilder? sb = new StringBuilder()
+            .AppendLine("BEGIN:VCARD")
+            .AppendLine("VERSION:2.1")
+            .AppendLine("AGENT:")
+            .AppendLine("BEGIN:VCARD")
+            .AppendLine("VERSION:2.1")
+            .AppendLine("N:Friday;Fred")
+            .AppendLine("TEL;WORK;VOICE:+1-213-555-1234")
+            .AppendLine("END:VCARD")
+            .AppendLine("FN:1234")
+            .AppendLine("END:VCARD");
+
+        string vCard = sb.ToString();
+        var info = new VcfDeserializationInfo();
+        int count1;
+        int count2;
+
+        using (var reader1 = new StringReader(vCard))
+        {
+            var vcfReader1 = new VcfReader(reader1, info);
+            IEnumerable numerable = vcfReader1;
+            count1 = numerable.AsWeakEnumerable().Cast<VcfRow>().Count();
+        }
+
+        using (var reader2 = new StringReader(vCard))
+        {
+            var vcfReader2 = new VcfReader(reader2, info);
+            count2 = vcfReader2.Count();
+        }
+
+        Assert.AreEqual(count1, count2);
+    }
 }

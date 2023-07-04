@@ -1,4 +1,7 @@
-﻿namespace FolkerKinzel.VCards.Models.Tests;
+﻿using System.Collections;
+using FolkerKinzel.VCards.Tests;
+
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass()]
 public class DateTimeOffsetPropertyTests
@@ -61,5 +64,31 @@ public class DateTimeOffsetPropertyTests
     {
         var prop = new DateTimeOffsetProperty(DateTimeOffset.MinValue, GROUP);
         Assert.IsNull(prop.Value);
+    }
+
+    [TestMethod()]
+    public void DateTimeOffsetPropertyTest4()
+    {
+        IEnumerable<DateTimeProperty> prop = new DateTimeOffsetProperty(DateTimeOffset.Now, GROUP);
+        DateTimeProperty first = prop.First();
+        Assert.AreSame(first, prop);
+    }
+
+    [TestMethod()]
+    public void DateTimeOffsetPropertyTest5()
+    {
+        IEnumerable prop = new DateTimeOffsetProperty(DateTimeOffset.Now, GROUP);
+        DateTimeProperty first = prop.AsWeakEnumerable().Cast<DateTimeProperty>().First();
+        Assert.AreSame(first, prop);
+    }
+
+    [TestMethod()]
+    public void DateTimeOffsetPropertyTest6()
+    {
+        IEnumerable<DateTimeProperty> prop = new DateTimeOffsetProperty(DateTimeOffset.Now, GROUP);
+        foreach (DateTimeProperty item in prop)
+        {
+            Assert.IsNotNull(item.Value);
+        }
     }
 }

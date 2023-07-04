@@ -37,7 +37,6 @@ internal class VcfReader : IEnumerable<VcfRow>
     public bool EOF { get; private set; }
 
 
-    [ExcludeFromCodeCoverage]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     private bool HandleException(Exception e)

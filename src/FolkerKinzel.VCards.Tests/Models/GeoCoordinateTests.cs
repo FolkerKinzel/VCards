@@ -112,6 +112,7 @@ public class GeoCoordinateTests
     }
 
     [DataTestMethod()]
+    [DataRow(null)]
     [DataRow(",0.7")]
     [DataRow("geo:,0.7")]
     [DataRow("0.8;")]

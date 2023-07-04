@@ -61,10 +61,10 @@ public abstract class DateTimeProperty : VCardProperty, IEnumerable<DateTimeProp
         }//switch
     }
 
-    IEnumerator<DateTimeProperty> IEnumerable<DateTimeProperty>.GetEnumerator()
-    {
-        yield return this;
-    }
+
+    [ExcludeFromCodeCoverage] // can never be called
+    [DoesNotReturn]
+    IEnumerator<DateTimeProperty> IEnumerable<DateTimeProperty>.GetEnumerator() => throw new NotImplementedException();
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateTimeProperty>)this).GetEnumerator();
 
