@@ -14,41 +14,32 @@ internal static class StringExtension
     {
         Debug.Assert(sb != null);
 
-        if (value is null)
+        if (value is null || value.Length == 0)
         {
-            return null;
-        }
-
-        if (value.Length == 0)
-        {
-            return string.Empty;
+            return value;
         }
 
         _ = sb.Clear().Append(value).UnMask(version);
 
-        if (sb.Length == value.Length)
-        {
-            if (version < VCdVersion.V4_0)
-            {
-                return value;
-            }
-            else
-            {
-                for (int i = 0; i < sb.Length; i++)
-                {
-                    if (sb[i] != value[i])
-                    {
-                        return sb.ToString();
-                    }
-                }
-
-                return value;
-            }
-        }
-        else
+        if (sb.Length != value.Length)
         {
             return sb.ToString();
         }
+
+        if (version == VCdVersion.V2_1)
+        {
+            return value;
+        }
+
+        for (int i = 0; i < sb.Length; i++)
+        {
+            if (sb[i] != value[i])
+            {
+                return sb.ToString();
+            }
+        }
+
+        return value;
     }
 
 

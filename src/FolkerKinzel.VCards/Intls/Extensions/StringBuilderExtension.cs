@@ -11,26 +11,60 @@ internal static class StringBuilderExtension
     {
         Debug.Assert(builder != null);
 
-        if (version == VCdVersion.V2_1)
+        return version switch
         {
-            _ = builder.Replace(@"\;", ";");
-            return builder;
-        }
+            VCdVersion.V2_1 => builder.UnMaskV2(),
+            VCdVersion.V3_0 => builder.UnMaskV3(),
+            _ => builder.UnMaskV4()
+        };
+    }
 
-        if (version >= VCdVersion.V4_0)
-        {
-            _ = builder
-                .Replace(@"\\", @"\");
-        }
+    private static StringBuilder UnMaskV2(this StringBuilder builder) => builder.Replace(@"\;", ";");
 
-
-        _ = builder
+    private static StringBuilder UnMaskV3(this StringBuilder builder)
+    {
+        return builder
             .Replace(@"\n", Environment.NewLine)
             .Replace(@"\N", Environment.NewLine)
             .Replace(@"\,", ",")
-            .Replace(@"\;", ";")
-            //.Replace(@"\:", ":")
-            ;
+            .Replace(@"\;", ";");
+    }
+
+    private static StringBuilder UnMaskV4(this StringBuilder builder)
+    {
+        bool masked = false;
+        for (int i = 0; i < builder.Length; i++)
+        {
+            if (builder[i] == '\\')
+            {
+                if (!masked)
+                {
+                    builder.Remove(i, 1);
+                    masked = true;
+                    --i;
+                    continue;
+                }
+
+                masked = false;
+                continue;
+            }
+
+            if (masked)
+            {
+                masked = false;
+                switch (builder[i])
+                {
+                    case 'n':
+                    case 'N':
+                        builder.Remove(i, 1);
+                        builder.Insert(i, Environment.NewLine);
+                        i += Environment.NewLine.Length - 1;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
         return builder;
     }
@@ -56,12 +90,6 @@ internal static class StringBuilderExtension
             .Replace(Environment.NewLine, NEWLINE_REPLACEMENT)
             .Replace(",", @"\,")
             .Replace(";", @"\;");
-
-
-        //if (version == VCdVersion.V3_0 && options.IsSet(VcfOptions.MaskColonInVcard_3_0))
-        //{
-        //    builder.Replace(":", @"\:");
-        //}
 
         return builder;
     }

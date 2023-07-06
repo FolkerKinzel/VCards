@@ -90,12 +90,9 @@ public abstract class VCardProperty : ICloneable
 
     internal bool BuildProperty(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
-        Debug.Assert(serializer.PropertyKey != null);
-        Debug.Assert(!this.IsEmpty || serializer.Options.IsSet(VcfOptions.WriteEmptyProperties));
+        Asserts(serializer);
 
         StringBuilder builder = serializer.Builder;
-        Debug.Assert(builder != null);
         _ = builder.Clear();
 
         PrepareForVcfSerialization(serializer);
@@ -120,6 +117,15 @@ public abstract class VCardProperty : ICloneable
             (Parameters.Encoding == VCdEncoding.QuotedPrintable || Parameters.Encoding == VCdEncoding.Base64));
     }
 
+    [ExcludeFromCodeCoverage]
+    [Conditional("DEBUG")]
+    private void Asserts(VcfSerializer serializer)
+    {
+        Debug.Assert(serializer != null);
+        Debug.Assert(serializer.PropertyKey != null);
+        Debug.Assert(!this.IsEmpty || serializer.Options.IsSet(VcfOptions.WriteEmptyProperties));
+        Debug.Assert(serializer.Builder != null);
+    }
 
     [InternalProtected]
     internal virtual void PrepareForVcfSerialization(VcfSerializer serializer)

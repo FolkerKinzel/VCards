@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -77,8 +79,8 @@ public class DateTimeOffsetPropertyTests
     [TestMethod()]
     public void DateTimeOffsetPropertyTest5()
     {
-        IEnumerable prop = new DateTimeOffsetProperty(DateTimeOffset.Now, GROUP);
-        DateTimeProperty first = prop.AsWeakEnumerable().Cast<DateTimeProperty>().First();
+        IEnumerable<DateTimeOffsetProperty> prop = new DateTimeOffsetProperty(DateTimeOffset.Now, GROUP);
+        DateTimeProperty first = prop.AsWeakEnumerable().First();
         Assert.AreSame(first, prop);
     }
 

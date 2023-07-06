@@ -525,8 +525,7 @@ public class VcfReaderTests
         using (var reader1 = new StringReader(vCard))
         {
             var vcfReader1 = new VcfReader(reader1, info);
-            IEnumerable numerable = vcfReader1;
-            count1 = numerable.AsWeakEnumerable().Cast<VcfRow>().Count();
+            count1 = vcfReader1.AsWeakEnumerable().Count();
         }
 
         using (var reader2 = new StringReader(vCard))
