@@ -286,66 +286,68 @@ internal abstract class VcfSerializer
             {
                 TextProperty prop = arr[i];
 
-                if (prop.Parameters.InstantMessengerType.IsSet(ImppTypes.Personal))
+                var par = prop.Parameters;
+
+                if (par.InstantMessengerType.IsSet(ImppTypes.Personal) || par.PropertyClass.IsSet(PropertyClassTypes.Home))
                 {
-                    prop.Parameters.PropertyClass = prop.Parameters.PropertyClass.Set(PropertyClassTypes.Home);
+                    par.PropertyClass = par.PropertyClass.Set(PropertyClassTypes.Home);
                 }
 
-                if (prop.Parameters.InstantMessengerType.IsSet(ImppTypes.Business))
+                if (par.InstantMessengerType.IsSet(ImppTypes.Business) || par.PropertyClass.IsSet(PropertyClassTypes.Work))
                 {
-                    prop.Parameters.PropertyClass = prop.Parameters.PropertyClass.Set(PropertyClassTypes.Work);
+                    par.PropertyClass = par.PropertyClass.Set(PropertyClassTypes.Work);
                 }
 
-                if (prop.Parameters.InstantMessengerType.IsSet(ImppTypes.Mobile))
+                if (par.InstantMessengerType.IsSet(ImppTypes.Mobile) || par.TelephoneType.IsSet(TelTypes.PCS))
                 {
-                    prop.Parameters.TelephoneType = prop.Parameters.TelephoneType.Set(TelTypes.PCS);
+                    par.TelephoneType = par.TelephoneType.Set(TelTypes.PCS);
                 }
 
                 string val = prop.Value!;
 
                 if (val.StartsWith("aim:", StringComparison.OrdinalIgnoreCase))
                 {
-                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_AIM, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_AIM, prop, i == 0 && par.Preference < 100);
                 }
                 else if (val.StartsWith("gg:", StringComparison.OrdinalIgnoreCase))
                 {
-                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GADUGADU, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GADUGADU, prop, i == 0 && par.Preference < 100);
                 }
                 else if (val.StartsWith("gtalk:", StringComparison.OrdinalIgnoreCase))
                 {
-                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GTALK, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GTALK, prop, i == 0 && par.Preference < 100);
                 }
                 else if (val.StartsWith("com.google.hangouts:", StringComparison.OrdinalIgnoreCase))
                 {
-                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GOOGLE_TALK, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_GOOGLE_TALK, prop, i == 0 && par.Preference < 100);
                 }
                 else if (val.StartsWith("icq:", StringComparison.OrdinalIgnoreCase))
                 {
-                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_ICQ, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_ICQ, prop, i == 0 && par.Preference < 100);
                 }
                 else if (val.StartsWith("xmpp:", StringComparison.OrdinalIgnoreCase))
                 {
-                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_JABBER, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_JABBER, prop, i == 0 && par.Preference < 100);
                 }
                 else if (val.StartsWith("msnim:", StringComparison.OrdinalIgnoreCase))
                 {
-                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_MSN, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_MSN, prop, i == 0 && par.Preference < 100);
                 }
                 else if (val.StartsWith("sip:", StringComparison.OrdinalIgnoreCase))
                 {
-                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_MS_IMADDRESS, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_MS_IMADDRESS, prop, i == 0 && par.Preference < 100);
                 }
                 else if (val.StartsWith("skype:", StringComparison.OrdinalIgnoreCase))
                 {
-                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_SKYPE, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_SKYPE, prop, i == 0 && par.Preference < 100);
                 }
                 else if (val.StartsWith("twitter:", StringComparison.OrdinalIgnoreCase))
                 {
-                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_TWITTER, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_TWITTER, prop, i == 0 && par.Preference < 100);
                 }
                 else if (val.StartsWith("ymsgr:", StringComparison.OrdinalIgnoreCase))
                 {
-                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_YAHOO, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.NonStandard.InstantMessenger.X_YAHOO, prop, i == 0 && par.Preference < 100);
                 }
             }
         }
