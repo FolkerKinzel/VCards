@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 {
     internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
-        internal Vcf_3_0Serializer(TextWriter writer, VcfOptions options, ITimeZoneIDConverter? tzConverter) 
+        internal Vcf_3_0Serializer(TextWriter writer, VcfOptions options, ITimeZoneIDConverter? tzConverter)
             : base(writer, options, new ParameterSerializer3_0(options), tzConverter) { }
 
         internal override VCdVersion Version => VCdVersion.V3_0;
@@ -160,13 +160,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
                     BuildProperty(VCard.PropKeys.IMPP, prop, i == 0 && prop.Parameters.Preference < 100);
                 }
+            }
 
-                return;
-            }
-            else
-            {
-                BuildXImpps(value);
-            }
+            BuildXImpps(value);
         }
 
 

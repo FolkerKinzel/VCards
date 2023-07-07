@@ -1,5 +1,7 @@
-﻿using FolkerKinzel.VCards.Models;
+﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -189,4 +191,100 @@ END:VCARD";
         }
     }
 
+
+    [TestMethod]
+    public void NonStandardParameterTest1()
+    {
+        const string whatsAppNumber = "+1-234-567-89";
+        var xiamoiMobilePhone = new TextProperty(whatsAppNumber);
+        xiamoiMobilePhone.Parameters.NonStandardParameters = new KeyValuePair<string, string>[]
+        {
+                new KeyValuePair<string, string>("TYPE", "WhatsApp")
+        };
+
+        var vcard = new VCard
+        {
+            PhoneNumbers = xiamoiMobilePhone
+        };
+
+        // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
+        // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
+        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
+        vcard = VCard.ParseVcf(vcfString)[0];
+
+        // Find the WhatsApp number:
+        string? readWhatsAppNumber = vcard.PhoneNumbers?
+            .FirstOrDefault(x => x?.Parameters.NonStandardParameters?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
+            .Value;
+        Assert.AreEqual(whatsAppNumber, readWhatsAppNumber);
+
+    }
+
+    [TestMethod]
+    public void ImppTest1()
+    {
+        const string mobilePhoneNumber = "tel:+1-234-567-89";
+        var whatsAppImpp = new TextProperty(mobilePhoneNumber);
+
+        const ImppTypes messengerTypes = ImppTypes.Personal
+                                | ImppTypes.Business
+                                | ImppTypes.Mobile;
+        whatsAppImpp.Parameters.InstantMessengerType = ImppTypes.Personal
+                                                     | ImppTypes.Business
+                                                     | ImppTypes.Mobile;
+
+        var vcard = new VCard
+        {
+            InstantMessengerHandles = whatsAppImpp
+        };
+
+        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteXExtensions);
+        vcard = VCard.ParseVcf(vcfString)[0];
+
+        whatsAppImpp = vcard.InstantMessengerHandles?.First();
+
+        Assert.AreEqual(mobilePhoneNumber, whatsAppImpp?.Value);
+        Assert.AreEqual(messengerTypes, whatsAppImpp?.Parameters.InstantMessengerType);
+    }
+
+    [TestMethod]
+    public void XMessengerTest1()
+    {
+        const string mobilePhoneNumber = "skype:+1-234-567-89";
+        var prop = new TextProperty(mobilePhoneNumber);
+        prop.Parameters.InstantMessengerType = ImppTypes.Mobile | ImppTypes.Personal;
+
+        var vcard = new VCard
+        {
+            InstantMessengerHandles = prop
+        };
+
+        string vcfString = vcard.ToVcfString(options: (VcfOptions.Default | VcfOptions.WriteXExtensions).Unset(VcfOptions.WriteImppExtension));
+        vcard = VCard.ParseVcf(vcfString)[0];
+
+        prop = vcard.InstantMessengerHandles?.First();
+
+        Assert.AreEqual(mobilePhoneNumber, prop?.Value);
+        Assert.AreEqual(PropertyClassTypes.Home, prop?.Parameters.PropertyClass);
+    }
+
+    [TestMethod]
+    public void XMessengerTest2()
+    {
+        const string mobilePhoneNumber = "skype:+1-234-567-89";
+        var prop = new TextProperty(mobilePhoneNumber);
+        prop.Parameters.InstantMessengerType = ImppTypes.Mobile | ImppTypes.Personal;
+
+        var vcard = new VCard
+        {
+            InstantMessengerHandles = prop
+        };
+
+        string vcfString = vcard.ToVcfString(options: (VcfOptions.Default | VcfOptions.WriteXExtensions));
+        vcard = VCard.ParseVcf(vcfString)[0];
+        Assert.AreEqual(2, vcard.InstantMessengerHandles!.Count());
+        Assert.IsTrue(vcard.InstantMessengerHandles!.All(x => x?.Value == mobilePhoneNumber));
+
+        //Assert.AreEqual(PropertyClassTypes.Home, prop?.Parameters.PropertyClass);
+    }
 }

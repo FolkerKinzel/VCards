@@ -28,8 +28,9 @@
 - Cleanup: Remove identifiers that are marked as obsolete errors.
 
 ### 5.0.0
-- [ ] Higher code coverage of the unit tests.
+- [x] Higher code coverage of the unit tests.
 - [x] Fixes a bug that masked values in vCard 3.0 and vCard 4.0 could not be read correctly under certain circumstances.
+- [x] Fixes an issue that the option `VcfOptions.WriteXExtensions` is ignored in vCard 3.0 if the option `VcfOptions.WriteImppExtension` is set.
 
 ### 5.0.0-beta.2       
 - [x] Implement `VCard.IsEmpty()`.
