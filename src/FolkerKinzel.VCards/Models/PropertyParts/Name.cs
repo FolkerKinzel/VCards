@@ -441,4 +441,23 @@ public sealed class Name
         }
     }
 
+    /// <summary>
+    /// Bringt die von der Instanz gekapselten Daten in eine lesbare Form.
+    /// </summary>
+    /// <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
+    public string ToDisplayName()
+    {
+        const int stringBuilderInitialCapacity = 32;
+        return IsEmpty
+            ? string.Empty
+            : new StringBuilder(stringBuilderInitialCapacity)
+            .AppendReadableProperty(Prefix)
+            .AppendReadableProperty(FirstName)
+            .AppendReadableProperty(MiddleName)
+            .AppendReadableProperty(LastName)
+            .AppendReadableProperty(Suffix)
+            .ToString();
+    }
 }
+
+

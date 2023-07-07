@@ -112,6 +112,9 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     public override bool IsEmpty => Value.IsEmpty;
 
 
+    public string ToDisplayName() => Value.ToDisplayName();
+
+
     [InternalProtected]
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

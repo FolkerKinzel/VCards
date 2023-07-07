@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.Text;
 using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
@@ -173,6 +174,27 @@ internal static class StringBuilderExtension
         }
 
         return builder;
+    }
+
+    internal static StringBuilder AppendReadableProperty(this StringBuilder sb, ReadOnlyCollection<string> strings)
+    {
+        Debug.Assert(sb != null);
+        Debug.Assert(strings != null);
+
+        for (int i = 0; i < strings.Count; i++)
+        {
+            AppendEntry(sb, strings[i]);
+        }
+        return sb;
+
+        static void AppendEntry(StringBuilder sb, string entry)
+        {
+            if (sb.Length != 0)
+            {
+                sb.Append(' ');
+            }
+            sb.Append(entry);
+        }
     }
 
 }

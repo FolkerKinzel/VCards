@@ -613,7 +613,6 @@ internal abstract class VcfSerializer
             BuildProperty(VCard.PropKeys.AGENT, agent);
         }
 
-
         RelationProperty? spouse = Options.IsSet(VcfOptions.WriteEmptyProperties)
             ? value.Where(x => x != null && x.Parameters.RelationType.IsSet(RelationTypes.Spouse))
                    .OrderBy(x => x!.Parameters.Preference).FirstOrDefault()
@@ -630,7 +629,6 @@ internal abstract class VcfSerializer
 
             if (spouse is RelationTextProperty)
             {
-
                 if (Options.IsSet(VcfOptions.WriteXExtensions))
                 {
                     BuildProperty(VCard.PropKeys.NonStandard.X_SPOUSE, spouse);
@@ -653,27 +651,31 @@ internal abstract class VcfSerializer
             }
         }
 
-
-        static RelationTextProperty ConvertToRelationTextProperty(RelationVCardProperty vcardProp)
+        static RelationTextProperty? ConvertToRelationTextProperty(RelationVCardProperty vcardProp)
         {
             string? name = vcardProp.Value?.DisplayNames?.Where(x => x != null && !x.IsEmpty)
                 .OrderBy(x => x!.Parameters.Preference).FirstOrDefault()?.Value;
 
             if (name is null)
             {
-                Models.PropertyParts.Name? vcdName = vcardProp.Value?.NameViews?.Where(x => x != null && !x.IsEmpty).FirstOrDefault()?.Value;
+                NameProperty? vcdName = vcardProp.Value?.NameViews?.Where(x => x != null && !x.IsEmpty).FirstOrDefault();
 
                 if (vcdName != null)
                 {
-                    name = $"{vcdName.FirstName} {vcdName.MiddleName}".Trim() + " " + vcdName.LastName;
-                    name = name.Trim();
+                    name = vcdName.ToDisplayName();
+                }
+                else
+                {
+                    return null;
                 }
             }
 
-
+            Debug.Assert(name != null);
             return new RelationTextProperty(name, vcardProp.Parameters.RelationType ?? RelationTypes.Spouse, vcardProp.Group);
         }
     }
+
+    
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendRoles(IEnumerable<TextProperty?> value) { }

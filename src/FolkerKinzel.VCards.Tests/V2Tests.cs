@@ -206,4 +206,20 @@ public class V2Tests
 
     }
 
+    [TestMethod]
+    public void SpouseTest1()
+    {
+        var vc = new VCard
+        {
+            Relations = new RelationVCardProperty(new VCard { NameViews = new NameProperty("wife", "best") }, RelationTypes.Spouse)
+        };
+
+        string vcf = vc.ToVcfString(VCdVersion.V2_1);
+        vc = VCard.ParseVcf(vcf)[0];
+
+        Assert.IsNotNull(vc.Relations);
+        Assert.AreEqual(RelationTypes.Spouse, vc.Relations?.First()?.Parameters.RelationType);
+
+    }
+
 }
