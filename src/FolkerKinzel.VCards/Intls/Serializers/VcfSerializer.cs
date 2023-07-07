@@ -1,8 +1,10 @@
 ﻿using System.Globalization;
 using System.Text;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
@@ -287,21 +289,7 @@ internal abstract class VcfSerializer
                 TextProperty prop = arr[i];
 
                 var par = prop.Parameters;
-
-                if (par.InstantMessengerType.IsSet(ImppTypes.Personal) || par.PropertyClass.IsSet(PropertyClassTypes.Home))
-                {
-                    par.PropertyClass = par.PropertyClass.Set(PropertyClassTypes.Home);
-                }
-
-                if (par.InstantMessengerType.IsSet(ImppTypes.Business) || par.PropertyClass.IsSet(PropertyClassTypes.Work))
-                {
-                    par.PropertyClass = par.PropertyClass.Set(PropertyClassTypes.Work);
-                }
-
-                if (par.InstantMessengerType.IsSet(ImppTypes.Mobile) || par.TelephoneType.IsSet(TelTypes.PCS))
-                {
-                    par.TelephoneType = par.TelephoneType.Set(TelTypes.PCS);
-                }
+                XMessengerParameterConverter.ConvertFromInstantMessengerType(par);
 
                 string val = prop.Value!;
 

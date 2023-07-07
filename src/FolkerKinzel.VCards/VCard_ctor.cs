@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Globalization;
 using System.Text;
 
@@ -301,15 +302,9 @@ public sealed partial class VCard
                         {
                             InstantMessengerHandles = textProp.GetAssignment(InstantMessengerHandles);
 
-                            textProp.Parameters.Assign(vcfRow.Parameters); // die meisten diese Properties enthalten
-                                                                           // Telefon-Type-Informationen.
-
-                            if ((textProp.Parameters.TelephoneType.IsSet(TelTypes.Voice) ||
-                                textProp.Parameters.TelephoneType.IsSet(TelTypes.Video)) &&
-                                (!PhoneNumbers?.Any(x => x?.Value == textProp.Value) ?? true))
-                            {
-                                PhoneNumbers = textProp.GetAssignment(PhoneNumbers);
-                            }
+                            var para = textProp.Parameters;
+                            XMessengerParameterConverter.ConvertToInstantMessengerType(para);
+                            AddCopyToPhoneNumbers(textProp, para);
                         }
                     }
 
@@ -448,6 +443,15 @@ public sealed partial class VCard
 
     }//ctor
 
+    private void AddCopyToPhoneNumbers(TextProperty textProp, ParameterSection para)
+    {
+        if ((para.TelephoneType.IsSet(TelTypes.Voice) ||
+                                        para.TelephoneType.IsSet(TelTypes.Video)) &&
+                                        (!PhoneNumbers?.Any(x => x?.Value == textProp.Value) ?? true))
+        {
+            PhoneNumbers = textProp.GetAssignment(PhoneNumbers);
+        }
+    }
 
     private void AssignLabelToAddress(VcfRow labelRow)
     {
@@ -479,7 +483,7 @@ public sealed partial class VCard
         else if (labelRow.Parameters.PropertyClass.HasValue)
         {
             AddressProperty? address = addresses
-                .Where(x => x!.Parameters.Label is null && 
+                .Where(x => x!.Parameters.Label is null &&
                             x.Parameters.PropertyClass.IsSet(labelRow.Parameters.PropertyClass.Value) &&
                             x.Parameters.Preference == labelRow.Parameters.Preference)
                 .FirstOrDefault();
@@ -493,7 +497,7 @@ public sealed partial class VCard
         else if (labelRow.Parameters.AddressType.HasValue)
         {
             AddressProperty? address = addresses
-                .Where(x => x!.Parameters.Label is null && 
+                .Where(x => x!.Parameters.Label is null &&
                             x.Parameters.AddressType.IsSet(labelRow.Parameters.AddressType.Value) &&
                             x.Parameters.Preference == labelRow.Parameters.Preference)
                 .FirstOrDefault();

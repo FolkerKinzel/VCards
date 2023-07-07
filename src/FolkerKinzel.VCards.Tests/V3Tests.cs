@@ -252,7 +252,9 @@ END:VCARD";
     {
         const string mobilePhoneNumber = "skype:+1-234-567-89";
         var prop = new TextProperty(mobilePhoneNumber);
-        prop.Parameters.InstantMessengerType = ImppTypes.Mobile | ImppTypes.Personal;
+        const ImppTypes imppTypes = ImppTypes.Mobile | ImppTypes.Personal;
+
+        prop.Parameters.InstantMessengerType = imppTypes;
 
         var vcard = new VCard
         {
@@ -262,10 +264,12 @@ END:VCARD";
         string vcfString = vcard.ToVcfString(options: (VcfOptions.Default | VcfOptions.WriteXExtensions).Unset(VcfOptions.WriteImppExtension));
         vcard = VCard.ParseVcf(vcfString)[0];
 
+        Assert.AreEqual(1, vcard.InstantMessengerHandles!.Count());
         prop = vcard.InstantMessengerHandles?.First();
-
         Assert.AreEqual(mobilePhoneNumber, prop?.Value);
         Assert.AreEqual(PropertyClassTypes.Home, prop?.Parameters.PropertyClass);
+        Assert.AreEqual(imppTypes, prop?.Parameters.InstantMessengerType);
+
     }
 
     [TestMethod]
@@ -273,7 +277,8 @@ END:VCARD";
     {
         const string mobilePhoneNumber = "skype:+1-234-567-89";
         var prop = new TextProperty(mobilePhoneNumber);
-        prop.Parameters.InstantMessengerType = ImppTypes.Mobile | ImppTypes.Personal;
+        const ImppTypes imppTypes = ImppTypes.Mobile | ImppTypes.Personal;
+        prop.Parameters.InstantMessengerType = imppTypes;
 
         var vcard = new VCard
         {
@@ -282,9 +287,9 @@ END:VCARD";
 
         string vcfString = vcard.ToVcfString(options: (VcfOptions.Default | VcfOptions.WriteXExtensions));
         vcard = VCard.ParseVcf(vcfString)[0];
-        Assert.AreEqual(2, vcard.InstantMessengerHandles!.Count());
-        Assert.IsTrue(vcard.InstantMessengerHandles!.All(x => x?.Value == mobilePhoneNumber));
-
-        //Assert.AreEqual(PropertyClassTypes.Home, prop?.Parameters.PropertyClass);
+        Assert.AreEqual(1, vcard.InstantMessengerHandles!.Count());
+        prop = vcard.InstantMessengerHandles!.First();
+        Assert.AreEqual(mobilePhoneNumber, prop?.Value);
+        Assert.AreEqual(imppTypes, prop?.Parameters.InstantMessengerType);
     }
 }

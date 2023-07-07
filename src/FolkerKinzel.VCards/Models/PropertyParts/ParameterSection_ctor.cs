@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
+using static FolkerKinzel.VCards.VCard;
 
 #if !NET40
 using FolkerKinzel.Strings;
@@ -340,6 +341,20 @@ public sealed partial class ParameterSection
                     return false;
                 }
             case VCard.PropKeys.TEL:
+            case PropKeys.NonStandard.InstantMessenger.X_AIM:
+            case PropKeys.NonStandard.InstantMessenger.X_GADUGADU:
+            case PropKeys.NonStandard.InstantMessenger.X_GOOGLE_TALK:
+            case PropKeys.NonStandard.InstantMessenger.X_GROUPWISE:
+            case PropKeys.NonStandard.InstantMessenger.X_GTALK:
+            case PropKeys.NonStandard.InstantMessenger.X_ICQ:
+            case PropKeys.NonStandard.InstantMessenger.X_JABBER:
+            case PropKeys.NonStandard.InstantMessenger.X_KADDRESSBOOK_X_IMADDRESS:
+            case PropKeys.NonStandard.InstantMessenger.X_MSN:
+            case PropKeys.NonStandard.InstantMessenger.X_MS_IMADDRESS:
+            case PropKeys.NonStandard.InstantMessenger.X_SKYPE:
+            case PropKeys.NonStandard.InstantMessenger.X_SKYPE_USERNAME:
+            case PropKeys.NonStandard.InstantMessenger.X_TWITTER:
+            case PropKeys.NonStandard.InstantMessenger.X_YAHOO:
                 {
                     TelTypes? telType = TelTypesConverter.Parse(typeValue);
 
