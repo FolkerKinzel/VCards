@@ -119,14 +119,22 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(value != null);
 
-            TextProperty displayName = value
+            TextProperty? displayName = value
                 .Where(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty))
-                .OrderBy(x => x!.Parameters.Preference).FirstOrDefault()
+                .OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
 
-                ?? new TextProperty(Options.IsSet(VcfOptions.WriteEmptyProperties) ? null : "?");
+            
+            if (displayName is null)
+            {
+                var name = VCardToSerialize.NameViews?.Where(x => x != null && !x.IsEmpty).FirstOrDefault();
 
+                if(name is not null)
+                {
+                    displayName = new TextProperty(name.ToDisplayName());
+                }
+            }
 
-            BuildProperty(VCard.PropKeys.FN, displayName);
+            BuildProperty(VCard.PropKeys.FN, displayName ?? new TextProperty(Options.IsSet(VcfOptions.WriteEmptyProperties) ? null : "?"));
         }
 
 

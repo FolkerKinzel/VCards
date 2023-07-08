@@ -133,10 +133,15 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
         if (displNames.Length == 0)
         {
-            string? displName = Options.IsSet(VcfOptions.WriteEmptyProperties) ? null : "?";
+            NameProperty? name = VCardToSerialize.NameViews?.Where(x => x != null && !x.IsEmpty)
+                                                            .FirstOrDefault();
 
+            string? displName = name != null ? name.ToDisplayName() 
+                                                 : Options.IsSet(VcfOptions.WriteEmptyProperties)
+                                                        ? null 
+                                                        : "?";
+           
             var textProp = new TextProperty(displName);
-
             BuildProperty(VCard.PropKeys.FN, textProp);
         }
         else

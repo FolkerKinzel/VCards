@@ -34,6 +34,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <param name="autoLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
+    /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
     /// <remarks>
     /// Es ist empfehlenswert, dem Parameter <see cref="ParameterSection.Label"/> des <see cref="AddressProperty"/>-Objekts
     /// eine formatierte Darstellung der Adresse zuzuweisen.
@@ -45,7 +47,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                            IEnumerable<string?>? country = null,
                            IEnumerable<string?>? postOfficeBox = null,
                            IEnumerable<string?>? extendedAddress = null,
-                           string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+                           string? propertyGroup = null,
+                           bool autoLabel = true) : base(new ParameterSection(), propertyGroup)
     {
         Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
                             locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
@@ -54,6 +57,11 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                             country: ReadOnlyCollectionConverter.ToReadOnlyCollection(country),
                             postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
                             extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
+
+        if(autoLabel)
+        {
+            this.Parameters.Label = ToLabel();
+        }
     }
 
 
@@ -70,6 +78,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <param name="autoLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
+    /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
     /// <remarks>
     /// Es ist empfehlenswert, dem Parameter <see cref="ParameterSection.Label"/> des <see cref="AddressProperty"/>-Objekts
     /// eine formatierte Darstellung der Adresse zuzuweisen.
@@ -82,7 +92,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         string? country = null,
         string? postOfficeBox = null,
         string? extendedAddress = null,
-        string? propertyGroup = null)
+        string? propertyGroup = null,
+        bool autoLabel = true)
         : base(new ParameterSection(), propertyGroup)
     {
         Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
@@ -92,6 +103,11 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                             country: ReadOnlyCollectionConverter.ToReadOnlyCollection(country),
                             postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
                             extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
+        
+        if (autoLabel)
+        {
+            this.Parameters.Label = ToLabel();
+        }
     }
 
     /// <summary>
