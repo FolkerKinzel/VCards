@@ -36,10 +36,6 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
     /// <param name="autoLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
     /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
-    /// <remarks>
-    /// Es ist empfehlenswert, dem Parameter <see cref="ParameterSection.Label"/> des <see cref="AddressProperty"/>-Objekts
-    /// eine formatierte Darstellung der Adresse zuzuweisen.
-    /// </remarks>
     public AddressProperty(IEnumerable<string?>? street = null,
                            IEnumerable<string?>? locality = null,
                            IEnumerable<string?>? postalCode = null,
@@ -80,10 +76,6 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
     /// <param name="autoLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
     /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
-    /// <remarks>
-    /// Es ist empfehlenswert, dem Parameter <see cref="ParameterSection.Label"/> des <see cref="AddressProperty"/>-Objekts
-    /// eine formatierte Darstellung der Adresse zuzuweisen.
-    /// </remarks>
     public AddressProperty(
         string? street,
         string? locality,

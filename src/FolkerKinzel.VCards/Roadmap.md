@@ -36,11 +36,12 @@
 - [x] Fixes an issue that the option `VcfOptions.WriteXExtensions` is ignored in vCard 3.0 if the option `VcfOptions.WriteImppExtension` is set.
 - [x] Implement `string Name.ToDisplayName()`.
 - [x] Implement `string NameProperty.ToDisplayName`.
+- [x] Let vCard 4.0 and vCard 3.0 automatically generate a `FN` property from the names if no `DisplayNames` are specified.
 - [x] Implement `bool Address.IsUSAddress()`.
 - [x] Implement `bool AddressProperty.IsUSAddress()`.
 - [x] Implement `string Address.ToLabel()`.
 - [x] Implement `string AddressProperty.ToLabel()`.
-- [ ] Add an optional parameter `autoLabel = true` to the `AddressProperty` ctors.
+- [x] Add an optional parameter `autoLabel = true` to the `AddressProperty` ctors.
 
 ### 5.0.0-beta.2       
 - [x] Implement `VCard.IsEmpty()`.
