@@ -351,6 +351,12 @@ public sealed class Address
         return arr.SequenceEqual("USA") || arr.SequenceEqual("UNITEDSTATESOFAMERICA");
     }
 
+    /// <summary>
+    /// Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
+    /// </summary>
+    /// <returns>Die in der Instanz gekapselten Daten, umgewandelt in formatierten Text für ein Adressetikett.</returns>
+    public string ToLabel() => IsUSAddress() ? this.ConvertToUSLabel() : this.ConvertToDinLabel();
+
 
     internal void AppendVCardString(VcfSerializer serializer)
     {

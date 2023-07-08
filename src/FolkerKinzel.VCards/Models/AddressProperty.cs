@@ -107,6 +107,16 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     public bool IsUSAddress() => Value.IsUSAddress();
 
 
+    /// <summary>
+    /// Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
+    /// </summary>
+    /// <returns>Die in der Instanz gekapselten Daten, umgewandelt in formatierten Text für ein Adressetikett.</returns>
+#if !NET40
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]    
+#endif
+    public string ToLabel() => Value.ToLabel();
+
+
     internal AddressProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
