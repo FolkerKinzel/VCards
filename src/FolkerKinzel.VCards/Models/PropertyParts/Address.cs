@@ -342,13 +342,13 @@ public sealed class Address
     /// <remarks>
     /// Die Methode untersucht die Eigenschaft <see cref="Country"/>. Wenn diese Eigenschaft leer ist, gibt sie <c>false</c> zurück.
     /// </remarks>
-    public bool IsUSAddress()
+    internal bool IsUSAddress()
     {
         var arr = Country.SelectMany(x => x)
                        .Where(x => char.IsLetter(x))
                        .Select(x => char.ToUpperInvariant(x)).ToArray();
 
-        return arr.SequenceEqual("USA") || arr.SequenceEqual("UNITEDSTATESOFAMERICA");
+        return arr.SequenceEqual("USA") || arr.Take(12).SequenceEqual("UNITEDSTATES"); // || arr.SequenceEqual("UNITEDSTATESOFAMERICA");
     }
 
     /// <summary>

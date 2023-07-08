@@ -37,8 +37,6 @@
 - [x] Implement `string Name.ToDisplayName()`.
 - [x] Implement `string NameProperty.ToDisplayName`.
 - [x] Let vCard 4.0 and vCard 3.0 automatically generate a `FN` property from the names if no `DisplayNames` are specified.
-- [x] Implement `bool Address.IsUSAddress()`.
-- [x] Implement `bool AddressProperty.IsUSAddress()`.
 - [x] Implement `string Address.ToLabel()`.
 - [x] Implement `string AddressProperty.ToLabel()`.
 - [x] Add an optional parameter `autoLabel = true` to the `AddressProperty` ctors.
