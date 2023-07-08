@@ -94,6 +94,17 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                             extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
     }
 
+    /// <summary>
+    /// Gibt an, ob die Instanz auf eine Postanschrift in den USA verweist.
+    /// </summary>
+    /// <returns><c>true</c>, wenn die Instanz auf eine Adresse in den USA verweist, andernfalls <c>false</c>.</returns>
+    /// <remarks>
+    /// Die Methode untersucht die Eigenschaft <see cref="Country"/>. Wenn diese Eigenschaft leer ist, gibt sie <c>false</c> zurück.
+    /// </remarks>
+#if !NET40
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]    
+#endif
+    public bool IsUSAddress() => Value.IsUSAddress();
 
 
     internal AddressProperty(VcfRow vcfRow, VCdVersion version)

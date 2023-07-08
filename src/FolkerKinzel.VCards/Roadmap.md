@@ -33,6 +33,8 @@
 - [x] Fixes an issue that the option `VcfOptions.WriteXExtensions` is ignored in vCard 3.0 if the option `VcfOptions.WriteImppExtension` is set.
 - [x] Implement `string Name.ToDisplayName()`.
 - [x] Implement `string NameProperty.ToDisplayName`.
+- [x] Implement `bool Address.IsUSAddress()`.
+- [x] Implement `bool AddressProperty.IsUSAddress()`.
 - [ ] Implement `string Address.ToLabel()`.
 - [ ] Add an optional parameter `autoLabel = true` to the `AddressProperty` ctors.
 

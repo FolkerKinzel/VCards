@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
+
 #pragma warning disable CS0618 // Typ oder Element ist veraltet
 
 [TestClass()]
@@ -210,4 +211,17 @@ public class AddressPropertyTests
         Assert.AreEqual(labelText, adr.Parameters.Label);
     }
 
+    [DataTestMethod]
+    [DataRow(null, false)]
+    [DataRow("Germany", false)]
+    [DataRow("USA", true)]
+    [DataRow("U.S.A.", true)]
+    [DataRow("U. S. A.", true)]
+    [DataRow("United States Of America", true)]
+    [DataRow("UNITED STATES OF AMERICA", true)]
+    public void IsUSAddressTest(string? input, bool expected)
+    {
+        var addr = new AddressProperty(null, null, null, country: input);
+        Assert.AreEqual(expected, addr.IsUSAddress());
+    }
 }

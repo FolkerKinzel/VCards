@@ -335,6 +335,22 @@ public sealed class Address
         }
     }
 
+    /// <summary>
+    /// Gibt an, ob die Instanz auf eine Postanschrift in den USA verweist.
+    /// </summary>
+    /// <returns><c>true</c>, wenn die Instanz auf eine Adresse in den USA verweist, andernfalls <c>false</c>.</returns>
+    /// <remarks>
+    /// Die Methode untersucht die Eigenschaft <see cref="Country"/>. Wenn diese Eigenschaft leer ist, gibt sie <c>false</c> zurück.
+    /// </remarks>
+    public bool IsUSAddress()
+    {
+        var arr = Country.SelectMany(x => x)
+                       .Where(x => char.IsLetter(x))
+                       .Select(x => char.ToUpperInvariant(x)).ToArray();
+
+        return arr.SequenceEqual("USA") || arr.SequenceEqual("UNITEDSTATESOFAMERICA");
+    }
+
 
     internal void AppendVCardString(VcfSerializer serializer)
     {

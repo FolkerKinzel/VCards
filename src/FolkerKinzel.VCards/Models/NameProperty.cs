@@ -112,6 +112,13 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     public override bool IsEmpty => Value.IsEmpty;
 
 
+    /// <summary>
+    /// Bringt die von der Instanz gekapselten Daten in eine lesbare Form.
+    /// </summary>
+    /// <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
+#if !NET40
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     public string ToDisplayName() => Value.ToDisplayName();
 
 
