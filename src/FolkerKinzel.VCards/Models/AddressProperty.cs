@@ -34,7 +34,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    /// <param name="autoLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
+    /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
     /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
     public AddressProperty(IEnumerable<string?>? street = null,
                            IEnumerable<string?>? locality = null,
@@ -44,7 +44,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                            IEnumerable<string?>? postOfficeBox = null,
                            IEnumerable<string?>? extendedAddress = null,
                            string? propertyGroup = null,
-                           bool autoLabel = true) : base(new ParameterSection(), propertyGroup)
+                           bool appendLabel = true) : base(new ParameterSection(), propertyGroup)
     {
         Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
                             locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
@@ -54,7 +54,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                             postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
                             extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
 
-        if(autoLabel)
+        if(appendLabel)
         {
             AppendLabel();
         }
@@ -74,7 +74,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    /// <param name="autoLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
+    /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
     /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
     public AddressProperty(
         string? street,
@@ -85,7 +85,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         string? postOfficeBox = null,
         string? extendedAddress = null,
         string? propertyGroup = null,
-        bool autoLabel = true)
+        bool appendLabel = true)
         : base(new ParameterSection(), propertyGroup)
     {
         Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
@@ -96,7 +96,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                             postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
                             extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
         
-        if (autoLabel)
+        if (appendLabel)
         {
             AppendLabel();
         }

@@ -116,15 +116,15 @@ internal static class AddressOrderConverter
             new ReadOnlySpan<char>(arr);
 #endif
 #pragma warning disable CA1303 // Literale nicht als lokalisierte Parameter übergeben
-        return span.Equals("USA") ||
+        return span.Equals("USA", StringComparison.Ordinal) ||
                span.StartsWith("UNITEDSTATES") ||
                span.StartsWith("AUSTRAL") ||
                span.EndsWith("ANADA") || // Canada, Kanada
                span.EndsWith("BAHRAIN") ||
                span.EndsWith("BANGLADESH") ||
-               span.Equals("BERMUDA") ||
-               span.Equals("BHUTAN") ||
-               span.Equals("BRAZIL") ||
+               span.Equals("BERMUDA", StringComparison.Ordinal) ||
+               span.Equals("BHUTAN", StringComparison.Ordinal) ||
+               span.Equals("BRAZIL", StringComparison.Ordinal) ||
                span.StartsWith("BRASIL") ||
                span.StartsWith("BRUNEI") ||
                span.StartsWith("CAYMAN") || // Cayman Islands
@@ -133,45 +133,45 @@ internal static class AddressOrderConverter
                span.EndsWith("KOLUMBIEN") ||
                span.StartsWith("DOMINICAN") || // Dominican Republic
                span.StartsWith("DOMINIKAN") || // Dominikanische Republik
-               span.Equals("EGYPT") ||
+               span.Equals("EGYPT", StringComparison.Ordinal) ||
                span.EndsWith("INDIA") ||
                span.StartsWith("INDONESI") ||
                span.EndsWith("IRELAND") ||
-               span.Equals("JAPAN") ||
+               span.Equals("JAPAN", StringComparison.Ordinal) ||
                span.EndsWith("JORDAN") ||
-               span.Equals("KAZAKHSTAN") ||
-               span.Equals("KENYA") ||
-               span.Equals("KENIA") ||
+               span.Equals("KAZAKHSTAN", StringComparison.Ordinal) ||
+               span.Equals("KENYA", StringComparison.Ordinal) ||
+               span.Equals("KENIA", StringComparison.Ordinal) ||
                span.EndsWith("KOREA") ||
-               span.Equals("LATVIA") ||
-               span.Equals("LESOTHO") ||
-               span.Equals("MALDIVES") ||
-               span.Equals("MALEDIVEN") ||
-               span.Equals("MALTA") ||
-               span.Equals("MAURITIUS") ||
-               span.Equals("MYANMAR") ||
+               span.Equals("LATVIA", StringComparison.Ordinal) ||
+               span.Equals("LESOTHO", StringComparison.Ordinal) ||
+               span.Equals("MALDIVES", StringComparison.Ordinal) ||
+               span.Equals("MALEDIVEN", StringComparison.Ordinal) ||
+               span.Equals("MALTA", StringComparison.Ordinal) ||
+               span.Equals("MAURITIUS", StringComparison.Ordinal) ||
+               span.Equals("MYANMAR", StringComparison.Ordinal) ||
                span.EndsWith("NAURU") ||
-               span.Equals("NEPAL") ||
+               span.Equals("NEPAL", StringComparison.Ordinal) ||
                span.EndsWith("ZEALAND") ||
                span.EndsWith("SEELAND") ||
-               span.Equals("NIGERIA") ||
+               span.Equals("NIGERIA", StringComparison.Ordinal) ||
                span.StartsWith("NORFOLK") ||
-               span.Equals("PAKISTAN") ||
-               span.Equals("PITCAIRN") ||
+               span.Equals("PAKISTAN", StringComparison.Ordinal) ||
+               span.Equals("PITCAIRN", StringComparison.Ordinal) ||
                span.StartsWith("RUSS") ||
                span.EndsWith("HELENA") ||
                span.StartsWith("SAUDI") ||
-               span.Equals("SINGAPORE") ||
-               span.Equals("SOMALIA") ||
+               span.Equals("SINGAPORE", StringComparison.Ordinal) ||
+               span.Equals("SOMALIA", StringComparison.Ordinal) ||
                span.EndsWith("SOUTHAFRICA") ||
                span.StartsWith("SRI") || // Sri Lanka
-               span.Equals("SWAZILAND") ||
-               span.Equals("TAIWAN") ||
-               span.Equals("THAILAND") ||
+               span.Equals("SWAZILAND", StringComparison.Ordinal) ||
+               span.Equals("TAIWAN", StringComparison.Ordinal) ||
+               span.Equals("THAILAND", StringComparison.Ordinal) ||
                span.StartsWith("TURKS") || // Turks and Caicos Islands
                span.StartsWith("UKRAIN") ||
-               span.Equals("UNITEDKINGDOM") ||
-               span.Equals("UZBEKISTAN") ||
+               span.Equals("UNITEDKINGDOM", StringComparison.Ordinal) ||
+               span.Equals("UZBEKISTAN", StringComparison.Ordinal) ||
 #if NET40
                span.Contains("CHINA") ||
                span.Contains("BRIT") ||

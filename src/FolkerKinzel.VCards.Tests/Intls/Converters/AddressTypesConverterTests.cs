@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 [TestClass]
-public class AddressTypesConverterTest
+public class AddressTypesConverterTests
 {
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]

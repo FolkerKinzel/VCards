@@ -40,7 +40,7 @@
 - [x] Implement `string Address.ToLabel()`.
 - [x] Implement `string AddressProperty.ToLabel()`.
 - [x] Implement `string AddressProperty.AppendLabel()`.
-- [x] Add an optional parameter `autoLabel = true` to the `AddressProperty` ctors.
+- [x] Add an optional parameter `appendLabel = true` to the `AddressProperty` ctors.
 
 ### 5.0.0-beta.2       
 - [x] Implement `VCard.IsEmpty()`.
