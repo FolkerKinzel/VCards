@@ -2,6 +2,10 @@
 using System.Text;
 using FolkerKinzel.VCards.Models.Enums;
 
+#if !NET40
+using FolkerKinzel.Strings;
+#endif
+
 namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static class StringBuilderExtension
@@ -163,6 +167,21 @@ internal static class StringBuilderExtension
 
         return builder;
     }
+
+    internal static int LastIndexOf(this StringBuilder builder, char value)
+    {
+        Debug.Assert(builder != null);
+
+        for (int i = builder.Length - 1; i >= 0; i--)
+        {
+            if (value == builder[i])
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 #endif
 
     /// <summary>
@@ -188,20 +207,30 @@ internal static class StringBuilderExtension
         return builder;
     }
 
-    internal static StringBuilder AppendReadableProperty(this StringBuilder sb, ReadOnlyCollection<string> strings)
+    internal static StringBuilder AppendReadableProperty(this StringBuilder sb, ReadOnlyCollection<string> strings, int? maxLen = null)
     {
         Debug.Assert(sb != null);
         Debug.Assert(strings != null);
 
         for (int i = 0; i < strings.Count; i++)
         {
-            AppendEntry(sb, strings[i]);
+            AppendEntry(sb, strings[i], maxLen);
         }
         return sb;
 
-        static void AppendEntry(StringBuilder sb, string entry)
+        static void AppendEntry(StringBuilder sb, string entry, int? maxLen)
         {
-            if (sb.Length != 0)
+            if (maxLen.HasValue)
+            {
+                int lineStartIndex = sb.LastIndexOf(Environment.NewLine[0]);
+                lineStartIndex = lineStartIndex < 0 ? 0 : lineStartIndex + Environment.NewLine.Length;
+
+                if (sb.Length - lineStartIndex + entry.Length + 1 > maxLen.Value)
+                {
+                    sb.AppendLine();
+                }
+            }
+            else if (sb.Length != 0)
             {
                 sb.Append(' ');
             }

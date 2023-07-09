@@ -42,6 +42,7 @@
     <NoWarn>$(NoWarn);8600;8601;8602;8603;8604</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="TextFile1.txt" />
     <None Remove="Translations\FolkerKinzel.VCards.en.tsltn" />
   </ItemGroup>
   <ItemGroup>

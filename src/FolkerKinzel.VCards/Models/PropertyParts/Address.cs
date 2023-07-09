@@ -335,27 +335,30 @@ public sealed class Address
         }
     }
 
-    /// <summary>
-    /// Gibt an, ob die Instanz auf eine Postanschrift in den USA verweist.
-    /// </summary>
-    /// <returns><c>true</c>, wenn die Instanz auf eine Adresse in den USA verweist, andernfalls <c>false</c>.</returns>
-    /// <remarks>
-    /// Die Methode untersucht die Eigenschaft <see cref="Country"/>. Wenn diese Eigenschaft leer ist, gibt sie <c>false</c> zurück.
-    /// </remarks>
-    internal bool IsUSAddress()
-    {
-        var arr = Country.SelectMany(x => x)
-                       .Where(x => char.IsLetter(x))
-                       .Select(x => char.ToUpperInvariant(x)).ToArray();
+    ///// <summary>
+    ///// Gibt an, ob die Instanz auf eine Postanschrift in den USA verweist.
+    ///// </summary>
+    ///// <returns><c>true</c>, wenn die Instanz auf eine Adresse in den USA verweist, andernfalls <c>false</c>.</returns>
+    ///// <remarks>
+    ///// Die Methode untersucht die Eigenschaft <see cref="Country"/>. Wenn diese Eigenschaft leer ist, gibt sie <c>false</c> zurück.
+    ///// </remarks>
+    //internal bool IsUSAddress()
+    //{
+    //    var arr = Country.SelectMany(x => x)
+    //                   .Where(x => char.IsLetter(x))
+    //                   .Select(x => char.ToUpperInvariant(x)).ToArray();
 
-        return arr.SequenceEqual("USA") || arr.Take(12).SequenceEqual("UNITEDSTATES"); // || arr.SequenceEqual("UNITEDSTATESOFAMERICA");
-    }
+    //    return arr.SequenceEqual("USA") || arr.Take(12).SequenceEqual("UNITEDSTATES"); // || arr.SequenceEqual("UNITEDSTATESOFAMERICA");
+    //}
 
     /// <summary>
     /// Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
     /// </summary>
     /// <returns>Die in der Instanz gekapselten Daten, umgewandelt in formatierten Text für ein Adressetikett.</returns>
-    public string ToLabel() => IsUSAddress() ? this.ConvertToUSLabel() : this.ConvertToDinLabel();
+#if !NET40
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+    public string ToLabel() => this.ConvertToDinLabel();
 
 
     internal void AppendVCardString(VcfSerializer serializer)

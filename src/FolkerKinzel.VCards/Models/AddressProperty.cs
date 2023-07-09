@@ -56,7 +56,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
         if(autoLabel)
         {
-            this.Parameters.Label = ToLabel();
+            AppendLabel();
         }
     }
 
@@ -98,7 +98,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         
         if (autoLabel)
         {
-            this.Parameters.Label = ToLabel();
+            AppendLabel();
         }
     }
 
@@ -123,6 +123,17 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     [MethodImpl(MethodImplOptions.AggressiveInlining)]    
 #endif
     public string ToLabel() => Value.ToLabel();
+
+
+    /// <summary>
+    /// Fügt der Eigenschaft <see cref="ParameterSection.Label"/> ein Adressetikett hinzu, das automatisch aus den
+    /// Daten der Instanz generíert wird. Evtl. vorher in der Eigenschaft <see cref="ParameterSection.Label"/> gespeicherte
+    /// Daten werden dabei überschrieben.
+    /// </summary>
+#if !NET40
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+    public void AppendLabel() => Parameters.Label = ToLabel();
 
 
     internal AddressProperty(VcfRow vcfRow, VCdVersion version)

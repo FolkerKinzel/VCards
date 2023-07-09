@@ -42,7 +42,6 @@
 - Northern Mariana Islands (MP)
 - PAKISTAN (PK)
 - Palau (PW)
-- PAPUA NEW GUINEA (LOCALITY POSTAL_CODE PROVINCE) (PG)
 - PITCAIRN (PN)
 - Puerto Rico (PR)
 - RUSSIAN FEDERATION (RU)
@@ -62,10 +61,13 @@
 - UNITED STATES (US)
 - United States Minor Outlying Islands (UNITED STATES (UM)
 - Uzbekistan (UZ)
-- VENEZUELA (LOCALITY POSTAL_CODE, PROVINCE) (VE)
 - VIET NAM (VN)
 - Virgin Islands (U.K.) (VG)
 - Virgin Islands (U.S.) (VI)
+
+### Venezuela (LOCALITY POSTAL_CODE, PROVINCE):
+- VENEZUELA (VE)
+- PAPUA NEW GUINEA (PG)
 
 .
 ### Completely Different:

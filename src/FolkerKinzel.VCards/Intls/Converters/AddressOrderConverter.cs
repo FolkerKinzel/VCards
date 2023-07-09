@@ -1,5 +1,13 @@
 ﻿using System.Globalization;
 
+using FolkerKinzel.VCards.Models.PropertyParts;
+using System;
+
+#if !NET40
+using FolkerKinzel.Strings;
+using FolkerKinzel.Strings.Polyfills;
+#endif
+
 namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class AddressOrderConverter
@@ -13,7 +21,7 @@ internal static class AddressOrderConverter
 
         string countryName = name.Substring(separatorIndex + 1, 2);
 
-        switch (countryName) 
+        switch (countryName)
         {
             case "AU": // AUSTRALIA												
             case "BH": // BAHRAIN												
@@ -84,10 +92,104 @@ internal static class AddressOrderConverter
                 return AddressOrder.Usa;
             case "VE": // VENEZUELA (LOCALITY POSTAL_CODE, PROVINCE)				
             case "PG": // PAPUA NEW GUINEA (LOCALITY POSTAL_CODE PROVINCE)		
-                return AddressOrder.Venzuela;
+                return AddressOrder.Venezuela;
             default:
                 return AddressOrder.Din;
         }
+    }
+
+    internal static AddressOrder? GetAddressOrder(this Address address)
+    {
+        var arr = address.Country.SelectMany(x => x)
+                       .Where(x => char.IsLetter(x))
+                       .Select(x => char.ToUpperInvariant(x)).ToArray();
+
+        if(arr.Length == 0)
+        {
+            return null;
+        }
+
+        var span =
+#if NET40
+            new string(arr);
+#else
+            new ReadOnlySpan<char>(arr);
+#endif
+#pragma warning disable CA1303 // Literale nicht als lokalisierte Parameter übergeben
+        return span.Equals("USA") ||
+               span.StartsWith("UNITEDSTATES") ||
+               span.StartsWith("AUSTRAL") ||
+               span.EndsWith("ANADA") || // Canada, Kanada
+               span.EndsWith("BAHRAIN") ||
+               span.EndsWith("BANGLADESH") ||
+               span.Equals("BERMUDA") ||
+               span.Equals("BHUTAN") ||
+               span.Equals("BRAZIL") ||
+               span.StartsWith("BRASIL") ||
+               span.StartsWith("BRUNEI") ||
+               span.StartsWith("CAYMAN") || // Cayman Islands
+               span.StartsWith("CHRISTMAS") ||
+               span.StartsWith("COCOS") ||
+               span.EndsWith("KOLUMBIEN") ||
+               span.StartsWith("DOMINICAN") || // Dominican Republic
+               span.StartsWith("DOMINIKAN") || // Dominikanische Republik
+               span.Equals("EGYPT") ||
+               span.EndsWith("INDIA") ||
+               span.StartsWith("INDONESI") ||
+               span.EndsWith("IRELAND") ||
+               span.Equals("JAPAN") ||
+               span.EndsWith("JORDAN") ||
+               span.Equals("KAZAKHSTAN") ||
+               span.Equals("KENYA") ||
+               span.Equals("KENIA") ||
+               span.EndsWith("KOREA") ||
+               span.Equals("LATVIA") ||
+               span.Equals("LESOTHO") ||
+               span.Equals("MALDIVES") ||
+               span.Equals("MALEDIVEN") ||
+               span.Equals("MALTA") ||
+               span.Equals("MAURITIUS") ||
+               span.Equals("MYANMAR") ||
+               span.EndsWith("NAURU") ||
+               span.Equals("NEPAL") ||
+               span.EndsWith("ZEALAND") ||
+               span.EndsWith("SEELAND") ||
+               span.Equals("NIGERIA") ||
+               span.StartsWith("NORFOLK") ||
+               span.Equals("PAKISTAN") ||
+               span.Equals("PITCAIRN") ||
+               span.StartsWith("RUSS") ||
+               span.EndsWith("HELENA") ||
+               span.StartsWith("SAUDI") ||
+               span.Equals("SINGAPORE") ||
+               span.Equals("SOMALIA") ||
+               span.EndsWith("SOUTHAFRICA") ||
+               span.StartsWith("SRI") || // Sri Lanka
+               span.Equals("SWAZILAND") ||
+               span.Equals("TAIWAN") ||
+               span.Equals("THAILAND") ||
+               span.StartsWith("TURKS") || // Turks and Caicos Islands
+               span.StartsWith("UKRAIN") ||
+               span.Equals("UNITEDKINGDOM") ||
+               span.Equals("UZBEKISTAN") ||
+#if NET40
+               span.Contains("CHINA") ||
+               span.Contains("BRIT") ||
+               span.Contains("AMBOD") || // Cambodia, Kambodscha
+               span.Contains("COLOMBI") || // Colombia
+               span.Contains("VIET") 
+#else
+               span.Contains("CHINA".AsSpan(), StringComparison.Ordinal) ||
+               span.Contains("BRIT".AsSpan(), StringComparison.Ordinal) || // Great Britain, Großbritannien
+               span.Contains("AMBOD".AsSpan(), StringComparison.Ordinal) || // Cambodia, Kambodscha
+               span.Contains("COLOMBI".AsSpan(), StringComparison.Ordinal) || // Colombia
+               span.Contains("VIET".AsSpan(), StringComparison.Ordinal)  // Viet Nam
+#endif
+               ? AddressOrder.Usa
+               : span.StartsWith("PAPUA") || span.EndsWith("VENEZUELA") ? AddressOrder.Venezuela 
+                                                                        : AddressOrder.Din;
+#pragma warning restore CA1303 // Literale nicht als lokalisierte Parameter übergeben
+
     }
 
 }

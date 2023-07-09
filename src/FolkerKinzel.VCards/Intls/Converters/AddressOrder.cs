@@ -2,5 +2,5 @@
 
 internal enum AddressOrder
 {
-    Din, Usa, Venzuela
+    Din, Usa, Venezuela
 }
