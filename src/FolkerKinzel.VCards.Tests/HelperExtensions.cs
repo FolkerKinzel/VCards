@@ -18,7 +18,7 @@ namespace FolkerKinzel.VCards.Tests
                 throw new ArgumentNullException(nameof(source));
             }
 
-            foreach (object o in source)
+            foreach (object? o in source)
             {
                 yield return o;
             }

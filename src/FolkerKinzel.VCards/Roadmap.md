@@ -41,6 +41,7 @@
 - [x] Implement `string AddressProperty.ToLabel()`.
 - [x] Implement `string AddressProperty.AppendLabel()`.
 - [x] Add an optional parameter `appendLabel = true` to the `AddressProperty` ctors.
+- [x] Dependency update.
 
 ### 5.0.0-beta.2       
 - [x] Implement `VCard.IsEmpty()`.
