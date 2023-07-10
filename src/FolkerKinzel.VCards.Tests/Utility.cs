@@ -27,7 +27,7 @@ internal static class Utility
         var expertise1 = new TextProperty("C#");
         expertise1.Parameters.ExpertiseLevel = ExpertiseLevel.Average;
 
-        var adr1 = new AddressProperty("Elmstraße 13", "Entenhausen", "01234");
+        var adr1 = new AddressProperty("Elmstraße 13", "Entenhausen", postalCode: "01234");
         adr1.Parameters.Label = "  ";
         adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
         adr1.Parameters.GeoPosition = new Models.GeoCoordinate(12.98, 7.86);

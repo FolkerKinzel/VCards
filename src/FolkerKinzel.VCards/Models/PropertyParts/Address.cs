@@ -28,15 +28,15 @@ public sealed class Address
     /// </summary>
     /// <param name="street">Straße</param>
     /// <param name="locality">Ort</param>
-    /// <param name="postalCode">Postleitzahl</param>
     /// <param name="region">Bundesland</param>
+    /// <param name="postalCode">Postleitzahl</param>
     /// <param name="country">Land (Staat)</param>
     /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
     /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
     internal Address(ReadOnlyCollection<string> street,
                      ReadOnlyCollection<string> locality,
-                     ReadOnlyCollection<string> postalCode,
                      ReadOnlyCollection<string> region,
+                     ReadOnlyCollection<string> postalCode,
                      ReadOnlyCollection<string> country,
                      ReadOnlyCollection<string> postOfficeBox,
                      ReadOnlyCollection<string> extendedAddress)
@@ -335,22 +335,6 @@ public sealed class Address
         }
     }
 
-    ///// <summary>
-    ///// Gibt an, ob die Instanz auf eine Postanschrift in den USA verweist.
-    ///// </summary>
-    ///// <returns><c>true</c>, wenn die Instanz auf eine Adresse in den USA verweist, andernfalls <c>false</c>.</returns>
-    ///// <remarks>
-    ///// Die Methode untersucht die Eigenschaft <see cref="Country"/>. Wenn diese Eigenschaft leer ist, gibt sie <c>false</c> zurück.
-    ///// </remarks>
-    //internal bool IsUSAddress()
-    //{
-    //    var arr = Country.SelectMany(x => x)
-    //                   .Where(x => char.IsLetter(x))
-    //                   .Select(x => char.ToUpperInvariant(x)).ToArray();
-
-    //    return arr.SequenceEqual("USA") || arr.Take(12).SequenceEqual("UNITEDSTATES"); // || arr.SequenceEqual("UNITEDSTATESOFAMERICA");
-    //}
-
     /// <summary>
     /// Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
     /// </summary>
@@ -358,7 +342,7 @@ public sealed class Address
 #if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public string ToLabel() => this.ConvertToDinLabel();
+    public string ToLabel() => this.ConvertToLabel();
 
 
     internal void AppendVCardString(VcfSerializer serializer)

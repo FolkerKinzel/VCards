@@ -26,8 +26,47 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// </summary>
     /// <param name="street">Straße</param>
     /// <param name="locality">Ort</param>
-    /// <param name="postalCode">Postleitzahl</param>
     /// <param name="region">Bundesland</param>
+    /// <param name="postalCode">Postleitzahl</param>
+    /// <param name="country">Land (Staat)</param>
+    /// <param name="propertyGroup">Bezeichner der Gruppe,
+    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
+    /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
+#if !NET40
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+    public AddressProperty(IEnumerable<string?>? street = null,
+                           IEnumerable<string?>? locality = null,
+                           IEnumerable<string?>? region = null,
+                           IEnumerable<string?>? postalCode = null,
+                           IEnumerable<string?>? country = null,
+                           string? propertyGroup = null,
+                           bool appendLabel = true)
+#pragma warning disable CS0618 // Typ oder Element ist veraltet
+        : this(street: street,
+               locality: locality,
+               region: region,
+               postalCode: postalCode,
+               country: country,
+               postOfficeBox: null,
+               extendedAddress: null,
+               propertyGroup: propertyGroup,
+               appendLabel: appendLabel)
+    { }
+#pragma warning restore CS0618 // Typ oder Element ist veraltet
+
+
+
+
+    /// <summary>
+    /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
+    /// </summary>
+    /// <param name="street">Straße</param>
+    /// <param name="locality">Ort</param>
+    /// <param name="region">Bundesland</param>
+    /// <param name="postalCode">Postleitzahl</param>
     /// <param name="country">Land (Staat)</param>
     /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
     /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
@@ -36,20 +75,21 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
     /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
     /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
-    public AddressProperty(IEnumerable<string?>? street = null,
-                           IEnumerable<string?>? locality = null,
-                           IEnumerable<string?>? postalCode = null,
-                           IEnumerable<string?>? region = null,
-                           IEnumerable<string?>? country = null,
-                           IEnumerable<string?>? postOfficeBox = null,
-                           IEnumerable<string?>? extendedAddress = null,
+    [Obsolete("Don't use this constructor.", false)]
+    public AddressProperty(IEnumerable<string?>? street,
+                           IEnumerable<string?>? locality,
+                           IEnumerable<string?>? region,
+                           IEnumerable<string?>? postalCode,
+                           IEnumerable<string?>? country,
+                           IEnumerable<string?>? postOfficeBox,
+                           IEnumerable<string?>? extendedAddress,
                            string? propertyGroup = null,
                            bool appendLabel = true) : base(new ParameterSection(), propertyGroup)
     {
         Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
                             locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
-                            postalCode: ReadOnlyCollectionConverter.ToReadOnlyCollection(postalCode),
                             region: ReadOnlyCollectionConverter.ToReadOnlyCollection(region),
+                            postalCode: ReadOnlyCollectionConverter.ToReadOnlyCollection(postalCode),
                             country: ReadOnlyCollectionConverter.ToReadOnlyCollection(country),
                             postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
                             extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
@@ -66,11 +106,9 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// </summary>
     /// <param name="street">Straße</param>
     /// <param name="locality">Ort</param>
-    /// <param name="postalCode">Postleitzahl</param>
     /// <param name="region">Bundesland</param>
+    /// <param name="postalCode">Postleitzahl</param>
     /// <param name="country">Land (Staat)</param>
-    /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-    /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
@@ -79,19 +117,57 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     public AddressProperty(
         string? street,
         string? locality,
+        string? region,
         string? postalCode,
-        string? region = null,
         string? country = null,
-        string? postOfficeBox = null,
-        string? extendedAddress = null,
+        string? propertyGroup = null,
+        bool appendLabel = true)
+#pragma warning disable CS0618 // Typ oder Element ist veraltet
+        : this(street: street,
+              locality: locality,
+              region: region,
+              postalCode: postalCode,
+              country: country,
+              postOfficeBox: null,
+              extendedAddress: null,
+              propertyGroup: propertyGroup,
+              appendLabel: appendLabel)
+    { }
+#pragma warning restore CS0618 // Typ oder Element ist veraltet
+
+
+    /// <summary>
+    /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
+    /// </summary>
+    /// <param name="street">Straße</param>
+    /// <param name="locality">Ort</param>
+    /// <param name="region">Bundesland</param>
+    /// <param name="postalCode">Postleitzahl</param>
+    /// <param name="country">Land (Staat)</param>
+    /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+    /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+    /// <param name="propertyGroup">Bezeichner der Gruppe,
+    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
+    /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
+    [Obsolete("Don't use this constructor.", false)]
+    public AddressProperty(
+        string? street,
+        string? locality,
+        string? region,
+        string? postalCode,
+        string? country,
+        string? postOfficeBox,
+        string? extendedAddress,
         string? propertyGroup = null,
         bool appendLabel = true)
         : base(new ParameterSection(), propertyGroup)
     {
         Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
                             locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
-                            postalCode: ReadOnlyCollectionConverter.ToReadOnlyCollection(postalCode),
                             region: ReadOnlyCollectionConverter.ToReadOnlyCollection(region),
+                            postalCode: ReadOnlyCollectionConverter.ToReadOnlyCollection(postalCode),
                             country: ReadOnlyCollectionConverter.ToReadOnlyCollection(country),
                             postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
                             extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
@@ -101,19 +177,6 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
             AppendLabel();
         }
     }
-
-//    /// <summary>
-//    /// Gibt an, ob die Instanz auf eine Postanschrift in den USA verweist.
-//    /// </summary>
-//    /// <returns><c>true</c>, wenn die Instanz auf eine Adresse in den USA verweist, andernfalls <c>false</c>.</returns>
-//    /// <remarks>
-//    /// Die Methode untersucht die Eigenschaft <see cref="Country"/>. Wenn diese Eigenschaft leer ist, gibt sie <c>false</c> zurück.
-//    /// </remarks>
-//#if !NET40
-//    [MethodImpl(MethodImplOptions.AggressiveInlining)]    
-//#endif
-//    public bool IsUSAddress() => Value.IsUSAddress();
-
 
     /// <summary>
     /// Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.

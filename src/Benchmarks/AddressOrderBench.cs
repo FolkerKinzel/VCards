@@ -9,7 +9,7 @@ namespace Benchmarks;
 [RyuJitX64Job]
 public class AddressOrderBench
 {
-    private readonly Address _address = new AddressProperty(null, null, null, country: "Germany", appendLabel: false).Value;
+    private readonly Address _address = new AddressProperty(null, null, postalCode: null, country: "Germany", appendLabel: false).Value;
 
     [Benchmark]
     public object? GetAddressOrder() => _address.GetAddressOrder();

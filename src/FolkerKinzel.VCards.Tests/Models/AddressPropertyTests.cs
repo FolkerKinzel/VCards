@@ -23,7 +23,7 @@ public class AddressPropertyTests
     [TestMethod()]
     public void AddressPropertyTest()
     {
-        var adr = new AddressProperty(STREET, LOCALITY, POSTAL_CODE, REGION, COUNTRY, PO_BOX, EXTENDED_ADDRESS, propertyGroup: GROUP);
+        var adr = new AddressProperty(STREET, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PO_BOX, EXTENDED_ADDRESS, propertyGroup: GROUP);
 
         Assert.IsNotNull(adr);
         Assert.AreEqual(STREET, adr.Value.Street[0]);
@@ -43,8 +43,8 @@ public class AddressPropertyTests
         var adr = new AddressProperty(
             new string[] { STREET },
             new string[] { LOCALITY },
-            new string[] { POSTAL_CODE },
             new string[] { REGION },
+            new string[] { POSTAL_CODE },
             new string[] { COUNTRY },
             new string[] { PO_BOX },
             new string[] { EXTENDED_ADDRESS },
@@ -66,7 +66,7 @@ public class AddressPropertyTests
     [TestMethod()]
     public void ToStringTest()
     {
-        var adr = new AddressProperty(STREET, LOCALITY, POSTAL_CODE, REGION, COUNTRY, PO_BOX, EXTENDED_ADDRESS);
+        var adr = new AddressProperty(STREET, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PO_BOX, EXTENDED_ADDRESS);
 
         string s = adr.ToString();
 

@@ -11,7 +11,7 @@ public class SingleStringListBench
     [Benchmark]
     public AddressProperty StructVsClass()
     {
-        return new AddressProperty("eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben");
+        return new AddressProperty("eins", "zwei", "vier", "drei", "fünf", "sechs", "sieben");
     }
 
 }

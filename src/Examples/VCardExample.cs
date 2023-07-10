@@ -100,7 +100,7 @@ public static class VCardExample
 
 
             var adrWorkProp = new VC::AddressProperty
-                ("Friedrichstraße 22", "Berlin", "10117", country: "Germany", propertyGroup: groupName);
+                ("Friedrichstraße 22", "Berlin", postalCode: "10117", country: "Germany", propertyGroup: groupName);
             adrWorkProp.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
             adrWorkProp.Parameters.AddressType = VC::Enums.AddressTypes.Dom | VC::Enums.AddressTypes.Intl | VC::Enums.AddressTypes.Postal | VC::Enums.AddressTypes.Parcel;
             vcard.Addresses = adrWorkProp;
