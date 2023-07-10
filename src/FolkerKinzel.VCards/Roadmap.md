@@ -42,6 +42,9 @@
 - [x] Implement `string AddressProperty.AppendLabel()`.
 - [x] Add an optional parameter `appendLabel = true` to the `AddressProperty` ctors.
 - [x] Dependency update.
+- [x] **Breaking Change:** Change the parameter order in the `AddressProperty` constructors to `street, locality, region, postalCode, country` to let it be more aligned to the address order used in the USA and many other parts of the world and to let it be more intuitive.
+- [x] Add to new constructors to the `AddressProperty` class, which avoid the use of the obsolete parameters `postOfficeBox` and `extendedAddress`.
+- [x] Give an `Obsolete` warning when the parameters `postOfficeBox` and `extendedAddress` are used in the `AddressProperty` constructors.
 
 ### 5.0.0-beta.2       
 - [x] Implement `VCard.IsEmpty()`.
