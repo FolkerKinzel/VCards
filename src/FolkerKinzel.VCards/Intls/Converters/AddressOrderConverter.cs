@@ -33,7 +33,7 @@ internal static class AddressOrderConverter
             case "KH": // CAMBODIA												
             case "CA": // CANADA													
             case "KY": // CAYMAN ISLANDS											
-            case "CN": // CHINA													
+            case "CN": // CHINA											
             case "CX": // Christmas Island										
             case "CC": // Cocos Islands											
             case "CO": // COLOMBIA												

@@ -119,7 +119,6 @@ internal static class QuotedPrintableConverter
 
         static int EncodeLastChar(StringBuilder sb, char lastChar, int lastCharIndex)
         {
-
             _ = sb.Remove(lastCharIndex, 1)
                   .Insert(lastCharIndex, '=')
                   .Insert(lastCharIndex + 1, ((byte)lastChar).ToString("X02", CultureInfo.InvariantCulture));

@@ -324,7 +324,7 @@ public class VCardTests
         var vc = new VCard();
         Assert.IsTrue(vc.IsEmpty());
 
-        var adr = new AddressProperty("  ", null, postalCode: "");
+        var adr = new AddressProperty("  ", null, null, postalCode: "", appendLabel: false);
         adr.Parameters.Label = "  ";
 
         vc.Addresses = new AddressProperty?[] { null, adr};

@@ -91,7 +91,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V2_1;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new ("", null, null);
+        AddressProperty adr = new ("", null, null, null, appendLabel: false);
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard
@@ -133,7 +133,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V3_0;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new ("", null, null);
+        AddressProperty adr = new ("", null, null, null, appendLabel: false);
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard
@@ -175,7 +175,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V4_0;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new("", null, null);
+        AddressProperty adr = new("", null, null, null);
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard

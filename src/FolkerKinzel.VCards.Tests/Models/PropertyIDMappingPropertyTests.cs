@@ -14,7 +14,7 @@ public class PropertyIDMappingPropertyTests
 
         var vcard = new VCard
         {
-            PropertyIDMappings = prop
+            PropertyIDMappings = new PropertyIDMappingProperty?[]{prop, null, new PropertyIDMappingProperty((PropertyIDMapping?)null)}
         };
 
         string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);

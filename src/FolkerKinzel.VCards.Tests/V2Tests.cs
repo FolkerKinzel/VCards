@@ -142,13 +142,13 @@ public class V2Tests
         const string label0 = "Elmstreet 13";
         const string label1 = "Sackgasse 5";
 
-        var addr0 = new AddressProperty(label0, "Entenhausen", postalCode: "01234");
+        var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", appendLabel: false);
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
         addr0.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
         addr0.Parameters.PropertyClass = PropertyClassTypes.Home;
 
-        var addr1 = new AddressProperty(label1, "Borna", postalCode: "43210");
+        var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", appendLabel: false);
         addr1.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
         addr1.Parameters.PropertyClass = PropertyClassTypes.Work;
         addr1.Parameters.Label = label1;
@@ -176,13 +176,13 @@ public class V2Tests
         const string label0 = "Elmstreet 13";
         const string label1 = "Sackgasse 5";
 
-        var addr0 = new AddressProperty(label0, "Entenhausen", postalCode: "01234");
+        var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", appendLabel: false);
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
         addr0.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
         addr0.Parameters.PropertyClass = PropertyClassTypes.Home;
 
-        var addr1 = new AddressProperty(label1, "Borna", postalCode: "43210");
+        var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", appendLabel: false);
         addr1.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
         addr1.Parameters.PropertyClass = PropertyClassTypes.Work;
         addr1.Parameters.Label = label1;

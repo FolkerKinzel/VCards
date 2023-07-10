@@ -225,20 +225,18 @@ internal static class StringBuilderExtension
                 int lineStartIndex = sb.LastIndexOf(Environment.NewLine[0]);
                 lineStartIndex = lineStartIndex < 0 ? 0 : lineStartIndex + Environment.NewLine.Length;
 
-                if (sb.Length - lineStartIndex + entry.Length + 1 > maxLen.Value)
+                if (sb.Length != 0 && lineStartIndex != sb.Length)
                 {
-                    sb.AppendLine();
-                }
-                else if (sb.Length != 0)
-                {
-                    sb.Append(' ');
+                    _ = sb.Length - lineStartIndex + entry.Length + 1 > maxLen.Value 
+                        ? sb.AppendLine()
+                        : sb.Append(' ');
                 }
             }
             else if (sb.Length != 0)
             {
-                sb.Append(' ');
+                _ = sb.Append(' ');
             }
-            sb.Append(entry);
+            _ = sb.Append(entry);
         }
     }
 

@@ -240,7 +240,7 @@ public sealed partial class ParameterSection
     /// Obwohl die korrekte Zuordnung auf diese Weise meist gelingt, kann dies nicht für jedes Szenario garantiert werden. Wenn die 
     /// Zuordnung von <c>ADR</c> und <c>Label</c> für die Anwendung eine Rolle spielt, sollte die Anwendung diese im Falle von vCard 2.1 
     /// oder vCard 3.0 durch 
-    /// Textvergleich überprüfen oder aus den Adressdaten eigene Labels erstellen.
+    /// Textvergleich überprüfen oder mit der Methode <see cref="AddressProperty.AppendLabel()"/> aus den Adressdaten eigene Labels erstellen.
     /// </para>
     /// </note>
     /// 
