@@ -529,7 +529,7 @@ public sealed partial class VCard
 
         static AddressProperty CreateEmptyAddressPropertyWithLabel(VcfRow vcfRow)
         {
-            var adrProp = new AddressProperty();
+            var adrProp = new AddressProperty("", null, null, null, appendLabel: false);
             adrProp.Parameters.Assign(vcfRow.Parameters);
             adrProp.Parameters.Label = vcfRow.Value;
             return adrProp;

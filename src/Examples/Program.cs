@@ -25,7 +25,7 @@ internal class Program
         VCardExample.ReadingAndWritingVCard(directoryPath);
         //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
 
-        StartAnsiFilterExample();
+        // StartAnsiFilterExample();
 
         //StartMultiAnsiFilterExample();
 

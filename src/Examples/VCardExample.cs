@@ -45,20 +45,21 @@ public static class VCardExample
 
         static VCard InitializeTheVCardAndFillItWithData(string directoryPath, string photoFileName)
         {
+            var name = new VC::NameProperty
+                        (
+                            lastName: new string[] { "Müller-Risinowsky" },
+                            firstName: new string[] { "Käthe" },
+                            middleName: new string[] { "Alexandra", "Caroline" },
+                            prefix: new string[] { "Prof.", "Dr." }
+                        );
             var vcard = new VCard
             {
                 // Although NameViews is of Type IEnumerable<NameProperty?>
                 // you can assign a single NameProperty instance because NameProperty
                 // (like almost all classes derived from VCardProperty) has an explicit
                 // implementation of IEnumerable<T>
-                NameViews = new VC::NameProperty
-                                (
-                                    lastName: new string[] { "Müller-Risinowsky" },
-                                    firstName: new string[] { "Käthe" },
-                                    middleName: new string[] { "Alexandra", "Caroline" },
-                                    prefix: new string[] { "Prof.", "Dr." }
-                                ),
-                DisplayNames = new VC.TextProperty("Käthe Müller-Risinowsky"),
+                NameViews = name,
+                DisplayNames = new VC.TextProperty(name.ToDisplayName()),
                 Organizations = new VC::OrganizationProperty
                                 (
                                     "Millers Company",
@@ -100,7 +101,7 @@ public static class VCardExample
 
 
             var adrWorkProp = new VC::AddressProperty
-                ("Friedrichstraße 22", "Berlin", postalCode: "10117", country: "Germany", propertyGroup: groupName);
+                ("Friedrichstraße 22", "Berlin", null, "10117", "Germany", propertyGroup: groupName);
             adrWorkProp.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
             adrWorkProp.Parameters.AddressType = VC::Enums.AddressTypes.Dom | VC::Enums.AddressTypes.Intl | VC::Enums.AddressTypes.Postal | VC::Enums.AddressTypes.Parcel;
             vcard.Addresses = adrWorkProp;
@@ -186,11 +187,11 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2021-08-16T10:25:46Z
+REV:2023-07-10T15:34:08Z
 gr1.TZ:+01:00
 gr1.GEO:52.511821;13.389581
-FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:K=C3=A4the M=C3=BCller-Risinows=
-ky
+FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
+ Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
 e;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
@@ -199,14 +200,16 @@ BDAY:1984-03-28
 X-ANNIVERSARY:2006-07-14
 gr1.ADR;DOM;INTL;POSTAL;PARCEL;WORK;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:;;F=
 riedrichstra=C3=9Fe 22;Berlin;;10117;Germany
+gr1.LABEL;DOM;INTL;POSTAL;PARCEL;WORK;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Fri=
+edrichstra=C3=9Fe 22=0D=0A10117 Berlin=0D=0AGERMANY
 TEL;HOME;VOICE;BBS:tel:+49-123-9876543
 TEL;WORK;VOICE;MSG;CELL;BBS:tel:+49-321-1234567
 EMAIL;PREF;INTERNET:kaethe_mueller@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- z0c3+eZfci51dmt+X8PzZhKTI7zewFWBd22F9E0YtuExj04QehEa/jKgzo5a/U3
- cLTW+JkpZGA7xtoJ5
+ OIY6sax5T3dMOZgz+naGPHhYPWiIBX4t6YZ5PiZCGmdnr27Y89IH2B7XY9BrF+s
+ suCy1uBS/vUYAB3/W
 
 END:VCARD
 
@@ -215,10 +218,10 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2021-08-16T10:25:46Z
+REV:2023-07-10T15:34:08Z
 gr1.TZ:+01:00
 gr1.GEO:52.511821;13.389581
-FN:Käthe Müller-Risinowsky
+FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
@@ -226,12 +229,14 @@ BDAY;VALUE=DATE:1984-03-28
 X-ANNIVERSARY:2006-07-14
 gr1.ADR;TYPE=WORK,DOM,INTL,POSTAL,PARCEL:;;Friedrichstraße 22;Berlin;;1011
  7;Germany
+gr1.LABEL;TYPE=WORK,DOM,INTL,POSTAL,PARCEL:Friedrichstraße 22\n10117 Berli
+ n\nGERMANY
 TEL;TYPE=HOME,VOICE,BBS:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:z0c3+eZfci51dmt+X8PzZhKTI7zewFWBd22F9E0YtuExj04Q
- ehEa/jKgzo5a/U3cLTW+JkpZGA7xtoJ5
+PHOTO;ENCODING=b;TYPE=JPEG:OIY6sax5T3dMOZgz+naGPHhYPWiIBX4t6YZ5PiZCGmdnr27Y
+ 89IH2B7XY9BrF+ssuCy1uBS/vUYAB3/W
 END:VCARD
 
 
@@ -239,24 +244,25 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20210816T102546Z
+REV:20230710T153408Z
 gr1.TZ:Europe/Berlin
 gr1.GEO:geo:52.511821,13.389581
-FN:Käthe Müller-Risinowsky
+FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
 BDAY:19840328
 ANNIVERSARY:20060714
-gr1.ADR;TYPE=WORK;GEO="geo:52.511821,13.389581";TZ=Europe/Berlin:;;Friedric
- hstraße 22;Berlin;;10117;Germany
+gr1.ADR;TYPE=WORK;LABEL=Friedrichstraße 22\n10117 Berlin\nGERMANY;GEO="geo
+ :52.511821,13.389581";TZ=Europe/Berlin:;;Friedrichstraße 22;Berlin;;10117
+ ;Germany
 TEL;TYPE=HOME,VOICE;VALUE=URI;PID=1.1:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=2.1:tel:+49-321-1234567
 EMAIL;TYPE=WORK;PREF=1:kaethe_mueller@internet.com
 RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT:Paul Müller-Risinowsk
  y
-PHOTO:data:image/jpeg\;base64\,z0c3+eZfci51dmt+X8PzZhKTI7zewFWBd22F9E0YtuEx
- j04QehEa/jKgzo5a/U3cLTW+JkpZGA7xtoJ5
+PHOTO:data:image/jpeg\;base64\,OIY6sax5T3dMOZgz+naGPHhYPWiIBX4t6YZ5PiZCGmdn
+ r27Y89IH2B7XY9BrF+ssuCy1uBS/vUYAB3/W
 CLIENTPIDMAP:1;http://folkerkinzel.de/file1.htm
 END:VCARD
 
@@ -265,8 +271,8 @@ Read VCard:
 
 Version: 3.0
 
-[DataType: Timestamp]
-TimeStamp: 08/16/2021 10:25:46 +00:00
+[DataType: TimeStamp]
+TimeStamp: 07/10/2023 15:34:08 +00:00
 
 [Group: gr1]
 TimeZones: +01:00
@@ -276,7 +282,7 @@ GeoCoordinates:
     Latitude:    52.511821
     Longitude:   13.389581
 
-DisplayNames: Käthe Müller-Risinowsky
+DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 
 NameViews:
     LastName:   Müller-Risinowsky
@@ -298,6 +304,10 @@ AnniversaryViews: 07/14/2006 00:00:00 +02:00
 
 [PropertyClass: Work]
 [AddressType: Dom, Intl, Postal, Parcel]
+[Label:
+    Friedrichstraße 22
+    10117 Berlin
+    GERMANY]
 [Group: gr1]
 Addresses:
     Street:     Friedrichstraße 22
@@ -323,5 +333,5 @@ Relations: Paul Müller-Risinowsky
 
 [Encoding: Base64]
 [MediaType: image/jpeg]
-Photos: data:image/jpeg;base64,z0c3+eZfci51dmt+X8PzZhKTI7zewFWBd22F9E0YtuExj04QehEa/jKgzo5a/U3cLTW+JkpZGA7xtoJ5
+Photos: data:image/jpeg;base64,OIY6sax5T3dMOZgz+naGPHhYPWiIBX4t6YZ5PiZCGmdnr27Y89IH2B7XY9BrF+ssuCy1uBS/vUYAB3/W
  */

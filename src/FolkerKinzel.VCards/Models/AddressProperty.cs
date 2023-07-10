@@ -37,10 +37,10 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 #if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public AddressProperty(IEnumerable<string?>? street = null,
-                           IEnumerable<string?>? locality = null,
-                           IEnumerable<string?>? region = null,
-                           IEnumerable<string?>? postalCode = null,
+    public AddressProperty(IEnumerable<string?>? street,
+                           IEnumerable<string?>? locality,
+                           IEnumerable<string?>? region,
+                           IEnumerable<string?>? postalCode,
                            IEnumerable<string?>? country = null,
                            string? propertyGroup = null,
                            bool appendLabel = true)
@@ -114,6 +114,9 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
     /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
     /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
+#if !NET40
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     public AddressProperty(
         string? street,
         string? locality,
