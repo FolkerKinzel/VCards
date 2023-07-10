@@ -16,12 +16,12 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="latitude"/> oder <paramref name="longitude"/> hat keinen gültigen Wert.</exception>
     public GeoCoordinate(double latitude, double longitude)
     {
-        if (latitude < -90.0000001 || latitude > 90.0000001)
+        if (double.IsNaN(latitude) || latitude < -90.0000001 || latitude > 90.0000001)
         {
             throw new ArgumentOutOfRangeException(nameof(latitude));
         }
 
-        if (longitude < -180.0000001 || longitude > 180.0000001)
+        if (double.IsNaN(longitude) || longitude < -180.0000001 || longitude > 180.0000001)
         {
             throw new ArgumentOutOfRangeException(nameof(longitude));
         }
