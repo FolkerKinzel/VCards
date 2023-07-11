@@ -211,7 +211,9 @@ internal static class StringBuilderExtension
     {
         Debug.Assert(sb != null);
         Debug.Assert(strings != null);
+        Debug.Assert(strings.All(x => !string.IsNullOrEmpty(x)));
 
+        // Wenn strings leer ist, wird die Schleife nicht gestartet:
         for (int i = 0; i < strings.Count; i++)
         {
             AppendEntry(sb, strings[i], maxLen);

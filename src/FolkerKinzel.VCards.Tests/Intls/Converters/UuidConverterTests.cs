@@ -1,43 +1,25 @@
 ﻿using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 [TestClass()]
 public class UuidConverterTest
 {
-#if NET45
-        [TestMethod]
-        public void IsUuidUriTest1()
-        {
-            string guidString = "550e8400-e29b-11d4-a716-446655440000";
-            guidString = "urn:uuid:" + guidString;
-
-
-            Assert.IsTrue(guidString.IsUuidUri());
-        }
-#endif
-
-
-#if !NET45
     [TestMethod]
     public void IsUuidUriTest1()
     {
         string guidString = "550e8400-e29b-11d4-a716-446655440000";
         guidString = "urn:uuid:" + guidString;
-
-        Assert.IsTrue(guidString.AsSpan().IsUuidUri());
+        Assert.IsTrue(guidString.IsUuidUri());
     }
-#endif
+
 
     [TestMethod]
     public void IsUuidUriTest2()
     {
         string guidString = "550e8400-e29b-11d4-a716-446655440000";
-#if NET45
-            Assert.IsFalse(guidString.IsUuidUri());
-#else
-        Assert.IsFalse(guidString.AsSpan().IsUuidUri());
-#endif
+        Assert.IsFalse(guidString.IsUuidUri());
     }
 
     [TestMethod]
@@ -45,23 +27,21 @@ public class UuidConverterTest
     {
         string guidString = "550e8400-e29b-11d4-a716-446655440000";
         guidString = "https://" + guidString;
-
-#if NET45
-            Assert.IsFalse(guidString.IsUuidUri());
-#else
-        Assert.IsFalse(guidString.AsSpan().IsUuidUri());
-#endif
+        Assert.IsFalse(guidString.IsUuidUri());
     }
 
     [TestMethod]
     public void IsUuidUriTest5()
     {
         string guidString = "550e8400";
-#if NET45
-            Assert.IsFalse(guidString.IsUuidUri());
-#else
-        Assert.IsFalse(guidString.AsSpan().IsUuidUri());
-#endif
+        Assert.IsFalse(guidString.IsUuidUri());
+    }
+
+    [TestMethod]
+    public void IsUuidUriTest5b()
+    {
+        string? guidString = null;
+        Assert.IsFalse(guidString.IsUuidUri());
     }
 
     [TestMethod]
@@ -69,25 +49,21 @@ public class UuidConverterTest
     {
         string guidString = "550e8400e29b11d4a716446655440000";
         guidString = "   urn:uuid:" + guidString;
-
-#if NET45
-            Assert.IsTrue(guidString.IsUuidUri());
-#else
-        Assert.IsTrue(guidString.AsSpan().IsUuidUri());
-#endif
+        Assert.IsTrue(guidString.IsUuidUri());
     }
 
     [TestMethod]
     public void IsUuidUriTest7()
     {
         string guidString = " ";
-        //guidString = "   urn:uuid:" + guidString;
+        Assert.IsFalse(guidString.IsUuidUri());
+    }
 
-#if NET45
-            Assert.IsFalse(guidString.IsUuidUri());
-#else
-        Assert.IsFalse(guidString.AsSpan().IsUuidUri());
-#endif
+    [TestMethod]
+    public void IsUuidUriTest8()
+    {
+        string guidString = new(' ', 100);
+        Assert.IsFalse(guidString.IsUuidUri());
     }
 
     [TestMethod()]

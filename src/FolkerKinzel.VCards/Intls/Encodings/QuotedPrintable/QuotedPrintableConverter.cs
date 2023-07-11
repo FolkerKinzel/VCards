@@ -48,10 +48,7 @@ internal static class QuotedPrintableConverter
             return string.Empty;
         }
 
-        if (Environment.NewLine != STANDARD_LINEBREAK)
-        {
-            value = value.Replace(Environment.NewLine, STANDARD_LINEBREAK, StringComparison.Ordinal);
-        }
+        value = NormalizeLineBreaksOnUnixSystems(value);
 
 
         //unerlaubte Zeichen codieren
@@ -64,6 +61,16 @@ internal static class QuotedPrintableConverter
 
 
         ////////////////////////////////////////
+
+        [ExcludeFromCodeCoverage]
+        static string NormalizeLineBreaksOnUnixSystems(string value)
+        {
+            if (!StringComparer.Ordinal.Equals(Environment.NewLine, STANDARD_LINEBREAK))
+            {
+                value = value.Replace(Environment.NewLine, STANDARD_LINEBREAK, StringComparison.Ordinal);
+            }
+            return value;
+        }
 
         static void EncodeLastCharInLineIfItsWhitespace(StringBuilder sb)
         {
@@ -176,20 +183,27 @@ internal static class QuotedPrintableConverter
         byte[] bytes = DecodeData(qpCoded);
 
 
-        if (textEncoding == null)
-        {
-            textEncoding = Encoding.UTF8;
-        }
+        textEncoding ??= Encoding.UTF8;
 
         string s = textEncoding.GetString(bytes);
 
-        //Anpassen des NewLine-Zeichens für Unix-Systeme
-        if (Environment.NewLine != STANDARD_LINEBREAK) // notwendig, wenn Hard-Linebreaks codiert waren
-        {
-            s = s.Replace(STANDARD_LINEBREAK, Environment.NewLine, StringComparison.Ordinal);
-        }
+        s = NormalizeLineBreaksOnUnixSystems(s);
 
         return s;
+
+        ///////////////////////////////////////////////////////////////////////
+
+        [ExcludeFromCodeCoverage]
+        static string NormalizeLineBreaksOnUnixSystems(string s)
+        {
+            //Anpassen des NewLine-Zeichens für Unix-Systeme
+            if (Environment.NewLine != STANDARD_LINEBREAK) // notwendig, wenn Hard-Linebreaks codiert waren
+            {
+                s = s.Replace(STANDARD_LINEBREAK, Environment.NewLine, StringComparison.Ordinal);
+            }
+
+            return s;
+        }
     }
 
 

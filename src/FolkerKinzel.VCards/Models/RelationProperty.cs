@@ -44,20 +44,11 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
             return new RelationTextProperty(vcfRow);
         }
 
-#if NET40
-            if (vcfRow.Value.IsUuidUri())
-#else
-        if (vcfRow.Value?.AsSpan().IsUuidUri() ?? false)
-#endif
+        if (vcfRow.Value.IsUuidUri())
         {
-            var relation = new RelationUuidProperty(
-#if NET40
-                    UuidConverter.ToGuid(vcfRow.Value),
-#else
-                    UuidConverter.ToGuid(vcfRow.Value.AsSpan()),
-#endif
-                    vcfRow.Parameters.RelationType,
-                propertyGroup: vcfRow.Group);
+            var relation = new RelationUuidProperty(UuidConverter.ToGuid(vcfRow.Value),
+                                                    vcfRow.Parameters.RelationType,
+                                                    propertyGroup: vcfRow.Group);
 
             relation.Parameters.Assign(vcfRow.Parameters);
 

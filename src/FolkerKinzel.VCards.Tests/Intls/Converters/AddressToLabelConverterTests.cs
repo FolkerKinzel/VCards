@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
@@ -20,6 +21,7 @@ public class AddressToLabelConverterTests
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{zip} {city}");
         StringAssert.Contains(label, country.ToUpperInvariant());
+        Assert.IsFalse(label.HasEmptyLine());
     }
 
     [TestMethod]
@@ -37,6 +39,7 @@ public class AddressToLabelConverterTests
         Assert.IsFalse(label!.Contains(street));
         Assert.IsTrue(label!.Contains(poBox));
         StringAssert.Contains(label, country.ToUpperInvariant());
+        Assert.IsFalse(label.HasEmptyLine());
     }
 
     [TestMethod]
@@ -53,6 +56,7 @@ public class AddressToLabelConverterTests
         StringAssert.Contains(label, $"{zip} {city}");
         StringAssert.Contains(label, country.ToUpperInvariant());
         StringAssert.Contains(label, state);
+        Assert.IsFalse(label.HasEmptyLine());
     }
 
     [TestMethod]
@@ -70,6 +74,7 @@ public class AddressToLabelConverterTests
         StringAssert.Contains(label, $"{zip} {city}");
         StringAssert.Contains(label, country.ToUpperInvariant());
         StringAssert.Contains(label, state);
+        Assert.IsFalse(label.HasEmptyLine());
     }
 
 
@@ -88,6 +93,7 @@ public class AddressToLabelConverterTests
         StringAssert.Contains(label, $"{city} {state} {zip}");
         StringAssert.Contains(label, country.ToUpperInvariant());
         StringAssert.Contains(label, state);
+        Assert.IsFalse(label.HasEmptyLine());
     }
 
     [TestMethod]
@@ -105,6 +111,7 @@ public class AddressToLabelConverterTests
         StringAssert.Contains(label, $"{city} {zip} {state}");
         StringAssert.Contains(label, country.ToUpperInvariant());
         StringAssert.Contains(label, state);
+        Assert.IsFalse(label.HasEmptyLine());
     }
 }
 

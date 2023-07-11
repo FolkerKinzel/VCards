@@ -8,15 +8,9 @@ internal static class UuidConverter
     internal const string UUID_PROTOCOL = "urn:uuid:";
     private const int GUID_MIN_LENGTH = 32;
 
-#if NET40
-        internal static bool IsUuidUri(this string? uri)
-        {
-            if(uri is null || uri.Length < GUID_MIN_LENGTH) 
-#else
-    internal static bool IsUuidUri(this ReadOnlySpan<char> uri)
+    internal static bool IsUuidUri(this string? uri)
     {
-        if (uri.Length < GUID_MIN_LENGTH)
-#endif
+        if (uri is null || uri.Length < GUID_MIN_LENGTH)
         {
             return false;
         }
@@ -44,21 +38,11 @@ internal static class UuidConverter
         return false;
     }
 
-#if NET461 || NETSTANDARD2_0
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Guid ToGuid(string? uuid)
-            => ToGuid(uuid.AsSpan());
-#endif
 
-#if NET40
-        internal static Guid ToGuid(string? uuid)
-        {
-            if (string.IsNullOrWhiteSpace(uuid) || uuid.Length < GUID_MIN_LENGTH)
-#else
-    internal static Guid ToGuid(ReadOnlySpan<char> uuid)
+    internal static Guid ToGuid(string? uuid)
     {
-        if (uuid.IsWhiteSpace() || uuid.Length < GUID_MIN_LENGTH)
-#endif
+        if (string.IsNullOrWhiteSpace(uuid) || uuid.Length < GUID_MIN_LENGTH)
+
         {
             return Guid.Empty;
         }
@@ -74,12 +58,10 @@ internal static class UuidConverter
             }
         }
 
-#if NET40
-            _ = Guid.TryParse(uuid.Substring(startOfGuid), out Guid guid);
-#elif NET461 || NETSTANDARD2_0
-            _ = Guid.TryParse(uuid.Slice(startOfGuid).ToString(), out Guid guid);
+#if NET40 || NET461 || NETSTANDARD2_0
+        _ = Guid.TryParse(uuid.Substring(startOfGuid), out Guid guid);
 #else
-        _ = Guid.TryParse(uuid.Slice(startOfGuid), out Guid guid);
+        _ = Guid.TryParse(uuid.AsSpan().Slice(startOfGuid), out Guid guid);
 #endif
         return guid;
     }

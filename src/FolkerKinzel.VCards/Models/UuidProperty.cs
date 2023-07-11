@@ -36,11 +36,8 @@ public sealed class UuidProperty : VCardProperty
 
 
     internal UuidProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
-#if NET40
             => Value = UuidConverter.ToGuid(vcfRow.Value);
-#else
-            => Value = UuidConverter.ToGuid(vcfRow.Value.AsSpan());
-#endif
+
 
 
     /// <summary>
