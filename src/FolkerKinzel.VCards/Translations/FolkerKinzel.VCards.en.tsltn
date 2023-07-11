@@ -339,12 +339,6 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="B83E00E131E00DB">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.AccessProperty"/&gt; object.</T>
   <T ID="DAA859F485A24605">A member of the &lt;see cref="T:FolkerKinzel.VCards.Models.Enums.VCdAccess"/&gt; enum.</T>
   <T ID="D9FAB987DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
-  <T ID="26AAF5C9B32B423E">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
-  <T ID="F44218FE6C1C342A">The street address.</T>
-  <T ID="3FB6EFB4B2CD4333">The locality (e.g. city).</T>
-  <T ID="18EC3DE7509F6036">The region (e.g. state or province).</T>
-  <T ID="F558C0232F267067">The postal code.</T>
-  <T ID="976A2C83D10A0BD9">The country name (full name).</T>
   <T ID="8FC1E9BDDD3CF227">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.AccessProperty"/&gt;.</T>
   <T ID="7A2E47F5D5B0C874"></T>
   <T ID="CE1D0EF1D0B2CB29"></T>
@@ -391,20 +385,6 @@ The &lt;see cref="P:FolkerKinzel.VCards.VCard.Kind"/&gt;-property must be set to
   <T ID="D594B2ED0D3CF27F"></T>
   <T ID="A09EB7A3E91ADF6"></T>
   <T ID="F7411A47E22BC073"></T>
-  <T ID="C7AB87332CE16B60">The post office box. (Don't use this parameter!)</T>
-  <T ID="7F26B58072345EEF">The extended address (e.g. apartment or suite number).  (Don't use this parameter!)</T>
-  <T ID="EA33381CDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
-  <T ID="AFB7E0461EE45C7F">It is recommended to assign a formatted representation of the address to the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/&gt; parameter of the &lt;see cref ="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
-  <T ID="108FD039B32B423E">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
-  <T ID="1D33951B6C1C342A">The street address.</T>
-  <T ID="4898625CB2CD4333">The locality (e.g. city).</T>
-  <T ID="C18A281E2F267067">The postal code.</T>
-  <T ID="D6B17852509F6036">The region (e.g. state or province).</T>
-  <T ID="ECCB752ED10A0BD9">The country name (full name).</T>
-  <T ID="7D32E4012CE16B60">The post office box. (Don't use this parameter!)</T>
-  <T ID="F60C0DF272345EEF">The extended address (e.g. apartment or suite number).  (Don't use this parameter!)</T>
-  <T ID="7CF600D0DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
-  <T ID="6C46404E1EE45C7F">It is recommended to assign a formatted representation of the address to the &lt;see cref ="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/&gt; parameter of the &lt;see cref ="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
   <T ID="2712F74801854DAF">The data provided by the &lt;see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt;.</T>
   <T ID="79E201AE803F7456">A class derived from &lt;see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/&gt; that specializes in encapsulating &lt;see cref="T:System.DateTimeOffset"/&gt; values.</T>
   <T ID="2ED264D4D41D7A8">Encapsulates information to specify the components of the sex and gender identity of the object the vCard represents</T>
@@ -1288,15 +1268,6 @@ To make the code more readable, exception handling has been omitted from the exa
   <T ID="AF6776C5DF8C3FD8">&lt;paramref name="fallbackEncodingWebName"/&gt; is &lt;c&gt;null&lt;/c&gt;.</T>
   <T ID="9810B4915DA24D20">The identifier specified for &lt;paramref name="fallbackEncodingWebName"/&gt; could not be mapped to an ANSI code page.</T>
   <T ID="E381CCB32537723">&lt;c&gt;CHARSET&lt;/c&gt;: Indicates the character set that was used for the property. &lt;c&gt;(2)&lt;/c&gt;</T>
-  <T ID="4029DFE9B750563C">In the vCard standards 2.1 and 3.0, &lt;c&gt;ADR&lt;/c&gt; and &lt;c&gt;Label&lt;/c&gt; are separate vCard properties. Only as of vCard 4.0 they are permanently linked to one another. When saving a vCard 2.1 and vCard 3.0, the content of &lt;see cref="Label"/&gt; is automatically inserted into the vCard as a separate &lt;c&gt;LABEL&lt;/c&gt; property.
-&lt;note type="warning"&gt;
-&lt;para&gt;
-When loading a vCard 2.1 or 3.0, the library tries to create the link between &lt;c&gt;Label&lt;/c&gt; and &lt;c&gt;ADR&lt;/c&gt; based on matching parameters of both properties. A text comparison of the content of &lt;c&gt;ADR&lt;/c&gt; and &lt;c&gt;Label&lt;/c&gt; does not take place for performance reasons.
-&lt;/para&gt;
-&lt;para&gt;
-Although the correct assignment is usually successful in this way, this cannot be guaranteed for every scenario. If the assignment of &lt;c&gt;ADR&lt;/c&gt; and &lt;c&gt;Label&lt;/c&gt; plays a role for the application, the application should check this in the case of vCard 2.1 or vCard 3.0 by text comparison or create its own labels from the address data .
-&lt;/para&gt;
-&lt;/note&gt;</T>
   <T ID="8E30514132537723">&lt;c&gt;CHARSET&lt;/c&gt;: Indicates the character set that was used for the property. &lt;c&gt;(2)&lt;/c&gt;</T>
   <T ID="BB27F7531DBD9F60"></T>
   <T ID="DE0C4D7F754C5858">&lt;para&gt;
@@ -1486,4 +1457,77 @@ The method behaves in the same way, if a vCard 2.1 or 3.0 is serialized with the
 &lt;/para&gt;</T>
   <T ID="64FF9980F85526E4">Default setting (corresponds to &lt;see cref="F:FolkerKinzel.VCards.VcfOptions.WriteGroups"/&gt; | &lt;see cref="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6474Extensions"/&gt; | &lt;see cref="F:FolkerKinzel.VCards.VcfOptions.WriteRfc6715Extensions"/&gt; | &lt;see cref="F:FolkerKinzel.VCards.VcfOptions.WriteImppExtension"/&gt; | &lt;see cref="F:FolkerKinzel.VCards.VcfOptions.WriteXExtensions"/&gt; | &lt;see cref="F:FolkerKinzel.VCards.VcfOptions.AllowMultipleAdrAndLabelInVCard21"/&gt;)</T>
   <T ID="2A746323AFE6BE38">Set the flag to allow multiple "ADR" and "LABEL" properties to be written into a vCard 2.1.</T>
+  <T ID="EBCB03B2B32B423E">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
+  <T ID="A76747626C1C342A">The street address.</T>
+  <T ID="C760F741B2CD4333">The locality (e.g. city).</T>
+  <T ID="C236C44F509F6036">The region (e.g. state or province).</T>
+  <T ID="C7E6DA282F267067">The postal code.</T>
+  <T ID="39E069B5D10A0BD9">The country name (full name).</T>
+  <T ID="A85DD998DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="52FB4B02094CC130">Pass &lt;c&gt;false&lt;/c&gt; to prevent a mailing label from being automatically added to the &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/&gt; parameter.</T>
+  <T ID="FE6A63DDB32B423E">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
+  <T ID="FA8A3F566C1C342A">The street address.</T>
+  <T ID="2856B462B2CD4333">The locality (e.g. city).</T>
+  <T ID="A090E191509F6036">The region (e.g. state or province).</T>
+  <T ID="A6EA013E2F267067">The postal code.</T>
+  <T ID="5E08B017D10A0BD9">The country name (full name).</T>
+  <T ID="5D43846C2CE16B60">The post office box. (Don't use this parameter!)</T>
+  <T ID="DBF664D472345EEF">The extended address (e.g. apartment or suite number).  (Don't use this parameter!)</T>
+  <T ID="BF9789ADE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="D3CBF9BA094CC130">Pass &lt;c&gt;false&lt;/c&gt; to prevent a mailing label from being automatically added to the &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/&gt; parameter.</T>
+  <T ID="309FD07AB32B423E">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
+  <T ID="C487F2F86C1C342A">The street address.</T>
+  <T ID="4F9FA99DB2CD4333">The locality (e.g. city).</T>
+  <T ID="1AB26637509F6036">The region (e.g. state or province).</T>
+  <T ID="C70DC2AB2F267067">The postal code.</T>
+  <T ID="490D4DABD10A0BD9">The country name (full name).</T>
+  <T ID="9C3E5984DE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="13160D4A094CC130">Pass &lt;c&gt;false&lt;/c&gt; to prevent a mailing label from being automatically added to the &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/&gt; parameter.</T>
+  <T ID="308DD3BD2D2816FE"></T>
+  <T ID="713F62CB32B423E">Initializes a new &lt;see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/&gt; object.</T>
+  <T ID="B49E6EFA6C1C342A">The street address.</T>
+  <T ID="A87130D5B2CD4333">The locality (e.g. city).</T>
+  <T ID="52804035509F6036">The region (e.g. state or province).</T>
+  <T ID="6149E6842F267067">The postal code.</T>
+  <T ID="177905C1D10A0BD9">The country name (full name).</T>
+  <T ID="D71CAF632CE16B60">The post office box. (Don't use this property!)</T>
+  <T ID="830E8CE772345EEF">The extended address (e.g. apartment or suite number).  (Don't use this parameter!)</T>
+  <T ID="EAF5C66DDE54CE19">Identifier of the group of &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; objects, which the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; should belong to, or &lt;c&gt;null&lt;/c&gt; to indicate that the &lt;see cref ="T:FolkerKinzel.VCards.Models.VCardProperty"/&gt; does not belong to any group.</T>
+  <T ID="20B20630094CC130">Pass &lt;c&gt;false&lt;/c&gt; to prevent a mailing label from being automatically added to the &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/&gt; parameter.</T>
+  <T ID="BED7373C2D2816FE"></T>
+  <T ID="705480F5678EB8AB">Converts the data encapsulated in the instance into formatted text for a mailing label.</T>
+  <T ID="618C1CD4A69E4544">The data encapsulated in the instance, converted to formatted text for a mailing label.</T>
+  <T ID="CA000F1B2D2816FE"></T>
+  <T ID="9D37B8032D2816FE"></T>
+  <T ID="1B1ECFE22D2816FE"></T>
+  <T ID="A7BE62123D7B5DDC">Adds a mailing label generated from the instance's data to the &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/&gt; property. Any data previously stored in the property &lt;see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/&gt; will be overwritten.</T>
+  <T ID="7C7624022D2816FE"></T>
+  <T ID="577E7BF8824B3681">&lt;note type="tip"&gt;
+You can use the &lt;see cref="M:FolkerKinzel.VCards.Models.NameProperty.ToDisplayName"/&gt; method to generate formatted representations from the structured name representations that are readable by the users of the application.
+&lt;/note&gt;</T>
+  <T ID="DAB9F7442D2816FE"></T>
+  <T ID="FA5263E92D2816FE"></T>
+  <T ID="84C8606B14197629">Formats the data encapsulated by the instance into a human-readable form.</T>
+  <T ID="56B1AA38D3EDF571">The data encapsulated by the instance in human-readable form.</T>
+  <T ID="D48F195B678EB8AB">Converts the data encapsulated in the instance into formatted text for a mailing label.</T>
+  <T ID="7942E62A69E4544">The data encapsulated in the instance, converted to formatted text for a mailing label.</T>
+  <T ID="1FA772D514197629">Formats the data encapsulated by the instance into a human-readable form.</T>
+  <T ID="441A9B12D3EDF571">The data encapsulated by the instance in human-readable form.</T>
+  <T ID="4029DFE900BA0D17">In the vCard standards 2.1 and 3.0, &lt;c&gt;ADR&lt;/c&gt; and &lt;c&gt;Label&lt;/c&gt; are separate vCard properties. Only as of vCard 4.0 they are permanently linked to one another. When saving a vCard 2.1 and vCard 3.0, the content of &lt;see cref="Label"/&gt; is automatically inserted into the vCard as a separate &lt;c&gt;LABEL&lt;/c&gt; property.
+&lt;note type="warning"&gt;
+&lt;para&gt;
+When loading a vCard 2.1 or 3.0, the library tries to create the link between &lt;c&gt;Label&lt;/c&gt; and &lt;c&gt;ADR&lt;/c&gt; based on matching parameters of both properties. A text comparison of the content of &lt;c&gt;ADR&lt;/c&gt; and &lt;c&gt;Label&lt;/c&gt; does not take place for performance reasons.
+&lt;/para&gt;
+&lt;para&gt;
+Although the correct assignment is usually successful in this way, this cannot be guaranteed for every scenario. If the assignment of &lt;c&gt;ADR&lt;/c&gt; and &lt;c&gt;Label&lt;/c&gt; plays a role for the application, the application should check this in the case of vCard 2.1 or vCard 3.0 by text comparison or create its own labels from the address data, e.g., using the method &lt;see cref="M:FolkerKinzel.VCards.Models.AddressProperty.AppendLabel"/&gt;.
+&lt;/para&gt;
+&lt;/note&gt;</T>
+  <T ID="2726932C2D2816FE"></T>
+  <T ID="365E64D9E1C19DC4">&lt;para&gt;
+The name representations stored in this property are typically intended to be presented to the users of the application.
+&lt;/para&gt;
+&lt;note type="tip"&gt;
+You can use the &lt;see cref="M:FolkerKinzel.VCards.Models.NameProperty.ToDisplayName"/&gt; method to convert the structured name representations that are stored in the &lt;see cref="P:FolkerKinzel.VCards.VCard.NameViews"/&gt; property to produce formatted representations readable by the users of the application.
+&lt;/note&gt;</T>
+  <T ID="BB04DD0E2D2816FE"></T>
 </Tsltn>

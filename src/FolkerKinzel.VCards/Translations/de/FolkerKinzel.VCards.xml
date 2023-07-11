@@ -821,6 +821,7 @@
             um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
             <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> 
             automatisch ein Adressetikett hinzugefügt wird.</param>
+            <seealso cref="M:FolkerKinzel.VCards.Models.AddressProperty.AppendLabel"/>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.AddressProperty.#ctor(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.String,System.Boolean)">
             <summary>
@@ -838,6 +839,7 @@
             um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
             <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> 
             automatisch ein Adressetikett hinzugefügt wird.</param>
+            <seealso cref="M:FolkerKinzel.VCards.Models.AddressProperty.AppendLabel"/>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.AddressProperty.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean)">
             <summary>
@@ -883,7 +885,7 @@
         <member name="M:FolkerKinzel.VCards.Models.AddressProperty.AppendLabel">
             <summary>
             Fügt der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> ein Adressetikett hinzu, das aus den
-            Daten der Instanz generíert wird. Evtl. vorher in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> gespeicherte
+            Daten der Instanz generiert wird. Evtl. vorher in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> gespeicherte
             Daten werden dabei überschrieben.
             </summary>
             <seealso cref="M:FolkerKinzel.VCards.Models.AddressProperty.ToLabel"/>
@@ -2241,7 +2243,7 @@
         </member>
         <member name="M:FolkerKinzel.VCards.Models.NameProperty.ToDisplayName">
             <summary>
-            Bringt die von der Instanz gekapselten Daten in eine lesbare Form.
+            Formatiert die von der Instanz gekapselten Daten in eine lesbare Form.
             </summary>
             <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
         </member>
@@ -2712,7 +2714,7 @@
         </member>
         <member name="M:FolkerKinzel.VCards.Models.PropertyParts.Name.ToDisplayName">
             <summary>
-            Bringt die von der Instanz gekapselten Daten in eine lesbare Form.
+            Formatiert die von der Instanz gekapselten Daten in eine lesbare Form.
             </summary>
             <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
         </member>

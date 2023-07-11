@@ -442,7 +442,7 @@ public sealed class Name
     }
 
     /// <summary>
-    /// Bringt die von der Instanz gekapselten Daten in eine lesbare Form.
+    /// Formatiert die von der Instanz gekapselten Daten in eine lesbare Form.
     /// </summary>
     /// <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
     public string ToDisplayName()

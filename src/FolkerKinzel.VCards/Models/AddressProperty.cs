@@ -198,7 +198,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
     /// <summary>
     /// Fügt der Eigenschaft <see cref="ParameterSection.Label"/> ein Adressetikett hinzu, das aus den
-    /// Daten der Instanz generíert wird. Evtl. vorher in der Eigenschaft <see cref="ParameterSection.Label"/> gespeicherte
+    /// Daten der Instanz generiert wird. Evtl. vorher in der Eigenschaft <see cref="ParameterSection.Label"/> gespeicherte
     /// Daten werden dabei überschrieben.
     /// </summary>
     /// <seealso cref="ToLabel"/>

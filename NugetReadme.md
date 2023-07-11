@@ -9,7 +9,7 @@ It allows
 
 FolkerKinzel.VCards is used as a dependency in [FolkerKinzel.Contacts.IO](https://www.nuget.org/packages/FolkerKinzel.Contacts.IO/) - an easy to use .NET-API to manage contact data of organizations and natural persons.
 
-[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v5.0.0-beta.2)
+[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v5.0.0-beta.3)
 
 
 ## Overview
