@@ -243,8 +243,8 @@ public sealed partial class ParameterSection
     /// Textvergleich überprüfen oder mit der Methode <see cref="AddressProperty.AppendLabel()"/> aus den Adressdaten eigene Labels erstellen.
     /// </para>
     /// </note>
-    /// 
     /// </remarks>
+    /// <seealso cref="AddressProperty.AppendLabel"/>
     public string? Label
     {
         get => Get<string?>(VCdParam.Label);

@@ -13,6 +13,12 @@ namespace FolkerKinzel.VCards.Models;
 /// <summary>
 /// Repräsentiert die vCard-Property <c>N</c>, die den Namen des vCard-Subjekts speichert.
 /// </summary>
+/// <remarks>
+/// <note type="tip">
+/// Sie können die Methode <see cref="NameProperty.ToDisplayName"/> verwenden, um aus den strukturierten Namensdarstellungen
+/// formatierte Darstellungen zu erzeugen, die für die Benutzer der Anwendung lesbar sind.
+/// </note>
+/// </remarks>
 public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 {
     /// <summary>
@@ -33,6 +39,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <seealso cref="ToDisplayName"/>
     public NameProperty(
         IEnumerable<string?>? lastName = null,
         IEnumerable<string?>? firstName = null,
@@ -60,6 +67,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <seealso cref="ToDisplayName"/>
     public NameProperty(
         string? lastName,
         string? firstName = null,
@@ -113,7 +121,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
 
     /// <summary>
-    /// Bringt die von der Instanz gekapselten Daten in eine lesbare Form.
+    /// Formatiert die von der Instanz gekapselten Daten in eine lesbare Form.
     /// </summary>
     /// <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
 #if !NET40

@@ -807,43 +807,86 @@
             </summary>
             <param name="prop">The <see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/> object to clone.</param>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.AddressProperty.#ctor(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.String)">
+        <member name="M:FolkerKinzel.VCards.Models.AddressProperty.#ctor(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.String,System.Boolean)">
             <summary>
             Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/>-Objekt.
             </summary>
             <param name="street">Straße</param>
             <param name="locality">Ort</param>
-            <param name="postalCode">Postleitzahl</param>
             <param name="region">Bundesland</param>
+            <param name="postalCode">Postleitzahl</param>
             <param name="country">Land (Staat)</param>
-            <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-            <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
             <param name="propertyGroup">Bezeichner der Gruppe,
             der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
             um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
-            <remarks>
-            Es ist empfehlenswert, dem Parameter <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> des <see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/>-Objekts
-            eine formatierte Darstellung der Adresse zuzuweisen.
-            </remarks>
+            <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> 
+            automatisch ein Adressetikett hinzugefügt wird.</param>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.AddressProperty.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:FolkerKinzel.VCards.Models.AddressProperty.#ctor(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.String,System.Boolean)">
             <summary>
             Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/>-Objekt.
             </summary>
             <param name="street">Straße</param>
             <param name="locality">Ort</param>
-            <param name="postalCode">Postleitzahl</param>
             <param name="region">Bundesland</param>
+            <param name="postalCode">Postleitzahl</param>
             <param name="country">Land (Staat)</param>
             <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
             <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
             <param name="propertyGroup">Bezeichner der Gruppe,
             der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
             um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
-            <remarks>
-            Es ist empfehlenswert, dem Parameter <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> des <see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/>-Objekts
-            eine formatierte Darstellung der Adresse zuzuweisen.
-            </remarks>
+            <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> 
+            automatisch ein Adressetikett hinzugefügt wird.</param>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.AddressProperty.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/>-Objekt.
+            </summary>
+            <param name="street">Straße</param>
+            <param name="locality">Ort</param>
+            <param name="region">Bundesland</param>
+            <param name="postalCode">Postleitzahl</param>
+            <param name="country">Land (Staat)</param>
+            <param name="propertyGroup">Bezeichner der Gruppe,
+            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
+            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
+            <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> 
+            automatisch ein Adressetikett hinzugefügt wird.</param>
+            <seealso cref="M:FolkerKinzel.VCards.Models.AddressProperty.AppendLabel"/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.AddressProperty.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.AddressProperty"/>-Objekt.
+            </summary>
+            <param name="street">Straße</param>
+            <param name="locality">Ort</param>
+            <param name="region">Bundesland</param>
+            <param name="postalCode">Postleitzahl</param>
+            <param name="country">Land (Staat)</param>
+            <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+            <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+            <param name="propertyGroup">Bezeichner der Gruppe,
+            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
+            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
+            <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> 
+            automatisch ein Adressetikett hinzugefügt wird.</param>
+            <seealso cref="M:FolkerKinzel.VCards.Models.AddressProperty.AppendLabel"/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.AddressProperty.ToLabel">
+            <summary>
+            Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
+            </summary>
+            <returns>Die in der Instanz gekapselten Daten, umgewandelt in formatierten Text für ein Adressetikett.</returns>
+            <seealso cref="M:FolkerKinzel.VCards.Models.AddressProperty.AppendLabel"/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.AddressProperty.AppendLabel">
+            <summary>
+            Fügt der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> ein Adressetikett hinzu, das aus den
+            Daten der Instanz generíert wird. Evtl. vorher in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Label"/> gespeicherte
+            Daten werden dabei überschrieben.
+            </summary>
+            <seealso cref="M:FolkerKinzel.VCards.Models.AddressProperty.ToLabel"/>
         </member>
         <member name="P:FolkerKinzel.VCards.Models.AddressProperty.Value">
             <summary>
@@ -2144,6 +2187,12 @@
             <summary>
             Repräsentiert die vCard-Property <c>N</c>, die den Namen des vCard-Subjekts speichert.
             </summary>
+            <remarks>
+            <note type="tip">
+            Sie können die Methode <see cref="M:FolkerKinzel.VCards.Models.NameProperty.ToDisplayName"/> verwenden, um aus den strukturierten Namensdarstellungen
+            formatierte Darstellungen zu erzeugen, die für die Benutzer der Anwendung lesbar sind.
+            </note>
+            </remarks>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.NameProperty.#ctor(FolkerKinzel.VCards.Models.NameProperty)">
             <summary>
@@ -2163,6 +2212,7 @@
             <param name="propertyGroup">Bezeichner der Gruppe,
             der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
             um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
+            <seealso cref="M:FolkerKinzel.VCards.Models.NameProperty.ToDisplayName"/>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.NameProperty.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
@@ -2176,6 +2226,7 @@
             <param name="propertyGroup">Bezeichner der Gruppe,
             der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
             um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
+            <seealso cref="M:FolkerKinzel.VCards.Models.NameProperty.ToDisplayName"/>
         </member>
         <member name="P:FolkerKinzel.VCards.Models.NameProperty.Value">
             <summary>
@@ -2187,6 +2238,12 @@
         </member>
         <member name="P:FolkerKinzel.VCards.Models.NameProperty.IsEmpty">
             <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.NameProperty.ToDisplayName">
+            <summary>
+            Bringt die von der Instanz gekapselten Daten in eine lesbare Form.
+            </summary>
+            <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.NameProperty.Clone">
             <inheritdoc/>
@@ -2486,8 +2543,8 @@
             </summary>
             <param name="street">Straße</param>
             <param name="locality">Ort</param>
-            <param name="postalCode">Postleitzahl</param>
             <param name="region">Bundesland</param>
+            <param name="postalCode">Postleitzahl</param>
             <param name="country">Land (Staat)</param>
             <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
             <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
@@ -2531,6 +2588,12 @@
             <summary>
             <c>true</c>, wenn das <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Address"/>-Objekt keine verwertbaren Daten enthält.
             </summary>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.PropertyParts.Address.ToLabel">
+            <summary>
+            Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
+            </summary>
+            <returns>Die in der Instanz gekapselten Daten, umgewandelt in formatierten Text für ein Adressetikett.</returns>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.PropertyParts.Address.ToString">
             <summary>
@@ -2646,6 +2709,12 @@
             (Nur zum Debugging.)
             </summary>
             <returns>Eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Name"/>-Objekts.</returns>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.PropertyParts.Name.ToDisplayName">
+            <summary>
+            Bringt die von der Instanz gekapselten Daten in eine lesbare Form.
+            </summary>
+            <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
         </member>
         <member name="T:FolkerKinzel.VCards.Models.PropertyParts.Organization">
             <summary>
@@ -2810,11 +2879,11 @@
             Obwohl die korrekte Zuordnung auf diese Weise meist gelingt, kann dies nicht für jedes Szenario garantiert werden. Wenn die 
             Zuordnung von <c>ADR</c> und <c>Label</c> für die Anwendung eine Rolle spielt, sollte die Anwendung diese im Falle von vCard 2.1 
             oder vCard 3.0 durch 
-            Textvergleich überprüfen oder aus den Adressdaten eigene Labels erstellen.
+            Textvergleich überprüfen oder mit der Methode <see cref="M:FolkerKinzel.VCards.Models.AddressProperty.AppendLabel"/> aus den Adressdaten eigene Labels erstellen.
             </para>
             </note>
-            
             </remarks>
+            <seealso cref="M:FolkerKinzel.VCards.Models.AddressProperty.AppendLabel"/>
         </member>
         <member name="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Language">
             <summary>
@@ -4254,6 +4323,18 @@
             <summary>
             <c>FN</c>: Formatierte Zeichenfolge mit dem/den vollständigen Namen des vCard-Objekts. <c>(2,3,4)</c>
             </summary>
+            <remarks>
+            <para>
+            Die in dieser Eigenschaft gespeicherten Namensdarstellungen sind typischerweise dafür gedacht, den Benutzern der Anwendung
+            präsentiert zu werden.
+            </para>
+            <note type="tip">
+            Sie können die Methode <see cref="M:FolkerKinzel.VCards.Models.NameProperty.ToDisplayName"/> verwenden, um aus den strukturierten Namensdarstellungen,
+            die in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.NameViews"/> gespeichert sind, formatierte Darstellungen zu erzeugen, die
+            für die Benutzer der Anwendung lesbar sind.
+            </note>
+            </remarks>
+            <seealso cref="M:FolkerKinzel.VCards.Models.NameProperty.ToDisplayName"/>
         </member>
         <member name="P:FolkerKinzel.VCards.VCard.EmailAddresses">
             <summary>

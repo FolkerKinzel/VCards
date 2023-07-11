@@ -1,5 +1,7 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -63,11 +65,50 @@ public class NamePropertyTests
     [TestMethod()]
     public void ToStringTest()
     {
-        var adr = new NameProperty(LAST_NAME, FIRST_NAME, MIDDLE_NAME, PREFIX, SUFFIX);
+        var name = new NameProperty(LAST_NAME, FIRST_NAME, MIDDLE_NAME, PREFIX, SUFFIX);
 
-        string s = adr.ToString();
+        string s = name.ToString();
 
         Assert.IsNotNull(s);
         Assert.AreNotEqual(0, s.Length);
+    }
+
+    [TestMethod]
+    public void ToDisplayNameTest1()
+    {
+        var name = new NameProperty(LAST_NAME, FIRST_NAME, MIDDLE_NAME, PREFIX, SUFFIX);
+        string s = name.ToDisplayName();
+        Assert.IsNotNull(s);
+        Assert.AreNotEqual(0, s.Length);
+        Assert.AreEqual(1, s.GetLinesCount());
+    }
+
+    [TestMethod]
+    public void ToDisplayNameTest2()
+    {
+        var name = new NameProperty(LAST_NAME, FIRST_NAME);
+        string s = name.ToDisplayName();
+        Assert.IsNotNull(s);
+        Assert.AreNotEqual(0, s.Length);
+        Assert.AreEqual(1, s.GetLinesCount());
+    }
+
+    [TestMethod]
+    public void ToDisplayNameTest3()
+    {
+        var name = new NameProperty(null, FIRST_NAME);
+        string s = name.ToDisplayName();
+        Assert.IsNotNull(s);
+        Assert.AreNotEqual(0, s.Length);
+        Assert.AreEqual(1, s.GetLinesCount());
+    }
+
+    [TestMethod]
+    public void ToDisplayNameTest4()
+    {
+        var name = new NameProperty();
+        string s = name.ToDisplayName();
+        Assert.IsNotNull(s);
+        Assert.AreEqual(0, s.Length);
     }
 }

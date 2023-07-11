@@ -29,6 +29,7 @@ public static class HelperExtensions
     {
         int count = 0;
         if (source == null) { return count; }
+        if (source.Length == 0) { return 1; }
 
         using var reader = new StringReader(source);
         while(reader.ReadLine() != null) { count++; }
@@ -37,7 +38,8 @@ public static class HelperExtensions
 
     public static bool HasEmptyLine(this string? source)
     {
-        if (string.IsNullOrEmpty(source)) { return false; }
+        if (source is null) { return false; }
+        if (source.Length == 0) { return true; }
 
         using var reader = new StringReader(source);
 

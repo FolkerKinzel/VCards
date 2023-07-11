@@ -33,7 +33,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
     /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
-    /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
+    /// automatisch ein Adressetikett hinzugefügt wird.</param>
+    /// <seealso cref="AppendLabel"/>
 #if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -74,7 +75,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
     /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
-    /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
+    /// automatisch ein Adressetikett hinzugefügt wird.</param>
+    /// <seealso cref="AppendLabel"/>
     [Obsolete("Don't use this constructor.", false)]
     public AddressProperty(IEnumerable<string?>? street,
                            IEnumerable<string?>? locality,
@@ -113,7 +115,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
     /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
-    /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
+    /// automatisch ein Adressetikett hinzugefügt wird.</param>
+    /// <seealso cref="AppendLabel"/>
 #if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -153,7 +156,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
     /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
-    /// automatisch ein aus den gekapselten Daten erzeugtes Adressetikett hinzugefügt wird.</param>
+    /// automatisch ein Adressetikett hinzugefügt wird.</param>
+    /// <seealso cref="AppendLabel"/>
     [Obsolete("Don't use this constructor.", false)]
     public AddressProperty(
         string? street,
@@ -185,6 +189,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
     /// </summary>
     /// <returns>Die in der Instanz gekapselten Daten, umgewandelt in formatierten Text für ein Adressetikett.</returns>
+    /// <seealso cref="AppendLabel"/>
 #if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]    
 #endif
@@ -192,10 +197,11 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
 
     /// <summary>
-    /// Fügt der Eigenschaft <see cref="ParameterSection.Label"/> ein Adressetikett hinzu, das automatisch aus den
+    /// Fügt der Eigenschaft <see cref="ParameterSection.Label"/> ein Adressetikett hinzu, das aus den
     /// Daten der Instanz generíert wird. Evtl. vorher in der Eigenschaft <see cref="ParameterSection.Label"/> gespeicherte
     /// Daten werden dabei überschrieben.
     /// </summary>
+    /// <seealso cref="ToLabel"/>
 #if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif

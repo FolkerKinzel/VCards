@@ -203,6 +203,18 @@ public sealed partial class VCard
     /// <summary>
     /// <c>FN</c>: Formatierte Zeichenfolge mit dem/den vollständigen Namen des vCard-Objekts. <c>(2,3,4)</c>
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Die in dieser Eigenschaft gespeicherten Namensdarstellungen sind typischerweise dafür gedacht, den Benutzern der Anwendung
+    /// präsentiert zu werden.
+    /// </para>
+    /// <note type="tip">
+    /// Sie können die Methode <see cref="NameProperty.ToDisplayName"/> verwenden, um aus den strukturierten Namensdarstellungen,
+    /// die in der Eigenschaft <see cref="NameViews"/> gespeichert sind, formatierte Darstellungen zu erzeugen, die
+    /// für die Benutzer der Anwendung lesbar sind.
+    /// </note>
+    /// </remarks>
+    /// <seealso cref="NameProperty.ToDisplayName"/>
     public IEnumerable<TextProperty?>? DisplayNames
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.DisplayNames);
