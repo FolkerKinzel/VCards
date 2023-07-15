@@ -1,14 +1,14 @@
-﻿BEGIN:VCARD
+BEGIN:VCARD
 VERSION:4.0
 PRODID:-//Thunderbird.net/NONSGML Thunderbird CardBook V36.3//DE
 UID:9e49143d-201c-46cc-b1ca-b84cac8211e9
-FN:Möhrke Marina
-N:Möhrke;Marina;;;
-ORG:KiTa Hohenmölsen
-EMAIL;PREF=1;TYPE=HOME:info@kinderland-hhm.de
+FN:Möhrke Gerda
+N:Möhrke;Gerda;;;
+ORG:KiTa Öhrdingen
+EMAIL;PREF=1;TYPE=HOME:info@kinderland-blubblub.de
 TEL;TYPE=WORK:034441/ 2 22 67
 TEL;TYPE=FAX:034441/ 39 23 34
-URL;TYPE=WORK:www.kinderland-hhm.de
+URL;TYPE=WORK:www.kinderland-ufftata.de
 REV:20190602T115709Z
 END:VCARD
 
@@ -27,7 +27,7 @@ ORG:SED
 EMAIL;TYPE=HOME:privat@freenet.de
 EMAIL;TYPE=WORK:geschaeftlich@freenet.de
 EMAIL;TYPE=OTHER:sonstige@freenet.de
-EMAIL:nichts@freenet.de
+EMAIL:nichts@wabbel.de
 TEL;TYPE=HOME:Privattelefon
 TEL;TYPE=WORK:Diensttelefon
 TEL;TYPE=FAX:Fax
@@ -38,8 +38,8 @@ TEL;TYPE=CELL:Mobil
 TEL;TYPE=PAGER:Pager
 TEL;TYPE=OTHER:sonstige
 TEL:ohne
-ADR;TYPE=HOME:;;Priorauer Str. 32;Raguhn;Sachsen-Anhalt;06779;Deutschland
-ADR;TYPE=WORK:;;Geschäftsadresse 32;Raguhn;Sachsen-Anhalt;06779;Deutschland
+ADR;TYPE=HOME:;;Alte Str. 32;Entenhausen;Sachsen-Anhalt;06789;Deutschland
+ADR;TYPE=WORK:;;Geschäftsadresse 32;Raguhn;Sachsen-Anhalt;06789;Deutschland
 URL;TYPE=WORK:www.business.de
 URL;TYPE=HOME:www.privat.de
 URL;TYPE=OTHER:www.sonstige.de

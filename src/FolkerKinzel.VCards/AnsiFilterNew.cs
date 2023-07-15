@@ -167,17 +167,20 @@ public class AnsiFilterNew
 
         string? charSet = GetCharsetFromVCards(vCards);
 
-        if (charSet is null)
+        if (charSet is null) // No CHARSET parameter
         {
-            encodingWebName = FallbackEncodingWebName;
-            return VCard.LoadVcf(fileName, _ansi);
+            return ReadWithFallbackEncoding(fileName, out encodingWebName);
         }
 
         Encoding? enc = _encodingCache.GetEncoding(charSet);
 
         if (enc is null)
         {
-            return vCards;
+            // It's not valid UTF-8, because the first reading produced an error. It
+            // has a CHARSET parameter, but it's not readable. We decide to read the
+            // file with the FallbackEncoding because ANSI decoded text can be
+            // converted to another ANSI encoding after reading too.
+            return ReadWithFallbackEncoding(fileName, out encodingWebName);
         }
 
         encodingWebName = enc.WebName;
@@ -200,6 +203,12 @@ public class AnsiFilterNew
                 .SelectMany(x => x!)
                 .FirstOrDefault(x => x.Parameters.CharSet != null)?.Parameters.CharSet;
         }
+    }
+
+    private IList<VCard> ReadWithFallbackEncoding(string fileName, out string encodingWebName) 
+    {
+        encodingWebName = FallbackEncodingWebName;
+        return VCard.LoadVcf(fileName, _ansi);
     }
 
     private static bool IsUtf8(Encoding encoding) => encoding.CodePage == AnsiFilterNew.UTF8_CODEPAGE;

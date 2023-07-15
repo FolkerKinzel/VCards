@@ -18,12 +18,12 @@ PHOTO:https://lh3.googleusercontent.com/-qA19KAIW4ig/XPRQfJuWDoI/AAAAAAAAAA
 END:VCARD
 BEGIN:VCARD
 VERSION:3.0
-FN:KMS Au√üenstelle
+FN:KMS Auﬂenstelle
 N:KMS;WSF;;;
-EMAIL;TYPE=INTERNET: blabl√∂@blub.com
+EMAIL;TYPE=INTERNET: blablˆ@blub.com
 TEL;TYPE=HOME:03443-303776
 item1.TEL:03443-333440
 item1.X-ABLabel:homeFax
-item2.ORG:KMS Au√üenstelle
+item2.ORG:KMS Auﬂenstelle
 item2.X-ABLabel:
 END:VCARD
