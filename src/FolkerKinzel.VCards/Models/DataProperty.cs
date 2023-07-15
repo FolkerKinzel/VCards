@@ -206,22 +206,22 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
             switch (Value)
             {
                 case null:
-                    Parameters.ContentLocation = VCdContentLocation.Inline;
+                    Parameters.ContentLocation = ContentLocation.Inline;
                     break;
                 case DataUrl dataUri:
                     {
                         if (dataUri.ContainsBytes)
                         {
-                            Parameters.ContentLocation = VCdContentLocation.Inline;
+                            Parameters.ContentLocation = ContentLocation.Inline;
                             Parameters.Encoding = ValueEncoding.Base64;
                             Parameters.MediaType = dataUri.MimeType.ToString();
 
                         }
                         else // enthält Text
                         {
-                            if (Parameters.ContentLocation != VCdContentLocation.ContentID)
+                            if (Parameters.ContentLocation != ContentLocation.ContentID)
                             {
-                                Parameters.ContentLocation = VCdContentLocation.Inline;
+                                Parameters.ContentLocation = ContentLocation.Inline;
                             }
 
                             if (dataUri.GetEmbeddedText().NeedsToBeQpEncoded())
@@ -237,11 +237,11 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
                     {
                         if (uri.IsAbsoluteUri && (uri.Scheme?.StartsWith("cid", StringComparison.Ordinal) ?? false))
                         {
-                            Parameters.ContentLocation = VCdContentLocation.ContentID;
+                            Parameters.ContentLocation = ContentLocation.ContentID;
                         }
-                        else if (Parameters.ContentLocation != VCdContentLocation.ContentID)
+                        else if (Parameters.ContentLocation != ContentLocation.ContentID)
                         {
-                            Parameters.ContentLocation = VCdContentLocation.Url;
+                            Parameters.ContentLocation = ContentLocation.Url;
                         }
 
                         if (uri.ToString().NeedsToBeQpEncoded())

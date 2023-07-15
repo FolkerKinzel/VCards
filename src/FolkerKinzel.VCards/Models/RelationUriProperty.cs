@@ -71,11 +71,11 @@ public sealed class RelationUriProperty : RelationProperty, IEnumerable<Relation
 
             if (uri.IsAbsoluteUri && (uri.Scheme?.StartsWith("cid", StringComparison.Ordinal) ?? false))
             {
-                Parameters.ContentLocation = VCdContentLocation.ContentID;
+                Parameters.ContentLocation = ContentLocation.ContentID;
             }
-            else if (Parameters.ContentLocation != VCdContentLocation.ContentID)
+            else if (Parameters.ContentLocation != ContentLocation.ContentID)
             {
-                Parameters.ContentLocation = VCdContentLocation.Url;
+                Parameters.ContentLocation = ContentLocation.Url;
             }
 
             if (uri.ToString().NeedsToBeQpEncoded())

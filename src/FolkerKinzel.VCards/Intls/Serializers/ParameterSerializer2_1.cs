@@ -425,9 +425,9 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
 
     private void AppendValue()
     {
-        VCdContentLocation contentLocation = ParaSection.ContentLocation;
+        ContentLocation contentLocation = ParaSection.ContentLocation;
 
-        if (contentLocation != VCdContentLocation.Inline)
+        if (contentLocation != ContentLocation.Inline)
         {
             AppendParameter(ParameterSection.ParameterKey.VALUE, contentLocation.ToVcfString());
         }

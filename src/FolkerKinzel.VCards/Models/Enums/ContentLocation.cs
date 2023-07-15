@@ -3,7 +3,7 @@
 /// <summary>
 /// Benannte Konstanten, um in vCard 2.1 anzugeben, wo der Inhalt einer vCard-Property lokalisiert ist.
 /// </summary>
-public enum VCdContentLocation
+public enum ContentLocation
 {
     /// <summary>
     /// <c>INLINE</c>: Der Inhalt ist direkt in die vCard eingebettet. (Default)

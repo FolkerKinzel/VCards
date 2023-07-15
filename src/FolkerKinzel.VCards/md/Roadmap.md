@@ -33,12 +33,13 @@
 - [x] Dependency update.
 - [x] **Breaking Change:** End .NET Framework 4.0 support.
 - [ ] **Breaking Change:** Give `AnsiFilter` the functionality of `MultiAnsiFilter` with better performance.
-- [ ] **Breaking Change:** Mark the usage of `MultiAnsiFilter` as obsolete error.
+- [ ] **Breaking Change:** Remove `MultiAnsiFilter`.
 - [ ] **Breaking Change:** Think of a consistent naming of enums.
 - [ ] **Breaking Change:** Move `VCdVersion` to namespace `FolkerKinzel.VCards`
 - [ ] **Breaking Change:** Rename `VCdSex` into  `Gender`
 - [ ] **Breaking Change:** Rename `VCdEncoding` into  `ValueEncoding`
 - [ ] **Breaking Change:** Rename `VCdAccess` into  `Access`
+- [ ] **Breaking Change:** Rename `VCdContentLocation` into  `ContentLocation`
 - [ ] 
 - [ ] Use the HashCode struct to compute hash codes.
 

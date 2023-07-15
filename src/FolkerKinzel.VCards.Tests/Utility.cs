@@ -34,7 +34,7 @@ internal static class Utility
         adr1.Parameters.TimeZone = new Models.TimeZoneID(TimeZoneInfo.Local.Id);
         adr1.Parameters.AltID = "Address";
         adr1.Parameters.Calendar = "GREGORIAN";
-        adr1.Parameters.ContentLocation = VCdContentLocation.Inline;
+        adr1.Parameters.ContentLocation = ContentLocation.Inline;
         adr1.Parameters.Index = 0;
         adr1.Parameters.Language = "de";
         adr1.Parameters.SortAs = sortAs;

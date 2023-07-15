@@ -63,7 +63,7 @@ public sealed class RelationUuidProperty : RelationProperty, IEnumerable<Relatio
         base.PrepareForVcfSerialization(serializer);
 
         this.Parameters.DataType = VCdDataType.Uri;
-        this.Parameters.ContentLocation = VCdContentLocation.ContentID;
+        this.Parameters.ContentLocation = ContentLocation.ContentID;
     }
 
 

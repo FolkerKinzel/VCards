@@ -94,14 +94,14 @@ public sealed partial class ParameterSection
     /// <summary>
     /// <c>VALUE</c>: Gibt an, wo sich der eigentiche Inhalt der Property befindet. <c>(2)</c>
     /// </summary>
-    public VCdContentLocation ContentLocation
+    public ContentLocation ContentLocation
     {
-        get => Get<VCdContentLocation>(VCdParam.ContentLocation);
+        get => Get<ContentLocation>(VCdParam.ContentLocation);
         set
         {
             Set(VCdParam.ContentLocation, value);
 
-            if (value != VCdContentLocation.Inline)
+            if (value != ContentLocation.Inline)
             {
                 DataType = VCdDataType.Uri;
             }

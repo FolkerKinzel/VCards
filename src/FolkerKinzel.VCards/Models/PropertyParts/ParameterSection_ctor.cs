@@ -65,10 +65,10 @@ public sealed partial class ParameterSection
 
                         if (!dataType.HasValue)
                         {
-                            VCdContentLocation contentLocation = VCdContentLocationConverter.Parse(valValue);
+                            ContentLocation contentLocation = ContentLocationConverter.Parse(valValue);
                             this.ContentLocation = contentLocation;
 
-                            if (contentLocation == VCdContentLocation.Url)
+                            if (contentLocation == ContentLocation.Url)
                             {
                                 this.DataType = VCdDataType.Uri;
                             }

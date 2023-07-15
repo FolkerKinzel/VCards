@@ -126,10 +126,10 @@ internal sealed partial class VcfRow
                 return TYPE_PROPERTY;
 
 
-            case VCdContentLocationConverter.Values.INLINE:
-            case VCdContentLocationConverter.Values.CID:
-            case VCdContentLocationConverter.Values.CONTENT_ID:
-            case VCdContentLocationConverter.Values.URL:
+            case ContentLocationConverter.Values.INLINE:
+            case ContentLocationConverter.Values.CID:
+            case ContentLocationConverter.Values.CONTENT_ID:
+            case ContentLocationConverter.Values.URL:
                 return VALUE_PROPERTY;
             default:
                 break;
