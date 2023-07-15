@@ -40,7 +40,10 @@
 - [x] **Breaking Change:** Rename `VCdAccess` into  `Access`
 - [x] **Breaking Change:** Rename `VCdContentLocation` into  `ContentLocation`
 - [x] **Breaking Change:** Rename the `Gender` class into  `GenderInfo`
-- [ ] 
+- [x] **Breaking Change:** Rename the `GenderInfo.Sex` into  `GenderInfo.Gender`
+- [ ] **Breaking Change:** Make `DataEncoding` an internal enum of `DataUrl`
+- [ ] **Breaking Change:** Rename `DataEncoding` to `EmbeddedDataEncoding`
+- [ ] **Breaking Change:** Rename `EmbeddedDataEncoding.UrlEncoded` to `EmbeddedDataEncoding.Url`
 - [ ] Use the HashCode struct to compute hash codes.
 
 

@@ -37,7 +37,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     /// <summary>
     /// Die von der <see cref="GenderProperty"/> zur Verfügung gestellten Daten.
     /// </summary>
-    public new PropertyParts.GenderInfo Value
+    public new GenderInfo Value
     {
         get;
     }
