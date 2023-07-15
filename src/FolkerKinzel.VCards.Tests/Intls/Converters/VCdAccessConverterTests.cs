@@ -8,18 +8,18 @@ public class VCdAccessConverterTests
     [TestMethod()]
     public void Roundtrip()
     {
-        foreach (VCdAccess kind in (VCdAccess[])Enum.GetValues(typeof(VCdAccess)))
+        foreach (Access kind in (Access[])Enum.GetValues(typeof(Access)))
         {
-            VCdAccess kind2 = VCdAccessConverter.Parse(kind.ToString());
+            Access kind2 = VCdAccessConverter.Parse(kind.ToString());
             Assert.AreEqual(kind, kind2);
-            var kind3 = Enum.Parse(typeof(VCdAccess), kind.ToVCardString(), true);
+            var kind3 = Enum.Parse(typeof(Access), kind.ToVCardString(), true);
             Assert.AreEqual(kind, kind3);
         }
 
         // Test auf null
-        Assert.AreEqual(VCdAccess.Public, VCdAccessConverter.Parse(null));
+        Assert.AreEqual(Access.Public, VCdAccessConverter.Parse(null));
 
         // Test auf nicht definiert
-        Assert.AreEqual(VCdAccess.Public.ToVCardString(), ((VCdAccess)4711).ToVCardString());
+        Assert.AreEqual(Access.Public.ToVCardString(), ((Access)4711).ToVCardString());
     }
 }

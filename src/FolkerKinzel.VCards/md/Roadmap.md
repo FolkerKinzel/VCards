@@ -38,6 +38,7 @@
 - [ ] **Breaking Change:** Move `VCdVersion` to namespace `FolkerKinzel.VCards`
 - [ ] **Breaking Change:** Rename `VCdSex` into  `Gender`
 - [ ] **Breaking Change:** Rename `VCdEncoding` into  `ValueEncoding`
+- [ ] **Breaking Change:** Rename `VCdAccess` into  `Access`
 - [ ] 
 - [ ] Use the HashCode struct to compute hash codes.
 

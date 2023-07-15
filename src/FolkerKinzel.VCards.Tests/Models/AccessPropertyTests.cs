@@ -10,11 +10,11 @@ public class AccessPropertyTests
     [TestMethod()]
     public void AccessPropertyTest1()
     {
-        var prop = new AccessProperty(Enums.VCdAccess.Confidential, GROUP);
+        var prop = new AccessProperty(Enums.Access.Confidential, GROUP);
 
         Assert.AreEqual(GROUP, prop.Group);
-        Assert.AreEqual(Enums.VCdAccess.Confidential, prop.Value);
-        Assert.AreEqual(Enums.VCdAccess.Confidential, ((VCardProperty)prop).Value);
+        Assert.AreEqual(Enums.Access.Confidential, prop.Value);
+        Assert.AreEqual(Enums.Access.Confidential, ((VCardProperty)prop).Value);
 
         Assert.IsFalse(prop.IsEmpty);
     }
@@ -29,8 +29,8 @@ public class AccessPropertyTests
         var prop = new AccessProperty(row!);
 
         Assert.AreEqual(GROUP, prop.Group);
-        Assert.AreEqual(Enums.VCdAccess.Private, prop.Value);
-        Assert.AreEqual(Enums.VCdAccess.Private, ((VCardProperty)prop).Value);
+        Assert.AreEqual(Enums.Access.Private, prop.Value);
+        Assert.AreEqual(Enums.Access.Private, ((VCardProperty)prop).Value);
 
 
         Assert.IsFalse(prop.IsEmpty);
@@ -41,7 +41,7 @@ public class AccessPropertyTests
     {
         var vcard = new VCard
         {
-            Access = new AccessProperty(Enums.VCdAccess.Private, GROUP)
+            Access = new AccessProperty(Enums.Access.Private, GROUP)
         };
 
         string serialized = vcard.ToVcfString();
@@ -53,7 +53,7 @@ public class AccessPropertyTests
         vcard = list[0];
         Assert.IsNotNull(vcard.Access);
         Assert.AreEqual(GROUP, vcard.Access!.Group);
-        Assert.AreEqual(Enums.VCdAccess.Private, vcard.Access.Value);
+        Assert.AreEqual(Enums.Access.Private, vcard.Access.Value);
     }
 
 

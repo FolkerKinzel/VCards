@@ -11,25 +11,25 @@ internal static class VCdAccessConverter
         internal const string Confidential = "CONFIDENTIAL";
     }
 
-    internal static VCdAccess Parse(string? value)
+    internal static Access Parse(string? value)
     {
         return (value?.ToUpperInvariant()) switch
         {
-            VCdAccessValue.Public => VCdAccess.Public,
-            VCdAccessValue.Private => VCdAccess.Private,
-            VCdAccessValue.Confidential => VCdAccess.Confidential,
-            _ => VCdAccess.Public
+            VCdAccessValue.Public => Access.Public,
+            VCdAccessValue.Private => Access.Private,
+            VCdAccessValue.Confidential => Access.Confidential,
+            _ => Access.Public
         };
     }
 
 
-    internal static string ToVCardString(this VCdAccess kind)
+    internal static string ToVCardString(this Access kind)
     {
         return kind switch
         {
-            VCdAccess.Public => VCdAccessValue.Public,
-            VCdAccess.Private => VCdAccessValue.Private,
-            VCdAccess.Confidential => VCdAccessValue.Confidential,
+            Access.Public => VCdAccessValue.Public,
+            Access.Private => VCdAccessValue.Private,
+            Access.Confidential => VCdAccessValue.Confidential,
             _ => VCdAccessValue.Public
         };
     }

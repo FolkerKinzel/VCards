@@ -149,7 +149,7 @@ internal static class Utility
             UniqueIdentifier = new UuidProperty(),
             URLs = new TextProperty("www.folker.com"),
             DirectoryName = new TextProperty("Webseite"),
-            Access = new AccessProperty(VCdAccess.Confidential),
+            Access = new AccessProperty(Access.Confidential),
             GenderViews = new GenderProperty(Gender.NonOrNotApplicable),
             GeoCoordinates = new GeoProperty(new Models.GeoCoordinate(23.456, 49.654)),
             NickNames = new StringCollectionProperty(new string[] { "Genius", "The Brain" }),

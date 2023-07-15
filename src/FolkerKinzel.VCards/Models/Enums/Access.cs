@@ -3,7 +3,7 @@
 /// <summary>
 /// Benannte Konstanten, um in vCard 3.0 anzugeben, welche Geheimhaltungsstufe für die vCard gilt.
 /// </summary>
-public enum VCdAccess
+public enum Access
 {
     /// <summary>
     /// Der Inhalt der vCard ist öffentlich zugänglich.

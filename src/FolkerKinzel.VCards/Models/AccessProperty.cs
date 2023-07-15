@@ -23,11 +23,11 @@ public sealed class AccessProperty : VCardProperty
     /// <summary>
     /// Initialisiert ein neues <see cref="AccessProperty"/>-Objekt.
     /// </summary>
-    /// <param name="value">Ein Member der <see cref="VCdAccess"/>-Enumeration.</param>
+    /// <param name="value">Ein Member der <see cref="Access"/>-Enumeration.</param>
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    public AccessProperty(VCdAccess value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+    public AccessProperty(Access value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
         => Value = value;
 
     internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = VCdAccessConverter.Parse(vcfRow.Value);
@@ -49,7 +49,7 @@ public sealed class AccessProperty : VCardProperty
     /// <summary>
     /// Die von der <see cref="AccessProperty"/> zur Verfügung gestellten Daten.
     /// </summary>
-    public new VCdAccess Value
+    public new Access Value
     {
         get;
     }
