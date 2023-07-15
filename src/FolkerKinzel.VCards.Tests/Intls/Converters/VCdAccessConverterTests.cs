@@ -10,14 +10,14 @@ public class VCdAccessConverterTests
     {
         foreach (Access kind in (Access[])Enum.GetValues(typeof(Access)))
         {
-            Access kind2 = VCdAccessConverter.Parse(kind.ToString());
+            Access kind2 = AccessConverter.Parse(kind.ToString());
             Assert.AreEqual(kind, kind2);
             var kind3 = Enum.Parse(typeof(Access), kind.ToVCardString(), true);
             Assert.AreEqual(kind, kind3);
         }
 
         // Test auf null
-        Assert.AreEqual(Access.Public, VCdAccessConverter.Parse(null));
+        Assert.AreEqual(Access.Public, AccessConverter.Parse(null));
 
         // Test auf nicht definiert
         Assert.AreEqual(Access.Public.ToVCardString(), ((Access)4711).ToVCardString());

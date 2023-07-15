@@ -2,7 +2,7 @@
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-internal static class VCdAccessConverter
+internal static class AccessConverter
 {
     private static class VCdAccessValue
     {

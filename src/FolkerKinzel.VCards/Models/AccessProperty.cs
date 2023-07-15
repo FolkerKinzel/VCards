@@ -30,7 +30,7 @@ public sealed class AccessProperty : VCardProperty
     public AccessProperty(Access value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
         => Value = value;
 
-    internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = VCdAccessConverter.Parse(vcfRow.Value);
+    internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = AccessConverter.Parse(vcfRow.Value);
 
 
     [InternalProtected]
