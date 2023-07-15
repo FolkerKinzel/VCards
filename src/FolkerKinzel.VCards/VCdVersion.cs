@@ -1,4 +1,4 @@
-﻿namespace FolkerKinzel.VCards.Models.Enums;
+﻿namespace FolkerKinzel.VCards;
 
 /// <summary>
 /// Benannte Konstanten, um die VCF-Version anzugeben.

@@ -49,7 +49,7 @@ public class GenderPropertyTests
 
         Assert.IsNotNull(vcfRow);
 
-        var genderProp = new GenderProperty(vcfRow!, Enums.VCdVersion.V4_0);
+        var genderProp = new GenderProperty(vcfRow!, VCdVersion.V4_0);
 
         Assert.IsNotNull(genderProp.Value);
         Assert.AreEqual(expectedGroup, genderProp.Group);

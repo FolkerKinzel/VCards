@@ -54,7 +54,42 @@ public class StringCollectionPropertyTests
         var vcfRow = VcfRow.Parse(s, new VcfDeserializationInfo());
         Assert.IsNotNull(vcfRow);
 
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net5.0)"
+Vor:
         var nickNameProp = new StringCollectionProperty(vcfRow!, Enums.VCdVersion.V4_0);
+Nach:
+        var nickNameProp = new StringCollectionProperty(vcfRow!, VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net6.0)"
+Vor:
+        var nickNameProp = new StringCollectionProperty(vcfRow!, Enums.VCdVersion.V4_0);
+Nach:
+        var nickNameProp = new StringCollectionProperty(vcfRow!, VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp3.1)"
+Vor:
+        var nickNameProp = new StringCollectionProperty(vcfRow!, Enums.VCdVersion.V4_0);
+Nach:
+        var nickNameProp = new StringCollectionProperty(vcfRow!, VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net461)"
+Vor:
+        var nickNameProp = new StringCollectionProperty(vcfRow!, Enums.VCdVersion.V4_0);
+Nach:
+        var nickNameProp = new StringCollectionProperty(vcfRow!, VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp2.1)"
+Vor:
+        var nickNameProp = new StringCollectionProperty(vcfRow!, Enums.VCdVersion.V4_0);
+Nach:
+        var nickNameProp = new StringCollectionProperty(vcfRow!, VCards.VCdVersion.V4_0);
+*/
+        var nickNameProp = new StringCollectionProperty(vcfRow!, VCdVersion.V4_0);
 
         Assert.AreEqual(expectedGroup, nickNameProp.Group);
         CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value);

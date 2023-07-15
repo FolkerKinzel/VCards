@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 

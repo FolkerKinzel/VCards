@@ -35,6 +35,7 @@
 - [ ] **Breaking Change:** Give `AnsiFilter` the functionality of `MultiAnsiFilter` with better performance.
 - [ ] **Breaking Change:** Mark the usage of `MultiAnsiFilter` as obsolete error.
 - [ ] **Breaking Change:** Think of a consistent naming of enums.
+- [ ] **Breaking Change:** Move `VCdVersion` to namespace `FolkerKinzel.VCards`
 - [ ] Use the HashCode struct to compute hash codes.
 
 

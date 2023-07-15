@@ -47,7 +47,42 @@ public class OrganizationPropertyTests
         var vcfRow = VcfRow.Parse(s, new VcfDeserializationInfo());
         Assert.IsNotNull(vcfRow);
 
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net5.0)"
+Vor:
         var orgProp = new OrganizationProperty(vcfRow!, Enums.VCdVersion.V4_0);
+Nach:
+        var orgProp = new OrganizationProperty(vcfRow!, VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net6.0)"
+Vor:
+        var orgProp = new OrganizationProperty(vcfRow!, Enums.VCdVersion.V4_0);
+Nach:
+        var orgProp = new OrganizationProperty(vcfRow!, VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp3.1)"
+Vor:
+        var orgProp = new OrganizationProperty(vcfRow!, Enums.VCdVersion.V4_0);
+Nach:
+        var orgProp = new OrganizationProperty(vcfRow!, VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net461)"
+Vor:
+        var orgProp = new OrganizationProperty(vcfRow!, Enums.VCdVersion.V4_0);
+Nach:
+        var orgProp = new OrganizationProperty(vcfRow!, VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp2.1)"
+Vor:
+        var orgProp = new OrganizationProperty(vcfRow!, Enums.VCdVersion.V4_0);
+Nach:
+        var orgProp = new OrganizationProperty(vcfRow!, VCards.VCdVersion.V4_0);
+*/
+        var orgProp = new OrganizationProperty(vcfRow!, VCdVersion.V4_0);
 
         Assert.IsNotNull(orgProp.Value);
         Assert.AreEqual(expectedGroup, orgProp.Group);
@@ -60,7 +95,42 @@ public class OrganizationPropertyTests
     public void OrganizationPropertyTest3()
     {
         VcfRow row = VcfRow.Parse("ORG:", new VcfDeserializationInfo())!;
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net5.0)"
+Vor:
         var prop = new OrganizationProperty(row, Enums.VCdVersion.V3_0);
+Nach:
+        var prop = new OrganizationProperty(row, VCards.VCdVersion.V3_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net6.0)"
+Vor:
+        var prop = new OrganizationProperty(row, Enums.VCdVersion.V3_0);
+Nach:
+        var prop = new OrganizationProperty(row, VCards.VCdVersion.V3_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp3.1)"
+Vor:
+        var prop = new OrganizationProperty(row, Enums.VCdVersion.V3_0);
+Nach:
+        var prop = new OrganizationProperty(row, VCards.VCdVersion.V3_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net461)"
+Vor:
+        var prop = new OrganizationProperty(row, Enums.VCdVersion.V3_0);
+Nach:
+        var prop = new OrganizationProperty(row, VCards.VCdVersion.V3_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp2.1)"
+Vor:
+        var prop = new OrganizationProperty(row, Enums.VCdVersion.V3_0);
+Nach:
+        var prop = new OrganizationProperty(row, VCards.VCdVersion.V3_0);
+*/
+        var prop = new OrganizationProperty(row, VCdVersion.V3_0);
 
         Assert.IsNotNull(prop.Value);
     }

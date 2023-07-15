@@ -27,14 +27,14 @@ public static class VCardExample
         VC::ITimeZoneIDConverter tzConverter = new TimeZoneIDConverter();
 
         // Save vcard as vCard 2.1:
-        vcard.SaveVcf(v2FilePath, VC::Enums.VCdVersion.V2_1, tzConverter);
+        vcard.SaveVcf(v2FilePath, VCdVersion.V2_1, tzConverter);
 
         // Save vcard as vCard 3.0:
         // You don't need to specify the version: Version 3.0 is the default.
         vcard.SaveVcf(v3FilePath, tzConverter: tzConverter);
 
         // Save vcard as vCard 4.0. (A time zone converter is not needed):
-        vcard.SaveVcf(v4FilePath, VC::Enums.VCdVersion.V4_0);
+        vcard.SaveVcf(v4FilePath, VCdVersion.V4_0);
 
         // Load vCard:
         vcard = VCard.LoadVcf(v3FilePath)[0];

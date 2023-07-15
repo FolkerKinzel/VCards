@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 

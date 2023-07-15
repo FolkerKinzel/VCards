@@ -1,6 +1,4 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
-
-namespace FolkerKinzel.VCards.Intls.Converters;
+﻿namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class VCdVersionConverter
 {

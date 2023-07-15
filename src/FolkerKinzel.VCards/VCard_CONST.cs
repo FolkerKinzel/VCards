@@ -1,6 +1,4 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
-
-namespace FolkerKinzel.VCards;
+﻿namespace FolkerKinzel.VCards;
 
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:Bezeichner müssen ein korrektes Suffix aufweisen", Justification = "<Ausstehend>")]
 public sealed partial class VCard

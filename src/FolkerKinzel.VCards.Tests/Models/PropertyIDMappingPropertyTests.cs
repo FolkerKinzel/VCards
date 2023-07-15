@@ -17,7 +17,42 @@ public class PropertyIDMappingPropertyTests
             PropertyIDMappings = new PropertyIDMappingProperty?[]{prop, null, new PropertyIDMappingProperty((PropertyIDMapping?)null)}
         };
 
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net5.0)"
+Vor:
         string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
+Nach:
+        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net6.0)"
+Vor:
+        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
+Nach:
+        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp3.1)"
+Vor:
+        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
+Nach:
+        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net461)"
+Vor:
+        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
+Nach:
+        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
+*/
+
+/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp2.1)"
+Vor:
+        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
+Nach:
+        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
+*/
+        string s = vcard.ToVcfString(VCdVersion.V4_0);
 
         IList<VCard> list = VCard.ParseVcf(s);
 

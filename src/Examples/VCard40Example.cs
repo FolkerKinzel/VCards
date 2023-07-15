@@ -59,7 +59,7 @@ public static class VCard40Example
             referenced
                 .Where(x => x.DisplayNames?.Any(x => StringComparer.Ordinal.Equals(x?.Value, "Composers")) ?? false)
                 .First()
-                .ToVcfString(VC::Enums.VCdVersion.V4_0));
+                .ToVcfString(VCdVersion.V4_0));
 
         // Make sure to save ALL VCard objects in referenced - otherwise the information
         // originally stored in composersVCard will be irrevocably lost.
@@ -69,7 +69,7 @@ public static class VCard40Example
                 directoryPath,
                 $"{vcard.DisplayNames!.First()!.Value}{vcfExtension}");
 
-            vcard.SaveVcf(fileName, VC::Enums.VCdVersion.V4_0);
+            vcard.SaveVcf(fileName, VCdVersion.V4_0);
         }
 
         // Reload the .VCF files:
