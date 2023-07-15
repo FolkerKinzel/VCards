@@ -23,9 +23,9 @@ internal class Program
         //WhatsAppDemo1.IntegrateWhatsAppNumberUsingIMPP();
         //WhatsAppDemo2.UsingTheWhatsAppType();
         // VCardExample.ReadingAndWritingVCard(directoryPath);
-        VCard40Example.SaveSingleVCardAsVcf(directoryPath);
+        // VCard40Example.SaveSingleVCardAsVcf(directoryPath);
 
-        // StartAnsiFilterExample();
+        StartAnsiFilterExample();
 
         //StartMultiAnsiFilterExample();
 
@@ -39,7 +39,7 @@ internal class Program
 
     }
 
-    private static void StartAnsiFilterExample()
+    private static void StartAnsiFilterExampleOld()
     {
         string sourcePath = Path.GetFullPath(@"..\..\..\AnsiFilterExamples");
         MultiAnsiFilterExample.LoadVcfFilesWhichHaveDifferentAnsiEncodings(sourcePath);
@@ -49,5 +49,11 @@ internal class Program
     {
         string sourcePath = Path.GetFullPath(@"..\..\..\MultiAnsiFilterExamples");
         MultiAnsiFilterExample.LoadVcfFilesWhichHaveDifferentAnsiEncodings(sourcePath);
+    }
+
+    private static void StartAnsiFilterExample()
+    {
+        string sourcePath = Path.GetFullPath(@"..\..\..\MultiAnsiFilterExamples");
+        AnsiFilterExample.LoadVcfFilesWhichHaveDifferentAnsiEncodings(sourcePath);
     }
 }

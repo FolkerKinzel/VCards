@@ -2,9 +2,8 @@
 ## Roadmap
 
 ### 7.0.0
-- [ ] End .NET Framework 4.0 support.
-- [ ] Think of a consistent naming of enums.
-- [ ] Use the HashCode struct to compute hash codes.
+
+
 - [ ] Add DateOnlyProperty. (Use nuget package Portable.System.DateTimeOnly.)
 - [ ] Remove the `DataUrl` class and the `MimeType` classes and replace it with something new and better like
 `FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
@@ -32,8 +31,11 @@
 
 ### 6.0.0-beta.1
 - [x] Dependency update.
+- [ ] **Breaking Change:** End .NET Framework 4.0 support.
 - [ ] **Breaking Change:** Give `AnsiFilter` the functionality of `MultiAnsiFilter` with better performance.
 - [ ] **Breaking Change:** Mark the usage of `MultiAnsiFilter` as obsolete error.
+- [ ] **Breaking Change:** Think of a consistent naming of enums.
+- [ ] Use the HashCode struct to compute hash codes.
 
 
 ### 5.0.0-beta.3
