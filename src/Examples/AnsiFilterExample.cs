@@ -13,10 +13,10 @@ public static class AnsiFilterExample
     /// <param name="directoryPath">Path to the directory containing the example files.</param>
     public static void LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
     {
-        // If you have to read VCF files which might have ANSI encodings, use the 
-        // AnsiFilter to read them automatically with the right encoding.
-        // Give the constructor the ANSI code page as an argument which is most likely. This will
-        // be the fallback code page if a VCF file couldn't be loaded as UTF-8 and didn't 
+        // If you have to read VCF files which might have ANSI encodings, use the AnsiFilter
+        // to read them automatically with the right encoding.
+        // Give the constructor the ANSI code page as an argument which is most likely. This
+        // will be the fallback code page if a VCF file couldn't be loaded as UTF-8 and didn't 
         // contain a CHARSET parameter. In our example we choose windows-1255 (Hebrew).
         var ansiFilter = new AnsiFilter(1255);
 
