@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Models;
@@ -127,16 +128,10 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
             CultureInfo culture = CultureInfo.InvariantCulture;
 
-#if NET461 || NETSTANDARD2_0
-                coordinate = new GeoCoordinate(
-                    double.Parse(roSpan.Slice(0, splitIndex).ToString(), numStyle, culture),
-                    double.Parse(roSpan.Slice(splitIndex + 1).ToString(), numStyle, culture));
-#else
-            coordinate = new GeoCoordinate(
-                double.Parse(roSpan.Slice(0, splitIndex), numStyle, culture),
-                double.Parse(roSpan.Slice(splitIndex + 1), numStyle, culture));
-#endif
 
+            coordinate = new GeoCoordinate(
+                _Double.Parse(roSpan.Slice(0, splitIndex), numStyle, culture),
+                _Double.Parse(roSpan.Slice(splitIndex + 1), numStyle, culture));
             return true;
         }
         catch

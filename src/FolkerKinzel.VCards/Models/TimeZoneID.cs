@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Resources;
 
@@ -67,48 +68,25 @@ public class TimeZoneID
                 startIndex = 1;
             }
 
-#if NET461 || NETSTANDARD2_0
-                string input = Value.Substring(startIndex);
-
-                return TimeSpan.TryParseExact(
-                    input,
-                    @"hh\:mm",
-                    CultureInfo.InvariantCulture,
-                    styles, out utcOffset) || 
-                    
-                    TimeSpan.TryParseExact(
-                    input,
-                     @"hhmm",
-                    CultureInfo.InvariantCulture,
-                    styles, out utcOffset) || 
-
-                    TimeSpan.TryParseExact(
-                    input,
-                     @"hh",
-                    CultureInfo.InvariantCulture,
-                    styles, out utcOffset);
-#else
             ReadOnlySpan<char> input = Value.AsSpan(startIndex);
 
-            return TimeSpan.TryParseExact(
+            return _TimeSpan.TryParseExact(
                 input,
                 @"hh\:mm",
                 CultureInfo.InvariantCulture,
                 styles, out utcOffset) ||
 
-                TimeSpan.TryParseExact(
+                _TimeSpan.TryParseExact(
                 input,
                 @"hhmm",
                 CultureInfo.InvariantCulture,
                 styles, out utcOffset) ||
 
-                TimeSpan.TryParseExact(
+                _TimeSpan.TryParseExact(
                 input,
                 @"hh",
                 CultureInfo.InvariantCulture,
                 styles, out utcOffset);
-#endif
-
         }
 
         if (converter is not null && converter.TryConvertToUtcOffset(Value, out utcOffset))

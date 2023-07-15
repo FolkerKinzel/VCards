@@ -58,11 +58,7 @@ internal static class UuidConverter
             }
         }
 
-#if NET461 || NETSTANDARD2_0
-        _ = Guid.TryParse(uuid.Substring(startOfGuid), out Guid guid);
-#else
-        _ = Guid.TryParse(uuid.AsSpan().Slice(startOfGuid), out Guid guid);
-#endif
+        _ = _Guid.TryParse(uuid.AsSpan().Slice(startOfGuid), out Guid guid);
         return guid;
     }
 

@@ -90,11 +90,7 @@ internal sealed class DateAndOrTimeConverter
             Span<char> slice = span.Slice(firstLeapYearJanuary.Length);
             roSpan.CopyTo(slice);
 
-#if NET461 || NETSTANDARD2_0
-                return DateTimeOffset.TryParseExact(span.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#else
-            return DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#endif
+            return _DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
         }
         else if (s.StartsWith("--", StringComparison.Ordinal))
         {
@@ -112,11 +108,7 @@ internal sealed class DateAndOrTimeConverter
                 Span<char> slice = span.Slice(leapYear.Length);
                 roSpan.CopyTo(slice);
 
-#if NET461 || NETSTANDARD2_0
-                    return DateTimeOffset.TryParseExact(span.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#else
-                return DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#endif
+                return _DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
             }
             else
             {
@@ -132,20 +124,12 @@ internal sealed class DateAndOrTimeConverter
                 Span<char> slice = span.Slice(leapYear.Length);
                 roSpan.CopyTo(slice);
 
-#if NET461 || NETSTANDARD2_0
-                    return DateTimeOffset.TryParseExact(span.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#else
-                return DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#endif
+                return _DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
             }
         }
         else
         {
-#if NET461 || NETSTANDARD2_0
-                return DateTimeOffset.TryParseExact(roSpan.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#else
-            return DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#endif
+            return _DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
         }
     }
 

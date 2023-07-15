@@ -59,11 +59,7 @@ internal sealed class TimeConverter
             styles |= DateTimeStyles.AssumeLocal;
         }
 
-#if NET461 || NETSTANDARD2_0
-            return DateTimeOffset.TryParseExact(roSpan.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#else
-        return DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#endif
+        return _DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
     }
 
 
