@@ -39,7 +39,7 @@ TEL;TYPE=PAGER:Pager
 TEL;TYPE=OTHER:sonstige
 TEL:ohne
 ADR;TYPE=HOME:;;Alte Str. 32;Entenhausen;Sachsen-Anhalt;06789;Deutschland
-ADR;TYPE=WORK:;;Geschäftsadresse 32;Raguhn;Sachsen-Anhalt;06789;Deutschland
+ADR;TYPE=WORK:;;Geschäftsadresse 32;Entenhausen;Sachsen-Anhalt;06789;Deutschland
 URL;TYPE=WORK:www.business.de
 URL;TYPE=HOME:www.privat.de
 URL;TYPE=OTHER:www.sonstige.de
