@@ -70,16 +70,7 @@ public sealed partial class ParameterSection
         set => Set<string?>(VCdParam.Calendar, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
-    /// <summary>
-    /// <c>CHARSET</c>: Gibt den Zeichensatz an, der für die Property verwendet wurde. <c>(2)</c>
-    /// </summary>
-    [Obsolete("Use CharSet instead.", true)]
-    [CLSCompliant(false)]
-    public string? Charset
-    {
-        get => CharSet;
-        set => CharSet = value;
-    }
+    
 
     /// <summary>
     /// <c>CHARSET</c>: Gibt den Zeichensatz an, der für die Property verwendet wurde. <c>(2)</c>

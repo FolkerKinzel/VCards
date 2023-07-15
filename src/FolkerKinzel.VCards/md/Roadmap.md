@@ -44,6 +44,10 @@
 - [ ] **Breaking Change:** Make `DataEncoding` an internal enum of `DataUrl`
 - [ ] **Breaking Change:** Rename `DataEncoding` to `EmbeddedDataEncoding`
 - [ ] **Breaking Change:** Rename `EmbeddedDataEncoding.UrlEncoded` to `EmbeddedDataEncoding.Url`
+- [ ] **Breaking Change:** Make `DataUrl` internal
+- [ ] **Breaking Change:** Make `DataProperty` an abstract class which is the base class of `EmbeddedBytesProperty`, `EmbeddedTextProperty` and `ReferencedDataProperty`.
+- [x] **Breaking Change:** Remove `Parameters.Charset`.
+- [ ] 
 - [ ] Use the HashCode struct to compute hash codes.
 
 
