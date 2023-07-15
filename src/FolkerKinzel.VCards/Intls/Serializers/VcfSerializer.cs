@@ -482,9 +482,9 @@ internal abstract class VcfSerializer
     {
         Debug.Assert(value != null);
 
-        if (value.FirstOrDefault(x => x?.Value?.Sex != null) is GenderProperty pref)
+        if (value.FirstOrDefault(x => x?.Value?.Gender != null) is GenderProperty pref)
         {
-            Models.Enums.Gender sex = pref.Value.Sex!.Value;
+            Models.Enums.Gender sex = pref.Value.Gender!.Value;
 
             if (sex != Models.Enums.Gender.Male && sex != Models.Enums.Gender.Female)
             {

@@ -32,13 +32,14 @@
 ### 6.0.0-beta.1
 - [x] Dependency update.
 - [x] **Breaking Change:** End .NET Framework 4.0 support.
-- [ ] **Breaking Change:** Give `AnsiFilter` the functionality of `MultiAnsiFilter` with better performance.
-- [ ] **Breaking Change:** Remove `MultiAnsiFilter`.
-- [ ] **Breaking Change:** Move `VCdVersion` to namespace `FolkerKinzel.VCards`
-- [ ] **Breaking Change:** Rename `VCdSex` into  `Gender`
-- [ ] **Breaking Change:** Rename `VCdEncoding` into  `ValueEncoding`
-- [ ] **Breaking Change:** Rename `VCdAccess` into  `Access`
-- [ ] **Breaking Change:** Rename `VCdContentLocation` into  `ContentLocation`
+- [x] **Breaking Change:** Give `AnsiFilter` the functionality of `MultiAnsiFilter` with better performance.
+- [x] **Breaking Change:** Remove `MultiAnsiFilter`.
+- [x] **Breaking Change:** Move `VCdVersion` to namespace `FolkerKinzel.VCards`
+- [x] **Breaking Change:** Rename `VCdSex` into  `Gender`
+- [x] **Breaking Change:** Rename `VCdEncoding` into  `ValueEncoding`
+- [x] **Breaking Change:** Rename `VCdAccess` into  `Access`
+- [x] **Breaking Change:** Rename `VCdContentLocation` into  `ContentLocation`
+- [x] **Breaking Change:** Rename the `Gender` class into  `GenderInfo`
 - [ ] 
 - [ ] Use the HashCode struct to compute hash codes.
 

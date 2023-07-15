@@ -32,12 +32,12 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
     public GenderProperty(Enums.Gender? sex,
                           string? genderIdentity = null,
-                          string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = new PropertyParts.Gender(sex, genderIdentity);
+                          string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = new PropertyParts.GenderInfo(sex, genderIdentity);
 
     /// <summary>
     /// Die von der <see cref="GenderProperty"/> zur Verfügung gestellten Daten.
     /// </summary>
-    public new PropertyParts.Gender Value
+    public new PropertyParts.GenderInfo Value
     {
         get;
     }
@@ -75,7 +75,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
             }
         }
 
-        Value = new PropertyParts.Gender(sex, genderIdentity);
+        Value = new PropertyParts.GenderInfo(sex, genderIdentity);
     }
 
 

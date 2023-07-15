@@ -25,7 +25,7 @@ public class GenderPropertyTests
 
         Assert.IsNotNull(genderProp.Value);
         Assert.AreEqual(expectedGroup, genderProp.Group);
-        Assert.AreEqual(expectedSex, genderProp.Value.Sex);
+        Assert.AreEqual(expectedSex, genderProp.Value.Gender);
         Assert.AreEqual(expectedGenderIdentity, genderProp.Value.GenderIdentity);
     }
 
@@ -53,7 +53,7 @@ public class GenderPropertyTests
 
         Assert.IsNotNull(genderProp.Value);
         Assert.AreEqual(expectedGroup, genderProp.Group);
-        Assert.AreEqual(expectedSex, genderProp.Value.Sex);
+        Assert.AreEqual(expectedSex, genderProp.Value.Gender);
         Assert.AreEqual(expectedGenderIdentity, genderProp.Value.GenderIdentity);
     }
 
@@ -82,7 +82,7 @@ public class GenderPropertyTests
         prop = vcard.GenderViews!.First() as GenderProperty;
 
         Assert.IsNotNull(prop);
-        Assert.AreEqual(Gender.Female, prop!.Value.Sex);
+        Assert.AreEqual(Gender.Female, prop!.Value.Gender);
         Assert.AreEqual(IDENTITY, prop!.Value.GenderIdentity);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);

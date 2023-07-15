@@ -9,23 +9,23 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 /// <summary>
 /// Kapselt Informationen zur Angabe des Geschlechts und der Geschlechtsidentität.
 /// </summary>
-public sealed class Gender
+public sealed class GenderInfo
 {
     /// <summary>
-    /// Initialisiert ein neues <see cref="Gender"/>-Objekt.
+    /// Initialisiert ein neues <see cref="GenderInfo"/>-Objekt.
     /// </summary>
-    /// <param name="sex">Standardisierte Geschlechtsangabe.</param>
+    /// <param name="gender">Standardisierte Geschlechtsangabe.</param>
     /// <param name="genderIdentity">Freie Beschreibung des Geschlechts.</param>
-    internal Gender(Enums.Gender? sex, string? genderIdentity)
+    internal GenderInfo(Gender? gender, string? genderIdentity)
     {
-        Sex = sex;
+        Gender = gender;
         GenderIdentity = string.IsNullOrWhiteSpace(genderIdentity) ? null : genderIdentity;
     }
 
     /// <summary>
     /// Standardisierte Geschlechtsangabe.
     /// </summary>
-    public Enums.Gender? Sex { get; }
+    public Gender? Gender { get; }
 
     /// <summary>
     /// Freie Beschreibung der Geschlechtsidentität.
@@ -33,17 +33,17 @@ public sealed class Gender
     public string? GenderIdentity { get; }
 
     /// <summary>
-    /// <c>true</c>, wenn das <see cref="Gender"/>-Objekt keine verwertbaren Daten enthält.
+    /// <c>true</c>, wenn das <see cref="GenderInfo"/>-Objekt keine verwertbaren Daten enthält.
     /// </summary>
-    public bool IsEmpty => !Sex.HasValue && GenderIdentity is null;
+    public bool IsEmpty => !Gender.HasValue && GenderIdentity is null;
 
 
     internal void AppendVCardStringTo(VcfSerializer serializer)
     {
         StringBuilder builder = serializer.Builder;
-        if (Sex.HasValue)
+        if (Gender.HasValue)
         {
-            _ = builder.Append(Sex.ToVcfString());
+            _ = builder.Append(Gender.ToVcfString());
         }
 
 
@@ -57,17 +57,17 @@ public sealed class Gender
     }
 
     /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="Gender"/>-Objekts. 
+    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="GenderInfo"/>-Objekts. 
     /// (Nur zum Debugging.)
     /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="Gender"/>-Objekts.</returns>
+    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="GenderInfo"/>-Objekts.</returns>
     public override string ToString()
     {
         string s = "";
 
-        if (Sex.HasValue)
+        if (Gender.HasValue)
         {
-            s += Sex.ToString();
+            s += Gender.ToString();
         }
 
         if (GenderIdentity != null)
