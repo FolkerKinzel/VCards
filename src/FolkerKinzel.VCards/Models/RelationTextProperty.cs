@@ -54,9 +54,7 @@ public sealed class RelationTextProperty : RelationProperty, IEnumerable<Relatio
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 

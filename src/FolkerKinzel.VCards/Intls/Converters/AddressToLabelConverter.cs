@@ -2,11 +2,7 @@
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Globalization;
-using System.Net;
-
-#if !NET40
 using FolkerKinzel.Strings;
-#endif
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 

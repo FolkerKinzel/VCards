@@ -1,10 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
-using FolkerKinzel.VCards.Intls.Extensions;
-
-#if !NET40
 using FolkerKinzel.Strings.Polyfills;
-#endif
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -29,11 +25,7 @@ public sealed class MimeType
         }
 
         string[] arr = value.Replace(" ", "", StringComparison.Ordinal)
-#if NET40
-                .Split(";", StringSplitOptions.RemoveEmptyEntries);
-#else
-                .Split(';', StringSplitOptions.RemoveEmptyEntries);
-#endif
+                            .Split(';', StringSplitOptions.RemoveEmptyEntries);
         int start;
 
         // erlaubte Abkürzung in RFC 2397: nur der "charset" Parameter wird bei "text/plain" angegeben:
@@ -65,12 +57,8 @@ public sealed class MimeType
 
             for (int i = start; i < arr.Length; i++)
             {
-#if NET40
-                    string[] para = arr[i].Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-#else
                 string[] para = arr[i].Split('=', StringSplitOptions.RemoveEmptyEntries);
 
-#endif
                 if (para.Length < 2)
                 {
                     continue;

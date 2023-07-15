@@ -35,9 +35,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
     /// automatisch ein Adressetikett hinzugefügt wird.</param>
     /// <seealso cref="AppendLabel"/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public AddressProperty(IEnumerable<string?>? street,
                            IEnumerable<string?>? locality,
                            IEnumerable<string?>? region,
@@ -117,9 +115,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
     /// automatisch ein Adressetikett hinzugefügt wird.</param>
     /// <seealso cref="AppendLabel"/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public AddressProperty(
         string? street,
         string? locality,
@@ -190,9 +186,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// </summary>
     /// <returns>Die in der Instanz gekapselten Daten, umgewandelt in formatierten Text für ein Adressetikett.</returns>
     /// <seealso cref="AppendLabel"/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]    
-#endif
     public string ToLabel() => Value.ToLabel();
 
 
@@ -202,9 +196,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// Daten werden dabei überschrieben.
     /// </summary>
     /// <seealso cref="ToLabel"/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public void AppendLabel() => Parameters.Label = ToLabel();
 
 
@@ -294,9 +286,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 

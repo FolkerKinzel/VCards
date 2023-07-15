@@ -110,9 +110,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 
@@ -124,9 +122,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// Formatiert die von der Instanz gekapselten Daten in eine lesbare Form.
     /// </summary>
     /// <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public string ToDisplayName() => Value.ToDisplayName();
 
 

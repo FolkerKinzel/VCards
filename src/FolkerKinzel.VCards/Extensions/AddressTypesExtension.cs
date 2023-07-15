@@ -15,9 +15,7 @@ public static class AddressTypesExtension
     /// <see cref="AddressTypes"/>-Werten.</param>
     /// <returns>Ein <see cref="AddressTypes"/>-Wert, auf dem sämtliche in <paramref name="value"/> und <paramref name="flags"/>
     /// gesetzten Flags gesetzt sind. Wenn <paramref name="value"/>&#160;<c>null</c> ist, wird <paramref name="flags"/> zurückgegeben.</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     [return: NotNull]
     public static AddressTypes? Set(this AddressTypes? value, AddressTypes flags) => value.HasValue ? (value.Value | flags) : flags;
 
@@ -32,9 +30,7 @@ public static class AddressTypesExtension
     /// <see cref="AddressTypes"/>-Werten.</param>
     /// <returns><c>true</c>, wenn sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
     /// gesetzt sind. Wenn <paramref name="value"/>&#160;<c>null</c> ist, wird <c>false</c> zurückgegeben.</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static bool IsSet(this AddressTypes? value, AddressTypes flags) => (value & flags) == flags;
 
 
@@ -47,9 +43,7 @@ public static class AddressTypesExtension
     /// <returns>Ein <see cref="AddressTypes"/>-Wert, auf dem sämtliche in <paramref name="flags"/>
     /// gesetzten Flags entfernt sind oder <c>null</c>, wenn sämtliche Flags entfernt wurden. Wenn 
     /// <paramref name="value"/>&#160;<c>null</c> ist, wird <c>null</c> zurückgegeben.</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static AddressTypes? Unset(this AddressTypes? value, AddressTypes flags)
     {
         value &= ~flags;

@@ -1,12 +1,7 @@
 ﻿using System.Globalization;
-
 using FolkerKinzel.VCards.Models.PropertyParts;
-using System;
-
-#if !NET40
 using FolkerKinzel.Strings;
 using FolkerKinzel.Strings.Polyfills;
-#endif
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -110,11 +105,9 @@ internal static class AddressOrderConverter
         }
 
         var span =
-#if NET40
-        new string(arr);
-#else
+
         new ReadOnlySpan<char>(arr);
-#endif
+
 #pragma warning disable CA1303 // Literale nicht als lokalisierte Parameter übergeben
         return span.Equals("USA", StringComparison.Ordinal) ||
                span.StartsWith("UNITEDSTATES") ||
@@ -172,19 +165,11 @@ internal static class AddressOrderConverter
                span.StartsWith("UKRAIN") ||
                span.Equals("UNITEDKINGDOM", StringComparison.Ordinal) ||
                span.Equals("UZBEKISTAN", StringComparison.Ordinal) ||
-#if NET40
-               span.Contains("CHINA") ||
-               span.Contains("BRIT") ||
-               span.Contains("AMBOD") || // Cambodia, Kambodscha
-               span.Contains("COLOMBI") || // Colombia
-               span.Contains("VIET") 
-#else
                span.Contains("CHINA", StringComparison.Ordinal) ||
                span.Contains("BRIT", StringComparison.Ordinal) || // Great Britain, Großbritannien
                span.Contains("AMBOD", StringComparison.Ordinal) || // Cambodia, Kambodscha
                span.Contains("COLOMBI", StringComparison.Ordinal) || // Colombia
                span.Contains("VIET", StringComparison.Ordinal)  // Viet Nam
-#endif
                ? AddressOrder.Usa
                : span.StartsWith("PAPUA") || span.EndsWith("VENEZUELA") ? AddressOrder.Venezuela 
                                                                         : AddressOrder.Din;

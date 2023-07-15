@@ -52,9 +52,7 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 

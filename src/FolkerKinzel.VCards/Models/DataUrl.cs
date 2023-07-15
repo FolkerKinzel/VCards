@@ -5,11 +5,8 @@ using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Intls;
-
-#if !NET40
 using FolkerKinzel.Strings;
 using FolkerKinzel.Strings.Polyfills;
-#endif
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -67,11 +64,9 @@ public class DataUrl : Uri, ISerializable
     /// <summary>
     /// Die eingebetteten encodierten Daten.
     /// </summary>
-#if NET40
-        public string EncodedData => ToString().Split(new char[] { ',' }, 2, StringSplitOptions.None)[1];
-#else
+
     public string EncodedData => ToString().Split(',', 2, StringSplitOptions.None)[1];
-#endif
+
 
     /// <summary>
     /// <c>true</c>, wenn der <see cref="DataUrl"/> eingebetteten Text enthält.
@@ -223,12 +218,7 @@ public class DataUrl : Uri, ISerializable
     public static DataUrl FromBytes(byte[]? bytes, string? mimeType)
     {
         var mType = new MimeType(mimeType);
-
-#if NET40
-            bytes ??= new byte[0];
-#else
         bytes ??= Array.Empty<byte>();
-#endif
 
         return new DataUrl($"data:{mType};base64,{Convert.ToBase64String(bytes)}", mType, DataEncoding.Base64);
     }

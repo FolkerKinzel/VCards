@@ -19,11 +19,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         if (VCardToSerialize.NameViews is null)
         {
-#if NET40
-                VCardToSerialize.NameViews = new NameProperty[0];
-#else
             VCardToSerialize.NameViews = Array.Empty<NameProperty>();
-#endif
         }
     }
 
@@ -166,7 +162,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
                 BuildProperty(VCard.PropKeys.LABEL, labelProp, isPref);
             }
 
-            if(!multiple) { break; }
+            if (!multiple) { break; }
         }
     }
 

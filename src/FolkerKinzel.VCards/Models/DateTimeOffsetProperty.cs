@@ -50,9 +50,7 @@ public sealed class DateTimeOffsetProperty : DateTimeProperty, IEnumerable<DateT
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 

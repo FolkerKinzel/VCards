@@ -1,10 +1,8 @@
 ﻿using System.Globalization;
 using System.Text;
 using FolkerKinzel.VCards.Models.Enums;
-
-#if !NET40
 using FolkerKinzel.Strings.Polyfills;
-#endif
+
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -48,20 +46,7 @@ internal sealed class TimeConverter
 
         DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
-#if NET40
-            if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
-            {
-                s = s.Substring(0, s.Length - 1);
 
-                styles |= DateTimeStyles.AssumeUniversal;
-            }
-            else
-            {
-                styles |= DateTimeStyles.AssumeLocal;
-            }
-
-            return DateTimeOffset.TryParseExact(s, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#else
         ReadOnlySpan<char> roSpan = s.AsSpan();
 
         if (roSpan.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
@@ -78,7 +63,6 @@ internal sealed class TimeConverter
             return DateTimeOffset.TryParseExact(roSpan.ToString(), _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
 #else
         return DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-#endif
 #endif
     }
 

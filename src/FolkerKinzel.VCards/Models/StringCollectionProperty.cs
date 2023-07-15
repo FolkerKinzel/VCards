@@ -95,9 +95,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 

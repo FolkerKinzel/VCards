@@ -175,9 +175,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 

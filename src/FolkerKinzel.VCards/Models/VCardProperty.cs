@@ -54,9 +54,7 @@ public abstract class VCardProperty : ICloneable
     /// Zugriffsmethode für die Daten von <see cref="VCardProperty"/>.
     /// </summary>
     /// <returns>Die Daten, die den Inhalt von <see cref="VCardProperty"/> darstellen.</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected abstract object? GetVCardPropertyValue();
 
 

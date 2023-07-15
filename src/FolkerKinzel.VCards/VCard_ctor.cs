@@ -6,10 +6,7 @@ using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Globalization;
 using System.Text;
-
-#if !NET40
 using FolkerKinzel.Strings.Polyfills;
-#endif
 
 namespace FolkerKinzel.VCards;
 
@@ -258,19 +255,9 @@ public sealed partial class VCard
                     }
                     else if (GenderViews is null && vcfRow.Value != null)
                     {
-                        if (
-#if NET40
-                                vcfRow.Value.Contains("1"))
-#else
-                                vcfRow.Value.Contains('1', StringComparison.Ordinal))
-#endif
-                        {
-                            GenderViews = new GenderProperty(VCdSex.Female);
-                        }
-                        else
-                        {
-                            GenderViews = new GenderProperty(VCdSex.Male);
-                        }
+                        GenderViews = vcfRow.Value.Contains('1', StringComparison.Ordinal)
+                                            ? new GenderProperty(VCdSex.Female) 
+                                            : new GenderProperty(VCdSex.Male);
                     }
                     break;
                 case PropKeys.IMPP:

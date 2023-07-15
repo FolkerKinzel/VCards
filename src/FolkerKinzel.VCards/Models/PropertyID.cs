@@ -1,10 +1,7 @@
 ﻿using System.Collections;
 using System.Text;
 using FolkerKinzel.VCards.Intls.Extensions;
-
-#if !NET40
 using FolkerKinzel.Strings;
-#endif
 
 namespace FolkerKinzel.VCards.Models;
 

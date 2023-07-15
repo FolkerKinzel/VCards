@@ -210,11 +210,7 @@ public sealed partial class VCard
         var encoding = new UTF8Encoding(false);
 
         using StreamWriter? writer = leaveStreamOpen
-#if NET40
-                ? new StreamWriter(new Net40LeaveOpenStream(stream), encoding)
-#else
                 ? new StreamWriter(stream, encoding, 1024, true)
-#endif
                 : new StreamWriter(stream, encoding);
 
 
@@ -341,9 +337,7 @@ public sealed partial class VCard
     /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
     /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public void SaveVcf(
         string fileName,
         VCdVersion version = DEFAULT_VERSION,
@@ -389,9 +383,7 @@ public sealed partial class VCard
     /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
     /// <exception cref="IOException">E/A-Fehler.</exception>
     /// <exception cref="ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public void SerializeVcf(Stream stream,
                           VCdVersion version = DEFAULT_VERSION,
                           ITimeZoneIDConverter? tzConverter = null,
@@ -436,9 +428,7 @@ public sealed partial class VCard
     /// 
     /// <exception cref="ArgumentException"><paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
     /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public string ToVcfString(VCdVersion version = DEFAULT_VERSION, ITimeZoneIDConverter? tzConverter = null, VcfOptions options = VcfOptions.Default)
         => VCard.ToVcfString(this, version, tzConverter, options);
 

@@ -339,9 +339,7 @@ public sealed class Address
     /// Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
     /// </summary>
     /// <returns>Die in der Instanz gekapselten Daten, umgewandelt in formatierten Text für ein Adressetikett.</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public string ToLabel() => this.ConvertToLabel();
 
 

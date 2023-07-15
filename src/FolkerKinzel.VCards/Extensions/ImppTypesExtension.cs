@@ -15,9 +15,7 @@ public static class ImppTypesExtension
     /// <see cref="ImppTypes"/>-Werten.</param>
     /// <returns>Ein <see cref="ImppTypes"/>-Wert, auf dem sämtliche in <paramref name="value"/> und <paramref name="flags"/>
     /// gesetzten Flags gesetzt sind. Wenn <paramref name="value"/>&#160;<c>null</c> ist, wird <paramref name="flags"/> zurückgegeben.</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     [return: NotNull]
     public static ImppTypes? Set(this ImppTypes? value, ImppTypes flags) => value.HasValue ? (value.Value | flags) : flags;
 
@@ -31,9 +29,7 @@ public static class ImppTypesExtension
     /// <see cref="ImppTypes"/>-Werten.</param>
     /// <returns><c>true</c>, wenn sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
     /// gesetzt sind. Wenn <paramref name="value"/>&#160;<c>null</c> ist, wird <c>false</c> zurückgegeben.</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static bool IsSet(this ImppTypes? value, ImppTypes flags) => (value & flags) == flags;
 
 
@@ -46,9 +42,7 @@ public static class ImppTypesExtension
     /// <returns>Ein <see cref="ImppTypes"/>-Wert, auf dem sämtliche in <paramref name="flags"/>
     /// gesetzten Flags entfernt sind oder <c>null</c>, wenn sämtliche Flags entfernt wurden. Wenn 
     /// <paramref name="value"/>&#160;<c>null</c> ist, wird <c>null</c> zurückgegeben.</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static ImppTypes? Unset(this ImppTypes? value, ImppTypes flags)
     {
         value &= ~flags;

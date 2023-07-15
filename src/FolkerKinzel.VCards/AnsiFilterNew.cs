@@ -2,12 +2,7 @@
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
-
-#if NET40
-using FolkerKinzel.VCards.Intls.Converters;
-#else
 using FolkerKinzel.Strings;
-#endif
 
 namespace FolkerKinzel.VCards;
 

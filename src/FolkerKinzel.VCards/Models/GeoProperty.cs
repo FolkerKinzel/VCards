@@ -48,9 +48,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 

@@ -5,10 +5,7 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
 using static FolkerKinzel.VCards.VCard;
-
-#if !NET40
 using FolkerKinzel.Strings;
-#endif
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 

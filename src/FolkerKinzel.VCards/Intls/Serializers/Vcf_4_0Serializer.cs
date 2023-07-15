@@ -24,11 +24,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
         if (VCardToSerialize.DisplayNames is null)
         {
-#if NET40
-                VCardToSerialize.DisplayNames = new TextProperty?[0];
-#else
             VCardToSerialize.DisplayNames = Array.Empty<TextProperty?>();
-#endif
         }
     }
 
@@ -136,11 +132,11 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             NameProperty? name = VCardToSerialize.NameViews?.Where(x => x != null && !x.IsEmpty)
                                                             .FirstOrDefault();
 
-            string? displName = name != null ? name.ToDisplayName() 
+            string? displName = name != null ? name.ToDisplayName()
                                                  : Options.IsSet(VcfOptions.WriteEmptyProperties)
-                                                        ? null 
+                                                        ? null
                                                         : "?";
-           
+
             var textProp = new TextProperty(displName);
             BuildProperty(VCard.PropKeys.FN, textProp);
         }

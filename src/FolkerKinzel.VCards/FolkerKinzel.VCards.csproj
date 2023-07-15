@@ -52,7 +52,11 @@
     <NoWarn>$(NoWarn);8600;8601;8602;8603;8604</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Intls\Converters\TextEncodingConverter.cs" />
+    <Compile Remove="Intls\Deserializers\VcfRow_ctor - NET40.cs" />
     <Compile Remove="Intls\Extensions\DoubleExtension.cs" />
+    <Compile Remove="Intls\Extensions\PolyfillExtension.cs" />
+    <Compile Remove="Intls\Net40LeaveOpenStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="TextFile1.txt" />

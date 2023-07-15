@@ -2,10 +2,7 @@
 using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
-
-#if !NET40
 using FolkerKinzel.Strings;
-#endif
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
@@ -37,9 +34,7 @@ internal sealed partial class VcfRow
     /// verwendeten vCard-Standards und dekodiert ihn, falls er Quoted-Printable-kodiert ist.
     /// </summary>
     /// <param name="version">Die Versionsnummer des vCard-Standards.</param>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     internal void UnMask(VCdVersion version)
     {
         if (!_unMasked)

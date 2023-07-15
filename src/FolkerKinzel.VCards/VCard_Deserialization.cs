@@ -55,9 +55,7 @@ public sealed partial class VCard
     /// <exception cref="ArgumentNullException"><paramref name="reader"/> ist <c>null</c>.</exception>
     /// <exception cref="ObjectDisposedException"><paramref name="reader"/> wurde geschlossen.</exception>
     /// <exception cref="IOException"><paramref name="reader"/> konnte nicht aus dem <see cref="Stream"/> lesen.</exception>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static IList<VCard> DeserializeVcf(TextReader reader)
         => DoParseVcf(reader ?? throw new ArgumentNullException(nameof(reader)));
 

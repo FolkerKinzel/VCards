@@ -103,36 +103,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
             startIndex++;
         }
 
-#if NET40
 
-            if(startIndex != 0)
-            {
-                value = value.Substring(startIndex);
-            }
-
-            value = value.Replace(';', ','); // vCard 3.0
-
-            string[] arr = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries); // vCard 4.0
-
-            try
-            {
-                NumberStyles numStyle = NumberStyles.AllowDecimalPoint
-                                      | NumberStyles.AllowLeadingSign 
-                                      | NumberStyles.AllowLeadingWhite 
-                                      | NumberStyles.AllowTrailingWhite;
-                CultureInfo culture = CultureInfo.InvariantCulture;
-
-                coordinate = new GeoCoordinate(
-                    double.Parse(arr[0].Trim(), numStyle, culture),
-                    double.Parse(arr[1].Trim(), numStyle, culture));
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-#else
         ReadOnlySpan<char> roSpan = value.AsSpan();
 
         if (startIndex != 0)
@@ -172,8 +143,6 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         {
             return false;
         }
-
-#endif
     }
 
 }

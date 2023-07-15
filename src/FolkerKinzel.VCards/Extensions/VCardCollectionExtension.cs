@@ -56,9 +56,7 @@ public static class VCardCollectionExtension
     /// </example>
     /// 
     /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static IEnumerable<VCard> ReferenceVCards(this IEnumerable<VCard?> vCards)
         => VCard.Reference(vCards);
 
@@ -103,9 +101,7 @@ public static class VCardCollectionExtension
     /// </example>
     /// 
     /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static IEnumerable<VCard> DereferenceVCards(this IEnumerable<VCard?> vCards)
         => VCard.Dereference(vCards);
 
@@ -154,9 +150,7 @@ public static class VCardCollectionExtension
     /// ist <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
     /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static void SaveVcf(
         this IEnumerable<VCard?> vCards,
         string fileName,
@@ -211,9 +205,7 @@ public static class VCardCollectionExtension
     /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
     /// <exception cref="IOException">E/A-Fehler.</exception>
     /// <exception cref="ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static void SerializeVcf(
         this IEnumerable<VCard?> vCards,
         Stream stream,
@@ -266,9 +258,7 @@ public static class VCardCollectionExtension
     /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
     /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static string ToVcfString(
         this IEnumerable<VCard?> vCards,
         VCdVersion version = VCard.DEFAULT_VERSION,

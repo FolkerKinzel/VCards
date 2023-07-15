@@ -5,10 +5,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 using System.Collections;
 using System.Text;
-
-#if !NET40
 using FolkerKinzel.Strings.Polyfills;
-#endif
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -55,14 +52,9 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
             throw new ArgumentNullException(nameof(propertyKey));
         }
 
-        if (propertyKey.Length < 3
-            || !propertyKey.StartsWith("X-", StringComparison.OrdinalIgnoreCase)
-#if NET40
-                || propertyKey.Contains(" ")
-#else
-                || propertyKey.Contains(' ', StringComparison.Ordinal)
-#endif
-                )
+        if (propertyKey.Length < 3 ||
+            !propertyKey.StartsWith("X-", StringComparison.OrdinalIgnoreCase) ||
+             propertyKey.Contains(' ', StringComparison.Ordinal))
         {
             throw new ArgumentException(
                 Res.NoXName, nameof(propertyKey));
@@ -95,9 +87,7 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 

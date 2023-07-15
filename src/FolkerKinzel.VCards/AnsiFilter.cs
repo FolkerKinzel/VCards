@@ -1,11 +1,6 @@
 ﻿using System.Text;
 using FolkerKinzel.VCards.Resources;
-
-#if NET40
-using FolkerKinzel.VCards.Intls.Converters;
-#else
 using FolkerKinzel.Strings;
-#endif
 
 namespace FolkerKinzel.VCards;
 

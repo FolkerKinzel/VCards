@@ -22,20 +22,13 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             if (VCardToSerialize.NameViews is null)
             {
-#if NET40
-                VCardToSerialize.NameViews = new NameProperty?[0];
-#else
+
                 VCardToSerialize.NameViews = Array.Empty<NameProperty?>();
-#endif
             }
 
             if (VCardToSerialize.DisplayNames is null)
             {
-#if NET40
-                VCardToSerialize.DisplayNames = new TextProperty?[0];
-#else
                 VCardToSerialize.DisplayNames = Array.Empty<TextProperty?>();
-#endif
             }
         }
 

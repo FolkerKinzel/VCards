@@ -1,10 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 using FolkerKinzel.VCards.Models.Enums;
-
-#if !NET40
 using FolkerKinzel.Strings.Polyfills;
-#endif
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -67,34 +64,6 @@ internal sealed class DateAndOrTimeConverter
 
         DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
-#if NET40
-            if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
-            {
-                s = s.Substring(0, s.Length - 1);
-
-                styles |= DateTimeStyles.AssumeUniversal;
-            }
-            else
-            {
-                styles |= DateTimeStyles.AssumeLocal;
-            }
-
-            // date-noreduc zu date-complete
-            if (s.StartsWith("---", StringComparison.Ordinal))
-            {
-                s = "000401" + s.Substring(3); // 4 ist das erste Schaltjahr!
-            }
-            else if (s.StartsWith("--", StringComparison.Ordinal))
-            {
-                s = s.Length == 4 
-                ? "0004-" + s.Substring(2) // "--MM" zu "0004-MM"
-                : "0004" + s.Substring(2); // "--MMdd" zu "0004MMdd"
-            }
-
-
-            return DateTimeOffset.TryParseExact(s, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
-
-#else
         Debug.Assert(s.Length <= MAX_DATE_TIME_STRING_LENGTH);
 
         ReadOnlySpan<char> roSpan = s.AsSpan();
@@ -178,7 +147,6 @@ internal sealed class DateAndOrTimeConverter
             return DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
 #endif
         }
-#endif
     }
 
 
@@ -274,9 +242,7 @@ internal sealed class DateAndOrTimeConverter
         }//switch
     }
 
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     internal static bool HasTimeComponent(DateTimeOffset dt)
         => dt.TimeOfDay != TimeSpan.Zero;
     //|| utcOffset != TimeSpan.Zero //nicht konsequent, aber sonst bei Geburtstagen meist komisch

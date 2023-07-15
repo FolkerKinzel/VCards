@@ -1,11 +1,8 @@
 ﻿using System.Globalization;
 using System.Text;
 using FolkerKinzel.VCards.Intls.Extensions;
-
-#if !NET40
 using FolkerKinzel.Strings;
 using FolkerKinzel.Strings.Polyfills;
-#endif
 
 namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 
@@ -219,11 +216,7 @@ internal static class QuotedPrintableConverter
     {
         if (string.IsNullOrEmpty(qpCoded))
         {
-#if NET40
-                return new byte[0];
-#else
             return Array.Empty<byte>();
-#endif
         }
 
         //Ausbessern illegaler Soft - Line - Breaks, die auf Unix - Systemen entstanden sein könnten.
@@ -265,13 +258,8 @@ internal static class QuotedPrintableConverter
 
         var bytes = new byte[qpCoded.Length];
 
-
-#if NET40
-            char[] charr = new char[2];
-#else
         Span<char> charr = stackalloc char[2];
         //charr.Clear();
-#endif
 
         int j = 0;
 
@@ -300,19 +288,7 @@ internal static class QuotedPrintableConverter
         return bytes;
 
 
-#if NET40
-            static byte HexToByte(char[] charr)
-            {
-                try
-                {
-                    return (byte)(Uri.FromHex(charr[1]) + Uri.FromHex(charr[0]) * 16);
-                }
-                catch (Exception)
-                {
-                    return (byte)'?';
-                }
-            }
-#else
+
         static byte HexToByte(ReadOnlySpan<char> charr)
         {
             try
@@ -328,7 +304,6 @@ internal static class QuotedPrintableConverter
                 return (byte)'?';
             }
         }
-#endif
     }
 
     #endregion

@@ -46,9 +46,7 @@ public sealed class RelationUriProperty : RelationProperty, IEnumerable<Relation
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 

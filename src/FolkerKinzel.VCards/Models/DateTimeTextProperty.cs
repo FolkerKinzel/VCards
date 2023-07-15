@@ -57,9 +57,7 @@ public sealed class DateTimeTextProperty : DateTimeProperty, IEnumerable<DateTim
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 

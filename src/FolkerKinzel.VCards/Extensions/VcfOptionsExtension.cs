@@ -13,9 +13,7 @@ public static class VcfOptionsExtension
     /// <see cref="VcfOptions"/>-Werten.</param>
     /// <returns>Ein <see cref="VcfOptions"/>-Wert, auf dem sämtliche in <paramref name="value"/> und <paramref name="flags"/>
     /// gesetzten Flags gesetzt sind.</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static VcfOptions Set(this VcfOptions value, VcfOptions flags) => value | flags;
 
     /// <summary>
@@ -29,9 +27,7 @@ public static class VcfOptionsExtension
     /// <returns><c>true</c>, wenn sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
     /// gesetzt sind. (Wenn <paramref name="flags"/>&#160;<see cref="VcfOptions.None"/> ist, wird nur dann <c>true</c> zurückgegeben,
     /// wenn auch <paramref name="value"/>&#160;<see cref="VcfOptions.None"/> ist. Dasselbe gilt auch für <see cref="VcfOptions.All"/>.)</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static bool IsSet(this VcfOptions value, VcfOptions flags) => flags == VcfOptions.None ? value == flags : (value & flags) == flags;
 
     /// <summary>
@@ -43,8 +39,6 @@ public static class VcfOptionsExtension
     /// <returns>Ein <see cref="VcfOptions"/>-Wert, auf dem sämtliche in <paramref name="flags"/>
     /// gesetzten Flags entfernt sind. (Wenn <paramref name="flags"/>&#160;<see cref="VcfOptions.All"/> ist, wird 
     /// <see cref="VcfOptions.None"/> zurückgegeben.)</returns>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public static VcfOptions Unset(this VcfOptions value, VcfOptions flags) => value & ~flags;
 }

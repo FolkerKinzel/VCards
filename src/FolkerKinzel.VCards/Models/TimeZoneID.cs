@@ -67,7 +67,7 @@ public class TimeZoneID
                 startIndex = 1;
             }
 
-#if NET40 || NET461 || NETSTANDARD2_0
+#if NET461 || NETSTANDARD2_0
                 string input = Value.Substring(startIndex);
 
                 return TimeSpan.TryParseExact(
@@ -176,9 +176,6 @@ public class TimeZoneID
         const string pattern = @"^[-\+]?[01][0-9]:?([0-5][0-9])?";
         const RegexOptions options = RegexOptions.CultureInvariant | RegexOptions.Singleline;
 
-#if NET40
-                return Regex.IsMatch(Value, pattern, options);
-#else
         try
         {
             return Regex.IsMatch(Value, pattern, options, TimeSpan.FromMilliseconds(50));
@@ -187,6 +184,5 @@ public class TimeZoneID
         {
             return false;
         }
-#endif
     }
 }

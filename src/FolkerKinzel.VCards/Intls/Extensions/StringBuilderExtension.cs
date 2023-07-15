@@ -1,10 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
 using FolkerKinzel.VCards.Models.Enums;
-
-#if !NET40
 using FolkerKinzel.Strings;
-#endif
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
 
@@ -109,80 +106,6 @@ internal static class StringBuilderExtension
         return builder;
     }
 
-#if NET40
-    /// <summary>
-    /// Entfernt führenden und nachgestellten Leerraum vom Inhalt
-    /// von <paramref name="builder"/>.
-    /// </summary>
-    /// <param name="builder">Der <see cref="StringBuilder"/>, dessen Inhalt verändert wird.</param>
-    /// <returns>Gibt <paramref name="builder"/> zurück, damit Aufrufe verkettet werden können.</returns>
-    internal static StringBuilder Trim(this StringBuilder builder)
-    {
-        Debug.Assert(builder != null);
-
-        while (builder.Length >= 1 && char.IsWhiteSpace(builder[0]))
-        {
-            _ = builder.Remove(0, 1);
-        }
-
-        while (builder.Length >= 1 && char.IsWhiteSpace(builder[builder.Length - 1]))
-        {
-            _ = builder.Remove(builder.Length - 1, 1);
-        }
-
-        return builder;
-    }
-
-
-    internal static StringBuilder TrimEnd(this StringBuilder builder)
-    {
-        while (builder.Length >= 1 && char.IsWhiteSpace(builder[builder.Length - 1]))
-        {
-            _ = builder.Remove(builder.Length - 1, 1);
-        }
-
-        return builder;
-    }
-
-    internal static StringBuilder ToLowerInvariant(this StringBuilder builder)
-    {
-        Debug.Assert(builder != null);
-
-        for (int i = 0; i < builder.Length; i++)
-        {
-            builder[i] = char.ToLowerInvariant(builder[i]);
-        }
-
-        return builder;
-    }
-
-    internal static StringBuilder ToUpperInvariant(this StringBuilder builder)
-    {
-        Debug.Assert(builder != null);
-
-        for (int i = 0; i < builder.Length; i++)
-        {
-            builder[i] = char.ToUpperInvariant(builder[i]);
-        }
-
-        return builder;
-    }
-
-    internal static int LastIndexOf(this StringBuilder builder, char value)
-    {
-        Debug.Assert(builder != null);
-
-        for (int i = builder.Length - 1; i >= 0; i--)
-        {
-            if (value == builder[i])
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-#endif
 
     /// <summary>
     /// Entfernt einfache und doppelte Gänsefüßchen, die sich am Beginnn oder Ende des Inhalts

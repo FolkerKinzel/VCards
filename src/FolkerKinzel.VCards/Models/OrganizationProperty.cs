@@ -71,9 +71,7 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
 
 
     /// <inheritdoc/>
-#if !NET40
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected override object? GetVCardPropertyValue() => Value;
 
 

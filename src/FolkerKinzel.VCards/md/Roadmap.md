@@ -31,7 +31,7 @@
 
 ### 6.0.0-beta.1
 - [x] Dependency update.
-- [ ] **Breaking Change:** End .NET Framework 4.0 support.
+- [x] **Breaking Change:** End .NET Framework 4.0 support.
 - [ ] **Breaking Change:** Give `AnsiFilter` the functionality of `MultiAnsiFilter` with better performance.
 - [ ] **Breaking Change:** Mark the usage of `MultiAnsiFilter` as obsolete error.
 - [ ] **Breaking Change:** Think of a consistent naming of enums.
