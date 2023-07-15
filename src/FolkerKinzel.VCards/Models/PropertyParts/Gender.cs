@@ -16,7 +16,7 @@ public sealed class Gender
     /// </summary>
     /// <param name="sex">Standardisierte Geschlechtsangabe.</param>
     /// <param name="genderIdentity">Freie Beschreibung des Geschlechts.</param>
-    internal Gender(VCdSex? sex, string? genderIdentity)
+    internal Gender(Enums.Gender? sex, string? genderIdentity)
     {
         Sex = sex;
         GenderIdentity = string.IsNullOrWhiteSpace(genderIdentity) ? null : genderIdentity;
@@ -25,7 +25,7 @@ public sealed class Gender
     /// <summary>
     /// Standardisierte Geschlechtsangabe.
     /// </summary>
-    public VCdSex? Sex { get; }
+    public Enums.Gender? Sex { get; }
 
     /// <summary>
     /// Freie Beschreibung der Geschlechtsidentität.

@@ -8,11 +8,11 @@ public class VCdSexConverterTests
     [TestMethod()]
     public void Roundtrip()
     {
-        foreach (VCdSex sex in (VCdSex[])Enum.GetValues(typeof(VCdSex)))
+        foreach (Gender sex in (Gender[])Enum.GetValues(typeof(Gender)))
         {
-            VCdSex? sex2 = VCdSexConverter.Parse(sex.ToString().Substring(0, 1));
+            Gender? sex2 = VCdSexConverter.Parse(sex.ToString().Substring(0, 1));
             Assert.AreEqual(sex, sex2);
-            VCdSex? sex3 = VCdSexConverter.Parse(VCdSexConverter.ToVcfString(sex));
+            Gender? sex3 = VCdSexConverter.Parse(VCdSexConverter.ToVcfString(sex));
             Assert.AreEqual(sex, sex3);
         }
 
@@ -20,7 +20,7 @@ public class VCdSexConverterTests
         Assert.AreEqual(null, VCdSexConverter.Parse(null));
 
         // Test auf nicht definiert
-        Assert.AreEqual(null, ((VCdSex?)4711).ToVcfString());
+        Assert.AreEqual(null, ((Gender?)4711).ToVcfString());
     }
 
 

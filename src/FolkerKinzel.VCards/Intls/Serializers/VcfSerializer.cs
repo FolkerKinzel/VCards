@@ -484,9 +484,9 @@ internal abstract class VcfSerializer
 
         if (value.FirstOrDefault(x => x?.Value?.Sex != null) is GenderProperty pref)
         {
-            VCdSex sex = pref.Value.Sex!.Value;
+            Models.Enums.Gender sex = pref.Value.Sex!.Value;
 
-            if (sex != VCdSex.Male && sex != VCdSex.Female)
+            if (sex != Models.Enums.Gender.Male && sex != Models.Enums.Gender.Female)
             {
                 return;
             }
@@ -497,7 +497,7 @@ internal abstract class VcfSerializer
 
                 var xGender = new NonStandardProperty(
                     propKey,
-                    sex == VCdSex.Male ? "Male" : "Female", pref.Group);
+                    sex == Models.Enums.Gender.Male ? "Male" : "Female", pref.Group);
 
                 BuildProperty(propKey, xGender);
             }
@@ -509,7 +509,7 @@ internal abstract class VcfSerializer
 
                 var xGender = new NonStandardProperty(
                     propKey,
-                    sex == VCdSex.Male ? "2" : "1", pref.Group);
+                    sex == Models.Enums.Gender.Male ? "2" : "1", pref.Group);
 
                 BuildProperty(propKey, xGender);
             }

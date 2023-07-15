@@ -30,14 +30,14 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    public GenderProperty(VCdSex? sex,
+    public GenderProperty(Enums.Gender? sex,
                           string? genderIdentity = null,
-                          string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = new Gender(sex, genderIdentity);
+                          string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = new PropertyParts.Gender(sex, genderIdentity);
 
     /// <summary>
     /// Die von der <see cref="GenderProperty"/> zur Verfügung gestellten Daten.
     /// </summary>
-    public new Gender Value
+    public new PropertyParts.Gender Value
     {
         get;
     }
@@ -55,7 +55,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     internal GenderProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        VCdSex? sex = null;
+        Enums.Gender? sex = null;
         string? genderIdentity = null;
         ValueSplitter semicolonSplitter = vcfRow.Info.SemiColonSplitter;
 
@@ -75,7 +75,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
             }
         }
 
-        Value = new Gender(sex, genderIdentity);
+        Value = new PropertyParts.Gender(sex, genderIdentity);
     }
 
 

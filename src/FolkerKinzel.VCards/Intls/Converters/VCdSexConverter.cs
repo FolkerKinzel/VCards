@@ -13,30 +13,30 @@ internal static class VCdSexConverter
         internal const string Unknown = "U";
     }
 
-    internal static VCdSex? Parse(string? value)
+    internal static Gender? Parse(string? value)
     {
         return value is null
             ? null
             : (value.ToUpperInvariant() switch
             {
-                Values.Male => VCdSex.Male,
-                Values.Female => VCdSex.Female,
-                Values.Other => VCdSex.Other,
-                Values.NonOrNotApplicable => VCdSex.NonOrNotApplicable,
-                Values.Unknown => VCdSex.Unknown,
-                _ => (VCdSex?)null
+                Values.Male => Gender.Male,
+                Values.Female => Gender.Female,
+                Values.Other => Gender.Other,
+                Values.NonOrNotApplicable => Gender.NonOrNotApplicable,
+                Values.Unknown => Gender.Unknown,
+                _ => (Gender?)null
             });
     }
 
-    internal static string? ToVcfString(this VCdSex? sex)
+    internal static string? ToVcfString(this Gender? sex)
     {
         return sex switch
         {
-            VCdSex.Male => Values.Male,
-            VCdSex.Female => Values.Female,
-            VCdSex.Other => Values.Other,
-            VCdSex.NonOrNotApplicable => Values.NonOrNotApplicable,
-            VCdSex.Unknown => Values.Unknown,
+            Gender.Male => Values.Male,
+            Gender.Female => Values.Female,
+            Gender.Other => Values.Other,
+            Gender.NonOrNotApplicable => Values.NonOrNotApplicable,
+            Gender.Unknown => Values.Unknown,
             _ => null
         };
     }

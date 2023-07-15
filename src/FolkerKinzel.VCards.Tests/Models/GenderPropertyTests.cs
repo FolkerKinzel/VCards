@@ -10,16 +10,16 @@ public class GenderPropertyTests
     private const string IDENTITY = "identity";
 
     [DataTestMethod()]
-    [DataRow(GROUP, VCdSex.Male, null)]
-    [DataRow(GROUP, VCdSex.Female, null)]
-    [DataRow(GROUP, VCdSex.Other, null)]
-    [DataRow(GROUP, VCdSex.Unknown, null)]
-    [DataRow(GROUP, VCdSex.NonOrNotApplicable, null)]
+    [DataRow(GROUP, Gender.Male, null)]
+    [DataRow(GROUP, Gender.Female, null)]
+    [DataRow(GROUP, Gender.Other, null)]
+    [DataRow(GROUP, Gender.Unknown, null)]
+    [DataRow(GROUP, Gender.NonOrNotApplicable, null)]
     [DataRow(GROUP, null, null)]
     [DataRow(null, null, IDENTITY)]
-    [DataRow(null, VCdSex.Female, IDENTITY)]
-    [DataRow(GROUP, VCdSex.Female, IDENTITY)]
-    public void GenderPropertyTest1(string? expectedGroup, VCdSex? expectedSex, string? expectedGenderIdentity)
+    [DataRow(null, Gender.Female, IDENTITY)]
+    [DataRow(GROUP, Gender.Female, IDENTITY)]
+    public void GenderPropertyTest1(string? expectedGroup, Gender? expectedSex, string? expectedGenderIdentity)
     {
         var genderProp = new GenderProperty(expectedSex, expectedGenderIdentity, expectedGroup);
 
@@ -31,19 +31,19 @@ public class GenderPropertyTests
 
 
     [DataTestMethod()]
-    [DataRow(GROUP + ".GENDER:M", GROUP, VCdSex.Male, null)]
-    [DataRow(GROUP + ".GENDER:F", GROUP, VCdSex.Female, null)]
-    [DataRow(GROUP + ".GENDER:O", GROUP, VCdSex.Other, null)]
-    [DataRow(GROUP + ".GENDER:U", GROUP, VCdSex.Unknown, null)]
-    [DataRow(GROUP + ".GENDER:N", GROUP, VCdSex.NonOrNotApplicable, null)]
+    [DataRow(GROUP + ".GENDER:M", GROUP, Gender.Male, null)]
+    [DataRow(GROUP + ".GENDER:F", GROUP, Gender.Female, null)]
+    [DataRow(GROUP + ".GENDER:O", GROUP, Gender.Other, null)]
+    [DataRow(GROUP + ".GENDER:U", GROUP, Gender.Unknown, null)]
+    [DataRow(GROUP + ".GENDER:N", GROUP, Gender.NonOrNotApplicable, null)]
     [DataRow(GROUP + ".GENDER:", GROUP, null, null)]
     [DataRow(GROUP + ".GENDER:;", GROUP, null, null)]
     [DataRow(GROUP + ".GENDER: ; ", GROUP, null, null)]
     [DataRow("GENDER: ;" + IDENTITY, null, null, IDENTITY)]
-    [DataRow("GENDER:F;" + IDENTITY, null, VCdSex.Female, IDENTITY)]
-    [DataRow(GROUP + ".GENDER:F;" + IDENTITY, GROUP, VCdSex.Female, IDENTITY)]
-    [DataRow(GROUP + ".GENDER:F;", GROUP, VCdSex.Female, null)]
-    public void GenderPropertyTest2(string s, string? expectedGroup, VCdSex? expectedSex, string? expectedGenderIdentity)
+    [DataRow("GENDER:F;" + IDENTITY, null, Gender.Female, IDENTITY)]
+    [DataRow(GROUP + ".GENDER:F;" + IDENTITY, GROUP, Gender.Female, IDENTITY)]
+    [DataRow(GROUP + ".GENDER:F;", GROUP, Gender.Female, null)]
+    public void GenderPropertyTest2(string s, string? expectedGroup, Gender? expectedSex, string? expectedGenderIdentity)
     {
         var vcfRow = VcfRow.Parse(s, new VcfDeserializationInfo());
 
@@ -61,7 +61,7 @@ public class GenderPropertyTests
     [TestMethod]
     public void GenderPropertyTest3()
     {
-        var prop = new GenderProperty(VCdSex.Female, IDENTITY, GROUP);
+        var prop = new GenderProperty(Gender.Female, IDENTITY, GROUP);
 
         var vcard = new VCard
         {
@@ -82,7 +82,7 @@ public class GenderPropertyTests
         prop = vcard.GenderViews!.First() as GenderProperty;
 
         Assert.IsNotNull(prop);
-        Assert.AreEqual(VCdSex.Female, prop!.Value.Sex);
+        Assert.AreEqual(Gender.Female, prop!.Value.Sex);
         Assert.AreEqual(IDENTITY, prop!.Value.GenderIdentity);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);

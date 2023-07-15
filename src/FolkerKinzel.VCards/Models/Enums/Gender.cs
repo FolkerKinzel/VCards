@@ -3,7 +3,7 @@
 /// <summary>
 /// Benannte Konstanten, um das Geschlecht des Subjekts anzugeben, das die vCard repräsentiert.
 /// </summary>
-public enum VCdSex
+public enum Gender
 {
     /// <summary>
     /// <c>U</c>: unbekannt <c>(4)</c>

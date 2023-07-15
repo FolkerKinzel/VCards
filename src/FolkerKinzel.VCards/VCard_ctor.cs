@@ -244,8 +244,8 @@ public sealed partial class VCard
                     else if (GenderViews is null && vcfRow.Value != null)
                     {
                         GenderViews = vcfRow.Value.StartsWith("F", true, CultureInfo.InvariantCulture)
-                            ? new GenderProperty(VCdSex.Female)
-                            : new GenderProperty(VCdSex.Male);
+                            ? new GenderProperty(Models.Enums.Gender.Female)
+                            : new GenderProperty(Models.Enums.Gender.Male);
                     }
                     break;
                 case PropKeys.NonStandard.X_WAB_GENDER:
@@ -256,8 +256,8 @@ public sealed partial class VCard
                     else if (GenderViews is null && vcfRow.Value != null)
                     {
                         GenderViews = vcfRow.Value.Contains('1', StringComparison.Ordinal)
-                                            ? new GenderProperty(VCdSex.Female) 
-                                            : new GenderProperty(VCdSex.Male);
+                                            ? new GenderProperty(Models.Enums.Gender.Female) 
+                                            : new GenderProperty(Models.Enums.Gender.Male);
                     }
                     break;
                 case PropKeys.IMPP:

@@ -36,6 +36,7 @@
 - [ ] **Breaking Change:** Mark the usage of `MultiAnsiFilter` as obsolete error.
 - [ ] **Breaking Change:** Think of a consistent naming of enums.
 - [ ] **Breaking Change:** Move `VCdVersion` to namespace `FolkerKinzel.VCards`
+- [ ] **Breaking Change:** Rename `VCdSex` into  `Gender`
 - [ ] Use the HashCode struct to compute hash codes.
 
 
