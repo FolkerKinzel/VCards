@@ -32,7 +32,6 @@
 ### 6.0.0-beta.1
 - [x] Dependency update.
 - [x] **Breaking Change:** End .NET Framework 4.0 support.
-- [x] **Breaking Change:** Give `AnsiFilter` the functionality of `MultiAnsiFilter` with better performance.
 - [x] **Breaking Change:** Remove `MultiAnsiFilter`.
 - [x] **Breaking Change:** Move `VCdVersion` to namespace `FolkerKinzel.VCards`
 - [x] **Breaking Change:** Rename `VCdSex` into  `Gender`
@@ -45,9 +44,9 @@
 - [ ] **Breaking Change:** Rename `DataEncoding` to `EmbeddedDataEncoding`
 - [ ] **Breaking Change:** Rename `EmbeddedDataEncoding.UrlEncoded` to `EmbeddedDataEncoding.Url`
 - [ ] **Breaking Change:** Make `DataUrl` internal
-- [ ] **Breaking Change:** Make `DataProperty` an abstract class which is the base class of `EmbeddedBytesProperty`, `EmbeddedTextProperty` and `ReferencedDataProperty`.
+- [ ] **Breaking Change:** Make `DataProperty` an abstract class which is the base class of `EmbeddedBytesProperty`, `EmbeddedTextProperty` and `ReferencedContentProperty`.
 - [x] **Breaking Change:** Remove `Parameters.Charset`.
-- [ ] 
+- [x] Give `AnsiFilter` the functionality of `MultiAnsiFilter` with better performance.
 - [ ] Use the HashCode struct to compute hash codes.
 
 
