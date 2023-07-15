@@ -80,7 +80,7 @@ public sealed class RelationUriProperty : RelationProperty, IEnumerable<Relation
 
             if (uri.ToString().NeedsToBeQpEncoded())
             {
-                Parameters.Encoding = VCdEncoding.QuotedPrintable;
+                Parameters.Encoding = ValueEncoding.QuotedPrintable;
                 Parameters.CharSet = VCard.DEFAULT_CHARSET;
             }
         }
@@ -95,7 +95,7 @@ public sealed class RelationUriProperty : RelationProperty, IEnumerable<Relation
 
         StringBuilder builder = serializer.Builder;
 
-        _ = this.Parameters.Encoding == VCdEncoding.QuotedPrintable
+        _ = this.Parameters.Encoding == ValueEncoding.QuotedPrintable
             ? builder.Append(QuotedPrintableConverter.Encode(this.Value?.ToString(), builder.Length))
             : builder.Append(this.Value);
     }

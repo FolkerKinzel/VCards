@@ -3,7 +3,7 @@
 /// <summary>
 /// Benannte Konstanten, um die Kodierung des Inhalts einer vCard-Property anzugeben.
 /// </summary>
-public enum VCdEncoding
+public enum ValueEncoding
 {
     /// <summary>
     /// <c>B</c>, <c>BASE64</c>: Base64 <c>(2,3)</c>

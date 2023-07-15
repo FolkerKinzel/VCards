@@ -2,9 +2,9 @@
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-internal static class VCdEncodingConverter
+internal static class ValueEncodingConverter
 {
-    internal static VCdEncoding? Parse(string? val)
+    internal static ValueEncoding? Parse(string? val)
     {
         if (val is null)
         {
@@ -19,13 +19,13 @@ internal static class VCdEncodingConverter
             {
                 return char.ToUpperInvariant(c) switch
                 {
-                    'B' => VCdEncoding.Base64,
-                    'Q' => VCdEncoding.QuotedPrintable,
-                    '8' => VCdEncoding.Ansi,
+                    'B' => ValueEncoding.Base64,
+                    'Q' => ValueEncoding.QuotedPrintable,
+                    '8' => ValueEncoding.Ansi,
 
                     // Ascii ist der Standard in vCard 2.1 und hat kein Symbol
                     // '7' => VCdEncoding.Ascii,
-                    _ => (VCdEncoding?)null,
+                    _ => (ValueEncoding?)null,
                 };
             }
         }

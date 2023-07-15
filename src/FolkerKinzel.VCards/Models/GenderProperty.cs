@@ -70,7 +70,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
             }
             else
             {
-                sex = VCdSexConverter.Parse(s);
+                sex = GenderConverter.Parse(s);
                 initGenderIdentity = true;
             }
         }

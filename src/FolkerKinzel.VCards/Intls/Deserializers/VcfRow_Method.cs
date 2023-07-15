@@ -50,11 +50,11 @@ internal sealed partial class VcfRow
     /// <summary>
     /// Dekodiert Quoted-Printable kodierten Text, der sich in <see cref="Value"/> befindet, wenn 
     /// <see cref="VCards.Models.PropertyParts.ParameterSection.Encoding"/>
-    /// gleich <see cref="VCdEncoding.QuotedPrintable"/> ist.
+    /// gleich <see cref="ValueEncoding.QuotedPrintable"/> ist.
     /// </summary>
     internal void DecodeQuotedPrintable()
     {
-        if (this.Parameters.Encoding == VCdEncoding.QuotedPrintable && !_quotedPrintableDecoded)
+        if (this.Parameters.Encoding == ValueEncoding.QuotedPrintable && !_quotedPrintableDecoded)
         {
             this.Value = QuotedPrintableConverter.Decode(this.Value, // null-Prüfung nicht erforderlich
                 TextEncodingConverter.GetEncoding(this.Parameters.CharSet)); // null-Prüfung nicht erforderlich

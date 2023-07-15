@@ -335,7 +335,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
         AppendValue(ParaSection.DataType);
 
-        if (ParaSection.Encoding == VCdEncoding.Base64)
+        if (ParaSection.Encoding == ValueEncoding.Base64)
         {
             AppendBase64Encoding();
         }

@@ -68,7 +68,7 @@ public sealed class RelationTextProperty : RelationProperty, IEnumerable<Relatio
 
         if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
-            this.Parameters.Encoding = VCdEncoding.QuotedPrintable;
+            this.Parameters.Encoding = ValueEncoding.QuotedPrintable;
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
 
@@ -87,7 +87,7 @@ public sealed class RelationTextProperty : RelationProperty, IEnumerable<Relatio
 
         if (serializer.Version == VCdVersion.V2_1)
         {
-            _ = this.Parameters.Encoding == VCdEncoding.QuotedPrintable
+            _ = this.Parameters.Encoding == ValueEncoding.QuotedPrintable
                 ? builder.Append(QuotedPrintableConverter.Encode(Value, builder.Length))
                 : builder.Append(Value);
         }

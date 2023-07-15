@@ -146,7 +146,7 @@ public sealed partial class ParameterSection
                     this.Calendar = parameter.Value.Trim().Trim(info.AllQuotes);
                     break;
                 case ParameterKey.ENCODING:
-                    this.Encoding = VCdEncodingConverter.Parse(parameter.Value);
+                    this.Encoding = ValueEncodingConverter.Parse(parameter.Value);
                     break;
                 case ParameterKey.CHARSET:
                     this.CharSet = parameter.Value.Trim().Trim(info.AllQuotes);

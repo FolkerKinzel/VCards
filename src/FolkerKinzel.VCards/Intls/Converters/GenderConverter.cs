@@ -2,7 +2,7 @@
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-internal static class VCdSexConverter
+internal static class GenderConverter
 {
     private static class Values
     {

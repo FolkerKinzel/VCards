@@ -10,14 +10,14 @@ public class VCdSexConverterTests
     {
         foreach (Gender sex in (Gender[])Enum.GetValues(typeof(Gender)))
         {
-            Gender? sex2 = VCdSexConverter.Parse(sex.ToString().Substring(0, 1));
+            Gender? sex2 = GenderConverter.Parse(sex.ToString().Substring(0, 1));
             Assert.AreEqual(sex, sex2);
-            Gender? sex3 = VCdSexConverter.Parse(VCdSexConverter.ToVcfString(sex));
+            Gender? sex3 = GenderConverter.Parse(GenderConverter.ToVcfString(sex));
             Assert.AreEqual(sex, sex3);
         }
 
         // Test auf null
-        Assert.AreEqual(null, VCdSexConverter.Parse(null));
+        Assert.AreEqual(null, GenderConverter.Parse(null));
 
         // Test auf nicht definiert
         Assert.AreEqual(null, ((Gender?)4711).ToVcfString());

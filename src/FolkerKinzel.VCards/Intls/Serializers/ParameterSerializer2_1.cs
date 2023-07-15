@@ -324,10 +324,10 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
     {
         switch (ParaSection.Encoding)
         {
-            case VCdEncoding.Base64:
+            case ValueEncoding.Base64:
                 AppendParameter(ParameterSection.ParameterKey.ENCODING, "BASE64");
                 break;
-            case VCdEncoding.QuotedPrintable:
+            case ValueEncoding.QuotedPrintable:
                 AppendParameter(ParameterSection.ParameterKey.ENCODING, "QUOTED-PRINTABLE");
                 AppendParameter(ParameterSection.ParameterKey.CHARSET, VCard.DEFAULT_CHARSET);
                 break;

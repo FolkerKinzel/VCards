@@ -149,7 +149,7 @@ internal class VcfReader : IEnumerable<VcfRow>
                 }
 
 
-                if (tmpRow.Parameters.Encoding == VCdEncoding.QuotedPrintable && tmp[tmp.Length - 1] == '=') // QuotedPrintable Soft-Linebreak (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
+                if (tmpRow.Parameters.Encoding == ValueEncoding.QuotedPrintable && tmp[tmp.Length - 1] == '=') // QuotedPrintable Soft-Linebreak (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
                 {
                     Debug.WriteLine("  == QuotedPrintable Soft-Linebreak detected ==");
 
@@ -172,7 +172,7 @@ internal class VcfReader : IEnumerable<VcfRow>
                         yield break;
                     }
                 }
-                else if (tmpRow.Parameters.Encoding == VCdEncoding.Base64)
+                else if (tmpRow.Parameters.Encoding == ValueEncoding.Base64)
                 {
                     Debug.WriteLine("  == vCard 2.1 Base64 detected ==");
 

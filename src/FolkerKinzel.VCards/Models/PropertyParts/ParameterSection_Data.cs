@@ -149,11 +149,11 @@ public sealed partial class ParameterSection
     /// <value>
     /// <para>Der Wert wird automatisch gesetzt - 
     /// lediglich bei <see cref="NonStandardProperty"/>-Objekten muss dies manuell erfolgen.</para>
-    /// <para>In vCard 3.0 ist nur <see cref="VCdEncoding.Base64"/> gestattet.</para> 
+    /// <para>In vCard 3.0 ist nur <see cref="ValueEncoding.Base64"/> gestattet.</para> 
     /// </value>
-    public VCdEncoding? Encoding
+    public ValueEncoding? Encoding
     {
-        get => Get<VCdEncoding?>(VCdParam.Encoding);
+        get => Get<ValueEncoding?>(VCdParam.Encoding);
         set => Set(VCdParam.Encoding, value);
     }
 

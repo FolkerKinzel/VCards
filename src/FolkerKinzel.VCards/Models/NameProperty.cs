@@ -138,7 +138,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
         if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
-            this.Parameters.Encoding = VCdEncoding.QuotedPrintable;
+            this.Parameters.Encoding = ValueEncoding.QuotedPrintable;
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
     }
@@ -158,7 +158,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
         Value.AppendVCardString(serializer);
 
-        if (Parameters.Encoding == VCdEncoding.QuotedPrintable)
+        if (Parameters.Encoding == ValueEncoding.QuotedPrintable)
         {
             string toEncode = builder.ToString(valueStartIndex, builder.Length - valueStartIndex);
             builder.Length = valueStartIndex;

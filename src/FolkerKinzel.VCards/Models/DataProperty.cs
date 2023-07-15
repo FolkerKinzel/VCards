@@ -78,21 +78,21 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
                         // vCard 2.1 ermöglicht noch andere Kodierungsarten als BASE64
                         // wandle diese in BASE64 um: (vCard 2.1 kennt keinen DataUrl)
-                        if (Parameters.Encoding == VCdEncoding.QuotedPrintable)
+                        if (Parameters.Encoding == ValueEncoding.QuotedPrintable)
                         {
                             byte[] bytes = QuotedPrintableConverter.DecodeData(value);
                             value = Convert.ToBase64String(bytes);
-                            Parameters.Encoding = VCdEncoding.Base64;
+                            Parameters.Encoding = ValueEncoding.Base64;
                         }
 
                         // Outlook verwendet falsches Line-Wrapping, weshalb Leerzeichen im Base64 und im Uri enthalten sein können
-                        Value = Parameters.Encoding == VCdEncoding.Base64 ? BuildDataUri(Parameters.MediaType, value.Replace(" ", "")) : BuildUri(value.Replace(" ", ""));
+                        Value = Parameters.Encoding == ValueEncoding.Base64 ? BuildDataUri(Parameters.MediaType, value.Replace(" ", "")) : BuildUri(value.Replace(" ", ""));
                         return;
                     }
                 }
             case VCdVersion.V3_0:
                 {
-                    if (Parameters.Encoding == VCdEncoding.Base64)
+                    if (Parameters.Encoding == ValueEncoding.Base64)
                     {
                         Value = BuildDataUri(Parameters.MediaType, vcfRow.Value);
                         return;
@@ -213,7 +213,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
                         if (dataUri.ContainsBytes)
                         {
                             Parameters.ContentLocation = VCdContentLocation.Inline;
-                            Parameters.Encoding = VCdEncoding.Base64;
+                            Parameters.Encoding = ValueEncoding.Base64;
                             Parameters.MediaType = dataUri.MimeType.ToString();
 
                         }
@@ -226,7 +226,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
                             if (dataUri.GetEmbeddedText().NeedsToBeQpEncoded())
                             {
-                                Parameters.Encoding = VCdEncoding.QuotedPrintable;
+                                Parameters.Encoding = ValueEncoding.QuotedPrintable;
                                 Parameters.CharSet = VCard.DEFAULT_CHARSET;
                             }
                         }
@@ -246,7 +246,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
                         if (uri.ToString().NeedsToBeQpEncoded())
                         {
-                            Parameters.Encoding = VCdEncoding.QuotedPrintable;
+                            Parameters.Encoding = ValueEncoding.QuotedPrintable;
                             Parameters.CharSet = VCard.DEFAULT_CHARSET;
                         }
                         break;
@@ -260,14 +260,14 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
             {
                 case null:
                     Parameters.DataType = VCdDataType.Binary;
-                    Parameters.Encoding = VCdEncoding.Base64;
+                    Parameters.Encoding = ValueEncoding.Base64;
                     break;
                 case DataUrl dataUri:
                     {
                         if (dataUri.ContainsBytes)
                         {
                             Parameters.DataType = VCdDataType.Binary;
-                            Parameters.Encoding = VCdEncoding.Base64;
+                            Parameters.Encoding = ValueEncoding.Base64;
                             Parameters.MediaType = dataUri.MimeType.ToString();
                         }
                         else // enthält Text
@@ -340,7 +340,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
                 {
                     if (dataUrl.ContainsText)
                     {
-                        _ = this.Parameters.Encoding == VCdEncoding.QuotedPrintable
+                        _ = this.Parameters.Encoding == ValueEncoding.QuotedPrintable
                             ? builder.Append(QuotedPrintableConverter.Encode(dataUrl.GetEmbeddedText(), builder.Length))
                             : builder.Append(dataUrl.GetEmbeddedText());
                     }
@@ -351,7 +351,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
                 }
                 else // Value is Uri
                 {
-                    _ = this.Parameters.Encoding == VCdEncoding.QuotedPrintable
+                    _ = this.Parameters.Encoding == ValueEncoding.QuotedPrintable
                         ? builder.Append(QuotedPrintableConverter.Encode(Value.ToString(), builder.Length))
                         : builder.Append(Value);
                 }

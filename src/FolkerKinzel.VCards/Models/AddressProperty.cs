@@ -229,7 +229,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
         if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
-            this.Parameters.Encoding = VCdEncoding.QuotedPrintable;
+            this.Parameters.Encoding = ValueEncoding.QuotedPrintable;
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
     }
@@ -249,7 +249,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
         Value.AppendVCardString(serializer);
 
-        if (Parameters.Encoding == VCdEncoding.QuotedPrintable)
+        if (Parameters.Encoding == ValueEncoding.QuotedPrintable)
         {
             string toEncode = builder.ToString(startIndex, builder.Length - startIndex);
             builder.Length = startIndex;

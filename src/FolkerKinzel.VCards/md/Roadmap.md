@@ -37,6 +37,8 @@
 - [ ] **Breaking Change:** Think of a consistent naming of enums.
 - [ ] **Breaking Change:** Move `VCdVersion` to namespace `FolkerKinzel.VCards`
 - [ ] **Breaking Change:** Rename `VCdSex` into  `Gender`
+- [ ] **Breaking Change:** Rename `VCdEncoding` into  `ValueEncoding`
+- [ ] 
 - [ ] Use the HashCode struct to compute hash codes.
 
 
