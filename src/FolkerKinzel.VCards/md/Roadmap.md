@@ -31,7 +31,7 @@
 - [ ] Higher code coverage of the unit tests.
 
 ### 6.0.0-beta.1
-- [ ] Dependency update.
+- [x] Dependency update.
 - [ ] **Breaking Change:** Give `AnsiFilter` the functionality of `MultiAnsiFilter` with better performance.
 - [ ] **Breaking Change:** Mark the usage of `MultiAnsiFilter` as obsolete error.
 
