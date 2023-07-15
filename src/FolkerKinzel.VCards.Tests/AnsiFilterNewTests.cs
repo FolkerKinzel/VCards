@@ -18,17 +18,17 @@ namespace FolkerKinzel.VCards.Tests
         private const string UTF8 = "孔夫子";
 
         [TestMethod()]
-        public void AnsiFilterNewTest()
+        public void AnsiFilterTest()
         {
-            var filter = new AnsiFilterNew();
+            var filter = new AnsiFilter();
             Assert.IsNotNull(filter);
             Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName, true);
         }
 
         [TestMethod()]
-        public void AnsiFilterNewTest1()
+        public void AnsiFilterTest1()
         {
-            var filter = new AnsiFilterNew("windows-1251");
+            var filter = new AnsiFilter("windows-1251");
             Assert.IsNotNull(filter);
             Assert.AreEqual("windows-1251", filter.FallbackEncodingWebName, true);
         }
@@ -37,7 +37,7 @@ namespace FolkerKinzel.VCards.Tests
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>")]
         public void LoadVcfTest1()
         {
-            var filter = new AnsiFilterNew();
+            var filter = new AnsiFilter();
             Assert.IsNotNull(filter);
             Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName, true);
             IList<VCard> vCards = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_Utf8Vcf, out string enc);
@@ -76,7 +76,7 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void LoadVcfTest2()
         {
-            var filter = new AnsiFilterNew();
+            var filter = new AnsiFilter();
             Assert.IsNotNull(filter);
             Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName, true);
             IList<VCard> vCards = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_Utf8Vcf);
@@ -104,7 +104,7 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void LoadVcfTest3()
         {
-            var filter = new AnsiFilterNew();
+            var filter = new AnsiFilter();
             Assert.IsNotNull(filter);
             Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName, true);
             IList<VCard> vCards = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_v3AnsiVcf, out string encName);
@@ -117,15 +117,24 @@ namespace FolkerKinzel.VCards.Tests
 
             [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void AnsiFilterNewTest2() => _ = new AnsiFilterNew(4711);
+        public void AnsiFilterTest2() => _ = new AnsiFilter(4711);
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void AnsiFilterNewTest4() => _ = new AnsiFilterNew("Nixda");
+        public void AnsiFilterTest4() => _ = new AnsiFilter("Nixda");
 
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void AnsiFilterNewTest5() => _ = new AnsiFilterNew(null!);
+        public void AnsiFilterTest5() => _ = new AnsiFilter(null!);
+
+        [TestMethod]
+        public void AnsiFilterTest6()
+        {
+            var bt = File.ReadAllBytes(TestFiles.MultiAnsiFilterTests_v3Utf16Bom);
+            var filter = new AnsiFilter();
+            _ = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_v3Utf16Bom, out string enc);
+            Assert.AreEqual("utf-8", enc, false);
+        }
     }
 }

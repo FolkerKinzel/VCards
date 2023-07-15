@@ -11,9 +11,9 @@
     <!-- .nuget-Package: -->
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
-    <Version>5.0.0</Version>
-    <FileVersion>5.0.0.92</FileVersion>
-    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <Version>6.0.0-alpha.1</Version>
+    <FileVersion>6.0.0.0</FileVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v5.0.0-beta.3</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
@@ -52,11 +52,13 @@
     <NoWarn>$(NoWarn);8600;8601;8602;8603;8604</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="AnsiFilter_old.cs" />
     <Compile Remove="Intls\Converters\TextEncodingConverter.cs" />
     <Compile Remove="Intls\Deserializers\VcfRow_ctor - NET40.cs" />
     <Compile Remove="Intls\Extensions\DoubleExtension.cs" />
     <Compile Remove="Intls\Extensions\PolyfillExtension.cs" />
     <Compile Remove="Intls\Net40LeaveOpenStream.cs" />
+    <Compile Remove="MultiAnsiFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="TextFile1.txt" />

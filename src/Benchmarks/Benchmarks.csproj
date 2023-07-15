@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AnsiFilterBench.cs" />
+    <Compile Remove="AnsiFilterBench2.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.6" />
   </ItemGroup>
 

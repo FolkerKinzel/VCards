@@ -24,7 +24,9 @@
 		<None Remove="reports\**" />
 	</ItemGroup>
 	<ItemGroup>
+		<Compile Remove="AnsiFilterTests.cs" />
 		<Compile Remove="Intls\Deserializers\DigitParserTests.cs" />
+		<Compile Remove="MultiAnsiFilterTests.cs" />
 		<Compile Remove="UnitTestsInitialize.cs" />
 		<Compile Remove="VcfPaths.cs" />
 	</ItemGroup>

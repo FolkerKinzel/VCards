@@ -1,19 +1,15 @@
-﻿// Compile for .NET 7.0 or above and FolkerKinzel.VCards 5.0.0 or above
+﻿// Compile for .NET 7.0 or above and FolkerKinzel.VCards 6.0.0-beta.1 or above
 using System.Diagnostics;
 using FolkerKinzel.VCards;
 
 namespace Examples;
 
-public static class MultiAnsiFilterExample
+public static class AnsiFilterExample
 {
     /// <summary>
     /// The example loads several vCard 2.1 files which have different encodings and 
     /// shows their content in the text editor. The encoding is selected automatically.
     /// </summary>
-    /// <remarks>
-    /// Download the example files at
-    /// https://github.com/FolkerKinzel/VCards/tree/1ac0a8ee718c18a3c0e187a955773ebae845ec8f/src/Examples/MultiAnsiFilterExamples
-    /// </remarks>
     /// <param name="directoryPath">Path to the directory containing the example files.</param>
     public static void LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
     {
@@ -22,7 +18,7 @@ public static class MultiAnsiFilterExample
         // Give the constructor the ANSI code page as an argument which is most likely. This will
         // be the fallback code page if a VCF file couldn't be loaded as UTF-8 and didn't 
         // contain a CHARSET parameter. In our example we choose windows-1255 (Hebrew).
-        var multiAnsiFilter = new MultiAnsiFilter(1255);
+        var ansiFilter = new AnsiFilter(1255);
 
         var outFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
         using (StreamWriter writer = File.AppendText(outFileName))
@@ -31,7 +27,7 @@ public static class MultiAnsiFilterExample
                 .EnumerateFiles(directoryPath)
                 .Where(x => StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(x), ".vcf")))
             {
-                IList<VCard> vCards = multiAnsiFilter.LoadVcf(vcfFileName, out string encodingWebName);
+                IList<VCard> vCards = ansiFilter.LoadVcf(vcfFileName, out string encodingWebName);
                 WriteToTextFile(vcfFileName, vCards, encodingWebName, writer);
             }
         }
@@ -85,6 +81,6 @@ utf-8.vcf:
 Please note that Hebrew.vcf and utf-8.vcf have been read properly without
 any CHARSET parameter in the VCF files: UTF-8 is the default character set 
 and windows-1255 (Hebrew) had been set as the default fallback value in the 
-constructor.
+AnsiFilter constructor.
  */
 

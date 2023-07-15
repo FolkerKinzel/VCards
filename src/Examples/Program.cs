@@ -27,7 +27,6 @@ internal class Program
 
         StartAnsiFilterExample();
 
-        //StartMultiAnsiFilterExample();
 
         //string destinationPath = Path.Combine(sourcePath, "Ansi");
 
@@ -39,21 +38,11 @@ internal class Program
 
     }
 
-    private static void StartAnsiFilterExampleOld()
-    {
-        string sourcePath = Path.GetFullPath(@"..\..\..\AnsiFilterExamples");
-        MultiAnsiFilterExample.LoadVcfFilesWhichHaveDifferentAnsiEncodings(sourcePath);
-    }
-
-    private static void StartMultiAnsiFilterExample()
-    {
-        string sourcePath = Path.GetFullPath(@"..\..\..\MultiAnsiFilterExamples");
-        MultiAnsiFilterExample.LoadVcfFilesWhichHaveDifferentAnsiEncodings(sourcePath);
-    }
+    
 
     private static void StartAnsiFilterExample()
     {
-        string sourcePath = Path.GetFullPath(@"..\..\..\MultiAnsiFilterExamples");
+        string sourcePath = Path.GetFullPath(@"..\..\..\AnsiFilterExamples");
         AnsiFilterExample.LoadVcfFilesWhichHaveDifferentAnsiEncodings(sourcePath);
     }
 }

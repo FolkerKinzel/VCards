@@ -12,6 +12,7 @@
 		<Exec Command="if $(ConfigurationName) == Release if '$(TargetFramework)' == 'net5.0' dotnet $(SolutionDir)IncVersion\IncVersion.dll $(ProjectDir)$(ProjectFileName) --revision" />
 	</Target>
 	<ItemGroup>
+		<Compile Remove="AnsiFilterExample_old.cs" />
 		<Compile Remove="NullableTest.cs" />
 	</ItemGroup>
 	<ItemGroup>

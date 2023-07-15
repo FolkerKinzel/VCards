@@ -43,6 +43,8 @@ internal static class TestFiles
 
     internal static string MultiAnsiFilterTests_v3AnsiVcf => Path.Combine(_testFileDirectory, "MultiAnsiFilterTests", "v3Ansi.vcf");
 
+    internal static string MultiAnsiFilterTests_v3Utf16Bom => Path.Combine(_testFileDirectory, "MultiAnsiFilterTests", "v3Utf16Bom.vcf");
+
 
     internal static string NextCloudPhotoIssueTxt => Path.Combine(_testFileDirectory, "NextCloudPhotoIssue.txt");
 
