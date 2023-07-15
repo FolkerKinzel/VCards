@@ -1,7 +1,7 @@
 ﻿# FolkerKinzel.VCards
 ## Roadmap
 
-### 6.0.0
+### 7.0.0
 - [ ] End .NET Framework 4.0 support.
 - [ ] Think of a consistent naming of enums.
 - [ ] Use the HashCode struct to compute hash codes.
@@ -24,11 +24,17 @@
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
-### 5.0.1
+### 6.0.1
 - Cleanup: Remove identifiers that are marked as obsolete errors.
 
-### 5.0.0
+### 6.0.0
 - [ ] Higher code coverage of the unit tests.
+
+### 6.0.0-beta.1
+- [ ] Dependency update.
+- [ ] **Breaking Change:** Give `AnsiFilter` the functionality of `MultiAnsiFilter` with better performance.
+- [ ] **Breaking Change:** Mark the usage of `MultiAnsiFilter` as obsolete error.
+
 
 ### 5.0.0-beta.3
 - [x] Higher code coverage of the unit tests.

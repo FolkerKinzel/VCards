@@ -7,9 +7,10 @@ It allows
 * to serialize VCF files from and to Streams and
 * to convert VCF files, that match the vCard versions 2.1, 3.0 and 4.0, to each other.
 
+[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v5.0.0-beta.3)
+
 FolkerKinzel.VCards is used as a dependency in [FolkerKinzel.Contacts.IO](https://www.nuget.org/packages/FolkerKinzel.Contacts.IO/) - an easy to use .NET-API to manage contact data of organizations and natural persons.
 
-[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v5.0.0-beta.3)
 
 
 ## Overview
