@@ -62,7 +62,7 @@ public sealed class Address
         Locality =
         Region =
         PostalCode =
-        Country = ReadOnlyCollectionConverter.Empty();
+        Country = ReadOnlyCollectionString.Empty;
     }
 
 
@@ -85,7 +85,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            PostOfficeBox = ReadOnlyCollectionConverter.Empty();
+                            PostOfficeBox = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -106,7 +106,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            ExtendedAddress = ReadOnlyCollectionConverter.Empty();
+                            ExtendedAddress = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -128,7 +128,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Street = ReadOnlyCollectionConverter.Empty();
+                            Street = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -149,7 +149,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Locality = ReadOnlyCollectionConverter.Empty();
+                            Locality = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -170,7 +170,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Region = ReadOnlyCollectionConverter.Empty();
+                            Region = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -191,7 +191,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            PostalCode = ReadOnlyCollectionConverter.Empty();
+                            PostalCode = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -212,7 +212,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Country = ReadOnlyCollectionConverter.Empty();
+                            Country = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -238,14 +238,14 @@ public sealed class Address
         // Wenn die VCF-Datei fehlerhaft ist, könnten Properties null sein:
 
 #pragma warning disable CS0618 // Typ oder Element ist veraltet
-        PostOfficeBox ??= ReadOnlyCollectionConverter.Empty();
-        ExtendedAddress ??= ReadOnlyCollectionConverter.Empty();
+        PostOfficeBox ??= ReadOnlyCollectionString.Empty;
+        ExtendedAddress ??= ReadOnlyCollectionString.Empty;
 #pragma warning restore CS0618 // Typ oder Element ist veraltet
-        Street ??= ReadOnlyCollectionConverter.Empty();
-        Locality ??= ReadOnlyCollectionConverter.Empty();
-        Region ??= ReadOnlyCollectionConverter.Empty();
-        PostalCode ??= ReadOnlyCollectionConverter.Empty();
-        Country ??= ReadOnlyCollectionConverter.Empty();
+        Street ??= ReadOnlyCollectionString.Empty;
+        Locality ??= ReadOnlyCollectionString.Empty;
+        Region ??= ReadOnlyCollectionString.Empty;
+        PostalCode ??= ReadOnlyCollectionString.Empty;
+        Country ??= ReadOnlyCollectionString.Empty;
     }
 
     /// <summary>

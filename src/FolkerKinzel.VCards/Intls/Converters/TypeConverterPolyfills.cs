@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -46,7 +47,7 @@ internal static class _Double
 #endif
 }
 
-internal class _TimeSpan
+internal static class _TimeSpan
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static bool TryParseExact(ReadOnlySpan<char> input,

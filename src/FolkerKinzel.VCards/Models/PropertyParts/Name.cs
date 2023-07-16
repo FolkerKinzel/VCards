@@ -49,7 +49,7 @@ public sealed class Name
         FirstName =
         MiddleName =
         Prefix =
-        Suffix = ReadOnlyCollectionConverter.Empty();
+        Suffix = ReadOnlyCollectionString.Empty;
     }
 
 
@@ -71,7 +71,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            LastName = ReadOnlyCollectionConverter.Empty();
+                            LastName = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -92,7 +92,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            FirstName = ReadOnlyCollectionConverter.Empty();
+                            FirstName = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -113,7 +113,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            MiddleName = ReadOnlyCollectionConverter.Empty();
+                            MiddleName = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -134,7 +134,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            Prefix = ReadOnlyCollectionConverter.Empty();
+                            Prefix = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -155,7 +155,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            Suffix = ReadOnlyCollectionConverter.Empty();
+                            Suffix = ReadOnlyCollectionString.Empty;
                         }
                         else
                         {
@@ -176,11 +176,11 @@ public sealed class Name
         }//foreach
 
         // Wenn die VCF-Datei fehlerhaft ist, könnten Properties null sein:
-        FirstName ??= ReadOnlyCollectionConverter.Empty();
-        LastName ??= ReadOnlyCollectionConverter.Empty();
-        MiddleName ??= ReadOnlyCollectionConverter.Empty();
-        Prefix ??= ReadOnlyCollectionConverter.Empty();
-        Suffix ??= ReadOnlyCollectionConverter.Empty();
+        FirstName ??= ReadOnlyCollectionString.Empty;
+        LastName ??= ReadOnlyCollectionString.Empty;
+        MiddleName ??= ReadOnlyCollectionString.Empty;
+        Prefix ??= ReadOnlyCollectionString.Empty;
+        Suffix ??= ReadOnlyCollectionString.Empty;
     }
 
     /// <summary>

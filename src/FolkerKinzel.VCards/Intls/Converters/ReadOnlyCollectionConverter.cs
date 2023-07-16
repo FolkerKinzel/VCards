@@ -4,16 +4,9 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class ReadOnlyCollectionConverter
 {
-    private static readonly ReadOnlyCollection<string> _emptyColl = new(Array.Empty<string>());
-
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static ReadOnlyCollection<string> Empty() => _emptyColl;
-
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static ReadOnlyCollection<string> ToReadOnlyCollection(string? s)
-        => string.IsNullOrWhiteSpace(s) ? _emptyColl : new ReadOnlyCollection<string>(new string[] { s });
+        => string.IsNullOrWhiteSpace(s) ? ReadOnlyCollectionString.Empty : new ReadOnlyCollection<string>(new string[] { s });
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:In bedingten Ausdruck konvertieren", Justification = "<Ausstehend>")]
@@ -21,7 +14,7 @@ internal static class ReadOnlyCollectionConverter
     {
         if (coll is null || !coll.Any(x => !string.IsNullOrWhiteSpace(x)))
         {
-            return _emptyColl;
+            return ReadOnlyCollectionString.Empty;
         }
 
         if (coll.All(x => !string.IsNullOrWhiteSpace(x)))
