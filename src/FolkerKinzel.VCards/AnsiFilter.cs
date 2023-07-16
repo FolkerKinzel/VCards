@@ -183,18 +183,19 @@ public class AnsiFilter
 
         static string? GetCharsetFromVCards(IList<VCard> vCards)
         {
-            if (vCards.All(x => x.Version != VCdVersion.V2_1))
+            foreach (var vCard in vCards.Where(x => x.Version == VCdVersion.V2_1))
             {
-                return null;
-            }
-            IEnumerable<IEnumerable<KeyValuePair<VCdProp, object>>> keyValuePairs = vCards;
+                IEnumerable<KeyValuePair<VCdProp, object>> keyValuePairs = vCard;
 
-            return keyValuePairs
-                .SelectMany(x => x)
-                .Where(x => x.Value is IEnumerable<AddressProperty> or IEnumerable<NameProperty> or IEnumerable<TextProperty>)
-                .Select(x => x.Value as IEnumerable<VCardProperty>)
-                .SelectMany(x => x!)
-                .FirstOrDefault(x => x.Parameters.CharSet != null)?.Parameters.CharSet;
+                string? charSet = keyValuePairs
+                    .Where(x => x.Value is IEnumerable<AddressProperty> or IEnumerable<NameProperty> or IEnumerable<TextProperty>)
+                    .Select(x => x.Value as IEnumerable<VCardProperty>)
+                    .SelectMany(x => x!)
+                    .FirstOrDefault(x => x.Parameters.CharSet != null)?.Parameters.CharSet;
+
+                if (charSet != null) { return charSet; }
+            }
+            return null;
         }
     }
 

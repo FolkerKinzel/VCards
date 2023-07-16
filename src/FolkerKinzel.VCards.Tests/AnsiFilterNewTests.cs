@@ -110,7 +110,7 @@ namespace FolkerKinzel.VCards.Tests
             IList<VCard> vCards = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_v3AnsiVcf, out string encName);
             Assert.IsNotNull(vCards);
             Assert.AreEqual(2, vCards.Count);
-            Assert.AreEqual("windows-1252", encName);
+            Assert.AreEqual("windows-1252", encName, true);
 
         }
 
