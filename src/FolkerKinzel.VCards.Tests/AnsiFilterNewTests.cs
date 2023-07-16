@@ -131,7 +131,6 @@ namespace FolkerKinzel.VCards.Tests
         [TestMethod]
         public void AnsiFilterTest6()
         {
-            var bt = File.ReadAllBytes(TestFiles.MultiAnsiFilterTests_v3Utf16Bom);
             var filter = new AnsiFilter();
             _ = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_v3Utf16Bom, out string enc);
             Assert.AreEqual("utf-8", enc, false);
