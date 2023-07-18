@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
@@ -16,10 +17,10 @@ internal sealed class VcfDeserializationInfo
     internal StringBuilder Builder { get; } = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY);
 
 
-    internal readonly char[] AllQuotes = new char[] { '\"', '\'' };
+    internal char[] AllQuotes { get; } = new char[] { '\"', '\'' };
 
 
-    internal readonly List<KeyValuePair<string, string>> ParameterList = new();
+    internal List<KeyValuePair<string, string>> ParameterList { get; } = new();
 
 
     internal DateAndOrTimeConverter DateAndOrTimeConverter
@@ -46,5 +47,6 @@ internal sealed class VcfDeserializationInfo
 
     internal ValueSplitter CommaSplitter { get; } = new ValueSplitter(',', StringSplitOptions.RemoveEmptyEntries);
 
+    internal ContentSizeRestriction EmbeddedContentSize { get; } = VCard.EmbeddedContentSize;
 
 }

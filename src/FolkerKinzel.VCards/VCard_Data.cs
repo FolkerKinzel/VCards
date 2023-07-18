@@ -18,6 +18,7 @@ namespace FolkerKinzel.VCards;
 public sealed partial class VCard
 {
     private readonly Dictionary<VCdProp, object> _propDic = new();
+    private static ContentSizeRestriction _contentSizeRestriction = new ContentSizeRestriction();
 
     [return: MaybeNull]
     private T Get<T>(VCdProp prop) where T : class?
@@ -38,6 +39,12 @@ public sealed partial class VCard
         }
     }
 
+
+    public static ContentSizeRestriction EmbeddedContentSize
+    {
+        get => _contentSizeRestriction;
+        set => _contentSizeRestriction = value ?? throw new ArgumentNullException(nameof(value));
+    }
 
 
     /// <summary>

@@ -48,6 +48,11 @@
 - [x] **Breaking Change:** Remove `Parameters.Charset`.
 - [x] Give `AnsiFilter` the functionality of `MultiAnsiFilter` with better performance.
 - [ ] Use the HashCode struct to compute hash codes.
+- [x] Implement `Models.ContentSizeRestriction`
+- [x] Implement `Models.Enums.SizeRestriction`
+- [x] Implement `static ContentSizeRestriction VCard.EmbeddedContentSize`
+- [x] Implement `VcfDeserializationInfo.EmbeddedContentSize` 
+- [x] Implement `VcfSerializer.EmbeddedContentSize` 
 
 
 ### 5.0.0-beta.3
