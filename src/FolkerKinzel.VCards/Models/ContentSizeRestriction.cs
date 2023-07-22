@@ -10,6 +10,7 @@ namespace FolkerKinzel.VCards.Models;
 public class ContentSizeRestriction
 {
     private const int OVERHEAD = 64;
+    private const SizeRestriction DISCARD_MAX_SIZE = (SizeRestriction)6;
 
     private ContentSizeRestriction(ContentSizeRestriction other) :
         this(other.ReadRestriction, other.WriteRestriction)
@@ -19,8 +20,18 @@ public class ContentSizeRestriction
     public ContentSizeRestriction(SizeRestriction readRestriction = SizeRestriction.Uri,
                                   SizeRestriction writeRestriction = SizeRestriction.Uri)
     {
-        ReadRestriction = readRestriction;
-        WriteRestriction = writeRestriction;
+        ReadRestriction = Normalize(readRestriction);
+        WriteRestriction = Normalize(writeRestriction);
+
+        //////////////////////////////////////////////////////////////////////////////////
+
+        static SizeRestriction Normalize(SizeRestriction value)
+        {
+            if(value <= SizeRestriction.None) { return SizeRestriction.None; }
+
+            if(value <= DISCARD_MAX_SIZE) { return SizeRestriction.Discard; }
+            return value;
+        }
     }
 
     public SizeRestriction ReadRestriction { get; } = SizeRestriction.Uri;
