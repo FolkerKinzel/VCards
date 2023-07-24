@@ -1,5 +1,4 @@
-﻿using System.Text;
-using FolkerKinzel.VCards.Extensions;
+﻿using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;

@@ -1,12 +1,9 @@
 ﻿using System.Runtime.Serialization;
-using System.Text;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.Strings;
-using FolkerKinzel.Strings.Polyfills;
 
 namespace FolkerKinzel.VCards.Models;
 

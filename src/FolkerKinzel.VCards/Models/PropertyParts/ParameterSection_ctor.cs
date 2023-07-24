@@ -1,11 +1,9 @@
-﻿using System.Text;
-using FolkerKinzel.VCards.Extensions;
+﻿using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
 using static FolkerKinzel.VCards.VCard;
-using FolkerKinzel.Strings;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 

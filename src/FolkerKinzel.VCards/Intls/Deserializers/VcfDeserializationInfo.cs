@@ -1,5 +1,4 @@
-﻿using System.Text;
-using FolkerKinzel.VCards.Intls.Converters;
+﻿using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;

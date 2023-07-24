@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Text;
-using FolkerKinzel.Strings;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
 

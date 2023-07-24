@@ -5,8 +5,6 @@ using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Globalization;
-using System.Text;
-using FolkerKinzel.Strings.Polyfills;
 
 namespace FolkerKinzel.VCards;
 

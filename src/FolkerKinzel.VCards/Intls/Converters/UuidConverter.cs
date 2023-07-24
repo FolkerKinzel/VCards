@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace FolkerKinzel.VCards.Intls.Converters;
+﻿namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class UuidConverter
 {

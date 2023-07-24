@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Text;
-using FolkerKinzel.Strings.Polyfills;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 

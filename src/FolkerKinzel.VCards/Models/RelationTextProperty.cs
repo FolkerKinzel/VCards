@@ -1,5 +1,4 @@
-﻿using System.Text;
-using FolkerKinzel.VCards.Intls.Attributes;
+﻿using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;

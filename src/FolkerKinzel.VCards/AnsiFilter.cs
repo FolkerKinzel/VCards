@@ -1,8 +1,6 @@
-﻿using System.Text;
-using FolkerKinzel.VCards.Resources;
+﻿using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.Strings;
 
 namespace FolkerKinzel.VCards;
 

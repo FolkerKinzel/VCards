@@ -1,7 +1,4 @@
-﻿using System.Text;
-using FolkerKinzel.Strings.Polyfills;
-
-namespace FolkerKinzel.VCards.Intls.Extensions;
+﻿namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static class StringExtension
 {

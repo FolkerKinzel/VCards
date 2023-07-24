@@ -1,7 +1,5 @@
-﻿using System.Text;
-using FolkerKinzel.VCards.Intls.Extensions;
+﻿using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Resources;
-using FolkerKinzel.Strings;
 
 namespace FolkerKinzel.VCards.Models;
 

@@ -1,8 +1,4 @@
 ﻿using System.Globalization;
-using System.Text;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.Strings;
-using FolkerKinzel.Strings.Polyfills;
 
 namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 

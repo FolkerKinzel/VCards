@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.Strings.Polyfills;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 

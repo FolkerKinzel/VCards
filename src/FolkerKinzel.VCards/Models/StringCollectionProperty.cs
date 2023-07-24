@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
-using System.Text;
 using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;

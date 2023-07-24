@@ -39,7 +39,6 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="FolkerKinzel.Strings" Version="5.2.0" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.3" />
 		<PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />

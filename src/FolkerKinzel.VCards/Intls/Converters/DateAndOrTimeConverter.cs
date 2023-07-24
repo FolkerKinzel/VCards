@@ -1,6 +1,4 @@
 ﻿using System.Globalization;
-using System.Text;
-using FolkerKinzel.Strings.Polyfills;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 

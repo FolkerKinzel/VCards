@@ -1,7 +1,4 @@
 ﻿using System.Collections;
-using System.Text;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.Strings.Polyfills;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
