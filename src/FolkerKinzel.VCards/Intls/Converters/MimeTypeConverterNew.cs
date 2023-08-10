@@ -61,19 +61,17 @@ internal static class MimeTypeConverterNew
 
     private const int SHORT_STRING = 128;
 
-    internal static string? ImageTypeFromMimeType(string? mimeType)
-    {
-        string? lowered = mimeType?.ToLowerInvariant();
-        return lowered switch
+    internal static string? ImageTypeFromMimeType(string? mimeType) =>
+        mimeType switch
         {
             MimeTypeString.Image.MET => ImageTypeValue.MET,
             MimeTypeString.Image.PMB => ImageTypeValue.PMB,
             MimeTypeString.Image.DIB => ImageTypeValue.DIB,
             MimeTypeString.Image.PS => ImageTypeValue.PS,
             MimeTypeString.Image.QTIME => ImageTypeValue.QTIME,
-            _ => TypeValueFromMimeType(lowered),
+            _ => TypeValueFromMimeType(mimeType)
         };
-    }
+    
 
     internal static string? MimeTypeFromImageType(string typeValue) =>
          typeValue switch
@@ -89,17 +87,15 @@ internal static class MimeTypeConverterNew
         };
 
 
-    internal static string? KeyTypeFromMimeType(string? mimeType)
-    {
-        string? lowered = mimeType?.ToLowerInvariant();
-        return lowered  switch
+    internal static string? KeyTypeFromMimeType(string? mimeType) =>
+        mimeType switch
         {
             MimeTypeString.EncryptionKey.X509 => KeyTypeValue.X509,
             "application/x-x509-user-cert" => KeyTypeValue.X509,
             MimeTypeString.EncryptionKey.PGP => KeyTypeValue.PGP,
-            _ => TypeValueFromMimeType(lowered)
+            _ => TypeValueFromMimeType(mimeType)
         };
-    }
+
 
     internal static string? MimeTypeFromKeyType(string typeValue) =>
         typeValue switch
@@ -110,16 +106,13 @@ internal static class MimeTypeConverterNew
         };
 
 
-    internal static string? SoundTypeValueFromMimeType(string? mimeType)
-    {
-        string? lowered = mimeType?.ToLowerInvariant();
-        return lowered switch
+    internal static string? SoundTypeValueFromMimeType(string? mimeType) =>
+        mimeType switch
         {
             MimeTypeString.Audio.WAVE => SoundTypeValue.WAVE,
             MimeTypeString.Audio.PCM => SoundTypeValue.PCM,
-            _ => TypeValueFromMimeType(lowered),
+            _ => TypeValueFromMimeType(mimeType)
         };
-    }
 
     internal static string MimeTypeFromSoundTypeValue(string typeValue) =>
          typeValue switch
@@ -135,6 +128,10 @@ internal static class MimeTypeConverterNew
 
     private static string? CreateMimeType(string mediaType, string subType)
     {
+        if(IsMimeType(subType))
+        {
+            return subType;
+        }
         try
         {
             return MimeType.Create(mediaType, subType).ToString();
@@ -143,6 +140,8 @@ internal static class MimeTypeConverterNew
         {
             return null;
         }
+
+        static bool IsMimeType(string input) => input.Contains('/');
     }
 
     private static string? TypeValueFromMimeType(string? mimeType)
@@ -152,12 +151,10 @@ internal static class MimeTypeConverterNew
             return null;
         }
 
-        Debug.Assert(mimeType.ToLowerInvariant() == mimeType);
-
         if (MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo info))
         {
             var subType = info.SubType;
-            subType = subType.StartsWith("x-", StringComparison.Ordinal) ? subType.Slice(2) : subType;
+            subType = subType.StartsWith("x-", StringComparison.OrdinalIgnoreCase) ? subType.Slice(2) : subType;
 
             var span = subType.Length > SHORT_STRING ? new char[subType.Length].AsSpan() : stackalloc char[subType.Length];
             _ = subType.ToUpperInvariant(span);

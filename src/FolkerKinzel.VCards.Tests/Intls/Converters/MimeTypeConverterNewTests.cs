@@ -288,9 +288,10 @@ public class MimeTypeConverterNewTests
     //[DataRow("MPEG2")]
     [DataRow("AVI")]
     [DataRow("QTIME")]
+    [DataRow("SVG")]
     public void PictureRoundtripTest1(string typeValue)
     {
-        string mime = MimeTypeConverterNew.MimeTypeFromImageType(typeValue);
+        string? mime = MimeTypeConverterNew.MimeTypeFromImageType(typeValue);
         string? type = MimeTypeConverterNew.ImageTypeFromMimeType(mime);
         Assert.IsNotNull(type);
         Assert.AreEqual(typeValue, type);
@@ -299,18 +300,12 @@ public class MimeTypeConverterNewTests
     [TestMethod]
     public void PictureRoundtripTest2()
     {
-        string mime = MimeTypeConverterNew.MimeTypeFromImageType("MPEG2");
+        string? mime = MimeTypeConverterNew.MimeTypeFromImageType("MPEG2");
         string? type = MimeTypeConverterNew.ImageTypeFromMimeType(mime);
         Assert.AreEqual("MPEG", type);
     }
 
-    [TestMethod]
-    public void PictureRoundtripTest3()
-    {
-        string mime = MimeTypeConverterNew.MimeTypeFromImageType("SVG");
-        string? type = MimeTypeConverterNew.ImageTypeFromMimeType(mime);
-        Assert.AreEqual("SVG+XML", type);
-    }
+    
 
 
     [DataTestMethod]
