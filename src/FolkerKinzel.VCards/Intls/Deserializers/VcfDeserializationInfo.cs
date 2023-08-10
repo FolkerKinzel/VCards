@@ -46,6 +46,6 @@ internal sealed class VcfDeserializationInfo
 
     internal ValueSplitter CommaSplitter { get; } = new ValueSplitter(',', StringSplitOptions.RemoveEmptyEntries);
 
-    internal ContentSizeRestriction EmbeddedContentSize { get; } = VCard.EmbeddedContentSize;
+    internal ContentSizeRestriction EmbeddedContentSize { get; } = VCard.EmbeddedContentSizeLimit;
 
 }

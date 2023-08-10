@@ -61,8 +61,10 @@
 		<Compile Remove="Intls\Extensions\DoubleExtension.cs" />
 		<Compile Remove="Intls\Extensions\PolyfillExtension.cs" />
 		<Compile Remove="Intls\Net40LeaveOpenStream.cs" />
+		<Compile Remove="Models\ContentSizeRestriction.cs" />
 		<Compile Remove="Models\DataProperty_OBSOLETE.cs" />
 		<Compile Remove="Models\DataUrl.cs" />
+		<Compile Remove="Models\Enums\SizeRestriction.cs" />
 		<Compile Remove="Models\PropertyParts\MimeType.cs" />
 		<Compile Remove="MultiAnsiFilter.cs" />
 	</ItemGroup>
@@ -91,7 +93,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="FolkerKinzel.Uris">
-			<Version>3.0.0-beta.1</Version>
+			<Version>3.0.0-beta.2</Version>
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>

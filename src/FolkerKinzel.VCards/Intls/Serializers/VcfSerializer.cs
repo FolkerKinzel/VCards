@@ -31,7 +31,7 @@ internal abstract class VcfSerializer
 
     internal ITimeZoneIDConverter? TimeZoneConverter { get; }
 
-    internal ContentSizeRestriction EmbeddedContentSize { get; } = VCard.EmbeddedContentSize;
+    internal ContentSizeRestriction EmbeddedContentSize { get; } = VCard.EmbeddedContentSizeLimit;
 
 
     protected VcfSerializer(TextWriter writer, VcfOptions options, ParameterSerializer parameterSerializer, ITimeZoneIDConverter? tzConverter)

@@ -61,11 +61,29 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The content to embed is too large. ähnelt.
+        /// </summary>
+        internal static string ContentTooLarge {
+            get {
+                return ResourceManager.GetString("ContentTooLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The length of the identifier is more than one digit. ähnelt.
         /// </summary>
         internal static string IdentifierTooLong {
             get {
                 return ResourceManager.GetString("IdentifierTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid internet media type. ähnelt.
+        /// </summary>
+        internal static string InvalidMimeType {
+            get {
+                return ResourceManager.GetString("InvalidMimeType", resourceCulture);
             }
         }
         

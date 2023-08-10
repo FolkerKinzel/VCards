@@ -267,7 +267,7 @@ public sealed partial class ParameterSection
     public string? MediaType
     {
         get => Get<string?>(VCdParam.MediaType);
-        internal set => Set<string?>(VCdParam.MediaType, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
+        internal set => Set<string?>(VCdParam.MediaType, value);
     }
 
     /// <summary>

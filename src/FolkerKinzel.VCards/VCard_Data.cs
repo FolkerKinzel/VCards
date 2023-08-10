@@ -40,7 +40,7 @@ public sealed partial class VCard
     }
 
 
-    public static ContentSizeRestriction EmbeddedContentSize
+    public static ContentSizeRestriction EmbeddedContentSizeLimit
     {
         get => _contentSizeRestriction;
         set => _contentSizeRestriction = value ?? throw new ArgumentNullException(nameof(value));
