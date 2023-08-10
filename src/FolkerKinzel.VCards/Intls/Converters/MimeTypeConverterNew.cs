@@ -61,17 +61,89 @@ internal static class MimeTypeConverterNew
 
     private const int SHORT_STRING = 128;
 
-    internal static string? ImageTypeValueFromMimeType(string? mimeType) =>
-         mimeType?.ToLowerInvariant() switch
+    internal static string? ImageTypeFromMimeType(string? mimeType)
+    {
+        string? lowered = mimeType?.ToLowerInvariant();
+        return lowered switch
         {
             MimeTypeString.Image.MET => ImageTypeValue.MET,
             MimeTypeString.Image.PMB => ImageTypeValue.PMB,
             MimeTypeString.Image.DIB => ImageTypeValue.DIB,
             MimeTypeString.Image.PS => ImageTypeValue.PS,
             MimeTypeString.Image.QTIME => ImageTypeValue.QTIME,
-            _ => TypeValueFromMimeType(mimeType),
+            _ => TypeValueFromMimeType(lowered),
+        };
+    }
+
+    internal static string? MimeTypeFromImageType(string typeValue) =>
+         typeValue switch
+        {
+            ImageTypeValue.DIB => MimeTypeString.Image.DIB,
+            ImageTypeValue.MET => MimeTypeString.Image.MET,
+            ImageTypeValue.MPEG2 => MimeTypeFromImageType(ImageTypeValue.MPEG),
+            ImageTypeValue.PICT => MimeTypeString.Image.PICT,
+            ImageTypeValue.PMB => MimeTypeString.Image.PMB,
+            ImageTypeValue.PS => MimeTypeString.Image.PS,
+            ImageTypeValue.QTIME => MimeTypeString.Image.QTIME,
+            _ => CreateMimeType("image", typeValue),
         };
 
+
+    internal static string? KeyTypeFromMimeType(string? mimeType)
+    {
+        string? lowered = mimeType?.ToLowerInvariant();
+        return lowered  switch
+        {
+            MimeTypeString.EncryptionKey.X509 => KeyTypeValue.X509,
+            "application/x-x509-user-cert" => KeyTypeValue.X509,
+            MimeTypeString.EncryptionKey.PGP => KeyTypeValue.PGP,
+            _ => TypeValueFromMimeType(lowered)
+        };
+    }
+
+    internal static string? MimeTypeFromKeyType(string typeValue) =>
+        typeValue switch
+        {
+            KeyTypeValue.X509 => MimeTypeString.EncryptionKey.X509,
+            KeyTypeValue.PGP => MimeTypeString.EncryptionKey.PGP,
+            _ => CreateMimeType("application", typeValue)
+        };
+
+
+    internal static string? SoundTypeValueFromMimeType(string? mimeType)
+    {
+        string? lowered = mimeType?.ToLowerInvariant();
+        return lowered switch
+        {
+            MimeTypeString.Audio.WAVE => SoundTypeValue.WAVE,
+            MimeTypeString.Audio.PCM => SoundTypeValue.PCM,
+            _ => TypeValueFromMimeType(lowered),
+        };
+    }
+
+    internal static string MimeTypeFromSoundTypeValue(string typeValue) =>
+         typeValue switch
+        {
+            SoundTypeValue.PCM => MimeTypeString.Audio.PCM,
+            SoundTypeValue.WAVE => MimeTypeString.Audio.WAVE,
+            SoundTypeValue.NonStandard.BASIC => MimeTypeString.Audio.BASIC,
+            "MPEG" => MimeTypeString.Audio.MP3,
+            SoundTypeValue.NonStandard.VORBIS => MimeTypeString.Audio.VORBIS,
+            _ => MimeString.FromFileName(typeValue)
+        };
+
+
+    private static string? CreateMimeType(string mediaType, string subType)
+    {
+        try
+        {
+            return MimeType.Create(mediaType, subType).ToString();
+        }
+        catch
+        {
+            return null;
+        }
+    }
 
     private static string? TypeValueFromMimeType(string? mimeType)
     {
@@ -91,107 +163,7 @@ internal static class MimeTypeConverterNew
             _ = subType.ToUpperInvariant(span);
             return span.ToString();
         }
-        return mimeType.ToUpperInvariant();
+        return null;
     }
 
-
-    internal static string MimeTypeFromImageTypeValue(string typeValue)
-    {
-        Debug.Assert(StringComparer.Ordinal.Equals(typeValue, typeValue.ToUpperInvariant()));
-
-        switch (typeValue)
-        {
-            case ImageTypeValue.DIB:
-                return MimeTypeString.Image.DIB;
-            case ImageTypeValue.MET:
-                return MimeTypeString.Image.MET;
-            case ImageTypeValue.MPEG2:
-                return MimeTypeFromImageTypeValue(ImageTypeValue.MPEG);
-            case ImageTypeValue.PICT:
-                return MimeTypeString.Image.PICT;
-            case ImageTypeValue.PMB:
-                return MimeTypeString.Image.PMB;
-            case ImageTypeValue.PS:
-                return MimeTypeString.Image.PS;
-            case ImageTypeValue.QTIME:
-                return MimeTypeString.Image.QTIME;
-
-            default:
-                return MimeString.FromFileName(typeValue);
-
-        }//switch
-    }
-
-
-    internal static string MimeTypeFromEncryptionTypeValue(string typeValue)
-    {
-        Debug.Assert(StringComparer.Ordinal.Equals(typeValue, typeValue.ToUpperInvariant()));
-
-        return typeValue switch
-        {
-            KeyTypeValue.X509 => MimeTypeString.EncryptionKey.X509,
-            KeyTypeValue.PGP => MimeTypeString.EncryptionKey.PGP,
-            _ => MimeString.FromFileName(typeValue)
-        };
-    }
-
-    internal static string? KeyTypeValueFromMimeType(string? mimeType)
-    {
-        return mimeType?.ToLowerInvariant() switch
-        {
-            MimeTypeString.EncryptionKey.X509 => KeyTypeValue.X509,
-            "application/x-x509-user-cert" => KeyTypeValue.X509,
-            MimeTypeString.EncryptionKey.PGP => KeyTypeValue.PGP,
-            _ => TypeValueFromMimeType(mimeType)
-        };
-    }
-
-    internal static string? SoundTypeValueFromMimeType(string? mimeType)
-    {
-
-        switch (mimeType?.ToLowerInvariant())
-        {
-            case MimeTypeString.Audio.WAVE:
-                return SoundTypeValue.WAVE;
-            case MimeTypeString.Audio.PCM:
-                return SoundTypeValue.PCM;
-            default:
-                return TypeValueFromMimeType(mimeType);
-        }
-    }
-
-    internal static string MimeTypeFromSoundTypeValue(string typeValue)
-    {
-        Debug.Assert(StringComparer.Ordinal.Equals(typeValue, typeValue.ToUpperInvariant()));
-
-        switch (typeValue)
-        {
-            case SoundTypeValue.PCM:
-                return MimeTypeString.Audio.PCM;
-
-            case SoundTypeValue.WAVE:
-                return MimeTypeString.Audio.WAVE;
-
-            case SoundTypeValue.NonStandard.BASIC:
-                return MimeTypeString.Audio.BASIC;
-
-            case "MPEG":
-                return MimeTypeString.Audio.MP3;
-
-            case SoundTypeValue.NonStandard.VORBIS:
-                return MimeTypeString.Audio.VORBIS;
-
-            default:
-                return MimeString.FromFileName(typeValue);
-
-        }
-    }
-
-
-
-    //private static string? GetFileTypeExtensionFromMimeType(string? mimeString)
-    //{
-    //    string? extension = MimeString.ToFileTypeExtension(mimeString, includePeriod: false);
-    //    return extension == "bin" ? null : extension.ToUpperInvariant();
-    //}
 }
