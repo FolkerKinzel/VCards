@@ -55,11 +55,15 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="AnsiFilter_old.cs" />
+		<Compile Remove="Intls\Converters\MimeTypeConverter_OBSOLETE.cs" />
 		<Compile Remove="Intls\Converters\TextEncodingConverter.cs" />
 		<Compile Remove="Intls\Deserializers\VcfRow_ctor - NET40.cs" />
 		<Compile Remove="Intls\Extensions\DoubleExtension.cs" />
 		<Compile Remove="Intls\Extensions\PolyfillExtension.cs" />
 		<Compile Remove="Intls\Net40LeaveOpenStream.cs" />
+		<Compile Remove="Models\DataProperty_OBSOLETE.cs" />
+		<Compile Remove="Models\DataUrl.cs" />
+		<Compile Remove="Models\PropertyParts\MimeType.cs" />
 		<Compile Remove="MultiAnsiFilter.cs" />
 	</ItemGroup>
 	<ItemGroup>

@@ -83,9 +83,9 @@ public class V3Tests
                 new TextProperty(UNITEXT)
         };
 
-        vcard.Keys = new DataProperty[] { new DataProperty(DataUrl.FromText(ASCIITEXT)) };
+        vcard.Keys = DataProperty.FromText(ASCIITEXT);
 
-        vcard.Photos = new DataProperty[] { new DataProperty(DataUrl.FromBytes(bytes, "image/jpeg")) };
+        vcard.Photos = DataProperty.FromBytes(bytes, "image/jpeg");
 
         string s = vcard.ToVcfString(VCdVersion.V3_0);
 
@@ -97,9 +97,9 @@ public class V3Tests
 
         _ = VCard.ParseVcf(s);
 
-        Assert.AreEqual(((DataUrl?)vcard.Keys?.First()?.Value)?.GetEmbeddedText(), ASCIITEXT);
+        Assert.AreEqual(vcard.Keys?.First()?.Value, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-        Assert.IsTrue(((DataUrl?)vcard.Photos?.First()?.Value)?.GetEmbeddedBytes()?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(((byte[]?)vcard.Photos?.First()?.Value)?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()

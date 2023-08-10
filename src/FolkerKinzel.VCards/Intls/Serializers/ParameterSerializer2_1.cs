@@ -384,7 +384,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
 
     private void AppendImageType()
     {
-        string? s = MimeTypeConverter.ImageTypeValueFromMimeType(ParaSection.MediaType);
+        string? s = MimeTypeConverterNew.ImageTypeFromMimeType(ParaSection.MediaType);
 
         if (s != null)
         {
@@ -394,7 +394,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
 
     private void AppendSoundType()
     {
-        string? s = MimeTypeConverter.SoundTypeValueFromMimeType(ParaSection.MediaType);
+        string? s = MimeTypeConverterNew.SoundTypeFromMimeType(ParaSection.MediaType);
 
         if (s != null)
         {
@@ -404,7 +404,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
 
     private void AppendKeyType()
     {
-        string? s = MimeTypeConverter.KeyTypeValueFromMimeType(ParaSection.MediaType);
+        string? s = MimeTypeConverterNew.KeyTypeFromMimeType(ParaSection.MediaType);
 
         if (s != null)
         {

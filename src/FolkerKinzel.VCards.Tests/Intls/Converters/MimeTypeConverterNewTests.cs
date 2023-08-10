@@ -34,7 +34,7 @@ public class MimeTypeConverterNewTests
     [DataRow(null, null)]
     public void SoundTypeValueFromMimeTypeTest(string? input, string? expected)
     {
-        string? result = MimeTypeConverterNew.SoundTypeValueFromMimeType(input);
+        string? result = MimeTypeConverterNew.SoundTypeFromMimeType(input);
         Assert.AreEqual(expected, result);
     }
 
@@ -315,8 +315,8 @@ public class MimeTypeConverterNewTests
     [DataRow("MPEG")]
     public void SoundRoundtripTest1(string typeValue)
     {
-        string mime = MimeTypeConverterNew.MimeTypeFromSoundTypeValue(typeValue);
-        string? type = MimeTypeConverterNew.SoundTypeValueFromMimeType(mime);
+        string mime = MimeTypeConverterNew.MimeTypeFromSoundType(typeValue);
+        string? type = MimeTypeConverterNew.SoundTypeFromMimeType(mime);
         Assert.IsNotNull(type);
         Assert.AreEqual(typeValue, type);
     }
@@ -324,8 +324,8 @@ public class MimeTypeConverterNewTests
     [TestMethod]
     public void SoundRoundtripTest2()
     {
-        string mime = MimeTypeConverterNew.MimeTypeFromSoundTypeValue("MP3");
-        string? type = MimeTypeConverterNew.SoundTypeValueFromMimeType(mime);
+        string mime = MimeTypeConverterNew.MimeTypeFromSoundType("MP3");
+        string? type = MimeTypeConverterNew.SoundTypeFromMimeType(mime);
         Assert.IsNotNull(type);
         Assert.AreEqual("MPEG", type);
     }
@@ -335,7 +335,7 @@ public class MimeTypeConverterNewTests
     [DataRow("PGP")]
     public void KeyRoundtripTest1(string typeValue)
     {
-        string mime = MimeTypeConverterNew.MimeTypeFromKeyType(typeValue);
+        string? mime = MimeTypeConverterNew.MimeTypeFromKeyType(typeValue);
         string? type = MimeTypeConverterNew.KeyTypeFromMimeType(mime);
         Assert.IsNotNull(type);
         Assert.AreEqual(typeValue, type);

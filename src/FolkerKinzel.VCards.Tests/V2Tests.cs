@@ -31,15 +31,8 @@ public class V2Tests
         DataProperty? photo = vcard[0].Photos?.FirstOrDefault();
         Assert.IsNotNull(photo);
 
-        if (photo?.Value is DataUrl dataUrl)
-        {
-            Assert.AreEqual(dataUrl.MimeType.MediaType, "image/jpeg");
-            //System.IO.File.WriteAllBytes(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"Testbild{dataUrl.GetFileExtension()}"), dataUrl.GetEmbeddedBytes());
-        }
-        else
-        {
-            Assert.Fail();
-        }
+        Assert.AreEqual(photo?.Parameters.MediaType, "image/jpeg");
+        //System.IO.File.WriteAllBytes(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"Testbild{dataUrl.GetFileExtension()}"), dataUrl.GetEmbeddedBytes());
 
         VCard.SaveVcf(System.IO.Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"),
@@ -86,8 +79,8 @@ public class V2Tests
                 new TextProperty(UNITEXT)
         };
 
-        vcard.Keys = new DataProperty[] { new DataProperty(DataUrl.FromText(ASCIITEXT)) };
-        vcard.Photos = new DataProperty[] { new DataProperty(DataUrl.FromBytes(bytes, "image/jpeg")) };
+        vcard.Keys = DataProperty.FromText(ASCIITEXT);
+        vcard.Photos = DataProperty.FromBytes(bytes, "image/jpeg");
 
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
@@ -98,9 +91,9 @@ public class V2Tests
 
         _ = VCard.ParseVcf(s);
 
-        Assert.AreEqual(((DataUrl?)vcard.Keys?.First()?.Value)?.GetEmbeddedText(), ASCIITEXT);
+        Assert.AreEqual(vcard.Keys?.First()?.Value, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-        Assert.IsTrue(((DataUrl?)vcard.Photos?.First()?.Value)?.GetEmbeddedBytes()?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(((byte[]?)(vcard.Photos?.First()?.Value))?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()
@@ -165,7 +158,7 @@ public class V2Tests
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
         Assert.IsNotNull(addresses);
         Assert.AreEqual(2, addresses!.Count());
-        Assert.IsNotNull(addresses!.FirstOrDefault( x => x!.Parameters.Label == label0 && x.Value.Street[0] == label0));
+        Assert.IsNotNull(addresses!.FirstOrDefault(x => x!.Parameters.Label == label0 && x.Value.Street[0] == label0));
         Assert.IsNotNull(addresses!.FirstOrDefault(x => x!.Parameters.Label == label1 && x.Value.Street[0] == label1));
 
     }

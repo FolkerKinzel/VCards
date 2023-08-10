@@ -74,7 +74,7 @@ public static class VCardExample
             string photoFilePath = Path.Combine(directoryPath, photoFileName);
             CreatePhoto(photoFilePath);
 
-            vcard.Photos = new VC::DataProperty(VC::DataUrl.FromFile(photoFilePath));
+            vcard.Photos = VC::DataProperty.FromFile(photoFilePath);
 
             // This shows how to create a PropertyIDMapping, which helps to identify vCard-Properties
             // even if they are located in vCards that come from different sources (vCard 4.0 only):

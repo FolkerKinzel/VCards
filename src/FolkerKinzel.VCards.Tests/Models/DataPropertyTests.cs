@@ -9,7 +9,7 @@ public class DataPropertyTests
     public void DataPropertyTest3()
     {
         VcfRow row = VcfRow.Parse("PHOTO:", new VcfDeserializationInfo())!;
-        var prop = new DataProperty(row, VCdVersion.V3_0);
+        var prop = DataProperty.Create(row, VCdVersion.V3_0);
 
         Assert.IsNull(prop.Value);
     }

@@ -176,16 +176,16 @@ public sealed partial class VCard
                     Categories = new StringCollectionProperty(vcfRow, this.Version).GetAssignment(Categories);
                     break;
                 case PropKeys.SOUND:
-                    Sounds = new DataProperty(vcfRow, this.Version).GetAssignment(Sounds);
+                    Sounds = DataProperty.Create(vcfRow, this.Version).GetAssignment(Sounds);
                     break;
                 case PropKeys.PHOTO:
-                    Photos = new DataProperty(vcfRow, this.Version).GetAssignment(Photos);
+                    Photos = DataProperty.Create(vcfRow, this.Version).GetAssignment(Photos);
                     break;
                 case PropKeys.LOGO:
-                    Logos = new DataProperty(vcfRow, this.Version).GetAssignment(Logos);
+                    Logos = DataProperty.Create(vcfRow, this.Version).GetAssignment(Logos);
                     break;
                 case PropKeys.KEY:
-                    Keys = new DataProperty(vcfRow, this.Version).GetAssignment(Keys);
+                    Keys = DataProperty.Create(vcfRow, this.Version).GetAssignment(Keys);
                     break;
                 case PropKeys.SORT_STRING: // nur vCard 3.0
                     if (vcfRowsParsed < vcfRowsToParse)

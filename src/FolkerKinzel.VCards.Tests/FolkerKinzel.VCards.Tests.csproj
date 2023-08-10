@@ -25,7 +25,10 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Remove="AnsiFilterTests.cs" />
+		<Compile Remove="Intls\Converters\MimeTypeConverterTests.cs" />
 		<Compile Remove="Intls\Deserializers\DigitParserTests.cs" />
+		<Compile Remove="Models\DataUrlTests.cs" />
+		<Compile Remove="Models\MimeTypeTests.cs" />
 		<Compile Remove="MultiAnsiFilterTests.cs" />
 		<Compile Remove="UnitTestsInitialize.cs" />
 		<Compile Remove="VcfPaths.cs" />
