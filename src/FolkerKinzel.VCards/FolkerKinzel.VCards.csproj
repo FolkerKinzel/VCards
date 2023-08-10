@@ -73,7 +73,7 @@
 		<Using Include="System.Runtime.CompilerServices" />
 		<Using Include="FolkerKinzel.Strings" />
 		<Using Include="FolkerKinzel.Strings.Polyfills" />
-		<Using Include="System.Text"/>
+		<Using Include="System.Text" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
@@ -87,7 +87,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="FolkerKinzel.Uris">
-			<Version>2.0.0-beta.1</Version>
+			<Version>3.0.0-beta.1</Version>
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>

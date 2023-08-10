@@ -1,4 +1,6 @@
-﻿using FolkerKinzel.VCards.Models.PropertyParts;
+﻿using FolkerKinzel.MimeTypes;
+using FolkerKinzel.VCards.Models.PropertyParts;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
@@ -108,80 +110,80 @@ public class MimeTypeConverterNewTests
     }
 
 
-    [DataTestMethod]
-    [DataRow(".pgp", "application/pgp-keys")]
-    [DataRow(".crt", "application/x-x509-ca-cert")]
-    //[DataRow(".der", "application/x-x509-ca-cert")]
-    [DataRow(".cer", "application/pkix-cert")]
-    [DataRow(".pfx", "application/x-pkcs12")]
-    //[DataRow(".p12", "application/x-pkcs12")]
-    [DataRow(".p7b", "application/x-pkcs7-certificates")]
-    //[DataRow(".spc", "application/x-pkcs7-certificates")]
-    [DataRow(".p7c", "application/pkcs7-mime")]
-    [DataRow(".pem", "application/x-pem-file")]
-    [DataRow(".key", "application/pkcs8")]
-    //[DataRow(".p8", "application/pkcs8")]
-    [DataRow(".csr", "application/pkcs10")]
-    //[DataRow(".p10", "application/pkcs10")]
+    //[DataTestMethod]
+    //[DataRow(".pgp", "application/pgp-keys")]
+    //[DataRow(".crt", "application/x-x509-ca-cert")]
+    ////[DataRow(".der", "application/x-x509-ca-cert")]
+    //[DataRow(".cer", "application/pkix-cert")]
+    //[DataRow(".pfx", "application/x-pkcs12")]
+    ////[DataRow(".p12", "application/x-pkcs12")]
+    //[DataRow(".p7b", "application/x-pkcs7-certificates")]
+    ////[DataRow(".spc", "application/x-pkcs7-certificates")]
+    //[DataRow(".p7c", "application/pkcs7-mime")]
+    //[DataRow(".pem", "application/x-pem-file")]
+    //[DataRow(".key", "application/pkcs8")]
+    ////[DataRow(".p8", "application/pkcs8")]
+    //[DataRow(".csr", "application/pkcs10")]
+    ////[DataRow(".p10", "application/pkcs10")]
 
-    [DataRow(".bmp", "image/bmp")]
-    //[DataRow(".dib", "image/bmp")]
-    [DataRow(".gif", "image/gif")]
-    [DataRow(".ico", "image/x-icon")]
-    [DataRow(".jpg", "image/jpeg")]
-    //[DataRow(".jpe", "image/jpeg")]
-    //[DataRow(".jpeg", "image/jpeg")]
-    [DataRow(".pdf", "application/pdf")]
-    [DataRow(".png", "image/png")]
-    //[DataRow(".pnz", "image/png")]
-    [DataRow(".ps", "application/postscript")]
-    //[DataRow(".ai", "application/postscript")]
-    //[DataRow(".eps", "application/postscript")]
-    [DataRow(".svg", "image/svg+xml")]
-    //[DataRow(".svgz", "image/svg+xml")]
-    [DataRow(".tif", "image/tiff")]
-    //[DataRow(".tiff", "image/tiff")]
-    [DataRow(".wmf", "image/x-wmf")]
-    [DataRow(".hevc", "image/mpeg-h")]
-    [DataRow(".xbm", "image/x-xbitmap")]
-    [DataRow(".avi", "image/avi")]
-    [DataRow(".cgm", "image/cgm")]
-    [DataRow(".pic", "image/x-pict")]
-    //[DataRow(".pict", "image/x-pict")]
-    //[DataRow(".pct", "image/x-pict")]
-    [DataRow(".mov", "image/mov")]
+    //[DataRow(".bmp", "image/bmp")]
+    ////[DataRow(".dib", "image/bmp")]
+    //[DataRow(".gif", "image/gif")]
+    //[DataRow(".ico", "image/x-icon")]
+    //[DataRow(".jpg", "image/jpeg")]
+    ////[DataRow(".jpe", "image/jpeg")]
+    ////[DataRow(".jpeg", "image/jpeg")]
+    //[DataRow(".pdf", "application/pdf")]
+    //[DataRow(".png", "image/png")]
+    ////[DataRow(".pnz", "image/png")]
+    //[DataRow(".ps", "application/postscript")]
+    ////[DataRow(".ai", "application/postscript")]
+    ////[DataRow(".eps", "application/postscript")]
+    //[DataRow(".svg", "image/svg+xml")]
+    ////[DataRow(".svgz", "image/svg+xml")]
+    //[DataRow(".tif", "image/tiff")]
+    ////[DataRow(".tiff", "image/tiff")]
+    //[DataRow(".wmf", "image/x-wmf")]
+    //[DataRow(".hevc", "image/mpeg-h")]
+    //[DataRow(".xbm", "image/x-xbitmap")]
+    //[DataRow(".avi", "image/avi")]
+    //[DataRow(".cgm", "image/cgm")]
+    //[DataRow(".pic", "image/x-pict")]
+    ////[DataRow(".pict", "image/x-pict")]
+    ////[DataRow(".pct", "image/x-pict")]
+    //[DataRow(".mov", "image/mov")]
 
-    [DataRow(".aac", "audio/aac")]
-    //[DataRow(".adts", "audio/aac")]
-    [DataRow(".ac3", "audio/ac3")]
-    [DataRow(".aif", "audio/x-aiff")]
-    //[DataRow(".aiff", "audio/x-aiff")]
-    //[DataRow(".aifc", "audio/x-aiff")]
-    [DataRow(".snd", "audio/basic")]
-    //[DataRow(".au", "audio/basic")]
-    [DataRow(".mp3", "audio/mpeg")]
-    //[DataRow(".mpga", "audio/mpeg")]
-    //[DataRow(".mp2", "audio/mpeg")]
-    //[DataRow(".mp2a", "audio/mpeg")]
-    //[DataRow(".m2a", "audio/mpeg")]
-    //[DataRow(".m3a", "audio/mpeg")]
-    [DataRow(".m4a", "audio/mp4")]
-    //[DataRow(".mp4a", "audio/mp4")]
-    [DataRow(".ogg", "audio/ogg")]
-    //[DataRow(".oga", "audio/ogg")]
-    //[DataRow(".spx", "audio/ogg")]
-    [DataRow(".wav", "audio/wav")]
-    [DataRow(".wav", "audio/x-wav")]
+    //[DataRow(".aac", "audio/aac")]
+    ////[DataRow(".adts", "audio/aac")]
+    //[DataRow(".ac3", "audio/ac3")]
+    //[DataRow(".aif", "audio/x-aiff")]
+    ////[DataRow(".aiff", "audio/x-aiff")]
+    ////[DataRow(".aifc", "audio/x-aiff")]
+    //[DataRow(".snd", "audio/basic")]
+    ////[DataRow(".au", "audio/basic")]
+    //[DataRow(".mp3", "audio/mpeg")]
+    ////[DataRow(".mpga", "audio/mpeg")]
+    ////[DataRow(".mp2", "audio/mpeg")]
+    ////[DataRow(".mp2a", "audio/mpeg")]
+    ////[DataRow(".m2a", "audio/mpeg")]
+    ////[DataRow(".m3a", "audio/mpeg")]
+    //[DataRow(".m4a", "audio/mp4")]
+    ////[DataRow(".mp4a", "audio/mp4")]
+    //[DataRow(".ogg", "audio/ogg")]
+    ////[DataRow(".oga", "audio/ogg")]
+    ////[DataRow(".spx", "audio/ogg")]
+    //[DataRow(".wav", "audio/wav")]
+    //[DataRow(".wav", "audio/x-wav")]
 
-    [DataRow(".txt", "text/plain")]
+    //[DataRow(".txt", "text/plain")]
 
-    [DataRow(".octet-stream", "application/octet-stream")]
-    public void GetFileExtensionTest(string extension, string mimeString)
-    {
-        var mime = new MimeType(mimeString);
-        string result = MimeTypeConverter.GetFileExtension(mime);
-        Assert.AreEqual(extension, result);
-    }
+    //[DataRow(".octet-stream", "application/octet-stream")]
+    //public void GetFileExtensionTest(string extension, string mimeString)
+    //{
+    //    var mime = new MimeType(mimeString);
+    //    string result = MimeTypeConverter.GetFileExtension(mime);
+    //    Assert.AreEqual(extension, result);
+    //}
 
 
     [DataTestMethod]
@@ -279,5 +281,80 @@ public class MimeTypeConverterNewTests
     {
         string result = MimeTypeConverterNew.MimeTypeFromSoundTypeValue(typeValue);
         Assert.AreEqual(mime, result);
+    }
+
+    [DataTestMethod]
+    [DataRow("GIF")]
+    [DataRow("CGM")]
+    [DataRow("WMF")]
+    [DataRow("BMP")]
+    [DataRow("MET")]
+    [DataRow("PMB")]
+    [DataRow("DIB")]
+    [DataRow("PICT")]
+    [DataRow("TIFF")]
+    [DataRow("PS")]
+    [DataRow("PDF")]
+    [DataRow("JPEG")]
+    [DataRow("MPEG")]
+    //[DataRow("MPEG2")]
+    [DataRow("AVI")]
+    [DataRow("QTIME")]
+    public void PictureRoundtripTest1(string typeValue)
+    {
+        string mime = MimeTypeConverterNew.MimeTypeFromImageTypeValue(typeValue);
+        string? type = MimeTypeConverterNew.ImageTypeValueFromMimeType(mime);
+        Assert.IsNotNull(type);
+        Assert.AreEqual(typeValue, type);
+    }
+
+    [TestMethod]
+    public void PictureRoundtripTest2()
+    {
+        string mime = MimeTypeConverterNew.MimeTypeFromImageTypeValue("MPEG2");
+        string? type = MimeTypeConverterNew.ImageTypeValueFromMimeType(mime);
+        Assert.AreEqual("MPEG", type);
+    }
+
+    [TestMethod]
+    public void PictureRoundtripTest3()
+    {
+        string mime = MimeTypeConverterNew.MimeTypeFromImageTypeValue("SVG");
+        string? type = MimeTypeConverterNew.ImageTypeValueFromMimeType(mime);
+        Assert.AreEqual("SVG+XML", type);
+    }
+
+
+    [DataTestMethod]
+    [DataRow("WAVE")]
+    [DataRow("PCM")]
+    [DataRow("AIFF")]
+    [DataRow("MPEG")]
+    public void SoundRoundtripTest1(string typeValue)
+    {
+        string mime = MimeTypeConverterNew.MimeTypeFromSoundTypeValue(typeValue);
+        string? type = MimeTypeConverterNew.SoundTypeValueFromMimeType(mime);
+        Assert.IsNotNull(type);
+        Assert.AreEqual(typeValue, type);
+    }
+
+    [TestMethod]
+    public void SoundRoundtripTest2()
+    {
+        string mime = MimeTypeConverterNew.MimeTypeFromSoundTypeValue("MP3");
+        string? type = MimeTypeConverterNew.SoundTypeValueFromMimeType(mime);
+        Assert.IsNotNull(type);
+        Assert.AreEqual("MPEG", type);
+    }
+
+    [DataTestMethod]
+    [DataRow("X509")]
+    [DataRow("PGP")]
+    public void KeyRoundtripTest1(string typeValue)
+    {
+        string mime = MimeTypeConverterNew.MimeTypeFromEncryptionTypeValue(typeValue);
+        string? type = MimeTypeConverterNew.KeyTypeValueFromMimeType(mime);
+        Assert.IsNotNull(type);
+        Assert.AreEqual(typeValue, type);
     }
 }

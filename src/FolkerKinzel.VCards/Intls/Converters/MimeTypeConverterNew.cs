@@ -53,27 +53,47 @@ internal static class MimeTypeConverterNew
             internal const string QTIME = "image/mov";
             internal const string WMF = "image/x-wmf";
             internal const string XBM = "image/x-xbitmap";
+            internal const string MET = "IBM PM Metafile";
+            internal const string PMB = "IBM PM Bitmap";
+            internal const string DIB = "MS Windows DIB";
         }
     }
 
-    
+    private const int SHORT_STRING = 128;
 
-    private const string MP3 = "MP3";
+    internal static string? ImageTypeValueFromMimeType(string? mimeType) =>
+         mimeType?.ToLowerInvariant() switch
+        {
+            MimeTypeString.Image.MET => ImageTypeValue.MET,
+            MimeTypeString.Image.PMB => ImageTypeValue.PMB,
+            MimeTypeString.Image.DIB => ImageTypeValue.DIB,
+            MimeTypeString.Image.PS => ImageTypeValue.PS,
+            MimeTypeString.Image.QTIME => ImageTypeValue.QTIME,
+            _ => TypeValueFromMimeType(mimeType),
+        };
 
-    internal static string? ImageTypeValueFromMimeType(string? mimeType)
+
+    private static string? TypeValueFromMimeType(string? mimeType)
     {
         if (mimeType is null)
         {
             return null;
         }
 
-        const string imageType = @"image/";
+        Debug.Assert(mimeType.ToLowerInvariant() == mimeType);
 
-        return mimeType.StartsWith(imageType, StringComparison.OrdinalIgnoreCase)
-            ? mimeType.Length == imageType.Length ? null : mimeType.Substring(imageType.Length).ToUpperInvariant()
-            : mimeType.ToUpperInvariant();
+        if (MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo info))
+        {
+            var subType = info.SubType;
+            subType = subType.StartsWith("x-", StringComparison.Ordinal) ? subType.Slice(2) : subType;
 
+            var span = subType.Length > SHORT_STRING ? new char[subType.Length].AsSpan() : stackalloc char[subType.Length];
+            _ = subType.ToUpperInvariant(span);
+            return span.ToString();
+        }
+        return mimeType.ToUpperInvariant();
     }
+
 
     internal static string MimeTypeFromImageTypeValue(string typeValue)
     {
@@ -81,73 +101,26 @@ internal static class MimeTypeConverterNew
 
         switch (typeValue)
         {
-            //case ImageTypeValue.JPEG:
-            //case ImageTypeValue.NonStandard.JPG:
-            //case ImageTypeValue.NonStandard.JPE:
-            //    return MimeTypeString.Image.JPEG;
-
-            //case ImageTypeValue.TIFF:
-            //case ImageTypeValue.NonStandard.TIF:
-            //    return MimeTypeString.Image.TIFF;
-
-            //case ImageTypeValue.BMP:
             case ImageTypeValue.DIB:
-                return MimeTypeString.Image.BMP;
-
-            //case ImageTypeValue.GIF:
-            //    return MimeTypeString.Image.GIF;
-
-            //case ImageTypeValue.NonStandard.ICO:
-            //    return MimeTypeString.Image.ICO;
-
-            //case ImageTypeValue.NonStandard.PNG:
-            //    return MimeTypeString.Image.PNG;
-
-            //case ImageTypeValue.NonStandard.SVG:
-            //    return MimeTypeString.Image.SVG;
-
-            //case ImageTypeValue.AVI:
-            //    return MimeTypeString.Image.AVI;
-
-            //case ImageTypeValue.CGM:
-            //    return MimeTypeString.Image.CGM;
-
-            ////case ImageTypeValue.MET:
-            ////    return "";
-            ////    
-            //case ImageTypeValue.MPEG:
-            //case ImageTypeValue.MPEG2:
-            //    return MimeTypeString.Image.MPEG; // Standard?
-
-            //case ImageTypeValue.PDF:
-            //    return MimeTypeString.Image.PDF;
-
+                return MimeTypeString.Image.DIB;
+            case ImageTypeValue.MET:
+                return MimeTypeString.Image.MET;
+            case ImageTypeValue.MPEG2:
+                return MimeTypeFromImageTypeValue(ImageTypeValue.MPEG);
             case ImageTypeValue.PICT:
                 return MimeTypeString.Image.PICT;
-
-            ////case ImageTypeValue.PMB:
-            ////    return "";
-            ////
-            //case ImageTypeValue.PS:
-            //    return MimeTypeString.Image.PS;
-
-            //case ImageTypeValue.QTIME:
-            //case ImageTypeValue.NonStandard.QT:
-            //case ImageTypeValue.NonStandard.MOV:
-            //    return MimeTypeString.Image.QTIME;
-
-            //case ImageTypeValue.WMF:
-            //    return MimeTypeString.Image.WMF;
-
-            //case ImageTypeValue.NonStandard.XBM:
-            //    return MimeTypeString.Image.XBM;
+            case ImageTypeValue.PMB:
+                return MimeTypeString.Image.PMB;
+            case ImageTypeValue.PS:
+                return MimeTypeString.Image.PS;
+            case ImageTypeValue.QTIME:
+                return MimeTypeString.Image.QTIME;
 
             default:
-                return MimeType.FromFileTypeExtension(typeValue).ToString();
+                return MimeString.FromFileName(typeValue);
 
         }//switch
     }
-
 
 
     internal static string MimeTypeFromEncryptionTypeValue(string typeValue)
@@ -158,7 +131,7 @@ internal static class MimeTypeConverterNew
         {
             KeyTypeValue.X509 => MimeTypeString.EncryptionKey.X509,
             KeyTypeValue.PGP => MimeTypeString.EncryptionKey.PGP,
-            _ => MimeTypeString.OCTET_STREAM,
+            _ => MimeString.FromFileName(typeValue)
         };
     }
 
@@ -169,23 +142,22 @@ internal static class MimeTypeConverterNew
             MimeTypeString.EncryptionKey.X509 => KeyTypeValue.X509,
             "application/x-x509-user-cert" => KeyTypeValue.X509,
             MimeTypeString.EncryptionKey.PGP => KeyTypeValue.PGP,
-            _ => GetFileTypeExtensionFromMimeType(mimeType)
+            _ => TypeValueFromMimeType(mimeType)
         };
     }
 
-    internal static string? SoundTypeValueFromMimeType(string? input)
+    internal static string? SoundTypeValueFromMimeType(string? mimeType)
     {
-        if(input is null)
-        {
-            return null;
-        }
 
-        if(input.EndsWith(MP3, StringComparison.OrdinalIgnoreCase))
+        switch (mimeType?.ToLowerInvariant())
         {
-            return MP3;
+            case MimeTypeString.Audio.WAVE:
+                return SoundTypeValue.WAVE;
+            case MimeTypeString.Audio.PCM:
+                return SoundTypeValue.PCM;
+            default:
+                return TypeValueFromMimeType(mimeType);
         }
-
-        return GetFileTypeExtensionFromMimeType(input);
     }
 
     internal static string MimeTypeFromSoundTypeValue(string typeValue)
@@ -194,49 +166,32 @@ internal static class MimeTypeConverterNew
 
         switch (typeValue)
         {
-            //case SoundTypeValue.AIFF:
-            //case SoundTypeValue.NonStandard.AIF:
-            //    return MimeTypeString.Audio.AIFF;
-
             case SoundTypeValue.PCM:
                 return MimeTypeString.Audio.PCM;
 
             case SoundTypeValue.WAVE:
-            //case SoundTypeValue.NonStandard.WAV:
                 return MimeTypeString.Audio.WAVE;
-
-            //case SoundTypeValue.NonStandard.AAC:
-            //    return MimeTypeString.Audio.AAC;
-
-            //case SoundTypeValue.NonStandard.AC3:
-            //    return MimeTypeString.Audio.AC3;
 
             case SoundTypeValue.NonStandard.BASIC:
                 return MimeTypeString.Audio.BASIC;
 
-            //case SoundTypeValue.NonStandard.MP3:
-            //    return MimeTypeString.Audio.MP3;
-
-            //case SoundTypeValue.NonStandard.MP4:
-            //    return MimeTypeString.Audio.MP4;
-
-            //case SoundTypeValue.NonStandard.OGG:
-            //    return MimeTypeString.Audio.OGG;
+            case "MPEG":
+                return MimeTypeString.Audio.MP3;
 
             case SoundTypeValue.NonStandard.VORBIS:
                 return MimeTypeString.Audio.VORBIS;
 
             default:
-                return MimeType.FromFileTypeExtension(typeValue).ToString();
+                return MimeString.FromFileName(typeValue);
 
         }
     }
 
 
 
-    private static string? GetFileTypeExtensionFromMimeType(string? mimeString)
-    {
-        string? extension = MimeType.GetFileTypeExtension(mimeString);
-        return extension == ".bin" ? null : extension.Substring(1).ToUpperInvariant();
-    }
+    //private static string? GetFileTypeExtensionFromMimeType(string? mimeString)
+    //{
+    //    string? extension = MimeString.ToFileTypeExtension(mimeString, includePeriod: false);
+    //    return extension == "bin" ? null : extension.ToUpperInvariant();
+    //}
 }
