@@ -75,54 +75,54 @@ internal sealed partial class VcfRow
 
 
             //Bilder
-            case MimeTypeConverterNew.ImageTypeValue.NonStandard.PNG:
-            case MimeTypeConverterNew.ImageTypeValue.JPEG:
-            case MimeTypeConverterNew.ImageTypeValue.NonStandard.JPG:
-            case MimeTypeConverterNew.ImageTypeValue.NonStandard.JPE:
-            case MimeTypeConverterNew.ImageTypeValue.GIF:
-            case MimeTypeConverterNew.ImageTypeValue.NonStandard.ICO:
-            case MimeTypeConverterNew.ImageTypeValue.TIFF:
-            case MimeTypeConverterNew.ImageTypeValue.NonStandard.TIF:
-            case MimeTypeConverterNew.ImageTypeValue.BMP:
-            case MimeTypeConverterNew.ImageTypeValue.CGM:
-            case MimeTypeConverterNew.ImageTypeValue.WMF:
-            case MimeTypeConverterNew.ImageTypeValue.MET:
-            case MimeTypeConverterNew.ImageTypeValue.PMB:
-            case MimeTypeConverterNew.ImageTypeValue.DIB:
-            case MimeTypeConverterNew.ImageTypeValue.PICT:
-            case MimeTypeConverterNew.ImageTypeValue.NonStandard.PIC:
-            case MimeTypeConverterNew.ImageTypeValue.NonStandard.XBM:
-            case MimeTypeConverterNew.ImageTypeValue.NonStandard.SVG:
+            case Const.ImageTypeValue.NonStandard.PNG:
+            case Const.ImageTypeValue.JPEG:
+            case Const.ImageTypeValue.NonStandard.JPG:
+            case Const.ImageTypeValue.NonStandard.JPE:
+            case Const.ImageTypeValue.GIF:
+            case Const.ImageTypeValue.NonStandard.ICO:
+            case Const.ImageTypeValue.TIFF:
+            case Const.ImageTypeValue.NonStandard.TIF:
+            case Const.ImageTypeValue.BMP:
+            case Const.ImageTypeValue.CGM:
+            case Const.ImageTypeValue.WMF:
+            case Const.ImageTypeValue.MET:
+            case Const.ImageTypeValue.PMB:
+            case Const.ImageTypeValue.DIB:
+            case Const.ImageTypeValue.PICT:
+            case Const.ImageTypeValue.NonStandard.PIC:
+            case Const.ImageTypeValue.NonStandard.XBM:
+            case Const.ImageTypeValue.NonStandard.SVG:
 
 
-            case MimeTypeConverterNew.ImageTypeValue.PS:
-            case MimeTypeConverterNew.ImageTypeValue.PDF:
+            case Const.ImageTypeValue.PS:
+            case Const.ImageTypeValue.PDF:
 
-            case MimeTypeConverterNew.ImageTypeValue.MPEG:
-            case MimeTypeConverterNew.ImageTypeValue.MPEG2:
-            case MimeTypeConverterNew.ImageTypeValue.AVI:
-            case MimeTypeConverterNew.ImageTypeValue.QTIME:
-            case MimeTypeConverterNew.ImageTypeValue.NonStandard.MOV:
-            case MimeTypeConverterNew.ImageTypeValue.NonStandard.QT:
+            case Const.ImageTypeValue.MPEG:
+            case Const.ImageTypeValue.MPEG2:
+            case Const.ImageTypeValue.AVI:
+            case Const.ImageTypeValue.QTIME:
+            case Const.ImageTypeValue.NonStandard.MOV:
+            case Const.ImageTypeValue.NonStandard.QT:
 
             //Sound
-            case MimeTypeConverterNew.SoundTypeValue.WAVE:
-            case MimeTypeConverterNew.SoundTypeValue.NonStandard.WAV:
-            case MimeTypeConverterNew.SoundTypeValue.PCM:
-            case MimeTypeConverterNew.SoundTypeValue.AIFF:
-            case MimeTypeConverterNew.SoundTypeValue.NonStandard.AIF:
-            case MimeTypeConverterNew.SoundTypeValue.NonStandard.MP3:
-            case MimeTypeConverterNew.SoundTypeValue.NonStandard.MP4:
-            case MimeTypeConverterNew.SoundTypeValue.NonStandard.OGG:
-            case MimeTypeConverterNew.SoundTypeValue.NonStandard.VORBIS:
-            case MimeTypeConverterNew.SoundTypeValue.NonStandard.BASIC:
-            case MimeTypeConverterNew.SoundTypeValue.NonStandard.AAC:
-            case MimeTypeConverterNew.SoundTypeValue.NonStandard.AC3:
+            case Const.SoundTypeValue.WAVE:
+            case Const.SoundTypeValue.NonStandard.WAV:
+            case Const.SoundTypeValue.PCM:
+            case Const.SoundTypeValue.AIFF:
+            case Const.SoundTypeValue.NonStandard.AIF:
+            case Const.SoundTypeValue.NonStandard.MP3:
+            case Const.SoundTypeValue.NonStandard.MP4:
+            case Const.SoundTypeValue.NonStandard.OGG:
+            case Const.SoundTypeValue.NonStandard.VORBIS:
+            case Const.SoundTypeValue.NonStandard.BASIC:
+            case Const.SoundTypeValue.NonStandard.AAC:
+            case Const.SoundTypeValue.NonStandard.AC3:
 
 
             // Public Key
-            case MimeTypeConverterNew.KeyTypeValue.X509:
-            case MimeTypeConverterNew.KeyTypeValue.PGP:
+            case Const.KeyTypeValue.X509:
+            case Const.KeyTypeValue.PGP:
                 return TYPE_PROPERTY;
 
 

@@ -6,75 +6,10 @@ using System.Threading.Tasks;
 using FolkerKinzel.MimeTypes;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
+
+
 internal static class MimeTypeConverterNew
 {
-    //Bilder
-    internal static class ImageTypeValue
-    {
-        internal const string JPEG = "JPEG";
-        internal const string GIF = "GIF";
-        internal const string TIFF = "TIFF";
-        internal const string BMP = "BMP";
-        internal const string CGM = "CGM";
-        internal const string WMF = "WMF";
-        internal const string MET = "MET";
-        internal const string PMB = "PMB";
-        internal const string DIB = "DIB";
-        internal const string PICT = "PICT";
-        internal const string PS = "PS";
-        internal const string PDF = "PDF";
-        internal const string MPEG = "MPEG";
-        internal const string MPEG2 = "MPEG2";
-        internal const string AVI = "AVI";
-        internal const string QTIME = "QTIME";
-
-
-        internal static class NonStandard
-        {
-            internal const string PNG = "PNG";
-            internal const string JPG = "JPG";
-            internal const string JPE = "JPE";
-            internal const string ICO = "ICO";
-            internal const string TIF = "TIF";
-            internal const string PIC = "PIC";
-            internal const string XBM = "XBM";
-            internal const string MOV = "MOV";
-            internal const string QT = "QT";
-            internal const string SVG = "SVG";
-        }
-    }
-
-
-    // Public Key
-    internal static class KeyTypeValue
-    {
-        internal const string X509 = "X509";
-        internal const string PGP = "PGP";
-    }
-
-    //Sound
-    internal static class SoundTypeValue
-    {
-        internal const string WAVE = "WAVE";
-        internal const string PCM = "PCM";
-        internal const string AIFF = "AIFF";
-
-
-        internal static class NonStandard
-        {
-            internal const string AIF = "AIF";
-            internal const string MP3 = "MP3";
-            internal const string MP4 = "MP4";
-            internal const string OGG = "OGG";
-            internal const string VORBIS = "VORBIS";
-            internal const string BASIC = "BASIC";
-            internal const string AAC = "AAC";
-            internal const string AC3 = "AC3";
-            internal const string WAV = "WAV";
-        }
-    }
-
-
     private static class MimeTypeString
     {
         internal const string OCTET_STREAM = "application/octet-stream";
@@ -130,11 +65,11 @@ internal static class MimeTypeConverterNew
     internal static string? ImageTypeFromMimeType(string? mimeType) =>
         mimeType switch
         {
-            MimeTypeString.Image.MET => ImageTypeValue.MET,
-            MimeTypeString.Image.PMB => ImageTypeValue.PMB,
-            MimeTypeString.Image.DIB => ImageTypeValue.DIB,
-            MimeTypeString.Image.PS => ImageTypeValue.PS,
-            MimeTypeString.Image.QTIME => ImageTypeValue.QTIME,
+            MimeTypeString.Image.MET =>  Const.ImageTypeValue.MET,
+            MimeTypeString.Image.PMB =>  Const.ImageTypeValue.PMB,
+            MimeTypeString.Image.DIB =>  Const.ImageTypeValue.DIB,
+            MimeTypeString.Image.PS =>   Const.ImageTypeValue.PS,
+            MimeTypeString.Image.QTIME => Const.ImageTypeValue.QTIME,
             _ => TypeValueFromMimeType(mimeType)
         };
     
@@ -142,13 +77,13 @@ internal static class MimeTypeConverterNew
     internal static string? MimeTypeFromImageType(string typeValue) =>
          typeValue switch
         {
-            ImageTypeValue.DIB => MimeTypeString.Image.DIB,
-            ImageTypeValue.MET => MimeTypeString.Image.MET,
-            ImageTypeValue.MPEG2 => MimeTypeFromImageType(ImageTypeValue.MPEG),
-            ImageTypeValue.PICT => MimeTypeString.Image.PICT,
-            ImageTypeValue.PMB => MimeTypeString.Image.PMB,
-            ImageTypeValue.PS => MimeTypeString.Image.PS,
-            ImageTypeValue.QTIME => MimeTypeString.Image.QTIME,
+            Const.ImageTypeValue.DIB => MimeTypeString.Image.DIB,
+            Const.ImageTypeValue.MET => MimeTypeString.Image.MET,
+            Const.ImageTypeValue.MPEG2 => MimeTypeFromImageType(Const.ImageTypeValue.MPEG),
+            Const.ImageTypeValue.PICT => MimeTypeString.Image.PICT,
+            Const.ImageTypeValue.PMB => MimeTypeString.Image.PMB,
+            Const.ImageTypeValue.PS => MimeTypeString.Image.PS,
+            Const.ImageTypeValue.QTIME => MimeTypeString.Image.QTIME,
             _ => CreateMimeType("image", typeValue),
         };
 
@@ -156,9 +91,9 @@ internal static class MimeTypeConverterNew
     internal static string? KeyTypeFromMimeType(string? mimeType) =>
         mimeType switch
         {
-            MimeTypeString.EncryptionKey.X509 => KeyTypeValue.X509,
-            "application/x-x509-user-cert" => KeyTypeValue.X509,
-            MimeTypeString.EncryptionKey.PGP => KeyTypeValue.PGP,
+            MimeTypeString.EncryptionKey.X509 => Const.KeyTypeValue.X509,
+            "application/x-x509-user-cert" =>    Const.KeyTypeValue.X509,
+            MimeTypeString.EncryptionKey.PGP =>  Const.KeyTypeValue.PGP,
             _ => TypeValueFromMimeType(mimeType)
         };
 
@@ -166,8 +101,8 @@ internal static class MimeTypeConverterNew
     internal static string? MimeTypeFromKeyType(string typeValue) =>
         typeValue switch
         {
-            KeyTypeValue.X509 => MimeTypeString.EncryptionKey.X509,
-            KeyTypeValue.PGP => MimeTypeString.EncryptionKey.PGP,
+            Const.KeyTypeValue.X509 => MimeTypeString.EncryptionKey.X509,
+            Const.KeyTypeValue.PGP => MimeTypeString.EncryptionKey.PGP,
             _ => CreateMimeType("application", typeValue)
         };
 
@@ -175,19 +110,19 @@ internal static class MimeTypeConverterNew
     internal static string? SoundTypeFromMimeType(string? mimeType) =>
         mimeType switch
         {
-            MimeTypeString.Audio.WAVE => SoundTypeValue.WAVE,
-            MimeTypeString.Audio.PCM => SoundTypeValue.PCM,
+            MimeTypeString.Audio.WAVE => Const.SoundTypeValue.WAVE,
+            MimeTypeString.Audio.PCM =>  Const.SoundTypeValue.PCM,
             _ => TypeValueFromMimeType(mimeType)
         };
 
     internal static string MimeTypeFromSoundType(string typeValue) =>
          typeValue switch
         {
-            SoundTypeValue.PCM => MimeTypeString.Audio.PCM,
-            SoundTypeValue.WAVE => MimeTypeString.Audio.WAVE,
-            SoundTypeValue.NonStandard.BASIC => MimeTypeString.Audio.BASIC,
+            Const.SoundTypeValue.PCM => MimeTypeString.Audio.PCM,
+            Const.SoundTypeValue.WAVE => MimeTypeString.Audio.WAVE,
+            Const.SoundTypeValue.NonStandard.BASIC => MimeTypeString.Audio.BASIC,
             "MPEG" => MimeTypeString.Audio.MP3,
-            SoundTypeValue.NonStandard.VORBIS => MimeTypeString.Audio.VORBIS,
+            Const.SoundTypeValue.NonStandard.VORBIS => MimeTypeString.Audio.VORBIS,
             _ => MimeString.FromFileName(typeValue)
         };
 
