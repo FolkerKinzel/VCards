@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -124,11 +123,8 @@ public abstract class VCardProperty : ICloneable
         Debug.Assert(serializer.Builder != null);
     }
 
-    [InternalProtected]
     internal virtual void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
-
         Debug.Assert(serializer != null);
 
         if (this.Parameters.Encoding != ValueEncoding.Base64)

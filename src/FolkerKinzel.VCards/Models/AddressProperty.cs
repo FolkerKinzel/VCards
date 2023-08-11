@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
@@ -216,11 +215,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     }
 
 
-    [InternalProtected]
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
-
         base.PrepareForVcfSerialization(serializer);
 
         Debug.Assert(serializer != null);
@@ -234,11 +230,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     }
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
-
         Debug.Assert(serializer != null);
         Debug.Assert(Value != null); // value ist nie null
 

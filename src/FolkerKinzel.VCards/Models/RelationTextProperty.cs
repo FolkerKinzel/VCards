@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Attributes;
-using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -57,10 +56,8 @@ public sealed class RelationTextProperty : RelationProperty, IEnumerable<Relatio
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    [InternalProtected]
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         base.PrepareForVcfSerialization(serializer);
@@ -75,10 +72,8 @@ public sealed class RelationTextProperty : RelationProperty, IEnumerable<Relatio
     }
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         StringBuilder builder = serializer.Builder;

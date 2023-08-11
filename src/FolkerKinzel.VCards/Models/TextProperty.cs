@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -53,10 +52,8 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
 
 
-    [InternalProtected]
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         base.PrepareForVcfSerialization(serializer);
@@ -69,10 +66,8 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
     }
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         StringBuilder builder = serializer.Builder;

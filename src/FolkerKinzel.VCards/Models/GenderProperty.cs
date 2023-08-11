@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -78,13 +77,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     }
 
 
-    [InternalProtected]
-    internal override void AppendValue(VcfSerializer serializer)
-    {
-        InternalProtectedAttribute.Run();
-
-        Value.AppendVCardStringTo(serializer);
-    }
+    internal override void AppendValue(VcfSerializer serializer) => Value.AppendVCardStringTo(serializer);
 
 
     IEnumerator<GenderProperty> IEnumerable<GenderProperty>.GetEnumerator()

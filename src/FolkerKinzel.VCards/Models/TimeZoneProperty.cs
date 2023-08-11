@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -56,16 +55,11 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
-        if (Value != null)
-        {
-            Value.AppendTo(serializer.Builder, serializer.Version, serializer.TimeZoneConverter);
-        }
+        Value?.AppendTo(serializer.Builder, serializer.Version, serializer.TimeZoneConverter);
     }
 
     IEnumerator<TimeZoneProperty> IEnumerable<TimeZoneProperty>.GetEnumerator()

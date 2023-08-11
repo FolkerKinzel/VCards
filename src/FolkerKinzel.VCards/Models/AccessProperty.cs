@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Attributes;
-using FolkerKinzel.VCards.Intls.Converters;
+﻿using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
@@ -33,10 +32,8 @@ public sealed class AccessProperty : VCardProperty
     internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = AccessConverter.Parse(vcfRow.Value);
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         _ = serializer.Builder.Append(Value.ToVCardString());

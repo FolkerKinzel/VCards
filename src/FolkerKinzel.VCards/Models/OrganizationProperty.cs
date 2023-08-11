@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -78,11 +77,8 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
     public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
 
 
-    [InternalProtected]
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
-
         base.PrepareForVcfSerialization(serializer);
 
         Debug.Assert(serializer != null);
@@ -96,11 +92,8 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
     }
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
-
         Debug.Assert(serializer != null);
         Debug.Assert(Value != null); // value ist nie null
 

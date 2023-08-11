@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Attributes;
-using FolkerKinzel.VCards.Intls.Converters;
+﻿using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 
@@ -54,10 +53,8 @@ public sealed class RelationUuidProperty : RelationProperty, IEnumerable<Relatio
     public override bool IsEmpty => Value == Guid.Empty;
 
 
-    [InternalProtected]
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         base.PrepareForVcfSerialization(serializer);
@@ -67,10 +64,8 @@ public sealed class RelationUuidProperty : RelationProperty, IEnumerable<Relatio
     }
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         _ = serializer.Builder.AppendUuid(this.Value, serializer.Version);

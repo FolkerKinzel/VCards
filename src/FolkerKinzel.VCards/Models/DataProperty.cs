@@ -10,7 +10,6 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models.Enums;
-using FolkerKinzel.VCards.Intls.Attributes;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -146,7 +145,6 @@ public sealed class EmbeddedTextProperty : DataProperty, IEnumerable<EmbeddedTex
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         base.PrepareForVcfSerialization(serializer);
@@ -158,7 +156,6 @@ public sealed class EmbeddedTextProperty : DataProperty, IEnumerable<EmbeddedTex
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         _textProp.AppendValue(serializer);
     }
 

@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Attributes;
-using FolkerKinzel.VCards.Intls.Converters;
+﻿using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -80,10 +79,8 @@ public sealed class TimeStampProperty : VCardProperty
     /// <inheritdoc/>
     public override bool IsEmpty => Value < new DateTimeOffset(1900, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         StringBuilder worker = serializer.Worker;

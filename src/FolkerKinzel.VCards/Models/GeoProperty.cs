@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -52,10 +51,8 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         GeoCoordinateConverter.AppendTo(serializer.Builder, Value, serializer.Version);

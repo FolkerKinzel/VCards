@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Attributes;
-using FolkerKinzel.VCards.Intls.Converters;
+﻿using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
@@ -54,10 +53,8 @@ public sealed class DateTimeOffsetProperty : DateTimeProperty, IEnumerable<DateT
 
 
 
-    [InternalProtected]
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         base.PrepareForVcfSerialization(serializer);
 
         if (serializer.Version < VCdVersion.V4_0)
@@ -69,10 +66,8 @@ public sealed class DateTimeOffsetProperty : DateTimeProperty, IEnumerable<DateT
     }
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         StringBuilder worker = serializer.Worker;

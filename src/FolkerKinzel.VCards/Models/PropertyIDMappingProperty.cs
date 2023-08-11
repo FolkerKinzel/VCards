@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -60,10 +59,8 @@ public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<Prope
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Value?.AppendTo(serializer.Builder);
     }
 

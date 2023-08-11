@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Attributes;
-using FolkerKinzel.VCards.Intls.Converters;
+﻿using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -58,10 +57,8 @@ public sealed class UuidProperty : VCardProperty
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         _ = serializer.Builder.AppendUuid(this.Value, serializer.Version);

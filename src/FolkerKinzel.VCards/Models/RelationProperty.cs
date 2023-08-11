@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Models.Enums;
@@ -20,9 +19,8 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// <param name="prop">Das zu klonende <see cref="RelationProperty"/>-Objekt.</param>
     protected RelationProperty(RelationProperty prop) : base(prop) { }
 
-    [InternalProtected]
-    internal RelationProperty(ParameterSection parameters, string? propertyGroup)
-        : base(parameters, propertyGroup) => InternalProtectedAttribute.Run();
+    protected RelationProperty(ParameterSection parameters, string? propertyGroup)
+        : base(parameters, propertyGroup) { }
 
 
     /// <summary>

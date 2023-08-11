@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
-using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -97,10 +96,8 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         if (Value is null)

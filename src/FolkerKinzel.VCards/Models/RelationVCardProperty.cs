@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Attributes;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
@@ -49,10 +48,8 @@ public sealed class RelationVCardProperty : RelationProperty, IEnumerable<Relati
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    [InternalProtected]
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         base.PrepareForVcfSerialization(serializer);
@@ -61,11 +58,8 @@ public sealed class RelationVCardProperty : RelationProperty, IEnumerable<Relati
     }
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
-
         if (this.Value is null)
         {
             return;

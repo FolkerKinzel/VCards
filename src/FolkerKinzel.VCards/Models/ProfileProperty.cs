@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Attributes;
-using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 
 namespace FolkerKinzel.VCards.Models;
@@ -35,10 +34,8 @@ public sealed class ProfileProperty : TextProperty
     public override string Value => base.Value ?? PROFILE_PROPERTY_VALUE;
 
 
-    [InternalProtected]
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         this.Parameters.Encoding = null;
@@ -46,10 +43,8 @@ public sealed class ProfileProperty : TextProperty
     }
 
 
-    [InternalProtected]
     internal override void AppendValue(VcfSerializer serializer)
     {
-        InternalProtectedAttribute.Run();
         Debug.Assert(serializer != null);
 
         _ = serializer.Builder.Append(PROFILE_PROPERTY_VALUE);

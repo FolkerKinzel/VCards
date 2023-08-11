@@ -40,6 +40,11 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="Intls\Attributes\**" />
+	  <EmbeddedResource Remove="Intls\Attributes\**" />
+	  <None Remove="Intls\Attributes\**" />
+	</ItemGroup>
+	<ItemGroup>
 		<None Include="..\..\..\..\Nuget-Logo\Logo.png">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
