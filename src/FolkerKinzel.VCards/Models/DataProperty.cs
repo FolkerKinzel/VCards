@@ -6,6 +6,9 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models.Enums;
 using OneOf;
+using FolkerKinzel.Uris;
+using System.ComponentModel.DataAnnotations;
+using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -78,10 +81,9 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     /// <param name="prop">The <see cref="DataProperty"/> object to clone.</param>
     private EmbeddedBytesProperty(EmbeddedBytesProperty prop) : base(prop) => Value = prop.Value;
 
-    internal EmbeddedBytesProperty(byte[]? value, string mimeType, string? propertyGroup) : base(mimeType, propertyGroup)
+    internal EmbeddedBytesProperty(byte[]? value, string mimeType, string? propertyGroup, ParameterSection parameterSection) : base(mimeType, propertyGroup, parameterSection)
     {
         Value = value;
-        Parameters.Encoding = ValueEncoding.Base64;
     }
 
     protected override bool ValidateMimeType(ref string? mimeType)
@@ -119,10 +121,9 @@ internal sealed class EmbeddedTextProperty : DataProperty
         _textProp = new TextProperty(Value);
     }
 
-    internal EmbeddedTextProperty(string? value, string? propertyGroup) : base(null, propertyGroup)
+    internal EmbeddedTextProperty(string? value, string? propertyGroup, ParameterSection parameterSection) : base(null, propertyGroup, parameterSection)
     {
         Value = value;
-        Parameters.DataType = VCdDataType.Text;
         _textProp = new TextProperty(value);
     }
 
@@ -157,7 +158,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     protected DataProperty(DataProperty prop) : base(prop) { }
 
 
-    protected DataProperty(string? mimeType, string? propertyGroup) : base(new ParameterSection(), propertyGroup)
+    protected DataProperty(string? mimeType, string? propertyGroup, ParameterSection parameterSection) : base(parameterSection, propertyGroup)
     {
         if (ValidateMimeType(ref mimeType))
         {
@@ -193,7 +194,26 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     }
 
     
-    internal static DataProperty Create(VcfRow vcfRow, VCdVersion version) => throw new NotImplementedException();
+    internal static DataProperty Create(VcfRow vcfRow, VCdVersion version)
+    {
+        if(DataUrl.TryParse(vcfRow.Value, out DataUrlInfo info))
+        {
+            if(info.TryGetEmbeddedData(out OneOf<string, byte[]> data))
+            {
+                return data.Match<DataProperty>(
+                    s => new EmbeddedTextProperty(s, vcfRow.Group, vcfRow.Parameters),
+                    b => new EmbeddedBytesProperty(b, 
+                                                   MimeType.TryParse(info.MimeType, out MimeType? mimeType) ? mimeType.ToString() : MimeString.OctetStream,
+                                                   vcfRow.Group,
+                                                   vcfRow.Parameters));
+            }
+
+            vcfRow.UnMask(version);
+            return new EmbeddedTextProperty(vcfRow.Value, vcfRow.Group, vcfRow.Parameters);
+        }
+
+
+    }
 
 
     public static DataProperty FromFile(string filePath,
@@ -207,9 +227,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     public static DataProperty FromFile(string filePath,
                                         MimeType mimeType,
                                         string? propertyGroup = null) =>
-        new EmbeddedBytesProperty(LoadFile(filePath),
-                                  mimeType?.ToString() ?? throw new ArgumentNullException(nameof(mimeType)),
-                                  propertyGroup);
+        FromBytes(LoadFile(filePath), mimeType, propertyGroup);
 
 
     public static DataProperty FromBytes(byte[]? bytes,
@@ -223,11 +241,12 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                          string? propertyGroup = null) =>
         new EmbeddedBytesProperty(bytes,
                                   mimeType?.ToString() ?? throw new ArgumentNullException(nameof(mimeType)),
-                                  propertyGroup);
+                                  propertyGroup,
+                                  new ParameterSection() { Encoding = ValueEncoding.Base64 });
 
 
     public static DataProperty FromText(string? text, string? propertyGroup = null) =>
-        new EmbeddedTextProperty(text, propertyGroup);
+        new EmbeddedTextProperty(text, propertyGroup, new ParameterSection() { DataType = VCdDataType.Text });
 
     public static DataProperty FromUri(Uri? uri,
                                        string? mimeTypeString = null,
