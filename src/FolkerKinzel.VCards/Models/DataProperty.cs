@@ -21,7 +21,7 @@ public sealed class ReferencedDataProperty : DataProperty, IEnumerable<Reference
     /// <param name="prop"></param>
     private ReferencedDataProperty(ReferencedDataProperty prop) : base(prop) => Value = prop.Value;
 
-    public ReferencedDataProperty(Uri? value, string mimeType = "application/octet-stream", string? propertyGroup = null)
+    internal ReferencedDataProperty(Uri? value, string mimeType = "application/octet-stream", string? propertyGroup = null)
         : base(mimeType, propertyGroup)
     {
         Value = value;
@@ -87,7 +87,7 @@ public sealed class EmbeddedBytesProperty : DataProperty, IEnumerable<EmbeddedBy
     /// <param name="prop">The <see cref="DataProperty"/> object to clone.</param>
     private EmbeddedBytesProperty(EmbeddedBytesProperty prop) : base(prop) => Value = prop.Value;
 
-    public EmbeddedBytesProperty(byte[]? value, string mimeType = "application/octet-stream", string? propertyGroup = null) : base(mimeType, propertyGroup)
+    internal EmbeddedBytesProperty(byte[]? value, string mimeType = "application/octet-stream", string? propertyGroup = null) : base(mimeType, propertyGroup)
     {
         Value = value;
         Parameters.Encoding = ValueEncoding.Base64;
@@ -132,7 +132,7 @@ public sealed class EmbeddedTextProperty : DataProperty, IEnumerable<EmbeddedTex
         _textProp = new TextProperty(Value);
     }
 
-    public EmbeddedTextProperty(string? value, string? propertyGroup = null) : base(null, propertyGroup)
+    internal EmbeddedTextProperty(string? value, string? propertyGroup = null) : base(null, propertyGroup)
     {
         Value = value;
         Parameters.DataType = VCdDataType.Text;
@@ -214,11 +214,11 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                   propertyGroup);
 
 
-    internal static EmbeddedBytesProperty FromBytes(byte[] bytes, string mimeType) => throw new NotImplementedException();
+    public static EmbeddedBytesProperty FromBytes(byte[]? bytes, string? mimeType, string? propertyGroup = null) => throw new NotImplementedException();
 
-    internal static EmbeddedTextProperty FromText(string aSCIITEXT) => throw new NotImplementedException();
+    public static EmbeddedTextProperty FromText(string? text, string? propertyGroup = null) => throw new NotImplementedException();
 
-    internal static ReferencedDataProperty FromUri(Uri uri) => throw new NotImplementedException();
+    public static ReferencedDataProperty FromUri(Uri? uri, string? propertyGroup = null) => throw new NotImplementedException();
 
 
     IEnumerator<DataProperty> IEnumerable<DataProperty>.GetEnumerator()
