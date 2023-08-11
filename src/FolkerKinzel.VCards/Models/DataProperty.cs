@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models.Enums;
+using OneOf;
 
 namespace FolkerKinzel.VCards.Models;
 
-public sealed class ReferencedDataProperty : DataProperty, IEnumerable<ReferencedDataProperty>
+internal sealed class ReferencedDataProperty : DataProperty
 {
     /// <summary>
     /// Copy ctor
@@ -21,7 +17,7 @@ public sealed class ReferencedDataProperty : DataProperty, IEnumerable<Reference
     /// <param name="prop"></param>
     private ReferencedDataProperty(ReferencedDataProperty prop) : base(prop) => Value = prop.Value;
 
-    internal ReferencedDataProperty(Uri? value, string mimeType = "application/octet-stream", string? propertyGroup = null)
+    internal ReferencedDataProperty(Uri? value, string? mimeType, string? propertyGroup)
         : base(mimeType, propertyGroup)
     {
         Value = value;
@@ -36,11 +32,6 @@ public sealed class ReferencedDataProperty : DataProperty, IEnumerable<Reference
 
     /// <inheritdoc/>
     public override object Clone() => new ReferencedDataProperty(this);
-
-    public IEnumerator<ReferencedDataProperty> GetEnumerator()
-    {
-        yield return this;
-    }
 }
 
 //public abstract class EmbeddedDataProperty : DataProperty
@@ -79,7 +70,7 @@ public sealed class ReferencedDataProperty : DataProperty, IEnumerable<Reference
 
 
 
-public sealed class EmbeddedBytesProperty : DataProperty, IEnumerable<EmbeddedBytesProperty>
+internal sealed class EmbeddedBytesProperty : DataProperty
 {
     /// <summary>
     /// Copy ctor
@@ -87,7 +78,7 @@ public sealed class EmbeddedBytesProperty : DataProperty, IEnumerable<EmbeddedBy
     /// <param name="prop">The <see cref="DataProperty"/> object to clone.</param>
     private EmbeddedBytesProperty(EmbeddedBytesProperty prop) : base(prop) => Value = prop.Value;
 
-    internal EmbeddedBytesProperty(byte[]? value, string mimeType = "application/octet-stream", string? propertyGroup = null) : base(mimeType, propertyGroup)
+    internal EmbeddedBytesProperty(byte[]? value, string mimeType, string? propertyGroup) : base(mimeType, propertyGroup)
     {
         Value = value;
         Parameters.Encoding = ValueEncoding.Base64;
@@ -112,13 +103,9 @@ public sealed class EmbeddedBytesProperty : DataProperty, IEnumerable<EmbeddedBy
     /// <inheritdoc/>
     public override object Clone() => new EmbeddedBytesProperty(this);
 
-    public IEnumerator<EmbeddedBytesProperty> GetEnumerator()
-    { 
-        yield return this;
-    }
 }
 
-public sealed class EmbeddedTextProperty : DataProperty, IEnumerable<EmbeddedTextProperty>
+internal sealed class EmbeddedTextProperty : DataProperty
 {
     private readonly TextProperty _textProp;
 
@@ -132,7 +119,7 @@ public sealed class EmbeddedTextProperty : DataProperty, IEnumerable<EmbeddedTex
         _textProp = new TextProperty(Value);
     }
 
-    internal EmbeddedTextProperty(string? value, string? propertyGroup = null) : base(null, propertyGroup)
+    internal EmbeddedTextProperty(string? value, string? propertyGroup) : base(null, propertyGroup)
     {
         Value = value;
         Parameters.DataType = VCdDataType.Text;
@@ -154,14 +141,10 @@ public sealed class EmbeddedTextProperty : DataProperty, IEnumerable<EmbeddedTex
         this.Parameters.CharSet = _textProp.Parameters.CharSet;
     }
 
-    internal override void AppendValue(VcfSerializer serializer)
-    {
-        _textProp.AppendValue(serializer);
-    }
+    internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);
 
     public override object Clone() => new EmbeddedTextProperty(this);
 
-    public IEnumerator<EmbeddedTextProperty> GetEnumerator() { yield return this; }
 }
 
 
@@ -180,6 +163,17 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         {
             Parameters.MediaType = mimeType;
         }
+    }
+
+    public new OneOf<byte[], string, Uri>? Value
+    {
+        get => base.Value switch
+        {
+            byte[] bt => bt,
+            string s => s,
+            Uri uri => uri,
+            _ => null
+        }; 
     }
 
     protected virtual bool ValidateMimeType(ref string? mimeString)
@@ -202,23 +196,50 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     internal static DataProperty Create(VcfRow vcfRow, VCdVersion version) => throw new NotImplementedException();
 
 
-    public static EmbeddedBytesProperty FromFile(string filePath, string? mimeTypeString = null, string? propertyGroup = null) =>
+    public static DataProperty FromFile(string filePath,
+                                        string? mimeTypeString = null,
+                                        string? propertyGroup = null) =>
         mimeTypeString is null ? FromFile(filePath, MimeType.Parse(MimeString.FromFileName(filePath)), propertyGroup)
                                : MimeType.TryParse(mimeTypeString, out MimeType? mimeType)
                                    ? FromFile(filePath, mimeType, propertyGroup)
                                    : FromFile(filePath, (string?)null, propertyGroup);
 
-    public static EmbeddedBytesProperty FromFile(string filePath, MimeType mimeType, string? propertyGroup = null) =>
+    public static DataProperty FromFile(string filePath,
+                                        MimeType mimeType,
+                                        string? propertyGroup = null) =>
         new EmbeddedBytesProperty(LoadFile(filePath),
                                   mimeType?.ToString() ?? throw new ArgumentNullException(nameof(mimeType)),
                                   propertyGroup);
 
 
-    public static EmbeddedBytesProperty FromBytes(byte[]? bytes, string? mimeType, string? propertyGroup = null) => throw new NotImplementedException();
+    public static DataProperty FromBytes(byte[]? bytes,
+                                         string? mimeTypeString = MimeString.OctetStream,
+                                         string? propertyGroup = null) =>
+        MimeType.TryParse(mimeTypeString, out MimeType? mimeType) ? FromBytes(bytes, mimeType, propertyGroup) 
+                                                                  : FromBytes(bytes, MimeString.OctetStream, propertyGroup);
 
-    public static EmbeddedTextProperty FromText(string? text, string? propertyGroup = null) => throw new NotImplementedException();
+    public static DataProperty FromBytes(byte[]? bytes,
+                                         MimeType mimeType,
+                                         string? propertyGroup = null) =>
+        new EmbeddedBytesProperty(bytes,
+                                  mimeType?.ToString() ?? throw new ArgumentNullException(nameof(mimeType)),
+                                  propertyGroup);
 
-    public static ReferencedDataProperty FromUri(Uri? uri, string? propertyGroup = null) => throw new NotImplementedException();
+
+    public static DataProperty FromText(string? text, string? propertyGroup = null) =>
+        new EmbeddedTextProperty(text, propertyGroup);
+
+    public static DataProperty FromUri(Uri? uri,
+                                       string? mimeTypeString = null,
+                                       string? propertyGroup = null) =>
+        FromUri(uri, 
+                MimeType.TryParse(mimeTypeString, out MimeType? mimeType) ? mimeType : null, 
+                propertyGroup);
+
+    public static DataProperty FromUri(Uri? uri,
+                                      MimeType? mimeType,
+                                      string? propertyGroup = null) => 
+        new ReferencedDataProperty(uri, mimeType?.ToString(), propertyGroup);
 
 
     IEnumerator<DataProperty> IEnumerable<DataProperty>.GetEnumerator()
