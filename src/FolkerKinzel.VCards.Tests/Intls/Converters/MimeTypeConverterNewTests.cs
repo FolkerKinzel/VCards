@@ -8,9 +8,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 public class MimeTypeConverterNewTests
 {
     [DataTestMethod]
-    [DataRow("image/jpg", "JPG")]
-    [DataRow("image/JPG", "JPG")]
-    [DataRow("IMAGE/JPG", "JPG")]
+    [DataRow("image/jpg", "JPEG")]
     [DataRow("image/", null)]
     [DataRow("IMAGE/", null)]
     [DataRow("jpg", null)]
@@ -18,7 +16,7 @@ public class MimeTypeConverterNewTests
     [DataRow(null, null)]
     public void ImageTypeValueFromMimeTypeTest(string? input, string? expected)
     {
-        string? result = MimeTypeConverterNew.ImageTypeFromMimeType(input);
+        string? result = MimeTypeConverter.ImageTypeFromMimeType(input);
         Assert.AreEqual(expected, result);
     }
 
@@ -34,7 +32,7 @@ public class MimeTypeConverterNewTests
     [DataRow(null, null)]
     public void SoundTypeValueFromMimeTypeTest(string? input, string? expected)
     {
-        string? result = MimeTypeConverterNew.SoundTypeFromMimeType(input);
+        string? result = MimeTypeConverter.SoundTypeFromMimeType(input);
         Assert.AreEqual(expected, result);
     }
 
@@ -192,7 +190,7 @@ public class MimeTypeConverterNewTests
     [DataRow("OTHER", "application/other")]
     public void MimeTypeFromEncryptionTypeValueTest(string typeValue, string mime)
     {
-        string? result = MimeTypeConverterNew.MimeTypeFromKeyType(typeValue);
+        string? result = MimeTypeConverter.MimeTypeFromKeyType(typeValue);
         Assert.AreEqual(mime, result);
     }
 
@@ -204,7 +202,7 @@ public class MimeTypeConverterNewTests
     [DataRow("OCTET-STREAM", "application/octet-stream")]
     public void KeyTypeValueFromMimeTypeTest(string? typeValue, string mime)
     {
-        string? result = MimeTypeConverterNew.KeyTypeFromMimeType(mime);
+        string? result = MimeTypeConverter.KeyTypeFromMimeType(mime);
         Assert.AreEqual(typeValue, result);
     }
 
@@ -291,8 +289,8 @@ public class MimeTypeConverterNewTests
     [DataRow("SVG")]
     public void PictureRoundtripTest1(string typeValue)
     {
-        string? mime = MimeTypeConverterNew.MimeTypeFromImageType(typeValue);
-        string? type = MimeTypeConverterNew.ImageTypeFromMimeType(mime);
+        string? mime = MimeTypeConverter.MimeTypeFromImageType(typeValue);
+        string? type = MimeTypeConverter.ImageTypeFromMimeType(mime);
         Assert.IsNotNull(type);
         Assert.AreEqual(typeValue, type);
     }
@@ -300,12 +298,20 @@ public class MimeTypeConverterNewTests
     [TestMethod]
     public void PictureRoundtripTest2()
     {
-        string? mime = MimeTypeConverterNew.MimeTypeFromImageType("MPEG2");
-        string? type = MimeTypeConverterNew.ImageTypeFromMimeType(mime);
+        string? mime = MimeTypeConverter.MimeTypeFromImageType("MPEG2");
+        string? type = MimeTypeConverter.ImageTypeFromMimeType(mime);
         Assert.AreEqual("MPEG", type);
     }
 
-    
+    [TestMethod]
+    public void PictureRoundtripTest3()
+    {
+        string? mime = MimeTypeConverter.MimeTypeFromImageType("JPG");
+        string? type = MimeTypeConverter.ImageTypeFromMimeType(mime);
+        Assert.AreEqual("JPEG", type);
+    }
+
+
 
 
     [DataTestMethod]
@@ -315,8 +321,8 @@ public class MimeTypeConverterNewTests
     [DataRow("MPEG")]
     public void SoundRoundtripTest1(string typeValue)
     {
-        string mime = MimeTypeConverterNew.MimeTypeFromSoundType(typeValue);
-        string? type = MimeTypeConverterNew.SoundTypeFromMimeType(mime);
+        string mime = MimeTypeConverter.MimeTypeFromSoundType(typeValue);
+        string? type = MimeTypeConverter.SoundTypeFromMimeType(mime);
         Assert.IsNotNull(type);
         Assert.AreEqual(typeValue, type);
     }
@@ -324,8 +330,8 @@ public class MimeTypeConverterNewTests
     [TestMethod]
     public void SoundRoundtripTest2()
     {
-        string mime = MimeTypeConverterNew.MimeTypeFromSoundType("MP3");
-        string? type = MimeTypeConverterNew.SoundTypeFromMimeType(mime);
+        string? mime = MimeTypeConverter.MimeTypeFromSoundType("MP3");
+        string? type = MimeTypeConverter.SoundTypeFromMimeType(mime);
         Assert.IsNotNull(type);
         Assert.AreEqual("MPEG", type);
     }
@@ -335,9 +341,12 @@ public class MimeTypeConverterNewTests
     [DataRow("PGP")]
     public void KeyRoundtripTest1(string typeValue)
     {
-        string? mime = MimeTypeConverterNew.MimeTypeFromKeyType(typeValue);
-        string? type = MimeTypeConverterNew.KeyTypeFromMimeType(mime);
+        string? mime = MimeTypeConverter.MimeTypeFromKeyType(typeValue);
+        string? type = MimeTypeConverter.KeyTypeFromMimeType(mime);
         Assert.IsNotNull(type);
         Assert.AreEqual(typeValue, type);
+
+        //var result = MimeString.ToFileTypeExtension("image/pmb");
+        //var mimeString = MimeString.FromFileName(".pmb");
     }
 }

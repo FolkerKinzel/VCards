@@ -2,7 +2,7 @@
 
 internal static class Const
 {
-    //Bilder
+    //Images
     internal static class ImageTypeValue
     {
         internal const string JPEG = "JPEG";

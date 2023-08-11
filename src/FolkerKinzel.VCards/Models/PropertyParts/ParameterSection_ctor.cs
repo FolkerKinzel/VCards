@@ -377,14 +377,14 @@ public sealed partial class ParameterSection
                 this.EmailType = propertyKey;
                 break;
             case VCard.PropKeys.KEY:
-                this.MediaType = MimeTypeConverterNew.MimeTypeFromKeyType(typeValue);
+                this.MediaType = MimeTypeConverter.MimeTypeFromKeyType(typeValue);
                 break;
             case VCard.PropKeys.SOUND:
-                this.MediaType = MimeTypeConverterNew.MimeTypeFromSoundType(typeValue);
+                this.MediaType = MimeTypeConverter.MimeTypeFromSoundType(typeValue);
                 break;
             case VCard.PropKeys.PHOTO:
             case VCard.PropKeys.LOGO:
-                this.MediaType = MimeTypeConverterNew.MimeTypeFromImageType(typeValue);
+                this.MediaType = MimeTypeConverter.MimeTypeFromImageType(typeValue);
                 break;
             case VCard.PropKeys.IMPP:
                 {
