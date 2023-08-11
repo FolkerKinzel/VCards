@@ -202,7 +202,17 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     internal static DataProperty Create(VcfRow vcfRow, VCdVersion version) => throw new NotImplementedException();
 
 
-    public static EmbeddedBytesProperty FromFile(string filePath) => throw new NotImplementedException();
+    public static EmbeddedBytesProperty FromFile(string filePath, string? mimeTypeString = null, string? propertyGroup = null) =>
+        mimeTypeString is null ? FromFile(filePath, MimeType.Parse(MimeString.FromFileName(filePath)), propertyGroup)
+                               : MimeType.TryParse(mimeTypeString, out MimeType? mimeType)
+                                   ? FromFile(filePath, mimeType, propertyGroup)
+                                   : FromFile(filePath, (string?)null, propertyGroup);
+
+    public static EmbeddedBytesProperty FromFile(string filePath, MimeType mimeType, string? propertyGroup = null) =>
+        new EmbeddedBytesProperty(LoadFile(filePath),
+                                  mimeType?.ToString() ?? throw new ArgumentNullException(nameof(mimeType)),
+                                  propertyGroup);
+
 
     internal static EmbeddedBytesProperty FromBytes(byte[] bytes, string mimeType) => throw new NotImplementedException();
 
@@ -217,6 +227,44 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     }
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DataProperty>)this).GetEnumerator();
+
+
+    [ExcludeFromCodeCoverage]
+    private static byte[] LoadFile(string filePath)
+    {
+        try
+        {
+            return File.ReadAllBytes(filePath);
+        }
+        catch (ArgumentNullException)
+        {
+            throw new ArgumentNullException(nameof(filePath));
+        }
+        catch (ArgumentException e)
+        {
+            throw new ArgumentException(e.Message, nameof(filePath), e);
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            throw new IOException(e.Message, e);
+        }
+        catch (NotSupportedException e)
+        {
+            throw new ArgumentException(e.Message, nameof(filePath), e);
+        }
+        catch (System.Security.SecurityException e)
+        {
+            throw new IOException(e.Message, e);
+        }
+        catch (PathTooLongException e)
+        {
+            throw new ArgumentException(e.Message, nameof(filePath), e);
+        }
+        catch (Exception e)
+        {
+            throw new IOException(e.Message, e);
+        }
+    }
 
 
 }
