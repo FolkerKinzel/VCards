@@ -6,6 +6,8 @@ internal class Program
 {
     private static void Main()
     {
+        //bool b = Uri.TryCreate("http://www.fo  lker.de", UriKind.Absolute, out var uri);
+
         Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 

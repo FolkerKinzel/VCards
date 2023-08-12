@@ -8,6 +8,8 @@ using FolkerKinzel.VCards.Models.Enums;
 using OneOf;
 using FolkerKinzel.Uris;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Intls.Encodings;
+using FolkerKinzel.VCards.Intls.Converters;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -25,7 +27,7 @@ internal sealed class ReferencedDataProperty : DataProperty
     internal ReferencedDataProperty(Uri? value, string? mimeType, string? propertyGroup, ParameterSection parameterSection)
         : base(mimeType, parameterSection, propertyGroup)
     {
-        if(value != null && !value.IsAbsoluteUri)
+        if (value != null && !value.IsAbsoluteUri)
         {
             throw new ArgumentException(string.Format(Res.RelativeUri, nameof(value)), nameof(value));
         }
@@ -43,39 +45,7 @@ internal sealed class ReferencedDataProperty : DataProperty
     public override object Clone() => new ReferencedDataProperty(this);
 }
 
-//public abstract class EmbeddedDataProperty : DataProperty
-//{
 
-
-//    /// <summary>
-//    /// Copy ctor
-//    /// </summary>
-//    /// <param name="prop">The <see cref="DataProperty"/> object to clone.</param>
-//    protected EmbeddedDataProperty(DataProperty prop) : base(prop) { }
-
-//    protected EmbeddedDataProperty(object? value, string? mimeType, string? propertyGroup) : base(mimeType, propertyGroup)
-//    {
-//        if(!FitsSizeRestriction(value))
-//        {
-//            throw new ArgumentException(Res.ContentTooLarge, nameof(value));
-//        }
-//    }
-
-//    private bool FitsSizeRestriction(object? value)
-//    {
-//        const int OVERHEAD = 64;
-//        var limit = VCard.EmbeddedContentSizeLimit.SizeLimit;
-
-//        return limit == SizeRestriction.None ||
-//            (limit != SizeRestriction.Discard && 
-//             value switch
-//                {
-//                    byte[] bytes => bytes.Length * 1.3 + OVERHEAD < (int)limit,
-//                    string s => s.Length < (int)limit,
-//                    _ => true
-//                });
-//    }
-//}
 
 
 
@@ -87,19 +57,16 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     /// <param name="prop">The <see cref="DataProperty"/> object to clone.</param>
     private EmbeddedBytesProperty(EmbeddedBytesProperty prop) : base(prop) => Value = prop.Value;
 
-    internal EmbeddedBytesProperty(byte[]? value, string mimeType, string? propertyGroup, ParameterSection parameterSection) : base(mimeType, parameterSection, propertyGroup)
+    internal EmbeddedBytesProperty(byte[]? value,
+                                   string? mimeType,
+                                   string? propertyGroup,
+                                   ParameterSection parameterSection) : 
+        base(mimeType, parameterSection, propertyGroup)
     {
         Value = value;
     }
 
-    //protected override bool ValidateMimeType(ref string? mimeType)
-    //{
-    //    return mimeType is null
-    //        ? throw new ArgumentNullException(nameof(mimeType))
-    //        : string.IsNullOrWhiteSpace(mimeType) || !base.ValidateMimeType(ref mimeType)
-    //            ? throw new ArgumentException(Res.InvalidMimeType, nameof(mimeType))
-    //            : true;
-    //}
+    
 
     public new byte[]? Value { get; }
 
@@ -176,48 +143,48 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         };
     }
 
-    //protected virtual bool ValidateMimeType(ref string? mimeString)
-    //{
-    //    if (string.IsNullOrWhiteSpace(mimeString))
-    //    {
-    //        return true;
-    //    }
-
-    //    if (MimeType.TryParse(mimeString, out MimeType? mimeType))
-    //    {
-    //        mimeString = mimeType.ToString();
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
-
-
     internal static DataProperty Create(VcfRow vcfRow, VCdVersion version)
     {
         if (DataUrl.TryParse(vcfRow.Value, out DataUrlInfo info))
         {
-            if (info.TryGetEmbeddedData(out OneOf<string, byte[]> data))
-            {
-                return data.Match<DataProperty>(
-                    s => new EmbeddedTextProperty(vcfRow, version),
-                    b => new EmbeddedBytesProperty(b,
-                                                   MimeType.TryParse(info.MimeType, out MimeType? mimeType) ? mimeType.ToString() : MimeString.OctetStream,
-                                                   vcfRow.Group,
-                                                   vcfRow.Parameters));
-            }
-
-            return new EmbeddedTextProperty(vcfRow, version);
+            return info.TryGetEmbeddedData(out OneOf<string, byte[]> data)
+                    ? data.Match<DataProperty>(
+                        s => new EmbeddedTextProperty(vcfRow, version),
+                        b => new EmbeddedBytesProperty(b,
+                                                       MimeType.TryParse(info.MimeType,
+                                                                         out MimeType? mimeType) ? mimeType.ToString() 
+                                                                                                 : MimeString.OctetStream,
+                                                       vcfRow.Group,
+                                                       vcfRow.Parameters))
+                    : new EmbeddedTextProperty(vcfRow, version);
         }
 
-        // base64
+        if (vcfRow.Parameters.Encoding == ValueEncoding.Base64)
+        {
+            return new EmbeddedBytesProperty(Base64.Decode(vcfRow.Value),
+                                             vcfRow.Parameters.MediaType,
+                                             vcfRow.Group,
+                                             vcfRow.Parameters);
+        }
 
-        // url
+        if(vcfRow.Parameters.DataType == VCdDataType.Uri)
+        {
+            vcfRow.UnMask(version);
+            return new ReferencedDataProperty(UriConverter.ToAbsoluteUri(vcfRow.Value),
+                                              vcfRow.Parameters.MediaType,
+                                              vcfRow.Group,
+                                              vcfRow.Parameters);
+        }
 
-        // text
-
-        throw new NotImplementedException();
-
+        // Quoted-Printable encoded binary data:
+        return vcfRow.Parameters.Encoding == ValueEncoding.QuotedPrintable &&
+               vcfRow.Parameters.MediaType != null &&
+               vcfRow.Parameters.DataType != VCdDataType.Text
+               ? new EmbeddedBytesProperty(QuotedPrintable.DecodeData(vcfRow.Value),
+                                                vcfRow.Parameters.MediaType,
+                                                vcfRow.Group,
+                                                vcfRow.Parameters)
+               : new EmbeddedTextProperty(vcfRow, version);
     }
 
 

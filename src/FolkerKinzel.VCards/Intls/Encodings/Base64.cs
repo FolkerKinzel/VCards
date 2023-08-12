@@ -7,17 +7,23 @@ internal static class Base64
     /// if it is in the Base64Url format (RFC 4648 § 5).
     /// </summary>
     /// <param name="base64">A Base64 or Base64Url <see cref="string"/>.</param>
-    /// <returns>A byte array containing the data that was encoded in <paramref name="base64"/>.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="base64"/> is <c>null</c>.</exception>
-    /// <exception cref="FormatException"><paramref name="base64"/> has an invalid format.</exception>
-    internal static byte[] Decode(string base64)
+    /// <returns>A byte array containing the data that was encoded in <paramref name="base64"/> or <c>null</c>
+    /// if the decoding fails.</returns>
+    internal static byte[]? Decode(string? base64)
     {
-        Debug.Assert(base64 != null);
+        if (base64 == null)
+        {
+            return null;
+        }
 
         base64 = ConvertBase64UrlToBase64(base64);
         base64 = HandleBase64WithoutPadding(base64);
 
-        return Convert.FromBase64String(base64);
+        try
+        {
+            return Convert.FromBase64String(base64);
+        }
+        catch { return null; }
     }
 
 
