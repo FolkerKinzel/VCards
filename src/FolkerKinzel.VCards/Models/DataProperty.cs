@@ -45,10 +45,6 @@ internal sealed class ReferencedDataProperty : DataProperty
     public override object Clone() => new ReferencedDataProperty(this);
 }
 
-
-
-
-
 internal sealed class EmbeddedBytesProperty : DataProperty
 {
     /// <summary>
@@ -66,10 +62,7 @@ internal sealed class EmbeddedBytesProperty : DataProperty
         Value = value;
     }
 
-    
-
     public new byte[]? Value { get; }
-
 
     protected override object? GetVCardPropertyValue() => Value;
 
