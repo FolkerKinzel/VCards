@@ -1,5 +1,5 @@
 ﻿using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
+using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
@@ -74,7 +74,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
                 {
                     if (Builder[i + 1] == '\r') //Quoted-Printable-Softlinebreak
                     {
-                        i += QuotedPrintableConverter.STANDARD_LINEBREAK.Length;
+                        i += QuotedPrintable.STANDARD_LINEBREAK.Length;
                         counter = 0;
                         continue;
                     }

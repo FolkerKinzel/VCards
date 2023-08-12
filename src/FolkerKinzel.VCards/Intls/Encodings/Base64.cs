@@ -1,7 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Intls;
+﻿namespace FolkerKinzel.VCards.Intls.Encodings;
 
-[Obsolete("This class will be removed with DataUrl.", false)]
-internal static class Base64Parser
+internal static class Base64
 {
     /// <summary>
     /// Parses a Base64 <see cref="string"/> as byte array - even
@@ -11,7 +10,7 @@ internal static class Base64Parser
     /// <returns>A byte array containing the data that was encoded in <paramref name="base64"/>.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="base64"/> is <c>null</c>.</exception>
     /// <exception cref="FormatException"><paramref name="base64"/> has an invalid format.</exception>
-    internal static byte[] ParseBase64(string base64)
+    internal static byte[] Decode(string base64)
     {
         Debug.Assert(base64 != null);
 
@@ -21,11 +20,14 @@ internal static class Base64Parser
         return Convert.FromBase64String(base64);
     }
 
-    private static string ConvertBase64UrlToBase64(string base64)
+
+    internal static string Encode(byte[] data)
     {
-        base64 = base64.Replace('-', '+');
-        return base64.Replace('_', '/');
+        Debug.Assert(data != null);
+        return Convert.ToBase64String(data, Base64FormattingOptions.None);
     }
+
+    private static string ConvertBase64UrlToBase64(string base64) => base64.Replace('-', '+').Replace('_', '/');
 
 
     private static string HandleBase64WithoutPadding(string base64)

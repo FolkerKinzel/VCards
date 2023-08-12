@@ -93,7 +93,7 @@ public class V2Tests
 
         Assert.AreEqual(vcard.Keys?.First()?.Value, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-        Assert.IsTrue(((byte[]?)(vcard.Photos?.First()?.Value))?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(((byte[]?)vcard.Photos?.First()?.Value?.Value)?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()

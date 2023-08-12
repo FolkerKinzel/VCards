@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
+﻿using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
@@ -90,7 +90,7 @@ public sealed class RelationUriProperty : RelationProperty, IEnumerable<Relation
         StringBuilder builder = serializer.Builder;
 
         _ = this.Parameters.Encoding == ValueEncoding.QuotedPrintable
-            ? builder.Append(QuotedPrintableConverter.Encode(this.Value?.ToString(), builder.Length))
+            ? builder.Append(QuotedPrintable.Encode(this.Value?.ToString(), builder.Length))
             : builder.Append(this.Value);
     }
 

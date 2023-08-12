@@ -7,10 +7,12 @@ using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models.Enums;
 using OneOf;
 using FolkerKinzel.Uris;
-using System.ComponentModel.DataAnnotations;
 using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Models;
+
+[GenerateOneOf]
+public partial class DataPropertyValue : OneOfBase<string, byte[], Uri> { }
 
 internal sealed class ReferencedDataProperty : DataProperty
 {
@@ -163,7 +165,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         Parameters.MediaType = mimeType;
     }
 
-    public new OneOf<byte[], string, Uri>? Value
+    public new DataPropertyValue? Value
     {
         get => base.Value switch
         {
@@ -213,6 +215,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         // url
 
         // text
+
+        throw new NotImplementedException();
 
     }
 

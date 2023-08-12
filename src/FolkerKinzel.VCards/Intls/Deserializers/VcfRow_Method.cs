@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
+﻿using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
 
@@ -54,7 +54,7 @@ internal sealed partial class VcfRow
     {
         if (this.Parameters.Encoding == ValueEncoding.QuotedPrintable && !_quotedPrintableDecoded)
         {
-            this.Value = QuotedPrintableConverter.Decode(this.Value, // null-Prüfung nicht erforderlich
+            this.Value = QuotedPrintable.Decode(this.Value, // null-Prüfung nicht erforderlich
                 TextEncodingConverter.GetEncoding(this.Parameters.CharSet)); // null-Prüfung nicht erforderlich
 
             _quotedPrintableDecoded = true; // Encoding nicht 2x durchführen

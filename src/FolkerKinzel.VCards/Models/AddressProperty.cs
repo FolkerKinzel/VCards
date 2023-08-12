@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
+using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -246,7 +246,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
             string toEncode = builder.ToString(startIndex, builder.Length - startIndex);
             builder.Length = startIndex;
 
-            _ = builder.Append(QuotedPrintableConverter.Encode(toEncode, startIndex));
+            _ = builder.Append(QuotedPrintable.Encode(toEncode, startIndex));
         }
     }
 

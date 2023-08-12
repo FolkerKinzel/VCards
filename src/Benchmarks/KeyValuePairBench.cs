@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using BenchmarkDotNet.Attributes;
-using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
 
 namespace Benchmarks
 {

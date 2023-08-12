@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
+using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
@@ -76,7 +76,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
         if (serializer.Version == VCdVersion.V2_1)
         {
             _ = this.Parameters.Encoding == ValueEncoding.QuotedPrintable
-                ? builder.Append(QuotedPrintableConverter.Encode(Value, builder.Length))
+                ? builder.Append(QuotedPrintable.Encode(Value, builder.Length))
                 : builder.Append(Value);
         }
         else

@@ -1,13 +1,13 @@
 ﻿using System.Globalization;
 
-namespace FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
+namespace FolkerKinzel.VCards.Intls.Encodings;
 
 /// <summary>
 /// Eine Klasse, die Methoden zum Codieren und 
 /// Encodieren im Quoted-Printable-Format enthält.
 /// </summary>
 /// <threadsafety static="true" instance="false" />
-internal static class QuotedPrintableConverter
+internal static class QuotedPrintable
 {
     internal const string STANDARD_LINEBREAK = "\r\n";
 
@@ -290,7 +290,7 @@ internal static class QuotedPrintableConverter
             try
             {
 #if NETSTANDARD2_0 || NET461
-                    return (byte)(Uri.FromHex(charr[1]) + Uri.FromHex(charr[0]) * 16);
+                return (byte)(Uri.FromHex(charr[1]) + Uri.FromHex(charr[0]) * 16);
 #else
                 return byte.Parse(charr, NumberStyles.AllowHexSpecifier);
 #endif

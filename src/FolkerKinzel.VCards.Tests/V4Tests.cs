@@ -74,7 +74,7 @@ public class V4Tests
 
         Assert.AreEqual(vcard.Keys?.First()?.Value, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, null);
-        Assert.IsTrue(((byte[]?)vcard.Photos?.First()?.Value)?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(((byte[]?)vcard.Photos?.First()?.Value?.Value)?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()

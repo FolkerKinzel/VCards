@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using BenchmarkDotNet.Attributes;
-using FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable;
+using FolkerKinzel.VCards.Intls.Encodings;
 
 namespace Benchmarks
 {
@@ -13,7 +13,7 @@ namespace Benchmarks
         {
             string quoted = $"1=0D=0AFirmenstra=C3=9Fe=0D=0AOrt Firma, Bundesland Firma PLZFirma=0D=0ALand={Environment.NewLine} Firma";
 
-            _ = QuotedPrintableConverter.Decode(quoted);
+            _ = QuotedPrintable.Decode(quoted);
         }
     }
 }
