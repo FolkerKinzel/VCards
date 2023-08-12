@@ -160,6 +160,15 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} is not an absolute URI. ähnelt.
+        /// </summary>
+        internal static string RelativeUri {
+            get {
+                return ResourceManager.GetString("RelativeUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The XML element is in the reserved vCard 4.0-namespace. ähnelt.
         /// </summary>
         internal static string ReservedNameSpace {

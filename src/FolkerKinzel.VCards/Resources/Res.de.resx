@@ -150,6 +150,9 @@
   <data name="PidValue" xml:space="preserve">
     <value>Der Wert muss zwischen 1 und 9 liegen.</value>
   </data>
+  <data name="RelativeUri" xml:space="preserve">
+    <value>{0} ist kein absoluter URI.</value>
+  </data>
   <data name="ReservedNameSpace" xml:space="preserve">
     <value>Das XML-Element befindet sich im reservierten vCard4.0-Namespace.</value>
   </data>

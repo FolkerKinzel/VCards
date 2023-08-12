@@ -20,9 +20,13 @@ internal sealed class ReferencedDataProperty : DataProperty
     /// <param name="prop"></param>
     private ReferencedDataProperty(ReferencedDataProperty prop) : base(prop) => Value = prop.Value;
 
-    internal ReferencedDataProperty(Uri? value, string? mimeType, string? propertyGroup)
-        : base(mimeType, propertyGroup)
+    internal ReferencedDataProperty(Uri? value, string? mimeType, string? propertyGroup, ParameterSection parameterSection)
+        : base(mimeType, parameterSection, propertyGroup)
     {
+        if(value != null && !value.IsAbsoluteUri)
+        {
+            throw new ArgumentException(string.Format(Res.RelativeUri, nameof(value)), nameof(value));
+        }
         Value = value;
         Parameters.DataType = VCdDataType.Uri;
     }
@@ -81,19 +85,19 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     /// <param name="prop">The <see cref="DataProperty"/> object to clone.</param>
     private EmbeddedBytesProperty(EmbeddedBytesProperty prop) : base(prop) => Value = prop.Value;
 
-    internal EmbeddedBytesProperty(byte[]? value, string mimeType, string? propertyGroup, ParameterSection parameterSection) : base(mimeType, propertyGroup, parameterSection)
+    internal EmbeddedBytesProperty(byte[]? value, string mimeType, string? propertyGroup, ParameterSection parameterSection) : base(mimeType, parameterSection, propertyGroup)
     {
         Value = value;
     }
 
-    protected override bool ValidateMimeType(ref string? mimeType)
-    {
-        return mimeType is null
-            ? throw new ArgumentNullException(nameof(mimeType))
-            : string.IsNullOrWhiteSpace(mimeType) || !base.ValidateMimeType(ref mimeType)
-                ? throw new ArgumentException(Res.InvalidMimeType, nameof(mimeType))
-                : true;
-    }
+    //protected override bool ValidateMimeType(ref string? mimeType)
+    //{
+    //    return mimeType is null
+    //        ? throw new ArgumentNullException(nameof(mimeType))
+    //        : string.IsNullOrWhiteSpace(mimeType) || !base.ValidateMimeType(ref mimeType)
+    //            ? throw new ArgumentException(Res.InvalidMimeType, nameof(mimeType))
+    //            : true;
+    //}
 
     public new byte[]? Value { get; }
 
@@ -111,40 +115,36 @@ internal sealed class EmbeddedTextProperty : DataProperty
 {
     private readonly TextProperty _textProp;
 
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop"></param>
-    private EmbeddedTextProperty(EmbeddedTextProperty prop) : base(prop)
+
+    internal EmbeddedTextProperty(TextProperty textProp) :
+        base(textProp.Parameters.MediaType, textProp.Parameters, textProp.Group)
     {
-        Value = prop.Value;
-        _textProp = new TextProperty(Value);
+        _textProp = textProp;
+        Parameters.DataType = VCdDataType.Text;
     }
 
-    internal EmbeddedTextProperty(string? value, string? propertyGroup, ParameterSection parameterSection) : base(null, propertyGroup, parameterSection)
+    internal EmbeddedTextProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters.MediaType, vcfRow.Parameters, vcfRow.Group)
     {
-        Value = value;
-        _textProp = new TextProperty(value);
+        _textProp = new TextProperty(vcfRow, version);
     }
 
-    public new string? Value { get; }
+
+
+    public new string? Value => _textProp.Value;
 
     protected override object? GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
+        Debug.Assert(object.ReferenceEquals(this.Parameters, _textProp.Parameters));
 
         base.PrepareForVcfSerialization(serializer);
-        _textProp.PrepareForVcfSerialization(serializer);
-
-        this.Parameters.Encoding = _textProp.Parameters.Encoding;
-        this.Parameters.CharSet = _textProp.Parameters.CharSet;
     }
 
     internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);
 
-    public override object Clone() => new EmbeddedTextProperty(this);
+    public override object Clone() => new EmbeddedTextProperty((TextProperty)_textProp.Clone());
 
 }
 
@@ -158,12 +158,9 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     protected DataProperty(DataProperty prop) : base(prop) { }
 
 
-    protected DataProperty(string? mimeType, string? propertyGroup, ParameterSection parameterSection) : base(parameterSection, propertyGroup)
+    protected DataProperty(string? mimeType, ParameterSection parameterSection, string? propertyGroup) : base(parameterSection, propertyGroup)
     {
-        if (ValidateMimeType(ref mimeType))
-        {
-            Parameters.MediaType = mimeType;
-        }
+        Parameters.MediaType = mimeType;
     }
 
     public new OneOf<byte[], string, Uri>? Value
@@ -174,44 +171,48 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
             string s => s,
             Uri uri => uri,
             _ => null
-        }; 
+        };
     }
 
-    protected virtual bool ValidateMimeType(ref string? mimeString)
-    {
-        if (string.IsNullOrWhiteSpace(mimeString))
-        {
-            return true;
-        }
+    //protected virtual bool ValidateMimeType(ref string? mimeString)
+    //{
+    //    if (string.IsNullOrWhiteSpace(mimeString))
+    //    {
+    //        return true;
+    //    }
 
-        if (MimeType.TryParse(mimeString, out MimeType? mimeType))
-        {
-            mimeString = mimeType.ToString();
-            return true;
-        }
+    //    if (MimeType.TryParse(mimeString, out MimeType? mimeType))
+    //    {
+    //        mimeString = mimeType.ToString();
+    //        return true;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 
-    
+
     internal static DataProperty Create(VcfRow vcfRow, VCdVersion version)
     {
-        if(DataUrl.TryParse(vcfRow.Value, out DataUrlInfo info))
+        if (DataUrl.TryParse(vcfRow.Value, out DataUrlInfo info))
         {
-            if(info.TryGetEmbeddedData(out OneOf<string, byte[]> data))
+            if (info.TryGetEmbeddedData(out OneOf<string, byte[]> data))
             {
                 return data.Match<DataProperty>(
-                    s => new EmbeddedTextProperty(s, vcfRow.Group, vcfRow.Parameters),
-                    b => new EmbeddedBytesProperty(b, 
+                    s => new EmbeddedTextProperty(vcfRow, version),
+                    b => new EmbeddedBytesProperty(b,
                                                    MimeType.TryParse(info.MimeType, out MimeType? mimeType) ? mimeType.ToString() : MimeString.OctetStream,
                                                    vcfRow.Group,
                                                    vcfRow.Parameters));
             }
 
-            vcfRow.UnMask(version);
-            return new EmbeddedTextProperty(vcfRow.Value, vcfRow.Group, vcfRow.Parameters);
+            return new EmbeddedTextProperty(vcfRow, version);
         }
 
+        // base64
+
+        // url
+
+        // text
 
     }
 
@@ -233,7 +234,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     public static DataProperty FromBytes(byte[]? bytes,
                                          string? mimeTypeString = MimeString.OctetStream,
                                          string? propertyGroup = null) =>
-        MimeType.TryParse(mimeTypeString, out MimeType? mimeType) ? FromBytes(bytes, mimeType, propertyGroup) 
+        MimeType.TryParse(mimeTypeString, out MimeType? mimeType) ? FromBytes(bytes, mimeType, propertyGroup)
                                                                   : FromBytes(bytes, MimeString.OctetStream, propertyGroup);
 
     public static DataProperty FromBytes(byte[]? bytes,
@@ -246,19 +247,19 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
 
     public static DataProperty FromText(string? text, string? propertyGroup = null) =>
-        new EmbeddedTextProperty(text, propertyGroup, new ParameterSection() { DataType = VCdDataType.Text });
+        new EmbeddedTextProperty(new TextProperty(text, propertyGroup));
 
     public static DataProperty FromUri(Uri? uri,
                                        string? mimeTypeString = null,
                                        string? propertyGroup = null) =>
-        FromUri(uri, 
-                MimeType.TryParse(mimeTypeString, out MimeType? mimeType) ? mimeType : null, 
+        FromUri(uri,
+                MimeType.TryParse(mimeTypeString, out MimeType? mimeType) ? mimeType : null,
                 propertyGroup);
 
     public static DataProperty FromUri(Uri? uri,
                                       MimeType? mimeType,
-                                      string? propertyGroup = null) => 
-        new ReferencedDataProperty(uri, mimeType?.ToString(), propertyGroup);
+                                      string? propertyGroup = null) =>
+        new ReferencedDataProperty(uri, mimeType?.ToString(), propertyGroup, new ParameterSection());
 
 
     IEnumerator<DataProperty> IEnumerable<DataProperty>.GetEnumerator()
