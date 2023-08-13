@@ -277,7 +277,6 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
                         break;
                     }
                 case Uri _:
-
                     {
                         Parameters.DataType = VCdDataType.Uri;
                         break;

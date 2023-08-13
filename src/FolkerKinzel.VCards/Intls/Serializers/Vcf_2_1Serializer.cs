@@ -22,9 +22,15 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         }
     }
 
-
-    internal void AppendBase64Data(string base64Data)
+    internal override void AppendBase64EncodedData(byte[]? data)
     {
+        if(data is null)
+        {
+            return;
+        }
+
+        string base64Data = Convert.ToBase64String(data);
+
         _ = Builder.Append(VCard.NewLine);
         int i = Builder.Length;
         _ = Builder.Append(base64Data);
@@ -238,5 +244,4 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendUniqueIdentifier(UuidProperty value) => BuildProperty(VCard.PropKeys.UID, value);
 
     protected override void AppendURLs(IEnumerable<TextProperty?> value) => BuildPrefProperty(VCard.PropKeys.URL, value);
-
 }

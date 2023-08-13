@@ -220,5 +220,15 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
         protected override void AppendURLs(IEnumerable<TextProperty?> value) => BuildPrefProperty(VCard.PropKeys.URL, value);
 
+#
+        internal override void AppendBase64EncodedData(byte[]? data)
+        {
+            if (data is null)
+            {
+                return;
+            }
+
+            _ = Builder.Append(Convert.ToBase64String(data));
+        }
     }
 }

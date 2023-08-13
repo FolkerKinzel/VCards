@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -823,7 +824,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     private void AppendPid()
     {
-        IEnumerable<Models.PropertyID?>? pids = ParaSection.PropertyIDs;
+        IEnumerable<PropertyID?>? pids = ParaSection.PropertyIDs;
 
         if (pids is null)
         {
@@ -832,7 +833,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
         _ = _worker.Clear();
 
-        foreach (Models.PropertyID? pid in pids)
+        foreach (PropertyID? pid in pids)
         {
             if (pid is null)
             {
@@ -935,7 +936,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     private void AppendTz()
     {
-        Models.TimeZoneID? tz = ParaSection.TimeZone;
+        TimeZoneID? tz = ParaSection.TimeZone;
 
         if (tz is null)
         {

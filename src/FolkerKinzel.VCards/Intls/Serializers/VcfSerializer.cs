@@ -484,9 +484,9 @@ internal abstract class VcfSerializer
 
         if (value.FirstOrDefault(x => x?.Value?.Gender != null) is GenderProperty pref)
         {
-            Models.Enums.Gender sex = pref.Value.Gender!.Value;
+            Gender sex = pref.Value.Gender!.Value;
 
-            if (sex != Models.Enums.Gender.Male && sex != Models.Enums.Gender.Female)
+            if (sex != Gender.Male && sex != Gender.Female)
             {
                 return;
             }
@@ -497,7 +497,7 @@ internal abstract class VcfSerializer
 
                 var xGender = new NonStandardProperty(
                     propKey,
-                    sex == Models.Enums.Gender.Male ? "Male" : "Female", pref.Group);
+                    sex == Gender.Male ? "Male" : "Female", pref.Group);
 
                 BuildProperty(propKey, xGender);
             }
@@ -509,7 +509,7 @@ internal abstract class VcfSerializer
 
                 var xGender = new NonStandardProperty(
                     propKey,
-                    sex == Models.Enums.Gender.Male ? "2" : "1", pref.Group);
+                    sex == Gender.Male ? "2" : "1", pref.Group);
 
                 BuildProperty(propKey, xGender);
             }
@@ -700,6 +700,8 @@ internal abstract class VcfSerializer
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendXmlProperties(IEnumerable<XmlProperty?> value) { }
+
+    internal abstract void AppendBase64EncodedData(byte[]? data);
 
     #endregion
 

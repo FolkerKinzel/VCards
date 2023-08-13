@@ -8,7 +8,7 @@ internal class Program
 {
     private static void Main()
     {
-        var uri = new Uri("directory/image.png", UriKind.RelativeOrAbsolute);
+        var uri = new Uri("därectory/image.png", UriKind.RelativeOrAbsolute);
 
         var absUri = new Uri("http://a");
         bool res = Uri.TryCreate(absUri, uri, out uri);

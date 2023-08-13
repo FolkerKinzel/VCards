@@ -1,129 +1,15 @@
 ﻿using System.Collections;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models.Enums;
 using OneOf;
 using FolkerKinzel.Uris;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Models;
 
 namespace FolkerKinzel.VCards.Models;
-
-[GenerateOneOf]
-public partial class DataPropertyValue : OneOfBase<string, byte[], Uri> { }
-
-internal sealed class ReferencedDataProperty : DataProperty
-{
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop"></param>
-    private ReferencedDataProperty(ReferencedDataProperty prop) : base(prop) => Value = prop.Value;
-
-    internal ReferencedDataProperty(Uri? value, string? mimeType, string? propertyGroup, ParameterSection parameterSection)
-        : base(mimeType, parameterSection, propertyGroup)
-    {
-        if (value != null && !value.IsAbsoluteUri)
-        {
-            throw new ArgumentException(string.Format(Res.RelativeUri, nameof(value)), nameof(value));
-        }
-        Value = value;
-        Parameters.DataType = VCdDataType.Uri;
-    }
-
-    public new Uri? Value { get; }
-
-    public override string GetFileTypeExtension()
-    {
-        string? mime = Parameters.MediaType;
-
-        return mime != null ? MimeString.ToFileTypeExtension(mime)
-                            : UriConverter.GetFileTypeExtensionFromUri(Value);
-    }
-
-    /// <inheritdoc/>
-    public override object Clone() => new ReferencedDataProperty(this);
-
-    protected override object? GetVCardPropertyValue() => Value;
-
-    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
-}
-
-internal sealed class EmbeddedBytesProperty : DataProperty
-{
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop">The <see cref="DataProperty"/> object to clone.</param>
-    private EmbeddedBytesProperty(EmbeddedBytesProperty prop) : base(prop) => Value = prop.Value;
-
-    internal EmbeddedBytesProperty(byte[]? value,
-                                   string? mimeType,
-                                   string? propertyGroup,
-                                   ParameterSection parameterSection) : 
-        base(mimeType, parameterSection, propertyGroup)
-    {
-        Value = value;
-    }
-
-    public new byte[]? Value { get; }
-
-
-    public override string GetFileTypeExtension() => MimeString.ToFileTypeExtension(Parameters.MediaType);
-
-
-    /// <inheritdoc/>
-    public override object Clone() => new EmbeddedBytesProperty(this);
-
-    protected override object? GetVCardPropertyValue() => Value;
-
-    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
-
-}
-
-internal sealed class EmbeddedTextProperty : DataProperty
-{
-    private readonly TextProperty _textProp;
-
-
-    internal EmbeddedTextProperty(TextProperty textProp) :
-        base(textProp.Parameters.MediaType, textProp.Parameters, textProp.Group)
-    {
-        _textProp = textProp;
-        Parameters.DataType = VCdDataType.Text;
-    }
-
-    internal EmbeddedTextProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters.MediaType, vcfRow.Parameters, vcfRow.Group)
-    {
-        _textProp = new TextProperty(vcfRow, version);
-    }
-
-    public new string? Value => _textProp.Value;
-
-    public override string GetFileTypeExtension()
-    {
-        string? mime = Parameters.MediaType;
-        return mime is null ? ".txt" : MimeString.ToFileTypeExtension(mime);
-    }
-
-    public override object Clone() => new EmbeddedTextProperty((TextProperty)_textProp.Clone());
-
-
-    protected override object? GetVCardPropertyValue() => Value;
-
-    internal override void PrepareForVcfSerialization(VcfSerializer serializer)
-    {
-        Debug.Assert(object.ReferenceEquals(this.Parameters, _textProp.Parameters));
-        _textProp.PrepareForVcfSerialization(serializer);
-    }
-
-    internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);
-
-}
 
 
 public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
@@ -135,10 +21,11 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     protected DataProperty(DataProperty prop) : base(prop) { }
 
 
-    protected DataProperty(string? mimeType, ParameterSection parameterSection, string? propertyGroup) : base(parameterSection, propertyGroup)
-    {
-        Parameters.MediaType = mimeType;
-    }
+    protected DataProperty(string? mimeType,
+                           ParameterSection parameterSection,
+                           string? propertyGroup)
+        : base(parameterSection, propertyGroup) => Parameters.MediaType = mimeType;
+
 
     public new DataPropertyValue? Value
     {
@@ -162,7 +49,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                         s => new EmbeddedTextProperty(vcfRow, version),
                         b => new EmbeddedBytesProperty(b,
                                                        MimeType.TryParse(info.MimeType,
-                                                                         out MimeType? mimeType) ? mimeType.ToString() 
+                                                                         out MimeType? mimeType) ? mimeType.ToString()
                                                                                                  : MimeString.OctetStream,
                                                        vcfRow.Group,
                                                        vcfRow.Parameters))
@@ -177,7 +64,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                              vcfRow.Parameters);
         }
 
-        if(vcfRow.Parameters.DataType == VCdDataType.Uri)
+        if (vcfRow.Parameters.DataType == VCdDataType.Uri)
         {
             vcfRow.UnMask(version);
             return new ReferencedDataProperty(UriConverter.ToAbsoluteUri(vcfRow.Value),

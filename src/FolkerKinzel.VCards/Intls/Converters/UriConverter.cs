@@ -22,6 +22,14 @@ internal static class UriConverter
         return ToAbsoluteUri("http://" + value);
     }
 
+    internal static bool IsContentId(Uri value)
+    {
+        Debug.Assert(value != null);
+        Debug.Assert(value.IsAbsoluteUri);
+
+        return value.Scheme.StartsWith("cid", StringComparison.OrdinalIgnoreCase);
+    }
+
 
     internal static string GetFileTypeExtensionFromUri(Uri? uri)
     {
