@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
+using FolkerKinzel.MimeTypes;
 
 namespace Examples;
 
@@ -6,7 +8,16 @@ internal class Program
 {
     private static void Main()
     {
-        //bool b = Uri.TryCreate("http://www.fo  lker.de", UriKind.Absolute, out var uri);
+        var uri = new Uri("directory/image.png", UriKind.RelativeOrAbsolute);
+
+        var absUri = new Uri("http://a");
+        bool res = Uri.TryCreate(absUri, uri, out uri);
+        //Debug.Assert(uri.IsAbsoluteUri);
+        string[] segments = uri.Segments;
+        Debug.Assert(segments.Length > 0);
+        string segment = segments[segments.Length - 1];
+
+        string? b = Path.GetExtension(segment);
 
         Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
@@ -40,7 +51,7 @@ internal class Program
 
     }
 
-    
+
 
     private static void StartAnsiFilterExample()
     {

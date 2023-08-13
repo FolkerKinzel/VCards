@@ -37,12 +37,20 @@ internal sealed class ReferencedDataProperty : DataProperty
 
     public new Uri? Value { get; }
 
-    protected override object? GetVCardPropertyValue() => Value;
+    public override string GetFileTypeExtension()
+    {
+        string? mime = Parameters.MediaType;
 
-    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
+        return mime != null ? MimeString.ToFileTypeExtension(mime)
+                            : UriConverter.GetFileTypeExtensionFromUri(Value);
+    }
 
     /// <inheritdoc/>
     public override object Clone() => new ReferencedDataProperty(this);
+
+    protected override object? GetVCardPropertyValue() => Value;
+
+    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
 }
 
 internal sealed class EmbeddedBytesProperty : DataProperty
@@ -64,12 +72,16 @@ internal sealed class EmbeddedBytesProperty : DataProperty
 
     public new byte[]? Value { get; }
 
-    protected override object? GetVCardPropertyValue() => Value;
 
-    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
+    public override string GetFileTypeExtension() => MimeString.ToFileTypeExtension(Parameters.MediaType);
+
 
     /// <inheritdoc/>
     public override object Clone() => new EmbeddedBytesProperty(this);
+
+    protected override object? GetVCardPropertyValue() => Value;
+
+    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
 
 }
 
@@ -90,23 +102,26 @@ internal sealed class EmbeddedTextProperty : DataProperty
         _textProp = new TextProperty(vcfRow, version);
     }
 
-
-
     public new string? Value => _textProp.Value;
+
+    public override string GetFileTypeExtension()
+    {
+        string? mime = Parameters.MediaType;
+        return mime is null ? ".txt" : MimeString.ToFileTypeExtension(mime);
+    }
+
+    public override object Clone() => new EmbeddedTextProperty((TextProperty)_textProp.Clone());
+
 
     protected override object? GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
         Debug.Assert(object.ReferenceEquals(this.Parameters, _textProp.Parameters));
-
-        base.PrepareForVcfSerialization(serializer);
+        _textProp.PrepareForVcfSerialization(serializer);
     }
 
     internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);
-
-    public override object Clone() => new EmbeddedTextProperty((TextProperty)_textProp.Clone());
 
 }
 
@@ -135,6 +150,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
             _ => null
         };
     }
+
+    public abstract string GetFileTypeExtension();
 
     internal static DataProperty Create(VcfRow vcfRow, VCdVersion version)
     {
