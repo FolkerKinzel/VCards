@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Intls.Converters;
+﻿using System.Net;
+
+namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class UriConverter
 {

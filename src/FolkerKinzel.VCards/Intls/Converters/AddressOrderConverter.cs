@@ -106,7 +106,6 @@ internal static class AddressOrderConverter
 
         new ReadOnlySpan<char>(arr);
 
-#pragma warning disable CA1303 // Literale nicht als lokalisierte Parameter übergeben
         return span.Equals("USA", StringComparison.Ordinal) ||
                span.StartsWith("UNITEDSTATES") ||
                span.StartsWith("AUSTRAL") ||
@@ -171,7 +170,6 @@ internal static class AddressOrderConverter
                ? AddressOrder.Usa
                : span.StartsWith("PAPUA") || span.EndsWith("VENEZUELA") ? AddressOrder.Venezuela 
                                                                         : AddressOrder.Din;
-#pragma warning restore CA1303 // Literale nicht als lokalisierte Parameter übergeben
 
     }
 

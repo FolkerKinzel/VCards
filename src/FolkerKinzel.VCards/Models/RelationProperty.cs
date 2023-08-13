@@ -19,6 +19,13 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// <param name="prop">Das zu klonende <see cref="RelationProperty"/>-Objekt.</param>
     protected RelationProperty(RelationProperty prop) : base(prop) { }
 
+    /// <summary>
+    /// Konstruktor, der von abgeleiteten Klassen beim Parsen von VCF-Dateien verwendet wird.
+    /// </summary>
+    /// <param name="parameters">Die <see cref="ParameterSection"/> des <see cref="RelationProperty"/> Objekts.</param>
+    /// <param name="propertyGroup">Bezeichner der Gruppe,
+    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
+    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
     protected RelationProperty(ParameterSection parameters, string? propertyGroup)
         : base(parameters, propertyGroup) { }
 

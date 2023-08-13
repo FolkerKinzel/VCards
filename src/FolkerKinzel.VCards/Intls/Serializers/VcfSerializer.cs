@@ -47,11 +47,13 @@ internal abstract class VcfSerializer
     /// <summary>
     /// Name des Ehepartners
     /// </summary>
+    [SuppressMessage("Style", "IDE1006:Benennungsstile", Justification = "<Ausstehend>")]
     internal const string X_KADDRESSBOOK_X_SpouseName = "X-KADDRESSBOOK-X-SpouseName";
 
     /// <summary>
     /// beliebiges Jubiläum (zusätzlich zu BDAY, Geburtstag) 
     /// </summary>
+    [SuppressMessage("Style", "IDE1006:Benennungsstile", Justification = "<Ausstehend>")]
     internal const string X_KADDRESSBOOK_X_Anniversary = "X-KADDRESSBOOK-X-Anniversary";
 
     ///// <summary>
@@ -62,6 +64,7 @@ internal abstract class VcfSerializer
     /// <summary>
     /// Instant-Messenger-Adresse
     /// </summary>
+    [SuppressMessage("Style", "IDE1006:Benennungsstile", Justification = "<Ausstehend>")]
     internal const string X_KADDRESSBOOK_X_IMAddress = "X-KADDRESSBOOK-X-IMAddress";
 
 
@@ -701,7 +704,7 @@ internal abstract class VcfSerializer
     [ExcludeFromCodeCoverage]
     protected virtual void AppendXmlProperties(IEnumerable<XmlProperty?> value) { }
 
-    internal abstract void AppendBase64EncodedData(byte[]? data);
+    internal abstract void AppendBase64EncodedData(IEnumerable<byte>? data);
 
     #endregion
 

@@ -93,9 +93,9 @@ internal static class MimeTypeConverter
 
     private static string? CreateMimeType(string mediaType, string subType)
     {
-        if(IsMimeType(subType))
+        if(MimeType.TryParse(subType, out MimeType? mimeType))
         {
-            return subType;
+            return mimeType.ToString();
         }
         try
         {
@@ -105,8 +105,6 @@ internal static class MimeTypeConverter
         {
             return null;
         }
-
-        static bool IsMimeType(string input) => input.Contains('/');
     }
 
     private static string? TypeValueFromMimeType(string? mimeType)

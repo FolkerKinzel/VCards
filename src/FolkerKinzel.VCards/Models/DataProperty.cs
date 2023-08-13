@@ -8,6 +8,7 @@ using FolkerKinzel.Uris;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Models;
+using System.Collections.ObjectModel;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -31,7 +32,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     {
         get => base.Value switch
         {
-            byte[] bt => bt,
+            ReadOnlyCollection<byte> bt => bt,
             string s => s,
             Uri uri => uri,
             _ => null
@@ -77,10 +78,10 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         return vcfRow.Parameters.Encoding == ValueEncoding.QuotedPrintable &&
                vcfRow.Parameters.MediaType != null &&
                vcfRow.Parameters.DataType != VCdDataType.Text
-               ? new EmbeddedBytesProperty(QuotedPrintable.DecodeData(vcfRow.Value),
-                                                vcfRow.Parameters.MediaType,
-                                                vcfRow.Group,
-                                                vcfRow.Parameters)
+               ? new EmbeddedBytesProperty(vcfRow.Value is null ? null : QuotedPrintable.DecodeData(vcfRow.Value),
+                                           vcfRow.Parameters.MediaType,
+                                           vcfRow.Group,
+                                           vcfRow.Parameters)
                : new EmbeddedTextProperty(vcfRow, version);
     }
 
@@ -99,13 +100,13 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         FromBytes(LoadFile(filePath), mimeType, propertyGroup);
 
 
-    public static DataProperty FromBytes(byte[]? bytes,
+    public static DataProperty FromBytes(IEnumerable<byte>? bytes,
                                          string? mimeTypeString = MimeString.OctetStream,
                                          string? propertyGroup = null) =>
         MimeType.TryParse(mimeTypeString, out MimeType? mimeType) ? FromBytes(bytes, mimeType, propertyGroup)
                                                                   : FromBytes(bytes, MimeString.OctetStream, propertyGroup);
 
-    public static DataProperty FromBytes(byte[]? bytes,
+    public static DataProperty FromBytes(IEnumerable<byte>? bytes,
                                          MimeType mimeType,
                                          string? propertyGroup = null) =>
         new EmbeddedBytesProperty(bytes,

@@ -2,19 +2,9 @@
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Models.Enums;
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards (net7.0)"
-Vor:
-using FolkerKinzel.Uris;
-Nach:
-using FolkerKinzel.Uris;
-using FolkerKinzel;
-using FolkerKinzel.VCards;
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Intls.Models;
-*/
 using FolkerKinzel.Uris;
 using FolkerKinzel.VCards.Models;
+using System.Collections.ObjectModel;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
@@ -26,13 +16,15 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     /// <param name="prop">The <see cref="DataProperty"/> object to clone.</param>
     private EmbeddedBytesProperty(EmbeddedBytesProperty prop) : base(prop) => Value = prop.Value;
 
-    internal EmbeddedBytesProperty(byte[]? value,
+
+    internal EmbeddedBytesProperty(IEnumerable<byte>? value,
                                    string? mimeType,
                                    string? propertyGroup,
                                    ParameterSection parameterSection) :
-        base(mimeType, parameterSection, propertyGroup) => Value = value;
+        base(mimeType, parameterSection, propertyGroup) => Value = value is null ? null : new ReadOnlyCollection<byte>(value.ToArray());
 
-    public new byte[]? Value { get; }
+
+    public new ReadOnlyCollection<byte>? Value { get; }
 
 
     public override string GetFileTypeExtension() => MimeString.ToFileTypeExtension(Parameters.MediaType);
@@ -64,7 +56,7 @@ internal sealed class EmbeddedBytesProperty : DataProperty
         }
         else
         {
-            serializer.Builder.Append(DataUrl.FromBytes(Value, Parameters.MediaType));
+            serializer.Builder.Append(DataUrl.FromBytes(Value?.ToArray(), Parameters.MediaType));
         }
     }
 

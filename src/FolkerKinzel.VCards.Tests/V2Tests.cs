@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Extensions;
+﻿using System.Collections.ObjectModel;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -93,7 +94,7 @@ public class V2Tests
 
         Assert.AreEqual(vcard.Keys?.First()?.Value, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-        Assert.IsTrue(((byte[]?)vcard.Photos?.First()?.Value?.Value)?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(((ReadOnlyCollection<byte>?)vcard.Photos?.First()?.Value?.Value)?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()

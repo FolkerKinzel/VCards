@@ -99,7 +99,7 @@ public class V3Tests
 
         Assert.AreEqual(vcard.Keys?.First()?.Value, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-        Assert.IsTrue(((byte[]?)vcard.Photos?.First()?.Value?.Value)?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(((IReadOnlyCollection<byte>?)vcard.Photos?.First()?.Value?.Value)?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()
@@ -285,7 +285,7 @@ END:VCARD";
             InstantMessengerHandles = prop
         };
 
-        string vcfString = vcard.ToVcfString(options: (VcfOptions.Default | VcfOptions.WriteXExtensions));
+        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteXExtensions);
         vcard = VCard.ParseVcf(vcfString)[0];
         Assert.AreEqual(1, vcard.InstantMessengerHandles!.Count());
         prop = vcard.InstantMessengerHandles!.First();

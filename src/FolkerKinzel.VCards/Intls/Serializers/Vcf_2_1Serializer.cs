@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Extensions;
+﻿using System.Collections.ObjectModel;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Models;
 
@@ -22,14 +23,14 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         }
     }
 
-    internal override void AppendBase64EncodedData(byte[]? data)
+    internal override void AppendBase64EncodedData(IEnumerable<byte>? data)
     {
         if(data is null)
         {
             return;
         }
 
-        string base64Data = Convert.ToBase64String(data);
+        string base64Data = Convert.ToBase64String(data.ToArray(), Base64FormattingOptions.None);
 
         _ = Builder.Append(VCard.NewLine);
         int i = Builder.Length;
