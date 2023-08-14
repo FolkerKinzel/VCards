@@ -134,8 +134,12 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                   new ParameterSection() { Encoding = ValueEncoding.Base64 });
 
 
-    public static DataProperty FromText(string? text, string? propertyGroup = null) =>
-        new EmbeddedTextProperty(new TextProperty(text, propertyGroup));
+    public static DataProperty FromText(string? text, string? propertyGroup = null)
+    {
+        var prop = new EmbeddedTextProperty(new TextProperty(text, propertyGroup));
+        prop.Parameters.DataType = VCdDataType.Text;
+        return prop;
+    }
 
     public static DataProperty FromUri(Uri? uri,
                                        string? mimeTypeString = null,

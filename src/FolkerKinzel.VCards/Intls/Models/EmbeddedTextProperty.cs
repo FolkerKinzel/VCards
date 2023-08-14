@@ -38,7 +38,6 @@ internal sealed class EmbeddedTextProperty : DataProperty
     {
         Debug.Assert(ReferenceEquals(Parameters, _textProp.Parameters));
         _textProp.PrepareForVcfSerialization(serializer);
-        Parameters.DataType = VCdDataType.Text;
     }
 
     internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);
