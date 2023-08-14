@@ -69,6 +69,9 @@
     <Compile Remove="Models\ContentSizeRestriction.cs" />
     <Compile Remove="Models\DataProperty_OBSOLETE.cs" />
     <Compile Remove="Models\DataUrl.cs" />
+    <Compile Remove="Models\DateTimeOffsetProperty_OBSOLETE.cs" />
+    <Compile Remove="Models\DateTimeProperty_OBSOLETE.cs" />
+    <Compile Remove="Models\DateTimeTextProperty_OBSOLETE.cs" />
     <Compile Remove="Models\Enums\DataEncoding.cs" />
     <Compile Remove="Models\Enums\SizeRestriction.cs" />
     <Compile Remove="Models\PropertyParts\MimeType.cs" />
@@ -102,9 +105,11 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FolkerKinzel.Uris">
-      <Version>4.0.0-beta.1</Version>
-    </PackageReference>
+    <PackageReference Include="FolkerKinzel.Uris" Version="4.0.0-beta.1"/>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' Or '$(TargetFramework)' == 'netstandard2.0' 
+             Or '$(TargetFramework)' == 'netstandard2.1' Or '$(TargetFramework)' == 'net5.0'">
+    <PackageReference Include="Portable.System.DateTimeOnly" Version="7.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\Res.Designer.cs">
