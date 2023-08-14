@@ -44,7 +44,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     {
         vcfRow.UnMask(version);
 
-        if (vcfRow.Value is null || vcfRow.Parameters.DataType == Enums.VCdDataType.Text)
+        if (string.IsNullOrWhiteSpace(vcfRow.Value) || vcfRow.Parameters.DataType == Enums.VCdDataType.Text)
         {
             return new RelationTextProperty(vcfRow);
         }
@@ -61,7 +61,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
         }
         else
         {
-            if (Uri.TryCreate(vcfRow.Value, UriKind.RelativeOrAbsolute, out Uri? uri))
+            if (Uri.TryCreate(vcfRow.Value.Trim(), UriKind.RelativeOrAbsolute, out Uri? uri))
             {
                 var relation = new RelationUriProperty(
                     uri,

@@ -60,7 +60,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     {
         vcfRow.DecodeQuotedPrintable();
 
-        if (vcfRow.Value is null)
+        if (vcfRow.Value.Length == 0)
         {
             return;
         }
@@ -70,6 +70,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         ValueSplitter? commaSplitter = vcfRow.Info.CommaSplitter;
 
         commaSplitter.ValueString = vcfRow.Value;
+
         foreach (string s in commaSplitter)
         {
             list.Add(s.UnMask(vcfRow.Info.Builder, version));

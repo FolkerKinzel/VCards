@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using OneOf;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -56,9 +57,14 @@ public sealed class TimeStampProperty : VCardProperty
     {
         // ein statischer DateAndOrTimeConverter kann nicht benutzt werden, da das die 
         // Threadsafety zerstören würde:
-        _ = vcfRow.Info.DateAndOrTimeConverter.TryParse(vcfRow.Value, out DateTimeOffset value);
-        Value = value;
-        Parameters.DataType = VCdDataType.TimeStamp;
+        if (vcfRow.Info.DateAndOrTimeConverter.TryParse(vcfRow.Value.AsSpan(), out OneOf<DateOnly, DateTime, DateTimeOffset> value))
+        {
+            Value = value.Match<DateTimeOffset>(
+                dateOnly => new DateTimeOffset(dateOnly.ToDateTime(TimeOnly.MinValue, DateTimeKind.Local)),
+                dateTime => dateTime,
+                dateTimeOffset => dateTimeOffset);
+            Parameters.DataType = VCdDataType.TimeStamp;
+        }
     }
 
 

@@ -59,6 +59,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
 
         bool initGenderIdentity = false;
         semicolonSplitter.ValueString = vcfRow.Value;
+
         foreach (var s in semicolonSplitter)
         {
             if (initGenderIdentity)

@@ -36,7 +36,7 @@ public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<Prope
     internal PropertyIDMappingProperty(VcfRow vcfRow)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        if (vcfRow.Value is null)
+        if (string.IsNullOrWhiteSpace(vcfRow.Value))
         {
             return;
         }
@@ -59,10 +59,7 @@ public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<Prope
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    internal override void AppendValue(VcfSerializer serializer)
-    {
-        Value?.AppendTo(serializer.Builder);
-    }
+    internal override void AppendValue(VcfSerializer serializer) => Value?.AppendTo(serializer.Builder);
 
     IEnumerator<PropertyIDMappingProperty> IEnumerable<PropertyIDMappingProperty>.GetEnumerator()
     {

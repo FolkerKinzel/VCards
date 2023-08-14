@@ -6,18 +6,18 @@ internal static class AccessConverter
 {
     private static class VCdAccessValue
     {
-        internal const string Public = "PUBLIC";
-        internal const string Private = "PRIVATE";
-        internal const string Confidential = "CONFIDENTIAL";
+        internal const string PUBLIC = "PUBLIC";
+        internal const string PRIVATE = "PRIVATE";
+        internal const string CONFIDENTIAL = "CONFIDENTIAL";
     }
 
     internal static Access Parse(string? value)
     {
         return (value?.ToUpperInvariant()) switch
         {
-            VCdAccessValue.Public => Access.Public,
-            VCdAccessValue.Private => Access.Private,
-            VCdAccessValue.Confidential => Access.Confidential,
+            VCdAccessValue.PUBLIC => Access.Public,
+            VCdAccessValue.PRIVATE => Access.Private,
+            VCdAccessValue.CONFIDENTIAL => Access.Confidential,
             _ => Access.Public
         };
     }
@@ -27,10 +27,10 @@ internal static class AccessConverter
     {
         return kind switch
         {
-            Access.Public => VCdAccessValue.Public,
-            Access.Private => VCdAccessValue.Private,
-            Access.Confidential => VCdAccessValue.Confidential,
-            _ => VCdAccessValue.Public
+            Access.Public => VCdAccessValue.PUBLIC,
+            Access.Private => VCdAccessValue.PRIVATE,
+            Access.Confidential => VCdAccessValue.CONFIDENTIAL,
+            _ => VCdAccessValue.PUBLIC
         };
     }
 

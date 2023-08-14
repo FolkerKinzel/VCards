@@ -100,7 +100,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         else if (vcfRow.Parameters.Encoding == ValueEncoding.QuotedPrintable &&
                vcfRow.Parameters.MediaType != null)
         {
-            return new EmbeddedBytesProperty(vcfRow.Value is null ? null : QuotedPrintable.DecodeData(vcfRow.Value),
+            return new EmbeddedBytesProperty(string.IsNullOrWhiteSpace(vcfRow.Value) ? null : QuotedPrintable.DecodeData(vcfRow.Value),
                                              vcfRow.Parameters.MediaType,
                                              vcfRow.Group,
                                              vcfRow.Parameters);

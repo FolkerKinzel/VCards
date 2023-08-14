@@ -203,15 +203,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     {
         vcfRow.DecodeQuotedPrintable();
 
-        if (vcfRow.Value is null)
-        {
-            Value = new Address();
-        }
-        else
-        {
-            Debug.Assert(!string.IsNullOrWhiteSpace(vcfRow.Value));
-            Value = new Address(vcfRow.Value, vcfRow.Info, version);
-        }
+        Value = string.IsNullOrWhiteSpace(vcfRow.Value) ? new Address()
+                                                        : new Address(vcfRow.Value, vcfRow.Info, version);
     }
 
 

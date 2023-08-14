@@ -82,7 +82,6 @@ public sealed partial class VCard
         Debug.Assert(queue != null);
         Debug.Assert(info.Builder != null);
         Debug.Assert(queue.All(x => x != null));
-        Debug.Assert(queue.All(x => x.Value == null || !string.IsNullOrWhiteSpace(x.Value)));
 
         this.Version = versionHint;
 
@@ -93,7 +92,6 @@ public sealed partial class VCard
 
         while (queue.Count != 0)
         {
-            // vcfRow.Value ist entweder null oder enthält verwertbare Daten
             VcfRow? vcfRow = queue.Dequeue();
 
             switch (vcfRow.Key)
@@ -251,9 +249,9 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (GenderViews is null && vcfRow.Value != null)
+                    else
                     {
-                        GenderViews = vcfRow.Value.Contains('1', StringComparison.Ordinal)
+                        GenderViews ??= vcfRow.Value.Contains('1', StringComparison.Ordinal)
                                             ? new GenderProperty(Models.Enums.Gender.Female) 
                                             : new GenderProperty(Models.Enums.Gender.Male);
                     }
@@ -346,7 +344,7 @@ public sealed partial class VCard
 
                     break;
                 case PropKeys.AGENT:
-                    if (vcfRow.Value is null)
+                    if (string.IsNullOrWhiteSpace(vcfRow.Value))
                     {
                         Relations = new RelationTextProperty(null, RelationTypes.Agent, vcfRow.Group).GetAssignment(Relations);
                     }

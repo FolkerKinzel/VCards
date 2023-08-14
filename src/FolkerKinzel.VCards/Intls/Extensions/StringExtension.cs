@@ -2,7 +2,7 @@
 
 internal static class StringExtension
 {
-    [return: NotNullIfNotNull("value")]
+    [return: NotNullIfNotNull(nameof(value))]
     internal static string? UnMask(this string? value, StringBuilder sb, VCdVersion version)
     {
         Debug.Assert(sb != null);

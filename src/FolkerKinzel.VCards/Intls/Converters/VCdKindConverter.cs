@@ -6,22 +6,22 @@ internal static class VCdKindConverter
 {
     private static class VCdKindValues
     {
-        internal const string Individual = "individual";
-        internal const string Group = "group";
-        internal const string Organization = "organization";
-        internal const string Location = "location";
-        internal const string Application = "application";
+        internal const string INDIVIDUAL = "individual";
+        internal const string GROUP = "group";
+        internal const string ORGANIZATION = "organization";
+        internal const string LOCATION = "location";
+        internal const string APPLICATION = "application";
     }
 
     internal static VCdKind Parse(string? value)
     {
         return (value?.ToLowerInvariant()) switch
         {
-            VCdKindValues.Individual => VCdKind.Individual,
-            VCdKindValues.Group => VCdKind.Group,
-            VCdKindValues.Organization => VCdKind.Organization,
-            VCdKindValues.Location => VCdKind.Location,
-            VCdKindValues.Application => VCdKind.Application,
+            VCdKindValues.INDIVIDUAL => VCdKind.Individual,
+            VCdKindValues.GROUP => VCdKind.Group,
+            VCdKindValues.ORGANIZATION => VCdKind.Organization,
+            VCdKindValues.LOCATION => VCdKind.Location,
+            VCdKindValues.APPLICATION => VCdKind.Application,
             _ => VCdKind.Individual,
         };
     }
@@ -31,12 +31,12 @@ internal static class VCdKindConverter
     {
         return kind switch
         {
-            VCdKind.Individual => VCdKindValues.Individual,
-            VCdKind.Group => VCdKindValues.Group,
-            VCdKind.Organization => VCdKindValues.Organization,
-            VCdKind.Location => VCdKindValues.Location,
-            VCdKind.Application => VCdKindValues.Application,
-            _ => VCdKindValues.Individual,
+            VCdKind.Individual => VCdKindValues.INDIVIDUAL,
+            VCdKind.Group => VCdKindValues.GROUP,
+            VCdKind.Organization => VCdKindValues.ORGANIZATION,
+            VCdKind.Location => VCdKindValues.LOCATION,
+            VCdKind.Application => VCdKindValues.APPLICATION,
+            _ => VCdKindValues.INDIVIDUAL,
         };
     }
 }

@@ -159,18 +159,18 @@ internal static class QuotedPrintable
     /// <summary>
     /// Decodiert einen Quoted-Printable codierten String. Zeilenwechselzeichen werden an das auf dem System übliche Zeilenwechselzeichen angepasst.
     /// </summary>
-    /// <remarks>Wenn der übergebene String <c>null</c> oder Empty ist, wird <c>null</c> zurückgegeben.</remarks>
+    /// <remarks>Wenn der übergebene String <c>null</c> oder Empty ist, wird <see cref="string.Empty"/> zurückgegeben.</remarks>
     /// <param name="qpCoded">Der codierte String. Wird <c>null</c> übergeben, wird ein Leerstring zurückgegeben.</param>
     /// <param name="textEncoding">Die Textencodierung, der der codierte String entspricht. Als Standard wird <see cref="Encoding.UTF8"/> angenommen.
     /// (Wird auch gewählt, wenn dem Parameter <c>null</c> übergeben wird.)</param>
     /// <returns>Der decodierte String.</returns>
-    public static string? Decode(
+    public static string Decode(
         string? qpCoded,
         Encoding? textEncoding = null)
     {
         if (string.IsNullOrEmpty(qpCoded))
         {
-            return null;
+            return "";
         }
 
         byte[] bytes = DecodeData(qpCoded);

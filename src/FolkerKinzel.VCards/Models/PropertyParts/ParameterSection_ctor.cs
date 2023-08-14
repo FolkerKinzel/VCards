@@ -112,7 +112,7 @@ public sealed partial class ParameterSection
                         break;
                     }
                 case ParameterKey.GEO:
-                    if (FolkerKinzel.VCards.Models.GeoCoordinate.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out FolkerKinzel.VCards.Models.GeoCoordinate? geo))
+                    if (GeoCoordinate.TryParse(parameter.Value.AsSpan().Trim().Trim(info.AllQuotes), out FolkerKinzel.VCards.Models.GeoCoordinate? geo))
                     {
                         this.GeoPosition = geo;
                     }

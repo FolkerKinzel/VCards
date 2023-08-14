@@ -87,15 +87,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     {
         vcfRow.DecodeQuotedPrintable();
 
-        if (vcfRow.Value == null)
-        {
-            Value = new Name();
-        }
-        else
-        {
-            Debug.Assert(!string.IsNullOrWhiteSpace(vcfRow.Value));
-            Value = new Name(vcfRow.Value, vcfRow.Info, version);
-        }
+        Value = string.IsNullOrWhiteSpace(vcfRow.Value) ? new Name() : new Name(vcfRow.Value, vcfRow.Info, version);
     }
 
     /// <summary>

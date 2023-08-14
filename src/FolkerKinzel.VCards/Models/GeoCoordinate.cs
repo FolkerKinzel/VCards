@@ -80,11 +80,11 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
 
 
-    internal static bool TryParse(string? value, out GeoCoordinate? coordinate)
+    internal static bool TryParse(ReadOnlySpan<char> value, out GeoCoordinate? coordinate)
     {
         coordinate = null;
 
-        if (value is null)
+        if (value.IsEmpty)
         {
             return false;
         }
@@ -104,18 +104,17 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         }
 
 
-        ReadOnlySpan<char> roSpan = value.AsSpan();
 
         if (startIndex != 0)
         {
-            roSpan = roSpan.Slice(startIndex);
+            value = value.Slice(startIndex);
         }
 
-        int splitIndex = MemoryExtensions.IndexOf(roSpan, ','); // vCard 4.0
+        int splitIndex = value.IndexOf(','); // vCard 4.0
 
         if (splitIndex == -1)
         {
-            splitIndex = MemoryExtensions.IndexOf(roSpan, ';'); // vCard 3.0
+            splitIndex = value.IndexOf(';'); // vCard 3.0
         }
 
         try
@@ -129,8 +128,8 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
 
             coordinate = new GeoCoordinate(
-                _Double.Parse(roSpan.Slice(0, splitIndex), numStyle, culture),
-                _Double.Parse(roSpan.Slice(splitIndex + 1), numStyle, culture));
+                _Double.Parse(value.Slice(0, splitIndex), numStyle, culture),
+                _Double.Parse(value.Slice(splitIndex + 1), numStyle, culture));
             return true;
         }
         catch
