@@ -106,8 +106,8 @@ Nach:
     [TestMethod()]
     public void DateTimeOffsetPropertyTest4()
     {
-        IEnumerable<DateTimeProperty> prop = new DateTimeOffsetProperty(DateTimeOffset.Now, GROUP);
-        DateTimeProperty first = prop.First();
+        IEnumerable<DateAndOrTimeProperty> prop = new DateTimeOffsetProperty(DateTimeOffset.Now, GROUP);
+        DateAndOrTimeProperty first = prop.First();
         Assert.AreSame(first, prop);
     }
 
@@ -115,15 +115,15 @@ Nach:
     public void DateTimeOffsetPropertyTest5()
     {
         IEnumerable<DateTimeOffsetProperty> prop = new DateTimeOffsetProperty(DateTimeOffset.Now, GROUP);
-        DateTimeProperty first = prop.AsWeakEnumerable().First();
+        DateAndOrTimeProperty first = prop.AsWeakEnumerable().First();
         Assert.AreSame(first, prop);
     }
 
     [TestMethod()]
     public void DateTimeOffsetPropertyTest6()
     {
-        IEnumerable<DateTimeProperty> prop = new DateTimeOffsetProperty(DateTimeOffset.Now, GROUP);
-        foreach (DateTimeProperty item in prop)
+        IEnumerable<DateAndOrTimeProperty> prop = new DateTimeOffsetProperty(DateTimeOffset.Now, GROUP);
+        foreach (DateAndOrTimeProperty item in prop)
         {
             Assert.IsNotNull(item.Value);
         }

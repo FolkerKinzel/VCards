@@ -4,4 +4,4 @@ using OneOf;
 namespace FolkerKinzel.VCards.Models;
 
 [GenerateOneOf]
-public partial class DataPropertyValue : OneOfBase<ReadOnlyCollection<byte>, Uri, string> { }
+public sealed partial class DataPropertyValue : OneOfBase<ReadOnlyCollection<byte>, Uri, string> { }

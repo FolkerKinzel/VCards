@@ -34,8 +34,8 @@ public sealed partial class VCard
                 ProfileProperty profProp => profProp.Clone(),
                 TextProperty txtProp => txtProp.Clone(),
                 IEnumerable<TextProperty?> txtPropEnumerable => txtPropEnumerable.Select(cloner).Cast<TextProperty?>().ToArray(),
-                DateTimeProperty dtTimeProp => dtTimeProp.Clone(),
-                IEnumerable<DateTimeProperty?> dtTimePropEnumerable => dtTimePropEnumerable.Select(cloner).Cast<DateTimeProperty?>().ToArray(),
+                DateAndOrTimeProperty dtTimeProp => dtTimeProp.Clone(),
+                IEnumerable<DateAndOrTimeProperty?> dtTimePropEnumerable => dtTimePropEnumerable.Select(cloner).Cast<DateAndOrTimeProperty?>().ToArray(),
                 AddressProperty adrProp => adrProp.Clone(),
                 IEnumerable<AddressProperty?> adrPropEnumerable => adrPropEnumerable.Select(cloner).Cast<AddressProperty?>().ToArray(),
                 NameProperty nameProp => nameProp.Clone(),
@@ -117,7 +117,7 @@ public sealed partial class VCard
                     DisplayNames = new TextProperty(vcfRow, this.Version).GetAssignment(DisplayNames);
                     break;
                 case PropKeys.BDAY:
-                    BirthDayViews = DateTimeProperty.Create(vcfRow, this.Version).GetAssignment(BirthDayViews);
+                    BirthDayViews = DateAndOrTimeProperty.Create(vcfRow, this.Version).GetAssignment(BirthDayViews);
                     break;
                 case PropKeys.ADR: // PostOfficeBox, ExtendedAddress, Street, Locality, Region, PostalCode, Country
                     Addresses = new AddressProperty(vcfRow, this.Version).GetAssignment(Addresses);
@@ -215,7 +215,7 @@ public sealed partial class VCard
                     Sources = new TextProperty(vcfRow, this.Version).GetAssignment(Sources);
                     break;
                 case PropKeys.ANNIVERSARY:
-                    this.AnniversaryViews = DateTimeProperty.Create(vcfRow, this.Version).GetAssignment(AnniversaryViews);
+                    this.AnniversaryViews = DateAndOrTimeProperty.Create(vcfRow, this.Version).GetAssignment(AnniversaryViews);
                     break;
                 case PropKeys.NonStandard.X_ANNIVERSARY:
                 case PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY:
@@ -227,7 +227,7 @@ public sealed partial class VCard
                     }
                     else if (AnniversaryViews is null)
                     {
-                        this.AnniversaryViews = DateTimeProperty.Create(vcfRow, this.Version);
+                        this.AnniversaryViews = DateAndOrTimeProperty.Create(vcfRow, this.Version);
                     }
 
                     break;
@@ -396,7 +396,7 @@ public sealed partial class VCard
                 // Erweiterungen:
                 case PropKeys.NonStandard.DEATHDATE:
                     this.DeathDateViews =
-                        DateTimeProperty.Create(vcfRow, this.Version).GetAssignment(DeathDateViews);
+                        DateAndOrTimeProperty.Create(vcfRow, this.Version).GetAssignment(DeathDateViews);
                     break;
                 case PropKeys.NonStandard.BIRTHPLACE:
                     this.BirthPlaceViews =

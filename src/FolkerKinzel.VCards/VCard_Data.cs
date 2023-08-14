@@ -99,9 +99,9 @@ public sealed partial class VCard
     /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
     /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
     /// </remarks>
-    public IEnumerable<DateTimeProperty?>? AnniversaryViews
+    public IEnumerable<DateAndOrTimeProperty?>? AnniversaryViews
     {
-        get => Get<IEnumerable<DateTimeProperty?>?>(VCdProp.AnniversaryViews);
+        get => Get<IEnumerable<DateAndOrTimeProperty?>?>(VCdProp.AnniversaryViews);
         set => Set(VCdProp.AnniversaryViews, value);
     }
 
@@ -114,9 +114,9 @@ public sealed partial class VCard
     /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
     /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
     /// </remarks>
-    public IEnumerable<DateTimeProperty?>? BirthDayViews
+    public IEnumerable<DateAndOrTimeProperty?>? BirthDayViews
     {
-        get => Get<IEnumerable<DateTimeProperty?>?>(VCdProp.BirthDayViews);
+        get => Get<IEnumerable<DateAndOrTimeProperty?>?>(VCdProp.BirthDayViews);
         set => Set(VCdProp.BirthDayViews, value);
     }
 
@@ -174,9 +174,9 @@ public sealed partial class VCard
     /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
     /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
     /// </remarks>
-    public IEnumerable<DateTimeProperty?>? DeathDateViews
+    public IEnumerable<DateAndOrTimeProperty?>? DeathDateViews
     {
-        get => Get<IEnumerable<DateTimeProperty?>?>(VCdProp.DeathDateViews);
+        get => Get<IEnumerable<DateAndOrTimeProperty?>?>(VCdProp.DeathDateViews);
         set => Set(VCdProp.DeathDateViews, value);
     }
 

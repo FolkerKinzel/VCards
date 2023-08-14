@@ -179,7 +179,7 @@ END:VCARD";
 
         Assert.IsNotNull(vcard.BirthDayViews);
 
-        DateTimeProperty? bday = vcard.BirthDayViews!.First();
+        DateAndOrTimeProperty? bday = vcard.BirthDayViews!.First();
 
         if (bday is DateTimeOffsetProperty prop)
         {

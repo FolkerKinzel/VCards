@@ -8,6 +8,8 @@ internal class Program
 {
     private static void Main()
     {
+        var offset = DateTimeOffset.ParseExact("140000", "HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal);
+
         //var uri = new Uri("därectory/image.png", UriKind.RelativeOrAbsolute);
 
         //var absUri = new Uri("http://a");

@@ -69,13 +69,13 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendAddresses(IEnumerable<AddressProperty?> value) => BuildPropertyCollection(VCard.PropKeys.ADR, value);
 
-    protected override void AppendAnniversaryViews(IEnumerable<DateTimeProperty?> value)
+    protected override void AppendAnniversaryViews(IEnumerable<DateAndOrTimeProperty?> value)
     {
         SetAltID(value);
         BuildPropertyCollection(VCard.PropKeys.ANNIVERSARY, value);
     }
 
-    protected override void AppendBirthDayViews(IEnumerable<DateTimeProperty?> value)
+    protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value)
     {
         SetAltID(value);
         BuildPropertyCollection(VCard.PropKeys.BDAY, value);
@@ -98,7 +98,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendCategories(IEnumerable<StringCollectionProperty?> value) => BuildPropertyCollection(VCard.PropKeys.CATEGORIES, value);
 
-    protected override void AppendDeathDateViews(IEnumerable<DateTimeProperty?> value)
+    protected override void AppendDeathDateViews(IEnumerable<DateAndOrTimeProperty?> value)
     {
         if (!Options.IsSet(VcfOptions.WriteRfc6474Extensions))
         {

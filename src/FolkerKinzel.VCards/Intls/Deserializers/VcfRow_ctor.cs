@@ -23,10 +23,7 @@ internal sealed partial class VcfRow
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
         int valueStart = valueSeparatorIndex + 1;
 
-        if (valueStart < vCardRow.Length)
-        {
-            this.Value = vCardRow.Substring(valueStart);
-        }
+        this.Value = valueStart < vCardRow.Length ? vCardRow.Substring(valueStart) : "";
 
 
         // keySection:

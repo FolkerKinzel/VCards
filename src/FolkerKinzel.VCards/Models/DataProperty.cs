@@ -43,7 +43,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     {
         get
         {
-            if(!_isValueInitialized)
+            if (!_isValueInitialized)
             {
                 InitializeValue();
             }
@@ -73,6 +73,11 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                     : new EmbeddedTextProperty(vcfRow, version);
         }
 
+        if(vcfRow.Parameters.DataType == VCdDataType.Text)
+        {
+            return new EmbeddedTextProperty(vcfRow, version);
+        }
+
         if (vcfRow.Parameters.Encoding == ValueEncoding.Base64)
         {
             return new EmbeddedBytesProperty(Base64.Decode(vcfRow.Value),
@@ -84,24 +89,25 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         if (vcfRow.Parameters.DataType == VCdDataType.Uri)
         {
             vcfRow.UnMask(version);
-            return Uri.TryCreate(vcfRow.Value, UriKind.Absolute, out Uri uri)
-                      ? new ReferencedDataProperty(uri,
-                                                   vcfRow.Parameters.MediaType,
-                                                   vcfRow.Group,
-                                                   vcfRow.Parameters)
-                      : new EmbeddedTextProperty(vcfRow, version);
+            if (Uri.TryCreate(vcfRow.Value.Trim(), UriKind.Absolute, out Uri? uri))
+            {
+                return new ReferencedDataProperty(uri,
+                                                  vcfRow.Parameters.MediaType,
+                                                  vcfRow.Group,
+                                                  vcfRow.Parameters);
+            }
+        } // Quoted-Printable encoded binary data:
+        else if (vcfRow.Parameters.Encoding == ValueEncoding.QuotedPrintable &&
+               vcfRow.Parameters.MediaType != null)
+        {
+            return new EmbeddedBytesProperty(vcfRow.Value is null ? null : QuotedPrintable.DecodeData(vcfRow.Value),
+                                             vcfRow.Parameters.MediaType,
+                                             vcfRow.Group,
+                                             vcfRow.Parameters);
         }
 
-        // Quoted-Printable encoded binary data:
-        return vcfRow.Parameters.Encoding == ValueEncoding.QuotedPrintable &&
-               vcfRow.Parameters.MediaType != null &&
-               vcfRow.Parameters.DataType != VCdDataType.Text
-               ? new EmbeddedBytesProperty(vcfRow.Value is null ? null : QuotedPrintable.DecodeData(vcfRow.Value),
-                                           vcfRow.Parameters.MediaType,
-                                           vcfRow.Group,
-                                           vcfRow.Parameters)
-               // Text:
-               : new EmbeddedTextProperty(vcfRow, version);
+        // Text:
+        return new EmbeddedTextProperty(vcfRow, version);
     }
 
 

@@ -1,4 +1,7 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using FolkerKinzel.VCards.Intls.Extensions;
+using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -29,42 +32,43 @@ internal sealed class DateAndOrTimeConverter
             "yyyyMMddTHHmmzzz",
             "yyyyMMddTHHmmsszz",
             "yyyyMMddTHHmmsszzz",
-            "THH",
-            "THHmm",
-            "THHmmss",
-            "THHzz",
-            "THHzzz",
-            "THHmmzz",
-            "THHmmzzz",
-            "THHmmsszz",
-            "THHmmsszzz",
-            "T-mmss",
-            "T-mmsszz",
-            "T-mmsszzz",
-            "T--ss",
-            "T--sszz",
-            "T--sszzz"
+            //"THH",
+            //"THHmm",
+            //"THHmmss",
+            //"THHzz",
+            //"THHzzz",
+            //"THHmmzz",
+            //"THHmmzzz",
+            //"THHmmsszz",
+            //"THHmmsszzz",
+            //"T-mmss",
+            //"T-mmsszz",
+            //"T-mmsszzz",
+            //"T--ss",
+            //"T--sszz",
+            //"T--sszzz"
     };
 
 #if NET5_0_OR_GREATER
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
 #endif
-    internal bool TryParse(string? s, out DateTimeOffset offset)
+    internal bool TryParse(ReadOnlySpan<char> roSpan, out OneOf<DateOnly, DateTime, DateTimeOffset> oneOf)
     {
-        offset = DateTimeOffset.MinValue;
+        oneOf = default;
 
         // Test auf Länge nötig, um StackOverflowException auszuschließen
-        if (s is null || s.Length > MAX_DATE_TIME_STRING_LENGTH)
+        if (roSpan.Length > MAX_DATE_TIME_STRING_LENGTH)
         {
             return false;
         }
 
         DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
-        Debug.Assert(s.Length <= MAX_DATE_TIME_STRING_LENGTH);
+        Debug.Assert(roSpan.Length <= MAX_DATE_TIME_STRING_LENGTH);
 
-        ReadOnlySpan<char> roSpan = s.AsSpan();
-        if (s.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
+        bool hasUtcIndicator = roSpan.EndsWith("Z", StringComparison.OrdinalIgnoreCase);
+
+        if (hasUtcIndicator)
         {
             roSpan = roSpan.Slice(0, roSpan.Length - 1);
 
@@ -87,9 +91,15 @@ internal sealed class DateAndOrTimeConverter
             Span<char> slice = span.Slice(firstLeapYearJanuary.Length);
             roSpan.CopyTo(slice);
 
-            return _DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+            if (_DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out DateTimeOffset offset))
+            {
+                oneOf = hasUtcIndicator || offset.Offset != TimeSpan.Zero || roSpan.ContainsUtcOffset()
+                       ? offset
+                       : IsDateOnly(span) ? DateOnly.FromDateTime(offset.Date) : offset.DateTime;
+                return true;
+            }
         }
-        else if (s.StartsWith("--", StringComparison.Ordinal))
+        else if (roSpan.StartsWith("--", StringComparison.Ordinal))
         {
             // "--MM" zu "0004-MM":
             // Note the use of YYYY-MM in the second example above.  YYYYMM is
@@ -105,7 +115,13 @@ internal sealed class DateAndOrTimeConverter
                 Span<char> slice = span.Slice(leapYear.Length);
                 roSpan.CopyTo(slice);
 
-                return _DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+                if(_DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out DateTimeOffset offset))
+                {
+                    oneOf = hasUtcIndicator || offset.Offset != TimeSpan.Zero || roSpan.ContainsUtcOffset()
+                           ? offset
+                           : IsDateOnly(span) ? DateOnly.FromDateTime(offset.Date) : offset.DateTime;
+                    return true;
+                }
             }
             else
             {
@@ -121,13 +137,47 @@ internal sealed class DateAndOrTimeConverter
                 Span<char> slice = span.Slice(leapYear.Length);
                 roSpan.CopyTo(slice);
 
-                return _DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+                if (_DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out DateTimeOffset offset))
+                {
+                    oneOf = hasUtcIndicator || offset.Offset != TimeSpan.Zero || roSpan.ContainsUtcOffset()
+                           ? offset
+                           : IsDateOnly(span) ? DateOnly.FromDateTime(offset.Date) : offset.DateTime;
+                    return true;
+                }
             }
         }
         else
         {
-            return _DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+            if (_DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out DateTimeOffset offset))
+            {
+                oneOf = hasUtcIndicator || offset.Offset != TimeSpan.Zero || roSpan.ContainsUtcOffset()
+                       ? offset
+                       : IsDateOnly(roSpan) ? DateOnly.FromDateTime(offset.Date) : offset.DateTime;
+                return true;
+            }
         }
+
+        return false;
+    }
+
+
+    private bool IsDateOnly(ReadOnlySpan<char> span)
+    {
+        const int maxDateOnly = 8;
+        int counter = 0;
+        for (int i = 0; i < span.Length; i++)
+        {
+            if (span[i].IsDecimalDigit())
+            {
+                counter++;
+            }
+
+            if(counter > maxDateOnly)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 

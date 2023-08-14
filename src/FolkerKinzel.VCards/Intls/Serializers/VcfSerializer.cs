@@ -169,16 +169,16 @@ internal abstract class VcfSerializer
                     AppendOrganizations((IEnumerable<OrganizationProperty?>)kvp.Value);
                     break;
                 case VCdProp.BirthDayViews:
-                    AppendBirthDayViews((IEnumerable<DateTimeProperty?>)kvp.Value);
+                    AppendBirthDayViews((IEnumerable<DateAndOrTimeProperty?>)kvp.Value);
                     break;
                 case VCdProp.BirthPlaceViews:
                     AppendBirthPlaceViews((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case VCdProp.AnniversaryViews:
-                    AppendAnniversaryViews((IEnumerable<DateTimeProperty?>)kvp.Value);
+                    AppendAnniversaryViews((IEnumerable<DateAndOrTimeProperty?>)kvp.Value);
                     break;
                 case VCdProp.DeathDateViews:
-                    AppendDeathDateViews((IEnumerable<DateTimeProperty?>)kvp.Value);
+                    AppendDeathDateViews((IEnumerable<DateAndOrTimeProperty?>)kvp.Value);
                     break;
                 case VCdProp.DeathPlaceViews:
                     AppendDeathPlaceViews((IEnumerable<TextProperty?>)kvp.Value);
@@ -401,7 +401,7 @@ internal abstract class VcfSerializer
     protected virtual void AppendAddresses(IEnumerable<AddressProperty?> value) { }
     
 
-    protected virtual void AppendAnniversaryViews(IEnumerable<DateTimeProperty?> value)
+    protected virtual void AppendAnniversaryViews(IEnumerable<DateAndOrTimeProperty?> value)
     {
         Debug.Assert(value != null);
 
@@ -445,7 +445,7 @@ internal abstract class VcfSerializer
     }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendBirthDayViews(IEnumerable<DateTimeProperty?> value) { }
+    protected virtual void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendBirthPlaceViews(IEnumerable<TextProperty?> value) { }
@@ -460,7 +460,7 @@ internal abstract class VcfSerializer
     protected virtual void AppendCategories(IEnumerable<StringCollectionProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendDeathDateViews(IEnumerable<DateTimeProperty?> value) { }
+    protected virtual void AppendDeathDateViews(IEnumerable<DateAndOrTimeProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendDeathPlaceViews(IEnumerable<TextProperty?> value) { }

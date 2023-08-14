@@ -29,6 +29,6 @@ internal sealed partial class VcfRow
 
 
     // Value: ;;Waldstr. 54;Kleinknuffelsdorf;Sachsen-Anhalt;06789;Germany
-    public string? Value { get; private set; }
+    public string Value { get; private set; }
 
 }

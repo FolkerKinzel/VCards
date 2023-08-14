@@ -172,9 +172,9 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         }
     }
 
-    protected override void AppendAnniversaryViews(IEnumerable<DateTimeProperty?> value) => base.AppendAnniversaryViews(value);
+    protected override void AppendAnniversaryViews(IEnumerable<DateAndOrTimeProperty?> value) => base.AppendAnniversaryViews(value);
 
-    protected override void AppendBirthDayViews(IEnumerable<DateTimeProperty?> value)
+    protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value)
     {
         Debug.Assert(value != null);
 

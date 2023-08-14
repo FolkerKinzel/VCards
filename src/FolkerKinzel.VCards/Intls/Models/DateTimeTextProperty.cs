@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
-internal sealed class DateTimeTextProperty : DateTimeProperty
+internal sealed class DateTimeTextProperty : DateAndOrTimeProperty
 {
     private readonly TextProperty _textProp;
 

@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using FolkerKinzel.VCards.Intls.Extensions;
+using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -31,21 +33,22 @@ internal sealed class TimeConverter
     };
 
 
-    internal bool TryParse(string? s, out DateTimeOffset offset)
+    internal bool TryParse(ReadOnlySpan<char> s, out OneOf<TimeOnly, DateTimeOffset> oneOf)
     {
-        offset = DateTimeOffset.MinValue;
-
-        if (s is null)
-        {
-            return false;
-        }
+        oneOf = default;
 
         DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
+        ReadOnlySpan<char> roSpan = s.Trim();
 
-        ReadOnlySpan<char> roSpan = s.AsSpan();
+        if(roSpan.StartsWith('T'))
+        {
+            roSpan = roSpan.Slice(1);
+        }
 
-        if (roSpan.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
+        bool hasUtcIndicator = roSpan.EndsWith("Z", StringComparison.OrdinalIgnoreCase);
+
+        if (hasUtcIndicator)
         {
             roSpan = roSpan.Slice(0, roSpan.Length - 1);
             styles |= DateTimeStyles.AssumeUniversal;
@@ -55,8 +58,17 @@ internal sealed class TimeConverter
             styles |= DateTimeStyles.AssumeLocal;
         }
 
-        return _DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out offset);
+        if (_DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out DateTimeOffset dtOffset))
+        {
+            oneOf = hasUtcIndicator || dtOffset.Offset != TimeSpan.Zero || roSpan.ContainsUtcOffset()
+                   ? dtOffset 
+                   : TimeOnly.FromTimeSpan(dtOffset.TimeOfDay);
+            return true;
+        }
+        return false;
+
     }
+
 
 
     internal static string ToTimeString(DateTimeOffset dt, VCdVersion version)

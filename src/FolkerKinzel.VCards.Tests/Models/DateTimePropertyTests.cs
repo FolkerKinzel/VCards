@@ -6,7 +6,7 @@ namespace FolkerKinzel.VCards.Models.Tests;
 [TestClass]
 public class DateTimePropertyTests
 {
-    private class TestIEnumerable : DateTimeProperty
+    private class TestIEnumerable : DateAndOrTimeProperty
     {
         public TestIEnumerable() : base(new DateTimeOffsetProperty(DateTimeOffset.Now)) { }
         public override object Clone() => throw new NotImplementedException();
