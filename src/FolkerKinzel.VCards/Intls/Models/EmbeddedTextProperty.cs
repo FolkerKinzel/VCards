@@ -10,12 +10,10 @@ internal sealed class EmbeddedTextProperty : DataProperty
 {
     private readonly TextProperty _textProp;
 
-
     internal EmbeddedTextProperty(TextProperty textProp) :
         base(textProp.Parameters.MediaType, textProp.Parameters, textProp.Group)
     {
         _textProp = textProp;
-        Parameters.DataType = VCdDataType.Text;
     }
 
     internal EmbeddedTextProperty(VcfRow vcfRow, VCdVersion version)
@@ -40,6 +38,7 @@ internal sealed class EmbeddedTextProperty : DataProperty
     {
         Debug.Assert(ReferenceEquals(Parameters, _textProp.Parameters));
         _textProp.PrepareForVcfSerialization(serializer);
+        Parameters.DataType = VCdDataType.Text;
     }
 
     internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);

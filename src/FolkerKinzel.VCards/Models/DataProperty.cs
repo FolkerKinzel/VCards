@@ -15,14 +15,25 @@ namespace FolkerKinzel.VCards.Models;
 
 public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
 {
+    private DataPropertyValue? _value;
+    private bool _isValueInitialized;
+
     /// <summary>
-    /// Copy ctor
+    /// Kopierkonstruktor
     /// </summary>
-    /// <param name="prop">The <see cref="DataProperty"/> object to clone.</param>
+    /// <param name="prop">Das zu klonende <see cref="DataProperty"/> Objekt.</param>
     protected DataProperty(DataProperty prop) : base(prop) { }
 
 
-    protected DataProperty(string? mimeType,
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="mimeType"></param>
+    /// <param name="parameterSection"></param>
+    /// <param name="propertyGroup"></param>
+    /// <remarks>Must be internal, because <see cref="ParameterSection.MediaType"/> has strong
+    /// restrictions.</remarks>
+    internal DataProperty(string? mimeType,
                            ParameterSection parameterSection,
                            string? propertyGroup)
         : base(parameterSection, propertyGroup) => Parameters.MediaType = mimeType;
@@ -30,30 +41,35 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
     public new DataPropertyValue? Value
     {
-        get => base.Value switch
+        get
         {
-            ReadOnlyCollection<byte> bt => bt,
-            string s => s,
-            Uri uri => uri,
-            _ => null
-        };
+            if(!_isValueInitialized)
+            {
+                InitializeValue();
+            }
+
+            return _value;
+        }
     }
 
     public abstract string GetFileTypeExtension();
+
 
     internal static DataProperty Create(VcfRow vcfRow, VCdVersion version)
     {
         if (DataUrl.TryParse(vcfRow.Value, out DataUrlInfo info))
         {
             return info.TryGetEmbeddedData(out OneOf<string, byte[]> data)
-                    ? data.Match<DataProperty>(
+                    ? data.Match<DataProperty>
+                       (
                         s => new EmbeddedTextProperty(vcfRow, version),
                         b => new EmbeddedBytesProperty(b,
                                                        MimeType.TryParse(info.MimeType,
                                                                          out MimeType? mimeType) ? mimeType.ToString()
                                                                                                  : MimeString.OctetStream,
                                                        vcfRow.Group,
-                                                       vcfRow.Parameters))
+                                                       vcfRow.Parameters)
+                        )
                     : new EmbeddedTextProperty(vcfRow, version);
         }
 
@@ -68,10 +84,12 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         if (vcfRow.Parameters.DataType == VCdDataType.Uri)
         {
             vcfRow.UnMask(version);
-            return new ReferencedDataProperty(UriConverter.ToAbsoluteUri(vcfRow.Value),
-                                              vcfRow.Parameters.MediaType,
-                                              vcfRow.Group,
-                                              vcfRow.Parameters);
+            return Uri.TryCreate(vcfRow.Value, UriKind.Absolute, out Uri uri)
+                      ? new ReferencedDataProperty(uri,
+                                                   vcfRow.Parameters.MediaType,
+                                                   vcfRow.Group,
+                                                   vcfRow.Parameters)
+                      : new EmbeddedTextProperty(vcfRow, version);
         }
 
         // Quoted-Printable encoded binary data:
@@ -82,6 +100,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                            vcfRow.Parameters.MediaType,
                                            vcfRow.Group,
                                            vcfRow.Parameters)
+               // Text:
                : new EmbeddedTextProperty(vcfRow, version);
     }
 
@@ -138,6 +157,17 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DataProperty>)this).GetEnumerator();
 
+    private void InitializeValue()
+    {
+        _isValueInitialized = true;
+        _value = GetVCardPropertyValue() switch
+        {
+            ReadOnlyCollection<byte> bt => bt,
+            string s => s,
+            Uri uri => uri,
+            _ => null
+        };
+    }
 
     [ExcludeFromCodeCoverage]
     private static byte[] LoadFile(string filePath)
