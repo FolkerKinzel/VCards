@@ -33,7 +33,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
     internal TextProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
     {
         vcfRow.UnMask(version);
-        Value = vcfRow.Value;
+        Value = vcfRow.Value.Length == 0 ? null : vcfRow.Value;
     }
 
 

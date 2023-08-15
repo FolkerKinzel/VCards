@@ -10,6 +10,19 @@ public sealed partial class DateAndOrTime : IOneOf
 
     public DateAndOrTime(OneOf<DateOnly, DateTimeOffset, TimeOnly, string> oneOf) => _oneOf = oneOf;
 
+    public static implicit operator DateAndOrTime(DateOnly _) => new DateAndOrTime(_);
+    public static explicit operator DateOnly(DateAndOrTime _) => _.AsDateOnly;
+
+    public static implicit operator DateAndOrTime(DateTimeOffset _) => new DateAndOrTime(_);
+    public static explicit operator DateTimeOffset(DateAndOrTime _) => _.AsDateTimeOffset;
+
+    public static implicit operator DateAndOrTime(TimeOnly _) => new DateAndOrTime(_);
+    public static explicit operator TimeOnly(DateAndOrTime _) => _.AsTimeOnly;
+
+    public static implicit operator DateAndOrTime(string _) => new DateAndOrTime(_);
+    public static explicit operator string(DateAndOrTime _) => _.AsString;
+
+
     public bool IsDateOnly => _oneOf.IsT0;
 
     public DateOnly AsDateOnly => _oneOf.AsT0;
@@ -47,6 +60,18 @@ public sealed partial class DateAndOrTime : IOneOf
 
     public TResult Match<TResult>(Func<DateOnly, TResult> f0, Func<DateTimeOffset, TResult> f1, Func<TimeOnly, TResult> f2, Func<string, TResult> f3) => _oneOf.Match(f0, f1, f2, f3);
 
+    public OneOf<TResult, DateTimeOffset, TimeOnly, string> MapDateOnly<TResult>(Func<DateOnly, TResult> mapFunc) => _oneOf.MapT0(mapFunc);
+
+    public OneOf<DateOnly, TResult, TimeOnly, string> MapDateTimeOffset<TResult>(Func<DateTimeOffset, TResult> mapFunc) => _oneOf.MapT1(mapFunc);
+
+    public OneOf<DateOnly, DateTimeOffset, TResult, string> MapTimeOnly<TResult>(Func<TimeOnly, TResult> mapFunc) => _oneOf.MapT2(mapFunc);
+
+    public OneOf<DateOnly, DateTimeOffset, TimeOnly, TResult> MapString<TResult>(Func<string, TResult> mapFunc) => _oneOf.MapT3(mapFunc);
+
+    public object Value => this._oneOf.Value;
+
+    public int Index => this._oneOf.Index;
+
     //[EditorBrowsable(EditorBrowsableState.Never)]
     //[Browsable(false)]
     //public new bool IsT0 => base.IsT0;
@@ -79,7 +104,5 @@ public sealed partial class DateAndOrTime : IOneOf
     //[Browsable(false)]
     //public new string AsT3 => base.AsT3;
 
-    public object Value => this._oneOf.Value;
 
-    public int Index => this._oneOf.Index;
 }

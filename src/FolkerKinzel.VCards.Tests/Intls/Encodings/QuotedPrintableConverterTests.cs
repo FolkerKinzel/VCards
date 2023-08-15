@@ -21,7 +21,7 @@ public class QuotedPrintableTests
     [DataRow(null)]
     [DataRow("")]
     public void DecodeStringTest2(string? quoted)
-        => Assert.IsNull(QuotedPrintable.Decode(quoted));
+        => Assert.AreEqual(0, QuotedPrintable.Decode(quoted).Length);
 
 
     [DataTestMethod]

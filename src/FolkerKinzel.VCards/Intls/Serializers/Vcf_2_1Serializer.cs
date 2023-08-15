@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Encodings;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;

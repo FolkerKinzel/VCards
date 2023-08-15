@@ -12,10 +12,11 @@ public class DateAndOrTimeConverterTests
     {
         string s = "1963-08-17";
 
-        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out OneOf.OneOf<DateOnly, DateTimeOffset> dt));
 
-        var reference = new DateTime(1963, 8, 17);
-        Assert.AreEqual(reference, dt.DateTime);
+        var reference = new DateOnly(1963, 8, 17);
+        Assert.IsTrue(dt.IsT0);
+        Assert.AreEqual(reference, dt.AsT0);
     }
 
 
@@ -23,10 +24,11 @@ public class DateAndOrTimeConverterTests
     public void DateTest2()
     {
         string s = "--08";
-        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out OneOf.OneOf<DateOnly, DateTimeOffset> dt));
 
-        Assert.AreEqual(dt.Year, 4);
-        Assert.AreEqual(dt.Month, 8);
+        Assert.IsTrue(dt.IsT0);
+        Assert.AreEqual(dt.AsT0.Year, 4);
+        Assert.AreEqual(dt.AsT0.Month, 8);
     }
 
 
@@ -34,11 +36,12 @@ public class DateAndOrTimeConverterTests
     public void DateTest3()
     {
         string s = "--0803";
-        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out var dt));
 
-        Assert.AreEqual(dt.Year, 4);
-        Assert.AreEqual(dt.Month, 8);
-        Assert.AreEqual(dt.Day, 3);
+        Assert.IsTrue(dt.IsT0);
+        Assert.AreEqual(dt.AsT0.Year, 4);
+        Assert.AreEqual(dt.AsT0.Month, 8);
+        Assert.AreEqual(dt.AsT0.Day, 3);
     }
 
 
@@ -46,11 +49,12 @@ public class DateAndOrTimeConverterTests
     public void DateTest4()
     {
         string s = "---03";
-        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out var dt));
 
-        Assert.AreEqual(dt.Year, 4);
-        Assert.AreEqual(dt.Month, 1);
-        Assert.AreEqual(dt.Day, 3);
+        Assert.IsTrue(dt.IsT0);
+        Assert.AreEqual(dt.AsT0.Year, 4);
+        Assert.AreEqual(dt.AsT0.Month, 1);
+        Assert.AreEqual(dt.AsT0.Day, 3);
     }
 
 
@@ -86,23 +90,26 @@ public class DateAndOrTimeConverterTests
     private void Roundtrip(
         string s, bool stringRoundTrip, VCdVersion version)
     {
-        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out OneOf.OneOf<DateOnly, DateTimeOffset> dt));
 
-        string s2 = ToDateTimeString(dt, version);
+        string s2 = ToDateTimeString(in dt, version);
 
         if (stringRoundTrip)
         {
             Assert.AreEqual(s, s2);
         }
 
-        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out DateTimeOffset dt2));
+        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out var dt2));
 
         Assert.AreEqual(dt, dt2);
 
-        static string ToDateTimeString(DateTimeOffset dt, VCdVersion version)
-        {
+        static string ToDateTimeString(in OneOf.OneOf<DateOnly, DateTimeOffset> dt, VCdVersion version)
+        { 
             var builder = new StringBuilder();
-            DateAndOrTimeConverter.AppendDateTimeStringTo(builder, dt, version);
+            dt.Switch(
+                dateOnly => DateAndOrTimeConverter.AppendDateTo(builder, dateOnly, version),
+                dto => DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, dto, version)
+            );
             return builder.ToString();
         }
     }
@@ -110,60 +117,79 @@ public class DateAndOrTimeConverterTests
     private void RoundtripTimestamp(
         string s, bool stringRoundTrip = true, VCdVersion version = VCdVersion.V4_0)
     {
-        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out OneOf.OneOf<DateOnly, DateTimeOffset> dt));
 
-        string s2 = ToTimeStamp(dt, version);
+        string s2 = ToTimeStamp(in dt, version);
 
         if (stringRoundTrip)
         {
             Assert.AreEqual(s, s2);
         }
 
-        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out DateTimeOffset dt2));
+        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out var dt2));
 
         Assert.AreEqual(dt, dt2);
 
-        static string ToTimeStamp(DateTimeOffset dt, VCdVersion version)
+        static string ToTimeStamp(in OneOf.OneOf<DateOnly, DateTimeOffset> dt, VCdVersion version)
         {
             var builder = new StringBuilder();
-            DateAndOrTimeConverter.AppendTimeStampTo(builder, dt, version);
+            dt.Switch(
+                dateOnly => DateAndOrTimeConverter.AppendDateTo(builder, dateOnly, version),
+                dto => DateAndOrTimeConverter.AppendTimeStampTo(builder, dto, version)
+            );
             return builder.ToString();
         }
     }
 
 
-    [TestMethod]
-    public void AppendTimeStampToTest1()
-    {
-        var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendTimeStampTo(builder, null, VCdVersion.V3_0);
-        Assert.AreEqual(0, builder.Length);
-    }
+    //[TestMethod]
+    //public void AppendTimeStampToTest1()
+    //{
+    //    var builder = new StringBuilder();
+    //    DateAndOrTimeConverter.AppendTimeStampTo(builder, null, VCdVersion.V3_0);
+    //    Assert.AreEqual(0, builder.Length);
+    //}
 
 
     [TestMethod]
     public void AppendDateTimeStringToTest1()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeStringTo(builder, null, VCdVersion.V3_0);
+        DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, default, VCdVersion.V3_0);
         Assert.AreEqual(0, builder.Length);
     }
 
 
     [TestMethod]
-    public void AppendDateTimeStringToTest2()
+    public void AppendDateTimeStringToTest2a()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeStringTo(builder, new DateTime(2, 1, 1), VCdVersion.V4_0);
-        Assert.IsTrue(builder[0] == '-' && builder[1] == '-');
+        DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
+        Assert.AreEqual(0, builder.Length);
     }
-
 
     [TestMethod]
     public void AppendDateTimeStringToTest2b()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeStringTo(builder, new DateTime(2, 1, 1), VCdVersion.V3_0);
+        DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 2, 0,0,0, DateTimeKind.Utc), VCdVersion.V4_0);
+        Assert.IsTrue(builder[0] == '-' && builder[1] == '-');
+    }
+
+
+    [TestMethod]
+    public void AppendDateTimeStringToTest2c()
+    {
+        var builder = new StringBuilder();
+        DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V3_0);
+        Assert.AreEqual(0, builder.Length);
+    }
+
+    [TestMethod]
+    public void AppendDateTimeStringToTest2d()
+    {
+        var builder = new StringBuilder();
+        DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 2), VCdVersion.V3_0);
         Assert.IsTrue(builder[0] == '-' && builder[1] == '-');
     }
 
@@ -172,7 +198,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest3()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeStringTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0);
+        DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0);
         Assert.IsTrue(builder.ToString().StartsWith("0004"));
     }
 

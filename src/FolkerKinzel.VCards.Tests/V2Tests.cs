@@ -92,9 +92,9 @@ public class V2Tests
 
         _ = VCard.ParseVcf(s);
 
-        Assert.AreEqual(vcard.Keys?.First()?.Value, ASCIITEXT);
+        Assert.AreEqual(vcard.Keys?.First()?.Value?.AsString, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-        Assert.IsTrue(((ReadOnlyCollection<byte>?)vcard.Photos?.First()?.Value?.Value)?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(vcard.Photos?.First()?.Value?.AsReadOnlyByteCollection.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()

@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -97,9 +98,9 @@ public class V3Tests
 
         _ = VCard.ParseVcf(s);
 
-        Assert.AreEqual(vcard.Keys?.First()?.Value, ASCIITEXT);
+        Assert.AreEqual(vcard.Keys?.First()?.Value.AsString, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-        Assert.IsTrue(((IReadOnlyCollection<byte>?)vcard.Photos?.First()?.Value?.Value)?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(vcard.Photos?.First()?.Value?.AsReadOnlyByteCollection?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()

@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Intls.Converters.Tests;
+﻿using System.Text;
+
+namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 [TestClass]
 public class TimeConverterTests
@@ -8,8 +10,8 @@ public class TimeConverterTests
     [TestMethod]
     public void TimeConverterTest()
     {
-        Roundtrip("16:58:00", false);
-        Roundtrip("165800Z");
+        Roundtrip("16:58:00", false, VCdVersion.V4_0);
+        Roundtrip("165800Z", true, VCdVersion.V4_0);
         Roundtrip("16:58:00Z", true, VCdVersion.V2_1);
         Roundtrip("16:58:00-04:00", false, VCdVersion.V4_0);
         Roundtrip("16:58:00+04", false, VCdVersion.V4_0);
@@ -19,18 +21,25 @@ public class TimeConverterTests
     }
 
     private void Roundtrip(
-        string s, bool stringRoundTrip = true, VCdVersion version = VCdVersion.V4_0)
+        string s, bool stringRoundTrip, VCdVersion version)
     {
-        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> dt));
 
-        string s2 = TimeConverter.ToTimeString(dt, version);
+        
+        var builder = new StringBuilder();
+
+        dt.Switch(
+            to => TimeConverter.AppendTimeTo(builder, to, version),
+            dto => TimeConverter.AppendTimeTo(builder, dto, version)
+            );
+        string s2 = builder.ToString();
 
         if (stringRoundTrip)
         {
             Assert.AreEqual(s, s2);
         }
 
-        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out DateTimeOffset dt2));
+        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> dt2));
         Assert.AreEqual(dt, dt2);
     }
 

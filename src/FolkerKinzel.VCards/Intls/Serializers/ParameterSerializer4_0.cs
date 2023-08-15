@@ -64,18 +64,14 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     {
         VCdDataType? dataType = this.ParaSection.DataType;
 
+        AppendValue(dataType);
+        AppendCalScale();
+
         if (dataType == VCdDataType.Text)
         {
-            AppendValue(VCdDataType.Text);
-
             // Hinweis: LANGUAGE ist eigentlich nur bei BDAY erlaubt!
             // (Fehler im RFC?)
             AppendLanguage();
-        }
-        else if (ParaSection.Calendar != null)
-        {
-            AppendValue(VCdDataType.DateAndOrTime);
-            AppendCalScale();
         }
 
         AppendAltId();
@@ -86,16 +82,12 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     protected override void BuildBdayPara()
     {
         VCdDataType? dataType = this.ParaSection.DataType;
+        AppendValue(dataType);
+        AppendCalScale();
 
         if (dataType == VCdDataType.Text)
         {
-            AppendValue(VCdDataType.Text);
             AppendLanguage();
-        }
-        else if (ParaSection.Calendar != null)
-        {
-            AppendValue(VCdDataType.DateAndOrTime);
-            AppendCalScale();
         }
 
         AppendAltId();

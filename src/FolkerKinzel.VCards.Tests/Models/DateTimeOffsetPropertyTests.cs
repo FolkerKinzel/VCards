@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -40,41 +41,6 @@ public class DateTimeOffsetPropertyTests
             BirthDayViews = prop
         };
 
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net5.0)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net6.0)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp3.1)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net461)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp2.1)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
         IList<VCard> list = VCard.ParseVcf(s);
@@ -86,14 +52,14 @@ Nach:
 
         Assert.IsNotNull(vcard.BirthDayViews);
 
-        prop = vcard.BirthDayViews!.First() as DateTimeOffsetProperty;
+        DateTimeOffsetProperty? prop2 = vcard.BirthDayViews!.First() as DateTimeOffsetProperty;
 
-        Assert.IsNotNull(prop);
-        Assert.AreEqual(now, prop!.Value);
-        Assert.AreEqual(GROUP, prop.Group);
-        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsNotNull(prop2);
+        Assert.AreEqual(now, prop2!.Value);
+        Assert.AreEqual(GROUP, prop2.Group);
+        Assert.IsFalse(prop2.IsEmpty);
 
-        Assert.AreEqual(Enums.VCdDataType.DateAndOrTime, prop.Parameters.DataType);
+        Assert.AreEqual(Enums.VCdDataType.DateAndOrTime, prop2.Parameters.DataType);
     }
 
     [TestMethod()]
