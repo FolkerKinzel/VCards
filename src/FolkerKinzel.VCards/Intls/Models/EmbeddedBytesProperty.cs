@@ -21,8 +21,20 @@ internal sealed class EmbeddedBytesProperty : DataProperty
                                    string? mimeType,
                                    string? propertyGroup,
                                    ParameterSection parameterSection) :
-        base(mimeType, parameterSection, propertyGroup) => Value = value is null ? null : new ReadOnlyCollection<byte>(value.ToArray());
+        base(mimeType, parameterSection, propertyGroup)
+    {
+        if (value != null)
+        {
+            var arr = value.ToArray();
 
+            if (arr.Length == 0)
+            {
+                return;
+            }
+
+            Value = new ReadOnlyCollection<byte>(arr);
+        }
+    }
 
     public new ReadOnlyCollection<byte>? Value { get; }
 
