@@ -60,4 +60,6 @@ internal sealed class EmbeddedBytesProperty : DataProperty
         }
     }
 
+    public override string ToString() => Value != null ? $"{Value.Count} Bytes" : base.ToString();
+
 }

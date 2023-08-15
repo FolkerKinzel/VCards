@@ -81,4 +81,6 @@ internal sealed class ReferencedDataProperty : DataProperty
         Debug.Assert(Value.IsAbsoluteUri);
         _ = serializer.Builder.Append(Value.AbsoluteUri);
     }
+
+    public override string ToString() => Value?.AbsoluteUri ?? base.ToString();
 }

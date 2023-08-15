@@ -11,8 +11,8 @@
     <!-- .nuget-Package: -->
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
-    <Version>6.0.0-alpha.1</Version>
-    <FileVersion>6.0.0.1</FileVersion>
+    <Version>6.0.0-alpha.2</Version>
+    <FileVersion>6.0.0.8</FileVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v5.0.0-beta.3</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
@@ -105,10 +105,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FolkerKinzel.Uris" Version="4.0.0-beta.1"/>
+    <PackageReference Include="FolkerKinzel.Uris" Version="4.0.0-beta.1" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' Or '$(TargetFramework)' == 'netstandard2.0' 
-             Or '$(TargetFramework)' == 'netstandard2.1' Or '$(TargetFramework)' == 'net5.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' Or '$(TargetFramework)' == 'netstandard2.0'               Or '$(TargetFramework)' == 'netstandard2.1' Or '$(TargetFramework)' == 'net5.0'">
     <PackageReference Include="Portable.System.DateTimeOnly" Version="7.0.1" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@
     <members>
         <member name="T:FolkerKinzel.VCards.AnsiFilter">
             <summary>
-            Hilfsklasse, die dem korrekten Laden von VCF-Dateien dient, die in einer ANSI-Codepage gespeichert wurden.
+            Hilfsklasse, die dem automatischen Erkennen und korrekten Laden von VCF-Dateien dient, die in einer anderen Codepage als UTF-8 gespeichert sind.
             </summary>
             <threadsafety static="true" instance="false"/>
             <remarks>
@@ -17,18 +17,13 @@
             Kodierung UTF-8 verbindlich festgelegt.
             </para>
             <para>
-            Die Klasse ist ein Wrapper um die <see cref="T:FolkerKinzel.VCards.VCard"/>.<see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)"/>-Methode, der zunächst prüft, ob die zu
-            ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut mit einer als Fallback angegebenen Kodierung geladen.
+            Die Klasse ist ein Wrapper um die <see cref="T:FolkerKinzel.VCards.VCard"/>.<see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)"/>-Methode, der die Datei zunächst als UTF-8 lädt.
+            Wenn es dabei zu Dekodierungsfehlern kommt, untersucht die Methode die VCard-Objekte auf evtl. vorhandene <c>CHARSET</c>-Parameter, die einen Anhaltspunkt 
+            auf die zu verwendende Textenkodierung geben. Wird ein Hinweis gefunden, wird die Datei mit der ermittelten Textenkodierung erneut geladen, andernfalls
+            mit der im Konstruktor als Fallback angegebenen Kodierung.
             </para>
             <para>
-            Die Verwendung der Klasse eignet sich nicht für Code, bei dem es auf Performance ankommt, denn zur Auswertung werden <see cref="T:System.Text.DecoderFallbackException"/>s 
-            abgefangen und Dateien müssen ggf. zweimal geladen werden.
-            </para>
-            <para>
-            Verwenden Sie die Klasse, wenn Sie mit relativer Sicherheit vorhersagen können, welche ANSI-Codepage ggf. verwendet worden ist oder wenn Sie nicht mit 
-            vCard 2.1 - Dateien arbeiten. Falls Sie es mit
-            vCard 2.1-Dateien zu tun haben, die in verschiedenen ANSI-Codepages gespeichert worden sind, können Sie auf die Klasse <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter"/>
-            zurückgreifen, die zusätzlich in den eingelesenen vCard-Dateien noch nach <c>CHARSET</c>-Parametern fahndet.
+            <c>CHARSET</c>-Parameter gibt es nur im vCard-Standard 2.1.
             </para>
             </remarks>
             <example>
@@ -36,13 +31,16 @@
             <code language="cs" source="..\Examples\AnsiFilterExample.cs"/>
             </example>
         </member>
+        <member name="F:FolkerKinzel.VCards.AnsiFilter._encodingCache">
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
+        </member>
         <member name="M:FolkerKinzel.VCards.AnsiFilter.#ctor(System.Int32)">
             <summary>
             Initialisiert eine Instanz der <see cref="T:FolkerKinzel.VCards.AnsiFilter"/>-Klasse mit der Nummer
             der Codepage, die für das Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format vorliegen.
             </summary>
             <param name="fallbackCodePage">Die Nummer der Codepage. Default ist
-            1252 für windows-1252.</param>
+            1252 für <c>windows-1252</c>.</param>
             <exception cref="T:System.ArgumentException">Die für <paramref name="fallbackCodePage"/> angegebene Nummer
             konnte keiner ANSI-Codepage zugeordnet werden.</exception>
         </member>
@@ -59,13 +57,12 @@
         <member name="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName">
             <summary>
             <see cref="P:System.Text.Encoding.WebName"/>-Eigenschaft des <see cref="T:System.Text.Encoding"/>-Objekts, das zum Laden von VCF-Dateien verwendet wird, 
-            die nicht im UTF-8-Format vorliegen.
+            die nicht im UTF-8-Format vorliegen, wenn kein Hinweis zur Verwendung eines anderen <see cref="T:System.Text.Encoding"/>s gefunden wird.
             </summary>
         </member>
         <member name="M:FolkerKinzel.VCards.AnsiFilter.LoadVcf(System.String)">
             <summary>
-            Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit dem durch <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName"/>
-            spezifizierten <see cref="T:System.Text.Encoding"/>.
+            Lädt eine VCF-Datei und wählt dabei automatisch das geeignete <see cref="T:System.Text.Encoding"/> aus.
             </summary>
             
             <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
@@ -78,8 +75,7 @@
         </member>
         <member name="M:FolkerKinzel.VCards.AnsiFilter.LoadVcf(System.String,System.String@)">
             <summary>
-            Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit dem durch <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName"/>
-            spezifizierten <see cref="T:System.Text.Encoding"/>.
+            Lädt eine VCF-Datei und wählt dabei automatisch das geeignete <see cref="T:System.Text.Encoding"/> aus.
             </summary>
             
             <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
@@ -377,7 +373,7 @@
             
             <exception cref="T:System.ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SaveVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.String,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
+        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SaveVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.String,FolkerKinzel.VCards.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
             <summary>
             Speichert eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten in eine gemeinsame VCF-Datei.
             </summary>
@@ -423,7 +419,7 @@
             <exception cref="T:System.ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
             <exception cref="T:System.IO.IOException">Die Datei konnte nicht geschrieben werden.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SerializeVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.IO.Stream,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions,System.Boolean)">
+        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.SerializeVcf(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},System.IO.Stream,FolkerKinzel.VCards.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions,System.Boolean)">
             <summary>
             Serialisiert eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten unter Verwendung des VCF-Formats in einen <see cref="T:System.IO.Stream"/>.
             </summary>
@@ -470,7 +466,7 @@
             <exception cref="T:System.IO.IOException">E/A-Fehler.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.ToVcfString(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
+        <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.ToVcfString(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
             <summary>
             Serialisiert <paramref name="vCards"/> als einen <see cref="T:System.String"/>, der den Inhalt einer VCF-Datei darstellt.
             </summary>
@@ -553,39 +549,6 @@
             gesetzten Flags entfernt sind. (Wenn <paramref name="flags"/>&#160;<see cref="F:FolkerKinzel.VCards.VcfOptions.All"/> ist, wird 
             <see cref="F:FolkerKinzel.VCards.VcfOptions.None"/> zurückgegeben.)</returns>
         </member>
-        <member name="T:FolkerKinzel.VCards.Intls.Attributes.InternalProtectedAttribute">
-            <summary>
-            Das Attribut simuliert einen Zugriffsmodifizierer, mit dem Methoden, Eigenschaften und Konstruktoren, die ihn nutzen 
-            außerhalb der Assembly unsichtbar (internal) und innerhalb der Assembly nur für abgeleitete Klassen sichtbar sind 
-            (internal UND protected). Member, die ihn nutzen, müssen als internal deklariert sein und als erstes die Methode 
-            InternalProtectedAttribute.Run() ausführen. Die Methode führt die Überprüfung durch (nur im Debug-Modus), das Attribut 
-            dient nur zur Information. In Properties muss InternalProtectedAttribute.Run() auf jedem Accessor ausgeführt werden. 
-            Wird eine Methode oder Property überschrieben oder verdeckt, muss InternalProtectedAttribute.Run() auf der verdeckenden 
-            oder überschreibenden Methode bzw. Property ausgeführt werden: Es genügt nicht, wenn die base-Property oder Methode 
-            aufgerufen wird. InternalProtected kann nicht verhindern, dass ein Aufruf von einem fremden Objekt aus erfolgt, dessen Klasse 
-            der gleichen Verebungshierarchie angehört.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Intls.Attributes.InternalProtectedAttribute.Run">
-            <summary>
-            Die Methode prüft im Debug-Modus, ob der Aufrufer den Zugriffsmodifizierer internal nutzt (Warnmeldung, wenn nicht) 
-            und von einer abgeleiteten Klasse oder einer Basisklasse aufgerufen wurde. Ist dies nicht der Fall, wird eine 
-            InvalidOperationException geworfen. Die Methode kann nicht verhindern, dass der Aufruf von einem fremden Objekt aus erfolgt, dessen 
-            Klasse der gleichen Verebungshierarchie angehört.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">Ein InternalProtected deklarierter Konstruktor bzw. eine InternalProtected deklarierte 
-            Eigenschaft oder Methode wurde nicht von einer abgeleiteten Klasse aufgerufen.</exception>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Intls.Base64Parser.ParseBase64(System.String)">
-            <summary>
-            Parses a Base64 <see cref="T:System.String"/> as byte array - even
-            if it is in the Base64Url format (RFC 4648 § 5).
-            </summary>
-            <param name="base64">A Base64 or Base64Url <see cref="T:System.String"/>.</param>
-            <returns>A byte array containing the data that was encoded in <paramref name="base64"/>.</returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="base64"/> is <c>null</c>.</exception>
-            <exception cref="T:System.FormatException"><paramref name="base64"/> has an invalid format.</exception>
-        </member>
         <member name="T:FolkerKinzel.VCards.Intls.Converters.DateAndOrTimeConverter">
             <summary>
             Konvertiert die vCard-Values Date, Date-Time, Date-And-Or-Time und Timestamp.
@@ -620,7 +583,7 @@
             <param name="info">Ein <see cref="T:FolkerKinzel.VCards.Intls.Deserializers.VcfDeserializationInfo"/>.</param>
             <returns><see cref="T:FolkerKinzel.VCards.Intls.Deserializers.VcfRow"/>-Objekt</returns>
         </member>
-        <member name="M:FolkerKinzel.VCards.Intls.Deserializers.VcfRow.UnMask(FolkerKinzel.VCards.Models.Enums.VCdVersion)">
+        <member name="M:FolkerKinzel.VCards.Intls.Deserializers.VcfRow.UnMask(FolkerKinzel.VCards.VCdVersion)">
             <summary>
             Unmaskiert maskierten Text, der sich in <see cref="P:FolkerKinzel.VCards.Intls.Deserializers.VcfRow.Value"/> befindet, nach den Maßgaben des
             verwendeten vCard-Standards und dekodiert ihn, falls er Quoted-Printable-kodiert ist.
@@ -631,17 +594,26 @@
             <summary>
             Dekodiert Quoted-Printable kodierten Text, der sich in <see cref="P:FolkerKinzel.VCards.Intls.Deserializers.VcfRow.Value"/> befindet, wenn 
             <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Encoding"/>
-            gleich <see cref="F:FolkerKinzel.VCards.Models.Enums.VCdEncoding.QuotedPrintable"/> ist.
+            gleich <see cref="F:FolkerKinzel.VCards.Models.Enums.ValueEncoding.QuotedPrintable"/> ist.
             </summary>
         </member>
-        <member name="T:FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable.QuotedPrintableConverter">
+        <member name="M:FolkerKinzel.VCards.Intls.Encodings.Base64.Decode(System.String)">
+            <summary>
+            Parses a Base64 <see cref="T:System.String"/> as byte array - even
+            if it is in the Base64Url format (RFC 4648 § 5).
+            </summary>
+            <param name="base64">A Base64 or Base64Url <see cref="T:System.String"/>.</param>
+            <returns>A byte array containing the data that was encoded in <paramref name="base64"/> or <c>null</c>
+            if the decoding fails.</returns>
+        </member>
+        <member name="T:FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable">
             <summary>
             Eine Klasse, die Methoden zum Codieren und 
             Encodieren im Quoted-Printable-Format enthält.
             </summary>
             <threadsafety static="true" instance="false" />
         </member>
-        <member name="M:FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable.QuotedPrintableConverter.Encode(System.String,System.Int32)">
+        <member name="M:FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable.Encode(System.String,System.Int32)">
             <summary>
             Codiert einen String in Quoted-Printable. Sollte Environment.NewLine auf dem ausführenden System nicht 
             "\r\n" sein, wird der String automatisch angepasst.
@@ -652,17 +624,17 @@
             <returns>Der encodierte String. Wenn der übergebene String <c>null</c> oder Empty ist, wird string.Empty zurückgegeben.</returns>
             <exception cref="T:System.ArgumentOutOfRangeException">Wird ausgelöst, wenn maxRowLength kleiner als 4 ist.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable.QuotedPrintableConverter.Decode(System.String,System.Text.Encoding)">
+        <member name="M:FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable.Decode(System.String,System.Text.Encoding)">
             <summary>
             Decodiert einen Quoted-Printable codierten String. Zeilenwechselzeichen werden an das auf dem System übliche Zeilenwechselzeichen angepasst.
             </summary>
-            <remarks>Wenn der übergebene String <c>null</c> oder Empty ist, wird <c>null</c> zurückgegeben.</remarks>
+            <remarks>Wenn der übergebene String <c>null</c> oder Empty ist, wird <see cref="F:System.String.Empty"/> zurückgegeben.</remarks>
             <param name="qpCoded">Der codierte String. Wird <c>null</c> übergeben, wird ein Leerstring zurückgegeben.</param>
             <param name="textEncoding">Die Textencodierung, der der codierte String entspricht. Als Standard wird <see cref="P:System.Text.Encoding.UTF8"/> angenommen.
             (Wird auch gewählt, wenn dem Parameter <c>null</c> übergeben wird.)</param>
             <returns>Der decodierte String.</returns>
         </member>
-        <member name="M:FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable.QuotedPrintableConverter.DecodeData(System.String)">
+        <member name="M:FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable.DecodeData(System.String)">
             <summary>
             Decodiert beliebige Daten, die im Quoted-Printable-Format codiert sind.
             </summary>
@@ -694,6 +666,24 @@
             </summary>
             <param name="s">Ein <see cref="T:System.String"/> oder <c>null</c>.</param>
             <returns><c>true</c>, wenn <paramref name="s"/> enkodiert werden muss.</returns>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.EmbeddedBytesProperty.#ctor(FolkerKinzel.VCards.Intls.Models.EmbeddedBytesProperty)">
+            <summary>
+            Copy ctor
+            </summary>
+            <param name="prop">The <see cref="T:FolkerKinzel.VCards.Models.DataProperty"/> object to clone.</param>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.EmbeddedBytesProperty.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.ReferencedDataProperty.#ctor(FolkerKinzel.VCards.Intls.Models.ReferencedDataProperty)">
+            <summary>
+            Copy ctor
+            </summary>
+            <param name="prop"></param>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.ReferencedDataProperty.Clone">
+            <inheritdoc/>
         </member>
         <member name="M:FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.AddressTypesCollector.CollectValueStrings(System.Nullable{FolkerKinzel.VCards.Models.Enums.AddressTypes},System.Collections.Generic.List{System.String})">
             <summary>
@@ -773,11 +763,11 @@
             </summary>
             <param name="prop">The <see cref="T:FolkerKinzel.VCards.Models.AccessProperty"/> object to clone.</param>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.AccessProperty.#ctor(FolkerKinzel.VCards.Models.Enums.VCdAccess,System.String)">
+        <member name="M:FolkerKinzel.VCards.Models.AccessProperty.#ctor(FolkerKinzel.VCards.Models.Enums.Access,System.String)">
             <summary>
             Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.AccessProperty"/>-Objekt.
             </summary>
-            <param name="value">Ein Member der <see cref="T:FolkerKinzel.VCards.Models.Enums.VCdAccess"/>-Enumeration.</param>
+            <param name="value">Ein Member der <see cref="T:FolkerKinzel.VCards.Models.Enums.Access"/>-Enumeration.</param>
             <param name="propertyGroup">Bezeichner der Gruppe,
             der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
             um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
@@ -917,275 +907,41 @@
         <member name="M:FolkerKinzel.VCards.Models.AddressProperty.Clone">
             <inheritdoc/>
         </member>
-        <member name="T:FolkerKinzel.VCards.Models.DataProperty">
-            <summary>
-            Kapselt eingebettete Binärdaten, Verweise auf Binärdaten (z.B. Urls) oder als freier Text 
-            vorliegende Information.
-            </summary>
-            <remarks>
-            <para>Die Informationen könnnen in verschiedenen Formaten vorliegen:</para>
-            <list type="bullet">
-            <item>eingebettete Binärdaten</item>
-            <item>Verweise auf Binärdaten (z.B. Urls)</item>
-            <item>als freier Text vorliegende Information</item>
-            </list>
-            <para>Verwenden Sie die <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>-Klasse, um
-            einzubettende Binärdaten oder freien Text zu übergeben oder diese Informationen aus der 
-            Property wieder auszulesen.</para>
-            </remarks>
-        </member>
         <member name="M:FolkerKinzel.VCards.Models.DataProperty.#ctor(FolkerKinzel.VCards.Models.DataProperty)">
-            <summary>
-            Copy ctor
-            </summary>
-            <param name="prop">The <see cref="T:FolkerKinzel.VCards.Models.DataProperty"/> object to clone.</param>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataProperty.#ctor(System.Uri,System.String)">
-            <summary>
-            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.DataProperty"/>-Objekt.
-            </summary>
-            <param name="value">Ein <see cref="T:System.Uri"/>: Verwenden Sie die statischen Methoden der <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>-Klasse,
-            um einzubettende Binärdaten oder freien Text als <see cref="T:System.Uri"/>zu übergeben.</param>
-            <param name="propertyGroup">Bezeichner der Gruppe,
-            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
-            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.DataProperty.Value">
-            <summary>
-            Die von der <see cref="T:FolkerKinzel.VCards.Models.DataProperty"/> zur Verfügung gestellten Daten.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataProperty.GetVCardPropertyValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataProperty.Clone">
-            <inheritdoc/>
-        </member>
-        <member name="T:FolkerKinzel.VCards.Models.DataUrl">
-            <summary>
-            Repräsentiert einen Data-URL nach RFC 2397.
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.DataUrl.UriSchemeData">
-            <summary>
-            Gibt an, dass der <see cref="T:System.Uri"/> ein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> nach RFC 2397 ist. Dieses Feld ist schreibgeschützt.
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.DataUrl.SchemeDelimiter">
-            <summary>
-            Gibt das Zeichen an, das das Schema des Kommunikationsprotokolls vom Adressteil des URIs trennt. Dieses Feld ist schreibgeschützt.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataUrl.#ctor(System.String,FolkerKinzel.VCards.Models.PropertyParts.MimeType,FolkerKinzel.VCards.Models.Enums.DataEncoding)">
-            <summary>
-            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>-Objekt.
-            </summary>
-            <param name="uriString">Der <see cref="T:System.String"/>, aus dem der <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> initialisiert wird.</param>
-            <param name="mimeType">Der MIME-Typ der eingebetteten Daten. Wenn <c>null</c> übergeben wird, 
-            wird der Standard-MIME-Typ <c>text/plain;charset=US-ASCII</c> erzeugt.</param>
-            <param name="encoding">Beschreibt, in welcher Form die Daten im  <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> kodiert sind.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="uriString"/> ist <c>null</c>.</exception>
-            <exception cref="T:System.UriFormatException">Es kann kein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> initialisiert werden, z.B.
-            weil der resultierende <paramref name="uriString"/> länger als 65519 Zeichen wäre.</exception>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.DataUrl.MimeType">
-            <summary>
-            MIME-Type der eingebetteten Daten. (Nie <c>null</c>.)
-            </summary>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.DataUrl.Encoding">
-            <summary>
-            Encodierung der eingebetteten Daten.
-            </summary>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.DataUrl.EncodedData">
-            <summary>
-            Die eingebetteten encodierten Daten.
-            </summary>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.DataUrl.ContainsText">
-            <summary>
-            <c>true</c>, wenn der <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> eingebetteten Text enthält.
-            </summary>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.DataUrl.ContainsBytes">
-            <summary>
-            <c>true</c>, wenn der <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> eingebettete binäre Daten enthält.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataUrl.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataUrl.TryCreate(System.String,FolkerKinzel.VCards.Models.DataUrl@)">
-            <summary>
-            Erstellt einen neuen <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>. Löst keine Ausnahme aus, wenn der <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> nicht erstellt werden kann.
-            </summary>
-            <param name="value">Ein <see cref="T:System.String"/>, der dem Data-URL-Schema nach RFC 2397 entspricht.</param>
-            <param name="dataUrl">Enthält nach dem Beenden der Methode einen aus <paramref name="value"/> erstellten <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>.
-            Dieser Parameter wird nicht-initialisiert übergeben.</param>
-            <returns>Ein <see cref="T:System.Boolean"/>-Wert, der <c>true</c> ist, wenn der <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> erfolgreich erstellt wurde, andernfalls <c>false</c>.</returns>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataUrl.FromText(System.String)">
-            <summary>
-            Erzeugt einen <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>, in den beliebiger Text eingebettet ist.
-            </summary>
-            <param name="text">Der in den <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> einzubettende Text.</param>
-            <returns>Ein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>, in den <paramref name="text"/> eingebettet ist.</returns>
-            <exception cref="T:System.FormatException">Es kann kein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> initialisiert werden, z.B.
-            weil <paramref name="text"/> zu lang ist und deshalb der URI-String länger als 65519 Zeichen wäre.</exception>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataUrl.FromBytes(System.Byte[],System.String)">
-            <summary>
-            Erzeugt einen <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>, in den binäre Daten eingebettet sind.
-            </summary>
-            <param name="bytes">Die in den <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> einzubettenden Daten.</param>
-            <param name="mimeType">Der MIME-Typ der in <paramref name="bytes"/> enthaltenen
-            Daten oder <c>null</c> für "text/plain;charset=US-ASCII".</param>
-            <returns>Ein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>, in den die in <paramref name="bytes"/> enthaltenen 
-            binären Daten eingebettet sind.</returns>
-            <exception cref="T:System.UriFormatException">Es kann kein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> initialisiert werden, z.B.
-            weil <paramref name="bytes"/> ein zu langes <see cref="T:System.Array"/> ist (länger als 49000 Bytes) und der resultierende 
-            URI-<see cref="T:System.String"/> deshalb länger als 65519 Zeichen wäre.</exception>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataUrl.FromFile(System.String,System.String)">
-            <summary>
-            Erstellt einen <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> aus einer physisch vorhandenen Datei.
-            </summary>
-            <param name="path">Absoluter Pfad zu der einzubettenden Datei.</param>
-            <param name="mimeType">MIME-Typ der einzubettenden Datei. Wenn <c>null</c> angegeben wird,
-            wird versucht, den MIME-Typ aus der Dateiendung automatisch zu ermitteln.</param>
-            <returns>Ein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>, in den die Daten der mit <paramref name="path"/> referenzierten Datei
-            eingebettet sind.</returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="path"/> ist <c>null</c>.</exception>
-            <exception cref="T:System.ArgumentException"><paramref name="path"/> ist kein gültiger Dateipfad oder
-            <paramref name="mimeType"/> hat kein gültiges Format.</exception>
-            <exception cref="T:System.UriFormatException">Es kann kein <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> initialisiert werden, z.B.
-            weil <paramref name="path"/> eine zu große Datei (> 47 KB) referenziert und der URI-String deshalb länger als 
-            65519 Zeichen wäre.</exception>
-            <exception cref="T:System.IO.IOException">E/A-Fehler.</exception>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataUrl.GetEmbeddedText">
-            <summary>
-            Gibt den im <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> eingebetteten Text zurück oder <c>null</c>,
-            wenn der <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> eingebettete binäre Daten enthält.
-            </summary>
-            <returns>Der eingebettete Text oder <c>null</c>.</returns>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataUrl.GetEmbeddedBytes">
-            <summary>
-            Gibt die im <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> eingebetteten binären Daten zurück oder <c>null</c>,
-            wenn der <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> keine eingebetteten binäre Daten enthält oder wenn
-            diese nicht dekodiert werden konnten.
-            </summary>
-            <returns>Die eingebetteten binären Daten oder <c>null</c>.</returns>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataUrl.GetFileExtension">
-            <summary>
-            Gibt eine geeignete Dateiendung für die in den den <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/> eingebetteten Daten 
-            zurück.
-            </summary>
-            <returns>Eine geeignete Dateiendung für die in den <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>
-            eingebetteten Daten. Die Dateiendung enthält den Punkt "." als Trennzeichen.</returns>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataUrl.LoadFile(System.String)">
-            <summary>
-            Loads the file from <paramref name="path"/>.
-            </summary>
-            <param name="path">The file path.</param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="path"/> is <c>null</c>.</exception>
-            <exception cref="T:System.ArgumentException"><paramref name="path"/> is not a valid file path.</exception>
-            <exception cref="T:System.IO.IOException">I/O error</exception>
-        </member>
-        <member name="T:FolkerKinzel.VCards.Models.DateTimeOffsetProperty">
-            <summary>
-            Eine von <see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/> abgeleitete Klasse, die darauf spezialisiert ist <see cref="T:System.DateTimeOffset"/>-Werte zu speichern.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DateTimeOffsetProperty.#ctor(FolkerKinzel.VCards.Models.DateTimeOffsetProperty)">
-            <summary>
-            Copy ctor.
-            </summary>
-            <param name="prop"></param>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DateTimeOffsetProperty.#ctor(System.Nullable{System.DateTimeOffset},System.String)">
-            <summary>
-            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.DateTimeOffsetProperty"/>-Objekt, bei dem der <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType"/>-Parameter
-            auf <see cref="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.DateAndOrTime"/> gesetzt ist.
-            </summary>
-            <param name="value">Ein <see cref="T:System.DateTimeOffset"/>-Objekt oder <c>null</c>.</param>
-            <param name="propertyGroup">Bezeichner der Gruppe,
-            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
-            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.DateTimeOffsetProperty.Value">
-            <summary>
-            Die von der <see cref="T:FolkerKinzel.VCards.Models.DateTimeOffsetProperty"/> zur Verfügung gestellten Daten.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DateTimeOffsetProperty.GetVCardPropertyValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DateTimeOffsetProperty.Clone">
-            <inheritdoc/>
-        </member>
-        <member name="T:FolkerKinzel.VCards.Models.DateTimeProperty">
-            <summary>
-            Kapselt Informationen über Zeit und Datum.
-            </summary>
-            <remarks>Die Informationen könnnen in verschiedenen Formaten vorliegen. So ist z.B. in vCard 4.0 auch
-            freier Text wie "dienstags nach Mitternacht" möglich. Um herauszufinden, welcher Art die enthaltene Information ist,
-            ist die <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType">Parameters.DataType</see>-Eigenschaft hilfreich.</remarks>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DateTimeProperty.#ctor(FolkerKinzel.VCards.Models.DateTimeProperty)">
             <summary>
             Kopierkonstruktor
             </summary>
-            <param name="prop">Das zu klonende <see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/>-Objekt.</param>
+            <param name="prop">Das zu klonende <see cref="T:FolkerKinzel.VCards.Models.DataProperty"/> Objekt.</param>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.DateTimeProperty.#ctor(FolkerKinzel.VCards.Models.PropertyParts.ParameterSection,System.String)">
+        <member name="M:FolkerKinzel.VCards.Models.DataProperty.#ctor(System.String,FolkerKinzel.VCards.Models.PropertyParts.ParameterSection,System.String)">
             <summary>
-            Konstruktor, der abgeleiteten Klassen erlaubt, ein neues <see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/>-Objekt zu initialisieren.
+            ctor
             </summary>
-            <param name="parameters">Ein <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/>-Objekt, das den Parameter-Teil einer
-            vCard-Property repräsentiert.</param>
-            <param name="propertyGroup">Bezeichner der Gruppe,
-            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
-            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
+            <param name="mimeType"></param>
+            <param name="parameterSection"></param>
+            <param name="propertyGroup"></param>
+            <remarks>Must be internal, because <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.MediaType"/> has strong
+            restrictions.</remarks>
         </member>
-        <member name="T:FolkerKinzel.VCards.Models.DateTimeTextProperty">
+        <member name="T:FolkerKinzel.VCards.Models.Enums.Access">
             <summary>
-            Spezialisierung der <see cref="T:FolkerKinzel.VCards.Models.DateTimeProperty"/>-Klasse, die es erlaubt eine Zeit- und/oder Datumsangabe
-            als freien Text zu speichern.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DateTimeTextProperty.#ctor(FolkerKinzel.VCards.Models.DateTimeTextProperty)">
-            <summary>
-            Copy ctor
-            </summary>
-            <param name="prop"></param>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.DateTimeTextProperty.#ctor(System.String,System.String)">
-            <summary>
-            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.DateTimeTextProperty"/>-Objekt, bei dem der 
-            <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.DataType"/>-Parameter
-            auf <see cref="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.Text"/> gesetzt ist.
-            </summary>
-            <param name="value">Ein beliebiger <see cref="T:System.String"/>, der eine Zeit oder ein Datum beschreibt, oder <c>null</c>.</param>
-            <param name="propertyGroup">Bezeichner der Gruppe,
-            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
-            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.DateTimeTextProperty.Value">
-            <summary>
-            Die von der <see cref="T:FolkerKinzel.VCards.Models.DateTimeTextProperty"/> zur Verfügung gestellten Daten.
+            Benannte Konstanten, um in vCard 3.0 anzugeben, welche Geheimhaltungsstufe für die vCard gilt.
             </summary>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.DateTimeTextProperty.GetVCardPropertyValue">
-            <inheritdoc/>
+        <member name="F:FolkerKinzel.VCards.Models.Enums.Access.Public">
+            <summary>
+            Der Inhalt der vCard ist öffentlich zugänglich.
+            </summary>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.DateTimeTextProperty.Clone">
-            <inheritdoc/>
+        <member name="F:FolkerKinzel.VCards.Models.Enums.Access.Private">
+            <summary>
+            Der Inhalt der vCard ist für persönliche Bekannte zugänglich.
+            </summary>
+        </member>
+        <member name="F:FolkerKinzel.VCards.Models.Enums.Access.Confidential">
+            <summary>
+            Der Inhalt der vCard ist vertraulich.
+            </summary>
         </member>
         <member name="T:FolkerKinzel.VCards.Models.Enums.AddressTypes">
             <summary>
@@ -1217,20 +973,25 @@
             <c>PARCEL</c>: Anschrift für die Zustellung von Paketen (Lieferadresse)
             </summary>
         </member>
-        <member name="T:FolkerKinzel.VCards.Models.Enums.DataEncoding">
+        <member name="T:FolkerKinzel.VCards.Models.Enums.ContentLocation">
             <summary>
-            Benannte Konstanten, um in der <see cref="T:FolkerKinzel.VCards.Models.DataUrl"/>-Klasse die Kodierung der eingebetteten Daten
-            anzugeben.
+            Benannte Konstanten, um in vCard 2.1 anzugeben, wo der Inhalt einer vCard-Property lokalisiert ist.
             </summary>
         </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.DataEncoding.UrlEncoded">
+        <member name="F:FolkerKinzel.VCards.Models.Enums.ContentLocation.Inline">
             <summary>
-            Url-Kodierung
+            <c>INLINE</c>: Der Inhalt ist direkt in die vCard eingebettet. (Default)
             </summary>
         </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.DataEncoding.Base64">
+        <member name="F:FolkerKinzel.VCards.Models.Enums.ContentLocation.ContentID">
             <summary>
-            Base64-Kodierung
+            <c>Content-ID</c>, <c>CID</c>: Der Inhalt befindet sich an einer anderen Stelle in derselben Datei (z.B. Multipart-E-Mail). Auf
+            ihn wird mit einer Content-ID (cid) verwiesen.
+            </summary>
+        </member>
+        <member name="F:FolkerKinzel.VCards.Models.Enums.ContentLocation.Url">
+            <summary>
+            <c>URL</c>: Der Inhalt befindet sich im Internet. Auf ihn wird mit einer Url verwiesen.
             </summary>
         </member>
         <member name="T:FolkerKinzel.VCards.Models.Enums.EmailType">
@@ -1267,6 +1028,36 @@
         <member name="F:FolkerKinzel.VCards.Models.Enums.ExpertiseLevel.Expert">
             <summary>
             Experte
+            </summary>
+        </member>
+        <member name="T:FolkerKinzel.VCards.Models.Enums.Gender">
+            <summary>
+            Benannte Konstanten, um das Geschlecht des Subjekts anzugeben, das die vCard repräsentiert.
+            </summary>
+        </member>
+        <member name="F:FolkerKinzel.VCards.Models.Enums.Gender.Unknown">
+            <summary>
+            <c>U</c>: unbekannt <c>(4)</c>
+            </summary>
+        </member>
+        <member name="F:FolkerKinzel.VCards.Models.Enums.Gender.Female">
+            <summary>
+            <c>F</c>: weiblich <c>(4)</c>
+            </summary>
+        </member>
+        <member name="F:FolkerKinzel.VCards.Models.Enums.Gender.Male">
+            <summary>
+            <c>M</c>: männlich <c>(4)</c>
+            </summary>
+        </member>
+        <member name="F:FolkerKinzel.VCards.Models.Enums.Gender.NonOrNotApplicable">
+            <summary>
+            <c>N</c>: geschlechtslos oder nicht zuzuordnen <c>(4)</c>
+            </summary>
+        </member>
+        <member name="F:FolkerKinzel.VCards.Models.Enums.Gender.Other">
+            <summary>
+            <c>O</c>: anderes Geschlecht <c>(4)</c>
             </summary>
         </member>
         <member name="T:FolkerKinzel.VCards.Models.Enums.ImppTypes">
@@ -1524,45 +1315,24 @@
             <c>TEXT</c>: Die Telefonnummer unterstützt Textnachrichten (SMS). <c>(4)</c>
             </summary>
         </member>
-        <member name="T:FolkerKinzel.VCards.Models.Enums.VCdAccess">
+        <member name="T:FolkerKinzel.VCards.Models.Enums.ValueEncoding">
             <summary>
-            Benannte Konstanten, um in vCard 3.0 anzugeben, welche Geheimhaltungsstufe für die vCard gilt.
+            Benannte Konstanten, um die Kodierung des Inhalts einer vCard-Property anzugeben.
             </summary>
         </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdAccess.Public">
+        <member name="F:FolkerKinzel.VCards.Models.Enums.ValueEncoding.Base64">
             <summary>
-            Der Inhalt der vCard ist öffentlich zugänglich.
+            <c>B</c>, <c>BASE64</c>: Base64 <c>(2,3)</c>
             </summary>
         </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdAccess.Private">
+        <member name="F:FolkerKinzel.VCards.Models.Enums.ValueEncoding.QuotedPrintable">
             <summary>
-            Der Inhalt der vCard ist für persönliche Bekannte zugänglich.
+            <c>QUOTED-PRINTABLE</c>: Quoted Printable <c>(2)</c>
             </summary>
         </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdAccess.Confidential">
+        <member name="F:FolkerKinzel.VCards.Models.Enums.ValueEncoding.Ansi">
             <summary>
-            Der Inhalt der vCard ist vertraulich.
-            </summary>
-        </member>
-        <member name="T:FolkerKinzel.VCards.Models.Enums.VCdContentLocation">
-            <summary>
-            Benannte Konstanten, um in vCard 2.1 anzugeben, wo der Inhalt einer vCard-Property lokalisiert ist.
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdContentLocation.Inline">
-            <summary>
-            <c>INLINE</c>: Der Inhalt ist direkt in die vCard eingebettet. (Default)
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdContentLocation.ContentID">
-            <summary>
-            <c>Content-ID</c>, <c>CID</c>: Der Inhalt befindet sich an einer anderen Stelle in derselben Datei (z.B. Multipart-E-Mail). Auf
-            ihn wird mit einer Content-ID (cid) verwiesen.
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdContentLocation.Url">
-            <summary>
-            <c>URL</c>: Der Inhalt befindet sich im Internet. Auf ihn wird mit einer Url verwiesen.
+            <c>8BIT</c>: 8-Bit-Zeichensatz <c>(2)</c>
             </summary>
         </member>
         <member name="T:FolkerKinzel.VCards.Models.Enums.VCdDataType">
@@ -1643,26 +1413,6 @@
         <member name="F:FolkerKinzel.VCards.Models.Enums.VCdDataType.VCard">
             <summary>
             <c>VCARD</c>: Eingebettete vCard <c>(3)</c>
-            </summary>
-        </member>
-        <member name="T:FolkerKinzel.VCards.Models.Enums.VCdEncoding">
-            <summary>
-            Benannte Konstanten, um die Kodierung des Inhalts einer vCard-Property anzugeben.
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdEncoding.Base64">
-            <summary>
-            <c>B</c>, <c>BASE64</c>: Base64 <c>(2,3)</c>
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdEncoding.QuotedPrintable">
-            <summary>
-            <c>QUOTED-PRINTABLE</c>: Quoted Printable <c>(2)</c>
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdEncoding.Ansi">
-            <summary>
-            <c>8BIT</c>: 8-Bit-Zeichensatz <c>(2)</c>
             </summary>
         </member>
         <member name="T:FolkerKinzel.VCards.Models.Enums.VCdKind">
@@ -1944,56 +1694,6 @@
             vCard-Properties, die nicht dem Standard entsprechen.
             </summary>
         </member>
-        <member name="T:FolkerKinzel.VCards.Models.Enums.VCdSex">
-            <summary>
-            Benannte Konstanten, um das Geschlecht des Subjekts anzugeben, das die vCard repräsentiert.
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdSex.Unknown">
-            <summary>
-            <c>U</c>: unbekannt <c>(4)</c>
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdSex.Female">
-            <summary>
-            <c>F</c>: weiblich <c>(4)</c>
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdSex.Male">
-            <summary>
-            <c>M</c>: männlich <c>(4)</c>
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdSex.NonOrNotApplicable">
-            <summary>
-            <c>N</c>: geschlechtslos oder nicht zuzuordnen <c>(4)</c>
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdSex.Other">
-            <summary>
-            <c>O</c>: anderes Geschlecht <c>(4)</c>
-            </summary>
-        </member>
-        <member name="T:FolkerKinzel.VCards.Models.Enums.VCdVersion">
-            <summary>
-            Benannte Konstanten, um die VCF-Version anzugeben.
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdVersion.V2_1">
-            <summary>
-            vCard 2.1
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdVersion.V3_0">
-            <summary>
-            vCard 3.0
-            </summary>
-        </member>
-        <member name="F:FolkerKinzel.VCards.Models.Enums.VCdVersion.V4_0">
-            <summary>
-            vCard 4.0
-            </summary>
-        </member>
         <member name="T:FolkerKinzel.VCards.Models.GenderProperty">
             <summary>
             Repräsentiert die in vCard 4.0 eingeführte vCard-Property <c>GENDER</c>, die Informationen über das Geschlecht
@@ -2006,7 +1706,7 @@
             </summary>
             <param name="prop"></param>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.GenderProperty.#ctor(System.Nullable{FolkerKinzel.VCards.Models.Enums.VCdSex},System.String,System.String)">
+        <member name="M:FolkerKinzel.VCards.Models.GenderProperty.#ctor(System.Nullable{FolkerKinzel.VCards.Models.Enums.Gender},System.String,System.String)">
             <summary>
             Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.GenderProperty"/>-Objekt.
             </summary>
@@ -2604,61 +2304,39 @@
             </summary>
             <returns>Eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Address"/>-Objekts.</returns>
         </member>
-        <member name="T:FolkerKinzel.VCards.Models.PropertyParts.Gender">
+        <member name="T:FolkerKinzel.VCards.Models.PropertyParts.GenderInfo">
             <summary>
             Kapselt Informationen zur Angabe des Geschlechts und der Geschlechtsidentität.
             </summary>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.PropertyParts.Gender.#ctor(System.Nullable{FolkerKinzel.VCards.Models.Enums.VCdSex},System.String)">
+        <member name="M:FolkerKinzel.VCards.Models.PropertyParts.GenderInfo.#ctor(System.Nullable{FolkerKinzel.VCards.Models.Enums.Gender},System.String)">
             <summary>
-            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Gender"/>-Objekt.
+            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.GenderInfo"/>-Objekt.
             </summary>
-            <param name="sex">Standardisierte Geschlechtsangabe.</param>
+            <param name="gender">Standardisierte Geschlechtsangabe.</param>
             <param name="genderIdentity">Freie Beschreibung des Geschlechts.</param>
         </member>
-        <member name="P:FolkerKinzel.VCards.Models.PropertyParts.Gender.Sex">
+        <member name="P:FolkerKinzel.VCards.Models.PropertyParts.GenderInfo.Gender">
             <summary>
             Standardisierte Geschlechtsangabe.
             </summary>
         </member>
-        <member name="P:FolkerKinzel.VCards.Models.PropertyParts.Gender.GenderIdentity">
+        <member name="P:FolkerKinzel.VCards.Models.PropertyParts.GenderInfo.GenderIdentity">
             <summary>
             Freie Beschreibung der Geschlechtsidentität.
             </summary>
         </member>
-        <member name="P:FolkerKinzel.VCards.Models.PropertyParts.Gender.IsEmpty">
+        <member name="P:FolkerKinzel.VCards.Models.PropertyParts.GenderInfo.IsEmpty">
             <summary>
-            <c>true</c>, wenn das <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Gender"/>-Objekt keine verwertbaren Daten enthält.
+            <c>true</c>, wenn das <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.GenderInfo"/>-Objekt keine verwertbaren Daten enthält.
             </summary>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.PropertyParts.Gender.ToString">
+        <member name="M:FolkerKinzel.VCards.Models.PropertyParts.GenderInfo.ToString">
             <summary>
-            Erstellt eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Gender"/>-Objekts. 
+            Erstellt eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.GenderInfo"/>-Objekts. 
             (Nur zum Debugging.)
             </summary>
-            <returns>Eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Gender"/>-Objekts.</returns>
-        </member>
-        <member name="T:FolkerKinzel.VCards.Models.PropertyParts.MimeType">
-            <summary>
-            Kapselt Informationen über einen MIME-Type. ("Multipurpose Internet Mail Extensions")
-            </summary>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.PropertyParts.MimeType.MediaType">
-            <summary>
-            Internet Media Type (Nie <c>null</c>.)
-            </summary>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.PropertyParts.MimeType.Parameters">
-            <summary>
-            Parameter
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.PropertyParts.MimeType.ToString">
-            <summary>
-            Erstellt eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.MimeType"/>-Objekts. (Nur zum 
-            Debuggen.)
-            </summary>
-            <returns>Eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.MimeType"/>-Objekts.</returns>
+            <returns>Eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.GenderInfo"/>-Objekts.</returns>
         </member>
         <member name="T:FolkerKinzel.VCards.Models.PropertyParts.Name">
             <summary>
@@ -2787,11 +2465,6 @@
             <value>Der einzige offiziell registrierte Wert ist <c>GREGORIAN</c> für den gregorianischen 
             Kalender.</value>
         </member>
-        <member name="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.Charset">
-            <summary>
-            <c>CHARSET</c>: Gibt den Zeichensatz an, der für die Property verwendet wurde. <c>(2)</c>
-            </summary>
-        </member>
         <member name="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.CharSet">
             <summary>
             <c>CHARSET</c>: Gibt den Zeichensatz an, der für die Property verwendet wurde. <c>(2)</c>
@@ -2828,7 +2501,7 @@
             <value>
             <para>Der Wert wird automatisch gesetzt - 
             lediglich bei <see cref="T:FolkerKinzel.VCards.Models.NonStandardProperty"/>-Objekten muss dies manuell erfolgen.</para>
-            <para>In vCard 3.0 ist nur <see cref="F:FolkerKinzel.VCards.Models.Enums.VCdEncoding.Base64"/> gestattet.</para> 
+            <para>In vCard 3.0 ist nur <see cref="F:FolkerKinzel.VCards.Models.Enums.ValueEncoding.Base64"/> gestattet.</para> 
             </value>
         </member>
         <member name="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.ExpertiseLevel">
@@ -3128,6 +2801,15 @@
             Kopierkonstruktor.
             </summary>
             <param name="prop">Das zu klonende <see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/>-Objekt.</param>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.RelationProperty.#ctor(FolkerKinzel.VCards.Models.PropertyParts.ParameterSection,System.String)">
+            <summary>
+            Konstruktor, der von abgeleiteten Klassen beim Parsen von VCF-Dateien verwendet wird.
+            </summary>
+            <param name="parameters">Die <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> des <see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/> Objekts.</param>
+            <param name="propertyGroup">Bezeichner der Gruppe,
+            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
+            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.RelationProperty.#ctor(System.Nullable{FolkerKinzel.VCards.Models.Enums.RelationTypes},System.String)">
             <summary>
@@ -3594,104 +3276,6 @@
         <member name="M:FolkerKinzel.VCards.Models.XmlProperty.Clone">
             <inheritdoc/>
         </member>
-        <member name="T:FolkerKinzel.VCards.MultiAnsiFilter">
-            <summary>
-            Hilfsklasse, die dem korrekten Laden von VCF-Dateien des vCard-Standards 2.1 dient, die in verschiedenen ANSI-Codepages gespeichert wurden.
-            </summary>
-            <threadsafety static="true" instance="false"/>
-            <remarks>
-            <para>
-            VCF-Dateien des Standards vCard 2.1 wurden von Outlook und Outlook Express früher in der ANSI-Kodierung des jeweiligen Windows-Systems gespeichert, 
-            ohne dass in jedem Fall die erweiterten Zeichen mit Quoted-Printable-Kodierung kodiert worden wären. Solche Dateien enthalten aber mitunter an irgendeiner Stelle
-            einen <c>CHARSET</c>-Parameter, der Rückschlüsse auf die verwendete Enkodierung zulässt. Die Wirkungsweise der Klasse beruht auf der Annahme, dass innerhalb einer 
-            VCF-Datei jeweils nur eine ANSI-Kodierung Verwendung fand.
-            </para>
-            
-            <para>
-            Die Klasse ist ein Wrapper um die <see cref="T:FolkerKinzel.VCards.VCard"/>.<see cref="M:FolkerKinzel.VCards.VCard.LoadVcf(System.String,System.Text.Encoding)"/>-Methode, der zunächst
-            prüft, ob die zu
-            ladende Datei korrektes UTF-8 darstellt. Schlägt die Prüfung fehl, wird die VCF-Datei erneut mit dem durch <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName"/> 
-            spezifizierten <see cref="T:System.Text.Encoding"/> geladen. Anschließend wird der Inhalt der so geladenen VCF-Datei
-            nach <c>CHARSET</c>-Parametern durchsucht, die einen Hinweis auf die tatsächlich verwendete Kodierung geben. Erweist sich bei dieser Untersuchung, 
-            dass diese Kodierung von der Kodierung abweicht, mit der die VCF-Datei geladen wurde, wird die Datei mit der ermittelten Kodierung erneut geladen.
-            </para>
-            
-            <para>
-            Die Verwendung der Klasse eignet sich nicht für Code, bei dem es auf Performance ankommt, denn zur Auswertung werden <see cref="T:System.Text.DecoderFallbackException"/>s 
-            abgefangen und Dateien müssen ggf. dreimal geladen werden.
-            </para>
-            <para>
-            Verwenden Sie die Klasse nur dann, wenn Sie es auch mit vCard 2.1 - Dateien zu tun haben, denn nur in diesem Standard existieren 
-            <c>CHARSET</c>-Parameter. Zwar können auch VCF-Dateien des Standards vCard 3.0
-            ANSI-kodiert sein, aber diese enthalten eben keinen 
-            <c>CHARSET</c>-Parameter. Deshalb ist zum Erkennen ANSI-kodierter vCard 3.0 - Dateien die Verwendung der Klasse <see cref="T:FolkerKinzel.VCards.AnsiFilter"/> effizienter. 
-            </para>
-            </remarks>
-            <example>
-            <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
-            <code language="cs" source="..\Examples\MultiAnsiFilterExample.cs"/>
-            </example>
-        </member>
-        <member name="F:FolkerKinzel.VCards.MultiAnsiFilter._encodingCache">
-            ///////////////////////////////////////////////////////////////////////////////////////////////////
-        </member>
-        <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.#ctor(System.Int32)">
-            <summary>
-            Initialisiert eine Instanz der <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter"/>-Klasse mit der Nummer
-            der Codepage des <see cref="T:System.Text.Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, 
-            die nicht im UTF-8-Format vorliegen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, 
-            der die Verwendung eines anderen <see cref="T:System.Text.Encoding"/>s nahelegt.
-            </summary>
-            <param name="fallbackCodePage">Die Nummer der Codepage des <see cref="T:System.Text.Encoding"/>-Objekts. Default ist
-            1252 für windows-1252.</param>
-            <exception cref="T:System.ArgumentException">Die für <paramref name="fallbackCodePage"/> angegebene Nummer
-            konnte keiner ANSI-Codepage zugeordnet werden.</exception>
-        </member>
-        <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.#ctor(System.String)">
-            <summary>
-            Initialisiert eine Instanz der <see cref="T:FolkerKinzel.VCards.MultiAnsiFilter"/>-Klasse mit dem <see cref="P:System.Text.Encoding.WebName"/> des 
-            <see cref="T:System.Text.Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format
-            vorliegen und die in ihren <c>CHARSET</c>-Parametern keinen Hinweis enthalten, der die Verwendung eines anderen
-            <see cref="T:System.Text.Encoding"/>s nahelegt.
-            </summary>
-            <param name="fallbackEncodingWebName"><see cref="P:System.Text.Encoding.WebName"/> des <see cref="T:System.Text.Encoding"/>-Objekts.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="fallbackEncodingWebName"/> ist <c>null</c>.</exception>
-            <exception cref="T:System.ArgumentException">Der für <paramref name="fallbackEncodingWebName"/> angegebene Bezeichner
-            konnte keiner ANSI-Codepage zugeordnet werden.</exception>
-        </member>
-        <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.LoadVcf(System.String)">
-            <summary>
-            Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit dem durch 
-            <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName"/> spezifizierten <see cref="T:System.Text.Encoding"/>
-            oder - falls die VCF-Datei einen <c>CHARSET</c>-Parameter enthält - mit einer entsprechenden Kodierung.
-            </summary>
-            
-            <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
-             
-            <returns>Eine Sammlung geparster <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
-            
-            <exception cref="T:System.ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
-            <exception cref="T:System.ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
-            <exception cref="T:System.IO.IOException">Die Datei konnte nicht geladen werden.</exception>
-        </member>
-        <member name="M:FolkerKinzel.VCards.MultiAnsiFilter.LoadVcf(System.String,System.String@)">
-            <summary>
-            Versucht eine VCF-Datei zunächst als UTF-8 zu laden und lädt sie - falls dies fehlschlägt - mit dem durch 
-            <see cref="P:FolkerKinzel.VCards.AnsiFilter.FallbackEncodingWebName"/> spezifizierten <see cref="T:System.Text.Encoding"/>
-            oder - falls die VCF-Datei einen <c>CHARSET</c>-Parameter enthält - mit einer entsprechenden Kodierung.
-            </summary>
-            
-            <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
-            <param name="encodingWebName"><see cref="P:System.Text.Encoding.WebName"/>-Eigenschaft des <see cref="T:System.Text.Encoding"/>-Objekts,
-            mit dem die VCF-Datei geladen wurde. Der Parameter wird uninitialisiert übergeben.</param>
-             
-            <returns>Eine Sammlung geparster <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
-            
-            
-            <exception cref="T:System.ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
-            <exception cref="T:System.ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
-            <exception cref="T:System.IO.IOException">Die Datei konnte nicht geladen werden.</exception>
-        </member>
         <member name="T:FolkerKinzel.VCards.Resources.Res">
             <summary>
               Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
@@ -3708,9 +3292,19 @@
               Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
             </summary>
         </member>
+        <member name="P:FolkerKinzel.VCards.Resources.Res.ContentTooLarge">
+            <summary>
+              Sucht eine lokalisierte Zeichenfolge, die The content to embed is too large. ähnelt.
+            </summary>
+        </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.IdentifierTooLong">
             <summary>
               Sucht eine lokalisierte Zeichenfolge, die The length of the identifier is more than one digit. ähnelt.
+            </summary>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Resources.Res.InvalidMimeType">
+            <summary>
+              Sucht eine lokalisierte Zeichenfolge, die Invalid internet media type. ähnelt.
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.MissingMappingID">
@@ -3751,6 +3345,11 @@
         <member name="P:FolkerKinzel.VCards.Resources.Res.PidValue">
             <summary>
               Sucht eine lokalisierte Zeichenfolge, die The value must be between 1 and 9. ähnelt.
+            </summary>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Resources.Res.RelativeUri">
+            <summary>
+              Sucht eine lokalisierte Zeichenfolge, die {0} is not an absolute URI. ähnelt.
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.ReservedNameSpace">
@@ -4219,7 +3818,7 @@
             </summary>
             <param name="vCard">The vCard to clone.</param>
         </member>
-        <member name="M:FolkerKinzel.VCards.VCard.#ctor(System.Collections.Generic.Queue{FolkerKinzel.VCards.Intls.Deserializers.VcfRow},FolkerKinzel.VCards.Intls.Deserializers.VcfDeserializationInfo,FolkerKinzel.VCards.Models.Enums.VCdVersion)">
+        <member name="M:FolkerKinzel.VCards.VCard.#ctor(System.Collections.Generic.Queue{FolkerKinzel.VCards.Intls.Deserializers.VcfRow},FolkerKinzel.VCards.Intls.Deserializers.VcfDeserializationInfo,FolkerKinzel.VCards.VCdVersion)">
             <summary>
             Initialisiert ein <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekt aus einer Queue von <see cref="T:FolkerKinzel.VCards.Intls.Deserializers.VcfRow"/>-Objekten.
             </summary>
@@ -4788,7 +4387,7 @@
             
             <exception cref="T:System.ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.VCard.SaveVcf(System.String,System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
+        <member name="M:FolkerKinzel.VCards.VCard.SaveVcf(System.String,System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
             <summary>
             Speichert eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten in eine gemeinsame VCF-Datei.
             </summary>
@@ -4837,7 +4436,7 @@
             <exception cref="T:System.ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
             <exception cref="T:System.IO.IOException">Die Datei konnte nicht geschrieben werden.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.VCard.SerializeVcf(System.IO.Stream,System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions,System.Boolean)">
+        <member name="M:FolkerKinzel.VCards.VCard.SerializeVcf(System.IO.Stream,System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions,System.Boolean)">
             <summary>
             Serialisiert eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten unter Verwendung des VCF-Formats in einen <see cref="T:System.IO.Stream"/>.
             </summary>
@@ -4890,7 +4489,7 @@
             <exception cref="T:System.IO.IOException">E/A-Fehler.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.VCard.ToVcfString(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
+        <member name="M:FolkerKinzel.VCards.VCard.ToVcfString(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard},FolkerKinzel.VCards.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
             <summary>
             Serialisiert <paramref name="vCards"/> als einen <see cref="T:System.String"/>, der den Inhalt einer VCF-Datei darstellt.
             </summary>
@@ -4939,7 +4538,7 @@
             <exception cref="T:System.ArgumentException"><paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
             <exception cref="T:System.OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.VCard.SaveVcf(System.String,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
+        <member name="M:FolkerKinzel.VCards.VCard.SaveVcf(System.String,FolkerKinzel.VCards.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
             <summary>
             Speichert die <see cref="T:FolkerKinzel.VCards.VCard"/>-Instanz als VCF-Datei.
             </summary>
@@ -4977,7 +4576,7 @@
             <exception cref="T:System.ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
             <exception cref="T:System.IO.IOException">Die Datei konnte nicht geschrieben werden.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.VCard.SerializeVcf(System.IO.Stream,FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions,System.Boolean)">
+        <member name="M:FolkerKinzel.VCards.VCard.SerializeVcf(System.IO.Stream,FolkerKinzel.VCards.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions,System.Boolean)">
             <summary>
             Serialisiert die <see cref="T:FolkerKinzel.VCards.VCard"/>-Instanz unter Verwendung des VCF-Formats in einen <see cref="T:System.IO.Stream"/>.
             </summary>
@@ -5017,7 +4616,7 @@
             <exception cref="T:System.IO.IOException">E/A-Fehler.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
         </member>
-        <member name="M:FolkerKinzel.VCards.VCard.ToVcfString(FolkerKinzel.VCards.Models.Enums.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
+        <member name="M:FolkerKinzel.VCards.VCard.ToVcfString(FolkerKinzel.VCards.VCdVersion,FolkerKinzel.VCards.Models.ITimeZoneIDConverter,FolkerKinzel.VCards.VcfOptions)">
             <summary>
             Serialisiert die <see cref="T:FolkerKinzel.VCards.VCard"/>-Instanz als einen <see cref="T:System.String"/>, der den Inhalt einer VCF-Datei darstellt.
             </summary>
@@ -5060,6 +4659,26 @@
             (Nur zum Debugging.)
             </summary>
             <returns>Eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts.</returns>
+        </member>
+        <member name="T:FolkerKinzel.VCards.VCdVersion">
+            <summary>
+            Benannte Konstanten, um die VCF-Version anzugeben.
+            </summary>
+        </member>
+        <member name="F:FolkerKinzel.VCards.VCdVersion.V2_1">
+            <summary>
+            vCard 2.1
+            </summary>
+        </member>
+        <member name="F:FolkerKinzel.VCards.VCdVersion.V3_0">
+            <summary>
+            vCard 3.0
+            </summary>
+        </member>
+        <member name="F:FolkerKinzel.VCards.VCdVersion.V4_0">
+            <summary>
+            vCard 4.0
+            </summary>
         </member>
         <member name="T:FolkerKinzel.VCards.VcfOptions">
             <summary>
