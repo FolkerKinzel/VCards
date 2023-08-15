@@ -10,11 +10,10 @@ internal sealed class EmbeddedTextProperty : DataProperty
 {
     private readonly TextProperty _textProp;
 
-    internal EmbeddedTextProperty(TextProperty textProp) :
-        base(textProp.Parameters.MediaType, textProp.Parameters, textProp.Group)
-    {
-        _textProp = textProp;
-    }
+    internal EmbeddedTextProperty(TextProperty textProp) 
+       : base(textProp.Parameters.MediaType,
+             textProp.Parameters,
+             textProp.Group) => _textProp = textProp;
 
     internal EmbeddedTextProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters.MediaType,

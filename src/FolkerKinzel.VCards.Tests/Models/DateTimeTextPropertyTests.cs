@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FolkerKinzel.VCards.Intls.Models;
+
 namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass()]
@@ -11,7 +13,7 @@ public class DateTimeTextPropertyTests
     {
         string now = "Früh morgens";
 
-        var prop = new DateTimeTextProperty(now, GROUP);
+        var prop = DateAndOrTimeProperty.Create(now, GROUP);
 
         var vcard = new VCard
         {
@@ -76,7 +78,7 @@ Nach:
     [TestMethod]
     public void DateTimeTextPropertyTest2()
     {
-        var prop = new DateTimeTextProperty("   ");
+        var prop = DateAndOrTimeProperty.Create("   ");
         Assert.IsNull(prop.Value);
     }
 }

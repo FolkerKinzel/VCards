@@ -29,11 +29,11 @@ public static class VCard40Example
         var members = new VC::RelationVCardProperty[]
         {
                 new VC::RelationVCardProperty(InitializeComposerVCard(
-                    "Sergei Rachmaninoff", new DateTime(1873,4,1), new DateTime(1943,3,28))),
+                    "Sergei Rachmaninoff", new DateOnly(1873,4,1), new DateOnly(1943,3,28))),
                 new VC::RelationVCardProperty(InitializeComposerVCard(
-                    "Ludwig van Beethoven", new DateTime(1770,12,17), new DateTime(1827,3,26))),
+                    "Ludwig van Beethoven", new DateOnly(1770,12,17), new DateOnly(1827,3,26))),
                 new VC::RelationVCardProperty(InitializeComposerVCard(
-                    "Frédéric Chopin", new DateTime(1810,3,1), new DateTime(1849,10,17)))
+                    "Frédéric Chopin", new DateOnly(1810,3,1), new DateOnly(1849,10,17)))
         };
 
         var composersVCard = new VCard
@@ -42,7 +42,6 @@ public static class VCard40Example
             Kind = new VC::KindProperty(VC::Enums.VCdKind.Group),
             Members = members
         };
-
 
         // Replace the embedded VCards in composersVCard.Members with Guid references in order
         // to save them as separate vCard 4.0 .VCF files.
@@ -95,29 +94,34 @@ public static class VCard40Example
             //Retrieve Beethovens birth year from the members of the "Composers.vcf" group:
             Console.Write("What year was Beethoven born?: ");
 
-            DateTimeOffset? birthDay = composersVCard.Members?
+            VC::DateAndOrTimeProperty? birthDay = composersVCard.Members?
                 .Select(x => x as VC::RelationVCardProperty)
                 .Where(x => x?.Value != null)
                 .Select(x => x!.Value)
                     .FirstOrDefault(x => x!.DisplayNames?.Any(x => x?.Value == "Ludwig van Beethoven") ?? false)?
                         .BirthDayViews?
-                        .Select(x => x as VC::DateTimeOffsetProperty)
                         .Where(x => x != null && !x.IsEmpty)
-                        .FirstOrDefault()?
-                        .Value;
+                        .FirstOrDefault();
 
-            Console.WriteLine(birthDay.HasValue ? birthDay.Value.Year.ToString() : "Don't know.");
+            if (birthDay?.Value!.Value is DateOnly dateOnly)
+            {
+                Console.WriteLine(dateOnly.Year);
+            }
+            else
+            {
+                Console.WriteLine("Don't know.");
+            }
         }
     }
 
 
-    private static VCard InitializeComposerVCard(string composersName, DateTime birthDate, DateTime deathDate)
+    private static VCard InitializeComposerVCard(string composersName, DateOnly birthDate, DateOnly deathDate)
     {
         var vCard = new VCard
         {
             DisplayNames = new VC::TextProperty(composersName),
-            BirthDayViews = new VC::DateTimeOffsetProperty(birthDate),
-            DeathDateViews = new VC::DateTimeOffsetProperty(deathDate)
+            BirthDayViews = VC::DateAndOrTimeProperty.Create(birthDate),
+            DeathDateViews = VC::DateAndOrTimeProperty.Create(deathDate)
         };
 
         return vCard;

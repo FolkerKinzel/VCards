@@ -405,9 +405,8 @@ internal abstract class VcfSerializer
     {
         Debug.Assert(value != null);
 
-
-        if (value.FirstOrDefault(x => x != null && x is DateTimeOffsetProperty) is DateTimeOffsetProperty pref
-            && (!pref.IsEmpty || Options.IsSet(VcfOptions.WriteEmptyProperties)))
+        if (value.FirstOrDefault(x => x != null && x is DateOnlyProperty) is DateOnlyProperty pref)
+            //&& (!pref.IsEmpty || Options.IsSet(VcfOptions.WriteEmptyProperties)))
         {
             if (Options.IsSet(VcfOptions.WriteXExtensions))
             {
@@ -431,7 +430,7 @@ internal abstract class VcfSerializer
 
             void BuildAnniversary(string propKey, string? group)
             {
-                DateTimeOffset dto = pref.Value ?? DateTimeOffset.MinValue;
+                DateOnly dto = pref.Value;
 
                 var xAnniversary = new NonStandardProperty(
                     propKey,

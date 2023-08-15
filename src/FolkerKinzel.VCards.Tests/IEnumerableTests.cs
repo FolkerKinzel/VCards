@@ -52,7 +52,7 @@ public class IEnumerableTests
     {
         var vc = new VCard
         {
-            BirthDayViews = new DateTimeOffsetProperty(DateTime.Now)
+            BirthDayViews = DateAndOrTimeProperty.Create(DateTime.Now)
         };
 
         IEnumerable enumerable = vc.BirthDayViews;

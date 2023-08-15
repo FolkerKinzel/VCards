@@ -131,9 +131,7 @@ public static class VCardExample
 
             vcard.EmailAddresses = prefMail;
 
-            // System.DateTime has an implicit conversion to
-            // System.DateTimeOffset:
-            vcard.BirthDayViews = new VC::DateTimeOffsetProperty(new DateTime(1984, 3, 28));
+            vcard.BirthDayViews = VC::DateAndOrTimeProperty.Create(new DateOnly(1984, 3, 28));
 
             vcard.Relations = new VC::RelationTextProperty
                 (
@@ -143,7 +141,7 @@ public static class VCardExample
                     | VC::Enums.RelationTypes.Colleague
                 );
 
-            vcard.AnniversaryViews = new VC::DateTimeOffsetProperty(new DateTime(2006, 7, 14));
+            vcard.AnniversaryViews = VC::DateAndOrTimeProperty.Create(new DateOnly(2006, 7, 14));
             return vcard;
         }
 

@@ -10,12 +10,18 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 /// <threadsafety static="true" instance="false" />
 internal sealed class TimeConverter
 {
-    private readonly string[] _modelStrings = new string[]
+    private readonly string[] _timeOnlyPatterns = new string[]
     {
             "HH",
             "HHmm",
             "HHmmss",
             "HH:mm:ss", //vCard 2.1
+            "-mmss",
+            "--ss",
+    };
+
+    private readonly string[] _modelStrings = new string[]
+    {
             "HH:mm:sszzz", //vCard 2.1
             "HH:mm:sszz",
             "HHzz",
@@ -24,10 +30,8 @@ internal sealed class TimeConverter
             "HHmmzzz",
             "HHmmsszz",
             "HHmmsszzz",
-            "-mmss",
             "-mmsszz",
             "-mmsszzz",
-            "--ss",
             "--sszz",
             "--sszzz"
     };
@@ -37,16 +41,17 @@ internal sealed class TimeConverter
     {
         oneOf = default;
 
-        DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
         ReadOnlySpan<char> roSpan = s.Trim();
 
-        if(roSpan.StartsWith('T'))
+        if (roSpan.StartsWith('T'))
         {
             roSpan = roSpan.Slice(1);
         }
 
         bool hasUtcIndicator = roSpan.EndsWith("Z", StringComparison.OrdinalIgnoreCase);
+
+        DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
         if (hasUtcIndicator)
         {
@@ -58,17 +63,27 @@ internal sealed class TimeConverter
             styles |= DateTimeStyles.AssumeLocal;
         }
 
-        if (_DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out DateTimeOffset dtOffset))
+        if (hasUtcIndicator || ContainsUtcOffset(roSpan))
         {
-            oneOf = hasUtcIndicator || dtOffset.Offset != TimeSpan.Zero || roSpan.ContainsUtcOffset()
-                   ? dtOffset 
-                   : TimeOnly.FromTimeSpan(dtOffset.TimeOfDay);
-            return true;
+            if (_DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out DateTimeOffset dtOffset))
+            {
+                oneOf = dtOffset;
+                return true;
+            }
         }
+        else
+        {
+            if(TimeOnly.TryParseExact(roSpan, _timeOnlyPatterns, CultureInfo.InvariantCulture, styles, out TimeOnly timeOnly))
+            {
+                oneOf = timeOnly;
+                return true;
+            }
+        }
+
         return false;
 
+        static bool ContainsUtcOffset(ReadOnlySpan<char> span) => span.TrimStart('-').ContainsAny("+-".AsSpan());
     }
-
 
 
     internal static string ToTimeString(DateTimeOffset dt, VCdVersion version)

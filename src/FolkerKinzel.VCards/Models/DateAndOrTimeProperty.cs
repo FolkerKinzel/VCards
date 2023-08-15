@@ -9,30 +9,30 @@ using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Models;
 
-[GenerateOneOf]
-public sealed partial class DateAndOrTime : OneOfBase<DateOnly, DateTime, DateTimeOffset, TimeOnly, string> { }
-
 
 internal sealed class DateOnlyProperty : DateAndOrTimeProperty
 {
-    public DateOnlyProperty(VCardProperty prop) : base(prop)
-    {
-    }
+    private DateOnlyProperty(DateOnlyProperty prop) : base(prop) => Value = prop.Value;
 
-    public DateOnlyProperty(DateOnly value, ParameterSection parameters, string? propertyGroup) : base(parameters, propertyGroup)
-    {
-    }
+    internal DateOnlyProperty(DateOnly value,
+                              ParameterSection parameters,
+                              string? propertyGroup)
+        : base(parameters, propertyGroup) => Value = value;
 
-    public override object Clone() => throw new NotImplementedException();
-    protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
+
+    public new DateOnly Value { get; }
+
+    public override bool IsEmpty => false;
+
+
+    public override object Clone() => new DateOnlyProperty(this);
+    protected override object? GetVCardPropertyValue() => Value;
     internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
 }
 
 internal sealed class TimeOnlyProperty : DateAndOrTimeProperty
 {
-    public TimeOnlyProperty(VCardProperty prop) : base(prop)
-    {
-    }
+    public TimeOnlyProperty(TimeOnlyProperty prop) : base(prop) => Value = prop.Value;
 
     public TimeOnlyProperty(TimeOnly value,
                             ParameterSection parameters,
@@ -42,45 +42,39 @@ internal sealed class TimeOnlyProperty : DateAndOrTimeProperty
 
     public new TimeOnly Value { get; }
 
-    public override object Clone() => throw new NotImplementedException();
-    protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
+    public override bool IsEmpty => false;
+
+
+    public override object Clone() => new TimeOnlyProperty(this);
+    protected override object? GetVCardPropertyValue() => Value;
     internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
+
 }
 
-internal sealed class DateTimeProperty : DateAndOrTimeProperty
-{
-    public DateTimeProperty(VCardProperty prop) : base(prop)
-    {
-    }
-
-    public DateTimeProperty(DateTimeOffset value, ParameterSection parameters, string? propertyGroup) : base(parameters, propertyGroup)
-    {
-    }
-
-    public override object Clone() => throw new NotImplementedException();
-    protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
-    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
-}
 
 
 internal class DateTimeOffsetProperty : DateAndOrTimeProperty
 {
-    internal DateTimeOffsetProperty(VCardProperty prop) : base(prop)
-    {
-    }
+    internal DateTimeOffsetProperty(DateTimeOffsetProperty prop)
+        : base(prop) => Value = prop.Value;
 
-    public DateTimeOffsetProperty(DateTimeOffset value, string? group = null) : base(new ParameterSection(), group) => Value = value;
 
-    internal DateTimeOffsetProperty(DateTimeOffset value, ParameterSection parameters, string? propertyGroup) : base(parameters, propertyGroup)
-    {
-    }
+    internal DateTimeOffsetProperty(DateTimeOffset value,
+                                    ParameterSection parameters,
+                                    string? propertyGroup)
+        : base(parameters, propertyGroup) => Value = value;
+
 
     public new DateTimeOffset Value { get; }
 
-    public override object Clone() => throw new NotImplementedException();
-    protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
+    public override bool IsEmpty => false;
+
+
+    public override object Clone() => new DateTimeOffsetProperty(this);
+    protected override object? GetVCardPropertyValue() => Value;
     internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
 }
+
 
 public abstract class DateAndOrTimeProperty
     : VCardProperty, IEnumerable<DateAndOrTimeProperty>
@@ -88,13 +82,14 @@ public abstract class DateAndOrTimeProperty
     private DateAndOrTime? _value;
     private bool _isValueInitialized;
 
-    protected DateAndOrTimeProperty(VCardProperty prop) : base(prop)
-    {
-    }
 
-    protected DateAndOrTimeProperty(ParameterSection parameters, string? propertyGroup) : base(parameters, propertyGroup)
-    {
-    }
+    protected DateAndOrTimeProperty(VCardProperty prop) : base(prop) { }
+   
+
+    protected DateAndOrTimeProperty(ParameterSection parameters,
+                                    string? propertyGroup) 
+        : base(parameters, propertyGroup) { }
+    
 
 
     public new DateAndOrTime? Value
@@ -123,29 +118,45 @@ public abstract class DateAndOrTimeProperty
 
         ReadOnlySpan<char> valueSpan = vcfRow.Value.AsSpan().Trim();
 
-        // Time
-        if (dataType == VCdDataType.Time || valueSpan.StartsWith('T'))
-        {
-            if(vcfRow.Info.TimeConverter.TryParse(valueSpan, out OneOf<TimeOnly, DateTimeOffset> oneOf1))
-            {
-                return oneOf1.Match<DateAndOrTimeProperty>(
+        return dataType == VCdDataType.Time || valueSpan.StartsWith('T')
+            ? vcfRow.Info.TimeConverter.TryParse(valueSpan, out OneOf<TimeOnly, DateTimeOffset> oneOf1)
+                ? oneOf1.Match<DateAndOrTimeProperty>
+                    (
                     timeOnly => new TimeOnlyProperty(timeOnly, vcfRow.Parameters, vcfRow.Group),
-                    dateTimeOffset => new DateTimeOffsetProperty(dateTimeOffset, vcfRow.Parameters, vcfRow.Group));
-            }
-
-            return new DateTimeTextProperty(vcfRow, version);
-        }
-
-        if(vcfRow.Info.DateAndOrTimeConverter.TryParse(valueSpan, out OneOf<DateOnly, DateTime, DateTimeOffset> oneOf2))
-        {
-            return oneOf2.Match<DateAndOrTimeProperty>(
-                dateOnly => new DateOnlyProperty(dateOnly, vcfRow.Parameters, vcfRow.Group),
-                dateTime => new DateTimeProperty(dateTime, vcfRow.Parameters, vcfRow.Group),
-                dateTimeOffset => new DateTimeOffsetProperty(dateTimeOffset, vcfRow.Parameters, vcfRow.Group));
-        }
-
-        return new DateTimeTextProperty(vcfRow, version);
+                    dateTimeOffset => new DateTimeOffsetProperty(dateTimeOffset, vcfRow.Parameters, vcfRow.Group)
+                    )
+                : new DateTimeTextProperty(new TextProperty(null, vcfRow.Group))
+            : vcfRow.Info.DateAndOrTimeConverter.TryParse(valueSpan, out OneOf<DateOnly, DateTimeOffset> oneOf2)
+                ? oneOf2.Match<DateAndOrTimeProperty>
+                   (
+                    dateOnly => new DateOnlyProperty(dateOnly, vcfRow.Parameters, vcfRow.Group),
+                    dateTimeOffset => new DateTimeOffsetProperty(dateTimeOffset, vcfRow.Parameters, vcfRow.Group)
+                   )
+                : new DateTimeTextProperty(new TextProperty(null, vcfRow.Group));
     }
+
+    public static DateAndOrTimeProperty Create(DateTimeOffset value,
+                                               string? propertyGroup = null) => 
+        new DateTimeOffsetProperty(value,
+                                   new ParameterSection() { DataType = VCdDataType.DateAndOrTime },
+                                   propertyGroup);
+
+    public static DateAndOrTimeProperty Create(DateOnly value,
+                                               string? propertyGroup = null) =>
+        new DateOnlyProperty(value,
+                             new ParameterSection() { DataType = VCdDataType.Date },
+                             propertyGroup);
+
+    public static DateAndOrTimeProperty Create(TimeOnly value,
+                                              string? propertyGroup = null) =>
+       new TimeOnlyProperty(value,
+                            new ParameterSection() { DataType = VCdDataType.Time },
+                            propertyGroup);
+
+    public static DateAndOrTimeProperty Create(string? value,
+                                               string? propertyGroup = null) =>
+       new DateTimeTextProperty(new TextProperty(value, propertyGroup));
+
 
     IEnumerator<DateAndOrTimeProperty> IEnumerable<DateAndOrTimeProperty>.GetEnumerator()
     {
@@ -154,13 +165,17 @@ public abstract class DateAndOrTimeProperty
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateAndOrTimeProperty>)this).GetEnumerator();
 
+
     private void InitializeValue()
     {
         _isValueInitialized = true;
         _value = GetVCardPropertyValue() switch
         {
-
-            _ => throw new NotImplementedException()
+            DateOnly dateOnly => dateOnly,
+            TimeOnly timeOnly => timeOnly,
+            DateTimeOffset dateTimeOffset => dateTimeOffset,
+            string s => s,
+            _ => null
         };
     }
 }

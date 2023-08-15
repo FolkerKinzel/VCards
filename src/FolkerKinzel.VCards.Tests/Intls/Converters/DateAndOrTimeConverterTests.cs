@@ -12,7 +12,7 @@ public class DateAndOrTimeConverterTests
     {
         string s = "1963-08-17";
 
-        Assert.IsTrue(_conv.TryParse(s, out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
 
         var reference = new DateTime(1963, 8, 17);
         Assert.AreEqual(reference, dt.DateTime);
@@ -23,7 +23,7 @@ public class DateAndOrTimeConverterTests
     public void DateTest2()
     {
         string s = "--08";
-        Assert.IsTrue(_conv.TryParse(s, out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
 
         Assert.AreEqual(dt.Year, 4);
         Assert.AreEqual(dt.Month, 8);
@@ -34,7 +34,7 @@ public class DateAndOrTimeConverterTests
     public void DateTest3()
     {
         string s = "--0803";
-        Assert.IsTrue(_conv.TryParse(s, out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
 
         Assert.AreEqual(dt.Year, 4);
         Assert.AreEqual(dt.Month, 8);
@@ -46,7 +46,7 @@ public class DateAndOrTimeConverterTests
     public void DateTest4()
     {
         string s = "---03";
-        Assert.IsTrue(_conv.TryParse(s, out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
 
         Assert.AreEqual(dt.Year, 4);
         Assert.AreEqual(dt.Month, 1);
@@ -86,7 +86,7 @@ public class DateAndOrTimeConverterTests
     private void Roundtrip(
         string s, bool stringRoundTrip, VCdVersion version)
     {
-        Assert.IsTrue(_conv.TryParse(s, out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
 
         string s2 = ToDateTimeString(dt, version);
 
@@ -95,7 +95,7 @@ public class DateAndOrTimeConverterTests
             Assert.AreEqual(s, s2);
         }
 
-        Assert.IsTrue(_conv.TryParse(s2, out DateTimeOffset dt2));
+        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out DateTimeOffset dt2));
 
         Assert.AreEqual(dt, dt2);
 
@@ -110,7 +110,7 @@ public class DateAndOrTimeConverterTests
     private void RoundtripTimestamp(
         string s, bool stringRoundTrip = true, VCdVersion version = VCdVersion.V4_0)
     {
-        Assert.IsTrue(_conv.TryParse(s, out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
 
         string s2 = ToTimeStamp(dt, version);
 
@@ -119,7 +119,7 @@ public class DateAndOrTimeConverterTests
             Assert.AreEqual(s, s2);
         }
 
-        Assert.IsTrue(_conv.TryParse(s2, out DateTimeOffset dt2));
+        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out DateTimeOffset dt2));
 
         Assert.AreEqual(dt, dt2);
 
@@ -180,6 +180,6 @@ public class DateAndOrTimeConverterTests
     [TestMethod]
     [DataRow(null)]
     [DataRow("This is a very very long string that is longer than 64 characters.")]
-    public void TryParseTest1(string? input) => Assert.IsFalse(new DateAndOrTimeConverter().TryParse(input, out _));
+    public void TryParseTest1(string? input) => Assert.IsFalse(new DateAndOrTimeConverter().TryParse(input.AsSpan(), out _));
 }
 

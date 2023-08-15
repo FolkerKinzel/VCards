@@ -8,7 +8,7 @@ public class DateTimePropertyTests
 {
     private class TestIEnumerable : DateAndOrTimeProperty
     {
-        public TestIEnumerable() : base(new DateTimeOffsetProperty(DateTimeOffset.Now)) { }
+        public TestIEnumerable() : base(DateAndOrTimeProperty.Create(DateTimeOffset.Now)) { }
         public override object Clone() => throw new NotImplementedException();
         protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
         internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();

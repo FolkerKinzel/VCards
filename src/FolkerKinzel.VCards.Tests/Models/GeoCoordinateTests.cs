@@ -105,7 +105,7 @@ public class GeoCoordinateTests
     [DataRow("  0.8  ;  .7  ")]
     public void TryParseTest1(string? s)
     {
-        Assert.IsTrue(GeoCoordinate.TryParse(s, out GeoCoordinate? geo));
+        Assert.IsTrue(GeoCoordinate.TryParse(s.AsSpan(), out GeoCoordinate? geo));
 
         Assert.IsNotNull(geo);
         Assert.AreEqual(new GeoCoordinate(0.8, 0.7), geo);
@@ -127,7 +127,7 @@ public class GeoCoordinateTests
     [DataRow("  0.8  0.7  ")]
     public void TryParseTest2(string? s)
     {
-        Assert.IsFalse(GeoCoordinate.TryParse(s, out GeoCoordinate? geo));
+        Assert.IsFalse(GeoCoordinate.TryParse(s.AsSpan(), out GeoCoordinate? geo));
         Assert.IsNull(geo);
     }
 

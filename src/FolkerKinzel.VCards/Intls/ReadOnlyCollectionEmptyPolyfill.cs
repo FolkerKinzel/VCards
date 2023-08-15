@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace FolkerKinzel.VCards.Intls.Converters;
+namespace FolkerKinzel.VCards.Intls;
 
 
 internal static class ReadOnlyCollectionString

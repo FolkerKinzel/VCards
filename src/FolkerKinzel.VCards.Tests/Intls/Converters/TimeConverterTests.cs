@@ -21,7 +21,7 @@ public class TimeConverterTests
     private void Roundtrip(
         string s, bool stringRoundTrip = true, VCdVersion version = VCdVersion.V4_0)
     {
-        Assert.IsTrue(_conv.TryParse(s, out DateTimeOffset dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateTimeOffset dt));
 
         string s2 = TimeConverter.ToTimeString(dt, version);
 
@@ -30,7 +30,7 @@ public class TimeConverterTests
             Assert.AreEqual(s, s2);
         }
 
-        Assert.IsTrue(_conv.TryParse(s2, out DateTimeOffset dt2));
+        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out DateTimeOffset dt2));
         Assert.AreEqual(dt, dt2);
     }
 
