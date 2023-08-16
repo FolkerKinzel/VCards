@@ -36,21 +36,21 @@ internal sealed class DateAndOrTimeConverter
             "yyyyMMddTHHmmzzz",
             "yyyyMMddTHHmmsszz",
             "yyyyMMddTHHmmsszzz",
-            //"THH",
-            //"THHmm",
-            //"THHmmss",
-            //"THHzz",
-            //"THHzzz",
-            //"THHmmzz",
-            //"THHmmzzz",
-            //"THHmmsszz",
-            //"THHmmsszzz",
-            //"T-mmss",
-            //"T-mmsszz",
-            //"T-mmsszzz",
-            //"T--ss",
-            //"T--sszz",
-            //"T--sszzz"
+            "THH",
+            "THHmm",
+            "THHmmss",
+            "THHzz",
+            "THHzzz",
+            "THHmmzz",
+            "THHmmzzz",
+            "THHmmsszz",
+            "THHmmsszzz",
+            "T-mmss",
+            "T-mmsszz",
+            "T-mmsszzz",
+            "T--ss",
+            "T--sszz",
+            "T--sszzz"
     };
 
 
@@ -152,7 +152,6 @@ internal sealed class DateAndOrTimeConverter
         }
         else
         {
-
             if (span.EndsWith("Z", StringComparison.OrdinalIgnoreCase))
             {
                 span = span.Slice(0, span.Length - 1);

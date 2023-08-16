@@ -19,9 +19,8 @@ internal sealed class EmbeddedBytesProperty : DataProperty
 
     internal EmbeddedBytesProperty(IEnumerable<byte>? value,
                                    string? mimeType,
-                                   string? propertyGroup,
-                                   ParameterSection parameterSection) :
-        base(mimeType, parameterSection, propertyGroup)
+                                   string? propertyGroup)
+        : base(mimeType, new ParameterSection() { Encoding = ValueEncoding.Base64 }, propertyGroup)
     {
         if (value != null)
         {
@@ -32,6 +31,18 @@ internal sealed class EmbeddedBytesProperty : DataProperty
                 return;
             }
 
+            Value = new ReadOnlyCollection<byte>(arr);
+        }
+    }
+
+    internal EmbeddedBytesProperty(byte[]? arr,
+                                   string? mimeType,
+                                   string? propertyGroup,
+                                   ParameterSection parameterSection)
+        : base(mimeType, parameterSection, propertyGroup)
+    {
+        if (arr != null && arr.Length != 0)
+        {
             Value = new ReadOnlyCollection<byte>(arr);
         }
     }

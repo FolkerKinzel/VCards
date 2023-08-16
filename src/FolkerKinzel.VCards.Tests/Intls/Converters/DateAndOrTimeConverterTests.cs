@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
@@ -207,5 +208,37 @@ public class DateAndOrTimeConverterTests
     [DataRow(null)]
     [DataRow("This is a very very long string that is longer than 64 characters.")]
     public void TryParseTest1(string? input) => Assert.IsFalse(new DateAndOrTimeConverter().TryParse(input.AsSpan(), out _));
+
+
+
+    [DataTestMethod]
+    [DataRow("---bl")]
+    [DataRow("---bTlZ")]
+    [DataRow("--bb")]
+    [DataRow("--bbTau")]
+    public void TryParseTest2(string input) => Assert.IsFalse(_conv.TryParse(input.AsSpan(), out _));
+
+    [DataTestMethod]
+    [DataRow("T14")]
+    [DataRow("T1435")]
+    [DataRow("T143522")]
+    [DataRow("T143522+02")]
+    [DataRow("T143522+0200")]
+    [DataRow("T14+0200")]
+    [DataRow("T14+02")]
+    [DataRow("T1435+02")]
+    [DataRow("T1435+0200")]
+    [DataRow("T-3522")]
+    [DataRow("T-3522+02")]
+    [DataRow("T-3522+0200")]
+    [DataRow("T--22")]
+    [DataRow("T--22+02")]
+    [DataRow("T--22+0200")]
+    public void TryParseTest3(string? input)
+    {
+        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out var oneOf));
+        Assert.IsTrue(oneOf.IsT1);
+    }
+
 }
 

@@ -136,8 +136,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                          string? propertyGroup = null) =>
         new EmbeddedBytesProperty(bytes,
                                   mimeType?.ToString() ?? throw new ArgumentNullException(nameof(mimeType)),
-                                  propertyGroup,
-                                  new ParameterSection() { Encoding = ValueEncoding.Base64 });
+                                  propertyGroup);
 
 
     public static DataProperty FromText(string? text, string? propertyGroup = null)

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
@@ -44,6 +45,40 @@ public class TimeConverterTests
     }
 
     [TestMethod]
-    public void TryParseTest() => Assert.IsFalse(_conv.TryParse(null, out _));
+    public void TryParseTest1() => Assert.IsFalse(_conv.TryParse(null, out _));
+
+
+    [DataTestMethod]
+    [DataRow("T143522+02")]
+    [DataRow("T143522+0200")]
+    [DataRow("T14+0200")]
+    [DataRow("T14+02")]
+    [DataRow("T1435+02")]
+    [DataRow("T1435+0200")]
+    [DataRow("T-3522+02")]
+    [DataRow("T-3522+0200")]
+    [DataRow("T--22+02")]
+    [DataRow("T--22+0200")]
+    public void TryParseTest2(string? input)
+    {
+        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out var oneOf));
+        Assert.IsTrue(oneOf.IsT1);
+    }
+
+
+    [DataTestMethod]
+    [DataRow("T14")]
+    [DataRow("T1435")]
+    [DataRow("T143522")]
+    [DataRow("T-3522")]
+    [DataRow("T--22")]
+    public void TryParseTest3(string? input)
+    {
+        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out var oneOf));
+        Assert.IsTrue(oneOf.IsT0);
+    }
+
+    [TestMethod]
+    public void TryParseTest4() => Assert.IsFalse(_conv.TryParse("TblablaZ".AsSpan(), out _));
 
 }

@@ -27,11 +27,11 @@ internal static class Base64
     }
 
 
-    internal static string Encode(byte[] data)
-    {
-        Debug.Assert(data != null);
-        return Convert.ToBase64String(data, Base64FormattingOptions.None);
-    }
+    //internal static string Encode(byte[] data)
+    //{
+    //    Debug.Assert(data != null);
+    //    return Convert.ToBase64String(data, Base64FormattingOptions.None);
+    //}
 
     private static string ConvertBase64UrlToBase64(string base64) => base64.Replace('-', '+').Replace('_', '/');
 
