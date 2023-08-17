@@ -138,12 +138,20 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                   mimeType?.ToString() ?? throw new ArgumentNullException(nameof(mimeType)),
                                   propertyGroup);
 
+    public static DataProperty FromText(string? text,
+                                        string? mimeTypeString = null,
+                                        string? propertyGroup = null) =>
+        MimeType.TryParse(mimeTypeString, out MimeType? mimeType) ? FromText(text, mimeType, propertyGroup)
+                                                                  : FromText(text, (MimeType?)null, propertyGroup);
 
-    public static DataProperty FromText(string? text, string? propertyGroup = null)
+    public static DataProperty FromText(string? text,
+                                         MimeType? mimeType,
+                                         string? propertyGroup = null)
     {
-        var prop = new EmbeddedTextProperty(new TextProperty(text, propertyGroup));
-        prop.Parameters.DataType = VCdDataType.Text;
-        return prop;
+        var textProp = new TextProperty(text, propertyGroup);
+        textProp.Parameters.MediaType = mimeType?.ToString();
+        textProp.Parameters.DataType = VCdDataType.Text;
+        return new EmbeddedTextProperty(textProp);
     }
 
     public static DataProperty FromUri(Uri? uri,

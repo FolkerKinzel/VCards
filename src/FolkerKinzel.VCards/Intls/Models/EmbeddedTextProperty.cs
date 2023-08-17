@@ -12,8 +12,8 @@ internal sealed class EmbeddedTextProperty : DataProperty
 
     internal EmbeddedTextProperty(TextProperty textProp) 
        : base(textProp.Parameters.MediaType,
-             textProp.Parameters,
-             textProp.Group) => _textProp = textProp;
+              textProp.Parameters,
+              textProp.Group) => _textProp = textProp;
 
     internal EmbeddedTextProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters.MediaType,
