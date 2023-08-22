@@ -101,7 +101,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FolkerKinzel.Uris" Version="4.0.0-beta.1" />
+    <PackageReference Include="FolkerKinzel.Uris" Version="4.0.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard2.1' Or '$(TargetFramework)' == 'net5.0'">
     <PackageReference Include="Portable.System.DateTimeOnly" Version="7.0.1" />
