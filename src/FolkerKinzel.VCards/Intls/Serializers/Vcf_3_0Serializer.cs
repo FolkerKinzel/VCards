@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Extensions;
+﻿using System.Runtime.Serialization;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -28,12 +29,16 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
+        
+
 
         private void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> serializables)
         {
             Debug.Assert(serializables != null);
 
-            VCardProperty[] arr = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray()!;
+            VCardProperty[] arr = serializables.Where(x => x != null)
+                                               .OrderBy(static x => x!.Parameters.Preference)
+                                               .ToArray()!;
 
             for (int i = 0; i < arr.Length; i++)
             {
@@ -47,7 +52,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             Debug.Assert(serializables != null);
 
-            VCardProperty? pref = serializables.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
+            VCardProperty? pref = serializables.Where(IsPropertyWithData)
+                                               .OrderBy(static x => x!.Parameters.Preference)
+                                               .FirstOrDefault();
 
             if (pref != null)
             {
@@ -55,15 +62,16 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
-
-        protected override void AppendAccess(AccessProperty value) => BuildProperty(VCard.PropKeys.CLASS, value, false);
+        protected override void AppendAccess(AccessProperty value)
+            => BuildProperty(VCard.PropKeys.CLASS, value, false);
 
         protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
         {
             Debug.Assert(value != null);
 
             bool first = true;
-            foreach (AddressProperty? prop in value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference))
+            foreach (AddressProperty? prop in value.Where(IsPropertyWithData)
+                                                   .OrderBy(static x => x!.Parameters.Preference))
             {
                 bool isPref = first && prop!.Parameters.Preference < 100;
                 first = false;
@@ -86,36 +94,39 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
-        protected override void AppendAnniversaryViews(IEnumerable<DateAndOrTimeProperty?> value) => base.AppendAnniversaryViews(value);
+        protected override void AppendAnniversaryViews(IEnumerable<DateAndOrTimeProperty?> value)
+            => base.AppendAnniversaryViews(value);
 
         protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value)
         {
             Debug.Assert(value != null);
 
-
-            if (value.FirstOrDefault(x => x != null && x is DateTimeOffsetProperty) is DateTimeOffsetProperty pref)
+            if (value.FirstOrDefault(static x => (x is DateOnlyProperty or DateTimeOffsetProperty) && !x.IsEmpty)
+                is DateTimeOffsetProperty pref)
             {
                 BuildProperty(VCard.PropKeys.BDAY, pref);
             }
         }
 
+        protected override void AppendCategories(IEnumerable<StringCollectionProperty?> value)
+            => BuildPrefProperty(VCard.PropKeys.CATEGORIES, value);
 
-        protected override void AppendCategories(IEnumerable<StringCollectionProperty?> value) => BuildPrefProperty(VCard.PropKeys.CATEGORIES, value);
-
-        protected override void AppendDirectoryName(TextProperty value) => BuildProperty(VCard.PropKeys.NAME, value);
+        protected override void AppendDirectoryName(TextProperty value)
+            => BuildProperty(VCard.PropKeys.NAME, value);
 
         protected override void AppendDisplayNames(IEnumerable<TextProperty?> value)
         {
             Debug.Assert(value != null);
 
             TextProperty? displayName = value
-                .Where(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty))
-                .OrderBy(x => x!.Parameters.Preference).FirstOrDefault();
+                .Where(IsPropertyWithData)
+                .OrderBy(static x => x!.Parameters.Preference).FirstOrDefault();
 
             
             if (displayName is null)
             {
-                var name = VCardToSerialize.NameViews?.Where(x => x != null && !x.IsEmpty).FirstOrDefault();
+                var name = VCardToSerialize.NameViews?.Where(static x => x != null && !x.IsEmpty)
+                                                      .FirstOrDefault();
 
                 if(name is not null)
                 {
@@ -123,15 +134,24 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 }
             }
 
-            BuildProperty(VCard.PropKeys.FN, displayName ?? new TextProperty(Options.IsSet(VcfOptions.WriteEmptyProperties) ? null : "?"));
+            BuildProperty(VCard.PropKeys.FN, 
+                          displayName ?? new TextProperty
+                                             (
+                                              Options.IsSet(VcfOptions.WriteEmptyProperties) 
+                                                 ? null 
+                                                 : "?"
+                                              ));
         }
 
 
-        protected override void AppendEmailAddresses(IEnumerable<TextProperty?> value) => BuildPropertyCollection(VCard.PropKeys.EMAIL, value);
+        protected override void AppendEmailAddresses(IEnumerable<TextProperty?> value)
+            => BuildPropertyCollection(VCard.PropKeys.EMAIL, value);
 
-        protected override void AppendGenderViews(IEnumerable<GenderProperty?> value) => base.AppendGenderViews(value);
+        protected override void AppendGenderViews(IEnumerable<GenderProperty?> value)
+            => base.AppendGenderViews(value);
 
-        protected override void AppendGeoCoordinates(IEnumerable<GeoProperty?> value) => BuildPrefProperty(VCard.PropKeys.GEO, value);
+        protected override void AppendGeoCoordinates(IEnumerable<GeoProperty?> value)
+            => BuildPrefProperty(VCard.PropKeys.GEO, value);
 
         protected override void AppendInstantMessengerHandles(IEnumerable<TextProperty?> value)
         {
@@ -139,7 +159,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (Options.IsSet(VcfOptions.WriteImppExtension))
             {
-                TextProperty[] arr = value.Where(x => x != null).OrderBy(x => x!.Parameters.Preference).ToArray()!;
+                TextProperty[] arr = value.Where(static x => x != null)
+                                          .OrderBy(static x => x!.Parameters.Preference)
+                                          .ToArray()!;
 
                 for (int i = 0; i < arr.Length; i++)
                 {
@@ -147,12 +169,14 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
                     if (prop.Parameters.PropertyClass.IsSet(PropertyClassTypes.Home))
                     {
-                        prop.Parameters.InstantMessengerType = prop.Parameters.InstantMessengerType.Set(ImppTypes.Personal);
+                        prop.Parameters.InstantMessengerType = 
+                            prop.Parameters.InstantMessengerType.Set(ImppTypes.Personal);
                     }
 
                     if (prop.Parameters.PropertyClass.IsSet(PropertyClassTypes.Work))
                     {
-                        prop.Parameters.InstantMessengerType = prop.Parameters.InstantMessengerType.Set(ImppTypes.Business);
+                        prop.Parameters.InstantMessengerType = 
+                            prop.Parameters.InstantMessengerType.Set(ImppTypes.Business);
                     }
 
                     BuildProperty(VCard.PropKeys.IMPP, prop, i == 0 && prop.Parameters.Preference < 100);
@@ -163,25 +187,50 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         }
 
 
-        protected override void AppendKeys(IEnumerable<DataProperty?> value) => BuildPrefProperty(VCard.PropKeys.KEY, value);
+        protected override void AppendKeys(IEnumerable<DataProperty?> value)
+        {
+            VCardProperty? pref = value.Where(IsPropertyWithData)
+                                       .OrderBy(static x => x!.Parameters.Preference)
+                                       .FirstOrDefault(static x => x is EmbeddedBytesProperty or EmbeddedTextProperty);
 
-        protected override void AppendLastRevision(TimeStampProperty value) => BuildProperty(VCard.PropKeys.REV, value);
+            if (pref != null)
+            {
+                BuildProperty(VCard.PropKeys.KEY, pref);
+            }
+        }
 
-        protected override void AppendLogos(IEnumerable<DataProperty?> value) => BuildPrefProperty(VCard.PropKeys.LOGO, value);
+        protected override void AppendLastRevision(TimeStampProperty value)
+            => BuildProperty(VCard.PropKeys.REV, value);
 
-        protected override void AppendMailer(TextProperty value) => BuildProperty(VCard.PropKeys.MAILER, value);
+        protected override void AppendLogos(IEnumerable<DataProperty?> value)
+        {
+            VCardProperty? pref = value.Where(IsPropertyWithData)
+                                       .OrderBy(static x => x!.Parameters.Preference)
+                                       .FirstOrDefault(static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
+
+            if (pref != null)
+            {
+                BuildProperty(VCard.PropKeys.LOGO, pref);
+            }
+        }
+
+        protected override void AppendMailer(TextProperty value)
+            => BuildProperty(VCard.PropKeys.MAILER, value);
 
         protected override void AppendNameViews(IEnumerable<NameProperty?> value)
         {
             Debug.Assert(value != null);
 
-            NameProperty name = value.FirstOrDefault(x => x != null && (Options.IsSet(VcfOptions.WriteEmptyProperties) || !x.IsEmpty))
-
-                ?? (Options.IsSet(VcfOptions.WriteEmptyProperties) ? new NameProperty() : new NameProperty(new string[] { "?" }));
+            NameProperty name = 
+                value.FirstOrDefault(IsPropertyWithData)
+                ?? (Options.IsSet(VcfOptions.WriteEmptyProperties) ? new NameProperty() 
+                                                                   : new NameProperty(new string[] { "?" }));
 
             BuildProperty(VCard.PropKeys.N, name);
 
-            string? sortString = name.Parameters.SortAs?.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x))?.Trim();
+            string? sortString = name.Parameters.SortAs?
+                                                .FirstOrDefault(static x => !string.IsNullOrWhiteSpace(x))?
+                                                                                   .Trim();
 
             if (sortString != null)
             {
@@ -191,38 +240,72 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             }
         }
 
-        protected override void AppendNickNames(IEnumerable<StringCollectionProperty?> value) => BuildPrefProperty(VCard.PropKeys.NICKNAME, value);
+        protected override void AppendNickNames(IEnumerable<StringCollectionProperty?> value)
+            => BuildPrefProperty(VCard.PropKeys.NICKNAME, value);
 
-        protected override void AppendNotes(IEnumerable<TextProperty?> value) => BuildPrefProperty(VCard.PropKeys.NOTE, value);
+        protected override void AppendNotes(IEnumerable<TextProperty?> value)
+            => BuildPrefProperty(VCard.PropKeys.NOTE, value);
 
-        protected override void AppendOrganizations(IEnumerable<OrganizationProperty?> value) => BuildPrefProperty(VCard.PropKeys.ORG, value);
+        protected override void AppendOrganizations(IEnumerable<OrganizationProperty?> value)
+            => BuildPrefProperty(VCard.PropKeys.ORG, value);
 
-        protected override void AppendPhoneNumbers(IEnumerable<TextProperty?> value) => BuildPropertyCollection(VCard.PropKeys.TEL, value);
+        protected override void AppendPhoneNumbers(IEnumerable<TextProperty?> value)
+            => BuildPropertyCollection(VCard.PropKeys.TEL, value);
 
-        protected override void AppendPhotos(IEnumerable<DataProperty?> value) => BuildPrefProperty(VCard.PropKeys.PHOTO, value);
+        protected override void AppendPhotos(IEnumerable<DataProperty?> value)
+        {
+            VCardProperty? pref = value.Where(IsPropertyWithData)
+                                       .OrderBy(static x => x!.Parameters.Preference)
+                                       .FirstOrDefault(static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
-        protected override void AppendProdID(TextProperty value) => BuildProperty(VCard.PropKeys.PRODID, value);
+            if (pref != null)
+            {
+                BuildProperty(VCard.PropKeys.PHOTO, pref);
+            }
+        }
 
-        protected override void AppendProfile(ProfileProperty value) => BuildProperty(VCard.PropKeys.PROFILE, value);
+        protected override void AppendProdID(TextProperty value)
+            => BuildProperty(VCard.PropKeys.PRODID, value);
 
-        protected override void AppendRelations(IEnumerable<RelationProperty?> value) => base.AppendRelations(value);
+        protected override void AppendProfile(ProfileProperty value) 
+            => BuildProperty(VCard.PropKeys.PROFILE, value);
 
-        protected override void AppendRoles(IEnumerable<TextProperty?> value) => BuildPrefProperty(VCard.PropKeys.ROLE, value);
+        protected override void AppendRelations(IEnumerable<RelationProperty?> value)
+            => base.AppendRelations(value);
 
-        protected override void AppendSounds(IEnumerable<DataProperty?> value) => BuildPrefProperty(VCard.PropKeys.SOUND, value);
+        protected override void AppendRoles(IEnumerable<TextProperty?> value)
+            => BuildPrefProperty(VCard.PropKeys.ROLE, value);
 
-        protected override void AppendSources(IEnumerable<TextProperty?> value) => BuildPrefProperty(VCard.PropKeys.SOURCE, value);
+        protected override void AppendSounds(IEnumerable<DataProperty?> value)
+        {
+            VCardProperty? pref = value.Where(IsPropertyWithData)
+                                       .OrderBy(static x => x!.Parameters.Preference)
+                                       .FirstOrDefault(static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
-        protected override void AppendTimeZones(IEnumerable<TimeZoneProperty?> value) => BuildPrefProperty(VCard.PropKeys.TZ, value);
+            if (pref != null)
+            {
+                BuildProperty(VCard.PropKeys.SOUND, pref);
+            }
+        }
 
-        protected override void AppendTitles(IEnumerable<TextProperty?> value) => BuildPrefProperty(VCard.PropKeys.TITLE, value);
+        protected override void AppendSources(IEnumerable<TextProperty?> value)
+            => BuildPrefProperty(VCard.PropKeys.SOURCE, value);
 
-        protected override void AppendUniqueIdentifier(UuidProperty value) => BuildProperty(VCard.PropKeys.UID, value);
+        protected override void AppendTimeZones(IEnumerable<TimeZoneProperty?> value)
+            => BuildPrefProperty(VCard.PropKeys.TZ, value);
 
-        protected override void AppendURLs(IEnumerable<TextProperty?> value) => BuildPrefProperty(VCard.PropKeys.URL, value);
+        protected override void AppendTitles(IEnumerable<TextProperty?> value)
+            => BuildPrefProperty(VCard.PropKeys.TITLE, value);
+
+        protected override void AppendUniqueIdentifier(UuidProperty value)
+            => BuildProperty(VCard.PropKeys.UID, value);
+
+        protected override void AppendURLs(IEnumerable<TextProperty?> value)
+            => BuildPrefProperty(VCard.PropKeys.URL, value);
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal override void AppendBase64EncodedData(byte[]? data) => _ = Builder.AppendBase64(data);
+        internal override void AppendBase64EncodedData(byte[]? data)
+            => _ = Builder.AppendBase64(data);
     }
 }

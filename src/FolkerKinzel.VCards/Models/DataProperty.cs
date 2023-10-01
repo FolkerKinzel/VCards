@@ -51,6 +51,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         }
     }
 
+
     public abstract string GetFileTypeExtension();
 
 
@@ -75,38 +76,26 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                     : new EmbeddedTextProperty(vcfRow, version);
         }
 
-        if (vcfRow.Parameters.DataType == VCdDataType.Text)
-        {
-            return new EmbeddedTextProperty(vcfRow, version);
-        }
-
         if (vcfRow.Parameters.Encoding == ValueEncoding.Base64)
         {
             return new EmbeddedBytesProperty
                        (
-                        Base64.GetBytes(vcfRow.Value, Base64ParserOptions.AcceptMissingPadding),
+                        Base64Helper.GetBytesOrNull(vcfRow.Value),
                         vcfRow.Parameters.MediaType,
                         vcfRow.Group,
                         vcfRow.Parameters
                         );
         }
 
-        if (vcfRow.Parameters.DataType == VCdDataType.Uri)
+        if (vcfRow.Parameters.DataType == VCdDataType.Uri ||
+            vcfRow.Parameters.DataType == VCdDataType.Text)
         {
-            vcfRow.UnMask(version);
-            if (Uri.TryCreate(vcfRow.Value.Trim(), UriKind.Absolute, out Uri? uri))
-            {
-                return new ReferencedDataProperty
-                       (
-                        uri,
-                        vcfRow.Parameters.MediaType,
-                        vcfRow.Group,
-                        vcfRow.Parameters
-                        );
-            }
-        } // Quoted-Printable encoded binary data:
-        else if (vcfRow.Parameters.Encoding == ValueEncoding.QuotedPrintable &&
-               vcfRow.Parameters.MediaType != null)
+            return TryAsUri(vcfRow, version);
+        }
+
+        // Quoted-Printable encoded binary data:
+        if (vcfRow.Parameters.Encoding == ValueEncoding.QuotedPrintable &&
+            vcfRow.Parameters.MediaType != null)
         {
             return new EmbeddedBytesProperty
                    (
@@ -119,8 +108,24 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                      );
         }
 
-        // Text:
-        return new EmbeddedTextProperty(vcfRow, version);
+        // Missing data type:
+        return TryAsUri(vcfRow, version);
+
+        ///////////////////////////////////////////////////////////////
+
+        static DataProperty TryAsUri(VcfRow vcfRow, VCdVersion version)
+        {
+            vcfRow.UnMask(version);
+            return Uri.TryCreate(vcfRow.Value.Trim(), UriKind.Absolute, out Uri? uri)
+                       ? new ReferencedDataProperty
+                              (
+                               uri,
+                               vcfRow.Parameters.MediaType,
+                               vcfRow.Group,
+                               vcfRow.Parameters
+                               )
+                       : new EmbeddedTextProperty(vcfRow, version);
+        }
     }
 
 

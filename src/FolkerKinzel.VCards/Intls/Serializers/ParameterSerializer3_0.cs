@@ -54,7 +54,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Add(_collectAddressTypes);
 
 
-        AppendType(isPref, true);
+        AppendType(isPref);
         AppendValue(ParaSection.DataType);
         AppendLanguage();
         AppendNonStandardParameters();
@@ -97,7 +97,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         // EmailType ist eine string-Property.
         // Deshalb können X-Values dort direkt eingegeben werden.
         // Auch ist die Kombination mehrerer Values nicht erlaubt.
-        AppendType(isPref, false);
+        AppendType(isPref);
     }
 
     protected override void BuildFnPara()
@@ -118,7 +118,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Add(_collectPropertyClassTypes);
         _actionList.Add(_collectImppTypes);
 
-        AppendType(isPref, true);
+        AppendType(isPref);
     }
 
 
@@ -131,12 +131,13 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         {
             AppendValue(VCdDataType.Text);
         }
-        else
+
+        if (ParaSection.Encoding == ValueEncoding.Base64)
         {
             AppendBase64Encoding();
         }
 
-        AppendType(false, true);
+        AppendType(false);
     }
 
 
@@ -146,8 +147,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Add(_collectPropertyClassTypes);
         _actionList.Add(_collectAddressTypes);
 
-
-        AppendType(isPref, true);
+        AppendType(isPref);
         AppendValue(ParaSection.DataType);
         AppendLanguage();
         AppendNonStandardParameters();
@@ -159,17 +159,17 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Clear();
         _actionList.Add(_collectImageType);
 
-
         if (ParaSection.DataType == VCdDataType.Uri)
         {
             AppendValue(VCdDataType.Uri);
         }
-        else
+
+        if (ParaSection.Encoding == ValueEncoding.Base64)
         {
             AppendBase64Encoding();
         }
 
-        AppendType(false, false);
+        AppendType(false);
     }
 
 
@@ -223,12 +223,13 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         {
             AppendValue(VCdDataType.Uri);
         }
-        else
+
+        if (ParaSection.Encoding == ValueEncoding.Base64)
         {
             AppendBase64Encoding();
         }
 
-        AppendType(false, false);
+        AppendType(false);
     }
 
     protected override void BuildProdidPara()
@@ -271,12 +272,13 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         {
             AppendValue(VCdDataType.Uri);
         }
-        else
+        
+        if(ParaSection.Encoding == ValueEncoding.Base64)
         {
             AppendBase64Encoding();
         }
 
-        AppendType(false, false);
+        AppendType(false);
     }
 
 
@@ -293,7 +295,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Add(_collectPropertyClassTypes);
         _actionList.Add(_collectTelTypes);
 
-        AppendType(isPref, true);
+        AppendType(isPref);
     }
 
     protected override void BuildTitlePara()
@@ -324,7 +326,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Add(_collectPropertyClassTypes);
         _actionList.Add(_collectTelTypes);
 
-        AppendType(isPref, true);
+        AppendType(isPref);
     }
 
     protected override void BuildNonStandardPropertyPara(bool isPref)
@@ -340,7 +342,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
             AppendBase64Encoding();
         }
 
-        AppendType(isPref, true);
+        AppendType(isPref);
         AppendLanguage();
         AppendContext();
         AppendNonStandardParameters();
@@ -446,7 +448,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         }
     }
 
-    private void AppendType(bool isPref, bool appendXName)
+    private void AppendType(bool isPref)
     {
         this._stringCollectionList.Clear();
 
@@ -461,7 +463,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         }
 
 
-        if (appendXName && Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
+        if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandardParameters)
             {

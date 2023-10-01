@@ -66,8 +66,9 @@ internal sealed class EmbeddedBytesProperty : DataProperty
         }
     }
 
+    public override bool IsEmpty => _bytes is null;
 
-public override string GetFileTypeExtension() => MimeString.ToFileTypeExtension(Parameters.MediaType);
+    public override string GetFileTypeExtension() => MimeString.ToFileTypeExtension(Parameters.MediaType);
 
 
 /// <inheritdoc/>

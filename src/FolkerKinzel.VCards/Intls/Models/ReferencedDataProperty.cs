@@ -67,6 +67,10 @@ internal sealed class ReferencedDataProperty : DataProperty
                 Parameters.ContentLocation = ContentLocation.Url;
             }
         }
+        else
+        {
+            if (Value != null) { Parameters.DataType = VCdDataType.Uri; }
+        }
     }
 
     internal override void AppendValue(VcfSerializer serializer)

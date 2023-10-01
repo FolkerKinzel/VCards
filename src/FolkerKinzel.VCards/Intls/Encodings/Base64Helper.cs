@@ -1,7 +1,19 @@
 ﻿namespace FolkerKinzel.VCards.Intls.Encodings;
 
-internal static class Base64
+internal static class Base64Helper
 {
+    internal static byte[]? GetBytesOrNull(string? base64)
+    {
+        try
+        {
+            return Base64.GetBytes(base64, Base64ParserOptions.AcceptMissingPadding);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     /// <summary>
     /// Parses a Base64 <see cref="string"/> as byte array - even
     /// if it is in the Base64Url format (RFC 4648 § 5).
