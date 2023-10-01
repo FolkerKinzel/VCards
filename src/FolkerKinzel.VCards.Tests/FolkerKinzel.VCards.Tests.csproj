@@ -27,6 +27,7 @@
 		<Compile Remove="AnsiFilterTests.cs" />
 		<Compile Remove="Intls\Converters\MimeTypeConverterTests_OBSOLETE.cs" />
 		<Compile Remove="Intls\Deserializers\DigitParserTests.cs" />
+		<Compile Remove="Intls\Encodings\Base64Tests.cs" />
 		<Compile Remove="Models\DataUrlTests.cs" />
 		<Compile Remove="Models\MimeTypeTests.cs" />
 		<Compile Remove="MultiAnsiFilterTests.cs" />

@@ -118,7 +118,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
             {
                 parseMapping = true;
             }
-            else if (c.IsDecimalDigit())
+            else if (c.IsAsciiDigit())
             {
                 if (parseMapping)
                 {

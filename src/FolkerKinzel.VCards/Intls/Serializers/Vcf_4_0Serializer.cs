@@ -289,6 +289,6 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     #endregion
 
     [ExcludeFromCodeCoverage]
-    internal override void AppendBase64EncodedData(IEnumerable<byte>? data) => throw new NotImplementedException();
+    internal override void AppendBase64EncodedData(byte[]? data) => throw new NotImplementedException();
 
 }

@@ -24,19 +24,17 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         }
     }
 
-    internal override void AppendBase64EncodedData(IEnumerable<byte>? data)
+    internal override void AppendBase64EncodedData(byte[]? data)
     {
         if(data is null)
         {
             return;
         }
 
-        string base64Data = Convert.ToBase64String(data.ToArray(), Base64FormattingOptions.None);
-
         _ = Builder.Append(VCard.NewLine);
-        int i = Builder.Length;
-        _ = Builder.Append(base64Data);
 
+        int i = Builder.Length;
+        _ = Builder.AppendBase64(data);
 
         while (i < Builder.Length)
         {
@@ -48,15 +46,6 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
             i += VCard.NewLine.Length;
         }
-
-        //// mindestens 1 Zeichen muss in der letzten Datenzeile verbleiben
-        //for (int i = startOfBase64; i < Builder.Length - 1; i += VCard.MAX_BYTES_PER_LINE)
-        //{
-        //    _ = Builder.Insert(i, VCard.NewLine);
-        //    i += VCard.NewLine.Length;
-        //}
-
-        //_ = Builder.Append(VCard.NewLine); //Leerzeile nach den Daten
     }
 
 

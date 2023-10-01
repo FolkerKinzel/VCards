@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using FolkerKinzel.MimeTypes;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -35,17 +36,15 @@ internal static class UriConverter
 
     internal static string GetFileTypeExtensionFromUri(Uri? uri)
     {
-        const string defaultExtension = ".bin";
-
         if (uri == null)
         {
-            return defaultExtension;
+            return MimeCache.DefaultFileTypeExtension;
         }
         
         if(!uri.IsAbsoluteUri)
         {
             return Uri.TryCreate(new Uri("http://a"), uri, out uri) ? GetFileTypeExtensionFromUri(uri)
-                                                                    : defaultExtension;
+                                                                    : MimeCache.DefaultFileTypeExtension;
         }
 
         Debug.Assert(uri.IsAbsoluteUri);
@@ -61,10 +60,10 @@ internal static class UriConverter
 #if NETSTANDARD2_0 || NET461
         if(segment.ContainsAny(Path.GetInvalidPathChars()))
         {
-            return defaultExtension;
+            return MimeCache.DefaultFileTypeExtension;
         }
 #endif
         string ext = Path.GetExtension(segment);
-        return ext.StartsWith('.') ? ext : defaultExtension;
+        return ext.StartsWith('.') ? ext : MimeCache.DefaultFileTypeExtension;
     }
 }
