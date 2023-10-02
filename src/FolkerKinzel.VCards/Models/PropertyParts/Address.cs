@@ -76,6 +76,7 @@ public sealed class Address
 
         int index = 0;
         semicolonSplitter.ValueString = vCardValue;
+
         foreach (var s in semicolonSplitter)
         {
             switch (index++)

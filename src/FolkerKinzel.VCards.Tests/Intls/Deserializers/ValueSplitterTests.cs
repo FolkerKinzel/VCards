@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
 
@@ -84,5 +85,27 @@ public class ValueSplitterTests
         }
 
         Assert.AreEqual(count, expected.Length);
+    }
+
+    [TestMethod]
+    public void GetEnumeratorTest4()
+    {
+        var splitter = new ValueSplitter(',', StringSplitOptions.RemoveEmptyEntries)
+        {
+            ValueString = ",,,"
+        };
+
+        Assert.AreEqual(0, splitter.Count());
+    }
+
+    [TestMethod]
+    public void GetEnumeratorTest5()
+    {
+        var splitter = new ValueSplitter(',', StringSplitOptions.None)
+        {
+            ValueString = "abc"
+        };
+
+        Assert.AreEqual(1, splitter.Count());
     }
 }

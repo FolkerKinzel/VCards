@@ -114,12 +114,12 @@ internal static class StringBuilderExtension
     {
         Debug.Assert(builder != null);
 
-        while (builder.Length >= 1 && (builder[0] == '\"' || builder[0] == '\''))
+        if (builder.Length >= 1 && (builder[0] == '\"' || builder[0] == '\''))
         {
             _ = builder.Remove(0, 1);
         }
 
-        while (builder.Length >= 1 && (builder[builder.Length - 1] == '\"' || builder[builder.Length - 1] == '\''))
+        if (builder.Length >= 1 && (builder[builder.Length - 1] == '\"' || builder[builder.Length - 1] == '\''))
         {
             _ = builder.Remove(builder.Length - 1, 1);
         }

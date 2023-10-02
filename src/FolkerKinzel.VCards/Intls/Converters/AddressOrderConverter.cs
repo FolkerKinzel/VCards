@@ -8,9 +8,14 @@ internal static class AddressOrderConverter
     internal static AddressOrder ToAddressOrder(this CultureInfo cultureInfo)
     {
         Debug.Assert(cultureInfo != null);
+
         string name = cultureInfo.Name;
         int separatorIndex = name.IndexOf('-');
-        if(separatorIndex == -1 || name.Length < separatorIndex + 3) { return AddressOrder.Din; }
+
+        if(separatorIndex == -1 || name.Length < separatorIndex + 3)
+        { 
+            return AddressOrder.Din; 
+        }
 
         string countryName = name.Substring(separatorIndex + 1, 2);
 

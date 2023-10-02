@@ -155,7 +155,6 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
         }
     }
 
-
     protected override void AppendEmailAddresses(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.EMAIL, value);
 
@@ -169,10 +168,8 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
         BuildPropertyCollection(VCard.PropKeys.NonStandard.EXPERTISE, value);
     }
 
-
     protected override void AppendFreeBusyUrls(IEnumerable<TextProperty?> value) 
         => BuildPropertyCollection(VCard.PropKeys.FBURL, value);
-
 
     protected override void AppendGenderViews(IEnumerable<GenderProperty?> value)
     {

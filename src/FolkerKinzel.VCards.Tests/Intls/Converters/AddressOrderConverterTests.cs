@@ -65,5 +65,14 @@ public class AddressOrderConverterTests
         }
         catch(CultureNotFoundException) { }
     }
+
+    [TestMethod]
+    public void ToAddressOrderTest2()
+    {
+        foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+        {
+            Assert.IsInstanceOfType(culture.ToAddressOrder(), typeof(AddressOrder));
+        }
+    }
 }
 

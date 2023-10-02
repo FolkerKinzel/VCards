@@ -27,6 +27,7 @@ internal class ValueSplitter : IEnumerable<string>
         int i = 0;
         string valueString = ValueString;
         int valueStringLength = valueString.Length;
+        bool removeEmptyEntries = Options.HasFlag(StringSplitOptions.RemoveEmptyEntries);
 
         while (i <= valueStringLength)
         {
@@ -34,7 +35,7 @@ internal class ValueSplitter : IEnumerable<string>
 
             if (splitIndex == i)
             {
-                if (Options == StringSplitOptions.None)
+                if (!removeEmptyEntries)
                 {
                     yield return string.Empty;
                 }
@@ -43,13 +44,11 @@ internal class ValueSplitter : IEnumerable<string>
             {
                 int length = splitIndex - i;
 
-                if (Options != StringSplitOptions.RemoveEmptyEntries || ContainsData(i, length, valueString))
+                if (!removeEmptyEntries || ContainsData(i, length, valueString))
                 {
                     yield return length == valueStringLength
                                     ? valueString
-                                    : length == 0
-                                        ? string.Empty
-                                        : valueString.Substring(i, length);
+                                    : valueString.Substring(i, length);
                 }
             }
 
