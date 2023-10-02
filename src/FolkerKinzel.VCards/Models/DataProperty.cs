@@ -7,6 +7,7 @@ using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Resources;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Models;
@@ -170,10 +171,12 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                        string? propertyGroup = null)
         => new ReferencedDataProperty
            (
-            uri,
-            MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo) ? mimeInfo.ToString() : null,
-            propertyGroup,
-            new ParameterSection()
+             (uri is not null) && !uri.IsAbsoluteUri 
+                 ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)), nameof(uri))
+                 : uri,
+             MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo) ? mimeInfo.ToString() : null,
+             propertyGroup,
+             new ParameterSection()
             );
 
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using OneOf;
 
@@ -47,62 +48,116 @@ public sealed partial class DateAndOrTime : IOneOf
 
     public string? String => IsString ? AsString : null;
 
-    public bool TryPickDateOnly(out DateOnly value, out OneOf<DateTimeOffset, TimeOnly, string> remainder) => _oneOf.TryPickT0(out value, out remainder);
+    public bool TryGetDateOnly(out DateOnly value)
+    {
+        var result = _oneOf.Match<(DateOnly Value, bool Result)>
+         (
+          dateOnly => (dateOnly, true),
+          dtOffset => (new DateOnly(dtOffset.Year, dtOffset.Month, dtOffset.Day), true),
+          timeOnly => (default, false),
+          str => (default, false)
+         );
 
-    public bool TryPickDateTimeOffset(out DateTimeOffset value, out OneOf<DateOnly, TimeOnly, string> remainder) => _oneOf.TryPickT1(out value, out remainder);
+        value = result.Value;
+        return result.Result;
+    }
+
+    public bool TryGetDateTimeOffset(out DateTimeOffset value)
+    {
+        var result = _oneOf.Match<(DateTimeOffset Value, bool Result)>
+         (
+          dateOnly => (new DateTimeOffset(dateOnly.Year, dateOnly.Month, dateOnly.Day, 12, 0, 0, TimeSpan.Zero), true),
+          dtOffset => (dtOffset, true),
+          timeOnly => (new DateTimeOffset().AddTicks(timeOnly.Ticks), true),
+          str => (default, false)
+         );
+
+        value = result.Value;
+        return result.Result;
+    }
+
+    public bool TryGetTimeOnly(out TimeOnly value)
+    {
+        if (IsTimeOnly)
+        {
+            value = AsTimeOnly;
+            return true;
+        }
+        else
+        {
+            value = default;
+            return false;
+        }
+    }
+
+    public bool TryGetString([NotNullWhen(true)] out string? value)
+    {
+        if (IsString)
+        {
+            value = AsString;
+            return true;
+        }
+        else
+        {
+            value = default;
+            return false;
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool TryPickDateOnly(out DateOnly value,
+                                out OneOf<DateTimeOffset, TimeOnly, string> remainder) 
+        => _oneOf.TryPickT0(out value, out remainder);
 
 
-    public bool TryPickTimeOnly(out TimeOnly value, out OneOf<DateOnly, DateTimeOffset, string> remainder) => _oneOf.TryPickT2(out value, out remainder);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool TryPickDateTimeOffset(out DateTimeOffset value,
+                                      out OneOf<DateOnly, TimeOnly, string> remainder)
+        => _oneOf.TryPickT1(out value, out remainder);
 
-    public bool TryPickString(out string value, out OneOf<DateOnly, DateTimeOffset, TimeOnly> remainder) => _oneOf.TryPickT3(out value, out remainder);
 
-    public void Switch(Action<DateOnly> f0, Action<DateTimeOffset> f1, Action<TimeOnly> f2, Action<string> f3) => _oneOf.Switch(f0, f1, f2, f3);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool TryPickTimeOnly(out TimeOnly value,
+                                out OneOf<DateOnly, DateTimeOffset, string> remainder)
+        => _oneOf.TryPickT2(out value, out remainder);
 
-    public TResult Match<TResult>(Func<DateOnly, TResult> f0, Func<DateTimeOffset, TResult> f1, Func<TimeOnly, TResult> f2, Func<string, TResult> f3) => _oneOf.Match(f0, f1, f2, f3);
 
-    public OneOf<TResult, DateTimeOffset, TimeOnly, string> MapDateOnly<TResult>(Func<DateOnly, TResult> mapFunc) => _oneOf.MapT0(mapFunc);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool TryPickString([NotNullWhen(true)] out string? value,
+                              out OneOf<DateOnly, DateTimeOffset, TimeOnly> remainder) 
+        => _oneOf.TryPickT3(out value, out remainder);
 
-    public OneOf<DateOnly, TResult, TimeOnly, string> MapDateTimeOffset<TResult>(Func<DateTimeOffset, TResult> mapFunc) => _oneOf.MapT1(mapFunc);
 
-    public OneOf<DateOnly, DateTimeOffset, TResult, string> MapTimeOnly<TResult>(Func<TimeOnly, TResult> mapFunc) => _oneOf.MapT2(mapFunc);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Switch(Action<DateOnly>? f0,
+                       Action<DateTimeOffset>? f1,
+                       Action<TimeOnly>? f2,
+                       Action<string>? f3) => _oneOf.Switch(f0, f1, f2, f3);
 
-    public OneOf<DateOnly, DateTimeOffset, TimeOnly, TResult> MapString<TResult>(Func<string, TResult> mapFunc) => _oneOf.MapT3(mapFunc);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public TResult Match<TResult>(Func<DateOnly, TResult>? f0,
+                                  Func<DateTimeOffset, TResult>? f1,
+                                  Func<TimeOnly, TResult>? f2,
+                                  Func<string, TResult>? f3) => _oneOf.Match(f0, f1, f2, f3);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public OneOf<TResult, DateTimeOffset, TimeOnly, string> MapDateOnly<TResult>(Func<DateOnly, TResult> mapFunc) 
+        => _oneOf.MapT0(mapFunc);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public OneOf<DateOnly, TResult, TimeOnly, string> MapDateTimeOffset<TResult>(Func<DateTimeOffset, TResult> mapFunc)
+        => _oneOf.MapT1(mapFunc);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public OneOf<DateOnly, DateTimeOffset, TResult, string> MapTimeOnly<TResult>(Func<TimeOnly, TResult> mapFunc)
+        => _oneOf.MapT2(mapFunc);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public OneOf<DateOnly, DateTimeOffset, TimeOnly, TResult> MapString<TResult>(Func<string, TResult> mapFunc)
+        => _oneOf.MapT3(mapFunc);
 
     public object Value => this._oneOf.Value;
 
     public int Index => this._oneOf.Index;
-
-    //[EditorBrowsable(EditorBrowsableState.Never)]
-    //[Browsable(false)]
-    //public new bool IsT0 => base.IsT0;
-
-    //[EditorBrowsable(EditorBrowsableState.Never)]
-    //[Browsable(false)]
-    //public new bool IsT1 => base.IsT1;
-
-    //[EditorBrowsable(EditorBrowsableState.Never)]
-    //[Browsable(false)]
-    //public new bool IsT2 => base.IsT2;
-
-    //[EditorBrowsable(EditorBrowsableState.Never)]
-    //[Browsable(false)]
-    //public new bool IsT3 => base.IsT2;
-
-    //[EditorBrowsable(EditorBrowsableState.Never)]
-    //[Browsable(false)]
-    //public new DateOnly AsT0 => base.AsT0;
-
-    //[EditorBrowsable(EditorBrowsableState.Never)]
-    //[Browsable(false)]
-    //public new DateTimeOffset AsT1 => base.AsT1;
-
-    //[EditorBrowsable(EditorBrowsableState.Never)]
-    //[Browsable(false)]
-    //public new TimeOnly AsT2 => base.AsT2;
-
-    //[EditorBrowsable(EditorBrowsableState.Never)]
-    //[Browsable(false)]
-    //public new string AsT3 => base.AsT3;
-
 
 }

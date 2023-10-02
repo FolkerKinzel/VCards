@@ -21,10 +21,7 @@ internal sealed class ReferencedDataProperty : DataProperty
     {
         if (value != null)
         {
-            if (!value.IsAbsoluteUri)
-            {
-                throw new ArgumentException(string.Format(Res.RelativeUri, nameof(value)), nameof(value));
-            }
+            Debug.Assert(value.IsAbsoluteUri);
 
             Value = value;
             Parameters.DataType = VCdDataType.Uri;
