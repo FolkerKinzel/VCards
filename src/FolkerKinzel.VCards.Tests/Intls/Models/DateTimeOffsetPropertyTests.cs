@@ -66,7 +66,7 @@ public class DateTimeOffsetPropertyTests
     public void DateTimeOffsetPropertyTest3()
     {
         var prop = DateAndOrTimeProperty.Create(DateTimeOffset.MinValue, GROUP);
-        Assert.IsNull(prop.Value);
+        Assert.IsNotNull(prop.Value);
     }
 
     [TestMethod()]
