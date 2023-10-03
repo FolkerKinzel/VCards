@@ -27,4 +27,19 @@ public class DataPropertyTests
         Assert.AreEqual(val1, val2);
         Assert.AreSame(val1, val2);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void FromUriTest1()
+    {
+        Assert.IsTrue(Uri.TryCreate("../relative", UriKind.Relative, out Uri? uri));
+        _ = DataProperty.FromUri(uri);
+    }
+
+    [TestMethod]
+    public void FromBytesTest1()
+    {
+        var prop = DataProperty.FromBytes(null, "blabla");
+        Assert.AreEqual("application/octet-stream", prop.Parameters.MediaType);
+    }
 }

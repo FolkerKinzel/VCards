@@ -94,16 +94,15 @@ public static class VCard40Example
             //Retrieve Beethovens birth year from the members of the "Composers.vcf" group:
             Console.Write("What year was Beethoven born?: ");
 
-            DateOnly? birthDay = composersVCard.Members?
+            DateOnly birthDay = DateOnly.MinValue;
+            VC::DateAndOrTimeProperty? prop = composersVCard.Members?
                 .Select(x => x as VC::RelationVCardProperty)
-                .Where(x => x?.Value != null)
-                .Select(x => x!.Value)
-                    .FirstOrDefault(x => x!.DisplayNames?.Any(x => x?.Value == "Ludwig van Beethoven") ?? false)?
+                .Select(x => x?.Value)
+                    .FirstOrDefault(x => x?.DisplayNames?.Any(x => x?.Value == "Ludwig van Beethoven") ?? false)?
                         .BirthDayViews?
-                        .FirstOrDefault(x => x?.Value?.IsDateOnly ?? false)?
-                        .Value!.AsDateOnly;
+                        .FirstOrDefault(x => x?.Value?.TryAsDateOnly(out birthDay) ?? false);
 
-            Console.WriteLine(birthDay.HasValue ? birthDay.Value.Year : "Don't know.");
+            Console.WriteLine(prop is not null ? birthDay.Year : "Don't know.");
         }
     }
 

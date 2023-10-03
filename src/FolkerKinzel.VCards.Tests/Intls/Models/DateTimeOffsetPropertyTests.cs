@@ -17,13 +17,13 @@ public class DateTimeOffsetPropertyTests
 
         Assert.IsInstanceOfType(prop, typeof(DateTimeOffsetProperty));
         Assert.AreEqual(group, prop.Group);
-        Assert.AreEqual(dto, prop.Value?.AsDateTimeOffset);
+        Assert.AreEqual(dto, prop.Value?.DateTimeOffset);
         Assert.AreEqual(VCdDataType.DateAndOrTime, prop.Parameters.DataType);
 
         var clone = (DateAndOrTimeProperty)prop.Clone();
         Assert.IsInstanceOfType(prop, typeof(DateTimeOffsetProperty));
         Assert.AreEqual(group, prop.Group);
-        Assert.AreEqual(dto, prop.Value?.AsDateTimeOffset);
+        Assert.AreEqual(dto, prop.Value?.DateTimeOffset);
         Assert.AreEqual(VCdDataType.DateAndOrTime, prop.Parameters.DataType);
 
         Assert.AreNotSame(clone, prop);

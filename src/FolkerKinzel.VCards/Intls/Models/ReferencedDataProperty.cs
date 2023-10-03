@@ -39,9 +39,13 @@ internal sealed class ReferencedDataProperty : DataProperty
     }
 
     /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new ReferencedDataProperty(this);
 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
+
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -49,13 +53,13 @@ internal sealed class ReferencedDataProperty : DataProperty
 
         base.PrepareForVcfSerialization(serializer);
 
-        if (serializer.Version == VCdVersion.V2_1)
+        if (Value is null)
         {
-            if (Value is null)
-            {
-                Parameters.ContentLocation = ContentLocation.Inline;
-            }
-            else if (UriConverter.IsContentId(Value))
+            Parameters.ContentLocation = ContentLocation.Inline;
+        }
+        else if (serializer.Version == VCdVersion.V2_1)
+        {
+            if (UriConverter.IsContentId(Value))
             {
                 Parameters.ContentLocation = ContentLocation.ContentID;
             }
@@ -66,7 +70,7 @@ internal sealed class ReferencedDataProperty : DataProperty
         }
         else
         {
-            if (Value != null) { Parameters.DataType = VCdDataType.Uri; }
+            Parameters.DataType = VCdDataType.Uri;
         }
     }
 
@@ -83,5 +87,6 @@ internal sealed class ReferencedDataProperty : DataProperty
         _ = serializer.Builder.Append(Value.AbsoluteUri);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => Value?.AbsoluteUri ?? base.ToString();
 }

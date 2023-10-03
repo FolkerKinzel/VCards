@@ -74,6 +74,7 @@ public abstract class VCardProperty : ICloneable
     /// <summary>
     /// <c>true</c>, wenn das <see cref="VCardProperty"/>-Objekt keine verwertbaren Daten enthält.
     /// </summary>
+    [MemberNotNullWhen(true, nameof(Value))]
     public virtual bool IsEmpty => GetVCardPropertyValue() is null;
 
 

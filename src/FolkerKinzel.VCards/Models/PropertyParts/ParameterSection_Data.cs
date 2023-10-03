@@ -96,6 +96,10 @@ public sealed partial class ParameterSection
             {
                 DataType = VCdDataType.Uri;
             }
+            else if (DataType == VCdDataType.Uri)
+            {
+                DataType = null;
+            }
         }
     }
 
@@ -267,7 +271,7 @@ public sealed partial class ParameterSection
     public string? MediaType
     {
         get => Get<string?>(VCdParam.MediaType);
-        internal set => Set<string?>(VCdParam.MediaType, value);
+        set => Set<string?>(VCdParam.MediaType, value);
     }
 
     /// <summary>

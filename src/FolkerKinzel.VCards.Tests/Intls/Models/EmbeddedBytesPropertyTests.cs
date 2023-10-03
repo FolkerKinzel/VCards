@@ -49,10 +49,10 @@ public class EmbeddedBytesPropertyTests
         Assert.IsInstanceOfType(prop2, typeof(EmbeddedBytesProperty));
         Assert.IsNotNull(prop1.Value);
         Assert.IsNotNull(prop2.Value);
-        Assert.IsTrue(prop1.Value!.TryGetReadOnlyByteCollection(out ReadOnlyCollection<byte>? bytes1));
-        Assert.IsTrue(prop2.Value!.TryGetReadOnlyByteCollection(out ReadOnlyCollection<byte>? bytes2));
+        Assert.IsNotNull(prop1.Value!.Bytes);
+        Assert.IsNotNull(prop2.Value!.Bytes);
 
-        CollectionAssert.AreEqual(bytes1, bytes2);
+        CollectionAssert.AreEqual(prop1.Value!.Bytes, prop2.Value!.Bytes);
     }
 }
 

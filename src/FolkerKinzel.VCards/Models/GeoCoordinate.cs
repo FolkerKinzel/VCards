@@ -78,8 +78,6 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     }
 
 
-
-
     internal static bool TryParse(ReadOnlySpan<char> value, out GeoCoordinate? coordinate)
     {
         coordinate = null;
@@ -102,8 +100,6 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
             startIndex++;
         }
-
-
 
         if (startIndex != 0)
         {

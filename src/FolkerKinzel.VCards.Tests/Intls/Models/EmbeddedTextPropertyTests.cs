@@ -41,10 +41,10 @@ public class EmbeddedTextPropertyTests
         Assert.IsInstanceOfType(prop2, typeof(EmbeddedTextProperty));
         Assert.IsNotNull(prop1.Value);
         Assert.IsNotNull(prop2.Value);
-        Assert.IsTrue(prop1.Value!.TryGetString(out string? str1));
-        Assert.IsTrue(prop2.Value!.TryGetString(out string? str2));
+        Assert.IsNotNull(prop1.Value!.String);
+        Assert.IsNotNull(prop2.Value!.String);
         
-        Assert.AreSame(str1, str2);
+        Assert.AreSame(prop1.Value!.String, prop2.Value!.String);
     }
 }
 

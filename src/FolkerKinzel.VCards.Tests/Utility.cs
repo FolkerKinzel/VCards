@@ -42,17 +42,18 @@ internal static class Utility
         adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, pidMap), new PropertyID(2) };
         adr1.Parameters.AddressType = AddressTypes.Dom | AddressTypes.Intl | AddressTypes.Parcel | AddressTypes.Postal;
 
-        var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"));
-        logo1.Parameters.MediaType = "image/jpeg";
+        var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
+        //logo1.Parameters.MediaType = "image/jpeg";
 
-        var photo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/photo.png"));
-        logo1.Parameters.MediaType = "image/png";
+        var photo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/photo.png"), "image/png");
+        //photo1.Parameters.MediaType = "image/png";
 
-        var sound1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/audio.mp3"));
-        logo1.Parameters.MediaType = "audio/mpeg";
+        var sound1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/audio.mp3"), "audio/mpeg");
+        //sound1.Parameters.MediaType = "audio/mpeg";
 
-        var key1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/pgp"));
-        logo1.Parameters.MediaType = "application/pgp-keys";
+        var key1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/pgp"), "application/pgp-keys");
+        var key2 = DataProperty.FromText("ThePassword");
+        //key1.Parameters.MediaType = "application/pgp-keys";
 
 
         var email1 = new TextProperty("email@folker.com");

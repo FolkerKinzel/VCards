@@ -20,15 +20,19 @@ internal sealed class TimeOnlyProperty : DateAndOrTimeProperty
 
     public override bool IsEmpty => false;
 
-
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new TimeOnlyProperty(this);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
+
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         base.PrepareForVcfSerialization(serializer);
         Parameters.DataType = VCdDataType.Time;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal override void AppendValue(VcfSerializer serializer) =>
         TimeConverter.AppendTimeTo(serializer.Builder, Value, serializer.Version);
 }

@@ -105,10 +105,10 @@ public abstract class DateAndOrTimeProperty
         _isValueInitialized = true;
         _value = IsEmpty ? null : GetVCardPropertyValue() switch
         {
-            DateOnly dateOnly => dateOnly,
-            TimeOnly timeOnly => timeOnly,
-            DateTimeOffset dateTimeOffset => dateTimeOffset,
-            string s => s,
+            DateOnly dateOnly => new DateAndOrTime(dateOnly),
+            TimeOnly timeOnly => new DateAndOrTime(timeOnly),
+            DateTimeOffset dateTimeOffset => new DateAndOrTime(dateTimeOffset),
+            string s => new DateAndOrTime(s),
             _ => null
         };
     }

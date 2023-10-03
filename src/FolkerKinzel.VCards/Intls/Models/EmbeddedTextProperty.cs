@@ -28,9 +28,11 @@ internal sealed class EmbeddedTextProperty : DataProperty
         return mime is null ? ".txt" : MimeString.ToFileTypeExtension(mime);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new EmbeddedTextProperty((TextProperty)_textProp.Clone());
 
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)

@@ -192,9 +192,9 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         _isValueInitialized = true;
         _value = GetVCardPropertyValue() switch
         {
-            ReadOnlyCollection<byte> bt => bt,
-            string s => s,
-            Uri uri => uri,
+            ReadOnlyCollection<byte> bt => new DataPropertyValue(bt),
+            string s => new DataPropertyValue(s),
+            Uri uri => new DataPropertyValue(uri),
             _ => null
         };
     }

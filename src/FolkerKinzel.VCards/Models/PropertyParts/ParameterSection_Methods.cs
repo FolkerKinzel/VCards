@@ -29,7 +29,7 @@ public sealed partial class ParameterSection
 
         Clear();
 
-        foreach (KeyValuePair<VCdParam, object> kvp in other._propDic)
+        foreach (KeyValuePair<VCdParam, object> kvp in ((ParameterSection)other.Clone())._propDic)
         {
             this._propDic.Add(kvp.Key, kvp.Value);
         }

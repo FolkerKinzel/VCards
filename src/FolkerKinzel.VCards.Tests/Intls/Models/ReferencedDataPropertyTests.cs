@@ -1,5 +1,7 @@
 ﻿using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -18,10 +20,10 @@ public class ReferencedDataPropertyTests
         Assert.IsInstanceOfType(prop2, typeof(ReferencedDataProperty));
         Assert.IsNotNull(prop1.Value);
         Assert.IsNotNull(prop2.Value);
-        Assert.IsTrue(prop1.Value!.TryGetUri(out Uri? str1));
-        Assert.IsTrue(prop2.Value!.TryGetUri(out Uri? str2));
+        Assert.IsNotNull(prop1.Value!.Uri);
+        Assert.IsNotNull(prop2.Value!.Uri);
 
-        Assert.AreSame(str1, str2);
+        Assert.AreSame(prop1.Value!.Uri, prop2.Value!.Uri);
     }
 
 
@@ -37,7 +39,7 @@ public class ReferencedDataPropertyTests
         var prop = DataProperty.FromUri(uri, "image/png");
         Assert.AreEqual(".png", prop.GetFileTypeExtension());
 
-        prop.Parameters.Clear();
+        prop = DataProperty.FromUri(uri);
         Assert.AreEqual(".txt", prop.GetFileTypeExtension());
 
     }
@@ -53,6 +55,35 @@ public class ReferencedDataPropertyTests
         var serializer = new Vcf_3_0Serializer(writer, VcfOptions.Default, null);
         DataProperty.FromUri(null).AppendValue(serializer);
         Assert.AreEqual(0, serializer.Builder.Length);
+    }
+
+    [TestMethod]
+    public void PrepareForVcfSerializationTest1()
+    {
+        using var writer = new StringWriter();
+        var serializer = new Vcf_2_1Serializer(writer, VcfOptions.Default, null);
+
+        var prop = DataProperty.FromUri(null);
+        prop.Parameters.ContentLocation = ContentLocation.Url;
+        prop.Parameters.DataType = VCdDataType.Uri;
+
+        prop.PrepareForVcfSerialization(serializer);
+        Assert.AreEqual(ContentLocation.Inline, prop.Parameters.ContentLocation);
+        Assert.IsNull(prop.Parameters.DataType);
+    }
+
+    [TestMethod]
+    public void PrepareForVcfSerializationTest2()
+    {
+        using var writer = new StringWriter();
+        var serializer = new Vcf_2_1Serializer(writer, VcfOptions.Default, null);
+
+        Assert.IsTrue(Uri.TryCreate("cid:something", UriKind.Absolute, out Uri? uri));
+        var prop = DataProperty.FromUri(uri);
+
+        prop.PrepareForVcfSerialization(serializer);
+        Assert.AreEqual(ContentLocation.ContentID, prop.Parameters.ContentLocation);
+        Assert.AreEqual(VCdDataType.Uri,  prop.Parameters.DataType);
     }
 }
 

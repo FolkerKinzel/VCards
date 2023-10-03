@@ -19,13 +19,12 @@ public sealed partial class ParameterSection
     {
         foreach (var kvp in paraSec._propDic)
         {
-            Set(kvp.Key, kvp.Value switch
+            _propDic.Add(kvp.Key, kvp.Value switch
             {
                 PropertyID pid => pid,
                 IEnumerable<PropertyID?> pidEnumerable => pidEnumerable.ToArray(),
                 IEnumerable<string?> stringEnumerable => stringEnumerable.ToArray(),
                 IEnumerable<KeyValuePair<string, string>> kvpEnumerable => kvpEnumerable.ToArray(),
-
                 _ => kvp.Value
             });
         }

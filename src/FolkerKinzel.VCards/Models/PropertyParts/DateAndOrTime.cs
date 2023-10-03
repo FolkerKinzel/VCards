@@ -5,40 +5,11 @@ using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
-public sealed partial class DateAndOrTime : IOneOf
+public sealed partial class DateAndOrTime
 {
     private readonly OneOf<DateOnly, DateTimeOffset, TimeOnly, string> _oneOf;
 
-    public DateAndOrTime(OneOf<DateOnly, DateTimeOffset, TimeOnly, string> oneOf) => _oneOf = oneOf;
-
-    public static implicit operator DateAndOrTime(DateOnly _) => new DateAndOrTime(_);
-    public static explicit operator DateOnly(DateAndOrTime _) => _.AsDateOnly;
-
-    public static implicit operator DateAndOrTime(DateTimeOffset _) => new DateAndOrTime(_);
-    public static explicit operator DateTimeOffset(DateAndOrTime _) => _.AsDateTimeOffset;
-
-    public static implicit operator DateAndOrTime(TimeOnly _) => new DateAndOrTime(_);
-    public static explicit operator TimeOnly(DateAndOrTime _) => _.AsTimeOnly;
-
-    public static implicit operator DateAndOrTime(string _) => new DateAndOrTime(_);
-    public static explicit operator string(DateAndOrTime _) => _.AsString;
-
-
-    public bool IsDateOnly => _oneOf.IsT0;
-
-    public DateOnly AsDateOnly => _oneOf.AsT0;
-
-    public bool IsDateTimeOffset => _oneOf.IsT1;
-
-    public DateTimeOffset AsDateTimeOffset => _oneOf.AsT1;
-
-    public bool IsTimeOnly => _oneOf.IsT2;
-
-    public TimeOnly AsTimeOnly => _oneOf.AsT2;
-
-    public bool IsString => _oneOf.IsT3;
-
-    public string AsString => _oneOf.AsT3;
+    internal DateAndOrTime(OneOf<DateOnly, DateTimeOffset, TimeOnly, string> oneOf) => _oneOf = oneOf;
 
     public DateOnly? DateOnly => IsDateOnly ? AsDateOnly : null;
 
@@ -48,7 +19,10 @@ public sealed partial class DateAndOrTime : IOneOf
 
     public string? String => IsString ? AsString : null;
 
-    public bool TryGetDateOnly(out DateOnly value)
+    public object Value => this._oneOf.Value;
+
+
+    public bool TryAsDateOnly(out DateOnly value)
     {
         var result = _oneOf.Match<(DateOnly Value, bool Result)>
          (
@@ -62,7 +36,7 @@ public sealed partial class DateAndOrTime : IOneOf
         return result.Result;
     }
 
-    public bool TryGetDateTimeOffset(out DateTimeOffset value)
+    public bool TryAsDateTimeOffset(out DateTimeOffset value)
     {
         var result = _oneOf.Match<(DateTimeOffset Value, bool Result)>
          (
@@ -76,57 +50,6 @@ public sealed partial class DateAndOrTime : IOneOf
         return result.Result;
     }
 
-    public bool TryGetTimeOnly(out TimeOnly value)
-    {
-        if (IsTimeOnly)
-        {
-            value = AsTimeOnly;
-            return true;
-        }
-        else
-        {
-            value = default;
-            return false;
-        }
-    }
-
-    public bool TryGetString([NotNullWhen(true)] out string? value)
-    {
-        if (IsString)
-        {
-            value = AsString;
-            return true;
-        }
-        else
-        {
-            value = default;
-            return false;
-        }
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool TryPickDateOnly(out DateOnly value,
-                                out OneOf<DateTimeOffset, TimeOnly, string> remainder) 
-        => _oneOf.TryPickT0(out value, out remainder);
-
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool TryPickDateTimeOffset(out DateTimeOffset value,
-                                      out OneOf<DateOnly, TimeOnly, string> remainder)
-        => _oneOf.TryPickT1(out value, out remainder);
-
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool TryPickTimeOnly(out TimeOnly value,
-                                out OneOf<DateOnly, DateTimeOffset, string> remainder)
-        => _oneOf.TryPickT2(out value, out remainder);
-
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool TryPickString([NotNullWhen(true)] out string? value,
-                              out OneOf<DateOnly, DateTimeOffset, TimeOnly> remainder) 
-        => _oneOf.TryPickT3(out value, out remainder);
-
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Switch(Action<DateOnly>? f0,
@@ -134,30 +57,115 @@ public sealed partial class DateAndOrTime : IOneOf
                        Action<TimeOnly>? f2,
                        Action<string>? f3) => _oneOf.Switch(f0, f1, f2, f3);
 
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TResult Match<TResult>(Func<DateOnly, TResult>? f0,
                                   Func<DateTimeOffset, TResult>? f1,
                                   Func<TimeOnly, TResult>? f2,
                                   Func<string, TResult>? f3) => _oneOf.Match(f0, f1, f2, f3);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public OneOf<TResult, DateTimeOffset, TimeOnly, string> MapDateOnly<TResult>(Func<DateOnly, TResult> mapFunc) 
-        => _oneOf.MapT0(mapFunc);
+    private bool IsDateOnly => _oneOf.IsT0;
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public OneOf<DateOnly, TResult, TimeOnly, string> MapDateTimeOffset<TResult>(Func<DateTimeOffset, TResult> mapFunc)
-        => _oneOf.MapT1(mapFunc);
+    private DateOnly AsDateOnly => _oneOf.AsT0;
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public OneOf<DateOnly, DateTimeOffset, TResult, string> MapTimeOnly<TResult>(Func<TimeOnly, TResult> mapFunc)
-        => _oneOf.MapT2(mapFunc);
+    private bool IsDateTimeOffset => _oneOf.IsT1;
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public OneOf<DateOnly, DateTimeOffset, TimeOnly, TResult> MapString<TResult>(Func<string, TResult> mapFunc)
-        => _oneOf.MapT3(mapFunc);
+    private DateTimeOffset AsDateTimeOffset => _oneOf.AsT1;
 
-    public object Value => this._oneOf.Value;
+    private bool IsTimeOnly => _oneOf.IsT2;
 
-    public int Index => this._oneOf.Index;
+    private TimeOnly AsTimeOnly => _oneOf.AsT2;
+
+    private bool IsString => _oneOf.IsT3;
+
+    private string AsString => _oneOf.AsT3;
+
+
+    //public static implicit operator DateAndOrTime(DateOnly _) => new DateAndOrTime(_);
+    //public static explicit operator DateOnly(DateAndOrTime _) => _.AsDateOnly;
+
+    //public static implicit operator DateAndOrTime(DateTimeOffset _) => new DateAndOrTime(_);
+    //public static explicit operator DateTimeOffset(DateAndOrTime _) => _.AsDateTimeOffset;
+
+    //public static implicit operator DateAndOrTime(TimeOnly _) => new DateAndOrTime(_);
+    //public static explicit operator TimeOnly(DateAndOrTime _) => _.AsTimeOnly;
+
+    //public static implicit operator DateAndOrTime(string _) => new DateAndOrTime(_);
+    //public static explicit operator string(DateAndOrTime _) => _.AsString;
+
+
+    //public bool TryGetTimeOnly(out TimeOnly value)
+    //{
+    //    if (IsTimeOnly)
+    //    {
+    //        value = AsTimeOnly;
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        value = default;
+    //        return false;
+    //    }
+    //}
+
+    //public bool TryGetString([NotNullWhen(true)] out string? value)
+    //{
+    //    if (IsString)
+    //    {
+    //        value = AsString;
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        value = default;
+    //        return false;
+    //    }
+    //}
+
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public bool TryPickDateOnly(out DateOnly value,
+    //                            out OneOf<DateTimeOffset, TimeOnly, string> remainder) 
+    //    => _oneOf.TryPickT0(out value, out remainder);
+
+
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public bool TryPickDateTimeOffset(out DateTimeOffset value,
+    //                                  out OneOf<DateOnly, TimeOnly, string> remainder)
+    //    => _oneOf.TryPickT1(out value, out remainder);
+
+
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public bool TryPickTimeOnly(out TimeOnly value,
+    //                            out OneOf<DateOnly, DateTimeOffset, string> remainder)
+    //    => _oneOf.TryPickT2(out value, out remainder);
+
+
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public bool TryPickString([NotNullWhen(true)] out string? value,
+    //                          out OneOf<DateOnly, DateTimeOffset, TimeOnly> remainder) 
+    //    => _oneOf.TryPickT3(out value, out remainder);
+
+
+
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public OneOf<TResult, DateTimeOffset, TimeOnly, string> MapDateOnly<TResult>(Func<DateOnly, TResult> mapFunc) 
+    //    => _oneOf.MapT0(mapFunc);
+
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public OneOf<DateOnly, TResult, TimeOnly, string> MapDateTimeOffset<TResult>(Func<DateTimeOffset, TResult> mapFunc)
+    //    => _oneOf.MapT1(mapFunc);
+
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public OneOf<DateOnly, DateTimeOffset, TResult, string> MapTimeOnly<TResult>(Func<TimeOnly, TResult> mapFunc)
+    //    => _oneOf.MapT2(mapFunc);
+
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public OneOf<DateOnly, DateTimeOffset, TimeOnly, TResult> MapString<TResult>(Func<string, TResult> mapFunc)
+    //    => _oneOf.MapT3(mapFunc);
+
+
+
+
+    //public int Index => this._oneOf.Index;
 
 }
