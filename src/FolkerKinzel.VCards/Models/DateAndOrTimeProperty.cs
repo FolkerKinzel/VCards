@@ -20,18 +20,13 @@ public abstract class DateAndOrTimeProperty
     protected DateAndOrTimeProperty(ParameterSection parameters,
                                     string? propertyGroup) 
         : base(parameters, propertyGroup) { }
-    
 
 
     public new DateAndOrTime? Value
     {
         get
         {
-            if (!_isValueInitialized)
-            {
-                InitializeValue();
-            }
-
+            InitializeValue();
             return _value;
         }
     }
@@ -102,8 +97,14 @@ public abstract class DateAndOrTimeProperty
 
     private void InitializeValue()
     {
+        if(_isValueInitialized) 
+        {
+            return;
+        }
+
         _isValueInitialized = true;
-        _value = IsEmpty ? null : GetVCardPropertyValue() switch
+
+        _value = GetVCardPropertyValue() switch
         {
             DateOnly dateOnly => new DateAndOrTime(dateOnly),
             TimeOnly timeOnly => new DateAndOrTime(timeOnly),

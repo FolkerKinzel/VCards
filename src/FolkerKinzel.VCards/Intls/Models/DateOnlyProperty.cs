@@ -18,6 +18,7 @@ internal sealed class DateOnlyProperty : DateAndOrTimeProperty
 
     public new DateOnly Value { get; }
 
+
     public override bool IsEmpty => false;
 
 

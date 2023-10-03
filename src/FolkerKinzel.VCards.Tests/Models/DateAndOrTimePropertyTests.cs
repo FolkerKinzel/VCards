@@ -4,7 +4,7 @@ using FolkerKinzel.VCards.Tests;
 namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
-public class DateTimePropertyTests
+public class DateAndOrTimePropertyTests
 {
     private class TestIEnumerable : DateAndOrTimeProperty
     {

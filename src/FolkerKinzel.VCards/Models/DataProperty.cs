@@ -12,7 +12,6 @@ using OneOf;
 
 namespace FolkerKinzel.VCards.Models;
 
-
 public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
 {
     private DataPropertyValue? _value;
@@ -74,7 +73,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                               vcfRow.Parameters
                               )
                         )
-                    : new EmbeddedTextProperty(vcfRow, version);
+                    : FromText(vcfRow.Value, info.MimeType.ToString(), vcfRow.Group);
         }
 
         if (vcfRow.Parameters.Encoding == ValueEncoding.Base64)

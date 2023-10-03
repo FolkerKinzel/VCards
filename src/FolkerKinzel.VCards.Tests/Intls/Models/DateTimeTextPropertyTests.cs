@@ -1,9 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FolkerKinzel.VCards.Intls.Models;
+﻿using System;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Enums;
 
-namespace FolkerKinzel.VCards.Models.Tests;
+namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
-[TestClass()]
+[TestClass]
 public class DateTimeTextPropertyTests
 {
     private const string GROUP = "myGroup";
@@ -37,7 +38,7 @@ public class DateTimeTextPropertyTests
         Assert.AreEqual(now, prop2!.Value);
         Assert.AreEqual(GROUP, prop2.Group);
         Assert.IsFalse(prop2.IsEmpty);
-        Assert.AreEqual(Enums.VCdDataType.Text, prop2.Parameters.DataType);
+        Assert.AreEqual(VCdDataType.Text, prop2.Parameters.DataType);
     }
 
     [TestMethod]
@@ -46,4 +47,22 @@ public class DateTimeTextPropertyTests
         var prop = DateAndOrTimeProperty.Create("   ");
         Assert.IsNull(prop.Value);
     }
+    [TestMethod]
+    public void IsEmptyTest1()
+    {
+        var prop = DateAndOrTimeProperty.Create(null);
+        Assert.IsTrue(prop.IsEmpty);
+        Assert.IsNull(prop.Value);
+    }
+
+    [TestMethod]
+    public void IsEmptyTest2()
+    {
+        const string test = "test";
+        var prop = DateAndOrTimeProperty.Create(test);
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsNotNull(prop.Value);
+        Assert.AreEqual(test, prop.Value!.String);
+    }
 }
+
