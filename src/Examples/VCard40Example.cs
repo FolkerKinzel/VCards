@@ -126,7 +126,7 @@ public static class VCard40Example
     private static bool TryFindBeethovensBirthday(VCard composersVCard, out DateOnly birthDay)
     {
         DateOnly date = default;
-        bool result = composersVCard.Members?
+        bool found = composersVCard.Members?
                 .Select(x => x as VC::RelationVCardProperty)
                 .Select(x => x?.Value)
                     .FirstOrDefault(x => x?.DisplayNames?
@@ -137,7 +137,7 @@ public static class VCard40Example
                         != null;
 
         birthDay = date;
-        return result;
+        return found;
     }
 }
 
