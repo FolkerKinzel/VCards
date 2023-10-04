@@ -40,7 +40,7 @@ internal class Program
         // VCardExample.ReadingAndWritingVCard(directoryPath);
          VCard40Example.SaveSingleVCardAsVcf(directoryPath);
 
-        StartAnsiFilterExample();
+        //StartAnsiFilterExample();
 
 
         //string destinationPath = Path.Combine(sourcePath, "Ansi");

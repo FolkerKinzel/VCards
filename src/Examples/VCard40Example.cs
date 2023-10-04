@@ -16,7 +16,8 @@ public static class VCard40Example
         // Note that argument validation and exception handling is completely omitted in this
         // example. The following "if" statement only ensures, that the method doesn't destroy
         // valueable data.
-        if (Directory.GetFiles(directoryPath).Any(x => x.EndsWith(vcfExtension, StringComparison.OrdinalIgnoreCase)))
+        if (Directory.GetFiles(directoryPath)
+                     .Any(x => x.EndsWith(vcfExtension, StringComparison.OrdinalIgnoreCase)))
         {
             Console.WriteLine("The method \"SaveSingleVCardAsVcf(string)\" could not be executed");
             Console.WriteLine("because the destination directory contains .VCF files, that might");
@@ -43,25 +44,31 @@ public static class VCard40Example
             Members = members
         };
 
-        // Replace the embedded VCards in composersVCard.Members with Guid references in order
-        // to save them as separate vCard 4.0 .VCF files.
-        // IMPORTANT: Never call ReferenceVCards() if you intend to serialize a vCard 2.1 or vCard 3.0 !
+        // Replace the embedded VCards in composersVCard.Members with Guid
+        // references in order to save them as separate vCard 4.0 .VCF files.
+        // IMPORTANT: Never call ReferenceVCards() if you intend to serialize
+        // a vCard 2.1 or vCard 3.0 !
+
         IEnumerable<VCard> referenced = composersVCard.ReferenceVCards();
-        // (The extension method can be called on a single VCard because VCard implements IEnumerable<VCard>.)
+        // (The extension method can be called on a single VCard because
+        // VCard implements IEnumerable<VCard>.)
 
         Console.WriteLine();
-        Console.WriteLine($"After ReferenceVCards() vCardList contains {referenced.Count()} VCard objects.");
+        Console.WriteLine(
+            $"After ReferenceVCards() vCardList contains {referenced.Count()} VCard objects.");
         Console.WriteLine();
         Console.WriteLine("composersVCard:");
         Console.WriteLine();
         Console.WriteLine(
             referenced
-                .Where(x => x.DisplayNames?.Any(x => StringComparer.Ordinal.Equals(x?.Value, "Composers")) ?? false)
+                .Where(x => x.DisplayNames?
+                             .Any(x => StringComparer.Ordinal.Equals(x?.Value, "Composers")) ?? false)
                 .First()
                 .ToVcfString(VCdVersion.V4_0));
 
-        // Make sure to save ALL VCard objects in referenced - otherwise the information
-        // originally stored in composersVCard will be irrevocably lost.
+        // Make sure to save ALL VCard objects in `referenced` - otherwise
+        // the information originally stored in `composersVCard` will be
+        // irrevocably lost.
         foreach (VCard vcard in referenced)
         {
             string fileName = Path.Combine(
@@ -74,7 +81,8 @@ public static class VCard40Example
         // Reload the .VCF files:
         var vCardList = new List<VCard>();
 
-        foreach (string fileName in Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"))
+        foreach (string fileName in 
+            Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"))
         {
             vCardList.AddRange(VCard.LoadVcf(fileName));
         }
@@ -83,7 +91,8 @@ public static class VCard40Example
         IEnumerable<VCard> dereferenced = vCardList.DereferenceVCards();
 
         // Find the parsed result from "Composers.vcf":
-        composersVCard = dereferenced.FirstOrDefault(x => x.DisplayNames?.Any(x => x?.Value == "Composers") ?? false);
+        composersVCard = dereferenced.FirstOrDefault(x => x.DisplayNames?
+                                     .Any(x => x?.Value == "Composers") ?? false);
 
         if (composersVCard is null)
         {
@@ -93,21 +102,16 @@ public static class VCard40Example
         {
             //Retrieve Beethovens birth year from the members of the "Composers.vcf" group:
             Console.Write("What year was Beethoven born?: ");
-
-            DateOnly birthDay = DateOnly.MinValue;
-            VC::DateAndOrTimeProperty? prop = composersVCard.Members?
-                .Select(x => x as VC::RelationVCardProperty)
-                .Select(x => x?.Value)
-                    .FirstOrDefault(x => x?.DisplayNames?.Any(x => x?.Value == "Ludwig van Beethoven") ?? false)?
-                        .BirthDayViews?
-                        .FirstOrDefault(x => x?.Value?.TryAsDateOnly(out birthDay) ?? false);
-
-            Console.WriteLine(prop is not null ? birthDay.Year : "Don't know.");
+            Console.WriteLine(
+                TryFindBeethovensBirthday(composersVCard, out DateOnly birthDay)
+                   ? birthDay.Year 
+                   : "Don't know.");
         }
     }
 
 
-    private static VCard InitializeComposerVCard(string composersName, DateOnly birthDate, DateOnly deathDate)
+    private static VCard InitializeComposerVCard(
+        string composersName, DateOnly birthDate, DateOnly deathDate)
     {
         var vCard = new VCard
         {
@@ -117,6 +121,23 @@ public static class VCard40Example
         };
 
         return vCard;
+    }
+
+    private static bool TryFindBeethovensBirthday(VCard composersVCard, out DateOnly birthDay)
+    {
+        DateOnly date = default;
+        bool result = composersVCard.Members?
+                .Select(x => x as VC::RelationVCardProperty)
+                .Select(x => x?.Value)
+                    .FirstOrDefault(x => x?.DisplayNames?
+                                           .Any(x => x?.Value == "Ludwig van Beethoven") ?? false)?
+                        .BirthDayViews?
+                        .FirstOrDefault(x => x?.Value?
+                                               .TryAsDateOnly(out date) ?? false)
+                        != null;
+
+        birthDay = date;
+        return result;
     }
 }
 
