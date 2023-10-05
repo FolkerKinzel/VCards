@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Serializers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
@@ -17,41 +18,6 @@ public class PropertyIDMappingPropertyTests
             PropertyIDMappings = new PropertyIDMappingProperty?[]{prop, null, new PropertyIDMappingProperty((PropertyIDMapping?)null)}
         };
 
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net5.0)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net6.0)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp3.1)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net461)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp2.1)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
         IList<VCard> list = VCard.ParseVcf(s);
@@ -81,12 +47,18 @@ Nach:
         var prop = new PropertyIDMappingProperty(row);
 
         Assert.IsNull(prop.Value);
+    }
 
-        //using var writer = new StringWriter();
-        //var serializer = new Vcf_3_0Serializer(writer, VcfOptions.WriteEmptyProperties, null);
-        //serializer.
-        //prop.BuildProperty(serializer);
-        //Assert.AreEqual(0, writer.ToString().Length);
+
+    [TestMethod]
+    public void AppendValueTest1()
+    {
+        var prop = new PropertyIDMappingProperty((PropertyIDMapping?)null);
+        Assert.IsTrue(prop.IsEmpty);
+        using var writer = new StringWriter();
+        var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
+        prop.AppendValue(serializer);
+        Assert.AreEqual(0, serializer.Builder.Length);
     }
 
 }

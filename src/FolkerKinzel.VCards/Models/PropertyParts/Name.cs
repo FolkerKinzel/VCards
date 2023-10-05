@@ -172,12 +172,16 @@ public sealed class Name
 
                         break;
                     }
+                default:
+                    break;
             }//switch
         }//foreach
 
-        // Wenn die VCF-Datei fehlerhaft ist, könnten Properties null sein:
+        // If the VCF file is invalid, properties could be null:
+        // (LastName can never be null)
+        Debug.Assert(LastName != null);
+        //LastName ??= ReadOnlyCollectionString.Empty;
         FirstName ??= ReadOnlyCollectionString.Empty;
-        LastName ??= ReadOnlyCollectionString.Empty;
         MiddleName ??= ReadOnlyCollectionString.Empty;
         Prefix ??= ReadOnlyCollectionString.Empty;
         Suffix ??= ReadOnlyCollectionString.Empty;

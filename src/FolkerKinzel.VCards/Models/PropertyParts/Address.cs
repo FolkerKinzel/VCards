@@ -7,6 +7,8 @@ using FolkerKinzel.VCards.Intls.Serializers;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
+#pragma warning disable CS0618 // Type or member is obsolete
+
 /// <summary>
 /// Kapselt Informationen über die Postanschrift in vCards.
 /// </summary>
@@ -40,10 +42,8 @@ public sealed class Address
                      ReadOnlyCollection<string> postOfficeBox,
                      ReadOnlyCollection<string> extendedAddress)
     {
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
         PostOfficeBox = postOfficeBox;
         ExtendedAddress = extendedAddress;
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
         Street = street;
         Locality = locality;
         Region = region;
@@ -54,11 +54,9 @@ public sealed class Address
 
     internal Address()
     {
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
         PostOfficeBox =
         ExtendedAddress =
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
-            Street =
+        Street =
         Locality =
         Region =
         PostalCode =
@@ -66,7 +64,9 @@ public sealed class Address
     }
 
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     internal Address(string vCardValue, VcfDeserializationInfo info, VCdVersion version)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         Debug.Assert(vCardValue != null);
 
@@ -81,7 +81,6 @@ public sealed class Address
         {
             switch (index++)
             {
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
                 case POST_OFFICE_BOX:
                     {
                         if (s.Length == 0)
@@ -124,7 +123,6 @@ public sealed class Address
 
                         break;
                     }
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
                 case STREET:
                     {
                         if (s.Length == 0)
@@ -236,12 +234,11 @@ public sealed class Address
         }//foreach
 
 
-        // Wenn die VCF-Datei fehlerhaft ist, könnten Properties null sein:
-
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
-        PostOfficeBox ??= ReadOnlyCollectionString.Empty;
+        // If the VCF file is invalid, properties could be null:
+        // (PostOfficeBox can never be null)
+        Debug.Assert(PostOfficeBox != null);
+        //PostOfficeBox ??= ReadOnlyCollectionString.Empty;
         ExtendedAddress ??= ReadOnlyCollectionString.Empty;
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
         Street ??= ReadOnlyCollectionString.Empty;
         Locality ??= ReadOnlyCollectionString.Empty;
         Region ??= ReadOnlyCollectionString.Empty;
@@ -319,7 +316,6 @@ public sealed class Address
                 return false;
             }
 
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
             if (PostOfficeBox.Count != 0)
             {
                 return false;
@@ -329,7 +325,6 @@ public sealed class Address
             {
                 return false;
             }
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
 
             return true;
         }
@@ -350,13 +345,11 @@ public sealed class Address
 
         char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
 
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
         AppendProperty(PostOfficeBox);
         _ = builder.Append(';');
 
         AppendProperty(ExtendedAddress);
         _ = builder.Append(';');
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
 
         AppendProperty(Street);
         _ = builder.Append(';');
@@ -393,42 +386,40 @@ public sealed class Address
 
     internal bool NeedsToBeQpEncoded()
     {
-        if (Locality.Any(x => x.NeedsToBeQpEncoded()))
+        if (Locality.Any(static x => x.NeedsToBeQpEncoded()))
         {
             return true;
         }
 
-        if (Street.Any(x => x.NeedsToBeQpEncoded()))
+        if (Street.Any(static x => x.NeedsToBeQpEncoded()))
         {
             return true;
         }
 
-        if (Country.Any(x => x.NeedsToBeQpEncoded()))
+        if (Country.Any(static x => x.NeedsToBeQpEncoded()))
         {
             return true;
         }
 
-        if (Region.Any(x => x.NeedsToBeQpEncoded()))
+        if (Region.Any(static x => x.NeedsToBeQpEncoded()))
         {
             return true;
         }
 
-        if (PostalCode.Any(x => x.NeedsToBeQpEncoded()))
+        if (PostalCode.Any(static x => x.NeedsToBeQpEncoded()))
         {
             return true;
         }
 
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
-        if (PostOfficeBox.Any(x => x.NeedsToBeQpEncoded()))
+        if (PostOfficeBox.Any(static x => x.NeedsToBeQpEncoded()))
         {
             return true;
         }
 
-        if (ExtendedAddress.Any(x => x.NeedsToBeQpEncoded()))
+        if (ExtendedAddress.Any(static x => x.NeedsToBeQpEncoded()))
         {
             return true;
         }
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
 
         return false;
     }
@@ -448,7 +439,6 @@ public sealed class Address
         {
             switch (i)
             {
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
                 case POST_OFFICE_BOX:
                     {
                         string? s = BuildProperty(PostOfficeBox);
@@ -473,7 +463,6 @@ public sealed class Address
                         dic.Add(new Tuple<string, string>(nameof(ExtendedAddress), s));
                         break;
                     }
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
                 case STREET:
                     {
                         string? s = BuildProperty(Street);
@@ -579,3 +568,6 @@ public sealed class Address
         }
     }
 }
+
+#pragma warning restore CS0618 // Type or member is deprecated
+
