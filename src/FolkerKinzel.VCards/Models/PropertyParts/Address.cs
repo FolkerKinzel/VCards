@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
+using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -386,37 +387,37 @@ public sealed class Address
 
     internal bool NeedsToBeQpEncoded()
     {
-        if (Locality.Any(static x => x.NeedsToBeQpEncoded()))
+        if (Locality.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }
 
-        if (Street.Any(static x => x.NeedsToBeQpEncoded()))
+        if (Street.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }
 
-        if (Country.Any(static x => x.NeedsToBeQpEncoded()))
+        if (Country.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }
 
-        if (Region.Any(static x => x.NeedsToBeQpEncoded()))
+        if (Region.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }
 
-        if (PostalCode.Any(static x => x.NeedsToBeQpEncoded()))
+        if (PostalCode.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }
 
-        if (PostOfficeBox.Any(static x => x.NeedsToBeQpEncoded()))
+        if (PostOfficeBox.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }
 
-        if (ExtendedAddress.Any(static x => x.NeedsToBeQpEncoded()))
+        if (ExtendedAddress.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }

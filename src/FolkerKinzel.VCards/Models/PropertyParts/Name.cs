@@ -4,7 +4,7 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
-
+using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -296,27 +296,27 @@ public sealed class Name
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:In bedingten Ausdruck konvertieren", Justification = "<Ausstehend>")]
     internal bool NeedsToBeQpEncoded()
     {
-        if (LastName.Any(x => x.NeedsToBeQpEncoded()))
+        if (LastName.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }
 
-        if (FirstName.Any(x => x.NeedsToBeQpEncoded()))
+        if (FirstName.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }
 
-        if (MiddleName.Any(x => x.NeedsToBeQpEncoded()))
+        if (MiddleName.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }
 
-        if (Prefix.Any(x => x.NeedsToBeQpEncoded()))
+        if (Prefix.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }
 
-        if (Suffix.Any(x => x.NeedsToBeQpEncoded()))
+        if (Suffix.Any(StringExtension.NeedsToBeQpEncoded))
         {
             return true;
         }
