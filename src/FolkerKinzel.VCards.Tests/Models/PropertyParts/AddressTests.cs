@@ -65,4 +65,19 @@ public class AddressTests
     [DataRow(";;;;;;ä")]
     public void NeedsToBeQPEncodedTest1(string input)
         => Assert.IsTrue(new Address(input, new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
+
+    [DataTestMethod]
+    [DataRow("a;;;;;;")]
+    [DataRow(";a;;;;;")]
+    [DataRow(";;a;;;;")]
+    [DataRow(";;;a;;;")]
+    [DataRow(";;;;a;;")]
+    [DataRow(";;;;;a;")]
+    [DataRow(";;;;;;a")]
+    public void NeedsToBeQPEncodedTest2(string input)
+        => Assert.IsFalse(new Address(input, new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
+
+    [TestMethod]
+    public void NeedsToBeQPEncodedTest3()
+        => Assert.IsFalse(new Address(";;;;;;", new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
 }

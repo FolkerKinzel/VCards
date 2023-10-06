@@ -66,16 +66,15 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
     protected override object? GetVCardPropertyValue() => Value;
 
     /// <inheritdoc/>
-    public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
+    public override bool IsEmpty => Value.IsEmpty;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         base.PrepareForVcfSerialization(serializer);
 
         Debug.Assert(serializer != null);
-        Debug.Assert(Value != null); // value ist nie null
 
-        if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded)
+        if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
             this.Parameters.Encoding = ValueEncoding.QuotedPrintable;
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
@@ -85,13 +84,11 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
     internal override void AppendValue(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
-        Debug.Assert(Value != null); // value ist nie null
 
         StringBuilder builder = serializer.Builder;
         int valueStartIndex = builder.Length;
 
-
-        Value.AppendVCardString(serializer);
+        Value.AppendVCardStringTo(serializer);
 
         if (Parameters.Encoding == ValueEncoding.QuotedPrintable)
         {

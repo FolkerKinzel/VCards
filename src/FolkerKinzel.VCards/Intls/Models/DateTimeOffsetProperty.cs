@@ -20,10 +20,13 @@ internal class DateTimeOffsetProperty : DateAndOrTimeProperty
 
     public new DateTimeOffset Value { get; }
 
-    public override bool IsEmpty => !DateAndOrTimeConverter.HasDateComponent(Value) && !DateAndOrTimeConverter.HasTimeComponent(Value);
+    public override bool IsEmpty
+        => !DateAndOrTimeConverter.HasDateComponent(Value) && 
+           !DateAndOrTimeConverter.HasTimeComponent(Value);
 
 
     public override object Clone() => new DateTimeOffsetProperty(this);
+
     protected override object? GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)

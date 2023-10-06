@@ -23,12 +23,17 @@ internal sealed class DateOnlyProperty : DateAndOrTimeProperty
 
 
     public override object Clone() => new DateOnlyProperty(this);
+
+
     protected override object? GetVCardPropertyValue() => Value;
+
+
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         base.PrepareForVcfSerialization(serializer);
         Parameters.DataType = VCdDataType.Date;
     }
+
 
     internal override void AppendValue(VcfSerializer serializer) =>
         DateAndOrTimeConverter.AppendDateTo(serializer.Builder, Value, serializer.Version);

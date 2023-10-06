@@ -236,7 +236,10 @@ internal sealed class DateAndOrTimeConverter
         }
     }
 
-    internal static bool HasDateComponent(DateTimeOffset dt) => !(dt.Year < FIRST_LEAP_YEAR && dt.Month == 1 && dt.Day == 1);
+
+    internal static bool HasDateComponent(DateTimeOffset dt)
+        => !(dt.Year < FIRST_LEAP_YEAR && dt.Month == 1 && dt.Day == 1);
+
 
     internal static bool HasTimeComponent(DateTimeOffset dt)
         => dt.TimeOfDay != TimeSpan.Zero || dt.Offset != TimeSpan.Zero;

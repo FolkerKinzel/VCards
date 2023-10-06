@@ -386,44 +386,13 @@ public sealed class Address
     }
 
     internal bool NeedsToBeQpEncoded()
-    {
-        if (Locality.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        if (Street.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        if (Country.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        if (Region.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        if (PostalCode.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        if (PostOfficeBox.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        if (ExtendedAddress.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        return false;
-    }
+        => Locality.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Street.Any(StringExtension.NeedsToBeQpEncoded) || 
+           Country.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Region.Any(StringExtension.NeedsToBeQpEncoded) || 
+           PostalCode.Any(StringExtension.NeedsToBeQpEncoded) || 
+           PostOfficeBox.Any(StringExtension.NeedsToBeQpEncoded) || 
+           ExtendedAddress.Any(StringExtension.NeedsToBeQpEncoded);
 
 
     /// <summary>

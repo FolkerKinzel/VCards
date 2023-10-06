@@ -1,6 +1,8 @@
-﻿namespace FolkerKinzel.VCards.Models.Tests;
+﻿using FolkerKinzel.VCards.Intls.Serializers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+namespace FolkerKinzel.VCards.Models.Tests;
 
-[TestClass()]
+[TestClass]
 public class RelationUriPropertyTests
 {
     private const string GROUP = "myGroup";
@@ -35,41 +37,6 @@ public class RelationUriPropertyTests
             Relations = prop
         };
 
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net5.0)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net6.0)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp3.1)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net461)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp2.1)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V4_0);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V4_0);
-*/
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
         IList<VCard> list = VCard.ParseVcf(s);
@@ -105,41 +72,6 @@ Nach:
             Relations = prop
         };
 
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net5.0)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V2_1);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V2_1);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net6.0)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V2_1);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V2_1);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp3.1)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V2_1);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V2_1);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net461)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V2_1);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V2_1);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp2.1)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V2_1);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V2_1);
-*/
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
         IList<VCard> list = VCard.ParseVcf(s);
@@ -174,41 +106,6 @@ Nach:
             Relations = prop
         };
 
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net5.0)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V2_1);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V2_1);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net6.0)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V2_1);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V2_1);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp3.1)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V2_1);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V2_1);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (net461)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V2_1);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V2_1);
-*/
-
-/* Nicht gemergte Änderung aus Projekt "FolkerKinzel.VCards.Tests (netcoreapp2.1)"
-Vor:
-        string s = vcard.ToVcfString(Enums.VCdVersion.V2_1);
-Nach:
-        string s = vcard.ToVcfString(VCards.VCdVersion.V2_1);
-*/
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
         IList<VCard> list = VCard.ParseVcf(s);
@@ -227,6 +124,20 @@ Nach:
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Enums.VCdDataType.Uri, prop.Parameters.DataType);
+    }
+
+
+    [TestMethod]
+    public void PrepareForVcfSerializationTest1()
+    {
+        var prop = new RelationUriProperty(null);
+        prop.Parameters.Clear();
+
+        using var writer = new StringWriter();
+        var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
+
+        prop.PrepareForVcfSerialization(serializer);
         Assert.AreEqual(Enums.VCdDataType.Uri, prop.Parameters.DataType);
     }
 

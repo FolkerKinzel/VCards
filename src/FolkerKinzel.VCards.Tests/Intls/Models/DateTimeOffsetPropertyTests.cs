@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -115,6 +116,13 @@ public class DateTimeOffsetPropertyTests
         Assert.AreEqual(VCdDataType.DateAndOrTime, prop.Parameters.DataType);
 
         Assert.AreNotSame(clone, prop);
+    }
+
+    [TestMethod]
+    public void IsEmptyTest1()
+    {
+        var prop = new DateTimeOffsetProperty(new DateTimeOffset(), new ParameterSection(), null);
+        Assert.IsTrue(prop.IsEmpty);
     }
 }
 

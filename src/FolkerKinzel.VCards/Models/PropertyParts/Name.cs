@@ -293,36 +293,12 @@ public sealed class Name
     }
 
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:In bedingten Ausdruck konvertieren", Justification = "<Ausstehend>")]
     internal bool NeedsToBeQpEncoded()
-    {
-        if (LastName.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        if (FirstName.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        if (MiddleName.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        if (Prefix.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        if (Suffix.Any(StringExtension.NeedsToBeQpEncoded))
-        {
-            return true;
-        }
-
-        return false;
-    }
+        => LastName.Any(StringExtension.NeedsToBeQpEncoded) ||
+           FirstName.Any(StringExtension.NeedsToBeQpEncoded) ||
+           MiddleName.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Prefix.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Suffix.Any(StringExtension.NeedsToBeQpEncoded);
 
 
     /// <summary>

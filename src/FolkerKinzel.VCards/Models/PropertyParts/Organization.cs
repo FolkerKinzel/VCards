@@ -35,6 +35,7 @@ public sealed class Organization
     /// </summary>
     public string? OrganizationName { get; }
 
+
     /// <summary>
     /// Name(n) der Unterorganisation(en)
     /// </summary>
@@ -47,12 +48,12 @@ public sealed class Organization
     public bool IsEmpty => OrganizationName is null && OrganizationalUnits is null;
 
 
+    internal bool NeedsToBeQpEncoded()
+        => OrganizationName.NeedsToBeQpEncoded() ||
+           (OrganizationalUnits != null && OrganizationalUnits.Any(s => s.NeedsToBeQpEncoded()));
 
-    internal bool NeedsToBeQpEncoded => OrganizationName.NeedsToBeQpEncoded() ||
-            (OrganizationalUnits != null && OrganizationalUnits.Any(s => s.NeedsToBeQpEncoded()));
 
-
-    internal void AppendVCardString(VcfSerializer serializer)
+    internal void AppendVCardStringTo(VcfSerializer serializer)
     {
         StringBuilder builder = serializer.Builder;
         StringBuilder worker = serializer.Worker;

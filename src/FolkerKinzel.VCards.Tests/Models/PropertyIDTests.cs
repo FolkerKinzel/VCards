@@ -1,5 +1,4 @@
 ﻿#if !NETCOREAPP3_1
-using System.Collections;
 using FolkerKinzel.Strings.Polyfills;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 #endif
@@ -7,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
-public class PropertyIDTest
+public class PropertyIDTests
 {
     [TestMethod]
     public void CtorTest()
@@ -172,6 +171,47 @@ public class PropertyIDTest
 
         Assert.AreNotEqual(id1, id6);
         Assert.AreNotEqual(id1.GetHashCode(), id6.GetHashCode());
+    }
+
+    [TestMethod]
+    public void EqualsTest2()
+    {
+        var propID = new PropertyID(7);
+        Assert.IsFalse(propID.Equals(7));
+    }
+
+    [TestMethod]
+    public void EqualityOperatorTest1()
+    {
+        var propID1 = new PropertyID(7);
+        PropertyID propID2 = propID1;
+
+        Assert.IsTrue(propID1 == propID2);
+    }
+
+    [TestMethod]
+    public void EqualityOperatorTest2()
+    {
+        PropertyID? propID1 = null;
+        Assert.IsTrue(propID1 == null);
+    }
+
+    [TestMethod]
+    public void EqualityOperatorTest3()
+    {
+        PropertyID? propID1 = null;
+        var propID = new PropertyID(7);
+
+        Assert.IsFalse(propID1 == propID);
+    }
+
+    [TestMethod]
+    public void EqualityOperatorTest4()
+    {
+        var propID1 = new PropertyID(5);
+        var propID2 = new PropertyID(7);
+
+        Assert.IsFalse(propID1 == propID2);
     }
 
     [TestMethod]
