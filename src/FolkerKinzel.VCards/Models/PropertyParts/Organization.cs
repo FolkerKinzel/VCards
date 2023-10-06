@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -10,26 +11,22 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 /// </summary>
 public sealed class Organization
 {
-    internal Organization() { }
-    
-
     /// <summary>
     /// Initialisiert ein neues <see cref="Organization"/>-Objekt.
     /// </summary>
-    /// <param name="organizationName">Name der Organisation.</param>
-    /// <param name="organizationalUnits">Name(n) der Unterorganisation(en).</param>
-    internal Organization(string? organizationName, IEnumerable<string?>? organizationalUnits = null)
+    /// <param name="orgList">Name der Organisation gefolgt von Name(n) der Unterorganisation(en).</param>
+    internal Organization(List<string> orgList)
     {
+        Debug.Assert(orgList.Count != 0);
+        string organizationName = orgList[0];
+        orgList.RemoveAt(0);
+
         this.OrganizationName = string.IsNullOrWhiteSpace(organizationName) ? null : organizationName;
+        this.OrganizationalUnits = ReadOnlyCollectionConverter.ToReadOnlyCollection(orgList);
 
-        if (organizationalUnits != null)
+        if (OrganizationalUnits.Count == 0)
         {
-            this.OrganizationalUnits = ReadOnlyCollectionConverter.ToReadOnlyCollection(organizationalUnits);
-
-            if (OrganizationalUnits.Count == 0)
-            {
-                OrganizationalUnits = null;
-            }
+            OrganizationalUnits = null;
         }
     }
 

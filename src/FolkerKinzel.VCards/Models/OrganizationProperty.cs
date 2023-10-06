@@ -30,8 +30,12 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
     public OrganizationProperty(string? organizationName,
                                 IEnumerable<string?>? organizationalUnits = null,
-                                string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = new Organization(organizationName, organizationalUnits);
-
+                                string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+    {
+        var list = new List<string>() { organizationName ?? "" };
+        list.AddRange((organizationalUnits?.Where(x => x != null) ?? Array.Empty<string>())!);
+        Value = new Organization(list);
+    }
 
     internal OrganizationProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
@@ -45,19 +49,9 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
 
         semicolonSplitter.ValueString = vcfRow.Value;
         var list = semicolonSplitter.Select(x => x.UnMask(builder, version)).ToList();
-
-        if (list.Count != 0)
-        {
-            string organizationName = list[0];
-            list.RemoveAt(0);
-
-            Value = new Organization(organizationName, list);
-        }
-        else
-        {
-            Value = new Organization();
-        }
+        Value = new Organization(list);
     }
+
 
     /// <summary>
     /// Die von der <see cref="OrganizationProperty"/> zur Verfügung gestellten Daten.
@@ -67,15 +61,12 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
         get;
     }
 
-
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-
     /// <inheritdoc/>
     public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
-
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -90,7 +81,6 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
     }
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {
