@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
-[TestClass()]
+[TestClass]
 public class GeoCoordinateConverterTests
 {
     //[TestMethod()]
@@ -20,7 +20,7 @@ public class GeoCoordinateConverterTests
     //}
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow(VCdVersion.V4_0, "geo:0.800000,0.700000")]
     [DataRow(VCdVersion.V3_0, "0.800000;0.700000")]
     [DataRow(VCdVersion.V2_1, "0.800000;0.700000")]
@@ -32,7 +32,7 @@ public class GeoCoordinateConverterTests
     }
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow(VCdVersion.V4_0)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V2_1)]
@@ -44,7 +44,7 @@ public class GeoCoordinateConverterTests
     }
 
 
-    [TestMethod()]
+    [TestMethod]
     public void AppendToTest3()
     {
         var sb = new StringBuilder();

@@ -2,7 +2,7 @@
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
-[TestClass()]
+[TestClass]
 public class VCdKindConverterTests
 {
     [TestMethod()]
@@ -13,7 +13,7 @@ public class VCdKindConverterTests
             VCdKind kind2 = VCdKindConverter.Parse(kind.ToString());
             Assert.AreEqual(kind, kind2);
 
-            var kind3 = Enum.Parse(typeof(VCdKind), kind.ToVcfString(), true);
+            object kind3 = Enum.Parse(typeof(VCdKind), kind.ToVcfString(), true);
             Assert.AreEqual(kind, kind3);
         }
 

@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
@@ -28,7 +27,7 @@ public class AddressOrderConverterTests
     [DataTestMethod]
     [DataRow("en-US", AddressOrder.Usa)]
     [DataRow("de-DE", AddressOrder.Din)]
-    [DataRow ("es-VE-Z", AddressOrder.Venezuela)]
+    [DataRow("es-VE-Z", AddressOrder.Venezuela)]
     [DataRow("en-AU", AddressOrder.Usa)]
     [DataRow("en-CA", AddressOrder.Usa)]
     [DataRow("af-ZA", AddressOrder.Usa)]
@@ -63,7 +62,7 @@ public class AddressOrderConverterTests
             var culture = CultureInfo.CreateSpecificCulture(input);
             Assert.AreEqual(expected, culture.ToAddressOrder());
         }
-        catch(CultureNotFoundException) { }
+        catch (CultureNotFoundException) { }
     }
 
     [TestMethod]

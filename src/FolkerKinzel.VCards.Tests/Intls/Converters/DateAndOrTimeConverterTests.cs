@@ -37,7 +37,7 @@ public class DateAndOrTimeConverterTests
     public void DateTest3()
     {
         string s = "--0803";
-        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out var dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out OneOf.OneOf<DateOnly, DateTimeOffset> dt));
 
         Assert.IsTrue(dt.IsT0);
         Assert.AreEqual(dt.AsT0.Year, 4);
@@ -50,7 +50,7 @@ public class DateAndOrTimeConverterTests
     public void DateTest4()
     {
         string s = "---03";
-        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out var dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out OneOf.OneOf<DateOnly, DateTimeOffset> dt));
 
         Assert.IsTrue(dt.IsT0);
         Assert.AreEqual(dt.AsT0.Year, 4);
@@ -100,7 +100,7 @@ public class DateAndOrTimeConverterTests
             Assert.AreEqual(s, s2);
         }
 
-        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out var dt2));
+        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out OneOf.OneOf<DateOnly, DateTimeOffset> dt2));
 
         Assert.AreEqual(dt, dt2);
 
@@ -127,7 +127,7 @@ public class DateAndOrTimeConverterTests
             Assert.AreEqual(s, s2);
         }
 
-        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out var dt2));
+        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out OneOf.OneOf<DateOnly, DateTimeOffset> dt2));
 
         Assert.AreEqual(dt, dt2);
 
@@ -236,7 +236,7 @@ public class DateAndOrTimeConverterTests
     [DataRow("T--22+0200")]
     public void TryParseTest3(string? input)
     {
-        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out var oneOf));
+        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out OneOf.OneOf<DateOnly, DateTimeOffset> oneOf));
         Assert.IsTrue(oneOf.IsT1);
     }
 

@@ -2,7 +2,7 @@
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
-[TestClass()]
+[TestClass]
 public class VCdSexConverterTests
 {
     [TestMethod()]

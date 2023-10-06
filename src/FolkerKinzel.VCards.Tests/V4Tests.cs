@@ -81,7 +81,7 @@ public class V4Tests
         {
             const int DATA_LENGTH = 200;
 
-            var arr = new byte[DATA_LENGTH];
+            byte[] arr = new byte[DATA_LENGTH];
 
             for (byte i = 0; i < arr.Length; i++)
             {

@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
@@ -83,7 +82,7 @@ public class ReferencedDataPropertyTests
 
         prop.PrepareForVcfSerialization(serializer);
         Assert.AreEqual(ContentLocation.ContentID, prop.Parameters.ContentLocation);
-        Assert.AreEqual(VCdDataType.Uri,  prop.Parameters.DataType);
+        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
     }
 }
 

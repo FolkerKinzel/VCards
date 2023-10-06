@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
 
@@ -40,7 +39,7 @@ public class ValueSplitterTests
             ValueString = valueString
         };
 
-        foreach (var s in valueSplitter)
+        foreach (string s in valueSplitter)
         {
             Assert.IsNotNull(s);
             count++;
@@ -60,7 +59,7 @@ public class ValueSplitterTests
             ValueString = valueString
         };
 
-        var arr = valueSplitter.ToArray();
+        string[] arr = valueSplitter.ToArray();
         CollectionAssert.AreEqual(arr, expected, StringComparer.Ordinal);
     }
 
@@ -79,7 +78,7 @@ public class ValueSplitterTests
 
         int count = 0;
 
-        foreach (var item in enumerable)
+        foreach (object? item in enumerable)
         {
             count++;
         }

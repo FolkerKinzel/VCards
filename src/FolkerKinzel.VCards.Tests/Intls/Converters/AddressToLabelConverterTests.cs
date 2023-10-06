@@ -1,7 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 #pragma warning disable CS0618 // Typ oder Element ist veraltet
@@ -16,7 +14,7 @@ public class AddressToLabelConverterTests
         const string city = "Maxdorf";
         const string country = "Germany";
         const string street = "Röntgenstr. 9";
-        var address = new AddressProperty(street, city,  null, zip, country);
+        var address = new AddressProperty(street, city, null, zip, country);
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{zip} {city}");
@@ -68,7 +66,7 @@ public class AddressToLabelConverterTests
         const string country = "Germany";
         const string street = "Röntgenstr. 9";
         const string extended = "3. Stock";
-        var address = new AddressProperty(street, city, state, zip, country, postOfficeBox:null, extendedAddress: extended);
+        var address = new AddressProperty(street, city, state, zip, country, postOfficeBox: null, extendedAddress: extended);
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{zip} {city}");

@@ -2,10 +2,10 @@
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
-[TestClass()]
+[TestClass]
 public class VCdContentLocationConverterTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void Roundtrip1()
     {
         foreach (ContentLocation kind in (ContentLocation[])Enum.GetValues(typeof(ContentLocation)))
@@ -28,7 +28,7 @@ public class VCdContentLocationConverterTests
         Assert.AreEqual(ContentLocation.Inline.ToVcfString(), ((ContentLocation)4711).ToVcfString());
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void Roundtrip2()
     {
         string cIdString = "CONTENT-ID";

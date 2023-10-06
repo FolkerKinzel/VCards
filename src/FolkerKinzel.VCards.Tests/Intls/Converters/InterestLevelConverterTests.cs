@@ -2,17 +2,17 @@
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
-[TestClass()]
+[TestClass]
 public class InterestLevelConverterTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void Roundtrip()
     {
         foreach (InterestLevel kind in (InterestLevel[])Enum.GetValues(typeof(InterestLevel)))
         {
             InterestLevel? kind2 = InterestLevelConverter.Parse(kind.ToString().ToLowerInvariant());
             Assert.AreEqual(kind, kind2);
-            var kind3 = Enum.Parse(typeof(InterestLevel), ((InterestLevel?)kind).ToVCardString() ?? "", true);
+            object kind3 = Enum.Parse(typeof(InterestLevel), ((InterestLevel?)kind).ToVCardString() ?? "", true);
             Assert.AreEqual(kind, kind3);
         }
 

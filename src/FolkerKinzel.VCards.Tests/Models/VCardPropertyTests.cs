@@ -1,19 +1,24 @@
 ﻿using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Tests;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
-public class RelationPropertyTests
+public class VCardPropertyTests
 {
-    private class TestIEnumerable : RelationProperty
+    private class ArgumentNullTester : VCardProperty
     {
-        public TestIEnumerable() : base(Enums.RelationTypes.Contact, null) { } 
+        public ArgumentNullTester(ParameterSection parameters) : base(parameters, null)
+        {
+
+        }
+
         public override object Clone() => throw new NotImplementedException();
         protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
         internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
     }
 
     [TestMethod]
-    public void IEnumerableTest() => Assert.AreEqual(1, new TestIEnumerable().AsWeakEnumerable().Count());
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void CtorTest1() => _ = new ArgumentNullTester(null!);
 }

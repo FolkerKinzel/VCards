@@ -1,6 +1,6 @@
 ﻿namespace FolkerKinzel.VCards.Models.Tests;
 
-[TestClass()]
+[TestClass]
 public class GeoPropertyTests
 {
     private const string GROUP = "MyGroup";

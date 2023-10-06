@@ -1,15 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace FolkerKinzel.VCards.Intls.Converters.Tests;
+﻿namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 [TestClass]
 public class UriConverterTests
 {
     [TestMethod]
-    public void ToAbsoluteUriTest1() 
+    public void ToAbsoluteUriTest1()
         => Assert.IsNull(UriConverter.ToAbsoluteUri(null));
 
     [TestMethod]
-    public void ToAbsoluteUriTest2() 
+    public void ToAbsoluteUriTest2()
         => Assert.IsNull(UriConverter.ToAbsoluteUri("https://not allowed space.com"));
 
     [TestMethod]
@@ -21,7 +20,7 @@ public class UriConverterTests
         => Assert.AreEqual(".bin", UriConverter.GetFileTypeExtensionFromUri(null));
 
     [TestMethod]
-    public void GetFileTypeExtensionFromUriTest2() 
+    public void GetFileTypeExtensionFromUriTest2()
         => Assert.AreEqual(".png", UriConverter.GetFileTypeExtensionFromUri(new Uri("picture.png", UriKind.Relative)));
 
     [TestMethod]
@@ -33,6 +32,6 @@ public class UriConverterTests
         => Assert.AreEqual(".htm", UriConverter.GetFileTypeExtensionFromUri(
             new Uri("http://contoso.com", UriKind.Absolute)));
 
-    
+
 }
 

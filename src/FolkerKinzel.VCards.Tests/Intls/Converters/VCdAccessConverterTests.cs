@@ -2,17 +2,17 @@
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
-[TestClass()]
+[TestClass]
 public class VCdAccessConverterTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void Roundtrip()
     {
         foreach (Access kind in (Access[])Enum.GetValues(typeof(Access)))
         {
             Access kind2 = AccessConverter.Parse(kind.ToString());
             Assert.AreEqual(kind, kind2);
-            var kind3 = Enum.Parse(typeof(Access), kind.ToVCardString(), true);
+            object kind3 = Enum.Parse(typeof(Access), kind.ToVCardString(), true);
             Assert.AreEqual(kind, kind3);
         }
 

@@ -2,17 +2,17 @@
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
-[TestClass()]
+[TestClass]
 public class ExpertiseLevelConverterTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void Roundtrip()
     {
         foreach (ExpertiseLevel kind in (ExpertiseLevel[])Enum.GetValues(typeof(ExpertiseLevel)))
         {
             ExpertiseLevel? kind2 = ExpertiseLevelConverter.Parse(kind.ToString().ToLowerInvariant());
             Assert.AreEqual(kind, kind2);
-            var kind3 = Enum.Parse(typeof(ExpertiseLevel), ((ExpertiseLevel?)kind).ToVcfString() ?? "", true);
+            object kind3 = Enum.Parse(typeof(ExpertiseLevel), ((ExpertiseLevel?)kind).ToVcfString() ?? "", true);
             Assert.AreEqual(kind, kind3);
         }
 

@@ -274,7 +274,7 @@ public class VCardTests
 
         System.Collections.IEnumerable enumerable = vc;
 
-        foreach (var _ in enumerable)
+        foreach (object? _ in enumerable)
         {
             return;
         }

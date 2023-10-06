@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
@@ -26,7 +25,7 @@ public class TimeConverterTests
     {
         Assert.IsTrue(_conv.TryParse(s.AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> dt));
 
-        
+
         var builder = new StringBuilder();
 
         dt.Switch(
@@ -61,7 +60,7 @@ public class TimeConverterTests
     [DataRow("T--22+0200")]
     public void TryParseTest2(string? input)
     {
-        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out var oneOf));
+        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> oneOf));
         Assert.IsTrue(oneOf.IsT1);
     }
 
@@ -74,7 +73,7 @@ public class TimeConverterTests
     [DataRow("T--22")]
     public void TryParseTest3(string? input)
     {
-        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out var oneOf));
+        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> oneOf));
         Assert.IsTrue(oneOf.IsT0);
     }
 

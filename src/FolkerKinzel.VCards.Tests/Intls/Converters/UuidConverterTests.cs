@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
-[TestClass()]
+[TestClass]
 public class UuidConverterTest
 {
     [TestMethod]
@@ -66,7 +66,7 @@ public class UuidConverterTest
         Assert.IsFalse(guidString.IsUuidUri());
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void ToGuidTest1()
     {
         string guidString = "550e8400e29b11d4a716446655440000";
@@ -77,7 +77,7 @@ public class UuidConverterTest
         Assert.AreEqual(guid, guid2);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void ToGuidTest6()
     {
         string guidString = "550e8400e29b11d4a716446655440000";
@@ -89,7 +89,7 @@ public class UuidConverterTest
     }
 
 
-    [TestMethod()]
+    [TestMethod]
     public void ToGuidTest2()
     {
         string guidString = "550e8400-e29b-11d4-a716-446655440000";
@@ -105,14 +105,14 @@ public class UuidConverterTest
     }
 
 
-    [TestMethod()]
+    [TestMethod]
     public void ToGuidTest3()
     {
         var guid3 = UuidConverter.ToGuid((string?)null);
         Assert.AreEqual(Guid.Empty, guid3);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void ToGuidTest4()
     {
         var guid4 = UuidConverter.ToGuid(string.Empty);
@@ -120,7 +120,7 @@ public class UuidConverterTest
     }
 
 
-    [TestMethod()]
+    [TestMethod]
     public void ToGuidTest5()
     {
         var guid4 = UuidConverter.ToGuid("               ");

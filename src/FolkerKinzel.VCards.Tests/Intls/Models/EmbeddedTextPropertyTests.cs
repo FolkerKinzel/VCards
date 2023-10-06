@@ -1,7 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Models.Enums;
-using System.Collections.ObjectModel;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -43,7 +41,7 @@ public class EmbeddedTextPropertyTests
         Assert.IsNotNull(prop2.Value);
         Assert.IsNotNull(prop1.Value!.String);
         Assert.IsNotNull(prop2.Value!.String);
-        
+
         Assert.AreSame(prop1.Value!.String, prop2.Value!.String);
     }
 }

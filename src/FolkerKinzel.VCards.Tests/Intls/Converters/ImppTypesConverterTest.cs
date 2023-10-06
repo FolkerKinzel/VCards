@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 [TestClass]
 public class ImppTypesConverterTest
 {
-    [TestMethod()]
+    [TestMethod]
     public void ParseTest()
     {
         foreach (ImppTypes kind in (ImppTypes[])Enum.GetValues(typeof(ImppTypes)))

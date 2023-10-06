@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace FolkerKinzel.VCards.Intls.Extensions.Tests;
+﻿namespace FolkerKinzel.VCards.Intls.Extensions.Tests;
 
 [TestClass]
 public class StringExtensionTests

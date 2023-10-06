@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 [TestClass()]
 public class VCdDataTypeConverterTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void Roundtrip()
     {
         foreach (VCdDataType kind in (VCdDataType[])Enum.GetValues(typeof(VCdDataType)))

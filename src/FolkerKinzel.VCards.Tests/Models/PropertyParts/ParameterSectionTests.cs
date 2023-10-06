@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 
@@ -26,5 +25,5 @@ public class ParameterSectionTests
         var sec = new ParameterSection();
         sec.Assign(null!);
     }
-    
+
 }

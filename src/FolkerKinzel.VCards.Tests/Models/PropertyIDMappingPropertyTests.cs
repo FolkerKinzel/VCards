@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -15,7 +14,7 @@ public class PropertyIDMappingPropertyTests
 
         var vcard = new VCard
         {
-            PropertyIDMappings = new PropertyIDMappingProperty?[]{prop, null, new PropertyIDMappingProperty((PropertyIDMapping?)null)}
+            PropertyIDMappings = new PropertyIDMappingProperty?[] { prop, null, new PropertyIDMappingProperty((PropertyIDMapping?)null) }
         };
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
@@ -38,7 +37,7 @@ public class PropertyIDMappingPropertyTests
         Assert.IsFalse(prop.IsEmpty);
     }
 
-    
+
 
     [TestMethod]
     public void GetValueTest()

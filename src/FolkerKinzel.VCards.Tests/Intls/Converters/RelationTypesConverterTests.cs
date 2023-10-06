@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 [TestClass]
 public class RelationTypesConverterTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void ParseTest1()
     {
         foreach (RelationTypes rel in (RelationTypes[])Enum.GetValues(typeof(RelationTypes)))

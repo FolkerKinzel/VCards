@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Intls.Encodings.Tests;
 
 [TestClass]
@@ -45,8 +44,8 @@ public class QuotedPrintableTests
     [TestMethod]
     public void EncodeDataTest1()
     {
-        var s = new string(' ', 100);
-        string quoted = QuotedPrintable.Encode(s, 0); 
+        string s = new string(' ', 100);
+        string quoted = QuotedPrintable.Encode(s, 0);
         Assert.IsNotNull(quoted);
         Assert.AreNotEqual(quoted[quoted.Length - 1], ' ');
         Assert.AreEqual(2, quoted.GetLinesCount());

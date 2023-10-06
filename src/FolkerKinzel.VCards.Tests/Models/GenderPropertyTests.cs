@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
-[TestClass()]
+[TestClass]
 public class GenderPropertyTests
 {
     private const string GROUP = "myGroup";

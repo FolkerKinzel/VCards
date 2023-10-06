@@ -8,7 +8,7 @@ internal static class Utility
 {
     internal static VCard CreateVCard()
     {
-        var sortAs = new string[] { "Entenhausen", "Elmstreet" };
+        string[] sortAs = new string[] { "Entenhausen", "Elmstreet" };
 
         var tel1 = new TextProperty("123");
         tel1.Parameters.TelephoneType = default(TelTypes);

@@ -1,8 +1,5 @@
 ﻿using System.Text;
-
-#if !NET45
 using FolkerKinzel.Strings;
-#endif
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 

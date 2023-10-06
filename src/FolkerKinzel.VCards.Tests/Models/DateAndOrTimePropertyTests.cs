@@ -32,7 +32,7 @@ public class DateAndOrTimePropertyTests
         VCard vcard = VCard.ParseVcf(vcf)[0];
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
-        var bdayProp = vcard.BirthDayViews!.First();
+        DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
         Assert.IsInstanceOfType(bdayProp, typeof(DateTimeOffsetProperty));
     }
 
@@ -49,7 +49,7 @@ public class DateAndOrTimePropertyTests
         VCard vcard = VCard.ParseVcf(vcf)[0];
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
-        var bdayProp = vcard.BirthDayViews!.First();
+        DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
         Assert.IsInstanceOfType(bdayProp, typeof(DateTimeOffsetProperty));
     }
 
@@ -66,7 +66,7 @@ public class DateAndOrTimePropertyTests
         VCard vcard = VCard.ParseVcf(vcf)[0];
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
-        var bdayProp = vcard.BirthDayViews!.First();
+        DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
         Assert.IsInstanceOfType(bdayProp, typeof(DateTimeTextProperty));
     }
 }

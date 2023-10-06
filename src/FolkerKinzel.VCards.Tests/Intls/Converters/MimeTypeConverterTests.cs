@@ -1,8 +1,4 @@
-﻿using FolkerKinzel.MimeTypes;
-using FolkerKinzel.VCards.Models.PropertyParts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace FolkerKinzel.VCards.Intls.Converters.Tests;
+﻿namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 [TestClass]
 public class MimeTypeConverterTests

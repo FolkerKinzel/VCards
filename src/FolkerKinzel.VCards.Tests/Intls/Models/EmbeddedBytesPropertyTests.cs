@@ -1,16 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
-
-
-//internal static class _Array
-//{
-//    internal static T[] Empty<T>()
-//        => Array.Empty<T>();
-//}
 
 [TestClass]
 public class EmbeddedBytesPropertyTests

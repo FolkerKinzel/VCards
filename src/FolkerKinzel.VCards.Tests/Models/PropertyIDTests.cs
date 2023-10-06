@@ -1,6 +1,5 @@
 ﻿#if !NETCOREAPP3_1
 using FolkerKinzel.Strings.Polyfills;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 #endif
 
 namespace FolkerKinzel.VCards.Models.Tests;
@@ -252,7 +251,7 @@ public class PropertyIDTests
     {
         var pid = new PropertyID(5);
 
-        var s = pid.ToString();
+        string s = pid.ToString();
 
         Assert.IsNotNull(s);
         Assert.IsFalse(s.Contains('.'));

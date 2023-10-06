@@ -19,7 +19,7 @@ public class IEnumerableTests
 
         IEnumerable enumerable = vc.XmlProperties;
 
-        foreach (var item in enumerable)
+        foreach (object? item in enumerable)
         {
             Assert.IsNotNull(item);
         }
@@ -38,7 +38,7 @@ public class IEnumerableTests
 
         IEnumerable enumerable = vc.BirthPlaceViews;
 
-        foreach (var item in enumerable)
+        foreach (object? item in enumerable)
         {
             Assert.IsNotNull(item);
         }
@@ -57,7 +57,7 @@ public class IEnumerableTests
 
         IEnumerable enumerable = vc.BirthDayViews;
 
-        foreach (var item in enumerable)
+        foreach (object? item in enumerable)
         {
             Assert.IsNotNull(item);
         }
