@@ -27,7 +27,9 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    public TextProperty(string? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = string.IsNullOrWhiteSpace(value) ? null : value;
+    public TextProperty(string? value, string? propertyGroup = null) 
+        : base(new ParameterSection(), propertyGroup) 
+        => Value = string.IsNullOrWhiteSpace(value) ? null : value;
 
 
     internal TextProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
@@ -58,7 +60,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
         base.PrepareForVcfSerialization(serializer);
 
-        if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
+        if (serializer.Version == VCdVersion.V2_1 && Value != null && Value.NeedsToBeQpEncoded())
         {
             this.Parameters.Encoding = ValueEncoding.QuotedPrintable;
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;

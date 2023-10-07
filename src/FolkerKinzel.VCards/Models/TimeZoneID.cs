@@ -10,22 +10,69 @@ namespace FolkerKinzel.VCards.Models;
 /// </summary>
 public class TimeZoneID
 {
-    /// <summary>
-    /// Initialisiert ein neues <see cref="TimeZoneID"/>-Objekt.
-    /// </summary>
-    /// <param name="timeZoneID">Bezeichner der Zeitzone. Es sollte sich um einen Bezeichner aus der 
-    /// "IANA Time Zone Database" handeln. (Siehe https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
-    /// <exception cref="ArgumentNullException"><paramref name="timeZoneID"/> ist <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="timeZoneID"/> ist ein leerer <see cref="string"/> oder 
-    /// enthält nur Leerraum.</exception>
-    public TimeZoneID(string timeZoneID)
-    {
-        Value = timeZoneID ?? throw new ArgumentNullException(nameof(timeZoneID));
+    private enum TzError { None, Null, Empty }
 
-        if (string.IsNullOrWhiteSpace(Value))
+    private TimeZoneID(string timeZoneID) => Value = timeZoneID.Trim();
+
+    /// <summary>
+    /// Parst einen <see cref="string"/> als <see cref="TimeZoneID"/>-Objekt.
+    /// </summary>
+    /// <param name="value">Bezeichner der Zeitzone. Es sollte sich um einen Bezeichner aus der 
+    /// "IANA Time Zone Database" handeln. (Siehe https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> ist <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="value"/> ist ein leerer <see cref="string"/> oder 
+    /// enthält nur Leerraum.</exception>
+    public static TimeZoneID Parse(string value)
+    {
+        if (!Validate(value, out TzError error))
         {
-            throw new ArgumentException(Res.NoData, nameof(timeZoneID));
+            if (error == TzError.Null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            throw new ArgumentException(Res.NoData, nameof(value));
         }
+        
+        return new TimeZoneID(value);
+    }
+
+    /// <summary>
+    /// Versucht, einen <see cref="string"/> als <see cref="TimeZoneID"/>-Objekt zu parsen.
+    /// </summary>
+    /// <param name="value">Bezeichner der Zeitzone. Es sollte sich um einen Bezeichner aus der 
+    /// "IANA Time Zone Database" handeln. (Siehe https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
+    /// <param name="timeZoneID">Wenn das Parsen erfolgreich war, enthält der Parameter ein neues <see cref="TimeZoneID"/>-Objekt.
+    /// Der Parameter wird uninitialisiert übergeben.</param>
+    /// <returns><c>true</c>, wenn deas Parsen erfolgreich war, andernfalls <c>false</c>.</returns>
+    public static bool TryParse(string? value, [NotNullWhen(true)] out TimeZoneID? timeZoneID)
+    {
+        if(Validate(value, out _))
+        {
+            timeZoneID = new TimeZoneID(value);
+            return true;
+        }
+
+        timeZoneID = null;
+        return false;
+    }
+
+    private static bool Validate([NotNullWhen(true)] string? value, out TzError error)
+    {
+        if(value is null) 
+        {
+            error = TzError.Null; 
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            error = TzError.Empty;
+            return false;
+        }
+
+        error = TzError.None;
+        return true;
     }
 
 

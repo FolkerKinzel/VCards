@@ -56,7 +56,7 @@
   </ItemGroup>
   <!-- 👇 disable the nullable warnings when compiling for .NET 4.0 -->
   <PropertyGroup Condition="'$(TargetFramework)' == 'net40' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net461'">
-    <NoWarn>$(NoWarn);8600;8601;8602;8603;8604</NoWarn>
+    <NoWarn>$(NoWarn);8600;8601;8602;8603;8604;8618</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="AnsiFilter_old.cs" />
@@ -80,7 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="TextFile1.txt" />
-    <None Remove="Translations\FolkerKinzel.VCards.en.tsltn" />
   </ItemGroup>
   <ItemGroup>
     <Using Remove="System.Net.Http" />

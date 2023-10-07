@@ -117,11 +117,10 @@ public sealed partial class ParameterSection
                     }
                     break;
                 case ParameterKey.TZ:
-                    try
+                    if(TimeZoneID.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out TimeZoneID? tzID))
                     {
-                        this.TimeZone = new TimeZoneID(parameter.Value.Trim().Trim(info.AllQuotes));
+                        this.TimeZone = tzID;
                     }
-                    catch { }
                     break;
                 case ParameterKey.SORT_AS:
                     {

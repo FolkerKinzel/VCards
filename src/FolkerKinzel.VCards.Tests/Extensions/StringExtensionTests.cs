@@ -8,12 +8,12 @@ namespace FolkerKinzel.VCards.Extensions.Tests;
 [TestClass]
 public class StringExtensionTests
 {
-    [TestMethod]
-    public void NeedsToBeQpEncodedTest1()
-    {
-        string? s = null;
-        Assert.IsFalse(s.NeedsToBeQpEncoded());
-    }
+    //[TestMethod]
+    //public void NeedsToBeQpEncodedTest1()
+    //{
+    //    string? s = null;
+    //    Assert.IsFalse(s.NeedsToBeQpEncoded());
+    //}
 
     [TestMethod]
     public void UnMaskTest1()

@@ -1,14 +1,34 @@
 ﻿using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace FolkerKinzel.VCards.Models.Tests;
+
+internal class TimeZoneIDConverterMock : ITimeZoneIDConverter
+{
+    public TimeZoneIDConverterMock(bool success)
+    {
+        Success = success;
+    }
+
+    public bool TryConvertToUtcOffset(string timeZoneID, out TimeSpan utcOffset)
+    {
+        utcOffset = TimeSpan.Zero;
+        return Success;
+    }
+
+    internal bool Success { get; }
+}
 
 [TestClass]
 public class TimeZoneIDTests
 {
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void TimeZoneIdTest() => _ = new TimeZoneID("  ");
+    public void ParseTest1() => _ = TimeZoneID.Parse("  ");
 
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ParseTest2() => _ = TimeZoneID.Parse(null!);
 
     [DataTestMethod]
     [DataRow("-0700")]
@@ -25,8 +45,19 @@ public class TimeZoneIDTests
     [DataRow("-12")]
     public void TryGetUtcOffsetTest1(string s)
     {
-        var tzInfo = new TimeZoneID(s);
+        var tzInfo = TimeZoneID.Parse(s);
         Assert.IsTrue(tzInfo.TryGetUtcOffset(out _));
+    }
+
+    [DataTestMethod]
+    [DataRow(true)]
+    [DataRow(false)]
+    public void TryGetUtcOffsetTest3(bool success) 
+    {
+        var tzInfo = TimeZoneID.Parse("TheTimeZone");
+
+        Assert.AreEqual(success, 
+                        tzInfo.TryGetUtcOffset(out _, new TimeZoneIDConverterMock(success)));
     }
 
 
@@ -63,7 +94,7 @@ public class TimeZoneIDTests
     [DataRow("Text-07:00Text", false)]
     public void TryGetUtcOffsetTest2(string input, bool expected)
     {
-        var tz = new TimeZoneID(input);
+        var tz = TimeZoneID.Parse(input);
         Assert.AreEqual(expected, tz.TryGetUtcOffset(out _));
     }
 
@@ -72,7 +103,7 @@ public class TimeZoneIDTests
     public void AppendToTest1()
     {
         const string input = "unknown";
-        var id = new TimeZoneID(input);
+        var id = TimeZoneID.Parse(input);
         var builder = new StringBuilder();
 
         id.AppendTo(builder, VCdVersion.V3_0, null);
@@ -85,7 +116,7 @@ public class TimeZoneIDTests
     [DataRow("+0100")]
     public void AppendToTest2(string input)
     {
-        var id = new TimeZoneID(input);
+        var id = TimeZoneID.Parse(input);
         var builder = new StringBuilder();
 
         id.AppendTo(builder, VCdVersion.V4_0, null);

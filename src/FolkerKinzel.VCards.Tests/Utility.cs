@@ -31,7 +31,7 @@ internal static class Utility
         adr1.Parameters.Label = "  ";
         adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
         adr1.Parameters.GeoPosition = new Models.GeoCoordinate(12.98, 7.86);
-        adr1.Parameters.TimeZone = new Models.TimeZoneID(TimeZoneInfo.Local.Id);
+        adr1.Parameters.TimeZone = Models.TimeZoneID.Parse(TimeZoneInfo.Local.Id);
         adr1.Parameters.AltID = "Address";
         adr1.Parameters.Calendar = "GREGORIAN";
         adr1.Parameters.ContentLocation = ContentLocation.Inline;
@@ -128,7 +128,7 @@ internal static class Utility
             Logos = logo1,
             Photos = photo1,
             Sounds = sound1,
-            Keys = key1,
+            Keys = new DataProperty[] { key1, key2 },
             DeathDateViews = DateAndOrTimeProperty.Create("Later"),
             DeathPlaceViews = new TextProperty("Somewhere"),
             BirthPlaceViews = new TextProperty("Dessau"),
@@ -138,7 +138,7 @@ internal static class Utility
             CalendarUserAddresses = new TextProperty("Calendar user address"),
             FreeOrBusyUrls = new TextProperty("Free Busy"),
             Sources = source,
-            TimeZones = new TimeZoneProperty(new TimeZoneID(TimeZoneInfo.Local.Id)),
+            TimeZones = new TimeZoneProperty(TimeZoneID.Parse(TimeZoneInfo.Local.Id)),
             DisplayNames = new TextProperty("Folker"),
             OrgDirectories = new TextProperty("OrgDirectory"),
             Profile = new ProfileProperty("Group"),

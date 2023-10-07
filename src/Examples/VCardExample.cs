@@ -106,7 +106,7 @@ public static class VCardExample
             adrWorkProp.Parameters.AddressType = VC::Enums.AddressTypes.Dom | VC::Enums.AddressTypes.Intl | VC::Enums.AddressTypes.Postal | VC::Enums.AddressTypes.Parcel;
             vcard.Addresses = adrWorkProp;
 
-            var tz = new VC::TimeZoneID("Europe/Berlin");
+            var tz = VC::TimeZoneID.Parse("Europe/Berlin");
             var geo = new VC::GeoCoordinate(52.51182050685474, 13.389581454284256);
 
             // vCard 4.0 allows to specify the time zone and geographical

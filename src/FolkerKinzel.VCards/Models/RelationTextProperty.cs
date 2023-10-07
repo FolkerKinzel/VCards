@@ -62,7 +62,7 @@ public sealed class RelationTextProperty : RelationProperty, IEnumerable<Relatio
 
         base.PrepareForVcfSerialization(serializer);
 
-        if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
+        if (serializer.Version == VCdVersion.V2_1 && Value != null && Value.NeedsToBeQpEncoded())
         {
             this.Parameters.Encoding = ValueEncoding.QuotedPrintable;
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;

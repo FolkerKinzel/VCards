@@ -198,7 +198,8 @@ internal sealed class DateAndOrTimeConverter
     }
 
     internal static void AppendDateTo(StringBuilder builder,
-        DateOnly dt, VCdVersion version)
+                                      DateOnly dt,
+                                      VCdVersion version)
     {
         switch (version)
         {

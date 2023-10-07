@@ -1,13 +1,15 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Serializers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
-[TestClass()]
+[TestClass]
 public class StringCollectionPropertyTests
 {
     private const string GROUP = "myGroup";
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow(new string?[] { "Bodo, der Blöde", "Dumbo" }, GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
     [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
     [DataRow(new string?[] { "", null, "  " }, GROUP, null)]
@@ -25,7 +27,7 @@ public class StringCollectionPropertyTests
     }
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow("Dumbo", GROUP, new string[] { "Dumbo" })]
     [DataRow(null, GROUP, null)]
     [DataRow("", GROUP, null)]
@@ -43,7 +45,8 @@ public class StringCollectionPropertyTests
     }
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
+    [DataRow(GROUP + ".NICKNAME:", GROUP, null)]
     [DataRow(GROUP + @".NICKNAME:Bodo\, der Blöde,Dumbo", GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
     [DataRow(@"NICKNAME:Bodo\, der Blöde,Dumbo", null, new string[] { "Bodo, der Blöde", "Dumbo" })]
     [DataRow(@"NICKNAME:,Bodo\, der Blöde,  ,Dumbo, ", null, new string[] { "Bodo, der Blöde", "Dumbo" })]
@@ -61,7 +64,7 @@ public class StringCollectionPropertyTests
     }
 
 
-    [TestMethod()]
+    [TestMethod]
     public void ToStringTest1()
     {
         string s = new StringCollectionProperty(new string[] { "Bla", "Blub" }).ToString();
@@ -71,7 +74,7 @@ public class StringCollectionPropertyTests
     }
 
 
-    [TestMethod()]
+    [TestMethod]
     public void ToStringTest2()
     {
         string? s = null;
@@ -79,5 +82,18 @@ public class StringCollectionPropertyTests
 
         Assert.IsNotNull(s);
         Assert.AreEqual(0, s.Length);
+    }
+
+    [TestMethod]
+    public void AppendValueTest1()
+    {
+        var prop = new StringCollectionProperty((string?)null);
+        Assert.IsTrue(prop.IsEmpty);
+
+        using var writer = new StringWriter();
+        var serializer = new Vcf_3_0Serializer(writer, VcfOptions.Default, null);
+
+        prop.AppendValue(serializer);
+        Assert.AreEqual(0, serializer.Builder.Length);
     }
 }

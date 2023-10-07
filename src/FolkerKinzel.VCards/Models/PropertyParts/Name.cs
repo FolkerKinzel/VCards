@@ -216,39 +216,11 @@ public sealed class Name
     /// <summary>
     /// <c>true</c>, wenn das <see cref="Name"/>-Objekt keine verwertbaren Daten enthält.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:In bedingten Ausdruck konvertieren", Justification = "<Ausstehend>")]
-    public bool IsEmpty
-    {
-        get
-        {
-            if (LastName.Count != 0)
-            {
-                return false;
-            }
-
-            if (FirstName.Count != 0)
-            {
-                return false;
-            }
-
-            if (MiddleName.Count != 0)
-            {
-                return false;
-            }
-
-            if (Prefix.Count != 0)
-            {
-                return false;
-            }
-
-            if (Suffix.Count != 0)
-            {
-                return false;
-            }
-
-            return true;
-        }
-    }
+    public bool IsEmpty => LastName.Count == 0 && 
+                           FirstName.Count == 0 && 
+                           MiddleName.Count == 0 && 
+                           Prefix.Count == 0 && 
+                           Suffix.Count == 0;
 
 
     internal void AppendVCardString(VcfSerializer serializer)

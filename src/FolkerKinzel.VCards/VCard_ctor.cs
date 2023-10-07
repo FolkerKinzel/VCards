@@ -299,7 +299,7 @@ public sealed partial class VCard
                     Mailer = new TextProperty(vcfRow, this.Version);
                     break;
                 case PropKeys.TZ:
-                    TimeZones = new TimeZoneProperty(vcfRow).GetAssignment(TimeZones);
+                    TimeZones = new TimeZoneProperty(vcfRow, this.Version).GetAssignment(TimeZones);
                     break;
                 case PropKeys.CLASS:
                     Access = new AccessProperty(vcfRow);

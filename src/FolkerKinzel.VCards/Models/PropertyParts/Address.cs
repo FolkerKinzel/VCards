@@ -65,9 +65,7 @@ public sealed class Address
     }
 
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     internal Address(string vCardValue, VcfDeserializationInfo info, VCdVersion version)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         Debug.Assert(vCardValue != null);
 
@@ -288,48 +286,14 @@ public sealed class Address
     /// <summary>
     /// <c>true</c>, wenn das <see cref="Address"/>-Objekt keine verwertbaren Daten enthält.
     /// </summary>
-    public bool IsEmpty
-    {
-        get
-        {
-            if (Locality.Count != 0)
-            {
-                return false;
-            }
-
-            if (Street.Count != 0)
-            {
-                return false;
-            }
-
-            if (Country.Count != 0)
-            {
-                return false;
-            }
-
-            if (Region.Count != 0)
-            {
-                return false;
-            }
-
-            if (PostalCode.Count != 0)
-            {
-                return false;
-            }
-
-            if (PostOfficeBox.Count != 0)
-            {
-                return false;
-            }
-
-            if (ExtendedAddress.Count != 0)
-            {
-                return false;
-            }
-
-            return true;
-        }
-    }
+    public bool IsEmpty => Locality.Count == 0 &&
+                           Street.Count == 0 &&
+                           Country.Count == 0 &&
+                           Region.Count == 0 &&
+                           PostalCode.Count == 0 && 
+                           PostOfficeBox.Count == 0 && 
+                           ExtendedAddress.Count == 0;
+    
 
     /// <summary>
     /// Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
