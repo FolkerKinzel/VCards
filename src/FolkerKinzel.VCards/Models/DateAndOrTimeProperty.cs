@@ -94,6 +94,10 @@ public abstract class DateAndOrTimeProperty
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateAndOrTimeProperty>)this).GetEnumerator();
 
+    /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override string ToString() => Value?.ToString() ?? base.ToString();
+
 
     private void InitializeValue()
     {

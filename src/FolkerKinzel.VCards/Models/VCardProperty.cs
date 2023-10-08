@@ -82,6 +82,7 @@ public abstract class VCardProperty : ICloneable
     /// Überladung der <see cref="object.ToString"/>-Methode. Nur zum Debugging.
     /// </summary>
     /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="VCardProperty"/>-Objekts. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => Value?.ToString() ?? "<null>";
 
 

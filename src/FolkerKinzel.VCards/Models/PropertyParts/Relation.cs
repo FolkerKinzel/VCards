@@ -36,6 +36,8 @@ public sealed class Relation
         => _oneOf.Match(f0, f1, f2, f3);
 
 
+    
+    /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => _oneOf.ToString();
 

@@ -67,6 +67,11 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     }
 
 
+    /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override string ToString() => Value?.ToString() ?? base.ToString();
+
+
     /// <summary>
     /// Kopierkonstruktor.
     /// </summary>

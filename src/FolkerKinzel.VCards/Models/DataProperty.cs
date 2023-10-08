@@ -184,6 +184,11 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DataProperty>)this).GetEnumerator();
 
+
+    /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override string ToString() => Value?.ToString() ?? base.ToString();
+
     private void InitializeValue()
     {
         _isValueInitialized = true;
