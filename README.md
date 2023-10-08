@@ -93,7 +93,7 @@ namespace NameSpaceAliasDemos;
 public static class NameSpaceAliasDemo
 {
     public static void HowToUseTheNameSpaceAlias() =>
-        _ = new VC::RelationTextProperty("Folker", VC::Enums.RelationTypes.Contact);
+        _ = VC::RelationProperty.FromText("Folker", VC::Enums.RelationTypes.Contact);
 }
 ```
 

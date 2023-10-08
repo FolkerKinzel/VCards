@@ -133,7 +133,7 @@ public static class VCardExample
 
             vcard.BirthDayViews = VC::DateAndOrTimeProperty.Create(new DateOnly(1984, 3, 28));
 
-            vcard.Relations = new VC::RelationTextProperty
+            vcard.Relations = VC::RelationProperty.FromText
                 (
                     "Paul Müller-Risinowsky",
                     VC::Enums.RelationTypes.Spouse

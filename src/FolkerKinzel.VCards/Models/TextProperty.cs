@@ -47,6 +47,11 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
         get;
     }
 
+    
+    /// <inheritdoc/>
+    [MemberNotNullWhen(false, nameof(Value))]
+    public override bool IsEmpty => base.IsEmpty;
+
 
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

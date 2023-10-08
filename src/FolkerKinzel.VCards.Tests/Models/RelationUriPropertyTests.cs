@@ -132,7 +132,7 @@ public class RelationUriPropertyTests
     [TestMethod]
     public void PrepareForVcfSerializationTest1()
     {
-        var prop = new RelationUriProperty(null);
+        var prop = RelationProperty.FromUri(new Uri("http://folker.de/"));
         prop.Parameters.Clear();
 
         using var writer = new StringWriter();

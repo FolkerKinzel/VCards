@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards;

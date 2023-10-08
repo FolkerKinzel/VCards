@@ -27,13 +27,13 @@ public static class VCard40Example
         }
 
         // Initialize a group vCard with composers names and live dates:
-        var members = new VC::RelationVCardProperty[]
+        var members = new VC::RelationProperty[]
         {
-                new VC::RelationVCardProperty(InitializeComposerVCard(
+                VC::RelationProperty.FromVCard(InitializeComposerVCard(
                     "Sergei Rachmaninoff", new DateOnly(1873,4,1), new DateOnly(1943,3,28))),
-                new VC::RelationVCardProperty(InitializeComposerVCard(
+                VC::RelationProperty.FromVCard(InitializeComposerVCard(
                     "Ludwig van Beethoven", new DateOnly(1770,12,17), new DateOnly(1827,3,26))),
-                new VC::RelationVCardProperty(InitializeComposerVCard(
+                VC :: RelationProperty.FromVCard(InitializeComposerVCard(
                     "Frédéric Chopin", new DateOnly(1810,3,1), new DateOnly(1849,10,17)))
         };
 
@@ -127,9 +127,9 @@ public static class VCard40Example
     {
         DateOnly date = default;
         bool found = composersVCard.Members?
-                .Select(x => x as VC::RelationVCardProperty)
-                .Select(x => x?.Value)
-                    .FirstOrDefault(x => x?.DisplayNames?
+                .Where(x =>  x?.Value?.VCard is not null)
+                .Select(x => x!.Value!.VCard)
+                    .FirstOrDefault(x => x!.DisplayNames?
                                            .Any(x => x?.Value == "Ludwig van Beethoven") ?? false)?
                         .BirthDayViews?
                         .FirstOrDefault(x => x?.Value?

@@ -90,8 +90,8 @@ internal static class Utility
         var impp11 = new TextProperty("twitter:uri.com");
         var impp12 = new TextProperty("ymsgr:uri.com");
 
-        var rel1 = new RelationTextProperty("Agent", RelationTypes.Agent);
-        var rel2 = new RelationTextProperty("Spouse");
+        var rel1 = RelationProperty.FromText("Agent", RelationTypes.Agent);
+        var rel2 = RelationProperty.FromText("Spouse");
         rel2.Parameters.RelationType = default(RelationTypes);
         rel2.Parameters.RelationType = RelationTypes.Spouse | RelationTypes.CoResident;
 

@@ -346,21 +346,24 @@ public sealed partial class VCard
                 case PropKeys.AGENT:
                     if (string.IsNullOrWhiteSpace(vcfRow.Value))
                     {
-                        Relations = new RelationTextProperty(null, RelationTypes.Agent, vcfRow.Group).GetAssignment(Relations);
+                        Relations = RelationProperty.FromText(null, RelationTypes.Agent, vcfRow.Group)
+                                                    .GetAssignment(Relations);
                     }
                     else
                     {
                         if (vcfRow.Value.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                         {
                             var nested = VCard.ParseNestedVcard(vcfRow.Value, info, this.Version);
-                            Relations = new RelationVCardProperty(nested, RelationTypes.Agent, vcfRow.Group).GetAssignment(Relations);
+                            Relations = RelationProperty.FromVCard(nested, RelationTypes.Agent, vcfRow.Group)
+                                                        .GetAssignment(Relations);
                         }
                         else
                         {
                             vcfRow.Parameters.DataType ??= VCdDataType.Text;
                             vcfRow.Parameters.RelationType = RelationTypes.Agent;
 
-                            Relations = RelationProperty.Parse(vcfRow, this.Version).GetAssignment(Relations);
+                            Relations = RelationProperty.Parse(vcfRow, this.Version)
+                                                        .GetAssignment(Relations);
                         }
                     }
                     break;

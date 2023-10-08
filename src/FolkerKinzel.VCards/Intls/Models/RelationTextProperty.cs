@@ -27,6 +27,10 @@ internal sealed class RelationTextProperty : RelationProperty
     /// </summary>
     public new string? Value => _textProp.Value;
 
+    
+    /// <inheritdoc/>
+    [MemberNotNullWhen(false, nameof(Value))]
+    public override bool IsEmpty => base.IsEmpty;
 
 
     /// <inheritdoc/>

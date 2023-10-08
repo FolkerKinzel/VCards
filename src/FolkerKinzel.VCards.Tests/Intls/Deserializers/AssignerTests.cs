@@ -9,7 +9,7 @@ public class AssignerTests
     public void AssignerTest1()
     {
         var vcard = new VCard();
-        var textProp = new RelationTextProperty("Hallo");
+        var textProp = RelationProperty.FromText("Hallo");
 
         IEnumerable<RelationProperty>? assignment = Assigner.GetAssignment(textProp, vcard.Relations);
         Assert.AreSame(textProp, assignment);

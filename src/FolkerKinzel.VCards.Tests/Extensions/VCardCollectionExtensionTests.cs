@@ -6,6 +6,7 @@ using FolkerKinzel.VCards.Models.Enums;
 using System.Linq;
 using System.IO;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Intls.Models;
 
 namespace FolkerKinzel.VCards.Extensions.Tests
 {
@@ -42,7 +43,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
         }
 
 
-        [TestMethod()]
+        [TestMethod]
         public void ReferenceVCardsTest()
         {
             List<VCard?>? list = GenerateVCardList();
@@ -73,7 +74,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
             Assert.AreEqual((Guid)o1!, o2!.Value);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DereferenceVCardsTest()
         {
             List<VCard?>? list = GenerateVCardList();
@@ -151,7 +152,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
         }
 
 
-        [TestMethod()]
+        [TestMethod]
         public void SaveVcfTest_vCard2_1()
         {
             List<VCard?> list = GenerateVCardList();
@@ -163,10 +164,10 @@ namespace FolkerKinzel.VCards.Extensions.Tests
             IList<VCard> list2 = VCard.LoadVcf(path);
 
             Assert.AreNotEqual(list.Count, list2.Count);
-            Assert.IsInstanceOfType(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value, typeof(VCard));
+            Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void SaveVcfTest_vCard3_0()
         {
             List<VCard?> list = GenerateVCardList();
@@ -178,10 +179,11 @@ namespace FolkerKinzel.VCards.Extensions.Tests
             IList<VCard> list2 = VCard.LoadVcf(path);
 
             Assert.AreNotEqual(list.Count, list2.Count);
-            Assert.IsInstanceOfType(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value, typeof(VCard));
+            Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void SaveVcfTest_vCard4_0()
         {
             List<VCard?> list = GenerateVCardList();
@@ -193,10 +195,10 @@ namespace FolkerKinzel.VCards.Extensions.Tests
             IList<VCard> list2 = VCard.LoadVcf(path);
 
             Assert.AreEqual(2, list2.Count);
-            Assert.IsInstanceOfType(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value, typeof(VCard));
+            Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SerializeVcfTest1() => new List<VCard?>().SerializeVcf(null!, VCdVersion.V3_0);
 
@@ -252,7 +254,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests
             IList<VCard> list2 = VCard.ParseVcf(s);
 
             Assert.AreNotEqual(0, list2.Count);
-            Assert.IsInstanceOfType(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value, typeof(VCard));
+            Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
             Assert.AreEqual(version, list2[0].Version);
         }
     }

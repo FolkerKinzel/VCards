@@ -81,6 +81,10 @@ public sealed partial class DateAndOrTime
     private string AsString => _oneOf.AsT3;
 
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override string ToString() => _oneOf.ToString();
+
+
     //public static implicit operator DateAndOrTime(DateOnly _) => new DateAndOrTime(_);
     //public static explicit operator DateOnly(DateAndOrTime _) => _.AsDateOnly;
 

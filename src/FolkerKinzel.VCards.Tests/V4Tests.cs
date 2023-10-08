@@ -155,7 +155,7 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = new RelationTextProperty("http://folkers-website.de"),
+            Members = RelationProperty.FromText("http://folkers-website.de"),
             Kind = new KindProperty(VCdKind.Group)
         };
 

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
@@ -15,14 +17,17 @@ namespace FolkerKinzel.VCards.Models;
 /// </summary>
 public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProperty>
 {
-    public static RelationProperty FromUri(Uri uri,
+    private bool _isValueInitialized;
+    private Relation? _value;
+
+    public static RelationProperty FromUri(Uri? uri,
                                     RelationTypes? relation = null,
                                     string? propertyGroup = null)
         => uri is null
-            ? throw new ArgumentNullException(nameof(uri))
+            ? FromText(null, relation, propertyGroup)
             : !uri.IsAbsoluteUri
                 ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)), nameof(uri))
-                : (RelationProperty)new RelationUriProperty(uri, relation, propertyGroup);
+                : new RelationUriProperty(uri, relation, propertyGroup);
 
 
     public static RelationProperty FromText(string? text,
@@ -40,6 +45,28 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
                                             RelationTypes? relation = null,
                                             string? propertyGroup = null)
         => new RelationUuidProperty(uuid, relation, propertyGroup);
+
+
+    public static RelationProperty FromVCard(VCard? vCard,
+                                             RelationTypes? relation = null,
+                                             string? propertyGroup = null)
+        => vCard is null
+            ? FromText(null, relation, propertyGroup)
+            : new RelationVCardProperty(vCard, relation, propertyGroup);
+
+
+    public new Relation? Value
+    {
+        get
+        {
+            if (!_isValueInitialized)
+            {
+                InitializeValue();
+            }
+
+            return _value;
+        }
+    }
 
 
     /// <summary>
@@ -114,4 +141,22 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     }
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<RelationProperty>)this).GetEnumerator();
+
+    private void InitializeValue()
+    {
+        _isValueInitialized = true;
+
+        _value = this switch
+        {
+            RelationTextProperty tProp => tProp.IsEmpty ? null : new Relation(tProp.Value),
+
+            // The vCard could be empty or not when initializing, but users get
+            // always a reference to it to change it afterwards:
+            RelationVCardProperty vcProp => new Relation(vcProp.Value),
+
+            RelationUuidProperty guidProp => guidProp.IsEmpty ? null : new Relation(guidProp.Value),
+            RelationUriProperty uriProp => new Relation(uriProp.Value),
+            _ => null
+        };
+    }
 }

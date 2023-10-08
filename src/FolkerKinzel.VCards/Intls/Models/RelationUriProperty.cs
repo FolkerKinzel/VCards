@@ -91,8 +91,8 @@ internal sealed class RelationUriProperty : RelationProperty
         StringBuilder builder = serializer.Builder;
 
         _ = Parameters.Encoding == ValueEncoding.QuotedPrintable
-            ? builder.Append(QuotedPrintable.Encode(Value?.ToString(), builder.Length))
-            : builder.Append(Value);
+            ? builder.Append(QuotedPrintable.Encode(Value?.AbsoluteUri, builder.Length))
+            : builder.Append(Value?.AbsoluteUri);
     }
 
     //IEnumerator<RelationUriProperty> IEnumerable<RelationUriProperty>.GetEnumerator()
@@ -102,5 +102,12 @@ internal sealed class RelationUriProperty : RelationProperty
 
     /// <inheritdoc/>
     public override object Clone() => new RelationUriProperty(this);
+
+
+    public override bool IsEmpty => false;
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override string ToString() => Value.AbsoluteUri;
 
 }

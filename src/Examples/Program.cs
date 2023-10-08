@@ -8,7 +8,7 @@ internal class Program
 {
     private static void Main()
     {
-        var offset = DateTimeOffset.ParseExact("140000", "HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal);
+        //var offset = DateTimeOffset.ParseExact("140000", "HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal);
 
         //var uri = new Uri("därectory/image.png", UriKind.RelativeOrAbsolute);
 
@@ -35,12 +35,12 @@ internal class Program
         _ = Directory.CreateDirectory(directoryPath);
 
 
-        //WhatsAppDemo1.IntegrateWhatsAppNumberUsingIMPP();
-        //WhatsAppDemo2.UsingTheWhatsAppType();
-        // VCardExample.ReadingAndWritingVCard(directoryPath);
+        WhatsAppDemo1.IntegrateWhatsAppNumberUsingIMPP();
+        WhatsAppDemo2.UsingTheWhatsAppType();
+         //VCardExample.ReadingAndWritingVCard(directoryPath);
          VCard40Example.SaveSingleVCardAsVcf(directoryPath);
 
-        //StartAnsiFilterExample();
+        StartAnsiFilterExample();
 
 
         //string destinationPath = Path.Combine(sourcePath, "Ansi");

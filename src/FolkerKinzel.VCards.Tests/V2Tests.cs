@@ -205,7 +205,7 @@ public class V2Tests
     {
         var vc = new VCard
         {
-            Relations = new RelationVCardProperty(new VCard { NameViews = new NameProperty("wife", "best") }, RelationTypes.Spouse)
+            Relations = RelationProperty.FromVCard(new VCard { NameViews = new NameProperty("wife", "best") }, RelationTypes.Spouse)
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);

@@ -1,14 +1,15 @@
 ﻿using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 
-namespace FolkerKinzel.VCards.Models;
+namespace FolkerKinzel.VCards.Intls.Models;
 
 /// <summary>
 /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit der UUID ihrer <see cref="VCard"/>
 /// zu beschreiben.
 /// </summary>
-internal sealed class RelationUuidProperty : RelationProperty, IEnumerable<RelationUuidProperty>
+internal sealed class RelationUuidProperty : RelationProperty
 {
     /// <summary>
     /// Copy ctor.
@@ -30,8 +31,8 @@ internal sealed class RelationUuidProperty : RelationProperty, IEnumerable<Relat
     internal RelationUuidProperty(Guid uuid, RelationTypes? relation = null, string? propertyGroup = null)
         : base(relation, propertyGroup)
     {
-        this.Parameters.DataType = VCdDataType.Uri;
-        this.Value = uuid;
+        Parameters.DataType = VCdDataType.Uri;
+        Value = uuid;
     }
 
 
@@ -59,8 +60,8 @@ internal sealed class RelationUuidProperty : RelationProperty, IEnumerable<Relat
 
         base.PrepareForVcfSerialization(serializer);
 
-        this.Parameters.DataType = VCdDataType.Uri;
-        this.Parameters.ContentLocation = ContentLocation.ContentID;
+        Parameters.DataType = VCdDataType.Uri;
+        Parameters.ContentLocation = ContentLocation.ContentID;
     }
 
 
@@ -68,13 +69,13 @@ internal sealed class RelationUuidProperty : RelationProperty, IEnumerable<Relat
     {
         Debug.Assert(serializer != null);
 
-        _ = serializer.Builder.AppendUuid(this.Value, serializer.Version);
+        _ = serializer.Builder.AppendUuid(Value, serializer.Version);
     }
 
-    IEnumerator<RelationUuidProperty> IEnumerable<RelationUuidProperty>.GetEnumerator()
-    {
-        yield return this;
-    }
+    //IEnumerator<RelationUuidProperty> IEnumerable<RelationUuidProperty>.GetEnumerator()
+    //{
+    //    yield return this;
+    //}
 
     /// <inheritdoc/>
     public override object Clone() => new RelationUuidProperty(this);

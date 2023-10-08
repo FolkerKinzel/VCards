@@ -664,7 +664,7 @@ internal abstract class VcfSerializer
             }
         }
 
-        static RelationTextProperty? ConvertToRelationTextProperty(RelationVCardProperty vcardProp)
+        static RelationProperty? ConvertToRelationTextProperty(RelationVCardProperty vcardProp)
         {
             string? name = vcardProp.Value?.DisplayNames?
                 .Where(static x => x != null && !x.IsEmpty)
@@ -688,7 +688,9 @@ internal abstract class VcfSerializer
             }
 
             Debug.Assert(name != null);
-            return new RelationTextProperty(name, vcardProp.Parameters.RelationType ?? RelationTypes.Spouse, vcardProp.Group);
+            return RelationProperty.FromText(name, 
+                                             vcardProp.Parameters.RelationType ?? RelationTypes.Spouse,
+                                             vcardProp.Group);
         }
     }
 

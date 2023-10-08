@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Serializers;
+﻿using FolkerKinzel.VCards.Intls.Models;
+using FolkerKinzel.VCards.Intls.Serializers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -8,10 +9,10 @@ public class RelationVCardPropertyTests
     [TestMethod]
     public void RelationVCardPropertyTest1()
     {
-        var prop = new RelationVCardProperty(null);
+        var prop = RelationProperty.FromVCard(null);
         Assert.IsTrue(prop.IsEmpty);
 
-        var prop2 = prop.Clone() as RelationVCardProperty;
+        var prop2 = prop.Clone() as RelationProperty;
         Assert.IsNotNull(prop2);
         Assert.IsTrue(prop2!.IsEmpty);
         Assert.AreNotSame(prop, prop2);

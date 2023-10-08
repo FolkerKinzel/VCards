@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
-
 
 public sealed partial class DataPropertyValue
 {
