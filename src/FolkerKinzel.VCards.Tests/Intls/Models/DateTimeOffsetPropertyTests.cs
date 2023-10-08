@@ -12,11 +12,11 @@ public class DateTimeOffsetPropertyTests
 {
     private const string GROUP = "myGroup";
 
-    [TestMethod()]
+    [TestMethod]
     public void DateTimeOffsetPropertyTest1()
     {
 
-        var prop = DateAndOrTimeProperty.Create(DateTimeOffset.UtcNow, GROUP) as DateTimeOffsetProperty;
+        var prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.UtcNow, GROUP) as DateTimeOffsetProperty;
 
         Assert.IsNotNull(prop);
         Assert.IsNotNull(prop!.Value);
@@ -30,12 +30,12 @@ public class DateTimeOffsetPropertyTests
     }
 
 
-    [TestMethod()]
+    [TestMethod]
     public void DateTimeOffsetPropertyTest2()
     {
         var now = new DateTimeOffset(2021, 4, 4, 12, 41, 2, TimeSpan.FromHours(2));
 
-        var prop = DateAndOrTimeProperty.Create(now, GROUP);
+        var prop = DateAndOrTimeProperty.FromDateTime(now, GROUP);
 
         var vcard = new VCard
         {
@@ -53,7 +53,7 @@ public class DateTimeOffsetPropertyTests
 
         Assert.IsNotNull(vcard.BirthDayViews);
 
-        DateTimeOffsetProperty? prop2 = vcard.BirthDayViews!.First() as DateTimeOffsetProperty;
+        var prop2 = vcard.BirthDayViews!.First() as DateTimeOffsetProperty;
 
         Assert.IsNotNull(prop2);
         Assert.AreEqual(now, prop2!.Value);
@@ -63,33 +63,33 @@ public class DateTimeOffsetPropertyTests
         Assert.AreEqual(VCdDataType.DateAndOrTime, prop2.Parameters.DataType);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void DateTimeOffsetPropertyTest3()
     {
-        var prop = DateAndOrTimeProperty.Create(DateTimeOffset.MinValue, GROUP);
+        var prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.MinValue, GROUP);
         Assert.IsNotNull(prop.Value);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void DateTimeOffsetPropertyTest4()
     {
-        IEnumerable<DateAndOrTimeProperty> prop = DateAndOrTimeProperty.Create(DateTimeOffset.Now, GROUP);
+        IEnumerable<DateAndOrTimeProperty> prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.Now, GROUP);
         DateAndOrTimeProperty first = prop.First();
         Assert.AreSame(first, prop);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void DateTimeOffsetPropertyTest5()
     {
-        IEnumerable<DateAndOrTimeProperty> prop = DateAndOrTimeProperty.Create(DateTimeOffset.Now, GROUP);
+        IEnumerable<DateAndOrTimeProperty> prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.Now, GROUP);
         DateAndOrTimeProperty first = prop.AsWeakEnumerable().First();
         Assert.AreSame(first, prop);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void DateTimeOffsetPropertyTest6()
     {
-        IEnumerable<DateAndOrTimeProperty> prop = DateAndOrTimeProperty.Create(DateTimeOffset.Now, GROUP);
+        IEnumerable<DateAndOrTimeProperty> prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.Now, GROUP);
         foreach (DateAndOrTimeProperty item in prop)
         {
             Assert.IsNotNull(item.Value);
@@ -102,7 +102,7 @@ public class DateTimeOffsetPropertyTests
         DateTimeOffset dto = DateTimeOffset.Now;
         const string group = "gr1";
 
-        var prop = DateAndOrTimeProperty.Create(dto, group);
+        var prop = DateAndOrTimeProperty.FromDateTime(dto, group);
 
         Assert.IsInstanceOfType(prop, typeof(DateTimeOffsetProperty));
         Assert.AreEqual(group, prop.Group);

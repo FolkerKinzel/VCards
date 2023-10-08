@@ -61,28 +61,32 @@ public abstract class DateAndOrTimeProperty
                 : new DateTimeTextProperty(new TextProperty(vcfRow, version));
     }
 
-    public static DateAndOrTimeProperty Create(DateTimeOffset value,
-                                               string? propertyGroup = null) => 
-        new DateTimeOffsetProperty(value,
+    public static DateAndOrTimeProperty FromDateTime(DateTimeOffset dateTime,
+                                                     string? propertyGroup = null) => 
+        new DateTimeOffsetProperty(dateTime,
                                    new ParameterSection() { DataType = VCdDataType.DateAndOrTime },
                                    propertyGroup);
 
-    public static DateAndOrTimeProperty Create(DateOnly value,
-                                               string? propertyGroup = null) =>
-        new DateOnlyProperty(value,
+    
+    public static DateAndOrTimeProperty FromDate(int year, int month, int day, string? propertyGroup = null)
+        => FromDate(new DateOnly(year, month, day), propertyGroup);
+
+    public static DateAndOrTimeProperty FromDate(DateOnly date,
+                                                 string? propertyGroup = null) =>
+        new DateOnlyProperty(date,
                              new ParameterSection() { DataType = VCdDataType.Date },
                              propertyGroup);
 
-    public static DateAndOrTimeProperty Create(TimeOnly value,
-                                              string? propertyGroup = null) =>
-       new TimeOnlyProperty(value,
+    public static DateAndOrTimeProperty FromTime(TimeOnly time,
+                                                 string? propertyGroup = null) =>
+       new TimeOnlyProperty(time,
                             new ParameterSection() { DataType = VCdDataType.Time },
                             propertyGroup);
 
-    public static DateAndOrTimeProperty Create(string? value,
-                                               string? propertyGroup = null)
+    public static DateAndOrTimeProperty FromText(string? text,
+                                                 string? propertyGroup = null)
     {
-        var prop = new DateTimeTextProperty(new TextProperty(value, propertyGroup));
+        var prop = new DateTimeTextProperty(new TextProperty(text, propertyGroup));
         prop.Parameters.DataType = VCdDataType.Text;
         return prop;
     }

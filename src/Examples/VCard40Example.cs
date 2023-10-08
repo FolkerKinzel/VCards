@@ -116,8 +116,8 @@ public static class VCard40Example
         var vCard = new VCard
         {
             DisplayNames = new VC::TextProperty(composersName),
-            BirthDayViews = VC::DateAndOrTimeProperty.Create(birthDate),
-            DeathDateViews = VC::DateAndOrTimeProperty.Create(deathDate)
+            BirthDayViews = VC::DateAndOrTimeProperty.FromDate(birthDate),
+            DeathDateViews = VC::DateAndOrTimeProperty.FromDate(deathDate)
         };
 
         return vCard;

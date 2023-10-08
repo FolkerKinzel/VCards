@@ -329,7 +329,7 @@ public class VCardTests
         vc.Addresses = new AddressProperty?[] { null, adr};
         Assert.IsTrue(vc.IsEmpty());
 
-        vc.BirthDayViews = DateAndOrTimeProperty.Create(null);
+        vc.BirthDayViews = DateAndOrTimeProperty.FromText(null);
         Assert.IsTrue(vc.IsEmpty());
 
         var text = new TextProperty("  ");

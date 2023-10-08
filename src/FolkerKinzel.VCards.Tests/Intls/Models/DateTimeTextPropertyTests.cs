@@ -14,7 +14,7 @@ public class DateTimeTextPropertyTests
     {
         string now = "Früh morgens";
 
-        var prop = DateAndOrTimeProperty.Create(now, GROUP);
+        var prop = DateAndOrTimeProperty.FromText(now, GROUP);
 
         var vcard = new VCard
         {
@@ -32,7 +32,7 @@ public class DateTimeTextPropertyTests
 
         Assert.IsNotNull(vcard.BirthDayViews);
 
-        DateTimeTextProperty? prop2 = vcard.BirthDayViews!.First() as DateTimeTextProperty;
+        var prop2 = vcard.BirthDayViews!.First() as DateTimeTextProperty;
 
         Assert.IsNotNull(prop2);
         Assert.AreEqual(now, prop2!.Value);
@@ -44,13 +44,13 @@ public class DateTimeTextPropertyTests
     [TestMethod]
     public void DateTimeTextPropertyTest2()
     {
-        var prop = DateAndOrTimeProperty.Create("   ");
+        var prop = DateAndOrTimeProperty.FromText("   ");
         Assert.IsNull(prop.Value);
     }
     [TestMethod]
     public void IsEmptyTest1()
     {
-        var prop = DateAndOrTimeProperty.Create(null);
+        var prop = DateAndOrTimeProperty.FromText(null);
         Assert.IsTrue(prop.IsEmpty);
         Assert.IsNull(prop.Value);
     }
@@ -59,10 +59,19 @@ public class DateTimeTextPropertyTests
     public void IsEmptyTest2()
     {
         const string test = "test";
-        var prop = DateAndOrTimeProperty.Create(test);
+        var prop = DateAndOrTimeProperty.FromText(test);
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsNotNull(prop.Value);
         Assert.AreEqual(test, prop.Value!.String);
+    }
+
+    [TestMethod]
+    public void ToStringTest1() 
+    {
+        var prop = DateAndOrTimeProperty.FromText(null);
+        string s = prop.ToString();
+        Assert.IsNotNull(s);
+        Assert.IsTrue(s.Length > 0);
     }
 }
 

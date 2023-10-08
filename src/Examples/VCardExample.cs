@@ -131,7 +131,7 @@ public static class VCardExample
 
             vcard.EmailAddresses = prefMail;
 
-            vcard.BirthDayViews = VC::DateAndOrTimeProperty.Create(new DateOnly(1984, 3, 28));
+            vcard.BirthDayViews = VC::DateAndOrTimeProperty.FromDate(1984, 3, 28);
 
             vcard.Relations = VC::RelationProperty.FromText
                 (
@@ -141,7 +141,7 @@ public static class VCardExample
                     | VC::Enums.RelationTypes.Colleague
                 );
 
-            vcard.AnniversaryViews = VC::DateAndOrTimeProperty.Create(new DateOnly(2006, 7, 14));
+            vcard.AnniversaryViews = VC::DateAndOrTimeProperty.FromDate(2006, 7, 14);
             return vcard;
         }
 

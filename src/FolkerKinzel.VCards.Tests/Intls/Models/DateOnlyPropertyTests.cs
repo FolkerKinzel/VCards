@@ -9,7 +9,7 @@ public class DateOnlyPropertyTests
     public void DateOnlyPropertyTest1()
     {
         var dateOnly = DateOnly.FromDateTime(DateTime.Now);
-        var prop = DateAndOrTimeProperty.Create(dateOnly);
+        var prop = DateAndOrTimeProperty.FromDate(dateOnly);
 
         Assert.IsNotNull(prop);
         Assert.IsInstanceOfType(prop, typeof(DateOnlyProperty));

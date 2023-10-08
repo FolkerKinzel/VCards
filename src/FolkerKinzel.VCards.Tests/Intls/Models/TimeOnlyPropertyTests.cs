@@ -10,10 +10,10 @@ public class TimeOnlyPropertyTests
     [TestMethod]
     public void CloneTest1()
     {
-        TimeOnly dto = TimeOnly.FromDateTime(DateTime.Now);
+        var dto = TimeOnly.FromDateTime(DateTime.Now);
         const string group = "gr1";
 
-        var prop = DateAndOrTimeProperty.Create(dto, group);
+        var prop = DateAndOrTimeProperty.FromTime(dto, group);
 
         Assert.IsInstanceOfType(prop, typeof(TimeOnlyProperty));
         Assert.AreEqual(group, prop.Group);
@@ -35,8 +35,8 @@ public class TimeOnlyPropertyTests
         using var writer = new StringWriter();
         var serializer = new Vcf_2_1Serializer(writer, VcfOptions.Default, null);
 
-        TimeOnly dto = TimeOnly.FromDateTime(DateTime.Now);
-        var prop = DateAndOrTimeProperty.Create(dto);
+        var dto = TimeOnly.FromDateTime(DateTime.Now);
+        var prop = DateAndOrTimeProperty.FromTime(dto);
 
         prop.PrepareForVcfSerialization(serializer);
         Assert.AreEqual(VCdDataType.Time, prop.Parameters.DataType);
@@ -48,8 +48,8 @@ public class TimeOnlyPropertyTests
         using var writer = new StringWriter();
         var serializer = new Vcf_2_1Serializer(writer, VcfOptions.Default, null);
 
-        TimeOnly dto = TimeOnly.FromDateTime(DateTime.Now);
-        var prop = DateAndOrTimeProperty.Create(dto);
+        var dto = TimeOnly.FromDateTime(DateTime.Now);
+        var prop = DateAndOrTimeProperty.FromTime(dto);
 
         prop.AppendValue(serializer);
         Assert.AreNotEqual(0, serializer.Builder.Length);
