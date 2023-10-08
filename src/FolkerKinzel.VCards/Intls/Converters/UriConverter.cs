@@ -25,7 +25,7 @@ internal static class UriConverter
         return ToAbsoluteUri("http://" + value);
     }
 
-    internal static bool IsContentId(Uri value)
+    internal static bool IsContentId(this Uri value)
     {
         Debug.Assert(value != null);
         Debug.Assert(value.IsAbsoluteUri);

@@ -43,6 +43,5 @@ internal sealed class EmbeddedTextProperty : DataProperty
 
     internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);
 
-    public override string ToString() => _textProp.ToString();
 
 }

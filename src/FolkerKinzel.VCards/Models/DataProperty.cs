@@ -30,8 +30,6 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <param name="mimeType"></param>
     /// <param name="parameterSection"></param>
     /// <param name="propertyGroup"></param>
-    /// <remarks>Must be internal, because <see cref="ParameterSection.MediaType"/> has strong
-    /// restrictions.</remarks>
     internal DataProperty(string? mimeType,
                           ParameterSection parameterSection,
                           string? propertyGroup)

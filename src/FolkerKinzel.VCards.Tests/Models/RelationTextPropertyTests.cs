@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Models.Tests;
+﻿using FolkerKinzel.VCards.Intls.Models;
+
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass()]
 public class RelationTextPropertyTests

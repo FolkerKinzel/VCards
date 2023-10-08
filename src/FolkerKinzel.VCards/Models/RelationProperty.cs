@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -13,6 +15,33 @@ namespace FolkerKinzel.VCards.Models;
 /// </summary>
 public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProperty>
 {
+    public static RelationProperty FromUri(Uri uri,
+                                    RelationTypes? relation = null,
+                                    string? propertyGroup = null)
+        => uri is null
+            ? throw new ArgumentNullException(nameof(uri))
+            : !uri.IsAbsoluteUri
+                ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)), nameof(uri))
+                : (RelationProperty)new RelationUriProperty(uri, relation, propertyGroup);
+
+
+    public static RelationProperty FromText(string? text,
+                                            RelationTypes? relation = null,
+                                            string? propertyGroup = null)
+    {
+        var prop = new TextProperty(text, propertyGroup);
+        prop.Parameters.RelationType = relation;
+        prop.Parameters.DataType = VCdDataType.Text;
+
+        return new RelationTextProperty(prop);
+    }
+
+    public static RelationProperty FromGuid(Guid uuid,
+                                            RelationTypes? relation = null,
+                                            string? propertyGroup = null)
+        => new RelationUuidProperty(uuid, relation, propertyGroup);
+
+
     /// <summary>
     /// Kopierkonstruktor.
     /// </summary>
@@ -37,7 +66,9 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    protected RelationProperty(RelationTypes? relation, string? propertyGroup) : base(new ParameterSection(), propertyGroup) => this.Parameters.RelationType = relation;
+    protected RelationProperty(RelationTypes? relation, string? propertyGroup)
+        : base(new ParameterSection(), propertyGroup)
+        => this.Parameters.RelationType = relation;
 
 
     internal static RelationProperty Parse(VcfRow vcfRow, VCdVersion version)
@@ -46,7 +77,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
 
         if (string.IsNullOrWhiteSpace(vcfRow.Value) || vcfRow.Parameters.DataType == Enums.VCdDataType.Text)
         {
-            return new RelationTextProperty(vcfRow);
+            return new RelationTextProperty(vcfRow, version);
         }
 
         if (vcfRow.Value.IsUuidUri())
@@ -59,24 +90,22 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
 
             return relation;
         }
+        else if (Uri.TryCreate(vcfRow.Value.Trim(), UriKind.Absolute, out Uri? uri))
+        {
+            var relation = new RelationUriProperty(
+                uri,
+                vcfRow.Parameters.RelationType,
+                propertyGroup: vcfRow.Group);
+
+            relation.Parameters.Assign(vcfRow.Parameters);
+
+            return relation;
+        }
         else
         {
-            if (Uri.TryCreate(vcfRow.Value.Trim(), UriKind.RelativeOrAbsolute, out Uri? uri))
-            {
-                var relation = new RelationUriProperty(
-                    uri,
-                    vcfRow.Parameters.RelationType,
-                    propertyGroup: vcfRow.Group);
-
-                relation.Parameters.Assign(vcfRow.Parameters);
-
-                return relation;
-            }
-            else
-            {
-                return new RelationTextProperty(vcfRow);
-            }
+            return new RelationTextProperty(vcfRow, version);
         }
+
     }
 
     IEnumerator<RelationProperty> IEnumerable<RelationProperty>.GetEnumerator()

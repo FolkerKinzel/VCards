@@ -8,7 +8,7 @@ namespace FolkerKinzel.VCards.Models;
 /// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit der UUID ihrer <see cref="VCard"/>
 /// zu beschreiben.
 /// </summary>
-public sealed class RelationUuidProperty : RelationProperty, IEnumerable<RelationUuidProperty>
+internal sealed class RelationUuidProperty : RelationProperty, IEnumerable<RelationUuidProperty>
 {
     /// <summary>
     /// Copy ctor.
@@ -27,7 +27,7 @@ public sealed class RelationUuidProperty : RelationProperty, IEnumerable<Relatio
     /// <param name="propertyGroup">Bezeichner der Gruppe,
     /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
     /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    public RelationUuidProperty(Guid uuid, RelationTypes? relation = null, string? propertyGroup = null)
+    internal RelationUuidProperty(Guid uuid, RelationTypes? relation = null, string? propertyGroup = null)
         : base(relation, propertyGroup)
     {
         this.Parameters.DataType = VCdDataType.Uri;
