@@ -101,6 +101,6 @@ internal override void AppendValue(VcfSerializer serializer)
     }
 }
 
-public override string ToString() => Value != null ? $"{Value.Count} Bytes" : base.ToString();
+//public override string ToString() => Value != null ? $"{Value.Count} Bytes" : base.ToString();
 
 }

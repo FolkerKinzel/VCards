@@ -1,10 +1,9 @@
 ﻿using FolkerKinzel.MimeTypes;
-using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Resources;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
@@ -14,7 +13,8 @@ internal sealed class ReferencedDataProperty : DataProperty
     /// Copy ctor
     /// </summary>
     /// <param name="prop"></param>
-    private ReferencedDataProperty(ReferencedDataProperty prop) : base(prop) => Value = prop.Value;
+    private ReferencedDataProperty(ReferencedDataProperty prop) 
+        : base(prop) => Value = prop.Value;
 
     internal ReferencedDataProperty(Uri? value, string? mimeType, string? propertyGroup, ParameterSection parameterSection)
         : base(mimeType, parameterSection, propertyGroup)
@@ -87,6 +87,7 @@ internal sealed class ReferencedDataProperty : DataProperty
         _ = serializer.Builder.Append(Value.AbsoluteUri);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => Value?.AbsoluteUri ?? base.ToString();
+
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public override string ToString() => Value?.AbsoluteUri ?? base.ToString();
 }

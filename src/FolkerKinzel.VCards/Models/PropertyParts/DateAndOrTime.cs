@@ -64,6 +64,10 @@ public sealed partial class DateAndOrTime
                                   Func<TimeOnly, TResult>? f2,
                                   Func<string, TResult>? f3) => _oneOf.Match(f0, f1, f2, f3);
 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override string ToString() => _oneOf.ToString();
+
     private bool IsDateOnly => _oneOf.IsT0;
 
     private DateOnly AsDateOnly => _oneOf.AsT0;
@@ -81,8 +85,7 @@ public sealed partial class DateAndOrTime
     private string AsString => _oneOf.AsT3;
 
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => _oneOf.ToString();
+    
 
 
     //public static implicit operator DateAndOrTime(DateOnly _) => new DateAndOrTime(_);

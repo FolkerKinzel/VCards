@@ -74,12 +74,6 @@ internal sealed class RelationUriProperty : RelationProperty
             {
                 Parameters.ContentLocation = ContentLocation.Url;
             }
-
-            if (uri.ToString().NeedsToBeQpEncoded())
-            {
-                Parameters.Encoding = ValueEncoding.QuotedPrintable;
-                Parameters.CharSet = VCard.DEFAULT_CHARSET;
-            }
         }
     }
 
@@ -87,18 +81,9 @@ internal sealed class RelationUriProperty : RelationProperty
     internal override void AppendValue(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
-
-        StringBuilder builder = serializer.Builder;
-
-        _ = Parameters.Encoding == ValueEncoding.QuotedPrintable
-            ? builder.Append(QuotedPrintable.Encode(Value?.AbsoluteUri, builder.Length))
-            : builder.Append(Value?.AbsoluteUri);
+        _ = serializer.Builder.Append(Value.AbsoluteUri);
     }
-
-    //IEnumerator<RelationUriProperty> IEnumerable<RelationUriProperty>.GetEnumerator()
-    //{
-    //    yield return this;
-    //}
+    
 
     /// <inheritdoc/>
     public override object Clone() => new RelationUriProperty(this);
@@ -107,7 +92,7 @@ internal sealed class RelationUriProperty : RelationProperty
     public override bool IsEmpty => false;
 
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => Value.AbsoluteUri;
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public override string ToString() => Value.AbsoluteUri;
 
 }

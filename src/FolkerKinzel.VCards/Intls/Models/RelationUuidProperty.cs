@@ -72,11 +72,6 @@ internal sealed class RelationUuidProperty : RelationProperty
         _ = serializer.Builder.AppendUuid(Value, serializer.Version);
     }
 
-    //IEnumerator<RelationUuidProperty> IEnumerable<RelationUuidProperty>.GetEnumerator()
-    //{
-    //    yield return this;
-    //}
-
     /// <inheritdoc/>
     public override object Clone() => new RelationUuidProperty(this);
 

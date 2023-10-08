@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.ObjectModel;
+﻿using System.Collections;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
@@ -132,7 +130,6 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
         {
             return new RelationTextProperty(vcfRow, version);
         }
-
     }
 
     IEnumerator<RelationProperty> IEnumerable<RelationProperty>.GetEnumerator()

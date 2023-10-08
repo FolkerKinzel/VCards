@@ -34,6 +34,6 @@ internal sealed class DateTimeTextProperty : DateAndOrTimeProperty
 
     internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);
 
-    public override string ToString() => _textProp.ToString();
+    //public override string ToString() => _textProp.ToString();
 
 }

@@ -93,10 +93,6 @@ internal sealed class RelationVCardProperty : RelationProperty
         }
     }
 
-    //IEnumerator<RelationVCardProperty> IEnumerable<RelationVCardProperty>.GetEnumerator()
-    //{
-    //    yield return this;
-    //}
 
     /// <inheritdoc/>
     public override object Clone()

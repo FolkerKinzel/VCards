@@ -97,8 +97,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         {
             return new EmbeddedBytesProperty
                    (
-                     string.IsNullOrWhiteSpace(vcfRow.Value) 
-                            ? null 
+                     string.IsNullOrWhiteSpace(vcfRow.Value)
+                            ? null
                             : QuotedPrintable.DecodeData(vcfRow.Value),
                      vcfRow.Parameters.MediaType,
                      vcfRow.Group,
@@ -168,7 +168,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                        string? propertyGroup = null)
         => new ReferencedDataProperty
            (
-             (uri is not null) && !uri.IsAbsoluteUri 
+             (uri is not null) && !uri.IsAbsoluteUri
                  ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)), nameof(uri))
                  : uri,
              MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo) ? mimeInfo.ToString() : null,
