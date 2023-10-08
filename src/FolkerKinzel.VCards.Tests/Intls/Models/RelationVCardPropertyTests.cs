@@ -1,7 +1,7 @@
-﻿using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Intls.Serializers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace FolkerKinzel.VCards.Models.Tests;
+﻿using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Models;
+
+namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
 [TestClass]
 public class RelationVCardPropertyTests

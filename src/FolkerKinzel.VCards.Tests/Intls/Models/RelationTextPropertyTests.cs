@@ -1,6 +1,8 @@
 ﻿using FolkerKinzel.VCards.Intls.Models;
+using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models;
 
-namespace FolkerKinzel.VCards.Models.Tests;
+namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
 [TestClass]
 public class RelationTextPropertyTests
@@ -10,7 +12,7 @@ public class RelationTextPropertyTests
     [TestMethod]
     public void RelationTextPropertyTest1()
     {
-        const Enums.RelationTypes relation = Enums.RelationTypes.Acquaintance;
+        const RelationTypes relation = RelationTypes.Acquaintance;
         string text = "Bruno Hübchen";
 
         var prop = RelationProperty.FromText(text, relation, GROUP);
@@ -20,14 +22,14 @@ public class RelationTextPropertyTests
         Assert.IsFalse(prop.IsEmpty);
 
         Assert.AreEqual(relation, prop.Parameters.RelationType);
-        Assert.AreEqual(Enums.VCdDataType.Text, prop.Parameters.DataType);
+        Assert.AreEqual(VCdDataType.Text, prop.Parameters.DataType);
     }
 
 
     [TestMethod]
     public void RelationTextPropertyTest2()
     {
-        const Enums.RelationTypes relation = Enums.RelationTypes.Acquaintance;
+        const RelationTypes relation = RelationTypes.Acquaintance;
         string text = "Bruno Hübchen";
 
         var prop = RelationProperty.FromText(text, relation, GROUP);
@@ -56,14 +58,14 @@ public class RelationTextPropertyTests
         Assert.IsFalse(prop.IsEmpty);
 
         Assert.AreEqual(relation, prop.Parameters.RelationType);
-        Assert.AreEqual(Enums.VCdDataType.Text, prop.Parameters.DataType);
+        Assert.AreEqual(VCdDataType.Text, prop.Parameters.DataType);
     }
 
 
     [TestMethod]
     public void RelationTextPropertyTest3()
     {
-        const Enums.RelationTypes relation = Enums.RelationTypes.Agent;
+        const RelationTypes relation = RelationTypes.Agent;
         string text = "Bruno Hübchen";
 
         var prop = RelationProperty.FromText(text, relation, GROUP);
@@ -92,7 +94,7 @@ public class RelationTextPropertyTests
         Assert.IsFalse(prop.IsEmpty);
 
         Assert.AreEqual(relation, prop.Parameters.RelationType);
-        Assert.AreEqual(Enums.VCdDataType.Text, prop.Parameters.DataType);
+        Assert.AreEqual(VCdDataType.Text, prop.Parameters.DataType);
     }
 
 }

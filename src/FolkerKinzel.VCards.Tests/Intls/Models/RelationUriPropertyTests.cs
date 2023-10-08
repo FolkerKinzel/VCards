@@ -1,18 +1,19 @@
-﻿using FolkerKinzel.VCards.Intls.Models;
+﻿using System;
 using FolkerKinzel.VCards.Intls.Serializers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace FolkerKinzel.VCards.Models.Tests;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Enums;
+
+namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
 [TestClass]
 public class RelationUriPropertyTests
 {
     private const string GROUP = "myGroup";
 
-
     [TestMethod()]
     public void RelationUriPropertyTest1()
     {
-        const Enums.RelationTypes relation = Enums.RelationTypes.Acquaintance;
+        const RelationTypes relation = RelationTypes.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
         var prop = new RelationUriProperty(uri, relation, GROUP);
@@ -21,14 +22,14 @@ public class RelationUriPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(relation, prop.Parameters.RelationType);
-        Assert.AreEqual(Enums.VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
     }
 
 
     [TestMethod()]
     public void RelationUriPropertyTest2()
     {
-        const Enums.RelationTypes relation = Enums.RelationTypes.Acquaintance;
+        const RelationTypes relation = RelationTypes.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
         var prop = new RelationUriProperty(uri, relation, GROUP);
@@ -56,14 +57,14 @@ public class RelationUriPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(relation, prop.Parameters.RelationType);
-        Assert.AreEqual(Enums.VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
     }
 
 
     [TestMethod()]
     public void RelationUriPropertyTest3()
     {
-        const Enums.RelationTypes relation = Enums.RelationTypes.Agent;
+        const RelationTypes relation = RelationTypes.Agent;
         var uri = new Uri("http://test.ääh.com/", UriKind.Absolute);
 
         var prop = new RelationUriProperty(uri, relation, GROUP);
@@ -91,13 +92,13 @@ public class RelationUriPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(relation, prop.Parameters.RelationType);
-        Assert.AreEqual(Enums.VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
     }
 
     [TestMethod()]
     public void RelationUriPropertyTest4()
     {
-        const Enums.RelationTypes relation = Enums.RelationTypes.Agent;
+        const RelationTypes relation = RelationTypes.Agent;
         var uri = new Uri("cid:test.com/", UriKind.Absolute);
 
         var prop = new RelationUriProperty(uri, relation, GROUP);
@@ -125,7 +126,7 @@ public class RelationUriPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(relation, prop.Parameters.RelationType);
-        Assert.AreEqual(Enums.VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
     }
 
 
@@ -139,7 +140,7 @@ public class RelationUriPropertyTests
         var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
 
         prop.PrepareForVcfSerialization(serializer);
-        Assert.AreEqual(Enums.VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
     }
 
 }
