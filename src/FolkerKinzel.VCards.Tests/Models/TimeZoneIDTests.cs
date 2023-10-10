@@ -5,10 +5,7 @@ namespace FolkerKinzel.VCards.Models.Tests;
 
 internal class TimeZoneIDConverterMock : ITimeZoneIDConverter
 {
-    public TimeZoneIDConverterMock(bool success)
-    {
-        Success = success;
-    }
+    public TimeZoneIDConverterMock(bool success) => Success = success;
 
     public bool TryConvertToUtcOffset(string timeZoneID, out TimeSpan utcOffset)
     {

@@ -6,9 +6,9 @@ internal static class ImppTypesConverter
 {
     internal static class TypeValue
     {
-        internal const string Personal = "PERSONAL";
-        internal const string Business = "BUSINESS";
-        internal const string Mobile = "MOBILE";
+        internal const string PERSONAL = "PERSONAL";
+        internal const string BUSINESS = "BUSINESS";
+        internal const string MOBILE = "MOBILE";
     }
 
     internal const ImppTypes DEFINED_IMPP_TYPES_VALUES = ImppTypes.Business | ImppTypes.Mobile | ImppTypes.Personal;
@@ -23,9 +23,9 @@ internal static class ImppTypesConverter
 
         return typeValue switch
         {
-            TypeValue.Personal => ImppTypes.Personal,
-            TypeValue.Business => ImppTypes.Business,
-            TypeValue.Mobile => ImppTypes.Mobile,
+            TypeValue.PERSONAL => ImppTypes.Personal,
+            TypeValue.BUSINESS => ImppTypes.Business,
+            TypeValue.MOBILE => ImppTypes.Mobile,
             _ => null
         };
     }
@@ -33,9 +33,9 @@ internal static class ImppTypesConverter
     internal static string ToVcfString(this ImppTypes value)
         => value switch
         {
-            ImppTypes.Business => TypeValue.Business,
-            ImppTypes.Mobile => TypeValue.Mobile,
-            ImppTypes.Personal => TypeValue.Personal,
+            ImppTypes.Business => TypeValue.BUSINESS,
+            ImppTypes.Mobile => TypeValue.MOBILE,
+            ImppTypes.Personal => TypeValue.PERSONAL,
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
 }

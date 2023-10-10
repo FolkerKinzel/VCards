@@ -6,9 +6,9 @@ internal static class ExpertiseLevelConverter
 {
     private static class Values
     {
-        internal const string Beginner = "beginner";
-        internal const string Average = "average";
-        internal const string Expert = "expert";
+        internal const string BEGINNER = "beginner";
+        internal const string AVERAGE = "average";
+        internal const string EXPERT = "expert";
     }
 
     internal static ExpertiseLevel? Parse(string val)
@@ -18,9 +18,9 @@ internal static class ExpertiseLevelConverter
 
         return val switch
         {
-            Values.Beginner => ExpertiseLevel.Beginner,
-            Values.Average => ExpertiseLevel.Average,
-            Values.Expert => ExpertiseLevel.Expert,
+            Values.BEGINNER => ExpertiseLevel.Beginner,
+            Values.AVERAGE => ExpertiseLevel.Average,
+            Values.EXPERT => ExpertiseLevel.Expert,
             _ => null
         };
     }
@@ -29,9 +29,9 @@ internal static class ExpertiseLevelConverter
     {
         return expertise switch
         {
-            ExpertiseLevel.Beginner => Values.Beginner,
-            ExpertiseLevel.Average => Values.Average,
-            ExpertiseLevel.Expert => Values.Expert,
+            ExpertiseLevel.Beginner => Values.BEGINNER,
+            ExpertiseLevel.Average => Values.AVERAGE,
+            ExpertiseLevel.Expert => Values.EXPERT,
             _ => null
         };
     }

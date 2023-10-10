@@ -43,12 +43,12 @@ public class AnsiFilter
 
         internal Encoding? GetEncoding(string charSetName)
         {
-            if (_cache.ContainsKey(charSetName))
+            if (_cache.TryGetValue(charSetName, out Encoding? enc))
             {
-                return _cache[charSetName];
+                return enc;
             }
 
-            var enc = TextEncodingConverter.GetEncoding(charSetName);
+            enc = TextEncodingConverter.GetEncoding(charSetName);
 
             if (IsUtf8(enc))
             {

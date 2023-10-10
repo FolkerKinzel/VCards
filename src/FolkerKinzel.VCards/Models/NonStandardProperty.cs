@@ -103,10 +103,9 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
         return sb.ToString();
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0022:Ausdruckskörper für Methoden verwenden", Justification = "<Ausstehend>")]
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        // darf die Basisklassen-Implementation nicht aufrufen!
+        // MUST not call the base class implementation!
     }
 
 

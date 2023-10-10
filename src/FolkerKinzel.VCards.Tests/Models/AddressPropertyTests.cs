@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -90,7 +89,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V2_1;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new ("", null, null, null, appendLabel: false);
+        AddressProperty adr = new("", null, null, null, appendLabel: false);
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard
@@ -132,7 +131,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V3_0;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new ("", null, null, null, appendLabel: false);
+        AddressProperty adr = new("", null, null, null, appendLabel: false);
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard

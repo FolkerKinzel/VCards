@@ -50,8 +50,8 @@ internal static class RelationTypesConverter
                                                                | RelationTypes.Emergency;
 
 
-    internal const int RelationTypesMinBit = 0;
-    internal const int RelationTypesMaxBit = 19;
+    internal const int RELATION_TYPES_MIN_BIT = 0;
+    internal const int RELATION_TYPES_MAX_BIT = 19;
 
     internal static RelationTypes? Parse(string? typeValue)
     {

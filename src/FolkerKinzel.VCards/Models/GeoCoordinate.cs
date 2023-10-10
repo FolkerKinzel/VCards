@@ -59,7 +59,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     {
         const int prec = 1000000;
 
-        return -1 ^ Math.Floor(Latitude * prec).GetHashCode() ^ Math.Floor(Longitude * prec).GetHashCode();
+        return HashCode.Combine(Math.Floor(Latitude * prec), Math.Floor(Longitude * prec));
     }
 
 

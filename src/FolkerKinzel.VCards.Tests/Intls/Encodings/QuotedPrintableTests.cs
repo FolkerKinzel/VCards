@@ -44,7 +44,7 @@ public class QuotedPrintableTests
     [TestMethod]
     public void EncodeDataTest1()
     {
-        string s = new string(' ', 100);
+        var s = new string(' ', 100);
         string quoted = QuotedPrintable.Encode(s, 0);
         Assert.IsNotNull(quoted);
         Assert.AreNotEqual(quoted[quoted.Length - 1], ' ');

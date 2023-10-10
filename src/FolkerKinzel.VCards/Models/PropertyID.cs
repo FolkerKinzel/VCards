@@ -154,12 +154,11 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// <inheritdoc/>
     public bool Equals(PropertyID? other) => other is not null && ID == other.ID && Mapping == other.Mapping;
 
+
     /// <inheritdoc/>
     public override int GetHashCode()
-    {
-        int hashCode = -1;
-        return Mapping.HasValue ? (hashCode ^ ID.GetHashCode()) ^ (hashCode ^ Mapping.GetHashCode()) : hashCode ^ ID.GetHashCode();
-    }
+        => Mapping.HasValue ? HashCode.Combine(ID, Mapping) 
+                            : HashCode.Combine(ID);
 
 
     /// <summary>

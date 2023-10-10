@@ -18,8 +18,8 @@ internal static class AddressTypesConverter
                                                              | AddressTypes.Postal
                                                              | AddressTypes.Parcel;
 
-    internal const int AddressTypesMinBit = 0;
-    internal const int AddressTypesMaxBit = 3;
+    internal const int ADDRESS_TYPES_MIN_BIT = 0;
+    internal const int ADDRESS_TYPES_MAX_BIT = 3;
 
 
     internal static AddressTypes? Parse(string? typeValue)

@@ -6,9 +6,9 @@ internal static class InterestLevelConverter
 {
     internal static class Values
     {
-        internal const string High = "high";
-        internal const string Medium = "medium";
-        internal const string Low = "low";
+        internal const string HIGH = "high";
+        internal const string MEDIUM = "medium";
+        internal const string LOW = "low";
     }
 
     internal static InterestLevel? Parse(string val)
@@ -18,9 +18,9 @@ internal static class InterestLevelConverter
 
         return val switch
         {
-            Values.High => InterestLevel.High,
-            Values.Medium => InterestLevel.Medium,
-            Values.Low => InterestLevel.Low,
+            Values.HIGH => InterestLevel.High,
+            Values.MEDIUM => InterestLevel.Medium,
+            Values.LOW => InterestLevel.Low,
             _ => null
         };
     }
@@ -30,9 +30,9 @@ internal static class InterestLevelConverter
     {
         return interest switch
         {
-            InterestLevel.High => Values.High,
-            InterestLevel.Medium => Values.Medium,
-            InterestLevel.Low => Values.Low,
+            InterestLevel.High => Values.HIGH,
+            InterestLevel.Medium => Values.MEDIUM,
+            InterestLevel.Low => Values.LOW,
             _ => null
         };
     }

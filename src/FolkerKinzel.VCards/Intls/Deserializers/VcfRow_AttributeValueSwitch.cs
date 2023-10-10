@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
@@ -135,24 +136,6 @@ internal sealed partial class VcfRow
                 break;
         }
 
-        // Das Regex ist nicht perfekt, findet aber die meisten IETF-Language-Tags:
-        if (Regex.IsMatch(value, @"^[a-z]{2,3}-[A-Z]{2,3}$"))
-        {
-            return LANGUAGE_PROPERTY;
-        }
-
-
-        //CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.AllCultures); //AllCultures
-
-        //int i = 0;
-        //while (i < cultures.Length && !cultures[i].Name.Equals(value, StringComparison.InvariantCultureIgnoreCase))
-        //{
-        //    i++;
-        //}
-        //if (i < cultures.Length) return LANGUAGE_PROPERTY;
-
-
-        return TYPE_PROPERTY;
-
+        return value.IsIetfLanguageTag() ? LANGUAGE_PROPERTY : TYPE_PROPERTY;
     }
 }

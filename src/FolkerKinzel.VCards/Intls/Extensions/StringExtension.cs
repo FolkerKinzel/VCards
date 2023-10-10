@@ -1,7 +1,12 @@
-﻿namespace FolkerKinzel.VCards.Intls.Extensions;
+﻿using System.Text.RegularExpressions;
 
-internal static class StringExtension
+namespace FolkerKinzel.VCards.Intls.Extensions;
+
+internal static partial class StringExtension
 {
+    // The regex isn't perfect but finds most IETF language tags:
+    private const string IETF_LANGUAGE_TAG_REGEX = @"^[a-z]{2,3}-[A-Z]{2,3}$";
+
     [return: NotNullIfNotNull(nameof(value))]
     internal static string? UnMask(this string? value, StringBuilder sb, VCdVersion version)
     {
@@ -53,7 +58,7 @@ internal static class StringExtension
 
         for (int i = 0; i < s.Length; i++)
         {
-            if ((int)s[i] > 126)
+            if (s[i] > 126)
             {
                 return true;
             }
@@ -61,5 +66,35 @@ internal static class StringExtension
 
         return false;
     }
+
+
+
+    internal static bool IsIetfLanguageTag(this string value)
+#if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1 || NET5_0 || NET6_0
+    {
+        try
+        {
+            return Regex.IsMatch(value, IETF_LANGUAGE_TAG_REGEX, RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(50));
+        }
+        catch (RegexMatchTimeoutException)
+        {
+            return false;
+        }
+    }
+#else
+    {
+        try
+        {
+            return IetfLanguageTag().IsMatch(value);
+        }
+        catch(RegexMatchTimeoutException)
+        {
+            return false;
+        }
+    }
+
+    [GeneratedRegex(IETF_LANGUAGE_TAG_REGEX, RegexOptions.CultureInvariant, 50)]
+    private static partial Regex IetfLanguageTag();
+#endif
 
 }

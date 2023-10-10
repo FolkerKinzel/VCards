@@ -23,7 +23,7 @@ internal static class AddressTypesCollector
 
         AddressTypes value = addressType.Value & AddressTypesConverter.DEFINED_ADDRESS_TYPES_VALUES;
 
-        for (int i = AddressTypesConverter.AddressTypesMinBit; i <= AddressTypesConverter.AddressTypesMaxBit; i++)
+        for (int i = AddressTypesConverter.ADDRESS_TYPES_MIN_BIT; i <= AddressTypesConverter.ADDRESS_TYPES_MAX_BIT; i++)
         {
             AddressTypes flag = (AddressTypes)(1 << i);
 

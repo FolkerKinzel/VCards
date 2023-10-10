@@ -6,11 +6,11 @@ internal static class GenderConverter
 {
     private static class Values
     {
-        internal const string Male = "M";
-        internal const string Female = "F";
-        internal const string Other = "O";
-        internal const string NonOrNotApplicable = "N";
-        internal const string Unknown = "U";
+        internal const string MALE = "M";
+        internal const string FEMALE = "F";
+        internal const string OTHER = "O";
+        internal const string NON_OR_NOT_APPLICABLE = "N";
+        internal const string UNKNOWN = "U";
     }
 
     internal static Gender? Parse(string? value)
@@ -19,11 +19,11 @@ internal static class GenderConverter
             ? null
             : (value.ToUpperInvariant() switch
             {
-                Values.Male => Gender.Male,
-                Values.Female => Gender.Female,
-                Values.Other => Gender.Other,
-                Values.NonOrNotApplicable => Gender.NonOrNotApplicable,
-                Values.Unknown => Gender.Unknown,
+                Values.MALE => Gender.Male,
+                Values.FEMALE => Gender.Female,
+                Values.OTHER => Gender.Other,
+                Values.NON_OR_NOT_APPLICABLE => Gender.NonOrNotApplicable,
+                Values.UNKNOWN => Gender.Unknown,
                 _ => (Gender?)null
             });
     }
@@ -32,11 +32,11 @@ internal static class GenderConverter
     {
         return sex switch
         {
-            Gender.Male => Values.Male,
-            Gender.Female => Values.Female,
-            Gender.Other => Values.Other,
-            Gender.NonOrNotApplicable => Values.NonOrNotApplicable,
-            Gender.Unknown => Values.Unknown,
+            Gender.Male => Values.MALE,
+            Gender.Female => Values.FEMALE,
+            Gender.Other => Values.OTHER,
+            Gender.NonOrNotApplicable => Values.NON_OR_NOT_APPLICABLE,
+            Gender.Unknown => Values.UNKNOWN,
             _ => null
         };
     }

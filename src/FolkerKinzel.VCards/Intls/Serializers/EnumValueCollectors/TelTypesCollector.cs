@@ -23,7 +23,7 @@ internal static class TelTypesCollector
 
         TelTypes value = telType.Value & TelTypesConverter.DEFINED_TEL_TYPES_VALUES;
 
-        for (int i = TelTypesConverter.TelTypesMinBit; i <= TelTypesConverter.TelTypesMaxBit; i++)
+        for (int i = TelTypesConverter.TEL_TYPES_MIN_BIT; i <= TelTypesConverter.TEL_TYPES_MAX_BIT; i++)
         {
             TelTypes flag = (TelTypes)(1 << i);
 

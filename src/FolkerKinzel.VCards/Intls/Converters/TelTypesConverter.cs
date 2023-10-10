@@ -35,8 +35,8 @@ internal static class TelTypesConverter
                                                      | TelTypes.TextPhone
                                                      | TelTypes.Text;
 
-    internal const int TelTypesMinBit = 0;
-    internal const int TelTypesMaxBit = 12;
+    internal const int TEL_TYPES_MIN_BIT = 0;
+    internal const int TEL_TYPES_MAX_BIT = 12;
 
 
     internal static TelTypes? Parse(string? typeValue)

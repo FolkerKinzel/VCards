@@ -23,7 +23,7 @@ internal static class RelationTypesCollector
 
         RelationTypes value = relationType.Value & RelationTypesConverter.DEFINED_RELATION_TYPES_VALUES;
 
-        for (int i = RelationTypesConverter.RelationTypesMinBit; i <= RelationTypesConverter.RelationTypesMaxBit; i++)
+        for (int i = RelationTypesConverter.RELATION_TYPES_MIN_BIT; i <= RelationTypesConverter.RELATION_TYPES_MAX_BIT; i++)
         {
             RelationTypes flag = (RelationTypes)(1 << i);
 

@@ -16,7 +16,7 @@ public class ImppTypesCollectorTests
         ImppTypesCollector.CollectValueStrings(adr, list);
 
         Assert.AreEqual(2, list.Count);
-        Assert.IsTrue(list.Contains(ImppTypesConverter.TypeValue.Personal));
+        Assert.IsTrue(list.Contains(ImppTypesConverter.TypeValue.PERSONAL));
 
         // collector darf die Liste nicht löschen!:
         ImppTypesCollector.CollectValueStrings(adr, list);
