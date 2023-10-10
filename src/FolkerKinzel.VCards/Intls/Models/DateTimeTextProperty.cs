@@ -19,10 +19,10 @@ internal sealed class DateTimeTextProperty : DateAndOrTimeProperty
 
     public new string? Value => _textProp.Value;
 
-    
+    [MemberNotNullWhen(false, nameof(Value))]
+    public override bool IsEmpty => base.IsEmpty;
 
     public override object Clone() => new DateTimeTextProperty((TextProperty)_textProp.Clone());
-
 
     protected override object? GetVCardPropertyValue() => Value;
 
@@ -30,6 +30,7 @@ internal sealed class DateTimeTextProperty : DateAndOrTimeProperty
     {
         Debug.Assert(ReferenceEquals(Parameters, _textProp.Parameters));
         _textProp.PrepareForVcfSerialization(serializer);
+        Parameters.DataType = VCdDataType.Text;
     }
 
     internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);

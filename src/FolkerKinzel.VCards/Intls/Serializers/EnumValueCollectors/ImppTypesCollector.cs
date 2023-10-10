@@ -23,7 +23,7 @@ internal static class ImppTypesCollector
 
         ImppTypes value = imppType.Value & ImppTypesConverter.DEFINED_IMPP_TYPES_VALUES;
 
-        for (int i = ImppTypesConverter.ImppTypesMinBit; i <= ImppTypesConverter.ImppTypesMaxBit; i++)
+        for (int i = ImppTypesConverter.IMPP_TYPES_MIN_BIT; i <= ImppTypesConverter.IMPP_TYPES_MAX_BIT; i++)
         {
             ImppTypes flag = (ImppTypes)(1 << i);
 

@@ -1,5 +1,7 @@
-﻿using FolkerKinzel.VCards.Models;
+﻿using System.Collections.ObjectModel;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -28,6 +30,20 @@ public class EmbeddedBytesPropertyTests
     [DataRow(new byte[0])]
     public void EmbeddedBytesPropertyTest2(byte[]? input)
         => Assert.IsTrue(new EmbeddedBytesProperty(input, "application/octet-stream", null, new ParameterSection()).IsEmpty);
+
+
+    [TestMethod]
+    public void EmbeddedBytesPropertyTest3()
+    {
+        var prop = new EmbeddedBytesProperty(new byte[] {1,2,3}, "application/octet-stream", null, new ParameterSection());
+        Assert.IsFalse(prop.IsEmpty);
+
+        ReadOnlyCollection<byte>? val1 = prop.Value;
+        Assert.IsNotNull(val1);
+        ReadOnlyCollection<byte>? val2 = prop.Value;
+        Assert.AreSame(val1, val2);
+    }
+
 
     [TestMethod]
     public void CloneTest1()

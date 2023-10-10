@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Intls.Extensions;
 internal static partial class StringExtension
 {
     // The regex isn't perfect but finds most IETF language tags:
-    private const string IETF_LANGUAGE_TAG_REGEX = @"^[a-z]{2,3}-[A-Z]{2,3}$";
+    private const string IETF_LANGUAGE_TAG_PATTERN = @"^[a-z]{2,3}-[A-Z]{2,3}$";
 
     [return: NotNullIfNotNull(nameof(value))]
     internal static string? UnMask(this string? value, StringBuilder sb, VCdVersion version)
@@ -74,7 +74,7 @@ internal static partial class StringExtension
     {
         try
         {
-            return Regex.IsMatch(value, IETF_LANGUAGE_TAG_REGEX, RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(50));
+            return Regex.IsMatch(value, IETF_LANGUAGE_TAG_PATTERN, RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(50));
         }
         catch (RegexMatchTimeoutException)
         {
@@ -85,7 +85,7 @@ internal static partial class StringExtension
     {
         try
         {
-            return IetfLanguageTag().IsMatch(value);
+            return IetfLanguageTagRegex().IsMatch(value);
         }
         catch(RegexMatchTimeoutException)
         {
@@ -93,8 +93,8 @@ internal static partial class StringExtension
         }
     }
 
-    [GeneratedRegex(IETF_LANGUAGE_TAG_REGEX, RegexOptions.CultureInvariant, 50)]
-    private static partial Regex IetfLanguageTag();
+    [GeneratedRegex(IETF_LANGUAGE_TAG_PATTERN, RegexOptions.CultureInvariant, 50)]
+    private static partial Regex IetfLanguageTagRegex();
 #endif
 
 }

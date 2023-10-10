@@ -1,10 +1,10 @@
-﻿using FolkerKinzel.MimeTypes;
-using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Models.Enums;
+﻿using System.Collections.ObjectModel;
+using FolkerKinzel.MimeTypes;
 using FolkerKinzel.Uris;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using System.Collections.ObjectModel;
+using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
@@ -71,36 +71,36 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     public override string GetFileTypeExtension() => MimeString.ToFileTypeExtension(Parameters.MediaType);
 
 
-/// <inheritdoc/>
-public override object Clone() => new EmbeddedBytesProperty(this);
+    /// <inheritdoc/>
+    public override object Clone() => new EmbeddedBytesProperty(this);
 
-protected override object? GetVCardPropertyValue() => Value;
+    protected override object? GetVCardPropertyValue() => Value;
 
-internal override void PrepareForVcfSerialization(VcfSerializer serializer)
-{
-    Debug.Assert(serializer != null);
-
-    base.PrepareForVcfSerialization(serializer);
-
-    Parameters.ContentLocation = ContentLocation.Inline;
-    Parameters.DataType = VCdDataType.Binary;
-    Parameters.Encoding = ValueEncoding.Base64;
-}
-
-internal override void AppendValue(VcfSerializer serializer)
-{
-    Debug.Assert(serializer != null);
-
-    if (serializer.Version < VCdVersion.V4_0)
+    internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        serializer.AppendBase64EncodedData(_bytes);
-    }
-    else
-    {
-        serializer.Builder.Append(DataUrl.FromBytes(_bytes, Parameters.MediaType));
-    }
-}
+        Debug.Assert(serializer != null);
 
-//public override string ToString() => Value != null ? $"{Value.Count} Bytes" : base.ToString();
+        base.PrepareForVcfSerialization(serializer);
+
+        Parameters.ContentLocation = ContentLocation.Inline;
+        Parameters.DataType = VCdDataType.Binary;
+        Parameters.Encoding = ValueEncoding.Base64;
+    }
+
+    internal override void AppendValue(VcfSerializer serializer)
+    {
+        Debug.Assert(serializer != null);
+
+        if (serializer.Version < VCdVersion.V4_0)
+        {
+            serializer.AppendBase64EncodedData(_bytes);
+        }
+        else
+        {
+            serializer.Builder.Append(DataUrl.FromBytes(_bytes, Parameters.MediaType));
+        }
+    }
+
+    //public override string ToString() => Value != null ? $"{Value.Count} Bytes" : base.ToString();
 
 }

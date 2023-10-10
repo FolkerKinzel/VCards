@@ -41,12 +41,8 @@ internal sealed class RelationTextProperty : RelationProperty
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
-
-        base.PrepareForVcfSerialization(serializer);
-
-        _textProp?.PrepareForVcfSerialization(serializer);
+        _textProp.PrepareForVcfSerialization(serializer);
         Parameters.DataType = VCdDataType.Text;
-
     }
 
 

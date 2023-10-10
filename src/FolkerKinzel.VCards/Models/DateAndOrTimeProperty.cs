@@ -112,12 +112,12 @@ public abstract class DateAndOrTimeProperty
 
         _isValueInitialized = true;
 
-        _value = GetVCardPropertyValue() switch
+        _value = this switch
         {
-            DateOnly dateOnly => new DateAndOrTime(dateOnly),
-            TimeOnly timeOnly => new DateAndOrTime(timeOnly),
-            DateTimeOffset dateTimeOffset => new DateAndOrTime(dateTimeOffset),
-            string s => new DateAndOrTime(s),
+            DateOnlyProperty dateOnlyProperty => new DateAndOrTime(dateOnlyProperty.Value),
+            TimeOnlyProperty timeOnlyProperty => new DateAndOrTime(timeOnlyProperty.Value),
+            DateTimeOffsetProperty dateTimeOffsetProperty => new DateAndOrTime(dateTimeOffsetProperty.Value),
+            DateTimeTextProperty dateTimeTextProperty => dateTimeTextProperty.IsEmpty ? null : new DateAndOrTime(dateTimeTextProperty.Value),
             _ => null
         };
     }
