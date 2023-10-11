@@ -18,13 +18,10 @@ internal sealed class TimeOnlyProperty : DateAndOrTimeProperty
 
     public new TimeOnly Value { get; }
 
-    public override bool IsEmpty => false;
-
+    /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new TimeOnlyProperty(this);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

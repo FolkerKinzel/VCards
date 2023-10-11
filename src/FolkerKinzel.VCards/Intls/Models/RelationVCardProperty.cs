@@ -46,11 +46,6 @@ internal sealed class RelationVCardProperty : RelationProperty
     }
 
 
-    /// <inheritdoc/>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
-
-
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
@@ -95,11 +90,9 @@ internal sealed class RelationVCardProperty : RelationProperty
 
 
     /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone()
         => new RelationVCardProperty(this);
 
-
-    /// <inheritdoc/>
-    public override bool IsEmpty => false;
 
 }

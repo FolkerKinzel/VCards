@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
-internal class DateTimeOffsetProperty : DateAndOrTimeProperty
+internal sealed class DateTimeOffsetProperty : DateAndOrTimeProperty
 {
     private DateTimeOffsetProperty(DateTimeOffsetProperty prop)
         : base(prop) => Value = prop.Value;
@@ -20,14 +20,16 @@ internal class DateTimeOffsetProperty : DateAndOrTimeProperty
 
     public new DateTimeOffset Value { get; }
 
+
+    /// <inheritdoc/>
     public override bool IsEmpty
         => !DateAndOrTimeConverter.HasDateComponent(Value) && 
            !DateAndOrTimeConverter.HasTimeComponent(Value);
 
 
+    /// <inheritdoc/>
     public override object Clone() => new DateTimeOffsetProperty(this);
 
-    protected override object? GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

@@ -13,7 +13,11 @@ namespace FolkerKinzel.VCards.Tests
         public void NextCloudPhotoIssueTest1()
         {
             string contentsVCFFile = File.ReadAllText(TestFiles.NextCloudPhotoIssueTxt);
-            IList<VCard> convertedItem = VCard.ParseVcf(contentsVCFFile);
+            VCard? convertedItem = VCard.ParseVcf(contentsVCFFile).FirstOrDefault();
+            Assert.IsNotNull(convertedItem);
+            Assert.IsNotNull(convertedItem!.Photos);
+            Models.DataProperty? photo = convertedItem!.Photos!.FirstOrDefault();
+            Assert.IsFalse(photo!.IsEmpty);
         }
     }
 }

@@ -1,8 +1,25 @@
 ﻿using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Tests;
+using FolkerKinzel.VCards.Models.PropertyParts;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
+
+internal class DateAndOrTimePropertyDerived : DateAndOrTimeProperty
+{
+    public DateAndOrTimePropertyDerived(DateAndOrTimeProperty prop) : base(prop)
+    {
+    }
+
+    public DateAndOrTimePropertyDerived(ParameterSection parameters, string? propertyGroup) 
+        : base(parameters, propertyGroup)
+    {
+    }
+
+    public override object Clone() => throw new NotImplementedException();
+    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
+}
 
 [TestClass]
 public class DateAndOrTimePropertyTests
@@ -68,5 +85,12 @@ public class DateAndOrTimePropertyTests
         Assert.IsNotNull(vcard.BirthDayViews);
         DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
         Assert.IsInstanceOfType(bdayProp, typeof(DateTimeTextProperty));
+    }
+
+    [TestMethod]
+    public void IsEmptyTest1()
+    {
+        DateAndOrTimeProperty prop = new DateAndOrTimePropertyDerived(DateAndOrTimeProperty.FromDate(2023, 10, 11));
+        Assert.IsTrue(prop.IsEmpty);
     }
 }

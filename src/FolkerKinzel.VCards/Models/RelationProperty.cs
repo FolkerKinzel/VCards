@@ -66,10 +66,19 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
         }
     }
 
+    /// <inheritdoc/>
+    [MemberNotNullWhen(false, nameof(Value))]
+    public override bool IsEmpty => base.IsEmpty;
+
 
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => Value?.ToString() ?? base.ToString();
+
+
+    /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected override object? GetVCardPropertyValue() => Value;
 
 
     /// <summary>

@@ -16,17 +16,16 @@ public class DateTimeOffsetPropertyTests
     public void DateTimeOffsetPropertyTest1()
     {
 
-        var prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.UtcNow, GROUP) as DateTimeOffsetProperty;
+        DateAndOrTimeProperty prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.UtcNow, GROUP);
 
         Assert.IsNotNull(prop);
-        Assert.IsNotNull(prop!.Value);
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsNotNull(prop!.Value!.DateTimeOffset);
         Assert.AreEqual(GROUP, prop.Group);
-        Assert.AreNotEqual(DateTimeOffset.MinValue, prop.Value);
-
-        DateTimeOffset dto = prop.Value;
+        Assert.AreNotEqual(DateTimeOffset.MinValue, prop.Value.DateTimeOffset!.Value);
 
         VCardProperty vcProp = prop;
-        Assert.AreEqual(vcProp.Value, dto);
+        Assert.AreSame(vcProp.Value, prop.Value);
     }
 
 
@@ -67,7 +66,8 @@ public class DateTimeOffsetPropertyTests
     public void DateTimeOffsetPropertyTest3()
     {
         var prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.MinValue, GROUP);
-        Assert.IsNotNull(prop.Value);
+        Assert.IsTrue(prop.IsEmpty);
+        Assert.IsNull(prop.Value);
     }
 
     [TestMethod]

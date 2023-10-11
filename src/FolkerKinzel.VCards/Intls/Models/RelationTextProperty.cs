@@ -30,12 +30,7 @@ internal sealed class RelationTextProperty : RelationProperty
     
     /// <inheritdoc/>
     [MemberNotNullWhen(false, nameof(Value))]
-    public override bool IsEmpty => base.IsEmpty;
-
-
-    /// <inheritdoc/>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    public override bool IsEmpty => _textProp.IsEmpty;
 
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)

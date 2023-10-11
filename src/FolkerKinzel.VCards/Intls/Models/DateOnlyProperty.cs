@@ -19,13 +19,8 @@ internal sealed class DateOnlyProperty : DateAndOrTimeProperty
     public new DateOnly Value { get; }
 
 
-    public override bool IsEmpty => false;
-
-
+    /// <inheritdoc/>
     public override object Clone() => new DateOnlyProperty(this);
-
-
-    protected override object? GetVCardPropertyValue() => Value;
 
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)

@@ -30,6 +30,12 @@ internal sealed class ReferencedDataProperty : DataProperty
 
     public new Uri? Value { get; }
 
+
+    /// <inheritdoc/>
+    [MemberNotNullWhen(false, nameof(Value))]
+    public override bool IsEmpty => Value is null;
+
+
     public override string GetFileTypeExtension()
     {
         string? mime = Parameters.MediaType;
@@ -43,8 +49,7 @@ internal sealed class ReferencedDataProperty : DataProperty
     public override object Clone() => new ReferencedDataProperty(this);
 
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    
 
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)

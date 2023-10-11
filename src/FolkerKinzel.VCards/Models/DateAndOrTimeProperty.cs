@@ -14,7 +14,7 @@ public abstract class DateAndOrTimeProperty
     private bool _isValueInitialized;
 
 
-    protected DateAndOrTimeProperty(VCardProperty prop) : base(prop) { }
+    protected DateAndOrTimeProperty(DateAndOrTimeProperty prop) : base(prop) { }
    
 
     protected DateAndOrTimeProperty(ParameterSection parameters,
@@ -30,6 +30,15 @@ public abstract class DateAndOrTimeProperty
             return _value;
         }
     }
+
+    /// <inheritdoc/>
+    [MemberNotNullWhen(false, nameof(Value))]
+    public override bool IsEmpty => base.IsEmpty;
+
+
+    /// <inheritdoc/>
+    protected override object? GetVCardPropertyValue() => Value;
+
 
     internal static DateAndOrTimeProperty Create(VcfRow vcfRow, VCdVersion version)
     {
@@ -116,7 +125,7 @@ public abstract class DateAndOrTimeProperty
         {
             DateOnlyProperty dateOnlyProperty => new DateAndOrTime(dateOnlyProperty.Value),
             TimeOnlyProperty timeOnlyProperty => new DateAndOrTime(timeOnlyProperty.Value),
-            DateTimeOffsetProperty dateTimeOffsetProperty => new DateAndOrTime(dateTimeOffsetProperty.Value),
+            DateTimeOffsetProperty dateTimeOffsetProperty => dateTimeOffsetProperty.IsEmpty ? null : new DateAndOrTime(dateTimeOffsetProperty.Value),
             DateTimeTextProperty dateTimeTextProperty => dateTimeTextProperty.IsEmpty ? null : new DateAndOrTime(dateTimeTextProperty.Value),
             _ => null
         };

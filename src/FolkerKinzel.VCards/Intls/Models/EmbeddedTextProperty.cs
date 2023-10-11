@@ -22,18 +22,24 @@ internal sealed class EmbeddedTextProperty : DataProperty
 
     public new string? Value => _textProp.Value;
 
+
+    /// <inheritdoc/>
+    [MemberNotNullWhen(false, nameof(Value))]
+    public override bool IsEmpty => _textProp.IsEmpty;
+
+
     public override string GetFileTypeExtension()
     {
         string? mime = Parameters.MediaType;
         return mime is null ? ".txt" : MimeString.ToFileTypeExtension(mime);
     }
 
+
+    /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new EmbeddedTextProperty((TextProperty)_textProp.Clone());
 
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

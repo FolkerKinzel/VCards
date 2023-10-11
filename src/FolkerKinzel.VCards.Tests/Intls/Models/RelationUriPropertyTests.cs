@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -10,7 +11,7 @@ public class RelationUriPropertyTests
 {
     private const string GROUP = "myGroup";
 
-    [TestMethod()]
+    [TestMethod]
     public void RelationUriPropertyTest1()
     {
         const RelationTypes relation = RelationTypes.Acquaintance;
@@ -26,7 +27,7 @@ public class RelationUriPropertyTests
     }
 
 
-    [TestMethod()]
+    [TestMethod]
     public void RelationUriPropertyTest2()
     {
         const RelationTypes relation = RelationTypes.Acquaintance;
@@ -61,7 +62,7 @@ public class RelationUriPropertyTests
     }
 
 
-    [TestMethod()]
+    [TestMethod]
     public void RelationUriPropertyTest3()
     {
         const RelationTypes relation = RelationTypes.Agent;
@@ -95,7 +96,7 @@ public class RelationUriPropertyTests
         Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void RelationUriPropertyTest4()
     {
         const RelationTypes relation = RelationTypes.Agent;
@@ -128,6 +129,8 @@ public class RelationUriPropertyTests
         Assert.AreEqual(relation, prop.Parameters.RelationType);
         Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
     }
+
+    
 
 
     [TestMethod]

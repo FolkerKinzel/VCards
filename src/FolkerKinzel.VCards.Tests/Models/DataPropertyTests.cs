@@ -1,10 +1,29 @@
 ﻿using FolkerKinzel.Uris;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
+
+internal class DataPropertyDerived : DataProperty
+{
+    public DataPropertyDerived(DataProperty prop) : base(prop)
+    {
+    }
+
+    public DataPropertyDerived(string? mimeType, ParameterSection parameterSection, string? propertyGroup) 
+        : base(mimeType, parameterSection, propertyGroup)
+    {
+    }
+
+    public override object Clone() => throw new NotImplementedException();
+    public override string GetFileTypeExtension() => throw new NotImplementedException();
+    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
+}
+
 
 [TestClass]
 public class DataPropertyTests
@@ -143,5 +162,12 @@ public class DataPropertyTests
         Assert.IsTrue(photo.IsEmpty);
         Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
         Assert.AreEqual("image/gif", photo.Parameters.MediaType);
+    }
+
+    [TestMethod]
+    public void IsEmptyTest1()
+    {
+        DataProperty prop = new DataPropertyDerived(DataProperty.FromText("Hello"));
+        Assert.IsTrue(prop.IsEmpty);
     }
 }

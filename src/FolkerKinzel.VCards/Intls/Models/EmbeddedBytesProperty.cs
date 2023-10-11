@@ -66,15 +66,20 @@ internal sealed class EmbeddedBytesProperty : DataProperty
         }
     }
 
+
+    /// <inheritdoc/>
+    [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => _bytes is null;
 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string GetFileTypeExtension() => MimeString.ToFileTypeExtension(Parameters.MediaType);
 
 
     /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new EmbeddedBytesProperty(this);
 
-    protected override object? GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

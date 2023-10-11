@@ -49,11 +49,6 @@ internal sealed class RelationUriProperty : RelationProperty
     }
 
 
-    /// <inheritdoc/>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
-
-
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
@@ -86,13 +81,8 @@ internal sealed class RelationUriProperty : RelationProperty
     
 
     /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new RelationUriProperty(this);
 
-
-    public override bool IsEmpty => false;
-
-
-    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-    //public override string ToString() => Value.AbsoluteUri;
 
 }

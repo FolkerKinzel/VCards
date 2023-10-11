@@ -46,11 +46,6 @@ internal sealed class RelationUuidProperty : RelationProperty
 
 
     /// <inheritdoc/>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
-
-
-    /// <inheritdoc/>
     public override bool IsEmpty => Value == Guid.Empty;
 
 
@@ -73,6 +68,7 @@ internal sealed class RelationUuidProperty : RelationProperty
     }
 
     /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new RelationUuidProperty(this);
 
 }

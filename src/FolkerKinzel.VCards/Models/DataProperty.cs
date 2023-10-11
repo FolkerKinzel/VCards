@@ -50,6 +50,16 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     }
 
 
+    /// <inheritdoc/>
+    [MemberNotNullWhen(false, nameof(Value))]
+    public override bool IsEmpty => base.IsEmpty;
+
+
+    /// <inheritdoc/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected override object? GetVCardPropertyValue() => Value;
+
+
     public abstract string GetFileTypeExtension();
 
 
@@ -189,14 +199,15 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => Value?.ToString() ?? base.ToString();
 
+
     private void InitializeValue()
     {
         _isValueInitialized = true;
-        _value = GetVCardPropertyValue() switch
+        _value = this switch
         {
-            ReadOnlyCollection<byte> bt => new DataPropertyValue(bt),
-            string s => new DataPropertyValue(s),
-            Uri uri => new DataPropertyValue(uri),
+            EmbeddedBytesProperty bt => bt.IsEmpty ? null : new DataPropertyValue(bt.Value),
+            EmbeddedTextProperty text => text.IsEmpty ? null : new DataPropertyValue(text.Value),
+            ReferencedDataProperty uri => uri.IsEmpty ? null : new DataPropertyValue(uri.Value),
             _ => null
         };
     }
