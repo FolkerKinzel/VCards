@@ -14,8 +14,8 @@ internal class DataPropertyDerived : DataProperty
     {
     }
 
-    public DataPropertyDerived(string? mimeType, ParameterSection parameterSection, string? propertyGroup) 
-        : base(mimeType, parameterSection, propertyGroup)
+    public DataPropertyDerived(ParameterSection parameterSection, string? propertyGroup) 
+        : base(parameterSection, propertyGroup)
     {
     }
 
@@ -47,6 +47,32 @@ public class DataPropertyTests
         Assert.IsNotNull(val1);
         Assert.AreEqual(val1, val2);
         Assert.AreSame(val1, val2);
+    }
+
+    [TestMethod]
+    public void ValueTest2()
+    {
+        VCardProperty prop = DataProperty.FromText("abc");
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsInstanceOfType(prop.Value, typeof(DataPropertyValue));
+    }
+
+
+    [TestMethod]
+    public void ValueTest3()
+    {
+        Assert.IsTrue(Uri.TryCreate("http://folker.de/", UriKind.Absolute, out Uri? uri));
+        VCardProperty prop = DataProperty.FromUri(uri);
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsInstanceOfType(prop.Value, typeof(DataPropertyValue));
+    }
+
+    [TestMethod]
+    public void ValueTest4()
+    {
+        VCardProperty prop = DataProperty.FromBytes(new byte[] {1,2,3});
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsInstanceOfType(prop.Value, typeof(DataPropertyValue));
     }
 
     [TestMethod]
@@ -170,4 +196,6 @@ public class DataPropertyTests
         DataProperty prop = new DataPropertyDerived(DataProperty.FromText("Hello"));
         Assert.IsTrue(prop.IsEmpty);
     }
+
+    
 }

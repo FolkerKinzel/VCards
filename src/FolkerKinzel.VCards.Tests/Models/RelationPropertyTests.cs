@@ -65,10 +65,35 @@ public class RelationPropertyTests
     [DataRow("../bla.txt")]
     public void ParseTest1(string input)
     {
-        VcfRow? row = VcfRow.Parse("RELATED:" + input, new VcfDeserializationInfo());
+        var row = VcfRow.Parse("RELATED:" + input, new VcfDeserializationInfo());
         Assert.IsNotNull(row);
 
-        RelationProperty prop = RelationProperty.Parse(row!, VCdVersion.V4_0);
+        var prop = RelationProperty.Parse(row!, VCdVersion.V4_0);
         Assert.IsInstanceOfType(prop, typeof(RelationTextProperty));
     }
+
+    [TestMethod]
+    public void ValueTest1()
+    {
+        VCardProperty prop = RelationProperty.FromText("abc");
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsInstanceOfType(prop.Value, typeof(Relation));
+    }
+
+    [TestMethod]
+    public void ValueTest2()
+    {
+        VCardProperty prop = RelationProperty.FromGuid(Guid.NewGuid());
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsInstanceOfType(prop.Value, typeof(Relation));
+    }
+
+    [TestMethod]
+    public void ValueTest3()
+    {
+        VCardProperty prop = RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty("Folker") });
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsInstanceOfType(prop.Value, typeof(Relation));
+    }
+
 }

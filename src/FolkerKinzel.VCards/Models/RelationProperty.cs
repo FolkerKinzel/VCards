@@ -25,7 +25,10 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
             ? FromText(null, relation, propertyGroup)
             : !uri.IsAbsoluteUri
                 ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)), nameof(uri))
-                : new RelationUriProperty(uri, relation, propertyGroup);
+                : new RelationUriProperty
+                    (
+                    new UriProperty(uri, new ParameterSection() { RelationType = relation }, propertyGroup)
+                    );
 
 
     public static RelationProperty FromText(string? text,
@@ -131,12 +134,10 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
         }
         else if (Uri.TryCreate(vcfRow.Value.Trim(), UriKind.Absolute, out Uri? uri))
         {
-            var relation = new RelationUriProperty(
-                uri,
-                vcfRow.Parameters.RelationType,
-                propertyGroup: vcfRow.Group);
-
-            relation.Parameters.Assign(vcfRow.Parameters);
+            var relation = new RelationUriProperty
+                (
+                new UriProperty(uri, vcfRow.Parameters, propertyGroup: vcfRow.Group)
+                );
 
             return relation;
         }

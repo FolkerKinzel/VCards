@@ -2,38 +2,23 @@
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
 internal sealed class ReferencedDataProperty : DataProperty
 {
+    private readonly UriProperty _uriProp;
+
     /// <summary>
-    /// Copy ctor
+    /// ctor
     /// </summary>
     /// <param name="prop"></param>
-    private ReferencedDataProperty(ReferencedDataProperty prop) 
-        : base(prop) => Value = prop.Value;
-
-    internal ReferencedDataProperty(Uri? value, string? mimeType, string? propertyGroup, ParameterSection parameterSection)
-        : base(mimeType, parameterSection, propertyGroup)
-    {
-        if (value != null)
-        {
-            Debug.Assert(value.IsAbsoluteUri);
-
-            Value = value;
-            Parameters.DataType = VCdDataType.Uri;
-        }
-    }
-
-    public new Uri? Value { get; }
+    internal ReferencedDataProperty(UriProperty prop)
+        : base(prop.Parameters, prop.Group) => _uriProp = prop;
 
 
-    /// <inheritdoc/>
-    [MemberNotNullWhen(false, nameof(Value))]
-    public override bool IsEmpty => Value is null;
+    public new Uri Value => _uriProp.Value;
 
 
     public override string GetFileTypeExtension()
@@ -46,53 +31,14 @@ internal sealed class ReferencedDataProperty : DataProperty
 
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override object Clone() => new ReferencedDataProperty(this);
-
-
-    
+    public override object Clone() => new ReferencedDataProperty((UriProperty)_uriProp.Clone());
 
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
-    {
-        Debug.Assert(serializer != null);
+        => _uriProp.PrepareForVcfSerialization(serializer);
 
-        base.PrepareForVcfSerialization(serializer);
-
-        if (Value is null)
-        {
-            Parameters.ContentLocation = ContentLocation.Inline;
-        }
-        else if (serializer.Version == VCdVersion.V2_1)
-        {
-            if (UriConverter.IsContentId(Value))
-            {
-                Parameters.ContentLocation = ContentLocation.ContentID;
-            }
-            else if (Parameters.ContentLocation != ContentLocation.ContentID)
-            {
-                Parameters.ContentLocation = ContentLocation.Url;
-            }
-        }
-        else
-        {
-            Parameters.DataType = VCdDataType.Uri;
-        }
-    }
 
     internal override void AppendValue(VcfSerializer serializer)
-    {
-        Debug.Assert(serializer != null);
+        => _uriProp.AppendValue(serializer);
 
-        if (Value is null)
-        {
-            return;
-        }
-
-        Debug.Assert(Value.IsAbsoluteUri);
-        _ = serializer.Builder.Append(Value.AbsoluteUri);
-    }
-
-
-    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-    //public override string ToString() => Value?.AbsoluteUri ?? base.ToString();
 }

@@ -23,29 +23,11 @@ internal sealed class EmbeddedBytesProperty : DataProperty
         _value = prop._value;
     }
 
-    internal EmbeddedBytesProperty(IEnumerable<byte>? value,
-                                   string? mimeType,
-                                   string? propertyGroup)
-        : base(mimeType, new ParameterSection() { Encoding = ValueEncoding.Base64 }, propertyGroup)
-    {
-        if (value != null)
-        {
-            var arr = value.ToArray();
-
-            if (arr.Length == 0)
-            {
-                return;
-            }
-
-            _bytes = arr;
-        }
-    }
 
     internal EmbeddedBytesProperty(byte[]? arr,
-                                   string? mimeType,
                                    string? propertyGroup,
                                    ParameterSection parameterSection)
-        : base(mimeType, parameterSection, propertyGroup)
+        : base(parameterSection, propertyGroup)
     {
         if (arr != null && arr.Length != 0)
         {
@@ -105,7 +87,4 @@ internal sealed class EmbeddedBytesProperty : DataProperty
             serializer.Builder.Append(DataUrl.FromBytes(_bytes, Parameters.MediaType));
         }
     }
-
-    //public override string ToString() => Value != null ? $"{Value.Count} Bytes" : base.ToString();
-
 }

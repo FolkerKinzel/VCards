@@ -56,6 +56,7 @@ public class ReferencedDataPropertyTests
         Assert.AreEqual(0, serializer.Builder.Length);
     }
 
+
     [TestMethod]
     public void PrepareForVcfSerializationTest1()
     {
@@ -68,8 +69,8 @@ public class ReferencedDataPropertyTests
 
         prop.PrepareForVcfSerialization(serializer);
         Assert.AreEqual(ContentLocation.Inline, prop.Parameters.ContentLocation);
-        Assert.IsNull(prop.Parameters.DataType);
     }
+
 
     [TestMethod]
     public void PrepareForVcfSerializationTest2()

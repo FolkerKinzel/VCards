@@ -1,8 +1,7 @@
-﻿using System;
-using FolkerKinzel.VCards.Intls.Serializers;
+﻿using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -17,7 +16,7 @@ public class RelationUriPropertyTests
         const RelationTypes relation = RelationTypes.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(uri, relation, GROUP);
+        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         Assert.AreEqual(uri, prop.Value);
         Assert.AreEqual(GROUP, prop.Group);
@@ -33,7 +32,7 @@ public class RelationUriPropertyTests
         const RelationTypes relation = RelationTypes.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(uri, relation, GROUP);
+        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         var vcard = new VCard
         {
@@ -68,7 +67,7 @@ public class RelationUriPropertyTests
         const RelationTypes relation = RelationTypes.Agent;
         var uri = new Uri("http://test.ääh.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(uri, relation, GROUP);
+        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         var vcard = new VCard
         {
@@ -102,7 +101,7 @@ public class RelationUriPropertyTests
         const RelationTypes relation = RelationTypes.Agent;
         var uri = new Uri("cid:test.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(uri, relation, GROUP);
+        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         var vcard = new VCard
         {
@@ -130,7 +129,7 @@ public class RelationUriPropertyTests
         Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
     }
 
-    
+
 
 
     [TestMethod]

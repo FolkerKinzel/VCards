@@ -27,13 +27,10 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <summary>
     /// ctor
     /// </summary>
-    /// <param name="mimeType"></param>
-    /// <param name="parameterSection"></param>
+    /// <param name="parameters"></param>
     /// <param name="propertyGroup"></param>
-    internal DataProperty(string? mimeType,
-                          ParameterSection parameterSection,
-                          string? propertyGroup)
-        : base(parameterSection, propertyGroup) => Parameters.MediaType = mimeType;
+    internal DataProperty(ParameterSection parameters, string? propertyGroup)
+        : base(parameters, propertyGroup) { }
 
 
     public new DataPropertyValue? Value
@@ -67,19 +64,16 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     {
         if (DataUrl.TryParse(vcfRow.Value, out DataUrlInfo info))
         {
+            vcfRow.Parameters.MediaType =
+                MimeTypeInfo.TryParse(info.MimeType, out MimeTypeInfo mimeTypeInfo)
+                                  ? mimeTypeInfo.ToString()
+                                  : MimeString.OctetStream;
+
             return info.TryGetEmbeddedData(out OneOf<string, byte[]> data)
                     ? data.Match<DataProperty>
                        (
-                        s => new EmbeddedTextProperty(vcfRow, version),
-                        b => new EmbeddedBytesProperty
-                             (
-                              b,
-                              MimeTypeInfo.TryParse(info.MimeType, out MimeTypeInfo mimeTypeInfo)
-                                  ? mimeTypeInfo.ToString()
-                                  : MimeString.OctetStream,
-                              vcfRow.Group,
-                              vcfRow.Parameters
-                              )
+                        s => new EmbeddedTextProperty(new TextProperty(vcfRow, version)),
+                        b => new EmbeddedBytesProperty(b, vcfRow.Group, vcfRow.Parameters)
                         )
                     : FromText(vcfRow.Value, info.MimeType.ToString(), vcfRow.Group);
         }
@@ -89,7 +83,6 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
             return new EmbeddedBytesProperty
                        (
                         Base64Helper.GetBytesOrNull(vcfRow.Value),
-                        vcfRow.Parameters.MediaType,
                         vcfRow.Group,
                         vcfRow.Parameters
                         );
@@ -110,7 +103,6 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                      string.IsNullOrWhiteSpace(vcfRow.Value)
                             ? null
                             : QuotedPrintable.DecodeData(vcfRow.Value),
-                     vcfRow.Parameters.MediaType,
                      vcfRow.Group,
                      vcfRow.Parameters
                      );
@@ -127,12 +119,9 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
             return Uri.TryCreate(vcfRow.Value.Trim(), UriKind.Absolute, out Uri? uri)
                        ? new ReferencedDataProperty
                               (
-                               uri,
-                               vcfRow.Parameters.MediaType,
-                               vcfRow.Group,
-                               vcfRow.Parameters
+                               new UriProperty(uri, vcfRow.Parameters, vcfRow.Group)
                                )
-                       : new EmbeddedTextProperty(vcfRow, version);
+                       : new EmbeddedTextProperty(new TextProperty(vcfRow, version));
         }
     }
 
@@ -141,9 +130,9 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                         string? mimeType = null,
                                         string? propertyGroup = null)
        => mimeType is null
-            ? new EmbeddedBytesProperty(LoadFile(filePath), MimeString.FromFileName(filePath), propertyGroup)
+            ? new EmbeddedBytesProperty(LoadFile(filePath), propertyGroup, new ParameterSection() { MediaType = MimeString.FromFileName(filePath) })
             : MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
-               ? new EmbeddedBytesProperty(LoadFile(filePath), mimeInfo.ToString(), propertyGroup)
+               ? new EmbeddedBytesProperty(LoadFile(filePath),  propertyGroup, new ParameterSection() { MediaType = mimeInfo.ToString() })
                : FromFile(filePath, null, propertyGroup);
 
 
@@ -152,11 +141,14 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                          string? propertyGroup = null)
         => new EmbeddedBytesProperty
            (
-            bytes,
-            MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
-                 ? mimeInfo.ToString()
-                 : MimeString.OctetStream,
-            propertyGroup
+            bytes?.ToArray(),
+            propertyGroup,
+            new ParameterSection() 
+              { 
+                MediaType = MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
+                             ? mimeInfo.ToString()
+                             : MimeString.OctetStream
+              }
             );
 
 
@@ -164,28 +156,35 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                         string? mimeType = null,
                                         string? propertyGroup = null)
     {
-        var textProp = new TextProperty(text, propertyGroup);
-        textProp.Parameters.MediaType =
-            MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
-                           ? mimeInfo.ToString()
-                           : null;
-        textProp.Parameters.DataType = VCdDataType.Text;
-        return new EmbeddedTextProperty(textProp);
+        if (text is null)
+        {
+            return FromBytes(null, mimeType ?? "text/plain", propertyGroup);
+        }
+        else
+        {
+            var textProp = new TextProperty(text, propertyGroup);
+            textProp.Parameters.MediaType =
+                MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
+                               ? mimeInfo.ToString()
+                               : null;
+            textProp.Parameters.DataType = VCdDataType.Text;
+            return new EmbeddedTextProperty(textProp);
+        }
     }
 
     public static DataProperty FromUri(Uri? uri,
                                        string? mimeType = null,
                                        string? propertyGroup = null)
-        => new ReferencedDataProperty
+        => uri is null ? FromBytes(null, mimeType, propertyGroup)
+                       : new ReferencedDataProperty
            (
-             (uri is not null) && !uri.IsAbsoluteUri
-                 ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)), nameof(uri))
-                 : uri,
-             MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo) ? mimeInfo.ToString() : null,
-             propertyGroup,
-             new ParameterSection()
-            );
-
+             new UriProperty(uri.IsAbsoluteUri
+                               ? uri
+                               : throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)), nameof(uri)),
+                 new ParameterSection() { MediaType = MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo) ? mimeInfo.ToString() : null },
+                 propertyGroup)
+           );
+     
 
     IEnumerator<DataProperty> IEnumerable<DataProperty>.GetEnumerator()
     {
@@ -207,7 +206,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         {
             EmbeddedBytesProperty bt => bt.IsEmpty ? null : new DataPropertyValue(bt.Value),
             EmbeddedTextProperty text => text.IsEmpty ? null : new DataPropertyValue(text.Value),
-            ReferencedDataProperty uri => uri.IsEmpty ? null : new DataPropertyValue(uri.Value),
+            ReferencedDataProperty uri => new DataPropertyValue(uri.Value),
             _ => null
         };
     }

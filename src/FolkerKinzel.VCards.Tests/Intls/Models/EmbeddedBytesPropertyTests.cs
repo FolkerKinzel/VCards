@@ -29,13 +29,13 @@ public class EmbeddedBytesPropertyTests
     [DataRow(null)]
     [DataRow(new byte[0])]
     public void EmbeddedBytesPropertyTest2(byte[]? input)
-        => Assert.IsTrue(new EmbeddedBytesProperty(input, "application/octet-stream", null, new ParameterSection()).IsEmpty);
+        => Assert.IsTrue(new EmbeddedBytesProperty(input, null, new ParameterSection()).IsEmpty);
 
 
     [TestMethod]
     public void EmbeddedBytesPropertyTest3()
     {
-        var prop = new EmbeddedBytesProperty(new byte[] {1,2,3}, "application/octet-stream", null, new ParameterSection());
+        var prop = new EmbeddedBytesProperty(new byte[] {1,2,3}, null, new ParameterSection());
         Assert.IsFalse(prop.IsEmpty);
 
         ReadOnlyCollection<byte>? val1 = prop.Value;

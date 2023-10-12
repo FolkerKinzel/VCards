@@ -11,14 +11,8 @@ internal sealed class EmbeddedTextProperty : DataProperty
     private readonly TextProperty _textProp;
 
     internal EmbeddedTextProperty(TextProperty textProp) 
-       : base(textProp.Parameters.MediaType,
-              textProp.Parameters,
+       : base(textProp.Parameters,
               textProp.Group) => _textProp = textProp;
-
-    internal EmbeddedTextProperty(VcfRow vcfRow, VCdVersion version)
-        : base(vcfRow.Parameters.MediaType,
-               vcfRow.Parameters,
-               vcfRow.Group) => _textProp = new TextProperty(vcfRow, version);
 
     public new string? Value => _textProp.Value;
 
@@ -38,7 +32,6 @@ internal sealed class EmbeddedTextProperty : DataProperty
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new EmbeddedTextProperty((TextProperty)_textProp.Clone());
-
     
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
@@ -49,6 +42,5 @@ internal sealed class EmbeddedTextProperty : DataProperty
     }
 
     internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);
-
 
 }
