@@ -37,7 +37,7 @@ public class DateAndOrTimePropertyTests
 
 
     [TestMethod]
-    public void CreateTest1()
+    public void ParseTest1()
     {
         const string vcf = """
         BEGIN:VCARD
@@ -54,7 +54,7 @@ public class DateAndOrTimePropertyTests
     }
 
     [TestMethod]
-    public void CreateTest2()
+    public void ParseTest2()
     {
         const string vcf = """
         BEGIN:VCARD
@@ -71,7 +71,7 @@ public class DateAndOrTimePropertyTests
     }
 
     [TestMethod]
-    public void CreateTest3()
+    public void ParseTest3()
     {
         const string vcf = """
         BEGIN:VCARD
@@ -93,4 +93,39 @@ public class DateAndOrTimePropertyTests
         DateAndOrTimeProperty prop = new DateAndOrTimePropertyDerived(DateAndOrTimeProperty.FromDate(2023, 10, 11));
         Assert.IsTrue(prop.IsEmpty);
     }
+
+    [TestMethod]
+    public void ValueTest1()
+    {
+        VCardProperty prop = DateAndOrTimeProperty.FromDate(2023, 10, 14);
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
+    }
+
+    [TestMethod]
+    public void ValueTest2()
+    {
+        VCardProperty prop = DateAndOrTimeProperty.FromDateTime(DateTime.Now);
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
+    }
+
+
+    [TestMethod]
+    public void ValueTest3()
+    {
+        VCardProperty prop = DateAndOrTimeProperty.FromTime(14, 24);
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
+    }
+
+    [TestMethod]
+    public void ValueTest4()
+    {
+        VCardProperty prop = DateAndOrTimeProperty.FromText("Midnight");
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
+    }
+
+
 }

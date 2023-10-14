@@ -32,7 +32,7 @@ public class DataPropertyTests
     public void DataPropertyTest3()
     {
         VcfRow row = VcfRow.Parse("PHOTO:", new VcfDeserializationInfo())!;
-        var prop = DataProperty.Create(row, VCdVersion.V3_0);
+        var prop = DataProperty.Parse(row, VCdVersion.V3_0);
 
         Assert.IsNull(prop.Value);
     }
@@ -106,7 +106,7 @@ public class DataPropertyTests
     }
 
     [TestMethod]
-    public void CreateTest1()
+    public void ParseTest1()
     {
         string textUri = DataUrl.FromText("The password");
         string vcf = $"""
@@ -130,7 +130,7 @@ public class DataPropertyTests
     }
 
     [TestMethod]
-    public void CreateTest2()
+    public void ParseTest2()
     {
         const string vcf = """
         BEGIN:VCARD
@@ -150,7 +150,7 @@ public class DataPropertyTests
     }
 
     [TestMethod]
-    public void CreateTest3()
+    public void ParseTest3()
     {
         const string vcf = """
         BEGIN:VCARD
@@ -170,7 +170,7 @@ public class DataPropertyTests
     }
 
     [TestMethod]
-    public void CreateTest4()
+    public void ParseTest4()
     {
         const string vcf = """
         BEGIN:VCARD

@@ -40,7 +40,7 @@ public abstract class DateAndOrTimeProperty
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    internal static DateAndOrTimeProperty Create(VcfRow vcfRow, VCdVersion version)
+    internal static DateAndOrTimeProperty Parse(VcfRow vcfRow, VCdVersion version)
     {
         Debug.Assert(vcfRow != null);
 
@@ -70,27 +70,35 @@ public abstract class DateAndOrTimeProperty
                 : new DateTimeTextProperty(new TextProperty(vcfRow, version));
     }
 
-    public static DateAndOrTimeProperty FromDateTime(DateTimeOffset dateTime,
-                                                     string? propertyGroup = null) => 
-        new DateTimeOffsetProperty(dateTime,
-                                   new ParameterSection() { DataType = VCdDataType.DateAndOrTime },
-                                   propertyGroup);
-
     
     public static DateAndOrTimeProperty FromDate(int year, int month, int day, string? propertyGroup = null)
         => FromDate(new DateOnly(year, month, day), propertyGroup);
 
+
     public static DateAndOrTimeProperty FromDate(DateOnly date,
-                                                 string? propertyGroup = null) =>
-        new DateOnlyProperty(date,
-                             new ParameterSection() { DataType = VCdDataType.Date },
-                             propertyGroup);
+                                                 string? propertyGroup = null)
+        => new DateOnlyProperty(date,
+                                new ParameterSection() { DataType = VCdDataType.Date },
+                                propertyGroup);
+
+
+    public static DateAndOrTimeProperty FromDateTime(DateTimeOffset dateTime,
+                                                     string? propertyGroup = null)
+        => new DateTimeOffsetProperty(dateTime,
+                                      new ParameterSection() { DataType = VCdDataType.DateAndOrTime },
+                                      propertyGroup);
+
+
+    public static DateAndOrTimeProperty FromTime(int hour, int minute,
+                                                 string? propertyGroup = null) 
+        => FromTime(new TimeOnly(hour, minute), propertyGroup);
+
 
     public static DateAndOrTimeProperty FromTime(TimeOnly time,
-                                                 string? propertyGroup = null) =>
-       new TimeOnlyProperty(time,
-                            new ParameterSection() { DataType = VCdDataType.Time },
-                            propertyGroup);
+                                                 string? propertyGroup = null)
+        => new TimeOnlyProperty(time,
+                                new ParameterSection() { DataType = VCdDataType.Time },
+                                propertyGroup);
 
     public static DateAndOrTimeProperty FromText(string? text,
                                                  string? propertyGroup = null)

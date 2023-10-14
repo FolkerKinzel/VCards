@@ -43,13 +43,16 @@ internal static partial class StringExtension
 
     /// <summary>
     /// Gibt <c>true</c> zurück, wenn <paramref name="s"/> NON-ASCII-Zeichen oder Zeilenwechsel enthält.
-    /// Benötigt keine NULL-Prüfung.
+    /// Needs no <c>null</c> check!
     /// </summary>
     /// <param name="s">Ein <see cref="string"/>.</param>
     /// <returns><c>true</c>, wenn <paramref name="s"/> enkodiert werden muss.</returns>
-    public static bool NeedsToBeQpEncoded(this string s)
+    public static bool NeedsToBeQpEncoded(this string? s)
     {
-        Debug.Assert(s != null);
+        if (s is null)
+        {
+            return false;
+        }
 
         if (s.ContainsNewLine())
         {

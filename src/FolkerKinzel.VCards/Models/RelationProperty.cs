@@ -90,6 +90,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// <param name="prop">Das zu klonende <see cref="RelationProperty"/>-Objekt.</param>
     protected RelationProperty(RelationProperty prop) : base(prop) { }
 
+
     /// <summary>
     /// Konstruktor, der von abgeleiteten Klassen beim Parsen von VCF-Dateien verwendet wird.
     /// </summary>

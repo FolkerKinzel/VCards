@@ -65,7 +65,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
         base.PrepareForVcfSerialization(serializer);
 
-        if (serializer.Version == VCdVersion.V2_1 && Value != null && Value.NeedsToBeQpEncoded())
+        if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
             this.Parameters.Encoding = ValueEncoding.QuotedPrintable;
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;

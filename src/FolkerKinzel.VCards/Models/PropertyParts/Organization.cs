@@ -49,7 +49,7 @@ public sealed class Organization
 
 
     internal bool NeedsToBeQpEncoded()
-        => (OrganizationName != null && OrganizationName.NeedsToBeQpEncoded()) ||
+        => (OrganizationName.NeedsToBeQpEncoded()) ||
            (OrganizationalUnits != null && OrganizationalUnits.Any(s => s.NeedsToBeQpEncoded()));
 
 

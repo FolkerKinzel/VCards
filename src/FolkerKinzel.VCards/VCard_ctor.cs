@@ -115,7 +115,7 @@ public sealed partial class VCard
                     DisplayNames = new TextProperty(vcfRow, this.Version).GetAssignment(DisplayNames);
                     break;
                 case PropKeys.BDAY:
-                    BirthDayViews = DateAndOrTimeProperty.Create(vcfRow, this.Version).GetAssignment(BirthDayViews);
+                    BirthDayViews = DateAndOrTimeProperty.Parse(vcfRow, this.Version).GetAssignment(BirthDayViews);
                     break;
                 case PropKeys.ADR: // PostOfficeBox, ExtendedAddress, Street, Locality, Region, PostalCode, Country
                     Addresses = new AddressProperty(vcfRow, this.Version).GetAssignment(Addresses);
@@ -174,16 +174,16 @@ public sealed partial class VCard
                     Categories = new StringCollectionProperty(vcfRow, this.Version).GetAssignment(Categories);
                     break;
                 case PropKeys.SOUND:
-                    Sounds = DataProperty.Create(vcfRow, this.Version).GetAssignment(Sounds);
+                    Sounds = DataProperty.Parse(vcfRow, this.Version).GetAssignment(Sounds);
                     break;
                 case PropKeys.PHOTO:
-                    Photos = DataProperty.Create(vcfRow, this.Version).GetAssignment(Photos);
+                    Photos = DataProperty.Parse(vcfRow, this.Version).GetAssignment(Photos);
                     break;
                 case PropKeys.LOGO:
-                    Logos = DataProperty.Create(vcfRow, this.Version).GetAssignment(Logos);
+                    Logos = DataProperty.Parse(vcfRow, this.Version).GetAssignment(Logos);
                     break;
                 case PropKeys.KEY:
-                    Keys = DataProperty.Create(vcfRow, this.Version).GetAssignment(Keys);
+                    Keys = DataProperty.Parse(vcfRow, this.Version).GetAssignment(Keys);
                     break;
                 case PropKeys.SORT_STRING: // nur vCard 3.0
                     if (vcfRowsParsed < vcfRowsToParse)
@@ -213,7 +213,7 @@ public sealed partial class VCard
                     Sources = new TextProperty(vcfRow, this.Version).GetAssignment(Sources);
                     break;
                 case PropKeys.ANNIVERSARY:
-                    this.AnniversaryViews = DateAndOrTimeProperty.Create(vcfRow, this.Version).GetAssignment(AnniversaryViews);
+                    this.AnniversaryViews = DateAndOrTimeProperty.Parse(vcfRow, this.Version).GetAssignment(AnniversaryViews);
                     break;
                 case PropKeys.NonStandard.X_ANNIVERSARY:
                 case PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY:
@@ -225,7 +225,7 @@ public sealed partial class VCard
                     }
                     else if (AnniversaryViews is null)
                     {
-                        this.AnniversaryViews = DateAndOrTimeProperty.Create(vcfRow, this.Version);
+                        this.AnniversaryViews = DateAndOrTimeProperty.Parse(vcfRow, this.Version);
                     }
 
                     break;
@@ -397,7 +397,7 @@ public sealed partial class VCard
                 // Erweiterungen:
                 case PropKeys.NonStandard.DEATHDATE:
                     this.DeathDateViews =
-                        DateAndOrTimeProperty.Create(vcfRow, this.Version).GetAssignment(DeathDateViews);
+                        DateAndOrTimeProperty.Parse(vcfRow, this.Version).GetAssignment(DeathDateViews);
                     break;
                 case PropKeys.NonStandard.BIRTHPLACE:
                     this.BirthPlaceViews =

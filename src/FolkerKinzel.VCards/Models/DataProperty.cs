@@ -60,7 +60,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     public abstract string GetFileTypeExtension();
 
 
-    internal static DataProperty Create(VcfRow vcfRow, VCdVersion version)
+    internal static DataProperty Parse(VcfRow vcfRow, VCdVersion version)
     {
         if (DataUrl.TryParse(vcfRow.Value, out DataUrlInfo info))
         {
@@ -132,7 +132,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
        => mimeType is null
             ? new EmbeddedBytesProperty(LoadFile(filePath), propertyGroup, new ParameterSection() { MediaType = MimeString.FromFileName(filePath) })
             : MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
-               ? new EmbeddedBytesProperty(LoadFile(filePath),  propertyGroup, new ParameterSection() { MediaType = mimeInfo.ToString() })
+               ? new EmbeddedBytesProperty(LoadFile(filePath), propertyGroup, new ParameterSection() { MediaType = mimeInfo.ToString() })
                : FromFile(filePath, null, propertyGroup);
 
 
@@ -143,12 +143,12 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
            (
             bytes?.ToArray(),
             propertyGroup,
-            new ParameterSection() 
-              { 
+            new ParameterSection()
+            {
                 MediaType = MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
                              ? mimeInfo.ToString()
                              : MimeString.OctetStream
-              }
+            }
             );
 
 
@@ -156,21 +156,15 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                         string? mimeType = null,
                                         string? propertyGroup = null)
     {
-        if (text is null)
-        {
-            return FromBytes(null, mimeType ?? "text/plain", propertyGroup);
-        }
-        else
-        {
-            var textProp = new TextProperty(text, propertyGroup);
-            textProp.Parameters.MediaType =
-                MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
-                               ? mimeInfo.ToString()
-                               : null;
-            textProp.Parameters.DataType = VCdDataType.Text;
-            return new EmbeddedTextProperty(textProp);
-        }
+        var textProp = new TextProperty(text, propertyGroup);
+        textProp.Parameters.MediaType =
+            MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
+                           ? mimeInfo.ToString()
+                           : null;
+        textProp.Parameters.DataType = VCdDataType.Text;
+        return new EmbeddedTextProperty(textProp);
     }
+
 
     public static DataProperty FromUri(Uri? uri,
                                        string? mimeType = null,
@@ -184,7 +178,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                  new ParameterSection() { MediaType = MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo) ? mimeInfo.ToString() : null },
                  propertyGroup)
            );
-     
+
 
     IEnumerator<DataProperty> IEnumerable<DataProperty>.GetEnumerator()
     {
