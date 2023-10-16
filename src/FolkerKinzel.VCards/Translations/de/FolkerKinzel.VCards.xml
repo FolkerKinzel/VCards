@@ -285,9 +285,9 @@
         </member>
         <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.ReferenceVCards(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard})">
             <summary>
-            Gibt eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten zurück, in der die <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekte durch
-            <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte als 
+            Gibt eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten zurück, in der die <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekte durch
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte als 
             separate Elemente angefügt sind.
             </summary>
             
@@ -295,10 +295,10 @@
             enthalten.</param>
             
             <returns>
-            Eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten, in der die <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekte 
+            Eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten, in der die <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekte 
             durch 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte als 
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte als 
             separate Elemente angefügt sind. (Wenn die angefügten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte noch keine <see cref="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/>-Eigenschaft hatten, 
             wird ihnen von der Methode automatisch eine neue zugewiesen.)
             </returns>
@@ -334,8 +334,8 @@
         </member>
         <member name="M:FolkerKinzel.VCards.Extensions.VCardCollectionExtension.DereferenceVCards(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard})">
             <summary>
-            Gibt eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten zurück, in der <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/>-Objekte durch
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte
+            Gibt eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten zurück, in der <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty"/>-Objekte durch
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte
             in der Sammlung befinden.
             </summary>
             
@@ -343,8 +343,8 @@
             enthalten.</param>
             
             <returns>
-            Eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten, in der <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/>-Objekte durch
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte
+            Eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten, in der <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty"/>-Objekte durch
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte
             in der als Argument übergebenen Sammlung befinden.
             </returns>
             
@@ -401,13 +401,13 @@
             Dies geschieht, wenn eine VCF-Datei als
             vCard 4.0 gespeichert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befinden.
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten befinden.
             </para>
             
             <para>
             Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
             serialisiert wird und wenn sich in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts ein 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
             </para>
             </remarks>
@@ -448,12 +448,12 @@
             Dies geschieht, wenn eine
             vCard 4.0 serialisiert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden.
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten befanden.
             </para>
             
             <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
             serialisiert wird und wenn sich in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts ein 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
             </para>
             
@@ -493,12 +493,12 @@
             vCards, als sich ursprünglich Elemente in <paramref name="vCards"/> befanden. Dies geschieht, wenn eine
             vCard 4.0 serialisiert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden.
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten befanden.
             </para>
             
             <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
             serialisiert wird und wenn sich in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts ein 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
             </para>
             
@@ -597,15 +597,6 @@
             gleich <see cref="F:FolkerKinzel.VCards.Models.Enums.ValueEncoding.QuotedPrintable"/> ist.
             </summary>
         </member>
-        <member name="M:FolkerKinzel.VCards.Intls.Encodings.Base64.Decode(System.String)">
-            <summary>
-            Parses a Base64 <see cref="T:System.String"/> as byte array - even
-            if it is in the Base64Url format (RFC 4648 § 5).
-            </summary>
-            <param name="base64">A Base64 or Base64Url <see cref="T:System.String"/>.</param>
-            <returns>A byte array containing the data that was encoded in <paramref name="base64"/> or <c>null</c>
-            if the decoding fails.</returns>
-        </member>
         <member name="T:FolkerKinzel.VCards.Intls.Encodings.QuotedPrintable">
             <summary>
             Eine Klasse, die Methoden zum Codieren und 
@@ -662,10 +653,37 @@
         <member name="M:FolkerKinzel.VCards.Intls.Extensions.StringExtension.NeedsToBeQpEncoded(System.String)">
             <summary>
             Gibt <c>true</c> zurück, wenn <paramref name="s"/> NON-ASCII-Zeichen oder Zeilenwechsel enthält.
-            Benötigt keine NULL-Prüfung.
+            Needs no <c>null</c> check!
             </summary>
-            <param name="s">Ein <see cref="T:System.String"/> oder <c>null</c>.</param>
+            <param name="s">Ein <see cref="T:System.String"/>.</param>
             <returns><c>true</c>, wenn <paramref name="s"/> enkodiert werden muss.</returns>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Extensions.StringExtension.IetfLanguageTagRegex">
+            <remarks>
+            Pattern explanation:<br/>
+            <code>
+            ○ Match if at the beginning of the string.<br/>
+            ○ Match a character in the set [a-z] atomically at least 2 and at most 3 times.<br/>
+            ○ Match '-'.<br/>
+            ○ Match a character in the set [A-Z] atomically at least 2 and at most 3 times.<br/>
+            ○ Match if at the end of the string or if before an ending newline.<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.DateOnlyProperty.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Intls.Models.DateTimeOffsetProperty.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.DateTimeOffsetProperty.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Intls.Models.DateTimeTextProperty.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.DateTimeTextProperty.Clone">
+            <inheritdoc/>
         </member>
         <member name="M:FolkerKinzel.VCards.Intls.Models.EmbeddedBytesProperty.#ctor(FolkerKinzel.VCards.Intls.Models.EmbeddedBytesProperty)">
             <summary>
@@ -673,16 +691,140 @@
             </summary>
             <param name="prop">The <see cref="T:FolkerKinzel.VCards.Models.DataProperty"/> object to clone.</param>
         </member>
+        <member name="P:FolkerKinzel.VCards.Intls.Models.EmbeddedBytesProperty.IsEmpty">
+            <inheritdoc/>
+        </member>
         <member name="M:FolkerKinzel.VCards.Intls.Models.EmbeddedBytesProperty.Clone">
             <inheritdoc/>
         </member>
-        <member name="M:FolkerKinzel.VCards.Intls.Models.ReferencedDataProperty.#ctor(FolkerKinzel.VCards.Intls.Models.ReferencedDataProperty)">
+        <member name="P:FolkerKinzel.VCards.Intls.Models.EmbeddedTextProperty.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.EmbeddedTextProperty.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.ReferencedDataProperty.#ctor(FolkerKinzel.VCards.Intls.Models.UriProperty)">
+            <summary>
+            ctor
+            </summary>
+            <param name="prop"></param>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.ReferencedDataProperty.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="T:FolkerKinzel.VCards.Intls.Models.RelationTextProperty">
+            <summary>
+            Spezialisierung der <see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/>-Klasse, um den Namen einer Person, zu der eine Beziehung besteht, anzugeben.
+            </summary>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Intls.Models.RelationTextProperty.Value">
+            <summary>
+            Die von der <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationTextProperty"/> zur Verfügung gestellten Daten.
+            </summary>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Intls.Models.RelationTextProperty.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.RelationTextProperty.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="T:FolkerKinzel.VCards.Intls.Models.RelationUriProperty">
+            <summary>
+            Spezialisierung der <see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit einem
+            <see cref="T:System.Uri"/> dieser Person zu beschreiben.
+            </summary>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.RelationUriProperty.#ctor(FolkerKinzel.VCards.Intls.Models.UriProperty)">
+            <summary>
+            Copy ctor.
+            </summary>
+            <param name="prop"></param>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Intls.Models.RelationUriProperty.Value">
+            <summary>
+            Die von der <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUriProperty"/> zur Verfügung gestellten Daten.
+            </summary>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.RelationUriProperty.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty">
+            <summary>
+            Spezialisierung der <see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit der UUID ihrer <see cref="T:FolkerKinzel.VCards.VCard"/>
+            zu beschreiben.
+            </summary>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty.#ctor(FolkerKinzel.VCards.Intls.Models.RelationUuidProperty)">
+            <summary>
+            Copy ctor.
+            </summary>
+            <param name="prop"></param>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty.#ctor(System.Guid,System.Nullable{FolkerKinzel.VCards.Models.Enums.RelationTypes},System.String)">
+            <summary>
+            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty"/>-Objekt.
+            </summary>
+            <param name="uuid">UUID einer Person, zu der eine Beziehung besteht. Das kann zum Beispiel der Wert der 
+            vCard-Property <c>UID</c> (<see cref="P:FolkerKinzel.VCards.VCard.UniqueIdentifier">VCard.UniqueIdentifier</see>) der vCard dieser Person sein.</param>
+            <param name="relation">Einfacher oder kombinierter Wert der <see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/>-Enum oder <c>null</c>.</param>
+            <param name="propertyGroup">Bezeichner der Gruppe,
+            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
+            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty.Value">
+            <summary>
+            Die von der <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty"/> zur Verfügung gestellten Daten.
+            </summary>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty">
+            <summary>
+            Spezialisierung der <see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, 
+            mit ihrer <see cref="T:FolkerKinzel.VCards.VCard"/> zu beschreiben.
+            </summary>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty.#ctor(FolkerKinzel.VCards.Intls.Models.RelationVCardProperty)">
+            <summary>
+            Copy ctor.
+            </summary>
+            <param name="prop"></param>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty.#ctor(FolkerKinzel.VCards.VCard,System.Nullable{FolkerKinzel.VCards.Models.Enums.RelationTypes},System.String)">
+            <summary>
+            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekt.
+            </summary>
+            <param name="vcard"><see cref="T:FolkerKinzel.VCards.VCard"/> einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
+            <param name="relation">Einfacher oder kombinierter Wert der <see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/>-Enum oder <c>null</c>.</param>
+            <param name="propertyGroup">Bezeichner der Gruppe,
+            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
+            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty.Value">
+            <summary>
+            Die von der <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/> zur Verfügung gestellten Daten.
+            </summary>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.TimeOnlyProperty.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.UriProperty.#ctor(FolkerKinzel.VCards.Intls.Models.UriProperty)">
             <summary>
             Copy ctor
             </summary>
             <param name="prop"></param>
         </member>
-        <member name="M:FolkerKinzel.VCards.Intls.Models.ReferencedDataProperty.Clone">
+        <member name="M:FolkerKinzel.VCards.Intls.Models.UriProperty.Clone">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Intls.Models.UriProperty.GetVCardPropertyValue">
             <inheritdoc/>
         </member>
         <member name="M:FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.AddressTypesCollector.CollectValueStrings(System.Nullable{FolkerKinzel.VCards.Models.Enums.AddressTypes},System.Collections.Generic.List{System.String})">
@@ -913,15 +1055,30 @@
             </summary>
             <param name="prop">Das zu klonende <see cref="T:FolkerKinzel.VCards.Models.DataProperty"/> Objekt.</param>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.DataProperty.#ctor(System.String,FolkerKinzel.VCards.Models.PropertyParts.ParameterSection,System.String)">
+        <member name="M:FolkerKinzel.VCards.Models.DataProperty.#ctor(FolkerKinzel.VCards.Models.PropertyParts.ParameterSection,System.String)">
             <summary>
             ctor
             </summary>
-            <param name="mimeType"></param>
-            <param name="parameterSection"></param>
+            <param name="parameters"></param>
             <param name="propertyGroup"></param>
-            <remarks>Must be internal, because <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.MediaType"/> has strong
-            restrictions.</remarks>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Models.DataProperty.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.DataProperty.GetVCardPropertyValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.DataProperty.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Models.DateAndOrTimeProperty.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.DateAndOrTimeProperty.GetVCardPropertyValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.DateAndOrTimeProperty.ToString">
+            <inheritdoc/>
         </member>
         <member name="T:FolkerKinzel.VCards.Models.Enums.Access">
             <summary>
@@ -2304,6 +2461,9 @@
             </summary>
             <returns>Eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Address"/>-Objekts.</returns>
         </member>
+        <member name="M:FolkerKinzel.VCards.Models.PropertyParts.DateAndOrTime.ToString">
+            <inheritdoc/>
+        </member>
         <member name="T:FolkerKinzel.VCards.Models.PropertyParts.GenderInfo">
             <summary>
             Kapselt Informationen zur Angabe des Geschlechts und der Geschlechtsidentität.
@@ -2401,12 +2561,11 @@
             Kapselt Angaben zur Organisation (oder Firma) des Subjekts, das die vCard repräsentiert.
             </summary>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.PropertyParts.Organization.#ctor(System.String,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:FolkerKinzel.VCards.Models.PropertyParts.Organization.#ctor(System.Collections.Generic.List{System.String})">
             <summary>
             Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.Organization"/>-Objekt.
             </summary>
-            <param name="organizationName">Name der Organisation.</param>
-            <param name="organizationalUnits">Name(n) der Unterorganisation(en).</param>
+            <param name="orgList">Name der Organisation gefolgt von Name(n) der Unterorganisation(en).</param>
         </member>
         <member name="P:FolkerKinzel.VCards.Models.PropertyParts.Organization.OrganizationName">
             <summary>
@@ -2789,12 +2948,24 @@
             <c>INDEX</c>: 1-basierter Index einer Property, wenn mehrere Instanzen derselben Property möglich sind. <c>(4 - RFC 6715)</c>
             </summary>
         </member>
+        <member name="M:FolkerKinzel.VCards.Models.PropertyParts.Relation.ToString">
+            <inheritdoc/>
+        </member>
         <member name="T:FolkerKinzel.VCards.Models.RelationProperty">
             <summary>
             Abstrakte Basisklasse für Klassen, die die Daten von vCard-Properties kapseln, die Beziehungen zu anderen Menschen
             beschreiben. Dies sind insbesondere die vCard-4.0-Property <c>RELATED</c>, die vCard-2.1- und -3.0-Property <c>AGENT</c> sowie
             Non-Standard-Properties zur Angabe des Namens des Ehepartners (wie z.B. <c>X-SPOUSE</c>).
             </summary>
+        </member>
+        <member name="P:FolkerKinzel.VCards.Models.RelationProperty.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.RelationProperty.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.RelationProperty.GetVCardPropertyValue">
+            <inheritdoc/>
         </member>
         <member name="M:FolkerKinzel.VCards.Models.RelationProperty.#ctor(FolkerKinzel.VCards.Models.RelationProperty)">
             <summary>
@@ -2819,141 +2990,6 @@
             <param name="propertyGroup">Bezeichner der Gruppe,
             der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
             um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
-        </member>
-        <member name="T:FolkerKinzel.VCards.Models.RelationTextProperty">
-            <summary>
-            Spezialisierung der <see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/>-Klasse, um den Namen einer Person, zu der eine Beziehung besteht, anzugeben.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationTextProperty.#ctor(FolkerKinzel.VCards.Models.RelationTextProperty)">
-            <summary>
-            Copy ctor.
-            </summary>
-            <param name="prop"></param>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationTextProperty.#ctor(System.String,System.Nullable{FolkerKinzel.VCards.Models.Enums.RelationTypes},System.String)">
-            <summary>
-            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.RelationTextProperty"/>-Objekt.
-            </summary>
-            <param name="text">Name einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
-            <param name="relation">Einfacher oder kombinierter Wert der <see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/>-Enum oder <c>null</c>.</param>
-            <param name="propertyGroup">Bezeichner der Gruppe,
-            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
-            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.RelationTextProperty.Value">
-            <summary>
-            Die von der <see cref="T:FolkerKinzel.VCards.Models.RelationTextProperty"/> zur Verfügung gestellten Daten.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationTextProperty.GetVCardPropertyValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationTextProperty.Clone">
-            <inheritdoc/>
-        </member>
-        <member name="T:FolkerKinzel.VCards.Models.RelationUriProperty">
-            <summary>
-            Spezialisierung der <see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit einem
-            <see cref="T:System.Uri"/> dieser Person zu beschreiben.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationUriProperty.#ctor(FolkerKinzel.VCards.Models.RelationUriProperty)">
-            <summary>
-            Copy ctor.
-            </summary>
-            <param name="prop"></param>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationUriProperty.#ctor(System.Uri,System.Nullable{FolkerKinzel.VCards.Models.Enums.RelationTypes},System.String)">
-            <summary>
-            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.RelationUriProperty"/>-Objekt.
-            </summary>
-            <param name="uri"><see cref="T:System.Uri"/> einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
-            <param name="relation">Einfacher oder kombinierter Wert der <see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/>-Enum oder <c>null</c>.</param>
-            <param name="propertyGroup">Bezeichner der Gruppe,
-            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
-            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.RelationUriProperty.Value">
-            <summary>
-            Die von der <see cref="T:FolkerKinzel.VCards.Models.RelationUriProperty"/> zur Verfügung gestellten Daten.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationUriProperty.GetVCardPropertyValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationUriProperty.Clone">
-            <inheritdoc/>
-        </member>
-        <member name="T:FolkerKinzel.VCards.Models.RelationUuidProperty">
-            <summary>
-            Spezialisierung der <see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, mit der UUID ihrer <see cref="T:FolkerKinzel.VCards.VCard"/>
-            zu beschreiben.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationUuidProperty.#ctor(FolkerKinzel.VCards.Models.RelationUuidProperty)">
-            <summary>
-            Copy ctor.
-            </summary>
-            <param name="prop"></param>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationUuidProperty.#ctor(System.Guid,System.Nullable{FolkerKinzel.VCards.Models.Enums.RelationTypes},System.String)">
-            <summary>
-            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/>-Objekt.
-            </summary>
-            <param name="uuid">UUID einer Person, zu der eine Beziehung besteht. Das kann zum Beispiel der Wert der 
-            vCard-Property <c>UID</c> (<see cref="P:FolkerKinzel.VCards.VCard.UniqueIdentifier">VCard.UniqueIdentifier</see>) der vCard dieser Person sein.</param>
-            <param name="relation">Einfacher oder kombinierter Wert der <see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/>-Enum oder <c>null</c>.</param>
-            <param name="propertyGroup">Bezeichner der Gruppe,
-            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
-            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.RelationUuidProperty.Value">
-            <summary>
-            Die von der <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/> zur Verfügung gestellten Daten.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationUuidProperty.GetVCardPropertyValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.RelationUuidProperty.IsEmpty">
-            <inheritdoc/>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationUuidProperty.Clone">
-            <inheritdoc/>
-        </member>
-        <member name="T:FolkerKinzel.VCards.Models.RelationVCardProperty">
-            <summary>
-            Spezialisierung der <see cref="T:FolkerKinzel.VCards.Models.RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, 
-            mit ihrer <see cref="T:FolkerKinzel.VCards.VCard"/> zu beschreiben.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationVCardProperty.#ctor(FolkerKinzel.VCards.Models.RelationVCardProperty)">
-            <summary>
-            Copy ctor.
-            </summary>
-            <param name="prop"></param>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationVCardProperty.#ctor(FolkerKinzel.VCards.VCard,System.Nullable{FolkerKinzel.VCards.Models.Enums.RelationTypes},System.String)">
-            <summary>
-            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt.
-            </summary>
-            <param name="vcard"><see cref="T:FolkerKinzel.VCards.VCard"/> einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
-            <param name="relation">Einfacher oder kombinierter Wert der <see cref="T:FolkerKinzel.VCards.Models.Enums.RelationTypes"/>-Enum oder <c>null</c>.</param>
-            <param name="propertyGroup">Bezeichner der Gruppe,
-            der die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> zugehören soll, oder <c>null</c>,
-            um anzuzeigen, dass die <see cref="T:FolkerKinzel.VCards.Models.VCardProperty"/> keiner Gruppe angehört.</param>
-        </member>
-        <member name="P:FolkerKinzel.VCards.Models.RelationVCardProperty.Value">
-            <summary>
-            Die von der <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/> zur Verfügung gestellten Daten.
-            </summary>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationVCardProperty.GetVCardPropertyValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:FolkerKinzel.VCards.Models.RelationVCardProperty.Clone">
-            <inheritdoc/>
         </member>
         <member name="T:FolkerKinzel.VCards.Models.StringCollectionProperty">
             <summary>
@@ -3023,6 +3059,9 @@
             Die von der <see cref="T:FolkerKinzel.VCards.Models.TextProperty"/> zur Verfügung gestellten Daten.
             </summary>
         </member>
+        <member name="P:FolkerKinzel.VCards.Models.TextProperty.IsEmpty">
+            <inheritdoc/>
+        </member>
         <member name="M:FolkerKinzel.VCards.Models.TextProperty.GetVCardPropertyValue">
             <inheritdoc/>
         </member>
@@ -3085,15 +3124,25 @@
             Repräsentiert den standardisierten Namen einer Zeitzone.
             </summary>
         </member>
-        <member name="M:FolkerKinzel.VCards.Models.TimeZoneID.#ctor(System.String)">
+        <member name="M:FolkerKinzel.VCards.Models.TimeZoneID.Parse(System.String)">
             <summary>
-            Initialisiert ein neues <see cref="T:FolkerKinzel.VCards.Models.TimeZoneID"/>-Objekt.
+            Parst einen <see cref="T:System.String"/> als <see cref="T:FolkerKinzel.VCards.Models.TimeZoneID"/>-Objekt.
             </summary>
-            <param name="timeZoneID">Bezeichner der Zeitzone. Es sollte sich um einen Bezeichner aus der 
+            <param name="value">Bezeichner der Zeitzone. Es sollte sich um einen Bezeichner aus der 
             "IANA Time Zone Database" handeln. (Siehe https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="timeZoneID"/> ist <c>null</c>.</exception>
-            <exception cref="T:System.ArgumentException"><paramref name="timeZoneID"/> ist ein leerer <see cref="T:System.String"/> oder 
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> ist <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="value"/> ist ein leerer <see cref="T:System.String"/> oder 
             enthält nur Leerraum.</exception>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.TimeZoneID.TryParse(System.String,FolkerKinzel.VCards.Models.TimeZoneID@)">
+            <summary>
+            Versucht, einen <see cref="T:System.String"/> als <see cref="T:FolkerKinzel.VCards.Models.TimeZoneID"/>-Objekt zu parsen.
+            </summary>
+            <param name="value">Bezeichner der Zeitzone. Es sollte sich um einen Bezeichner aus der 
+            "IANA Time Zone Database" handeln. (Siehe https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
+            <param name="timeZoneID">Wenn das Parsen erfolgreich war, enthält der Parameter ein neues <see cref="T:FolkerKinzel.VCards.Models.TimeZoneID"/>-Objekt.
+            Der Parameter wird uninitialisiert übergeben.</param>
+            <returns><c>true</c>, wenn deas Parsen erfolgreich war, andernfalls <c>false</c>.</returns>
         </member>
         <member name="P:FolkerKinzel.VCards.Models.TimeZoneID.Value">
             <summary>
@@ -3119,6 +3168,22 @@
             Erstellt eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.Models.TimeZoneID"/>-Objekts. (Nur zum Debuggen.)
             </summary>
             <returns>Eine <see cref="T:System.String"/>-Repräsentation des <see cref="T:FolkerKinzel.VCards.Models.TimeZoneID"/>-Objekts.</returns>
+        </member>
+        <member name="M:FolkerKinzel.VCards.Models.TimeZoneID.UtcOffsetRegex">
+            <remarks>
+            Pattern explanation:<br/>
+            <code>
+            ○ Match if at the beginning of the string.<br/>
+            ○ Match a character in the set [+-] atomically, optionally.<br/>
+            ○ Match a character in the set [01].<br/>
+            ○ Match '0' through '9'.<br/>
+            ○ Match ':' greedily, optionally.<br/>
+            ○ Optional (greedy).<br/>
+                ○ 1st capture group.<br/>
+                    ○ Match a character in the set [0-5].<br/>
+                    ○ Match '0' through '9'.<br/>
+            </code>
+            </remarks>
         </member>
         <member name="T:FolkerKinzel.VCards.Models.TimeZoneProperty">
             <summary>
@@ -3278,93 +3343,93 @@
         </member>
         <member name="T:FolkerKinzel.VCards.Resources.Res">
             <summary>
-              Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
+              A strongly-typed resource class, for looking up localized strings, etc.
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.ResourceManager">
             <summary>
-              Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
+              Returns the cached ResourceManager instance used by this class.
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.Culture">
             <summary>
-              Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
-              Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.ContentTooLarge">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The content to embed is too large. ähnelt.
+              Looks up a localized string similar to The content to embed is too large..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.IdentifierTooLong">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The length of the identifier is more than one digit. ähnelt.
+              Looks up a localized string similar to The length of the identifier is more than one digit..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.InvalidMimeType">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die Invalid internet media type. ähnelt.
+              Looks up a localized string similar to Invalid internet media type..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.MissingMappingID">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The ID of the property mapping is missing. ähnelt.
+              Looks up a localized string similar to The ID of the property mapping is missing..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.MissingUri">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die No URI is specified. ähnelt.
+              Looks up a localized string similar to No URI is specified..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.NoAnsiEncoding">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The value references not an ANSI encoding. ähnelt.
+              Looks up a localized string similar to The value references not an ANSI encoding..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.NoData">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The argument contains no data. ähnelt.
+              Looks up a localized string similar to The argument contains no data..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.NoDataUrl">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The input does not represent a DataUrl. ähnelt.
+              Looks up a localized string similar to The input does not represent a DataUrl..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.NoNameSpace">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The XML element did not explicitly specify an own namespace. ähnelt.
+              Looks up a localized string similar to The XML element did not explicitly specify an own namespace..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.NoXName">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The argument is not a valid X-Name. ähnelt.
+              Looks up a localized string similar to The argument is not a valid X-Name..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.PidValue">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The value must be between 1 and 9. ähnelt.
+              Looks up a localized string similar to The value must be between 1 and 9..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.RelativeUri">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die {0} is not an absolute URI. ähnelt.
+              Looks up a localized string similar to {0} is not an absolute URI..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.ReservedNameSpace">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The XML element is in the reserved vCard 4.0-namespace. ähnelt.
+              Looks up a localized string similar to The XML element is in the reserved vCard 4.0-namespace..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.StreamNotWritable">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The Stream is not writable. ähnelt.
+              Looks up a localized string similar to The Stream is not writable..
             </summary>
         </member>
         <member name="P:FolkerKinzel.VCards.Resources.Res.UndefinedEnumValue">
             <summary>
-              Sucht eine lokalisierte Zeichenfolge, die The value is not defined. ähnelt.
+              Looks up a localized string similar to The value is not defined..
             </summary>
         </member>
         <member name="T:FolkerKinzel.VCards.VCard">
@@ -4050,13 +4115,13 @@
             <remarks>
             <para>
             Der Standard erlaubt nur URI-Werte. Daten, die nicht in einen <see cref="T:System.Uri"/> konvertiert werden können,
-            werden zwar gelesen und als <see cref="T:FolkerKinzel.VCards.Models.RelationTextProperty"/> eingefügt. Der Inhalt einer 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationTextProperty"/> wird aber nur dann in die VCF-Datei geschrieben, wenn er in einen
+            werden zwar gelesen und als <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationTextProperty"/> eingefügt. Der Inhalt einer 
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationTextProperty"/> wird aber nur dann in die VCF-Datei geschrieben, wenn er in einen
             <see cref="T:System.Uri"/> umgewandelt werden kann.
             </para>
             <para>
-            Der Inhalt einer <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/> wird als <see cref="T:System.Uri"/> geschrieben (urn:uuid:...).
-            Die von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte, werden 
+            Der Inhalt einer <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty"/> wird als <see cref="T:System.Uri"/> geschrieben (urn:uuid:...).
+            Die von <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte, werden 
             beim Schreiben als separate vCards an die VCF-Datei angehängt und der Wert ihrer <see cref="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/>-Eigenschaft
             wird in die "Mutter"-<see cref="T:FolkerKinzel.VCards.VCard"/> als uuid-URI geschrieben. Wenn die <see cref="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/>-Eigenschaft
             der eingefügten <see cref="T:FolkerKinzel.VCards.VCard"/>s nicht gesetzt ist, wird ihnen automatisch eine neue <see cref="T:System.Guid"/>
@@ -4279,11 +4344,11 @@
         </member>
         <member name="M:FolkerKinzel.VCards.VCard.Reference(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard})">
             <summary>
-            Gibt eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten zurück, in der die <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekte 
+            Gibt eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten zurück, in der die <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekte 
             der als Argument übergebenen
             Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten durch 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte als 
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte als 
             separate Elemente angefügt sind.
             </summary>
             
@@ -4291,11 +4356,11 @@
             enthalten.</param>
             
             <returns>
-            Eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten, in der die <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekte 
+            Eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten, in der die <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekte 
             der als Argument übergebenen
             Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten durch 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte als 
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte als 
             separate Elemente angefügt sind. (Wenn die angefügten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte noch keine 
             <see cref="P:FolkerKinzel.VCards.VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen 
             von der Methode automatisch eine neue zugewiesen.)
@@ -4339,10 +4404,10 @@
         </member>
         <member name="M:FolkerKinzel.VCards.VCard.Dereference(System.Collections.Generic.IEnumerable{FolkerKinzel.VCards.VCard})">
             <summary>
-            Gibt eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten zurück, in der <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/>-Objekte der als 
+            Gibt eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten zurück, in der <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty"/>-Objekte der als 
             Argument übergebenen Sammlung von
             <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten durch
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte
             in der als Argument übergebenen Sammlung befinden.
             </summary>
             
@@ -4350,10 +4415,10 @@
             enthalten.</param>
             
             <returns>
-            Eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten, in der <see cref="T:FolkerKinzel.VCards.Models.RelationUuidProperty"/>-Objekte der als 
+            Eine Sammlung von <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten, in der <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationUuidProperty"/>-Objekte der als 
             Argument übergebenen Sammlung von
             <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekten durch
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte
             in der als Argument übergebenen Sammlung befinden.
             </returns>
             
@@ -4418,13 +4483,13 @@
             Dies geschieht, wenn eine VCF-Datei als
             vCard 4.0 gespeichert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befinden. 
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten befinden. 
             </para>
             
             <para>
             Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
             serialisiert wird und wenn sich in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts ein 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
             </para>
             </remarks>
@@ -4470,12 +4535,12 @@
             Dies geschieht, wenn eine
             vCard 4.0 serialisiert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden.
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten befanden.
             </para>
             
             <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
             serialisiert wird und wenn sich in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts ein 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
             </para>
             
@@ -4520,12 +4585,12 @@
             vCards, als sich ursprünglich Elemente in <paramref name="vCards"/> befanden. Dies geschieht, wenn eine
             vCard 4.0 serialisiert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden.
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten befanden.
             </para>
             
             <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
             serialisiert wird und wenn sich in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> eines <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts ein 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
             </para>
             
@@ -4556,13 +4621,13 @@
             <para>Die Methode serialisiert möglicherweise mehrere vCards. Dies geschieht, wenn eine VCF-Datei als
             vCard 4.0 gespeichert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> des <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden. 
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten befanden. 
             </para>
             
             <para>
             Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
             serialisiert wird und wenn sich in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> des <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts ein 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
             </para>
             
@@ -4596,13 +4661,13 @@
             <para>Die Methode serialisiert möglicherweise mehrere vCards. Dies geschieht, wenn das <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekt als
             vCard 4.0 serialisiert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> des <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden. 
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten befanden. 
             </para>
             
             <para>
             Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
             serialisiert wird und wenn sich in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> des <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts ein 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
             </para>
             
@@ -4635,13 +4700,13 @@
             <para>Die Methode serialisiert möglicherweise mehrere vCards. Dies geschieht, wenn das <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekt als
             vCard 4.0 serialisiert wird und sich 
             in den Eigenschaften <see cref="P:FolkerKinzel.VCards.VCard.Members"/> oder <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> des <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts
-            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekten befanden. 
+            weitere <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekte in Form von <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekten befanden. 
             </para>
             
             <para>
             Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="F:FolkerKinzel.VCards.VcfOptions.IncludeAgentAsSeparateVCard"/> 
             serialisiert wird und wenn sich in der Eigenschaft <see cref="P:FolkerKinzel.VCards.VCard.Relations"/> des <see cref="T:FolkerKinzel.VCards.VCard"/>-Objekts ein 
-            <see cref="T:FolkerKinzel.VCards.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
+            <see cref="T:FolkerKinzel.VCards.Intls.Models.RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="T:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection"/> in der Eigenschaft <see cref="P:FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.RelationType"/>
             das Flag <see cref="F:FolkerKinzel.VCards.Models.Enums.RelationTypes.Agent"/> gesetzt ist.
             </para>
             
@@ -4782,6 +4847,76 @@
             Flag setzen, um in einer vCard 2.1 das Schreiben mehrerer "ADR"- und "LABEL"-Properties 
             zu ermöglichen.
             </summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.IetfLanguageTagRegex_0">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the IetfLanguageTagRegex method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.IetfLanguageTagRegex_0.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.IetfLanguageTagRegex_0.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.IetfLanguageTagRegex_0.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.IetfLanguageTagRegex_0.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.IetfLanguageTagRegex_0.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.IetfLanguageTagRegex_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.IetfLanguageTagRegex_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.IetfLanguageTagRegex_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.UtcOffsetRegex_1">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the UtcOffsetRegex method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.UtcOffsetRegex_1.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.UtcOffsetRegex_1.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.UtcOffsetRegex_1.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.UtcOffsetRegex_1.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.UtcOffsetRegex_1.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.UtcOffsetRegex_1.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.UtcOffsetRegex_1.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.UtcOffsetRegex_1.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Utilities">
+            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.Utilities.StackPush(System.Int32[]@,System.Int32@,System.Int32,System.Int32)">
+            <summary>Pushes 2 values onto the backtracking stack.</summary>
         </member>
     </members>
 </doc>
