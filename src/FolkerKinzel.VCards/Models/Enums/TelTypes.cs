@@ -1,9 +1,9 @@
-using FolkerKinzel.VCards.Extensions;
+ï»¿using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Models.Enums;
 
 /// <summary>
-/// Benannte Konstanten, um in vCards die Art einer Telefonnummer zu beschreiben. Die Konstanten können kombiniert werden.
+/// Benannte Konstanten, um in vCards die Art einer Telefonnummer zu beschreiben. Die Konstanten kÃ¶nnen kombiniert werden.
 /// </summary>
 /// <remarks>
 /// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der
@@ -12,11 +12,11 @@ namespace FolkerKinzel.VCards.Models.Enums;
 [Flags]
 public enum TelTypes
 {
-    // ACHTUNG: Wenn die Enum erweitert wird, müssen TelTypesConverter 
+    // ACHTUNG: Wenn die Enum erweitert wird, mÃ¼ssen TelTypesConverter 
     // und TelTypesCollector angepasst werden!
 
     /// <summary>
-    /// <c>VOICE</c>: Telefonnummer für Sprachkommunikation (Default). <c>(2,3,4)</c>
+    /// <c>VOICE</c>: Telefonnummer fÃ¼r Sprachkommunikation (Default). <c>(2,3,4)</c>
     /// </summary>
     Voice = 1,
 
@@ -61,7 +61,7 @@ public enum TelTypes
     ISDN = 1 << 8,
 
     /// <summary>
-    /// <c>VIDEO</c>: Telefonnummer für Videokonferenzen <c>(2,3,4)</c>
+    /// <c>VIDEO</c>: Telefonnummer fÃ¼r Videokonferenzen <c>(2,3,4)</c>
     /// </summary>
     Video = 1 << 9,
 
@@ -71,13 +71,13 @@ public enum TelTypes
     PCS = 1 << 10, // nur vCard 3.0
 
     /// <summary>
-    /// <c>TEXTPHONE</c>: Telefonnummer für Menschen mit Hör- oder 
-    /// Sprachstörungen. <c>(4)</c>
+    /// <c>TEXTPHONE</c>: Telefonnummer fÃ¼r Menschen mit HÃ¶r- oder 
+    /// SprachstÃ¶rungen. <c>(4)</c>
     /// </summary>
     TextPhone = 1 << 11,
 
     /// <summary>
-    /// <c>TEXT</c>: Die Telefonnummer unterstützt Textnachrichten (SMS). <c>(4)</c>
+    /// <c>TEXT</c>: Die Telefonnummer unterstÃ¼tzt Textnachrichten (SMS). <c>(4)</c>
     /// </summary>
     Text = 1 << 12
 }
