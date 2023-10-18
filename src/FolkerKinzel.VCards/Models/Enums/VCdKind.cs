@@ -1,17 +1,17 @@
-namespace FolkerKinzel.VCards.Models.Enums;
+Ôªønamespace FolkerKinzel.VCards.Models.Enums;
 
 /// <summary>
-/// Benannte Konstanten, um die Art des Objekts anzugeben, das die vCard repr‰sentiert.
+/// Benannte Konstanten, um die Art des Objekts anzugeben, das die vCard repr√§sentiert.
 /// </summary>
 public enum VCdKind
 {
     /// <summary>
-    /// <c>INDIVIDUAL</c>: Einzelne Person oder Entit‰t. <c>4</c>
+    /// <c>INDIVIDUAL</c>: Einzelne Person oder Entit√§t. <c>4</c>
     /// </summary>
     Individual,
 
     /// <summary>
-    /// <c>GROUP</c>: Gruppe von Personen oder Entit‰ten. <c>4</c>
+    /// <c>GROUP</c>: Gruppe von Personen oder Entit√§ten. <c>4</c>
     /// </summary>
     Group,
 
