@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -6,23 +6,25 @@ using System.Collections;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Repräsentiert eine vCard-Property, die nicht von den offiziellen Standards definiert ist.
-/// </summary>
-/// <remarks>
-/// <note type="important">
-/// <para>Um Objekte der Klasse <see cref="NonStandardProperty"/> in eine vCard zu schreiben, muss beim Schreibvorgang das Flag
-/// <see cref="VcfOptions.WriteNonStandardProperties">VcfOptions.WriteNonStandardProperties</see> explizit gesetzt werden.</para>
-/// <para>Bedenken Sie, dass Sie sich bei Verwendung der Klasse um die standardgerechte Maskierung, Demaskierung, Enkodierung und Dekodierung der 
-/// Daten selbst kümmern müssen.</para>
-/// </note>
-/// </remarks>
+    /// <summary>Represents a vCard property that is not defined by the official standards.</summary>
+    /// <remarks>
+    /// <note type="important">
+    /// <para>
+    /// Um Objekte der Klasse <see cref="NonStandardProperty" /> in eine vCard zu schreiben,
+    /// muss beim Schreibvorgang das Flag <see cref="VcfOptions.WriteNonStandardProperties">VcfOptions.WriteNonStandardProperties</see>
+    /// explizit gesetzt werden.
+    /// </para>
+    /// <para>
+    /// Bedenken Sie, dass Sie sich bei Verwendung der Klasse um die standardgerechte
+    /// Maskierung, Demaskierung, Enkodierung und Dekodierung der Daten selbst kümmern
+    /// müssen.
+    /// </para>
+    /// </note>
+    /// </remarks>
 public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandardProperty>
 {
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary />
+    /// <param name="prop" />
     private NonStandardProperty(NonStandardProperty prop) : base(prop)
     {
         PropertyKey = prop.PropertyKey;
@@ -30,17 +32,18 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     }
 
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="NonStandardProperty"/>-Objekt, das eine benutzerdefinierte
-    /// Erweiterung des vCard-Standards darstellt.
-    /// </summary>
-    /// <param name="propertyKey">Der Schlüssel (Format: <c>X-Name</c>).</param>
-    /// <param name="value">Der Wert der Property (beliebige als <see cref="string"/> kodierte Daten oder <c>null</c>).</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="propertyKey"/> ist <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="propertyKey"/> ist kein X-Name.</exception>
+    /// <summary>Initializes a new <see cref="NonStandardProperty" /> object.</summary>
+    /// <param name="propertyKey">The key ("name") of the non-standard vCard property
+    /// (format: <c>X-NAME</c>).</param>
+    /// <param name="value">The value of the vCard property: any data encoded as <see
+    /// cref="string" /> or <c>null</c>.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <exception cref="ArgumentNullException"> <paramref name="propertyKey" /> is
+    /// <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="propertyKey" /> is not
+    /// a valid X-NAME.</exception>
     public NonStandardProperty(string propertyKey, string? value, string? propertyGroup = null)
         : base(new ParameterSection(), propertyGroup)
     {
@@ -69,30 +72,26 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     }
 
 
-    /// <summary>
-    /// Bezeichner der vCard-Property.
-    /// </summary>
+    /// <summary>The key ("name") of the vCard property.</summary>
     public string PropertyKey { get; }
 
-    /// <summary>
-    /// Die von der <see cref="NonStandardProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary>The data provided by the <see cref="NonStandardProperty" /> (raw <see
+    /// cref="string" /> data).</summary>
     public new string? Value
     {
         get;
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="NonStandardProperty"/>-Objekts. (Nur zum 
-    /// Debuggen.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="NonStandardProperty"/>-Objekts.</returns>
+    /// <summary>Creates a <see cref="string" /> representation of the <see cref="NonStandardProperty"
+    /// /> object. (For debugging only.)</summary>
+    /// <returns>A <see cref="string" /> representation of the <see cref="NonStandardProperty"
+    /// /> object.</returns>
     public override string ToString()
     {
         var sb = new StringBuilder();
@@ -123,6 +122,6 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<NonStandardProperty>)this).GetEnumerator();
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new NonStandardProperty(this);
 }

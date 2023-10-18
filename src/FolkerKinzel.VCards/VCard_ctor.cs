@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Models;
@@ -10,15 +10,11 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard
 {
-    /// <summary>
-    /// Initialisiert ein neues <see cref="VCard"/>-Objekt.
-    /// </summary>
+    /// <summary>Initializes a new <see cref="VCard" /> object.</summary>
     public VCard() { }
 
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="vCard">The vCard to clone.</param>
+    /// <summary />
+    /// <param name="vCard" />
     private VCard(VCard vCard)
     {
         Version = vCard.Version;
@@ -69,14 +65,11 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// Initialisiert ein <see cref="VCard"/>-Objekt aus einer Queue von <see cref="VcfRow"/>-Objekten.
-    /// </summary>
-    /// <param name="queue">Eine Queue von <see cref="VcfRow"/>-Objekten, deren Value-Property
-    /// den rohen Textinhalt der vCard-Zeile darstellt.</param>
-    /// <param name="info">Ein <see cref="VcfDeserializationInfo"/>-Objekt, das Daten für den Deserialisierungsvorgang zur Verfügung stellt.</param>
-    /// <param name="versionHint">Ein Hinweis, welche vCard-Version angenommen wird. (Eingebettete
-    /// vCards haben manchmal keinen "VERSION:"-Tag.)</param>
+    /// <summary>Initializes a <see cref="VCard" /> object from a queue of <see cref="VcfRow"
+    /// /> objects.</summary>
+    /// <param name="queue" />
+    /// <param name="info" />
+    /// <param name="versionHint" />
     private VCard(Queue<VcfRow> queue, VcfDeserializationInfo info, VCdVersion versionHint)
     {
         Debug.Assert(queue != null);

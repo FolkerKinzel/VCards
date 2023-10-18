@@ -1,20 +1,16 @@
-﻿using System.Collections;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 public sealed partial class ParameterSection
 {
-    /// <summary>
-    /// Löscht alle Inhalte der aktuellen Instanz.
-    /// </summary>
+    /// <summary>Deletes all contents of the current instance.</summary>
     public void Clear() => this._propDic.Clear();
 
 
-    /// <summary>
-    /// Weist der Instanz den Inhalt von <paramref name="other"/> zu.
-    /// </summary>
-    /// <param name="other">Fremde Instanz, deren Inhalt übernommen wird.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="other"/> ist <c>null</c>.</exception>
+    /// <summary>Assigns the content of <paramref name="other" /> to the instance.</summary>
+    /// <param name="other">Foreign instance, whose content is adopted.</param>
+    /// <exception cref="ArgumentNullException"> <paramref name="other" /> is <c>null</c>.</exception>
     public void Assign(ParameterSection other)
     {
         if (other is null)
@@ -35,11 +31,10 @@ public sealed partial class ParameterSection
         }
     }
 
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="ParameterSection"/>-Objekts. (Nur zum 
-    /// Debuggen.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="ParameterSection"/>-Objekts.</returns>
+    /// <summary>Creates a <see cref="string" /> representation of the <see cref="ParameterSection"
+    /// /> object. (For debugging only.)</summary>
+    /// <returns>A <see cref="string" /> representation of the <see cref="ParameterSection"
+    /// /> object.</returns>
     public override string ToString()
     {
         if (this._propDic.Count == 0)

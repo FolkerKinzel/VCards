@@ -1,83 +1,61 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>
-/// Benannte Konstanten, um in vCards die Art einer Telefonnummer zu beschreiben. Die Konstanten können kombiniert werden.
-/// </summary>
-/// <remarks>
-/// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der
-/// <see cref="TelTypesExtension"/>-Klasse.</note>
-/// </remarks>
+    /// <summary>Named constants to describe the type of a phone number in vCards. The
+    /// constants can be combined.</summary>
+    /// <remarks>
+    /// <note type="tip">
+    /// Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der <see
+    /// cref="TelTypesExtension" />-Klasse.
+    /// </note>
+    /// </remarks>
 [Flags]
 public enum TelTypes
 {
     // ACHTUNG: Wenn die Enum erweitert wird, müssen TelTypesConverter 
     // und TelTypesCollector angepasst werden!
 
-    /// <summary>
-    /// <c>VOICE</c>: Telefonnummer für Sprachkommunikation (Default). <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>VOICE</c>: Indicates a voice telephone number. (Default). <c>(2,3,4)</c></summary>
     Voice = 1,
 
-    /// <summary>
-    /// <c>FAX</c>: Fax-Nummer <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>FAX</c>: Indicates a facsimile telephone number. <c>(2,3,4)</c></summary>
     Fax = 1 << 1,
 
-    /// <summary>
-    /// <c>MSG</c>: Voice Message (z.B. MMS). <c>(2,3)</c>
-    /// </summary>
+    /// <summary> <c>MSG</c>: Indicates that the telephone number has voice messaging
+    /// support. <c>(2,3)</c></summary>
     Msg = 1 << 2,
 
-    /// <summary>
-    /// <c>CELL</c>: Handy <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>CELL</c>: Indicates a cellular or mobile telephone number. <c>(2,3,4)</c></summary>
     Cell = 1 << 3,
 
-    /// <summary>
-    /// <c>PAGER</c>: Pager-Nummer <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>PAGER</c>: Indicates a paging device telephone number. <c>(2,3,4)</c></summary>
     Pager = 1 << 4,
 
-    /// <summary>
-    /// <c>BBS</c>: Anrufbeantworter (Bulletin board system) <c>(2,3)</c>
-    /// </summary>
+    /// <summary> <c>BBS</c>: Indicates a bulletin board system telephone number. <c>(2,3)</c></summary>
     BBS = 1 << 5,
 
-    /// <summary>
-    /// <c>MODEM</c>: Modem <c>(2,3)</c>
-    /// </summary>
+    /// <summary> <c>MODEM</c>: Indicates a MODEM connected telephone number. <c>(2,3)</c></summary>
     Modem = 1 << 6,
 
-    /// <summary>
-    /// <c>CAR</c>: Autotelefon <c>(2,3)</c>
-    /// </summary>
+    /// <summary> <c>CAR</c>: Indicates a car-phone telephone number.<c>(2,3)</c></summary>
     Car = 1 << 7,
 
-    /// <summary>
-    /// <c>ISDN</c>: ISDN-Nummer <c>(2,3)</c>
-    /// </summary>
+    /// <summary> <c>ISDN</c>: Indicates an ISDN service telephone number. <c>(2,3)</c></summary>
     ISDN = 1 << 8,
 
-    /// <summary>
-    /// <c>VIDEO</c>: Telefonnummer für Videokonferenzen <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>VIDEO</c>: Indicates a video conferencing telephone number. <c>(2,3,4)</c></summary>
     Video = 1 << 9,
 
-    /// <summary>
-    /// <c>PCS</c>: Mobilfunkdienst (Personal communication services) <c>(3)</c>
-    /// </summary>
+    /// <summary> <c>PCS</c>: Indicates a personal communication services telephone
+    /// number. <c>(3)</c></summary>
     PCS = 1 << 10, // nur vCard 3.0
 
-    /// <summary>
-    /// <c>TEXTPHONE</c>: Telefonnummer für Menschen mit Hör- oder 
-    /// Sprachstörungen. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>TEXTPHONE</c>: Indicates a telecommunication device for people
+    /// with hearing or speech difficulties. <c>(4)</c></summary>
     TextPhone = 1 << 11,
 
-    /// <summary>
-    /// <c>TEXT</c>: Die Telefonnummer unterstützt Textnachrichten (SMS). <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>TEXT</c>: Indicates that the telephone number supports text messages
+    /// (SMS). <c>(4)</c></summary>
     Text = 1 << 12
 }

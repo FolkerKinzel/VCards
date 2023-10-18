@@ -1,14 +1,12 @@
-﻿using System;
+using System;
 using System.Globalization;
 using FolkerKinzel.VCards.Intls.Extensions;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-/// <summary>
-/// Konvertiert die vCard-Values Date, Date-Time, Date-And-Or-Time und Timestamp.
-/// </summary>
-/// <threadsafety static="true" instance="false" />
+    /// <summary />
+    /// <threadsafety static="true" instance="false" />
 internal sealed class DateAndOrTimeConverter
 {
     private const int FIRST_LEAP_YEAR = 4;

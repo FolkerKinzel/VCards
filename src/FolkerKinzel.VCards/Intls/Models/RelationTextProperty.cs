@@ -1,13 +1,12 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
-/// <summary>
-/// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um den Namen einer Person, zu der eine Beziehung besteht, anzugeben.
-/// </summary>
+    /// <summary> Spezialisierung der <see cref="RelationProperty" />-Klasse, um den
+    /// Namen einer Person, zu der eine Beziehung besteht, anzugeben. </summary>
 internal sealed class RelationTextProperty : RelationProperty
 {
     private readonly TextProperty _textProp;
@@ -22,13 +21,12 @@ internal sealed class RelationTextProperty : RelationProperty
                vcfRow.Group) => _textProp = new TextProperty(vcfRow, version);
 
 
-    /// <summary>
-    /// Die von der <see cref="RelationTextProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary> Die von der <see cref="RelationTextProperty" /> zur Verfügung gestellten
+    /// Daten. </summary>
     public new string? Value => _textProp.Value;
 
     
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => _textProp.IsEmpty;
 
@@ -45,7 +43,7 @@ internal sealed class RelationTextProperty : RelationProperty
      => _textProp.AppendValue(serializer);
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new RelationTextProperty((TextProperty)_textProp.Clone());
 

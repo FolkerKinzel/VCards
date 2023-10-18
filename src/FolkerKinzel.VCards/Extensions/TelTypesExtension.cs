@@ -1,48 +1,47 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Extensions;
 
-/// <summary>
-/// Erweiterungsmethoden, die die Arbeit mit der <see cref="TelTypes"/>-Enum erleichtern.
-/// </summary>
+/// <summary>Extension methods that make working with the <see cref="TelTypes" />
+/// enum easier.</summary>
 public static class TelTypesExtension
 {
-    /// <summary>
-    /// Setzt sämtliche in <paramref name="flags"/> gesetzten Flags in <paramref name="value"/>.
-    /// </summary>
-    /// <param name="value">Der <see cref="TelTypes"/>?-Wert, auf dem die in <paramref name="flags"/> gesetzten Flags gesetzt werden.</param>
-    /// <param name="flags">Ein einzelner <see cref="TelTypes"/>-Wert oder eine Kombination aus mehreren 
-    /// <see cref="TelTypes"/>-Werten.</param>
-    /// <returns>Ein <see cref="TelTypes"/>-Wert, auf dem sämtliche in <paramref name="value"/> und <paramref name="flags"/>
-    /// gesetzten Flags gesetzt sind. Wenn <paramref name="value"/>&#160;<c>null</c> ist, wird <paramref name="flags"/> zurückgegeben.</returns>
+    /// <summary>Sets all the flags set in <paramref name="flags" /> in 
+    /// <paramref name="value" />.</summary>
+    /// <param name="value">The value to which all the flags set in <paramref name="flags"
+    /// /> are added.</param>
+    /// <param name="flags">A single <see cref="TelTypes" /> value or a combination
+    /// of several <see cref="TelTypes" /> values.</param>
+    /// <returns>A value, which has all flags set that are set in <paramref name="value"
+    /// /> and <paramref name="flags" />. If <paramref name="value" /> is <c>null</c>,
+    /// <paramref name="flags" /> is returned.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [return: NotNull]
-    public static TelTypes? Set(this TelTypes? value, TelTypes flags) => value.HasValue ? (value.Value | flags) : flags;
+    public static TelTypes? Set(this TelTypes? value, TelTypes flags) 
+        => value.HasValue ? (value.Value | flags) : flags;
 
-
-    /// <summary>
-    /// Untersucht, ob sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
-    /// gesetzt sind.
-    /// </summary>
-    /// <param name="value">Der <see cref="TelTypes"/>?-Wert, der daraufhin überprüft wird, ob sämtliche in <paramref name="flags"/> gesetzten 
-    /// Flags auf ihm gesetzt sind.</param>
-    /// <param name="flags">Ein einzelner <see cref="TelTypes"/>-Wert oder eine Kombination aus mehreren 
-    /// <see cref="TelTypes"/>-Werten.</param>
-    /// <returns><c>true</c>, wenn sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
-    /// gesetzt sind. Wenn <paramref name="value"/>&#160;<c>null</c> ist, wird <c>false</c> zurückgegeben.</returns>
+    /// <summary>Checks whether all flags set in <paramref name="flags" /> are also
+    /// set in <paramref name="value" />.</summary>
+    /// <param name="value">The value, which is checked to see whether all flags set
+    /// in <paramref name="flags" /> are set on it.</param>
+    /// <param name="flags">A single <see cref="TelTypes" /> value or a combination
+    /// of several <see cref="TelTypes" /> values.</param>
+    /// <returns>Returns <c>true</c>, if all flags set in <paramref name="flags" />
+    /// are also set in <paramref name="value" />. If <paramref name="value" /> is 
+    /// <c>null</c>, <c>false</c> is returned.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsSet(this TelTypes? value, TelTypes flags) => (value & flags) == flags;
+    public static bool IsSet(this TelTypes? value, TelTypes flags) 
+        => (value & flags) == flags;
 
-
-    /// <summary>
-    /// Entfernt sämtliche in <paramref name="flags"/> gesetzten Flags aus <paramref name="value"/>.
-    /// </summary>
-    /// <param name="value">Der <see cref="TelTypes"/>?-Wert, aus dem die in <paramref name="flags"/> gesetzten Flags entfernt werden.</param>
-    /// <param name="flags">Ein einzelner <see cref="TelTypes"/>-Wert oder eine Kombination aus mehreren 
-    /// <see cref="TelTypes"/>-Werten.</param>
-    /// <returns>Ein <see cref="TelTypes"/>-Wert, auf dem sämtliche in <paramref name="flags"/>
-    /// gesetzten Flags entfernt sind oder <c>null</c>, wenn sämtliche Flags entfernt wurden. Wenn 
-    /// <paramref name="value"/>&#160;<c>null</c> ist, wird <c>null</c> zurückgegeben.</returns>
+    /// <summary>Unsets all flags set in <paramref name="flags" /> in <paramref name="value"
+    /// />.</summary>
+    /// <param name="value">The value from which the flags set in <paramref name="flags"
+    /// /> are removed.</param>
+    /// <param name="flags">A single <see cref="TelTypes" /> value or a combination
+    /// of several <see cref="TelTypes" /> values.</param>
+    /// <returns>A value from which all the flags set in <paramref name="flags" /> are
+    /// removed, respectively <c>null</c> if all flags are unset. If <paramref name="value"
+    /// /> is <c>null</c>, <c>null</c> is returned.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TelTypes? Unset(this TelTypes? value, TelTypes flags)
     {

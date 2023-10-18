@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.Uris;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -13,10 +13,8 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     private readonly byte[]? _bytes;
     private ReadOnlyCollection<byte>? _value;
 
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop">The <see cref="DataProperty"/> object to clone.</param>
+    /// <summary />
+    /// <param name="prop">The <see cref="DataProperty" /> object to clone.</param>
     private EmbeddedBytesProperty(EmbeddedBytesProperty prop) : base(prop)
     {
         _bytes = prop._bytes;
@@ -49,7 +47,7 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => _bytes is null;
 
@@ -58,7 +56,7 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     public override string GetFileTypeExtension() => MimeString.ToFileTypeExtension(Parameters.MediaType);
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new EmbeddedBytesProperty(this);
 

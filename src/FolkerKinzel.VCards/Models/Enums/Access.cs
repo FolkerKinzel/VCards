@@ -1,22 +1,15 @@
-﻿namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>
-/// Benannte Konstanten, um in vCard 3.0 anzugeben, welche Geheimhaltungsstufe für die vCard gilt.
-/// </summary>
+    /// <summary>Named constants to indicate in vCard 3.0 which level of confidentiality
+    /// applies to the vCard.</summary>
 public enum Access
 {
-    /// <summary>
-    /// Der Inhalt der vCard ist öffentlich zugänglich.
-    /// </summary>
+    /// <summary>Public</summary>
     Public,
 
-    /// <summary>
-    /// Der Inhalt der vCard ist für persönliche Bekannte zugänglich.
-    /// </summary>
+    /// <summary>Private</summary>
     Private,
 
-    /// <summary>
-    /// Der Inhalt der vCard ist vertraulich.
-    /// </summary>
+    /// <summary>Confidential</summary>
     Confidential
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -7,45 +7,39 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Repräsentiert die in vCard 4.0 eingeführte vCard-Property <c>GENDER</c>, die Informationen über das Geschlecht
-/// und die Geschlechtsidentität speichert.
-/// </summary>
+    /// <summary>Represents the vCard property <c>GENDER</c>, introduced in vCard 4.0,
+    /// which stores information to specify the components of the sex and gender identity
+    /// of the object the vCard represents</summary>
 public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
 {
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary />
+    /// <param name="prop" />
     private GenderProperty(GenderProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="GenderProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="sex">Standardisierte Geschlechtsangabe.</param>
-    /// <param name="genderIdentity">Freie Beschreibung des sexuellen Identität.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <summary> Initialisiert ein neues <see cref="GenderProperty" />-Objekt. </summary>
+    /// <param name="sex">Standardized information about the sex of a person.</param>
+    /// <param name="genderIdentity">Free text describing the gender identity.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public GenderProperty(Enums.Gender? sex,
                           string? genderIdentity = null,
                           string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = new PropertyParts.GenderInfo(sex, genderIdentity);
 
-    /// <summary>
-    /// Die von der <see cref="GenderProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary> Die von der <see cref="GenderProperty" /> zur Verfügung gestellten
+    /// Daten. </summary>
     public new GenderInfo Value
     {
         get;
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
@@ -89,6 +83,6 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GenderProperty>)this).GetEnumerator();
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new GenderProperty(this);
 }

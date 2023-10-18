@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 
@@ -6,11 +6,10 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard
 {
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="VCard"/>-Objekts. 
-    /// (Nur zum Debugging.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="VCard"/>-Objekts.</returns>
+    /// <summary>Creates a <see cref="string" /> representation of the <see cref="VCard"
+    /// /> object. (For debugging only.)</summary>
+    /// <returns>A <see cref="string" /> representation of the <see cref="VCard" />
+    /// object.</returns>
     public override string ToString()
     {
         var sb = new StringBuilder();

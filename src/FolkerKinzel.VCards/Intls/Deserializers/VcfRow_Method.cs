@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Encodings;
+using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
 
@@ -6,12 +6,10 @@ namespace FolkerKinzel.VCards.Intls.Deserializers;
 
 internal sealed partial class VcfRow
 {
-    /// <summary>
-    /// Parst eine Datenzeile der VCF-Datei.
-    /// </summary>
-    /// <param name="vCardRow">Die Datenzeile der vCard als <see cref="string"/>.</param>
-    /// <param name="info">Ein <see cref="VcfDeserializationInfo"/>.</param>
-    /// <returns><see cref="VcfRow"/>-Objekt</returns>
+    /// <summary />
+    /// <param name="vCardRow" />
+    /// <param name="info" />
+    /// <returns />
     internal static VcfRow? Parse(string vCardRow, VcfDeserializationInfo info)
     {
         // vCardRow:
@@ -27,11 +25,10 @@ internal sealed partial class VcfRow
     }
 
 
-    /// <summary>
-    /// Unmaskiert maskierten Text, der sich in <see cref="Value"/> befindet, nach den Maßgaben des
-    /// verwendeten vCard-Standards und dekodiert ihn, falls er Quoted-Printable-kodiert ist.
-    /// </summary>
-    /// <param name="version">Die Versionsnummer des vCard-Standards.</param>
+    /// <summary> Unmaskiert maskierten Text, der sich in <see cref="Value" /> befindet,
+    /// nach den Maßgaben des verwendeten vCard-Standards und dekodiert ihn, falls er
+    /// Quoted-Printable-kodiert ist. </summary>
+    /// <param name="version" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal void UnMask(VCdVersion version)
     {
@@ -45,11 +42,9 @@ internal sealed partial class VcfRow
     }
 
 
-    /// <summary>
-    /// Dekodiert Quoted-Printable kodierten Text, der sich in <see cref="Value"/> befindet, wenn 
-    /// <see cref="VCards.Models.PropertyParts.ParameterSection.Encoding"/>
-    /// gleich <see cref="ValueEncoding.QuotedPrintable"/> ist.
-    /// </summary>
+    /// <summary> Dekodiert Quoted-Printable kodierten Text, der sich in <see cref="Value"
+    /// /> befindet, wenn <see cref="VCards.Models.PropertyParts.ParameterSection.Encoding"
+    /// /> gleich <see cref="ValueEncoding.QuotedPrintable" /> ist. </summary>
     internal void DecodeQuotedPrintable()
     {
         if (this.Parameters.Encoding == ValueEncoding.QuotedPrintable && !_quotedPrintableDecoded)

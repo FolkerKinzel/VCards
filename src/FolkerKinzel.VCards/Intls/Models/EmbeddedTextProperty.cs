@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.MimeTypes;
+using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
@@ -17,7 +17,7 @@ internal sealed class EmbeddedTextProperty : DataProperty
     public new string? Value => _textProp.Value;
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => _textProp.IsEmpty;
 
@@ -29,7 +29,7 @@ internal sealed class EmbeddedTextProperty : DataProperty
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new EmbeddedTextProperty((TextProperty)_textProp.Clone());
     

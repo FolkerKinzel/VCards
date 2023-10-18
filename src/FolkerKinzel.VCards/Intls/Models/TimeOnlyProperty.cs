@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -18,7 +18,7 @@ internal sealed class TimeOnlyProperty : DateAndOrTimeProperty
 
     public new TimeOnly Value { get; }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new TimeOnlyProperty(this);
 

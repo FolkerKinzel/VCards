@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -8,9 +8,7 @@ using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
-/// <summary>
-/// Kapselt Informationen über den Namen der Person, die die vCard repräsentiert.
-/// </summary>
+    /// <summary>Encapsulates information about the name of the person the vCard represents.</summary>
 public sealed class Name
 {
     private const int MAX_COUNT = 5;
@@ -21,14 +19,12 @@ public sealed class Name
     private const int PREFIX = 3;
     private const int SUFFIX = 4;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="Name"/>-Objekt.
-    /// </summary>
-    /// <param name="lastName">Nachname</param>
-    /// <param name="firstName">Vorname</param>
-    /// <param name="middleName">zweiter Vorname</param>
-    /// <param name="prefix">Namenspräfix (z.B. "Prof. Dr.")</param>
-    /// <param name="suffix">Namenssuffix (z.B. "jr.")</param>
+    /// <summary />
+    /// <param name="lastName" />
+    /// <param name="firstName" />
+    /// <param name="middleName" />
+    /// <param name="prefix" />
+    /// <param name="suffix" />
     internal Name(
         ReadOnlyCollection<string> lastName,
         ReadOnlyCollection<string> firstName,
@@ -187,35 +183,24 @@ public sealed class Name
         Suffix ??= ReadOnlyCollectionString.Empty;
     }
 
-    /// <summary>
-    /// Nachname (nie <c>null</c>)
-    /// </summary>
+    /// <summary>Family Name(s) (also known as surname(s)) (Never <c>null</c>.)</summary>
     public ReadOnlyCollection<string> LastName { get; }
 
-    /// <summary>
-    /// Vorname (nie <c>null</c>)
-    /// </summary>
+    /// <summary>Given Name(s) (first name(s)) (Never <c>null</c>.)</summary>
     public ReadOnlyCollection<string> FirstName { get; }
 
-    /// <summary>
-    /// zweiter Vorname (nie <c>null</c>)
-    /// </summary>
+    /// <summary>Additional Name(s) (Never <c>null</c>.)</summary>
     public ReadOnlyCollection<string> MiddleName { get; }
 
-    /// <summary>
-    /// Namenspräfix (z.B. "Prof. Dr.") (nie <c>null</c>)
-    /// </summary>
+    /// <summary>Honorific Prefix(es) (Never <c>null</c>.)</summary>
     public ReadOnlyCollection<string> Prefix { get; }
 
-    /// <summary>
-    /// Namenssuffix (z.B. "jr.") (nie <c>null</c>)
-    /// </summary>
+    /// <summary>Honorific Suffix(es) (Never <c>null</c>.)</summary>
     public ReadOnlyCollection<string> Suffix { get; }
 
 
-    /// <summary>
-    /// <c>true</c>, wenn das <see cref="Name"/>-Objekt keine verwertbaren Daten enthält.
-    /// </summary>
+    /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain
+    /// any usable data.</summary>
     public bool IsEmpty => LastName.Count == 0 && 
                            FirstName.Count == 0 && 
                            MiddleName.Count == 0 && 
@@ -273,11 +258,9 @@ public sealed class Name
            Suffix.Any(StringExtension.NeedsToBeQpEncoded);
 
 
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="Name"/>-Objekts. 
-    /// (Nur zum Debugging.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="Name"/>-Objekts.</returns>
+    /// <summary>Creates a <see cref="string" /> representation of the <see cref="Name"
+    /// /> object. (For debugging only.)</summary>
+    /// <returns>A <see cref="string" /> representation of the <see cref="Name" /> object.</returns>
     public override string ToString()
     {
         var worker = new StringBuilder();
@@ -392,10 +375,9 @@ public sealed class Name
         }
     }
 
-    /// <summary>
-    /// Formatiert die von der Instanz gekapselten Daten in eine lesbare Form.
-    /// </summary>
-    /// <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
+    /// <summary>Formats the data encapsulated by the instance into a human-readable
+    /// form.</summary>
+    /// <returns>The data encapsulated by the instance in human-readable form.</returns>
     public string ToDisplayName()
     {
         const int stringBuilderInitialCapacity = 32;

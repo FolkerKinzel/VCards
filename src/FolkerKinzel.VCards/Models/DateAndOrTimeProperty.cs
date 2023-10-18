@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -31,12 +31,12 @@ public abstract class DateAndOrTimeProperty
         }
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => base.IsEmpty;
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     protected override object? GetVCardPropertyValue() => Value;
 
 
@@ -115,7 +115,7 @@ public abstract class DateAndOrTimeProperty
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DateAndOrTimeProperty>)this).GetEnumerator();
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => Value?.ToString() ?? base.ToString();
 

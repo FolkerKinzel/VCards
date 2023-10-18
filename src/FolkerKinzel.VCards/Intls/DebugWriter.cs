@@ -1,4 +1,4 @@
-﻿namespace FolkerKinzel.VCards.Intls;
+namespace FolkerKinzel.VCards.Intls;
 
 internal static class DebugWriter
 {

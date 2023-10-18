@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -11,10 +11,8 @@ public sealed partial class ParameterSection
 {
     internal ParameterSection() { }
 
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="paraSec">The <see cref="ParameterSection"/> object to clone.</param>
+    /// <summary />
+    /// <param name="paraSec" />
     private ParameterSection(ParameterSection paraSec)
     {
         foreach (var kvp in paraSec._propDic)

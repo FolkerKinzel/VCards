@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Globalization;
 

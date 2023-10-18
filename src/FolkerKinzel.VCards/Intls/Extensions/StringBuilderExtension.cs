@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
 
@@ -104,12 +104,9 @@ internal static class StringBuilderExtension
     }
 
 
-    /// <summary>
-    /// Entfernt einfache und doppelte Gänsefüßchen, die sich am Beginnn oder Ende des Inhalts
-    /// von <paramref name="builder"/> befinden.
-    /// </summary>
-    /// <param name="builder">Der <see cref="StringBuilder"/>, dessen Inhalt verändert wird.</param>
-    /// <returns>Gibt <paramref name="builder"/> zurück, damit Aufrufe verkettet werden können.</returns>
+    /// <summary />
+    /// <param name="builder" />
+    /// <returns />
     internal static StringBuilder RemoveQuotes(this StringBuilder builder)
     {
         Debug.Assert(builder != null);

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
@@ -8,11 +8,11 @@ using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Abstrakte Basisklasse für Klassen, die die Daten von vCard-Properties kapseln, die Beziehungen zu anderen Menschen
-/// beschreiben. Dies sind insbesondere die vCard-4.0-Property <c>RELATED</c>, die vCard-2.1- und -3.0-Property <c>AGENT</c> sowie
-/// Non-Standard-Properties zur Angabe des Namens des Ehepartners (wie z.B. <c>X-SPOUSE</c>).
-/// </summary>
+    /// <summary>Abstract base class for classes that encapsulate data from vCard properties
+    /// that describe relationships with other people. These are in particular the vCard
+    /// 4.0 property <c>RELATED</c>, the vCard 2.1- and -3.0-property <c>AGENT</c>,
+    /// as well as non-standard properties for specifying the name of the spouse (such
+    /// as <c>X-SPOUSE</c>).</summary>
 public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProperty>
 {
     private bool _isValueInitialized;
@@ -69,46 +69,43 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
         }
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => base.IsEmpty;
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => Value?.ToString() ?? base.ToString();
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    /// <summary>
-    /// Kopierkonstruktor.
-    /// </summary>
-    /// <param name="prop">Das zu klonende <see cref="RelationProperty"/>-Objekt.</param>
+    /// <summary>Copy constructor.</summary>
+    /// <param name="prop">Das zu klonende <see cref="RelationProperty" />-Objekt.</param>
     protected RelationProperty(RelationProperty prop) : base(prop) { }
 
 
-    /// <summary>
-    /// Konstruktor, der von abgeleiteten Klassen beim Parsen von VCF-Dateien verwendet wird.
-    /// </summary>
-    /// <param name="parameters">Die <see cref="ParameterSection"/> des <see cref="RelationProperty"/> Objekts.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <summary> Konstruktor, der von abgeleiteten Klassen beim Parsen von VCF-Dateien
+    /// verwendet wird. </summary>
+    /// <param name="parameters">Die <see cref="ParameterSection" /> des <see cref="RelationProperty"
+    /// /> Objekts.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     protected RelationProperty(ParameterSection parameters, string? propertyGroup)
         : base(parameters, propertyGroup) { }
 
 
-    /// <summary>
-    /// Konstruktor, der von abgeleiteten Klassen aufgerufen wird.
-    /// </summary>
-    /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum oder <c>null</c>.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <summary>Constructor called by derived classes.</summary>
+    /// <param name="relation">A single <see cref="RelationTypes" /> value or a combination
+    /// of several <see cref="RelationTypes" /> values or <c>null</c>.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     protected RelationProperty(RelationTypes? relation, string? propertyGroup)
         : base(new ParameterSection(), propertyGroup)
         => this.Parameters.RelationType = relation;

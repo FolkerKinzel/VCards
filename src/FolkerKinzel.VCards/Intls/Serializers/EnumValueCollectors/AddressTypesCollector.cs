@@ -1,17 +1,13 @@
-﻿using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;
 
 internal static class AddressTypesCollector
 {
-    /// <summary>
-    /// Sammelt die Namen der in <paramref name="addressType"/> gesetzten Flags in
-    /// <paramref name="list"/>. <paramref name="list"/> wird von der Methode nicht
-    /// geleert.
-    /// </summary>
-    /// <param name="addressType"><see cref="AddressTypes"/>-Objekt oder <c>null</c>.</param>
-    /// <param name="list">Eine Liste zum sammeln.</param>
+    /// <summary />
+    /// <param name="addressType" />
+    /// <param name="list" />
     internal static void CollectValueStrings(AddressTypes? addressType, List<string> list)
     {
         Debug.Assert(list != null);

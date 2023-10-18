@@ -1,32 +1,20 @@
-﻿namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>
-/// Benannte Konstanten, um das Geschlecht des Subjekts anzugeben, das die vCard repräsentiert.
-/// </summary>
+    /// <summary>Named Constants to specify the sex of the object the vCard represents.</summary>
 public enum Gender
 {
-    /// <summary>
-    /// <c>U</c>: unbekannt <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>U</c>: Unknown. <c>(4)</c></summary>
     Unknown,
 
-    /// <summary>
-    /// <c>F</c>: weiblich <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>F</c>: Female. <c>(4)</c></summary>
     Female,
 
-    /// <summary>
-    /// <c>M</c>: männlich <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>M</c>: Male. <c>(4)</c></summary>
     Male,
 
-    /// <summary>
-    /// <c>N</c>: geschlechtslos oder nicht zuzuordnen <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>N</c>: None or not applicable. <c>(4)</c></summary>
     NonOrNotApplicable,
 
-    /// <summary>
-    /// <c>O</c>: anderes Geschlecht <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>O</c>: Other. <c>(4)</c></summary>
     Other
 }

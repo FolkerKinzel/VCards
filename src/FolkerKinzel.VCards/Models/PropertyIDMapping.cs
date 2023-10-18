@@ -1,24 +1,21 @@
-﻿using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Verbindet das lokale <see cref="PropertyID.Mapping"/> einer <see cref="VCardProperty"/> mit einem
-/// <see cref="Uri"/>, der die vCard-Property über verschiedene Versionszustände derselben vCard hinweg
-/// eindeutig identifiziert.
-/// </summary>
+    /// <summary> Verbindet das lokale <see cref="PropertyID.Mapping" /> einer <see
+    /// cref="VCardProperty" /> mit einem <see cref="Uri" />, der die vCard-Property
+    /// über verschiedene Versionszustände derselben vCard hinweg eindeutig identifiziert.
+    /// </summary>
 public sealed class PropertyIDMapping
 {
-    /// <summary>
-    /// Initialisiert eine neues <see cref="PropertyIDMapping"/>-Objekt.
-    /// </summary>
-    /// <param name="id">Lokale ID des Mappings (Wert: zwischen 1 und 9).</param>
-    /// <param name="mapping">Ein <see cref="Uri"/>, der die vCard-Property über 
-    /// verschiedene Versionszustände derselben vCard hinweg
-    /// eindeutig identifiziert.</param>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="id"/> ist kleiner als 1 oder größer als 9.</exception>
-    /// <exception cref="ArgumentNullException"><paramref name="mapping"/> ist <c>null</c>.</exception>
+    /// <summary>Initializes a new <see cref="PropertyIDMapping" /> object.</summary>
+    /// <param name="id">Local ID of the mapping (value: between 1 and 9).</param>
+    /// <param name="mapping">A <see cref="Uri" /> that uniquely identifies the vCard
+    /// property across different versions of the same vCard.</param>
+    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> is less
+    /// than 1 or greater than 9.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="mapping" /> is <c>null</c>.</exception>
     public PropertyIDMapping(int id, Uri mapping)
     {
         id.ValidateID(nameof(id));
@@ -27,28 +24,23 @@ public sealed class PropertyIDMapping
         Mapping = mapping ?? throw new ArgumentNullException(nameof(mapping));
     }
 
-    /// <summary>
-    /// Lokale ID des Mappings.
-    /// </summary>
+    /// <summary>Gets the Local ID of the mapping.</summary>
     public int ID
     {
         get;
     }
 
-    /// <summary>
-    /// Ein <see cref="Uri"/>, der als plattformübergreifender Bezeichner des Mappings dient.
-    /// </summary>
+    /// <summary>Gets the <see cref="Uri" /> that serves as a cross-platform identifier
+    /// for the mapping.</summary>
     public Uri Mapping
     {
         get;
     }
 
-    /// <summary>
-    /// Parses a <see cref="string"/> that represents a vCard 4.0 Property ID Mapping.
-    /// </summary>
-    /// <param name="s"></param>
-    /// <returns>A <see cref="PropertyIDMapping"/> instance.</returns>
-    /// <exception cref="ArgumentException"><paramref name="s"/> ist kein <see cref="PropertyIDMapping"/>.</exception>
+    /// <summary />
+    /// <param name="s" />
+    /// <returns />
+    /// <exception cref="ArgumentException" />
     internal static PropertyIDMapping Parse(string s)
     {
         int? mappingNumber = null;
@@ -106,11 +98,10 @@ public sealed class PropertyIDMapping
 
 
 
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation der <see cref="PropertyIDMapping"/>-Instanz. (Nur zum 
-    /// Debuggen.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation der <see cref="PropertyIDMapping"/>-Instanz.</returns>
+    /// <summary>Creates a <see cref="string" /> representation of the <see cref="PropertyIDMapping"
+    /// /> object. (For debugging only.)</summary>
+    /// <returns>A <see cref="string" /> representation of the <see cref="PropertyIDMapping"
+    /// /> object.</returns>
     public override string ToString()
     {
         var sb = new StringBuilder(48);

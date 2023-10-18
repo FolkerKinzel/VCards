@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 

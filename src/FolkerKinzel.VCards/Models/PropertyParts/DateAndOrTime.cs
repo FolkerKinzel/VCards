@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using OneOf;
@@ -66,7 +66,7 @@ public sealed partial class DateAndOrTime
 
 
     
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => _oneOf.ToString();
 

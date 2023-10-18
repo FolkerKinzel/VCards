@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Converters;

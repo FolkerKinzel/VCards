@@ -1,4 +1,4 @@
-﻿using OneOf;
+using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -37,7 +37,7 @@ public sealed class Relation
 
 
     
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => _oneOf.ToString();
 

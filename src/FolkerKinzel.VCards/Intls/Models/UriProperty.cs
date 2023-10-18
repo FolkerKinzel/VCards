@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -8,10 +8,8 @@ namespace FolkerKinzel.VCards.Intls.Models;
 
 internal sealed class UriProperty : VCardProperty
 {
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary />
+    /// <param name="prop" />
     private UriProperty(UriProperty prop)
         : base(prop) => Value = prop.Value;
 
@@ -28,12 +26,12 @@ internal sealed class UriProperty : VCardProperty
     public new Uri Value { get; }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new UriProperty(this);
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     protected override object? GetVCardPropertyValue() => Value;
 
 

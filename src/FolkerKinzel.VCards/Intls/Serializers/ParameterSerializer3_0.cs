@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;

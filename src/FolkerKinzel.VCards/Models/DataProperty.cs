@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.ObjectModel;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.Uris;
@@ -17,18 +17,14 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     private DataPropertyValue? _value;
     private bool _isValueInitialized;
 
-    /// <summary>
-    /// Kopierkonstruktor
-    /// </summary>
-    /// <param name="prop">Das zu klonende <see cref="DataProperty"/> Objekt.</param>
+    /// <summary>Copy constructor.</summary>
+    /// <param name="prop">Das zu klonende <see cref="DataProperty" /> Objekt.</param>
     protected DataProperty(DataProperty prop) : base(prop) { }
 
 
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="parameters"></param>
-    /// <param name="propertyGroup"></param>
+    /// <summary>ctor</summary>
+    /// <param name="parameters" />
+    /// <param name="propertyGroup" />
     internal DataProperty(ParameterSection parameters, string? propertyGroup)
         : base(parameters, propertyGroup) { }
 
@@ -47,12 +43,12 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => base.IsEmpty;
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
@@ -188,7 +184,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<DataProperty>)this).GetEnumerator();
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => Value?.ToString() ?? base.ToString();
 

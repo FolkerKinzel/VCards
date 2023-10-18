@@ -1,21 +1,25 @@
-﻿using FolkerKinzel.VCards.Intls.Models;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards;
 
-/// <summary>
-/// Kapselt die in einer vCard enthaltenen Informationen.
-/// </summary>
-/// <threadsafety static="true" instance="false" />
-/// <example>
-/// <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
-/// <para>Schreiben, Lesen und Umwandeln von VCF-Dateien:</para>
-/// <code language="cs" source="..\Examples\VCardExample.cs"/>
-/// <para>Beispiel-Implementierung für <see cref="ITimeZoneIDConverter"/>:</para>
-/// <code language="cs" source="..\Examples\TimeZoneIDConverter.cs"/>
-/// </example>
+    /// <summary>Encapsulates the information contained in a vCard.</summary>
+    /// <threadsafety static="true" instance="false" />
+    /// <example>
+    /// <note type="note">
+    /// For the sake of easier readability, exception handling is not used in the examples.
+    /// </note>
+    /// <para>
+    /// Writing, reading and converting VCF files:
+    /// </para>
+    /// <code language="cs" source="..\Examples\VCardExample.cs" />
+    /// <para>
+    /// Example implementation for <see cref="ITimeZoneIDConverter" />:
+    /// </para>
+    /// <code language="cs" source="..\Examples\TimeZoneIDConverter.cs" />
+    /// </example>
 public sealed partial class VCard
 {
     private readonly Dictionary<VCdProp, object> _propDic = new();
@@ -48,10 +52,10 @@ public sealed partial class VCard
     //}
 
 
-    /// <summary>
-    /// Gibt <c>true</c> zurück, wenn das <see cref="VCard"/>-Objekt keine verwertbaren Daten enthält.
-    /// </summary>
-    /// <returns><c>true</c>, wenn das <see cref="VCard"/>-Objekt keine verwertbaren Daten enthält, sonst <c>false</c>.</returns>
+    /// <summary>Returns <c>true</c>, if the <see cref="VCard" /> object does not contain
+    /// any usable data.</summary>
+    /// <returns> <c>true</c> if the <see cref="VCard" /> object contains no usable
+    /// data, <c>false</c> otherwise.</returns>
     public bool IsEmpty() =>
         !_propDic
             .Select(x => x.Value)
@@ -63,18 +67,15 @@ public sealed partial class VCard
             });
 
 
-    /// <summary>
-    /// <c>VERSION</c>: Version der vCard-Spezifikation. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>VERSION</c>: Version of the vCard standard. <c>(2,3,4)</c></summary>
     public VCdVersion Version
     {
         get; private set;
     }
 
 
-    /// <summary>
-    /// <c>CLASS</c>: Sensibilität der in der vCard enthaltenen Daten. <c>(3)</c>
-    /// </summary>
+    /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
+    /// vCard. <c>(3)</c></summary>
     public AccessProperty? Access
     {
         get => Get<AccessProperty?>(VCdProp.Access);
@@ -82,9 +83,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>ADR</c>: Adressen <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>ADR</c>: A structured representation of the physical delivery address
+    /// for the vCard object. <c>(2,3,4)</c></summary>
     public IEnumerable<AddressProperty?>? Addresses
     {
         get => Get<IEnumerable<AddressProperty?>?>(VCdProp.Addresses);
@@ -92,14 +92,10 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>ANNIVERSARY</c>: Jahrestag (gemeint ist i. A. der Hochzeitstag) der Person. <c>(4)</c>
-    /// </summary>
-    /// <remarks>
-    /// Mehrere Instanzen sind nur dann zulässig, wenn sie
-    /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
-    /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
-    /// </remarks>
+    /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
+    /// <remarks>Multiple instances are only allowed, if they have the same <see cref="ParameterSection.AltID"
+    /// /> parameters. This can e.g. be useful, if the property is displayed in different
+    /// languages.</remarks>
     public IEnumerable<DateAndOrTimeProperty?>? AnniversaryViews
     {
         get => Get<IEnumerable<DateAndOrTimeProperty?>?>(VCdProp.AnniversaryViews);
@@ -107,14 +103,11 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>BDAY</c>: Geburtstag <c>(2,3,4)</c>
-    /// </summary>
-    /// <remarks>
-    /// Mehrere Instanzen sind nur in vCard 4.0 zulässig, und nur dann, wenn sie
-    /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
-    /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
-    /// </remarks>
+    /// <summary> <c>BDAY</c>: Date of birth of the individual associated with the vCard.
+    /// <c>(2,3,4)</c></summary>
+    /// <remarks>Multiple instances are only allowed in vCard 4.0, and only, if they
+    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
+    /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<DateAndOrTimeProperty?>? BirthDayViews
     {
         get => Get<IEnumerable<DateAndOrTimeProperty?>?>(VCdProp.BirthDayViews);
@@ -122,14 +115,11 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>BIRTHPLACE</c>: Geburtsort <c>(4 - RFC 6474)</c>
-    /// </summary>
-    /// <remarks>
-    /// Mehrere Instanzen sind nur dann zulässig, wenn sie
-    /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
-    /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
-    /// </remarks>
+    /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
+    /// RFC 6474)</c></summary>
+    /// <remarks>Multiple instances are only allowed, if they have the same <see cref="ParameterSection.AltID"
+    /// /> parameters. This can e.g. be useful, if the property is displayed in different
+    /// languages.</remarks>
     public IEnumerable<TextProperty?>? BirthPlaceViews
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.BirthPlaceViews);
@@ -137,9 +127,7 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>CALURI</c>: URLs zum Kalender der Person. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4)</c></summary>
     public IEnumerable<TextProperty?>? CalendarAddresses
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.CalendarAddresses);
@@ -147,9 +135,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>CALADRURI</c>: URLs für das Senden einer Terminanforderung an die Person oder Organisation. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
+    /// the person's calendar. <c>(4)</c></summary>
     public IEnumerable<TextProperty?>? CalendarUserAddresses
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.CalendarUserAddresses);
@@ -157,9 +144,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>CATEGORIES</c>: Liste(n) von Eigenschaften, die das Objekt der vCard beschreiben. <c>(3,4)</c>
-    /// </summary>
+    /// <summary> <c>CATEGORIES</c>: Lists of "tags" that can be used to describe the
+    /// object represented by this vCard. <c>(3,4)</c></summary>
     public IEnumerable<StringCollectionProperty?>? Categories
     {
         get => Get<IEnumerable<StringCollectionProperty?>?>(VCdProp.Categories);
@@ -167,14 +153,10 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>DEATHDATE</c>: Todestag <c>(4 - RFC 6474)</c>
-    /// </summary>
-    /// <remarks>
-    /// Mehrere Instanzen sind nur dann zulässig, wenn sie
-    /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
-    /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
-    /// </remarks>
+    /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
+    /// <remarks>Multiple instances are only allowed, if they have the same <see cref="ParameterSection.AltID"
+    /// /> parameters. This can e.g. be useful, if the property is displayed in different
+    /// languages.</remarks>
     public IEnumerable<DateAndOrTimeProperty?>? DeathDateViews
     {
         get => Get<IEnumerable<DateAndOrTimeProperty?>?>(VCdProp.DeathDateViews);
@@ -182,14 +164,11 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>DEATHPLACE</c>: Sterbeort <c>(4 - RFC 6474)</c>
-    /// </summary>
-    /// <remarks>
-    /// Mehrere Instanzen sind nur dann zulässig, wenn sie
-    /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
-    /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
-    /// </remarks>
+    /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
+    /// RFC 6474)</c></summary>
+    /// <remarks>Multiple instances are only allowed, if they have the same <see cref="ParameterSection.AltID"
+    /// /> parameters. This can e.g. be useful, if the property is displayed in different
+    /// languages.</remarks>
     public IEnumerable<TextProperty?>? DeathPlaceViews
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.DeathPlaceViews);
@@ -197,10 +176,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>NAME</c>:
-    /// Anzeigbarer Name der <see cref="Sources"/>-Eigenschaft. <c>(3)</c>
-    /// </summary>
+    /// <summary> <c>NAME</c>: Anzeigbarer Name der <see cref="Sources" />-Eigenschaft.
+    /// <c>(3)</c></summary>
     public TextProperty? DirectoryName
     {
         get => Get<TextProperty?>(VCdProp.DirectoryName);
@@ -208,21 +185,21 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>FN</c>: Formatierte Zeichenfolge mit dem/den vollständigen Namen des vCard-Objekts. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>FN</c>: The formatted name string associated with the vCard object.
+    /// <c>(2,3,4)</c></summary>
     /// <remarks>
     /// <para>
-    /// Die in dieser Eigenschaft gespeicherten Namensdarstellungen sind typischerweise dafür gedacht, den Benutzern der Anwendung
-    /// präsentiert zu werden.
+    /// Die in dieser Eigenschaft gespeicherten Namensdarstellungen sind typischerweise
+    /// dafür gedacht, den Benutzern der Anwendung präsentiert zu werden.
     /// </para>
     /// <note type="tip">
-    /// Sie können die Methode <see cref="NameProperty.ToDisplayName"/> verwenden, um aus den strukturierten Namensdarstellungen,
-    /// die in der Eigenschaft <see cref="NameViews"/> gespeichert sind, formatierte Darstellungen zu erzeugen, die
-    /// für die Benutzer der Anwendung lesbar sind.
+    /// Sie können die Methode <see cref="NameProperty.ToDisplayName" /> verwenden,
+    /// um aus den strukturierten Namensdarstellungen, die in der Eigenschaft <see cref="NameViews"
+    /// /> gespeichert sind, formatierte Darstellungen zu erzeugen, die für die Benutzer
+    /// der Anwendung lesbar sind.
     /// </note>
     /// </remarks>
-    /// <seealso cref="NameProperty.ToDisplayName"/>
+    /// <seealso cref="NameProperty.ToDisplayName" />
     public IEnumerable<TextProperty?>? DisplayNames
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.DisplayNames);
@@ -230,9 +207,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>EMAIL</c>: E-Mail-Adressen  <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>EMAIL</c>: The addresses for electronic mail communication with
+    /// the vCard object. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? EmailAddresses
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.EmailAddresses);
@@ -240,12 +216,10 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>EXPERTISE</c>: Fachgebiete, über die die Person Kenntnisse hat. <c>(RFC 6715)</c>
-    /// </summary>
-    /// <remarks>
-    /// Geben Sie den Grad der Fachkenntnis im Parameter <see cref="ParameterSection.ExpertiseLevel"/> an!
-    /// </remarks>
+    /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has
+    /// knowledge of. <c>(RFC 6715)</c></summary>
+    /// <remarks> Geben Sie den Grad der Fachkenntnis im Parameter <see cref="ParameterSection.ExpertiseLevel"
+    /// /> an! </remarks>
     public IEnumerable<TextProperty?>? Expertises
     {
         get => Get<IEnumerable<TextProperty>>(VCdProp.Expertises);
@@ -253,15 +227,14 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>FBURL</c>: URLs, die beschreiben, ob auf dem Kalender der Person "frei" oder "besetzt" angezeigt wird. <c>(4)</c>
-    /// </summary>
-    /// <remarks>
-    /// Wenn mehrere <see cref="TextProperty"/>-Objekte zugewiesen sind, wird die Standardeigenschaft durch den Wert von 
-    /// <see cref="ParameterSection.Preference"/> bestimmt. URLs vom Typ FTP [RFC1738] oder HTTP [RFC2616] verweisen auf ein iCalendar-Objekt [RFC5545],
-    /// das einen Snapshot der nächsten Wochen oder Monate mit Daten zur ausgelasteten Zeit darstellt. Wenn das iCalendar-Objekt eine Datei ist, sollte
-    /// seine Dateierweiterung ".ifb" sein.
-    /// </remarks>
+    /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
+    /// "busy" on their calendar. <c>(4)</c></summary>
+    /// <remarks> Wenn mehrere <see cref="TextProperty" />-Objekte zugewiesen sind,
+    /// wird die Standardeigenschaft durch den Wert von <see cref="ParameterSection.Preference"
+    /// /> bestimmt. URLs vom Typ FTP [RFC1738] oder HTTP [RFC2616] verweisen auf ein
+    /// iCalendar-Objekt [RFC5545], das einen Snapshot der nächsten Wochen oder Monate
+    /// mit Daten zur ausgelasteten Zeit darstellt. Wenn das iCalendar-Objekt eine Datei
+    /// ist, sollte seine Dateierweiterung ".ifb" sein. </remarks>
     public IEnumerable<TextProperty?>? FreeOrBusyUrls
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.FreeOrBusyUrls);
@@ -269,14 +242,10 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>GENDER</c>: Geschlecht <c>(4)</c>
-    /// </summary>
-    /// <remarks>
-    /// Mehrere Instanzen sind nur dann zulässig, wenn sie
-    /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
-    /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
-    /// </remarks>
+    /// <summary> <c>GENDER</c>: Defines the person's gender. <c>(4)</c></summary>
+    /// <remarks>Multiple instances are only allowed, if they have the same <see cref="ParameterSection.AltID"
+    /// /> parameters. This can e.g. be useful, if the property is displayed in different
+    /// languages.</remarks>
     public IEnumerable<GenderProperty?>? GenderViews
     {
         get => Get<IEnumerable<GenderProperty?>?>(VCdProp.GenderViews);
@@ -284,9 +253,7 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>GEO</c>: Längen- und Breitengrad(e). <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>GEO</c>: Specifies latitudes and longitudes. <c>(2,3,4)</c></summary>
     public IEnumerable<GeoProperty?>? GeoCoordinates
     {
         get => Get<IEnumerable<GeoProperty?>?>(VCdProp.GeoCoordinates);
@@ -294,12 +261,10 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>HOBBY</c>: Freizeitbeschäftigungen, denen die Person nachgeht. <c>(4 - RFC 6715)</c>
-    /// </summary>
-    /// <remarks>
-    /// Legen Sie den Grad des Interesses im Parameter <see cref="ParameterSection.InterestLevel"/> fest!
-    /// </remarks>
+    /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
+    /// in. <c>(4 - RFC 6715)</c></summary>
+    /// <remarks> Legen Sie den Grad des Interesses im Parameter <see cref="ParameterSection.InterestLevel"
+    /// /> fest! </remarks>
     public IEnumerable<TextProperty?>? Hobbies
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.Hobbies);
@@ -307,15 +272,13 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>IMPP</c>: Liste von Instant-Messenger-Handles. <c>(3,4)</c>
-    /// </summary>
-    /// <remarks>
-    /// <see cref="TextProperty.Value"/> sollte einen URI darstellen, der dem Instant Messenging
-    /// und der Präsenzprotokoll-Kommunikation mit dem Objekt dient, das durch die vCard repräsentiert wird.
-    /// Wenn der URI zusätzlich auch zum Austausch von gesprochenen Nachrichten oder Videos verwendet werden kann,
-    /// sollte zusätzlich ein Eintrag in <see cref="VCard.PhoneNumbers"/> vorgenommen werden.
-    /// </remarks>
+    /// <summary> <c>IMPP</c>: List of instant messenger handles. <c>(3,4)</c></summary>
+    /// <remarks> <see cref="TextProperty.Value" /> sollte einen URI darstellen, der
+    /// dem Instant Messenging und der Präsenzprotokoll-Kommunikation mit dem Objekt
+    /// dient, das durch die vCard repräsentiert wird. Wenn der URI zusätzlich auch
+    /// zum Austausch von gesprochenen Nachrichten oder Videos verwendet werden kann,
+    /// sollte zusätzlich ein Eintrag in <see cref="VCard.PhoneNumbers" /> vorgenommen
+    /// werden. </remarks>
     public IEnumerable<TextProperty?>? InstantMessengerHandles
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.InstantMessengerHandles);
@@ -323,13 +286,10 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>INTEREST</c>: Freizeitbeschäftigungen, für die sich die Person interessiert, an denen sie 
-    /// aber nicht zwangsläufig teilnimmt. <c>(4 - RFC 6715)</c>
-    /// </summary>
-    /// <remarks>
-    /// Legen Sie den Grad des Interesses im Parameter <see cref="ParameterSection.InterestLevel"/> fest!
-    /// </remarks>
+    /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
+    /// in, but does not necessarily take part in. <c>(4 - RFC 6715)</c></summary>
+    /// <remarks> Legen Sie den Grad des Interesses im Parameter <see cref="ParameterSection.InterestLevel"
+    /// /> fest! </remarks>
     public IEnumerable<TextProperty?>? Interests
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.Interests);
@@ -337,13 +297,10 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>KEY</c>: Öffentliche Schlüssel, die dem vCard-Objekt zugeordnet sind. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>
-    /// Es kann zu einer externen URL verwiesen werden, 
-    /// Klartext angegeben oder ein Base64-kodierter Textblock in die vCard eingebettet werden.
-    /// </value>
+    /// <summary> <c>KEY</c>: Public encryption keys associated with the vCard object.
+    /// <c>(2,3,4)</c></summary>
+    /// <value>It may point to an external URL, may be plain text, or may be embedded
+    /// in the vCard as a Base64 encoded block of text.</value>
     public IEnumerable<DataProperty?>? Keys
     {
         get => Get<IEnumerable<DataProperty?>?>(VCdProp.Keys);
@@ -351,9 +308,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>KIND</c>: Art des Objekts, das die vCard beschreibt. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>KIND</c>: Defines the type of entity, that this vCard represents.
+    /// <c>(4)</c></summary>
     public KindProperty? Kind
     {
         get => Get<KindProperty?>(VCdProp.Kind);
@@ -361,9 +317,7 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>LANG</c>: Sprachen, die die Person spricht. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
     public IEnumerable<TextProperty?>? Languages
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.Languages);
@@ -371,9 +325,7 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>REV</c>: A timestamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
     public TimeStampProperty? TimeStamp
     {
         get => Get<TimeStampProperty?>(VCdProp.TimeStamp);
@@ -381,12 +333,10 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>LOGO</c>: Logo(s) der Organisation, mit der die Person in Beziehung steht, der die vCard gehört. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>
-    /// Es kann zu einer externen URL verwiesen oder ein Base64-kodierter Textblock in die vCard eingebettet werden.
-    /// </value>
+    /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
+    /// is associated with the individual to which the vCard belongs. <c>(2,3,4)</c></summary>
+    /// <value>It may point to an external URL or may be embedded in the vCard as a
+    /// Base64 encoded block of text.</value>
     public IEnumerable<DataProperty?>? Logos
     {
         get => Get<IEnumerable<DataProperty?>?>(VCdProp.Logos);
@@ -395,9 +345,7 @@ public sealed partial class VCard
 
 
 
-    /// <summary>
-    /// <c>MAILER</c>: Art des genutzten E-Mail-Programms. <c>(2,3)</c>
-    /// </summary>
+    /// <summary> <c>MAILER</c>: Type of email program used. <c>(2,3)</c></summary>
     public TextProperty? Mailer
     {
         get => Get<TextProperty?>(VCdProp.Mailer);
@@ -405,25 +353,27 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>MEMBER</c>: Definiert das Objekt, das die vCard repräsentiert, als Teil einer Gruppe. 
-    /// Um diese Eigenschaft verwenden zu können, muss die <see cref="VCard.Kind"/>-Eigenschaft auf
-    /// <see cref="VCdKind.Group"/> gesetzt werden. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>MEMBER</c>: Definiert das Objekt, das die vCard repräsentiert,
+    /// als Teil einer Gruppe. Um diese Eigenschaft verwenden zu können, muss die <see
+    /// cref="VCard.Kind" />-Eigenschaft auf <see cref="VCdKind.Group" /> gesetzt werden.
+    /// <c>(4)</c></summary>
     /// <remarks>
     /// <para>
-    /// Der Standard erlaubt nur URI-Werte. Daten, die nicht in einen <see cref="Uri"/> konvertiert werden können,
-    /// werden zwar gelesen und als <see cref="RelationTextProperty"/> eingefügt. Der Inhalt einer 
-    /// <see cref="RelationTextProperty"/> wird aber nur dann in die VCF-Datei geschrieben, wenn er in einen
-    /// <see cref="Uri"/> umgewandelt werden kann.
+    /// Der Standard erlaubt nur URI-Werte. Daten, die nicht in einen <see cref="Uri"
+    /// /> konvertiert werden können, werden zwar gelesen und als <see cref="RelationTextProperty"
+    /// /> eingefügt. Der Inhalt einer <see cref="RelationTextProperty" /> wird aber
+    /// nur dann in die VCF-Datei geschrieben, wenn er in einen <see cref="Uri" /> umgewandelt
+    /// werden kann.
     /// </para>
     /// <para>
-    /// Der Inhalt einer <see cref="RelationUuidProperty"/> wird als <see cref="Uri"/> geschrieben (urn:uuid:...).
-    /// Die von <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte, werden 
-    /// beim Schreiben als separate vCards an die VCF-Datei angehängt und der Wert ihrer <see cref="VCard.UniqueIdentifier"/>-Eigenschaft
-    /// wird in die "Mutter"-<see cref="VCard"/> als uuid-URI geschrieben. Wenn die <see cref="VCard.UniqueIdentifier"/>-Eigenschaft
-    /// der eingefügten <see cref="VCard"/>s nicht gesetzt ist, wird ihnen automatisch eine neue <see cref="Guid"/>
-    /// zugewiesen.
+    /// Der Inhalt einer <see cref="RelationUuidProperty" /> wird als <see cref="Uri"
+    /// /> geschrieben (urn:uuid:...). Die von <see cref="RelationVCardProperty" />-Objekten
+    /// referenzierten <see cref="VCard" />-Objekte, werden beim Schreiben als separate
+    /// vCards an die VCF-Datei angehängt und der Wert ihrer <see cref="VCard.UniqueIdentifier"
+    /// />-Eigenschaft wird in die "Mutter"-<see cref="VCard" /> als uuid-URI geschrieben.
+    /// Wenn die <see cref="VCard.UniqueIdentifier" />-Eigenschaft der eingefügten <see
+    /// cref="VCard" />s nicht gesetzt ist, wird ihnen automatisch eine neue <see cref="Guid"
+    /// /> zugewiesen.
     /// </para>
     /// </remarks>
     public IEnumerable<RelationProperty?>? Members
@@ -433,14 +383,11 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>N</c>: Name der Person oder Organisation, die die vCard repräsentiert. <c>(2,3,4)</c>
-    /// </summary>
-    /// <remarks>
-    /// Mehrere Instanzen sind nur in vCard 4.0 zulässig, und nur dann, wenn sie
-    /// denselben <see cref="ParameterSection.AltID"/>-Parameter haben. Das kann z.B.
-    /// sinnvoll sein, wenn die Property in verschiedenen Sprachen dargestellt ist.
-    /// </remarks>
+    /// <summary> <c>N</c>: A structured representation of the name of the person, place
+    /// or thing associated with the vCard object. <c>(2,3,4)</c></summary>
+    /// <remarks>Multiple instances are only allowed in vCard 4.0, and only, if they
+    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
+    /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<NameProperty?>? NameViews
     {
         get => Get<IEnumerable<NameProperty?>?>(VCdProp.NameViews);
@@ -448,9 +395,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>NICKNAME</c>: Ein oder mehrere Alternativnamen für das Objekt, das von der vCard repräsentiert wird. <c>(3,4)</c>
-    /// </summary>
+    /// <summary> <c>NICKNAME</c>: One or more descriptive/familiar names for the object
+    /// represented by this vCard. <c>(3,4)</c></summary>
     public IEnumerable<StringCollectionProperty?>? NickNames
     {
         get => Get<IEnumerable<StringCollectionProperty?>?>(VCdProp.NickNames);
@@ -459,44 +405,98 @@ public sealed partial class VCard
 
 
 
-    /// <summary>
-    /// vCard-Properties, die nicht dem Standard entsprechen.
-    /// </summary>
+    /// <summary>vCard-Properties that don't belong to the standard.</summary>
     /// <remarks>
-    /// <para><see cref="NonStandardProperties"/> speichert alle vCard-Properties, die beim Parsen nicht
-    /// ausgewertet werden konnten. Um den Inhalt von <see cref="NonStandardProperties"/> in eine vCard
-    /// zu schreiben, muss das Flag <see cref="VcfOptions.WriteNonStandardProperties">VcfOptions.WriteNonStandardProperties</see>
-    /// explizit gesetzt werden.</para>
-    /// <para>Einige <see cref="NonStandardProperty"/>-Objekte werden der zu schreibenden vCard automatisch
-    /// hinzugefügt, wenn es kein Standard-Äquivalent dafür gibt. Sie können dieses Verhalten mit <see cref="VcfOptions"/>
-    /// steuern. Es wird deshalb nicht empfohlen, der Eigenschaft <see cref="NonStandardProperties"/> Instanzen dieser
-    /// automatisch hinzuzufügenden <see cref="NonStandardProperty"/>-Objekte zu übergeben.</para>
-    /// <para>Es handelt sich um folgende vCard-Properties:</para>
+    /// <para>
+    /// <see cref="NonStandardProperties" /> speichert alle vCard-Properties, die beim
+    /// Parsen nicht ausgewertet werden konnten. Um den Inhalt von <see cref="NonStandardProperties"
+    /// /> in eine vCard zu schreiben, muss das Flag <see cref="VcfOptions.WriteNonStandardProperties">VcfOptions.WriteNonStandardProperties</see>
+    /// explizit gesetzt werden.
+    /// </para>
+    /// <para>
+    /// Einige <see cref="NonStandardProperty" />-Objekte werden der zu schreibenden
+    /// vCard automatisch hinzugefügt, wenn es kein Standard-Äquivalent dafür gibt.
+    /// Sie können dieses Verhalten mit <see cref="VcfOptions" /> steuern. Es wird deshalb
+    /// nicht empfohlen, der Eigenschaft <see cref="NonStandardProperties" /> Instanzen
+    /// dieser automatisch hinzuzufügenden <see cref="NonStandardProperty" />-Objekte
+    /// zu übergeben.
+    /// </para>
+    /// <para>
+    /// Es handelt sich um folgende vCard-Properties:
+    /// </para>
     /// <list type="bullet">
-    /// <item><c>X-AIM</c></item>
-    /// <item><c>X-ANNIVERSARY</c></item>
-    /// <item><c>X-EVOLUTION-SPOUSE</c></item>
-    /// <item><c>X-EVOLUTION-ANNIVERSARY</c></item>
-    /// <item><c>X-GADUGADU</c></item>
-    /// <item><c>X-GENDER</c></item>
-    /// <item><c>X-GOOGLE-TALK</c></item>
-    /// <item><c>X-GROUPWISE</c></item>
-    /// <item><c>X-GTALK</c></item>
-    /// <item><c>X-ICQ</c></item>
-    /// <item><c>X-JABBER</c></item>
-    /// <item><c>X-KADDRESSBOOK-X-ANNIVERSARY</c></item>
-    /// <item><c>X-KADDRESSBOOK-X-IMADDRESS</c></item>
-    /// <item><c>X-KADDRESSBOOK-X-SPOUSENAME</c></item>
-    /// <item><c>X-MS-IMADDRESS</c></item>
-    /// <item><c>X-MSN</c></item>
-    /// <item><c>X-SKYPE</c></item>
-    /// <item><c>X-SKYPE-USERNAME</c></item>
-    /// <item><c>X-SPOUSE</c></item>
-    /// <item><c>X-TWITTER</c></item>
-    /// <item><c>X-WAB-GENDER</c></item>
-    /// <item><c>X-WAB-WEDDING_ANNIVERSARY</c></item>
-    /// <item><c>X-WAB-SPOUSE_NAME</c></item>
-    /// <item><c>X-YAHOO</c></item>
+    /// <item>
+    /// <c>X-AIM</c>
+    /// </item>
+    /// <item>
+    /// <c>X-ANNIVERSARY</c>
+    /// </item>
+    /// <item>
+    /// <c>X-EVOLUTION-SPOUSE</c>
+    /// </item>
+    /// <item>
+    /// <c>X-EVOLUTION-ANNIVERSARY</c>
+    /// </item>
+    /// <item>
+    /// <c>X-GADUGADU</c>
+    /// </item>
+    /// <item>
+    /// <c>X-GENDER</c>
+    /// </item>
+    /// <item>
+    /// <c>X-GOOGLE-TALK</c>
+    /// </item>
+    /// <item>
+    /// <c>X-GROUPWISE</c>
+    /// </item>
+    /// <item>
+    /// <c>X-GTALK</c>
+    /// </item>
+    /// <item>
+    /// <c>X-ICQ</c>
+    /// </item>
+    /// <item>
+    /// <c>X-JABBER</c>
+    /// </item>
+    /// <item>
+    /// <c>X-KADDRESSBOOK-X-ANNIVERSARY</c>
+    /// </item>
+    /// <item>
+    /// <c>X-KADDRESSBOOK-X-IMADDRESS</c>
+    /// </item>
+    /// <item>
+    /// <c>X-KADDRESSBOOK-X-SPOUSENAME</c>
+    /// </item>
+    /// <item>
+    /// <c>X-MS-IMADDRESS</c>
+    /// </item>
+    /// <item>
+    /// <c>X-MSN</c>
+    /// </item>
+    /// <item>
+    /// <c>X-SKYPE</c>
+    /// </item>
+    /// <item>
+    /// <c>X-SKYPE-USERNAME</c>
+    /// </item>
+    /// <item>
+    /// <c>X-SPOUSE</c>
+    /// </item>
+    /// <item>
+    /// <c>X-TWITTER</c>
+    /// </item>
+    /// <item>
+    /// <c>X-WAB-GENDER</c>
+    /// </item>
+    /// <item>
+    /// <c>X-WAB-WEDDING_ANNIVERSARY</c>
+    /// </item>
+    /// <item>
+    /// <c>X-WAB-SPOUSE_NAME</c>
+    /// </item>
+    /// <item>
+    /// <c>X-YAHOO</c>
+    /// </item>
     /// </list>
     /// </remarks>
     public IEnumerable<NonStandardProperty?>? NonStandardProperties
@@ -506,9 +506,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>NOTE</c>: Kommentar(e) <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>NOTE</c>: Specifies supplemental informations or comments, that
+    /// are associated with the vCard. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? Notes
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.Notes);
@@ -516,9 +515,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>ORG</c>: Name und gegebenenfalls Einheit(en) der Organisation, der das vCard-Objekt zugeordnet ist. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>ORG</c>: The name and optionally the unit(s) of the organization
+    /// associated with the vCard object. <c>(2,3,4)</c></summary>
     public IEnumerable<OrganizationProperty?>? Organizations
     {
         get => Get<IEnumerable<OrganizationProperty?>?>(VCdProp.Organizations);
@@ -526,10 +524,9 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>ORG-DIRECTORY</c>: URIs, die die Arbeitsplätze der Person repräsentieren. Damit können Informationen 
-    /// über Mitarbeiter der Person eingeholt werden. <c>(RFC 6715)</c>
-    /// </summary>
+    /// <summary> <c>ORG-DIRECTORY</c>: A URI representing the person's work place,
+    /// which can be used to look up information on the person's co-workers. <c>(RFC
+    /// 6715)</c></summary>
     public IEnumerable<TextProperty?>? OrgDirectories
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.OrgDirectories);
@@ -537,9 +534,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>TEL</c>: Telefonnummern <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>TEL</c>: Canonical number strings for a telephone numbers for telephony
+    /// communication with the vCard object. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? PhoneNumbers
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.PhoneNumbers);
@@ -547,11 +543,9 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>PHOTO</c>: Bild(er) oder Fotografie(n) der mit der vCard verbundenen Person. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value> Es kann auf eine externe URL verwiesen oder ein Base64-kodierter Textblock 
-    /// in die vCard eingebettet werden.</value>
+    /// <summary> <c>PHOTO</c>: Image(s) or photograph(s) of the individual associated
+    /// with the vCard. <c>(2,3,4)</c></summary>
+    /// <value />
     public IEnumerable<DataProperty?>? Photos
     {
         get => Get<IEnumerable<DataProperty>>(VCdProp.Photos);
@@ -559,11 +553,11 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>PRODID</c>: Kennung für das Produkt, mit dem das vCard-Objekt erstellt wurde. <c>(3,4)</c>
-    /// </summary>
-    /// <value>Der Name sollte weltweit eindeutig sein. Er sollte deshalb der Spezifikation für
-    /// Formal Public Identifiers [ISO9070] oder Universal Resource Names in [RFC3406] entsprechen.</value>
+    /// <summary> <c>PRODID</c>: The identifier for the product that created the vCard
+    /// object. <c>(3,4)</c></summary>
+    /// <value>The name should be unique worldwide. It should therefore conform to the
+    /// specification for Formal Public Identifiers [ISO9070] or Universal Resource
+    /// Names in RFC 3406.</value>
     public TextProperty? ProdID
     {
         get => Get<TextProperty?>(VCdProp.ProdID);
@@ -571,9 +565,7 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>PROFILE</c>: Legt fest, dass die VCF-Datei eine vCard ist. <c>(3)</c>
-    /// </summary>
+    /// <summary> <c>PROFILE</c>: States that the vCard is a vCard. <c>(3)</c></summary>
     public ProfileProperty? Profile
     {
         get => Get<ProfileProperty?>(VCdProp.Profile);
@@ -581,10 +573,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>CLIENTPIDMAP</c>: Mappings für <see cref="PropertyID"/>s. Wird verwendet,
-    /// um verschiedene Bearbeitungsstände derselben vCard zu synchronisieren. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>CLIENTPIDMAP</c>: Mappings for <see cref="PropertyID" />s. It is
+    /// used for synchronizing different revisions of the same vCard. <c>(4)</c></summary>
     public IEnumerable<PropertyIDMappingProperty?>? PropertyIDMappings
     {
         get => Get<IEnumerable<PropertyIDMappingProperty?>?>(VCdProp.PropertyIDMappings);
@@ -592,9 +582,7 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>RELATED</c>: Andere Einheiten, zu der die Person Verbindung hat. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>RELATED</c>: Other entities that the person is related to. <c>(4)</c></summary>
     public IEnumerable<RelationProperty?>? Relations
     {
         get => Get<IEnumerable<RelationProperty?>?>(VCdProp.Relations);
@@ -602,10 +590,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>ROLE</c>: Rolle, Beruf oder Wirtschaftskategorie des vCard-Objekts innerhalb 
-    /// einer Organisation, z.B. "rechte Hand des Chefs". <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>ROLE</c>: The role, occupation, or business category of the vCard
+    /// object within an organization. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? Roles
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.Roles);
@@ -613,12 +599,10 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>SOUND</c>: Demonstriert die Aussprache der <see cref="DisplayNames"/>-Eigenschaft des <see cref="VCard"/>-Objekts. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>
-    /// Es kann zu einer externen URL verwiesen oder ein Base64-kodierter Textblock in die vCard eingebettet werden.
-    /// </value>
+    /// <summary> <c>SOUND</c>: Specifies the pronunciation of the <see cref="VCard.DisplayNames"
+    /// /> property of the <see cref="VCard" />-object. <c>(2,3,4)</c></summary>
+    /// <value>It may point to an external URL or may be embedded in the vCard as a
+    /// Base64 encoded block of text.</value>
     public IEnumerable<DataProperty?>? Sounds
     {
         get => Get<IEnumerable<DataProperty?>?>(VCdProp.Sounds);
@@ -626,11 +610,9 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>SOURCE</c>: URLs, die verwendet werden können, um die neueste Version dieser vCard zu 
-    /// erhalten. <c>(3,4)</c>
-    /// </summary>
-    /// <remarks>vCard 3.0 erlaubt nur eine Instanz dieser Property.</remarks>
+    /// <summary> <c>SOURCE</c>: URLs that can be used to get the latest version of
+    /// this vCard.<c>(3,4)</c></summary>
+    /// <remarks>vCard 3.0 only allows one instance of this property.</remarks>
     public IEnumerable<TextProperty?>? Sources
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.Sources);
@@ -638,9 +620,7 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>TZ</c>: Zeitzone(n) des vCard Objekts. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>TZ</c>: The time zone(s) of the vCard object. <c>(2,3,4)</c></summary>
     public IEnumerable<TimeZoneProperty?>? TimeZones
     {
         get => Get<IEnumerable<TimeZoneProperty?>?>(VCdProp.TimeZones);
@@ -648,10 +628,9 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>TITLE</c>: Angabe der Stellenbezeichnung, funktionellen Stellung oder Funktion der mit dem vCard-Objekt 
-    /// verbundenen Person innerhalb einer Organisation, z.B. “Vizepräsident”. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>TITLE</c>: Specifies the job title, functional position or function
+    /// of the individual, associated with the vCard object, within an organization.
+    /// <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? Titles
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.Titles);
@@ -659,13 +638,10 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>UID</c>: UUID, die eine persistente, global eindeutige Kennung des verbundenen Objekts darstellt. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>
-    /// Obwohl der Standard beliebige Strings zur Identifizierung erlaubt, werden hier nur 
-    /// UUIDs unterstützt.
-    /// </value>
+    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
+    /// unique identifier, associated with the object. <c>(2,3,4)</c></summary>
+    /// <value>Although the standard allows any strings for identification, the library
+    /// only supports UUIDs.</value>
     public UuidProperty? UniqueIdentifier
     {
         get => Get<UuidProperty?>(VCdProp.UniqueIdentifier);
@@ -673,9 +649,8 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>URL</c>: URLs, die die Person repräsentieren (Webseiten, Blogs, Social-Media-Seiten). <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
+    /// some way. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? URLs
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.URLs);
@@ -683,9 +658,7 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// <c>XML</c>: Beliebige zusätzliche XML-Daten. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
     public IEnumerable<XmlProperty?>? XmlProperties
     {
         get => Get<IEnumerable<XmlProperty?>?>(VCdProp.XmlProperties);

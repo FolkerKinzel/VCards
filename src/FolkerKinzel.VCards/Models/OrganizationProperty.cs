@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -8,26 +8,22 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Repräsentiert die vCard-Property <c>ORG</c>, die Informationen über die Organisation speichert, der das vCard-Objekt zugeordnet ist.
-/// </summary>
+    /// <summary>Represents the vCard property <c>ORG</c>, which stores information
+    /// about the organization to which the vCard object is associated.</summary>
 public sealed class OrganizationProperty : VCardProperty, IEnumerable<OrganizationProperty>
 {
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary />
+    /// <param name="prop" />
     private OrganizationProperty(OrganizationProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="OrganizationProperty"/>-Objekt.
+    /// <summary> Initialisiert ein neues <see cref="OrganizationProperty" />-Objekt.
     /// </summary>
-    /// <param name="organizationName">Name der Organisation oder <c>null</c>.</param>
-    /// <param name="organizationalUnits">Nam(en) der Unterorganisation(en) oder <c>null</c>.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <param name="organizationName">Organization name or <c>null</c>.</param>
+    /// <param name="organizationalUnits">Organization unit(s) or <c>null</c>.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public OrganizationProperty(string? organizationName,
                                 IEnumerable<string?>? organizationalUnits = null,
                                 string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
@@ -53,19 +49,18 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
     }
 
 
-    /// <summary>
-    /// Die von der <see cref="OrganizationProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary> Die von der <see cref="OrganizationProperty" /> zur Verfügung gestellten
+    /// Daten. </summary>
     public new Organization Value
     {
         get;
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
@@ -106,6 +101,6 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<OrganizationProperty>)this).GetEnumerator();
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new OrganizationProperty(this);
 }

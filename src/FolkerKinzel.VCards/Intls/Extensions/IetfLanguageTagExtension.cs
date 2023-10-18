@@ -1,4 +1,4 @@
-﻿namespace FolkerKinzel.VCards.Intls.Extensions;
+namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static class IetfLanguageTagExtension
 {

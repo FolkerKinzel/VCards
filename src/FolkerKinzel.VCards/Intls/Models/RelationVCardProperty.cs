@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
@@ -6,27 +6,25 @@ using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
-/// <summary>
-/// Spezialisierung der <see cref="RelationProperty"/>-Klasse, um eine Person, zu der eine Beziehung besteht, 
-/// mit ihrer <see cref="VCard"/> zu beschreiben.
-/// </summary>
+    /// <summary> Spezialisierung der <see cref="RelationProperty" />-Klasse, um eine
+    /// Person, zu der eine Beziehung besteht, mit ihrer <see cref="VCard" /> zu beschreiben.
+    /// </summary>
 internal sealed class RelationVCardProperty : RelationProperty
 {
-    /// <summary>
-    /// Copy ctor.
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary />
+    /// <param name="prop" />
     private RelationVCardProperty(RelationVCardProperty prop) : base(prop)
         => Value = (VCard)prop.Value.Clone();
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="RelationVCardProperty"/>-Objekt.
+    /// <summary> Initialisiert ein neues <see cref="RelationVCardProperty" />-Objekt.
     /// </summary>
-    /// <param name="vcard"><see cref="VCard"/> einer Person, zu der eine Beziehung besteht oder <c>null</c>.</param>
-    /// <param name="relation">Einfacher oder kombinierter Wert der <see cref="RelationTypes"/>-Enum oder <c>null</c>.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <param name="vcard">The <see cref="VCard" /> of a person, with whom there is
+    /// a relationship, or <c>null</c>.</param>
+    /// <param name="relation">A single <see cref="RelationTypes" /> value or a combination
+    /// of several <see cref="RelationTypes" /> values or <c>null</c>.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     internal RelationVCardProperty(VCard vcard, RelationTypes? relation = null, string? propertyGroup = null)
         : base(relation, propertyGroup)
     {
@@ -37,9 +35,8 @@ internal sealed class RelationVCardProperty : RelationProperty
     }
 
 
-    /// <summary>
-    /// Die von der <see cref="RelationVCardProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary> Die von der <see cref="RelationVCardProperty" /> zur Verfügung gestellten
+    /// Daten. </summary>
     public new VCard Value
     {
         get;
@@ -89,7 +86,7 @@ internal sealed class RelationVCardProperty : RelationProperty
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone()
         => new RelationVCardProperty(this);

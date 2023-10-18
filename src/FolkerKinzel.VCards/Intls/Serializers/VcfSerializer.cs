@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Models;
@@ -44,28 +44,13 @@ internal abstract class VcfSerializer
         writer.NewLine = VCard.NewLine;
     }
 
-
-    /// <summary>
-    /// Name des Ehepartners
-    /// </summary>
-    [SuppressMessage("Style", "IDE1006:Benennungsstile", Justification = "<Ausstehend>")]
+    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     internal const string X_KADDRESSBOOK_X_SpouseName = "X-KADDRESSBOOK-X-SpouseName";
 
-    /// <summary>
-    /// beliebiges Jubiläum (zusätzlich zu BDAY, Geburtstag) 
-    /// </summary>
-    [SuppressMessage("Style", "IDE1006:Benennungsstile", Justification = "<Ausstehend>")]
+    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     internal const string X_KADDRESSBOOK_X_Anniversary = "X-KADDRESSBOOK-X-Anniversary";
-
-    ///// <summary>
-    ///// Assistenzname (anstelle von AGENT) 
-    ///// </summary>
-    //internal const string X_KADDRESSBOOK_X_AssistantsName = "X-KADDRESSBOOK-X-AssistantsName";
-
-    /// <summary>
-    /// Instant-Messenger-Adresse
-    /// </summary>
-    [SuppressMessage("Style", "IDE1006:Benennungsstile", Justification = "<Ausstehend>")]
+  
+    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     internal const string X_KADDRESSBOOK_X_IMAddress = "X-KADDRESSBOOK-X-IMAddress";
 
 

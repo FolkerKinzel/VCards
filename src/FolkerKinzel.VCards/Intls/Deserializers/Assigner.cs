@@ -1,4 +1,4 @@
-﻿namespace FolkerKinzel.VCards.Intls.Deserializers;
+namespace FolkerKinzel.VCards.Intls.Deserializers;
 
 internal static class Assigner
 {

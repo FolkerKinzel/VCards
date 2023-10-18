@@ -1,41 +1,33 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>
-/// Benannte Konstanten, um in vCards die Art einer Postanschrift zu beschreiben. Die Konstanten können
-/// kombiniert werden.
-/// </summary>
-/// <remarks>
-/// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der
-/// <see cref="AddressTypesExtension"/>-Klasse.</note>
-/// </remarks>
+    /// <summary>Named constants to describe the type of a postal address in vCards.
+    /// The constants can be combined.</summary>
+    /// <remarks>
+    /// <note type="tip">
+    /// When working with the enum use the extension methods from the <see cref="AddressTypesExtension"
+    /// /> class.
+    /// </note>
+    /// </remarks>
 [Flags]
 public enum AddressTypes
 {
     // ACHTUNG: Wenn die Enum erweitert wird, müssen 
     // AddressTypesConverter und AddressTypesCollector angepasst werden!
 
-    /// <summary>
-    /// <c>DOM</c>: inländische Adresse
-    /// </summary>
+    /// <summary> <c>DOM</c>: Domestic delivery address</summary>
     Dom = 1,
 
 
-    /// <summary>
-    /// <c>INTL</c>: internationale Adresse
-    /// </summary>
+    /// <summary> <c>INTL</c>: International delivery address</summary>
     Intl = 2,
 
 
-    /// <summary>
-    /// <c>POSTAL</c>: Postanschrift
-    /// </summary>
+    /// <summary> <c>POSTAL</c>: Postal delivery address</summary>
     Postal = 4,
 
 
-    /// <summary>
-    /// <c>PARCEL</c>: Anschrift für die Zustellung von Paketen (Lieferadresse)
-    /// </summary>
+    /// <summary> <c>PARCEL</c>: Parcel delivery address</summary>
     Parcel = 8
 }

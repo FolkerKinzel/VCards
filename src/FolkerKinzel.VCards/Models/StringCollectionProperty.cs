@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -8,25 +8,20 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Repräsentiert vCard-Properties, die eine Sammlung von <see cref="string"/>s speichern.
-/// </summary>
+    /// <summary>Represents vCard properties that store a collection of <see cref="string"
+    /// />s .</summary>
 public sealed class StringCollectionProperty : VCardProperty, IEnumerable<StringCollectionProperty>
 {
-    /// <summary>
-    /// Copy ctor.
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary />
+    /// <param name="prop" />
     private StringCollectionProperty(StringCollectionProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="StringCollectionProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="value">Eine Sammlung von <see cref="string"/>s oder <c>null</c>.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <summary>Initializes a new <see cref="StringCollectionProperty" /> object.</summary>
+    /// <param name="value">A collection of <see cref="string" />s or <c>null</c>.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
     {
         this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
@@ -38,13 +33,11 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     }
 
 
-    /// <summary>
-    /// Initialisiert ein <see cref="StringCollectionProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="value">Ein <see cref="string"/> oder <c>null</c>.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <summary>Initializes a new <see cref="StringCollectionProperty" /> object.</summary>
+    /// <param name="value">A <see cref="string" /> or <c>null</c>.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public StringCollectionProperty(string? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
     {
         this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
@@ -83,16 +76,14 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     }
 
 
-    /// <summary>
-    /// Die von der <see cref="StringCollectionProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary>The data provided by the <see cref="StringCollectionProperty" />.</summary>
     public new ReadOnlyCollection<string>? Value
     {
         get;
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
@@ -131,7 +122,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override string ToString()
     {
         string s = "";
@@ -161,6 +152,6 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<StringCollectionProperty>)this).GetEnumerator();
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new StringCollectionProperty(this);
 }

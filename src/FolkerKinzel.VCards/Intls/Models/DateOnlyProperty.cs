@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
@@ -19,7 +19,7 @@ internal sealed class DateOnlyProperty : DateAndOrTimeProperty
     public new DateOnly Value { get; }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new DateOnlyProperty(this);
 
 

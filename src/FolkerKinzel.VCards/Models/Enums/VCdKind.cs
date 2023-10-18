@@ -1,32 +1,25 @@
-﻿namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>
-/// Benannte Konstanten, um die Art des Objekts anzugeben, das die vCard repräsentiert.
-/// </summary>
+    /// <summary>Named Constants to specify the type of object the vCard represents.</summary>
 public enum VCdKind
 {
-    /// <summary>
-    /// <c>INDIVIDUAL</c>: Einzelne Person oder Entität. <c>4</c>
-    /// </summary>
+    /// <summary> <c>INDIVIDUAL</c>: The vCard represents a single person or entity.
+    /// (Default) <c>4</c></summary>
     Individual,
 
-    /// <summary>
-    /// <c>GROUP</c>: Gruppe von Personen oder Entitäten. <c>4</c>
-    /// </summary>
+    /// <summary> <c>GROUP</c>: The vCard represents a group of persons or entities.
+    /// <c>4</c></summary>
     Group,
 
-    /// <summary>
-    /// <c>ORGANIZATION</c>: Eine Organisation. <c>4</c>
-    /// </summary>
+    /// <summary> <c>ORGANIZATION</c>: The vCard represents an organization. <c>4</c></summary>
     Organization,
 
-    /// <summary>
-    /// <c>LOCATION</c>: Einen geographischen Ort. <c>4</c>
-    /// </summary>
+    /// <summary> <c>LOCATION</c>: The vCard represents a named geographical place.
+    /// <c>4</c></summary>
     Location,
 
-    /// <summary>
-    /// <c>APPLICATION</c>: Ein Software-Programm (Server, Online-Service etc.). <c>(4 - RFC 6473)</c>
-    /// </summary>
+    /// <summary> <c>APPLICATION</c>: The vCard represents a software application such
+    /// as a server, an online service (e.g., a chat room), or an automated software
+    /// bot. <c>(4 - RFC 6473)</c></summary>
     Application
 }

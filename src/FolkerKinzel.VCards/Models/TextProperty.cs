@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -8,25 +8,19 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Repräsentiert vCard-Properties, deren Inhalt aus Text besteht.
-/// </summary>
+    /// <summary>Represents vCard properties whose content consists of text.</summary>
 public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 {
-    /// <summary>
-    /// Kopierkonstruktor.
-    /// </summary>
-    /// <param name="prop">Das zu klonende <see cref="TextProperty"/>-Objekt.</param>
+    /// <summary>Copy constructor.</summary>
+    /// <param name="prop">The <see cref="TextProperty" /> object to clone.</param>
     protected TextProperty(TextProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="TextProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="value">Ein <see cref="string"/> oder <c>null</c>.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <summary>Initializes a new <see cref="TextProperty" /> object.</summary>
+    /// <param name="value">A <see cref="string" /> or <c>null</c>.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public TextProperty(string? value, string? propertyGroup = null) 
         : base(new ParameterSection(), propertyGroup) 
         => Value = string.IsNullOrWhiteSpace(value) ? null : value;
@@ -39,21 +33,19 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
     }
 
 
-    /// <summary>
-    /// Die von der <see cref="TextProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary>The data provided by the <see cref="TextProperty" />.</summary>
     public new virtual string? Value
     {
         get;
     }
 
     
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => base.IsEmpty;
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
@@ -104,6 +96,6 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TextProperty>)this).GetEnumerator();
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new TextProperty(this);
 }

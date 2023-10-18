@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 
@@ -6,20 +6,17 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard
 {
-    /// <summary>
-    /// Lädt eine VCF-Datei.
-    /// </summary>
-    /// 
-    /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
-    /// <param name="textEncoding">Die zum Einlesen der Datei zu verwendende Textenkodierung oder <c>null</c>, um die Datei mit der 
-    /// standardgerechten Enkodierung <see cref="Encoding.UTF8"/> einzulesen.</param>
-    /// 
-    /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
-    /// 
-    /// 
-    /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
-    /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
+    /// <summary>Loads a VCF file.</summary>
+    /// <param name="fileName">Absolute or relative path to a VCF file.</param>
+    /// <param name="textEncoding">The text encoding to use to read the file or <c>null</c>,
+    /// to read the file with the standard-compliant text encoding <see cref="Encoding.UTF8"
+    /// />.</param>
+    /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
+    /// the content of the VCF file.</returns>
+    /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
+    /// file path.</exception>
+    /// <exception cref="IOException">The file could not be loaded.</exception>
     public static IList<VCard> LoadVcf(string fileName, Encoding? textEncoding = null)
     {
         using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
@@ -27,12 +24,13 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// Parst einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
-    /// </summary>
-    /// <param name="vcf">Ein <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</param>
-    /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt von <paramref name="vcf"/> darstellen.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="vcf"/> ist <c>null</c>.</exception>
+    /// <summary>Parses a <see cref="string" />, that represents the content of a VCF
+    /// file.</summary>
+    /// <param name="vcf">A <see cref="string" /> that represents the content of a VCF
+    /// file.</param>
+    /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
+    /// the content of <paramref name="vcf" />.</returns>
+    /// <exception cref="ArgumentNullException"> <paramref name="vcf" /> is <c>null</c>.</exception>
     public static IList<VCard> ParseVcf(string vcf)
     {
         if (vcf == null)
@@ -45,14 +43,14 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// Deserialisiert eine VCF-Datei mit einem <see cref="TextReader"/>.
-    /// </summary>
-    /// <param name="reader">Ein <see cref="TextReader"/>.</param>
-    /// <returns>Eine Sammlung von <see cref="VCard"/>-Objekten, die den Inhalt der deserialisierten VCF-Datei darstellen.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="reader"/> ist <c>null</c>.</exception>
-    /// <exception cref="ObjectDisposedException"><paramref name="reader"/> wurde geschlossen.</exception>
-    /// <exception cref="IOException"><paramref name="reader"/> konnte nicht aus dem <see cref="Stream"/> lesen.</exception>
+    /// <summary>Deserializes a VCF file using a <see cref="TextReader" />.</summary>
+    /// <param name="reader">A <see cref="TextReader" />.</param>
+    /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
+    /// the content of the VCF file.</returns>
+    /// <exception cref="ArgumentNullException"> <paramref name="reader" /> is <c>null</c>.</exception>
+    /// <exception cref="ObjectDisposedException"> <paramref name="reader" /> was closed.</exception>
+    /// <exception cref="IOException"> <paramref name="reader" />could not read from
+    /// the <see cref="Stream" />.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IList<VCard> DeserializeVcf(TextReader reader)
         => DoParseVcf(reader ?? throw new ArgumentNullException(nameof(reader)));

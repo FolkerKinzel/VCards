@@ -1,8 +1,8 @@
-﻿namespace FolkerKinzel.VCards;
+namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard : ICloneable
 {
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public object Clone()
         => new VCard(this);
 }

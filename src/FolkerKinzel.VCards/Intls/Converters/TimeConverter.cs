@@ -1,13 +1,11 @@
-﻿using System.Globalization;
+using System.Globalization;
 using FolkerKinzel.VCards.Intls.Extensions;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-/// <summary>
-/// Konvertiert das vCard-Value "Time".
-/// </summary>
-/// <threadsafety static="true" instance="false" />
+    /// <summary />
+    /// <threadsafety static="true" instance="false" />
 internal sealed class TimeConverter
 {
     private readonly string[] _timeOnlyPatterns = new string[]

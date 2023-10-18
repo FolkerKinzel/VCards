@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -6,25 +6,20 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Repräsentiert die vCard-Property <c>TZ</c>, die die Zeitzone der vCard speichert.
-/// </summary>
+    /// <summary>Represents the vCard property TZ, which encapsulates the time zone
+    /// of the vCard.</summary>
 public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProperty>
 {
-    /// <summary>
-    /// Copy ctor.
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary />
+    /// <param name="prop" />
     private TimeZoneProperty(TimeZoneProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="TimeZoneProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="value">Ein <see cref="TimeZoneInfo"/>-Objekt oder <c>null</c>.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <summary> Initialisiert ein neues <see cref="TimeZoneProperty" />-Objekt. </summary>
+    /// <param name="value">Ein <see cref="TimeZoneInfo" />-Objekt oder <c>null</c>.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public TimeZoneProperty(TimeZoneID? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = value;
 
 
@@ -40,16 +35,15 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
     }
 
 
-    /// <summary>
-    /// Die von der <see cref="TimeZoneProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary> Die von der <see cref="TimeZoneProperty" /> zur Verfügung gestellten
+    /// Daten. </summary>
     public new TimeZoneID? Value
     {
         get;
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
@@ -68,6 +62,6 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TimeZoneProperty>)this).GetEnumerator();
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new TimeZoneProperty(this);
 }

@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 
@@ -6,64 +6,61 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard
 {
-    /// <summary>
-    /// Gibt eine Sammlung von <see cref="VCard"/>-Objekten zurück, in der die <see cref="RelationVCardProperty"/>-Objekte 
-    /// der als Argument übergebenen
-    /// Sammlung von <see cref="VCard"/>-Objekten durch 
-    /// <see cref="RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
-    /// <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte als 
-    /// separate Elemente angefügt sind.
-    /// </summary>
-    /// 
-    /// <param name="vCards">Sammlung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein und <c>null</c>-Werte
-    /// enthalten.</param>
-    /// 
-    /// <returns>
-    /// Eine Sammlung von <see cref="VCard"/>-Objekten, in der die <see cref="RelationVCardProperty"/>-Objekte 
-    /// der als Argument übergebenen
-    /// Sammlung von <see cref="VCard"/>-Objekten durch 
-    /// <see cref="RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
-    /// <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte als 
-    /// separate Elemente angefügt sind. (Wenn die angefügten <see cref="VCard"/>-Objekte noch keine 
-    /// <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, wird ihnen 
-    /// von der Methode automatisch eine neue zugewiesen.)
-    /// </returns>
-    /// 
+    /// <summary> Gibt eine Sammlung von <see cref="VCard" />-Objekten zurück, in der
+    /// die <see cref="RelationVCardProperty" />-Objekte der als Argument übergebenen
+    /// Sammlung von <see cref="VCard" />-Objekten durch <see cref="RelationUuidProperty"
+    /// />-Objekte ersetzt sind und in der die in den <see cref="RelationVCardProperty"
+    /// />-Objekten referenzierten <see cref="VCard" />-Objekte als separate Elemente
+    /// angefügt sind. </summary>
+    /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
+    /// may be empty or may contain <c>null</c> values.</param>
+    /// <returns> Eine Sammlung von <see cref="VCard" />-Objekten, in der die <see cref="RelationVCardProperty"
+    /// />-Objekte der als Argument übergebenen Sammlung von <see cref="VCard" />-Objekten
+    /// durch <see cref="RelationUuidProperty" />-Objekte ersetzt sind und in der die
+    /// in den <see cref="RelationVCardProperty" />-Objekten referenzierten <see cref="VCard"
+    /// />-Objekte als separate Elemente angefügt sind. (Wenn die angefügten <see cref="VCard"
+    /// />-Objekte noch keine <see cref="VCard.UniqueIdentifier" />-Eigenschaft hatten,
+    /// wird ihnen von der Methode automatisch eine neue zugewiesen.) </returns>
     /// <remarks>
     /// <note type="caution">
-    /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
-    /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
-    /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+    /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
+    /// passed to the method are not. Block read and write access to these <see cref="VCard"
+    /// /> objects, while this method is being executed!
     /// </note>
     /// <note type="important">
-    /// Verwenden Sie diese Methode niemals, wenn Sie eine VCF-Datei als vCard 2.1 oder vCard 3.0 speichern möchten. Es droht Datenverlust.
+    /// Never use this method, if you want to save a VCF file as vCard 2.1 or vCard
+    /// 3.0!
     /// </note>
     /// <note type="tip">
-    /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
-    /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
+    /// You can pass a single <see cref="VCard" /> object to the method, since the <see
+    /// cref="VCard" /> class has an explicit implementation of <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see>.
     /// </note>
     /// <para>
-    /// Die Methode wird bei Bedarf von den Serialisierungsmethoden von <see cref="VCard"/> automatisch verwendet. Die Verwendung in eigenem 
-    /// Code ist
-    /// nur dann sinnvoll, wenn ein <see cref="VCard"/>-Objekt als vCard 4.0 gespeichert werden soll und wenn dabei jede VCF-Datei nur
-    /// eine einzige vCard enthalten soll. (Dieses Vorgehen ist i.d.R. nicht vorteilhaft, da es die referentielle Integrität gefährdet.)
+    /// The method is - if necessary - automatically called by the serialization methods
+    /// of <see cref="VCard" />. It only makes sense to use it in your own code, if
+    /// a <see cref="VCard" /> object is to be saved as vCard 4.0 and if each VCF file
+    /// should only contain a single vCard. (As a rule, this approach is not advantageous
+    /// as it endangers referential integrity.)
     /// </para>
     /// </remarks>
-    /// 
     /// <example>
     /// <para>
-    /// Das Beispiel demonstriert, wie ein <see cref="VCard"/>-Objekt als vCard 4.0 gespeichert werden kann, wenn beabsichtigt ist,
-    /// dass eine VCF-Datei jeweils nur eine einzige vCard enthalten soll. Das Beispiel zeigt möglicherweise auch, dass dieses Vorgehen i.d.R.
-    /// nicht vorteilhaft ist, da es die referentielle Integrität gefährdet.
+    /// The example demonstrates how a <see cref="VCard" /> object can be saved as a
+    /// vCard 4.0 if it is intended that a VCF file should only contain one single vCard.
+    /// The example may also show that this approach is generally not advantageous,
+    /// as it endangers referential integrity.
     /// </para>
-    /// <para>In dem Beispiel wird die Erweiterungsmethode <see cref="VCardCollectionExtension.ReferenceVCards"/> verwendet, die 
-    /// <see cref="Reference(IEnumerable{VCard})"/>
-    /// aufruft.</para>
-    /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
-    /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
+    /// <para>
+    /// The example uses the extension method <see cref="VCardCollectionExtension.ReferenceVCards"
+    /// />, which calls <see cref="Reference(IEnumerable{VCard})" />.
+    /// </para>
+    /// <note type="note">
+    /// For the sake of easier readability, exception handling has not been used in
+    /// the example.
+    /// </note>
+    /// <code language="cs" source="..\Examples\VCard40Example.cs" />
     /// </example>
-    /// 
-    /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     public static IEnumerable<VCard> Reference(IEnumerable<VCard?> vCards)
     {
         if (vCards is null)
@@ -147,54 +144,48 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// Gibt eine Sammlung von <see cref="VCard"/>-Objekten zurück, in der <see cref="RelationUuidProperty"/>-Objekte der als 
-    /// Argument übergebenen Sammlung von
-    /// <see cref="VCard"/>-Objekten durch
-    /// <see cref="RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="VCard"/>-Objekte
-    /// in der als Argument übergebenen Sammlung befinden.
-    /// </summary>
-    /// 
-    /// <param name="vCards">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein und <c>null</c>-Werte
-    /// enthalten.</param>
-    /// 
-    /// <returns>
-    /// Eine Sammlung von <see cref="VCard"/>-Objekten, in der <see cref="RelationUuidProperty"/>-Objekte der als 
-    /// Argument übergebenen Sammlung von
-    /// <see cref="VCard"/>-Objekten durch
-    /// <see cref="RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="VCard"/>-Objekte
-    /// in der als Argument übergebenen Sammlung befinden.
-    /// </returns>
-    /// 
+    /// <summary> Gibt eine Sammlung von <see cref="VCard" />-Objekten zurück, in der
+    /// <see cref="RelationUuidProperty" />-Objekte der als Argument übergebenen Sammlung
+    /// von <see cref="VCard" />-Objekten durch <see cref="RelationVCardProperty" />-Objekte
+    /// ersetzt worden sind, falls sich die referenzierten <see cref="VCard" />-Objekte
+    /// in der als Argument übergebenen Sammlung befinden. </summary>
+    /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
+    /// may be empty or may contain <c>null</c> values.</param>
+    /// <returns> Eine Sammlung von <see cref="VCard" />-Objekten, in der <see cref="RelationUuidProperty"
+    /// />-Objekte der als Argument übergebenen Sammlung von <see cref="VCard" />-Objekten
+    /// durch <see cref="RelationVCardProperty" />-Objekte ersetzt worden sind, falls
+    /// sich die referenzierten <see cref="VCard" />-Objekte in der als Argument übergebenen
+    /// Sammlung befinden. </returns>
     /// <remarks>
     /// <note type="caution">
-    /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
-    /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
-    /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+    /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
+    /// passed to the method are not. Block read and write access to these <see cref="VCard"
+    /// /> objects, while this method is being executed!
     /// </note>
     /// <note type="tip">
-    /// Sie können der Methode auch ein einzelnes <see cref="VCard"/>-Objekt übergeben, da die <see cref="VCard"/>-Klasse
-    /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see> explizit implementiert.
+    /// You can pass a single <see cref="VCard" /> object to the method, since the <see
+    /// cref="VCard" /> class has an explicit implementation of <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see>.
     /// </note>
-    /// 
-    /// <para>Die Methode wird von den Deserialisierungsmethoden von <see cref="VCard"/> automatisch aufgerufen. Die Verwendung in 
-    /// eigenem Code kann z.B. nützlich sein, wenn <see cref="VCard"/>-Objekte aus verschiedenen Quellen in einer gemeinsamen Liste 
-    /// zusammengeführt werden, um ihre Daten durchsuchbar zu machen.
+    /// <para>
+    /// The method is automatically called by the deserialization methods of the <see
+    /// cref="VCard" /> class. Using it in your own code can be useful, e.g., if <see
+    /// cref="VCard" /> objects from different sources are combined in a common list
+    /// in order to make their data searchable.
     /// </para>
-    /// 
     /// </remarks>
-    /// 
     /// <example>
     /// <para>
-    /// Das Beispiel zeigt das Deserialisieren und Auswerten einer VCF-Datei, deren Inhalt auf andere VCF-Dateien verweist. In dem 
-    /// Beispiel wird die Erweiterungsmethode <see cref="VCardCollectionExtension.DereferenceVCards(IEnumerable{VCard?})"/> verwendet, 
-    /// die <see cref="Dereference(IEnumerable{VCard?})"/> aufruft.
+    /// The example shows the deserialization and analysis of a VCF file whose content
+    /// refers to other VCF files. The example uses the extension method <see cref="VCardCollectionExtension.DereferenceVCards(IEnumerable{VCard?})"
+    /// />, which calls <see cref="Dereference(IEnumerable{VCard?})" />.
     /// </para>
-    /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
-    /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
+    /// <note type="note">
+    /// For the sake of easier readability, exception handling has not been used in
+    /// the example.
+    /// </note>
+    /// <code language="cs" source="..\Examples\VCard40Example.cs" />
     /// </example>
-    /// 
-    /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     public static IEnumerable<VCard> Dereference(IEnumerable<VCard?> vCards)
     {
         if (vCards is null)

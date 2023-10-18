@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -10,9 +10,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 #pragma warning disable CS0618 // Type or member is obsolete
 
-/// <summary>
-/// Kapselt Informationen über die Postanschrift in vCards.
-/// </summary>
+    /// <summary>Encapsulates information about a postal delivery address.</summary>
 public sealed class Address
 {
     private const int MAX_COUNT = 7;
@@ -25,16 +23,15 @@ public sealed class Address
     private const int POSTAL_CODE = 5;
     private const int COUNTRY = 6;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="Address"/>-Objekt.
-    /// </summary>
-    /// <param name="street">Straße</param>
-    /// <param name="locality">Ort</param>
-    /// <param name="region">Bundesland</param>
-    /// <param name="postalCode">Postleitzahl</param>
-    /// <param name="country">Land (Staat)</param>
-    /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-    /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+    /// <summary />
+    /// <param name="street">The street address.</param>
+    /// <param name="locality">The locality (e.g. city).</param>
+    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="postalCode">The postal code.</param>
+    /// <param name="country">The country name (full name).</param>
+    /// <param name="postOfficeBox">The post office box. (Don't use this property!)</param>
+    /// <param name="extendedAddress">The extended address (e.g. apartment or suite
+    /// number). (Don't use this parameter!)</param>
     internal Address(ReadOnlyCollection<string> street,
                      ReadOnlyCollection<string> locality,
                      ReadOnlyCollection<string> region,
@@ -245,47 +242,33 @@ public sealed class Address
         Country ??= ReadOnlyCollectionString.Empty;
     }
 
-    /// <summary>
-    /// Postfach (nie <c>null</c>) (nicht verwenden)
-    /// </summary>
+    /// <summary>The post office box. (Don't use this property!)</summary>
     [Obsolete("Don't use this property.", false)]
     public ReadOnlyCollection<string> PostOfficeBox { get; }
 
-    /// <summary>
-    /// Adresszusatz (nie <c>null</c>) (nicht verwenden)
-    /// </summary>
+    /// <summary>The extended address (e.g. apartment or suite number). (Don't use this
+    /// property!)</summary>
     [Obsolete("Don't use this property.", false)]
     public ReadOnlyCollection<string> ExtendedAddress { get; }
 
-    /// <summary>
-    /// Straße (nie <c>null</c>)
-    /// </summary>
+    /// <summary>The street address. (Never <c>null</c>.)</summary>
     public ReadOnlyCollection<string> Street { get; }
 
-    /// <summary>
-    /// Ort (nie <c>null</c>)
-    /// </summary>
+    /// <summary>The locality (e.g. city). (Never <c>null</c>.)</summary>
     public ReadOnlyCollection<string> Locality { get; }
 
-    /// <summary>
-    /// Bundesland (nie <c>null</c>)
-    /// </summary>
+    /// <summary>The region (e.g. state or province). (Never <c>null</c>.)</summary>
     public ReadOnlyCollection<string> Region { get; }
 
-    /// <summary>
-    /// Postleitzahl (nie <c>null</c>)
-    /// </summary>
+    /// <summary>The postal code. (Never <c>null</c>.)</summary>
     public ReadOnlyCollection<string> PostalCode { get; }
 
-    /// <summary>
-    /// Land (Staat) (nie <c>null</c>)
-    /// </summary>
+    /// <summary>The country name (full name). (Never <c>null</c>.)</summary>
     public ReadOnlyCollection<string> Country { get; }
 
 
-    /// <summary>
-    /// <c>true</c>, wenn das <see cref="Address"/>-Objekt keine verwertbaren Daten enthält.
-    /// </summary>
+    /// <summary>Returns <c>true</c>, if the <see cref="Address" /> object does not
+    /// contain any usable data.</summary>
     public bool IsEmpty => Locality.Count == 0 &&
                            Street.Count == 0 &&
                            Country.Count == 0 &&
@@ -295,10 +278,10 @@ public sealed class Address
                            ExtendedAddress.Count == 0;
     
 
-    /// <summary>
-    /// Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
-    /// </summary>
-    /// <returns>Die in der Instanz gekapselten Daten, umgewandelt in formatierten Text für ein Adressetikett.</returns>
+    /// <summary>Converts the data encapsulated in the instance into formatted text
+    /// for a mailing label.</summary>
+    /// <returns>The data encapsulated in the instance, converted to formatted text
+    /// for a mailing label.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string ToLabel() => this.ConvertToLabel();
 
@@ -359,11 +342,10 @@ public sealed class Address
            ExtendedAddress.Any(StringExtension.NeedsToBeQpEncoded);
 
 
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="Address"/>-Objekts. 
-    /// (Nur zum Debugging.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="Address"/>-Objekts.</returns>
+    /// <summary>Creates a <see cref="string" /> representation of the <see cref="Address"
+    /// /> object. (For debugging only.)</summary>
+    /// <returns>A <see cref="string" /> representation of the <see cref="Address" />
+    /// object.</returns>
     public override string ToString()
     {
         var worker = new StringBuilder();

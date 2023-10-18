@@ -1,16 +1,13 @@
-﻿using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
 internal sealed partial class VcfRow
 {
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="vCardRow">vCard-Zeile</param>
-    /// <param name="valueSeparatorIndex">Index des des Trennzeichens <c>':'</c>, das den Wert von
-    /// <paramref name="vCardRow"/> vom Schlüssel- und Parameterteil trennt.</param>
-    /// <param name="info">Ein <see cref="VcfDeserializationInfo"/>-Objekt.</param>
+    /// <summary>ctor</summary>
+    /// <param name="vCardRow" />
+    /// <param name="valueSeparatorIndex" />
+    /// <param name="info" />
     private VcfRow(string vCardRow, int valueSeparatorIndex, VcfDeserializationInfo info)
     {
         // vCardRow:

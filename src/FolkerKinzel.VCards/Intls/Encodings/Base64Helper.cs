@@ -1,4 +1,4 @@
-﻿namespace FolkerKinzel.VCards.Intls.Encodings;
+namespace FolkerKinzel.VCards.Intls.Encodings;
 
 internal static class Base64Helper
 {

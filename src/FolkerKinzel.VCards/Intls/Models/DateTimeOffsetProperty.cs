@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -21,13 +21,13 @@ internal sealed class DateTimeOffsetProperty : DateAndOrTimeProperty
     public new DateTimeOffset Value { get; }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override bool IsEmpty
         => !DateAndOrTimeConverter.HasDateComponent(Value) && 
            !DateAndOrTimeConverter.HasTimeComponent(Value);
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new DateTimeOffsetProperty(this);
 
 

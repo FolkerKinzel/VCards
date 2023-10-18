@@ -1,269 +1,219 @@
-﻿using FolkerKinzel.VCards.Intls.Models;
+using System.Runtime.Intrinsics.X86;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Extensions;
 
-/// <summary>
-/// Erweiterungsmethoden, die die Arbeit mit <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see>-Objekten erleichtern.
-/// </summary>
+/// <summary>Extension methods that make working with <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see>
+/// objects easier.</summary>
 public static class VCardCollectionExtension
 {
-    /// <summary>
-    /// Gibt eine Sammlung von <see cref="VCard"/>-Objekten zurück, in der die <see cref="RelationVCardProperty"/>-Objekte durch
-    /// <see cref="RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
-    /// <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte als 
-    /// separate Elemente angefügt sind.
+    /// <summary> 
+    /// Returns a collection of <see cref="VCard" /> objects containing both the
+    /// <see cref = "VCard" /> objects passed as a collection as well as those which
+    /// had been embedded in their <see cref="VCard.Relations"/> property. The previously 
+    /// embedded <see cref="VCard"/> objects are now referenced by <see cref = "RelationProperty" /> 
+    /// objects that are initialized with the value of the <see cref="VCard.UniqueIdentifier"/>
+    /// property of these previously embedded <see cref="VCard"/>s.
     /// </summary>
-    /// 
-    /// <param name="vCards">Sammlung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein und <c>null</c>-Werte
-    /// enthalten.</param>
-    /// 
-    /// <returns>
-    /// Eine Sammlung von <see cref="VCard"/>-Objekten, in der die <see cref="RelationVCardProperty"/>-Objekte 
-    /// durch 
-    /// <see cref="RelationUuidProperty"/>-Objekte ersetzt sind und in der die in den
-    /// <see cref="RelationVCardProperty"/>-Objekten referenzierten <see cref="VCard"/>-Objekte als 
-    /// separate Elemente angefügt sind. (Wenn die angefügten <see cref="VCard"/>-Objekte noch keine <see cref="VCard.UniqueIdentifier"/>-Eigenschaft hatten, 
-    /// wird ihnen von der Methode automatisch eine neue zugewiesen.)
+    /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
+    /// may be empty or may contain <c>null</c> values.</param>
+    /// <returns> A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/> 
+    /// objects previously embedded in the <see cref="VCard.Relations"/> property are appended 
+    /// separately and referenced through their <see cref="VCard.UniqueIdentifier"/> property. 
+    /// (If the appended <see cref="VCard" /> objects did not already have a 
+    /// <see cref="VCard.UniqueIdentifier" /> property, the method automatically assigns them 
+    /// a new one.)
     /// </returns>
-    /// 
     /// <remarks>
     /// <note type="caution">
-    /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
-    /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
-    /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+    /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
+    /// passed to the method are not. Block read and write access to these <see cref="VCard"
+    /// /> objects, while this method is being executed!
     /// </note>
     /// <note type="important">
-    /// Verwenden Sie diese Methode niemals, wenn Sie eine VCF-Datei als vCard 2.1 oder vCard 3.0 speichern möchten. Es droht Datenverlust.
+    /// Never use this method, if you want to save a VCF file as vCard 2.1 or vCard
+    /// 3.0!
     /// </note>
     /// <para>
-    /// Die Methode wird bei Bedarf von den Serialisierungsmethoden von <see cref="VCard"/> automatisch verwendet. Die Verwendung in eigenem 
-    /// Code ist
-    /// nur dann sinnvoll, wenn ein <see cref="VCard"/>-Objekt als vCard 4.0 gespeichert werden soll und wenn dabei jede VCF-Datei nur
-    /// eine einzige vCard enthalten soll. (Dieses Vorgehen ist i.d.R. nicht vorteilhaft, da es die referentielle Integrität gefährdet.)
+    /// The method is - if necessary - automatically called by the serialization methods
+    /// of <see cref="VCard" />. It only makes sense to use it in your own code, if
+    /// a <see cref="VCard" /> object is to be saved as vCard 4.0 and if each VCF file
+    /// should only contain a single vCard. (As a rule, this approach is not advantageous
+    /// as it endangers referential integrity.)
     /// </para>
     /// </remarks>
-    /// 
     /// <example>
     /// <para>
-    /// Das Beispiel demonstriert, wie ein <see cref="VCard"/>-Objekt als vCard 4.0 gespeichert werden kann, wenn beabsichtigt ist,
-    /// dass eine VCF-Datei jeweils nur eine einzige vCard enthalten soll. Das Beispiel zeigt möglicherweise auch, dass dieses Vorgehen i.d.R.
-    /// nicht vorteilhaft ist, da es die referentielle Integrität gefährdet.
+    /// The example demonstrates how a <see cref="VCard" /> object can be saved as a
+    /// vCard 4.0, if it is intended that a VCF file should only contain one single
+    /// vCard. The example may also show that this approach is generally not advantageous,
+    /// because it endangers referential integrity.
     /// </para>
-    /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
-    /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
+    /// <note type="note">
+    /// For the sake of easier readability, exception handling has not been used in
+    /// the example.
+    /// </note>
+    /// <code language="cs" source="..\Examples\VCard40Example.cs" />
     /// </example>
-    /// 
-    /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IEnumerable<VCard> ReferenceVCards(this IEnumerable<VCard?> vCards)
         => VCard.Reference(vCards);
 
-
-
     /// <summary>
-    /// Gibt eine Sammlung von <see cref="VCard"/>-Objekten zurück, in der <see cref="RelationUuidProperty"/>-Objekte durch
-    /// <see cref="RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="VCard"/>-Objekte
-    /// in der Sammlung befinden.
-    /// </summary>
-    /// 
-    /// <param name="vCards">Auflistung von <see cref="VCard"/>-Objekten. Die Auflistung darf leer sein und <c>null</c>-Werte
-    /// enthalten.</param>
-    /// 
-    /// <returns>
-    /// Eine Sammlung von <see cref="VCard"/>-Objekten, in der <see cref="RelationUuidProperty"/>-Objekte durch
-    /// <see cref="RelationVCardProperty"/>-Objekte ersetzt worden sind, falls sich die referenzierten <see cref="VCard"/>-Objekte
-    /// in der als Argument übergebenen Sammlung befinden.
-    /// </returns>
-    /// 
+    /// Returns a collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
+    /// referenced by their <see cref="VCard.UniqueIdentifier"/> property are embedded in 
+    /// <see cref ="RelationProperty"/> objects, provided that the collection passed as an 
+    /// argument contains these <see cref="VCard"/> objects.</summary>
+    /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
+    /// may be empty or may contain <c>null</c> values.</param>
+    /// <returns> A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
+    /// referenced by their <see cref="VCard.UniqueIdentifier"/> property are embedded in 
+    /// <see cref ="RelationProperty"/> objects, provided that the collection passed as an 
+    /// argument contains these <see cref="VCard"/> objects.</returns>
     /// <remarks>
     /// <note type="caution">
-    /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
-    /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
-    /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+    /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
+    /// passed to the method are not. Block read and write access to these <see cref="VCard"
+    /// /> objects, while this method is being executed!
     /// </note>
-    /// 
-    /// 
-    /// <para>Die Methode wird von den Deserialisierungsmethoden von <see cref="VCard"/> automatisch aufgerufen. Die Verwendung in 
-    /// eigenem Code kann z.B. nützlich sein, wenn <see cref="VCard"/>-Objekte aus verschiedenen Quellen in einer gemeinsamen Liste 
-    /// zusammengeführt werden, um ihre Daten durchsuchbar zu machen.
+    /// <para>
+    /// The method is automatically called by the deserialization methods of the <see
+    /// cref="VCard" /> class. Using it in your own code can be useful, e.g., if <see
+    /// cref="VCard" /> objects from different sources are combined in a common list
+    /// in order to make their data searchable.
     /// </para>
-    /// 
     /// </remarks>
-    /// 
     /// <example>
     /// <para>
-    /// Das Beispiel zeigt das Deserialisieren und Auswerten einer VCF-Datei, deren Inhalt auf andere VCF-Dateien verweist.
+    /// The example shows the deserialization and analysis of a VCF file whose content
+    /// refers to other VCF files.
     /// </para>
-    /// <note type="note">Der leichteren Lesbarkeit wegen, wurde in dem Beispiel auf Ausnahmebehandlung verzichtet.</note>
-    /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
+    /// <note type="note">
+    /// For the sake of easier readability, exception handling has not been used in
+    /// the example.
+    /// </note>
+    /// <code language="cs" source="..\Examples\VCard40Example.cs" />
     /// </example>
-    /// 
-    /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IEnumerable<VCard> DereferenceVCards(this IEnumerable<VCard?> vCards)
         => VCard.Dereference(vCards);
 
-
-    /// <summary>
-    /// Speichert eine Sammlung von <see cref="VCard"/>-Objekten in eine gemeinsame VCF-Datei.
-    /// </summary>
-    /// 
-    /// <param name="vCards">Die zu speichernden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein und <c>null</c>-Werte
-    /// enthalten. Wenn die Sammlung kein <see cref="VCard"/>-Objekt enthält, wird keine Datei geschrieben.</param>
-    /// <param name="fileName">Der Dateipfad. Wenn die Datei existiert, wird sie überschrieben.</param>
-    /// <param name="version">Die vCard-Version der zu speichernden VCF-Datei.</param>
-    /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-    /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
-    /// auf eine Umwandlung zu verzichten.</param>
-    /// <param name="options">Optionen für das Schreiben der VCF-Datei. Die Flags können
-    /// kombiniert werden.</param>
-    /// 
+    /// <summary>Saves a collection of <see cref="VCard" /> objects in a common VCF
+    /// file.</summary>
+    /// <param name="vCards">The <see cref="VCard" /> objects to be saved. The collection
+    /// may be empty or may contain <c>null</c> values. If the collection does not contain
+    /// any <see cref="VCard" /> object, no file will be written.</param>
+    /// <param name="fileName">The file path. If the file exists, it will be overwritten.</param>
+    /// <param name="version">The vCard version of the VCF file to be written.</param>
+    /// <param name="tzConverter">An object that implements <see cref="ITimeZoneIDConverter"
+    /// /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
+    /// <param name="options">Options for writing the VCF file. The flags can be combined.</param>
     /// <remarks>
     /// <note type="caution">
-    /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
-    /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
-    /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+    /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
+    /// passed to the method are not. Block read and write access to these <see cref="VCard"
+    /// /> objects, while this method is being executed!
     /// </note>
-    /// 
-    /// 
-    /// <para>Die Methode serialisiert möglicherweise mehr
-    /// vCards, als die Anzahl der Elemente in der Sammlung, die an den Parameter <paramref name="vCards"/> übergeben wird.
-    /// Dies geschieht, wenn eine VCF-Datei als
-    /// vCard 4.0 gespeichert wird und sich 
-    /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
-    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befinden.
-    /// </para>
-    /// 
     /// <para>
-    /// Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
-    /// serialisiert wird und wenn sich in der Eigenschaft <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts ein 
-    /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
-    /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
+    /// The method may serialize more vCards than the number of elements in the collection passed 
+    /// to the <paramref name="vCards" /> parameter. This can happen if there are embedded 
+    /// <see cref="VCard" /> objects in the <see cref="VCard.Members" /> or 
+    /// <see cref="VCard.Relations" /> properties.
     /// </para>
     /// </remarks>
-    /// 
-    /// <seealso cref="ITimeZoneIDConverter"/>
-    /// 
-    /// <exception cref="ArgumentNullException"><paramref name="fileName"/> oder <paramref name="vCards"/>
-    /// ist <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
-    /// <exception cref="IOException">Die Datei konnte nicht geschrieben werden.</exception>
+    /// <seealso cref="ITimeZoneIDConverter" />
+    /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> or <paramref
+    /// name="vCards" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
+    /// file path or <paramref name="version" /> has an undefined value.</exception>
+    /// <exception cref="IOException">The file could not be written.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SaveVcf(
-        this IEnumerable<VCard?> vCards,
-        string fileName,
-        VCdVersion version = VCard.DEFAULT_VERSION,
-        ITimeZoneIDConverter? tzConverter = null,
-        VcfOptions options = VcfOptions.Default)
+    public static void SaveVcf(this IEnumerable<VCard?> vCards,
+                               string fileName,
+                               VCdVersion version = VCard.DEFAULT_VERSION,
+                               ITimeZoneIDConverter? tzConverter = null,
+                               VcfOptions options = VcfOptions.Default)
         => VCard.SaveVcf(fileName, vCards, version, tzConverter, options);
 
-
-    /// <summary>
-    /// Serialisiert eine Sammlung von <see cref="VCard"/>-Objekten unter Verwendung des VCF-Formats in einen <see cref="Stream"/>.
-    /// </summary>
-    /// 
-    /// <param name="vCards">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein und <c>null</c>-Werte
-    /// enthalten.</param>
-    /// <param name="stream">Ein <see cref="Stream"/>, in den die serialisierten <see cref="VCard"/>-Objekte geschrieben werden.</param>
-    /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
-    /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-    /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
-    /// auf eine Umwandlung zu verzichten.</param>
-    /// <param name="options">Optionen für das Serialisieren. Die Flags können
-    /// kombiniert werden.</param>
-    /// <param name="leaveStreamOpen">Mit <c>true</c> wird bewirkt, dass die Methode <paramref name="stream"/> nicht schließt. Der Standardwert
-    /// ist <c>false</c>.</param>
-    /// 
+    /// <summary>Serializes a collection of <see cref="VCard" /> objects into a <see
+    /// cref="Stream" /> using the VCF format.</summary>
+    /// <param name="vCards">The <see cref="VCard" /> objects to be serialized. The
+    /// collection may be empty or may contain <c>null</c> values.</param>
+    /// <param name="stream">A <see cref="Stream" /> into which the serialized <see
+    /// cref="VCard" /> objects are written.</param>
+    /// <param name="version">The vCard version used for the serialization.</param>
+    /// <param name="tzConverter">An object that implements <see cref="ITimeZoneIDConverter"
+    /// /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
+    /// <param name="options">Options for serializing VCF. The flags can be combined.</param>
+    /// <param name="leaveStreamOpen"> <c>true</c> means that the method does not close
+    /// the underlying <see cref="Stream" />. The default value is <c>false</c>.</param>
     /// <remarks>
     /// <note type="caution">
-    /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
-    /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
-    /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+    /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
+    /// passed to the method are not. Block read and write access to these <see cref="VCard"
+    /// /> objects, while this method is being executed!
     /// </note>
-    /// 
-    /// <para>Die Methode serialisiert möglicherweise mehr
-    /// vCards, als die Anzahl der Elemente in der Sammlung, die an den Parameter <paramref name="vCards"/> übergeben wird.
-    /// Dies geschieht, wenn eine
-    /// vCard 4.0 serialisiert wird und sich 
-    /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
-    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden.
+    /// <para>
+    /// The method may serialize more vCards than the number of elements in the collection passed 
+    /// to the <paramref name="vCards" /> parameter. This can happen if there are embedded 
+    /// <see cref="VCard" /> objects in the <see cref="VCard.Members" /> or 
+    /// <see cref="VCard.Relations" /> properties.
     /// </para>
-    /// 
-    /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
-    /// serialisiert wird und wenn sich in der Eigenschaft <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts ein 
-    /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
-    /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
-    /// </para>
-    /// 
     /// </remarks>
-    /// 
-    /// <seealso cref="ITimeZoneIDConverter"/>
-    /// 
-    /// <exception cref="ArgumentNullException"><paramref name="stream"/> oder <paramref name="vCards"/> ist <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="stream"/> unterstützt keine Schreibvorgänge oder <paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
-    /// <exception cref="IOException">E/A-Fehler.</exception>
-    /// <exception cref="ObjectDisposedException"><paramref name="stream"/> war bereits geschlossen.</exception>
+    /// <seealso cref="ITimeZoneIDConverter" />
+    /// <exception cref="ArgumentNullException"> <paramref name="stream" /> or <paramref
+    /// name="vCards" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="stream" /> does not support
+    /// write operations or <paramref name="version" /> has an undefined value.</exception>
+    /// <exception cref="IOException">I/O error.</exception>
+    /// <exception cref="ObjectDisposedException"> <paramref name="stream" /> was already
+    /// closed.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SerializeVcf(
-        this IEnumerable<VCard?> vCards,
-        Stream stream,
-        VCdVersion version = VCard.DEFAULT_VERSION,
-        ITimeZoneIDConverter? tzConverter = null,
-        VcfOptions options = VcfOptions.Default,
-        bool leaveStreamOpen = false)
+    public static void SerializeVcf(this IEnumerable<VCard?> vCards,
+                                    Stream stream,
+                                    VCdVersion version = VCard.DEFAULT_VERSION,
+                                    ITimeZoneIDConverter? tzConverter = null,
+                                    VcfOptions options = VcfOptions.Default,
+                                    bool leaveStreamOpen = false)
         => VCard.SerializeVcf(stream, vCards, version, tzConverter, options, leaveStreamOpen);
 
-
-    /// <summary>
-    /// Serialisiert <paramref name="vCards"/> als einen <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.
-    /// </summary>
-    /// 
-    /// <param name="vCards">Die zu serialisierenden <see cref="VCard"/>-Objekte. Die Sammlung darf leer sein und <c>null</c>-Werte
-    /// enthalten.</param>
-    /// <param name="version">Die vCard-Version, die für die Serialisierung verwendet wird.</param>
-    /// <param name="tzConverter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um beim Schreiben von vCard 2.1 oder 
-    /// vCard 3.0 Zeitzonennamen aus der "IANA time zone database" in UTC-Offsets umwandeln zu können, oder <c>null</c>, um 
-    /// auf eine Umwandlung zu verzichten.</param>
-    /// <param name="options">Optionen für das Serialisieren. Die Flags können
-    /// kombiniert werden.</param>
-    /// 
-    /// <returns><paramref name="vCards"/>, serialisiert als <see cref="string"/>, der den Inhalt einer VCF-Datei darstellt.</returns>
-    /// 
+    /// <summary>Serializes <paramref name="vCards" /> as a <see cref="string" />, which
+    /// represents the content of a VCF file.</summary>
+    /// <param name="vCards">The <see cref="VCard" /> objects to be serialized. The
+    /// collection may be empty or may contain <c>null</c> values.</param>
+    /// <param name="version">The vCard version used for the serialization.</param>
+    /// <param name="tzConverter">An object that implements <see cref="ITimeZoneIDConverter"
+    /// /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
+    /// <param name="options">Options for serializing VCF. The flags can be combined.</param>
+    /// <returns> <paramref name="vCards" />, serialized as a <see cref="string" />,
+    /// which represents the content of a VCF file.</returns>
     /// <remarks>
     /// <note type="caution">
-    /// Obwohl die Methode selbst threadsafe ist, sind es die an die Methode übergebenen 
-    /// <see cref="VCard"/>-Objekte nicht. Sperren Sie den lesenden und schreibenden Zugriff auf diese
-    /// <see cref="VCard"/>-Objekte während der Ausführung dieser Methode!
+    /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
+    /// passed to the method are not. Block read and write access to these <see cref="VCard"
+    /// /> objects, while this method is being executed!
     /// </note>
-    /// 
-    /// <para>Die Methode serialisiert möglicherweise mehr
-    /// vCards, als sich ursprünglich Elemente in <paramref name="vCards"/> befanden. Dies geschieht, wenn eine
-    /// vCard 4.0 serialisiert wird und sich 
-    /// in den Eigenschaften <see cref="VCard.Members"/> oder <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts
-    /// weitere <see cref="VCard"/>-Objekte in Form von <see cref="RelationVCardProperty"/>-Objekten befanden.
+    /// <para>
+    /// The method may serialize more vCards than the number of elements in the collection passed 
+    /// to the <paramref name="vCards" /> parameter. This can happen if there are embedded 
+    /// <see cref="VCard" /> objects in the <see cref="VCard.Members" /> or 
+    /// <see cref="VCard.Relations" /> properties.
     /// </para>
-    /// 
-    /// <para>Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option <see cref="VcfOptions.IncludeAgentAsSeparateVCard"/> 
-    /// serialisiert wird und wenn sich in der Eigenschaft <see cref="VCard.Relations"/> eines <see cref="VCard"/>-Objekts ein 
-    /// <see cref="RelationVCardProperty"/>-Objekt befindet, auf dessen <see cref="ParameterSection"/> in der Eigenschaft <see cref="ParameterSection.RelationType"/>
-    /// das Flag <see cref="RelationTypes.Agent"/> gesetzt ist.
-    /// </para>
-    /// 
     /// </remarks>
-    /// 
-    ///  <seealso cref="ITimeZoneIDConverter"/>
-    /// 
-    /// <exception cref="ArgumentNullException"><paramref name="vCards"/> ist <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="version"/> hat einen nichtdefinierten Wert.</exception>
-    /// <exception cref="OutOfMemoryException">Es ist nicht genug Speicher vorhanden.</exception>
+    /// <seealso cref="ITimeZoneIDConverter" />
+    /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="version" /> has an undefined
+    /// value.</exception>
+    /// <exception cref="OutOfMemoryException">The system is out of memory.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string ToVcfString(
-        this IEnumerable<VCard?> vCards,
-        VCdVersion version = VCard.DEFAULT_VERSION,
-        ITimeZoneIDConverter? tzConverter = null,
-        VcfOptions options = VcfOptions.Default)
-    => VCard.ToVcfString(vCards, version, tzConverter, options);
+    public static string ToVcfString(this IEnumerable<VCard?> vCards,
+                                     VCdVersion version = VCard.DEFAULT_VERSION,
+                                     ITimeZoneIDConverter? tzConverter = null,
+                                     VcfOptions options = VcfOptions.Default)
+        => VCard.ToVcfString(vCards, version, tzConverter, options);
 }

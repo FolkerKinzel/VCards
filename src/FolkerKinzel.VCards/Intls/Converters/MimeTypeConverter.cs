@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.MimeTypes;
+using FolkerKinzel.MimeTypes;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 

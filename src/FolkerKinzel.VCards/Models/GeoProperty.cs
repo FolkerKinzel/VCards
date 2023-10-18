@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -6,26 +6,21 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Repräsentiert die vCard-Property <c>GEO</c>, die eine geographische Position speichert.
-/// </summary>
+    /// <summary>Represents the vCard property <c>GEO</c>, which encapsulates a geographic
+    /// position.</summary>
 public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 {
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary />
+    /// <param name="prop" />
     private GeoProperty(GeoProperty prop) : base(prop)
         => Value = prop.Value;
 
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="GeoProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="value">Ein <see cref="GeoCoordinate"/>-Objekt oder <c>null</c>.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <summary> Initialisiert ein neues <see cref="GeoProperty" />-Objekt. </summary>
+    /// <param name="value">Ein <see cref="GeoCoordinate" />-Objekt oder <c>null</c>.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public GeoProperty(GeoCoordinate? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => this.Value = value;
 
     internal GeoProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
@@ -37,8 +32,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
     }
 
 
-    /// <summary>
-    /// Die von der <see cref="GeoProperty"/> zur Verfügung gestellten Daten.
+    /// <summary> Die von der <see cref="GeoProperty" /> zur Verfügung gestellten Daten.
     /// </summary>
     public new GeoCoordinate? Value
     {
@@ -46,7 +40,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
@@ -65,6 +59,6 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GeoProperty>)this).GetEnumerator();
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new GeoProperty(this);
 }

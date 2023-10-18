@@ -1,36 +1,30 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Abstrakte Basisklasse aller Klassen, die vCard-Properties repräsentieren.
-/// </summary>
+    /// <summary>Abstract base class of all classes that represent vCard properties.</summary>
 public abstract class VCardProperty : ICloneable
 {
     private string? _group;
 
-    /// <summary>
-    /// Kopierkonstruktor.
-    /// </summary>
-    /// <param name="prop">Das zu klonende <see cref="VCardProperty"/>-Objekt.</param>
+    /// <summary>Copy constructor.</summary>
+    /// <param name="prop">The <see cref="VCardProperty" /> object to clone.</param>
     protected VCardProperty(VCardProperty prop)
     {
         Parameters = (ParameterSection)prop.Parameters.Clone();
         Group = prop.Group;
     }
 
-    /// <summary>
-    /// Konstruktor, der von abgeleiteten Klassen aufgerufen wird.
-    /// </summary>
-    /// <param name="parameters">Ein <see cref="ParameterSection"/>-Objekt, das den Parameter-Teil einer
-    /// vCard-Property repräsentiert.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe von <see cref="VCardProperty"/>-Objekten,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="parameters"/> ist <c>null</c>.</exception>
+    /// <summary>Constructor called by derived classes.</summary>
+    /// <param name="parameters">A <see cref="ParameterSection" /> object that represents
+    /// the parameter part of a vCard property.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <exception cref="ArgumentNullException"> <paramref name="parameters" /> is <c>null</c>.</exception>
     protected VCardProperty(ParameterSection parameters, string? propertyGroup)
     {
         if (parameters is null)
@@ -42,46 +36,40 @@ public abstract class VCardProperty : ICloneable
 
     }
 
-    /// <summary>
-    /// Die von der <see cref="VCardProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary>The data provided by the <see cref="VCardProperty" />.</summary>
     public object? Value => GetVCardPropertyValue();
 
 
-    /// <summary>
-    /// Zugriffsmethode für die Daten von <see cref="VCardProperty"/>.
-    /// </summary>
-    /// <returns>Die Daten, die den Inhalt von <see cref="VCardProperty"/> darstellen.</returns>
+    /// <summary>Abstract access method to get the data from <see cref="VCardProperty"
+    /// />.</summary>
+    /// <returns>The data provided by the <see cref="VCardProperty" />.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected abstract object? GetVCardPropertyValue();
 
 
-    /// <summary>
-    /// Gruppenbezeichner einer vCard-Property oder <c>null</c>, wenn die vCard-Property keinen Gruppenbezeichner hat.
-    /// </summary>
+    /// <summary>Corresponds to the Group identifier of a vCard property or is <c>null</c>,
+    /// if the vCard property has no group identifier.</summary>
     public string? Group
     {
         get => _group;
         set => _group = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
     }
 
-    /// <summary>
-    /// Enthält die Daten des Parameter-Abschnitts einer vCard-Property. (Nie <c>null</c>.)
-    /// </summary>
+    /// <summary>Contains the data of the parameter section of a vCard property. (Never
+    /// <c>null</c>.)</summary>
     public ParameterSection Parameters { get; }
 
 
-    /// <summary>
-    /// <c>true</c>, wenn das <see cref="VCardProperty"/>-Objekt keine verwertbaren Daten enthält.
-    /// </summary>
+    /// <summary>Returns <c>true</c>, if the <see cref="VCardProperty" /> object does
+    /// not contain any usable data.</summary>
     [MemberNotNullWhen(false, nameof(Value))]
     public virtual bool IsEmpty => GetVCardPropertyValue() is null;
 
 
-    /// <summary>
-    /// Überladung der <see cref="object.ToString"/>-Methode. Nur zum Debugging.
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="VCardProperty"/>-Objekts. </returns>
+    /// <summary>Overload of the <see cref="object.ToString" /> method. For debugging
+    /// only.</summary>
+    /// <returns>A <see cref="string" /> representation of the <see cref="VCardProperty"
+    /// /> object.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => Value?.ToString() ?? "<null>";
 
@@ -140,6 +128,6 @@ public abstract class VCardProperty : ICloneable
     internal abstract void AppendValue(VcfSerializer serializer);
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public abstract object Clone();
 }

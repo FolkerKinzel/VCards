@@ -1,38 +1,31 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Kapselt Informationen, die dazu dienen, vCard-Properties über verschiedene Bearbeitungsstände derselben vCard hinweg
-/// eindeutig zu identifizieren.
-/// </summary>
+    /// <summary>Encapsulates information that is used to identify vCard properties
+    /// across different versions of the same vCard.</summary>
 public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<PropertyIDMappingProperty>
 {
-    /// <summary>
-    /// Copy ctor.
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary />
+    /// <param name="prop" />
     private PropertyIDMappingProperty(PropertyIDMappingProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="PropertyIDMappingProperty"/>-Objekt.
+    /// <summary> Initialisiert ein neues <see cref="PropertyIDMappingProperty" />-Objekt.
     /// </summary>
-    /// <param name="value">Ein <see cref="PropertyIDMapping"/>-Objekt oder <c>null</c>.</param>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> ist kleiner als 1 oder größer als 9.</exception>
+    /// <param name="value">A <see cref="PropertyIDMapping" /> object or <c>null</c>.</param>
+    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="value" /> is
+    /// less than 1 or greater than 9.</exception>
     public PropertyIDMappingProperty(PropertyIDMapping? value) : base(new ParameterSection(), null)
         => Value = value;
 
 
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="vcfRow"><see cref="VcfRow"/></param>
-    /// <exception cref="ArgumentException">Aus <paramref name="vcfRow"/> kann kein <see cref="PropertyIDMapping"/>
-    /// geparst werden.</exception>
+    /// <summary>ctor</summary>
+    /// <param name="vcfRow" />
+    /// <exception cref="ArgumentException" />
     internal PropertyIDMappingProperty(VcfRow vcfRow)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
@@ -45,16 +38,15 @@ public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<Prope
     }
 
 
-    /// <summary>
-    /// Die von der <see cref="PropertyIDMappingProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary> Die von der <see cref="PropertyIDMappingProperty" /> zur Verfügung
+    /// gestellten Daten. </summary>
     public new PropertyIDMapping? Value
     {
         get;
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
@@ -68,6 +60,6 @@ public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<Prope
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PropertyIDMappingProperty>)this).GetEnumerator();
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new PropertyIDMappingProperty(this);
 }

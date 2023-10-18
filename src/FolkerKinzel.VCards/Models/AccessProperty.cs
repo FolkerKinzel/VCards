@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Enums;
@@ -6,26 +6,20 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Kapselt die Daten der vCard-Property <c>CLASS</c>, die in vCard 3.0 die Geheimhaltungsstufe der 
-/// vCard definiert.
-/// </summary>
+    /// <summary>Encapsulates the data of the vCard property <c>CLASS</c>, which defines
+    /// the level of confidentiality of the vCard in vCard 3.0.</summary>
 public sealed class AccessProperty : VCardProperty
 {
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop">The <see cref="AccessProperty"/> object to clone.</param>
+    /// <summary />
+    /// <param name="prop">The <see cref="AccessProperty" /> object to clone.</param>
     private AccessProperty(AccessProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="AccessProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="value">Ein Member der <see cref="Access"/>-Enumeration.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
+    /// <summary> Initialisiert ein neues <see cref="AccessProperty" />-Objekt. </summary>
+    /// <param name="value">Ein Member der <see cref="Access" />-Enumeration.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public AccessProperty(Access value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
         => Value = value;
 
@@ -40,23 +34,22 @@ public sealed class AccessProperty : VCardProperty
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override bool IsEmpty => false;
 
-    /// <summary>
-    /// Die von der <see cref="AccessProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary> Die von der <see cref="AccessProperty" /> zur Verfügung gestellten
+    /// Daten. </summary>
     public new Access Value
     {
         get;
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object GetVCardPropertyValue() => Value;
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new AccessProperty(this);
 }

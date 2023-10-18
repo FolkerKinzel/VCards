@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.MimeTypes;
+using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
@@ -10,10 +10,8 @@ internal sealed class ReferencedDataProperty : DataProperty
 {
     private readonly UriProperty _uriProp;
 
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary>ctor</summary>
+    /// <param name="prop" />
     internal ReferencedDataProperty(UriProperty prop)
         : base(prop.Parameters, prop.Group) => _uriProp = prop;
 
@@ -29,7 +27,7 @@ internal sealed class ReferencedDataProperty : DataProperty
                             : UriConverter.GetFileTypeExtensionFromUri(Value);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new ReferencedDataProperty((UriProperty)_uriProp.Clone());
 

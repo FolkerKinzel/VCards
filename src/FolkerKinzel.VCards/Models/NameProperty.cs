@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
@@ -8,36 +8,32 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Repräsentiert die vCard-Property <c>N</c>, die den Namen des vCard-Subjekts speichert.
-/// </summary>
-/// <remarks>
-/// <note type="tip">
-/// Sie können die Methode <see cref="NameProperty.ToDisplayName"/> verwenden, um aus den strukturierten Namensdarstellungen
-/// formatierte Darstellungen zu erzeugen, die für die Benutzer der Anwendung lesbar sind.
-/// </note>
-/// </remarks>
+    /// <summary>Represents the vCard property <c>N</c>, which stores the name of the
+    /// vCard subject.</summary>
+    /// <remarks>
+    /// <note type="tip">
+    /// Sie können die Methode <see cref="NameProperty.ToDisplayName" /> verwenden,
+    /// um aus den strukturierten Namensdarstellungen formatierte Darstellungen zu erzeugen,
+    /// die für die Benutzer der Anwendung lesbar sind.
+    /// </note>
+    /// </remarks>
 public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 {
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary />
+    /// <param name="prop" />
     private NameProperty(NameProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="NameProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="lastName">Nachname</param>
-    /// <param name="firstName">Vorname</param>
-    /// <param name="middleName">zweiter Vorname</param>
-    /// <param name="prefix">Namenspräfix (z.B. "Prof. Dr.")</param>
-    /// <param name="suffix">Namenssuffix (z.B. "jr.")</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    /// <seealso cref="ToDisplayName"/>
+    /// <summary> Initialisiert ein neues <see cref="NameProperty" />-Objekt. </summary>
+    /// <param name="lastName" />
+    /// <param name="firstName" />
+    /// <param name="middleName" />
+    /// <param name="prefix" />
+    /// <param name="suffix" />
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <seealso cref="ToDisplayName" />
     public NameProperty(
         IEnumerable<string?>? lastName = null,
         IEnumerable<string?>? firstName = null,
@@ -54,18 +50,16 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     }
 
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="NameProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="lastName">Nachname</param>
-    /// <param name="firstName">Vorname</param>
-    /// <param name="middleName">zweiter Vorname</param>
-    /// <param name="prefix">Namenspräfix (z.B. "Prof. Dr.")</param>
-    /// <param name="suffix">Namenssuffix (z.B. "jr.")</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    /// <seealso cref="ToDisplayName"/>
+    /// <summary> Initialisiert ein neues <see cref="NameProperty" />-Objekt. </summary>
+    /// <param name="lastName" />
+    /// <param name="firstName" />
+    /// <param name="middleName" />
+    /// <param name="prefix" />
+    /// <param name="suffix" />
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <seealso cref="ToDisplayName" />
     public NameProperty(
         string? lastName,
         string? firstName = null,
@@ -90,8 +84,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
         Value = string.IsNullOrWhiteSpace(vcfRow.Value) ? new Name() : new Name(vcfRow.Value, vcfRow.Info, version);
     }
 
-    /// <summary>
-    /// Die von der <see cref="NameProperty"/> zur Verfügung gestellten Daten.
+    /// <summary> Die von der <see cref="NameProperty" /> zur Verfügung gestellten Daten.
     /// </summary>
     public new Name Value
     {
@@ -99,19 +92,18 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     }
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;
 
 
-    /// <summary>
-    /// Formatiert die von der Instanz gekapselten Daten in eine lesbare Form.
-    /// </summary>
-    /// <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
+    /// <summary>Formats the data encapsulated by the instance into a human-readable
+    /// form.</summary>
+    /// <returns>The data encapsulated by the instance in human-readable form.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string ToDisplayName() => Value.ToDisplayName();
 
@@ -158,6 +150,6 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<NameProperty>)this).GetEnumerator();
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new NameProperty(this);
 }

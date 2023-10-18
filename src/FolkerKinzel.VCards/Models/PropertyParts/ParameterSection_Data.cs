@@ -1,11 +1,9 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
-/// <summary>
-/// Kapselt die Information über die Parameter einer vCard-Property.
-/// </summary>
-/// <threadsafety static="true" instance="false" />
+    /// <summary>Encapsulates the information about the parameters of a vCard property.</summary>
+    /// <threadsafety static="true" instance="false" />
 public sealed partial class ParameterSection
 {
     private readonly Dictionary<VCdParam, object> _propDic = new();
@@ -28,15 +26,11 @@ public sealed partial class ParameterSection
         }
     }
 
-    /// <summary>
-    /// Anzahl der gespeicherten Parameter (zum Testen und Debuggen)
-    /// </summary>
+    /// <summary />
     internal int Count => _propDic.Count;
 
 
-    /// <summary>
-    /// <c>TYPE</c>: Beschreibt die Art einer Adresse. <c>(2,3)</c>
-    /// </summary>
+    /// <summary> <c>TYPE</c>: Specifies the type of a postal delivery address. <c>(2,3)</c></summary>
     public AddressTypes? AddressType
     {
         get => Get<AddressTypes?>(VCdParam.AddressType);
@@ -48,10 +42,7 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>ALTID</c>: Ein gemeinsamer Bezeichner, der zu erkennen gibt, dass mehrere Instanzen derselben Property dasselbe 
-    /// darstellen (z.B. in unterschiedlichen Sprachen). <c>(4)</c>
-    /// </summary>
+    /// <summary />
     public string? AltID
     {
         get => Get<string?>(VCdParam.AltID);
@@ -59,11 +50,9 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>CALSCALE</c>: Gibt die Art des Kalenders an, der für Datumsangaben verwendet wird. <c>(4)</c>
-    /// </summary>
-    /// <value>Der einzige offiziell registrierte Wert ist <c>GREGORIAN</c> für den gregorianischen 
-    /// Kalender.</value>
+    /// <summary />
+    /// <value>The only value specified is <c>GREGORIAN</c>, which stands for the Gregorian
+    /// system.</value>
     public string? Calendar
     {
         get => Get<string?>(VCdParam.Calendar);
@@ -72,9 +61,8 @@ public sealed partial class ParameterSection
 
     
 
-    /// <summary>
-    /// <c>CHARSET</c>: Gibt den Zeichensatz an, der für die Property verwendet wurde. <c>(2)</c>
-    /// </summary>
+    /// <summary> <c>CHARSET</c>: Indicates the character set that was used for the
+    /// property. <c>(2)</c></summary>
     public string? CharSet
     {
         get => Get<string?>(VCdParam.CharSet);
@@ -82,9 +70,7 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>VALUE</c>: Gibt an, wo sich der eigentiche Inhalt der Property befindet. <c>(2)</c>
-    /// </summary>
+    /// <summary />
     public ContentLocation ContentLocation
     {
         get => Get<ContentLocation>(VCdParam.ContentLocation);
@@ -104,10 +90,9 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>CONTEXT</c>: Gibt den Kontext der Daten an, z.B. <c>VCARD</c> oder <c>LDAP</c>. <c>(3)</c>
-    /// </summary>
-    /// <remarks>Kommt in der <c>SOURCE</c>-Property von vCard 3.0 zum Einsatz.</remarks>
+    /// <summary> <c>CONTEXT</c>: Indicates the context of the data, e.g. <c>VCARD</c>
+    /// or <c>LDAP</c>. <c>(3)</c></summary>
+    /// <remarks>Is used in the <c>SOURCE</c> property of vCard 3.0.</remarks>
     public string? Context
     {
         get => Get<string?>(VCdParam.Context);
@@ -115,10 +100,7 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>VALUE</c>: Gibt an, welchem der vom vCard-Standard vordefinierten Datentypen der Inhalt
-    /// der vCard-Property entspricht. <c>(3,4)</c>
-    /// </summary>
+    /// <summary />
     public VCdDataType? DataType
     {
         get => Get<VCdDataType?>(VCdParam.DataType);
@@ -126,11 +108,8 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>TYPE</c>: Beschreibt die Art einer E-Mail. <c>(2,3)</c>
-    /// </summary>
-    /// <value>Verwenden Sie nur die Konstanten der Klasse
-    /// <see cref="EmailType"/>.</value>
+    /// <summary> <c>TYPE</c>: Describes the type of an email. <c>(2,3)</c></summary>
+    /// <value>Verwenden Sie nur die Konstanten der Klasse <see cref="EmailType" />.</value>
     public string? EmailType
     {
         get => Get<string?>(VCdParam.EmailType);
@@ -138,13 +117,15 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>ENCODING</c>: Gibt die Encodierung der <see cref="VCardProperty"/> an. <c>(2,3)</c>
-    /// </summary>
+    /// <summary />
     /// <value>
-    /// <para>Der Wert wird automatisch gesetzt - 
-    /// lediglich bei <see cref="NonStandardProperty"/>-Objekten muss dies manuell erfolgen.</para>
-    /// <para>In vCard 3.0 ist nur <see cref="ValueEncoding.Base64"/> gestattet.</para> 
+    /// <para>
+    /// Der Wert wird automatisch gesetzt - lediglich bei <see cref="NonStandardProperty"
+    /// />-Objekten muss dies manuell erfolgen.
+    /// </para>
+    /// <para>
+    /// In vCard 3.0 ist nur <see cref="ValueEncoding.Base64" /> gestattet.
+    /// </para>
     /// </value>
     public ValueEncoding? Encoding
     {
@@ -153,9 +134,8 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>LEVEL</c>: Grad der Sachkenntnis einer Person. (Für die Eigenschaft <see cref="VCard.Expertises">VCard.Expertises</see>.) <c>(4 - RFC 6715)</c>
-    /// </summary>
+    /// <summary> <c>LEVEL</c>: Grad der Sachkenntnis einer Person. (Für die Eigenschaft
+    /// <see cref="VCard.Expertises">VCard.Expertises</see>.) <c>(4 - RFC 6715)</c></summary>
     public ExpertiseLevel? ExpertiseLevel
     {
         get => Get<ExpertiseLevel?>(VCdParam.ExpertiseLevel);
@@ -163,13 +143,9 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>GEO</c>: Geografische Position. <c>(4)</c>
-    /// </summary>
-    /// <remarks>
-    /// Dieser Parameter wird nur geschrieben, wenn er an ein <see cref="AddressProperty"/>-Objekt
-    /// angehängt ist.
-    /// </remarks>
+    /// <summary> <c>GEO</c>: Geographical position. <c>(4)</c></summary>
+    /// <remarks> Dieser Parameter wird nur geschrieben, wenn er an ein <see cref="AddressProperty"
+    /// />-Objekt angehängt ist. </remarks>
     public FolkerKinzel.VCards.Models.GeoCoordinate? GeoPosition
     {
         get => Get<FolkerKinzel.VCards.Models.GeoCoordinate?>(VCdParam.GeoPosition);
@@ -177,18 +153,14 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>TYPE</c>: Nähere Beschreibung einer Instant-Messenger-Adresse. <c>(3 - RFC 4770)</c>
-    /// </summary>
+    /// <summary />
     public ImppTypes? InstantMessengerType
     {
         get => Get<ImppTypes?>(VCdParam.InstantMessengerType);
         set => Set(VCdParam.InstantMessengerType, value);
     }
 
-    /// <summary>
-    /// <c>INDEX</c>: 1-basierter Index einer Property, wenn mehrere Instanzen derselben Property möglich sind. <c>(4 - RFC 6715)</c>
-    /// </summary>
+    /// <summary />
     public int? Index
     {
         get => Get<int?>(VCdParam.Index);
@@ -205,10 +177,9 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>LEVEL</c>: Grad des Interesses einer Person für eine Sache. (Für die Eigenschaften 
-    /// <see cref="VCard.Hobbies">VCard.Hobbies</see> und <see cref="VCard.Interests">VCard.Interests</see>.) <c>(4 - RFC 6715)</c>
-    /// </summary>
+    /// <summary> <c>LEVEL</c>: Grad des Interesses einer Person für eine Sache. (Für
+    /// die Eigenschaften <see cref="VCard.Hobbies">VCard.Hobbies</see> und <see cref="VCard.Interests">VCard.Interests</see>.)
+    /// <c>(4 - RFC 6715)</c></summary>
     public InterestLevel? InterestLevel
     {
         get => Get<InterestLevel?>(VCdParam.InterestLevel);
@@ -216,30 +187,29 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>LABEL</c>: Gibt die formatierte Textdarstellung einer Adresse an. <c>([2],[3],4)</c>
-    /// </summary>
-    /// <remarks>
-    /// Im vCard-Standard 2.1 und 3.0 sind <c>ADR</c> und <c>Label</c> separate vCard-Properties. Erst ab vCard 4.0 sind sie fest 
-    /// miteinander verknüpft.
-    /// Beim Speichern einer vCard 2.1 und vCard 3.0 wird der Inhalt dieser Eigenschaft automatisch als separate <c>LABEL</c>-Property in die 
-    /// vCard eingefügt.
-    /// 
+    /// <summary />
+    /// <remarks> Im vCard-Standard 2.1 und 3.0 sind <c>ADR</c> und <c>Label</c> separate
+    /// vCard-Properties. Erst ab vCard 4.0 sind sie fest miteinander verknüpft. Beim
+    /// Speichern einer vCard 2.1 und vCard 3.0 wird der Inhalt dieser Eigenschaft automatisch
+    /// als separate <c>LABEL</c>-Property in die vCard eingefügt.
     /// <note type="warning">
     /// <para>
-    /// Beim Einlesen einer vCard 2.1 oder 3.0 versucht die Library, die Verküpfung zwischen <c>Label</c> und <c>ADR</c> aufgrund
-    /// von Übereinstimmungen der Parameter beider Properties herzustellen. Ein Textvergleich der Inhalte von <c>ADR</c> und <c>Label</c>
-    /// findet aber aus Performancegründen nicht statt.
+    /// Beim Einlesen einer vCard 2.1 oder 3.0 versucht die Library, die Verküpfung
+    /// zwischen <c>Label</c> und <c>ADR</c> aufgrund von Übereinstimmungen der Parameter
+    /// beider Properties herzustellen. Ein Textvergleich der Inhalte von <c>ADR</c>
+    /// und <c>Label</c> findet aber aus Performancegründen nicht statt.
     /// </para>
     /// <para>
-    /// Obwohl die korrekte Zuordnung auf diese Weise meist gelingt, kann dies nicht für jedes Szenario garantiert werden. Wenn die 
-    /// Zuordnung von <c>ADR</c> und <c>Label</c> für die Anwendung eine Rolle spielt, sollte die Anwendung diese im Falle von vCard 2.1 
-    /// oder vCard 3.0 durch 
-    /// Textvergleich überprüfen oder mit der Methode <see cref="AddressProperty.AppendLabel()"/> aus den Adressdaten eigene Labels erstellen.
+    /// Obwohl die korrekte Zuordnung auf diese Weise meist gelingt, kann dies nicht
+    /// für jedes Szenario garantiert werden. Wenn die Zuordnung von <c>ADR</c> und
+    /// <c>Label</c> für die Anwendung eine Rolle spielt, sollte die Anwendung diese
+    /// im Falle von vCard 2.1 oder vCard 3.0 durch Textvergleich überprüfen oder mit
+    /// der Methode <see cref="AddressProperty.AppendLabel()" /> aus den Adressdaten
+    /// eigene Labels erstellen.
     /// </para>
     /// </note>
     /// </remarks>
-    /// <seealso cref="AddressProperty.AppendLabel"/>
+    /// <seealso cref="AddressProperty.AppendLabel" />
     public string? Label
     {
         get => Get<string?>(VCdParam.Label);
@@ -251,10 +221,8 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>LANGUAGE</c>: Sprache der <see cref="VCardProperty"/>. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>Ein IETF-Language-Tag wie in Section 2 von RFC 5646 definiert.</value>
+    /// <summary />
+    /// <value>An IETF Language Tag as defined in Section 2 of RFC 5646.</value>
     public string? Language
     {
         get => Get<string?>(VCdParam.Language);
@@ -262,26 +230,18 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>MEDIATYPE</c>: Gibt bei URIs den MIME-Typ der Daten an, auf den der URI verweist (z.B. <c>text/plain</c>). <c>(4)</c>
-    /// </summary>
-    /// <value>
-    /// MIME-Typ entsprechend RFC 2046.
-    /// </value>
+    /// <summary />
+    /// <value>MIME type according to RFC 2046.</value>
     public string? MediaType
     {
         get => Get<string?>(VCdParam.MediaType);
         set => Set<string?>(VCdParam.MediaType, value);
     }
 
-    /// <summary>
-    /// Nichtstandardisierte Attribute. <c>(2,3,4)</c>
-    /// </summary>
-    /// <remarks>
-    /// Um nicht-standardisierte Attribute in eine vCard zu schreiben, muss beim Serialisieren des 
-    /// <see cref="VCard"/>-Objekts das Flag <see cref="VcfOptions.WriteNonStandardParameters">VcfOptions.WriteNonStandardParameters</see> 
-    /// explizit gesetzt werden.
-    /// </remarks>
+    /// <summary>Non-standard attributes. <c>(2,3,4)</c></summary>
+    /// <remarks> Um nicht-standardisierte Attribute in eine vCard zu schreiben, muss
+    /// beim Serialisieren des <see cref="VCard" />-Objekts das Flag <see cref="VcfOptions.WriteNonStandardParameters">VcfOptions.WriteNonStandardParameters</see>
+    /// explizit gesetzt werden. </remarks>
     public IEnumerable<KeyValuePair<string, string>>? NonStandardParameters
     {
         get => Get<IEnumerable<KeyValuePair<string, string>>?>(VCdParam.NonStandard);
@@ -289,14 +249,12 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>PREF</c> oder <c>TYPE=PREF</c>: Drückt die Beliebtheit einer Property aus. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>Ein Wert zwischen 1 und 100. 1 bedeutet 
-    /// am beliebtesten.</value>
-    /// <remarks>Erst ab vCard 4.0 kann eine differenzierte Beliebtheit angegeben werden. In vCard 2.1 und vCard 3.0
-    /// wird lediglich die beliebteste Property markiert. Als beliebteste Property wird diejenige ausgewählt,
-    /// deren Zahlenwert für <see cref="Preference"/> am geringsten ist.</remarks>
+    /// <summary />
+    /// <value>A value between 1 and 100. 1 means most preferred.</value>
+    /// <remarks>Erst ab vCard 4.0 kann eine differenzierte Beliebtheit angegeben werden.
+    /// In vCard 2.1 und vCard 3.0 wird lediglich die beliebteste Property markiert.
+    /// Als beliebteste Property wird diejenige ausgewählt, deren Zahlenwert für <see
+    /// cref="Preference" /> am geringsten ist.</remarks>
     public int Preference
     {
         get => _propDic.ContainsKey(VCdParam.Preference) ? (int)_propDic[VCdParam.Preference] : PREF_MAX_VALUE;
@@ -318,9 +276,8 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>TYPE</c>: Klassifiziert eine <see cref="VCardProperty"/> als dienstlich und / oder privat. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>TYPE</c>: Indicates, wether a <see cref="VCardProperty" /> is related
+    /// to an individual's work place or to an individual's personal life. <c>(2,3,4)</c></summary>
     public PropertyClassTypes? PropertyClass
     {
         get => Get<PropertyClassTypes?>(VCdParam.PropertyClass);
@@ -332,9 +289,8 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>PID</c>: <see cref="PropertyID"/>s zur Identifizierung der <see cref="VCardProperty"/>. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c> PID </c>: <see cref="PropertyID" />s to identify the <see cref="VCardProperty"
+    /// />. <c> (4) </c></summary>
     public IEnumerable<PropertyID?>? PropertyIDs
     {
         get => Get<IEnumerable<PropertyID?>?>(VCdParam.PropertyIDs);
@@ -343,9 +299,8 @@ public sealed partial class ParameterSection
 
 
 
-    /// <summary>
-    /// <c>TYPE</c>: Bestimmt in einer <see cref="RelationProperty"/> (<c>RELATED</c>) die Art der Beziehung zu einer Person. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>TYPE</c>: Bestimmt in einer <see cref="RelationProperty" /> (<c>RELATED</c>)
+    /// die Art der Beziehung zu einer Person. <c>(4)</c></summary>
     public RelationTypes? RelationType
     {
         get => Get<RelationTypes?>(VCdParam.RelationType);
@@ -356,20 +311,15 @@ public sealed partial class ParameterSection
         }
     }
 
-    /// <summary>
-    /// <c>SORT-AS</c>:&#160;<see cref="string"/>s (case-sensitiv!), die die Sortierreihenfolge festlegen. (Maximal so viele, wie Felder der 
-    /// zusammengesetzten Property!) <c>([3],4)</c>
-    /// </summary>
+    /// <summary />
     /// <example>
     /// <code>
-    /// FN:Rene van der Harten
-    /// N;SORT-AS="Harten,Rene":van der Harten;Rene,J.;Sir;R.D.O.N.
+    /// FN:Rene van der Harten N;SORT-AS="Harten,Rene":van der Harten;Rene,J.;Sir;R.D.O.N.
     /// </code>
     /// </example>
-    /// <remarks>
-    /// In vCard 3.0 wird automatisch eine separate <c>SORT-STRING</c>-Property eingefügt, in die lediglich der erste <see cref="string"/>
-    /// übernommen wird.
-    /// </remarks>
+    /// <remarks>When serializing a file as vCard 3.0, a separate <c>SORT-STRING</c>-property,
+    /// which contains the first <see cref="string" />, is automatically inserted into
+    /// the vCard.</remarks>
     public IEnumerable<string?>? SortAs
     {
         get => Get<IEnumerable<string?>?>(VCdParam.SortAs);
@@ -377,9 +327,7 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>TYPE</c>: Beschreibt die Art einer Telefonnummer. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary />
     public TelTypes? TelephoneType
     {
         get => Get<TelTypes?>(VCdParam.TelephoneType);
@@ -391,13 +339,9 @@ public sealed partial class ParameterSection
     }
 
 
-    /// <summary>
-    /// <c>TZ</c>: Zeitzone <c>(4)</c>
-    /// </summary>
-    /// <remarks>
-    /// Dieser Parameter wird nur geschrieben, wenn er an ein <see cref="AddressProperty"/>-Objekt
-    /// angehängt ist.
-    /// </remarks>
+    /// <summary />
+    /// <remarks> Dieser Parameter wird nur geschrieben, wenn er an ein <see cref="AddressProperty"
+    /// />-Objekt angehängt ist. </remarks>
     public TimeZoneID? TimeZone
     {
         get => Get<TimeZoneID?>(VCdParam.TimeZone);
