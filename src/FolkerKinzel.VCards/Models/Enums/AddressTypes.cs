@@ -2,19 +2,19 @@ using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Models.Enums;
 
-    /// <summary>Named constants to describe the type of a postal address in vCards.
-    /// The constants can be combined.</summary>
-    /// <remarks>
-    /// <note type="tip">
-    /// When working with the enum use the extension methods from the <see cref="AddressTypesExtension"
-    /// /> class.
-    /// </note>
-    /// </remarks>
+/// <summary>Named constants to describe the type of a postal address in vCards.
+/// The constants can be combined.</summary>
+/// <remarks>
+/// <note type="tip">
+/// When working with the enum use the extension methods from the 
+/// <see cref="AddressTypesExtension" /> class.
+/// </note>
+/// </remarks>
 [Flags]
 public enum AddressTypes
 {
-    // ACHTUNG: Wenn die Enum erweitert wird, müssen 
-    // AddressTypesConverter und AddressTypesCollector angepasst werden!
+    // CAUTION: If the enum is expanded, AddressTypesConverter and
+    // AddressTypesCollector must be adjusted!
 
     /// <summary> <c>DOM</c>: Domestic delivery address</summary>
     Dom = 1,

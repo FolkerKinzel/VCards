@@ -106,8 +106,8 @@ public sealed partial class VCard
             IEnumerable<RelationVCardProperty> vcdProps = relations
                             .Select(x => x as RelationVCardProperty)
                             .Where(x => x != null)
-                            .ToArray()!;
-
+                            .ToArray()!; // We need ToArray here because relations
+                                         // might change.
 
             foreach (RelationVCardProperty vcdProp in vcdProps)
             {
