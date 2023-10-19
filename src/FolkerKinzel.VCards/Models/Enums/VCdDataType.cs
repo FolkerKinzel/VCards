@@ -1,12 +1,11 @@
 namespace FolkerKinzel.VCards.Models.Enums;
 
-    /// <summary>Named constants to specify the data type of the value of a vCard property.</summary>
+/// <summary>Named constants to specify the data type of the value of a vCard property.</summary>
 public enum VCdDataType
 {
-    // ACHTUNG: Wenn die Enum erweitert wird, muss
-    // VCdDataTypeConverter angepasst werden!
-    //
-    // Die Wertzuweisung als Flags ist nötig, um inkompatible Werte leichter auszufiltern!
+    // CAUTION: If the enum is expanded, VCdDataTypeConverter must be adjusted!
+    // 
+    // The value assignment as flags is necessary to filter out incompatible values more easily.
 
     /// <summary> <c>TEXT</c>: Values that contain human-readable text. <c>(3,4)</c></summary>
     Text = 1,
@@ -39,20 +38,22 @@ public enum VCdDataType
     // yyyymmddThh[mm[ss]][+/-hh[mm]]
     // --mmddThh[mm[ss]][+/-hh[mm]]
     // ---ddThh[mm[ss]][+/-hh[mm]]
-    // yyyymmddThh[mm[ss]][Z]        // "Z" bedeutet UTC
+    // yyyymmddThh[mm[ss]][Z]        // "Z" means UTC
     // --mmddThh[mm[ss]][Z]
     // ---ddThh[mm[ss]][Z]
 
-    /// <summary> <c>DATE-AND-OR-TIME</c>: <see cref="Date" />, <see cref="Time" />
-    /// oder <see cref="DateTime" />. <c>(4)</c></summary>
+
+    /// <summary> <c>DATE-AND-OR-TIME</c>: <see cref="Date" />, <see cref="Time" />,
+    /// or <see cref="DateTime" />. <c>(4)</c></summary>
     DateAndOrTime = 1 << 5,
     // A stand-alone TIME value is always preceded by a "T".
+
 
     /// <summary> <c>TIMESTAMP</c>: A complete date and time of day combination as specified
     /// in [ISO.8601.2004], Section 4.3.2. <c>(4)</c></summary>
     TimeStamp = 1 << 6,
     // yyyymmddThhmmss[+/-hh[mm]]
-    // yyyymmddThhmmss[Z]          // "Z" bedeutet UTC
+    // yyyymmddThhmmss[Z]          // "Z" means UTC
 
 
     /// <summary> <c>BOOLEAN</c>: A boolean value. <c>(3,4)</c></summary>
@@ -69,16 +70,13 @@ public enum VCdDataType
 
     /// <summary> <c>LANGUAGE-TAG</c>: A single language tag, as defined in RFC 5646.
     /// <c>(4)</c></summary>
-    LanguageTag = 1 << 11, // z.B. de-DE
-
+    LanguageTag = 1 << 11, // e.g. de-DE
 
     /// <summary> <c>BINARY</c>: The value is inline, Base64-encoded binary data. <c>(3)</c></summary>
     Binary = 1 << 12,
 
-
     /// <summary> <c>PHONE-NUMBER</c>: The value is a telephone number. <c>(3)</c></summary>
     PhoneNumber = 1 << 13,
-
 
     /// <summary> <c>VCARD</c>: The value is another embedded vCard. <c>(3)</c></summary>
     VCard = 1 << 14

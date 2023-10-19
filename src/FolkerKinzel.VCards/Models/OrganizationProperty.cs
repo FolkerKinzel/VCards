@@ -8,16 +8,15 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Represents the vCard property <c>ORG</c>, which stores information
-    /// about the organization to which the vCard object is associated.</summary>
+/// <summary>Represents the vCard property <c>ORG</c>, which stores information
+/// about the organization to which the <see cref="VCard"/> object is associated.</summary>
 public sealed class OrganizationProperty : VCardProperty, IEnumerable<OrganizationProperty>
 {
-    /// <summary />
-    /// <param name="prop" />
+    
     private OrganizationProperty(OrganizationProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary> Initialisiert ein neues <see cref="OrganizationProperty" />-Objekt.
+    /// <summary> Initializes a new <see cref="OrganizationProperty" /> object.
     /// </summary>
     /// <param name="organizationName">Organization name or <c>null</c>.</param>
     /// <param name="organizationalUnits">Organization unit(s) or <c>null</c>.</param>

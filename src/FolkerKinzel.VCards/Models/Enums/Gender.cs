@@ -1,6 +1,7 @@
 namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>Named Constants to specify the gender of the object the vCard represents.</summary>
+/// <summary>Named Constants to specify the gender of the object the 
+/// <see cref="VCard"/> represents.</summary>
 public enum Gender
 {
     /// <summary> <c>U</c>: Unknown. <c>(4)</c></summary>

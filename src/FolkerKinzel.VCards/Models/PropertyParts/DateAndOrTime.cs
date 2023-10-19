@@ -64,7 +64,6 @@ public sealed partial class DateAndOrTime
                                   Func<TimeOnly, TResult>? f2,
                                   Func<string, TResult>? f3) => _oneOf.Match(f0, f1, f2, f3);
 
-
     
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

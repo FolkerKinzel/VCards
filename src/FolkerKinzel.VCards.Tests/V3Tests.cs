@@ -198,7 +198,7 @@ END:VCARD";
     {
         const string whatsAppNumber = "+1-234-567-89";
         var xiamoiMobilePhone = new TextProperty(whatsAppNumber);
-        xiamoiMobilePhone.Parameters.NonStandardParameters = new KeyValuePair<string, string>[]
+        xiamoiMobilePhone.Parameters.NonStandard = new KeyValuePair<string, string>[]
         {
                 new KeyValuePair<string, string>("TYPE", "WhatsApp")
         };
@@ -215,7 +215,7 @@ END:VCARD";
 
         // Find the WhatsApp number:
         string? readWhatsAppNumber = vcard.PhoneNumbers?
-            .FirstOrDefault(x => x?.Parameters.NonStandardParameters?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
+            .FirstOrDefault(x => x?.Parameters.NonStandard?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
             .Value;
         Assert.AreEqual(whatsAppNumber, readWhatsAppNumber);
 

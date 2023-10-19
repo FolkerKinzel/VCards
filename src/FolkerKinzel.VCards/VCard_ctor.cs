@@ -312,10 +312,10 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (Relations?.All(x => x!.Parameters.RelationType != RelationTypes.Spouse) ?? true)
+                    else if (Relations?.All(x => x!.Parameters.Relation != RelationTypes.Spouse) ?? true)
                     {
                         vcfRow.Parameters.DataType = VCdDataType.Text; // führt dazu, dass eine RelationTextProperty erzeugt wird
-                        vcfRow.Parameters.RelationType = RelationTypes.Spouse;
+                        vcfRow.Parameters.Relation = RelationTypes.Spouse;
 
                         Relations = RelationProperty.Parse(vcfRow, this.Version).GetAssignment(Relations);
                     }
@@ -328,10 +328,10 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (Relations?.All(x => !x!.Parameters.RelationType.IsSet(RelationTypes.Agent)) ?? true)
+                    else if (Relations?.All(x => !x!.Parameters.Relation.IsSet(RelationTypes.Agent)) ?? true)
                     {
                         vcfRow.Parameters.DataType ??= VCdDataType.Text;
-                        vcfRow.Parameters.RelationType = RelationTypes.Agent;
+                        vcfRow.Parameters.Relation = RelationTypes.Agent;
 
                         Relations = RelationProperty.Parse(vcfRow, this.Version).GetAssignment(Relations);
                     }
@@ -357,7 +357,7 @@ public sealed partial class VCard
                         else
                         {
                             vcfRow.Parameters.DataType ??= VCdDataType.Text;
-                            vcfRow.Parameters.RelationType = RelationTypes.Agent;
+                            vcfRow.Parameters.Relation = RelationTypes.Agent;
 
                             Relations = RelationProperty.Parse(vcfRow, this.Version)
                                                         .GetAssignment(Relations);
@@ -417,7 +417,7 @@ public sealed partial class VCard
                     OrgDirectories = new TextProperty(vcfRow, this.Version).GetAssignment(OrgDirectories);
                     break;
                 default:
-                    NonStandardProperties = new NonStandardProperty(vcfRow).GetAssignment(NonStandardProperties);
+                    NonStandard = new NonStandardProperty(vcfRow).GetAssignment(NonStandard);
                     break;
             };//switch
 

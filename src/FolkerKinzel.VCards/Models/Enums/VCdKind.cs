@@ -1,6 +1,6 @@
 namespace FolkerKinzel.VCards.Models.Enums;
 
-    /// <summary>Named Constants to specify the type of object the vCard represents.</summary>
+/// <summary>Named Constants to specify the type of object the vCard represents.</summary>
 public enum VCdKind
 {
     /// <summary> <c>INDIVIDUAL</c>: The vCard represents a single person or entity.

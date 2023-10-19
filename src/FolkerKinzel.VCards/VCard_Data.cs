@@ -218,7 +218,7 @@ public sealed partial class VCard
 
     /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has
     /// knowledge of. <c>(RFC 6715)</c></summary>
-    /// <remarks> Geben Sie den Grad der Fachkenntnis im Parameter <see cref="ParameterSection.ExpertiseLevel"
+    /// <remarks> Geben Sie den Grad der Fachkenntnis im Parameter <see cref="ParameterSection.Expertise"
     /// /> an! </remarks>
     public IEnumerable<TextProperty?>? Expertises
     {
@@ -263,7 +263,7 @@ public sealed partial class VCard
 
     /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
     /// in. <c>(4 - RFC 6715)</c></summary>
-    /// <remarks> Legen Sie den Grad des Interesses im Parameter <see cref="ParameterSection.InterestLevel"
+    /// <remarks> Legen Sie den Grad des Interesses im Parameter <see cref="ParameterSection.Interest"
     /// /> fest! </remarks>
     public IEnumerable<TextProperty?>? Hobbies
     {
@@ -288,7 +288,7 @@ public sealed partial class VCard
 
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
     /// in, but does not necessarily take part in. <c>(4 - RFC 6715)</c></summary>
-    /// <remarks> Legen Sie den Grad des Interesses im Parameter <see cref="ParameterSection.InterestLevel"
+    /// <remarks> Legen Sie den Grad des Interesses im Parameter <see cref="ParameterSection.Interest"
     /// /> fest! </remarks>
     public IEnumerable<TextProperty?>? Interests
     {
@@ -408,8 +408,8 @@ public sealed partial class VCard
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
     /// <remarks>
     /// <para>
-    /// <see cref="NonStandardProperties" /> speichert alle vCard-Properties, die beim
-    /// Parsen nicht ausgewertet werden konnten. Um den Inhalt von <see cref="NonStandardProperties"
+    /// <see cref="NonStandard" /> speichert alle vCard-Properties, die beim
+    /// Parsen nicht ausgewertet werden konnten. Um den Inhalt von <see cref="NonStandard"
     /// /> in eine vCard zu schreiben, muss das Flag <see cref="VcfOptions.WriteNonStandardProperties">VcfOptions.WriteNonStandardProperties</see>
     /// explizit gesetzt werden.
     /// </para>
@@ -417,7 +417,7 @@ public sealed partial class VCard
     /// Einige <see cref="NonStandardProperty" />-Objekte werden der zu schreibenden
     /// vCard automatisch hinzugefügt, wenn es kein Standard-Äquivalent dafür gibt.
     /// Sie können dieses Verhalten mit <see cref="VcfOptions" /> steuern. Es wird deshalb
-    /// nicht empfohlen, der Eigenschaft <see cref="NonStandardProperties" /> Instanzen
+    /// nicht empfohlen, der Eigenschaft <see cref="NonStandard" /> Instanzen
     /// dieser automatisch hinzuzufügenden <see cref="NonStandardProperty" />-Objekte
     /// zu übergeben.
     /// </para>
@@ -499,10 +499,10 @@ public sealed partial class VCard
     /// </item>
     /// </list>
     /// </remarks>
-    public IEnumerable<NonStandardProperty?>? NonStandardProperties
+    public IEnumerable<NonStandardProperty?>? NonStandard
     {
-        get => Get<IEnumerable<NonStandardProperty?>?>(VCdProp.NonStandardProperties);
-        set => Set(VCdProp.NonStandardProperties, value);
+        get => Get<IEnumerable<NonStandardProperty?>?>(VCdProp.NonStandard);
+        set => Set(VCdProp.NonStandard, value);
     }
 
 

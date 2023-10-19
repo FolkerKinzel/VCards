@@ -15,7 +15,7 @@ public class WhatsAppIssueTests
         Models.TextProperty? whatsAppNumber = phoneNumbers!.ElementAtOrDefault(1);
         Assert.IsNotNull(whatsAppNumber);
 
-        KeyValuePair<string, string>? parameter = whatsAppNumber!.Parameters.NonStandardParameters?.FirstOrDefault();
+        KeyValuePair<string, string>? parameter = whatsAppNumber!.Parameters.NonStandard?.FirstOrDefault();
 
         Assert.IsTrue(parameter.HasValue);
         Assert.AreEqual("TYPE", parameter!.Value.Key);

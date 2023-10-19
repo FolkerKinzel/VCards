@@ -8,7 +8,8 @@ using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
-    /// <summary>Encapsulates information about the name of the person the vCard represents.</summary>
+/// <summary>Encapsulates information about the name of the person the 
+/// <see cref="VCard"/> represents.</summary>
 public sealed class Name
 {
     private const int MAX_COUNT = 5;
@@ -19,12 +20,7 @@ public sealed class Name
     private const int PREFIX = 3;
     private const int SUFFIX = 4;
 
-    /// <summary />
-    /// <param name="lastName" />
-    /// <param name="firstName" />
-    /// <param name="middleName" />
-    /// <param name="prefix" />
-    /// <param name="suffix" />
+    
     internal Name(
         ReadOnlyCollection<string> lastName,
         ReadOnlyCollection<string> firstName,
@@ -38,6 +34,7 @@ public sealed class Name
         Prefix = prefix;
         Suffix = suffix;
     }
+
 
     internal Name()
     {
@@ -183,84 +180,30 @@ public sealed class Name
         Suffix ??= ReadOnlyCollectionString.Empty;
     }
 
-    /// <summary>Family Name(s) (also known as surname(s)) (Never <c>null</c>.)</summary>
+    /// <summary>Family Name(s) (also known as surname(s)).</summary>
     public ReadOnlyCollection<string> LastName { get; }
 
-    /// <summary>Given Name(s) (first name(s)) (Never <c>null</c>.)</summary>
+    /// <summary>Given Name(s) (First Name(s)).</summary>
     public ReadOnlyCollection<string> FirstName { get; }
 
-    /// <summary>Additional Name(s) (Never <c>null</c>.)</summary>
+    /// <summary>Additional Name(s).</summary>
     public ReadOnlyCollection<string> MiddleName { get; }
 
-    /// <summary>Honorific Prefix(es) (Never <c>null</c>.)</summary>
+    /// <summary>Honorific Prefix(es).</summary>
     public ReadOnlyCollection<string> Prefix { get; }
 
-    /// <summary>Honorific Suffix(es) (Never <c>null</c>.)</summary>
+    /// <summary>Honorific Suffix(es).</summary>
     public ReadOnlyCollection<string> Suffix { get; }
 
-
     /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain
-    /// any usable data.</summary>
-    public bool IsEmpty => LastName.Count == 0 && 
-                           FirstName.Count == 0 && 
-                           MiddleName.Count == 0 && 
-                           Prefix.Count == 0 && 
+    /// any usable data, otherwise <c>false</c>.</summary>
+    public bool IsEmpty => LastName.Count == 0 &&
+                           FirstName.Count == 0 &&
+                           MiddleName.Count == 0 &&
+                           Prefix.Count == 0 &&
                            Suffix.Count == 0;
 
-
-    internal void AppendVCardString(VcfSerializer serializer)
-    {
-        StringBuilder builder = serializer.Builder;
-        StringBuilder worker = serializer.Worker;
-
-        char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
-
-        AppendProperty(LastName);
-        _ = builder.Append(';');
-
-        AppendProperty(FirstName);
-        _ = builder.Append(';');
-
-        AppendProperty(MiddleName);
-        _ = builder.Append(';');
-
-        AppendProperty(Prefix);
-        _ = builder.Append(';');
-
-        AppendProperty(Suffix);
-
-        ///////////////////////////////////
-
-        void AppendProperty(IList<string> strings)
-        {
-            if (strings.Count == 0)
-            {
-                return;
-            }
-
-            for (int i = 0; i < strings.Count - 1; i++)
-            {
-                _ = worker.Clear().Append(strings[i]).Mask(serializer.Version);
-                _ = builder.Append(worker).Append(joinChar);
-            }
-
-            _ = worker.Clear().Append(strings[strings.Count - 1]).Mask(serializer.Version);
-            _ = builder.Append(worker);
-        }
-    }
-
-
-    internal bool NeedsToBeQpEncoded()
-        => LastName.Any(StringExtension.NeedsToBeQpEncoded) ||
-           FirstName.Any(StringExtension.NeedsToBeQpEncoded) ||
-           MiddleName.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Prefix.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Suffix.Any(StringExtension.NeedsToBeQpEncoded);
-
-
-    /// <summary>Creates a <see cref="string" /> representation of the <see cref="Name"
-    /// /> object. (For debugging only.)</summary>
-    /// <returns>A <see cref="string" /> representation of the <see cref="Name" /> object.</returns>
+    /// <inheritdoc/>
     public override string ToString()
     {
         var worker = new StringBuilder();
@@ -391,6 +334,56 @@ public sealed class Name
             .AppendReadableProperty(Suffix)
             .ToString();
     }
+
+
+    internal void AppendVCardString(VcfSerializer serializer)
+    {
+        StringBuilder builder = serializer.Builder;
+        StringBuilder worker = serializer.Worker;
+
+        char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
+
+        AppendProperty(LastName);
+        _ = builder.Append(';');
+
+        AppendProperty(FirstName);
+        _ = builder.Append(';');
+
+        AppendProperty(MiddleName);
+        _ = builder.Append(';');
+
+        AppendProperty(Prefix);
+        _ = builder.Append(';');
+
+        AppendProperty(Suffix);
+
+        ///////////////////////////////////
+
+        void AppendProperty(IList<string> strings)
+        {
+            if (strings.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < strings.Count - 1; i++)
+            {
+                _ = worker.Clear().Append(strings[i]).Mask(serializer.Version);
+                _ = builder.Append(worker).Append(joinChar);
+            }
+
+            _ = worker.Clear().Append(strings[strings.Count - 1]).Mask(serializer.Version);
+            _ = builder.Append(worker);
+        }
+    }
+
+
+    internal bool NeedsToBeQpEncoded()
+        => LastName.Any(StringExtension.NeedsToBeQpEncoded) ||
+           FirstName.Any(StringExtension.NeedsToBeQpEncoded) ||
+           MiddleName.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Prefix.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Suffix.Any(StringExtension.NeedsToBeQpEncoded);
 }
 
 

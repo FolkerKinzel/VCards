@@ -6,12 +6,13 @@ using FolkerKinzel.VCards.Intls.Serializers;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
-    /// <summary>Encapsulates information about the organization (or company) of the
-    /// subject the vCard represents.</summary>
+/// <summary>Encapsulates information about the organization (or company) of the
+/// object the <see cref="VCard"/> represents.</summary>
 public sealed class Organization
 {
     /// <summary>Initializes a new <see cref="Organization" /> object.</summary>
-    /// <param name="orgList">Name der Organisation gefolgt von Name(n) der Unterorganisation(en).</param>
+    /// <param name="orgList">Organization name, optional followed by the name(s) 
+    /// of the organizational units.</param>
     internal Organization(List<string> orgList)
     {
         Debug.Assert(orgList.Count != 0);
@@ -30,45 +31,18 @@ public sealed class Organization
     /// <summary>Organization name.</summary>
     public string? OrganizationName { get; }
 
-
     /// <summary>Organizational unit name(s).</summary>
     public ReadOnlyCollection<string>? OrganizationalUnits { get; }
-
 
     /// <summary>Returns <c>true</c>, if the <see cref="Organization" /> object does
     /// not contain any usable data.</summary>
     public bool IsEmpty => OrganizationName is null && OrganizationalUnits is null;
 
-
     internal bool NeedsToBeQpEncoded()
-        => (OrganizationName.NeedsToBeQpEncoded()) ||
+        => OrganizationName.NeedsToBeQpEncoded() ||
            (OrganizationalUnits != null && OrganizationalUnits.Any(s => s.NeedsToBeQpEncoded()));
-
-
-    internal void AppendVCardStringTo(VcfSerializer serializer)
-    {
-        StringBuilder builder = serializer.Builder;
-        StringBuilder worker = serializer.Worker;
-
-        _ = worker.Clear().Append(OrganizationName).Mask(serializer.Version);
-        _ = builder.Append(worker);
-
-        if (OrganizationalUnits != null)
-        {
-            for (int i = 0; i < OrganizationalUnits.Count; i++)
-            {
-                _ = worker.Clear().Append(OrganizationalUnits[i]).Mask(serializer.Version);
-
-                _ = builder.Append(';');
-                _ = builder.Append(worker);
-            }
-        }
-    }
-
-    /// <summary>Creates a <see cref="string" /> representation of the <see cref="Organization"
-    /// /> object. (For debugging only.)</summary>
-    /// <returns>A <see cref="string" /> representation of the <see cref="Organization"
-    /// /> object.</returns>
+    
+    /// <inheritdoc/>
     public override string ToString()
     {
         var sb = new StringBuilder();
@@ -103,4 +77,24 @@ public sealed class Organization
         return sb.ToString();
     }
 
+
+    internal void AppendVCardStringTo(VcfSerializer serializer)
+    {
+        StringBuilder builder = serializer.Builder;
+        StringBuilder worker = serializer.Worker;
+
+        _ = worker.Clear().Append(OrganizationName).Mask(serializer.Version);
+        _ = builder.Append(worker);
+
+        if (OrganizationalUnits != null)
+        {
+            for (int i = 0; i < OrganizationalUnits.Count; i++)
+            {
+                _ = worker.Clear().Append(OrganizationalUnits[i]).Mask(serializer.Version);
+
+                _ = builder.Append(';');
+                _ = builder.Append(worker);
+            }
+        }
+    }
 }

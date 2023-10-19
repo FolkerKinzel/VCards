@@ -2,19 +2,19 @@ using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Models.Enums;
 
-    /// <summary>Named constants to describe the type of a phone number in vCards. The
-    /// constants can be combined.</summary>
-    /// <remarks>
-    /// <note type="tip">
-    /// Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der <see
-    /// cref="TelTypesExtension" />-Klasse.
-    /// </note>
-    /// </remarks>
+/// <summary>Named constants to describe the type of a phone number. The constants can be 
+/// combined.</summary>
+/// <remarks>
+/// <note type="tip">
+/// When working with the enum use the extension methods from the <see
+/// cref="TelTypesExtension" /> class. 
+/// </note>
+/// </remarks>
 [Flags]
 public enum TelTypes
 {
-    // ACHTUNG: Wenn die Enum erweitert wird, müssen TelTypesConverter 
-    // und TelTypesCollector angepasst werden!
+    // CAUTION: If the enum is expanded, TelTypesConverter and
+    // TelTypesCollector must be adjusted!
 
     /// <summary> <c>VOICE</c>: Indicates a voice telephone number. (Default). <c>(2,3,4)</c></summary>
     Voice = 1,

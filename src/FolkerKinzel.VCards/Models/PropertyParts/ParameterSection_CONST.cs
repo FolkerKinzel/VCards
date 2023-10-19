@@ -7,8 +7,8 @@ public sealed partial class ParameterSection
 
     internal static class ParameterKey
     {
-        // Wenn die Klasse erweitert wird, muss 
-        // ParameterSerializer.AppendNonStandardParameters() angepasst werden!
+        // CAUTION: If the class is expanded,
+        // ParameterSerializer.AppendNonStandardParameters() must be adjusted!
 
         internal const string LANGUAGE = "LANGUAGE";
         internal const string VALUE = "VALUE";
@@ -36,5 +36,4 @@ public sealed partial class ParameterSection
         internal const string HOME = "HOME";
 
     }//class TypeValue
-
 }

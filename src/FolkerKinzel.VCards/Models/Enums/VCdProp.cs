@@ -1,7 +1,7 @@
 namespace FolkerKinzel.VCards.Models.Enums;
 
-    /// <summary>Named constants to access the properties of a <see cref="VCard" />
-    /// object.</summary>
+/// <summary>Named constants to access the properties of a <see cref="VCard" />
+/// object.</summary>
 public enum VCdProp
 {
     /// <summary> <c>PROFILE</c>: States that the vCard is a vCard. <c>(3)</c></summary>
@@ -36,10 +36,9 @@ public enum VCdProp
     /// this vCard.<c>(3,4)</c></summary>
     Sources,
 
-    /// <summary> <c>NAME</c>: Anzeigbarer Name der <see cref="Sources" />-Eigenschaft.
-    /// <c>(3)</c></summary>
+    /// <summary> <c>NAME</c>: Provides a textual representation of the 
+    /// <see cref="Sources" /> property. <c>(3)</c></summary>
     DirectoryName,
-
 
     /// <summary> <c>MAILER</c>: Type of email program used. <c>(2,3)</c></summary>
     Mailer,
@@ -131,10 +130,9 @@ public enum VCdProp
     /// <summary> <c>RELATED</c>: Other entities that the person is related to. <c>(4)</c></summary>
     Relations,
 
-    /// <summary> <c>MEMBER</c>: Definiert das Objekt, das die vCard repräsentiert,
-    /// als Teil einer Gruppe. Um diese Eigenschaft verwenden zu können, muss die <see
-    /// cref="VCard.Kind" />-Eigenschaft auf <see cref="VCdKind.Group" /> gesetzt werden.
-    /// <c>(4)</c></summary>
+    /// <summary> <c>MEMBER</c>: Defines a member that is part of the group that this 
+    /// vCard represents. The <see cref="VCard.Kind" /> property must be set to <see 
+    /// cref="VCdKind.Group" /> in order to use this property. <c>(4)</c></summary>
     Members,
 
     /// <summary> <c>ORG-DIRECTORY</c>: A URI representing the person's work place,
@@ -181,5 +179,5 @@ public enum VCdProp
     PropertyIDMappings,
 
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
-    NonStandardProperties
+    NonStandard
 }

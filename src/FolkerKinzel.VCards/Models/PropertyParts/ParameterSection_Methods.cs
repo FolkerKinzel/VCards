@@ -4,9 +4,8 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 public sealed partial class ParameterSection
 {
-    /// <summary>Deletes all contents of the current instance.</summary>
+    /// <summary>Deletes all content of the current instance.</summary>
     public void Clear() => this._propDic.Clear();
-
 
     /// <summary>Assigns the content of <paramref name="other" /> to the instance.</summary>
     /// <param name="other">Foreign instance, whose content is adopted.</param>
@@ -31,10 +30,7 @@ public sealed partial class ParameterSection
         }
     }
 
-    /// <summary>Creates a <see cref="string" /> representation of the <see cref="ParameterSection"
-    /// /> object. (For debugging only.)</summary>
-    /// <returns>A <see cref="string" /> representation of the <see cref="ParameterSection"
-    /// /> object.</returns>
+    /// <inheritdoc />
     public override string ToString()
     {
         if (this._propDic.Count == 0)
@@ -63,6 +59,7 @@ public sealed partial class ParameterSection
 
         return sb.ToString();
     }
+
 
     private static void AppendValue(StringBuilder sb, KeyValuePair<VCdParam, object> para)
     {

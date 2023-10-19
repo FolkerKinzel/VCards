@@ -48,7 +48,7 @@ public sealed partial class VCard
     /// <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> serialisiert wird und
     /// wenn sich in der Eigenschaft <see cref="VCard.Relations" /> eines <see cref="VCard"
     /// />-Objekts ein <see cref="RelationVCardProperty" />-Objekt befindet, auf dessen
-    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.RelationType"
+    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.Relation"
     /// /> das Flag <see cref="RelationTypes.Agent" /> gesetzt ist.
     /// </para>
     /// </remarks>
@@ -119,7 +119,7 @@ public sealed partial class VCard
     /// <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> serialisiert wird und
     /// wenn sich in der Eigenschaft <see cref="VCard.Relations" /> eines <see cref="VCard"
     /// />-Objekts ein <see cref="RelationVCardProperty" />-Objekt befindet, auf dessen
-    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.RelationType"
+    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.Relation"
     /// /> das Flag <see cref="RelationTypes.Agent" /> gesetzt ist.
     /// </para>
     /// </remarks>
@@ -181,7 +181,7 @@ public sealed partial class VCard
 
                     RelationVCardProperty? agent = vCard.Relations
                         .Select(x => x as RelationVCardProperty)
-                        .Where(x => x != null && !x.IsEmpty && x.Parameters.RelationType.IsSet(RelationTypes.Agent))
+                        .Where(x => x != null && !x.IsEmpty && x.Parameters.Relation.IsSet(RelationTypes.Agent))
                         .OrderBy(x => x!.Parameters.Preference)
                         .FirstOrDefault();
 
@@ -259,7 +259,7 @@ public sealed partial class VCard
     /// <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> serialisiert wird und
     /// wenn sich in der Eigenschaft <see cref="VCard.Relations" /> eines <see cref="VCard"
     /// />-Objekts ein <see cref="RelationVCardProperty" />-Objekt befindet, auf dessen
-    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.RelationType"
+    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.Relation"
     /// /> das Flag <see cref="RelationTypes.Agent" /> gesetzt ist.
     /// </para>
     /// </remarks>
@@ -313,7 +313,7 @@ public sealed partial class VCard
     /// <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> serialisiert wird und
     /// wenn sich in der Eigenschaft <see cref="VCard.Relations" /> des <see cref="VCard"
     /// />-Objekts ein <see cref="RelationVCardProperty" />-Objekt befindet, auf dessen
-    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.RelationType"
+    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.Relation"
     /// /> das Flag <see cref="RelationTypes.Agent" /> gesetzt ist.
     /// </para>
     /// </remarks>
@@ -353,7 +353,7 @@ public sealed partial class VCard
     /// <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> serialisiert wird und
     /// wenn sich in der Eigenschaft <see cref="VCard.Relations" /> des <see cref="VCard"
     /// />-Objekts ein <see cref="RelationVCardProperty" />-Objekt befindet, auf dessen
-    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.RelationType"
+    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.Relation"
     /// /> das Flag <see cref="RelationTypes.Agent" /> gesetzt ist.
     /// </para>
     /// </remarks>
@@ -395,7 +395,7 @@ public sealed partial class VCard
     /// <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> serialisiert wird und
     /// wenn sich in der Eigenschaft <see cref="VCard.Relations" /> des <see cref="VCard"
     /// />-Objekts ein <see cref="RelationVCardProperty" />-Objekt befindet, auf dessen
-    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.RelationType"
+    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.Relation"
     /// /> das Flag <see cref="RelationTypes.Agent" /> gesetzt ist.
     /// </para>
     /// </remarks>

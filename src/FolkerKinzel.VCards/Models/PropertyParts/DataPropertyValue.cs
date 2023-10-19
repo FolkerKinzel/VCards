@@ -9,7 +9,8 @@ public sealed partial class DataPropertyValue
 {
     private readonly OneOf<ReadOnlyCollection<byte>, Uri, string> _oneOf;
 
-    internal DataPropertyValue(OneOf<ReadOnlyCollection<byte>, Uri, string> oneOf) => _oneOf = oneOf;
+    internal DataPropertyValue(OneOf<ReadOnlyCollection<byte>, Uri, string> oneOf)
+        => _oneOf = oneOf;
 
     public ReadOnlyCollection<byte>? Bytes => IsBytes ? AsBytes : null;
 
@@ -52,6 +53,5 @@ public sealed partial class DataPropertyValue
     private bool IsString => _oneOf.IsT2;
 
     private string AsString => _oneOf.AsT2;
-
 }
 

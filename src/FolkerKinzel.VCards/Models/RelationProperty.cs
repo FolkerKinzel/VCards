@@ -30,7 +30,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
                 ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)), nameof(uri))
                 : new RelationUriProperty
                     (
-                    new UriProperty(uri, new ParameterSection() { RelationType = relation }, propertyGroup)
+                    new UriProperty(uri, new ParameterSection() { Relation = relation }, propertyGroup)
                     );
 
 
@@ -39,7 +39,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
                                             string? propertyGroup = null)
     {
         var prop = new TextProperty(text, propertyGroup);
-        prop.Parameters.RelationType = relation;
+        prop.Parameters.Relation = relation;
         prop.Parameters.DataType = VCdDataType.Text;
 
         return new RelationTextProperty(prop);
@@ -58,7 +58,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// <param name="vCard">The <see cref="VCard"/>-object whose copy is to embed or 
     /// <c>null</c>.</param>
     /// <param name="relation">The type of relationship with the subject that <paramref name="vCard"/>
-    /// represents. <see cref="ParameterSection.RelationType"/> of the returned instance will be
+    /// represents. <see cref="ParameterSection.Relation"/> of the returned instance will be
     /// set to this value.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the returned <see cref="VCardProperty" /> should belong to, or <c>null</c>
@@ -73,7 +73,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// </note>
     /// <para>
     /// vCard 2.1 and vCard 3.0 can embed nested vCards if the flag <see cref="RelationTypes.Agent"/> is 
-    /// set in their <see cref="ParameterSection.RelationType"/> property . When serializing a vCard 4.0, 
+    /// set in their <see cref="ParameterSection.Relation"/> property . When serializing a vCard 4.0, 
     /// embedded <see cref="VCard"/>s will be automatically replaced by <see cref="Guid"/> references and
     /// appended as separate vCards to the VCF file.
     /// </para>
@@ -142,7 +142,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     protected RelationProperty(RelationTypes? relation, string? propertyGroup)
         : base(new ParameterSection(), propertyGroup)
-        => this.Parameters.RelationType = relation;
+        => this.Parameters.Relation = relation;
 
 
     internal static RelationProperty Parse(VcfRow vcfRow, VCdVersion version)
@@ -158,7 +158,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
         if (vcfRow.Value.IsUuidUri())
         {
             var relation = new RelationUuidProperty(UuidConverter.ToGuid(vcfRow.Value),
-                                                    vcfRow.Parameters.RelationType,
+                                                    vcfRow.Parameters.Relation,
                                                     propertyGroup: vcfRow.Group);
 
             relation.Parameters.Assign(vcfRow.Parameters);

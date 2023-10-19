@@ -352,13 +352,13 @@ internal abstract class ParameterSerializer
 
     protected void AppendNonStandardParameters()
     {
-        if (this.ParaSection.NonStandardParameters is null
+        if (this.ParaSection.NonStandard is null
             || !Options.IsSet(VcfOptions.WriteNonStandardParameters))
         {
             return;
         }
 
-        foreach (KeyValuePair<string, string> parameter in this.ParaSection.NonStandardParameters)
+        foreach (KeyValuePair<string, string> parameter in this.ParaSection.NonStandard)
         {
             string key = parameter.Key;
 

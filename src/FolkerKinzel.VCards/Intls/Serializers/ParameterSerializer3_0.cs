@@ -463,9 +463,9 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         }
 
 
-        if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
+        if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
         {
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandardParameters)
+            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
                 if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) && !string.IsNullOrWhiteSpace(kvp.Value))
                 {

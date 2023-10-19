@@ -2,21 +2,21 @@ using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Models.Enums;
 
-    /// <summary>Named constants to describe the type of relationship with a person
-    /// or organization. The constants can be combined.</summary>
-    /// <remarks>
-    /// <note type="tip">
-    /// Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus der <see
-    /// cref="RelationTypesExtension" />-Klasse.
-    /// </note>
-    /// </remarks>
+/// <summary>Named constants to describe the type of relationship with a person
+/// or organization. The constants can be combined.</summary>
+/// <remarks>
+/// <note type="tip">
+/// When working with the enum use the extension methods from the <see
+/// cref="RelationTypesExtension" /> class. 
+/// </note>
+/// </remarks>
 [Flags]
 public enum RelationTypes
 {
-    // ACHTUNG: Wenn die Enum erweitert wird, muss RelationTypesConverter
-    // angepasst werden!
+    // CAUTION: If the enum is expanded, RelationTypesConverter must be adjusted!
 
-    /// <summary> <c>CONTACT</c>: Someone you know how to get in touch with. Often symmetric.</summary>
+    /// <summary> <c>CONTACT</c>: Someone you know how to get in touch with. Often symmetric.
+    /// </summary>
     Contact = 1,
 
     /// <summary> <c>ACQUAINTANCE</c>: Someone who you have exchanged greetings and

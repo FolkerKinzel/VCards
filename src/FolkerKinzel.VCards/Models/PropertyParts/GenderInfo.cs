@@ -5,12 +5,13 @@ using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
-    /// <summary>Encapsulates information to specify the components of the sex and gender
-    /// identity of the object the vCard represents</summary>
+/// <summary>Encapsulates information to specify the components of the gender and 
+/// gender identity of the object the <see cref="VCard"/> represents.</summary>
 public sealed class GenderInfo
 {
-    /// <summary> Initialisiert ein neues <see cref="GenderInfo" />-Objekt. </summary>
-    /// <param name="gender">Standardized information about the sex of a person.</param>
+    /// <summary> Initializes a new <see cref="GenderInfo" /> object. </summary>
+    /// <param name="gender">Standardized information about the gender of the object
+    /// the <see cref="VCard"/> represents.</param>
     /// <param name="genderIdentity">Free text describing the gender identity.</param>
     internal GenderInfo(Gender? gender, string? genderIdentity)
     {
@@ -18,39 +19,18 @@ public sealed class GenderInfo
         GenderIdentity = string.IsNullOrWhiteSpace(genderIdentity) ? null : genderIdentity;
     }
 
-    /// <summary>Standardized information about the sex of a person.</summary>
+    /// <summary>Standardized information about the gender of the object the 
+    /// <see cref="VCard"/> represents.</summary>
     public Gender? Gender { get; }
 
     /// <summary>Free text describing the gender identity.</summary>
     public string? GenderIdentity { get; }
 
-    /// <summary> <c>true</c>, wenn das <see cref="GenderInfo" />-Objekt keine verwertbaren
-    /// Daten enthält. </summary>
+    /// <summary> Returns <c>true</c> if the <see cref="GenderInfo" /> object does not 
+    /// contain any usable data, otherwise <c>false</c>.</summary>
     public bool IsEmpty => !Gender.HasValue && GenderIdentity is null;
 
-
-    internal void AppendVCardStringTo(VcfSerializer serializer)
-    {
-        StringBuilder builder = serializer.Builder;
-        if (Gender.HasValue)
-        {
-            _ = builder.Append(Gender.ToVcfString());
-        }
-
-
-        if (GenderIdentity != null)
-        {
-            StringBuilder worker = serializer.Worker;
-            _ = worker.Clear().Append(GenderIdentity).Mask(serializer.Version);
-
-            _ = builder.Append(';').Append(worker);
-        }
-    }
-
-    /// <summary> Erstellt eine <see cref="string" />-Repräsentation des <see cref="GenderInfo"
-    /// />-Objekts. (Nur zum Debugging.) </summary>
-    /// <returns>Eine <see cref="string" />-Repräsentation des <see cref="GenderInfo"
-    /// />-Objekts.</returns>
+    /// <inheritdoc/>
     public override string ToString()
     {
         string s = "";
@@ -73,4 +53,21 @@ public sealed class GenderInfo
         return s;
     }
 
+    internal void AppendVCardStringTo(VcfSerializer serializer)
+    {
+        StringBuilder builder = serializer.Builder;
+        if (Gender.HasValue)
+        {
+            _ = builder.Append(Gender.ToVcfString());
+        }
+
+
+        if (GenderIdentity != null)
+        {
+            StringBuilder worker = serializer.Worker;
+            _ = worker.Clear().Append(GenderIdentity).Mask(serializer.Version);
+
+            _ = builder.Append(';').Append(worker);
+        }
+    }
 }

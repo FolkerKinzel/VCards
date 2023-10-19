@@ -129,7 +129,7 @@ public sealed partial class VCard
 
                 if (relations.Any(x => x is RelationUuidProperty xUid
                                     && xUid.Value == vc.UniqueIdentifier.Value
-                                    && xUid.Parameters.RelationType == vcdProp.Parameters.RelationType))
+                                    && xUid.Parameters.Relation == vcdProp.Parameters.Relation))
                 {
                     continue;
                 }
@@ -254,7 +254,7 @@ public sealed partial class VCard
                     // Use the constructor here in order NOT to clone referenced VCard
                     var vcardProp = new RelationVCardProperty(
                                         referencedVCard,
-                                        guidProp.Parameters.RelationType,
+                                        guidProp.Parameters.Relation,
                                         propertyGroup: guidProp.Group);
                     vcardProp.Parameters.Assign(guidProp.Parameters);
 

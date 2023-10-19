@@ -238,7 +238,7 @@ internal abstract class VcfSerializer
                 case VCdProp.PropertyIDMappings:
                     AppendPropertyIDMappings((IEnumerable<PropertyIDMappingProperty?>)kvp.Value);
                     break;
-                case VCdProp.NonStandardProperties:
+                case VCdProp.NonStandard:
                     AppendNonStandardProperties((IEnumerable<NonStandardProperty?>)kvp.Value);
                     break;
                 default:
@@ -598,10 +598,10 @@ internal abstract class VcfSerializer
     protected virtual void AppendRelations(IEnumerable<RelationProperty?> value)
     {
         RelationProperty? agent = Options.IsSet(VcfOptions.WriteEmptyProperties)
-            ? value.Where(static x => x != null && x.Parameters.RelationType.IsSet(RelationTypes.Agent))
+            ? value.Where(static x => x != null && x.Parameters.Relation.IsSet(RelationTypes.Agent))
                    .OrderBy(static x => x!.Parameters.Preference)
                    .FirstOrDefault()
-            : value.Where(static x => x != null && !x.IsEmpty && x.Parameters.RelationType.IsSet(RelationTypes.Agent))
+            : value.Where(static x => x != null && !x.IsEmpty && x.Parameters.Relation.IsSet(RelationTypes.Agent))
                    .OrderBy(static x => x!.Parameters.Preference)
                    .FirstOrDefault();
 
@@ -611,10 +611,10 @@ internal abstract class VcfSerializer
         }
 
         RelationProperty? spouse = Options.IsSet(VcfOptions.WriteEmptyProperties)
-            ? value.Where(static x => x != null && x.Parameters.RelationType.IsSet(RelationTypes.Spouse))
+            ? value.Where(static x => x != null && x.Parameters.Relation.IsSet(RelationTypes.Spouse))
                    .OrderBy(static x => x!.Parameters.Preference)
                    .FirstOrDefault()
-            : value.Where(static x => x != null && !x.IsEmpty && x.Parameters.RelationType.IsSet(RelationTypes.Spouse))
+            : value.Where(static x => x != null && !x.IsEmpty && x.Parameters.Relation.IsSet(RelationTypes.Spouse))
                    .OrderBy(static x => x!.Parameters.Preference)
                    .FirstOrDefault();
 
@@ -674,7 +674,7 @@ internal abstract class VcfSerializer
 
             Debug.Assert(name != null);
             return RelationProperty.FromText(name, 
-                                             vcardProp.Parameters.RelationType ?? RelationTypes.Spouse,
+                                             vcardProp.Parameters.Relation ?? RelationTypes.Spouse,
                                              vcardProp.Group);
         }
     }

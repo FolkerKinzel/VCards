@@ -32,7 +32,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     private readonly Action<ParameterSerializer4_0> _collectRelationTypes =
         serializer => RelationTypesCollector.CollectValueStrings(
-            serializer.ParaSection.RelationType, serializer._stringCollectionList);
+            serializer.ParaSection.Relation, serializer._stringCollectionList);
 
 
     public ParameterSerializer4_0(VcfOptions options) : base(options) { }
@@ -711,15 +711,15 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     private void AppendExpertiseLevel()
     {
-        string? exp = ParaSection.ExpertiseLevel.ToVcfString();
+        string? exp = ParaSection.Expertise.ToVcfString();
 
         if (exp != null)
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, exp);
         }
-        else if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
+        else if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
         {
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandardParameters)
+            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
                 if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL) && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
@@ -764,15 +764,15 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     private void AppendInterestLevel()
     {
-        string? interest = ParaSection.InterestLevel.ToVCardString();
+        string? interest = ParaSection.Interest.ToVCardString();
 
         if (interest != null)
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, interest);
         }
-        else if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
+        else if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
         {
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandardParameters)
+            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
                 if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL) && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
@@ -892,9 +892,9 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
             _actionList[i](this);
         }
 
-        if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
+        if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
         {
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandardParameters)
+            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
                 if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) && !string.IsNullOrWhiteSpace(kvp.Value))
                 {

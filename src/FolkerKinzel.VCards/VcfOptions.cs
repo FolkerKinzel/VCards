@@ -47,13 +47,13 @@ public enum VcfOptions
     IncludeAgentAsSeparateVCard = 1 << 2,
 
 
-    /// <summary> Flag setzen, um Non-Standard-Parameter der Eigenschaft <see cref="ParameterSection.NonStandardParameters">ParameterSection.NonStandardParameters</see>
+    /// <summary> Flag setzen, um Non-Standard-Parameter der Eigenschaft <see cref="ParameterSection.NonStandard">ParameterSection.NonStandardParameters</see>
     /// zu schreiben. </summary>
     WriteNonStandardParameters = 1 << 3,
 
 
     /// <summary> Flag setzen, um <see cref="NonStandardProperty" />-Objekte zu serialisieren,
-    /// die in der Eigenschaft <see cref="VCard.NonStandardProperties">VCard.NonStandardProperties</see>
+    /// die in der Eigenschaft <see cref="VCard.NonStandard">VCard.NonStandardProperties</see>
     /// gespeichert sind. </summary>
     WriteNonStandardProperties = 1 << 4,
 
