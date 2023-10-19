@@ -61,7 +61,7 @@ public sealed partial class VCard
     /// <code language="cs" source="..\Examples\VCard40Example.cs" />
     /// </example>
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
-    public static IEnumerable<VCard> Reference(IEnumerable<VCard?> vCards)
+    public static IEnumerable<VCard> MyMethod1(IEnumerable<VCard?> vCards)
     {
         if (vCards is null)
         {
@@ -101,11 +101,9 @@ public sealed partial class VCard
 
         static void DoSetReferences(List<VCard> vCardList, List<RelationProperty?> relations)
         {
-            Debug.Assert(relations.Where(x => x is RelationVCardProperty).All(x => !x.IsEmpty));
-
-            IEnumerable<RelationVCardProperty> vcdProps = relations
+            RelationVCardProperty[] vcdProps = relations
                             .Select(x => x as RelationVCardProperty)
-                            .Where(x => x != null)
+                            .Where(x => x != null && !x.IsEmpty)
                             .ToArray()!;
 
 
@@ -115,27 +113,28 @@ public sealed partial class VCard
 
                 _ = relations.Remove(vcdProp);
 
-                VCard vc = vcdProp.Value;
+                VCard vc = vcdProp.Value!;
+
+                if (!vCardList.Contains(vc))
+                {
+                    vCardList.Add(vc);
+                }
 
                 if (vc.UniqueIdentifier is null || vc.UniqueIdentifier.IsEmpty)
                 {
                     vc.UniqueIdentifier = new UuidProperty();
                 }
 
-                if (!vCardList.Any(c => vc.UniqueIdentifier == c.UniqueIdentifier))
-                {
-                    vCardList.Add(vc);
-                }
-
                 if (relations.Any(x => x is RelationUuidProperty xUid
-                                    && xUid.Value == vc.UniqueIdentifier.Value
-                                    && xUid.Parameters.RelationType == vcdProp.Parameters.RelationType))
+                && xUid.Value == vc.UniqueIdentifier.Value
+                && xUid.Parameters.RelationType == vcdProp.Parameters.RelationType))
                 {
                     continue;
                 }
 
                 var relationUuid = new RelationUuidProperty(
                     vc.UniqueIdentifier.Value,
+                    vcdProp.Parameters.RelationType,
                     propertyGroup: vcdProp.Group);
 
                 relationUuid.Parameters.Assign(vcdProp.Parameters);
@@ -188,15 +187,12 @@ public sealed partial class VCard
     /// <code language="cs" source="..\Examples\VCard40Example.cs" />
     /// </example>
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IEnumerable<VCard> Dereference(IEnumerable<VCard?> vCards)
-        => vCards is null ? throw new ArgumentNullException(nameof(vCards)) 
-                          : Dereference(vCards, true);
-
-
-    private static IEnumerable<VCard> Dereference(IEnumerable<VCard?> vCards, bool clone)
+    public static IEnumerable<VCard> MyMethod2(IEnumerable<VCard?> vCards)
     {
-        Debug.Assert(vCards != null);
+        if (vCards is null)
+        {
+            throw new ArgumentNullException(nameof(vCards));
+        }
 
         foreach (VCard? vcard in vCards)
         {
@@ -204,23 +200,22 @@ public sealed partial class VCard
             {
                 if (vcard.Relations != null || vcard.Members != null)
                 {
-                    VCard vc = clone ? (VCard)vcard.Clone() : vcard;
-
-                    if (vc.Relations != null)
+                    VCard clone = (VCard)vcard.Clone();
+                    if (clone.Relations != null)
                     {
-                        List<RelationProperty?> relations = vc.Relations.ToList();
-                        vc.Relations = relations;
-                        DoDereference(relations, vCards);
+                        List<RelationProperty?> relations = clone.Relations.ToList();
+                        clone.Relations = relations;
+                        TueDieBeziehungenMaterialisieren(relations, vCards);
                     }
 
-                    if (vc.Members != null)
+                    if (clone.Members != null)
                     {
-                        List<RelationProperty?> members = vc.Members.ToList();
-                        vc.Members = members;
-                        DoDereference(members, vCards);
+                        List<RelationProperty?> members = clone.Members.ToList();
+                        clone.Members = members;
+                        TueDieBeziehungenMaterialisieren(members, vCards);
                     }
 
-                    yield return vc;
+                    yield return clone;
                 }
                 else
                 {
@@ -230,28 +225,24 @@ public sealed partial class VCard
         }
 
 
-        static void DoDereference(List<RelationProperty?> relations, IEnumerable<VCard?> vCards)
+        static void TueDieBeziehungenMaterialisieren(List<RelationProperty?> relations, IEnumerable<VCard?> vCards)
         {
             IEnumerable<RelationUuidProperty> guidProps = relations
                 .Select(x => x as RelationUuidProperty)
-                .Where(x => x != null && !x.IsEmpty)
-                .ToArray()!;
+                .Where(x => x != null && !x.IsEmpty).ToArray()!;
 
             foreach (RelationUuidProperty guidProp in guidProps)
             {
                 VCard? referencedVCard =
-                    vCards.Where(x => x?.UniqueIdentifier != null)
-                          .FirstOrDefault(x => x!.UniqueIdentifier!.Value == guidProp.Value);
+                    vCards.Where(x => x?.UniqueIdentifier != null).FirstOrDefault(x => x!.UniqueIdentifier!.Value == guidProp.Value);
 
                 if (referencedVCard != null)
                 {
-                    if (relations.Any(x => x is RelationVCardProperty xVc &&
-                                           xVc.Value.UniqueIdentifier == referencedVCard.UniqueIdentifier))
+                    if (relations.Any(x => x is RelationVCardProperty xVc && xVc.Value == referencedVCard))
                     {
                         continue;
                     }
 
-                    // Use the constructor here in order NOT to clone referenced VCard
                     var vcardProp = new RelationVCardProperty(
                                         referencedVCard,
                                         guidProp.Parameters.RelationType,
@@ -265,4 +256,6 @@ public sealed partial class VCard
         }
     }
 
+
+    public static void MyMethod3() { }
 }

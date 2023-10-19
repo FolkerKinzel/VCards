@@ -7,6 +7,10 @@ namespace FolkerKinzel.VCards.Intls.Models.Tests;
 [TestClass]
 public class TimeOnlyPropertyTests
 {
+    //[TestMethod]
+    //[ExpectedException(typeof(ArgumentNullException))]
+    //public void DereferenceTest42() => _ = VCard.Dereference(null!);
+
     [TestMethod]
     public void CloneTest1()
     {

@@ -92,7 +92,7 @@ public sealed partial class VCard
             }
         } while (!vcfReader.EOF);
 
-        return VCard.Dereference(vCardList).ToList();
+        return VCard.Dereference(vCardList, false).ToList();
     }
 
 

@@ -48,12 +48,43 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
         => new RelationUuidProperty(uuid, relation, propertyGroup);
 
 
+
+    /// <summary>
+    /// Creates a new <see cref="RelationProperty"/> object that embeds a <see cref="VCard"/>.
+    /// </summary>
+    /// <param name="vCard">The <see cref="VCard"/>-object whose copy is to embed or 
+    /// <c>null</c>.</param>
+    /// <param name="relation">The type of relationship with the subject that <paramref name="vCard"/>
+    /// represents. <see cref="ParameterSection.RelationType"/> of the returned instance will be
+    /// set to this value.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the returned <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the returned <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <returns>A <see cref="RelationProperty"/> object that embeds a copy of <paramref name="vCard"/>.
+    /// </returns>
+    /// <remarks>
+    /// <note type="important">
+    /// This constructor clones <paramref name="vcard"/> in order to avoid circular references.
+    /// Changing the <paramref name="vcard"/> instance AFTER assigning it to this constructor 
+    /// leads to unexpected results!
+    /// </note>
+    /// <para>
+    /// vCard 2.1 and vCard 3.0 can embed nested vCards if the flag <see cref="RelationTypes.Agent"/> is 
+    /// set in their <see cref="ParameterSection.RelationType"/> property . When serializing a vCard 4.0, 
+    /// embedded <see cref="VCard"/>s will be automatically replaced by <see cref="Guid"/> references and
+    /// appended as separate vCards to the VCF file.
+    /// </para>
+    /// </remarks>
+    /// <example>
+    /// <code language="cs" source="source=..\Examples\EmbeddedVCardExample.cs" />
+    /// </example>
     public static RelationProperty FromVCard(VCard? vCard,
                                              RelationTypes? relation = null,
                                              string? propertyGroup = null)
         => vCard is null
             ? FromText(null, relation, propertyGroup)
-            : new RelationVCardProperty(vCard, relation, propertyGroup);
+            // Clone vcard in order to avoid circular references:
+            : new RelationVCardProperty((VCard)vCard.Clone(), relation, propertyGroup);
 
 
     public new Relation? Value
@@ -113,12 +144,13 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
 
     internal static RelationProperty Parse(VcfRow vcfRow, VCdVersion version)
     {
-        vcfRow.UnMask(version);
 
         if (string.IsNullOrWhiteSpace(vcfRow.Value) || vcfRow.Parameters.DataType == Enums.VCdDataType.Text)
         {
             return new RelationTextProperty(vcfRow, version);
         }
+
+        vcfRow.UnMask(version);
 
         if (vcfRow.Value.IsUuidUri())
         {

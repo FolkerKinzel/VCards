@@ -1,6 +1,7 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -347,8 +348,11 @@ public sealed partial class VCard
                         if (vcfRow.Value.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                         {
                             var nested = VCard.ParseNestedVcard(vcfRow.Value, info, this.Version);
-                            Relations = RelationProperty.FromVCard(nested, RelationTypes.Agent, vcfRow.Group)
-                                                        .GetAssignment(Relations);
+                            Relations = nested is null ? RelationProperty.FromText(vcfRow.Value, RelationTypes.Agent, vcfRow.Group)
+                                                       // use the ctor directly because nested can't be a circular
+                                                       // reference and therefore don't neeed to be cloned:
+                                                       : new RelationVCardProperty(nested, RelationTypes.Agent, vcfRow.Group)
+                                        .GetAssignment(Relations);
                         }
                         else
                         {

@@ -16,7 +16,7 @@ internal sealed class RelationVCardProperty : RelationProperty
     private RelationVCardProperty(RelationVCardProperty prop) : base(prop)
         => Value = (VCard)prop.Value.Clone();
 
-    /// <summary> Initialisiert ein neues <see cref="RelationVCardProperty" />-Objekt.
+    /// <summary> Initializes a new <see cref="RelationVCardProperty" /> object.
     /// </summary>
     /// <param name="vcard">The <see cref="VCard" /> of a person, with whom there is
     /// a relationship, or <c>null</c>.</param>
@@ -25,7 +25,15 @@ internal sealed class RelationVCardProperty : RelationProperty
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    internal RelationVCardProperty(VCard vcard, RelationTypes? relation = null, string? propertyGroup = null)
+    /// <remarks>
+    /// <note type="important">
+    /// This constructor clones <paramref name="vcard"/> in order to avoid circular references.
+    /// Changing the <paramref name="vcard"/> instance AFTER assigning it to this constructor 
+    /// leads to unexpected results!
+    /// </note>
+    /// </remarks>
+    internal RelationVCardProperty(
+        VCard vcard, RelationTypes? relation = null, string? propertyGroup = null)
         : base(relation, propertyGroup)
     {
         Debug.Assert(vcard != null);

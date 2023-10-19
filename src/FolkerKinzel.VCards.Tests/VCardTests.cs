@@ -1,34 +1,34 @@
 ﻿using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
-[TestClass()]
+[TestClass]
 public class VCardTests
 {
-    public TestContext? TestContext { get; set; }
+    public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
 
-    [TestMethod()]
+
+    [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void LoadTest_fileNameNull() => _ = VCard.LoadVcf(null!);
 
-    [TestMethod()]
+    [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void LoadTest_invalidFileName() => _ = VCard.LoadVcf("  ");
 
-    [TestMethod()]
+    [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void ParseTest_contentNull() => _ = VCard.ParseVcf(null!);
 
-    [TestMethod()]
+    [TestMethod]
     public void ParseTest_contentEmpty()
     {
         IList<VCard> list = VCard.ParseVcf("");
         Assert.AreEqual(0, list.Count);
     }
 
-    [TestMethod()]
-    public void ParseTest()
+    [TestMethod]
+    public void ParseTest1()
     {
         IList<VCard> list = VCard.ParseVcf("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
         Assert.AreEqual(1, list.Count);
@@ -41,11 +41,11 @@ public class VCardTests
     }
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    public void SaveTest(VCdVersion version)
+    public void SaveTest1(VCdVersion version)
     {
         var vcard = new VCard
         {
@@ -94,7 +94,7 @@ public class VCardTests
     }
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -110,11 +110,11 @@ public class VCardTests
     }
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    public void SerializeTest(VCdVersion version)
+    public void SerializeTest1(VCdVersion version)
     {
         var vcard = new VCard
         {
@@ -133,7 +133,7 @@ public class VCardTests
     }
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -153,7 +153,7 @@ public class VCardTests
     }
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -172,11 +172,11 @@ public class VCardTests
     }
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    public void DeserializeTest(VCdVersion version)
+    public void DeserializeTest1(VCdVersion version)
     {
         var vcard = new VCard
         {
@@ -201,16 +201,16 @@ public class VCardTests
     }
 
 
-    [TestMethod()]
+    [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void DeserializeTest_readerNull() => _ = VCard.DeserializeVcf(null!);
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    public void ToVcfStringTest(VCdVersion version)
+    public void ToVcfStringTest1(VCdVersion version)
     {
         var vcard = new VCard
         {
@@ -231,16 +231,16 @@ public class VCardTests
     }
 
 
-    [DataTestMethod()]
+    [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void ToVcfStringTest_vcardListNull(VCdVersion version) => _ = VCard.ToVcfString(null!, version);
+    public void ToVcfStringTest_vcardListNull1(VCdVersion version) => _ = VCard.ToVcfString(null!, version);
 
 
-    [TestMethod()]
-    public void ToStringTest()
+    [TestMethod]
+    public void ToStringTest1()
     {
         var textProp = new TextProperty("Test");
 
@@ -265,7 +265,7 @@ public class VCardTests
 
 
     [TestMethod]
-    public void GetEnumeratorTest()
+    public void GetEnumeratorTest1()
     {
         var vc = new VCard
         {
@@ -285,7 +285,7 @@ public class VCardTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void SeralizeVcfTest()
+    public void SeralizeVcfTest1()
     {
         using var stream = new MemoryStream();
         VCard.SerializeVcf(stream, null!);
@@ -326,7 +326,7 @@ public class VCardTests
         var adr = new AddressProperty("  ", null, null, postalCode: "", appendLabel: false);
         adr.Parameters.Label = "  ";
 
-        vc.Addresses = new AddressProperty?[] { null, adr};
+        vc.Addresses = new AddressProperty?[] { null, adr };
         Assert.IsTrue(vc.IsEmpty());
 
         vc.BirthDayViews = DateAndOrTimeProperty.FromText(null);
@@ -350,6 +350,21 @@ public class VCardTests
         names[0] = new TextProperty("Name");
         Assert.IsFalse(vc.IsEmpty());
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void DereferenceTest1()
+    {
+        _ = FolkerKinzel.VCards.VCard.Dereference(null!).Count();
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ReferenceTest1()
+    {
+        _ = FolkerKinzel.VCards.VCard.Reference(null!);
+    }
+
 
     //[TestMethod]
     //public void EqualsTest1()
