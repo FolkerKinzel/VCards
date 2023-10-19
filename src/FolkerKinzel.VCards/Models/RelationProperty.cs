@@ -8,11 +8,14 @@ using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Abstract base class for classes that encapsulate data from vCard properties
-    /// that describe relationships with other people. These are in particular the vCard
-    /// 4.0 property <c>RELATED</c>, the vCard 2.1- and -3.0-property <c>AGENT</c>,
-    /// as well as non-standard properties for specifying the name of the spouse (such
-    /// as <c>X-SPOUSE</c>).</summary>
+/// <summary>Encapsulates data from vCard properties which describe relationships 
+/// with other people. </summary>
+/// <remarks>
+/// vCard properties whose data <see cref="RelationProperty"/> encapsulates are 
+/// in particular the vCard 4.0 property <c>RELATED</c>, the vCard 2.1 and vCard 3.0 
+/// property <c>AGENT</c>, as well as non-standard properties for specifying the 
+/// name of the spouse (such as <c>X-SPOUSE</c>).
+/// </remarks>
 public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProperty>
 {
     private bool _isValueInitialized;
