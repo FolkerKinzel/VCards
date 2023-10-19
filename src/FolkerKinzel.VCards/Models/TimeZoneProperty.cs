@@ -10,8 +10,8 @@ namespace FolkerKinzel.VCards.Models;
     /// of the vCard.</summary>
 public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProperty>
 {
-    /// <summary />
-    /// <param name="prop" />
+    /// <summary>Copy ctor.</summary>
+    /// <param name="prop">The <see cref="TimeZoneID"/> instance to clone.</param>
     private TimeZoneProperty(TimeZoneProperty prop) : base(prop)
         => Value = prop.Value;
 
@@ -20,7 +20,8 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public TimeZoneProperty(TimeZoneID? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = value;
+    public TimeZoneProperty(TimeZoneID? value, string? propertyGroup = null) 
+        : base(new ParameterSection(), propertyGroup) => Value = value;
 
 
     internal TimeZoneProperty(VcfRow vcfRow, VCdVersion version)
@@ -34,7 +35,6 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
         }
     }
 
-
     /// <summary> Die von der <see cref="TimeZoneProperty" /> zur Verfügung gestellten
     /// Daten. </summary>
     public new TimeZoneID? Value
@@ -42,6 +42,17 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
         get;
     }
 
+    /// <inheritdoc />
+    public override object Clone() => new TimeZoneProperty(this);
+
+    /// <inheritdoc />
+    IEnumerator<TimeZoneProperty> IEnumerable<TimeZoneProperty>.GetEnumerator()
+    {
+        yield return this;
+    }
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TimeZoneProperty>)this).GetEnumerator();
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -54,14 +65,4 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
 
         Value?.AppendTo(serializer.Builder, serializer.Version, serializer.TimeZoneConverter);
     }
-
-    IEnumerator<TimeZoneProperty> IEnumerable<TimeZoneProperty>.GetEnumerator()
-    {
-        yield return this;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TimeZoneProperty>)this).GetEnumerator();
-
-    /// <inheritdoc />
-    public override object Clone() => new TimeZoneProperty(this);
 }
