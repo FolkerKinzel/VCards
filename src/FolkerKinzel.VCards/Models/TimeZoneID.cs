@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Represents the standardized name of a time zone.</summary>
+/// <summary>Represents the standardized name of a time zone.</summary>
 public sealed partial class TimeZoneID
 {
     private enum TzError { None, Null, Empty }
@@ -78,10 +78,9 @@ public sealed partial class TimeZoneID
 
 
     /// <summary>Standardized name of the time zone.</summary>
-    /// <remarks> Das ist der <see cref="string" />, mit dem das <see cref="TimeZoneID"
-    /// />-Objekt initialisiert wurde. </remarks>
+    /// <value> That's the String with which the <see cref="TimeZoneID"
+    /// /> object was initialized.</value>
     public string Value { get; }
-
 
     /// <summary> Versucht, einen entsprechenden UTC-Offset für das <see cref="TimeZoneID"
     /// />-Objekt zu finden. </summary>
@@ -147,11 +146,8 @@ public sealed partial class TimeZoneID
         utcOffset = default;
         return false;
     }
-
-    /// <summary> Erstellt eine <see cref="string" />-Repräsentation des <see cref="TimeZoneID"
-    /// />-Objekts. (Nur zum Debuggen.) </summary>
-    /// <returns>Eine <see cref="string" />-Repräsentation des <see cref="TimeZoneID"
-    /// />-Objekts.</returns>
+    
+    /// <inheritdoc/>
     public override string ToString() => Value;
 
     internal void AppendTo(StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter)
