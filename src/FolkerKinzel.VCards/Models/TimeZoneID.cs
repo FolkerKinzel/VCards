@@ -150,7 +150,9 @@ public sealed partial class TimeZoneID
     /// <inheritdoc/>
     public override string ToString() => Value;
 
-    internal void AppendTo(StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter)
+
+    internal void AppendTo(
+        StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter)
     {
         Debug.Assert(builder != null);
 
@@ -192,7 +194,10 @@ public sealed partial class TimeZoneID
 #if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1 || NET5_0 || NET6_0
         try
         {
-            return Regex.IsMatch(Value, UTC_OFFSET_PATTERN, RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(50));
+            return Regex.IsMatch(Value,
+                                 UTC_OFFSET_PATTERN,
+                                 RegexOptions.CultureInvariant,
+                                 TimeSpan.FromMilliseconds(50));
         }
         catch (RegexMatchTimeoutException)
         {
