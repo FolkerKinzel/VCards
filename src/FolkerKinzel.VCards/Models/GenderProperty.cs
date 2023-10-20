@@ -7,28 +7,32 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Represents the vCard property <c>GENDER</c>, introduced in vCard 4.0,
-    /// which stores information to specify the components of the sex and gender identity
-    /// of the object the vCard represents</summary>
+/// <summary>Represents the vCard property <c>GENDER</c>, introduced in vCard&#160;4.0,
+/// which stores information to specify the components of gender and gender identity
+/// of the object the <see cref="VCard"/> represents. (See <see cref="VCard.GenderViews"/>.)
+/// </summary>
+/// <seealso cref="GenderInfo"/>
+/// <seealso cref="VCard.GenderViews"/>
 public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
 {
-    /// <summary />
-    /// <param name="prop" />
+    /// <summary>Copy ctor.</summary>
+    /// <param name="prop">The <see cref="GenderProperty"/> instance
+    /// to clone.</param>
     private GenderProperty(GenderProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary> Initialisiert ein neues <see cref="GenderProperty" />-Objekt. </summary>
-    /// <param name="sex">Standardized information about the sex of a person.</param>
+    /// <summary> Initializes a new <see cref="GenderProperty" /> object. </summary>
+    /// <param name="sex">Standardized information about the gender of a person.</param>
     /// <param name="genderIdentity">Free text describing the gender identity.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public GenderProperty(Enums.Gender? sex,
                           string? genderIdentity = null,
-                          string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => Value = new PropertyParts.GenderInfo(sex, genderIdentity);
+                          string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) 
+        => Value = new PropertyParts.GenderInfo(sex, genderIdentity);
 
-    /// <summary> Die von der <see cref="GenderProperty" /> zur Verfügung gestellten
-    /// Daten. </summary>
+    /// <summary>The data provided by the <see cref="GenderProperty" />. </summary>
     public new GenderInfo Value
     {
         get;

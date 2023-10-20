@@ -13,7 +13,9 @@ public abstract class DateAndOrTimeProperty
     private DateAndOrTime? _value;
     private bool _isValueInitialized;
 
-
+ 
+    /// <summary>Copy ctor.</summary>
+    /// <param name="prop"></param>
     protected DateAndOrTimeProperty(DateAndOrTimeProperty prop) : base(prop) { }
    
 
@@ -22,6 +24,9 @@ public abstract class DateAndOrTimeProperty
         : base(parameters, propertyGroup) { }
 
 
+    /// <summary>
+    /// The data provided by the <see cref="DateAndOrTimeProperty"/>.
+    /// </summary>
     public new DateAndOrTime? Value
     {
         get

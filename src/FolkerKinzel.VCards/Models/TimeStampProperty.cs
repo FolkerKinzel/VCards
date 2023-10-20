@@ -12,12 +12,12 @@ namespace FolkerKinzel.VCards.Models;
     /// of the last update of the <see cref="VCard" />.</summary>
 public sealed class TimeStampProperty : VCardProperty
 {
-    /// <summary />
+    /// <summary>Copy ctor.</summary>
     /// <param name="prop" />
     private TimeStampProperty(TimeStampProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary> Initialisiert ein neues <see cref="TimeStampProperty" />-Objekt, das
+    /// <summary>  Initializes a new <see cref="TimeStampProperty" /> object, das
     /// den Zeitpunkt des Konstruktoraufrufs als Zeitstempel kapselt. </summary>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
@@ -27,7 +27,7 @@ public sealed class TimeStampProperty : VCardProperty
     public TimeStampProperty(string? propertyGroup = null) : this(DateTimeOffset.UtcNow, propertyGroup) { }
 
 
-    /// <summary> Initialisiert ein neues <see cref="TimeStampProperty" />-Objekt mit
+    /// <summary>  Initializes a new <see cref="TimeStampProperty" />-Objekt mit
     /// dem angegebenen Zeitstempel. </summary>
     /// <param name="value">Ein <see cref="DateTimeOffset" />-Objekt.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
@@ -57,8 +57,7 @@ public sealed class TimeStampProperty : VCardProperty
     }
 
 
-    /// <summary> Die von der <see cref="TimeStampProperty" /> zur Verfügung gestellten
-    /// Daten. </summary>
+    /// <summary> The data provided by the  <see cref="TimeStampProperty" />. </summary>
     public new DateTimeOffset Value
     {
         get;

@@ -9,17 +9,17 @@ namespace FolkerKinzel.VCards.Models;
     /// for the vCard subject.</summary>
 public sealed class UuidProperty : VCardProperty, IEquatable<UuidProperty>
 {
-    /// <summary />
+    /// <summary>Copy ctor.</summary>
     /// <param name="prop" />
     private UuidProperty(UuidProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary> Initialisiert ein neues <see cref="UuidProperty" />-Objekt mit einer
-    /// automatisch erzeugten <see cref="Guid" />. </summary>
+    /// <summary> Initializes a new <see cref="UuidProperty" /> object with a
+    /// new <see cref="Guid" />. </summary>
     public UuidProperty() : this(Guid.NewGuid()) { }
 
 
-    /// <summary> Initialisiert ein neues <see cref="UuidProperty" />-Objekt. </summary>
+    /// <summary> Initializes a new <see cref="UuidProperty" /> object. </summary>
     /// <param name="uuid">Ein <see cref="Guid" />-Objekt.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
@@ -33,7 +33,7 @@ public sealed class UuidProperty : VCardProperty, IEquatable<UuidProperty>
 
 
 
-    /// <summary> Die von der <see cref="UuidProperty" /> zur Verfügung gestellten Daten.
+    /// <summary> The data provided by the <see cref="UuidProperty" />.
     /// </summary>
     public new Guid Value
     {

@@ -6,50 +6,48 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Encapsulates the data of the vCard property <c>CLASS</c>, which defines
-    /// the level of confidentiality of the vCard in vCard 3.0.</summary>
+/// <summary>Encapsulates the data of the vCard property <c>CLASS</c>, which defines
+/// the level of confidentiality of the vCard in vCard&#160;3.0.
+/// (See <see cref="VCard.Access"/>.)</summary>
+/// <seealso cref="VCard.Access"/>
 public sealed class AccessProperty : VCardProperty
 {
-    /// <summary />
+    /// <summary>Copy ctor</summary>
     /// <param name="prop">The <see cref="AccessProperty" /> object to clone.</param>
-    private AccessProperty(AccessProperty prop) : base(prop)
-        => Value = prop.Value;
+    private AccessProperty(AccessProperty prop) : base(prop) => Value = prop.Value;
 
-    /// <summary> Initialisiert ein neues <see cref="AccessProperty" />-Objekt. </summary>
-    /// <param name="value">Ein Member der <see cref="Access" />-Enumeration.</param>
+    /// <summary> Initializes a new <see cref="AccessProperty" /> object. </summary>
+    /// <param name="value">A member of the <see cref="Access" /> enum.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public AccessProperty(Access value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
-        => Value = value;
-
-    internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = AccessConverter.Parse(vcfRow.Value);
+    public AccessProperty(Access value, string? propertyGroup = null)
+        : base(new ParameterSection(), propertyGroup) => Value = value;
 
 
-    internal override void AppendValue(VcfSerializer serializer)
-    {
-        Debug.Assert(serializer != null);
-
-        _ = serializer.Builder.Append(Value.ToVCardString());
-    }
-
+    internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
+        => Value = AccessConverter.Parse(vcfRow.Value);
 
     /// <inheritdoc />
     public override bool IsEmpty => false;
 
-    /// <summary> Die von der <see cref="AccessProperty" /> zur Verfügung gestellten
-    /// Daten. </summary>
+    /// <summary>The data provided by the <see cref="AccessProperty" />.</summary>
     public new Access Value
     {
         get;
     }
 
+    /// <inheritdoc />
+    public override object Clone() => new AccessProperty(this);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object GetVCardPropertyValue() => Value;
 
 
-    /// <inheritdoc />
-    public override object Clone() => new AccessProperty(this);
+    internal override void AppendValue(VcfSerializer serializer)
+    {
+        Debug.Assert(serializer != null);
+        _ = serializer.Builder.Append(Value.ToVCardString());
+    }
 }

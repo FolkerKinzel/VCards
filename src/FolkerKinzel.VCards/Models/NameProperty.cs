@@ -19,12 +19,12 @@ namespace FolkerKinzel.VCards.Models;
     /// </remarks>
 public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 {
-    /// <summary />
+    /// <summary>Copy ctor.</summary>
     /// <param name="prop" />
     private NameProperty(NameProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary> Initialisiert ein neues <see cref="NameProperty" />-Objekt. </summary>
+    /// <summary>  Initializes a new <see cref="NameProperty" /> object. </summary>
     /// <param name="lastName" />
     /// <param name="firstName" />
     /// <param name="middleName" />
@@ -50,7 +50,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     }
 
 
-    /// <summary> Initialisiert ein neues <see cref="NameProperty" />-Objekt. </summary>
+    /// <summary>  Initializes a new <see cref="NameProperty" /> object. </summary>
     /// <param name="lastName" />
     /// <param name="firstName" />
     /// <param name="middleName" />
@@ -84,7 +84,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
         Value = string.IsNullOrWhiteSpace(vcfRow.Value) ? new Name() : new Name(vcfRow.Value, vcfRow.Info, version);
     }
 
-    /// <summary> Die von der <see cref="NameProperty" /> zur Verfügung gestellten Daten.
+    /// <summary> The data provided by the <see cref="NameProperty" />.
     /// </summary>
     public new Name Value
     {

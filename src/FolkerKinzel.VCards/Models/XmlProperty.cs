@@ -4,16 +4,16 @@ using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Encapsulates the data of the vCard property <c>XML</c>, which enables
-    /// embedded XML data in VCF files.</summary>
+/// <summary>Encapsulates the data of the vCard property <c>XML</c>, which enables
+/// embedded XML data in VCF files.</summary>
 public sealed class XmlProperty : TextProperty, IEnumerable<XmlProperty>
 {
-    /// <summary />
+    /// <summary>Copy ctor.</summary>
     /// <param name="prop" />
     private XmlProperty(XmlProperty prop) : base(prop) { }
 
 
-    /// <summary> Initialisiert ein neues <see cref="XmlProperty" />-Objekt. </summary>
+    /// <summary>Initializes a new <see cref="XmlProperty" /> object. </summary>
     /// <param name="xmlContent">A <see cref="XElement" /> or <c>null</c>. The element
     /// must be explicitly assigned to an XML namespace (xmlns attribute). This namespace
     /// must not be the VCARD 4.0 namespace <c>urn:ietf:params:xml:ns:vcard-4.0</c>!</param>

@@ -39,37 +39,32 @@ public abstract class VCardProperty : ICloneable
     /// <summary>The data provided by the <see cref="VCardProperty" />.</summary>
     public object? Value => GetVCardPropertyValue();
 
-
     /// <summary>Abstract access method to get the data from <see cref="VCardProperty"
     /// />.</summary>
     /// <returns>The data provided by the <see cref="VCardProperty" />.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected abstract object? GetVCardPropertyValue();
 
-
-    /// <summary>Corresponds to the Group identifier of a vCard property or is <c>null</c>,
-    /// if the vCard property has no group identifier.</summary>
+    /// <summary>Corresponds to the group identifier of a vCard property, or is <c>null</c>
+    /// if the <see cref="VCardProperty"/> does not belong to any group.</summary>
     public string? Group
     {
         get => _group;
         set => _group = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
     }
 
-    /// <summary>Contains the data of the parameter section of a vCard property. (Never
-    /// <c>null</c>.)</summary>
+    /// <summary>Contains the data of the parameter section of a vCard property.</summary>
     public ParameterSection Parameters { get; }
 
-
     /// <summary>Returns <c>true</c>, if the <see cref="VCardProperty" /> object does
-    /// not contain any usable data.</summary>
+    /// not contain any usable data, otherwise <c>false</c>.</summary>
     [MemberNotNullWhen(false, nameof(Value))]
     public virtual bool IsEmpty => GetVCardPropertyValue() is null;
 
+    /// <inheritdoc />
+    public abstract object Clone();
 
-    /// <summary>Overload of the <see cref="object.ToString" /> method. For debugging
-    /// only.</summary>
-    /// <returns>A <see cref="string" /> representation of the <see cref="VCardProperty"
-    /// /> object.</returns>
+    /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => Value?.ToString() ?? "<null>";
 
@@ -103,6 +98,7 @@ public abstract class VCardProperty : ICloneable
             (Parameters.Encoding == ValueEncoding.QuotedPrintable || Parameters.Encoding == ValueEncoding.Base64));
     }
 
+
     [ExcludeFromCodeCoverage]
     [Conditional("DEBUG")]
     private void Asserts(VcfSerializer serializer)
@@ -112,6 +108,7 @@ public abstract class VCardProperty : ICloneable
         Debug.Assert(!this.IsEmpty || serializer.Options.IsSet(VcfOptions.WriteEmptyProperties));
         Debug.Assert(serializer.Builder != null);
     }
+
 
     internal virtual void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -126,8 +123,4 @@ public abstract class VCardProperty : ICloneable
 
 
     internal abstract void AppendValue(VcfSerializer serializer);
-
-
-    /// <inheritdoc />
-    public abstract object Clone();
 }

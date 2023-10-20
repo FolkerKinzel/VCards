@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.Models;
     /// />s .</summary>
 public sealed class StringCollectionProperty : VCardProperty, IEnumerable<StringCollectionProperty>
 {
-    /// <summary />
+    /// <summary>Copy ctor.</summary>
     /// <param name="prop" />
     private StringCollectionProperty(StringCollectionProperty prop) : base(prop)
         => Value = prop.Value;

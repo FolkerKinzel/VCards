@@ -13,7 +13,7 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     private readonly byte[]? _bytes;
     private ReadOnlyCollection<byte>? _value;
 
-    /// <summary />
+    /// <summary>Copy ctor</summary>
     /// <param name="prop">The <see cref="DataProperty" /> object to clone.</param>
     private EmbeddedBytesProperty(EmbeddedBytesProperty prop) : base(prop)
     {

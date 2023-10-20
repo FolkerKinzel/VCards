@@ -10,13 +10,13 @@ namespace FolkerKinzel.VCards.Models;
     /// describes the type of object represented by the vCard.</summary>
 public sealed class KindProperty : VCardProperty
 {
-    /// <summary />
+    /// <summary>Copy ctor.</summary>
     /// <param name="prop" />
     private KindProperty(KindProperty prop) : base(prop)
         => Value = prop.Value;
 
 
-    /// <summary> Initialisiert ein neues <see cref="KindProperty" />-Objekt. </summary>
+    /// <summary>  Initializes a new <see cref="KindProperty" /> object. </summary>
     /// <param name="value">Ein Member der <see cref="VCdKind" />-Enumeration.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
@@ -27,7 +27,7 @@ public sealed class KindProperty : VCardProperty
     internal KindProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group) => Value = VCdKindConverter.Parse(vcfRow.Value);
 
 
-    /// <summary> Die von der <see cref="KindProperty" /> zur Verfügung gestellten Daten.
+    /// <summary> The data provided by the <see cref="KindProperty" />.
     /// </summary>
     public new VCdKind Value
     {

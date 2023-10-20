@@ -9,11 +9,11 @@ public sealed class ProfileProperty : TextProperty
 {
     private const string PROFILE_PROPERTY_VALUE = "VCARD";
 
-    /// <summary />
+    /// <summary>Copy ctor.</summary>
     /// <param name="prop" />
     private ProfileProperty(ProfileProperty prop) : base(prop) { }
 
-    /// <summary> Initialisiert ein neues <see cref="ProfileProperty" />-Objekt. </summary>
+    /// <summary>  Initializes a new <see cref="ProfileProperty" /> object. </summary>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
@@ -23,8 +23,7 @@ public sealed class ProfileProperty : TextProperty
     internal ProfileProperty(VcfRow row, VCdVersion version) : base(row, version) { }
 
 
-    /// <summary> Die von der <see cref="ProfileProperty" /> zur Verfügung gestellten
-    /// Daten. </summary>
+    /// <summary> The data provided by the <see cref="ProfileProperty" />. </summary>
     public override string Value => base.Value ?? PROFILE_PROPERTY_VALUE;
 
 

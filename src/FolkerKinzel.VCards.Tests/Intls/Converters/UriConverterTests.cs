@@ -5,15 +5,29 @@ public class UriConverterTests
 {
     [TestMethod]
     public void ToAbsoluteUriTest1()
-        => Assert.IsNull(UriConverter.ToAbsoluteUri(null));
+        => Assert.IsFalse(UriConverter.TryConvertToAbsoluteUri(null, out _));
+
+    public void ToAbsoluteUriTest1b()
+        => Assert.IsFalse(UriConverter.TryConvertToAbsoluteUri("", out _));
+
+    public void ToAbsoluteUriTest1c()
+       => Assert.IsFalse(UriConverter.TryConvertToAbsoluteUri("    ", out _));
 
     [TestMethod]
     public void ToAbsoluteUriTest2()
-        => Assert.IsNull(UriConverter.ToAbsoluteUri("https://not allowed space.com"));
+        => Assert.IsFalse(UriConverter.TryConvertToAbsoluteUri("https://not allowed space.com", out _));
 
     [TestMethod]
     public void ToAbsoluteUriTest3()
-        => Assert.IsNotNull(UriConverter.ToAbsoluteUri("www.not allowed space.com"));
+        => Assert.IsFalse(UriConverter.TryConvertToAbsoluteUri("www.not allowed space.com", out _));
+
+    [TestMethod]
+    public void ToAbsoluteUriTest4()
+        => Assert.IsTrue(UriConverter.TryConvertToAbsoluteUri("  www.nospace.com   ", out _));
+
+    [TestMethod]
+    public void ToAbsoluteUriTest5()
+        => Assert.IsTrue(UriConverter.TryConvertToAbsoluteUri(" http://www.nospace.com   ", out _));
 
     [TestMethod]
     public void GetFileTypeExtensionFromUriTest1()

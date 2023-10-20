@@ -89,7 +89,9 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
             // Clone vcard in order to avoid circular references:
             : new RelationVCardProperty((VCard)vCard.Clone(), relation, propertyGroup);
 
-
+    /// <summary>
+    /// The data provided by the <see cref="RelationProperty"/>.
+    /// </summary>
     public new Relation? Value
     {
         get

@@ -15,7 +15,7 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
     private TimeZoneProperty(TimeZoneProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary> Initialisiert ein neues <see cref="TimeZoneProperty" />-Objekt. </summary>
+    /// <summary>  Initializes a new <see cref="TimeZoneProperty" /> object. </summary>
     /// <param name="value">Ein <see cref="TimeZoneInfo" />-Objekt oder <c>null</c>.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
@@ -35,8 +35,7 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
         }
     }
 
-    /// <summary> Die von der <see cref="TimeZoneProperty" /> zur Verfügung gestellten
-    /// Daten. </summary>
+    /// <summary> The data provided by the <see cref="TimeZoneProperty" />. </summary>
     public new TimeZoneID? Value
     {
         get;

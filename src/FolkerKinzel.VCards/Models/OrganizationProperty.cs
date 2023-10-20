@@ -12,7 +12,10 @@ namespace FolkerKinzel.VCards.Models;
 /// about the organization to which the <see cref="VCard"/> object is associated.</summary>
 public sealed class OrganizationProperty : VCardProperty, IEnumerable<OrganizationProperty>
 {
-    
+    /// <summary>
+    /// <summary>Copy ctor.</summary>
+    /// </summary>
+    /// <param name="prop"></param>
     private OrganizationProperty(OrganizationProperty prop) : base(prop)
         => Value = prop.Value;
 
@@ -48,8 +51,7 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
     }
 
 
-    /// <summary> Die von der <see cref="OrganizationProperty" /> zur Verfügung gestellten
-    /// Daten. </summary>
+    /// <summary> The data provided by the  <see cref="OrganizationProperty" />. </summary>
     public new Organization Value
     {
         get;

@@ -9,12 +9,12 @@ namespace FolkerKinzel.VCards.Models;
     /// across different versions of the same vCard.</summary>
 public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<PropertyIDMappingProperty>
 {
-    /// <summary />
+    /// <summary>Copy ctor.</summary>
     /// <param name="prop" />
     private PropertyIDMappingProperty(PropertyIDMappingProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary> Initialisiert ein neues <see cref="PropertyIDMappingProperty" />-Objekt.
+    /// <summary>  Initializes a new <see cref="PropertyIDMappingProperty" /> object. 
     /// </summary>
     /// <param name="value">A <see cref="PropertyIDMapping" /> object or <c>null</c>.</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="value" /> is
@@ -38,8 +38,7 @@ public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<Prope
     }
 
 
-    /// <summary> Die von der <see cref="PropertyIDMappingProperty" /> zur Verfügung
-    /// gestellten Daten. </summary>
+    /// <summary> The data provided by the <see cref="PropertyIDMappingProperty" />. </summary>
     public new PropertyIDMapping? Value
     {
         get;

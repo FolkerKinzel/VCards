@@ -10,18 +10,19 @@ namespace FolkerKinzel.VCards.Models;
     /// position.</summary>
 public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 {
-    /// <summary />
+    /// <summary>Copy ctor.</summary>
     /// <param name="prop" />
     private GeoProperty(GeoProperty prop) : base(prop)
         => Value = prop.Value;
 
 
-    /// <summary> Initialisiert ein neues <see cref="GeoProperty" />-Objekt. </summary>
+    /// <summary>  Initializes a new <see cref="GeoProperty" /> object. </summary>
     /// <param name="value">Ein <see cref="GeoCoordinate" />-Objekt oder <c>null</c>.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public GeoProperty(GeoCoordinate? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) => this.Value = value;
+    public GeoProperty(GeoCoordinate? value, string? propertyGroup = null) 
+        : base(new ParameterSection(), propertyGroup) => this.Value = value;
 
     internal GeoProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
     {
@@ -32,7 +33,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
     }
 
 
-    /// <summary> Die von der <see cref="GeoProperty" /> zur Verfügung gestellten Daten.
+    /// <summary> The data provided by the <see cref="GeoProperty" />.
     /// </summary>
     public new GeoCoordinate? Value
     {

@@ -62,7 +62,5 @@ public sealed class Relation
     private Guid AsGuid => _oneOf.AsT2;
 
     private Uri AsUri => _oneOf.AsT3;
-
-    
 }
 
