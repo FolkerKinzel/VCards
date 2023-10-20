@@ -56,7 +56,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="region">The region (e.g. state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
-    /// <param name="postOfficeBox">The post office box. (Don't use this property!)</param>
+    /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
     /// <param name="extendedAddress">The extended address (e.g. apartment or suite
     /// number). (Don't use this parameter!)</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
@@ -130,7 +130,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="region">The region (e.g. state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
-    /// <param name="postOfficeBox">The post office box. (Don't use this property!)</param>
+    /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
     /// <param name="extendedAddress">The extended address (e.g. apartment or suite
     /// number). (Don't use this parameter!)</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"

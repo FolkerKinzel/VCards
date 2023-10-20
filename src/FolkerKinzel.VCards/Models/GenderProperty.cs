@@ -32,21 +32,6 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
                           string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) 
         => Value = new PropertyParts.GenderInfo(sex, genderIdentity);
 
-    /// <summary>The data provided by the <see cref="GenderProperty" />. </summary>
-    public new GenderInfo Value
-    {
-        get;
-    }
-
-
-    /// <inheritdoc />
-    public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
-
-
-    /// <inheritdoc />
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
-
 
     internal GenderProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
@@ -75,18 +60,31 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
         Value = new PropertyParts.GenderInfo(sex, genderIdentity);
     }
 
+    /// <summary>The data provided by the <see cref="GenderProperty" />. </summary>
+    public new GenderInfo Value
+    {
+        get;
+    }
 
-    internal override void AppendValue(VcfSerializer serializer) => Value.AppendVCardStringTo(serializer);
+    /// <inheritdoc />
+    public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
 
+    /// <inheritdoc />
+    public override object Clone() => new GenderProperty(this);
 
+    /// <inheritdoc />
     IEnumerator<GenderProperty> IEnumerable<GenderProperty>.GetEnumerator()
     {
         yield return this;
     }
 
-
+    /// <inheritdoc />
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GenderProperty>)this).GetEnumerator();
 
     /// <inheritdoc />
-    public override object Clone() => new GenderProperty(this);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected override object? GetVCardPropertyValue() => Value;
+
+
+    internal override void AppendValue(VcfSerializer serializer) => Value.AppendVCardStringTo(serializer);
 }

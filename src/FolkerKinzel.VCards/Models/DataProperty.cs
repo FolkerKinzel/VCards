@@ -65,7 +65,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     public abstract string GetFileTypeExtension();
 
     /// <summary>
-    /// Creates a <see cref="DataProperty"/> that embeds the binary content of a file
+    /// Creates a new <see cref="DataProperty"/> that embeds the binary content of a file
     /// in a vCard.
     /// </summary>
     /// <param name="filePath">Path to the file whose content is to embed.</param>
@@ -96,7 +96,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                : FromFile(filePath, null, propertyGroup);
 
     /// <summary>
-    /// Creates a <see cref="DataProperty"/> that embeds a collection of <see cref="byte"/>s
+    /// Creates a new <see cref="DataProperty"/> that embeds a collection of <see cref="byte"/>s
     /// in a vCard.
     /// </summary>
     /// <param name="bytes">The <see cref="byte"/>s to embed or <c>null</c>.</param>
@@ -122,7 +122,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
            );
 
     /// <summary>
-    /// Creates a <see cref="DataProperty"/> that embeds text in a vCard.
+    /// Creates a new <see cref="DataProperty"/> that embeds text in a vCard.
     /// </summary>
     /// <param name="text">The text to embed or <c>null</c>.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="text"/>
@@ -150,7 +150,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     }
 
     /// <summary>
-    /// Creates a <see cref="DataProperty"/> from an absolute <see cref="Uri"/> that 
+    /// Creates a new <see cref="DataProperty"/> from an absolute <see cref="Uri"/> that 
     /// references external data.
     /// </summary>
     /// <param name="uri">An absolute <see cref="Uri"/> or <c>null</c>.</param>
