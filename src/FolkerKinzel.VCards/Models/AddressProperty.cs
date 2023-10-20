@@ -9,7 +9,8 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates the data of the vCard property <c>ADR</c> that contains 
-/// information about the postal address. (See <see cref="VCard.Addresses"/>.)</summary>
+/// information about the postal address.</summary>
+/// <remarks>See <see cref="VCard.Addresses"/>.</remarks>
 /// <seealso cref="VCard.Addresses"/>
 public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty>
 {

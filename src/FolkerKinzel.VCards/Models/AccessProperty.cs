@@ -7,8 +7,8 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates the data of the vCard property <c>CLASS</c>, which defines
-/// the level of confidentiality of the vCard in vCard&#160;3.0.
-/// (See <see cref="VCard.Access"/>.)</summary>
+/// the level of confidentiality of the vCard in vCard&#160;3.0.</summary>
+/// <remarks>See <see cref="VCard.Access"/>.</remarks>
 /// <seealso cref="VCard.Access"/>
 public sealed class AccessProperty : VCardProperty
 {

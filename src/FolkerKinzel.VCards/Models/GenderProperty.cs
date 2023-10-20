@@ -9,8 +9,9 @@ namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Represents the vCard property <c>GENDER</c>, introduced in vCard&#160;4.0,
 /// which stores information to specify the components of gender and gender identity
-/// of the object the <see cref="VCard"/> represents. (See <see cref="VCard.GenderViews"/>.)
+/// of the object the <see cref="VCard"/> represents.
 /// </summary>
+/// <remarks>See <see cref="VCard.GenderViews"/>.</remarks>
 /// <seealso cref="GenderInfo"/>
 /// <seealso cref="VCard.GenderViews"/>
 public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
