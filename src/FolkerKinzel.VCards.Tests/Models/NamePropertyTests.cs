@@ -75,7 +75,7 @@ public class NamePropertyTests
     public void ToDisplayNameTest1()
     {
         var name = new NameProperty(LAST_NAME, FIRST_NAME, MIDDLE_NAME, PREFIX, SUFFIX);
-        string s = name.ToDisplayName();
+        string? s = name.ToDisplayName();
         Assert.IsNotNull(s);
         Assert.AreNotEqual(0, s.Length);
         Assert.AreEqual(1, s.GetLinesCount());
@@ -85,7 +85,7 @@ public class NamePropertyTests
     public void ToDisplayNameTest2()
     {
         var name = new NameProperty(LAST_NAME, FIRST_NAME);
-        string s = name.ToDisplayName();
+        string? s = name.ToDisplayName();
         Assert.IsNotNull(s);
         Assert.AreNotEqual(0, s.Length);
         Assert.AreEqual(1, s.GetLinesCount());
@@ -95,7 +95,7 @@ public class NamePropertyTests
     public void ToDisplayNameTest3()
     {
         var name = new NameProperty(null, FIRST_NAME);
-        string s = name.ToDisplayName();
+        string? s = name.ToDisplayName();
         Assert.IsNotNull(s);
         Assert.AreNotEqual(0, s.Length);
         Assert.AreEqual(1, s.GetLinesCount());
@@ -105,8 +105,7 @@ public class NamePropertyTests
     public void ToDisplayNameTest4()
     {
         var name = new NameProperty();
-        string s = name.ToDisplayName();
-        Assert.IsNotNull(s);
-        Assert.AreEqual(0, s.Length);
+        string? s = name.ToDisplayName();
+        Assert.IsNull(s);
     }
 }

@@ -1,5 +1,6 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
@@ -181,8 +182,8 @@ public sealed partial class VCard
 
                     RelationVCardProperty? agent = vCard.Relations
                         .Select(x => x as RelationVCardProperty)
-                        .Where(x => x != null && !x.IsEmpty && x.Parameters.Relation.IsSet(RelationTypes.Agent))
-                        .OrderBy(x => x!.Parameters.Preference)
+                        .WhereNotEmptyAnd(x => x.Parameters.Relation.IsSet(RelationTypes.Agent))
+                        .OrderByPreference()
                         .FirstOrDefault();
 
                     if (agent != null)

@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 
@@ -68,7 +69,7 @@ public sealed partial class VCard
             throw new ArgumentNullException(nameof(vCards));
         }
 
-        List<VCard> list = vCards.Where(x => x is not null).ToList()!;
+        List<VCard> list = vCards.WhereNotNull().ToList();
 
         for (int i = list.Count - 1; i >= 0; i--)
         {
@@ -101,11 +102,11 @@ public sealed partial class VCard
 
         static void DoSetReferences(List<VCard> vCardList, List<RelationProperty?> relations)
         {
-            Debug.Assert(relations.Where(x => x is RelationVCardProperty).All(x => !x.IsEmpty));
+            Debug.Assert(relations.Where(x => x is RelationVCardProperty).All(x => !x!.IsEmpty));
 
             IEnumerable<RelationVCardProperty> vcdProps = relations
                             .Select(x => x as RelationVCardProperty)
-                            .Where(x => x != null)
+                            .WhereNotNull()
                             .ToArray()!; // We need ToArray here because relations
                                          // might change.
 
@@ -128,8 +129,8 @@ public sealed partial class VCard
                 }
 
                 if (relations.Any(x => x is RelationUuidProperty xUid
-                                    && xUid.Value == vc.UniqueIdentifier.Value
-                                    && xUid.Parameters.Relation == vcdProp.Parameters.Relation))
+                                       && xUid.Value == vc.UniqueIdentifier.Value
+                                       && xUid.Parameters.Relation == vcdProp.Parameters.Relation))
                 {
                     continue;
                 }
@@ -234,7 +235,7 @@ public sealed partial class VCard
         {
             IEnumerable<RelationUuidProperty> guidProps = relations
                 .Select(x => x as RelationUuidProperty)
-                .Where(x => x != null && !x.IsEmpty)
+                .WhereNotEmpty()
                 .ToArray()!;
 
             foreach (RelationUuidProperty guidProp in guidProps)

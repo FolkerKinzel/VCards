@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Encodings;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 
@@ -26,7 +27,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     internal override void AppendBase64EncodedData(byte[]? data)
     {
-        if(data is null)
+        if (data is null)
         {
             return;
         }
@@ -110,9 +111,9 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         Debug.Assert(serializables != null);
 
-        VCardProperty? pref = serializables.Where(IsPropertyWithData)
-                                           .OrderBy(static x => x!.Parameters.Preference)
-                                           .FirstOrDefault();
+        VCardProperty? pref = FilterSerializables(serializables)
+                                .OrderByPreference()
+                                .FirstOrDefault();
 
         if (pref != null)
         {
@@ -124,8 +125,8 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         Debug.Assert(serializables != null);
 
-        VCardProperty[] arr = serializables.Where(static x => x != null)
-                                           .OrderBy(x => x!.Parameters.Preference)
+        VCardProperty[] arr = serializables.WhereNotNull()
+                                           .OrderByPreference()
                                            .ToArray()!;
 
         for (int i = 0; i < arr.Length; i++)
@@ -141,8 +142,8 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
         bool multiple = Options.IsSet(VcfOptions.AllowMultipleAdrAndLabelInVCard21);
         bool first = true;
-        foreach (AddressProperty? prop in value.Where(static x => x != null)
-                                               .OrderBy(static x => x!.Parameters.Preference))
+        foreach (AddressProperty? prop in value.WhereNotNull()
+                                               .OrderByPreference())
         {
             bool isPref = first && multiple && prop!.Parameters.Preference < 100;
             first = false;
@@ -185,13 +186,12 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         Debug.Assert(value != null);
 
-        TextProperty displayName = value
-            .Where(IsPropertyWithData)
-            .OrderBy(static x => x!.Parameters.Preference)
+        TextProperty displayName = FilterSerializables(value)
+            .OrderByPreference()
             .FirstOrDefault()
-
-            ?? new TextProperty(Options.IsSet(VcfOptions.WriteEmptyProperties) ? null 
-                                                                               : "?");
+            ?? new TextProperty(Options.IsSet(VcfOptions.WriteEmptyProperties)
+                   ? null
+                   : "?");
 
         BuildProperty(VCard.PropKeys.FN, displayName);
     }
@@ -210,9 +210,9 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     protected override void AppendKeys(IEnumerable<DataProperty?> value)
     {
-        VCardProperty? pref = value.Where(IsPropertyWithData)
-                                   .OrderBy(static x => x!.Parameters.Preference)
-                                   .FirstOrDefault(static x => x is EmbeddedBytesProperty or EmbeddedTextProperty);
+        VCardProperty? pref = FilterSerializables(value)
+                                .OrderByPreference()
+                                .FirstOrDefault(static x => x is EmbeddedBytesProperty or EmbeddedTextProperty);
 
         if (pref != null)
         {
@@ -220,13 +220,13 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         }
     }
 
-    protected override void AppendLastRevision(TimeStampProperty value) 
+    protected override void AppendLastRevision(TimeStampProperty value)
         => BuildProperty(VCard.PropKeys.REV, value);
 
     protected override void AppendLogos(IEnumerable<DataProperty?> value)
     {
-        VCardProperty? pref = value.Where(IsPropertyWithData)
-                                   .OrderBy(static x => x!.Parameters.Preference)
+        VCardProperty? pref = FilterSerializables(value)
+                                   .OrderByPreference()
                                    .FirstOrDefault(static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
         if (pref != null)
@@ -242,9 +242,10 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         Debug.Assert(value != null);
 
-        NameProperty? name = value.FirstOrDefault(IsPropertyWithData)
-            ?? (Options.IsSet(VcfOptions.WriteEmptyProperties) ? new NameProperty() 
-                                                               : new NameProperty(new string[] { "?" }));
+        NameProperty? name = FilterSerializables(value).FirstOrDefault()
+                             ?? (Options.IsSet(VcfOptions.WriteEmptyProperties)
+                                 ? new NameProperty()
+                                 : new NameProperty(new string[] { "?" }));
         BuildProperty(VCard.PropKeys.N, name);
     }
 
@@ -259,8 +260,8 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     protected override void AppendPhotos(IEnumerable<DataProperty?> value)
     {
-        VCardProperty? pref = value.Where(IsPropertyWithData)
-                                   .OrderBy(static x => x!.Parameters.Preference)
+        VCardProperty? pref = FilterSerializables(value)
+                                   .OrderByPreference()
                                    .FirstOrDefault(static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
         if (pref != null)
@@ -277,8 +278,8 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     protected override void AppendSounds(IEnumerable<DataProperty?> value)
     {
-        VCardProperty? pref = value.Where(IsPropertyWithData)
-                                   .OrderBy(static x => x!.Parameters.Preference)
+        VCardProperty? pref = FilterSerializables(value)
+                                   .OrderByPreference()
                                    .FirstOrDefault(static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
         if (pref != null)

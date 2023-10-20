@@ -1,3 +1,4 @@
+using FolkerKinzel.VCards.Intls.Extensions;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
@@ -9,15 +10,35 @@ public sealed class Relation
     internal Relation(OneOf<string, VCard, Guid, Uri> oneOf) => _oneOf = oneOf;
 
 
-    public string? String => IsString ? AsString : null;
+    public string? String => IsString ? AsStringIntl : null;
 
-    public VCard? VCard => IsVCard ? AsVCard : null;
+    public VCard? VCard => IsVCard ? AsVCardIntl : null;
 
-    public Guid? Guid => IsGuid ? AsGuid : null;
+    public Guid? Guid => IsGuid ? AsGuidIntl : null;
 
-    public Uri? Uri => IsUri ? AsUri : null;
+    public Uri? Uri => IsUri ? AsUriIntl : null;
 
     public object Value => this._oneOf.Value;
+
+
+    public bool TryAsString([NotNullWhen(true)] out string? str)
+    {
+        str = Match(
+            static s => s,
+            static vc => vc.DisplayNames?.WhereNotEmpty()
+                                         .OrderByPreference()
+                                         .FirstOrDefault()?
+                                         .Value ??
+                          vc.NameViews?.WhereNotEmpty()
+                                       .FirstOrDefault()?.ToDisplayName() ??
+                          vc.Organizations?.WhereNotEmpty()
+                                           .OrderByPreference()
+                                           .FirstOrDefault()?.Value.OrganizationName,
+            static guid => null,
+            static uri => uri.ToString()
+            );
+        return str != null;
+    }
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -55,12 +76,12 @@ public sealed class Relation
     [MemberNotNullWhen(true, nameof(Uri))]
     private bool IsUri => _oneOf.IsT3;
 
-    private string AsString => _oneOf.AsT0;
+    private string AsStringIntl => _oneOf.AsT0;
 
-    private VCard AsVCard => _oneOf.AsT1;
+    private VCard AsVCardIntl => _oneOf.AsT1;
     
-    private Guid AsGuid => _oneOf.AsT2;
+    private Guid AsGuidIntl => _oneOf.AsT2;
 
-    private Uri AsUri => _oneOf.AsT3;
+    private Uri AsUriIntl => _oneOf.AsT3;
 }
 

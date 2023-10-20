@@ -31,7 +31,7 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
                                 string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
     {
         var list = new List<string>() { organizationName ?? "" };
-        list.AddRange((organizationalUnits?.Where(x => x != null) ?? Array.Empty<string>())!);
+        list.AddRange((organizationalUnits?.WhereNotNull() ?? Array.Empty<string>()));
         Value = new Organization(list);
     }
 

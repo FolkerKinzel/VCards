@@ -1,4 +1,5 @@
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -17,7 +18,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     protected override void ReplenishRequiredProperties()
     {
         if (VCardToSerialize.Members != null
-            && VCardToSerialize.Members.Any(IsPropertyWithData)
+            && FilterSerializables(VCardToSerialize.Members).Any()
             && (VCardToSerialize.Kind?.Value != VCdKind.Group))
         {
             VCardToSerialize.Kind = new KindProperty(VCdKind.Group);
@@ -50,7 +51,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     {
         Debug.Assert(props != null);
 
-        VCardProperty[] arr = props.Where(x => x != null).ToArray()!;
+        VCardProperty[] arr = props.WhereNotNull().ToArray()!;
 
         if (arr.Length <= 1)
         {
@@ -129,14 +130,11 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     {
         Debug.Assert(value != null);
 
-        TextProperty[] displNames = value
-            .Where(IsPropertyWithData)
-            .ToArray()!;
+        TextProperty[] displNames = FilterSerializables(value).ToArray();
 
         if (displNames.Length == 0)
         {
-            NameProperty? name = VCardToSerialize.NameViews?.Where(static x => x != null && !x.IsEmpty)
-                                                            .FirstOrDefault();
+            NameProperty? name = VCardToSerialize.NameViews?.FirstOrDefault(static x => x != null && !x.IsEmpty );
 
             string? displName = name != null ? name.ToDisplayName()
                                                  : Options.IsSet(VcfOptions.WriteEmptyProperties)

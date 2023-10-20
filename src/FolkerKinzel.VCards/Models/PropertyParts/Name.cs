@@ -320,12 +320,13 @@ public sealed class Name
 
     /// <summary>Formats the data encapsulated by the instance into a human-readable
     /// form.</summary>
-    /// <returns>The data encapsulated by the instance in human-readable form.</returns>
-    public string ToDisplayName()
+    /// <returns>The data encapsulated by the instance in human-readable form or
+    /// <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
+    public string? ToDisplayName()
     {
         const int stringBuilderInitialCapacity = 32;
         return IsEmpty
-            ? string.Empty
+            ? null
             : new StringBuilder(stringBuilderInitialCapacity)
             .AppendReadableProperty(Prefix)
             .AppendReadableProperty(FirstName)

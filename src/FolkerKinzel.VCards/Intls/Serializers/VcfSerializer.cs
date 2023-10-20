@@ -1,6 +1,7 @@
 using System.Globalization;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -54,8 +55,22 @@ internal abstract class VcfSerializer
     internal const string X_KADDRESSBOOK_X_IMAddress = "X-KADDRESSBOOK-X-IMAddress";
 
 
-    protected bool IsPropertyWithData([NotNullWhen(true)] VCardProperty? x)
-            => x != null && (!x.IsEmpty || Options.HasFlag(VcfOptions.WriteEmptyProperties));
+    protected IEnumerable<T> FilterSerializables<T>(IEnumerable<T?> properties)
+        where T : VCardProperty
+    {
+        foreach (var prop in properties)
+        {
+            if(IsPropertyWithData(prop, Options))
+            {
+                yield return prop;
+            }
+        }
+
+        static bool IsPropertyWithData([NotNullWhen(true)] VCardProperty? x, VcfOptions options)
+           => x != null && (!x.IsEmpty || options.HasFlag(VcfOptions.WriteEmptyProperties));
+    }
+
+    
 
     internal static VcfSerializer GetSerializer(TextWriter writer, VCdVersion version, VcfOptions options, ITimeZoneIDConverter? tzConverter)
     {
@@ -96,7 +111,8 @@ internal abstract class VcfSerializer
 
     private void AppendProperties()
     {
-        foreach (KeyValuePair<VCdProp, object> kvp in ((IEnumerable<KeyValuePair<VCdProp, object>>)VCardToSerialize).OrderBy(x => x.Key))
+        foreach (KeyValuePair<VCdProp, object> kvp in 
+            ((IEnumerable<KeyValuePair<VCdProp, object>>)VCardToSerialize).OrderBy(x => x.Key))
         {
             switch (kvp.Key)
             {
@@ -274,8 +290,8 @@ internal abstract class VcfSerializer
 
         if (Options.IsSet(VcfOptions.WriteXExtensions))
         {
-            TextProperty[] arr = value.Where(static x => x?.Value != null)
-                                      .OrderBy(static x => x!.Parameters.Preference)
+            TextProperty[] arr = value.WhereNotEmpty()
+                                      .OrderByPreference()
                                       .ToArray()!;
 
             for (int i = 0; i < arr.Length; i++)
@@ -336,8 +352,9 @@ internal abstract class VcfSerializer
 
         if (Options.IsSet(VcfOptions.WriteKAddressbookExtensions))
         {
-            TextProperty? prop = value.Where(IsPropertyWithData)
-                                      .OrderBy(static x => x!.Parameters.Preference).FirstOrDefault();
+            TextProperty? prop = FilterSerializables(value)
+                                 .OrderByPreference()
+                                 .FirstOrDefault();
 
             if (prop != null)
             {
@@ -397,8 +414,8 @@ internal abstract class VcfSerializer
     {
         Debug.Assert(value != null);
 
-        if (value.Where(IsPropertyWithData)
-                 .FirstOrDefault(static x => x is DateOnlyProperty && !x.IsEmpty) is DateOnlyProperty pref)
+        if (value.WhereNotEmpty()
+                 .FirstOrDefault(static x => x is DateOnlyProperty) is DateOnlyProperty pref)
         {
             if (Options.IsSet(VcfOptions.WriteXExtensions))
             {
@@ -598,11 +615,11 @@ internal abstract class VcfSerializer
     protected virtual void AppendRelations(IEnumerable<RelationProperty?> value)
     {
         RelationProperty? agent = Options.IsSet(VcfOptions.WriteEmptyProperties)
-            ? value.Where(static x => x != null && x.Parameters.Relation.IsSet(RelationTypes.Agent))
-                   .OrderBy(static x => x!.Parameters.Preference)
+            ? value.WhereNotNullAnd(static x => x.Parameters.Relation.IsSet(RelationTypes.Agent))
+                   .OrderByPreference()
                    .FirstOrDefault()
-            : value.Where(static x => x != null && !x.IsEmpty && x.Parameters.Relation.IsSet(RelationTypes.Agent))
-                   .OrderBy(static x => x!.Parameters.Preference)
+            : value.WhereNotEmptyAnd(static x => x.Parameters.Relation.IsSet(RelationTypes.Agent))
+                   .OrderByPreference()
                    .FirstOrDefault();
 
         if (agent != null)
@@ -611,11 +628,11 @@ internal abstract class VcfSerializer
         }
 
         RelationProperty? spouse = Options.IsSet(VcfOptions.WriteEmptyProperties)
-            ? value.Where(static x => x != null && x.Parameters.Relation.IsSet(RelationTypes.Spouse))
-                   .OrderBy(static x => x!.Parameters.Preference)
+            ? value.WhereNotNullAnd(static x => x.Parameters.Relation.IsSet(RelationTypes.Spouse))
+                   .OrderByPreference()
                    .FirstOrDefault()
-            : value.Where(static x => x != null && !x.IsEmpty && x.Parameters.Relation.IsSet(RelationTypes.Spouse))
-                   .OrderBy(static x => x!.Parameters.Preference)
+            : value.WhereNotEmptyAnd(static x => x.Parameters.Relation.IsSet(RelationTypes.Spouse))
+                   .OrderByPreference()
                    .FirstOrDefault();
 
         if (spouse != null)
@@ -652,14 +669,14 @@ internal abstract class VcfSerializer
         static RelationProperty? ConvertToRelationTextProperty(RelationVCardProperty vcardProp)
         {
             string? name = vcardProp.Value?.DisplayNames?
-                .Where(static x => x != null && !x.IsEmpty)
-                .OrderBy(static x => x!.Parameters.Preference)
+                .WhereNotEmpty()
+                .OrderByPreference()
                 .FirstOrDefault()?.Value;
 
             if (name is null)
             {
                 NameProperty? vcdName = vcardProp.Value?.NameViews?
-                    .Where(x => x != null && !x.IsEmpty)
+                    .WhereNotEmpty()
                     .FirstOrDefault();
 
                 if (vcdName != null)

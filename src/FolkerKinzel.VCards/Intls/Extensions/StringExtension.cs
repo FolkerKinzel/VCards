@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
 

@@ -103,9 +103,10 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
     /// <summary>Formats the data encapsulated by the instance into a human-readable
     /// form.</summary>
-    /// <returns>The data encapsulated by the instance in human-readable form.</returns>
+    /// <returns>The data encapsulated by the instance in human-readable form
+    /// or <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string ToDisplayName() => Value.ToDisplayName();
+    public string? ToDisplayName() => Value.ToDisplayName();
 
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
