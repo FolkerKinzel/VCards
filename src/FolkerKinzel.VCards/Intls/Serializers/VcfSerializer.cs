@@ -74,6 +74,19 @@ internal abstract class VcfSerializer
         }
     }
 
+    protected virtual void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> serializables)
+    {
+        Debug.Assert(serializables != null);
+
+        bool first = true;
+
+        foreach (VCardProperty prop in serializables.OrderByPrefIntl(IgnoreEmptyItems))
+        {
+            BuildProperty(propertyKey, prop, first && prop.Parameters.Preference < 100);
+            first = false;
+        }
+    }
+
     //protected IEnumerable<T> FilterSerializables<T>(IEnumerable<T?> properties)
     //    where T : VCardProperty
     //{
@@ -89,7 +102,7 @@ internal abstract class VcfSerializer
     //       => x != null && (!x.IsEmpty || options.HasFlag(VcfOptions.WriteEmptyProperties));
     //}
 
-    
+
 
     internal static VcfSerializer GetSerializer(TextWriter writer, VCdVersion version, VcfOptions options, ITimeZoneIDConverter? tzConverter)
     {

@@ -107,21 +107,6 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     }
 
 
-    private void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> serializables)
-    {
-        Debug.Assert(serializables != null);
-
-        bool first = true;
-
-        foreach (VCardProperty prop in serializables.OrderByPrefIntl(IgnoreEmptyItems))
-        {
-            bool isPref = first && prop.Parameters.Preference < 100;
-            first = false;
-
-            BuildProperty(propertyKey, prop, isPref);
-        }
-    }
-
     protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
     {
         Debug.Assert(value != null);

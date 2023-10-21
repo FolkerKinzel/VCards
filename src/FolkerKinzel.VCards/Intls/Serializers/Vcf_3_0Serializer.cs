@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers
 {
@@ -28,25 +29,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
                 VCardToSerialize.DisplayNames = Array.Empty<TextProperty?>();
             }
         }
-
-
-
-
-        private void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> serializables)
-        {
-            Debug.Assert(serializables != null);
-
-            VCardProperty[] arr = serializables.OrderByPrefIntl(IgnoreEmptyItems).ToArray();
-
-            for (int i = 0; i < arr.Length; i++)
-            {
-                VCardProperty prop = arr[i];
-                BuildProperty(propertyKey, prop, i == 0 && prop.Parameters.Preference < 100);
-            }
-        }
-
-
-        
 
         protected override void AppendAccess(AccessProperty value)
             => BuildProperty(VCard.PropKeys.CLASS, value, false);
@@ -135,25 +117,26 @@ namespace FolkerKinzel.VCards.Intls.Serializers
 
             if (Options.IsSet(VcfOptions.WriteImppExtension))
             {
-                TextProperty[] arr = value.OrderByPrefIntl(IgnoreEmptyItems).ToArray();
+                bool first = true;
 
-                for (int i = 0; i < arr.Length; i++)
+                foreach (var prop in value.OrderByPrefIntl(IgnoreEmptyItems))
                 {
-                    TextProperty prop = arr[i];
+                    ParameterSection parameters = prop.Parameters;
 
-                    if (prop.Parameters.PropertyClass.IsSet(PropertyClassTypes.Home))
+                    if (parameters.PropertyClass.IsSet(PropertyClassTypes.Home))
                     {
-                        prop.Parameters.InstantMessengerType =
-                            prop.Parameters.InstantMessengerType.Set(ImppTypes.Personal);
+                        parameters.InstantMessengerType =
+                            parameters.InstantMessengerType.Set(ImppTypes.Personal);
                     }
 
-                    if (prop.Parameters.PropertyClass.IsSet(PropertyClassTypes.Work))
+                    if (parameters.PropertyClass.IsSet(PropertyClassTypes.Work))
                     {
-                        prop.Parameters.InstantMessengerType =
-                            prop.Parameters.InstantMessengerType.Set(ImppTypes.Business);
+                        parameters.InstantMessengerType =
+                            parameters.InstantMessengerType.Set(ImppTypes.Business);
                     }
 
-                    BuildProperty(VCard.PropKeys.IMPP, prop, i == 0 && prop.Parameters.Preference < 100);
+                    BuildProperty(VCard.PropKeys.IMPP, prop, first && parameters.Preference < 100);
+                    first = false;
                 }
             }
 

@@ -236,7 +236,8 @@ public sealed partial class VCard
             IEnumerable<RelationUuidProperty> guidProps = relations
                 .Select(x => x as RelationUuidProperty)
                 .WhereNotEmpty()
-                .ToArray()!;
+                .ToArray(); // We need ToArray here because relations
+                            // might change.
 
             foreach (RelationUuidProperty guidProp in guidProps)
             {
@@ -265,5 +266,4 @@ public sealed partial class VCard
             }
         }
     }
-
 }

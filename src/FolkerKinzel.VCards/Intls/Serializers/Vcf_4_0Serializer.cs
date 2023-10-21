@@ -30,7 +30,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     }
 
 
-    private void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> props)
+    protected override void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> props)
     {
         Debug.Assert(props != null);
 
@@ -57,7 +57,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             return;
         }
 
-        string altID = arr.FirstOrDefault(x => x.Parameters.AltID != null)?.Parameters.AltID ?? "1";
+        string altID = arr.FirstOrDefault(static x => x.Parameters.AltID != null)?.Parameters.AltID ?? "1";
 
         foreach (VCardProperty prop in arr)
         {
