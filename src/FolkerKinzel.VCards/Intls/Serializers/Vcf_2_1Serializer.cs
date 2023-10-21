@@ -111,12 +111,14 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         Debug.Assert(serializables != null);
 
-        VCardProperty[] arr = serializables.OrderByPrefIntl(IgnoreEmptyItems).ToArray();
+        bool first = true;
 
-        for (int i = 0; i < arr.Length; i++)
+        foreach (VCardProperty prop in serializables.OrderByPrefIntl(IgnoreEmptyItems))
         {
-            VCardProperty prop = arr[i];
-            BuildProperty(propertyKey, prop, i == 0 && prop.Parameters.Preference < 100);
+            bool isPref = first && prop.Parameters.Preference < 100;
+            first = false;
+
+            BuildProperty(propertyKey, prop, isPref);
         }
     }
 
