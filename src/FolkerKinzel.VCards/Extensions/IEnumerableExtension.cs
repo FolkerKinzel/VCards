@@ -376,7 +376,7 @@ public static class IEnumerableExtension
     /// <see cref="ParameterSection.Preference"/> has no meaning in such properties.
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static IEnumerable<TSource> OrderByPref<TSource>(this IEnumerable<TSource?>? values,
+    public static IEnumerable<TSource> OrderByPref<TSource>(this IEnumerable<TSource?>? values,
                                                     bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values is null ? Enumerable.Empty<TSource>()
                           : values.OrderByPrefIntl(ignoreEmptyItems);
@@ -403,7 +403,7 @@ public static class IEnumerableExtension
     /// <see cref="OrderByPref{TSource}(IEnumerable{TSource}?, bool)"/>.
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static IEnumerable<TSource> OrderByIndex<TSource>(this IEnumerable<TSource?> values,
+    public static IEnumerable<TSource> OrderByIndex<TSource>(this IEnumerable<TSource?> values,
                                                    bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values is null ? Enumerable.Empty<TSource>()
                           : values.OrderByIndexIntl(ignoreEmptyItems);
