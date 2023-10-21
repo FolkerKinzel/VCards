@@ -113,6 +113,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
         bool multiple = Options.IsSet(VcfOptions.AllowMultipleAdrAndLabelInVCard21);
         bool first = true;
+
         foreach (AddressProperty prop in value.OrderByPrefIntl(IgnoreEmptyItems))
         {
             bool isPref = first && multiple && prop!.Parameters.Preference < 100;
@@ -142,16 +143,10 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         => base.AppendAnniversaryViews(value);
 
     protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value)
-    {
-        Debug.Assert(value != null);
-
-        if (value.FirstOrNullIntl(static x => x is DateOnlyProperty or DateTimeOffsetProperty, IgnoreEmptyItems)
-                is DateAndOrTimeProperty pref)
-        {
-            BuildProperty(VCard.PropKeys.BDAY, pref);
-        }
-    }
-
+        => BuildFirstProperty(VCard.PropKeys.BDAY, 
+                              value, 
+                              static x => x is DateOnlyProperty or DateTimeOffsetProperty);
+   
     protected override void AppendDisplayNames(IEnumerable<TextProperty?> value)
     {
         Debug.Assert(value != null);

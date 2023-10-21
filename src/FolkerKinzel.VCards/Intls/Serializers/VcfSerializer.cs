@@ -74,6 +74,21 @@ internal abstract class VcfSerializer
         }
     }
 
+    protected void BuildFirstProperty<T>(string propertyKey,
+                                         IEnumerable<T?> serializables,
+                                         Func<T, bool>? filter = null) where T : VCardProperty
+    {
+        Debug.Assert(serializables != null);
+
+        VCardProperty? first = filter is null ? serializables.FirstOrNullIntl(IgnoreEmptyItems)
+                                              : serializables.FirstOrNullIntl(filter, IgnoreEmptyItems);
+
+        if (first != null)
+        {
+            BuildProperty(propertyKey, first);
+        }
+    }
+
     protected virtual void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> serializables)
     {
         Debug.Assert(serializables != null);

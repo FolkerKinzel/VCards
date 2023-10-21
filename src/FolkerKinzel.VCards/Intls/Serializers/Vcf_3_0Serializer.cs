@@ -20,7 +20,6 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         {
             if (VCardToSerialize.NameViews is null)
             {
-
                 VCardToSerialize.NameViews = Array.Empty<NameProperty?>();
             }
 
@@ -65,16 +64,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         protected override void AppendAnniversaryViews(IEnumerable<DateAndOrTimeProperty?> value)
             => base.AppendAnniversaryViews(value);
 
-        protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value)
-        {
-            Debug.Assert(value != null);
-
-            if (value.FirstOrNullIntl(static x => x is DateOnlyProperty or DateTimeOffsetProperty, IgnoreEmptyItems)
-                is DateAndOrTimeProperty pref)
-            {
-                BuildProperty(VCard.PropKeys.BDAY, pref);
-            }
-        }
+        protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value) 
+            => BuildFirstProperty(VCard.PropKeys.BDAY,
+                                  value, 
+                                  static x => x is DateOnlyProperty or DateTimeOffsetProperty);
 
         protected override void AppendCategories(IEnumerable<StringCollectionProperty?> value)
             => BuildPrefProperty(VCard.PropKeys.CATEGORIES, value);
