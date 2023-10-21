@@ -3,34 +3,34 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 using System.Collections;
+using System.Numerics;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Represents a vCard property that is not defined by the official standards.</summary>
-    /// <remarks>
-    /// <note type="important">
-    /// <para>
-    /// Um Objekte der Klasse <see cref="NonStandardProperty" /> in eine vCard zu schreiben,
-    /// muss beim Schreibvorgang das Flag <see cref="VcfOptions.WriteNonStandardProperties">VcfOptions.WriteNonStandardProperties</see>
-    /// explizit gesetzt werden.
-    /// </para>
-    /// <para>
-    /// Bedenken Sie, dass Sie sich bei Verwendung der Klasse um die standardgerechte
-    /// Maskierung, Demaskierung, Enkodierung und Dekodierung der Daten selbst kümmern
-    /// müssen.
-    /// </para>
-    /// </note>
-    /// </remarks>
+/// <summary>Represents a vCard property that is not defined by the official 
+/// standards.</summary>
+/// <remarks>
+/// <note type="important">
+/// <para>
+/// To write <see cref="NonStandardProperty" /> objects into a vCard, the flag 
+/// <see cref="VcfOptions.WriteNonStandardProperties" /> must be set. 
+/// </para>
+/// <para>
+/// Please note that when using the class, yourself is responsible for the 
+/// standard-compliant masking, unmasking, encoding and decoding of the data.
+/// </para>
+/// </note>
+/// </remarks>
+/// <seealso cref="VCard.NonStandard"/>
 public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandardProperty>
 {
     /// <summary>Copy ctor.</summary>
-    /// <param name="prop" />
+    /// <param name="prop">The <see cref="NonStandardProperty"/> instance to clone.</param>
     private NonStandardProperty(NonStandardProperty prop) : base(prop)
     {
         PropertyKey = prop.PropertyKey;
         Value = prop.Value;
     }
-
 
     /// <summary>Initializes a new <see cref="NonStandardProperty" /> object.</summary>
     /// <param name="propertyKey">The key ("name") of the non-standard vCard property
@@ -64,13 +64,13 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
         Value = value;
     }
 
+
     internal NonStandardProperty(VcfRow vcfRow)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
         PropertyKey = vcfRow.Key;
-        Value = vcfRow.Value;
+        Value = string.IsNullOrEmpty(vcfRow.Value) ? null : vcfRow.Value;
     }
-
 
     /// <summary>The key ("name") of the vCard property.</summary>
     public string PropertyKey { get; }
@@ -82,16 +82,11 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
         get;
     }
 
-
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-
-    /// <summary>Creates a <see cref="string" /> representation of the <see cref="NonStandardProperty"
-    /// /> object. (For debugging only.)</summary>
-    /// <returns>A <see cref="string" /> representation of the <see cref="NonStandardProperty"
-    /// /> object.</returns>
+    /// <inheritdoc/>
     public override string ToString()
     {
         var sb = new StringBuilder();
@@ -101,6 +96,20 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
 
         return sb.ToString();
     }
+
+    /// <inheritdoc />
+    public override object Clone() => new NonStandardProperty(this);
+
+    /// <inheritdoc />
+    IEnumerator<NonStandardProperty> IEnumerable<NonStandardProperty>.GetEnumerator()
+    {
+        yield return this;
+    }
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator()
+        => ((IEnumerable<NonStandardProperty>)this).GetEnumerator();
+
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -114,14 +123,4 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
 
         _ = serializer.Builder.Append(Value);
     }
-
-    IEnumerator<NonStandardProperty> IEnumerable<NonStandardProperty>.GetEnumerator()
-    {
-        yield return this;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<NonStandardProperty>)this).GetEnumerator();
-
-    /// <inheritdoc />
-    public override object Clone() => new NonStandardProperty(this);
 }

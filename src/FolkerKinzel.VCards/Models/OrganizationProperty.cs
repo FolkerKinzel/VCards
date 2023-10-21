@@ -10,12 +10,14 @@ namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Represents the vCard property <c>ORG</c>, which stores information
 /// about the organization to which the <see cref="VCard"/> object is associated.</summary>
+/// <seealso cref="VCard.Organizations"/>
+/// <seealso cref="Organization"/>
 public sealed class OrganizationProperty : VCardProperty, IEnumerable<OrganizationProperty>
 {
     /// <summary>
     /// <summary>Copy ctor.</summary>
     /// </summary>
-    /// <param name="prop"></param>
+    /// <param name="prop">The <see cref="OrganizationProperty"/> instance to clone.</param>
     private OrganizationProperty(OrganizationProperty prop) : base(prop)
         => Value = prop.Value;
 
@@ -35,6 +37,7 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
         Value = new Organization(list);
     }
 
+
     internal OrganizationProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
@@ -50,7 +53,6 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
         Value = new Organization(list);
     }
 
-
     /// <summary> The data provided by the  <see cref="OrganizationProperty" />. </summary>
     public new Organization Value
     {
@@ -58,11 +60,24 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
     }
 
     /// <inheritdoc />
+    public override bool IsEmpty => Value.IsEmpty;
+
+    /// <inheritdoc />
+    public override object Clone() => new OrganizationProperty(this);
+
+    /// <inheritdoc />
+    IEnumerator<OrganizationProperty> IEnumerable<OrganizationProperty>.GetEnumerator()
+    {
+        yield return this;
+    }
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<OrganizationProperty>)this).GetEnumerator();
+
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-    /// <inheritdoc />
-    public override bool IsEmpty => Value.IsEmpty;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -76,6 +91,7 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
     }
+
 
     internal override void AppendValue(VcfSerializer serializer)
     {
@@ -94,14 +110,4 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
             _ = builder.Append(QuotedPrintable.Encode(toEncode, valueStartIndex));
         }
     }
-
-    IEnumerator<OrganizationProperty> IEnumerable<OrganizationProperty>.GetEnumerator()
-    {
-        yield return this;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<OrganizationProperty>)this).GetEnumerator();
-
-    /// <inheritdoc />
-    public override object Clone() => new OrganizationProperty(this);
 }
