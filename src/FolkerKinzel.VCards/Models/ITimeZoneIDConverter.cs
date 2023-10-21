@@ -16,7 +16,8 @@ namespace FolkerKinzel.VCards.Models;
 /// </para>
 /// <para>
 /// Since .NET cannot do the conversion itself, this interface enables a 3rd-party 
-/// library to be integrated.
+/// library to be integrated. (Since .NET&#160;6.0 exists a .NET solution with the ICU
+/// library but this needs a separate dependency or additional configuration.)
 /// </para>
 /// </remarks>
 /// <example>

@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
 using FolkerKinzel.VCards.Intls.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -51,6 +52,23 @@ public class RelationPropertyTests
 
     [TestMethod]
     public void FromUriTest2() => Assert.IsTrue(RelationProperty.FromUri(null).IsEmpty);
+
+
+    [TestMethod]
+    public void FromUriTest3()
+    {
+        Assert.IsTrue(Uri.TryCreate("mailto:jemand@beispiel.com", UriKind.Absolute, out Uri? uri));
+        Assert.IsInstanceOfType(RelationProperty.FromUri(uri), typeof(RelationUriProperty));
+    }
+
+    [TestMethod]
+    public void FromUriTest4()
+    {
+        Assert.IsTrue(Uri.TryCreate("urn:uuid:550e8400-e29b-11d4-a716-446655440000", UriKind.Absolute, out Uri? uri));
+        var prop = RelationProperty.FromUri(uri);
+        Assert.IsInstanceOfType(prop, typeof(RelationUuidProperty));
+        Assert.IsFalse(prop.IsEmpty);
+    }
 
     [TestMethod]
     public void IsEmptyTest1()

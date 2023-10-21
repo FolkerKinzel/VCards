@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Abstract base class of all classes that represent vCard properties.</summary>
+/// <summary>Abstract base class of all classes that represent vCard properties.</summary>
 public abstract class VCardProperty : ICloneable
 {
     private string? _group;
@@ -99,17 +99,6 @@ public abstract class VCardProperty : ICloneable
     }
 
 
-    [ExcludeFromCodeCoverage]
-    [Conditional("DEBUG")]
-    private void Asserts(VcfSerializer serializer)
-    {
-        Debug.Assert(serializer != null);
-        Debug.Assert(serializer.PropertyKey != null);
-        Debug.Assert(!this.IsEmpty || serializer.Options.IsSet(VcfOptions.WriteEmptyProperties));
-        Debug.Assert(serializer.Builder != null);
-    }
-
-
     internal virtual void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
@@ -123,4 +112,15 @@ public abstract class VCardProperty : ICloneable
 
 
     internal abstract void AppendValue(VcfSerializer serializer);
+
+
+    [ExcludeFromCodeCoverage]
+    [Conditional("DEBUG")]
+    private void Asserts(VcfSerializer serializer)
+    {
+        Debug.Assert(serializer != null);
+        Debug.Assert(serializer.PropertyKey != null);
+        Debug.Assert(!this.IsEmpty || serializer.Options.IsSet(VcfOptions.WriteEmptyProperties));
+        Debug.Assert(serializer.Builder != null);
+    }
 }

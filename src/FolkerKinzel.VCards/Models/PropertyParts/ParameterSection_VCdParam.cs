@@ -75,8 +75,8 @@ public sealed partial class ParameterSection
         /// <summary><c>TZ</c>: Time zone <c>(4)</c></summary>
         TimeZone,
 
-        // <summary><c>CALSCALE</c>: It is used to define the calendar system in which a date or 
-        /// date-time value is expressed. <c>(4)</c></summary>
+        /// <summary><c>CALSCALE</c>: It is used to define the calendar system in which 
+        /// a date or date-time value is expressed. <c>(4)</c></summary>
         Calendar,
 
         /// <summary><c>SORT-AS</c>: Determines the sort order. <c>([3],4)</c></summary>

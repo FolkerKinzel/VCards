@@ -2,10 +2,14 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Resources;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Represents the standardized name of a time zone.</summary>
+/// <seealso cref="TimeZoneProperty"/>
+/// <seealso cref="VCard.TimeZones"/>
+/// <seealso cref="ParameterSection.TimeZone"/>
 public sealed partial class TimeZoneID
 {
     private enum TzError { None, Null, Empty }
@@ -14,14 +18,15 @@ public sealed partial class TimeZoneID
 
     private TimeZoneID(string timeZoneID) => Value = timeZoneID.Trim();
 
-    /// <summary> Parst einen <see cref="string" /> als <see cref="TimeZoneID" />-Objekt.
+    /// <summary> Parses a <see cref="string" /> as <see cref="TimeZoneID" /> object.
     /// </summary>
     /// <param name="value">Identifier of the time zone. It should be an identifier
-    /// from the "IANA Time Zone Database". (See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    /// .)</param>
-    /// <exception cref="ArgumentNullException"> <paramref name="value" /> ist <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="value" /> ist ein leerer
-    /// <see cref="string" /> oder enthält nur Leerraum.</exception>
+    /// from the "IANA Time Zone Database".
+    /// (See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
+    /// <exception cref="ArgumentNullException"> <paramref name="value" /> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="ArgumentException"> <paramref name="value" /> is an empty
+    /// <see cref="string" /> or consists only of white space characters.</exception>
     public static TimeZoneID Parse(string value)
     {
         if (!Validate(value, out TzError error))
@@ -37,15 +42,13 @@ public sealed partial class TimeZoneID
         return new TimeZoneID(value);
     }
 
-    /// <summary> Versucht, einen <see cref="string" /> als <see cref="TimeZoneID" />-Objekt
-    /// zu parsen. </summary>
+    /// <summary> Tries to parse a <see cref="string" /> as <see cref="TimeZoneID" /> object. </summary>
     /// <param name="value">Identifier of the time zone. It should be an identifier
     /// from the "IANA Time Zone Database". (See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     /// .)</param>
-    /// <param name="timeZoneID">Wenn das Parsen erfolgreich war, enthält der Parameter
-    /// ein neues <see cref="TimeZoneID" />-Objekt. Der Parameter wird uninitialisiert
-    /// übergeben.</param>
-    /// <returns> <c>true</c>, wenn deas Parsen erfolgreich war, andernfalls <c>false</c>.</returns>
+    /// <param name="timeZoneID">If parsing was successful, the parameter contains a new 
+    /// <see cref="TimeZoneID" /> object. The parameter is passed uninitialized.</param>
+    /// <returns> <c>true</c> if parsing was successful, otherwise <c>false</c>.</returns>
     public static bool TryParse(string? value, [NotNullWhen(true)] out TimeZoneID? timeZoneID)
     {
         if (Validate(value, out _))
@@ -76,14 +79,13 @@ public sealed partial class TimeZoneID
         return true;
     }
 
-
     /// <summary>Standardized name of the time zone.</summary>
     /// <value> That's the String with which the <see cref="TimeZoneID"
     /// /> object was initialized.</value>
     public string Value { get; }
 
-    /// <summary> Versucht, einen entsprechenden UTC-Offset für das <see cref="TimeZoneID"
-    /// />-Objekt zu finden. </summary>
+    /// <summary>Tries to find a corresponding UTC offset for the <see cref="TimeZoneID" />
+    /// object.</summary>
     /// <param name="utcOffset">Contains the UTC offset after the method has been successfully
     /// returned. The argument is passed uninitialized.</param>
     /// <param name="converter">An object that implements <see cref="ITimeZoneIDConverter"

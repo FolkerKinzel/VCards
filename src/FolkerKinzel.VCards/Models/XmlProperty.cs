@@ -6,12 +6,13 @@ namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates the data of the vCard property <c>XML</c>, which enables
 /// embedded XML data in VCF files.</summary>
+/// <seealso cref="VCard.XmlProperties"/>
+/// <seealso cref="XElement"/>
 public sealed class XmlProperty : TextProperty, IEnumerable<XmlProperty>
 {
     /// <summary>Copy ctor.</summary>
-    /// <param name="prop" />
+    /// <param name="prop"></param>
     private XmlProperty(XmlProperty prop) : base(prop) { }
-
 
     /// <summary>Initializes a new <see cref="XmlProperty" /> object. </summary>
     /// <param name="xmlContent">A <see cref="XElement" /> or <c>null</c>. The element
@@ -46,12 +47,12 @@ public sealed class XmlProperty : TextProperty, IEnumerable<XmlProperty>
 
     internal XmlProperty(VcfRow vcfRow) : base(vcfRow, VCdVersion.V4_0) { }
 
+    /// <inheritdoc />
+    public override object Clone() => new XmlProperty(this);
 
+    /// <inheritdoc />
     IEnumerator<XmlProperty> IEnumerable<XmlProperty>.GetEnumerator()
     {
         yield return this;
     }
-
-    /// <inheritdoc />
-    public override object Clone() => new XmlProperty(this);
 }

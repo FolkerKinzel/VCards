@@ -8,34 +8,37 @@ using OneOf;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Encapsulates the vCard property <c>REV</c>, which represents a timestamp
-    /// of the last update of the <see cref="VCard" />.</summary>
+/// <summary>Encapsulates the vCard property <c>REV</c>, which represents 
+/// the timestamp of the last update of the <see cref="VCard" />.</summary>
+/// <see cref="VCard.TimeStamp"/>
 public sealed class TimeStampProperty : VCardProperty
 {
     /// <summary>Copy ctor.</summary>
-    /// <param name="prop" />
+    /// <param name="prop">The <see cref="TimeStampProperty"/> instance to clone.</param>
     private TimeStampProperty(TimeStampProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary>  Initializes a new <see cref="TimeStampProperty" /> object, das
-    /// den Zeitpunkt des Konstruktoraufrufs als Zeitstempel kapselt. </summary>
+    /// <summary> Initializes a new <see cref="TimeStampProperty" /> object that 
+    /// encapsulates the time of its constructor call as a UTC time stamp.</summary>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <remarks> Der Konstruktor setzt den <see cref="ParameterSection.DataType" />-Parameter
-    /// automatisch auf den Wert <see cref="VCdDataType.TimeStamp" />. </remarks>
-    public TimeStampProperty(string? propertyGroup = null) : this(DateTimeOffset.UtcNow, propertyGroup) { }
+    /// <remarks>The constructor sets the <see cref="ParameterSection.DataType" /> parameter 
+    /// to the value <see cref="VCdDataType.TimeStamp" />.</remarks>
+    public TimeStampProperty(string? propertyGroup = null)
+        : this(DateTimeOffset.UtcNow, propertyGroup) { }
 
 
-    /// <summary>  Initializes a new <see cref="TimeStampProperty" />-Objekt mit
-    /// dem angegebenen Zeitstempel. </summary>
-    /// <param name="value">Ein <see cref="DateTimeOffset" />-Objekt.</param>
+    /// <summary>  Initializes a new <see cref="TimeStampProperty" /> object with
+    /// the specified time stamp. </summary>
+    /// <param name="value">The <see cref="DateTimeOffset" /> value to embed.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <remarks> Der Konstruktor setzt den <see cref="ParameterSection.DataType" />-Parameter
-    /// automatisch auf den Wert <see cref="VCdDataType.TimeStamp" />. </remarks>
-    public TimeStampProperty(DateTimeOffset value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+    /// <remarks> The constructor sets the <see cref="ParameterSection.DataType" /> parameter 
+    /// to the value <see cref="VCdDataType.TimeStamp" />. </remarks>
+    public TimeStampProperty(DateTimeOffset value, string? propertyGroup = null)
+        : base(new ParameterSection(), propertyGroup)
     {
         Value = value;
         Parameters.DataType = VCdDataType.TimeStamp;
@@ -45,8 +48,8 @@ public sealed class TimeStampProperty : VCardProperty
     internal TimeStampProperty(VcfRow vcfRow)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        // ein statischer DateAndOrTimeConverter kann nicht benutzt werden, da das die 
-        // Threadsafety zerstören würde:
+        // A static DateAndOrTimeConverter can't be used because it would
+        // destroy the thread safety:
         if (vcfRow.Info.DateAndOrTimeConverter.TryParse(vcfRow.Value.AsSpan(), out OneOf<DateOnly, DateTimeOffset> value))
         {
             Value = value.Match<DateTimeOffset>(
@@ -56,21 +59,22 @@ public sealed class TimeStampProperty : VCardProperty
         }
     }
 
-
-    /// <summary> The data provided by the  <see cref="TimeStampProperty" />. </summary>
+    /// <summary> The data provided by the <see cref="TimeStampProperty" />. </summary>
     public new DateTimeOffset Value
     {
         get;
     }
 
+    /// <inheritdoc />
+    public override bool IsEmpty => Value < new DateTimeOffset(1900, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+    /// <inheritdoc />
+    public override object Clone() => new TimeStampProperty(this);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-
-    /// <inheritdoc />
-    public override bool IsEmpty => Value < new DateTimeOffset(1900, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
     internal override void AppendValue(VcfSerializer serializer)
     {
@@ -82,7 +86,4 @@ public sealed class TimeStampProperty : VCardProperty
         _ = worker.Mask(serializer.Version);
         _ = serializer.Builder.Append(worker);
     }
-
-    /// <inheritdoc />
-    public override object Clone() => new TimeStampProperty(this);
 }

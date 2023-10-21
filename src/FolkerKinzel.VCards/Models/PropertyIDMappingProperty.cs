@@ -5,23 +5,24 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Encapsulates information that is used to identify vCard properties
-    /// across different versions of the same vCard.</summary>
+/// <summary>Encapsulates information that is used to identify vCard properties
+/// across different versions of the same vCard.</summary>
+/// <seealso cref="PropertyIDMapping"/>
+/// <seealso cref="VCard.PropertyIDMappings"/>
 public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<PropertyIDMappingProperty>
 {
     /// <summary>Copy ctor.</summary>
-    /// <param name="prop" />
+    /// <param name="prop">The <see cref="PropertyIDMappingProperty"/> instance
+    /// to clone.</param>
     private PropertyIDMappingProperty(PropertyIDMappingProperty prop) : base(prop)
         => Value = prop.Value;
 
     /// <summary>  Initializes a new <see cref="PropertyIDMappingProperty" /> object. 
     /// </summary>
     /// <param name="value">A <see cref="PropertyIDMapping" /> object or <c>null</c>.</param>
-    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="value" /> is
-    /// less than 1 or greater than 9.</exception>
-    public PropertyIDMappingProperty(PropertyIDMapping? value) : base(new ParameterSection(), null)
+    public PropertyIDMappingProperty(PropertyIDMapping? value)
+        : base(new ParameterSection(), null)
         => Value = value;
-
 
     /// <summary>ctor</summary>
     /// <param name="vcfRow" />
@@ -37,13 +38,24 @@ public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<Prope
         Value = PropertyIDMapping.Parse(vcfRow.Value);
     }
 
-
     /// <summary> The data provided by the <see cref="PropertyIDMappingProperty" />. </summary>
     public new PropertyIDMapping? Value
     {
         get;
     }
 
+    /// <inheritdoc />
+    public override object Clone() => new PropertyIDMappingProperty(this);
+
+    /// <inheritdoc />
+    IEnumerator<PropertyIDMappingProperty> IEnumerable<PropertyIDMappingProperty>.GetEnumerator()
+    {
+        yield return this;
+    }
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator()
+        => ((IEnumerable<PropertyIDMappingProperty>)this).GetEnumerator();
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -51,14 +63,4 @@ public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<Prope
 
 
     internal override void AppendValue(VcfSerializer serializer) => Value?.AppendTo(serializer.Builder);
-
-    IEnumerator<PropertyIDMappingProperty> IEnumerable<PropertyIDMappingProperty>.GetEnumerator()
-    {
-        yield return this;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PropertyIDMappingProperty>)this).GetEnumerator();
-
-    /// <inheritdoc />
-    public override object Clone() => new PropertyIDMappingProperty(this);
 }

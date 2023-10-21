@@ -8,12 +8,14 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Represents vCard properties that store a collection of <see cref="string"
-    /// />s .</summary>
+/// <summary>Represents vCard properties that store a collection of <see cref="string" />s .</summary>
+/// <seealso cref="VCard.NickNames"/>
+/// <seealso cref="VCard.Categories"/>
 public sealed class StringCollectionProperty : VCardProperty, IEnumerable<StringCollectionProperty>
 {
     /// <summary>Copy ctor.</summary>
-    /// <param name="prop" />
+    /// <param name="prop">The <see cref="StringCollectionProperty"/>
+    /// instance to clone</param>
     private StringCollectionProperty(StringCollectionProperty prop) : base(prop)
         => Value = prop.Value;
 
@@ -22,7 +24,8 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+    public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null) 
+        : base(new ParameterSection(), propertyGroup)
     {
         this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
 
@@ -32,13 +35,13 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         }
     }
 
-
     /// <summary>Initializes a new <see cref="StringCollectionProperty" /> object.</summary>
     /// <param name="value">A <see cref="string" /> or <c>null</c>.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public StringCollectionProperty(string? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+    public StringCollectionProperty(string? value, string? propertyGroup = null)
+        : base(new ParameterSection(), propertyGroup)
     {
         this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
 
@@ -75,13 +78,47 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         }
     }
 
-
     /// <summary>The data provided by the <see cref="StringCollectionProperty" />.</summary>
     public new ReadOnlyCollection<string>? Value
     {
         get;
     }
 
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        string s = "";
+
+        if (Value is null)
+        {
+            return s;
+        }
+
+        Debug.Assert(Value.Count != 0);
+
+        for (int i = 0; i < Value.Count - 1; i++)
+        {
+            s += Value[i];
+            s += ", ";
+        }
+
+        s += Value[Value.Count - 1];
+
+        return s;
+    }
+
+    /// <inheritdoc />
+    public override object Clone() => new StringCollectionProperty(this);
+
+    /// <inheritdoc />
+    IEnumerator<StringCollectionProperty> IEnumerable<StringCollectionProperty>.GetEnumerator()
+    {
+        yield return this;
+    }
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator()
+        => ((IEnumerable<StringCollectionProperty>)this).GetEnumerator();
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -120,38 +157,4 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         _ = worker.Clear().Append(s).Mask(serializer.Version);
         _ = builder.Append(worker);
     }
-
-
-    /// <inheritdoc />
-    public override string ToString()
-    {
-        string s = "";
-
-        if (Value is null)
-        {
-            return s;
-        }
-
-        Debug.Assert(Value.Count != 0);
-
-        for (int i = 0; i < Value.Count - 1; i++)
-        {
-            s += Value[i];
-            s += ", ";
-        }
-
-        s += Value[Value.Count - 1];
-
-        return s;
-    }
-
-    IEnumerator<StringCollectionProperty> IEnumerable<StringCollectionProperty>.GetEnumerator()
-    {
-        yield return this;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<StringCollectionProperty>)this).GetEnumerator();
-
-    /// <inheritdoc />
-    public override object Clone() => new StringCollectionProperty(this);
 }

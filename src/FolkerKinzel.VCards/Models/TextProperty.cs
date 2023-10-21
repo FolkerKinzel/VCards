@@ -8,11 +8,11 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Represents vCard properties whose content consists of text.</summary>
+/// <summary>Represents vCard properties whose content consists of text.</summary>
 public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 {
     /// <summary>Copy constructor.</summary>
-    /// <param name="prop">The <see cref="TextProperty" /> object to clone.</param>
+    /// <param name="prop">The <see cref="TextProperty" /> instance to clone.</param>
     protected TextProperty(TextProperty prop) : base(prop)
         => Value = prop.Value;
 
@@ -21,8 +21,8 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public TextProperty(string? value, string? propertyGroup = null) 
-        : base(new ParameterSection(), propertyGroup) 
+    public TextProperty(string? value, string? propertyGroup = null)
+        : base(new ParameterSection(), propertyGroup)
         => Value = string.IsNullOrWhiteSpace(value) ? null : value;
 
 
@@ -32,23 +32,31 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
         Value = vcfRow.Value.Length == 0 ? null : vcfRow.Value;
     }
 
-
     /// <summary>The data provided by the <see cref="TextProperty" />.</summary>
     public new virtual string? Value
     {
         get;
     }
 
-    
     /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => base.IsEmpty;
 
+    /// <inheritdoc />
+    public override object Clone() => new TextProperty(this);
+
+    /// <inheritdoc />
+    IEnumerator<TextProperty> IEnumerable<TextProperty>.GetEnumerator()
+    {
+        yield return this;
+    }
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TextProperty>)this).GetEnumerator();
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
-
 
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
@@ -86,16 +94,4 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
             _ = builder.Append(worker);
         }
     }
-
-
-    IEnumerator<TextProperty> IEnumerable<TextProperty>.GetEnumerator()
-    {
-        yield return this;
-    }
-
-
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TextProperty>)this).GetEnumerator();
-
-    /// <inheritdoc />
-    public override object Clone() => new TextProperty(this);
 }

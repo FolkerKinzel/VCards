@@ -51,7 +51,7 @@ public abstract class DateAndOrTimeProperty
     public override bool IsEmpty => base.IsEmpty;
 
     /// <summary>
-    /// Creates a new <see cref="DateAndOrTimeProperty"/> from a date in the Gregorian
+    /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a date in the Gregorian
     /// calendar.
     /// </summary>
     /// <param name="year">The year (1 bis 9999).</param>
@@ -60,7 +60,7 @@ public abstract class DateAndOrTimeProperty
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The created <see cref="DateAndOrTimeProperty"/> instance.</returns>
+    /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
     /// <exception cref="ArgumentOutOfRangeException">
     /// <para><paramref name="year"/> is less than 1 or greater than 9999.</para>
     /// <para>-or-</para>
@@ -73,14 +73,14 @@ public abstract class DateAndOrTimeProperty
         => FromDate(new DateOnly(year, month, day), propertyGroup);
 
     /// <summary>
-    /// Creates a new <see cref="DateAndOrTimeProperty"/> from a <see cref="DateOnly"/> 
+    /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a <see cref="DateOnly"/> 
     /// value.
     /// </summary>
     /// <param name="date">The <see cref="DateOnly"/> value.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The created <see cref="DateAndOrTimeProperty"/> instance.</returns>
+    /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
     public static DateAndOrTimeProperty FromDate(DateOnly date,
                                                  string? propertyGroup = null)
         => new DateOnlyProperty(date,
@@ -88,15 +88,15 @@ public abstract class DateAndOrTimeProperty
                                 propertyGroup);
 
     /// <summary>
-    /// Creates a new <see cref="DateAndOrTimeProperty"/> from a <see cref="DateTime"/> or
+    /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a <see cref="System.DateTime"/> or
     /// <see cref="DateTimeOffset"/> value.
     /// </summary>
-    /// <param name="dateTime">A <see cref="DateTime"/> or <see cref="DateTimeOffset"/> value.</param>
+    /// <param name="dateTime">A <see cref="System.DateTime"/> or <see cref="DateTimeOffset"/> value.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The created <see cref="DateAndOrTimeProperty"/> instance.</returns>
-    /// <remarks><see cref="DateTime"/> has an implicit conversion to <see cref="DateTimeOffset"/>.
+    /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
+    /// <remarks><see cref="System.DateTime"/> has an implicit conversion to <see cref="DateTimeOffset"/>.
     /// </remarks>
     public static DateAndOrTimeProperty FromDateTime(DateTimeOffset dateTime,
                                                      string? propertyGroup = null)
@@ -105,14 +105,14 @@ public abstract class DateAndOrTimeProperty
                                       propertyGroup);
 
     /// <summary>
-    /// Creates a new <see cref="DateAndOrTimeProperty"/> from a time.
+    /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a time.
     /// </summary>
     /// <param name="hour">The hours (0 through 23).</param>
     /// <param name="minute">The minutes (0 through 59).</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The created <see cref="DateAndOrTimeProperty"/> instance.</returns>
+    /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
     /// <exception cref="ArgumentOutOfRangeException">
     /// <para><paramref name="hour"/> is less than 0 or greater than 23.</para>
     /// <para>-or-</para>
@@ -123,26 +123,26 @@ public abstract class DateAndOrTimeProperty
         => FromTime(new TimeOnly(hour, minute), propertyGroup);
 
     /// <summary>
-    /// Creates a new <see cref="DateAndOrTimeProperty"/> from a <see cref="TimeOnly"/>
-    /// value.
+    /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a 
+    /// <see cref="TimeOnly"/> value.
     /// </summary>
     /// <param name="time">A <see cref="TimeOnly"/> value.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The created <see cref="DateAndOrTimeProperty"/> instance.</returns>
+    /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
     public static DateAndOrTimeProperty FromTime(TimeOnly time,
                                                  string? propertyGroup = null)
         => new TimeOnlyProperty(time,
                                 new ParameterSection() { DataType = VCdDataType.Time },
                                 propertyGroup);
 
-    /// <summary> Creates a new <see cref="DateAndOrTimeProperty"/> from text. </summary>
+    /// <summary> Creates a new <see cref="DateAndOrTimeProperty"/> instance from text. </summary>
     /// <param name="text">Any text or <c>null</c>.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The created <see cref="DateAndOrTimeProperty"/> instance.</returns>
+    /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
     /// <example>
     /// <code language="none">
     /// After midnight.

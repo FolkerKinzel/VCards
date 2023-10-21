@@ -65,8 +65,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     public abstract string GetFileTypeExtension();
 
     /// <summary>
-    /// Creates a new <see cref="DataProperty"/> that embeds the binary content of a file
-    /// in a vCard.
+    /// Creates a new <see cref="DataProperty"/> instance that embeds the binary content 
+    /// of a file in a vCard.
     /// </summary>
     /// <param name="filePath">Path to the file whose content is to embed.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the file content
@@ -75,7 +75,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The created <see cref="DataProperty"/>.</returns>
+    /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="filePath"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="filePath"/> is not a valid file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
@@ -96,8 +96,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                : FromFile(filePath, null, propertyGroup);
 
     /// <summary>
-    /// Creates a new <see cref="DataProperty"/> that embeds a collection of <see cref="byte"/>s
-    /// in a vCard.
+    /// Creates a new <see cref="DataProperty"/> instance that embeds a collection of 
+    /// <see cref="byte"/>s in a vCard.
     /// </summary>
     /// <param name="bytes">The <see cref="byte"/>s to embed or <c>null</c>.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="bytes"/>
@@ -105,7 +105,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The created <see cref="DataProperty"/>.</returns>
+    /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
     public static DataProperty FromBytes(IEnumerable<byte>? bytes,
                                          string? mimeType = MimeString.OctetStream,
                                          string? propertyGroup = null)
@@ -122,7 +122,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
            );
 
     /// <summary>
-    /// Creates a new <see cref="DataProperty"/> that embeds text in a vCard.
+    /// Creates a new <see cref="DataProperty"/> instance that embeds text in a vCard.
     /// </summary>
     /// <param name="text">The text to embed or <c>null</c>.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="text"/>
@@ -130,7 +130,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The created <see cref="DataProperty"/>.</returns>
+    /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
     /// <remarks>
     /// The vCard standard allows to write a password as plain text to the <c>KEY</c> property.
     /// <see cref="VCard.Keys">(See VCard.Keys.)</see>
@@ -150,8 +150,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     }
 
     /// <summary>
-    /// Creates a new <see cref="DataProperty"/> from an absolute <see cref="Uri"/> that 
-    /// references external data.
+    /// Creates a new <see cref="DataProperty"/> instance from an absolute <see cref="Uri"/> 
+    /// that references external data.
     /// </summary>
     /// <param name="uri">An absolute <see cref="Uri"/> or <c>null</c>.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the 
@@ -159,7 +159,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The created <see cref="DataProperty"/>.</returns>
+    /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
     /// <exception cref="ArgumentException"><paramref name="uri"/> is neither <c>null</c> nor
     /// an absolute <see cref="Uri"/>.</exception>
     public static DataProperty FromUri(Uri? uri,

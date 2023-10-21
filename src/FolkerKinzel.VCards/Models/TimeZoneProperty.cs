@@ -6,21 +6,23 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-    /// <summary>Represents the vCard property TZ, which encapsulates the time zone
-    /// of the vCard.</summary>
+/// <summary>Represents the vCard property <c>TZ</c>, which encapsulates the time zone
+/// of the vCard.</summary>
+/// <seealso cref="VCard.TimeZones"/>
+/// <seealso cref="TimeZoneID"/>
 public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProperty>
 {
     /// <summary>Copy ctor.</summary>
-    /// <param name="prop">The <see cref="TimeZoneID"/> instance to clone.</param>
+    /// <param name="prop">The <see cref="TimeZoneProperty"/> instance to clone.</param>
     private TimeZoneProperty(TimeZoneProperty prop) : base(prop)
         => Value = prop.Value;
 
     /// <summary>  Initializes a new <see cref="TimeZoneProperty" /> object. </summary>
-    /// <param name="value">Ein <see cref="TimeZoneInfo" />-Objekt oder <c>null</c>.</param>
+    /// <param name="value">A <see cref="TimeZoneInfo" /> object or <c>null</c>.</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public TimeZoneProperty(TimeZoneID? value, string? propertyGroup = null) 
+    public TimeZoneProperty(TimeZoneID? value, string? propertyGroup = null)
         : base(new ParameterSection(), propertyGroup) => Value = value;
 
 
@@ -31,7 +33,7 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
 
         if (TimeZoneID.TryParse(vcfRow.Value, out TimeZoneID? tzID))
         {
-                Value = tzID;
+            Value = tzID;
         }
     }
 

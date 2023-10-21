@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Runtime.Intrinsics.X86;
-using System.Security.Principal;
 using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Models;
@@ -73,6 +71,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// /> object with which the <see cref="PropertyID" /> object is connected, or <c>null</c>
     /// if the <see cref="PropertyID" /> object is not connected with any <see
     /// cref="PropertyIDMapping" />.
+    /// </summary>
     public int? Mapping
     {
         get
