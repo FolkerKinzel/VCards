@@ -21,19 +21,19 @@ internal static class IEnumerableExtension
 
     
 
-    internal static IEnumerable<T> OrderByPreference<T>(this IEnumerable<T> values) 
+    internal static IEnumerable<T> OrderByPref<T>(this IEnumerable<T> values) 
         where T: VCardProperty
         => values.OrderBy(static x => x.Parameters.Preference);
 
     public static T? PrefOrNullIntl<T>(this IEnumerable<T?> properties, bool ignoreEmptyItems)
         where T : VCardProperty
-        => ignoreEmptyItems ? properties.WhereNotEmpty().OrderByPreference().FirstOrDefault()
-                            : properties.WhereNotNull().OrderByPreference().FirstOrDefault();
+        => ignoreEmptyItems ? properties.WhereNotEmpty().OrderByPref().FirstOrDefault()
+                            : properties.WhereNotNull().OrderByPref().FirstOrDefault();
 
     public static T? PrefOrNullIntl<T>(this IEnumerable<T?> properties, Predicate<T> predicate, bool ignoreEmptyItems)
         where T : VCardProperty
-        => ignoreEmptyItems ? properties.WhereNotEmptyAnd(predicate).OrderByPreference().FirstOrDefault()
-                            : properties.WhereNotNullAnd(predicate).OrderByPreference().FirstOrDefault();
+        => ignoreEmptyItems ? properties.WhereNotEmptyAnd(predicate).OrderByPref().FirstOrDefault()
+                            : properties.WhereNotNullAnd(predicate).OrderByPref().FirstOrDefault();
 
     public static T? FirstOrNullIntl<T>(this IEnumerable<T?> properties, bool ignoreEmptyItems) where T : VCardProperty
         => ignoreEmptyItems ? properties.FirstOrDefault(static x => x != null && !x.IsEmpty)

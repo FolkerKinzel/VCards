@@ -86,7 +86,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendBirthPlaceViews(IEnumerable<TextProperty?> value)
     {
-        if (!Options.IsSet(VcfOptions.WriteRfc6474Extensions))
+        if (!Options.HasFlag(VcfOptions.WriteRfc6474Extensions))
         {
             return;
         }
@@ -137,9 +137,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             NameProperty? name = VCardToSerialize.NameViews?.FirstOrDefault(static x => x != null && !x.IsEmpty );
 
             string? displName = name != null ? name.ToDisplayName()
-                                                 : Options.IsSet(VcfOptions.WriteEmptyProperties)
-                                                        ? null
-                                                        : "?";
+                                             : IgnoreEmptyItems ? "?" : null;
 
             var textProp = new TextProperty(displName);
             BuildProperty(VCard.PropKeys.FN, textProp);

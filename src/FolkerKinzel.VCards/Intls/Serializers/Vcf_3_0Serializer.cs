@@ -38,7 +38,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             Debug.Assert(serializables != null);
 
             VCardProperty[] arr = serializables.WhereNotNull()
-                                               .OrderByPreference()
+                                               .OrderByPref()
                                                .ToArray()!;
 
             for (int i = 0; i < arr.Length; i++)
@@ -54,7 +54,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             Debug.Assert(serializables != null);
 
             VCardProperty? pref = FilterSerializables(serializables)
-                                  .OrderByPreference()
+                                  .OrderByPref()
                                   .FirstOrDefault();
 
             if (pref != null)
@@ -71,14 +71,14 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             Debug.Assert(value != null);
 
             bool first = true;
-            foreach (AddressProperty? prop in FilterSerializables(value).OrderByPreference())
+            foreach (AddressProperty? prop in FilterSerializables(value).OrderByPref())
             {
                 bool isPref = first && prop!.Parameters.Preference < 100;
                 first = false;
 
                 // AddressProperty.IsEmpty ist auch dann false, wenn lediglich
                 // AddressProperty.Parameters.Label != null ist:
-                if (!prop!.Value.IsEmpty || Options.IsSet(VcfOptions.WriteEmptyProperties))
+                if (!prop!.Value.IsEmpty || !IgnoreEmptyItems)
                 {
                     BuildProperty(VCard.PropKeys.ADR, prop, isPref);
                 }
@@ -119,7 +119,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             Debug.Assert(value != null);
 
             TextProperty? displayName = FilterSerializables(value)
-                                        .OrderByPreference()
+                                        .OrderByPref()
                                         .FirstOrDefault();
             
             if (displayName is null)
@@ -160,7 +160,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             if (Options.IsSet(VcfOptions.WriteImppExtension))
             {
                 TextProperty[] arr = value.WhereNotNull()
-                                          .OrderByPreference()
+                                          .OrderByPref()
                                           .ToArray()!;
 
                 for (int i = 0; i < arr.Length; i++)
@@ -190,7 +190,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         protected override void AppendKeys(IEnumerable<DataProperty?> value)
         {
             VCardProperty? pref = FilterSerializables(value)
-                                  .OrderByPreference()
+                                  .OrderByPref()
                                   .FirstOrDefault(static x => x is EmbeddedBytesProperty or EmbeddedTextProperty);
 
             if (pref != null)
@@ -205,7 +205,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         protected override void AppendLogos(IEnumerable<DataProperty?> value)
         {
             VCardProperty? pref = FilterSerializables(value)
-                                  .OrderByPreference()
+                                  .OrderByPref()
                                   .FirstOrDefault(static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
             if (pref != null)
@@ -222,9 +222,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers
             Debug.Assert(value != null);
 
             NameProperty name = FilterSerializables(value).FirstOrDefault()
-                                ?? (Options.IsSet(VcfOptions.WriteEmptyProperties) 
-                                    ? new NameProperty() 
-                                    : new NameProperty(new string[] { "?" }));
+                                ?? (IgnoreEmptyItems 
+                                    ? new NameProperty(new string[] { "?" }) 
+                                    : new NameProperty());
 
             BuildProperty(VCard.PropKeys.N, name);
 
@@ -255,7 +255,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         protected override void AppendPhotos(IEnumerable<DataProperty?> value)
         {
             VCardProperty? pref = FilterSerializables(value)
-                                  .OrderByPreference()
+                                  .OrderByPref()
                                   .FirstOrDefault(static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
             if (pref != null)
@@ -279,7 +279,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers
         protected override void AppendSounds(IEnumerable<DataProperty?> value)
         {
             VCardProperty? pref = FilterSerializables(value)
-                                  .OrderByPreference()
+                                  .OrderByPref()
                                   .FirstOrDefault(static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
             if (pref != null)

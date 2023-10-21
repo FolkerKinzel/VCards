@@ -463,7 +463,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         }
 
 
-        if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {

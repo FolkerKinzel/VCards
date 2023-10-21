@@ -370,7 +370,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
             AppendV2_1Type(ParameterSection.TypeValue.PREF);
         }
 
-        if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {

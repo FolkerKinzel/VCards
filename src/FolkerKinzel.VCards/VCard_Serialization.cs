@@ -183,7 +183,7 @@ public sealed partial class VCard
                     RelationVCardProperty? agent = vCard.Relations
                         .Select(x => x as RelationVCardProperty)
                         .WhereNotEmptyAnd(x => x.Parameters.Relation.IsSet(RelationTypes.Agent))
-                        .OrderByPreference()
+                        .OrderByPref()
                         .FirstOrDefault();
 
                     if (agent != null)

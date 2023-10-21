@@ -111,7 +111,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         Debug.Assert(serializables != null);
 
-        VCardProperty? pref = serializables.FirstOrNullIntl(ignoreEmptyItems: !Options.HasFlag(VcfOptions.WriteEmptyProperties));
+        VCardProperty? pref = serializables.FirstOrNullIntl(IgnoreEmptyItems);
 
         if (pref != null)
         {
@@ -124,7 +124,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         Debug.Assert(serializables != null);
 
         VCardProperty[] arr = serializables.WhereNotNull()
-                                           .OrderByPreference()
+                                           .OrderByPref()
                                            .ToArray();
 
         for (int i = 0; i < arr.Length; i++)
@@ -141,14 +141,14 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         bool multiple = Options.IsSet(VcfOptions.AllowMultipleAdrAndLabelInVCard21);
         bool first = true;
         foreach (AddressProperty? prop in value.WhereNotNull()
-                                               .OrderByPreference())
+                                               .OrderByPref())
         {
             bool isPref = first && multiple && prop!.Parameters.Preference < 100;
             first = false;
 
             // AddressProperty.IsEmpty ist auch dann false, wenn lediglich
             // AddressProperty.Parameters.Label != null ist:
-            if (!prop!.Value.IsEmpty || Options.IsSet(VcfOptions.WriteEmptyProperties))
+            if (!prop!.Value.IsEmpty || !IgnoreEmptyItems)
             {
                 BuildProperty(VCard.PropKeys.ADR, prop, isPref);
             }
@@ -184,10 +184,8 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         Debug.Assert(value != null);
 
-        TextProperty displayName = value.FirstOrNullIntl(ignoreEmptyItems: !Options.HasFlag(VcfOptions.WriteEmptyProperties))
-                                   ?? new TextProperty(Options.IsSet(VcfOptions.WriteEmptyProperties)
-                                          ? null
-                                          : "?");
+        TextProperty displayName = value.FirstOrNullIntl(IgnoreEmptyItems)
+                                   ?? new TextProperty(IgnoreEmptyItems ? "?" : null);
 
         BuildProperty(VCard.PropKeys.FN, displayName);
     }
@@ -207,7 +205,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendKeys(IEnumerable<DataProperty?> value)
     {
         VCardProperty? pref = value.FirstOrNullIntl(static x => x is EmbeddedBytesProperty or EmbeddedTextProperty,
-                                                    ignoreEmptyItems: !Options.HasFlag(VcfOptions.WriteEmptyProperties));
+                                                    IgnoreEmptyItems);
 
         if (pref != null)
         {
@@ -221,7 +219,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendLogos(IEnumerable<DataProperty?> value)
     {
         VCardProperty? pref = value.FirstOrNullIntl(static x => x is EmbeddedBytesProperty or ReferencedDataProperty,
-                                                    ignoreEmptyItems: !Options.HasFlag(VcfOptions.WriteEmptyProperties));
+                                                    IgnoreEmptyItems);
 
         if (pref != null)
         {
@@ -237,9 +235,9 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         Debug.Assert(value != null);
 
         NameProperty? name = FilterSerializables(value).FirstOrDefault()
-                             ?? (Options.IsSet(VcfOptions.WriteEmptyProperties)
-                                 ? new NameProperty()
-                                 : new NameProperty(new string[] { "?" }));
+                             ?? (IgnoreEmptyItems
+                                   ? new NameProperty(new string[] { "?" })
+                                   : new NameProperty());
         BuildProperty(VCard.PropKeys.N, name);
     }
 
@@ -255,7 +253,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendPhotos(IEnumerable<DataProperty?> value)
     {
         VCardProperty? pref = FilterSerializables(value)
-                                   .OrderByPreference()
+                                   .OrderByPref()
                                    .FirstOrDefault(static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
         if (pref != null)
@@ -273,7 +271,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendSounds(IEnumerable<DataProperty?> value)
     {
         VCardProperty? pref = FilterSerializables(value)
-                                   .OrderByPreference()
+                                   .OrderByPref()
                                    .FirstOrDefault(static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
         if (pref != null)

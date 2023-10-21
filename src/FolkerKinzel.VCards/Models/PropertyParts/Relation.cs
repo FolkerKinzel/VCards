@@ -26,13 +26,13 @@ public sealed class Relation
         str = Match(
             static s => s,
             static vc => vc.DisplayNames?.WhereNotEmpty()
-                                         .OrderByPreference()
+                                         .OrderByPref()
                                          .FirstOrDefault()?
                                          .Value ??
                           vc.NameViews?.WhereNotEmpty()
                                        .FirstOrDefault()?.ToDisplayName() ??
                           vc.Organizations?.WhereNotEmpty()
-                                           .OrderByPreference()
+                                           .OrderByPref()
                                            .FirstOrDefault()?.Value.OrganizationName,
             static guid => null,
             static uri => uri.ToString()

@@ -717,7 +717,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, exp);
         }
-        else if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
@@ -770,7 +770,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, interest);
         }
-        else if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
@@ -892,7 +892,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
             _actionList[i](this);
         }
 
-        if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
