@@ -180,12 +180,9 @@ public sealed partial class VCard
                         continue;
                     }
 
-                    RelationVCardProperty? agent = vCard.Relations
-                        .Select(x => x as RelationVCardProperty)
-                        .WhereNotEmptyAnd(x => x.Parameters.Relation.IsSet(RelationTypes.Agent))
-                        .OrderByPref()
-                        .FirstOrDefault();
-
+                    RelationVCardProperty? agent = vCard.Relations.PrefOrNullIntl(x => x is RelationVCardProperty && x.Parameters.Relation.IsSet(RelationTypes.Agent),
+                                                                                  ignoreEmptyItems: true) as RelationVCardProperty;
+                        
                     if (agent != null)
                     {
                         if (!list.Contains(agent.Value))

@@ -17,8 +17,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void ReplenishRequiredProperties()
     {
-        if (VCardToSerialize.Members != null
-            && FilterSerializables(VCardToSerialize.Members).Any()
+        if (VCardToSerialize.Members.OrderByPref(IgnoreEmptyItems).Any()
             && (VCardToSerialize.Kind?.Value != VCdKind.Group))
         {
             VCardToSerialize.Kind = new KindProperty(VCdKind.Group);
@@ -130,14 +129,13 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     {
         Debug.Assert(value != null);
 
-        TextProperty[] displNames = FilterSerializables(value).ToArray();
+        TextProperty[] displNames = value.OrderByPrefIntl(IgnoreEmptyItems).ToArray();
 
         if (displNames.Length == 0)
         {
-            NameProperty? name = VCardToSerialize.NameViews?.FirstOrDefault(static x => x != null && !x.IsEmpty );
-
-            string? displName = name != null ? name.ToDisplayName()
-                                             : IgnoreEmptyItems ? "?" : null;
+            string? displName = VCardToSerialize.NameViews?.FirstOrNull(ignoreEmptyItems: true)?
+                                                           .ToDisplayName() 
+                                                           ?? (IgnoreEmptyItems ? "?" : null);
 
             var textProp = new TextProperty(displName);
             BuildProperty(VCard.PropKeys.FN, textProp);

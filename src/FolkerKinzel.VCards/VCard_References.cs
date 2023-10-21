@@ -105,10 +105,10 @@ public sealed partial class VCard
             Debug.Assert(relations.Where(x => x is RelationVCardProperty).All(x => !x!.IsEmpty));
 
             IEnumerable<RelationVCardProperty> vcdProps = relations
-                            .Select(x => x as RelationVCardProperty)
-                            .WhereNotNull()
-                            .ToArray()!; // We need ToArray here because relations
-                                         // might change.
+                            .WhereNotNullAnd(static x => x is RelationVCardProperty)
+                            .Cast<RelationVCardProperty>()
+                            .ToArray(); // We need ToArray here because relations
+                                        // might change.
 
             foreach (RelationVCardProperty vcdProp in vcdProps)
             {

@@ -107,9 +107,7 @@ internal static class AddressOrderConverter
             return null;
         }
 
-        var span =
-
-        new ReadOnlySpan<char>(arr);
+        var span = new ReadOnlySpan<char>(arr);
 
         return span.Equals("USA", StringComparison.Ordinal) ||
                span.StartsWith("UNITEDSTATES") ||

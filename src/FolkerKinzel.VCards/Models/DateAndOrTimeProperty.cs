@@ -4,7 +4,6 @@ using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using OneOf;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FolkerKinzel.VCards.Models;
 

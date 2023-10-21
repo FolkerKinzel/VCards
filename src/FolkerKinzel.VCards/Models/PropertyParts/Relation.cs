@@ -1,3 +1,4 @@
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
 using OneOf;
 
@@ -25,15 +26,9 @@ public sealed class Relation
     {
         str = Match(
             static s => s,
-            static vc => vc.DisplayNames?.WhereNotEmpty()
-                                         .OrderByPref()
-                                         .FirstOrDefault()?
-                                         .Value ??
-                          vc.NameViews?.WhereNotEmpty()
-                                       .FirstOrDefault()?.ToDisplayName() ??
-                          vc.Organizations?.WhereNotEmpty()
-                                           .OrderByPref()
-                                           .FirstOrDefault()?.Value.OrganizationName,
+            static vc => vc.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value ??
+                          vc.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true)?.ToDisplayName() ??
+                          vc.Organizations?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value.OrganizationName,
             static guid => null,
             static uri => uri.ToString()
             );
