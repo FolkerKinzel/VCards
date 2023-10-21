@@ -33,8 +33,6 @@ internal abstract class VcfSerializer
 
     internal ITimeZoneIDConverter? TimeZoneConverter { get; }
 
-    //internal ContentSizeRestriction EmbeddedContentSize { get; } = VCard.EmbeddedContentSizeLimit;
-
 
     protected VcfSerializer(TextWriter writer, VcfOptions options, ParameterSerializer parameterSerializer, ITimeZoneIDConverter? tzConverter)
     {
@@ -352,9 +350,8 @@ internal abstract class VcfSerializer
 
         if (Options.IsSet(VcfOptions.WriteKAddressbookExtensions))
         {
-            TextProperty? prop = FilterSerializables(value)
-                                 .OrderByPreference()
-                                 .FirstOrDefault();
+            TextProperty? prop = value.PrefOrNullIntl(ignoreEmptyItems: !Options.HasFlag(VcfOptions.WriteEmptyProperties));
+                                 
 
             if (prop != null)
             {
@@ -614,27 +611,17 @@ internal abstract class VcfSerializer
 
     protected virtual void AppendRelations(IEnumerable<RelationProperty?> value)
     {
-        RelationProperty? agent = Options.IsSet(VcfOptions.WriteEmptyProperties)
-            ? value.WhereNotNullAnd(static x => x.Parameters.Relation.IsSet(RelationTypes.Agent))
-                   .OrderByPreference()
-                   .FirstOrDefault()
-            : value.WhereNotEmptyAnd(static x => x.Parameters.Relation.IsSet(RelationTypes.Agent))
-                   .OrderByPreference()
-                   .FirstOrDefault();
+        RelationProperty? agent = value.PrefOrNullIntl(static x => x.Parameters.Relation.IsSet(RelationTypes.Agent),
+                                                       ignoreEmptyItems: !Options.IsSet(VcfOptions.WriteEmptyProperties));
 
         if (agent != null)
         {
             BuildProperty(VCard.PropKeys.AGENT, agent);
         }
 
-        RelationProperty? spouse = Options.IsSet(VcfOptions.WriteEmptyProperties)
-            ? value.WhereNotNullAnd(static x => x.Parameters.Relation.IsSet(RelationTypes.Spouse))
-                   .OrderByPreference()
-                   .FirstOrDefault()
-            : value.WhereNotEmptyAnd(static x => x.Parameters.Relation.IsSet(RelationTypes.Spouse))
-                   .OrderByPreference()
-                   .FirstOrDefault();
-
+        RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.Relation.IsSet(RelationTypes.Spouse), 
+                                                        ignoreEmptyItems: !Options.IsSet(VcfOptions.WriteEmptyProperties));
+                   
         if (spouse != null)
         {
             if (spouse is RelationVCardProperty vCardProp)
@@ -668,16 +655,11 @@ internal abstract class VcfSerializer
 
         static RelationProperty? ConvertToRelationTextProperty(RelationVCardProperty vcardProp)
         {
-            string? name = vcardProp.Value?.DisplayNames?
-                .WhereNotEmpty()
-                .OrderByPreference()
-                .FirstOrDefault()?.Value;
+            string? name = vcardProp.Value?.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value;
 
             if (name is null)
             {
-                NameProperty? vcdName = vcardProp.Value?.NameViews?
-                    .WhereNotEmpty()
-                    .FirstOrDefault();
+                NameProperty? vcdName = vcardProp.Value?.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true);
 
                 if (vcdName != null)
                 {

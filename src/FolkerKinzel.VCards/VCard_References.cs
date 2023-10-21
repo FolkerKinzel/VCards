@@ -52,7 +52,7 @@ public sealed partial class VCard
     /// as it endangers referential integrity.
     /// </para>
     /// <para>
-    /// The example uses the extension method <see cref="VCardCollectionExtension.ReferenceVCards"
+    /// The example uses the extension method <see cref="Extensions.IEnumerableExtension.ReferenceVCards"
     /// />, which calls <see cref="Reference(IEnumerable{VCard})" />.
     /// </para>
     /// <note type="note">
@@ -179,7 +179,7 @@ public sealed partial class VCard
     /// <para>
     /// The example shows the deserialization and analysis of a VCF file whose content
     /// refers to other VCF files. The example uses the extension method 
-    /// <see cref="VCardCollectionExtension.DereferenceVCards(IEnumerable{VCard?})" />, 
+    /// <see cref="Extensions.IEnumerableExtension.DereferenceVCards(IEnumerable{VCard?})" />, 
     /// which calls <see cref="Dereference(IEnumerable{VCard?})" />.
     /// </para>
     /// <note type="note">

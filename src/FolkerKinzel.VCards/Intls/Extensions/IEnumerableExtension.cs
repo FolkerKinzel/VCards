@@ -19,15 +19,28 @@ internal static class IEnumerableExtension
         where T : VCardProperty
         => values.Where(x => x != null && !x.IsEmpty && predicate(x))!;
 
-    //internal static IEnumerable<T> HasToBeSerialized<T>(this IEnumerable<T?> values, VcfOptions options)
-    //    where T : VCardProperty
-    //    => values.Where(x => x != null && (!x.IsEmpty || options.HasFlag(VcfOptions.WriteEmptyProperties)))!;
+    
 
     internal static IEnumerable<T> OrderByPreference<T>(this IEnumerable<T> values) 
         where T: VCardProperty
         => values.OrderBy(static x => x.Parameters.Preference);
 
-    //private static bool IsPropertyWithData([NotNullWhen(true)] VCardProperty? x, VcfOptions options)
-    //        => x != null && (!x.IsEmpty || options.HasFlag(VcfOptions.WriteEmptyProperties));
+    public static T? PrefOrNullIntl<T>(this IEnumerable<T?> properties, bool ignoreEmptyItems)
+        where T : VCardProperty
+        => ignoreEmptyItems ? properties.WhereNotEmpty().OrderByPreference().FirstOrDefault()
+                            : properties.WhereNotNull().OrderByPreference().FirstOrDefault();
+
+    public static T? PrefOrNullIntl<T>(this IEnumerable<T?> properties, Predicate<T> predicate, bool ignoreEmptyItems)
+        where T : VCardProperty
+        => ignoreEmptyItems ? properties.WhereNotEmptyAnd(predicate).OrderByPreference().FirstOrDefault()
+                            : properties.WhereNotNullAnd(predicate).OrderByPreference().FirstOrDefault();
+
+    public static T? FirstOrNullIntl<T>(this IEnumerable<T?> properties, bool ignoreEmptyItems) where T : VCardProperty
+        => ignoreEmptyItems ? properties.FirstOrDefault(static x => x != null && !x.IsEmpty)
+                            : properties.FirstOrDefault(static x => x != null);
+
+    public static T? FirstOrNullIntl<T>(this IEnumerable<T?> properties, Predicate<T> predicate, bool ignoreEmptyItems) where T : VCardProperty
+        => ignoreEmptyItems ? properties.FirstOrDefault(x => x != null && !x.IsEmpty && predicate(x))
+                            : properties.FirstOrDefault(x => x != null && predicate(x));
 
 }

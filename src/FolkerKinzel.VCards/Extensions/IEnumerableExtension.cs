@@ -1,10 +1,12 @@
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Extensions;
 
-/// <summary>Extension methods that make working with <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see>
-/// objects easier.</summary>
-public static class VCardCollectionExtension
+/// <summary>Extension methods that supports working with <see cref="IEnumerable{T}"/>
+/// objects.</summary>
+public static class IEnumerableExtension
 {
     /// <summary> 
     /// Returns a collection of <see cref="VCard" /> objects containing both the
@@ -212,4 +214,68 @@ public static class VCardCollectionExtension
                                      ITimeZoneIDConverter? tzConverter = null,
                                      VcfOptions options = VcfOptions.Default)
         => VCard.ToVcfString(vCards, version, tzConverter, options);
+
+
+    /// <summary>
+    /// Gets the most preferred <see cref="VCardProperty"/> from a collection of
+    /// <see cref="VCardProperty"/> objects and allows to specify whether or not
+    /// to ignore empty items.
+    /// </summary>
+    /// <typeparam name="T">Generic type parameter that's restricted to be a 
+    /// <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="properties">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects to search. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
+    /// values.</param>
+    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the search. 
+    /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
+    /// values will always be ignored.</param>
+    /// <returns>The most preferred <see cref="VCardProperty"/> from <paramref name="properties"/>,
+    /// or <c>null</c> if <paramref name="properties"/> is empty, contains only <c>null</c> values,
+    /// or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.</returns>
+    /// <remarks>
+    /// The method is useful to search <see cref="VCard"/> properties with plural names, but not those
+    /// whose name ends with <c>*views</c>. For efficiency those properties should be searched with one
+    /// of the overloads of <see cref="Enumerable.FirstOrDefault{TSource}(IEnumerable{TSource})"/> 
+    /// because the <see cref="ParameterSection.Preference"/> has no meaning in such properties.
+    /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T? PrefOrNull<T>(this IEnumerable<T?>? properties,
+                                   bool ignoreEmptyItems = true) where T : VCardProperty 
+        => properties is null ? null 
+                              : properties.PrefOrNullIntl(ignoreEmptyItems);
+
+    /// <summary>
+    /// Gets the most preferred <see cref="VCardProperty"/> from a collection of
+    /// <see cref="VCardProperty"/> objects and allows filtering of the items and
+    /// to specify whether or not to ignore empty items.
+    /// </summary>
+    /// <typeparam name="T">Generic type parameter that's restricted to be a 
+    /// <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="properties">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects to search. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
+    /// values.</param>
+    /// <param name="predicate">A <see cref="Predicate{T}"/> which allows filtering of the items.</param>
+    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the search. 
+    /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
+    /// values will always be ignored.</param>
+    /// <returns>The most preferred <see cref="VCardProperty"/> from <paramref name="properties"/>,
+    /// or <c>null</c> if <paramref name="properties"/> is empty, contains only <c>null</c> values,
+    /// or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.</returns>
+    /// <remarks>
+    /// The method is useful to search <see cref="VCard"/> properties with plural names, but not those
+    /// whose name ends with <c>*views</c>. For efficiency those properties should be searched with one
+    /// of the overloads of <see cref="Enumerable.FirstOrDefault{TSource}(IEnumerable{TSource})"/> 
+    /// because the <see cref="ParameterSection.Preference"/> has no meaning in such properties.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="predicate"/> is <c>null</c>.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T? PrefOrNull<T>(this IEnumerable<T?>? properties,
+                                   Predicate<T> predicate,
+                                   bool ignoreEmptyItems = true)  where T : VCardProperty
+        => properties is null ? null
+                              : properties.PrefOrNullIntl
+                                (
+                                   predicate ?? throw new ArgumentNullException(nameof(predicate)),
+                                   ignoreEmptyItems
+                                 );
 }

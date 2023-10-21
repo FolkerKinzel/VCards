@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Models.Enums;
 namespace FolkerKinzel.VCards.Extensions.Tests
 {
     [TestClass()]
-    public class VCardCollectionExtensionTests
+    public class IEnumerableExtensionTests
     {
         public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
 
