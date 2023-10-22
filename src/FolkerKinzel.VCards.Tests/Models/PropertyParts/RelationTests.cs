@@ -53,18 +53,36 @@ public class RelationTests
     public void SwitchTest1()
     {
         var rel = new Relation("Hi");
-        rel.Switch(s => rel = null, null, null, null);
+        rel.Switch(s => rel = null, null!, null!, null!);
         Assert.IsNull(rel);
     }
 
     [TestMethod]
-    public void MatchTest1()
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void SwitchTest2()
+    {
+        var rel = new Relation("Hi");
+        rel.Switch(null!, null!, null!, null!);
+    }
+
+    [TestMethod]
+    public void ConvertTest1()
     {
         const int expected = 42;
         var rel = new Relation("Hi");
 
-        int result = rel.Convert(s => expected, null, null, null);
+        int result = rel.Convert(s => expected, null!, null!, null!);
         Assert.AreEqual(expected, result);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void ConvertTest2()
+    {
+        const int expected = 42;
+        var rel = new Relation("Hi");
+
+        int result = rel.Convert<int>(null!, null!, null!, null!);
+        Assert.AreEqual(expected, result);
+    }
 }
