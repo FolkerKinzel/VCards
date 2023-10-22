@@ -31,7 +31,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     public GenderProperty(Enums.Gender? sex,
                           string? genderIdentity = null,
                           string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) 
-        => Value = new PropertyParts.GenderInfo(sex, genderIdentity);
+        => Value = new GenderInfo(sex, genderIdentity);
 
 
     internal GenderProperty(VcfRow vcfRow, VCdVersion version)
@@ -58,7 +58,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
             }
         }
 
-        Value = new PropertyParts.GenderInfo(sex, genderIdentity);
+        Value = new GenderInfo(sex, genderIdentity);
     }
 
     /// <summary>The data provided by the <see cref="GenderProperty" />. </summary>

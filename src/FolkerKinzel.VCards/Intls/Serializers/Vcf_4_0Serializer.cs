@@ -235,7 +235,14 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
                                    value.Where(static x => x is EmbeddedBytesProperty or ReferencedDataProperty));
     
     protected override void AppendMembers(IEnumerable<RelationProperty?> value)
-        => BuildPropertyCollection(VCard.PropKeys.MEMBER, value);
+        => BuildPropertyCollection(VCard.PropKeys.MEMBER, value.Select
+            (
+                static x => x is RelationTextProperty prop 
+                              ? Uri.TryCreate(prop.Value, UriKind.Absolute, out _) 
+                                    ? x 
+                                    : null 
+                              : x
+            ));
 
     protected override void AppendNameViews(IEnumerable<NameProperty?> value)
         => BuildPropertyViews(VCard.PropKeys.N, value);
