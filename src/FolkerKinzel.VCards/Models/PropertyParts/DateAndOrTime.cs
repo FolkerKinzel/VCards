@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
@@ -49,6 +50,17 @@ public sealed partial class DateAndOrTime
     public object Value => this._oneOf.Value;
 
 
+    /// <summary>
+    /// Tries to convert the instance to a <see cref="System.DateOnly"/> value.
+    /// </summary>
+    /// <param name="value">When the method
+    /// returns <c>true</c>, contains a <see cref="System.DateOnly"/> value that
+    /// represents the data that is encapsulated in the instance. The
+    /// parameter is passed uninitialized.</param>
+    /// <returns><c>true</c> if the conversion was successful, otherwise <c>false</c>.
+    /// </returns>
+    /// <remarks>The conversion succeeds if the encapsulated value is either a
+    /// <see cref="System.DateOnly"/> or a <see cref="System.DateTimeOffset"/>.</remarks>
     public bool TryAsDateOnly(out DateOnly value)
     {
         var result = _oneOf.Match<(DateOnly Value, bool Result)>
@@ -63,6 +75,18 @@ public sealed partial class DateAndOrTime
         return result.Result;
     }
 
+    /// <summary>
+    /// Tries to convert the instance to a <see cref="System.DateTimeOffset"/> value.
+    /// </summary>
+    /// <param name="value">When the method
+    /// returns <c>true</c>, contains a <see cref="System.DateTimeOffset"/> value that
+    /// represents the data that is encapsulated in the instance. The
+    /// parameter is passed uninitialized.</param>
+    /// <returns><c>true</c> if the conversion was successful, otherwise <c>false</c>.
+    /// </returns>
+    /// <remarks>If the encapsulated value is a <see cref="System.DateOnly"/>, 12 hours
+    /// are added to the resulting <see cref="System.DateTimeOffset"/> in order
+    /// to avoid wrapping the date.</remarks>
     public bool TryAsDateTimeOffset(out DateTimeOffset value)
     {
         var result = _oneOf.Match<(DateTimeOffset Value, bool Result)>
@@ -70,7 +94,11 @@ public sealed partial class DateAndOrTime
           dateOnly => (new DateTimeOffset(dateOnly.Year, dateOnly.Month, dateOnly.Day, 12, 0, 0, TimeSpan.Zero), true),
           dtOffset => (dtOffset, true),
           timeOnly => (new DateTimeOffset().AddTicks(timeOnly.Ticks), true),
-          str => (default, false)
+          str => System.DateTimeOffset.TryParse(str,
+                                                CultureInfo.CurrentCulture,
+                                                DateTimeStyles.AllowWhiteSpaces,
+                                                out DateTimeOffset dto) ? (dto, true)
+                                                                        : (default, false)
          );
 
         value = result.Value;

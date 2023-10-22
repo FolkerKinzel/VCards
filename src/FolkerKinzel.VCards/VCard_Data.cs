@@ -358,7 +358,7 @@ public sealed partial class VCard
     /// <see cref="NonStandard" /> contains all vCard properties that could not 
     /// be evaluated, when parsing the vCard. To serialize the content of 
     /// <see cref="NonStandard" /> into a VCF file, the flag 
-    /// <see cref="VcfOptions.WriteNonStandardProperties"> has to be set. 
+    /// <see cref="VcfOptions.WriteNonStandardProperties"/> has to be set. 
     /// </para>
     /// <para>
     /// Some <see cref="NonStandardProperty" /> objects are automatically added to the 
