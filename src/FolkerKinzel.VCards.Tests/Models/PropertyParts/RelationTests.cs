@@ -63,7 +63,7 @@ public class RelationTests
         const int expected = 42;
         var rel = new Relation("Hi");
 
-        int result = rel.Match(s => expected, null, null, null);
+        int result = rel.Convert(s => expected, null, null, null);
         Assert.AreEqual(expected, result);
     }
 

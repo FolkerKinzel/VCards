@@ -4,27 +4,52 @@ using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
+/// <summary>
+/// Encapsulates the value of a <see cref="RelationProperty"/> object.
+/// This can be either a <see cref="string"/>, a 
+/// <see cref="FolkerKinzel.VCards.VCard"/>, a <see cref="System.Guid"/>,
+/// or a <see cref="System.Uri"/>.
+/// </summary>
+/// <seealso cref="RelationProperty"/>
 public sealed class Relation
 {
     private readonly OneOf<string, VCard, Guid, Uri> _oneOf;
 
     internal Relation(OneOf<string, VCard, Guid, Uri> oneOf) => _oneOf = oneOf;
 
-
+    /// <summary>
+    /// Gets the encapsulated <see cref="string"/>
+    /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
+    /// </summary>
     public string? String => IsString ? AsStringIntl : null;
 
+    /// <summary>
+    /// Gets the encapsulated <see cref="FolkerKinzel.VCards.VCard"/>
+    /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
+    /// </summary>
     public VCard? VCard => IsVCard ? AsVCardIntl : null;
 
+    /// <summary>
+    /// Gets the encapsulated <see cref="System.Guid"/>
+    /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
+    /// </summary>
     public Guid? Guid => IsGuid ? AsGuidIntl : null;
 
+    /// <summary>
+    /// Gets the encapsulated <see cref="System.Uri"/>
+    /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
+    /// </summary>
     public Uri? Uri => IsUri ? AsUriIntl : null;
 
+    /// <summary>
+    /// Gets the encapsulated value.
+    /// </summary>
     public object Value => this._oneOf.Value;
 
 
     public bool TryAsString([NotNullWhen(true)] out string? str)
     {
-        str = Match(
+        str = Convert(
             static s => s,
             static vc => vc.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value ??
                           vc.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true)?.ToDisplayName() ??
@@ -35,28 +60,54 @@ public sealed class Relation
         return str != null;
     }
 
-
+    /// <summary>
+    /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
+    /// encapsulated value.
+    /// </summary>
+    /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="string"/>.</param>
+    /// <param name="vCardAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="FolkerKinzel.VCards.VCard"/>.</param>
+    /// <param name="guidAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.Guid"/>.</param>
+    /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.Uri"/>.</param>
+    /// <exception cref="InvalidOperationException">
+    /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Switch(Action<string>? f0,
-                       Action<VCard>? f1,
-                       Action<Guid>? f2,
-                       Action<Uri>? f3)
-        => _oneOf.Switch(f0, f1, f2, f3);
+    public void Switch(Action<string> stringAction,
+                       Action<VCard> vCardAction,
+                       Action<Guid> guidAction,
+                       Action<Uri> uriAction)
+        => _oneOf.Switch(stringAction, vCardAction, guidAction, uriAction);
 
-
+    /// <summary>
+    /// Converts the encapsulated value to <typeparamref name="TResult"/>.
+    /// </summary>
+    /// <typeparam name="TResult">Generic type parameter.</typeparam>
+    /// <param name="stringFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
+    /// value is a <see cref="string"/>.</param>
+    /// <param name="vCardFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
+    /// value is a <see cref="FolkerKinzel.VCards.VCard"/>.</param>
+    /// <param name="guidFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
+    /// value is a <see cref="System.Guid"/>.</param>
+    /// <param name="uriFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
+    /// value is a <see cref="System.Uri"/>.</param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException">
+    /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public TResult Match<TResult>(Func<string, TResult>? f0,
-                                  Func<VCard, TResult>? f1,
-                                  Func<Guid, TResult>? f2,
-                                  Func<Uri, TResult>? f3)
-        => _oneOf.Match(f0, f1, f2, f3);
-
-
+    public TResult Convert<TResult>(Func<string, TResult> stringFunc,
+                                  Func<VCard, TResult> vCardFunc,
+                                  Func<Guid, TResult> guidFunc,
+                                  Func<Uri, TResult> uriFunc)
+        => _oneOf.Match(stringFunc, vCardFunc, guidFunc, uriFunc);
     
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => _oneOf.ToString();
-
 
 
     [MemberNotNullWhen(true, nameof(String))]
