@@ -7,21 +7,25 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard
 {
-    /// <summary> Gibt eine Sammlung von <see cref="VCard" />-Objekten zurück, in der
-    /// die <see cref="RelationVCardProperty" />-Objekte der als Argument übergebenen
-    /// Sammlung von <see cref="VCard" />-Objekten durch <see cref="RelationUuidProperty"
-    /// />-Objekte ersetzt sind und in der die in den <see cref="RelationVCardProperty"
-    /// />-Objekten referenzierten <see cref="VCard" />-Objekte als separate Elemente
-    /// angefügt sind. </summary>
+    /// <summary>
+    /// Returns a collection of <see cref="VCard" /> objects containing both the
+    /// <see cref = "VCard" /> objects passed as a collection as well as those which
+    /// had been embedded in their <see cref="VCard.Relations"/> property. The previously 
+    /// embedded <see cref="VCard"/> objects are now referenced by <see cref = "RelationProperty" /> 
+    /// objects that are initialized with the value of the <see cref="VCard.UniqueIdentifier"/>
+    /// property of these previously embedded <see cref="VCard"/>s.</summary>
+    /// 
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
     /// may be empty or may contain <c>null</c> values.</param>
-    /// <returns> Eine Sammlung von <see cref="VCard" />-Objekten, in der die <see cref="RelationVCardProperty"
-    /// />-Objekte der als Argument übergebenen Sammlung von <see cref="VCard" />-Objekten
-    /// durch <see cref="RelationUuidProperty" />-Objekte ersetzt sind und in der die
-    /// in den <see cref="RelationVCardProperty" />-Objekten referenzierten <see cref="VCard"
-    /// />-Objekte als separate Elemente angefügt sind. (Wenn die angefügten <see cref="VCard"
-    /// />-Objekte noch keine <see cref="VCard.UniqueIdentifier" />-Eigenschaft hatten,
-    /// wird ihnen von der Methode automatisch eine neue zugewiesen.) </returns>
+    /// 
+    /// <returns> 
+    /// A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/> 
+    /// objects previously embedded in the <see cref="VCard.Relations"/> property are appended 
+    /// separately and referenced through their <see cref="VCard.UniqueIdentifier"/> property. 
+    /// (If the appended <see cref="VCard" /> objects did not already have a 
+    /// <see cref="VCard.UniqueIdentifier" /> property, the method automatically assigns them 
+    /// a new one.)</returns>
+    /// 
     /// <remarks>
     /// <note type="caution">
     /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
@@ -34,7 +38,8 @@ public sealed partial class VCard
     /// </note>
     /// <note type="tip">
     /// You can pass a single <see cref="VCard" /> object to the method, since the <see
-    /// cref="VCard" /> class has an explicit implementation of <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see>.
+    /// cref="VCard" /> class has an explicit implementation of 
+    /// <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see>.
     /// </note>
     /// <para>
     /// The method is - if necessary - automatically called by the serialization methods
@@ -145,28 +150,25 @@ public sealed partial class VCard
         }
     }
 
-
-    /// <summary> Gibt eine Sammlung von <see cref="VCard" />-Objekten zurück, in der
-    /// <see cref="RelationUuidProperty" />-Objekte der als Argument übergebenen Sammlung
-    /// von <see cref="VCard" />-Objekten durch <see cref="RelationVCardProperty" />-Objekte
-    /// ersetzt worden sind, falls sich die referenzierten <see cref="VCard" />-Objekte
-    /// in der als Argument übergebenen Sammlung befinden. </summary>
+    /// <summary> 
+    /// Returns a collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
+    /// referenced by their <see cref="VCard.UniqueIdentifier"/> property are embedded in 
+    /// <see cref ="RelationProperty"/> objects, provided that <paramref name="vCards"/>
+    /// contains these <see cref="VCard"/> objects.
+    /// </summary>
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
     /// may be empty or may contain <c>null</c> values.</param>
-    /// <returns> Eine Sammlung von <see cref="VCard" />-Objekten, in der <see cref="RelationUuidProperty"
-    /// />-Objekte der als Argument übergebenen Sammlung von <see cref="VCard" />-Objekten
-    /// durch <see cref="RelationVCardProperty" />-Objekte ersetzt worden sind, falls
-    /// sich die referenzierten <see cref="VCard" />-Objekte in der als Argument übergebenen
-    /// Sammlung befinden. </returns>
+    /// <returns> 
+    ///  A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
+    /// referenced by their <see cref="VCard.UniqueIdentifier"/> property are embedded in 
+    /// <see cref ="RelationProperty"/> objects, provided that <paramref name="vCards"/>
+    /// contains these <see cref="VCard"/> objects.
+    /// </returns>
     /// <remarks>
     /// <note type="caution">
     /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
     /// passed to the method are not. Block read and write access to these <see cref="VCard"
     /// /> objects, while this method is being executed!
-    /// </note>
-    /// <note type="tip">
-    /// You can pass a single <see cref="VCard" /> object to the method, since the <see
-    /// cref="VCard" /> class has an explicit implementation of <see cref="IEnumerable{T}">IEnumerable&lt;VCard&gt;</see>.
     /// </note>
     /// <para>
     /// The method is automatically called by the deserialization methods of the <see
@@ -188,7 +190,8 @@ public sealed partial class VCard
     /// </note>
     /// <code language="cs" source="..\Examples\VCard40Example.cs" />
     /// </example>
-    /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IEnumerable<VCard> Dereference(IEnumerable<VCard?> vCards)
         => vCards is null ? throw new ArgumentNullException(nameof(vCards)) 
@@ -229,7 +232,6 @@ public sealed partial class VCard
                 }
             }
         }
-
 
         static void DoDereference(List<RelationProperty?> relations, IEnumerable<VCard?> vCards)
         {

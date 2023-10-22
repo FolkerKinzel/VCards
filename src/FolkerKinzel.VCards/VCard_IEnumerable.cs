@@ -10,7 +10,6 @@ public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>, 
     /// <returns>An Enumerator for the <see cref="VCard" />.</returns>
     public IEnumerator<KeyValuePair<VCdProp, object>> GetEnumerator() => ((IEnumerable<KeyValuePair<VCdProp, object>>)_propDic).GetEnumerator();
 
-
     /// <inheritdoc />
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<KeyValuePair<VCdProp, object>>)_propDic).GetEnumerator();
 

@@ -1,6 +1,6 @@
 namespace FolkerKinzel.VCards;
 
-    /// <summary>Named constants to indicate the VCF version.</summary>
+/// <summary>Named constants to indicate the VCF version.</summary>
 public enum VCdVersion
 {
     /// <summary>vCard 2.1</summary>

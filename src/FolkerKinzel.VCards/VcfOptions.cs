@@ -4,21 +4,28 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards;
 
-    /// <summary>Named constants to specify options for writing VCF files. The constants
-    /// can be combined.</summary>
-    /// <remarks>
-    /// <note type="tip">
-    /// Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus <see
-    /// cref="VcfOptionsExtension" />.
-    /// </note>
-    /// <para>
-    /// Die Flags <see cref="WriteWabExtensions" />, <see cref="WriteXExtensions" />,
-    /// <see cref="WriteEvolutionExtensions" /> und <see cref="WriteKAddressbookExtensions"
-    /// /> steuern die automatische Verwendung von Non-Standard-Properties. Auch wenn
-    /// diese Flags gesetzt sind, werden die Non-Standard-Properties nur dann automatisch
-    /// erzeugt, wenn der gewählte vCard-Standard kein standardisiertes Äquivalent ermöglicht.
-    /// </para>
-    /// </remarks>
+/// <summary>Named constants to specify options for writing VCF files. The constants
+/// can be combined.</summary>
+/// <remarks>
+/// <note type="tip">
+/// When working with the enum use the extension methods from the 
+/// <see cref="VcfOptionsExtension" /> class.
+/// </note>
+/// <para>
+/// Die Flags <see cref="WriteWabExtensions" />, <see cref="WriteXExtensions" />,
+/// <see cref="WriteEvolutionExtensions" /> und <see cref="WriteKAddressbookExtensions"
+/// /> steuern die automatische Verwendung von Non-Standard-Properties. Auch wenn
+/// diese Flags gesetzt sind, werden die Non-Standard-Properties nur dann automatisch
+/// erzeugt, wenn der gewählte vCard-Standard kein standardisiertes Äquivalent ermöglicht.
+/// 
+/// The flags <see cref="WriteWabExtensions" />, <see cref="WriteXExtensions" />,  
+/// <see cref="WriteEvolutionExtensions" />, and <see cref="WriteKAddressbookExtensions" /> 
+/// control the automatic generation of <see cref="NonStandardProperty"/> objects. 
+/// Even if these flags are set, the <see cref="NonStandardProperty"/> objects are 
+/// only generated automatically, if the selected vCard standard does not allow a 
+/// standardized equivalent. 
+/// </para>
+/// </remarks>
 [Flags]
 public enum VcfOptions
 {
@@ -28,7 +35,7 @@ public enum VcfOptions
     /// <summary>All flags are unset.</summary>
     None = 0,
 
-    /// <summary> Standardeinstellung (entspricht <see cref="WriteGroups" /> | <see
+    /// <summary> Default setting (corresponds to  <see cref="WriteGroups" /> | <see
     /// cref="WriteRfc6474Extensions" /> | <see cref="WriteRfc6715Extensions" /> | <see
     /// cref="WriteImppExtension" /> | <see cref="WriteXExtensions" /> | <see cref="AllowMultipleAdrAndLabelInVCard21"
     /// />) </summary>
@@ -37,24 +44,19 @@ public enum VcfOptions
     /// <summary>Set the flag to write property group identifiers.</summary>
     WriteGroups = 1,
 
-
     /// <summary>Set the flag to also write empty properties to the vCard.</summary>
     WriteEmptyProperties = 1 << 1,
 
-
     /// <summary>Set the flag to append in vCard 2.1 and vCard 3.0 embedded <c>AGENT</c>-vCards
-    /// additionally to the main vCard.</summary>
+    /// in the VCF file to the main vCard.</summary>
     IncludeAgentAsSeparateVCard = 1 << 2,
 
-
-    /// <summary> Flag setzen, um Non-Standard-Parameter der Eigenschaft <see cref="ParameterSection.NonStandard">ParameterSection.NonStandardParameters</see>
-    /// zu schreiben. </summary>
+    /// <summary> Set the flag to write non-standard parameters to the VCF file.
+    /// </summary>
     WriteNonStandardParameters = 1 << 3,
 
-
-    /// <summary> Flag setzen, um <see cref="NonStandardProperty" />-Objekte zu serialisieren,
-    /// die in der Eigenschaft <see cref="VCard.NonStandard">VCard.NonStandardProperties</see>
-    /// gespeichert sind. </summary>
+    /// <summary> Set the flag to write <see cref="NonStandardProperty" /> objects
+    /// to the VCF file.</summary>
     WriteNonStandardProperties = 1 << 4,
 
     /// <summary>Set the flag to write the extensions from RFC 6474 (<c>BIRTHPLACE</c>,

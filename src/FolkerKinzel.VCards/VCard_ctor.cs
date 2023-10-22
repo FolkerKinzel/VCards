@@ -14,8 +14,8 @@ public sealed partial class VCard
     /// <summary>Initializes a new <see cref="VCard" /> object.</summary>
     public VCard() { }
 
-    /// <summary />
-    /// <param name="vCard" />
+    /// <summary>Copy ctor.</summary>
+    /// <param name="vCard">The <see cref="VCard"/> instance to clone.</param>
     private VCard(VCard vCard)
     {
         Version = vCard.Version;
@@ -246,7 +246,7 @@ public sealed partial class VCard
                     else
                     {
                         GenderViews ??= vcfRow.Value.Contains('1', StringComparison.Ordinal)
-                                            ? new GenderProperty(Models.Enums.Gender.Female) 
+                                            ? new GenderProperty(Models.Enums.Gender.Female)
                                             : new GenderProperty(Models.Enums.Gender.Male);
                     }
                     break;

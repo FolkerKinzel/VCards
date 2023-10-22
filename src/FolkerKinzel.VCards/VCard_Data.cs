@@ -64,7 +64,7 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
-    /// vCard. <c>(3)</c></summary>
+    /// <see cref="VCard"/>. <c>(3)</c></summary>
     public AccessProperty? Access
     {
         get => Get<AccessProperty?>(VCdProp.Access);
@@ -304,8 +304,6 @@ public sealed partial class VCard
     /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
     /// is associated with the individual to which the <see cref="VCard"/> belongs. 
     /// <c>(2,3,4)</c></summary>
-    /// <value>It may point to an external URL or may be embedded in the <see cref="VCard"/>
-    /// as a Base64 encoded block of text.</value>
     public IEnumerable<DataProperty?>? Logos
     {
         get => Get<IEnumerable<DataProperty?>?>(VCdProp.Logos);
@@ -322,8 +320,8 @@ public sealed partial class VCard
     /// <summary> <c>MEMBER</c>:
     /// Defines a member that is part of the group that this <see cref="VCard"/> represents.
     /// The <see cref="VCard.Kind" /> property must be set to <see cref="VCdKind.Group" />
-    /// in order to use this property.
-    /// <c>(4)</c></summary>
+    /// in order to use this property. <c>(4)</c>
+    /// </summary>
     /// <remarks>
     /// If the <see cref="Relation"/> property embeds a <see cref="string"/> value, it will
     /// only be written if this <see cref="string"/> can be converted to an absolute 
@@ -488,7 +486,6 @@ public sealed partial class VCard
 
     /// <summary> <c>PHOTO</c>: Image(s) or photograph(s) of the individual associated
     /// with the vCard. <c>(2,3,4)</c></summary>
-    /// <value />
     public IEnumerable<DataProperty?>? Photos
     {
         get => Get<IEnumerable<DataProperty>>(VCdProp.Photos);

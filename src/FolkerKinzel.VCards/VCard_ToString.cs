@@ -6,10 +6,7 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard
 {
-    /// <summary>Creates a <see cref="string" /> representation of the <see cref="VCard"
-    /// /> object. (For debugging only.)</summary>
-    /// <returns>A <see cref="string" /> representation of the <see cref="VCard" />
-    /// object.</returns>
+    ///<inheritdoc/>
     public override string ToString()
     {
         var sb = new StringBuilder();
@@ -99,5 +96,4 @@ public sealed partial class VCard
             }
         }
     }
-
 }

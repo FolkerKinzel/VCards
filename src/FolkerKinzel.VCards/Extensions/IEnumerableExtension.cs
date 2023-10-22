@@ -64,14 +64,15 @@ public static class IEnumerableExtension
     /// <summary>
     /// Returns a collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
     /// referenced by their <see cref="VCard.UniqueIdentifier"/> property are embedded in 
-    /// <see cref ="RelationProperty"/> objects, provided that the collection passed as an 
-    /// argument contains these <see cref="VCard"/> objects.</summary>
+    /// <see cref ="RelationProperty"/> objects, provided that <paramref name="vCards"/> 
+    /// contains these <see cref="VCard"/> objects.</summary>
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
     /// may be empty or may contain <c>null</c> values.</param>
+    /// 
     /// <returns> A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
     /// referenced by their <see cref="VCard.UniqueIdentifier"/> property are embedded in 
-    /// <see cref ="RelationProperty"/> objects, provided that the collection passed as an 
-    /// argument contains these <see cref="VCard"/> objects.</returns>
+    /// <see cref ="RelationProperty"/> objects, provided that <paramref name="vCards"/>
+    /// contains these <see cref="VCard"/> objects.</returns>
     /// <remarks>
     /// <note type="caution">
     /// Although the method itself is thread-safe, the <see cref="VCard" /> objects

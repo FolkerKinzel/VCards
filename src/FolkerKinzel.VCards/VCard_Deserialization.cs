@@ -13,7 +13,8 @@ public sealed partial class VCard
     /// />.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
     /// the content of the VCF file.</returns>
-    /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.
+    /// </exception>
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
@@ -30,7 +31,8 @@ public sealed partial class VCard
     /// file.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
     /// the content of <paramref name="vcf" />.</returns>
-    /// <exception cref="ArgumentNullException"> <paramref name="vcf" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="vcf" /> is <c>null</c>.
+    /// </exception>
     public static IList<VCard> ParseVcf(string vcf)
     {
         if (vcf == null)
@@ -47,8 +49,10 @@ public sealed partial class VCard
     /// <param name="reader">A <see cref="TextReader" />.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
     /// the content of the VCF file.</returns>
-    /// <exception cref="ArgumentNullException"> <paramref name="reader" /> is <c>null</c>.</exception>
-    /// <exception cref="ObjectDisposedException"> <paramref name="reader" /> was closed.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="reader" /> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="ObjectDisposedException"> <paramref name="reader" /> was closed.
+    /// </exception>
     /// <exception cref="IOException"> <paramref name="reader" />could not read from
     /// the <see cref="Stream" />.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -56,7 +60,8 @@ public sealed partial class VCard
         => DoParseVcf(reader ?? throw new ArgumentNullException(nameof(reader)));
 
 
-    private static List<VCard> DoParseVcf(TextReader reader, VCdVersion versionHint = VCdVersion.V2_1)
+    private static List<VCard> DoParseVcf(TextReader reader,
+                                          VCdVersion versionHint = VCdVersion.V2_1)
     {
         Debug.Assert(reader != null);
         DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoParseVcf) + "(TextReader)");
@@ -87,7 +92,8 @@ public sealed partial class VCard
 
                 if (info.Builder.Capacity > VcfDeserializationInfo.MAX_STRINGBUILDER_CAPACITY)
                 {
-                    info.Builder.Clear().Capacity = VcfDeserializationInfo.INITIAL_STRINGBUILDER_CAPACITY;
+                    info.Builder.Clear().Capacity =
+                        VcfDeserializationInfo.INITIAL_STRINGBUILDER_CAPACITY;
                 }
             }
         } while (!vcfReader.EOF);
@@ -96,9 +102,11 @@ public sealed partial class VCard
     }
 
 
-    private static VCard? ParseNestedVcard(string? content, VcfDeserializationInfo info, VCdVersion versionHint)
+    private static VCard? ParseNestedVcard(string? content,
+                                           VcfDeserializationInfo info,
+                                           VCdVersion versionHint)
     {
-        // Version 2.1 ist unmaskiert:
+        // Version 2.1 is not masked:
         content = versionHint == VCdVersion.V2_1
             ? content
             : content.UnMask(info.Builder, versionHint);
@@ -147,5 +155,4 @@ public sealed partial class VCard
             throw new IOException(e.Message, e);
         }
     }
-
 }
