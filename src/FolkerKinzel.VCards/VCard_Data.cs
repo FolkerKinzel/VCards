@@ -324,8 +324,8 @@ public sealed partial class VCard
     /// </summary>
     /// <remarks>
     /// If the <see cref="Relation"/> property embeds a <see cref="string"/> value, it will
-    /// only be written if this <see cref="string"/> can be converted to an absolute 
-    /// <see cref="Uri"/>.
+    /// be converted to the <see cref="DisplayNames"/> property of a <see cref="VCard"/> 
+    /// object if it can't be converted to an absolute <see cref="Uri"/>.
     /// </remarks>
     public IEnumerable<RelationProperty?>? Members
     {
