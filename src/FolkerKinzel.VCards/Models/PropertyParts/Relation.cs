@@ -47,7 +47,8 @@ public sealed class Relation
     public object Value => this._oneOf.Value;
 
     /// <summary>
-    /// Tries to convert the encapsulated data to a <see cref="string"/>.
+    /// Tries to convert the encapsulated data to a <see cref="string"/> that can be
+    /// displayed to users.
     /// </summary>
     /// <param name="str">When the method
     /// returns <c>true</c>, contains a <see cref="string"/> that
@@ -58,8 +59,8 @@ public sealed class Relation
     /// <para>
     /// The method differs from the <see cref="ToString"/> method in that it tries to convert 
     /// the information contained in the encapsulated data to a human-readable <see cref="string"/>,
-    /// whereas the <see cref="ToString"/> method provides meta-information about the Relation 
-    /// object itself.
+    /// whereas the <see cref="ToString"/> method provides meta-information about the 
+    /// <see cref="Relation"/> object itself.
     /// </para>
     /// The method fails
     /// <list type="bullet">
@@ -67,6 +68,8 @@ public sealed class Relation
     /// <item>if the instance contains a <see cref="VCards.VCard"/> and if this <see cref="VCards.VCard"/>
     /// contains no data that can be displayed as its name.</item>
     /// </list>
+    /// <para>Encapsulated <see cref="System.Uri"/>s will be converted using <see cref="System.Uri.ToString"/>
+    /// in order to get a more readable <see cref="string"/> than with <see cref="System.Uri.AbsoluteUri"/>.</para>
     /// </remarks>
     public bool TryAsString([NotNullWhen(true)] out string? str)
     {
