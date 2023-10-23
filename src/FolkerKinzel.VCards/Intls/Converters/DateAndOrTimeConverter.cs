@@ -5,8 +5,7 @@ using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-    /// <summary />
-    /// <threadsafety static="true" instance="false" />
+/// <threadsafety static="true" instance="false" />
 internal sealed class DateAndOrTimeConverter
 {
     private const int FIRST_LEAP_YEAR = 4;
@@ -50,8 +49,6 @@ internal sealed class DateAndOrTimeConverter
             "T--sszz",
             "T--sszzz"
     };
-
-
 
 #if NET5_0_OR_GREATER
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
@@ -174,7 +171,6 @@ internal sealed class DateAndOrTimeConverter
         static bool IsDateOnly(ReadOnlySpan<char> span) => !span.Contains('T');
     }
 
-
     internal static void AppendTimeStampTo(StringBuilder builder,
         DateTimeOffset dto, VCdVersion version)
     {
@@ -219,7 +215,6 @@ internal sealed class DateAndOrTimeConverter
         }//switch
     }
 
-
     internal static void AppendDateAndOrTimeTo(StringBuilder builder,
         DateTimeOffset dt, VCdVersion version)
     {
@@ -235,11 +230,9 @@ internal sealed class DateAndOrTimeConverter
         }
     }
 
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static bool HasDateComponent(DateTimeOffset dt)
         => !(dt.Year < FIRST_LEAP_YEAR && dt.Month == 1 && dt.Day == 1);
-
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static bool HasTimeComponent(DateTimeOffset dt)

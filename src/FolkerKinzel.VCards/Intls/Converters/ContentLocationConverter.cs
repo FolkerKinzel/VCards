@@ -7,14 +7,10 @@ internal static class ContentLocationConverter
     internal static class Values
     {
         internal const string INLINE = "INLINE";
-
         internal const string CONTENT_ID = "CONTENT-ID";
-
         internal const string CID = "CID";
-
         internal const string URL = "URL";
     }
-
 
     internal static ContentLocation Parse(string? value)
     {
@@ -28,7 +24,6 @@ internal static class ContentLocationConverter
             _ => ContentLocation.Inline
         };
     }
-
 
     internal static string ToVcfString(this ContentLocation contentLocation)
     {

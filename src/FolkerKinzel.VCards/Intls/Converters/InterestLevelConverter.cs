@@ -25,7 +25,6 @@ internal static class InterestLevelConverter
         };
     }
 
-
     internal static string? ToVCardString(this InterestLevel? interest)
     {
         return interest switch

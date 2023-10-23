@@ -4,7 +4,6 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class AddressTypesConverter
 {
-    //Post
     internal static class AdrTypeValue
     {
         internal const string DOM = "DOM";
@@ -21,7 +20,6 @@ internal static class AddressTypesConverter
     internal const int ADDRESS_TYPES_MIN_BIT = 0;
     internal const int ADDRESS_TYPES_MAX_BIT = 3;
 
-
     internal static AddressTypes? Parse(string? typeValue)
     {
         Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
@@ -35,7 +33,6 @@ internal static class AddressTypesConverter
             _ => null
         };
     }
-
 
     internal static string ToVcfString(this AddressTypes value)
         => value switch

@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
+#pragma warning disable CS0618 // Type or member is obsolete
 
 internal static class AddressToLabelConverter
 {
@@ -80,4 +80,4 @@ internal static class AddressToLabelConverter
         return builder;
     }
 }
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
+#pragma warning restore CS0618 // Type or member is obsolete

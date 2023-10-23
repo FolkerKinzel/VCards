@@ -173,7 +173,5 @@ internal static class AddressOrderConverter
                ? AddressOrder.Usa
                : span.StartsWith("PAPUA") || span.EndsWith("VENEZUELA") ? AddressOrder.Venezuela 
                                                                         : AddressOrder.Din;
-
     }
-
 }

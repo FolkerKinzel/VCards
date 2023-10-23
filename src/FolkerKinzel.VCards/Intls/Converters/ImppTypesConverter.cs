@@ -11,11 +11,11 @@ internal static class ImppTypesConverter
         internal const string MOBILE = "MOBILE";
     }
 
-    internal const ImppTypes DEFINED_IMPP_TYPES_VALUES = ImppTypes.Business | ImppTypes.Mobile | ImppTypes.Personal;
+    internal const ImppTypes DEFINED_IMPP_TYPES_VALUES =
+        ImppTypes.Business | ImppTypes.Mobile | ImppTypes.Personal;
 
     internal const int IMPP_TYPES_MIN_BIT = 0;
     internal const int IMPP_TYPES_MAX_BIT = 2;
-
 
     internal static ImppTypes? Parse(string? typeValue)
     {
