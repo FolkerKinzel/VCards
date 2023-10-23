@@ -11,11 +11,10 @@ internal abstract class ParameterSerializer
 
     /// <summary>ctor</summary>
     /// <param name="options" />
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     protected ParameterSerializer(VcfOptions options) => this.Options = options;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-    protected ParameterSection ParaSection { get; private set; }
+    [NotNull]
+    protected ParameterSection? ParaSection { get;  private set; }
 
     protected VcfOptions Options { get; }
 

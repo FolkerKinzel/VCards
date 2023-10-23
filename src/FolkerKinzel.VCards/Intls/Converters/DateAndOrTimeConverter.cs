@@ -50,9 +50,9 @@ internal sealed class DateAndOrTimeConverter
             "T--sszzz"
     };
 
-#if NET5_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
-#endif
+    #if NET5_0_OR_GREATER
+    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
+    #endif
     internal bool TryParse(ReadOnlySpan<char> roSpan, out OneOf<DateOnly, DateTimeOffset> oneOf)
     {
         oneOf = default;

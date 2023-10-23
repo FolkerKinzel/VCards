@@ -120,10 +120,15 @@ public sealed partial class VCard
                                     VcfOptions options = VcfOptions.Default,
                                     bool leaveStreamOpen = false)
     {
-        DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(SerializeVcf)}({nameof(Stream)}, IEnumerable<{nameof(VCard)}?>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
+        DebugWriter.WriteMethodHeader(
+            $"{nameof(VCard)}.{nameof(SerializeVcf)}({nameof(Stream)}, IEnumerable<{nameof(VCard)}?>");
         
         ValidateArguments(stream, vCards, leaveStreamOpen);
-        using VcfSerializer serializer = InitSerializer(stream, version, tzConverter, options, leaveStreamOpen);
+        using VcfSerializer serializer = VcfSerializer.GetSerializer(stream,
+                                                                     leaveStreamOpen,
+                                                                     version,
+                                                                     options,
+                                                                     tzConverter);
 
         var list = vCards.WhereNotNull().ToList();
 
@@ -177,19 +182,6 @@ public sealed partial class VCard
             }
         }
 
-        static VcfSerializer InitSerializer(Stream stream, VCdVersion version, ITimeZoneIDConverter? tzConverter, VcfOptions options, bool leaveStreamOpen)
-        {
-            // UTF-8 muss ohne BOM geschrieben werden, da sonst nicht lesbar
-            // (vCard 2.1 kann UTF-8 verwenden, da nur ASCII-Zeichen geschrieben werden)
-            var encoding = new UTF8Encoding(false);
-
-            StreamWriter writer = leaveStreamOpen
-                                  ? new StreamWriter(stream, encoding, 1024, true)
-                                  : new StreamWriter(stream, encoding);
-
-            return VcfSerializer.GetSerializer(writer, version, options, tzConverter);
-        }
-
         static void AppendAgents(List<VCard> list)
         {
             for (int i = 0; i < list.Count; i++)
@@ -201,8 +193,9 @@ public sealed partial class VCard
                     continue;
                 }
 
-                if (vCard.Relations.PrefOrNullIntl(x => x is RelationVCardProperty && x.Parameters.Relation.IsSet(RelationTypes.Agent),
-                                                                              ignoreEmptyItems: true) is RelationVCardProperty agent)
+                if (vCard.Relations.PrefOrNullIntl(x => x is RelationVCardProperty &&
+                                                        x.Parameters.Relation.IsSet(RelationTypes.Agent),
+                                                        ignoreEmptyItems: true) is RelationVCardProperty agent)
                 {
                     if (!list.Contains(agent.Value))
                     {
@@ -213,9 +206,6 @@ public sealed partial class VCard
             }//for
         }
     }
-
-
-
 
     /// <summary>Serializes <paramref name="vCards" /> as a <see cref="string" />, which
     /// represents the content of a VCF file.</summary>

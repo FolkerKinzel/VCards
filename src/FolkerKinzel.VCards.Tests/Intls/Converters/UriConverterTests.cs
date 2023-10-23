@@ -7,9 +7,11 @@ public class UriConverterTests
     public void ToAbsoluteUriTest1()
         => Assert.IsFalse(UriConverter.TryConvertToAbsoluteUri(null, out _));
 
+    [TestMethod]
     public void ToAbsoluteUriTest1b()
         => Assert.IsFalse(UriConverter.TryConvertToAbsoluteUri("", out _));
 
+    [TestMethod]
     public void ToAbsoluteUriTest1c()
        => Assert.IsFalse(UriConverter.TryConvertToAbsoluteUri("    ", out _));
 

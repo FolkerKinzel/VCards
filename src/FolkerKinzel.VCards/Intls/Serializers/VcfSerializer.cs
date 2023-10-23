@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.IO;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -11,30 +12,16 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal abstract class VcfSerializer : IDisposable
 {
+    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
+    internal const string X_KADDRESSBOOK_X_SpouseName = "X-KADDRESSBOOK-X-SpouseName";
+
+    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
+    internal const string X_KADDRESSBOOK_X_Anniversary = "X-KADDRESSBOOK-X-Anniversary";
+
+    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
+    internal const string X_KADDRESSBOOK_X_IMAddress = "X-KADDRESSBOOK-X-IMAddress";
+
     private readonly TextWriter _writer;
-
-    internal ParameterSerializer ParameterSerializer { get; }
-
-    [NotNull]
-    protected VCard? VCardToSerialize { get; private set; }
-
-    internal StringBuilder Builder { get; } = new();
-
-    internal StringBuilder Worker { get; } = new();
-
-    internal abstract VCdVersion Version { get; }
-
-    internal VcfOptions Options { get; }
-
-    [NotNull]
-    internal string? PropertyKey { get; private set; }
-
-    internal bool IsPref { get; private set; }
-
-    internal bool IgnoreEmptyItems { get; }
-
-    internal ITimeZoneIDConverter? TimeZoneConverter { get; }
-
 
     protected VcfSerializer(TextWriter writer, VcfOptions options, ParameterSerializer parameterSerializer, ITimeZoneIDConverter? tzConverter)
     {
@@ -49,15 +36,31 @@ internal abstract class VcfSerializer : IDisposable
         writer.NewLine = VCard.NewLine;
     }
 
-    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
-    internal const string X_KADDRESSBOOK_X_SpouseName = "X-KADDRESSBOOK-X-SpouseName";
+    internal ParameterSerializer ParameterSerializer { get; }
 
-    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
-    internal const string X_KADDRESSBOOK_X_Anniversary = "X-KADDRESSBOOK-X-Anniversary";
-  
-    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
-    internal const string X_KADDRESSBOOK_X_IMAddress = "X-KADDRESSBOOK-X-IMAddress";
+    
 
+    internal StringBuilder Builder { get; } = new();
+
+    internal StringBuilder Worker { get; } = new();
+
+    internal abstract VCdVersion Version { get; }
+
+    internal VcfOptions Options { get; }
+
+    internal bool IgnoreEmptyItems { get; }
+
+    internal ITimeZoneIDConverter? TimeZoneConverter { get; }
+
+    [NotNull]
+    protected VCard? VCardToSerialize { get; private set; }
+
+    [NotNull]
+    internal string? PropertyKey { get; private set; }
+
+    internal bool IsPref { get; private set; }
+
+    public void Dispose() => _writer.Dispose();
 
     protected void BuildPrefProperty<T>(string propertyKey,
                                        IEnumerable<T?> serializables,
@@ -102,25 +105,20 @@ internal abstract class VcfSerializer : IDisposable
         }
     }
 
-    //protected IEnumerable<T> FilterSerializables<T>(IEnumerable<T?> properties)
-    //    where T : VCardProperty
-    //{
-    //    foreach (var prop in properties)
-    //    {
-    //        if(IsPropertyWithData(prop, Options))
-    //        {
-    //            yield return prop;
-    //        }
-    //    }
-
-    //    static bool IsPropertyWithData([NotNullWhen(true)] VCardProperty? x, VcfOptions options)
-    //       => x != null && (!x.IsEmpty || options.HasFlag(VcfOptions.WriteEmptyProperties));
-    //}
-
-
-
-    internal static VcfSerializer GetSerializer(TextWriter writer, VCdVersion version, VcfOptions options, ITimeZoneIDConverter? tzConverter)
+    internal static VcfSerializer GetSerializer(Stream stream,
+                                                bool leaveStreamOpen,
+                                                VCdVersion version,
+                                                VcfOptions options,
+                                                ITimeZoneIDConverter? tzConverter)
     {
+        // UTF-8 must be written without BOM, otherwise it cannot be read
+        // (vCard 2.1 can use UTF-8 because only ASCII characters are written)
+        var encoding = new UTF8Encoding(false);
+
+        StreamWriter writer = leaveStreamOpen
+                              ? new StreamWriter(stream, encoding, 1024, true)
+                              : new StreamWriter(stream, encoding);
+
         return version switch
         {
             VCdVersion.V2_1 => new Vcf_2_1Serializer(writer, options, tzConverter),
@@ -129,7 +127,6 @@ internal abstract class VcfSerializer : IDisposable
             _ => throw new ArgumentException(Res.UndefinedEnumValue, nameof(version))
         };
     }
-
 
     internal void Serialize(VCard vCard)
     {
@@ -307,7 +304,6 @@ internal abstract class VcfSerializer : IDisposable
         }//foreach
     }
 
-
     protected void BuildProperty(string propertyKey, VCardProperty prop, bool isPref = false)
     {
         if (prop.IsEmpty && IgnoreEmptyItems)
@@ -326,7 +322,6 @@ internal abstract class VcfSerializer : IDisposable
 
         _writer.WriteLine(Builder);
     }
-
 
     protected void BuildXImpps(IEnumerable<TextProperty?> value)
     {
@@ -403,7 +398,6 @@ internal abstract class VcfSerializer : IDisposable
         }
     }
 
-
     protected virtual void AppendLineFolding()
     {
         int counter = 0;
@@ -439,16 +433,13 @@ internal abstract class VcfSerializer : IDisposable
         }
     }
 
-
     #region Append
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendAccess(AccessProperty value) { }
 
-
     [ExcludeFromCodeCoverage]
     protected virtual void AppendAddresses(IEnumerable<AddressProperty?> value) { }
-    
 
     protected virtual void AppendAnniversaryViews(IEnumerable<DateAndOrTimeProperty?> value)
     {
@@ -528,7 +519,6 @@ internal abstract class VcfSerializer : IDisposable
     [ExcludeFromCodeCoverage]
     protected virtual void AppendFreeBusyUrls(IEnumerable<TextProperty?> value) { }
 
-
     protected virtual void AppendGenderViews(IEnumerable<GenderProperty?> value)
     {
         Debug.Assert(value != null);
@@ -552,7 +542,6 @@ internal abstract class VcfSerializer : IDisposable
 
                 BuildProperty(propKey, xGender);
             }
-
 
             if (Options.HasFlag(VcfOptions.WriteWabExtensions))
             {
@@ -721,8 +710,6 @@ internal abstract class VcfSerializer : IDisposable
         }
     }
 
-    
-
     [ExcludeFromCodeCoverage]
     protected virtual void AppendRoles(IEnumerable<TextProperty?> value) { }
 
@@ -749,9 +736,5 @@ internal abstract class VcfSerializer : IDisposable
 
     internal abstract void AppendBase64EncodedData(byte[]? data);
 
-
-    public void Dispose() => _writer.Dispose();
-
     #endregion
-
 }

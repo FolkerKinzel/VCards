@@ -5,10 +5,7 @@ namespace FolkerKinzel.VCards.Models.Tests;
 public class UuidPropertyTests
 {
     [TestMethod]
-    public void EqualsTest1()
-    {
-        Assert.IsFalse(new UuidProperty() == new UuidProperty());
-    }
+    public void EqualsTest1() => Assert.IsFalse(new UuidProperty() == new UuidProperty());
 
     [TestMethod]
     public void EqualsTest2()
