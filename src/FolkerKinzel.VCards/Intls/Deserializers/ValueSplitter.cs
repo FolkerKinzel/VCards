@@ -103,6 +103,4 @@ internal class ValueSplitter : IEnumerable<string>
 
         return false;
     }
-
-
 }

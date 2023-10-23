@@ -66,8 +66,8 @@ public sealed partial class VCard
         Debug.Assert(reader != null);
         DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoParseVcf) + "(TextReader)");
 
-        var info = new VcfDeserializationInfo();
         var vCardList = new List<VCard>();
+        var info = new VcfDeserializationInfo();
         var vcfReader = new VcfReader(reader, info);
         var queue = new Queue<VcfRow>(DESERIALIZER_QUEUE_INITIAL_CAPACITY);
 
@@ -89,12 +89,6 @@ public sealed partial class VCard
                 Debug.WriteLine(vCard);
 
                 queue.Clear();
-
-                if (info.Builder.Capacity > VcfDeserializationInfo.MAX_STRINGBUILDER_CAPACITY)
-                {
-                    info.Builder.Clear().Capacity =
-                        VcfDeserializationInfo.INITIAL_STRINGBUILDER_CAPACITY;
-                }
             }
         } while (!vcfReader.EOF);
 

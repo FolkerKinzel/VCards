@@ -5,10 +5,9 @@ namespace FolkerKinzel.VCards.Intls.Deserializers;
 
 internal sealed class VcfDeserializationInfo
 {
-    internal const int INITIAL_STRINGBUILDER_CAPACITY = 4096;
-    internal const int MAX_STRINGBUILDER_CAPACITY = 4096 * 2;
+    private const int INITIAL_STRINGBUILDER_CAPACITY = 4096;
+    private const int MAX_STRINGBUILDER_CAPACITY = 4096 * 4;
     internal const int INITIAL_PARAMETERLIST_CAPACITY = 8;
-
 
     private DateAndOrTimeConverter? _dateAndOrTimeConverter;
     private TimeConverter? _timeConverter;
@@ -31,7 +30,6 @@ internal sealed class VcfDeserializationInfo
         }
     }
 
-
     internal TimeConverter TimeConverter
     {
         get
@@ -46,6 +44,14 @@ internal sealed class VcfDeserializationInfo
 
     internal ValueSplitter CommaSplitter { get; } = new ValueSplitter(',', StringSplitOptions.RemoveEmptyEntries);
 
-    //internal ContentSizeRestriction EmbeddedContentSize { get; } = VCard.EmbeddedContentSizeLimit;
+    internal void Reset()
+    {
+        Builder.Clear();
+
+        if (Builder.Capacity > MAX_STRINGBUILDER_CAPACITY)
+        {
+            Builder.Capacity = INITIAL_STRINGBUILDER_CAPACITY;
+        }
+    }
 
 }

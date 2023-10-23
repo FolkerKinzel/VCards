@@ -23,7 +23,7 @@ public class VcfReaderTests
 
         var list = new List<VcfRow>();
 
-        var vcReader = new VcfReader(reader, info);
+        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
 
         foreach (VcfRow vcfRow in vcReader)
         {

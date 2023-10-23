@@ -2,6 +2,7 @@ using System.Globalization;
 using System.IO;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
@@ -12,6 +13,10 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal abstract class VcfSerializer : IDisposable
 {
+    private const int BUILDER_INITIAL_CAPACITY = 4096;
+    private const int WORKER_INITIAL_CAPACITY = 128;
+    private const int MAX_STRINGBUILDER_CAPACITY = 4096 * 4;
+
     [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     internal const string X_KADDRESSBOOK_X_SpouseName = "X-KADDRESSBOOK-X-SpouseName";
 
@@ -38,11 +43,9 @@ internal abstract class VcfSerializer : IDisposable
 
     internal ParameterSerializer ParameterSerializer { get; }
 
-    
+    internal StringBuilder Builder { get; } = new(BUILDER_INITIAL_CAPACITY);
 
-    internal StringBuilder Builder { get; } = new();
-
-    internal StringBuilder Worker { get; } = new();
+    internal StringBuilder Worker { get; } = new(WORKER_INITIAL_CAPACITY);
 
     internal abstract VCdVersion Version { get; }
 
@@ -51,6 +54,8 @@ internal abstract class VcfSerializer : IDisposable
     internal bool IgnoreEmptyItems { get; }
 
     internal ITimeZoneIDConverter? TimeZoneConverter { get; }
+
+    protected abstract string VersionString { get; }
 
     [NotNull]
     protected VCard? VCardToSerialize { get; private set; }
@@ -135,7 +140,7 @@ internal abstract class VcfSerializer : IDisposable
         VCardToSerialize = vCard;
         ReplenishRequiredProperties();
 
-        _ = Builder.Clear();
+        ResetBuilders();
         _writer.WriteLine("BEGIN:VCARD");
         _writer.Write(VCard.PropKeys.VERSION);
         _writer.Write(':');
@@ -148,7 +153,20 @@ internal abstract class VcfSerializer : IDisposable
 
     protected abstract void ReplenishRequiredProperties();
 
-    protected abstract string VersionString { get; }
+    private void ResetBuilders()
+    {
+        _ = Builder.Clear();
+
+        if (Builder.Capacity > MAX_STRINGBUILDER_CAPACITY)
+        {
+            Builder.Capacity = BUILDER_INITIAL_CAPACITY;
+        }
+
+        if (Worker.Capacity > MAX_STRINGBUILDER_CAPACITY)
+        {
+            Worker.Clear().Capacity = WORKER_INITIAL_CAPACITY;
+        }
+    }
 
     private void AppendProperties()
     {

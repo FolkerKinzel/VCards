@@ -31,7 +31,6 @@ internal class VcfReader : IEnumerable<VcfRow>
 
     public bool EOF { get; private set; }
 
-
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     private bool HandleException(Exception e)
@@ -46,7 +45,7 @@ internal class VcfReader : IEnumerable<VcfRow>
 
     private bool ReadNextLine([NotNullWhen(true)] out string? s)
     {
-        // Die TextReader.ReadLine()-Methode normalisiert die Zeilenwechselzeichen!
+        // The TextReader.ReadLine() method normalizes the line breaks.
         try
         {
             s = _reader.ReadLine();
@@ -74,7 +73,7 @@ internal class VcfReader : IEnumerable<VcfRow>
     {
         string? s;
 
-        do //findet den Anfang der vCard
+        do //finds the begin of the vCard
         {
             if (!ReadNextLine(out s))
             {
@@ -102,7 +101,8 @@ internal class VcfReader : IEnumerable<VcfRow>
             yield break;
         }
 
-        _ = _info.Builder.Clear(); // nötig, wenn die vcf-Datei mehrere vCards enthält
+        // needed if the VCF file contains more than one vCard
+        _info.Reset(); 
 
         bool isFirstLine = true;
         bool isVcard_2_1 = _versionHint == VCdVersion.V2_1;
@@ -146,9 +146,9 @@ internal class VcfReader : IEnumerable<VcfRow>
                     continue;
                 }
 
-
-                if (tmpRow.Parameters.Encoding == ValueEncoding.QuotedPrintable && tmp[tmp.Length - 1] == '=') // QuotedPrintable Soft-Linebreak (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
+                if (tmpRow.Parameters.Encoding == ValueEncoding.QuotedPrintable && tmp[tmp.Length - 1] == '=')
                 {
+                    // QuotedPrintable Soft-Linebreak (This can't be "BEGIN:VCARD" or "END:VCARD".)
                     Debug.WriteLine("  == QuotedPrintable Soft-Linebreak detected ==");
 
                     _ = _info.Builder.Append(tmp);
