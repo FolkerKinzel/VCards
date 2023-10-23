@@ -22,7 +22,6 @@ internal sealed partial class VcfRow
 
         this.Value = valueStart < vCardRow.Length ? vCardRow.Substring(valueStart) : "";
 
-
         // keySection:
         // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
         ReadOnlySpan<char> keySection = vCardRow.AsSpan(0, valueSeparatorIndex);
@@ -39,7 +38,6 @@ internal sealed partial class VcfRow
             ? keyPartSpan.Slice(startOfKey).ToString().ToUpperInvariant()
             : keyPartSpan.ToString().ToUpperInvariant();
 
-
         if (groupSeparatorIndex > 0)
         {
             this.Group = keySection.Slice(0, groupSeparatorIndex).ToString();
@@ -55,8 +53,6 @@ internal sealed partial class VcfRow
             this.Parameters = new ParameterSection();
         }
     }
-
-
 
     // Attribut-Values dürfen in vCard 4.0 :;, enthalten, wenn sie in doppelte Anführungszeichen
     // eingeschlossen sind!
@@ -80,7 +76,6 @@ internal sealed partial class VcfRow
 
         return -1;
     }
-
 
     private static List<KeyValuePair<string, string>> GetParameters(ReadOnlySpan<char> parameterSection, List<KeyValuePair<string, string>> parameterTuples)
     {
@@ -122,9 +117,7 @@ internal sealed partial class VcfRow
             }
         }
 
-
         return parameterTuples;
-
 
         ////////////////////////////////////////////////////////////////////
 
@@ -151,7 +144,6 @@ internal sealed partial class VcfRow
             return -1;
         }
 
-
         static void SplitParameterKeyAndValue(List<KeyValuePair<string, string>> parameterTuples, ReadOnlySpan<char> parameter)
         {
             int splitIndex = parameter.IndexOf('=');
@@ -177,5 +169,4 @@ internal sealed partial class VcfRow
             }
         }
     }
-
 }

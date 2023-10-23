@@ -16,7 +16,6 @@ internal class ValueSplitter : IEnumerable<string>
 
     internal StringSplitOptions Options { get; }
 
-
     public IEnumerator<string> GetEnumerator()
     {
         if (ValueString is null)

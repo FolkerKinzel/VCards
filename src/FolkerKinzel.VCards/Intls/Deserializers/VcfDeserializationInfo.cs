@@ -14,12 +14,9 @@ internal sealed class VcfDeserializationInfo
 
     internal StringBuilder Builder { get; } = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY);
 
-
     internal char[] AllQuotes { get; } = new char[] { '\"', '\'' };
 
-
     internal List<KeyValuePair<string, string>> ParameterList { get; } = new();
-
 
     internal DateAndOrTimeConverter DateAndOrTimeConverter
     {
@@ -41,7 +38,6 @@ internal sealed class VcfDeserializationInfo
 
     internal ValueSplitter SemiColonSplitter { get; } = new ValueSplitter(';', StringSplitOptions.None);
 
-
     internal ValueSplitter CommaSplitter { get; } = new ValueSplitter(',', StringSplitOptions.RemoveEmptyEntries);
 
     internal void Reset()
@@ -53,5 +49,4 @@ internal sealed class VcfDeserializationInfo
             Builder.Capacity = INITIAL_STRINGBUILDER_CAPACITY;
         }
     }
-
 }

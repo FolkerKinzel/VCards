@@ -38,7 +38,8 @@ internal sealed partial class VcfRow
 
             case "VCARD":
                 return CONTEXT_PROPERTY;
-            //Telefon
+
+            //Phone
             case ParameterSection.TypeValue.PREF:
             case ParameterSection.TypeValue.WORK:
             case ParameterSection.TypeValue.HOME:
@@ -53,8 +54,7 @@ internal sealed partial class VcfRow
             case TelTypesConverter.TelTypeValue.ISDN:
             case TelTypesConverter.TelTypeValue.VIDEO:
 
-
-            //Post
+            //Postal
             case AddressTypesConverter.AdrTypeValue.DOM:
             case AddressTypesConverter.AdrTypeValue.INTL:
             case AddressTypesConverter.AdrTypeValue.POSTAL:
@@ -74,8 +74,7 @@ internal sealed partial class VcfRow
             case "TLX":
             case "X400":
 
-
-            //Bilder
+            //Images
             case Const.ImageTypeValue.NonStandard.PNG:
             case Const.ImageTypeValue.JPEG:
             case Const.ImageTypeValue.NonStandard.JPG:
@@ -94,7 +93,6 @@ internal sealed partial class VcfRow
             case Const.ImageTypeValue.NonStandard.PIC:
             case Const.ImageTypeValue.NonStandard.XBM:
             case Const.ImageTypeValue.NonStandard.SVG:
-
 
             case Const.ImageTypeValue.PS:
             case Const.ImageTypeValue.PDF:
@@ -120,12 +118,10 @@ internal sealed partial class VcfRow
             case Const.SoundTypeValue.NonStandard.AAC:
             case Const.SoundTypeValue.NonStandard.AC3:
 
-
             // Public Key
             case Const.KeyTypeValue.X509:
             case Const.KeyTypeValue.PGP:
                 return TYPE_PROPERTY;
-
 
             case ContentLocationConverter.Values.INLINE:
             case ContentLocationConverter.Values.CID:
