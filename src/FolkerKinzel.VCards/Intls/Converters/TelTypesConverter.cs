@@ -38,7 +38,6 @@ internal static class TelTypesConverter
     internal const int TEL_TYPES_MIN_BIT = 0;
     internal const int TEL_TYPES_MAX_BIT = 12;
 
-
     internal static TelTypes? Parse(string? typeValue)
     {
         Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
@@ -80,5 +79,4 @@ internal static class TelTypesConverter
             TelTypes.Text => TelTypeValue.TEXT,
             _ => throw new ArgumentOutOfRangeException(nameof(value))
         };
-
 }

@@ -37,7 +37,6 @@ internal static class UriConverter
         return value.Scheme.StartsWith("cid", StringComparison.OrdinalIgnoreCase);
     }
 
-
     internal static string GetFileTypeExtensionFromUri(Uri? uri)
     {
         if (uri == null)

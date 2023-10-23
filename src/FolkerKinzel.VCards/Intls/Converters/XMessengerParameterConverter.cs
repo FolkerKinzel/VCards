@@ -34,14 +34,15 @@ internal static class XMessengerParameterConverter
         {
             par.InstantMessengerType = par.InstantMessengerType.Set(ImppTypes.Mobile);
         }
+
         if (par.PropertyClass.IsSet(PropertyClassTypes.Home))
         {
             par.InstantMessengerType = par.InstantMessengerType.Set(ImppTypes.Personal);
         }
+
         if (par.PropertyClass.IsSet(PropertyClassTypes.Work))
         {
             par.InstantMessengerType = par.InstantMessengerType.Set(ImppTypes.Business);
         }
     }
-
 }

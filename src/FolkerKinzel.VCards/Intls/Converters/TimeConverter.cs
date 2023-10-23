@@ -4,8 +4,7 @@ using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-    /// <summary />
-    /// <threadsafety static="true" instance="false" />
+/// <threadsafety static="true" instance="false" />
 internal sealed class TimeConverter
 {
     private readonly string[] _timeOnlyPatterns = new string[]
@@ -40,11 +39,9 @@ internal sealed class TimeConverter
         "--sszzz"
     };
 
-
     internal bool TryParse(ReadOnlySpan<char> s, out OneOf<TimeOnly, DateTimeOffset> oneOf)
     {
         oneOf = default;
-
         ReadOnlySpan<char> roSpan = s.Trim();
 
         if (roSpan.StartsWith('T'))
@@ -53,7 +50,6 @@ internal sealed class TimeConverter
         }
 
         DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
-
         bool hasUtcIndicator = roSpan.EndsWith("Z", StringComparison.OrdinalIgnoreCase);
 
         if (hasUtcIndicator || ContainsUtcOffset(roSpan))
@@ -88,7 +84,6 @@ internal sealed class TimeConverter
         static bool ContainsUtcOffset(ReadOnlySpan<char> span) => span.TrimStart('-').ContainsAny("+-".AsSpan());
     }
 
-
     internal static void AppendTimeTo(StringBuilder builder, TimeOnly dt, VCdVersion version)
     {
         switch (version)
@@ -109,8 +104,6 @@ internal sealed class TimeConverter
                 }
         }
     }
-
-
 
     internal static void AppendTimeTo(StringBuilder builder, DateTimeOffset dt, VCdVersion version)
     {

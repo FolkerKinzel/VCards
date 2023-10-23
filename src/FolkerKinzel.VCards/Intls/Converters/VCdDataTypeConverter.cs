@@ -7,41 +7,25 @@ internal static class VCdDataTypeConverter
     private static class PropValue
     {
         internal const string BOOLEAN = "BOOLEAN";
-
         internal const string DATE = "DATE";
-
         internal const string DATE_AND_OR_TIME = "DATE-AND-OR-TIME";
-
         internal const string DATE_TIME = "DATE-TIME";
-
         internal const string FLOAT = "FLOAT";
-
         internal const string INTEGER = "INTEGER";
-
         internal const string LANGUAGE_TAG = "LANGUAGE-TAG";
-
         internal const string TEXT = "TEXT";
-
         internal const string TIME = "TIME";
-
         internal const string TIMESTAMP = "TIMESTAMP";
-
         internal const string URI = "URI";
-
         internal const string UTC_OFFSET = "UTC-OFFSET";
-
 
         internal static class V3_Specific
         {
             internal const string BINARY = "BINARY";
-
             internal const string VCARD = "VCARD";
-
             internal const string PHONE_NUMBER = "PHONE-NUMBER";
         }
     }
-
-
 
     internal static VCdDataType? Parse(string? s)
     {
@@ -90,5 +74,4 @@ internal static class VCdDataTypeConverter
             _ => null
         };
     }
-
 }
