@@ -51,7 +51,7 @@ public sealed partial class DateAndOrTime
 
 
     /// <summary>
-    /// Tries to convert the instance to a <see cref="System.DateOnly"/> value.
+    /// Tries to convert the encapsulated data to a <see cref="System.DateOnly"/> value.
     /// </summary>
     /// <param name="value">When the method
     /// returns <c>true</c>, contains a <see cref="System.DateOnly"/> value that
@@ -76,7 +76,7 @@ public sealed partial class DateAndOrTime
     }
 
     /// <summary>
-    /// Tries to convert the instance to a <see cref="System.DateTimeOffset"/> value.
+    /// Tries to convert the encapsulated data to a <see cref="System.DateTimeOffset"/> value.
     /// </summary>
     /// <param name="value">When the method
     /// returns <c>true</c>, contains a <see cref="System.DateTimeOffset"/> value that

@@ -23,6 +23,7 @@ public sealed partial class TimeZoneID
     /// <param name="value">Identifier of the time zone. It should be an identifier
     /// from the "IANA Time Zone Database".
     /// (See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
+    /// <returns>The parsed <see cref="TimeZoneID"/>.</returns>
     /// <exception cref="ArgumentNullException"> <paramref name="value" /> is <c>null</c>.
     /// </exception>
     /// <exception cref="ArgumentException"> <paramref name="value" /> is an empty

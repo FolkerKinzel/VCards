@@ -5,13 +5,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 [TestClass]
 public class DataPropertyValueTests
 {
-    private readonly ReadOnlyCollection<byte> ReadOnlyByteCollection = new ReadOnlyCollection<byte>(Array.Empty<byte>());
+    private readonly ReadOnlyCollection<byte> _readOnlyByteCollection = new(Array.Empty<byte>());
 
     [TestMethod]
     public void SwitchTest1()
     {
-        var rel = new DataPropertyValue(ReadOnlyByteCollection);
-        rel.Switch(s => rel = null, null, null);
+        var rel = new DataPropertyValue(_readOnlyByteCollection);
+        rel.Switch(s => rel = null, null!, null!);
         Assert.IsNull(rel);
     }
 
@@ -40,7 +40,7 @@ public class DataPropertyValueTests
     [TestMethod]
     public void ValueTest3()
     {
-        var rel = new DataPropertyValue(ReadOnlyByteCollection);
+        var rel = new DataPropertyValue(_readOnlyByteCollection);
         Assert.IsNotNull(rel.Value);
         Assert.IsNull(rel.String);
         Assert.IsNotNull(rel.Bytes);

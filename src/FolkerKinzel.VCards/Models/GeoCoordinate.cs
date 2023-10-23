@@ -45,11 +45,23 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         return other is not null && (Math.Abs(this.Latitude - other.Latitude) < _6) && (Math.Abs(this.Longitude - other.Longitude) < _6);
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Overloads the equality operator for <see cref="GeoCoordinate"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="GeoCoordinate"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="GeoCoordinate"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the values of <paramref name="left"/> and <paramref name="right"/>
+    /// are equal, otherwise <c>false</c>.</returns>
     public static bool operator ==(GeoCoordinate? left, GeoCoordinate? right) 
         => object.Equals(left, right) || (left?.Equals(right) ?? false);
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Overloads the not-equal-to operator for <see cref="GeoCoordinate"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="GeoCoordinate"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="GeoCoordinate"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the values of <paramref name="left"/> and <paramref name="right"/>
+    /// are not equal, otherwise <c>false</c>.</returns>
     public static bool operator !=(GeoCoordinate? left, GeoCoordinate? right)
         => !(left == right);
 

@@ -282,11 +282,10 @@ public static class IEnumerableExtension
                                  );
 
     /// <summary>
-    /// Gets the most preferred <see cref="VCardProperty"/> from a collection of
-    /// <see cref="VCardProperty"/> objects and allows to specify whether or not
-    /// to ignore empty items.
+    /// Gets the first <see cref="VCardProperty"/> from a collection of <see cref="VCardProperty"/> 
+    /// objects and allows to specify whether or not to ignore empty items.
     /// </summary>
-    /// <typeparam name="TSource">>Generic type parameter that's constrained to be a class that's 
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
     /// objects to search. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
@@ -314,9 +313,8 @@ public static class IEnumerableExtension
         => values?.FirstOrNullIntl(ignoreEmptyItems);
 
     /// <summary>
-    /// Gets the first <see cref="VCardProperty"/> from a collection of
-    /// <see cref="VCardProperty"/> objects and allows filtering of the items and
-    /// to specify whether or not to ignore empty items.
+    /// Gets the first <see cref="VCardProperty"/> from a collection of <see cref="VCardProperty"/>
+    /// objects and allows filtering of the items and to specify whether or not to ignore empty items.
     /// </summary>
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
@@ -352,7 +350,6 @@ public static class IEnumerableExtension
               filter ?? throw new ArgumentNullException(nameof(filter)),
               ignoreEmptyItems
            );
-
 
     /// <summary>
     /// Sorts the elements in <paramref name="values"/> ascending by the value of their 

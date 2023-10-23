@@ -58,11 +58,23 @@ public sealed class UuidProperty : VCardProperty, IEquatable<UuidProperty>
     /// <inheritdoc />
     public override int GetHashCode() => HashCode.Combine(Value);
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Overloads the equality operator for <see cref="UuidProperty"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="UuidProperty"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="UuidProperty"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the <see cref="Value"/> of <paramref name="left"/> and 
+    /// <paramref name="right"/> is equal, otherwise <c>false</c>.</returns>
     public static bool operator ==(UuidProperty? left, UuidProperty? right)
         => object.ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Overloads the not-equal-to operator for <see cref="UuidProperty"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="UuidProperty"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="UuidProperty"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the <see cref="Value"/> of <paramref name="left"/> and 
+    /// <paramref name="right"/> is not equal, otherwise <c>false</c>.</returns>
     public static bool operator !=(UuidProperty? left, UuidProperty? right)
         => !(left == right);
 

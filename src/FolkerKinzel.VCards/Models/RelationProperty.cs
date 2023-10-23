@@ -176,7 +176,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// </para>
     /// </remarks>
     /// <example>
-    /// <code language="cs" source="source=..\Examples\EmbeddedVCardExample.cs" />
+    /// <code language="cs" source="..\Examples\EmbeddedVCardExample.cs" />
     /// </example>
     public static RelationProperty FromVCard(VCard? vCard,
                                              RelationTypes? relation = null,

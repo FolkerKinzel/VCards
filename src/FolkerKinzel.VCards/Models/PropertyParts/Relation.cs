@@ -7,7 +7,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 /// <summary>
 /// Encapsulates the value of a <see cref="RelationProperty"/> object.
 /// This can be either a <see cref="string"/>, a 
-/// <see cref="FolkerKinzel.VCards.VCard"/>, a <see cref="System.Guid"/>,
+/// <see cref="VCards.VCard"/>, a <see cref="System.Guid"/>,
 /// or a <see cref="System.Uri"/>.
 /// </summary>
 /// <seealso cref="RelationProperty"/>
@@ -24,7 +24,7 @@ public sealed class Relation
     public string? String => IsString ? AsStringIntl : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="FolkerKinzel.VCards.VCard"/>
+    /// Gets the encapsulated <see cref="VCards.VCard"/>
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     public VCard? VCard => IsVCard ? AsVCardIntl : null;
@@ -46,7 +46,28 @@ public sealed class Relation
     /// </summary>
     public object Value => this._oneOf.Value;
 
-
+    /// <summary>
+    /// Tries to convert the encapsulated data to a <see cref="string"/>.
+    /// </summary>
+    /// <param name="str">When the method
+    /// returns <c>true</c>, contains a <see cref="string"/> that
+    /// represents the data that is encapsulated in the instance. The
+    /// parameter is passed uninitialized.</param>
+    /// <returns><c>true</c> if the conversion was successful, otherwise <c>false</c>.</returns>
+    /// <remarks>
+    /// <para>
+    /// The method differs from the <see cref="ToString"/> method in that it tries to convert 
+    /// the information contained in the encapsulated data to a human-readable <see cref="string"/>,
+    /// whereas the <see cref="ToString"/> method provides meta-information about the Relation 
+    /// object itself.
+    /// </para>
+    /// The method fails
+    /// <list type="bullet">
+    /// <item>if the instance encapsulates a <see cref="System.Guid"/></item>
+    /// <item>if the instance contains a <see cref="VCards.VCard"/> and if this <see cref="VCards.VCard"/>
+    /// contains no data that can be displayed as its name.</item>
+    /// </list>
+    /// </remarks>
     public bool TryAsString([NotNullWhen(true)] out string? str)
     {
         str = Convert(
@@ -67,7 +88,7 @@ public sealed class Relation
     /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="string"/>.</param>
     /// <param name="vCardAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="FolkerKinzel.VCards.VCard"/>.</param>
+    /// value is a <see cref="VCards.VCard"/>.</param>
     /// <param name="guidAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="System.Guid"/>.</param>
     /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
@@ -89,12 +110,12 @@ public sealed class Relation
     /// <param name="stringFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="string"/>.</param>
     /// <param name="vCardFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
-    /// value is a <see cref="FolkerKinzel.VCards.VCard"/>.</param>
+    /// value is a <see cref="VCards.VCard"/>.</param>
     /// <param name="guidFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.Guid"/>.</param>
     /// <param name="uriFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.Uri"/>.</param>
-    /// <returns></returns>
+    /// <returns>A <typeparamref name="TResult"/>.</returns>
     /// <exception cref="InvalidOperationException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
@@ -108,7 +129,6 @@ public sealed class Relation
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => _oneOf.ToString();
-
 
     [MemberNotNullWhen(true, nameof(String))]
     private bool IsString => _oneOf.IsT0;

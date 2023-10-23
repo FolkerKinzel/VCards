@@ -162,10 +162,8 @@ public sealed partial class VCard
                         continue;
                     }
 
-                    RelationVCardProperty? agent = vCard.Relations.PrefOrNullIntl(x => x is RelationVCardProperty && x.Parameters.Relation.IsSet(RelationTypes.Agent),
-                                                                                  ignoreEmptyItems: true) as RelationVCardProperty;
-                        
-                    if (agent != null)
+                    if (vCard.Relations.PrefOrNullIntl(x => x is RelationVCardProperty && x.Parameters.Relation.IsSet(RelationTypes.Agent),
+                                                                                  ignoreEmptyItems: true) is RelationVCardProperty agent)
                     {
                         if (!list.Contains(agent.Value))
                         {
@@ -272,23 +270,7 @@ public sealed partial class VCard
     /// <param name="tzConverter">An object that implements <see cref="ITimeZoneIDConverter"
     /// /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
     /// <param name="options">Options for writing the VCF file. The flags can be combined.</param>
-    /// <remarks>
-    /// <para>
-    /// Die Methode serialisiert möglicherweise mehrere vCards. Dies geschieht, wenn
-    /// eine VCF-Datei als vCard 4.0 gespeichert wird und sich in den Eigenschaften
-    /// <see cref="VCard.Members" /> oder <see cref="VCard.Relations" /> des <see cref="VCard"
-    /// />-Objekts weitere <see cref="VCard" />-Objekte in Form von <see cref="RelationVCardProperty"
-    /// />-Objekten befanden.
-    /// </para>
-    /// <para>
-    /// Ebenso verhält sich die Methode, wenn eine vCard 2.1 oder 3.0 mit der Option
-    /// <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> serialisiert wird und
-    /// wenn sich in der Eigenschaft <see cref="VCard.Relations" /> des <see cref="VCard"
-    /// />-Objekts ein <see cref="RelationVCardProperty" />-Objekt befindet, auf dessen
-    /// <see cref="ParameterSection" /> in der Eigenschaft <see cref="ParameterSection.Relation"
-    /// /> das Flag <see cref="RelationTypes.Agent" /> gesetzt ist.
-    /// </para>
-    /// </remarks>
+    /// 
     /// <remarks>
     /// <note type="caution">
     /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
