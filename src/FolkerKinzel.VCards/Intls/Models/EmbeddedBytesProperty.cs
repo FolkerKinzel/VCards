@@ -10,16 +10,10 @@ namespace FolkerKinzel.VCards.Intls.Models;
 
 internal sealed class EmbeddedBytesProperty : DataProperty
 {
-    private readonly byte[]? _bytes;
-    private ReadOnlyCollection<byte>? _value;
-
     /// <summary>Copy ctor</summary>
     /// <param name="prop">The <see cref="DataProperty" /> object to clone.</param>
-    private EmbeddedBytesProperty(EmbeddedBytesProperty prop) : base(prop)
-    {
-        _bytes = prop._bytes;
-        _value = prop._value;
-    }
+    private EmbeddedBytesProperty(EmbeddedBytesProperty prop)
+        : base(prop) => Value = prop.Value;
 
 
     internal EmbeddedBytesProperty(byte[]? arr,
@@ -29,32 +23,19 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     {
         if (arr != null && arr.Length != 0)
         {
-            _bytes = arr;
+            Value = arr;
         }
     }
 
-    public new ReadOnlyCollection<byte>? Value
-    {
-        get
-        {
-            if (_value == null && _bytes != null)
-            {
-                _value = new ReadOnlyCollection<byte>(_bytes);
-            }
-
-            return _value;
-        }
-    }
-
+    public new byte[]? Value { get; }
 
     /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
-    public override bool IsEmpty => _bytes is null;
+    public override bool IsEmpty => Value is null;
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string GetFileTypeExtension() => MimeString.ToFileTypeExtension(Parameters.MediaType);
-
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -72,17 +53,18 @@ internal sealed class EmbeddedBytesProperty : DataProperty
         Parameters.Encoding = ValueEncoding.Base64;
     }
 
+
     internal override void AppendValue(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
 
         if (serializer.Version < VCdVersion.V4_0)
         {
-            serializer.AppendBase64EncodedData(_bytes);
+            serializer.AppendBase64EncodedData(Value);
         }
         else
         {
-            serializer.Builder.Append(DataUrl.FromBytes(_bytes, Parameters.MediaType));
+            serializer.Builder.Append(DataUrl.FromBytes(Value, Parameters.MediaType));
         }
     }
 }

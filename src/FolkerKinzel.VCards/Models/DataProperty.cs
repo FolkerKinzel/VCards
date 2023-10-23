@@ -26,7 +26,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     private bool _isValueInitialized;
 
     /// <summary>Copy constructor.</summary>
-    /// <param name="prop">Das zu klonende <see cref="DataProperty" /> Objekt.</param>
+    /// <param name="prop">The<see cref="DataProperty" /> object to clone.</param>
     protected DataProperty(DataProperty prop) : base(prop) { }
 
     /// <summary>ctor</summary>
@@ -96,8 +96,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                : FromFile(filePath, null, propertyGroup);
 
     /// <summary>
-    /// Creates a new <see cref="DataProperty"/> instance that embeds a collection of 
-    /// <see cref="byte"/>s in a vCard.
+    /// Creates a new <see cref="DataProperty"/> instance that embeds an array of 
+    /// <see cref="byte"/>s in a VCF file.
     /// </summary>
     /// <param name="bytes">The <see cref="byte"/>s to embed or <c>null</c>.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="bytes"/>
@@ -106,12 +106,12 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
-    public static DataProperty FromBytes(IEnumerable<byte>? bytes,
+    public static DataProperty FromBytes(byte[]? bytes,
                                          string? mimeType = MimeString.OctetStream,
                                          string? propertyGroup = null)
         => new EmbeddedBytesProperty
            (
-             bytes?.ToArray(),
+             bytes,
              propertyGroup,
              new ParameterSection()
              {

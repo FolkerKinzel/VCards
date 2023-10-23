@@ -8,22 +8,22 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary>
 /// Encapsulates the value of a <see cref="DataProperty"/> object.
-/// This can be either a <see cref="ReadOnlyCollection{T}">ReadOnlyCollection&lt;Byte&gt;</see>,
+/// This can be either an array of <see cref="byte"/>s,
 /// a <see cref="System.Uri"/>, or a <see cref="string"/>.
 /// </summary>
 /// <seealso cref="DataProperty"/>
 public sealed partial class DataPropertyValue
 {
-    private readonly OneOf<ReadOnlyCollection<byte>, Uri, string> _oneOf;
+    private readonly OneOf<byte[], Uri, string> _oneOf;
 
-    internal DataPropertyValue(OneOf<ReadOnlyCollection<byte>, Uri, string> oneOf)
+    internal DataPropertyValue(OneOf<byte[], Uri, string> oneOf)
         => _oneOf = oneOf;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="ReadOnlyCollection{T}">ReadOnlyCollection&lt;Byte&gt;</see>
+    /// Gets the encapsulated <see cref="byte"/> array
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
-    public ReadOnlyCollection<byte>? Bytes => IsBytes ? AsBytes : null;
+    public byte[]? Bytes => IsBytes ? AsBytes : null;
 
     /// <summary>
     /// Gets the encapsulated <see cref="System.Uri"/>
@@ -47,7 +47,7 @@ public sealed partial class DataPropertyValue
     /// encapsulated value.
     /// </summary>
     /// <param name="bytesAction">The <see cref="Action{T}"/> to perform if the encapsulated value
-    /// is a <see cref="ReadOnlyCollection{T}">ReadOnlyCollection&lt;Byte&gt;</see>.</param>
+    /// is an array of <see cref="byte"/>s.</param>
     /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="System.Uri"/>.</param>
     /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
@@ -56,7 +56,7 @@ public sealed partial class DataPropertyValue
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Switch(Action<ReadOnlyCollection<byte>> bytesAction,
+    public void Switch(Action<byte[]> bytesAction,
                        Action<Uri> uriAction,
                        Action<string> stringAction)
         => _oneOf.Switch(bytesAction, uriAction, stringAction);
@@ -66,7 +66,7 @@ public sealed partial class DataPropertyValue
     /// </summary>
     /// <typeparam name="TResult">Generic type parameter.</typeparam>
     /// <param name="bytesFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated 
-    /// value is a <see cref="ReadOnlyCollection{T}">ReadOnlyCollection&lt;Byte&gt;</see>.</param>
+    /// value is an array of <see cref="byte"/>s.</param>
     /// <param name="uriFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.Uri"/>.</param>
     /// <param name="stringFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
@@ -76,7 +76,7 @@ public sealed partial class DataPropertyValue
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public TResult Convert<TResult>(Func<ReadOnlyCollection<byte>, TResult>? bytesFunc,
+    public TResult Convert<TResult>(Func<byte[], TResult>? bytesFunc,
                                     Func<Uri, TResult> uriFunc,
                                     Func<string, TResult> stringFunc)
         => _oneOf.Match(bytesFunc, uriFunc, stringFunc);
@@ -85,14 +85,14 @@ public sealed partial class DataPropertyValue
     public override string ToString()
      => Convert
         (
-         bytes => $"{bytes}: {bytes.Count} Bytes",
+         bytes => $"{bytes}: {bytes.Length} Bytes",
          uri => _oneOf.ToString(),
          str => _oneOf.ToString()
         );
 
     private bool IsBytes => _oneOf.IsT0;
 
-    private ReadOnlyCollection<byte> AsBytes => _oneOf.AsT0;
+    private byte[] AsBytes => _oneOf.AsT0;
 
     private bool IsUri => _oneOf.IsT1;
 
