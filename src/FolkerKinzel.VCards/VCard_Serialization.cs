@@ -65,7 +65,6 @@ public sealed partial class VCard
         // prevents an empty file from being written:
         if (!vCards.Any(x => x != null))
         {
-            //File.Delete(fileName);
             return;
         }
 
@@ -122,84 +121,100 @@ public sealed partial class VCard
                                     bool leaveStreamOpen = false)
     {
         DebugWriter.WriteMethodHeader($"{nameof(VCard)}.{nameof(SerializeVcf)}({nameof(Stream)}, IEnumerable<{nameof(VCard)}?>, {nameof(VCdVersion)}, {nameof(VcfOptions)}");
+        
+        ValidateArguments(stream, vCards, leaveStreamOpen);
+        using VcfSerializer serializer = InitSerializer(stream, version, tzConverter, options, leaveStreamOpen);
 
-        if (stream is null)
-        {
-            throw new ArgumentNullException(nameof(stream));
-        }
-
-        if (!stream.CanWrite)
-        {
-            if (!leaveStreamOpen)
-            {
-                stream.Close();
-            }
-
-            throw new ArgumentException(Res.StreamNotWritable, nameof(stream));
-        }
-
-        if (vCards is null)
-        {
-            if (!leaveStreamOpen)
-            {
-                stream.Close();
-            }
-            throw new ArgumentNullException(nameof(vCards));
-        }
+        var list = vCards.WhereNotNull().ToList();
 
         if (version < VCdVersion.V4_0)
         {
             if (options.IsSet(VcfOptions.IncludeAgentAsSeparateVCard))
             {
-                List<VCard?> list = vCards.ToList();
-                vCards = list;
-                for (int i = 0; i < list.Count; i++)
-                {
-                    VCard? vCard = list[i];
-
-                    if (vCard?.Relations is null)
-                    {
-                        continue;
-                    }
-
-                    if (vCard.Relations.PrefOrNullIntl(x => x is RelationVCardProperty && x.Parameters.Relation.IsSet(RelationTypes.Agent),
-                                                                                  ignoreEmptyItems: true) is RelationVCardProperty agent)
-                    {
-                        if (!list.Contains(agent.Value))
-                        {
-                            list.Add(agent.Value);
-                        }
-                    }
-
-                }//for
-            }//if
+                AppendAgents(list);
+            }
         }
         else
         {
-            vCards = Reference(vCards);
+            foreach (var vCard in list)
+            {
+                vCard.NormalizeMembers(serializer);
+            }
+
+            ReferenceIntl(list);
         }
 
-        // UTF-8 muss ohne BOM geschrieben werden, da sonst nicht lesbar
-        // (vCard 2.1 kann UTF-8 verwenden, da nur ASCII-Zeichen geschrieben werden)
-        var encoding = new UTF8Encoding(false);
-
-        using StreamWriter? writer = leaveStreamOpen
-                ? new StreamWriter(stream, encoding, 1024, true)
-                : new StreamWriter(stream, encoding);
-
-
-        var serializer = VcfSerializer.GetSerializer(writer, version, options, tzConverter);
-
-        foreach (VCard? vCard in vCards)
+        foreach (VCard vCard in list)
         {
-            if (vCard is null)
-            {
-                continue;
-            }
             vCard.Version = version;
             serializer.Serialize(vCard);
         }
+
+        static void ValidateArguments(Stream stream, IEnumerable<VCard?> vCards, bool leaveStreamOpen)
+        {
+            if (stream is null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (!stream.CanWrite)
+            {
+                if (!leaveStreamOpen)
+                {
+                    stream.Close();
+                }
+
+                throw new ArgumentException(Res.StreamNotWritable, nameof(stream));
+            }
+
+            if (vCards is null)
+            {
+                if (!leaveStreamOpen)
+                {
+                    stream.Close();
+                }
+                throw new ArgumentNullException(nameof(vCards));
+            }
+        }
+
+        static VcfSerializer InitSerializer(Stream stream, VCdVersion version, ITimeZoneIDConverter? tzConverter, VcfOptions options, bool leaveStreamOpen)
+        {
+            // UTF-8 muss ohne BOM geschrieben werden, da sonst nicht lesbar
+            // (vCard 2.1 kann UTF-8 verwenden, da nur ASCII-Zeichen geschrieben werden)
+            var encoding = new UTF8Encoding(false);
+
+            StreamWriter writer = leaveStreamOpen
+                                  ? new StreamWriter(stream, encoding, 1024, true)
+                                  : new StreamWriter(stream, encoding);
+
+            return VcfSerializer.GetSerializer(writer, version, options, tzConverter);
+        }
+
+        static void AppendAgents(List<VCard> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                VCard vCard = list[i];
+
+                if (vCard.Relations is null)
+                {
+                    continue;
+                }
+
+                if (vCard.Relations.PrefOrNullIntl(x => x is RelationVCardProperty && x.Parameters.Relation.IsSet(RelationTypes.Agent),
+                                                                              ignoreEmptyItems: true) is RelationVCardProperty agent)
+                {
+                    if (!list.Contains(agent.Value))
+                    {
+                        list.Add(agent.Value);
+                    }
+                }
+
+            }//for
+        }
     }
+
+
 
 
     /// <summary>Serializes <paramref name="vCards" /> as a <see cref="string" />, which
@@ -423,6 +438,29 @@ public sealed partial class VCard
         catch (Exception e)
         {
             throw new IOException(e.Message, e);
+        }
+    }
+
+    private void NormalizeMembers(VcfSerializer serializer)
+    {
+        RelationProperty[] members = Members?.WhereNotNull().ToArray() ?? Array.Empty<RelationProperty>();
+        Members = members;
+
+        for (int i = 0; i < members.Length; i++)
+        {
+            RelationProperty prop = members[i];
+
+            if (prop is RelationTextProperty textProp)
+            {
+                if (textProp.IsEmpty && serializer.IgnoreEmptyItems)
+                {
+                    continue;
+                }
+
+                members[i] = Uri.TryCreate(textProp.Value?.Trim(), UriKind.Absolute, out Uri? uri)
+                    ? RelationProperty.FromUri(uri, prop.Parameters.Relation, prop.Group)
+                    : RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(textProp.Value) });
+            }
         }
     }
 }

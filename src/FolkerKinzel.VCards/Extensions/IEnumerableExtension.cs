@@ -242,8 +242,7 @@ public static class IEnumerableExtension
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T? PrefOrNull<T>(this IEnumerable<T?>? values,
                                    bool ignoreEmptyItems = true) where T : VCardProperty
-        => values is null ? null
-                              : values.PrefOrNullIntl(ignoreEmptyItems);
+        => values?.PrefOrNullIntl(ignoreEmptyItems);
 
     /// <summary>
     /// Gets the most preferred <see cref="VCardProperty"/> from a collection of
@@ -274,12 +273,11 @@ public static class IEnumerableExtension
     public static TSource? PrefOrNull<TSource>(this IEnumerable<TSource?>? values,
                                    Func<TSource, bool> filter,
                                    bool ignoreEmptyItems = true) where TSource : VCardProperty
-        => values is null ? null
-                              : values.PrefOrNullIntl
-                                (
-                                   filter ?? throw new ArgumentNullException(nameof(filter)),
-                                   ignoreEmptyItems
-                                 );
+        => values?.PrefOrNullIntl
+                   (
+                      filter ?? throw new ArgumentNullException(nameof(filter)),
+                      ignoreEmptyItems
+                   );
 
     /// <summary>
     /// Gets the first <see cref="VCardProperty"/> from a collection of <see cref="VCardProperty"/> 

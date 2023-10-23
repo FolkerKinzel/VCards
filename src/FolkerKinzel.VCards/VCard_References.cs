@@ -69,28 +69,34 @@ public sealed partial class VCard
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     public static IEnumerable<VCard> Reference(IEnumerable<VCard?> vCards)
     {
-        if (vCards is null)
+        if(vCards is null)
         {
             throw new ArgumentNullException(nameof(vCards));
         }
 
-        List<VCard> list = vCards.WhereNotNull().ToList();
+        var list = vCards.WhereNotNull().ToList();
+        ReferenceIntl(list);
+        return list;
+    }
 
-        for (int i = list.Count - 1; i >= 0; i--)
+
+    private static void ReferenceIntl(List<VCard> vCards)
+    {
+        for (int i = vCards.Count - 1; i >= 0; i--)
         {
-            VCard vcard = list[i];
+            VCard vcard = vCards[i];
 
             if (vcard.Members != null || vcard.Relations != null)
             {
                 vcard = (VCard)vcard.Clone();
-                list[i] = vcard;
+                vCards[i] = vcard;
 
                 if (vcard.Members != null)
                 {
                     List<RelationProperty?> members = vcard.Members.ToList();
                     vcard.Members = members;
 
-                    DoSetReferences(list, members);
+                    DoSetReferences(vCards, members);
                 }
 
                 if (vcard.Relations != null)
@@ -98,12 +104,10 @@ public sealed partial class VCard
                     List<RelationProperty?> relations = vcard.Relations.ToList();
                     vcard.Relations = relations;
 
-                    DoSetReferences(list, relations);
+                    DoSetReferences(vCards, relations);
                 }
             }
         }
-
-        return list;
 
         static void DoSetReferences(List<VCard> vCardList, List<RelationProperty?> relations)
         {

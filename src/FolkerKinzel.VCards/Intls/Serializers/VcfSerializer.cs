@@ -9,7 +9,7 @@ using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal abstract class VcfSerializer
+internal abstract class VcfSerializer : IDisposable
 {
     private readonly TextWriter _writer;
 
@@ -31,7 +31,7 @@ internal abstract class VcfSerializer
 
     internal bool IsPref { get; private set; }
 
-    protected bool IgnoreEmptyItems { get; }
+    internal bool IgnoreEmptyItems { get; }
 
     internal ITimeZoneIDConverter? TimeZoneConverter { get; }
 
@@ -748,6 +748,9 @@ internal abstract class VcfSerializer
     protected virtual void AppendXmlProperties(IEnumerable<XmlProperty?> value) { }
 
     internal abstract void AppendBase64EncodedData(byte[]? data);
+
+
+    public void Dispose() => _writer.Dispose();
 
     #endregion
 
