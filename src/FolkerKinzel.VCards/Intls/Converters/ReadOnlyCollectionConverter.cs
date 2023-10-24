@@ -6,12 +6,12 @@ internal static class ReadOnlyCollectionConverter
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static ReadOnlyCollection<string> ToReadOnlyCollection(string? s)
-        => string.IsNullOrWhiteSpace(s) ? ReadOnlyCollectionString.Empty : new ReadOnlyCollection<string>(new string[] { s });
+        => string.IsNullOrWhiteSpace(s) ? ReadOnlyStringCollection.Empty : new ReadOnlyCollection<string>(new string[] { s });
 
     internal static ReadOnlyCollection<string> ToReadOnlyCollection(IEnumerable<string?>? coll)
     {
         return coll is null || !coll.Any(x => !string.IsNullOrWhiteSpace(x))
-            ? ReadOnlyCollectionString.Empty
+            ? ReadOnlyStringCollection.Empty
             : coll.All(x => !string.IsNullOrWhiteSpace(x))
                   ? coll is ReadOnlyCollection<string> roc
                           ? roc

@@ -49,13 +49,11 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Add(_collectPropertyClassTypes);
         _actionList.Add(_collectAddressTypes);
 
-
         AppendType(isPref);
         AppendValue(ParaSection.DataType);
         AppendLanguage();
         AppendNonStandardParameters();
     }
-
 
     protected override void BuildAgentPara()
     {
@@ -64,7 +62,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
             AppendValue(VCdDataType.Uri);
         }
     }
-
 
     protected override void BuildBdayPara()
     {
@@ -82,7 +79,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     protected override void BuildClassPara()
     {
-        // keine Parameter
+        // none parameters
     }
 
     protected override void BuildEmailPara(bool isPref)
@@ -105,7 +102,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     protected override void BuildGeoPara()
     {
-        // keine Parameter
+        // none parameters
     }
 
     protected override void BuildImppPara(bool isPref)
@@ -116,7 +113,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
         AppendType(isPref);
     }
-
 
     protected override void BuildKeyPara()
     {
@@ -136,7 +132,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         AppendType(false);
     }
 
-
     protected override void BuildLabelPara(bool isPref)
     {
         _actionList.Clear();
@@ -148,7 +143,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         AppendLanguage();
         AppendNonStandardParameters();
     }
-
 
     protected override void BuildLogoPara()
     {
@@ -167,7 +161,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
         AppendType(false);
     }
-
 
     protected override void BuildMailerPara()
     {
@@ -230,12 +223,12 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     protected override void BuildProdidPara()
     {
-        // keine Parameter
+        // none parameters
     }
 
     protected override void BuildProfilePara()
     {
-        // keine Parameter
+        // none parameters
     }
 
     protected override void BuildRevPara()
@@ -277,15 +270,13 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         AppendType(false);
     }
 
-
     protected override void BuildSourcePara()
     {
         AppendValue(ParaSection.DataType);
         AppendContext();
     }
 
-
-    protected override void BuildTelPara(bool isPref)
+    protected override void BuildPhonesPara(bool isPref)
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
@@ -303,17 +294,17 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     protected override void BuildTzPara()
     {
-        // keine Parameter
+        // none parameters
     }
 
     protected override void BuildUidPara()
     {
-        // keine Parameter
+        /// none parameters
     }
 
     protected override void BuildUrlPara()
     {
-        // keine Parameter
+        // none parameters
     }
 
     protected override void BuildXMessengerPara(bool isPref)
@@ -419,7 +410,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         }
     }
 
-
     private void AppendContext()
     {
         string? s = ParaSection.Context;
@@ -430,9 +420,8 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         }
     }
 
-
-    private void AppendBase64Encoding() => AppendParameter(ParameterSection.ParameterKey.ENCODING, "b");
-
+    private void AppendBase64Encoding() 
+        => AppendParameter(ParameterSection.ParameterKey.ENCODING, "b");
 
     private void AppendLanguage()
     {
@@ -458,12 +447,13 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
             _stringCollectionList.Add(ParameterSection.TypeValue.PREF);
         }
 
-
-        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) 
+            && ParaSection.NonStandard != null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) && !string.IsNullOrWhiteSpace(kvp.Value))
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) 
+                    && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
                     _stringCollectionList.Add(kvp.Value);
                 }
@@ -507,7 +497,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         }
     }
 
-
     private void DoCollectImageType()
     {
         string? s = MimeTypeConverter.ImageTypeFromMimeType(ParaSection.MediaType);
@@ -518,7 +507,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         }
 
     }
-
 
     private void DoCollectSoundType()
     {
@@ -531,9 +519,8 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     }
 
-
-    private void DoCollectEmailType() => _stringCollectionList.Add(ParaSection.EmailType ?? EmailType.SMTP);
-
+    private void DoCollectEmailType() 
+        => _stringCollectionList.Add(ParaSection.EmailType ?? EmailType.SMTP);
 
     private void DoCollectMediaType()
     {
@@ -548,5 +535,4 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     #endregion
 
     private string Mask(string s) => s.Mask(_worker, VCdVersion.V3_0);
-
 }

@@ -14,5 +14,4 @@ internal static class DebugWriter
         Debug.WriteLine("");
         Debug.WriteLine(new string('/', HEADER_LENGTH));
     }
-
 }

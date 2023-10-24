@@ -53,8 +53,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-
-
     protected override void BuildAnniversaryPara()
     {
         VCdDataType? dataType = this.ParaSection.DataType;
@@ -73,7 +71,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-
     protected override void BuildBdayPara()
     {
         VCdDataType? dataType = this.ParaSection.DataType;
@@ -88,7 +85,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendAltId();
         AppendNonStandardParameters();
     }
-
 
     protected override void BuildCaladruriPara()
     {
@@ -183,14 +179,11 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-
-
     protected override void BuildGenderPara()
     {
         AppendValue(this.ParaSection.DataType);
         AppendNonStandardParameters();
     }
-
 
     protected override void BuildGeoPara()
     {
@@ -245,7 +238,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendIndex();
         AppendNonStandardParameters();
     }
-
 
     protected override void BuildKindPara()
     {
@@ -306,7 +298,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendAltId();
         AppendNonStandardParameters();
     }
-
 
     protected override void BuildNicknamePara()
     {
@@ -461,9 +452,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-
-
-    protected override void BuildTelPara(bool isPref)
+    protected override void BuildPhonesPara(bool isPref)
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
@@ -483,7 +472,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendIndex();
         AppendNonStandardParameters();
     }
-
 
     protected override void BuildTitlePara()
     {
@@ -589,8 +577,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-
-
     protected override void BuildHobbyPara()
     {
         _actionList.Clear();
@@ -604,8 +590,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendAltId();
         AppendNonStandardParameters();
     }
-
-
 
     protected override void BuildInterestPara()
     {
@@ -703,7 +687,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         }
     }
 
-
     private void AppendExpertiseLevel()
     {
         string? exp = ParaSection.Expertise.ToVcfString();
@@ -712,11 +695,13 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, exp);
         }
-        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) 
+                 && ParaSection.NonStandard != null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL) && !string.IsNullOrWhiteSpace(kvp.Value))
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL) 
+                    && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
                     AppendParameter(ParameterSection.ParameterKey.LEVEL, kvp.Value);
                     return;
@@ -755,7 +740,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
             AppendParameter(ParameterSection.ParameterKey.INDEX, val.Value.ToString(CultureInfo.InvariantCulture));
         }
     }
-
 
     private void AppendInterestLevel()
     {
@@ -808,7 +792,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         }
     }
 
-
     private void AppendPid()
     {
         IEnumerable<PropertyID?>? pids = ParaSection.PropertyIDs;
@@ -847,7 +830,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         }
     }
 
-
     private void AppendSortAs()
     {
         IEnumerable<string?>? sortAs = ParaSection.SortAs;
@@ -877,7 +859,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         }
     }
 
-
     private void AppendType()
     {
         this._stringCollectionList.Clear();
@@ -891,7 +872,8 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) && !string.IsNullOrWhiteSpace(kvp.Value))
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE)
+                    && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
                     _stringCollectionList.Add(kvp.Value);
                 }
@@ -919,7 +901,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
             return _worker.ToString();
         }
     }
-
 
     private void AppendTz()
     {
@@ -954,7 +935,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     #endregion
 
-
     private string EscapeAndQuote(string s)
     {
         _ = _worker.Clear().Append(s).MaskNewLine();
@@ -988,5 +968,4 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
             return mustBeQuoted;
         }
     }
-
 }

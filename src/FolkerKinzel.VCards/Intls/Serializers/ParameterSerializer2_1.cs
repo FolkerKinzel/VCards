@@ -78,7 +78,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
 
     protected override void BuildGeoPara()
     {
-        // keine Parameter
+        // none parameters
     }
 
     protected override void BuildKeyPara()
@@ -150,7 +150,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
 
     protected override void BuildRevPara()
     {
-        // keine Parameter
+        // none parameters
     }
 
     protected override void BuildRolePara()
@@ -179,7 +179,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
     //    AppendContext();
     //}
 
-    protected override void BuildTelPara(bool isPref)
+    protected override void BuildPhonesPara(bool isPref)
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
@@ -337,7 +337,6 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         }
     }
 
-
     private void AppendLanguage()
     {
         string? lang = ParaSection.Language;
@@ -347,7 +346,6 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
             AppendParameter(ParameterSection.ParameterKey.LANGUAGE, lang);
         }
     }
-
 
     private void AppendType(bool isPref)
     {
@@ -372,7 +370,9 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) && !string.IsNullOrWhiteSpace(kvp.Value))
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, 
+                                                            ParameterSection.ParameterKey.TYPE) 
+                    && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
                     AppendV2_1Type(kvp.Value);
                 }
@@ -431,8 +431,5 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         }
     }
 
-
     #endregion
-
-
 }

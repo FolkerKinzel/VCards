@@ -6,11 +6,8 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 internal abstract class ParameterSerializer
 {
     private readonly StringBuilder _builder = new();
-
     protected readonly StringBuilder _worker = new();
-
-    /// <summary>ctor</summary>
-    /// <param name="options" />
+    
     protected ParameterSerializer(VcfOptions options) => this.Options = options;
 
     [NotNull]
@@ -18,14 +15,13 @@ internal abstract class ParameterSerializer
 
     protected VcfOptions Options { get; }
 
-
-    internal StringBuilder Serialize(ParameterSection vCardPropertyParameter, string propertyKey, bool isPref)
+    internal StringBuilder Serialize(ParameterSection vCardPropertyParameter,
+                                     string propertyKey,
+                                     bool isPref)
     {
         ParaSection = vCardPropertyParameter;
 
         _ = _builder.Clear();
-
-        //Builder.Append(';');
 
         switch (propertyKey)
         {
@@ -138,7 +134,7 @@ internal abstract class ParameterSerializer
                 BuildSourcePara();
                 break;
             case VCard.PropKeys.TEL:
-                BuildTelPara(isPref);
+                BuildPhonesPara(isPref);
                 break;
             case VCard.PropKeys.TITLE:
                 BuildTitlePara();
@@ -203,7 +199,7 @@ internal abstract class ParameterSerializer
             case VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY:
             case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY:
             case VcfSerializer.X_KADDRESSBOOK_X_Anniversary:
-                // kein Parameter-Teil
+                // no parameters
                 break;
 
             case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE:
@@ -213,7 +209,6 @@ internal abstract class ParameterSerializer
                 BuildXSpousePara();
                 break;
 
-
             // ASSISTENT wird zwar gelesen und als AGENT interpretiert, aber
             // nicht geschrieben, da AGENT ein Standard-Pendant ist.
 
@@ -221,20 +216,14 @@ internal abstract class ParameterSerializer
             ////case VcfSerializer.X_KADDRESSBOOK_X_AssistantsName:
             //case VCard.PropKeys.NonStandard.X_ASSISTANT:
             //case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ASSISTANT:
-
-
             //break;
             default:
                 BuildNonStandardPropertyPara(isPref);
                 break;
         }
 
-        //if (Builder.Length == 1) Builder.Clear();
-
         return _builder;
     }
-
-
 
     #region BuildPara
 
@@ -268,7 +257,7 @@ internal abstract class ParameterSerializer
 
     protected abstract void BuildTitlePara();
 
-    protected abstract void BuildTelPara(bool isPref);
+    protected abstract void BuildPhonesPara(bool isPref);
 
     protected abstract void BuildSourcePara();
 
@@ -344,7 +333,6 @@ internal abstract class ParameterSerializer
 
     #endregion
 
-
     protected void AppendParameter(string key, string value) => _builder.Append(';').Append(key).Append('=').Append(value);
 
     protected void AppendV2_1Type(string value) => _builder.Append(';').Append(value);
@@ -408,5 +396,4 @@ internal abstract class ParameterSerializer
             }
         }
     }
-
 }

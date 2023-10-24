@@ -29,7 +29,6 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
         }
     }
 
-
     protected override void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> props)
     {
         Debug.Assert(props != null);
@@ -63,7 +62,8 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
                 return;
             }
 
-            string altID = arr.FirstOrDefault(static x => x.Parameters.AltID != null)?.Parameters.AltID ?? "1";
+            string altID = arr.FirstOrDefault(
+                static x => x.Parameters.AltID != null)?.Parameters.AltID ?? "1";
 
             foreach (VCardProperty prop in arr)
             {
@@ -164,7 +164,6 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendGenderViews(IEnumerable<GenderProperty?> value)
         => BuildPropertyViews(VCard.PropKeys.GENDER, value);
-    
 
     protected override void AppendGeoCoordinates(IEnumerable<GeoProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.GEO, value);
@@ -214,12 +213,8 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
         BuildPropertyCollection(VCard.PropKeys.NonStandard.INTEREST, value);
     }
 
-
     protected override void AppendKind(KindProperty value)
-    {
-        Debug.Assert(value != null);
-        BuildProperty(VCard.PropKeys.KIND, value);
-    }
+        => BuildProperty(VCard.PropKeys.KIND, value);
 
     protected override void AppendKeys(IEnumerable<DataProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.KEY, value);
@@ -232,7 +227,8 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendLogos(IEnumerable<DataProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.LOGO,
-                                   value.Where(static x => x is EmbeddedBytesProperty or ReferencedDataProperty));
+                                   value.Where(static x => x is EmbeddedBytesProperty 
+                                                             or ReferencedDataProperty));
 
     protected override void AppendMembers(IEnumerable<RelationProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.MEMBER, value);
@@ -264,7 +260,8 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendPhotos(IEnumerable<DataProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.PHOTO, 
-                                   value.Where(static x => x is EmbeddedBytesProperty or ReferencedDataProperty));
+                                   value.Where(static x => x is EmbeddedBytesProperty 
+                                                             or ReferencedDataProperty));
 
     protected override void AppendProdID(TextProperty value)
         => BuildProperty(VCard.PropKeys.PRODID, value);
@@ -280,8 +277,8 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendSounds(IEnumerable<DataProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.SOUND, 
-                                   value.Where(static x => x is EmbeddedBytesProperty or ReferencedDataProperty));
-
+                                   value.Where(static x => x is EmbeddedBytesProperty 
+                                                             or ReferencedDataProperty));
     protected override void AppendSources(IEnumerable<TextProperty?> value) 
         => BuildPropertyCollection(VCard.PropKeys.SOURCE, value);
 
@@ -305,5 +302,4 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     [ExcludeFromCodeCoverage]
     internal override void AppendBase64EncodedData(byte[]? data) 
         => throw new NotImplementedException();
-
 }

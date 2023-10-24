@@ -28,11 +28,14 @@ internal abstract class VcfSerializer : IDisposable
 
     private readonly TextWriter _writer;
 
-    protected VcfSerializer(TextWriter writer, VcfOptions options, ParameterSerializer parameterSerializer, ITimeZoneIDConverter? tzConverter)
+    protected VcfSerializer(TextWriter writer,
+                            VcfOptions options,
+                            ParameterSerializer parameterSerializer,
+                            ITimeZoneIDConverter? tzConverter)
     {
         this.Options = options;
 
-        // Save this for performance:
+        // Store this for performance:
         this.IgnoreEmptyItems = !options.IsSet(VcfOptions.WriteEmptyProperties);
 
         this.ParameterSerializer = parameterSerializer;
@@ -447,7 +450,6 @@ internal abstract class VcfSerializer : IDisposable
             i += VCard.NewLine.Length;
             _ = Builder.Insert(i, ' ');
             counter = 1; // um das Leerzeichen vorschieben
-
         }
     }
 

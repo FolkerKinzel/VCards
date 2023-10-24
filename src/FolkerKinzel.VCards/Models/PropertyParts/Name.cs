@@ -42,7 +42,7 @@ public sealed class Name
         FirstName =
         MiddleName =
         Prefix =
-        Suffix = ReadOnlyCollectionString.Empty;
+        Suffix = ReadOnlyStringCollection.Empty;
     }
 
 
@@ -64,7 +64,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            LastName = ReadOnlyCollectionString.Empty;
+                            LastName = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -85,7 +85,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            FirstName = ReadOnlyCollectionString.Empty;
+                            FirstName = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -106,7 +106,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            MiddleName = ReadOnlyCollectionString.Empty;
+                            MiddleName = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -127,7 +127,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            Prefix = ReadOnlyCollectionString.Empty;
+                            Prefix = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -148,7 +148,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            Suffix = ReadOnlyCollectionString.Empty;
+                            Suffix = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -174,10 +174,10 @@ public sealed class Name
         // (LastName can never be null)
         Debug.Assert(LastName != null);
         //LastName ??= ReadOnlyCollectionString.Empty;
-        FirstName ??= ReadOnlyCollectionString.Empty;
-        MiddleName ??= ReadOnlyCollectionString.Empty;
-        Prefix ??= ReadOnlyCollectionString.Empty;
-        Suffix ??= ReadOnlyCollectionString.Empty;
+        FirstName ??= ReadOnlyStringCollection.Empty;
+        MiddleName ??= ReadOnlyStringCollection.Empty;
+        Prefix ??= ReadOnlyStringCollection.Empty;
+        Suffix ??= ReadOnlyStringCollection.Empty;
     }
 
     /// <summary>Family Name(s) (also known as surname(s)).</summary>

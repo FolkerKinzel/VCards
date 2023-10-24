@@ -9,7 +9,9 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal sealed class Vcf_2_1Serializer : VcfSerializer
 {
-    internal Vcf_2_1Serializer(TextWriter writer, VcfOptions options, ITimeZoneIDConverter? tzConverter)
+    internal Vcf_2_1Serializer(TextWriter writer,
+                               VcfOptions options,
+                               ITimeZoneIDConverter? tzConverter)
         : base(writer, options, new ParameterSerializer2_1(options), tzConverter) { }
 
     internal override VCdVersion Version => VCdVersion.V2_1;
@@ -160,7 +162,8 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
             }
         }
 
-        BuildProperty(VCard.PropKeys.FN, displayName ?? new TextProperty(IgnoreEmptyItems ? "?" : null));
+        BuildProperty(VCard.PropKeys.FN, 
+                      displayName ?? new TextProperty(IgnoreEmptyItems ? "?" : null));
     }
 
     protected override void AppendEmailAddresses(IEnumerable<TextProperty?> value)
@@ -176,13 +179,16 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         => BuildXImpps(value);
 
     protected override void AppendKeys(IEnumerable<DataProperty?> value)
-        => BuildPrefProperty(VCard.PropKeys.KEY, value, static x => x is EmbeddedBytesProperty or EmbeddedTextProperty);
+        => BuildPrefProperty(VCard.PropKeys.KEY, value,
+                             static x => x is EmbeddedBytesProperty or EmbeddedTextProperty);
 
     protected override void AppendLastRevision(TimeStampProperty value)
         => BuildProperty(VCard.PropKeys.REV, value);
 
     protected override void AppendLogos(IEnumerable<DataProperty?> value)
-        => BuildPrefProperty(VCard.PropKeys.LOGO, value, static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
+        => BuildPrefProperty(VCard.PropKeys.LOGO, 
+                             value,
+                             static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
     protected override void AppendMailer(TextProperty value)
         => BuildProperty(VCard.PropKeys.MAILER, value);

@@ -58,7 +58,7 @@ public sealed class Address
         Locality =
         Region =
         PostalCode =
-        Country = ReadOnlyCollectionString.Empty;
+        Country = ReadOnlyStringCollection.Empty;
     }
 
 
@@ -81,7 +81,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            PostOfficeBox = ReadOnlyCollectionString.Empty;
+                            PostOfficeBox = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -102,7 +102,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            ExtendedAddress = ReadOnlyCollectionString.Empty;
+                            ExtendedAddress = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -123,7 +123,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Street = ReadOnlyCollectionString.Empty;
+                            Street = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -144,7 +144,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Locality = ReadOnlyCollectionString.Empty;
+                            Locality = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -165,7 +165,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Region = ReadOnlyCollectionString.Empty;
+                            Region = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -186,7 +186,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            PostalCode = ReadOnlyCollectionString.Empty;
+                            PostalCode = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -207,7 +207,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Country = ReadOnlyCollectionString.Empty;
+                            Country = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -233,12 +233,12 @@ public sealed class Address
         // (PostOfficeBox can never be null)
         Debug.Assert(PostOfficeBox != null);
         //PostOfficeBox ??= ReadOnlyCollectionString.Empty;
-        ExtendedAddress ??= ReadOnlyCollectionString.Empty;
-        Street ??= ReadOnlyCollectionString.Empty;
-        Locality ??= ReadOnlyCollectionString.Empty;
-        Region ??= ReadOnlyCollectionString.Empty;
-        PostalCode ??= ReadOnlyCollectionString.Empty;
-        Country ??= ReadOnlyCollectionString.Empty;
+        ExtendedAddress ??= ReadOnlyStringCollection.Empty;
+        Street ??= ReadOnlyStringCollection.Empty;
+        Locality ??= ReadOnlyStringCollection.Empty;
+        Region ??= ReadOnlyStringCollection.Empty;
+        PostalCode ??= ReadOnlyStringCollection.Empty;
+        Country ??= ReadOnlyStringCollection.Empty;
     }
 
     /// <summary>The post office box. (Don't use this property!)</summary>
