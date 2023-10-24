@@ -25,7 +25,7 @@ Read the ["Getting Started" tutorial](https://github.com/FolkerKinzel/VCards/blo
 - [Reading and writing GROUP vCards](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/VCard40Example.cs)
 - [Connecting vCards](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/EmbeddedVCardExample.cs)
 
-*_(The examples are in C# and with nullable reference types enabled. For the sake of 
-better readability no exception handling and parameter validation is used.)_*
+*_(All of the examples are in C# and with nullable reference types enabled. For the sake of 
+better readability, exception handling and parameter validation has been omitted.)_*
 
 [Version History](https://github.com/FolkerKinzel/VCards/releases)
