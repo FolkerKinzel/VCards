@@ -43,22 +43,22 @@ internal sealed partial class VcfRow
             case ParameterSection.TypeValue.PREF:
             case ParameterSection.TypeValue.WORK:
             case ParameterSection.TypeValue.HOME:
-            case PhoneTypesConverter.TelTypeValue.VOICE:
-            case PhoneTypesConverter.TelTypeValue.FAX:
-            case PhoneTypesConverter.TelTypeValue.MSG:
-            case PhoneTypesConverter.TelTypeValue.CELL:
-            case PhoneTypesConverter.TelTypeValue.PAGER:
-            case PhoneTypesConverter.TelTypeValue.BBS:
-            case PhoneTypesConverter.TelTypeValue.MODEM:
-            case PhoneTypesConverter.TelTypeValue.CAR:
-            case PhoneTypesConverter.TelTypeValue.ISDN:
-            case PhoneTypesConverter.TelTypeValue.VIDEO:
+            case PhoneTypesConverter.PhoneTypesValue.VOICE:
+            case PhoneTypesConverter.PhoneTypesValue.FAX:
+            case PhoneTypesConverter.PhoneTypesValue.MSG:
+            case PhoneTypesConverter.PhoneTypesValue.CELL:
+            case PhoneTypesConverter.PhoneTypesValue.PAGER:
+            case PhoneTypesConverter.PhoneTypesValue.BBS:
+            case PhoneTypesConverter.PhoneTypesValue.MODEM:
+            case PhoneTypesConverter.PhoneTypesValue.CAR:
+            case PhoneTypesConverter.PhoneTypesValue.ISDN:
+            case PhoneTypesConverter.PhoneTypesValue.VIDEO:
 
             //Postal
-            case AddressTypesConverter.AdrTypeValue.DOM:
-            case AddressTypesConverter.AdrTypeValue.INTL:
-            case AddressTypesConverter.AdrTypeValue.POSTAL:
-            case AddressTypesConverter.AdrTypeValue.PARCEL:
+            case AddressTypesConverter.AddressTypesValue.DOM:
+            case AddressTypesConverter.AddressTypesValue.INTL:
+            case AddressTypesConverter.AddressTypesValue.POSTAL:
+            case AddressTypesConverter.AddressTypesValue.PARCEL:
 
             //E-Mail
             case "INTERNET":

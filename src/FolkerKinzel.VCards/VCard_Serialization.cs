@@ -32,12 +32,12 @@ public sealed partial class VCard
     /// </note>
     /// <para>
     /// The method may serialize more vCards than were originally elements in the argument 
-    /// <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and 
+    /// <paramref name="vCards" />. This happens when a VCF file is saved as vCard&#160;4.0 and 
     /// when in the properties <see cref="VCard.Members" /> or <see cref="VCard.Relations"
     /// /> of a <see cref="VCard" /> object further VCard objects can be found. 
     /// </para>
     /// <para>
-    /// In the same way the method behaves, if a vCard 2.1 or 3.0 is serialized with the 
+    /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
@@ -93,12 +93,12 @@ public sealed partial class VCard
     /// </note>
     /// <para>
     /// The method may serialize more vCards than were originally elements in the argument 
-    /// <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and 
+    /// <paramref name="vCards" />. This happens when a VCF file is saved as vCard&#160;4.0 and 
     /// when in the properties <see cref="VCard.Members" /> or <see cref="VCard.Relations"
     /// /> of a <see cref="VCard" /> object further VCard objects can be found. 
     /// </para>
     /// <para>
-    /// In the same way the method behaves, if a vCard 2.1 or 3.0 is serialized with the 
+    /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
@@ -226,12 +226,12 @@ public sealed partial class VCard
     /// </note>
     /// <para>
     /// The method may serialize more vCards than were originally elements in the argument 
-    /// <paramref name="vCards" />. This happens when a VCF file is saved as vCard 4.0 and 
+    /// <paramref name="vCards" />. This happens when a VCF file is saved as vCard&#160;4.0 and 
     /// when in the properties <see cref="VCard.Members" /> or <see cref="VCard.Relations"
     /// /> of a <see cref="VCard" /> object further VCard objects can be found. 
     /// </para>
     /// <para>
-    /// In the same way the method behaves, if a vCard 2.1 or 3.0 is serialized with the 
+    /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
@@ -284,12 +284,12 @@ public sealed partial class VCard
     /// </note>
     /// <para>
     /// The method may serialize more the one vCard. This happens when a VCF file is saved 
-    /// as vCard 4.0 and when in the properties <see cref="VCard.Members" /> or 
+    /// as vCard&#160;4.0 and when in the properties <see cref="VCard.Members" /> or 
     /// <see cref="VCard.Relations" /> of a <see cref="VCard" /> object further VCard 
     /// objects can be found. 
     /// </para>
     /// <para>
-    /// In the same way the method behaves, if a vCard 2.1 or 3.0 is serialized with the 
+    /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
@@ -327,12 +327,12 @@ public sealed partial class VCard
     /// </note>
     /// <para>
     /// The method may serialize more the one vCard. This happens when a VCF file is saved 
-    /// as vCard 4.0 and when in the properties <see cref="VCard.Members" /> or 
+    /// as vCard&#160;4.0 and when in the properties <see cref="VCard.Members" /> or 
     /// <see cref="VCard.Relations" /> of a <see cref="VCard" /> object further VCard 
     /// objects can be found. 
     /// </para>
     /// <para>
-    /// In the same way the method behaves, if a vCard 2.1 or 3.0 is serialized with the 
+    /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
@@ -372,12 +372,12 @@ public sealed partial class VCard
     /// </note>
     /// <para>
     /// The method may serialize more the one vCard. This happens when a VCF file is saved 
-    /// as vCard 4.0 and when in the properties <see cref="VCard.Members" /> or 
+    /// as vCard&#160;4.0 and when in the properties <see cref="VCard.Members" /> or 
     /// <see cref="VCard.Relations" /> of a <see cref="VCard" /> object further VCard 
     /// objects can be found. 
     /// </para>
     /// <para>
-    /// In the same way the method behaves, if a vCard 2.1 or 3.0 is serialized with the 
+    /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 

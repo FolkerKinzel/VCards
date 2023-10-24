@@ -1,6 +1,6 @@
 namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>Named constants to indicate in vCard 2.1 where the content of a vCard
+/// <summary>Named constants to indicate in vCard&#160;2.1 where the content of a vCard
 /// property is located.</summary>
 public enum ContentLocation
 {

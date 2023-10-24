@@ -4,7 +4,7 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class AddressTypesConverter
 {
-    internal static class AdrTypeValue
+    internal static class AddressTypesValue
     {
         internal const string DOM = "DOM";
         internal const string INTL = "INTL";
@@ -26,10 +26,10 @@ internal static class AddressTypesConverter
 
         return typeValue switch
         {
-            AdrTypeValue.DOM => AddressTypes.Dom,
-            AdrTypeValue.INTL => AddressTypes.Intl,
-            AdrTypeValue.POSTAL => AddressTypes.Postal,
-            AdrTypeValue.PARCEL => AddressTypes.Parcel,
+            AddressTypesValue.DOM => AddressTypes.Dom,
+            AddressTypesValue.INTL => AddressTypes.Intl,
+            AddressTypesValue.POSTAL => AddressTypes.Postal,
+            AddressTypesValue.PARCEL => AddressTypes.Parcel,
             _ => null
         };
     }
@@ -37,10 +37,10 @@ internal static class AddressTypesConverter
     internal static string ToVcfString(this AddressTypes value)
         => value switch
         {
-            AddressTypes.Dom => AdrTypeValue.DOM,
-            AddressTypes.Intl => AdrTypeValue.INTL,
-            AddressTypes.Postal => AdrTypeValue.POSTAL,
-            AddressTypes.Parcel => AdrTypeValue.PARCEL,
+            AddressTypes.Dom => AddressTypesValue.DOM,
+            AddressTypes.Intl => AddressTypesValue.INTL,
+            AddressTypes.Postal => AddressTypesValue.POSTAL,
+            AddressTypes.Parcel => AddressTypesValue.PARCEL,
             _ => throw new ArgumentOutOfRangeException(nameof(value))
         };
 }

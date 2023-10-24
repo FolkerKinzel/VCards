@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>6.0.0-alpha.2</Version>
-    <FileVersion>6.0.0.31</FileVersion>
+    <FileVersion>6.0.0.36</FileVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v5.0.0-beta.3</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
@@ -39,8 +39,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Intls\Attributes\**" />
+    <Compile Remove="Translations\**" />
     <EmbeddedResource Remove="Intls\Attributes\**" />
+    <EmbeddedResource Remove="Translations\**" />
     <None Remove="Intls\Attributes\**" />
+    <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\Nuget-Logo\Logo.png">
@@ -77,6 +80,7 @@
     <Compile Remove="MultiAnsiFilter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Reverser.log" />
     <None Remove="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>

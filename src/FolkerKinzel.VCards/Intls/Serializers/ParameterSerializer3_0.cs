@@ -15,13 +15,13 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass, 
                                       serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer3_0> _collectTelTypes = static serializer
+    private readonly Action<ParameterSerializer3_0> _collectPhoneTypes = static serializer
         => {
-               const PhoneTypes DEFINED_TELTYPES = PhoneTypes.Voice | PhoneTypes.Fax | PhoneTypes.Msg |
+               const PhoneTypes DEFINED_PHONE_TYPES = PhoneTypes.Voice | PhoneTypes.Fax | PhoneTypes.Msg |
                PhoneTypes.Cell | PhoneTypes.Pager | PhoneTypes.BBS | PhoneTypes.Modem | PhoneTypes.Car |
                PhoneTypes.ISDN | PhoneTypes.Video | PhoneTypes.PCS;
          
-               EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_TELTYPES,
+               EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
                                           serializer._stringCollectionList);
            };
 
@@ -280,7 +280,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
-        _actionList.Add(_collectTelTypes);
+        _actionList.Add(_collectPhoneTypes);
 
         AppendType(isPref);
     }
@@ -299,7 +299,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     protected override void BuildUidPara()
     {
-        /// none parameters
+        // none parameters
     }
 
     protected override void BuildUrlPara()
@@ -311,7 +311,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
-        _actionList.Add(_collectTelTypes);
+        _actionList.Add(_collectPhoneTypes);
 
         AppendType(isPref);
     }

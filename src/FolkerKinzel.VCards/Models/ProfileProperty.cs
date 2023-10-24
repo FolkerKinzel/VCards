@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>Represents the vCard 3.0 property <c>PROFILE</c>, which specifies that
+/// <summary>Represents the vCard&#160;3.0 property <c>PROFILE</c>, which specifies that
 /// the vCard is a vCard.</summary>
 /// <seealso cref="VCard.Profile"/>
 public sealed class ProfileProperty : TextProperty

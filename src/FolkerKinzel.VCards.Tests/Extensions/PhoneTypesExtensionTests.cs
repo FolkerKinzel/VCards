@@ -10,10 +10,10 @@ using FolkerKinzel.VCards.Models.Enums;
 namespace FolkerKinzel.VCards.Extensions.Tests
 {
     [TestClass()]
-    public class TelTypesExtensionTests
+    public class PhoneTypesExtensionTests
     {
         [TestMethod()]
-        public void TelTypesTest()
+        public void PhoneTypesTest()
         {
             PhoneTypes? tp = null;
 

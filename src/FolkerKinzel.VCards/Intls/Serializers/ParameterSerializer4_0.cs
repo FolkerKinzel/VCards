@@ -17,13 +17,13 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
                                       serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer4_0> _collectTelTypes = static serializer
+    private readonly Action<ParameterSerializer4_0> _collectPhoneTypes = static serializer
         => {
-                const PhoneTypes DEFINED_TELTYPES = PhoneTypes.Voice | PhoneTypes.Text | PhoneTypes.Fax | 
+                const PhoneTypes DEFINED_PHONE_TYPES = PhoneTypes.Voice | PhoneTypes.Text | PhoneTypes.Fax | 
                                                     PhoneTypes.Cell | PhoneTypes.Video | PhoneTypes.Pager |
                                                     PhoneTypes.TextPhone;
          
-                EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_TELTYPES,
+                EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
                                            serializer._stringCollectionList);
             };
 
@@ -456,7 +456,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
-        _actionList.Add(_collectTelTypes);
+        _actionList.Add(_collectPhoneTypes);
 
         AppendType();
         AppendPref();

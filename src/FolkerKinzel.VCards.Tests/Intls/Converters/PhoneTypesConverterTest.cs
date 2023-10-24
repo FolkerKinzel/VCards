@@ -3,7 +3,7 @@
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 [TestClass]
-public class TelTypesConverterTest
+public class PhoneTypesConverterTest
 {
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]

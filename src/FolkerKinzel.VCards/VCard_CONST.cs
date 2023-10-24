@@ -161,7 +161,7 @@ public sealed partial class VCard
         /// this vCard.<c>(3,4)</c></summary>
         internal const string SOURCE = "SOURCE";
 
-        /// <summary> <c>TEL</c>: Canonical number strings for a telephone numbers for 
+        /// <summary> <c>TEL</c>: Canonical number strings for telephone numbers for 
         /// telephony communication with the vCard object. <c>(2,3,4)</c></summary>
         internal const string TEL = "TEL";
 

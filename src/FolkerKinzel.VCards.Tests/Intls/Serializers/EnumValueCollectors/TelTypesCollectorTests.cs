@@ -13,20 +13,20 @@ public class TelTypesCollectorTests
 
         var list = new List<string>();
 
-        PhoneTypesCollector.CollectValueStrings(tel, list);
+        EnumValueCollector.Collect(tel, list);
 
         Assert.AreEqual(2, list.Count);
         Assert.IsTrue(list.Contains("MSG"));
 
         // collector darf die Liste nicht löschen!:
-        PhoneTypesCollector.CollectValueStrings(tel, list);
+        EnumValueCollector.Collect(tel, list);
         Assert.AreEqual(4, list.Count);
 
         // auf null testen:
         tel = null;
         list.Clear();
 
-        PhoneTypesCollector.CollectValueStrings(tel, list);
+        EnumValueCollector.Collect(tel, list);
         Assert.AreEqual(0, list.Count);
     }
 
@@ -42,7 +42,7 @@ public class TelTypesCollectorTests
         foreach (PhoneTypes item in arr)
         {
             list.Clear();
-            PhoneTypesCollector.CollectValueStrings(item, list);
+            EnumValueCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
@@ -60,7 +60,7 @@ public class TelTypesCollectorTests
         foreach (PhoneTypes item in arr)
         {
             list.Clear();
-            PhoneTypesCollector.CollectValueStrings(item, list);
+            EnumValueCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);

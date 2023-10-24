@@ -13,19 +13,19 @@ public class RelationTypesCollectorTests
 
         var list = new List<string>();
 
-        RelationTypesCollector.CollectValueStrings(rel, list);
+        EnumValueCollector.Collect(rel, list);
 
         Assert.AreEqual(2, list.Count);
 
         // collector darf die Liste nicht löschen!:
-        RelationTypesCollector.CollectValueStrings(rel, list);
+        EnumValueCollector.Collect(rel, list);
         Assert.AreEqual(4, list.Count);
 
         // auf null testen:
         rel = null;
         list.Clear();
 
-        RelationTypesCollector.CollectValueStrings(rel, list);
+        EnumValueCollector.Collect(rel, list);
         Assert.AreEqual(0, list.Count);
     }
 
@@ -40,7 +40,7 @@ public class RelationTypesCollectorTests
         foreach (RelationTypes item in arr)
         {
             list.Clear();
-            RelationTypesCollector.CollectValueStrings(item, list);
+            EnumValueCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
         }
@@ -57,7 +57,7 @@ public class RelationTypesCollectorTests
         foreach (RelationTypes item in arr)
         {
             list.Clear();
-            RelationTypesCollector.CollectValueStrings(item, list);
+            EnumValueCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);

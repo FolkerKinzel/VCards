@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Models.Enums;
 [Flags]
 public enum RelationTypes
 {
-    // CAUTION: If the enum is expanded, RelationTypesConverter must be adjusted!
+    // CAUTION: If the enum is expanded, EnumValueCollector must be adjusted!
 
     /// <summary> <c>CONTACT</c>: Someone you know how to get in touch with. Often symmetric.
     /// </summary>

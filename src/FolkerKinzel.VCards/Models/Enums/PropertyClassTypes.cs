@@ -15,7 +15,7 @@ public enum PropertyClassTypes
 {
     // CAUTION: If the enum is expanded,
     // ParameterSection.ParseTypeParameter(string, string) and
-    // PropertyClassTypesCollector must be adjusted!
+    // EnumValueCollector must be adjusted!
 
     /// <summary> <c>HOME</c>: Implies that the property is related to an individual's
     /// personal life.</summary>

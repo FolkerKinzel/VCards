@@ -69,27 +69,27 @@ internal static class EnumValueCollector
         }
     }
 
-    /// <summary>Collects the names of the flags set in <paramref name="telType" /> into <paramref name="list" />. 
+    /// <summary>Collects the names of the flags set in <paramref name="phoneType" /> into <paramref name="list" />. 
     /// </summary>
-    /// <param name="telType">The <see cref="PhoneTypes"/> value to parse.</param>
+    /// <param name="phoneType">The <see cref="PhoneTypes"/> value to parse.</param>
     /// <param name="list">The list to collect in.</param>
     /// <remarks>
     /// <note type="caution">
     /// <paramref name="list" /> is not emptied by the method!
     /// </note>
     /// </remarks>
-    internal static void Collect(PhoneTypes? telType, List<string> list)
+    internal static void Collect(PhoneTypes? phoneType, List<string> list)
     {
         Debug.Assert(list != null);
 
-        if (!telType.HasValue)
+        if (!phoneType.HasValue)
         {
             return;
         }
 
-        PhoneTypes value = telType.Value & PhoneTypesConverter.DEFINED_TEL_TYPES_VALUES;
+        PhoneTypes value = phoneType.Value & PhoneTypesConverter.DEFINED_PHONE_TYPES_VALUES;
 
-        for (int i = PhoneTypesConverter.TEL_TYPES_MIN_BIT; i <= PhoneTypesConverter.TEL_TYPES_MAX_BIT; i++)
+        for (int i = PhoneTypesConverter.PHONE_TYPES_MIN_BIT; i <= PhoneTypesConverter.PHONE_TYPES_MAX_BIT; i++)
         {
             var flag = (PhoneTypes)(1 << i);
 

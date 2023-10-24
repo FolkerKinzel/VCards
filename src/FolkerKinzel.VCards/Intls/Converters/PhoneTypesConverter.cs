@@ -4,7 +4,7 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class PhoneTypesConverter
 {
-    internal static class TelTypeValue
+    internal static class PhoneTypesValue
     {
         internal const string VOICE = "VOICE";
         internal const string FAX = "FAX";
@@ -21,7 +21,7 @@ internal static class PhoneTypesConverter
         internal const string PCS = "PCS";
     }
 
-    internal const PhoneTypes DEFINED_TEL_TYPES_VALUES = PhoneTypes.Voice
+    internal const PhoneTypes DEFINED_PHONE_TYPES_VALUES = PhoneTypes.Voice
                                                      | PhoneTypes.Fax
                                                      | PhoneTypes.Msg
                                                      | PhoneTypes.Cell
@@ -35,8 +35,8 @@ internal static class PhoneTypesConverter
                                                      | PhoneTypes.TextPhone
                                                      | PhoneTypes.Text;
 
-    internal const int TEL_TYPES_MIN_BIT = 0;
-    internal const int TEL_TYPES_MAX_BIT = 12;
+    internal const int PHONE_TYPES_MIN_BIT = 0;
+    internal const int PHONE_TYPES_MAX_BIT = 12;
 
     internal static PhoneTypes? Parse(string? typeValue)
     {
@@ -44,19 +44,19 @@ internal static class PhoneTypesConverter
 
         return typeValue switch
         {
-            TelTypeValue.VOICE => PhoneTypes.Voice,
-            TelTypeValue.FAX => PhoneTypes.Fax,
-            TelTypeValue.MSG => PhoneTypes.Msg,
-            TelTypeValue.CELL => PhoneTypes.Cell,
-            TelTypeValue.PAGER => PhoneTypes.Pager,
-            TelTypeValue.BBS => PhoneTypes.BBS,
-            TelTypeValue.MODEM => PhoneTypes.Modem,
-            TelTypeValue.CAR => PhoneTypes.Car,
-            TelTypeValue.ISDN => PhoneTypes.ISDN,
-            TelTypeValue.VIDEO => PhoneTypes.Video,
-            TelTypeValue.PCS => PhoneTypes.PCS,
-            TelTypeValue.TEXTPHONE => PhoneTypes.TextPhone,
-            TelTypeValue.TEXT => PhoneTypes.Text,
+            PhoneTypesValue.VOICE => PhoneTypes.Voice,
+            PhoneTypesValue.FAX => PhoneTypes.Fax,
+            PhoneTypesValue.MSG => PhoneTypes.Msg,
+            PhoneTypesValue.CELL => PhoneTypes.Cell,
+            PhoneTypesValue.PAGER => PhoneTypes.Pager,
+            PhoneTypesValue.BBS => PhoneTypes.BBS,
+            PhoneTypesValue.MODEM => PhoneTypes.Modem,
+            PhoneTypesValue.CAR => PhoneTypes.Car,
+            PhoneTypesValue.ISDN => PhoneTypes.ISDN,
+            PhoneTypesValue.VIDEO => PhoneTypes.Video,
+            PhoneTypesValue.PCS => PhoneTypes.PCS,
+            PhoneTypesValue.TEXTPHONE => PhoneTypes.TextPhone,
+            PhoneTypesValue.TEXT => PhoneTypes.Text,
             _ => null
         };
     }
@@ -64,19 +64,19 @@ internal static class PhoneTypesConverter
     internal static string ToVcfString(this PhoneTypes value)
         => value switch
         {
-            PhoneTypes.Voice => TelTypeValue.VOICE,
-            PhoneTypes.Fax => TelTypeValue.FAX,
-            PhoneTypes.Msg => TelTypeValue.MSG,
-            PhoneTypes.Cell => TelTypeValue.CELL,
-            PhoneTypes.Pager => TelTypeValue.PAGER,
-            PhoneTypes.BBS => TelTypeValue.BBS,
-            PhoneTypes.Modem => TelTypeValue.MODEM,
-            PhoneTypes.Car => TelTypeValue.CAR,
-            PhoneTypes.ISDN => TelTypeValue.ISDN,
-            PhoneTypes.Video => TelTypeValue.VIDEO,
-            PhoneTypes.PCS => TelTypeValue.PCS,
-            PhoneTypes.TextPhone => TelTypeValue.TEXTPHONE,
-            PhoneTypes.Text => TelTypeValue.TEXT,
+            PhoneTypes.Voice => PhoneTypesValue.VOICE,
+            PhoneTypes.Fax => PhoneTypesValue.FAX,
+            PhoneTypes.Msg => PhoneTypesValue.MSG,
+            PhoneTypes.Cell => PhoneTypesValue.CELL,
+            PhoneTypes.Pager => PhoneTypesValue.PAGER,
+            PhoneTypes.BBS => PhoneTypesValue.BBS,
+            PhoneTypes.Modem => PhoneTypesValue.MODEM,
+            PhoneTypes.Car => PhoneTypesValue.CAR,
+            PhoneTypes.ISDN => PhoneTypesValue.ISDN,
+            PhoneTypes.Video => PhoneTypesValue.VIDEO,
+            PhoneTypes.PCS => PhoneTypesValue.PCS,
+            PhoneTypes.TextPhone => PhoneTypesValue.TEXTPHONE,
+            PhoneTypes.Text => PhoneTypesValue.TEXT,
             _ => throw new ArgumentOutOfRangeException(nameof(value))
         };
 }

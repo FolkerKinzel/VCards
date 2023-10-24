@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Extensions;
 namespace FolkerKinzel.VCards.Models.Enums;
 
 /// <summary>Named constants to specify the type of an instant messenger handle
-/// in vCard 3.0. The constants can be combined.</summary>
+/// in vCard&#160;3.0. The constants can be combined.</summary>
 /// <remarks>
 /// <note type="tip">
 /// When working with the enum use the extension methods from the <see
@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models.Enums;
 public enum ImppTypes
 {
     // CAUTION: If the enum is expanded, ImppTypesConverter and
-    // ImppTypesCollector must be adjusted!
+    // EnumValueCollector must be adjusted!
 
     /// <summary>Personal</summary>
     Personal = 1,

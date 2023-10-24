@@ -269,7 +269,7 @@ public sealed partial class ParameterSection
     /// <c>(2,3,4)</c></summary>
     /// <value>A value between 1 and 100. 1 means most preferred.</value>
     /// <remarks>
-    /// A differentiated preference can only be stated beginning with vCard 4.0. In 
+    /// A differentiated preference can only be stated beginning with vCard&#160;4.0. In 
     /// vCard&#160;2.1 and vCard&#160;3.0 only the most preferred property is marked with 
     /// <c>PREF</c>. As the preferred property the one is selected with the lowest 
     /// numerical value for <see cref="Preference" />.

@@ -7,14 +7,14 @@ namespace FolkerKinzel.VCards.Models.Enums;
 /// <remarks>
 /// <note type="tip">
 /// When working with the enum use the extension methods from the <see
-/// cref="TelTypesExtension" /> class. 
+/// cref="PhoneTypesExtension" /> class. 
 /// </note>
 /// </remarks>
 [Flags]
 public enum PhoneTypes
 {
     // CAUTION: If the enum is expanded, PhoneTypesConverter and
-    // PhoneTypesCollector must be adjusted!
+    // EnumValueCollector must be adjusted!
 
     /// <summary> <c>VOICE</c>: Indicates a voice telephone number. (Default). <c>(2,3,4)</c></summary>
     Voice = 1,

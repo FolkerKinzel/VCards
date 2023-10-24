@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.Models;
 /// with other people. </summary>
 /// <remarks>
 /// vCard properties whose data is encapsulated by <see cref="RelationProperty"/> 
-/// objects are in particular the vCard 4.0 properties <c>RELATED</c> and <c>MEMBER</c>,
+/// objects are in particular the vCard&#160;4.0 properties <c>RELATED</c> and <c>MEMBER</c>,
 /// the vCard&#160;2.1 and vCard&#160;3.0 property <c>AGENT</c>, as well as 
 /// non-standard properties for specifying the name of the spouse (such as <c>X-SPOUSE</c>).
 /// </remarks>

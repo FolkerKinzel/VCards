@@ -1,6 +1,6 @@
 namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>Named constants to indicate in vCard 3.0 which level of confidentiality
+/// <summary>Named constants to indicate in vCard&#160;3.0 which level of confidentiality
 /// applies to the vCard.</summary>
 public enum Access
 {

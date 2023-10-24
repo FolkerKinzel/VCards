@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models.Enums;
 public enum AddressTypes
 {
     // CAUTION: If the enum is expanded, AddressTypesConverter and
-    // AddressTypesCollector must be adjusted!
+    // EnumValueCollector must be adjusted!
 
     /// <summary> <c>DOM</c>: Domestic delivery address</summary>
     Dom = 1,

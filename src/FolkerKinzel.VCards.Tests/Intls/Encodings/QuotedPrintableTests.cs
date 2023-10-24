@@ -9,7 +9,7 @@ public class QuotedPrintableTests
     {
         string quoted = $"1=0D=0AFirmenstra=C3=9Fe=0D=0AOrt Firma, Bundesland Firma PLZFirma=0D=0ALand={Environment.NewLine} Firma";
 
-        string? s = QuotedPrintable.Decode(quoted);
+        string? s = QuotedPrintable.Decode(quoted, null);
 
         Assert.IsNotNull(s);
         StringAssert.Contains(s, "Firmenstraße");
@@ -20,7 +20,7 @@ public class QuotedPrintableTests
     [DataRow(null)]
     [DataRow("")]
     public void DecodeStringTest2(string? quoted)
-        => Assert.AreEqual(0, QuotedPrintable.Decode(quoted).Length);
+        => Assert.AreEqual(0, QuotedPrintable.Decode(quoted, null).Length);
 
 
     [DataTestMethod]

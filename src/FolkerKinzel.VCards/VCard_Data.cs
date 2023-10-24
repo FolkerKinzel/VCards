@@ -80,7 +80,7 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard 4.0, and only, if they
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
     /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<DateAndOrTimeProperty?>? AnniversaryViews
@@ -91,7 +91,7 @@ public sealed partial class VCard
 
     /// <summary> <c>BDAY</c>: Date of birth of the individual associated with the vCard.
     /// <c>(2,3,4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard 4.0, and only, if they
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
     /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<DateAndOrTimeProperty?>? BirthDayViews
@@ -102,7 +102,7 @@ public sealed partial class VCard
 
     /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
     /// RFC 6474)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard 4.0, and only, if they
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
     /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<TextProperty?>? BirthPlaceViews
@@ -220,7 +220,7 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>GENDER</c>: Defines the person's gender. <c>(4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard 4.0, and only, if they
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
     /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<GenderProperty?>? GenderViews
@@ -335,7 +335,7 @@ public sealed partial class VCard
 
     /// <summary> <c>N</c>: A structured representation of the name of the person, place
     /// or thing associated with the vCard object. <c>(2,3,4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard 4.0, and only, if they
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
     /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<NameProperty?>? NameViews
@@ -544,7 +544,7 @@ public sealed partial class VCard
 
     /// <summary> <c>SOURCE</c>: URLs that can be used to get the latest version of
     /// this vCard.<c>(3,4)</c></summary>
-    /// <remarks>vCard 3.0 only allows one instance of this property.</remarks>
+    /// <remarks>vCard&#160;3.0 only allows one instance of this property.</remarks>
     public IEnumerable<TextProperty?>? Sources
     {
         get => Get<IEnumerable<TextProperty?>?>(VCdProp.Sources);

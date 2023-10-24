@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>Represents the <c>KIND</c> property, introduced in vCard 4.0, which
+/// <summary>Represents the <c>KIND</c> property, introduced in vCard&#160;4.0, which
 /// describes the type of object represented by the vCard.</summary>
 /// <seealso cref="VCard.Kind"/>
 /// <seealso cref="VCdKind"/>

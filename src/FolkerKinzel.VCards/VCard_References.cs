@@ -33,8 +33,7 @@ public sealed partial class VCard
     /// /> objects, while this method is being executed!
     /// </note>
     /// <note type="important">
-    /// Never use this method, if you want to save a VCF file as vCard 2.1 or vCard
-    /// 3.0!
+    /// Never use this method, if you want to save a VCF file as vCard&#160;2.1 or vCard&#160;3.0!
     /// </note>
     /// <note type="tip">
     /// You can pass a single <see cref="VCard" /> object to the method, since the <see
@@ -44,7 +43,7 @@ public sealed partial class VCard
     /// <para>
     /// The method is - if necessary - automatically called by the serialization methods
     /// of <see cref="VCard" />. It only makes sense to use it in your own code, if
-    /// a <see cref="VCard" /> object is to be saved as vCard 4.0 and if each VCF file
+    /// a <see cref="VCard" /> object is to be saved as vCard&#160;4.0 and if each VCF file
     /// should only contain a single vCard. (As a rule, this approach is not advantageous
     /// as it endangers referential integrity.)
     /// </para>
@@ -52,7 +51,7 @@ public sealed partial class VCard
     /// <example>
     /// <para>
     /// The example demonstrates how a <see cref="VCard" /> object can be saved as a
-    /// vCard 4.0 if it is intended that a VCF file should only contain one single vCard.
+    /// vCard&#160;4.0 if it is intended that a VCF file should only contain one single vCard.
     /// The example may also show that this approach is generally not advantageous,
     /// as it endangers referential integrity.
     /// </para>

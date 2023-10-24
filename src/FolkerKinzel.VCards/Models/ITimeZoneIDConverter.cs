@@ -4,7 +4,7 @@ namespace FolkerKinzel.VCards.Models;
 /// a named time zone (IANA time zone ID), into a corresponding UTC offset.</summary>
 /// <remarks>
 /// <para>
-/// The vCard 4.0 standard recommends specifying time zones as IANA time zone names. - 
+/// The vCard&#160;4.0 standard recommends specifying time zones as IANA time zone names. - 
 /// Older standards (vCard&#160;2.1, vCard&#160;3.0), however, prefer UTC offsets.
 /// </para>
 /// <para>

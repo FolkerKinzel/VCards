@@ -4,7 +4,7 @@ namespace FolkerKinzel.VCards.Extensions;
 
 /// <summary>Extension methods that make working with the <see cref="PhoneTypes" />
 /// enum easier.</summary>
-public static class TelTypesExtension
+public static class PhoneTypesExtension
 {
     /// <summary>Sets all the flags set in <paramref name="flags" /> in 
     /// <paramref name="value" />.</summary>

@@ -11,12 +11,12 @@ namespace FolkerKinzel.VCards;
 /// <threadsafety static="true" instance="false" />
 /// <remarks>
 /// <para>
-/// VCF files of the vCard 2.1 standard were previously saved by Outlook and Outlook 
+/// VCF files of the vCard&#160;2.1 standard were previously saved by Outlook and Outlook 
 /// Express in the ANSI encoding of the current Windows system, without always encoding
 /// the extended characters with quoted printable encoding. In principle, VCF files of 
-/// the vCard 3.0 standard can also be ANSI-encoded if, for example, they were transmitted
+/// the vCard&#160;3.0 standard can also be ANSI-encoded if, for example, they were transmitted
 /// in an e-mail that specified the encoding in its content header. UTF-8 encoding has only
-/// been mandatory since vCard 4.0. 
+/// been mandatory since vCard&#160;4.0. 
 /// </para>
 /// <para>
 /// This class is a wrapper around the <see cref="VCard" />.<see cref="VCard.LoadVcf(string, Encoding?)" /> 
@@ -28,7 +28,7 @@ namespace FolkerKinzel.VCards;
 /// <see cref="AnsiFilter.AnsiFilter(string)">constructor</see> as a fallback.
 /// </para>
 /// <para>
-/// (The <c>CHARSET</c> parameter exists only in the vCard 2.1 standard.)
+/// (The <c>CHARSET</c> parameter exists only in the vCard&#160;2.1 standard.)
 /// </para>
 /// </remarks>
 /// <example>

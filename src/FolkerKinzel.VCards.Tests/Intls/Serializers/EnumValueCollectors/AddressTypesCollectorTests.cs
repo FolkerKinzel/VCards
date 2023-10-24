@@ -16,7 +16,7 @@ public class AddressTypesCollectorTests
         EnumValueCollector.Collect(adr, list);
 
         Assert.AreEqual(2, list.Count);
-        Assert.IsTrue(list.Contains(AddressTypesConverter.AdrTypeValue.PARCEL));
+        Assert.IsTrue(list.Contains(AddressTypesConverter.AddressTypesValue.PARCEL));
 
         // collector darf die Liste nicht löschen!:
         EnumValueCollector.Collect(adr, list);
