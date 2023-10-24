@@ -9,6 +9,24 @@ internal static partial class StringExtension
     private const string IETF_LANGUAGE_TAG_PATTERN = @"^[a-z]{2,3}-[A-Z]{2,3}$";
 
     [return: NotNullIfNotNull(nameof(value))]
+    internal static string? Mask(this string? value, StringBuilder sb, VCdVersion version)
+    {
+        return MustMask(value, version) ? sb.Clear().Append(value).Mask(version).ToString() 
+                                        : value;
+
+        static bool MustMask(string? value, VCdVersion version)
+        {
+            return value != null && 
+                  (
+                    value.Contains(';') ||
+                    (version >= VCdVersion.V3_0 && value.Contains(',')) ||
+                    (version >= VCdVersion.V4_0 && value.Contains('\\'))
+                   );
+        }
+
+    }
+
+    [return: NotNullIfNotNull(nameof(value))]
     internal static string? UnMask(this string? value, StringBuilder sb, VCdVersion version)
     {
         Debug.Assert(sb != null);

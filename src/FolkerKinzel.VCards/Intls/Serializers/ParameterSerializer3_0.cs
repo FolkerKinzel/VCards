@@ -547,6 +547,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     #endregion
 
-    private string Mask(string? s) => _worker.Clear().Append(s).Mask(VCdVersion.V3_0).ToString();
+    private string Mask(string s) => s.Mask(_worker, VCdVersion.V3_0);
 
 }
