@@ -24,7 +24,6 @@ public sealed partial class VCard
         return DoParseVcf(reader);
     }
 
-
     /// <summary>Parses a <see cref="string" />, that represents the content of a VCF
     /// file.</summary>
     /// <param name="vcf">A <see cref="string" /> that represents the content of a VCF
@@ -44,7 +43,6 @@ public sealed partial class VCard
         return DoParseVcf(reader);
     }
 
-
     /// <summary>Deserializes a VCF file using a <see cref="TextReader" />.</summary>
     /// <param name="reader">A <see cref="TextReader" />.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
@@ -58,7 +56,6 @@ public sealed partial class VCard
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IList<VCard> DeserializeVcf(TextReader reader)
         => DoParseVcf(reader ?? throw new ArgumentNullException(nameof(reader)));
-
 
     private static List<VCard> DoParseVcf(TextReader reader,
                                           VCdVersion versionHint = VCdVersion.V2_1)
@@ -111,7 +108,6 @@ public sealed partial class VCard
 
         return list.FirstOrDefault();
     }
-
 
     [ExcludeFromCodeCoverage]
     private static StreamReader InitializeStreamReader(string fileName, Encoding? textEncoding)
