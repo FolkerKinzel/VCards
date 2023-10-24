@@ -119,7 +119,7 @@ internal static class Utility
         return new VCard
         {
             NameViews = names,
-            PhoneNumbers = tel1,
+            Phones = tel1,
             Hobbies = hobby1,
             Interests = hobby1,
             Expertises = expertise1,

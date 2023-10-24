@@ -30,7 +30,7 @@ internal static class WhatsAppDemo2
                     new VC::TextProperty("zzMad Perla 45")
             },
 
-            PhoneNumbers = new VC::TextProperty[]
+            Phones = new VC::TextProperty[]
             {
                     xiamoiMobilePhone
             }
@@ -46,7 +46,7 @@ internal static class WhatsAppDemo2
         vcard = VCard.ParseVcf(vcfString)[0];
 
         // Find the WhatsApp number:
-        string? whatsAppNumber = vcard.PhoneNumbers?
+        string? whatsAppNumber = vcard.Phones?
             .FirstOrDefault(x => x?.Parameters.NonStandard?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
             .Value;
 

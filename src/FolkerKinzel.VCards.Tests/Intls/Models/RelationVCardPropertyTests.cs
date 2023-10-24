@@ -34,7 +34,7 @@ public class RelationVCardPropertyTests
         {
             DisplayNames = new TextProperty("John Doe"),
             NameViews = new NameProperty("Doe", "John"),
-            PhoneNumbers = new TextProperty(phone)
+            Phones = new TextProperty(phone)
         };
 
         var prop = RelationProperty.FromVCard(vc);

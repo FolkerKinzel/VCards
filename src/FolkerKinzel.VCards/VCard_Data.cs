@@ -251,7 +251,7 @@ public sealed partial class VCard
     /// <see cref="TextProperty.Value" /> should specify a URI for instant messaging 
     /// and presence protocol communications with the object the <see cref="VCard"/> 
     /// represents. If the URI can be used for voice and/or video, the 
-    /// <see cref="VCard.PhoneNumbers" /> property SHOULD be used in addition to this 
+    /// <see cref="VCard.Phones" /> property SHOULD be used in addition to this 
     /// property.</remarks>
     public IEnumerable<TextProperty?>? InstantMessengerHandles
     {
@@ -478,10 +478,10 @@ public sealed partial class VCard
 
     /// <summary> <c>TEL</c>: Canonical number strings for a telephone numbers for 
     /// telephony communication with the vCard object. <c>(2,3,4)</c></summary>
-    public IEnumerable<TextProperty?>? PhoneNumbers
+    public IEnumerable<TextProperty?>? Phones
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.PhoneNumbers);
-        set => Set(VCdProp.PhoneNumbers, value);
+        get => Get<IEnumerable<TextProperty?>?>(VCdProp.Phones);
+        set => Set(VCdProp.Phones, value);
     }
 
     /// <summary> <c>PHOTO</c>: Image(s) or photograph(s) of the individual associated

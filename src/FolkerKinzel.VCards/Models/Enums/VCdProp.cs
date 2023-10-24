@@ -99,7 +99,7 @@ public enum VCdProp
 
     /// <summary> <c>TEL</c>: Canonical number strings for a telephone numbers for telephony
     /// communication with the vCard object. <c>(2,3,4)</c></summary>
-    PhoneNumbers,
+    Phones,
 
     /// <summary> <c>EMAIL</c>: The addresses for electronic mail communication with
     /// the vCard object. <c>(2,3,4)</c></summary>

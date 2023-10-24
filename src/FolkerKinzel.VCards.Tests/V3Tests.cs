@@ -216,7 +216,7 @@ END:VCARD";
 
         var vcard = new VCard
         {
-            PhoneNumbers = xiamoiMobilePhone
+            Phones = xiamoiMobilePhone
         };
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
@@ -225,7 +225,7 @@ END:VCARD";
         vcard = VCard.ParseVcf(vcfString)[0];
 
         // Find the WhatsApp number:
-        string? readWhatsAppNumber = vcard.PhoneNumbers?
+        string? readWhatsAppNumber = vcard.Phones?
             .FirstOrDefault(x => x?.Parameters.NonStandard?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
             .Value;
         Assert.AreEqual(whatsAppNumber, readWhatsAppNumber);

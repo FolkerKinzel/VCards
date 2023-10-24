@@ -97,7 +97,7 @@ public sealed partial class VCard
                     Kind = new KindProperty(vcfRow);
                     break;
                 case PropKeys.TEL:
-                    PhoneNumbers = new TextProperty(vcfRow, this.Version).GetAssignment(PhoneNumbers);
+                    Phones = new TextProperty(vcfRow, this.Version).GetAssignment(Phones);
                     break;
                 case PropKeys.EMAIL:
                     this.EmailAddresses = new TextProperty(vcfRow, this.Version).GetAssignment(EmailAddresses);
@@ -430,9 +430,9 @@ public sealed partial class VCard
     {
         if ((para.PhoneType.IsSet(PhoneTypes.Voice) ||
                                         para.PhoneType.IsSet(PhoneTypes.Video)) &&
-                                        (!PhoneNumbers?.Any(x => x?.Value == textProp.Value) ?? true))
+                                        (!Phones?.Any(x => x?.Value == textProp.Value) ?? true))
         {
-            PhoneNumbers = textProp.GetAssignment(PhoneNumbers);
+            Phones = textProp.GetAssignment(Phones);
         }
     }
 

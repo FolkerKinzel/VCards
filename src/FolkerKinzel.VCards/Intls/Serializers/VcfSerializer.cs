@@ -250,7 +250,7 @@ internal abstract class VcfSerializer : IDisposable
                 case VCdProp.Addresses:
                     AppendAddresses((IEnumerable<AddressProperty?>)kvp.Value);
                     break;
-                case VCdProp.PhoneNumbers:
+                case VCdProp.Phones:
                     AppendPhoneNumbers((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case VCdProp.EmailAddresses:

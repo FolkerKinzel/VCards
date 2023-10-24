@@ -52,7 +52,7 @@ internal static class WhatsAppDemo1
             },
 
             // Add the mobile phone too:
-            PhoneNumbers = new VC::TextProperty[]
+            Phones = new VC::TextProperty[]
             {
                     xiamoiMobilePhone
             }

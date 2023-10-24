@@ -120,7 +120,7 @@ public static class VCardExample
             vcard.TimeZones = new VC::TimeZoneProperty(tz, groupName);
             vcard.GeoCoordinates = new VC::GeoProperty(geo, groupName);
 
-            vcard.PhoneNumbers = new VC::TextProperty[]
+            vcard.Phones = new VC::TextProperty[]
             {
                     telHome, telWork
             };
