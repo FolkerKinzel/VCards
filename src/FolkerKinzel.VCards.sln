@@ -11,7 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.github\ISSUE_TEMPLATE\bug_report.md = ..\.github\ISSUE_TEMPLATE\bug_report.md
 		..\.github\ISSUE_TEMPLATE\feature_request.md = ..\.github\ISSUE_TEMPLATE\feature_request.md
 		..\README.md = ..\README.md
-		..\docs\PackageReleaseNotes\5.0.0-beta.3\ReleaseNotes.md = ..\docs\PackageReleaseNotes\5.0.0-beta.3\ReleaseNotes.md
 		WhatsAppIssue.md = WhatsAppIssue.md
 	EndProjectSection
 EndProject
