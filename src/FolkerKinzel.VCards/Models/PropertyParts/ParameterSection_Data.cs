@@ -12,7 +12,6 @@ public sealed partial class ParameterSection
     private T Get<T>(VCdParam prop)
         => _propDic.ContainsKey(prop) ? (T)_propDic[prop] : default;
 
-
     private void Set<T>(VCdParam prop, T value)
     {
         if (value is null || value.Equals(default))
@@ -344,8 +343,6 @@ public sealed partial class ParameterSection
         get => Get<IEnumerable<string?>?>(VCdParam.SortAs);
         set => Set(VCdParam.SortAs, value);
     }
-
-    
 
     /// <summary><c>TZ</c>: Time zone <c>(4)</c></summary>
     /// <remarks> This parameter is only written if it is attached to an 
