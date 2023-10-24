@@ -1,255 +1,376 @@
 ﻿using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FolkerKinzel.VCards.Extensions.Tests
+namespace FolkerKinzel.VCards.Extensions.Tests;
+
+[TestClass]
+public class IEnumerableExtensionTests
 {
-    [TestClass()]
-    public class IEnumerableExtensionTests
+    public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
+
+    private static List<VCard?> GenerateVCardList()
     {
-        public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
-
-
-        private static List<VCard?> GenerateVCardList()
+        var agent = new VCard()
         {
-            var agent = new VCard()
-            {
-                DisplayNames = new TextProperty?[]
-                {
-                    null,
-                    new TextProperty("The Agent", "myGroup")
-                }
-            };
-
-
-            return new List<VCard?>
+            DisplayNames = new TextProperty?[]
             {
                 null,
-                new VCard()
+                new TextProperty("The Agent", "myGroup")
+            }
+        };
+
+        return new List<VCard?>
+        {
+            null,
+            new VCard()
+            {
+                Relations = new RelationProperty?[]
                 {
-                    Relations = new RelationProperty?[]
-                    {
-                        null,
-                        new RelationVCardProperty(agent, RelationTypes.Agent | RelationTypes.CoWorker, "otherGroup" )
-                    }
+                    null,
+                    new RelationVCardProperty(agent, RelationTypes.Agent | RelationTypes.CoWorker, "otherGroup" )
                 }
-            };
-        }
+            }
+        };
+    }
 
+    [TestMethod]
+    public void ReferenceVCardsTest()
+    {
+        List<VCard?>? list = GenerateVCardList();
 
-        [TestMethod]
-        public void ReferenceVCardsTest()
-        {
-            List<VCard?>? list = GenerateVCardList();
+        list = list.ReferenceVCards().ToList()!;
 
-            list = list.ReferenceVCards().ToList()!;
+        Assert.AreEqual(2, list.Count);
 
-            Assert.AreEqual(2, list.Count);
+        VCard? vc1 = list[0];
 
-            VCard? vc1 = list[0];
+        Assert.IsInstanceOfType(vc1, typeof(VCard));
+        Assert.IsNotNull(vc1?.Relations);
 
-            Assert.IsInstanceOfType(vc1, typeof(VCard));
-            Assert.IsNotNull(vc1?.Relations);
+        var uuidProp = vc1?.Relations?.FirstOrDefault(x => x is RelationUuidProperty) as RelationUuidProperty;
+        Assert.IsNotNull(uuidProp);
+        Guid o1 = uuidProp!.Value;
 
-            var uuidProp = vc1?.Relations?.FirstOrDefault(x => x is RelationUuidProperty) as RelationUuidProperty;
-            Assert.IsNotNull(uuidProp);
-            Guid o1 = uuidProp!.Value;
+        Assert.IsFalse(uuidProp.IsEmpty);
 
-            Assert.IsFalse(uuidProp.IsEmpty);
+        VCard? vc2 = list[1];
 
-            VCard? vc2 = list[1];
+        Assert.IsInstanceOfType(vc2, typeof(VCard));
+        Assert.IsNotNull(vc2?.UniqueIdentifier);
 
-            Assert.IsInstanceOfType(vc2, typeof(VCard));
-            Assert.IsNotNull(vc2?.UniqueIdentifier);
+        Guid? o2 = vc2?.UniqueIdentifier?.Value;
 
-            Guid? o2 = vc2?.UniqueIdentifier?.Value;
+        Assert.IsTrue(o2.HasValue);
+        Assert.AreEqual((Guid)o1!, o2!.Value);
+    }
 
-            Assert.IsTrue(o2.HasValue);
-            Assert.AreEqual((Guid)o1!, o2!.Value);
-        }
+    [TestMethod]
+    public void DereferenceVCardsTest()
+    {
+        List<VCard?>? list = GenerateVCardList();
 
-        [TestMethod]
-        public void DereferenceVCardsTest()
-        {
-            List<VCard?>? list = GenerateVCardList();
+        list = list.ReferenceVCards().ToList()!;
 
-            list = list.ReferenceVCards().ToList()!;
+        Assert.AreEqual(2, list.Count);
+        Assert.IsNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
 
-            Assert.AreEqual(2, list.Count);
-            Assert.IsNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
+        list = list.DereferenceVCards().ToList()!;
 
-            list = list.DereferenceVCards().ToList()!;
+        Assert.AreEqual(2, list.Count);
+        Assert.IsNotNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
+    }
 
-            Assert.AreEqual(2, list.Count);
-            Assert.IsNotNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
-        }
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    [ExpectedException(typeof(ArgumentException))]
+    public void SaveVcfTest_InvalidFilename(VCdVersion version)
+    {
+        var list = new List<VCard?>() { new VCard() };
 
+        string path = "   ";
 
-        [DataTestMethod()]
-        [DataRow(VCdVersion.V2_1)]
-        [DataRow(VCdVersion.V3_0)]
-        [DataRow(VCdVersion.V4_0)]
-        [ExpectedException(typeof(ArgumentException))]
-        public void SaveVcfTest_InvalidFilename(VCdVersion version)
-        {
-            var list = new List<VCard?>() { new VCard() };
+        list.SaveVcf(path, version);
 
-            string path = "   ";
+        Assert.IsFalse(File.Exists(path));
+    }
 
-            list.SaveVcf(path, version);
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    public void SaveVcfTest_EmptyList(VCdVersion version)
+    {
+        var list = new List<VCard?>();
 
-            Assert.IsFalse(File.Exists(path));
-        }
+        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_Empty.vcf");
 
+        list.SaveVcf(path, version);
 
-        [DataTestMethod()]
-        [DataRow(VCdVersion.V2_1)]
-        [DataRow(VCdVersion.V3_0)]
-        [DataRow(VCdVersion.V4_0)]
-        public void SaveVcfTest_EmptyList(VCdVersion version)
-        {
-            var list = new List<VCard?>();
+        Assert.IsFalse(File.Exists(path));
+    }
 
-            string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_Empty.vcf");
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void SaveVcfTest_ListNull(VCdVersion version)
+    {
+        List<VCard?>? list = null;
 
-            list.SaveVcf(path, version);
+        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_Empty.vcf");
 
-            Assert.IsFalse(File.Exists(path));
-        }
+        list!.SaveVcf(path, version);
+    }
 
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void SaveVcfTest_fileNameNull(VCdVersion version)
+    {
+        var list = new List<VCard?>() { new VCard() };
 
-        [DataTestMethod()]
-        [DataRow(VCdVersion.V2_1)]
-        [DataRow(VCdVersion.V3_0)]
-        [DataRow(VCdVersion.V4_0)]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void SaveVcfTest_ListNull(VCdVersion version)
-        {
-            List<VCard?>? list = null;
+        list.SaveVcf(null!, version);
+    }
 
-            string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_Empty.vcf");
+    [TestMethod]
+    public void SaveVcfTest_vCard2_1()
+    {
+        List<VCard?> list = GenerateVCardList();
 
-            list!.SaveVcf(path, version);
-        }
+        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v2.1.vcf");
 
+        list.SaveVcf(path, VCdVersion.V2_1);
 
-        [DataTestMethod()]
-        [DataRow(VCdVersion.V2_1)]
-        [DataRow(VCdVersion.V3_0)]
-        [DataRow(VCdVersion.V4_0)]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void SaveVcfTest_fileNameNull(VCdVersion version)
-        {
-            var list = new List<VCard?>() { new VCard() };
+        IList<VCard> list2 = VCard.LoadVcf(path);
 
-            list.SaveVcf(null!, version);
-        }
+        Assert.AreNotEqual(list.Count, list2.Count);
+        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+    }
 
+    [TestMethod]
+    public void SaveVcfTest_vCard3_0()
+    {
+        List<VCard?> list = GenerateVCardList();
 
-        [TestMethod]
-        public void SaveVcfTest_vCard2_1()
-        {
-            List<VCard?> list = GenerateVCardList();
+        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v3.0.vcf");
 
-            string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v2.1.vcf");
+        list.SaveVcf(path, VCdVersion.V3_0);
 
-            list.SaveVcf(path, VCdVersion.V2_1);
+        IList<VCard> list2 = VCard.LoadVcf(path);
 
-            IList<VCard> list2 = VCard.LoadVcf(path);
+        Assert.AreNotEqual(list.Count, list2.Count);
+        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
 
-            Assert.AreNotEqual(list.Count, list2.Count);
-            Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
-        }
+    }
 
-        [TestMethod]
-        public void SaveVcfTest_vCard3_0()
-        {
-            List<VCard?> list = GenerateVCardList();
+    [TestMethod]
+    public void SaveVcfTest_vCard4_0()
+    {
+        List<VCard?> list = GenerateVCardList();
 
-            string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v3.0.vcf");
+        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v4.0.vcf");
 
-            list.SaveVcf(path, VCdVersion.V3_0);
+        list.SaveVcf(path, VCdVersion.V4_0);
 
-            IList<VCard> list2 = VCard.LoadVcf(path);
+        IList<VCard> list2 = VCard.LoadVcf(path);
 
-            Assert.AreNotEqual(list.Count, list2.Count);
-            Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+        Assert.AreEqual(2, list2.Count);
+        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+    }
 
-        }
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void SerializeVcfTest1() => new List<VCard?>().SerializeVcf(null!, VCdVersion.V3_0);
 
-        [TestMethod]
-        public void SaveVcfTest_vCard4_0()
-        {
-            List<VCard?> list = GenerateVCardList();
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    public void SerializeVcfTest2(VCdVersion version)
+    {
+        List<VCard?> list = GenerateVCardList();
+
+        using var ms = new MemoryStream();
+
+        list.SerializeVcf(ms, version, leaveStreamOpen: true);
+
+        Assert.AreNotEqual(0, ms.Length);
+
+        ms.Position = 0;
+
+        Assert.AreNotEqual(-1, ms.ReadByte());
+    }
 
-            string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v4.0.vcf");
-
-            list.SaveVcf(path, VCdVersion.V4_0);
-
-            IList<VCard> list2 = VCard.LoadVcf(path);
-
-            Assert.AreEqual(2, list2.Count);
-            Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void SerializeVcfTest1() => new List<VCard?>().SerializeVcf(null!, VCdVersion.V3_0);
-
-
-
-        [DataTestMethod()]
-        [DataRow(VCdVersion.V2_1)]
-        [DataRow(VCdVersion.V3_0)]
-        [DataRow(VCdVersion.V4_0)]
-        public void SerializeVcfTest2(VCdVersion version)
-        {
-            List<VCard?> list = GenerateVCardList();
-
-            using var ms = new MemoryStream();
-
-            list.SerializeVcf(ms, version, leaveStreamOpen: true);
-
-            Assert.AreNotEqual(0, ms.Length);
-
-            ms.Position = 0;
-
-            Assert.AreNotEqual(-1, ms.ReadByte());
-        }
-
-
-        [DataTestMethod()]
-        [DataRow(VCdVersion.V2_1)]
-        [DataRow(VCdVersion.V3_0)]
-        [DataRow(VCdVersion.V4_0)]
-        [ExpectedException(typeof(ObjectDisposedException))]
-        public void SerializeVcfTest3(VCdVersion version)
-        {
-            List<VCard?> list = GenerateVCardList();
-
-            using var ms = new MemoryStream();
-
-            list.SerializeVcf(ms, version, leaveStreamOpen: false);
-
-            _ = ms.Length;
-
-        }
-
-        [DataTestMethod()]
-        [DataRow(VCdVersion.V2_1)]
-        [DataRow(VCdVersion.V3_0)]
-        [DataRow(VCdVersion.V4_0)]
-        public void ToVcfStringTest(VCdVersion version)
-        {
-            List<VCard?> list = GenerateVCardList();
-
-            string s = list.ToVcfString(version);
-
-            IList<VCard> list2 = VCard.ParseVcf(s);
-
-            Assert.AreNotEqual(0, list2.Count);
-            Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
-            Assert.AreEqual(version, list2[0].Version);
-        }
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    [ExpectedException(typeof(ObjectDisposedException))]
+    public void SerializeVcfTest3(VCdVersion version)
+    {
+        List<VCard?> list = GenerateVCardList();
+
+        using var ms = new MemoryStream();
+
+        list.SerializeVcf(ms, version, leaveStreamOpen: false);
+
+        _ = ms.Length;
+
+    }
+
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    public void ToVcfStringTest(VCdVersion version)
+    {
+        List<VCard?> list = GenerateVCardList();
+
+        string s = list.ToVcfString(version);
+
+        IList<VCard> list2 = VCard.ParseVcf(s);
+
+        Assert.AreNotEqual(0, list2.Count);
+        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+        Assert.AreEqual(version, list2[0].Version);
+    }
+
+    [TestMethod]
+    public void PrefOrNullTest1()
+    {
+        VCardProperty[]? props = null;
+        Assert.IsNull(props.PrefOrNull());
+    }
+
+    [TestMethod]
+    public void PrefOrNullTest2()
+    {
+        VCardProperty[]? props = new[] {new TextProperty(null)};
+        Assert.IsNull(props.PrefOrNull());
+    }
+
+    [TestMethod]
+    public void PrefOrNullTest3()
+    {
+        VCardProperty[]? props = new[] { new TextProperty(null) };
+        Assert.IsNotNull(props.PrefOrNull(ignoreEmptyItems: false));
+    }
+
+    [TestMethod]
+    public void PrefOrNullTest4()
+    {
+        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        Assert.IsNotNull(props.PrefOrNull());
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void PrefOrNullTest5()
+    {
+        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        props.PrefOrNull(null!);
+    }
+
+    [TestMethod]
+    public void PrefOrNullTest6()
+    {
+        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        props.PrefOrNull(static x => x is TextProperty);
+    }
+
+    [TestMethod]
+    public void PrefOrNullTest7()
+    {
+        VCardProperty[]? props = null;
+        Assert.IsNull(props.PrefOrNull(static x => x is TextProperty));
+    }
+
+    [TestMethod]
+    public void FirstOrNullTest1()
+    {
+        VCardProperty[]? props = null;
+        Assert.IsNull(props.FirstOrNull());
+    }
+
+    [TestMethod]
+    public void FirstOrNullTest2()
+    {
+        VCardProperty[]? props = new[] { new TextProperty(null) };
+        Assert.IsNull(props.FirstOrNull());
+    }
+
+
+    [TestMethod]
+    public void FirstOrNullTest3()
+    {
+        VCardProperty[]? props = new[] { new TextProperty(null) };
+        Assert.IsNotNull(props.FirstOrNull(ignoreEmptyItems: false));
+    }
+
+    [TestMethod]
+    public void FirstOrNullTest4()
+    {
+        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        Assert.IsNotNull(props.FirstOrNull());
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void FirstOrNullTest5()
+    {
+        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        props.FirstOrNull(null!);
+    }
+
+    [TestMethod]
+    public void FirstOrNullTest6()
+    {
+        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        props.FirstOrNull(static x => x is TextProperty);
+    }
+
+    [TestMethod]
+    public void FirstOrNullTest7()
+    {
+        VCardProperty[]? props = null;
+        Assert.IsNull(props.FirstOrNull(static x => x is TextProperty));
+    }
+
+    [TestMethod]
+    public void OrderByPrefTest1()
+    {
+        VCardProperty[]? props = null;
+        Assert.IsFalse(props.OrderByPref().Any());
+    }
+
+    [TestMethod]
+    public void OrderByIndexTest1()
+    {
+        VCardProperty[]? props = null;
+        Assert.IsFalse(props.OrderByIndex().Any());
+    }
+
+    [TestMethod]
+    public void OrderByPrefTest2()
+    {
+        var prop = new TextProperty("Hi");
+        VCardProperty[]? props = new[] { prop };
+        Assert.IsTrue(props.OrderByPref(false).Any());
+    }
+
+    [TestMethod]
+    public void OrderByIndexTest2()
+    {
+        var prop = new TextProperty("Hi");
+        prop.Parameters.Index = 1;
+        VCardProperty[]? props = new[] { prop };
+        Assert.IsTrue(props.OrderByIndex(false).Any());
     }
 }

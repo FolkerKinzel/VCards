@@ -3,6 +3,7 @@ namespace FolkerKinzel.VCards.Intls;
 internal static class DebugWriter
 {
     [Conditional("DEBUG")]
+    [ExcludeFromCodeCoverage]
     internal static void WriteMethodHeader(string? MethodName)
     {
         const int HEADER_LENGTH = 40;

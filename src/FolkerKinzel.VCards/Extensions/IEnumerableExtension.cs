@@ -398,7 +398,7 @@ public static class IEnumerableExtension
     /// <see cref="OrderByPref{TSource}(IEnumerable{TSource}?, bool)"/>.
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IEnumerable<TSource> OrderByIndex<TSource>(this IEnumerable<TSource?> values,
+    public static IEnumerable<TSource> OrderByIndex<TSource>(this IEnumerable<TSource?>? values,
                                                    bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values is null ? Enumerable.Empty<TSource>()
                           : values.OrderByIndexIntl(ignoreEmptyItems);
