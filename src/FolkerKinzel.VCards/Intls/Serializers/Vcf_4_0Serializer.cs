@@ -259,7 +259,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
         BuildPropertyCollection(VCard.PropKeys.NonStandard.ORG_DIRECTORY, value);
     }
 
-    protected override void AppendPhoneNumbers(IEnumerable<TextProperty?> value)
+    protected override void AppendPhones(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.TEL, value);
 
     protected override void AppendPhotos(IEnumerable<DataProperty?> value)

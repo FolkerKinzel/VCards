@@ -204,7 +204,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendOrganizations(IEnumerable<OrganizationProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.ORG, value);
 
-    protected override void AppendPhoneNumbers(IEnumerable<TextProperty?> value)
+    protected override void AppendPhones(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.TEL, value);
 
     protected override void AppendPhotos(IEnumerable<DataProperty?> value)
