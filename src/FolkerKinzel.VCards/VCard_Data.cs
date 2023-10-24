@@ -186,10 +186,10 @@ public sealed partial class VCard
 
     /// <summary> <c>EMAIL</c>: The addresses for electronic mail communication with
     /// the vCard object. <c>(2,3,4)</c></summary>
-    public IEnumerable<TextProperty?>? EmailAddresses
+    public IEnumerable<TextProperty?>? EMails
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.EmailAddresses);
-        set => Set(VCdProp.EmailAddresses, value);
+        get => Get<IEnumerable<TextProperty?>?>(VCdProp.EMails);
+        set => Set(VCdProp.EMails, value);
     }
 
     /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has

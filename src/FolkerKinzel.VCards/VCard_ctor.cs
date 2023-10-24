@@ -100,7 +100,7 @@ public sealed partial class VCard
                     Phones = new TextProperty(vcfRow, this.Version).GetAssignment(Phones);
                     break;
                 case PropKeys.EMAIL:
-                    this.EmailAddresses = new TextProperty(vcfRow, this.Version).GetAssignment(EmailAddresses);
+                    this.EMails = new TextProperty(vcfRow, this.Version).GetAssignment(EMails);
                     break;
                 case PropKeys.N:  //LastName, FirstName, MiddleName, Prefix, Suffix
                     this.NameViews = new NameProperty(vcfRow, this.Version).GetAssignment(NameViews);

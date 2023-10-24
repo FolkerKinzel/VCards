@@ -256,8 +256,8 @@ internal abstract class VcfSerializer : IDisposable
                 case VCdProp.Phones:
                     AppendPhones((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.EmailAddresses:
-                    AppendEmailAddresses((IEnumerable<TextProperty?>)kvp.Value);
+                case VCdProp.EMails:
+                    AppendEMails((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case VCdProp.URLs:
                     AppendURLs((IEnumerable<TextProperty?>)kvp.Value);
@@ -531,7 +531,7 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendDisplayNames(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendEmailAddresses(IEnumerable<TextProperty?> value) { }
+    protected virtual void AppendEMails(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendExpertises(IEnumerable<TextProperty?> value) { }

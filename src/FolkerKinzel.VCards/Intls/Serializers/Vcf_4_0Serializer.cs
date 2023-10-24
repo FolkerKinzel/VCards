@@ -146,7 +146,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
         }
     }
 
-    protected override void AppendEmailAddresses(IEnumerable<TextProperty?> value)
+    protected override void AppendEMails(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.EMAIL, value);
 
     protected override void AppendExpertises(IEnumerable<TextProperty?> value)

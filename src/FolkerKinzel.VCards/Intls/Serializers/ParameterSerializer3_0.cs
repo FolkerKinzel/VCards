@@ -276,7 +276,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         AppendContext();
     }
 
-    protected override void BuildPhonesPara(bool isPref)
+    protected override void BuildTelPara(bool isPref)
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
@@ -520,7 +520,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     }
 
     private void DoCollectEmailType() 
-        => _stringCollectionList.Add(ParaSection.EmailType ?? EmailType.SMTP);
+        => _stringCollectionList.Add(ParaSection.EMailType ?? EMailType.SMTP);
 
     private void DoCollectMediaType()
     {

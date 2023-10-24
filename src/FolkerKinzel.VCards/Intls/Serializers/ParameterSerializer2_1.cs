@@ -179,7 +179,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
     //    AppendContext();
     //}
 
-    protected override void BuildPhonesPara(bool isPref)
+    protected override void BuildTelPara(bool isPref)
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
@@ -418,7 +418,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         {
             AppendV2_1Type(ParameterSection.TypeValue.PREF);
         }
-        AppendV2_1Type(ParaSection.EmailType ?? EmailType.SMTP);
+        AppendV2_1Type(ParaSection.EMailType ?? EMailType.SMTP);
     }
 
     private void AppendValue()

@@ -40,7 +40,7 @@ public enum VCdProp
     /// <see cref="Sources" /> property. <c>(3)</c></summary>
     DirectoryName,
 
-    /// <summary> <c>MAILER</c>: Type of email program used. <c>(2,3)</c></summary>
+    /// <summary> <c>MAILER</c>: Type of e-mail program used. <c>(2,3)</c></summary>
     Mailer,
 
     /// <summary> <c>PRODID</c>: The identifier for the product that created the vCard
@@ -103,7 +103,7 @@ public enum VCdProp
 
     /// <summary> <c>EMAIL</c>: The addresses for electronic mail communication with
     /// the vCard object. <c>(2,3,4)</c></summary>
-    EmailAddresses,
+    EMails,
 
     /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>

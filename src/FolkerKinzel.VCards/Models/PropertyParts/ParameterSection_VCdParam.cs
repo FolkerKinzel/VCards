@@ -19,8 +19,8 @@ public sealed partial class ParameterSection
         /// <c>(2,3)</c></summary>
         AddressType,
 
-        /// <summary> <c>TYPE</c>: Describes the type of an email. <c>(2,3)</c></summary>
-        EmailType,
+        /// <summary> <c>TYPE</c>: Describes the type of an e-mail address. <c>(2,3)</c></summary>
+        EMailType,
 
         /// <summary><c>TYPE</c>: Describes a telephone number. <c>(2,3,4)</c></summary>
         PhoneType,

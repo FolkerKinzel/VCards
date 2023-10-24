@@ -129,7 +129,7 @@ public static class VCardExample
             prefMail.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
             prefMail.Parameters.Preference = 1;
 
-            vcard.EmailAddresses = prefMail;
+            vcard.EMails = prefMail;
 
             vcard.BirthDayViews = VC::DateAndOrTimeProperty.FromDate(1984, 3, 28);
 

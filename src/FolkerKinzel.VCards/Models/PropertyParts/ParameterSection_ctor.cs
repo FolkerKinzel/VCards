@@ -378,7 +378,7 @@ public sealed partial class ParameterSection
                     return false;
                 }
             case VCard.PropKeys.EMAIL:
-                this.EmailType = propertyKey;
+                this.EMailType = propertyKey;
                 break;
             case VCard.PropKeys.KEY:
                 this.MediaType = MimeTypeConverter.MimeTypeFromKeyType(typeValue);

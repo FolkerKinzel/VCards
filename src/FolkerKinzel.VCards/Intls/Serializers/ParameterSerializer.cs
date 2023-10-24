@@ -134,7 +134,7 @@ internal abstract class ParameterSerializer
                 BuildSourcePara();
                 break;
             case VCard.PropKeys.TEL:
-                BuildPhonesPara(isPref);
+                BuildTelPara(isPref);
                 break;
             case VCard.PropKeys.TITLE:
                 BuildTitlePara();
@@ -257,7 +257,7 @@ internal abstract class ParameterSerializer
 
     protected abstract void BuildTitlePara();
 
-    protected abstract void BuildPhonesPara(bool isPref);
+    protected abstract void BuildTelPara(bool isPref);
 
     protected abstract void BuildSourcePara();
 

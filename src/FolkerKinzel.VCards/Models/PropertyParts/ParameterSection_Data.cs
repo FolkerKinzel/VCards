@@ -106,12 +106,12 @@ public sealed partial class ParameterSection
         set => Set(VCdParam.DataType, value);
     }
 
-    /// <summary> <c>TYPE</c>: Describes the type of an email. <c>(2,3)</c></summary>
-    /// <value>Use only the constants defined in the <see cref="EmailType" /> class!</value>
-    public string? EmailType
+    /// <summary> <c>TYPE</c>: Describes the type of an e-mail address. <c>(2,3)</c></summary>
+    /// <value>Use only the constants defined in the <see cref="Enums.EMailType" /> class!</value>
+    public string? EMailType
     {
-        get => Get<string?>(VCdParam.EmailType);
-        set => Set<string?>(VCdParam.EmailType, string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToUpperInvariant());
+        get => Get<string?>(VCdParam.EMailType);
+        set => Set<string?>(VCdParam.EMailType, string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToUpperInvariant());
     }
 
     /// <summary><c>ENCODING</c>: Indicates the encoding of the VCardProperty. <c>(2,3)</c></summary>

@@ -452,7 +452,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-    protected override void BuildPhonesPara(bool isPref)
+    protected override void BuildTelPara(bool isPref)
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);

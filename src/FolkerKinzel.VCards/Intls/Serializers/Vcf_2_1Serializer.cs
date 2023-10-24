@@ -166,7 +166,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
                       displayName ?? new TextProperty(IgnoreEmptyItems ? "?" : null));
     }
 
-    protected override void AppendEmailAddresses(IEnumerable<TextProperty?> value)
+    protected override void AppendEMails(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.EMAIL, value);
 
     protected override void AppendGenderViews(IEnumerable<GenderProperty?> value)

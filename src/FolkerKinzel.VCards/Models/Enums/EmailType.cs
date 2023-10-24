@@ -1,7 +1,7 @@
 namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>Named constants to describe the type of an email address.</summary>
-public static class EmailType
+/// <summary>Named constants to describe the type of an e-mail address.</summary>
+public static class EMailType
 {
     /// <summary>Internet addressing type</summary>
     public const string SMTP = "INTERNET";

@@ -57,8 +57,8 @@ internal static class Utility
 
 
         var email1 = new TextProperty("email@folker.com");
-        email1.Parameters.EmailType = "  ";
-        email1.Parameters.EmailType = EmailType.SMTP;
+        email1.Parameters.EMailType = "  ";
+        email1.Parameters.EMailType = EMailType.SMTP;
 
         var name1 = new NameProperty("Künzel", "Folker");
         name1.Parameters.SortAs = new string[] { "Kinzel", "Folker" };
@@ -144,7 +144,7 @@ internal static class Utility
             Profile = new ProfileProperty("Group"),
             Categories = new StringCollectionProperty(new string[] { "Person", "Data" }),
             TimeStamp = new TimeStampProperty(),
-            EmailAddresses = email1,
+            EMails = email1,
             Roles = new TextProperty("Rechte Hand"),
             Titles = new TextProperty("Sündenbock"),
             UniqueIdentifier = new UuidProperty(),

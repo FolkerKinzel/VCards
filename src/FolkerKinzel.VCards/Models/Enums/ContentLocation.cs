@@ -9,7 +9,7 @@ public enum ContentLocation
     Inline,
 
     /// <summary> <c>Content-ID</c>, <c>CID</c>: In the case of the vCard being transported
-    /// within a MIME email message, the property value can be specified as being located
+    /// within a MIME e-mail message, the property value can be specified as being located
     /// in a separate MIME entity with the “Content-ID” value, or “CID” for short. In
     /// this case, the property value is the Content-ID for the MIME entity containing
     /// the property value.</summary>
