@@ -1,26 +1,26 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Kapselt Informationen, die dazu dienen, eine Instanz einer <see cref="VCardProperty"/> eindeutig
-/// zu identifizieren.
-/// </summary>
+/// <summary>Encapsulates information that is used to uniquely identify an instance
+/// of a <see cref="VCardProperty" />.</summary>
 public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 {
     private const int MAPPING_SHIFT = 4;
     private readonly byte _data;
 
-    /// <summary>
-    /// Initialisiert eine neues <see cref="PropertyID"/>-Objekt
-    /// mit der lokalen ID der vCard-Property und - optional - 
-    /// einem <see cref="PropertyIDMapping"/>-Objekt, das die Identifizierung der vCard-Property über
-    /// verschiedene Versionszustände derselben vCard hinweg erlaubt.
-    /// </summary>
-    /// <param name="id">Die lokale ID der vCard-Property.</param>
-    /// <param name="mapping">Ein <see cref="PropertyIDMapping"/>-Objekt oder <c>null</c>.</param>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="id"/> ist kleiner als 1 oder größer als 9.</exception>
+    /// <summary>Initializes a new <see cref="PropertyID" /> object with the local ID
+    /// of the vCard property and - optionally - a <see cref="PropertyIDMapping" />
+    /// object that allows the identification of the vCard property across different
+    /// version states of the same vCard.</summary>
+    /// <param name="id">The local ID of the vCard property (value: 1 - 9). The name 
+    /// of the vCard property and this number uniquely identify a property locally.</param>
+    /// <param name="mapping">A <see cref="PropertyIDMapping" /> object or <c>null</c>.
+    /// The mapping is used to identify 
+    /// a vCard property between different version states of the same vCard.</param>
+    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> is less
+    /// than 1 or greater than 9.</exception>
     public PropertyID(int id, PropertyIDMapping? mapping = null)
     {
         id.ValidateID(nameof(id));
@@ -32,19 +32,17 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
         }
     }
 
-    /// <summary>
-    /// Initialisiert eine neues <see cref="PropertyID"/>-Objekt
-    /// mit der lokalen Nummer der <see cref="VCardProperty"/> und der Nummer des Mappings dieser 
-    /// <see cref="VCardProperty"/>.
-    /// </summary>
-    /// <param name="id">Lokaler Identifier der <see cref="VCardProperty"/> (Wert: zwischen 1 und 9). Der Name der
-    /// vCard-Property und diese Nummer identifizieren eine Property lokal eindeutig.</param>
-    /// <param name="mapping"><see cref="PropertyIDMapping.ID"/> des Mappings der 
-    /// <see cref="VCardProperty"/> (Wert: zwischen 1 und 9) oder <c>null</c>, um kein Mapping anzugeben. Das
-    /// Mapping dient dazu, eine vCard-Property zwischen verschiedenen Versionszuständen derselben vCard
-    /// zu identifizieren.</param>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="id"/> und/oder <paramref name="mapping"/>
-    /// sind kleiner als 1 oder größer als 9.</exception>
+    /// <summary>Initializes a new <see cref="PropertyID" /> object with the local number of the 
+    /// <see cref="VCardProperty" /> and the number of the mapping of this 
+    /// <see cref="VCardProperty" />.</summary>
+    /// <param name="id">The local ID of the vCard property (Value: 1 - 9). The name of the vCard 
+    /// property and this number uniquely identify a property locally.</param>
+    /// <param name="mapping"> <see cref="PropertyIDMapping.ID" /> of the mapping of the 
+    /// <see cref="VCardProperty" /> (value: 1 - 9) or <c>null</c> to not specify any mapping. 
+    /// The mapping is used to identify a vCard property between different version states of the 
+    /// same vCard.</param>
+    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> or <paramref name="mapping"/>
+    /// is less than 1 or greater than 9.</exception>
     private PropertyID(int id, int? mapping = null)
     {
         id.ValidateID(nameof(id));
@@ -59,21 +57,20 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
         }
     }
 
-    /// <summary>
-    /// Gibt die lokale ID der <see cref="VCardProperty"/> zurück, der das <see cref="PropertyID"/>-Objekt
-    /// zugeordnet ist.
-    /// </summary>
+    /// <summary>Gets the local ID of the <see cref="VCardProperty" /> to which the
+    /// <see cref="PropertyID" /> object is assigned.</summary>
     /// <remarks>
-    /// Der lokale Schlüssel zur Identifizierung eines <see cref="VCardProperty"/>-Objekts besteht aus dem 
-    /// Namen der vCard-Property, dem dieses Objekt zugeordnet ist, und dem Wert der <see cref="PropertyID.ID"/>
-    /// des <see cref="PropertyID"/>-Objekts, das diesem <see cref="VCardProperty"/>-Objekt zugeordnet ist.
-    /// </remarks>
+    /// The local key for identifying a <see cref="VCardProperty" /> consists of the name 
+    /// of the vCard property to which this object is assigned and the value of the 
+    /// <see cref="PropertyID.ID" /> of the <see cref="PropertyID" /> object, which is 
+    /// assigned to this <see cref="VCardProperty" />.</remarks>
     public int ID => _data & 0xF;
 
     /// <summary>
-    /// Gibt die <see cref="PropertyIDMapping.ID"/> des <see cref="PropertyIDMapping"/>-Objekts
-    /// zurück, mit dem das <see cref="PropertyID"/>-Objekt verbunden ist, oder <c>null</c>, wenn das 
-    /// <see cref="PropertyID"/>-Objekt mit keinem <see cref="PropertyIDMapping"/> verbunden ist.
+    /// Gets the <see cref="PropertyIDMapping.ID" /> of the <see cref="PropertyIDMapping"
+    /// /> object with which the <see cref="PropertyID" /> object is connected, or <c>null</c>
+    /// if the <see cref="PropertyID" /> object is not connected with any <see
+    /// cref="PropertyIDMapping" />.
     /// </summary>
     public int? Mapping
     {
@@ -83,6 +80,57 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
             return value == 0 ? null : value;
         }
     }
+
+    /// <inheritdoc/>
+    public override string ToString()
+    {
+        var sb = new StringBuilder(3);
+        AppendTo(sb);
+        return sb.ToString();
+    }
+
+    /// <inheritdoc/>
+    IEnumerator<PropertyID> IEnumerable<PropertyID>.GetEnumerator()
+    {
+        yield return this;
+    }
+
+    /// <inheritdoc/>
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PropertyID>)this).GetEnumerator();
+
+    #region IEquatable
+
+    /// <inheritdoc />
+    public override bool Equals(object? obj) => obj is PropertyID other && Equals(other);
+
+    /// <inheritdoc />
+    public bool Equals(PropertyID? other) => other is not null && ID == other.ID && Mapping == other.Mapping;
+
+
+    /// <inheritdoc />
+    public override int GetHashCode()
+        => Mapping.HasValue ? HashCode.Combine(ID, Mapping)
+                            : HashCode.Combine(ID);
+
+
+    /// <summary>Compares two <see cref="PropertyID" /> objects. The result indicates
+    /// whether the values of the two <see cref="PropertyID" /> objects are equal.</summary>
+    /// <param name="pid1">A <see cref="PropertyID" /> object to compare.</param>
+    /// <param name="pid2">A <see cref="PropertyID" /> object to compare.</param>
+    /// <returns> <c>true</c> if the values of the two <see cref="PropertyID" /> objects
+    /// are equal, otherwise <c>false</c>.</returns>
+    public static bool operator ==(PropertyID? pid1, PropertyID? pid2)
+        => object.ReferenceEquals(pid1, pid2) || (pid1?.Equals(pid2) ?? false);
+
+    /// <summary>Compares two <see cref="PropertyID" /> objects. The result indicates
+    /// whether the values of the two <see cref="PropertyID" /> objects are not equal.</summary>
+    /// <param name="pid1">A <see cref="PropertyID" /> object to compare.</param>
+    /// <param name="pid2">A <see cref="PropertyID" /> object to compare.</param>
+    /// <returns> <c>true</c> if the values of the two <see cref="PropertyID" /> objects
+    /// are not equal, otherwise <c>false</c>.</returns>
+    public static bool operator !=(PropertyID? pid1, PropertyID? pid2) => !(pid1 == pid2);
+
+    #endregion
 
 
     internal static void ParseInto(List<PropertyID> list, string pids)
@@ -146,56 +194,6 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     }
 
 
-    #region IEquatable
-
-    /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is PropertyID other && Equals(other);
-
-    /// <inheritdoc/>
-    public bool Equals(PropertyID? other) => other is not null && ID == other.ID && Mapping == other.Mapping;
-
-
-    /// <inheritdoc/>
-    public override int GetHashCode()
-        => Mapping.HasValue ? HashCode.Combine(ID, Mapping) 
-                            : HashCode.Combine(ID);
-
-
-    /// <summary>
-    /// Vergleicht zwei <see cref="PropertyID"/>-Objekte. Das Ergebnis gibt an, ob die Werte 
-    /// der beiden <see cref="PropertyID"/>-Objekte gleich sind.
-    /// </summary>
-    /// <param name="pid1">Ein zu vergleichendes <see cref="PropertyID"/>-Objekt.</param>
-    /// <param name="pid2">Ein zu vergleichendes <see cref="PropertyID"/>-Objekt.</param>
-    /// <returns><c>true</c>, wenn die Werte der beiden <see cref="PropertyID"/>-Objekte gleich sind,
-    /// andernfalls <c>false</c>.</returns>
-    public static bool operator ==(PropertyID? pid1, PropertyID? pid2)
-        => object.ReferenceEquals(pid1, pid2) || (pid1?.Equals(pid2) ?? false);
-
-    /// <summary>
-    /// Vergleicht zwei <see cref="PropertyID"/>-Objekte. Das Ergebnis gibt an, ob die Werte der beiden 
-    /// <see cref="PropertyID"/>-Objekte ungleich sind.
-    /// </summary>
-    /// <param name="pid1">Ein zu vergleichendes <see cref="PropertyID"/>-Objekt.</param>
-    /// <param name="pid2">Ein zu vergleichendes <see cref="PropertyID"/>-Objekt.</param>
-    /// <returns><c>true</c>, wenn die Werte der beiden <see cref="PropertyID"/>-Objekte ungleich sind, 
-    /// andernfalls <c>false</c>.</returns>
-    public static bool operator !=(PropertyID? pid1, PropertyID? pid2) => !(pid1 == pid2);
-
-    #endregion
-
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation der <see cref="PropertyID"/>-Instanz. (Nur zum 
-    /// Debuggen.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation der <see cref="PropertyID"/>-Instanz.</returns>
-    public override string ToString()
-    {
-        var sb = new StringBuilder(3);
-        AppendTo(sb);
-        return sb.ToString();
-    }
-
     internal void AppendTo(StringBuilder builder)
     {
         Debug.Assert(builder != null);
@@ -208,11 +206,4 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
             _ = builder.Append(Mapping.Value);
         }
     }
-
-    IEnumerator<PropertyID> IEnumerable<PropertyID>.GetEnumerator()
-    {
-        yield return this;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PropertyID>)this).GetEnumerator();
 }

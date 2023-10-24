@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -14,7 +14,7 @@ public sealed partial class ParameterSection
     /// <summary>
     /// Copy ctor
     /// </summary>
-    /// <param name="paraSec">The <see cref="ParameterSection"/> object to clone.</param>
+    /// <param name="paraSec">The <see cref="ParameterSection"/> instance to clone.</param>
     private ParameterSection(ParameterSection paraSec)
     {
         foreach (var kvp in paraSec._propDic)
@@ -31,19 +31,12 @@ public sealed partial class ParameterSection
     }
 
 
-    internal ParameterSection(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters, VcfDeserializationInfo info)
+    internal ParameterSection(string propertyKey,
+                              IEnumerable<KeyValuePair<string, string>> propertyParameters,
+                              VcfDeserializationInfo info)
     {
-        #region DebugAssert
 
-        Debug.Assert(propertyKey != null);
-        Debug.Assert(propertyParameters != null);
-        Debug.Assert(!propertyParameters.Any(
-            x => string.IsNullOrWhiteSpace(x.Key) || string.IsNullOrWhiteSpace(x.Value)
-            ));
-        Debug.Assert(StringComparer.Ordinal.Equals(propertyKey, propertyKey.ToUpperInvariant()));
-        Debug.Assert(propertyParameters.All(x => StringComparer.Ordinal.Equals(x.Key, x.Key.ToUpperInvariant())));
-
-        #endregion
+        Asserts(propertyKey, propertyParameters);
 
         StringBuilder builder = info.Builder;
 
@@ -102,8 +95,8 @@ public sealed partial class ParameterSection
                             Debug.Assert(typeValue.Length != 0);
                             if (!ParseTypeParameter(typeValue, propertyKey))
                             {
-                                List<KeyValuePair<string, string>> nonStandardList = (List<KeyValuePair<string, string>>?)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
-                                this.NonStandardParameters = nonStandardList;
+                                List<KeyValuePair<string, string>> nonStandardList = (List<KeyValuePair<string, string>>?)this.NonStandard ?? new List<KeyValuePair<string, string>>();
+                                this.NonStandard = nonStandardList;
 
                                 nonStandardList.Add(new KeyValuePair<string, string>(parameter.Key, s));
                             }
@@ -117,7 +110,7 @@ public sealed partial class ParameterSection
                     }
                     break;
                 case ParameterKey.TZ:
-                    if(TimeZoneID.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out TimeZoneID? tzID))
+                    if (TimeZoneID.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out TimeZoneID? tzID))
                     {
                         this.TimeZone = tzID;
                     }
@@ -180,7 +173,7 @@ public sealed partial class ParameterSection
 
                         if (expertise.HasValue)
                         {
-                            this.ExpertiseLevel = expertise;
+                            this.Expertise = expertise;
                         }
                         else
                         {
@@ -193,7 +186,7 @@ public sealed partial class ParameterSection
 
                         if (interest.HasValue)
                         {
-                            this.InterestLevel = interest;
+                            this.Interest = interest;
                         }
                         else
                         {
@@ -201,7 +194,6 @@ public sealed partial class ParameterSection
                         }
                     }//else
                     break;
-
 
                 default:
                     {
@@ -211,19 +203,33 @@ public sealed partial class ParameterSection
 
             }//switch
 
-
         }//foreach
 
     }//ctor
 
+    [Conditional("DEBUG")]
+    private static void Asserts(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters)
+    {
+        Debug.Assert(propertyKey != null);
+        Debug.Assert(propertyParameters != null);
+        Debug.Assert(!propertyParameters.Any(
+            x => string.IsNullOrWhiteSpace(x.Key) || string.IsNullOrWhiteSpace(x.Value)
+            ));
+        Debug.Assert(StringComparer.Ordinal.Equals(propertyKey, propertyKey.ToUpperInvariant()));
+        Debug.Assert(propertyParameters.All(x => StringComparer.Ordinal.Equals(x.Key, x.Key.ToUpperInvariant())));
+    }
+
+
     private void AddNonStandardParameter(KeyValuePair<string, string> parameter)
     {
         List<KeyValuePair<string, string>> userAttributes
-                                        = (List<KeyValuePair<string, string>>?)this.NonStandardParameters ?? new List<KeyValuePair<string, string>>();
-        this.NonStandardParameters = userAttributes;
+                                        = (List<KeyValuePair<string, string>>?)this.NonStandard 
+                                          ?? new List<KeyValuePair<string, string>>();
 
+        this.NonStandard = userAttributes;
         userAttributes.Add(parameter);
     }
+
 
     private static string CleanParameterValue(string parameterValue, StringBuilder builder)
     {
@@ -349,11 +355,11 @@ public sealed partial class ParameterSection
             case PropKeys.NonStandard.InstantMessenger.X_TWITTER:
             case PropKeys.NonStandard.InstantMessenger.X_YAHOO:
                 {
-                    TelTypes? telType = TelTypesConverter.Parse(typeValue);
+                    PhoneTypes? phoneType = PhoneTypesConverter.Parse(typeValue);
 
-                    if (telType.HasValue)
+                    if (phoneType.HasValue)
                     {
-                        this.TelephoneType = this.TelephoneType.Set(telType.Value);
+                        this.PhoneType = this.PhoneType.Set(phoneType.Value);
                         return true;
                     }
 
@@ -365,7 +371,7 @@ public sealed partial class ParameterSection
 
                     if (relType.HasValue)
                     {
-                        this.RelationType = this.RelationType.Set(relType.Value);
+                        this.Relation = this.Relation.Set(relType.Value);
                         return true;
                     }
 
@@ -401,5 +407,4 @@ public sealed partial class ParameterSection
 
         return true;
     }
-
 }

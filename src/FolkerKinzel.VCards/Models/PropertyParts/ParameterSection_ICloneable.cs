@@ -1,7 +1,7 @@
-﻿namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 public sealed partial class ParameterSection : ICloneable
 {
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public object Clone() => new ParameterSection(this);
 }

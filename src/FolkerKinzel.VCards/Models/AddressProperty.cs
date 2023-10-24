@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
@@ -8,31 +8,28 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Kapselt die Daten einer vCard-Property, die Informationen über die Postanschrift enthält.
-/// </summary>
+/// <summary>Encapsulates the data of the vCard property <c>ADR</c> that contains 
+/// information about the postal address.</summary>
+/// <remarks>See <see cref="VCard.Addresses"/>.</remarks>
+/// <seealso cref="VCard.Addresses"/>
 public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty>
 {
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="prop">The <see cref="AddressProperty"/> object to clone.</param>
+    /// <summary>Copy ctor.</summary>
+    /// <param name="prop">The <see cref="AddressProperty" /> object to clone.</param>
     private AddressProperty(AddressProperty prop) : base(prop) => Value = prop.Value;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="street">Straße</param>
-    /// <param name="locality">Ort</param>
-    /// <param name="region">Bundesland</param>
-    /// <param name="postalCode">Postleitzahl</param>
-    /// <param name="country">Land (Staat)</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
-    /// automatisch ein Adressetikett hinzugefügt wird.</param>
-    /// <seealso cref="AppendLabel"/>
+    /// <summary> Initializes a new <see cref="AddressProperty" /> object.</summary>
+    /// <param name="street">The street address.</param>
+    /// <param name="locality">The locality (e.g. city).</param>
+    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="postalCode">The postal code.</param>
+    /// <param name="country">The country name (full name).</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <param name="appendLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
+    /// <seealso cref="AppendLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressProperty(IEnumerable<string?>? street,
                            IEnumerable<string?>? locality,
@@ -41,7 +38,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                            IEnumerable<string?>? country = null,
                            string? propertyGroup = null,
                            bool appendLabel = true)
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
+#pragma warning disable CS0618 // Type or member is obsolete
         : this(street: street,
                locality: locality,
                region: region,
@@ -52,27 +49,23 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                propertyGroup: propertyGroup,
                appendLabel: appendLabel)
     { }
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
+#pragma warning restore CS0618 // Type or member is obsolete
 
-
-
-
-    /// <summary>
-    /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="street">Straße</param>
-    /// <param name="locality">Ort</param>
-    /// <param name="region">Bundesland</param>
-    /// <param name="postalCode">Postleitzahl</param>
-    /// <param name="country">Land (Staat)</param>
-    /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-    /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
-    /// automatisch ein Adressetikett hinzugefügt wird.</param>
-    /// <seealso cref="AppendLabel"/>
+    /// <summary> Initializes a new <see cref="AddressProperty" /> object. </summary>
+    /// <param name="street">The street address.</param>
+    /// <param name="locality">The locality (e.g. city).</param>
+    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="postalCode">The postal code.</param>
+    /// <param name="country">The country name (full name).</param>
+    /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
+    /// <param name="extendedAddress">The extended address (e.g. apartment or suite
+    /// number). (Don't use this parameter!)</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <param name="appendLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
+    /// <seealso cref="AppendLabel" />
     [Obsolete("Don't use this constructor.", false)]
     public AddressProperty(IEnumerable<string?>? street,
                            IEnumerable<string?>? locality,
@@ -92,27 +85,24 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                             postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
                             extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
 
-        if(appendLabel)
+        if (appendLabel)
         {
             AppendLabel();
         }
     }
 
-
-    /// <summary>
-    /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="street">Straße</param>
-    /// <param name="locality">Ort</param>
-    /// <param name="region">Bundesland</param>
-    /// <param name="postalCode">Postleitzahl</param>
-    /// <param name="country">Land (Staat)</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
-    /// automatisch ein Adressetikett hinzugefügt wird.</param>
-    /// <seealso cref="AppendLabel"/>
+    /// <summary>Initializes a new <see cref="AddressProperty" /> object. </summary>
+    /// <param name="street">The street address.</param>
+    /// <param name="locality">The locality (e.g. city).</param>
+    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="postalCode">The postal code.</param>
+    /// <param name="country">The country name (full name).</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <param name="appendLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
+    /// <seealso cref="AppendLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressProperty(
         string? street,
@@ -122,7 +112,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         string? country = null,
         string? propertyGroup = null,
         bool appendLabel = true)
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
+#pragma warning disable CS0618 // Type or member is obsolete
         : this(street: street,
               locality: locality,
               region: region,
@@ -133,25 +123,23 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
               propertyGroup: propertyGroup,
               appendLabel: appendLabel)
     { }
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
+#pragma warning restore CS0618 // Type or member is obsolete
 
-
-    /// <summary>
-    /// Initialisiert ein neues <see cref="AddressProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="street">Straße</param>
-    /// <param name="locality">Ort</param>
-    /// <param name="region">Bundesland</param>
-    /// <param name="postalCode">Postleitzahl</param>
-    /// <param name="country">Land (Staat)</param>
-    /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-    /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    /// <param name="appendLabel">Geben Sie <c>false</c> an, um zu verhindern, dass dem Parameter <see cref="ParameterSection.Label"/> 
-    /// automatisch ein Adressetikett hinzugefügt wird.</param>
-    /// <seealso cref="AppendLabel"/>
+    /// <summary> Initializes a new <see cref="AddressProperty" /> object. </summary>
+    /// <param name="street">The street address.</param>
+    /// <param name="locality">The locality (e.g. city).</param>
+    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="postalCode">The postal code.</param>
+    /// <param name="country">The country name (full name).</param>
+    /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
+    /// <param name="extendedAddress">The extended address (e.g. apartment or suite
+    /// number). (Don't use this parameter!)</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <param name="appendLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
+    /// <seealso cref="AppendLabel" />
     [Obsolete("Don't use this constructor.", false)]
     public AddressProperty(
         string? street,
@@ -172,30 +160,12 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                             country: ReadOnlyCollectionConverter.ToReadOnlyCollection(country),
                             postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
                             extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
-        
+
         if (appendLabel)
         {
             AppendLabel();
         }
     }
-
-    /// <summary>
-    /// Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
-    /// </summary>
-    /// <returns>Die in der Instanz gekapselten Daten, umgewandelt in formatierten Text für ein Adressetikett.</returns>
-    /// <seealso cref="AppendLabel"/>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]    
-    public string ToLabel() => Value.ToLabel();
-
-
-    /// <summary>
-    /// Fügt der Eigenschaft <see cref="ParameterSection.Label"/> ein Adressetikett hinzu, das aus den
-    /// Daten der Instanz generiert wird. Evtl. vorher in der Eigenschaft <see cref="ParameterSection.Label"/> gespeicherte
-    /// Daten werden dabei überschrieben.
-    /// </summary>
-    /// <seealso cref="ToLabel"/>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void AppendLabel() => Parameters.Label = ToLabel();
 
 
     internal AddressProperty(VcfRow vcfRow, VCdVersion version)
@@ -206,6 +176,60 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         Value = string.IsNullOrWhiteSpace(vcfRow.Value) ? new Address()
                                                         : new Address(vcfRow.Value, vcfRow.Info, version);
     }
+
+    /// <summary> The data provided by the <see cref="AddressProperty" />.</summary>
+    public new Address Value
+    {
+        get;
+    }
+
+    /// <summary>
+    /// <inheritdoc />
+    /// </summary>
+    /// <remarks>
+    /// <note type="important">
+    /// <para>
+    /// The behavior of the property has changed since version 5.0.0-beta.2:
+    /// </para>
+    /// <para>
+    /// If only the <see cref="ParameterSection.Label" /> parameter is not equal
+    /// to <c>null</c>, the property returns <c>false</c>.
+    /// </para>
+    /// </note>
+    /// </remarks>
+    public override bool IsEmpty => Value.IsEmpty && Parameters.Label is null;
+
+    /// <summary>Converts the data encapsulated in the instance to formatted text
+    /// for a mailing label.</summary>
+    /// <returns>The data encapsulated in the instance, converted to formatted text
+    /// for a mailing label.</returns>
+    /// <seealso cref="AppendLabel" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public string ToLabel() => Value.ToLabel();
+
+    /// <summary> Adds a mailing label generated from the instance's data to the 
+    /// <see cref="ParameterSection.Label" /> property. Any data previously stored in the 
+    /// <see cref="ParameterSection.Label" /> property will be overwritten.</summary>
+    /// <seealso cref="ToLabel" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void AppendLabel() => Parameters.Label = ToLabel();
+
+    /// <inheritdoc />
+    public override object Clone() => new AddressProperty(this);
+
+    /// <inheritdoc/>
+    IEnumerator<AddressProperty> IEnumerable<AddressProperty>.GetEnumerator()
+    {
+        yield return this;
+    }
+
+    /// <inheritdoc/>
+    IEnumerator IEnumerable.GetEnumerator()
+        => ((IEnumerable<AddressProperty>)this).GetEnumerator();
+
+    /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected override object? GetVCardPropertyValue() => Value;
 
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
@@ -242,46 +266,4 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
             _ = builder.Append(QuotedPrintable.Encode(toEncode, startIndex));
         }
     }
-
-
-    /// <summary>
-    /// Die von der <see cref="AddressProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
-    public new Address Value
-    {
-        get;
-    }
-
-
-    /// <summary>
-    /// <inheritdoc/>
-    /// </summary>
-    /// <remarks>
-    /// <note type="important">
-    /// <para>
-    /// Das Verhalten der Eigenschaft hat sich seit Version 5.0.0-beta.2 geändert:
-    /// </para>
-    /// <para>
-    /// Wenn lediglich der Parameter <see cref="ParameterSection.Label"/>
-    /// ungleich <c>null</c> ist, wird <c>false</c> zurückgegeben.
-    /// </para>
-    /// </note>
-    /// </remarks>
-    public override bool IsEmpty => Value.IsEmpty && Parameters.Label is null;
-
-
-    /// <inheritdoc/>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
-
-
-    IEnumerator<AddressProperty> IEnumerable<AddressProperty>.GetEnumerator()
-    {
-        yield return this;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<AddressProperty>)this).GetEnumerator();
-
-    /// <inheritdoc/>
-    public override object Clone() => new AddressProperty(this);
 }

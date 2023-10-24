@@ -1,134 +1,100 @@
-﻿namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 public sealed partial class ParameterSection
 {
     private enum VCdParam
     {
-        /// <summary>
-        /// <c>CONTEXT</c>: Gibt den Kontext der Daten an, z.B. <c>VCARD</c> oder <c>LDAP</c>. <c>(3)</c>
-        /// </summary>
+        /// <summary> <c>CONTEXT</c>: Indicates the context of the data. <c>(3)</c></summary>
         Context,
 
-        /// <summary>
-        /// <c>TYPE</c>: Klassifiziert eine <see cref="VCardProperty"/> als dienstlich und / oder privat. <c>(2,3,4)</c>
-        /// </summary>
+        /// <summary> <c>TYPE</c>: Indicates, wether a <see cref="VCardProperty" /> is related
+        /// to an individual's work place or to an individual's personal life. <c>(2,3,4)</c></summary>
         PropertyClass,
 
-        /// <summary>
-        /// <c>TYPE</c>: Bestimmt in einer <see cref="RelationProperty"/> (<c>RELATED</c>) die Art der Beziehung zu einer Person. <c>(4)</c>
-        /// </summary>
-        RelationType,
+        /// <summary> <c>TYPE</c>: Specifies the type of relationship with 
+        /// a person. <c>(4)</c></summary>
+        Relation,
 
-        /// <summary>
-        /// <c>TYPE</c>: Beschreibt die Art einer Adresse. <c>(2,3)</c>
-        /// </summary>
+        /// <summary> <c>TYPE</c>: Specifies the type of a postal delivery address. 
+        /// <c>(2,3)</c></summary>
         AddressType,
 
-        /// <summary>
-        /// <c>TYPE</c>: Beschreibt die Art einer E-Mail. <c>(2,3)</c>
-        /// </summary>
+        /// <summary> <c>TYPE</c>: Describes the type of an email. <c>(2,3)</c></summary>
         EmailType,
 
-        /// <summary>
-        /// <c>TYPE</c>: Beschreibt die Art einer Telefonnummer. <c>(2,3,4)</c>
-        /// </summary>
-        TelephoneType,
+        /// <summary><c>TYPE</c>: Describes a telephone number. <c>(2,3,4)</c></summary>
+        PhoneType,
 
-        /// <summary>
-        /// <c>LEVEL</c>: Grad der Sachkenntnis einer Person. (Für vCard-Property <c>EXPERTISE</c>). <c>(4 - RFC 6715)</c>
-        /// </summary>
-        ExpertiseLevel,
+        /// <summary> <c>LEVEL</c>: A person's level of expertise. <c>(4 - RFC&#160;6715)</c></summary>
+        Expertise,
 
-        /// <summary>
-        /// <c>TYPE</c>: Nähere Beschreibung einer Instant-Messenger-Adresse. <c>(3 - RFC 4770)</c>
+        /// <summary><c>TYPE</c>: Description of an instant messenger address. <c>(3 - RFC&#160;4770)</c>
         /// </summary>
         InstantMessengerType,
 
-        /// <summary>
-        /// <c>LEVEL</c>: Grad des Interesses einer Person für eine Sache (Für die vCard-Properties <c>HOBBY</c> und <c>INTEREST</c>.) <c>(4 - RFC 6715)</c>
+        /// <summary> <c>LEVEL</c>: Degree of interest of a person in a thing. <c>(4 - RFC&#160;6715)</c>
         /// </summary>
-        InterestLevel,
+        Interest,
 
-        /// <summary>
-        /// <c>LABEL</c>: Gibt die formatierte Textdarstellung einer Adresse an. <c>([2],[3],4)</c>
+        /// <summary><c>LABEL</c>: Represents the actual text that should be put on the mailing 
+        /// label, when delivering a physical package to the person/object associated with the 
+        /// <see cref="VCard"/>. <c>([2],[3],4)</c>
         /// </summary>
         Label,
 
-        /// <summary>
-        /// <c>PREF</c> oder <c>TYPE=PREF</c>: Drückt die Beliebtheit einer Property aus. <c>(2,3,4)</c>
-        /// </summary>
+        /// <summary><c>PREF</c> or <c>TYPE=PREF</c>: Expresses preference for a property.
+        /// <c>(2,3,4)</c></summary>
         Preference,
 
-        /// <summary>
-        /// <c>CHARSET</c>: Gibt den Zeichensatz an, der für die Property verwendet wurde. <c>(2)</c>
-        /// </summary>
+        /// <summary> <c>CHARSET</c>: Indicates the character set that was used for the
+        /// property. <c>(2)</c></summary>
         CharSet,
 
-        /// <summary>
-        /// <c>ENCODING</c>: Gibt die Encodierung der <see cref="VCardProperty"/> an. <c>(2,3)</c>
-        /// </summary>
+        /// <summary><c>ENCODING</c>: Indicates the encoding of the VCardProperty. <c>(2,3)</c></summary>
         Encoding,
 
-        /// <summary>
-        /// <c>LANGUAGE</c>: Sprache der <see cref="VCardProperty"/>. <c>(2,3,4)</c>
-        /// </summary>
+        /// <summary><c>LANGUAGE</c>: Language of the <see cref="VCardProperty.Value"/> of
+        /// the <see cref="VCardProperty"/>. <c>(2,3,4)</c></summary>
         Language,
 
-        /// <summary>
-        /// <c>VALUE</c>: Gibt an, welchem der vom vCard-Standard vordefinierten Datentypen der Inhalt
-        /// der vCard-Property entspricht. <c>(3,4)</c>
-        /// </summary>
+        /// <summary><c>VALUE</c>: Indicates which of the data types predefined by the vCard
+        /// standard the content of the vCard property corresponds to. <c>(3,4)</c></summary>
         DataType,
 
-        /// <summary>
-        /// <c>VALUE</c>: Gibt an, wo sich der eigentiche Inhalt der Property befindet. <c>(2)</c>
-        /// </summary>
+        /// <summary><c>VALUE</c>: Indicates where the actual content of the property 
+        /// is located. <c>(2)</c></summary>
         ContentLocation,
 
-        /// <summary>
-        /// <c>MEDIATYPE</c>: Gibt bei URIs den MIME-Typ der Daten an, auf den der URI verweist (z.B. <c>text/plain</c>). <c>(4)</c>
-        /// </summary>
+        /// <summary>MEDIATYPE : Specifies the MIME type for the data to which a 
+        /// URI refers. <c>(4)</c></summary>
         MediaType,
 
-        /// <summary>
-        /// <c>GEO</c>: Geografische Position. <c>(4)</c>
-        /// </summary>
+        /// <summary> <c>GEO</c>: Geographical position. <c>(4)</c></summary>
         GeoPosition,
 
-        /// <summary>
-        /// <c>TZ</c>: Zeitzone <c>(4)</c>
-        /// </summary>
+        /// <summary><c>TZ</c>: Time zone <c>(4)</c></summary>
         TimeZone,
 
-        /// <summary>
-        /// <c>CALSCALE</c>: Gibt die Art des Kalenders an, der für Datumsangaben verwendet wird. <c>(4)</c>
-        /// </summary>
+        /// <summary><c>CALSCALE</c>: It is used to define the calendar system in which 
+        /// a date or date-time value is expressed. <c>(4)</c></summary>
         Calendar,
 
-        /// <summary>
-        /// <c>SORT-AS</c>:&#160;<see cref="string"/>s (case-sensitiv!), die die Sortierreihenfolge festlegen. (Maximal so viele, wie Felder der 
-        /// zusammengesetzten Property!) <c>([3],4)</c>
-        /// </summary>
+        /// <summary><c>SORT-AS</c>: Determines the sort order. <c>([3],4)</c></summary>
         SortAs,
 
-        /// <summary>
-        /// Nicht standardisierte Attribute. (2,3,4)
-        /// </summary>
+        /// <summary>Non-standard attributes. <c>(2,3,4)</c></summary>
         NonStandard,
 
-        /// <summary>
-        /// <c>PID</c>: Property-ID zur Identifizierung einer bestimmten vCard-Property unter verschiedenen Instanzen mit demselben Bezeichner. <c>(4)</c>
-        /// </summary>
+        /// <summary> <c>PID</c>: <see cref="PropertyID" />s to identify the 
+        /// <see cref="VCardProperty" />. <c>(4)</c></summary>
         PropertyIDs,
 
-        /// <summary>
-        /// <c>ALTID</c>: Ein gemeinsamer Bezeichner, der zu erkennen gibt, dass mehrere Instanzen derselben Property dasselbe 
-        /// darstellen (z.B. in unterschiedlichen Sprachen). <c>(4)</c>
-        /// </summary>
+        /// <summary><c>ALTID</c>: A common identifier that indicates, that several instances of 
+        /// the same property represent the same (e.g. in different languages). <c>(4)</c></summary>
         AltID,
 
-        /// <summary>
-        /// <c>INDEX</c>: 1-basierter Index einer Property, wenn mehrere Instanzen derselben Property möglich sind. <c>(4 - RFC 6715)</c>
+        /// <summary><c>INDEX</c>: 1-based index of a property if several instances of the same 
+        /// property are allowed. <c>(4 - RFC&#160;6715)</c>
         /// </summary>
         Index
     }

@@ -1,6 +1,7 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -10,15 +11,11 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard
 {
-    /// <summary>
-    /// Initialisiert ein neues <see cref="VCard"/>-Objekt.
-    /// </summary>
+    /// <summary>Initializes a new <see cref="VCard" /> object.</summary>
     public VCard() { }
 
-    /// <summary>
-    /// Copy ctor
-    /// </summary>
-    /// <param name="vCard">The vCard to clone.</param>
+    /// <summary>Copy ctor.</summary>
+    /// <param name="vCard">The <see cref="VCard"/> instance to clone.</param>
     private VCard(VCard vCard)
     {
         Version = vCard.Version;
@@ -69,14 +66,11 @@ public sealed partial class VCard
     }
 
 
-    /// <summary>
-    /// Initialisiert ein <see cref="VCard"/>-Objekt aus einer Queue von <see cref="VcfRow"/>-Objekten.
-    /// </summary>
-    /// <param name="queue">Eine Queue von <see cref="VcfRow"/>-Objekten, deren Value-Property
-    /// den rohen Textinhalt der vCard-Zeile darstellt.</param>
-    /// <param name="info">Ein <see cref="VcfDeserializationInfo"/>-Objekt, das Daten für den Deserialisierungsvorgang zur Verfügung stellt.</param>
-    /// <param name="versionHint">Ein Hinweis, welche vCard-Version angenommen wird. (Eingebettete
-    /// vCards haben manchmal keinen "VERSION:"-Tag.)</param>
+    /// <summary>Initializes a <see cref="VCard" /> object from a queue of <see cref="VcfRow"
+    /// /> objects.</summary>
+    /// <param name="queue" />
+    /// <param name="info" />
+    /// <param name="versionHint" />
     private VCard(Queue<VcfRow> queue, VcfDeserializationInfo info, VCdVersion versionHint)
     {
         Debug.Assert(queue != null);
@@ -103,7 +97,7 @@ public sealed partial class VCard
                     Kind = new KindProperty(vcfRow);
                     break;
                 case PropKeys.TEL:
-                    PhoneNumbers = new TextProperty(vcfRow, this.Version).GetAssignment(PhoneNumbers);
+                    Phones = new TextProperty(vcfRow, this.Version).GetAssignment(Phones);
                     break;
                 case PropKeys.EMAIL:
                     this.EmailAddresses = new TextProperty(vcfRow, this.Version).GetAssignment(EmailAddresses);
@@ -252,7 +246,7 @@ public sealed partial class VCard
                     else
                     {
                         GenderViews ??= vcfRow.Value.Contains('1', StringComparison.Ordinal)
-                                            ? new GenderProperty(Models.Enums.Gender.Female) 
+                                            ? new GenderProperty(Models.Enums.Gender.Female)
                                             : new GenderProperty(Models.Enums.Gender.Male);
                     }
                     break;
@@ -318,10 +312,10 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (Relations?.All(x => x!.Parameters.RelationType != RelationTypes.Spouse) ?? true)
+                    else if (Relations?.All(x => x!.Parameters.Relation != RelationTypes.Spouse) ?? true)
                     {
                         vcfRow.Parameters.DataType = VCdDataType.Text; // führt dazu, dass eine RelationTextProperty erzeugt wird
-                        vcfRow.Parameters.RelationType = RelationTypes.Spouse;
+                        vcfRow.Parameters.Relation = RelationTypes.Spouse;
 
                         Relations = RelationProperty.Parse(vcfRow, this.Version).GetAssignment(Relations);
                     }
@@ -334,10 +328,10 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (Relations?.All(x => !x!.Parameters.RelationType.IsSet(RelationTypes.Agent)) ?? true)
+                    else if (Relations?.All(x => !x!.Parameters.Relation.IsSet(RelationTypes.Agent)) ?? true)
                     {
                         vcfRow.Parameters.DataType ??= VCdDataType.Text;
-                        vcfRow.Parameters.RelationType = RelationTypes.Agent;
+                        vcfRow.Parameters.Relation = RelationTypes.Agent;
 
                         Relations = RelationProperty.Parse(vcfRow, this.Version).GetAssignment(Relations);
                     }
@@ -354,13 +348,16 @@ public sealed partial class VCard
                         if (vcfRow.Value.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                         {
                             var nested = VCard.ParseNestedVcard(vcfRow.Value, info, this.Version);
-                            Relations = RelationProperty.FromVCard(nested, RelationTypes.Agent, vcfRow.Group)
-                                                        .GetAssignment(Relations);
+                            Relations = nested is null ? RelationProperty.FromText(vcfRow.Value, RelationTypes.Agent, vcfRow.Group)
+                                                       // use the ctor directly because nested can't be a circular
+                                                       // reference and therefore don't neeed to be cloned:
+                                                       : new RelationVCardProperty(nested, RelationTypes.Agent, vcfRow.Group)
+                                        .GetAssignment(Relations);
                         }
                         else
                         {
                             vcfRow.Parameters.DataType ??= VCdDataType.Text;
-                            vcfRow.Parameters.RelationType = RelationTypes.Agent;
+                            vcfRow.Parameters.Relation = RelationTypes.Agent;
 
                             Relations = RelationProperty.Parse(vcfRow, this.Version)
                                                         .GetAssignment(Relations);
@@ -420,7 +417,7 @@ public sealed partial class VCard
                     OrgDirectories = new TextProperty(vcfRow, this.Version).GetAssignment(OrgDirectories);
                     break;
                 default:
-                    NonStandardProperties = new NonStandardProperty(vcfRow).GetAssignment(NonStandardProperties);
+                    NonStandard = new NonStandardProperty(vcfRow).GetAssignment(NonStandard);
                     break;
             };//switch
 
@@ -431,11 +428,11 @@ public sealed partial class VCard
 
     private void AddCopyToPhoneNumbers(TextProperty textProp, ParameterSection para)
     {
-        if ((para.TelephoneType.IsSet(TelTypes.Voice) ||
-                                        para.TelephoneType.IsSet(TelTypes.Video)) &&
-                                        (!PhoneNumbers?.Any(x => x?.Value == textProp.Value) ?? true))
+        if ((para.PhoneType.IsSet(PhoneTypes.Voice) ||
+                                        para.PhoneType.IsSet(PhoneTypes.Video)) &&
+                                        (!Phones?.Any(x => x?.Value == textProp.Value) ?? true))
         {
-            PhoneNumbers = textProp.GetAssignment(PhoneNumbers);
+            Phones = textProp.GetAssignment(Phones);
         }
     }
 

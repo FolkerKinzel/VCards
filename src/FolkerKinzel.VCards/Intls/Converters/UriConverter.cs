@@ -1,28 +1,32 @@
-﻿using System.Net;
+using System.Net;
 using FolkerKinzel.MimeTypes;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class UriConverter
 {
-    internal static Uri? ToAbsoluteUri(string? value)
+    internal static bool TryConvertToAbsoluteUri(string? value, [NotNullWhen(true)] out Uri? uri)
     {
-        if(value == null)
+        uri = null;
+
+        if(string.IsNullOrWhiteSpace(value))
         {
-            return null;
+            return false;
         }
 
-        if(Uri.TryCreate(value, UriKind.Absolute, out var uri))
+        value = value.Trim();
+
+        if(Uri.TryCreate(value, UriKind.Absolute, out uri))
         {
-            return uri;
+            return true;
         }
 
         if(value.StartsWith("http"))
         {
-            return null;
+            return false;
         }
-        value = value.ReplaceWhiteSpaceWith(ReadOnlySpan<char>.Empty);
-        return ToAbsoluteUri("http://" + value);
+        //value = value.ReplaceWhiteSpaceWith(ReadOnlySpan<char>.Empty);
+        return TryConvertToAbsoluteUri("http://" + value, out uri);
     }
 
     internal static bool IsContentId(this Uri value)
@@ -32,7 +36,6 @@ internal static class UriConverter
 
         return value.Scheme.StartsWith("cid", StringComparison.OrdinalIgnoreCase);
     }
-
 
     internal static string GetFileTypeExtensionFromUri(Uri? uri)
     {

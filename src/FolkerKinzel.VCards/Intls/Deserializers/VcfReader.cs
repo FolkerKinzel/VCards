@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
@@ -31,7 +31,6 @@ internal class VcfReader : IEnumerable<VcfRow>
 
     public bool EOF { get; private set; }
 
-
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     private bool HandleException(Exception e)
@@ -46,7 +45,7 @@ internal class VcfReader : IEnumerable<VcfRow>
 
     private bool ReadNextLine([NotNullWhen(true)] out string? s)
     {
-        // Die TextReader.ReadLine()-Methode normalisiert die Zeilenwechselzeichen!
+        // The TextReader.ReadLine() method normalizes the line breaks.
         try
         {
             s = _reader.ReadLine();
@@ -74,7 +73,7 @@ internal class VcfReader : IEnumerable<VcfRow>
     {
         string? s;
 
-        do //findet den Anfang der vCard
+        do //finds the begin of the vCard
         {
             if (!ReadNextLine(out s))
             {
@@ -102,7 +101,8 @@ internal class VcfReader : IEnumerable<VcfRow>
             yield break;
         }
 
-        _ = _info.Builder.Clear(); // nötig, wenn die vcf-Datei mehrere vCards enthält
+        // needed if the VCF file contains more than one vCard
+        _info.Reset(); 
 
         bool isFirstLine = true;
         bool isVcard_2_1 = _versionHint == VCdVersion.V2_1;
@@ -123,8 +123,9 @@ internal class VcfReader : IEnumerable<VcfRow>
                 isVcard_2_1 = GetIsVcard_2_1(s);
             }
 
-            if (s.Length != 0 && char.IsWhiteSpace(s[0])) //vCard-Wrapping (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
+            if (s.Length != 0 && char.IsWhiteSpace(s[0])) 
             {
+                //vCard-Wrapping (This can't be "BEGIN:VCARD" or "END:VCARD".)
                 Debug.WriteLine("  == vCard Line-Wrapping detected ==");
 
                 int insertPosition = _info.Builder.Length;
@@ -132,7 +133,8 @@ internal class VcfReader : IEnumerable<VcfRow>
 
                 if (!isVcard_2_1)
                 {
-                    _ = _info.Builder.Remove(insertPosition, 1); //automatisch eingefügtes Leerzeichen wieder entfernen
+                    //automatisch eingefügtes Leerzeichen wieder entfernen
+                    _ = _info.Builder.Remove(insertPosition, 1); 
                 }
                 continue;
             }
@@ -146,9 +148,9 @@ internal class VcfReader : IEnumerable<VcfRow>
                     continue;
                 }
 
-
-                if (tmpRow.Parameters.Encoding == ValueEncoding.QuotedPrintable && tmp[tmp.Length - 1] == '=') // QuotedPrintable Soft-Linebreak (Dies kann kein "BEGIN:VCARD" und kein "END:VCARD" sein.)
+                if (tmpRow.Parameters.Encoding == ValueEncoding.QuotedPrintable && tmp[tmp.Length - 1] == '=')
                 {
+                    // QuotedPrintable Soft-Linebreak (This can't be "BEGIN:VCARD" or "END:VCARD".)
                     Debug.WriteLine("  == QuotedPrintable Soft-Linebreak detected ==");
 
                     _ = _info.Builder.Append(tmp);
@@ -205,7 +207,7 @@ internal class VcfReader : IEnumerable<VcfRow>
                 {
                     Debug.WriteLine("  == Embedded VCARD 2.1 vCard detected ==");
 
-                    // Achtung: Version 2.1. unterstützt solche eingebetteten VCards in der AGENT-Property:
+                    // Achtung: Version 2.1. supports such embedded vCards in the AGENT property:
                     //
                     // AGENT:
                     // BEGIN:VCARD
@@ -264,8 +266,6 @@ internal class VcfReader : IEnumerable<VcfRow>
         yield break;
     }
 
-
-
     private static bool GetIsVcard_2_1(string s)
     {
         if (s.StartsWith("VERSION", StringComparison.OrdinalIgnoreCase) && !s.Contains("2.1", StringComparison.Ordinal))
@@ -277,14 +277,12 @@ internal class VcfReader : IEnumerable<VcfRow>
         return true;
     }
 
-
     private bool ConcatQuotedPrintableSoftLineBreak(string? s)
     {
         Debug.Assert(s is not null);
 
-        // QuotedPrintableConverter arbeitet plattformunabhängig mit 
+        // QuotedPrintableConverter works platform-independent with 
         // Environment.NewLine
-
         _ = _info.Builder.AppendLine().Append(s);
 
         while (s.Length == 0 || s[s.Length - 1] == '=')
@@ -300,11 +298,6 @@ internal class VcfReader : IEnumerable<VcfRow>
             {
                 continue;
             }
-
-            //if (_vCardEnd.IsMatch(s))
-            //{
-            //    return false;
-            //}
 
             _ = _info.Builder.AppendLine().Append(s);
         }
@@ -327,17 +320,10 @@ internal class VcfReader : IEnumerable<VcfRow>
             }
 
             Debug.WriteLine(s);
-
-            //if (_vCardEnd.IsMatch(s))
-            //{
-            //    return false;
-            //}
         }
 
         return true;
     }
-
- 
 
     private bool ConcatNested_2_1Vcard(string? s)
     {
@@ -362,12 +348,12 @@ internal class VcfReader : IEnumerable<VcfRow>
             _ = _info.Builder.Append(VCard.NewLine).Append(s);
         }
         while (!s.StartsWith(END_VCARD, StringComparison.OrdinalIgnoreCase));
+        
         // wenn die eingebettete vCard eine weitere eingebettete vCard enthält,
         // scheitert das Parsen
 
         return true;
     }
-
 
     private VcfRow? CreateVcfRow(out string toParse)
     {
@@ -377,5 +363,4 @@ internal class VcfReader : IEnumerable<VcfRow>
 
         return vcfRow;
     }
-
 }

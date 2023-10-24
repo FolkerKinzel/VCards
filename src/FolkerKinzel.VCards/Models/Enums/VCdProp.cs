@@ -1,252 +1,183 @@
-﻿namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>
-/// Benannte Konstanten, um auf Eigenschaften eines <see cref="VCard"/>-Objekts zuzugreifen.
-/// </summary>
+/// <summary>Named constants to access the properties of a <see cref="VCard" />
+/// object.</summary>
 public enum VCdProp
 {
-    /// <summary>
-    /// <c>PROFILE</c>: Legt fest, dass die VCF-Datei eine vCard ist. <c>(3)</c>
-    /// </summary>
+    /// <summary> <c>PROFILE</c>: States that the vCard is a vCard. <c>(3)</c></summary>
     Profile,
 
-    /// <summary>
-    /// <c>KIND</c>: Art des Objekts, das die vCard beschreibt. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>KIND</c>: Defines the type of entity, that this vCard represents.
+    /// <c>(4)</c></summary>
     Kind,
 
-    /// <summary>
-    /// <c>REV</c>: Zeitstempel der letzten Aktualisierung der vCard. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>REV</c>: A timestamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
     TimeStamp,
 
-    /// <summary>
-    /// <c>UID</c>: UUID, die eine persistente, global eindeutige Kennung des verbundenen Objekts darstellt. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
+    /// unique identifier, associated with the object. <c>(2,3,4)</c></summary>
     UniqueIdentifier,
 
-    /// <summary>
-    /// <c>CATEGORIES</c>: Liste von Eigenschaften, die das Objekt der vCard beschreiben. <c>(3,4)</c>
-    /// </summary>
+    /// <summary> <c>CATEGORIES</c>: Lists of "tags" that can be used to describe the
+    /// object represented by this vCard. <c>(3,4)</c></summary>
     Categories,
 
-    /// <summary>
-    /// <c>TZ</c>: Zeitzone(n) des vCard Objekts. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>TZ</c>: The time zone(s) of the vCard object. <c>(2,3,4)</c></summary>
     TimeZones,
 
-    /// <summary>
-    /// <c>GEO</c>: Längen- und Breitengrad(e). <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>GEO</c>: Specifies latitudes and longitudes. <c>(2,3,4)</c></summary>
     GeoCoordinates,
 
-    /// <summary>
-    /// <c>CLASS</c>: Sensibilität der in der vCard enthaltenen Daten. <c>(3)</c>
-    /// </summary>
+    /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
+    /// vCard. <c>(3)</c></summary>
     Access,
 
-    /// <summary>
-    /// <c>SOURCE</c>: URLs, die verwendet werden können, um die neueste Version dieser vCard zu 
-    /// erhalten. <c>(3,4)</c>
-    /// </summary>
+    /// <summary> <c>SOURCE</c>: URLs that can be used to get the latest version of
+    /// this vCard.<c>(3,4)</c></summary>
     Sources,
 
-    /// <summary>
-    /// <c>NAME</c>: 
-    /// Anzeigbarer Name der <see cref="Sources"/>-Eigenschaft. <c>(3)</c>
-    /// </summary>
+    /// <summary> <c>NAME</c>: Provides a textual representation of the 
+    /// <see cref="Sources" /> property. <c>(3)</c></summary>
     DirectoryName,
 
-
-    /// <summary>
-    /// <c>MAILER</c>: Art des genutzten E-Mail-Programms. <c>(2,3)</c>
-    /// </summary>
+    /// <summary> <c>MAILER</c>: Type of email program used. <c>(2,3)</c></summary>
     Mailer,
 
-    /// <summary>
-    /// <c>PRODID</c>: Kennung für das Produkt, mit dem die VCF-Datei erstellt wurde. <c>(3,4)</c>
-    /// </summary>
+    /// <summary> <c>PRODID</c>: The identifier for the product that created the vCard
+    /// object. <c>(3,4)</c></summary>
     ProdID,
 
-    /// <summary>
-    /// <c>FN</c>: Formatierte Zeichenfolge mit dem/den vollständigen Namen des vCard-Objekts. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>FN</c>: The formatted name string associated with the vCard object.
+    /// <c>(2,3,4)</c></summary>
     DisplayNames,
 
-    /// <summary>
-    /// <c>N</c>: Name der Person oder Organisation, die die vCard repräsentiert. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>N</c>: A structured representation of the name of the person, place
+    /// or thing associated with the vCard object. <c>(2,3,4)</c></summary>
     NameViews,
 
-    /// <summary>
-    /// <c>GENDER</c>: Geschlecht <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>GENDER</c>: Defines the person's gender. <c>(4)</c></summary>
     GenderViews,
 
-    /// <summary>
-    /// <c>NICKNAME</c>: Ein oder mehrere Alternativnamen für das Objekt, das von der vCard repräsentiert wird. <c>(3,4)</c>
-    /// </summary>
+    /// <summary> <c>NICKNAME</c>: One or more descriptive/familiar names for the object
+    /// represented by this vCard. <c>(3,4)</c></summary>
     NickNames,
 
-    /// <summary>
-    /// <c>TITLE</c>: Angabe der Stellenbezeichnung, funktionellen Stellung oder Funktion der mit dem vCard-Objekt 
-    /// verbundenen Person innerhalb einer Organisation, z.B. “Vizepräsident”. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>TITLE</c>: Specifies the job title, functional position or function
+    /// of the individual, associated with the vCard object, within an organization.
+    /// <c>(2,3,4)</c></summary>
     Titles,
 
-    /// <summary>
-    /// <c>ROLE</c>: Rolle, Beruf oder Wirtschaftskategorie des vCard-Objekts innerhalb 
-    /// einer Organisation, z.B. "rechte Hand des Chefs". <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>ROLE</c>: The role, occupation, or business category of the vCard
+    /// object within an organization. <c>(2,3,4)</c></summary>
     Roles,
 
-    /// <summary>
-    /// <c>ORG</c>: Name und gegebenenfalls Einheit(en) der Organisation, der das vCard-Objekt zugeordnet ist. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>ORG</c>: The name and optionally the unit(s) of the organization
+    /// associated with the vCard object. <c>(2,3,4)</c></summary>
     Organizations,
 
-    /// <summary>
-    /// <c>BDAY</c>: Geburtstag <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>BDAY</c>: Date of birth of the individual associated with the vCard.
+    /// <c>(2,3,4)</c></summary>
     BirthDayViews,
 
-    /// <summary>
-    /// <c>BIRTHPLACE</c>: Geburtsort <c>(RFC 6474)</c>
-    /// </summary>
+    /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
+    /// RFC 6474)</c></summary>
     BirthPlaceViews,
 
-    /// <summary>
-    /// <c>ANNIVERSARY</c>: Jahrestag (gemeint ist i. A. der Hochzeitstag) der Person. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
     AnniversaryViews,
 
-    /// <summary>
-    /// <c>DEATHDATE</c>: Todestag <c>(RFC 6474)</c>
-    /// </summary>
+    /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
     DeathDateViews,
 
-    /// <summary>
-    /// <c>DEATHPLACE</c>: Sterbeort <c>(RFC 6474)</c>
-    /// </summary>
+    /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
+    /// RFC 6474)</c></summary>
     DeathPlaceViews,
 
-    /// <summary>
-    /// <c>ADR</c>: Adressen <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>ADR</c>: A structured representation of the physical delivery address
+    /// for the vCard object. <c>(2,3,4)</c></summary>
     Addresses,
 
-    /// <summary>
-    /// <c>TEL</c>: Telefonnummern <c>(2,3,4)</c>
-    /// </summary>
-    PhoneNumbers,
+    /// <summary> <c>TEL</c>: Canonical number strings for a telephone numbers for telephony
+    /// communication with the vCard object. <c>(2,3,4)</c></summary>
+    Phones,
 
-    /// <summary>
-    /// <c>EMAIL</c>: E-Mail-Adressen  <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>EMAIL</c>: The addresses for electronic mail communication with
+    /// the vCard object. <c>(2,3,4)</c></summary>
     EmailAddresses,
 
-    /// <summary>
-    /// <c>URL</c>: URLs, die die Person repräsentieren (Webseiten, Blogs, Social-Media-Seiten). <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
+    /// some way. <c>(2,3,4)</c></summary>
     URLs,
 
-    /// <summary>
-    /// <c>IMPP</c>: Liste von Instant-Messenger-Handles. <c>(3,4)</c>
-    /// </summary>
+    /// <summary> <c>IMPP</c>: List of instant messenger handles. <c>(3,4)</c></summary>
     InstantMessengerHandles,
 
-    /// <summary>
-    /// <c>KEY</c>: Öffentliche Schlüssel, die dem vCard-Objekt zugeordnet sind. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>KEY</c>: Public encryption keys associated with the vCard object.
+    /// <c>(2,3,4)</c></summary>
     Keys,
 
-    /// <summary>
-    /// <c>CALURI</c>: URLs zum Kalender der Person. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4)</c></summary>
     CalendarAddresses,
 
-    /// <summary>
-    /// <c>CALADRURI</c>: URLs für das Senden einer Terminanforderung an die Person oder Organisation. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
+    /// the person's calendar. <c>(4)</c></summary>
     CalendarUserAddresses,
 
-    /// <summary>
-    /// <c>FBURL</c>: URLs, die beschreiben, ob auf dem Kalender der Person "frei" oder "besetzt" angezeigt wird. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
+    /// "busy" on their calendar. <c>(4)</c></summary>
     FreeOrBusyUrls,
 
-    /// <summary>
-    /// <c>RELATED</c>: Andere Einheiten, zu der die Person Verbindung hat. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>RELATED</c>: Other entities that the person is related to. <c>(4)</c></summary>
     Relations,
 
-    /// <summary>
-    /// <c>MEMBER</c>: Definiert das Objekt, das die vCard repräsentiert, als Teil einer Gruppe. 
-    /// Um diese Eigenschaft verwenden zu können, muss die <see cref="VCard.Kind"/>-Eigenschaft auf
-    /// <see cref="VCdKind.Group"/> gesetzt werden. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>MEMBER</c>: Defines a member that is part of the group that this 
+    /// vCard represents. The <see cref="VCard.Kind" /> property must be set to <see 
+    /// cref="VCdKind.Group" /> in order to use this property. <c>(4)</c></summary>
     Members,
 
-    /// <summary>
-    /// <c>ORG-DIRECTORY</c>: URIs, die die Arbeitsplätze der Person repräsentieren. Damit können Informationen 
-    /// über Mitarbeiter der Person eingeholt werden. <c>(RFC 6715)</c>
-    /// </summary>
+    /// <summary> <c>ORG-DIRECTORY</c>: A URI representing the person's work place,
+    /// which can be used to look up information on the person's co-workers. <c>(RFC
+    /// 6715)</c></summary>
     OrgDirectories,
 
-    /// <summary>
-    /// <c>EXPERTISE</c>: Fachgebiete, über die die Person Kenntnisse hat. <c>(RFC 6715)</c>
-    /// </summary>
+    /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has
+    /// knowledge of. <c>(RFC 6715)</c></summary>
     Expertises,
 
-    /// <summary>
-    /// <c>INTEREST</c>: Freizeitbeschäftigungen, für die sich die Person interessiert, an denen sie 
-    /// aber nicht zwangsläufig teilnimmt. <c>(RFC 6715)</c>
-    /// </summary>
+    /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
+    /// in, but does not necessarily take part in. <c>(4 - RFC 6715)</c></summary>
     Interests,
 
-    /// <summary>
-    /// <c>HOBBY</c>: Freizeitbeschäftigungen, denen die Person nachgeht. <c>(RFC 6715)</c>
-    /// </summary>
+    /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
+    /// in. <c>(4 - RFC 6715)</c></summary>
     Hobbies,
 
-    /// <summary>
-    /// <c>LANG</c>: Sprachen, die die Person spricht. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
     Languages,
 
-    /// <summary>
-    /// <c>NOTE</c>: Kommentar(e) <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>NOTE</c>: Specifies supplemental informations or comments, that
+    /// are associated with the vCard. <c>(2,3,4)</c></summary>
     Notes,
 
-    /// <summary>
-    /// <c>XML</c>: Beliebige zusätzliche XML-Daten. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
     XmlProperties,
 
-    /// <summary>
-    /// <c>LOGO</c>: Logo(s) der Organisation, mit der die Person in Beziehung steht, der die vCard gehört. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
+    /// is associated with the individual to which the vCard belongs. <c>(2,3,4)</c></summary>
     Logos,
 
-    /// <summary>
-    /// <c>PHOTO</c>: Bild(er) oder Fotografie(n) der mit der vCard verbundenen Person. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>PHOTO</c>: Image(s) or photograph(s) of the individual associated
+    /// with the vCard. <c>(2,3,4)</c></summary>
     Photos,
 
-    /// <summary>
-    /// <c>SOUND</c>: Demonstriert die Aussprache der <see cref="VCard.DisplayNames"/>-Eigenschaft des <see cref="VCard"/>-Objekts. <c>(2,3,4)</c>
-    /// </summary>
+    /// <summary> <c>SOUND</c>: Specifies the pronunciation of the <see cref="VCard.DisplayNames"
+    /// /> property of the <see cref="VCard" />-object. <c>(2,3,4)</c></summary>
     Sounds,
 
-    /// <summary>
-    /// <c>CLIENTPIDMAP</c>: Mappings für <see cref="PropertyID"/>s. Wird verwendet,
-    /// um verschiedene Bearbeitungsstände derselben vCard zu synchronisieren. <c>(4)</c>
-    /// </summary>
+    /// <summary> <c>CLIENTPIDMAP</c>: Mappings for <see cref="PropertyID" />s. It is
+    /// used for synchronizing different revisions of the same vCard. <c>(4)</c></summary>
     PropertyIDMappings,
 
-    /// <summary>
-    /// vCard-Properties, die nicht dem Standard entsprechen.
-    /// </summary>
-    NonStandardProperties
+    /// <summary>vCard-Properties that don't belong to the standard.</summary>
+    NonStandard
 }

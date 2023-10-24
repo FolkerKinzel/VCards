@@ -1,6 +1,5 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -11,23 +10,22 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
     private readonly List<string> _stringCollectionList = new();
     private readonly List<Action<ParameterSerializer2_1>> _actionList = new(2);
 
-    private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes =
-    serializer => PropertyClassTypesCollector.CollectValueStrings(
-            serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
+    private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes = static serializer
+        => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
+                                      serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer2_1> _collectTelTypes =
-    serializer =>
+    private readonly Action<ParameterSerializer2_1> _collectPhoneTypes = static serializer =>
     {
-        const TelTypes DEFINED_TELTYPES = TelTypes.Voice | TelTypes.Fax | TelTypes.Msg | TelTypes.Cell |
-        TelTypes.Pager | TelTypes.BBS | TelTypes.Modem | TelTypes.Car | TelTypes.ISDN | TelTypes.Video;
+        const PhoneTypes DEFINED_PHONE_TYPES = PhoneTypes.Voice | PhoneTypes.Fax | PhoneTypes.Msg | PhoneTypes.Cell |
+        PhoneTypes.Pager | PhoneTypes.BBS | PhoneTypes.Modem | PhoneTypes.Car | PhoneTypes.ISDN | PhoneTypes.Video;
 
-        TelTypesCollector.CollectValueStrings(
-                serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
+        EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
+                                   serializer._stringCollectionList);
     };
 
-    private readonly Action<ParameterSerializer2_1> _collectAddressTypes =
-    serializer => AddressTypesCollector.CollectValueStrings(
-            serializer.ParaSection.AddressType, serializer._stringCollectionList);
+    private readonly Action<ParameterSerializer2_1> _collectAddressTypes = static serializer 
+        => EnumValueCollector.Collect(serializer.ParaSection.AddressType,
+                                      serializer._stringCollectionList);
 
     public ParameterSerializer2_1(VcfOptions options) : base(options) { }
 
@@ -80,7 +78,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
 
     protected override void BuildGeoPara()
     {
-        // keine Parameter
+        // none parameters
     }
 
     protected override void BuildKeyPara()
@@ -152,7 +150,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
 
     protected override void BuildRevPara()
     {
-        // keine Parameter
+        // none parameters
     }
 
     protected override void BuildRolePara()
@@ -181,11 +179,11 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
     //    AppendContext();
     //}
 
-    protected override void BuildTelPara(bool isPref)
+    protected override void BuildPhonesPara(bool isPref)
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
-        _actionList.Add(_collectTelTypes);
+        _actionList.Add(_collectPhoneTypes);
 
 
         AppendType(isPref);
@@ -212,7 +210,7 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
-        _actionList.Add(_collectTelTypes);
+        _actionList.Add(_collectPhoneTypes);
 
 
         AppendType(isPref);
@@ -339,7 +337,6 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         }
     }
 
-
     private void AppendLanguage()
     {
         string? lang = ParaSection.Language;
@@ -349,7 +346,6 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
             AppendParameter(ParameterSection.ParameterKey.LANGUAGE, lang);
         }
     }
-
 
     private void AppendType(bool isPref)
     {
@@ -370,11 +366,13 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
             AppendV2_1Type(ParameterSection.TypeValue.PREF);
         }
 
-        if (Options.IsSet(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandardParameters != null)
+        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
         {
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandardParameters)
+            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) && !string.IsNullOrWhiteSpace(kvp.Value))
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, 
+                                                            ParameterSection.ParameterKey.TYPE) 
+                    && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
                     AppendV2_1Type(kvp.Value);
                 }
@@ -433,8 +431,5 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         }
     }
 
-
     #endregion
-
-
 }

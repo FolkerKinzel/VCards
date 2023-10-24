@@ -1,13 +1,15 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Resources;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Repräsentiert den standardisierten Namen einer Zeitzone.
-/// </summary>
+/// <summary>Represents the standardized name of a time zone.</summary>
+/// <seealso cref="TimeZoneProperty"/>
+/// <seealso cref="VCard.TimeZones"/>
+/// <seealso cref="ParameterSection.TimeZone"/>
 public sealed partial class TimeZoneID
 {
     private enum TzError { None, Null, Empty }
@@ -16,14 +18,16 @@ public sealed partial class TimeZoneID
 
     private TimeZoneID(string timeZoneID) => Value = timeZoneID.Trim();
 
-    /// <summary>
-    /// Parst einen <see cref="string"/> als <see cref="TimeZoneID"/>-Objekt.
+    /// <summary> Parses a <see cref="string" /> as <see cref="TimeZoneID" /> object.
     /// </summary>
-    /// <param name="value">Bezeichner der Zeitzone. Es sollte sich um einen Bezeichner aus der 
-    /// "IANA Time Zone Database" handeln. (Siehe https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
-    /// <exception cref="ArgumentNullException"><paramref name="value"/> ist <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="value"/> ist ein leerer <see cref="string"/> oder 
-    /// enthält nur Leerraum.</exception>
+    /// <param name="value">Identifier of the time zone. It should be an identifier
+    /// from the "IANA Time Zone Database".
+    /// (See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
+    /// <returns>The parsed <see cref="TimeZoneID"/>.</returns>
+    /// <exception cref="ArgumentNullException"> <paramref name="value" /> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="ArgumentException"> <paramref name="value" /> is an empty
+    /// <see cref="string" /> or consists only of white space characters.</exception>
     public static TimeZoneID Parse(string value)
     {
         if (!Validate(value, out TzError error))
@@ -39,14 +43,13 @@ public sealed partial class TimeZoneID
         return new TimeZoneID(value);
     }
 
-    /// <summary>
-    /// Versucht, einen <see cref="string"/> als <see cref="TimeZoneID"/>-Objekt zu parsen.
-    /// </summary>
-    /// <param name="value">Bezeichner der Zeitzone. Es sollte sich um einen Bezeichner aus der 
-    /// "IANA Time Zone Database" handeln. (Siehe https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
-    /// <param name="timeZoneID">Wenn das Parsen erfolgreich war, enthält der Parameter ein neues <see cref="TimeZoneID"/>-Objekt.
-    /// Der Parameter wird uninitialisiert übergeben.</param>
-    /// <returns><c>true</c>, wenn deas Parsen erfolgreich war, andernfalls <c>false</c>.</returns>
+    /// <summary> Tries to parse a <see cref="string" /> as <see cref="TimeZoneID" /> object. </summary>
+    /// <param name="value">Identifier of the time zone. It should be an identifier
+    /// from the "IANA Time Zone Database". (See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    /// .)</param>
+    /// <param name="timeZoneID">If parsing was successful, the parameter contains a new 
+    /// <see cref="TimeZoneID" /> object. The parameter is passed uninitialized.</param>
+    /// <returns> <c>true</c> if parsing was successful, otherwise <c>false</c>.</returns>
     public static bool TryParse(string? value, [NotNullWhen(true)] out TimeZoneID? timeZoneID)
     {
         if (Validate(value, out _))
@@ -77,25 +80,19 @@ public sealed partial class TimeZoneID
         return true;
     }
 
-
-    /// <summary>
-    /// Standardisierter Name der Zeitzone.
-    /// </summary>
-    /// <remarks>
-    /// Das ist der <see cref="string"/>, mit dem das <see cref="TimeZoneID"/>-Objekt initialisiert wurde.
-    /// </remarks>
+    /// <summary>Standardized name of the time zone.</summary>
+    /// <value> That's the String with which the <see cref="TimeZoneID"
+    /// /> object was initialized.</value>
     public string Value { get; }
 
-
-    /// <summary>
-    /// Versucht, einen entsprechenden UTC-Offset für das <see cref="TimeZoneID"/>-Objekt zu finden.
-    /// </summary>
-    /// <param name="utcOffset">Enthält nach erfolgreicher Beendigung der Methode den UTC-Offset. Das Argument
-    /// wird uninitialisiert übergeben.</param>
-    /// <param name="converter">Ein Objekt, das <see cref="ITimeZoneIDConverter"/> implementiert, um IANA time zone IDs
-    /// in UTC-Offsets umzuwandeln, oder <c>null</c>.</param>
-    /// <returns><c>true</c>, wenn ein geeigneter UTC-Offset gefunden werden konnte, andernfalls <c>false</c>.</returns>
-    /// <seealso cref="ITimeZoneIDConverter"/>
+    /// <summary>Tries to find a corresponding UTC offset for the <see cref="TimeZoneID" />
+    /// object.</summary>
+    /// <param name="utcOffset">Contains the UTC offset after the method has been successfully
+    /// returned. The argument is passed uninitialized.</param>
+    /// <param name="converter">An object that implements <see cref="ITimeZoneIDConverter"
+    /// /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
+    /// <returns> <c>true</c> if a suitable UTC offset could be found, otherwise <c>false</c>.</returns>
+    /// <seealso cref="ITimeZoneIDConverter" />
     public bool TryGetUtcOffset(out TimeSpan utcOffset, ITimeZoneIDConverter? converter = null)
     {
         if (IsUtcOffset())
@@ -152,14 +149,13 @@ public sealed partial class TimeZoneID
         utcOffset = default;
         return false;
     }
-
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="TimeZoneID"/>-Objekts. (Nur zum Debuggen.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="TimeZoneID"/>-Objekts.</returns>
+    
+    /// <inheritdoc/>
     public override string ToString() => Value;
 
-    internal void AppendTo(StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter)
+
+    internal void AppendTo(
+        StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter)
     {
         Debug.Assert(builder != null);
 
@@ -201,7 +197,10 @@ public sealed partial class TimeZoneID
 #if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1 || NET5_0 || NET6_0
         try
         {
-            return Regex.IsMatch(Value, UTC_OFFSET_PATTERN, RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(50));
+            return Regex.IsMatch(Value,
+                                 UTC_OFFSET_PATTERN,
+                                 RegexOptions.CultureInvariant,
+                                 TimeSpan.FromMilliseconds(50));
         }
         catch (RegexMatchTimeoutException)
         {

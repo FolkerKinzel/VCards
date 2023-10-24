@@ -13,20 +13,20 @@ public class AddressTypesCollectorTests
 
         var list = new List<string>();
 
-        AddressTypesCollector.CollectValueStrings(adr, list);
+        EnumValueCollector.Collect(adr, list);
 
         Assert.AreEqual(2, list.Count);
-        Assert.IsTrue(list.Contains(AddressTypesConverter.AdrTypeValue.PARCEL));
+        Assert.IsTrue(list.Contains(AddressTypesConverter.AddressTypesValue.PARCEL));
 
         // collector darf die Liste nicht löschen!:
-        AddressTypesCollector.CollectValueStrings(adr, list);
+        EnumValueCollector.Collect(adr, list);
         Assert.AreEqual(4, list.Count);
 
         // auf null testen:
         adr = null;
         list.Clear();
 
-        AddressTypesCollector.CollectValueStrings(adr, list);
+        EnumValueCollector.Collect(adr, list);
         Assert.AreEqual(0, list.Count);
     }
 
@@ -40,7 +40,7 @@ public class AddressTypesCollectorTests
         foreach (AddressTypes item in arr)
         {
             list.Clear();
-            AddressTypesCollector.CollectValueStrings(item, list);
+            EnumValueCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
@@ -57,7 +57,7 @@ public class AddressTypesCollectorTests
         foreach (AddressTypes item in arr)
         {
             list.Clear();
-            AddressTypesCollector.CollectValueStrings(item, list);
+            EnumValueCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);

@@ -169,7 +169,7 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The XML element is in the reserved vCard 4.0-namespace..
+        ///   Looks up a localized string similar to The XML element is in the reserved vCard&#160;4.0-namespace..
         /// </summary>
         internal static string ReservedNameSpace {
             get {

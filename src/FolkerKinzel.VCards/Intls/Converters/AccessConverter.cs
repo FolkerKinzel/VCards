@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -22,7 +22,6 @@ internal static class AccessConverter
         };
     }
 
-
     internal static string ToVCardString(this Access kind)
     {
         return kind switch
@@ -33,5 +32,4 @@ internal static class AccessConverter
             _ => VCdAccessValue.PUBLIC
         };
     }
-
 }

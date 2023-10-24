@@ -12,7 +12,7 @@ public class XMessengerParameterConverterTests
         var para = new ParameterSection
         {
             PropertyClass = PropertyClassTypes.Home | PropertyClassTypes.Work,
-            TelephoneType = TelTypes.PCS
+            PhoneType = PhoneTypes.PCS
         };
         XMessengerParameterConverter.ConvertToInstantMessengerType(para);
 
@@ -30,7 +30,7 @@ public class XMessengerParameterConverterTests
         XMessengerParameterConverter.ConvertFromInstantMessengerType(para);
 
         Assert.AreEqual(PropertyClassTypes.Home | PropertyClassTypes.Work, para.PropertyClass);
-        Assert.AreEqual(TelTypes.PCS, para.TelephoneType);
+        Assert.AreEqual(PhoneTypes.PCS, para.PhoneType);
     }
 }
 

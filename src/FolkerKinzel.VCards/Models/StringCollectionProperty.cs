@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -8,26 +8,24 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Repräsentiert vCard-Properties, die eine Sammlung von <see cref="string"/>s speichern.
-/// </summary>
+/// <summary>Represents vCard properties that store a collection of <see cref="string" />s .</summary>
+/// <seealso cref="VCard.NickNames"/>
+/// <seealso cref="VCard.Categories"/>
 public sealed class StringCollectionProperty : VCardProperty, IEnumerable<StringCollectionProperty>
 {
-    /// <summary>
-    /// Copy ctor.
-    /// </summary>
-    /// <param name="prop"></param>
+    /// <summary>Copy ctor.</summary>
+    /// <param name="prop">The <see cref="StringCollectionProperty"/>
+    /// instance to clone</param>
     private StringCollectionProperty(StringCollectionProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="StringCollectionProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="value">Eine Sammlung von <see cref="string"/>s oder <c>null</c>.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+    /// <summary>Initializes a new <see cref="StringCollectionProperty" /> object.</summary>
+    /// <param name="value">A collection of <see cref="string" />s or <c>null</c>.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null) 
+        : base(new ParameterSection(), propertyGroup)
     {
         this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
 
@@ -37,15 +35,13 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         }
     }
 
-
-    /// <summary>
-    /// Initialisiert ein <see cref="StringCollectionProperty"/>-Objekt.
-    /// </summary>
-    /// <param name="value">Ein <see cref="string"/> oder <c>null</c>.</param>
-    /// <param name="propertyGroup">Bezeichner der Gruppe,
-    /// der die <see cref="VCardProperty"/> zugehören soll, oder <c>null</c>,
-    /// um anzuzeigen, dass die <see cref="VCardProperty"/> keiner Gruppe angehört.</param>
-    public StringCollectionProperty(string? value, string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+    /// <summary>Initializes a new <see cref="StringCollectionProperty" /> object.</summary>
+    /// <param name="value">A <see cref="string" /> or <c>null</c>.</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    public StringCollectionProperty(string? value, string? propertyGroup = null)
+        : base(new ParameterSection(), propertyGroup)
     {
         this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
 
@@ -82,17 +78,49 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         }
     }
 
-
-    /// <summary>
-    /// Die von der <see cref="StringCollectionProperty"/> zur Verfügung gestellten Daten.
-    /// </summary>
+    /// <summary>The data provided by the <see cref="StringCollectionProperty" />.</summary>
     public new ReadOnlyCollection<string>? Value
     {
         get;
     }
 
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        string s = "";
 
-    /// <inheritdoc/>
+        if (Value is null)
+        {
+            return s;
+        }
+
+        Debug.Assert(Value.Count != 0);
+
+        for (int i = 0; i < Value.Count - 1; i++)
+        {
+            s += Value[i];
+            s += ", ";
+        }
+
+        s += Value[Value.Count - 1];
+
+        return s;
+    }
+
+    /// <inheritdoc />
+    public override object Clone() => new StringCollectionProperty(this);
+
+    /// <inheritdoc />
+    IEnumerator<StringCollectionProperty> IEnumerable<StringCollectionProperty>.GetEnumerator()
+    {
+        yield return this;
+    }
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator()
+        => ((IEnumerable<StringCollectionProperty>)this).GetEnumerator();
+
+    /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
@@ -129,38 +157,4 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         _ = worker.Clear().Append(s).Mask(serializer.Version);
         _ = builder.Append(worker);
     }
-
-
-    /// <inheritdoc/>
-    public override string ToString()
-    {
-        string s = "";
-
-        if (Value is null)
-        {
-            return s;
-        }
-
-        Debug.Assert(Value.Count != 0);
-
-        for (int i = 0; i < Value.Count - 1; i++)
-        {
-            s += Value[i];
-            s += ", ";
-        }
-
-        s += Value[Value.Count - 1];
-
-        return s;
-    }
-
-    IEnumerator<StringCollectionProperty> IEnumerable<StringCollectionProperty>.GetEnumerator()
-    {
-        yield return this;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<StringCollectionProperty>)this).GetEnumerator();
-
-    /// <inheritdoc/>
-    public override object Clone() => new StringCollectionProperty(this);
 }

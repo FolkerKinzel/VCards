@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
@@ -107,9 +107,7 @@ internal static class AddressOrderConverter
             return null;
         }
 
-        var span =
-
-        new ReadOnlySpan<char>(arr);
+        var span = new ReadOnlySpan<char>(arr);
 
         return span.Equals("USA", StringComparison.Ordinal) ||
                span.StartsWith("UNITEDSTATES") ||
@@ -175,7 +173,5 @@ internal static class AddressOrderConverter
                ? AddressOrder.Usa
                : span.StartsWith("PAPUA") || span.EndsWith("VENEZUELA") ? AddressOrder.Venezuela 
                                                                         : AddressOrder.Din;
-
     }
-
 }

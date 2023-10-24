@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -10,9 +10,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 #pragma warning disable CS0618 // Type or member is obsolete
 
-/// <summary>
-/// Kapselt Informationen über die Postanschrift in vCards.
-/// </summary>
+/// <summary>Encapsulates information about a postal delivery address.</summary>
 public sealed class Address
 {
     private const int MAX_COUNT = 7;
@@ -25,16 +23,15 @@ public sealed class Address
     private const int POSTAL_CODE = 5;
     private const int COUNTRY = 6;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="Address"/>-Objekt.
-    /// </summary>
-    /// <param name="street">Straße</param>
-    /// <param name="locality">Ort</param>
-    /// <param name="region">Bundesland</param>
-    /// <param name="postalCode">Postleitzahl</param>
-    /// <param name="country">Land (Staat)</param>
-    /// <param name="postOfficeBox">Postfach. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
-    /// <param name="extendedAddress">Adresszusatz. (Nicht verwenden: Sollte immer <c>null</c> sein.)</param>
+    /// <summary />
+    /// <param name="street">The street address.</param>
+    /// <param name="locality">The locality (e.g. city).</param>
+    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="postalCode">The postal code.</param>
+    /// <param name="country">The country name (full name).</param>
+    /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
+    /// <param name="extendedAddress">The extended address (e.g. apartment or suite
+    /// number). (Don't use this parameter!)</param>
     internal Address(ReadOnlyCollection<string> street,
                      ReadOnlyCollection<string> locality,
                      ReadOnlyCollection<string> region,
@@ -61,7 +58,7 @@ public sealed class Address
         Locality =
         Region =
         PostalCode =
-        Country = ReadOnlyCollectionString.Empty;
+        Country = ReadOnlyStringCollection.Empty;
     }
 
 
@@ -84,7 +81,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            PostOfficeBox = ReadOnlyCollectionString.Empty;
+                            PostOfficeBox = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -105,7 +102,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            ExtendedAddress = ReadOnlyCollectionString.Empty;
+                            ExtendedAddress = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -126,7 +123,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Street = ReadOnlyCollectionString.Empty;
+                            Street = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -147,7 +144,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Locality = ReadOnlyCollectionString.Empty;
+                            Locality = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -168,7 +165,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Region = ReadOnlyCollectionString.Empty;
+                            Region = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -189,7 +186,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            PostalCode = ReadOnlyCollectionString.Empty;
+                            PostalCode = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -210,7 +207,7 @@ public sealed class Address
                     {
                         if (s.Length == 0)
                         {
-                            Country = ReadOnlyCollectionString.Empty;
+                            Country = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -232,138 +229,61 @@ public sealed class Address
             }//switch
         }//foreach
 
-
         // If the VCF file is invalid, properties could be null:
         // (PostOfficeBox can never be null)
         Debug.Assert(PostOfficeBox != null);
         //PostOfficeBox ??= ReadOnlyCollectionString.Empty;
-        ExtendedAddress ??= ReadOnlyCollectionString.Empty;
-        Street ??= ReadOnlyCollectionString.Empty;
-        Locality ??= ReadOnlyCollectionString.Empty;
-        Region ??= ReadOnlyCollectionString.Empty;
-        PostalCode ??= ReadOnlyCollectionString.Empty;
-        Country ??= ReadOnlyCollectionString.Empty;
+        ExtendedAddress ??= ReadOnlyStringCollection.Empty;
+        Street ??= ReadOnlyStringCollection.Empty;
+        Locality ??= ReadOnlyStringCollection.Empty;
+        Region ??= ReadOnlyStringCollection.Empty;
+        PostalCode ??= ReadOnlyStringCollection.Empty;
+        Country ??= ReadOnlyStringCollection.Empty;
     }
 
-    /// <summary>
-    /// Postfach (nie <c>null</c>) (nicht verwenden)
-    /// </summary>
+    /// <summary>The post office box. (Don't use this property!)</summary>
     [Obsolete("Don't use this property.", false)]
     public ReadOnlyCollection<string> PostOfficeBox { get; }
 
-    /// <summary>
-    /// Adresszusatz (nie <c>null</c>) (nicht verwenden)
-    /// </summary>
+    /// <summary>The extended address (e.g. apartment or suite number). (Don't use this
+    /// property!)</summary>
     [Obsolete("Don't use this property.", false)]
     public ReadOnlyCollection<string> ExtendedAddress { get; }
 
-    /// <summary>
-    /// Straße (nie <c>null</c>)
-    /// </summary>
+    /// <summary>The street address.</summary>
     public ReadOnlyCollection<string> Street { get; }
 
-    /// <summary>
-    /// Ort (nie <c>null</c>)
-    /// </summary>
+    /// <summary>The locality (e.g. city).</summary>
     public ReadOnlyCollection<string> Locality { get; }
 
-    /// <summary>
-    /// Bundesland (nie <c>null</c>)
-    /// </summary>
+    /// <summary>The region (e.g. state or province).</summary>
     public ReadOnlyCollection<string> Region { get; }
 
-    /// <summary>
-    /// Postleitzahl (nie <c>null</c>)
-    /// </summary>
+    /// <summary>The postal code.</summary>
     public ReadOnlyCollection<string> PostalCode { get; }
 
-    /// <summary>
-    /// Land (Staat) (nie <c>null</c>)
-    /// </summary>
+    /// <summary>The country name (full name).</summary>
     public ReadOnlyCollection<string> Country { get; }
 
 
-    /// <summary>
-    /// <c>true</c>, wenn das <see cref="Address"/>-Objekt keine verwertbaren Daten enthält.
-    /// </summary>
+    /// <summary>Returns <c>true</c>, if the <see cref="Address" /> object does not
+    /// contain any usable data.</summary>
     public bool IsEmpty => Locality.Count == 0 &&
                            Street.Count == 0 &&
                            Country.Count == 0 &&
                            Region.Count == 0 &&
-                           PostalCode.Count == 0 && 
-                           PostOfficeBox.Count == 0 && 
+                           PostalCode.Count == 0 &&
+                           PostOfficeBox.Count == 0 &&
                            ExtendedAddress.Count == 0;
-    
 
-    /// <summary>
-    /// Wandelt die in der Instanz gekapselten Daten in formatierten Text für ein Adressetikett um.
-    /// </summary>
-    /// <returns>Die in der Instanz gekapselten Daten, umgewandelt in formatierten Text für ein Adressetikett.</returns>
+    /// <summary>Converts the data encapsulated in the instance into formatted text
+    /// for a mailing label.</summary>
+    /// <returns>The data encapsulated in the instance, converted to formatted text
+    /// for a mailing label.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string ToLabel() => this.ConvertToLabel();
 
-
-    internal void AppendVCardString(VcfSerializer serializer)
-    {
-        StringBuilder builder = serializer.Builder;
-        StringBuilder worker = serializer.Worker;
-
-        char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
-
-        AppendProperty(PostOfficeBox);
-        _ = builder.Append(';');
-
-        AppendProperty(ExtendedAddress);
-        _ = builder.Append(';');
-
-        AppendProperty(Street);
-        _ = builder.Append(';');
-
-        AppendProperty(Locality);
-        _ = builder.Append(';');
-
-        AppendProperty(Region);
-        _ = builder.Append(';');
-
-        AppendProperty(PostalCode);
-        _ = builder.Append(';');
-
-        AppendProperty(Country);
-
-
-        void AppendProperty(IList<string> strings)
-        {
-            if (strings.Count == 0)
-            {
-                return;
-            }
-
-            for (int i = 0; i < strings.Count - 1; i++)
-            {
-                _ = worker.Clear().Append(strings[i]).Mask(serializer.Version);
-                _ = builder.Append(worker).Append(joinChar);
-            }
-
-            _ = worker.Clear().Append(strings[strings.Count - 1]).Mask(serializer.Version);
-            _ = builder.Append(worker);
-        }
-    }
-
-    internal bool NeedsToBeQpEncoded()
-        => Locality.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Street.Any(StringExtension.NeedsToBeQpEncoded) || 
-           Country.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Region.Any(StringExtension.NeedsToBeQpEncoded) || 
-           PostalCode.Any(StringExtension.NeedsToBeQpEncoded) || 
-           PostOfficeBox.Any(StringExtension.NeedsToBeQpEncoded) || 
-           ExtendedAddress.Any(StringExtension.NeedsToBeQpEncoded);
-
-
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="Address"/>-Objekts. 
-    /// (Nur zum Debugging.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="Address"/>-Objekts.</returns>
+    /// <inheritdoc/>
     public override string ToString()
     {
         var worker = new StringBuilder();
@@ -501,6 +421,63 @@ public sealed class Address
             return worker.ToString();
         }
     }
+
+
+    internal void AppendVCardString(VcfSerializer serializer)
+    {
+        StringBuilder builder = serializer.Builder;
+        StringBuilder worker = serializer.Worker;
+
+        char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
+
+        AppendProperty(PostOfficeBox);
+        _ = builder.Append(';');
+
+        AppendProperty(ExtendedAddress);
+        _ = builder.Append(';');
+
+        AppendProperty(Street);
+        _ = builder.Append(';');
+
+        AppendProperty(Locality);
+        _ = builder.Append(';');
+
+        AppendProperty(Region);
+        _ = builder.Append(';');
+
+        AppendProperty(PostalCode);
+        _ = builder.Append(';');
+
+        AppendProperty(Country);
+
+
+        void AppendProperty(IList<string> strings)
+        {
+            if (strings.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < strings.Count - 1; i++)
+            {
+                _ = worker.Clear().Append(strings[i]).Mask(serializer.Version);
+                _ = builder.Append(worker).Append(joinChar);
+            }
+
+            _ = worker.Clear().Append(strings[strings.Count - 1]).Mask(serializer.Version);
+            _ = builder.Append(worker);
+        }
+    }
+
+
+    internal bool NeedsToBeQpEncoded()
+        => Locality.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Street.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Country.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Region.Any(StringExtension.NeedsToBeQpEncoded) ||
+           PostalCode.Any(StringExtension.NeedsToBeQpEncoded) ||
+           PostOfficeBox.Any(StringExtension.NeedsToBeQpEncoded) ||
+           ExtendedAddress.Any(StringExtension.NeedsToBeQpEncoded);
 }
 
 #pragma warning restore CS0618 // Type or member is deprecated

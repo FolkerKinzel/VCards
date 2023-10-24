@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -38,27 +38,27 @@ internal sealed partial class VcfRow
 
             case "VCARD":
                 return CONTEXT_PROPERTY;
-            //Telefon
+
+            //Phone
             case ParameterSection.TypeValue.PREF:
             case ParameterSection.TypeValue.WORK:
             case ParameterSection.TypeValue.HOME:
-            case TelTypesConverter.TelTypeValue.VOICE:
-            case TelTypesConverter.TelTypeValue.FAX:
-            case TelTypesConverter.TelTypeValue.MSG:
-            case TelTypesConverter.TelTypeValue.CELL:
-            case TelTypesConverter.TelTypeValue.PAGER:
-            case TelTypesConverter.TelTypeValue.BBS:
-            case TelTypesConverter.TelTypeValue.MODEM:
-            case TelTypesConverter.TelTypeValue.CAR:
-            case TelTypesConverter.TelTypeValue.ISDN:
-            case TelTypesConverter.TelTypeValue.VIDEO:
+            case PhoneTypesConverter.PhoneTypesValue.VOICE:
+            case PhoneTypesConverter.PhoneTypesValue.FAX:
+            case PhoneTypesConverter.PhoneTypesValue.MSG:
+            case PhoneTypesConverter.PhoneTypesValue.CELL:
+            case PhoneTypesConverter.PhoneTypesValue.PAGER:
+            case PhoneTypesConverter.PhoneTypesValue.BBS:
+            case PhoneTypesConverter.PhoneTypesValue.MODEM:
+            case PhoneTypesConverter.PhoneTypesValue.CAR:
+            case PhoneTypesConverter.PhoneTypesValue.ISDN:
+            case PhoneTypesConverter.PhoneTypesValue.VIDEO:
 
-
-            //Post
-            case AddressTypesConverter.AdrTypeValue.DOM:
-            case AddressTypesConverter.AdrTypeValue.INTL:
-            case AddressTypesConverter.AdrTypeValue.POSTAL:
-            case AddressTypesConverter.AdrTypeValue.PARCEL:
+            //Postal
+            case AddressTypesConverter.AddressTypesValue.DOM:
+            case AddressTypesConverter.AddressTypesValue.INTL:
+            case AddressTypesConverter.AddressTypesValue.POSTAL:
+            case AddressTypesConverter.AddressTypesValue.PARCEL:
 
             //E-Mail
             case "INTERNET":
@@ -74,8 +74,7 @@ internal sealed partial class VcfRow
             case "TLX":
             case "X400":
 
-
-            //Bilder
+            //Images
             case Const.ImageTypeValue.NonStandard.PNG:
             case Const.ImageTypeValue.JPEG:
             case Const.ImageTypeValue.NonStandard.JPG:
@@ -94,7 +93,6 @@ internal sealed partial class VcfRow
             case Const.ImageTypeValue.NonStandard.PIC:
             case Const.ImageTypeValue.NonStandard.XBM:
             case Const.ImageTypeValue.NonStandard.SVG:
-
 
             case Const.ImageTypeValue.PS:
             case Const.ImageTypeValue.PDF:
@@ -120,12 +118,10 @@ internal sealed partial class VcfRow
             case Const.SoundTypeValue.NonStandard.AAC:
             case Const.SoundTypeValue.NonStandard.AC3:
 
-
             // Public Key
             case Const.KeyTypeValue.X509:
             case Const.KeyTypeValue.PGP:
                 return TYPE_PROPERTY;
-
 
             case ContentLocationConverter.Values.INLINE:
             case ContentLocationConverter.Values.CID:

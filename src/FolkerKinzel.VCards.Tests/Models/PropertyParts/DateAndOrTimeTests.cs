@@ -65,7 +65,7 @@ public class DateAndOrTimeTests
     public void SwitchTest1()
     {
         var rel = new DateAndOrTime(new DateOnly(2023, 10, 14));
-        rel.Switch(s => rel = null, null, null, null);
+        rel.Switch(s => rel = null, null!, null!, null!);
         Assert.IsNull(rel);
     }
 
@@ -75,7 +75,7 @@ public class DateAndOrTimeTests
         const int expected = 42;
         var rel = new DateAndOrTime(new DateOnly(2023, 10, 14));
 
-        int result = rel.Match(s => expected, null, null, null);
+        int result = rel.Convert(s => expected, null!, null!, null!);
         Assert.AreEqual(expected, result);
     }
 

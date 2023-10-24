@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -48,7 +48,6 @@ internal static class RelationTypesConverter
                                                                | RelationTypes.Me
                                                                | RelationTypes.Agent
                                                                | RelationTypes.Emergency;
-
 
     internal const int RELATION_TYPES_MIN_BIT = 0;
     internal const int RELATION_TYPES_MAX_BIT = 19;
@@ -108,5 +107,4 @@ internal static class RelationTypesConverter
             RelationTypes.Emergency => RelationTypeValue.EMERGENCY,
             _ => throw new ArgumentOutOfRangeException(nameof(value))
         };
-    
 }

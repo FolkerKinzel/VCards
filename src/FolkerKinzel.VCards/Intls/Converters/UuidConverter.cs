@@ -1,4 +1,4 @@
-﻿namespace FolkerKinzel.VCards.Intls.Converters;
+namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class UuidConverter
 {
@@ -35,7 +35,6 @@ internal static class UuidConverter
         return false;
     }
 
-
     internal static Guid ToGuid(string? uuid)
     {
         if (string.IsNullOrWhiteSpace(uuid) || uuid.Length < GUID_MIN_LENGTH)
@@ -59,7 +58,6 @@ internal static class UuidConverter
         return guid;
     }
 
-
     internal static StringBuilder AppendUuid(this StringBuilder builder, Guid guid, VCdVersion version = VCdVersion.V4_0)
     {
         Debug.Assert(builder != null);
@@ -72,5 +70,4 @@ internal static class UuidConverter
 
         return builder;
     }
-
 }

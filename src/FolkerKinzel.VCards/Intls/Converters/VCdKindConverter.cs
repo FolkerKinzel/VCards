@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -25,7 +25,6 @@ internal static class VCdKindConverter
             _ => VCdKind.Individual,
         };
     }
-
 
     internal static string ToVcfString(this VCdKind kind)
     {

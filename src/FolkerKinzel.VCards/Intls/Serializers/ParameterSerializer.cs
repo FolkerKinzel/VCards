@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
@@ -6,29 +6,22 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 internal abstract class ParameterSerializer
 {
     private readonly StringBuilder _builder = new();
-
     protected readonly StringBuilder _worker = new();
-
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="options"></param>
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    
     protected ParameterSerializer(VcfOptions options) => this.Options = options;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-    protected ParameterSection ParaSection { get; private set; }
+    [NotNull]
+    protected ParameterSection? ParaSection { get;  private set; }
 
     protected VcfOptions Options { get; }
 
-
-    internal StringBuilder Serialize(ParameterSection vCardPropertyParameter, string propertyKey, bool isPref)
+    internal StringBuilder Serialize(ParameterSection vCardPropertyParameter,
+                                     string propertyKey,
+                                     bool isPref)
     {
         ParaSection = vCardPropertyParameter;
 
         _ = _builder.Clear();
-
-        //Builder.Append(';');
 
         switch (propertyKey)
         {
@@ -141,7 +134,7 @@ internal abstract class ParameterSerializer
                 BuildSourcePara();
                 break;
             case VCard.PropKeys.TEL:
-                BuildTelPara(isPref);
+                BuildPhonesPara(isPref);
                 break;
             case VCard.PropKeys.TITLE:
                 BuildTitlePara();
@@ -206,7 +199,7 @@ internal abstract class ParameterSerializer
             case VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY:
             case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY:
             case VcfSerializer.X_KADDRESSBOOK_X_Anniversary:
-                // kein Parameter-Teil
+                // no parameters
                 break;
 
             case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE:
@@ -216,7 +209,6 @@ internal abstract class ParameterSerializer
                 BuildXSpousePara();
                 break;
 
-
             // ASSISTENT wird zwar gelesen und als AGENT interpretiert, aber
             // nicht geschrieben, da AGENT ein Standard-Pendant ist.
 
@@ -224,20 +216,14 @@ internal abstract class ParameterSerializer
             ////case VcfSerializer.X_KADDRESSBOOK_X_AssistantsName:
             //case VCard.PropKeys.NonStandard.X_ASSISTANT:
             //case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ASSISTANT:
-
-
             //break;
             default:
                 BuildNonStandardPropertyPara(isPref);
                 break;
         }
 
-        //if (Builder.Length == 1) Builder.Clear();
-
         return _builder;
     }
-
-
 
     #region BuildPara
 
@@ -271,7 +257,7 @@ internal abstract class ParameterSerializer
 
     protected abstract void BuildTitlePara();
 
-    protected abstract void BuildTelPara(bool isPref);
+    protected abstract void BuildPhonesPara(bool isPref);
 
     protected abstract void BuildSourcePara();
 
@@ -347,20 +333,19 @@ internal abstract class ParameterSerializer
 
     #endregion
 
-
     protected void AppendParameter(string key, string value) => _builder.Append(';').Append(key).Append('=').Append(value);
 
     protected void AppendV2_1Type(string value) => _builder.Append(';').Append(value);
 
     protected void AppendNonStandardParameters()
     {
-        if (this.ParaSection.NonStandardParameters is null
+        if (this.ParaSection.NonStandard is null
             || !Options.IsSet(VcfOptions.WriteNonStandardParameters))
         {
             return;
         }
 
-        foreach (KeyValuePair<string, string> parameter in this.ParaSection.NonStandardParameters)
+        foreach (KeyValuePair<string, string> parameter in this.ParaSection.NonStandard)
         {
             string key = parameter.Key;
 
@@ -411,5 +396,4 @@ internal abstract class ParameterSerializer
             }
         }
     }
-
 }

@@ -83,21 +83,21 @@ public static class VCardExample
             vcard.PropertyIDMappings = pidMapProp;
 
             const string groupName = "gr1";
-            var telHome = new VC::TextProperty("tel:+49-123-9876543");
-            telHome.Parameters.DataType = VC::Enums.VCdDataType.Uri;
-            telHome.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Home;
-            telHome.Parameters.TelephoneType = VC::Enums.TelTypes.Voice | VC::Enums.TelTypes.BBS;
-            telHome.Parameters.PropertyIDs = new VC::PropertyID(1, pidMap);
+            var phoneHome = new VC::TextProperty("tel:+49-123-9876543");
+            phoneHome.Parameters.DataType = VC::Enums.VCdDataType.Uri;
+            phoneHome.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Home;
+            phoneHome.Parameters.PhoneType = VC::Enums.PhoneTypes.Voice | VC::Enums.PhoneTypes.BBS;
+            phoneHome.Parameters.PropertyIDs = new VC::PropertyID(1, pidMap);
 
-            var telWork = new VC::TextProperty("tel:+49-321-1234567");
-            telWork.Parameters.DataType = VC::Enums.VCdDataType.Uri;
-            telWork.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
-            telWork.Parameters.TelephoneType = VC::Enums.TelTypes.Cell
-                                             | VC::Enums.TelTypes.Text
-                                             | VC::Enums.TelTypes.Msg
-                                             | VC::Enums.TelTypes.BBS
-                                             | VC::Enums.TelTypes.Voice;
-            telWork.Parameters.PropertyIDs = new VC::PropertyID(2, pidMap);
+            var phoneWork = new VC::TextProperty("tel:+49-321-1234567");
+            phoneWork.Parameters.DataType = VC::Enums.VCdDataType.Uri;
+            phoneWork.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
+            phoneWork.Parameters.PhoneType = VC::Enums.PhoneTypes.Cell
+                                             | VC::Enums.PhoneTypes.Text
+                                             | VC::Enums.PhoneTypes.Msg
+                                             | VC::Enums.PhoneTypes.BBS
+                                             | VC::Enums.PhoneTypes.Voice;
+            phoneWork.Parameters.PropertyIDs = new VC::PropertyID(2, pidMap);
 
 
             var adrWorkProp = new VC::AddressProperty
@@ -120,9 +120,9 @@ public static class VCardExample
             vcard.TimeZones = new VC::TimeZoneProperty(tz, groupName);
             vcard.GeoCoordinates = new VC::GeoProperty(geo, groupName);
 
-            vcard.PhoneNumbers = new VC::TextProperty[]
+            vcard.Phones = new VC::TextProperty[]
             {
-                    telHome, telWork
+                    phoneHome, phoneWork
             };
 
             var prefMail = new VC::TextProperty("kaethe_mueller@internet.com");

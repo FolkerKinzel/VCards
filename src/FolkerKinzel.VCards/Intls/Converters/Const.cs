@@ -1,8 +1,8 @@
-﻿namespace FolkerKinzel.VCards.Intls.Converters;
+namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class Const
 {
-    //Images
+    //images
     internal static class ImageTypeValue
     {
         internal const string JPEG = "JPEG";
@@ -22,7 +22,6 @@ internal static class Const
         internal const string AVI = "AVI";
         internal const string QTIME = "QTIME";
 
-
         internal static class NonStandard
         {
             internal const string PNG = "PNG";
@@ -38,15 +37,14 @@ internal static class Const
         }
     }
 
-
-    // Public Key
+    // public keys
     internal static class KeyTypeValue
     {
         internal const string X509 = "X509";
         internal const string PGP = "PGP";
     }
 
-    //Sound
+    //sound
     internal static class SoundTypeValue
     {
         internal const string WAVE = "WAVE";

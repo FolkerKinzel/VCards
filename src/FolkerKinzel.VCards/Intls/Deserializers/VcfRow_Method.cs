@@ -1,65 +1,60 @@
-﻿using FolkerKinzel.VCards.Intls.Encodings;
+using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
 internal sealed partial class VcfRow
 {
-    /// <summary>
-    /// Parst eine Datenzeile der VCF-Datei.
-    /// </summary>
-    /// <param name="vCardRow">Die Datenzeile der vCard als <see cref="string"/>.</param>
-    /// <param name="info">Ein <see cref="VcfDeserializationInfo"/>.</param>
-    /// <returns><see cref="VcfRow"/>-Objekt</returns>
-    internal static VcfRow? Parse(string vCardRow, VcfDeserializationInfo info)
+    /// <summary>Parses a data row of the VCF file.</summary>
+    /// <param name="vcfRow">The data row of the VCF file</param>
+    /// <param name="info">Additional data used for parsing.</param>
+    /// <returns>A <see cref="VcfRow"/> object that represents the parsed
+    /// <paramref name="vcfRow"/> or <c>null</c> if <paramref name="vcfRow"/>
+    /// is invalid.</returns>
+    internal static VcfRow? Parse(string vcfRow, VcfDeserializationInfo info)
     {
-        // vCardRow:
+        // vcfRow:
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part
 
-
-        // vCardRowParts:
+        // vcfRow parts:
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
-        int valueSeparatorIndex = GetValueSeparatorIndex(vCardRow);
+        int valueSeparatorIndex = GetValueSeparatorIndex(vcfRow);
 
-
-        return valueSeparatorIndex > 0 ? new VcfRow(vCardRow, valueSeparatorIndex, info) : null;
+        return valueSeparatorIndex > 0 ? new VcfRow(vcfRow, valueSeparatorIndex, info) 
+                                       : null;
     }
 
-
-    /// <summary>
-    /// Unmaskiert maskierten Text, der sich in <see cref="Value"/> befindet, nach den Maßgaben des
-    /// verwendeten vCard-Standards und dekodiert ihn, falls er Quoted-Printable-kodiert ist.
-    /// </summary>
-    /// <param name="version">Die Versionsnummer des vCard-Standards.</param>
+    /// <summary> Unmasks masked text contained in <see cref="Value" /> according to the
+    /// vCard standard used, and decodes it if it is Quoted-Printable encoded.</summary>
+    /// <param name="version">The <see cref="VCard.Version"/> of the <see cref="VCard"/>.</param>
+    /// <remarks>If the method is called multiple times, it will still only be executed once.</remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal void UnMask(VCdVersion version)
     {
         if (!_unMasked)
         {
             this.Value = this.Value.UnMask(Info.Builder, version);
-            _unMasked = true; // Unmask nicht 2x
-
-            DecodeQuotedPrintable();
         }
+
+        _unMasked = true; // not twice!
+        DecodeQuotedPrintable();
     }
 
-
-    /// <summary>
-    /// Dekodiert Quoted-Printable kodierten Text, der sich in <see cref="Value"/> befindet, wenn 
-    /// <see cref="VCards.Models.PropertyParts.ParameterSection.Encoding"/>
-    /// gleich <see cref="ValueEncoding.QuotedPrintable"/> ist.
-    /// </summary>
+    /// <summary> Decodes Quoted-Printable encoded text located in <see cref="Value" /> if 
+    /// <see cref="ParameterSection.Encoding" /> is equal to 
+    /// <see cref="ValueEncoding.QuotedPrintable" />.</summary>
+    /// <remarks>If the method is called multiple times, it will still only be executed once.</remarks>
     internal void DecodeQuotedPrintable()
     {
-        if (this.Parameters.Encoding == ValueEncoding.QuotedPrintable && !_quotedPrintableDecoded)
+        if (!_quotedPrintableDecoded && this.Parameters.Encoding == ValueEncoding.QuotedPrintable)
         {
-            this.Value = QuotedPrintable.Decode(this.Value, // null-Prüfung nicht erforderlich
-                TextEncodingConverter.GetEncoding(this.Parameters.CharSet)); // null-Prüfung nicht erforderlich
-
-            _quotedPrintableDecoded = true; // Encoding nicht 2x durchführen
-
+            this.Value = QuotedPrintable.Decode(
+                this.Value,
+                TextEncodingConverter.GetEncoding(this.Parameters.CharSet)); // null-check not needed
         }
-    }
 
+        _quotedPrintableDecoded = true; // not twice!
+    }
 }

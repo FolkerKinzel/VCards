@@ -1,33 +1,42 @@
-﻿using FolkerKinzel.VCards.Resources;
+using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.PropertyParts;
+
 
 namespace FolkerKinzel.VCards;
 
-/// <summary>
-/// Hilfsklasse, die dem automatischen Erkennen und korrekten Laden von VCF-Dateien dient, die in einer anderen Codepage als UTF-8 gespeichert sind.
-/// </summary>
-/// <threadsafety static="true" instance="false"/>
+/// <summary> Helper class used to automatically detect and correctly load VCF files 
+/// stored in a code page other than UTF-8.</summary>
+/// <threadsafety static="true" instance="false" />
 /// <remarks>
 /// <para>
-/// VCF-Dateien des Standards vCard 2.1 wurden von Outlook und Outlook Express früher in der ANSI-Kodierung des jeweiligen Windows-Systems gespeichert, 
-/// ohne in jedem Fall die erweiterten Zeichen mit Quoted-Printable-Kodierung zu kodieren. Auch VCF-Dateien des Standards vCard 3.0 können prinzipiell
-/// ANSI-kodiert sein, wenn sie z.B. in einer E-Mail übertragen wurden, die in ihrem Content-Header die Kodierung festlegte. Erst seit vCard 4.0 ist die 
-/// Kodierung UTF-8 verbindlich festgelegt.
+/// VCF files of the vCard&#160;2.1 standard were previously saved by Outlook and Outlook 
+/// Express in the ANSI encoding of the current Windows system, without always encoding
+/// the extended characters with quoted printable encoding. In principle, VCF files of 
+/// the vCard&#160;3.0 standard can also be ANSI-encoded if, for example, they were transmitted
+/// in an e-mail that specified the encoding in its content header. UTF-8 encoding has only
+/// been mandatory since vCard&#160;4.0. 
 /// </para>
 /// <para>
-/// Die Klasse ist ein Wrapper um die <see cref="VCard"/>.<see cref="VCard.LoadVcf(string, Encoding?)"/>-Methode, der die Datei zunächst als UTF-8 lädt.
-/// Wenn es dabei zu Dekodierungsfehlern kommt, untersucht die Methode die VCard-Objekte auf evtl. vorhandene <c>CHARSET</c>-Parameter, die einen Anhaltspunkt 
-/// auf die zu verwendende Textenkodierung geben. Wird ein Hinweis gefunden, wird die Datei mit der ermittelten Textenkodierung erneut geladen, andernfalls
-/// mit der im Konstruktor als Fallback angegebenen Kodierung.
+/// This class is a wrapper around the <see cref="VCard" />.<see cref="VCard.LoadVcf(string, Encoding?)" /> 
+/// method, which initially loads the file as UTF-8. If a decoding error occurs, the method 
+/// examines the <see cref="VCard"/> objects for any <see cref="ParameterSection.CharSet"/> 
+/// (<c>CHARSET</c>) parameters, which provide an indication of the <see cref="Encoding"/> 
+/// to be used. If a hint is found, the file is reloaded with the determined <see cref="Encoding"/>,
+/// otherwise with the <see cref="Encoding"/> specified in the 
+/// <see cref="AnsiFilter.AnsiFilter(string)">constructor</see> as a fallback.
 /// </para>
 /// <para>
-/// <c>CHARSET</c>-Parameter gibt es nur im vCard-Standard 2.1.
+/// (The <c>CHARSET</c> parameter exists only in the vCard&#160;2.1 standard.)
 /// </para>
 /// </remarks>
 /// <example>
-/// <note type="note">Der leichteren Lesbarkeit wegen, wird in den Beispielen auf Ausnahmebehandlung verzichtet.</note>
-/// <code language="cs" source="..\Examples\AnsiFilterExample.cs"/>
+/// <note type="note">
+/// To make the code more readable, exception handling has been omitted from the
+/// examples.
+/// </note>
+/// <code language="cs" source="..\Examples\AnsiFilterExample.cs" />
 /// </example>
 public class AnsiFilter
 {
@@ -74,14 +83,14 @@ public class AnsiFilter
 
     private const int UTF8_CODEPAGE = 65001;
 
-    /// <summary>
-    /// Initialisiert eine Instanz der <see cref="AnsiFilter"/>-Klasse mit der Nummer
-    /// der Codepage, die für das Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format vorliegen.
-    /// </summary>
-    /// <param name="fallbackCodePage">Die Nummer der Codepage. Default ist
-    /// 1252 für <c>windows-1252</c>.</param>
-    /// <exception cref="ArgumentException">Die für <paramref name="fallbackCodePage"/> angegebene Nummer
-    /// konnte keiner ANSI-Codepage zugeordnet werden.</exception>
+    /// <summary>Initializes an instance of the <see cref="AnsiFilter" /> class with
+    /// the number of the code page to use for the reading of VCF files that are not
+    /// UTF-8 and that do not contain a hint in their CHARSET parameters which suggests 
+    /// the use of a different <see cref="Encoding" />.</summary>
+    /// <param name="fallbackCodePage">The number of the code page to use as a fallback. 
+    /// The default value is 1252 (for <c>windows-1252</c>).</param>
+    /// <exception cref="ArgumentException">The number specified for 
+    /// <paramref name="fallbackCodePage" /> could not be mapped to an ANSI code page.</exception>
     public AnsiFilter(int fallbackCodePage = 1252)
     {
         _ansi = TextEncodingConverter.GetEncoding(fallbackCodePage);
@@ -92,13 +101,18 @@ public class AnsiFilter
     }
 
     /// <summary>
-    /// Initialisiert eine Instanz der <see cref="AnsiFilter"/>-Klasse mit dem <see cref="Encoding.WebName"/> des 
-    /// <see cref="Encoding"/>-Objekts, das zum Lesen von VCF-Dateien verwendet werden soll, die nicht im UTF-8-Format vorliegen.
+    /// Initializes an instance of the <see cref="AnsiFilter" /> class with
+    /// the <see cref="Encoding.WebName" /> property of the <see cref="Encoding" />
+    /// object to use for reading VCF files that are not
+    /// UTF-8 and that do not contain a hint in their CHARSET parameters which suggests 
+    /// the use of a different <see cref="Encoding" />.
     /// </summary>
-    /// <param name="fallbackEncodingWebName"><see cref="Encoding.WebName"/> des <see cref="Encoding"/>-Objekts.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="fallbackEncodingWebName"/> ist <c>null</c>.</exception>
-    /// <exception cref="ArgumentException">Der für <paramref name="fallbackEncodingWebName"/> angegebene Bezeichner
-    /// konnte keiner ANSI-Codepage zugeordnet werden.</exception>
+    /// <param name="fallbackEncodingWebName"> <see cref="Encoding.WebName" /> property
+    /// of the <see cref="Encoding" /> object to use as a fallback.</param>
+    /// <exception cref="ArgumentNullException"> <paramref name="fallbackEncodingWebName"
+    /// /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">The identifier specified for <paramref name="fallbackEncodingWebName"
+    /// /> could not be mapped to an ANSI code page.</exception>
     public AnsiFilter(string fallbackEncodingWebName)
     {
         _ansi = TextEncodingConverter.GetEncoding(
@@ -108,42 +122,35 @@ public class AnsiFilter
         _utf8 = InitUtf8Encoding();
         _encodingCache = InitEncodingCache();
     }
-    
 
-    /// <summary>
-    /// <see cref="Encoding.WebName"/>-Eigenschaft des <see cref="Encoding"/>-Objekts, das zum Laden von VCF-Dateien verwendet wird, 
-    /// die nicht im UTF-8-Format vorliegen, wenn kein Hinweis zur Verwendung eines anderen <see cref="Encoding"/>s gefunden wird.
-    /// </summary>
+
+    /// <summary> <see cref="Encoding.WebName" /> property
+    /// of the <see cref="Encoding" /> object to use as a fallback. </summary>
     public string FallbackEncodingWebName => _ansi.WebName;
 
-
-    /// <summary>
-    /// Lädt eine VCF-Datei und wählt dabei automatisch das geeignete <see cref="Encoding"/> aus.
-    /// </summary>
-    /// 
-    /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
-    ///  
-    /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
-    /// 
-    /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
-    /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
+    /// <summary> Loads a VCF file and automatically selects the appropriate 
+    /// <see cref="Encoding" />.</summary>
+    /// <param name="fileName">Absolute or relative path to a VCF file.</param>
+    /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
+    /// the content of the VCF file.</returns>
+    /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
+    /// file path.</exception>
+    /// <exception cref="IOException">The file could not be loaded.</exception>
     public virtual IList<VCard> LoadVcf(string fileName) => LoadVcf(fileName, out _);
 
-
-    /// <summary>
-    /// Lädt eine VCF-Datei und wählt dabei automatisch das geeignete <see cref="Encoding"/> aus.
-    /// </summary>
-    /// 
-    /// <param name="fileName">Absoluter oder relativer Pfad zu einer VCF-Datei.</param>
-    /// <param name="encodingWebName"><see cref="Encoding.WebName"/>-Eigenschaft des <see cref="Encoding"/>-Objekts,
-    /// mit dem die VCF-Datei geladen wurde. Der Parameter wird uninitialisiert übergeben.</param>
-    ///  
-    /// <returns>Eine Sammlung geparster <see cref="VCard"/>-Objekte, die den Inhalt der VCF-Datei repräsentieren.</returns>
-    /// 
-    /// <exception cref="ArgumentNullException"><paramref name="fileName"/> ist <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="fileName"/> ist kein gültiger Dateipfad.</exception>
-    /// <exception cref="IOException">Die Datei konnte nicht geladen werden.</exception>
+    /// <summary>  Loads a VCF file and automatically selects the appropriate 
+    /// <see cref="Encoding" />. </summary>
+    /// <param name="fileName">Absolute or relative path to a VCF file.</param>
+    /// <param name="encodingWebName"> After the method has finished the parameter
+    /// contains the <see cref="Encoding.WebName" /> of the
+    /// <see cref="Encoding" /> object, which had been used to load the VCF file. The
+    /// parameter is passed uninitialized.</param>
+    /// <returns>A collection of parsed <see cref="VCard" /> objects.</returns>
+    /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
+    /// file path.</exception>
+    /// <exception cref="IOException">The file could not be loaded.</exception>
     public virtual IList<VCard> LoadVcf(string fileName, out string encodingWebName)
     {
         Reset();

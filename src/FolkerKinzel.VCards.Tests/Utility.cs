@@ -11,8 +11,8 @@ internal static class Utility
         string[] sortAs = new string[] { "Entenhausen", "Elmstreet" };
 
         var tel1 = new TextProperty("123");
-        tel1.Parameters.TelephoneType = default(TelTypes);
-        tel1.Parameters.TelephoneType = TelTypes.Voice | TelTypes.Cell | TelTypes.Text | TelTypes.Msg;
+        tel1.Parameters.PhoneType = default(PhoneTypes);
+        tel1.Parameters.PhoneType = PhoneTypes.Voice | PhoneTypes.Cell | PhoneTypes.Text | PhoneTypes.Msg;
 
         tel1.Parameters.Preference = -50;
         tel1.Parameters.Preference = 500;
@@ -22,10 +22,10 @@ internal static class Utility
 
 
         var hobby1 = new TextProperty("Swimming");
-        hobby1.Parameters.InterestLevel = InterestLevel.Medium;
+        hobby1.Parameters.Interest = InterestLevel.Medium;
 
         var expertise1 = new TextProperty("C#");
-        expertise1.Parameters.ExpertiseLevel = ExpertiseLevel.Average;
+        expertise1.Parameters.Expertise = ExpertiseLevel.Average;
 
         var adr1 = new AddressProperty("Elmstraße 13", "Entenhausen", null, postalCode: "01234");
         adr1.Parameters.Label = "  ";
@@ -92,12 +92,12 @@ internal static class Utility
 
         var rel1 = RelationProperty.FromText("Agent", RelationTypes.Agent);
         var rel2 = RelationProperty.FromText("Spouse");
-        rel2.Parameters.RelationType = default(RelationTypes);
-        rel2.Parameters.RelationType = RelationTypes.Spouse | RelationTypes.CoResident;
+        rel2.Parameters.Relation = default(RelationTypes);
+        rel2.Parameters.Relation = RelationTypes.Spouse | RelationTypes.CoResident;
 
 
         var nonStandard1 = new NonStandardProperty("X-NON-STANDARD", "The value");
-        nonStandard1.Parameters.NonStandardParameters
+        nonStandard1.Parameters.NonStandard
             = new KeyValuePair<string, string>[] { new KeyValuePair<string, string>("X-NONSTD", "para-value") };
 
         var nonStandard2 = new NonStandardProperty("X-WAKEUP", "07:00:00");
@@ -119,7 +119,7 @@ internal static class Utility
         return new VCard
         {
             NameViews = names,
-            PhoneNumbers = tel1,
+            Phones = tel1,
             Hobbies = hobby1,
             Interests = hobby1,
             Expertises = expertise1,
@@ -167,7 +167,7 @@ internal static class Utility
 
             Relations = new RelationProperty[] { rel1, rel2 },
             Organizations = new OrganizationProperty("The ÄÖÜ Organization", new string[] { "Department", "Office" }),
-            NonStandardProperties = nonStandard,
+            NonStandard = nonStandard,
             XmlProperties = xml1,
         };
     }

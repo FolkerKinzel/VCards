@@ -1,13 +1,10 @@
-﻿using System;
+using System;
 using System.Globalization;
 using FolkerKinzel.VCards.Intls.Extensions;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-/// <summary>
-/// Konvertiert die vCard-Values Date, Date-Time, Date-And-Or-Time und Timestamp.
-/// </summary>
 /// <threadsafety static="true" instance="false" />
 internal sealed class DateAndOrTimeConverter
 {
@@ -53,11 +50,9 @@ internal sealed class DateAndOrTimeConverter
             "T--sszzz"
     };
 
-
-
-#if NET5_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
-#endif
+    #if NET5_0_OR_GREATER
+    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
+    #endif
     internal bool TryParse(ReadOnlySpan<char> roSpan, out OneOf<DateOnly, DateTimeOffset> oneOf)
     {
         oneOf = default;
@@ -176,7 +171,6 @@ internal sealed class DateAndOrTimeConverter
         static bool IsDateOnly(ReadOnlySpan<char> span) => !span.Contains('T');
     }
 
-
     internal static void AppendTimeStampTo(StringBuilder builder,
         DateTimeOffset dto, VCdVersion version)
     {
@@ -221,7 +215,6 @@ internal sealed class DateAndOrTimeConverter
         }//switch
     }
 
-
     internal static void AppendDateAndOrTimeTo(StringBuilder builder,
         DateTimeOffset dt, VCdVersion version)
     {
@@ -237,11 +230,9 @@ internal sealed class DateAndOrTimeConverter
         }
     }
 
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static bool HasDateComponent(DateTimeOffset dt)
         => !(dt.Year < FIRST_LEAP_YEAR && dt.Month == 1 && dt.Day == 1);
-
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static bool HasTimeComponent(DateTimeOffset dt)

@@ -1,19 +1,20 @@
-﻿using System.Globalization;
+using System.Globalization;
 using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>
-/// Kapselt Informationen über die geographische Position.
-/// </summary>
+/// <summary>Encapsulates information about the geographical position.</summary>
 public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 {
-    /// <summary>
-    /// Initialisiert ein neues <see cref="GeoCoordinate"/>-Objekt.
-    /// </summary>
-    /// <param name="latitude">Breitengrad (muss zwischen -90 und 90 liegen).</param>
-    /// <param name="longitude">Längengrad (muss zwischen -180 und 180 liegen).</param>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="latitude"/> oder <paramref name="longitude"/> hat keinen gültigen Wert.</exception>
+    /// <summary> Initializes a new <see cref="GeoCoordinate" /> objekt. </summary>
+    /// <param name="latitude">Latitude (value between -90 and 90).</param>
+    /// <param name="longitude">Longitude (value between -180 and 180).</param>
+    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="latitude" />
+    /// or <paramref name="longitude" /> does not have a valid value.</exception>
+    /// <seealso cref="GeoProperty"/>
+    /// <seealso cref="VCard.GeoCoordinates"/>
+    /// <seealso cref="ParameterSection.GeoPosition"/>
     public GeoCoordinate(double latitude, double longitude)
     {
         if (double.IsNaN(latitude) || latitude < -90.0000001 || latitude > 90.0000001)
@@ -30,18 +31,13 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         Longitude = Math.Round(longitude, 6, MidpointRounding.ToEven);
     }
 
-    /// <summary>
-    /// Breitengrad
-    /// </summary>
+    /// <summary>Latitude.</summary>
     public double Latitude { get; }
 
-    /// <summary>
-    /// Längengrad
-    /// </summary>
+    /// <summary>Longitude.</summary>
     public double Longitude { get; }
 
-
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public bool Equals(GeoCoordinate? other)
     {
         const double _6 = 0.000001;
@@ -49,12 +45,30 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         return other is not null && (Math.Abs(this.Latitude - other.Latitude) < _6) && (Math.Abs(this.Longitude - other.Longitude) < _6);
     }
 
+    /// <summary>
+    /// Overloads the equality operator for <see cref="GeoCoordinate"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="GeoCoordinate"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="GeoCoordinate"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the values of <paramref name="left"/> and <paramref name="right"/>
+    /// are equal, otherwise <c>false</c>.</returns>
+    public static bool operator ==(GeoCoordinate? left, GeoCoordinate? right) 
+        => object.Equals(left, right) || (left?.Equals(right) ?? false);
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Overloads the not-equal-to operator for <see cref="GeoCoordinate"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="GeoCoordinate"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="GeoCoordinate"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the values of <paramref name="left"/> and <paramref name="right"/>
+    /// are not equal, otherwise <c>false</c>.</returns>
+    public static bool operator !=(GeoCoordinate? left, GeoCoordinate? right)
+        => !(left == right);
+
+    /// <inheritdoc />
     public override bool Equals(object? obj) => Equals(obj as GeoCoordinate);
 
-
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override int GetHashCode()
     {
         const int prec = 1000000;
@@ -62,19 +76,14 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         return HashCode.Combine(Math.Floor(Latitude * prec), Math.Floor(Longitude * prec));
     }
 
-
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="GeoCoordinate"/>-Objekts. 
-    /// (Nur zum Debugging.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="GeoCoordinate"/>-Objekts.</returns>
+    /// <inheritdoc/>
     public override string ToString()
     {
         string latitude = Latitude.ToString("F6");
         string longitude = Longitude.ToString("F6");
 
 
-        return $"Latitude:  {latitude,11}{ Environment.NewLine }Longitude: {longitude,11}";
+        return $"Latitude:  {latitude,11}{Environment.NewLine}Longitude: {longitude,11}";
     }
 
 
@@ -133,5 +142,4 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
             return false;
         }
     }
-
 }

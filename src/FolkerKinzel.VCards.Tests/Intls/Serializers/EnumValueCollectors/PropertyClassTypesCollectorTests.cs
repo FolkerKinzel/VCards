@@ -12,24 +12,22 @@ public class PropertyClassTypesCollectorTests
 
         var list = new List<string>();
 
-        PropertyClassTypesCollector.CollectValueStrings(type, list);
+        EnumValueCollector.Collect(type, list);
 
         Assert.AreEqual(2, list.Count);
         Assert.IsTrue(list.Contains("WORK"));
 
         // collector darf die Liste nicht löschen!:
-        PropertyClassTypesCollector.CollectValueStrings(type, list);
+        EnumValueCollector.Collect(type, list);
         Assert.AreEqual(4, list.Count);
 
         // auf null testen:
         type = null;
         list.Clear();
 
-        PropertyClassTypesCollector.CollectValueStrings(type, list);
+        EnumValueCollector.Collect(type, list);
         Assert.AreEqual(0, list.Count);
     }
-
-
 
     [TestMethod()]
     public void DetectAllEnumValues()
@@ -40,13 +38,12 @@ public class PropertyClassTypesCollectorTests
         foreach (PropertyClassTypes item in arr)
         {
             list.Clear();
-            PropertyClassTypesCollector.CollectValueStrings(item, list);
+            EnumValueCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
         }
     }
-
 
     [TestMethod()]
     public void RoundTrip()
@@ -57,7 +54,7 @@ public class PropertyClassTypesCollectorTests
         foreach (PropertyClassTypes item in arr)
         {
             list.Clear();
-            PropertyClassTypesCollector.CollectValueStrings(item, list);
+            EnumValueCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);

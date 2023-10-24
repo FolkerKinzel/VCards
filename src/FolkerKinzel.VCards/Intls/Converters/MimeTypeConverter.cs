@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.MimeTypes;
+using FolkerKinzel.MimeTypes;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -31,65 +31,61 @@ internal static class MimeTypeConverter
 
     private const int SHORT_STRING = 128;
 
-    internal static string? ImageTypeFromMimeType(string? mimeType) =>
-        mimeType switch
-        {
-            MimeTypeString.Image.PS =>   Const.ImageTypeValue.PS,
-            MimeTypeString.Image.QTIME => Const.ImageTypeValue.QTIME,
-            "image/jpg" => Const.ImageTypeValue.JPEG,
-            _ => TypeValueFromMimeType(mimeType)
-        };
+    internal static string? ImageTypeFromMimeType(string? mimeType)
+        => mimeType switch
+           {
+               MimeTypeString.Image.PS =>   Const.ImageTypeValue.PS,
+               MimeTypeString.Image.QTIME => Const.ImageTypeValue.QTIME,
+               "image/jpg" => Const.ImageTypeValue.JPEG,
+               _ => TypeValueFromMimeType(mimeType)
+           };
     
+    internal static string? MimeTypeFromImageType(string typeValue)
+        => typeValue switch
+           {
+               Const.ImageTypeValue.MPEG2 => MimeTypeFromImageType(Const.ImageTypeValue.MPEG),
+               Const.ImageTypeValue.PICT => MimeTypeString.Image.PICT,
+               Const.ImageTypeValue.PS => MimeTypeString.Image.PS,
+               Const.ImageTypeValue.QTIME => MimeTypeString.Image.QTIME,
+               "JPG" => MimeTypeString.Image.JPEG,
+               _ => CreateMimeType("image", typeValue),
+           };
 
-    internal static string? MimeTypeFromImageType(string typeValue) =>
-         typeValue switch
-        {
-            Const.ImageTypeValue.MPEG2 => MimeTypeFromImageType(Const.ImageTypeValue.MPEG),
-            Const.ImageTypeValue.PICT => MimeTypeString.Image.PICT,
-            Const.ImageTypeValue.PS => MimeTypeString.Image.PS,
-            Const.ImageTypeValue.QTIME => MimeTypeString.Image.QTIME,
-            "JPG" => MimeTypeString.Image.JPEG,
-            _ => CreateMimeType("image", typeValue),
-        };
+    internal static string? KeyTypeFromMimeType(string? mimeType)
+        => mimeType switch
+           {
+               MimeTypeString.EncryptionKey.X509 => Const.KeyTypeValue.X509,
+               "application/x-x509-user-cert" =>    Const.KeyTypeValue.X509,
+               MimeTypeString.EncryptionKey.PGP =>  Const.KeyTypeValue.PGP,
+               _ => TypeValueFromMimeType(mimeType)
+           };
 
-
-    internal static string? KeyTypeFromMimeType(string? mimeType) =>
-        mimeType switch
-        {
-            MimeTypeString.EncryptionKey.X509 => Const.KeyTypeValue.X509,
-            "application/x-x509-user-cert" =>    Const.KeyTypeValue.X509,
-            MimeTypeString.EncryptionKey.PGP =>  Const.KeyTypeValue.PGP,
-            _ => TypeValueFromMimeType(mimeType)
-        };
-
-
-    internal static string? MimeTypeFromKeyType(string typeValue) =>
-        typeValue switch
-        {
-            Const.KeyTypeValue.X509 => MimeTypeString.EncryptionKey.X509,
-            Const.KeyTypeValue.PGP => MimeTypeString.EncryptionKey.PGP,
-            _ => CreateMimeType("application", typeValue)
-        };
+    internal static string? MimeTypeFromKeyType(string typeValue)
+        => typeValue switch
+           {
+               Const.KeyTypeValue.X509 => MimeTypeString.EncryptionKey.X509,
+               Const.KeyTypeValue.PGP => MimeTypeString.EncryptionKey.PGP,
+               _ => CreateMimeType("application", typeValue)
+           };
 
 
-    internal static string? SoundTypeFromMimeType(string? mimeType) =>
-        mimeType switch
-        {
-            MimeTypeString.Audio.WAVE => Const.SoundTypeValue.WAVE,
-            MimeTypeString.Audio.PCM =>  Const.SoundTypeValue.PCM,
-            _ => TypeValueFromMimeType(mimeType)
-        };
+    internal static string? SoundTypeFromMimeType(string? mimeType)
+        => mimeType switch
+          {
+              MimeTypeString.Audio.WAVE => Const.SoundTypeValue.WAVE,
+              MimeTypeString.Audio.PCM =>  Const.SoundTypeValue.PCM,
+              _ => TypeValueFromMimeType(mimeType)
+          };
 
-    internal static string? MimeTypeFromSoundType(string typeValue) =>
-         typeValue switch
-        {
-            Const.SoundTypeValue.PCM => MimeTypeString.Audio.PCM,
-            Const.SoundTypeValue.WAVE => MimeTypeString.Audio.WAVE,
-            "MP3" => MimeTypeString.Audio.MPEG,
-            Const.SoundTypeValue.NonStandard.VORBIS => MimeTypeString.Audio.VORBIS,
-            _ => CreateMimeType("audio", typeValue)
-        };
-
+    internal static string? MimeTypeFromSoundType(string typeValue)
+        => typeValue switch
+           {
+               Const.SoundTypeValue.PCM => MimeTypeString.Audio.PCM,
+               Const.SoundTypeValue.WAVE => MimeTypeString.Audio.WAVE,
+               "MP3" => MimeTypeString.Audio.MPEG,
+               Const.SoundTypeValue.NonStandard.VORBIS => MimeTypeString.Audio.VORBIS,
+               _ => CreateMimeType("audio", typeValue)
+           };
 
     private static string? CreateMimeType(string mediaType, string subType)
     {
@@ -97,6 +93,7 @@ internal static class MimeTypeConverter
         {
             return mimeType.ToString();
         }
+
         try
         {
             return MimeType.Create(mediaType, subType).ToString();
@@ -123,7 +120,7 @@ internal static class MimeTypeConverter
             _ = subType.ToUpperInvariant(span);
             return span.ToString();
         }
+
         return null;
     }
-
 }

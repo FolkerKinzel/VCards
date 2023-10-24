@@ -38,9 +38,9 @@ public class EmbeddedBytesPropertyTests
         var prop = new EmbeddedBytesProperty(new byte[] {1,2,3}, null, new ParameterSection());
         Assert.IsFalse(prop.IsEmpty);
 
-        ReadOnlyCollection<byte>? val1 = prop.Value;
+        byte[] ? val1 = prop.Value;
         Assert.IsNotNull(val1);
-        ReadOnlyCollection<byte>? val2 = prop.Value;
+        byte[]? val2 = prop.Value;
         Assert.AreSame(val1, val2);
     }
 

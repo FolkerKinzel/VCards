@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.MimeTypes;
+using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
@@ -19,15 +19,12 @@ internal sealed class DateTimeTextProperty : DateAndOrTimeProperty
 
     public new string? Value => _textProp.Value;
 
-
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => _textProp.IsEmpty;
 
-
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public override object Clone() => new DateTimeTextProperty((TextProperty)_textProp.Clone());
-
     
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -36,6 +33,6 @@ internal sealed class DateTimeTextProperty : DateAndOrTimeProperty
         Parameters.DataType = VCdDataType.Text;
     }
 
-    internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);
-
+    internal override void AppendValue(VcfSerializer serializer)
+        => _textProp.AppendValue(serializer);
 }

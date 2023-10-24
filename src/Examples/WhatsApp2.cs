@@ -12,7 +12,7 @@ internal static class WhatsAppDemo2
     public static void UsingTheWhatsAppType()
     {
         var xiamoiMobilePhone = new VC::TextProperty("+1-234-567-89");
-        xiamoiMobilePhone.Parameters.NonStandardParameters = new KeyValuePair<string, string>[]
+        xiamoiMobilePhone.Parameters.NonStandard = new KeyValuePair<string, string>[]
         {
                 new KeyValuePair<string, string>("TYPE", "WhatsApp")
         };
@@ -30,7 +30,7 @@ internal static class WhatsAppDemo2
                     new VC::TextProperty("zzMad Perla 45")
             },
 
-            PhoneNumbers = new VC::TextProperty[]
+            Phones = new VC::TextProperty[]
             {
                     xiamoiMobilePhone
             }
@@ -46,8 +46,8 @@ internal static class WhatsAppDemo2
         vcard = VCard.ParseVcf(vcfString)[0];
 
         // Find the WhatsApp number:
-        string? whatsAppNumber = vcard.PhoneNumbers?
-            .FirstOrDefault(x => x?.Parameters.NonStandardParameters?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
+        string? whatsAppNumber = vcard.Phones?
+            .FirstOrDefault(x => x?.Parameters.NonStandard?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
             .Value;
 
         Console.Write("The WhatsApp number is: ");

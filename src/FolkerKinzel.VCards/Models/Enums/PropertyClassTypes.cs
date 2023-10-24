@@ -1,30 +1,28 @@
-﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>
-/// Benannte Konstanten, um den Geltungsbereich einer vCard-Property zu klassifizieren. Die Konstanten können
-/// kombiniert werden.
-/// </summary>
+/// <summary>Named constants to classify the scope of a vCard property. The constants
+/// can be combined.</summary>
 /// <remarks>
-/// <note type="tip">Verwenden Sie bei der Arbeit mit der Enum die Erweiterungsmethoden aus 
-/// <see cref="PropertyClassTypesExtension"/>.</note>
+/// <note type="tip">
+/// When working with the enum use the extension methods from the <see
+/// cref="PropertyClassTypesExtension" /> class. 
+/// </note>
 /// </remarks>
 [Flags]
 public enum PropertyClassTypes
 {
-    // ACHTUNG: Wenn die Enum erweitert wird, müssen
-    // VCardPropertyParameters.ParseTypeValue(string typeValue, string propertyKey)
-    // und PropertyClassTypesCollector angepasst werden!
+    // CAUTION: If the enum is expanded,
+    // ParameterSection.ParseTypeParameter(string, string) and
+    // EnumValueCollector must be adjusted!
 
-    /// <summary>
-    /// <c>HOME</c>: privat
-    /// </summary>
+    /// <summary> <c>HOME</c>: Implies that the property is related to an individual's
+    /// personal life.</summary>
     Home = 1,
 
 
-    /// <summary>
-    /// <c>WORK</c>: dienstlich
-    /// </summary>
+    /// <summary> <c>WORK</c>: Implies that the property is related to an individual's
+    /// work place.</summary>
     Work = 2
 }

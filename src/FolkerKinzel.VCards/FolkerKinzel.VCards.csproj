@@ -1,7 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup Condition="False And '$(TargetFramework)' == 'net7.0' And '$(Configuration)'=='Release'">
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net7.0;net6.0;net5.0;netstandard2.1;netstandard2.0;net461</TargetFrameworks>
     <LangVersion>11.0</LangVersion>
@@ -12,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>6.0.0-alpha.2</Version>
-    <FileVersion>6.0.0.14</FileVersion>
+    <FileVersion>6.0.0.36</FileVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v5.0.0-beta.3</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
@@ -29,7 +26,8 @@
     <PackageIconUrl />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
@@ -41,8 +39,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Intls\Attributes\**" />
+    <Compile Remove="Translations\**" />
     <EmbeddedResource Remove="Intls\Attributes\**" />
+    <EmbeddedResource Remove="Translations\**" />
     <None Remove="Intls\Attributes\**" />
+    <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\Nuget-Logo\Logo.png">
@@ -79,6 +80,7 @@
     <Compile Remove="MultiAnsiFilter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Reverser.log" />
     <None Remove="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -103,7 +105,7 @@
   <ItemGroup>
     <PackageReference Include="FolkerKinzel.Uris" Version="5.0.1" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard2.1' Or '$(TargetFramework)' == 'net5.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' Or &#xD;&#xA;                        '$(TargetFramework)' == 'netstandard2.0' Or&#xD;&#xA;                        '$(TargetFramework)' == 'netstandard2.1' Or&#xD;&#xA;                        '$(TargetFramework)' == 'net5.0'">
     <PackageReference Include="Portable.System.DateTimeOnly" Version="7.0.1" />
   </ItemGroup>
   <ItemGroup>
@@ -118,66 +120,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Res.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Translations\en\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\net7.0</PackagePath>
-    </None>
-    <None Include="Translations\en\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\net6.0</PackagePath>
-    </None>
-    <None Include="Translations\en\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\net5.0</PackagePath>
-    </None>
-    <None Include="Translations\en\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\netstandard2.1</PackagePath>
-    </None>
-    <None Include="Translations\en\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\netstandard2.0</PackagePath>
-    </None>
-    <None Include="Translations\en\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\net461</PackagePath>
-    </None>
-    <None Include="Translations\en\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\net40</PackagePath>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Translations\de\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\net7.0\de</PackagePath>
-    </None>
-    <None Include="Translations\de\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\net6.0\de</PackagePath>
-    </None>
-    <None Include="Translations\de\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\net5.0\de</PackagePath>
-    </None>
-    <None Include="Translations\de\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\netstandard2.1\de</PackagePath>
-    </None>
-    <None Include="Translations\de\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\netstandard2.0\de</PackagePath>
-    </None>
-    <None Include="Translations\de\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\net461\de</PackagePath>
-    </None>
-    <None Include="Translations\de\FolkerKinzel.VCards.xml">
-      <Pack>True</Pack>
-      <PackagePath>lib\net40\de</PackagePath>
-    </None>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="if $(ConfigurationName) == Release if '$(TargetFramework)' == 'net6.0' dotnet $(SolutionDir)IncVersion\IncVersion.dll $(ProjectDir)$(ProjectFileName) --revision" />

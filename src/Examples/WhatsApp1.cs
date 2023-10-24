@@ -25,12 +25,12 @@ internal static class WhatsAppDemo1
         var xiamoiMobilePhone = new VC::TextProperty(mobilePhoneNumber.Substring(4));
         xiamoiMobilePhone.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Home
                                                    | VC::Enums.PropertyClassTypes.Work;
-        xiamoiMobilePhone.Parameters.TelephoneType = VC::Enums.TelTypes.Voice
-                                                   | VC::Enums.TelTypes.BBS
-                                                   | VC::Enums.TelTypes.Cell
-                                                   | VC::Enums.TelTypes.Msg
-                                                   | VC::Enums.TelTypes.Text
-                                                   | VC::Enums.TelTypes.Video;
+        xiamoiMobilePhone.Parameters.PhoneType = VC::Enums.PhoneTypes.Voice
+                                                   | VC::Enums.PhoneTypes.BBS
+                                                   | VC::Enums.PhoneTypes.Cell
+                                                   | VC::Enums.PhoneTypes.Msg
+                                                   | VC::Enums.PhoneTypes.Text
+                                                   | VC::Enums.PhoneTypes.Video;
 
         // Initialize the VCard:
         var vcard = new VCard
@@ -52,7 +52,7 @@ internal static class WhatsAppDemo1
             },
 
             // Add the mobile phone too:
-            PhoneNumbers = new VC::TextProperty[]
+            Phones = new VC::TextProperty[]
             {
                     xiamoiMobilePhone
             }

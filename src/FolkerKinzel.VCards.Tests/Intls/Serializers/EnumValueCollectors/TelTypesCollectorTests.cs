@@ -9,24 +9,24 @@ public class TelTypesCollectorTests
     [TestMethod()]
     public void CollectValueStringsTest()
     {
-        TelTypes? tel = TelTypes.Voice | TelTypes.Msg;
+        PhoneTypes? tel = PhoneTypes.Voice | PhoneTypes.Msg;
 
         var list = new List<string>();
 
-        TelTypesCollector.CollectValueStrings(tel, list);
+        EnumValueCollector.Collect(tel, list);
 
         Assert.AreEqual(2, list.Count);
         Assert.IsTrue(list.Contains("MSG"));
 
         // collector darf die Liste nicht löschen!:
-        TelTypesCollector.CollectValueStrings(tel, list);
+        EnumValueCollector.Collect(tel, list);
         Assert.AreEqual(4, list.Count);
 
         // auf null testen:
         tel = null;
         list.Clear();
 
-        TelTypesCollector.CollectValueStrings(tel, list);
+        EnumValueCollector.Collect(tel, list);
         Assert.AreEqual(0, list.Count);
     }
 
@@ -35,14 +35,14 @@ public class TelTypesCollectorTests
     [TestMethod()]
     public void DetectAllEnumValues()
     {
-        var arr = (TelTypes[])Enum.GetValues(typeof(TelTypes));
+        var arr = (PhoneTypes[])Enum.GetValues(typeof(PhoneTypes));
 
         var list = new List<string>(1);
 
-        foreach (TelTypes item in arr)
+        foreach (PhoneTypes item in arr)
         {
             list.Clear();
-            TelTypesCollector.CollectValueStrings(item, list);
+            EnumValueCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
@@ -53,14 +53,14 @@ public class TelTypesCollectorTests
     [TestMethod()]
     public void RoundTrip()
     {
-        var arr = (TelTypes[])Enum.GetValues(typeof(TelTypes));
+        var arr = (PhoneTypes[])Enum.GetValues(typeof(PhoneTypes));
 
         var list = new List<string>(1);
 
-        foreach (TelTypes item in arr)
+        foreach (PhoneTypes item in arr)
         {
             list.Clear();
-            TelTypesCollector.CollectValueStrings(item, list);
+            EnumValueCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
@@ -71,12 +71,12 @@ public class TelTypesCollectorTests
             //Assert.AreEqual(comp.Value, item);
 
 
-            TelTypes? comp = TelTypesConverter.Parse(list[0]);
+            PhoneTypes? comp = PhoneTypesConverter.Parse(list[0]);
 
             Assert.IsTrue(comp.HasValue);
             Assert.AreEqual(comp!.Value, item);
 
-            var comp2 = (TelTypes)Enum.Parse(typeof(TelTypes), list[0], true);
+            var comp2 = (PhoneTypes)Enum.Parse(typeof(PhoneTypes), list[0], true);
 
             Assert.AreEqual(comp, comp2);
         }

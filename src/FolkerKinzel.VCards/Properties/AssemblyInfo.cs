@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
 [assembly: InternalsVisibleTo("FolkerKinzel.VCards.Tests")]

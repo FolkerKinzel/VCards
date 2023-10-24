@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -23,7 +23,7 @@ internal static class ValueEncodingConverter
                     'Q' => ValueEncoding.QuotedPrintable,
                     '8' => ValueEncoding.Ansi,
 
-                    // Ascii ist der Standard in vCard 2.1 und hat kein Symbol
+                    // Ascii is the standard in vCard 2.1 und has no symbol
                     // '7' => VCdEncoding.Ascii,
                     _ => (ValueEncoding?)null,
                 };
@@ -32,17 +32,4 @@ internal static class ValueEncodingConverter
 
         return null;
     }
-
-    //internal static string ToPropertyParameterString(this VCdEncoding? vCardEncoding, VCdVersion version)
-    //{
-    //    if (!vCardEncoding.HasValue || version >= VCdVersion.V4_0) return string.Empty;
-
-    //    if(vCardEncoding == VCdEncoding.Base64)
-    //    {
-    //        return (version == VCdVersion.V3_0) ? "b" : "BASE64";
-    //    }
-
-    //    return (vCardEncoding == VCdEncoding.QuotedPrintable && version == VCdVersion.V2_1)
-    //        ? "QUOTED-PRINTABLE" : string.Empty;
-    //}
 }

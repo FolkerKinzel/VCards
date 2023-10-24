@@ -1,16 +1,13 @@
-﻿using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
 internal sealed partial class VcfRow
 {
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="vCardRow">vCard-Zeile</param>
-    /// <param name="valueSeparatorIndex">Index des des Trennzeichens <c>':'</c>, das den Wert von
-    /// <paramref name="vCardRow"/> vom Schlüssel- und Parameterteil trennt.</param>
-    /// <param name="info">Ein <see cref="VcfDeserializationInfo"/>-Objekt.</param>
+    /// <summary>ctor</summary>
+    /// <param name="vCardRow" />
+    /// <param name="valueSeparatorIndex" />
+    /// <param name="info" />
     private VcfRow(string vCardRow, int valueSeparatorIndex, VcfDeserializationInfo info)
     {
         // vCardRow:
@@ -24,7 +21,6 @@ internal sealed partial class VcfRow
         int valueStart = valueSeparatorIndex + 1;
 
         this.Value = valueStart < vCardRow.Length ? vCardRow.Substring(valueStart) : "";
-
 
         // keySection:
         // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
@@ -42,7 +38,6 @@ internal sealed partial class VcfRow
             ? keyPartSpan.Slice(startOfKey).ToString().ToUpperInvariant()
             : keyPartSpan.ToString().ToUpperInvariant();
 
-
         if (groupSeparatorIndex > 0)
         {
             this.Group = keySection.Slice(0, groupSeparatorIndex).ToString();
@@ -51,7 +46,9 @@ internal sealed partial class VcfRow
         if (parameterSeparatorIndex != -1 && parameterSeparatorIndex < keySection.Length - 1)
         {
             ReadOnlySpan<char> parameterSection = keySection.Slice(parameterSeparatorIndex + 1);
-            this.Parameters = new ParameterSection(this.Key, GetParameters(parameterSection, info.ParameterList), info);
+            this.Parameters = new ParameterSection(this.Key,
+                                                   GetParameters(parameterSection, info.ParameterList),
+                                                   info);
         }
         else
         {
@@ -59,10 +56,8 @@ internal sealed partial class VcfRow
         }
     }
 
-
-
-    // Attribut-Values dürfen in vCard 4.0 :;, enthalten, wenn sie in doppelte Anführungszeichen
-    // eingeschlossen sind!
+    // Attribute-values may contain :;, in vCard 4.0 if they are
+    // enclosed in double quotes!
     private static int GetValueSeparatorIndex(string vCardRow)
     {
         bool isInDoubleQuotes = false;
@@ -84,8 +79,8 @@ internal sealed partial class VcfRow
         return -1;
     }
 
-
-    private static List<KeyValuePair<string, string>> GetParameters(ReadOnlySpan<char> parameterSection, List<KeyValuePair<string, string>> parameterTuples)
+    private static List<KeyValuePair<string, string>> GetParameters(ReadOnlySpan<char> parameterSection,
+                                                                    List<KeyValuePair<string, string>> parameterTuples)
     {
         int splitIndex;
         ReadOnlySpan<char> parameter;
@@ -125,9 +120,7 @@ internal sealed partial class VcfRow
             }
         }
 
-
         return parameterTuples;
-
 
         ////////////////////////////////////////////////////////////////////
 
@@ -154,7 +147,6 @@ internal sealed partial class VcfRow
             return -1;
         }
 
-
         static void SplitParameterKeyAndValue(List<KeyValuePair<string, string>> parameterTuples, ReadOnlySpan<char> parameter)
         {
             int splitIndex = parameter.IndexOf('=');
@@ -163,7 +155,8 @@ internal sealed partial class VcfRow
             {
                 // in vCard 2.1. kann direkt das Value angegeben werden, z.B. Note;Quoted-Printable;UTF-8:Text des Kommentars
                 string parameterString = parameter.ToString();
-                parameterTuples.Add(new KeyValuePair<string, string>(ParseAttributeKeyFromValue(parameterString), parameterString));
+                parameterTuples.Add(
+                    new KeyValuePair<string, string>(ParseAttributeKeyFromValue(parameterString), parameterString));
             }
             else
             {
@@ -180,5 +173,4 @@ internal sealed partial class VcfRow
             }
         }
     }
-
 }

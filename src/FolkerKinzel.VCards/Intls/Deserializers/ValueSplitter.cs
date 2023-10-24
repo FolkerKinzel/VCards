@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
@@ -15,7 +15,6 @@ internal class ValueSplitter : IEnumerable<string>
     internal char SplitChar { get; }
 
     internal StringSplitOptions Options { get; }
-
 
     public IEnumerator<string> GetEnumerator()
     {
@@ -103,6 +102,4 @@ internal class ValueSplitter : IEnumerable<string>
 
         return false;
     }
-
-
 }

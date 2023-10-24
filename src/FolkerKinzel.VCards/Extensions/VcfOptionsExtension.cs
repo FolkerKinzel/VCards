@@ -1,44 +1,47 @@
-﻿namespace FolkerKinzel.VCards.Extensions;
+namespace FolkerKinzel.VCards.Extensions;
 
-/// <summary>
-/// Erweiterungsmethoden, die die Arbeit mit der <see cref="VcfOptions"/>-Enum erleichtern.
-/// </summary>
+    /// <summary>Extension methods that make working with the <see cref="VcfOptions"
+    /// /> enum easier.</summary>
 public static class VcfOptionsExtension
 {
-    /// <summary>
-    /// Setzt sämtliche in <paramref name="flags"/> gesetzten Flags in <paramref name="value"/>.
-    /// </summary>
-    /// <param name="value">Der <see cref="VcfOptions"/>?-Wert, auf dem die in <paramref name="flags"/> gesetzten Flags gesetzt werden.</param>
-    /// <param name="flags">Ein einzelner <see cref="VcfOptions"/>-Wert oder eine Kombination aus mehreren 
-    /// <see cref="VcfOptions"/>-Werten.</param>
-    /// <returns>Ein <see cref="VcfOptions"/>-Wert, auf dem sämtliche in <paramref name="value"/> und <paramref name="flags"/>
-    /// gesetzten Flags gesetzt sind.</returns>
+    /// <summary>Sets all the flags set in <paramref name="flags" /> in <paramref name="value"
+    /// />.</summary>
+    /// <param name="value">The value to which all the flags set in <paramref name="flags"
+    /// /> are added.</param>
+    /// <param name="flags">A single <see cref="VcfOptions" /> value or a combination
+    /// of several <see cref="VcfOptions" /> values.</param>
+    /// <returns>A value, which has all flags set that are set in <paramref name="value"
+    /// /> and <paramref name="flags" />.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static VcfOptions Set(this VcfOptions value, VcfOptions flags) => value | flags;
 
-    /// <summary>
-    /// Untersucht, ob sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
-    /// gesetzt sind.
-    /// </summary>
-    /// <param name="value">Der <see cref="VcfOptions"/>?-Wert, der daraufhin überprüft wird, ob sämtliche in <paramref name="flags"/> gesetzten 
-    /// Flags auf ihm gesetzt sind.</param>
-    /// <param name="flags">Ein einzelner <see cref="VcfOptions"/>-Wert oder eine Kombination aus mehreren 
-    /// <see cref="VcfOptions"/>-Werten.</param>
-    /// <returns><c>true</c>, wenn sämtliche in <paramref name="flags"/> gesetzten Flags auch in <paramref name="value"/>
-    /// gesetzt sind. (Wenn <paramref name="flags"/>&#160;<see cref="VcfOptions.None"/> ist, wird nur dann <c>true</c> zurückgegeben,
-    /// wenn auch <paramref name="value"/>&#160;<see cref="VcfOptions.None"/> ist. Dasselbe gilt auch für <see cref="VcfOptions.All"/>.)</returns>
+    /// <summary>Checks whether all flags set in <paramref name="flags" /> are also
+    /// set in <paramref name="value" />.</summary>
+    /// <param name="value">The value, which is checked to see whether all flags set
+    /// in <paramref name="flags" /> are set on it.</param>
+    /// <param name="flags">A single <see cref="VcfOptions" /> value or a combination
+    /// of several <see cref="VcfOptions" /> values.</param>
+    /// <returns> 
+    /// Returns <c>true</c>, if all flags set in <paramref name="flags" /> are also set in 
+    /// <paramref name="value" />. If <paramref name="value" /> is null, <c>false</c> is returned. 
+    /// (If flags is <see cref="VcfOptions.None" />, <c>true</c> is only returned if 
+    /// <paramref name="value" /> is also <see cref="VcfOptions.None" />. The same applies 
+    /// to <see cref="VcfOptions.All" />.)
+    /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsSet(this VcfOptions value, VcfOptions flags) => flags == VcfOptions.None ? value == flags : (value & flags) == flags;
+    public static bool IsSet(this VcfOptions value, VcfOptions flags)
+        => flags == VcfOptions.None ? value == flags : (value & flags) == flags;
 
-    /// <summary>
-    /// Entfernt sämtliche in <paramref name="flags"/> gesetzten Flags aus <paramref name="value"/>.
-    /// </summary>
-    /// <param name="value">Der <see cref="VcfOptions"/>?-Wert, aus dem die in <paramref name="flags"/> gesetzten Flags entfernt werden.</param>
-    /// <param name="flags">Ein einzelner <see cref="VcfOptions"/>-Wert oder eine Kombination aus mehreren 
-    /// <see cref="VcfOptions"/>-Werten.</param>
-    /// <returns>Ein <see cref="VcfOptions"/>-Wert, auf dem sämtliche in <paramref name="flags"/>
-    /// gesetzten Flags entfernt sind. (Wenn <paramref name="flags"/>&#160;<see cref="VcfOptions.All"/> ist, wird 
-    /// <see cref="VcfOptions.None"/> zurückgegeben.)</returns>
+    /// <summary>Unsets all flags set in <paramref name="flags" /> in <paramref name="value"
+    /// />.</summary>
+    /// <param name="value">The value from which the flags set in <paramref name="flags"
+    /// /> are removed.</param>
+    /// <param name="flags">A single <see cref="VcfOptions" /> value or a combination
+    /// of several <see cref="VcfOptions" /> values.</param>
+    /// <returns>
+    /// A value from which all the flags set in <paramref name="flags" /> are removed. 
+    /// If <paramref name="flags" /> is <see cref="VcfOptions.All" />, 
+    /// <see cref="VcfOptions.None" /> is returned.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static VcfOptions Unset(this VcfOptions value, VcfOptions flags) => value & ~flags;
 }

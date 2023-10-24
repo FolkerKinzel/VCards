@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -8,9 +8,8 @@ using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
-/// <summary>
-/// Kapselt Informationen über den Namen der Person, die die vCard repräsentiert.
-/// </summary>
+/// <summary>Encapsulates information about the name of the person the 
+/// <see cref="VCard"/> represents.</summary>
 public sealed class Name
 {
     private const int MAX_COUNT = 5;
@@ -21,14 +20,7 @@ public sealed class Name
     private const int PREFIX = 3;
     private const int SUFFIX = 4;
 
-    /// <summary>
-    /// Initialisiert ein neues <see cref="Name"/>-Objekt.
-    /// </summary>
-    /// <param name="lastName">Nachname</param>
-    /// <param name="firstName">Vorname</param>
-    /// <param name="middleName">zweiter Vorname</param>
-    /// <param name="prefix">Namenspräfix (z.B. "Prof. Dr.")</param>
-    /// <param name="suffix">Namenssuffix (z.B. "jr.")</param>
+    
     internal Name(
         ReadOnlyCollection<string> lastName,
         ReadOnlyCollection<string> firstName,
@@ -43,13 +35,14 @@ public sealed class Name
         Suffix = suffix;
     }
 
+
     internal Name()
     {
         LastName =
         FirstName =
         MiddleName =
         Prefix =
-        Suffix = ReadOnlyCollectionString.Empty;
+        Suffix = ReadOnlyStringCollection.Empty;
     }
 
 
@@ -71,7 +64,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            LastName = ReadOnlyCollectionString.Empty;
+                            LastName = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -92,7 +85,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            FirstName = ReadOnlyCollectionString.Empty;
+                            FirstName = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -113,7 +106,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            MiddleName = ReadOnlyCollectionString.Empty;
+                            MiddleName = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -134,7 +127,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            Prefix = ReadOnlyCollectionString.Empty;
+                            Prefix = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -155,7 +148,7 @@ public sealed class Name
                     {
                         if (s.Length == 0)
                         {
-                            Suffix = ReadOnlyCollectionString.Empty;
+                            Suffix = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -181,103 +174,36 @@ public sealed class Name
         // (LastName can never be null)
         Debug.Assert(LastName != null);
         //LastName ??= ReadOnlyCollectionString.Empty;
-        FirstName ??= ReadOnlyCollectionString.Empty;
-        MiddleName ??= ReadOnlyCollectionString.Empty;
-        Prefix ??= ReadOnlyCollectionString.Empty;
-        Suffix ??= ReadOnlyCollectionString.Empty;
+        FirstName ??= ReadOnlyStringCollection.Empty;
+        MiddleName ??= ReadOnlyStringCollection.Empty;
+        Prefix ??= ReadOnlyStringCollection.Empty;
+        Suffix ??= ReadOnlyStringCollection.Empty;
     }
 
-    /// <summary>
-    /// Nachname (nie <c>null</c>)
-    /// </summary>
+    /// <summary>Family Name(s) (also known as surname(s)).</summary>
     public ReadOnlyCollection<string> LastName { get; }
 
-    /// <summary>
-    /// Vorname (nie <c>null</c>)
-    /// </summary>
+    /// <summary>Given Name(s) (First Name(s)).</summary>
     public ReadOnlyCollection<string> FirstName { get; }
 
-    /// <summary>
-    /// zweiter Vorname (nie <c>null</c>)
-    /// </summary>
+    /// <summary>Additional Name(s).</summary>
     public ReadOnlyCollection<string> MiddleName { get; }
 
-    /// <summary>
-    /// Namenspräfix (z.B. "Prof. Dr.") (nie <c>null</c>)
-    /// </summary>
+    /// <summary>Honorific Prefix(es).</summary>
     public ReadOnlyCollection<string> Prefix { get; }
 
-    /// <summary>
-    /// Namenssuffix (z.B. "jr.") (nie <c>null</c>)
-    /// </summary>
+    /// <summary>Honorific Suffix(es).</summary>
     public ReadOnlyCollection<string> Suffix { get; }
 
-
-    /// <summary>
-    /// <c>true</c>, wenn das <see cref="Name"/>-Objekt keine verwertbaren Daten enthält.
-    /// </summary>
-    public bool IsEmpty => LastName.Count == 0 && 
-                           FirstName.Count == 0 && 
-                           MiddleName.Count == 0 && 
-                           Prefix.Count == 0 && 
+    /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain
+    /// any usable data, otherwise <c>false</c>.</summary>
+    public bool IsEmpty => LastName.Count == 0 &&
+                           FirstName.Count == 0 &&
+                           MiddleName.Count == 0 &&
+                           Prefix.Count == 0 &&
                            Suffix.Count == 0;
 
-
-    internal void AppendVCardString(VcfSerializer serializer)
-    {
-        StringBuilder builder = serializer.Builder;
-        StringBuilder worker = serializer.Worker;
-
-        char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
-
-        AppendProperty(LastName);
-        _ = builder.Append(';');
-
-        AppendProperty(FirstName);
-        _ = builder.Append(';');
-
-        AppendProperty(MiddleName);
-        _ = builder.Append(';');
-
-        AppendProperty(Prefix);
-        _ = builder.Append(';');
-
-        AppendProperty(Suffix);
-
-        ///////////////////////////////////
-
-        void AppendProperty(IList<string> strings)
-        {
-            if (strings.Count == 0)
-            {
-                return;
-            }
-
-            for (int i = 0; i < strings.Count - 1; i++)
-            {
-                _ = worker.Clear().Append(strings[i]).Mask(serializer.Version);
-                _ = builder.Append(worker).Append(joinChar);
-            }
-
-            _ = worker.Clear().Append(strings[strings.Count - 1]).Mask(serializer.Version);
-            _ = builder.Append(worker);
-        }
-    }
-
-
-    internal bool NeedsToBeQpEncoded()
-        => LastName.Any(StringExtension.NeedsToBeQpEncoded) ||
-           FirstName.Any(StringExtension.NeedsToBeQpEncoded) ||
-           MiddleName.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Prefix.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Suffix.Any(StringExtension.NeedsToBeQpEncoded);
-
-
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="Name"/>-Objekts. 
-    /// (Nur zum Debugging.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="Name"/>-Objekts.</returns>
+    /// <inheritdoc/>
     public override string ToString()
     {
         var worker = new StringBuilder();
@@ -392,15 +318,15 @@ public sealed class Name
         }
     }
 
-    /// <summary>
-    /// Formatiert die von der Instanz gekapselten Daten in eine lesbare Form.
-    /// </summary>
-    /// <returns>Die von der Instanz gekapselten Daten in lesbarer Form.</returns>
-    public string ToDisplayName()
+    /// <summary>Formats the data encapsulated by the instance into a human-readable
+    /// form.</summary>
+    /// <returns>The data encapsulated by the instance in human-readable form or
+    /// <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
+    public string? ToDisplayName()
     {
         const int stringBuilderInitialCapacity = 32;
         return IsEmpty
-            ? string.Empty
+            ? null
             : new StringBuilder(stringBuilderInitialCapacity)
             .AppendReadableProperty(Prefix)
             .AppendReadableProperty(FirstName)
@@ -409,6 +335,56 @@ public sealed class Name
             .AppendReadableProperty(Suffix)
             .ToString();
     }
+
+
+    internal void AppendVCardString(VcfSerializer serializer)
+    {
+        StringBuilder builder = serializer.Builder;
+        StringBuilder worker = serializer.Worker;
+
+        char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
+
+        AppendProperty(LastName);
+        _ = builder.Append(';');
+
+        AppendProperty(FirstName);
+        _ = builder.Append(';');
+
+        AppendProperty(MiddleName);
+        _ = builder.Append(';');
+
+        AppendProperty(Prefix);
+        _ = builder.Append(';');
+
+        AppendProperty(Suffix);
+
+        ///////////////////////////////////
+
+        void AppendProperty(IList<string> strings)
+        {
+            if (strings.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < strings.Count - 1; i++)
+            {
+                _ = worker.Clear().Append(strings[i]).Mask(serializer.Version);
+                _ = builder.Append(worker).Append(joinChar);
+            }
+
+            _ = worker.Clear().Append(strings[strings.Count - 1]).Mask(serializer.Version);
+            _ = builder.Append(worker);
+        }
+    }
+
+
+    internal bool NeedsToBeQpEncoded()
+        => LastName.Any(StringExtension.NeedsToBeQpEncoded) ||
+           FirstName.Any(StringExtension.NeedsToBeQpEncoded) ||
+           MiddleName.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Prefix.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Suffix.Any(StringExtension.NeedsToBeQpEncoded);
 }
 
 

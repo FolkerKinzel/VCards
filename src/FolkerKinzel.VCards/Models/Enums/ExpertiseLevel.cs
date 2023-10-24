@@ -1,28 +1,22 @@
-﻿using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models.Enums;
 
 /// <summary>
-/// Benannte Konstanten, um den Parameter <see cref="ParameterSection.ExpertiseLevel"/> in der 
-/// Eigenschaft <see cref="VCard.Expertises">VCard.Expertises</see> anzugeben. <c>(RFC 6715)</c>
+/// Named constants to specify the parameter <see cref="ParameterSection.Expertise" /> 
+/// in the property <see cref="VCard.Expertises">VCard.Expertises</see>. <c>(RFC 6715)</c>
 /// </summary>
 public enum ExpertiseLevel
 {
-    // ACHTUNG: Wenn die Enum erweitert wird, muss
-    // ExpertiseLevelConverter angepasst werden!
+    // CAUTION: If the enum is expanded, ExpertiseLevelConverter
+    // must be adjusted!
 
-    /// <summary>
-    /// Anfänger
-    /// </summary>
+    /// <summary>Beginner</summary>
     Beginner,
 
-    /// <summary>
-    /// Fortgeschrittener
-    /// </summary>
+    /// <summary>Average</summary>
     Average,
 
-    /// <summary>
-    /// Experte
-    /// </summary>
+    /// <summary>Expert</summary>
     Expert
 }

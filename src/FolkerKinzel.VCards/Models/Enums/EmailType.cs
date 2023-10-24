@@ -1,17 +1,11 @@
-﻿namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Models.Enums;
 
-/// <summary>
-/// Benannte Konstanten, die die Art einer E-Mail-Adresse beschreiben.
-/// </summary>
+/// <summary>Named constants to describe the type of an email address.</summary>
 public static class EmailType
 {
-    /// <summary>
-    /// Internet-E-Mail
-    /// </summary>
+    /// <summary>Internet addressing type</summary>
     public const string SMTP = "INTERNET";
 
-    /// <summary>
-    /// X.400-E-Mail (z.B. "BusinessMail X.400")
-    /// </summary>
+    /// <summary>X.400 addressing type (e.g. "BusinessMail X.400")</summary>
     public const string X400 = "X400";
 }

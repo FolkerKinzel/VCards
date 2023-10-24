@@ -148,7 +148,7 @@ public class V3Tests
 
 
     [TestMethod]
-    public void SerializeVCard()
+    public void SerializeVCardTest1()
     {
         string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0, options: VcfOptions.All);
 
@@ -165,6 +165,17 @@ public class V3Tests
         Assert.AreEqual(VCdVersion.V3_0, vcard.Version);
         Assert.IsNotNull(vcard.DirectoryName);
         Assert.IsNotNull(vcard.Mailer);
+    }
+
+    [TestMethod]
+    public void SerializeVCardTest2()
+    {
+        IList<VCard> vc = VCard.LoadVcf(TestFiles.PhotoV3vcf);
+        vc.Add(vc[0]);
+
+        string s = vc.ToVcfString();
+
+        vc = VCard.ParseVcf(s);
     }
 
 
@@ -198,14 +209,14 @@ END:VCARD";
     {
         const string whatsAppNumber = "+1-234-567-89";
         var xiamoiMobilePhone = new TextProperty(whatsAppNumber);
-        xiamoiMobilePhone.Parameters.NonStandardParameters = new KeyValuePair<string, string>[]
+        xiamoiMobilePhone.Parameters.NonStandard = new KeyValuePair<string, string>[]
         {
                 new KeyValuePair<string, string>("TYPE", "WhatsApp")
         };
 
         var vcard = new VCard
         {
-            PhoneNumbers = xiamoiMobilePhone
+            Phones = xiamoiMobilePhone
         };
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
@@ -214,8 +225,8 @@ END:VCARD";
         vcard = VCard.ParseVcf(vcfString)[0];
 
         // Find the WhatsApp number:
-        string? readWhatsAppNumber = vcard.PhoneNumbers?
-            .FirstOrDefault(x => x?.Parameters.NonStandardParameters?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
+        string? readWhatsAppNumber = vcard.Phones?
+            .FirstOrDefault(x => x?.Parameters.NonStandard?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
             .Value;
         Assert.AreEqual(whatsAppNumber, readWhatsAppNumber);
 

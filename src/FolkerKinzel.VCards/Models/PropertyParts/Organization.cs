@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -6,15 +6,13 @@ using FolkerKinzel.VCards.Intls.Serializers;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
-/// <summary>
-/// Kapselt Angaben zur Organisation (oder Firma) des Subjekts, das die vCard repräsentiert.
-/// </summary>
+/// <summary>Encapsulates information about the organization (or company) of the
+/// object the <see cref="VCard"/> represents.</summary>
 public sealed class Organization
 {
-    /// <summary>
-    /// Initialisiert ein neues <see cref="Organization"/>-Objekt.
-    /// </summary>
-    /// <param name="orgList">Name der Organisation gefolgt von Name(n) der Unterorganisation(en).</param>
+    /// <summary>Initializes a new <see cref="Organization" /> object.</summary>
+    /// <param name="orgList">Organization name, optional followed by the name(s) 
+    /// of the organizational units.</param>
     internal Organization(List<string> orgList)
     {
         Debug.Assert(orgList.Count != 0);
@@ -30,54 +28,21 @@ public sealed class Organization
         }
     }
 
-    /// <summary>
-    /// Name der Organisation
-    /// </summary>
+    /// <summary>Organization name.</summary>
     public string? OrganizationName { get; }
 
-
-    /// <summary>
-    /// Name(n) der Unterorganisation(en)
-    /// </summary>
+    /// <summary>Organizational unit name(s).</summary>
     public ReadOnlyCollection<string>? OrganizationalUnits { get; }
 
-
-    /// <summary>
-    /// <c>true</c>, wenn das <see cref="Organization"/>-Objekt keine verwertbaren Daten enthält.
-    /// </summary>
+    /// <summary>Returns <c>true</c>, if the <see cref="Organization" /> object does
+    /// not contain any usable data.</summary>
     public bool IsEmpty => OrganizationName is null && OrganizationalUnits is null;
 
-
     internal bool NeedsToBeQpEncoded()
-        => (OrganizationName.NeedsToBeQpEncoded()) ||
+        => OrganizationName.NeedsToBeQpEncoded() ||
            (OrganizationalUnits != null && OrganizationalUnits.Any(s => s.NeedsToBeQpEncoded()));
-
-
-    internal void AppendVCardStringTo(VcfSerializer serializer)
-    {
-        StringBuilder builder = serializer.Builder;
-        StringBuilder worker = serializer.Worker;
-
-        _ = worker.Clear().Append(OrganizationName).Mask(serializer.Version);
-        _ = builder.Append(worker);
-
-        if (OrganizationalUnits != null)
-        {
-            for (int i = 0; i < OrganizationalUnits.Count; i++)
-            {
-                _ = worker.Clear().Append(OrganizationalUnits[i]).Mask(serializer.Version);
-
-                _ = builder.Append(';');
-                _ = builder.Append(worker);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Erstellt eine <see cref="string"/>-Repräsentation des <see cref="Organization"/>-Objekts. (Nur zum 
-    /// Debuggen.)
-    /// </summary>
-    /// <returns>Eine <see cref="string"/>-Repräsentation des <see cref="Organization"/>-Objekts.</returns>
+    
+    /// <inheritdoc/>
     public override string ToString()
     {
         var sb = new StringBuilder();
@@ -112,4 +77,24 @@ public sealed class Organization
         return sb.ToString();
     }
 
+
+    internal void AppendVCardStringTo(VcfSerializer serializer)
+    {
+        StringBuilder builder = serializer.Builder;
+        StringBuilder worker = serializer.Worker;
+
+        _ = worker.Clear().Append(OrganizationName).Mask(serializer.Version);
+        _ = builder.Append(worker);
+
+        if (OrganizationalUnits != null)
+        {
+            for (int i = 0; i < OrganizationalUnits.Count; i++)
+            {
+                _ = worker.Clear().Append(OrganizationalUnits[i]).Mask(serializer.Version);
+
+                _ = builder.Append(';');
+                _ = builder.Append(worker);
+            }
+        }
+    }
 }

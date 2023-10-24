@@ -1,19 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using FolkerKinzel.VCards.Models.Enums;
-using System.Linq;
-using System.IO;
+﻿using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Intls.Models;
+using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Extensions.Tests
 {
     [TestClass()]
-    public class VCardCollectionExtensionTests
+    public class IEnumerableExtensionTests
     {
-        public TestContext? TestContext { get; set; }
+        public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
 
 
         private static List<VCard?> GenerateVCardList()
