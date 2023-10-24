@@ -101,10 +101,7 @@
   <ItemGroup>
     <PackageReference Include="FolkerKinzel.Uris" Version="5.0.1" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' Or 
-                        '$(TargetFramework)' == 'netstandard2.0' Or
-                        '$(TargetFramework)' == 'netstandard2.1' Or
-                        '$(TargetFramework)' == 'net5.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' Or &#xD;&#xA;                        '$(TargetFramework)' == 'netstandard2.0' Or&#xD;&#xA;                        '$(TargetFramework)' == 'netstandard2.1' Or&#xD;&#xA;                        '$(TargetFramework)' == 'net5.0'">
     <PackageReference Include="Portable.System.DateTimeOnly" Version="7.0.1" />
   </ItemGroup>
   <ItemGroup>

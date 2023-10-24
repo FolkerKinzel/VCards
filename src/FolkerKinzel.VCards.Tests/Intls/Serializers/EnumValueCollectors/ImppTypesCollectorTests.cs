@@ -13,20 +13,20 @@ public class ImppTypesCollectorTests
 
         var list = new List<string>();
 
-        ImppTypesCollector.CollectValueStrings(adr, list);
+        ImppTypesCollector.Collect(adr, list);
 
         Assert.AreEqual(2, list.Count);
         Assert.IsTrue(list.Contains(ImppTypesConverter.TypeValue.PERSONAL));
 
         // collector darf die Liste nicht löschen!:
-        ImppTypesCollector.CollectValueStrings(adr, list);
+        ImppTypesCollector.Collect(adr, list);
         Assert.AreEqual(4, list.Count);
 
         // auf null testen:
         adr = null;
         list.Clear();
 
-        ImppTypesCollector.CollectValueStrings(adr, list);
+        ImppTypesCollector.Collect(adr, list);
         Assert.AreEqual(0, list.Count);
     }
 
@@ -40,7 +40,7 @@ public class ImppTypesCollectorTests
         foreach (ImppTypes item in arr)
         {
             list.Clear();
-            ImppTypesCollector.CollectValueStrings(item, list);
+            ImppTypesCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
@@ -57,7 +57,7 @@ public class ImppTypesCollectorTests
         foreach (ImppTypes item in arr)
         {
             list.Clear();
-            ImppTypesCollector.CollectValueStrings(item, list);
+            ImppTypesCollector.Collect(item, list);
 
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);

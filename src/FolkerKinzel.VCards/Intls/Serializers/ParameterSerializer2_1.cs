@@ -1,6 +1,5 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -11,23 +10,22 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
     private readonly List<string> _stringCollectionList = new();
     private readonly List<Action<ParameterSerializer2_1>> _actionList = new(2);
 
-    private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes =
-    serializer => PropertyClassTypesCollector.CollectValueStrings(
-            serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
+    private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes = static serializer
+        => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
+                                      serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer2_1> _collectTelTypes =
-    serializer =>
+    private readonly Action<ParameterSerializer2_1> _collectTelTypes = static serializer =>
     {
         const PhoneTypes DEFINED_TELTYPES = PhoneTypes.Voice | PhoneTypes.Fax | PhoneTypes.Msg | PhoneTypes.Cell |
         PhoneTypes.Pager | PhoneTypes.BBS | PhoneTypes.Modem | PhoneTypes.Car | PhoneTypes.ISDN | PhoneTypes.Video;
 
-        PhoneTypesCollector.CollectValueStrings(
-                serializer.ParaSection.PhoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
+        EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_TELTYPES,
+                                   serializer._stringCollectionList);
     };
 
-    private readonly Action<ParameterSerializer2_1> _collectAddressTypes =
-    serializer => AddressTypesCollector.CollectValueStrings(
-            serializer.ParaSection.AddressType, serializer._stringCollectionList);
+    private readonly Action<ParameterSerializer2_1> _collectAddressTypes = static serializer 
+        => EnumValueCollector.Collect(serializer.ParaSection.AddressType,
+                                      serializer._stringCollectionList);
 
     public ParameterSerializer2_1(VcfOptions options) : base(options) { }
 

@@ -2,7 +2,6 @@ using System.Globalization;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -14,29 +13,25 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     private readonly List<string> _stringCollectionList = new();
     private readonly List<Action<ParameterSerializer4_0>> _actionList = new(2);
 
-    private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes =
-        serializer => PropertyClassTypesCollector.CollectValueStrings(
-            serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
+    private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes = static serializer
+        => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
+                                      serializer._stringCollectionList);
 
+    private readonly Action<ParameterSerializer4_0> _collectTelTypes = static serializer
+        => {
+                const PhoneTypes DEFINED_TELTYPES = PhoneTypes.Voice | PhoneTypes.Text | PhoneTypes.Fax | 
+                                                    PhoneTypes.Cell | PhoneTypes.Video | PhoneTypes.Pager |
+                                                    PhoneTypes.TextPhone;
+         
+                EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_TELTYPES,
+                                           serializer._stringCollectionList);
+            };
 
-    private readonly Action<ParameterSerializer4_0> _collectTelTypes =
-        serializer =>
-        {
-            const PhoneTypes DEFINED_TELTYPES = PhoneTypes.Voice | PhoneTypes.Text | PhoneTypes.Fax | PhoneTypes.Cell
-                                            | PhoneTypes.Video | PhoneTypes.Pager | PhoneTypes.TextPhone;
-
-            PhoneTypesCollector.CollectValueStrings(
-                serializer.ParaSection.PhoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
-        };
-
-
-    private readonly Action<ParameterSerializer4_0> _collectRelationTypes =
-        serializer => RelationTypesCollector.CollectValueStrings(
-            serializer.ParaSection.Relation, serializer._stringCollectionList);
-
+    private readonly Action<ParameterSerializer4_0> _collectRelationTypes = static serializer
+        => EnumValueCollector.Collect(serializer.ParaSection.Relation,
+                                      serializer._stringCollectionList);
 
     public ParameterSerializer4_0(VcfOptions options) : base(options) { }
-
 
     #region Build
 

@@ -1,7 +1,6 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -12,38 +11,35 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     private readonly List<string> _stringCollectionList = new();
     private readonly List<Action<ParameterSerializer3_0>> _actionList = new(2);
 
-    private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes =
-    serializer => PropertyClassTypesCollector.CollectValueStrings(
-            serializer.ParaSection.PropertyClass, serializer._stringCollectionList);
+    private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes = static serializer
+        => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass, 
+                                      serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer3_0> _collectTelTypes =
-    serializer =>
-    {
-        const PhoneTypes DEFINED_TELTYPES = PhoneTypes.Voice | PhoneTypes.Fax | PhoneTypes.Msg |
-        PhoneTypes.Cell | PhoneTypes.Pager | PhoneTypes.BBS | PhoneTypes.Modem | PhoneTypes.Car | PhoneTypes.ISDN |
-        PhoneTypes.Video | PhoneTypes.PCS;
+    private readonly Action<ParameterSerializer3_0> _collectTelTypes = static serializer
+        => {
+               const PhoneTypes DEFINED_TELTYPES = PhoneTypes.Voice | PhoneTypes.Fax | PhoneTypes.Msg |
+               PhoneTypes.Cell | PhoneTypes.Pager | PhoneTypes.BBS | PhoneTypes.Modem | PhoneTypes.Car |
+               PhoneTypes.ISDN | PhoneTypes.Video | PhoneTypes.PCS;
+         
+               EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_TELTYPES,
+                                          serializer._stringCollectionList);
+           };
 
-        PhoneTypesCollector.CollectValueStrings(
-                serializer.ParaSection.PhoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
-    };
+    private readonly Action<ParameterSerializer3_0> _collectAddressTypes = static serializer 
+        => EnumValueCollector.Collect(serializer.ParaSection.AddressType,
+                                      serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer3_0> _collectAddressTypes =
-    serializer => AddressTypesCollector.CollectValueStrings(
-            serializer.ParaSection.AddressType, serializer._stringCollectionList);
+    private readonly Action<ParameterSerializer3_0> _collectImppTypes = static serializer 
+        => EnumValueCollector.Collect(serializer.ParaSection.InstantMessengerType,
+                                      serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer3_0> _collectImppTypes =
-    serializer => ImppTypesCollector.CollectValueStrings(
-            serializer.ParaSection.InstantMessengerType, serializer._stringCollectionList);
-
-    private readonly Action<ParameterSerializer3_0> _collectKeyType = serializer => serializer.DoCollectKeyType();
-    private readonly Action<ParameterSerializer3_0> _collectImageType = serializer => serializer.DoCollectImageType();
-    private readonly Action<ParameterSerializer3_0> _collectEmailType = serializer => serializer.DoCollectEmailType();
-    private readonly Action<ParameterSerializer3_0> _collectSoundType = serializer => serializer.DoCollectSoundType();
-    private readonly Action<ParameterSerializer3_0> _collectMediaType = serializer => serializer.DoCollectMediaType();
-
+    private readonly Action<ParameterSerializer3_0> _collectKeyType = static serializer => serializer.DoCollectKeyType();
+    private readonly Action<ParameterSerializer3_0> _collectImageType = static serializer => serializer.DoCollectImageType();
+    private readonly Action<ParameterSerializer3_0> _collectEmailType = static serializer => serializer.DoCollectEmailType();
+    private readonly Action<ParameterSerializer3_0> _collectSoundType = static serializer => serializer.DoCollectSoundType();
+    private readonly Action<ParameterSerializer3_0> _collectMediaType = static serializer => serializer.DoCollectMediaType();
 
     public ParameterSerializer3_0(VcfOptions options) : base(options) { }
-
 
     #region Build
 
@@ -550,7 +546,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     }
 
     #endregion
-
 
     private string Mask(string? s) => _worker.Clear().Append(s).Mask(VCdVersion.V3_0).ToString();
 
