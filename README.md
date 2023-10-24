@@ -2,21 +2,28 @@
 [![NuGet](https://img.shields.io/nuget/v/FolkerKinzel.VCards)](https://www.nuget.org/packages/FolkerKinzel.VCards/)
 [![GitHub](https://img.shields.io/github/license/FolkerKinzel/VCards)](https://github.com/FolkerKinzel/VCards/blob/master/LICENSE)
 
-.NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
+## .NET library to read, write and convert VCF files that match the vCard standards 2.1, 3.0 and 4.0.
+
+FolkerKinzel.VCards is a full featured .NET library to work with vCard files (*.vcf).</para>
 
 It allows
-* to load VCF files from the file system and to save them there,
-* to serialize VCF files from and to Streams and
-* to convert VCF files, that match the vCard versions 2.1, 3.0 and 4.0, to each other.
+- to load VCF files from the file system and to save them there,</para>
+- to serialize VCF files from and to Streams and</para>
+- to convert VCF files, that match the vCard versions 2.1, 3.0 and 4.0, to each other.</para>
 
-It is used as a dependency in [FolkerKinzel.Contacts.IO](https://github.com/FolkerKinzel/Contacts.IO) - an easy to use .NET-API
-to manage contact data of organizations and natural persons.
+Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from such files.
+The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards are not completely compliant, incompliant data is silently ignored when converting from one vCard standard to another. To minimize this kind of data loss, the library tries to preserve incompliant data using well-known x-name properties. The usage of such x-name properties can be controlled via options (VcfOptions).
 
-* [Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v4.0.0)
+[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v4.0.0)
 
-> IMPORTANT: On some systems the content of the .CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox (if it is present) in the lower right corner of the General tab in the Properties dialog.
+Read the ["Getting Started" tutorial]() if you are new to this library!
 
-* [Version History](https://github.com/FolkerKinzel/VCards/releases)
+### Code Examples
+
+
+
+
+[Version History](https://github.com/FolkerKinzel/VCards/releases)
 
 ## Getting Started
 

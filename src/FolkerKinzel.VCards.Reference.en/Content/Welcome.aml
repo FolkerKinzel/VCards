@@ -3,7 +3,7 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>FolkerKinzel.VCards is a full featured .NET library to work with vCard files (*.vcf).</para>
-      <para>It enables you</para>
+      <para>It allows</para>
       <list class="bullet">
         <listItem>
           <para>to load VCF files from the file system and to save them there,</para>
@@ -103,7 +103,7 @@
           <title>Naming Conventions</title>
           <content>
             <para>
-              Most properties of the class <codeInline>VCard</codeInline> are collections. It has to do with, that many properties are allowed to have more than one
+              Most properties of the <codeInline>VCard</codeInline> class are collections. It has to do with, that many properties are allowed to have more than one
               instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.
             </para>
             <para>
@@ -112,7 +112,7 @@
               on each of these versions.
             </para>
             <para>
-              Most classes that are derived from <codeInline>VCardProperty</codeInline> implement <codeInline>IEnumerable&lt;T&gt;</codeInline> in
+              Most classes derived from <codeInline>VCardProperty</codeInline> implement <codeInline>IEnumerable&lt;T&gt;</codeInline> in
               order to be assignable to collection properties without having to be wrapped in an Array or List.
             </para>
           </content>
@@ -153,7 +153,7 @@
     </section>
 
     <section address="VcardStandard">
-      <title>The vCard-Standard</title>
+      <title>The vCard Standard</title>
       <content>
         <para>The vCard standard is defined in the following documents:</para>
 
