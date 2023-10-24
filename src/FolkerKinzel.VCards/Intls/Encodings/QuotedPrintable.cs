@@ -2,11 +2,11 @@ using System.Globalization;
 
 namespace FolkerKinzel.VCards.Intls.Encodings;
 
-    /// <summary />
-    /// <threadsafety static="true" instance="false" />
+/// <summary>Provides methods for encoding and decoding the Quoted-Printable format.</summary>
+/// <threadsafety static="true" instance="false" />
 internal static class QuotedPrintable
 {
-    internal const string STANDARD_LINEBREAK = "\r\n";
+    internal const string NEW_LINE = "\r\n";
 
     private const string SOFT_LINEBREAK = "=\r\n";
     private const int SOFT_LINEBREAK_LENGTH = 3;
@@ -15,13 +15,16 @@ internal static class QuotedPrintable
     private const int MAX_ROWLENGTH = VCard.MAX_BYTES_PER_LINE; //76;
     private const int MIN_ROWLENGTH = ENCODED_CHAR_LENGTH + 1;
 
-
     #region Encode
-    /// <summary />
-    /// <param name="value" />
-    /// <param name="firstLineOffset" />
-    /// <returns />
-    /// <exception cref="ArgumentOutOfRangeException" />
+    /// <summary>Encodes a <see cref="string"/> into Quoted-Printable. </summary>
+    /// <param name="value">The <see cref="string"/> to encode or <c>null</c>.</param>
+    /// <param name="firstLineOffset">Length of the current line in the text before
+    /// <paramref name="value"/> starts. (Used to compute the correct line wrapping.)</param>
+    /// <returns><paramref name="value"/> Quoted-Printable encoded. If 
+    /// <paramref name="value"/> is <c>null</c>, <see cref="string.Empty"/> is 
+    /// returned.</returns>
+    /// <remarks>If <see cref="Environment.NewLine"/> is not "\r\n" on the executing 
+    /// platform, the <see cref="string"/> will be adjusted automatically.</remarks>
     public static string Encode(
         string? value,
         int firstLineOffset)
@@ -36,29 +39,26 @@ internal static class QuotedPrintable
 
         value = NormalizeLineBreaksOnUnixSystems(value);
 
-
         //unerlaubte Zeichen codieren
         StringBuilder sb = ProcessCoding(Encoding.UTF8.GetBytes(value));
 
-
-        EncodeLastCharInLineIfItsWhitespace(sb);
+        EncodeLastCharInLineIfItIsWhiteSpace(sb);
         MakeSoftLineBreaks(firstLineOffset, sb);
         return sb.ToString();
-
 
         ////////////////////////////////////////
 
         [ExcludeFromCodeCoverage]
         static string NormalizeLineBreaksOnUnixSystems(string value)
         {
-            if (!StringComparer.Ordinal.Equals(Environment.NewLine, STANDARD_LINEBREAK))
+            if (!StringComparer.Ordinal.Equals(Environment.NewLine, NEW_LINE))
             {
-                value = value.Replace(Environment.NewLine, STANDARD_LINEBREAK, StringComparison.Ordinal);
+                value = value.Replace(Environment.NewLine, NEW_LINE, StringComparison.Ordinal);
             }
             return value;
         }
 
-        static void EncodeLastCharInLineIfItsWhitespace(StringBuilder sb)
+        static void EncodeLastCharInLineIfItIsWhiteSpace(StringBuilder sb)
         {
             // wenn das letzte Zeichen einer Zeile Whitespace ist, dann codieren
             int sbLast = sb.Length - 1;
@@ -71,14 +71,12 @@ internal static class QuotedPrintable
         }
     }
 
-
     private static void MakeSoftLineBreaks(int firstLineOffset, StringBuilder sb)
     {
         //firstLineOffset %= MAX_ROWLENGTH;
         //int charsBeforeSoftlineBreak = MAX_ROWLENGTH - 1;
 
         int firstLineLength = Math.Max(MAX_ROWLENGTH - firstLineOffset, MIN_ROWLENGTH);
-
 
         for (int lineLength = firstLineLength;
             lineLength < sb.Length; // mindestens 1 Zeichen nach dem letzten Soft-Linebreak
@@ -126,14 +124,14 @@ internal static class QuotedPrintable
         }
     }
 
-
     private static StringBuilder ProcessCoding(IEnumerable<byte> data)
     {
         var sb = new StringBuilder();
 
         foreach (byte bt in data)
         {
-            _ = HasToBeQuoted(bt) ? sb.Append('=').Append(bt.ToString("X02", CultureInfo.InvariantCulture)) : sb.Append((char)bt);
+            _ = HasToBeQuoted(bt) ? sb.Append('=').Append(bt.ToString("X02", CultureInfo.InvariantCulture)) 
+                                  : sb.Append((char)bt);
         }
         return sb;
 
@@ -147,28 +145,26 @@ internal static class QuotedPrintable
 
     #endregion
 
-
     #region Decode
-    /// <summary />
-    /// <remarks>Wenn der übergebene String <c>null</c> oder Empty ist, wird <see cref="string.Empty"
-    /// /> zurückgegeben.</remarks>
-    /// <param name="qpCoded" />
-    /// <param name="textEncoding" />
-    /// <returns />
+
+    /// <summary>Decodes a Quoted-Printable encoded <see cref="string"/>.</summary>
+    /// <param name="qpEncoded"> The Quoted-Printable encoded <see cref="string"/>.</param>
+    /// <param name="textEncoding">The <see cref="Encoding"/> that had been used to encode 
+    /// <paramref name="qpEncoded"/>, or <c>null</c> to choose <see cref="Encoding.UTF8"/>.</param>
+    /// <returns><paramref name="qpEncoded"/> decoded. If <paramref name="qpEncoded"/> is <c>null</c>,
+    /// <see cref="string.Empty" /> is returned.</returns>
     public static string Decode(
-        string? qpCoded,
-        Encoding? textEncoding = null)
+        string? qpEncoded,
+        Encoding? textEncoding)
     {
-        if (string.IsNullOrEmpty(qpCoded))
+        if (string.IsNullOrEmpty(qpEncoded))
         {
             return "";
         }
 
-        byte[] bytes = DecodeData(qpCoded);
-
+        byte[] bytes = DecodeData(qpEncoded);
 
         textEncoding ??= Encoding.UTF8;
-
         string s = textEncoding.GetString(bytes);
 
         s = NormalizeLineBreaksOnUnixSystems(s);
@@ -181,24 +177,25 @@ internal static class QuotedPrintable
         static string NormalizeLineBreaksOnUnixSystems(string s)
         {
             //Anpassen des NewLine-Zeichens für Unix-Systeme
-            if (Environment.NewLine != STANDARD_LINEBREAK) // notwendig, wenn Hard-Linebreaks codiert waren
+            if (Environment.NewLine != NEW_LINE) // notwendig, wenn Hard-Linebreaks codiert waren
             {
-                s = s.Replace(STANDARD_LINEBREAK, Environment.NewLine, StringComparison.Ordinal);
+                s = s.Replace(NEW_LINE, Environment.NewLine, StringComparison.Ordinal);
             }
 
             return s;
         }
     }
 
-
-    /// <summary />
-    /// <remarks />
-    /// <param name="qpCoded" />
-    /// <returns />
+    /// <summary>Decodes any data that are Quoted-Printable encoded.</summary>
+    /// <param name="qpEncoded">A <see cref="string"/> that represents 
+    /// Quoted-Printable encoded data, or <c>null</c>.</param>
+    /// <returns>A <see cref="byte"/> array that contains the data
+    /// from <paramref name="qpEncoded"/>. If <paramref name="qpEncoded"/> is
+    /// <c>null</c>, an empty <see cref="byte"/> array is returned.</returns>
     public static byte[] DecodeData(
-        string? qpCoded)
+        string? qpEncoded)
     {
-        if (string.IsNullOrEmpty(qpCoded))
+        if (string.IsNullOrEmpty(qpEncoded))
         {
             return Array.Empty<byte>();
         }
@@ -206,9 +203,9 @@ internal static class QuotedPrintable
         //Ausbessern illegaler Soft - Line - Breaks, die auf Unix - Systemen entstanden sein könnten.
         //qpCoded = qpCoded.Replace("=\n", "=\r\n");
 
-        using var reader = new StringReader(qpCoded);
+        using var reader = new StringReader(qpEncoded);
 
-        var sb = new StringBuilder(qpCoded.Length);
+        var sb = new StringBuilder(qpEncoded.Length);
 
         string? zeile;
         while (null != (zeile = reader.ReadLine()))
@@ -240,10 +237,9 @@ internal static class QuotedPrintable
         //letzten Hard-Line-Break wieder entfernen
         sb.TrimEnd();
 
-        var bytes = new byte[qpCoded.Length];
+        var bytes = new byte[qpEncoded.Length];
 
         Span<char> charr = stackalloc char[2];
-        //charr.Clear();
 
         int j = 0;
 
@@ -270,7 +266,6 @@ internal static class QuotedPrintable
 
         Array.Resize(ref bytes, j);
         return bytes;
-
 
 
         static byte HexToByte(ReadOnlySpan<char> charr)

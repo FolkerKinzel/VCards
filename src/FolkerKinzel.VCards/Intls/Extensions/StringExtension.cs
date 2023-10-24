@@ -13,7 +13,7 @@ internal static partial class StringExtension
     {
         Debug.Assert(sb != null);
 
-        if (value is null || value.Length == 0)
+        if (value is null || !value.Contains('\\'))
         {
             return value;
         }
@@ -42,10 +42,12 @@ internal static partial class StringExtension
     }
 
 
-    /// <summary> Gibt <c>true</c> zurück, wenn <paramref name="s" /> NON-ASCII-Zeichen
-    /// oder Zeilenwechsel enthält. Needs no <c>null</c> check! </summary>
-    /// <param name="s">Ein <see cref="string" />.</param>
-    /// <returns />
+    /// <summary> Indicates whether <paramref name="s" /> needs 
+    /// Quoted-Printable encoding.</summary>
+    /// <param name="s">The <see cref="string" /> to check, or <c>null</c>.</param>
+    /// <returns><c>true</c>, if <paramref name="s"/> contains NON-ASCII
+    /// characters or line breaks, otherwise <c>false</c>.
+    /// If <paramref name="s"/> is <c>null</c>, the method returns <c>false</c>.</returns>
     public static bool NeedsToBeQpEncoded(this string? s)
     {
         if (s is null)
@@ -68,8 +70,6 @@ internal static partial class StringExtension
 
         return false;
     }
-
-
 
     internal static bool IsIetfLanguageTag(this string value)
 #if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1 || NET5_0 || NET6_0

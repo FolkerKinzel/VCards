@@ -11,8 +11,8 @@ internal static class Utility
         string[] sortAs = new string[] { "Entenhausen", "Elmstreet" };
 
         var tel1 = new TextProperty("123");
-        tel1.Parameters.TelephoneType = default(TelTypes);
-        tel1.Parameters.TelephoneType = TelTypes.Voice | TelTypes.Cell | TelTypes.Text | TelTypes.Msg;
+        tel1.Parameters.PhoneType = default(PhoneTypes);
+        tel1.Parameters.PhoneType = PhoneTypes.Voice | PhoneTypes.Cell | PhoneTypes.Text | PhoneTypes.Msg;
 
         tel1.Parameters.Preference = -50;
         tel1.Parameters.Preference = 500;

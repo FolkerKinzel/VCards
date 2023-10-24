@@ -18,11 +18,11 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
     private readonly Action<ParameterSerializer2_1> _collectTelTypes =
     serializer =>
     {
-        const TelTypes DEFINED_TELTYPES = TelTypes.Voice | TelTypes.Fax | TelTypes.Msg | TelTypes.Cell |
-        TelTypes.Pager | TelTypes.BBS | TelTypes.Modem | TelTypes.Car | TelTypes.ISDN | TelTypes.Video;
+        const PhoneTypes DEFINED_TELTYPES = PhoneTypes.Voice | PhoneTypes.Fax | PhoneTypes.Msg | PhoneTypes.Cell |
+        PhoneTypes.Pager | PhoneTypes.BBS | PhoneTypes.Modem | PhoneTypes.Car | PhoneTypes.ISDN | PhoneTypes.Video;
 
-        TelTypesCollector.CollectValueStrings(
-                serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
+        PhoneTypesCollector.CollectValueStrings(
+                serializer.ParaSection.PhoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
     };
 
     private readonly Action<ParameterSerializer2_1> _collectAddressTypes =

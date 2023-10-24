@@ -68,7 +68,6 @@ internal static class StringBuilderExtension
         return builder;
     }
 
-
     internal static StringBuilder Mask(this StringBuilder builder, VCdVersion version)
     {
         Debug.Assert(builder != null);
@@ -93,7 +92,6 @@ internal static class StringBuilderExtension
         return builder;
     }
 
-
     internal static StringBuilder MaskNewLine(this StringBuilder builder)
     {
         _ = builder
@@ -103,10 +101,11 @@ internal static class StringBuilderExtension
         return builder;
     }
 
-
-    /// <summary />
-    /// <param name="builder" />
-    /// <returns />
+    /// <summary>Removes a pair of single or double quotes at the start and 
+    /// end of builder.</summary>
+    /// <param name="builder">The <see cref="StringBuilder"/> whose content
+    /// is modified.</param>
+    /// <returns>A reference to <paramref name="builder"/>.</returns>
     internal static StringBuilder RemoveQuotes(this StringBuilder builder)
     {
         Debug.Assert(builder != null);
@@ -158,5 +157,4 @@ internal static class StringBuilderExtension
             _ = sb.Append(entry);
         }
     }
-
 }

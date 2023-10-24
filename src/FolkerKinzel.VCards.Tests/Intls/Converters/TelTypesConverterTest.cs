@@ -7,10 +7,10 @@ public class TelTypesConverterTest
 {
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
-    public void ToVcfStringTest() => _ = TelTypesConverter.ToVcfString((TelTypes)4711);
+    public void ToVcfStringTest() => _ = PhoneTypesConverter.ToVcfString((PhoneTypes)4711);
 
 
     [TestMethod]
-    public void ParseTest() => Assert.IsNull(TelTypesConverter.Parse(null));
+    public void ParseTest() => Assert.IsNull(PhoneTypesConverter.Parse(null));
 }
 

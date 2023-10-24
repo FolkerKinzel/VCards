@@ -15,44 +15,44 @@ namespace FolkerKinzel.VCards.Extensions.Tests
         [TestMethod()]
         public void TelTypesTest()
         {
-            TelTypes? tp = null;
+            PhoneTypes? tp = null;
 
-            Assert.IsFalse(tp.IsSet(TelTypes.Cell));
+            Assert.IsFalse(tp.IsSet(PhoneTypes.Cell));
 
-            tp = tp.Set(TelTypes.Cell);
-            Assert.IsTrue(tp.IsSet(TelTypes.Cell));
+            tp = tp.Set(PhoneTypes.Cell);
+            Assert.IsTrue(tp.IsSet(PhoneTypes.Cell));
             Assert.IsTrue(tp.HasValue);
 
             // Set doppelt aufrufen
-            tp = tp.Set(TelTypes.Cell);
-            Assert.IsTrue(tp.IsSet(TelTypes.Cell));
+            tp = tp.Set(PhoneTypes.Cell);
+            Assert.IsTrue(tp.IsSet(PhoneTypes.Cell));
             Assert.IsTrue(tp.HasValue);
 
-            tp = tp.Set(TelTypes.Voice);
-            Assert.IsTrue(tp.IsSet(TelTypes.Voice));
-            Assert.IsTrue(tp.IsSet(TelTypes.Cell));
+            tp = tp.Set(PhoneTypes.Voice);
+            Assert.IsTrue(tp.IsSet(PhoneTypes.Voice));
+            Assert.IsTrue(tp.IsSet(PhoneTypes.Cell));
             Assert.IsTrue(tp.HasValue);
 
-            tp = tp.Unset(TelTypes.Voice);
-            Assert.IsFalse(tp.IsSet(TelTypes.Voice));
-            Assert.IsTrue(tp.IsSet(TelTypes.Cell));
+            tp = tp.Unset(PhoneTypes.Voice);
+            Assert.IsFalse(tp.IsSet(PhoneTypes.Voice));
+            Assert.IsTrue(tp.IsSet(PhoneTypes.Cell));
             Assert.IsTrue(tp.HasValue);
 
             // Unset doppelt aufrufen:
-            tp = tp.Unset(TelTypes.Voice);
-            Assert.IsFalse(tp.IsSet(TelTypes.Voice));
-            Assert.IsTrue(tp.IsSet(TelTypes.Cell));
+            tp = tp.Unset(PhoneTypes.Voice);
+            Assert.IsFalse(tp.IsSet(PhoneTypes.Voice));
+            Assert.IsTrue(tp.IsSet(PhoneTypes.Cell));
             Assert.IsTrue(tp.HasValue);
 
             // letztes Flag löschen
-            tp = tp.Unset(TelTypes.Cell);
-            Assert.IsFalse(tp.IsSet(TelTypes.Cell));
+            tp = tp.Unset(PhoneTypes.Cell);
+            Assert.IsFalse(tp.IsSet(PhoneTypes.Cell));
             Assert.IsFalse(tp.HasValue);
 
             // Unset auf null aufrufen:
-            tp = tp.Unset(TelTypes.Cell);
+            tp = tp.Unset(PhoneTypes.Cell);
 
-            Assert.IsFalse(tp.IsSet(TelTypes.Cell));
+            Assert.IsFalse(tp.IsSet(PhoneTypes.Cell));
             Assert.IsFalse(tp.HasValue);
         }
     }

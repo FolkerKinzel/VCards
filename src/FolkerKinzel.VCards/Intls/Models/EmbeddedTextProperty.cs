@@ -16,11 +16,9 @@ internal sealed class EmbeddedTextProperty : DataProperty
 
     public new string? Value => _textProp.Value;
 
-
     /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => _textProp.IsEmpty;
-
 
     public override string GetFileTypeExtension()
     {
@@ -28,11 +26,9 @@ internal sealed class EmbeddedTextProperty : DataProperty
         return mime is null ? ".txt" : MimeString.ToFileTypeExtension(mime);
     }
 
-
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new EmbeddedTextProperty((TextProperty)_textProp.Clone());
-    
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -41,6 +37,6 @@ internal sealed class EmbeddedTextProperty : DataProperty
         Parameters.DataType = VCdDataType.Text;
     }
 
-    internal override void AppendValue(VcfSerializer serializer) => _textProp.AppendValue(serializer);
-
+    internal override void AppendValue(VcfSerializer serializer)
+        => _textProp.AppendValue(serializer);
 }

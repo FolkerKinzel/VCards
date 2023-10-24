@@ -355,11 +355,11 @@ public sealed partial class ParameterSection
             case PropKeys.NonStandard.InstantMessenger.X_TWITTER:
             case PropKeys.NonStandard.InstantMessenger.X_YAHOO:
                 {
-                    TelTypes? telType = TelTypesConverter.Parse(typeValue);
+                    PhoneTypes? telType = PhoneTypesConverter.Parse(typeValue);
 
                     if (telType.HasValue)
                     {
-                        this.TelephoneType = this.TelephoneType.Set(telType.Value);
+                        this.PhoneType = this.PhoneType.Set(telType.Value);
                         return true;
                     }
 

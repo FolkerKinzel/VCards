@@ -46,7 +46,9 @@ internal sealed partial class VcfRow
         if (parameterSeparatorIndex != -1 && parameterSeparatorIndex < keySection.Length - 1)
         {
             ReadOnlySpan<char> parameterSection = keySection.Slice(parameterSeparatorIndex + 1);
-            this.Parameters = new ParameterSection(this.Key, GetParameters(parameterSection, info.ParameterList), info);
+            this.Parameters = new ParameterSection(this.Key,
+                                                   GetParameters(parameterSection, info.ParameterList),
+                                                   info);
         }
         else
         {
@@ -54,8 +56,8 @@ internal sealed partial class VcfRow
         }
     }
 
-    // Attribut-Values dürfen in vCard 4.0 :;, enthalten, wenn sie in doppelte Anführungszeichen
-    // eingeschlossen sind!
+    // Attribute-values may contain :;, in vCard 4.0 if they are
+    // enclosed in double quotes!
     private static int GetValueSeparatorIndex(string vCardRow)
     {
         bool isInDoubleQuotes = false;
@@ -77,7 +79,8 @@ internal sealed partial class VcfRow
         return -1;
     }
 
-    private static List<KeyValuePair<string, string>> GetParameters(ReadOnlySpan<char> parameterSection, List<KeyValuePair<string, string>> parameterTuples)
+    private static List<KeyValuePair<string, string>> GetParameters(ReadOnlySpan<char> parameterSection,
+                                                                    List<KeyValuePair<string, string>> parameterTuples)
     {
         int splitIndex;
         ReadOnlySpan<char> parameter;
@@ -152,7 +155,8 @@ internal sealed partial class VcfRow
             {
                 // in vCard 2.1. kann direkt das Value angegeben werden, z.B. Note;Quoted-Printable;UTF-8:Text des Kommentars
                 string parameterString = parameter.ToString();
-                parameterTuples.Add(new KeyValuePair<string, string>(ParseAttributeKeyFromValue(parameterString), parameterString));
+                parameterTuples.Add(
+                    new KeyValuePair<string, string>(ParseAttributeKeyFromValue(parameterString), parameterString));
             }
             else
             {

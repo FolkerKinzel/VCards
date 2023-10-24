@@ -428,8 +428,8 @@ public sealed partial class VCard
 
     private void AddCopyToPhoneNumbers(TextProperty textProp, ParameterSection para)
     {
-        if ((para.TelephoneType.IsSet(TelTypes.Voice) ||
-                                        para.TelephoneType.IsSet(TelTypes.Video)) &&
+        if ((para.PhoneType.IsSet(PhoneTypes.Voice) ||
+                                        para.PhoneType.IsSet(PhoneTypes.Video)) &&
                                         (!PhoneNumbers?.Any(x => x?.Value == textProp.Value) ?? true))
         {
             PhoneNumbers = textProp.GetAssignment(PhoneNumbers);

@@ -11,25 +11,20 @@ internal sealed class DateTimeOffsetProperty : DateAndOrTimeProperty
     private DateTimeOffsetProperty(DateTimeOffsetProperty prop)
         : base(prop) => Value = prop.Value;
 
-
     internal DateTimeOffsetProperty(DateTimeOffset value,
                                     ParameterSection parameters,
                                     string? propertyGroup)
         : base(parameters, propertyGroup) => Value = value;
 
-
     public new DateTimeOffset Value { get; }
-
 
     /// <inheritdoc />
     public override bool IsEmpty
         => !DateAndOrTimeConverter.HasDateComponent(Value) && 
            !DateAndOrTimeConverter.HasTimeComponent(Value);
 
-
     /// <inheritdoc />
     public override object Clone() => new DateTimeOffsetProperty(this);
-
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -37,6 +32,8 @@ internal sealed class DateTimeOffsetProperty : DateAndOrTimeProperty
         Parameters.DataType = VCdDataType.DateAndOrTime;
     }
 
-    internal override void AppendValue(VcfSerializer serializer) =>
-        DateAndOrTimeConverter.AppendDateAndOrTimeTo(serializer.Builder, Value, serializer.Version);
+    internal override void AppendValue(VcfSerializer serializer) 
+        => DateAndOrTimeConverter.AppendDateAndOrTimeTo(serializer.Builder,
+                                                        Value,
+                                                        serializer.Version);
 }

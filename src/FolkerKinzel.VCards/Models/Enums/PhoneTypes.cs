@@ -11,10 +11,10 @@ namespace FolkerKinzel.VCards.Models.Enums;
 /// </note>
 /// </remarks>
 [Flags]
-public enum TelTypes
+public enum PhoneTypes
 {
-    // CAUTION: If the enum is expanded, TelTypesConverter and
-    // TelTypesCollector must be adjusted!
+    // CAUTION: If the enum is expanded, PhoneTypesConverter and
+    // PhoneTypesCollector must be adjusted!
 
     /// <summary> <c>VOICE</c>: Indicates a voice telephone number. (Default). <c>(2,3,4)</c></summary>
     Voice = 1,

@@ -16,7 +16,6 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     protected override string VersionString => "2.1";
 
-
     protected override void ReplenishRequiredProperties()
     {
         if (VCardToSerialize.NameViews is null)
@@ -49,7 +48,6 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         }
     }
 
-
     protected override void AppendLineFolding()
     {
         int counter = 0;
@@ -72,7 +70,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
                 {
                     if (Builder[i + 1] == '\r') //Quoted-Printable-Softlinebreak
                     {
-                        i += QuotedPrintable.STANDARD_LINEBREAK.Length;
+                        i += QuotedPrintable.NEW_LINE.Length;
                         counter = 0;
                         continue;
                     }
@@ -105,7 +103,6 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
             }
         }
     }
-
 
     protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
     {

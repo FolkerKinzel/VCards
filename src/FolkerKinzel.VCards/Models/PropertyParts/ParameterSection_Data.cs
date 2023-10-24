@@ -255,6 +255,17 @@ public sealed partial class ParameterSection
         set => Set(VCdParam.NonStandard, value);
     }
 
+    /// <summary><c>TYPE</c>: Describes a phone number. <c>(2,3,4)</c></summary>
+    public PhoneTypes? PhoneType
+    {
+        get => Get<PhoneTypes?>(VCdParam.PhoneType);
+        set
+        {
+            value = (value == default(PhoneTypes)) ? null : value;
+            Set(VCdParam.PhoneType, value);
+        }
+    }
+
     /// <summary><c>PREF</c> or <c>TYPE=PREF</c>: Expresses preference for a property.
     /// <c>(2,3,4)</c></summary>
     /// <value>A value between 1 and 100. 1 means most preferred.</value>
@@ -334,16 +345,7 @@ public sealed partial class ParameterSection
         set => Set(VCdParam.SortAs, value);
     }
 
-    /// <summary><c>TYPE</c>: Describes a telephone number. <c>(2,3,4)</c></summary>
-    public TelTypes? TelephoneType
-    {
-        get => Get<TelTypes?>(VCdParam.TelephoneType);
-        set
-        {
-            value = (value == default(TelTypes)) ? null : value;
-            Set(VCdParam.TelephoneType, value);
-        }
-    }
+    
 
     /// <summary><c>TZ</c>: Time zone <c>(4)</c></summary>
     /// <remarks> This parameter is only written if it is attached to an 

@@ -15,21 +15,19 @@ internal sealed class RelationTextProperty : RelationProperty
        : base(textProp.Parameters,
               textProp.Group) => _textProp = textProp;
 
-
     internal RelationTextProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters,
                vcfRow.Group) => _textProp = new TextProperty(vcfRow, version);
 
-
-    /// <summary> Die von der <see cref="RelationTextProperty" /> zur Verfügung gestellten
-    /// Daten. </summary>
     public new string? Value => _textProp.Value;
-
     
     /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => _textProp.IsEmpty;
 
+    /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override object Clone() => new RelationTextProperty((TextProperty)_textProp.Clone());
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -38,13 +36,7 @@ internal sealed class RelationTextProperty : RelationProperty
         Parameters.DataType = VCdDataType.Text;
     }
 
-
     internal override void AppendValue(VcfSerializer serializer)
      => _textProp.AppendValue(serializer);
-
-
-    /// <inheritdoc />
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override object Clone() => new RelationTextProperty((TextProperty)_textProp.Clone());
 
 }

@@ -15,7 +15,6 @@ internal sealed class TimeOnlyProperty : DateAndOrTimeProperty
                             string? propertyGroup)
         : base(parameters, propertyGroup) => Value = value;
 
-
     public new TimeOnly Value { get; }
 
     /// <inheritdoc />

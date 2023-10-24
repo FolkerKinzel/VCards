@@ -11,10 +11,9 @@ namespace FolkerKinzel.VCards.Intls.Models;
 internal sealed class EmbeddedBytesProperty : DataProperty
 {
     /// <summary>Copy ctor</summary>
-    /// <param name="prop">The <see cref="DataProperty" /> object to clone.</param>
+    /// <param name="prop">The <see cref="EmbeddedBytesProperty" /> object to clone.</param>
     private EmbeddedBytesProperty(EmbeddedBytesProperty prop)
         : base(prop) => Value = prop.Value;
-
 
     internal EmbeddedBytesProperty(byte[]? arr,
                                    string? propertyGroup,
@@ -41,7 +40,6 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new EmbeddedBytesProperty(this);
 
-
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
@@ -52,7 +50,6 @@ internal sealed class EmbeddedBytesProperty : DataProperty
         Parameters.DataType = VCdDataType.Binary;
         Parameters.Encoding = ValueEncoding.Base64;
     }
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {

@@ -5,9 +5,15 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;
 
 internal static class ImppTypesCollector
 {
-    /// <summary />
-    /// <param name="imppType" />
-    /// <param name="list" />
+    /// <summary>Collects the names of the flags set in <paramref name="imppType" /> into <paramref name="list" />. 
+    /// </summary>
+    /// <param name="imppType">The <see cref="ImppTypes"/> value to parse.</param>
+    /// <param name="list">The list to collect in.</param>
+    /// <remarks>
+    /// <note type="caution">
+    /// <paramref name="list" /> is not emptied by the method!
+    /// </note>
+    /// </remarks>
     internal static void CollectValueStrings(ImppTypes? imppType, List<string> list)
     {
         Debug.Assert(list != null);

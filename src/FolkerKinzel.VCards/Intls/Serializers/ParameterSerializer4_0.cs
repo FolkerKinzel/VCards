@@ -22,11 +22,11 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     private readonly Action<ParameterSerializer4_0> _collectTelTypes =
         serializer =>
         {
-            const TelTypes DEFINED_TELTYPES = TelTypes.Voice | TelTypes.Text | TelTypes.Fax | TelTypes.Cell
-                                            | TelTypes.Video | TelTypes.Pager | TelTypes.TextPhone;
+            const PhoneTypes DEFINED_TELTYPES = PhoneTypes.Voice | PhoneTypes.Text | PhoneTypes.Fax | PhoneTypes.Cell
+                                            | PhoneTypes.Video | PhoneTypes.Pager | PhoneTypes.TextPhone;
 
-            TelTypesCollector.CollectValueStrings(
-                serializer.ParaSection.TelephoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
+            PhoneTypesCollector.CollectValueStrings(
+                serializer.ParaSection.PhoneType & DEFINED_TELTYPES, serializer._stringCollectionList);
         };
 
 

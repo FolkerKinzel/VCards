@@ -5,9 +5,15 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;
 
 internal static class AddressTypesCollector
 {
-    /// <summary />
-    /// <param name="addressType" />
-    /// <param name="list" />
+    /// <summary>Collects the names of the flags set in <paramref name="addressType" /> into <paramref name="list" />. 
+    /// </summary>
+    /// <param name="addressType">The <see cref="AddressTypes"/> value to parse.</param>
+    /// <param name="list">The list to collect in.</param>
+    /// <remarks>
+    /// <note type="caution">
+    /// <paramref name="list" /> is not emptied by the method!
+    /// </note>
+    /// </remarks>
     internal static void CollectValueStrings(AddressTypes? addressType, List<string> list)
     {
         Debug.Assert(list != null);

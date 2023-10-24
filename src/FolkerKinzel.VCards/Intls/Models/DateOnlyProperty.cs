@@ -8,20 +8,18 @@ namespace FolkerKinzel.VCards.Intls.Models;
 
 internal sealed class DateOnlyProperty : DateAndOrTimeProperty
 {
-    private DateOnlyProperty(DateOnlyProperty prop) : base(prop) => Value = prop.Value;
+    private DateOnlyProperty(DateOnlyProperty prop) : base(prop)
+        => Value = prop.Value;
 
     internal DateOnlyProperty(DateOnly value,
                               ParameterSection parameters,
                               string? propertyGroup)
         : base(parameters, propertyGroup) => Value = value;
 
-
     public new DateOnly Value { get; }
-
 
     /// <inheritdoc />
     public override object Clone() => new DateOnlyProperty(this);
-
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -29,7 +27,8 @@ internal sealed class DateOnlyProperty : DateAndOrTimeProperty
         Parameters.DataType = VCdDataType.Date;
     }
 
-
-    internal override void AppendValue(VcfSerializer serializer) =>
-        DateAndOrTimeConverter.AppendDateTo(serializer.Builder, Value, serializer.Version);
+    internal override void AppendValue(VcfSerializer serializer)
+        => DateAndOrTimeConverter.AppendDateTo(serializer.Builder,
+                                               Value,
+                                               serializer.Version);
 }

@@ -8,11 +8,8 @@ namespace FolkerKinzel.VCards.Intls.Models;
 
 internal sealed class UriProperty : VCardProperty
 {
-    /// <summary />
-    /// <param name="prop" />
     private UriProperty(UriProperty prop)
         : base(prop) => Value = prop.Value;
-
 
     internal UriProperty(Uri value, ParameterSection parameterSection, string? propertyGroup)
         : base(parameterSection, propertyGroup)
@@ -25,15 +22,12 @@ internal sealed class UriProperty : VCardProperty
 
     public new Uri Value { get; }
 
-
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new UriProperty(this);
 
-
     /// <inheritdoc />
     protected override object? GetVCardPropertyValue() => Value;
-
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -57,12 +51,10 @@ internal sealed class UriProperty : VCardProperty
             Parameters.DataType = VCdDataType.Uri;
         }
     }
-
+    
     internal override void AppendValue(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
         _ = serializer.Builder.Append(Value.AbsoluteUri);
     }
-
-
 }

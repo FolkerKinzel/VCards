@@ -43,16 +43,16 @@ internal sealed partial class VcfRow
             case ParameterSection.TypeValue.PREF:
             case ParameterSection.TypeValue.WORK:
             case ParameterSection.TypeValue.HOME:
-            case TelTypesConverter.TelTypeValue.VOICE:
-            case TelTypesConverter.TelTypeValue.FAX:
-            case TelTypesConverter.TelTypeValue.MSG:
-            case TelTypesConverter.TelTypeValue.CELL:
-            case TelTypesConverter.TelTypeValue.PAGER:
-            case TelTypesConverter.TelTypeValue.BBS:
-            case TelTypesConverter.TelTypeValue.MODEM:
-            case TelTypesConverter.TelTypeValue.CAR:
-            case TelTypesConverter.TelTypeValue.ISDN:
-            case TelTypesConverter.TelTypeValue.VIDEO:
+            case PhoneTypesConverter.TelTypeValue.VOICE:
+            case PhoneTypesConverter.TelTypeValue.FAX:
+            case PhoneTypesConverter.TelTypeValue.MSG:
+            case PhoneTypesConverter.TelTypeValue.CELL:
+            case PhoneTypesConverter.TelTypeValue.PAGER:
+            case PhoneTypesConverter.TelTypeValue.BBS:
+            case PhoneTypesConverter.TelTypeValue.MODEM:
+            case PhoneTypesConverter.TelTypeValue.CAR:
+            case PhoneTypesConverter.TelTypeValue.ISDN:
+            case PhoneTypesConverter.TelTypeValue.VIDEO:
 
             //Postal
             case AddressTypesConverter.AdrTypeValue.DOM:

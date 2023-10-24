@@ -28,28 +28,27 @@ internal static class IEnumerableExtension
         => ignoreEmptyItems ? values.WhereNotEmpty().OrderBy(GetIndex)
                             : values.WhereNotNull().OrderBy(GetIndex);
 
-    public static TSource? PrefOrNullIntl<TSource>(this IEnumerable<TSource?> values,
+    internal static TSource? PrefOrNullIntl<TSource>(this IEnumerable<TSource?> values,
                                        bool ignoreEmptyItems) where TSource : VCardProperty
         => ignoreEmptyItems ? values.WhereNotEmpty().OrderBy(GetPreference).FirstOrDefault()
                             : values.WhereNotNull().OrderBy(GetPreference).FirstOrDefault();
 
-    public static TSource? PrefOrNullIntl<TSource>(this IEnumerable<TSource?> values,
+    internal static TSource? PrefOrNullIntl<TSource>(this IEnumerable<TSource?> values,
                                        Func<TSource, bool> filter,
                                        bool ignoreEmptyItems)  where TSource : VCardProperty
         => ignoreEmptyItems ? values.WhereNotEmptyAnd(filter).OrderBy(GetPreference).FirstOrDefault()
                             : values.WhereNotNullAnd(filter).OrderBy(GetPreference).FirstOrDefault();
 
-    public static TSource? FirstOrNullIntl<TSource>(this IEnumerable<TSource?> values,
+    internal static TSource? FirstOrNullIntl<TSource>(this IEnumerable<TSource?> values,
                                         bool ignoreEmptyItems) where TSource : VCardProperty
         => ignoreEmptyItems ? values.WhereNotEmpty().OrderBy(GetIndex).FirstOrDefault()
                             : values.WhereNotNull().OrderBy(GetIndex).FirstOrDefault();
 
-    public static TSource? FirstOrNullIntl<TSource>(this IEnumerable<TSource?> values,
+    internal static TSource? FirstOrNullIntl<TSource>(this IEnumerable<TSource?> values,
                                         Func<TSource, bool> filter,
                                         bool ignoreEmptyItems) where TSource : VCardProperty
          => ignoreEmptyItems ? values.WhereNotEmptyAnd(filter).OrderBy(GetIndex).FirstOrDefault()
                              : values.WhereNotNullAnd(filter).OrderBy(GetIndex).FirstOrDefault();
-
 
     private static int GetPreference(VCardProperty prop) => prop.Parameters.Preference;
 

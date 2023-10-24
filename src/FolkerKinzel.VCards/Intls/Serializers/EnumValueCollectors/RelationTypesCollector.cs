@@ -5,9 +5,15 @@ namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors;
 
 internal static class RelationTypesCollector
 {
-    /// <summary />
-    /// <param name="relationType" />
-    /// <param name="list" />
+    /// <summary>Collects the names of the flags set in <paramref name="relationType" /> into <paramref name="list" />. 
+    /// </summary>
+    /// <param name="relationType">The <see cref="RelationTypes"/> value to parse.</param>
+    /// <param name="list">The list to collect in.</param>
+    /// <remarks>
+    /// <note type="caution">
+    /// <paramref name="list" /> is not emptied by the method!
+    /// </note>
+    /// </remarks>
     internal static void CollectValueStrings(RelationTypes? relationType, List<string> list)
     {
         Debug.Assert(list != null);

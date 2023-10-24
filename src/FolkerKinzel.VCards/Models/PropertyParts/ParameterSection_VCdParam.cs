@@ -23,7 +23,7 @@ public sealed partial class ParameterSection
         EmailType,
 
         /// <summary><c>TYPE</c>: Describes a telephone number. <c>(2,3,4)</c></summary>
-        TelephoneType,
+        PhoneType,
 
         /// <summary> <c>LEVEL</c>: A person's level of expertise. <c>(4 - RFC&#160;6715)</c></summary>
         Expertise,

@@ -6,13 +6,8 @@ using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
-    /// <summary> Spezialisierung der <see cref="RelationProperty" />-Klasse, um eine
-    /// Person, zu der eine Beziehung besteht, mit ihrer <see cref="VCard" /> zu beschreiben.
-    /// </summary>
 internal sealed class RelationVCardProperty : RelationProperty
 {
-    /// <summary />
-    /// <param name="prop" />
     private RelationVCardProperty(RelationVCardProperty prop) : base(prop)
         => Value = (VCard)prop.Value.Clone();
 
@@ -42,13 +37,15 @@ internal sealed class RelationVCardProperty : RelationProperty
         Parameters.DataType = VCdDataType.VCard;
     }
 
-
-    /// <summary> Die von der <see cref="RelationVCardProperty" /> zur Verfügung gestellten
-    /// Daten. </summary>
     public new VCard Value
     {
         get;
     }
+
+    /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override object Clone()
+        => new RelationVCardProperty(this);
 
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
@@ -59,7 +56,6 @@ internal sealed class RelationVCardProperty : RelationProperty
 
         Parameters.DataType = VCdDataType.VCard;
     }
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {
@@ -92,12 +88,4 @@ internal sealed class RelationVCardProperty : RelationProperty
             _ = builder.Append(VCard.NewLine).Append(vc);
         }
     }
-
-
-    /// <inheritdoc />
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override object Clone()
-        => new RelationVCardProperty(this);
-
-
 }

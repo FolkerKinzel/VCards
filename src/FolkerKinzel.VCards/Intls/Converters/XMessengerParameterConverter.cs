@@ -20,9 +20,9 @@ internal static class XMessengerParameterConverter
             par.PropertyClass = par.PropertyClass.Set(PropertyClassTypes.Work);
         }
 
-        if (par.InstantMessengerType.IsSet(ImppTypes.Mobile) || par.TelephoneType.IsSet(TelTypes.PCS))
+        if (par.InstantMessengerType.IsSet(ImppTypes.Mobile) || par.PhoneType.IsSet(PhoneTypes.PCS))
         {
-            par.TelephoneType = par.TelephoneType.Set(TelTypes.PCS);
+            par.PhoneType = par.PhoneType.Set(PhoneTypes.PCS);
         }
     }
 
@@ -30,7 +30,7 @@ internal static class XMessengerParameterConverter
     {
         Debug.Assert(par is not null);
 
-        if (par.TelephoneType.IsSet(TelTypes.PCS))
+        if (par.PhoneType.IsSet(PhoneTypes.PCS))
         {
             par.InstantMessengerType = par.InstantMessengerType.Set(ImppTypes.Mobile);
         }
