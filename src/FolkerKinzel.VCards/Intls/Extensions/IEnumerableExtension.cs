@@ -19,13 +19,13 @@ internal static class IEnumerableExtension
         => values.Where(x => x != null && !x.IsEmpty && filter(x))!;
 
     internal static IEnumerable<TSource> OrderByPrefIntl<TSource>(this IEnumerable<TSource?> values,
-                                                      bool ignoreEmptyItems) where TSource : VCardProperty
-        => ignoreEmptyItems ? values.WhereNotEmpty().OrderBy(GetPreference)
-                            : values.WhereNotNull().OrderBy(GetPreference);
+                                                      bool discardEmptyItems) where TSource : VCardProperty
+        => discardEmptyItems ? values.WhereNotEmpty().OrderBy(GetPreference)
+                             : values.WhereNotNull().OrderBy(GetPreference);
 
     internal static IEnumerable<TSource> OrderByIndexIntl<TSource>(this IEnumerable<TSource?> values,
-                                                       bool ignoreEmptyItems) where TSource : VCardProperty
-        => ignoreEmptyItems ? values.WhereNotEmpty().OrderBy(GetIndex)
+                                                       bool discardEmptyItems) where TSource : VCardProperty
+        => discardEmptyItems ? values.WhereNotEmpty().OrderBy(GetIndex)
                             : values.WhereNotNull().OrderBy(GetIndex);
 
     internal static TSource? PrefOrNullIntl<TSource>(this IEnumerable<TSource?> values,

@@ -227,8 +227,8 @@ public static class IEnumerableExtension
     /// objects to search. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// values.</param>
     /// <param name="ignoreEmptyItems"> Pass <c>false</c> to include empty items in the return value
-    /// or <c>true</c> to discard them. ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> 
-    /// returns <c>true</c>.) <c>null</c> values will always be discarded.</param>
+    /// or <c>true</c> to ignore them. ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> 
+    /// returns <c>true</c>.) <c>null</c> values will always be ignored.</param>
     /// <returns>
     /// <para>
     /// The most preferred <see cref="VCardProperty"/> from <paramref name="values"/>,
@@ -264,7 +264,7 @@ public static class IEnumerableExtension
     /// delegate are guaranteed to not be <c>null</c>.</param>
     /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value. 
     /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
-    /// values will always be discarded.</param>
+    /// values will always be ignored.</param>
     /// <returns>
     /// <para>
     /// The most preferred <see cref="VCardProperty"/> from <paramref name="values"/>
@@ -288,16 +288,12 @@ public static class IEnumerableExtension
     /// searched with <see cref="FirstOrNull{TSource}(IEnumerable{TSource}?, Func{TSource, bool}, bool)"/>
     /// because the <see cref="ParameterSection.Preference"/> has no meaning in such properties.
     /// </remarks>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TSource? PrefOrNull<TSource>(
         this IEnumerable<TSource?>? values,
         Func<TSource, bool>? filter = null,
         bool ignoreEmptyItems = true) where TSource : VCardProperty
-        => values?.PrefOrNullIntl
-                   (
-                      filter ?? throw new ArgumentNullException(nameof(filter)),
-                      ignoreEmptyItems
-                   );
+        => filter is null ? values?.PrefOrNullIntl(ignoreEmptyItems)
+                          : values?.PrefOrNullIntl(filter, ignoreEmptyItems);
 
     /// <summary>
     /// Gets the first <see cref="VCardProperty"/> from a collection of <see cref="VCardProperty"/> 
@@ -309,9 +305,9 @@ public static class IEnumerableExtension
     /// objects to search. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// references.</param>
     /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value
-    /// or <c>true</c> to discard them. 
+    /// or <c>true</c> to ignore them.
     /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
-    /// values will always be discarded.</param>
+    /// values will always be ignored.</param>
     /// <returns>
     /// <para>
     /// The first <see cref="VCardProperty"/> from <paramref name="values"/>,
@@ -348,7 +344,7 @@ public static class IEnumerableExtension
     /// are guaranteed to not be <c>null</c>.</param>
     /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value. 
     /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
-    /// values will always be discarded.</param>
+    /// values will always be ignored.</param>
     /// <returns>
     /// <para>
     /// The first <see cref="VCardProperty"/> from <paramref name="values"/> that passes the 
@@ -372,16 +368,12 @@ public static class IEnumerableExtension
     /// with <c>*views</c>. For all other plural-named <see cref="VCard"/> properties use 
     /// <see cref="PrefOrNull{TSource}(IEnumerable{TSource}?, Func{TSource, bool}, bool)"/>.
     /// </remarks>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TSource? FirstOrNull<TSource>(
         this IEnumerable<TSource?>? values,
         Func<TSource, bool>? filter = null,
         bool ignoreEmptyItems = true) where TSource : VCardProperty
-        => values?.FirstOrNullIntl
-           (
-              filter ?? throw new ArgumentNullException(nameof(filter)),
-              ignoreEmptyItems
-           );
+        => filter is null ? values?.FirstOrNullIntl(ignoreEmptyItems) 
+                          : values?.FirstOrNullIntl(filter, ignoreEmptyItems);
 
     /// <summary>
     /// Sorts the elements in <paramref name="values"/> ascending by the value of their 
@@ -392,7 +384,7 @@ public static class IEnumerableExtension
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
     /// objects to sort. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
     /// references.</param>
-    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value. 
+    /// <param name="discardEmptyItems">Pass <c>false</c> to include empty items in the return value. 
     /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
     /// references are removed in any case.</param>
     /// <returns>A collection that contains the items of <paramref name="values"/> ordered ascending
@@ -407,9 +399,9 @@ public static class IEnumerableExtension
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IEnumerable<TSource> OrderByPref<TSource>(
-        this IEnumerable<TSource?>? values, bool ignoreEmptyItems = true) where TSource : VCardProperty
+        this IEnumerable<TSource?>? values, bool discardEmptyItems = true) where TSource : VCardProperty
         => values is null ? Enumerable.Empty<TSource>()
-                          : values.OrderByPrefIntl(ignoreEmptyItems);
+                          : values.OrderByPrefIntl(discardEmptyItems);
 
     /// <summary>
     /// Sorts the elements in <paramref name="values"/> ascending by the value of their 
@@ -420,7 +412,7 @@ public static class IEnumerableExtension
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
     /// objects to sort. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
     /// values.</param>
-    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value. 
+    /// <param name="discardEmptyItems">Pass <c>false</c> to include empty items in the return value. 
     /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
     /// references are removed in any case.</param>
     /// <returns>
@@ -443,7 +435,7 @@ public static class IEnumerableExtension
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IEnumerable<TSource> OrderByIndex<TSource>(
-        this IEnumerable<TSource?>? values, bool ignoreEmptyItems = true) where TSource : VCardProperty
+        this IEnumerable<TSource?>? values, bool discardEmptyItems = true) where TSource : VCardProperty
         => values is null ? Enumerable.Empty<TSource>()
-                          : values.OrderByIndexIntl(ignoreEmptyItems);
+                          : values.OrderByIndexIntl(discardEmptyItems);
 }
