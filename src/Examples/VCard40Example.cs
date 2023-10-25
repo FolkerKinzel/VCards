@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards;
+﻿// Compile for .NET 7.0 or above and FolkerKinzel.VCards 6.0.0-beta.1 or above
+using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Extensions;
 
 // It's recommended to use a namespace-alias for better readability of
@@ -135,9 +136,9 @@ public static class VCard40Example
                 .Select(x => x.Value!.VCard)
                     .FirstOrDefault(x => x!.DisplayNames?
                                            .Any(x => x?.Value == "Ludwig van Beethoven") ?? false)?
-                        .BirthDayViews?
-                        .FirstOrNull(x => x.Value?.TryAsDateOnly(out date) ?? false)
-                        != null;
+                    .BirthDayViews?
+                    .FirstOrNull(x => x.Value?.TryAsDateOnly(out date) ?? false)
+                    != null;
 
         birthDay = date;
         return found;

@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards;
+﻿// Compile for .NET 7.0 or above and FolkerKinzel.VCards 6.0.0-beta.1 or above
+using FolkerKinzel.VCards;
 
 // It's recommended to use a namespace-alias for better readability of
 // your code and better usability of Visual Studio IntelliSense:
@@ -68,7 +69,6 @@ public static class VCardExample
                 Titles = new VC::TextProperty("CEO"),
                 TimeStamp = new VC::TimeStampProperty(DateTimeOffset.UtcNow)
             };
-
 
             // Creates a small "Photo" file for demonstration purposes:
             string photoFilePath = Path.Combine(directoryPath, photoFileName);
@@ -185,7 +185,7 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2023-07-10T15:34:08Z
+REV:2023-10-25T21:32:06Z
 gr1.TZ:+01:00
 gr1.GEO:52.511821;13.389581
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
@@ -206,8 +206,8 @@ EMAIL;PREF;INTERNET:kaethe_mueller@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- OIY6sax5T3dMOZgz+naGPHhYPWiIBX4t6YZ5PiZCGmdnr27Y89IH2B7XY9BrF+s
- suCy1uBS/vUYAB3/W
+ 6L49AWHlVPGmZOV4vGkrALHNIH4tMgdyR37+TTZcjSh5Xmrrw7TeFFhQ4ZcvrSj
+ TGOUARW6ma4AW5H7Z
 
 END:VCARD
 
@@ -216,7 +216,7 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2023-07-10T15:34:08Z
+REV:2023-10-25T21:32:06Z
 gr1.TZ:+01:00
 gr1.GEO:52.511821;13.389581
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
@@ -233,8 +233,8 @@ TEL;TYPE=HOME,VOICE,BBS:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:OIY6sax5T3dMOZgz+naGPHhYPWiIBX4t6YZ5PiZCGmdnr27Y
- 89IH2B7XY9BrF+ssuCy1uBS/vUYAB3/W
+PHOTO;ENCODING=b;TYPE=JPEG:6L49AWHlVPGmZOV4vGkrALHNIH4tMgdyR37+TTZcjSh5Xmrr
+ w7TeFFhQ4ZcvrSjTGOUARW6ma4AW5H7Z
 END:VCARD
 
 
@@ -242,15 +242,15 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20230710T153408Z
+REV:20231025T213206Z
 gr1.TZ:Europe/Berlin
 gr1.GEO:geo:52.511821,13.389581
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
-BDAY:19840328
-ANNIVERSARY:20060714
+BDAY;VALUE=DATE:19840328
+ANNIVERSARY;VALUE=DATE:20060714
 gr1.ADR;TYPE=WORK;LABEL=Friedrichstraße 22\n10117 Berlin\nGERMANY;GEO="geo
  :52.511821,13.389581";TZ=Europe/Berlin:;;Friedrichstraße 22;Berlin;;10117
  ;Germany
@@ -259,8 +259,8 @@ TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=2.1:tel:+49-321-1234567
 EMAIL;TYPE=WORK;PREF=1:kaethe_mueller@internet.com
 RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT:Paul Müller-Risinowsk
  y
-PHOTO:data:image/jpeg\;base64\,OIY6sax5T3dMOZgz+naGPHhYPWiIBX4t6YZ5PiZCGmdn
- r27Y89IH2B7XY9BrF+ssuCy1uBS/vUYAB3/W
+PHOTO:data:image/jpeg;base64,6L49AWHlVPGmZOV4vGkrALHNIH4tMgdyR37+TTZcjSh5Xm
+ rrw7TeFFhQ4ZcvrSjTGOUARW6ma4AW5H7Z
 CLIENTPIDMAP:1;http://folkerkinzel.de/file1.htm
 END:VCARD
 
@@ -270,7 +270,7 @@ Read VCard:
 Version: 3.0
 
 [DataType: TimeStamp]
-TimeStamp: 07/10/2023 15:34:08 +00:00
+TimeStamp: 10/25/2023 21:32:06 +00:00
 
 [Group: gr1]
 TimeZones: +01:00
@@ -295,10 +295,9 @@ Organizations:
     OrganizationalUnits: C#; Webdesign
 
 [DataType: Date]
-BirthDayViews: 03/28/1984 00:00:00 +02:00
+BirthDayViews: System.DateOnly: 03/28/1984
 
-[DataType: DateAndOrTime]
-AnniversaryViews: 07/14/2006 00:00:00 +02:00
+AnniversaryViews: System.DateOnly: 07/14/2006
 
 [PropertyClass: Work]
 [AddressType: Dom, Intl, Postal, Parcel]
@@ -314,22 +313,22 @@ Addresses:
     Country:    Germany
 
 [PropertyClass: Home]
-[TelephoneType: Voice, BBS]
-PhoneNumbers: tel:+49-123-9876543
+[PhoneType: Voice, BBS]
+Phones: tel:+49-123-9876543
 
 [PropertyClass: Work]
-[TelephoneType: Voice, Msg, Cell, BBS]
-PhoneNumbers: tel:+49-321-1234567
+[PhoneType: Voice, Msg, Cell, BBS]
+Phones: tel:+49-321-1234567
 
-[EmailType: EMAIL]
+[EMailType: EMAIL]
 [Preference: 1]
-EmailAddresses: kaethe_mueller@internet.com
+EMails: kaethe_mueller@internet.com
 
-[RelationType: Spouse]
+[Relation: Spouse]
 [DataType: Text]
-Relations: Paul Müller-Risinowsky
+Relations: System.String: Paul Müller-Risinowsky
 
 [Encoding: Base64]
 [MediaType: image/jpeg]
-Photos: data:image/jpeg;base64,OIY6sax5T3dMOZgz+naGPHhYPWiIBX4t6YZ5PiZCGmdnr27Y89IH2B7XY9BrF+ssuCy1uBS/vUYAB3/W
+Photos: System.Byte[]: 60 Bytes
  */

@@ -8,22 +8,8 @@ internal class Program
 {
     private static void Main()
     {
-        //var offset = DateTimeOffset.ParseExact("140000", "HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal);
-
-        //var uri = new Uri("därectory/image.png", UriKind.RelativeOrAbsolute);
-
-        //var absUri = new Uri("http://a");
-        //bool res = Uri.TryCreate(absUri, uri, out uri);
-        ////Debug.Assert(uri.IsAbsoluteUri);
-        //string[] segments = uri.Segments;
-        //Debug.Assert(segments.Length > 0);
-        //string segment = segments[segments.Length - 1];
-
-        //string? b = Path.GetExtension(segment);
-
         Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
-
 
         string directoryPath = Path.GetFullPath("TestFiles");
 
@@ -34,13 +20,12 @@ internal class Program
 
         _ = Directory.CreateDirectory(directoryPath);
 
-
-        EmbeddedVCardExample.FromVCardExample();
+        //EmbeddedVCardExample.FromVCardExample();
 
         //WhatsAppDemo1.IntegrateWhatsAppNumberUsingIMPP();
         //WhatsAppDemo2.UsingTheWhatsAppType();
-         //VCardExample.ReadingAndWritingVCard(directoryPath);
-         VCard40Example.SaveSingleVCardAsVcf(directoryPath);
+         VCardExample.ReadingAndWritingVCard(directoryPath);
+         //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
 
         //StartAnsiFilterExample();
 
