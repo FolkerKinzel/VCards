@@ -230,6 +230,12 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>GEO</c>: Specifies latitudes and longitudes. <c>(2,3,4)</c></summary>
+    /// <remarks>
+    /// <note type="tip">
+    /// This information can be connected directly with an <see cref="AddressProperty"/> 
+    /// object via its <see cref="ParameterSection.GeoPosition"/> property in vCard&#160;4.0.
+    /// </note>
+    /// </remarks>
     public IEnumerable<GeoProperty?>? GeoCoordinates
     {
         get => Get<IEnumerable<GeoProperty?>?>(VCdProp.GeoCoordinates);
@@ -552,6 +558,12 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>TZ</c>: The time zone(s) of the vCard object. <c>(2,3,4)</c></summary>
+    /// <remarks>
+    /// <note type="tip">
+    /// This information can be connected directly with an <see cref="AddressProperty"/> 
+    /// object via its <see cref="ParameterSection.TimeZone"/> property in vCard&#160;4.0.
+    /// </note>
+    /// </remarks>
     public IEnumerable<TimeZoneProperty?>? TimeZones
     {
         get => Get<IEnumerable<TimeZoneProperty?>?>(VCdProp.TimeZones);

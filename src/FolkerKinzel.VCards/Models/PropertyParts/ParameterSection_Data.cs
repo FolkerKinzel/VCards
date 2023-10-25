@@ -140,16 +140,27 @@ public sealed partial class ParameterSection
     }
 
     /// <summary> <c>GEO</c>: Geographical position. <c>(4)</c></summary>
-    /// <remarks> This parameter is only written if it is attached to an
-    /// <see cref="AddressProperty" /> object. </remarks>
+    /// <remarks>
+    /// <para>
+    /// This parameter is only written if it is attached to an
+    /// <see cref="AddressProperty" /> object. 
+    /// </para>
+    /// <note type="tip">
+    /// To preserve this information when serializing
+    /// vCard&#160;2.1 or vCard&#160;3.0 make a copy of it in the
+    /// <see cref="VCard.GeoCoordinates"/> property and connect the 
+    /// <see cref="GeoProperty"/> with the <see cref="AddressProperty"/>
+    /// using a <see cref="VCardProperty.Group"/> identifier.
+    /// </note>
+    /// </remarks>
     public FolkerKinzel.VCards.Models.GeoCoordinate? GeoPosition
     {
         get => Get<FolkerKinzel.VCards.Models.GeoCoordinate?>(VCdParam.GeoPosition);
         set => Set(VCdParam.GeoPosition, value);
     }
 
-    /// <summary><c>INDEX</c>: 1-based index of a property if several instances of the same 
-    /// property are allowed. <c>(4 - RFC&#160;6715)</c>
+    /// <summary><c>INDEX</c>: 1-based index of a property in a multi-valued property.
+    /// <c>(4 - RFC&#160;6715)</c>
     /// </summary>
     public int? Index
     {
@@ -192,12 +203,16 @@ public sealed partial class ParameterSection
     /// <para>In the vCard standards 2.1 and 3.0, <c>ADR</c> and <c>LABEL</c> are separate 
     /// vCard properties. Only as of vCard&#160;4.0 they are permanently linked to one another. 
     /// When saving a vCard&#160;2.1 and vCard&#160;3.0, the content of this property is 
-    /// automatically inserted into the vCard as a separate <c>LABEL</c> property. 
+    /// automatically inserted into the vCard as a separate <c>LABEL</c> property. It's
+    /// recommended in this case to assign a <see cref="VCardProperty.Group"/> identifier to 
+    /// the <see cref="AddressProperty"/>: The <c>LABEL</c> property will get the same
+    /// automatically.
     /// </para>
     /// <note type="warning">
     /// <para>
     /// When loading a vCard&#160;2.1 or 3.0, the library tries to create the link between 
-    /// <c>LABEL</c> and <c>ADR</c> based on matching parameters of both properties. A text 
+    /// <c>LABEL</c> and <c>ADR</c> based on matching <see cref="VCardProperty.Group"/> identifiers
+    /// and parameters of both properties. A text 
     /// comparison of the content of <c>ADR</c> and <c>LABEL</c> does not take place for 
     /// performance reasons.
     /// </para>
@@ -345,8 +360,19 @@ public sealed partial class ParameterSection
     }
 
     /// <summary><c>TZ</c>: Time zone <c>(4)</c></summary>
-    /// <remarks> This parameter is only written if it is attached to an 
-    /// <see cref="AddressProperty" /> object.</remarks>
+    /// <remarks> 
+    /// <para>
+    /// This parameter is only written if it is attached to an 
+    /// <see cref="AddressProperty" /> object.
+    /// </para>
+    /// <note type="tip">
+    /// To preserve this information when serializing
+    /// vCard&#160;2.1 or vCard&#160;3.0 make a copy of it in the
+    /// <see cref="VCard.TimeZones"/> property and connect the 
+    /// <see cref="TimeZoneProperty"/> with the <see cref="AddressProperty"/>
+    /// using a <see cref="VCardProperty.Group"/> identifier.
+    /// </note>
+    /// </remarks>
     public TimeZoneID? TimeZone
     {
         get => Get<TimeZoneID?>(VCdParam.TimeZone);

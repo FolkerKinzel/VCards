@@ -95,7 +95,8 @@ public sealed partial class ParameterSection
                             Debug.Assert(typeValue.Length != 0);
                             if (!ParseTypeParameter(typeValue, propertyKey))
                             {
-                                List<KeyValuePair<string, string>> nonStandardList = (List<KeyValuePair<string, string>>?)this.NonStandard ?? new List<KeyValuePair<string, string>>();
+                                List<KeyValuePair<string, string>> nonStandardList = 
+                                    (List<KeyValuePair<string, string>>?)this.NonStandard ?? new List<KeyValuePair<string, string>>();
                                 this.NonStandard = nonStandardList;
 
                                 nonStandardList.Add(new KeyValuePair<string, string>(parameter.Key, s));
@@ -104,7 +105,8 @@ public sealed partial class ParameterSection
                         break;
                     }
                 case ParameterKey.GEO:
-                    if (GeoCoordinate.TryParse(parameter.Value.AsSpan().Trim().Trim(info.AllQuotes), out FolkerKinzel.VCards.Models.GeoCoordinate? geo))
+                    if (GeoCoordinate.TryParse(parameter.Value.AsSpan().Trim().Trim(info.AllQuotes), 
+                                               out FolkerKinzel.VCards.Models.GeoCoordinate? geo))
                     {
                         this.GeoPosition = geo;
                     }

@@ -438,4 +438,12 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? values, bool discardEmptyItems = true) where TSource : VCardProperty
         => values is null ? Enumerable.Empty<TSource>()
                           : values.OrderByIndexIntl(discardEmptyItems);
+
+
+    internal static IEnumerable<IGrouping<string?, TSource>> GroupByVCardGroup<TSource>(
+        this IEnumerable<TSource?>? values) where TSource : VCardProperty
+        => values?.WhereNotNull()
+                  .GroupBy(x => x.Group, StringComparer.OrdinalIgnoreCase)
+           ?? Enumerable.Empty<IGrouping<string?, TSource>>();
+       // Group names are case insensitive (see RFC 6350, 3.3)
 }
