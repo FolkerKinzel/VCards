@@ -250,6 +250,13 @@ public class IEnumerableExtensionTests
     }
 
     [TestMethod]
+    public void PrefOrNullTest1b()
+    {
+        VCardProperty[]? props = null;
+        Assert.IsNull(props.PrefOrNull(true));
+    }
+
+    [TestMethod]
     public void PrefOrNullTest2()
     {
         VCardProperty[]? props = new[] {new TextProperty(null)};
@@ -271,11 +278,10 @@ public class IEnumerableExtensionTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void PrefOrNullTest5()
     {
         VCardProperty[]? props = new[] { new TextProperty("Hi") };
-        props.PrefOrNull(null!);
+        Assert.IsNotNull(props.PrefOrNull(null));
     }
 
     [TestMethod]
@@ -297,6 +303,13 @@ public class IEnumerableExtensionTests
     {
         VCardProperty[]? props = null;
         Assert.IsNull(props.FirstOrNull());
+    }
+
+    [TestMethod]
+    public void FirstOrNullTest1b()
+    {
+        VCardProperty[]? props = null;
+        Assert.IsNull(props.FirstOrNull(true));
     }
 
     [TestMethod]
@@ -322,11 +335,10 @@ public class IEnumerableExtensionTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void FirstOrNullTest5()
     {
         VCardProperty[]? props = new[] { new TextProperty("Hi") };
-        props.FirstOrNull(null!);
+        Assert.IsNotNull(props.FirstOrNull(null));
     }
 
     [TestMethod]

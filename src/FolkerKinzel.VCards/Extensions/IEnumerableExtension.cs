@@ -219,7 +219,7 @@ public static class IEnumerableExtension
     /// <summary>
     /// Gets the most preferred <see cref="VCardProperty"/> from a collection of
     /// <see cref="VCardProperty"/> objects and allows to specify whether or not
-    /// to discard empty items.
+    /// to ignore empty items.
     /// </summary>
     /// <typeparam name="T">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
@@ -252,7 +252,7 @@ public static class IEnumerableExtension
     /// <summary>
     /// Gets the most preferred <see cref="VCardProperty"/> from a collection of
     /// <see cref="VCardProperty"/> objects and allows additional filtering of the items, and
-    /// to specify whether or not to discard empty items.
+    /// to specify whether or not to ignore empty items.
     /// </summary>
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>

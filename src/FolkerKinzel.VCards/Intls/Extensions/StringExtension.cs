@@ -1,4 +1,6 @@
 using System.Text.RegularExpressions;
+using FolkerKinzel.Strings;
+using FolkerKinzel.Strings.Polyfills;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
@@ -19,11 +21,10 @@ internal static partial class StringExtension
             return value != null && 
                   (
                     value.Contains(';') ||
-                    (version >= VCdVersion.V3_0 && value.Contains(',')) ||
+                    (version >= VCdVersion.V3_0 && value.ContainsAny(",\r,\n".AsSpan())) ||
                     (version >= VCdVersion.V4_0 && value.Contains('\\'))
                    );
         }
-
     }
 
     [return: NotNullIfNotNull(nameof(value))]
@@ -38,25 +39,11 @@ internal static partial class StringExtension
 
         _ = sb.Clear().Append(value).UnMask(version);
 
-        if (sb.Length != value.Length)
-        {
-            return sb.ToString();
-        }
-
-        if (version == VCdVersion.V2_1)
-        {
-            return value;
-        }
-
-        for (int i = 0; i < sb.Length; i++)
-        {
-            if (sb[i] != value[i])
-            {
-                return sb.ToString();
-            }
-        }
-
-        return value;
+        return sb.Length != value.Length
+                 ? sb.ToString() 
+                 : version == VCdVersion.V2_1
+                       ? value
+                       : sb.ToString();
     }
 
 

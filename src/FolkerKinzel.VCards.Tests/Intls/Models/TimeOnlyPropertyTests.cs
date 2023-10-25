@@ -1,16 +1,13 @@
 ﻿using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Intls.Serializers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
 [TestClass]
 public class TimeOnlyPropertyTests
 {
-    //[TestMethod]
-    //[ExpectedException(typeof(ArgumentNullException))]
-    //public void DereferenceTest42() => _ = VCard.Dereference(null!);
-
     [TestMethod]
     public void CloneTest1()
     {

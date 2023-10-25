@@ -59,26 +59,21 @@ internal sealed class RelationVCardProperty : RelationProperty
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        if (Value is null)
-        {
-            return;
-        }
-
         Debug.Assert(serializer != null);
+        Debug.Assert(Value != null);
+        Debug.Assert(serializer.Version < VCdVersion.V4_0);
 
         StringBuilder builder = serializer.Builder;
         StringBuilder worker = serializer.Worker;
 
-        Debug.Assert(serializer.Version < VCdVersion.V4_0);
-
-        string vc = Value.ToVcfString(serializer.Version, options: serializer.Options.Unset(VcfOptions.IncludeAgentAsSeparateVCard));
+        string vc = Value.ToVcfString(serializer.Version, 
+                                      options: serializer.Options.Unset(VcfOptions.IncludeAgentAsSeparateVCard));
 
         if (serializer.Version == VCdVersion.V3_0)
         {
             Debug.Assert(serializer.PropertyKey == VCard.PropKeys.AGENT);
 
             _ = worker.Clear().Append(vc).Mask(serializer.Version);
-
             _ = builder.Append(worker);
         }
         else //vCard 2.1
