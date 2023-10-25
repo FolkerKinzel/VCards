@@ -219,59 +219,80 @@ public static class IEnumerableExtension
     /// <summary>
     /// Gets the most preferred <see cref="VCardProperty"/> from a collection of
     /// <see cref="VCardProperty"/> objects and allows to specify whether or not
-    /// to ignore empty items.
+    /// to discard empty items.
     /// </summary>
-    /// <typeparam name="T">>Generic type parameter that's constrained to be a class that's 
+    /// <typeparam name="T">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
-    /// objects to search. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
+    /// objects to search. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// values.</param>
-    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the search. 
-    /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
-    /// values will always be ignored.</param>
-    /// <returns>The most preferred <see cref="VCardProperty"/> from <paramref name="values"/>,
-    /// or <c>null</c> if <paramref name="values"/> is empty, contains only <c>null</c> values,
-    /// or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.</returns>
+    /// <param name="ignoreEmptyItems"> Pass <c>false</c> to include empty items in the return value
+    /// or <c>true</c> to discard them. ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> 
+    /// returns <c>true</c>.) <c>null</c> values will always be discarded.</param>
+    /// <returns>
+    /// <para>
+    /// The most preferred <see cref="VCardProperty"/> from <paramref name="values"/>,
+    /// or <c>null</c> if <paramref name="values"/> is empty, contains only <c>null</c> references,
+    /// or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.
+    /// </para>
+    /// <para>"Most preferred" is defined as the <see cref="VCardProperty"/> with the lowest
+    /// <see cref="ParameterSection.Preference"/> value.</para>
+    /// </returns>
     /// <remarks>
-    /// The method is useful to search <see cref="VCard"/> properties with plural names, but not those
-    /// whose name ends with <c>*views</c>. These properties should be searched with
+    /// The method is especially useful to search <see cref="VCard"/> properties with plural names,
+    /// but not those whose names end with <c>*views</c>. These properties should be searched with
     /// <see cref="FirstOrNull{TSource}(IEnumerable{TSource}?, bool)"/>
     /// because the <see cref="ParameterSection.Preference"/> has no meaning in such properties.
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T? PrefOrNull<T>(this IEnumerable<T?>? values,
-                                   bool ignoreEmptyItems = true) where T : VCardProperty
+                                   bool ignoreEmptyItems) where T : VCardProperty
         => values?.PrefOrNullIntl(ignoreEmptyItems);
 
     /// <summary>
     /// Gets the most preferred <see cref="VCardProperty"/> from a collection of
-    /// <see cref="VCardProperty"/> objects and allows filtering of the items and
-    /// to specify whether or not to ignore empty items.
+    /// <see cref="VCardProperty"/> objects and allows additional filtering of the items, and
+    /// to specify whether or not to discard empty items.
     /// </summary>
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
-    /// objects to search. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
-    /// values.</param>
-    /// <param name="filter">A <see cref="Func{T, TResult}"/> which allows filtering of the items.
-    /// The arguments of the delegate are guaranteed to not be <c>null</c>.</param>
-    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the search. 
+    /// objects to search. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// references.</param>
+    /// <param name="filter">A <see cref="Func{T, TResult}"/> which allows additional filtering 
+    /// of the items, or <c>null</c> to not perform additional filtering. The arguments of the 
+    /// delegate are guaranteed to not be <c>null</c>.</param>
+    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value. 
     /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
-    /// values will always be ignored.</param>
-    /// <returns>The most preferred <see cref="VCardProperty"/> from <paramref name="values"/>,
-    /// or <c>null</c> if <paramref name="values"/> is empty, contains only <c>null</c> values,
-    /// or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.</returns>
+    /// values will always be discarded.</param>
+    /// <returns>
+    /// <para>
+    /// The most preferred <see cref="VCardProperty"/> from <paramref name="values"/>
+    /// that passes the <paramref name="filter"/>, or <c>null</c>
+    /// </para>
+    /// <list type="bullet">
+    /// <item>if no such item could be found,</item>
+    /// <item>if <paramref name="values"/> is empty,</item>
+    /// <item>if <paramref name="values"/> contains only <c>null</c> references,</item>
+    /// <item>or if <paramref name="values"/> contains only empty items and 
+    /// <paramref name="ignoreEmptyItems"/> is <c>true</c>.</item>
+    /// </list>
+    /// <para>
+    /// <para>"Most preferred" is defined as the <see cref="VCardProperty"/> with the lowest
+    /// <see cref="ParameterSection.Preference"/> value.</para>
+    /// </para>
+    /// </returns>
     /// <remarks>
-    /// The method is useful to search <see cref="VCard"/> properties with plural names, but not those
-    /// whose name ends with <c>*views</c>. These properties should be searched with
-    /// <see cref="FirstOrNull{TSource}(IEnumerable{TSource}?, Func{TSource, bool}, bool)"/>
+    /// The method is especially useful to search <see cref="VCard"/> properties with plural 
+    /// names, but not those whose names end with <c>*views</c>. These properties should be 
+    /// searched with <see cref="FirstOrNull{TSource}(IEnumerable{TSource}?, Func{TSource, bool}, bool)"/>
     /// because the <see cref="ParameterSection.Preference"/> has no meaning in such properties.
     /// </remarks>
-    /// <exception cref="ArgumentNullException"><paramref name="filter"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static TSource? PrefOrNull<TSource>(this IEnumerable<TSource?>? values,
-                                   Func<TSource, bool> filter,
-                                   bool ignoreEmptyItems = true) where TSource : VCardProperty
+    public static TSource? PrefOrNull<TSource>(
+        this IEnumerable<TSource?>? values,
+        Func<TSource, bool>? filter = null,
+        bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values?.PrefOrNullIntl
                    (
                       filter ?? throw new ArgumentNullException(nameof(filter)),
@@ -285,63 +306,77 @@ public static class IEnumerableExtension
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
-    /// objects to search. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
+    /// objects to search. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// references.</param>
-    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the search. 
+    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value
+    /// or <c>true</c> to discard them. 
     /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
-    /// values will always be ignored.</param>
-    /// <returns>The most preferred <see cref="VCardProperty"/> from <paramref name="values"/>,
+    /// values will always be discarded.</param>
+    /// <returns>
+    /// <para>
+    /// The first <see cref="VCardProperty"/> from <paramref name="values"/>,
     /// or <c>null</c> if <paramref name="values"/> is empty, contains only <c>null</c> references,
-    /// or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.</returns>
+    /// or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.
+    /// </para>
+    /// <para>
+    /// "First" is defined as the item with the lowest <see cref="ParameterSection.Index"/>
+    /// value. If <see cref="ParameterSection.Index"/> is <c>null</c>&#160;<see cref="int.MaxValue"/>
+    /// is assumed.
+    /// </para>
+    /// </returns>
     /// <remarks>
-    /// <para>
-    /// The method is useful to search <see cref="VCard"/> properties with names that ends with
-    /// <c>*views</c>. For all other plural-named <see cref="VCard"/> properties use 
+    /// The method is especially useful to search <see cref="VCard"/> properties with names 
+    /// that end with <c>*views</c>. For all other plural-named <see cref="VCard"/> properties use 
     /// <see cref="PrefOrNull{TSource}(IEnumerable{TSource}?, bool)"/>.
-    /// </para>
-    /// <para>
-    /// In order to determine what's the first item the <see cref="ParameterSection.Index"/>
-    /// property is taken into account.
-    /// </para>
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static TSource? FirstOrNull<TSource>(this IEnumerable<TSource?>? values,
-                                   bool ignoreEmptyItems = true) where TSource : VCardProperty
+    public static TSource? FirstOrNull<TSource>(
+        this IEnumerable<TSource?>? values, bool ignoreEmptyItems) where TSource : VCardProperty
         => values?.FirstOrNullIntl(ignoreEmptyItems);
 
     /// <summary>
     /// Gets the first <see cref="VCardProperty"/> from a collection of <see cref="VCardProperty"/>
-    /// objects and allows filtering of the items and to specify whether or not to ignore empty items.
+    /// objects and allows filtering of the items, and to specify whether or not to ignore empty items.
     /// </summary>
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
     /// objects to search. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
     /// references.</param>
-    /// <param name="filter">A <see cref="Func{T, TResult}"/> which allows filtering of the items.
-    /// The arguments of the delegate are guaranteed to not be <c>null</c>.</param>
-    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the search. 
+    /// <param name="filter">A <see cref="Func{T, TResult}"/> which allows additional filtering of
+    /// the items, or <c>null</c> to not perform additional filtering. The arguments of the delegate 
+    /// are guaranteed to not be <c>null</c>.</param>
+    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value. 
     /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
-    /// values will always be ignored.</param>
-    /// <returns>The most preferred <see cref="VCardProperty"/> from <paramref name="values"/>,
-    /// or <c>null</c> if <paramref name="values"/> is empty, contains only <c>null</c> references,
-    /// or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.</returns>
+    /// values will always be discarded.</param>
+    /// <returns>
+    /// <para>
+    /// The first <see cref="VCardProperty"/> from <paramref name="values"/> that passes the 
+    /// <paramref name="filter"/>, or <c>null</c>
+    /// </para>
+    /// <list type="bullet">
+    /// <item>if no such item could be found,</item>
+    /// <item>if <paramref name="values"/> is empty,</item>
+    /// <item>if <paramref name="values"/> contains only <c>null</c> references,</item>
+    /// <item>or if <paramref name="values"/> contains only empty items and 
+    /// <paramref name="ignoreEmptyItems"/> is <c>true</c>.</item>
+    /// </list>
+    /// <para>
+    /// "First" is defined as the item with the lowest <see cref="ParameterSection.Index"/>
+    /// value. If <see cref="ParameterSection.Index"/> is <c>null</c>&#160;<see cref="int.MaxValue"/>
+    /// is assumed.
+    /// </para>
+    /// </returns>
     /// <remarks>
-    /// <para>
-    /// The method is useful to search <see cref="VCard"/> properties with names that ends with
-    /// <c>*views</c>. For all other plural-named <see cref="VCard"/> properties use 
+    /// The method is especially useful to search <see cref="VCard"/> properties with names that end 
+    /// with <c>*views</c>. For all other plural-named <see cref="VCard"/> properties use 
     /// <see cref="PrefOrNull{TSource}(IEnumerable{TSource}?, Func{TSource, bool}, bool)"/>.
-    /// </para>
-    /// <para>
-    /// In order to determine what's the first item the <see cref="ParameterSection.Index"/>
-    /// property is taken into account.
-    /// </para>
     /// </remarks>
-    /// <exception cref="ArgumentNullException"><paramref name="filter"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static TSource? FirstOrNull<TSource>(this IEnumerable<TSource?>? values,
-                                   Func<TSource, bool> filter,
-                                   bool ignoreEmptyItems = true) where TSource : VCardProperty
+    public static TSource? FirstOrNull<TSource>(
+        this IEnumerable<TSource?>? values,
+        Func<TSource, bool>? filter = null,
+        bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values?.FirstOrNullIntl
            (
               filter ?? throw new ArgumentNullException(nameof(filter)),
@@ -362,8 +397,8 @@ public static class IEnumerableExtension
     /// references are removed in any case.</param>
     /// <returns>A collection that contains the items of <paramref name="values"/> ordered ascending
     /// by the value of their <see cref="ParameterSection.Preference"/> property. The returned collection 
-    /// won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c> &#160;
-    /// <see cref="Enumerable.Empty{TResult}"/> is returned instead.</returns>
+    /// won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c>
+    /// an empty collection will be returned.</returns>
     /// <remarks>
     /// The method is useful to examine <see cref="VCard"/> properties with plural names but not
     /// those which end with <c>*views</c>. These properties should be sorted with
@@ -371,8 +406,8 @@ public static class IEnumerableExtension
     /// <see cref="ParameterSection.Preference"/> has no meaning in such properties.
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IEnumerable<TSource> OrderByPref<TSource>(this IEnumerable<TSource?>? values,
-                                                    bool ignoreEmptyItems = true) where TSource : VCardProperty
+    public static IEnumerable<TSource> OrderByPref<TSource>(
+        this IEnumerable<TSource?>? values, bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values is null ? Enumerable.Empty<TSource>()
                           : values.OrderByPrefIntl(ignoreEmptyItems);
 
@@ -388,18 +423,27 @@ public static class IEnumerableExtension
     /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value. 
     /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
     /// references are removed in any case.</param>
-    /// <returns>A collection that contains the items of <paramref name="values"/> ordered ascending
-    /// by the value of their <see cref="ParameterSection.Index"/> property. The returned collection 
-    /// won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c> &#160;
-    /// <see cref="Enumerable.Empty{TResult}"/> is returned instead. </returns>
+    /// <returns>
+    /// <para>
+    /// A collection that contains the items of <paramref name="values"/> ordered ascending
+    /// by the value of their <see cref="ParameterSection.Index"/> property. If the
+    /// <see cref="ParameterSection.Index"/> property is <c>null</c>&#160;<see cref="int.MaxValue"/>
+    /// is assumed.
+    /// </para>
+    /// <para>
+    /// The returned collection 
+    /// won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c>
+    /// an empty collection will be returned. 
+    /// </para>
+    /// </returns>
     /// <remarks>
     /// The method is useful to examine <see cref="VCard"/> properties with names that ends with
     /// <c>*views</c>. For all other plural-named <see cref="VCard"/> properties use 
     /// <see cref="OrderByPref{TSource}(IEnumerable{TSource}?, bool)"/>.
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IEnumerable<TSource> OrderByIndex<TSource>(this IEnumerable<TSource?>? values,
-                                                   bool ignoreEmptyItems = true) where TSource : VCardProperty
+    public static IEnumerable<TSource> OrderByIndex<TSource>(
+        this IEnumerable<TSource?>? values, bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values is null ? Enumerable.Empty<TSource>()
                           : values.OrderByIndexIntl(ignoreEmptyItems);
 }
