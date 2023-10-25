@@ -9,4 +9,4 @@ It allows
 
 [Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v6.0.0-beta.1)
 
-See [code examples at GitHub](https://github.com/FolkerKinzel/VCards)!
+[See code examples at GitHub!](https://github.com/FolkerKinzel/VCards)

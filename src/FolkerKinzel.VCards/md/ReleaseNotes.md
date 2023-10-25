@@ -1,4 +1,4 @@
-Version 6 of this library is a very large update. In addition to numerous new features such as
+Version 6 of this library is a large update. In addition to numerous new features such as
 - automatic creation of address labels,
 - automatic generation of DisplayNames or
 - automatic filtering of VCF files with ANSI encoding,
