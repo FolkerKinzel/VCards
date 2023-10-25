@@ -319,7 +319,7 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (Relations?.All(x => x!.Parameters.Relation != RelationTypes.Spouse) ?? true)
+                    else if (Relations?.All(static x => x!.Parameters.Relation != RelationTypes.Spouse) ?? true)
                     {
                         vcfRow.Parameters.DataType = VCdDataType.Text; // führt dazu, dass eine RelationTextProperty erzeugt wird
                         vcfRow.Parameters.Relation = RelationTypes.Spouse;
@@ -436,7 +436,7 @@ public sealed partial class VCard
     private void AddCopyToPhoneNumbers(TextProperty textProp, ParameterSection para)
     {
         if ((para.PhoneType.IsSet(PhoneTypes.Voice) || para.PhoneType.IsSet(PhoneTypes.Video)) &&
-           (!Phones?.Any(x => x?.Value == textProp.Value) ?? true))
+           (!Phones?.Any(x => x!.Value == textProp.Value) ?? true))
         {
             Phones = textProp.GetAssignment(Phones);
         }
@@ -518,7 +518,6 @@ public sealed partial class VCard
         {
             Assign(labelRow, addressWithEqualPreference);
         }
-
 
         static AddressProperty CreateEmptyAddressPropertyWithLabel(VcfRow vcfRow)
         {

@@ -42,6 +42,8 @@ public class GeoCoordinateTests
         var geo2 = new GeoCoordinate(latitude2, longitude2);
 
         Assert.AreEqual(expected, geo1.Equals(geo2));
+        Assert.AreEqual(expected, geo1 == geo2);
+        Assert.AreNotEqual(expected, geo1 != geo2);
 
         if (expected)
         {
@@ -54,10 +56,17 @@ public class GeoCoordinateTests
     public void EqualsTest1()
     {
         var geo = new GeoCoordinate(1, 1);
+        var o = new object();
 
         Assert.IsFalse(geo.Equals(null));
-        Assert.IsFalse(geo!.Equals(new object()));
+        Assert.IsFalse(geo!.Equals(o));
     }
+
+    [TestMethod()]
+    public void EqualsTest2() => Assert.IsTrue((GeoCoordinate?)null == (GeoCoordinate?)null);
+
+    [TestMethod()]
+    public void EqualsTest3() => Assert.IsFalse((GeoCoordinate?)null == new GeoCoordinate(1,1));
 
     //[TestMethod()]
     //public void GetHashCodeTest()

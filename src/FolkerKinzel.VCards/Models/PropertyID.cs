@@ -106,12 +106,8 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// <inheritdoc />
     public bool Equals(PropertyID? other) => other is not null && ID == other.ID && Mapping == other.Mapping;
 
-
     /// <inheritdoc />
-    public override int GetHashCode()
-        => Mapping.HasValue ? HashCode.Combine(ID, Mapping)
-                            : HashCode.Combine(ID);
-
+    public override int GetHashCode() => HashCode.Combine(ID, Mapping);
 
     /// <summary>Compares two <see cref="PropertyID" /> objects. The result indicates
     /// whether the values of the two <see cref="PropertyID" /> objects are equal.</summary>
@@ -120,7 +116,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// <returns> <c>true</c> if the values of the two <see cref="PropertyID" /> objects
     /// are equal, otherwise <c>false</c>.</returns>
     public static bool operator ==(PropertyID? pid1, PropertyID? pid2)
-        => object.ReferenceEquals(pid1, pid2) || (pid1?.Equals(pid2) ?? false);
+        => ReferenceEquals(pid1, pid2) || (pid1?.Equals(pid2) ?? false);
 
     /// <summary>Compares two <see cref="PropertyID" /> objects. The result indicates
     /// whether the values of the two <see cref="PropertyID" /> objects are not equal.</summary>

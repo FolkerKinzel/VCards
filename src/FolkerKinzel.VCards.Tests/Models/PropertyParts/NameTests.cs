@@ -46,6 +46,12 @@ public class NameTests
     public void NeedsToBeQPEncodedTest1b(string input)
         => Assert.IsTrue(new Name(input, new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
 
+    [DataTestMethod]
+    [DataRow("a,a;a;a;a;a")]
+    [DataRow(";;;;")]
+    public void NeedsToBeQPEncodedTest2(string input)
+        => Assert.IsFalse(new Name(input, new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
+
     [TestMethod]
     public void ToStringTest1()
     {

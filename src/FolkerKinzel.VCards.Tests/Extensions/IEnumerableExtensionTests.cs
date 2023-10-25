@@ -385,4 +385,11 @@ public class IEnumerableExtensionTests
         VCardProperty[]? props = new[] { prop };
         Assert.IsTrue(props.OrderByIndex(false).Any());
     }
+
+    [TestMethod]
+    public void GroupByVCardGroupTest1()
+    {
+        TextProperty[]? props = null;
+        Assert.IsNotNull(props.GroupByVCardGroup());
+    }
 }

@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+﻿using System.Globalization;
+
+namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 
 [TestClass]
 public class DateAndOrTimeTests
@@ -59,6 +61,20 @@ public class DateAndOrTimeTests
 
         Assert.IsFalse(rel.TryAsDateOnly(out _));
         Assert.IsFalse(rel.TryAsDateTimeOffset(out _));
+    }
+
+    [TestMethod]
+    public void ValueTest5()
+    {
+        var rel = new DateAndOrTime(DateTimeOffset.Now.ToString(CultureInfo.CurrentCulture));
+        Assert.IsNotNull(rel.Value);
+        Assert.IsNull(rel.DateOnly);
+        Assert.IsNull(rel.DateTimeOffset);
+        Assert.IsNull(rel.TimeOnly);
+        Assert.IsNotNull(rel.String);
+
+        Assert.IsFalse(rel.TryAsDateOnly(out _));
+        Assert.IsTrue(rel.TryAsDateTimeOffset(out _));
     }
 
     [TestMethod]

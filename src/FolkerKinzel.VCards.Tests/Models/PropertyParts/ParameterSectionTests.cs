@@ -20,10 +20,17 @@ public class ParameterSectionTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AssignTest()
+    public void AssignTest1()
     {
         var sec = new ParameterSection();
         sec.Assign(null!);
+    }
+
+    [TestMethod]
+    public void AssignTest2()
+    {
+        var sec = new ParameterSection();
+        sec.Assign(sec);
     }
 
 }

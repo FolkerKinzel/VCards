@@ -1,4 +1,5 @@
-﻿namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 
 [TestClass]
 public class RelationTests
@@ -84,5 +85,54 @@ public class RelationTests
 
         int result = rel.Convert<int>(null!, null!, null!, null!);
         Assert.AreEqual(expected, result);
+    }
+
+
+    [TestMethod]
+    public void TryAsStringTest1() => Assert.IsFalse(RelationProperty.FromGuid(Guid.NewGuid()).Value!.TryAsString(out _));
+
+    [TestMethod]
+    public void TryAsStringTest2() => Assert.IsFalse(RelationProperty.FromVCard(new VCard()).Value!.TryAsString(out _));
+
+    [TestMethod]
+    public void TryAsStringTest3() => Assert.IsTrue(RelationProperty.FromText("Hi").Value!.TryAsString(out _));
+
+    [TestMethod]
+    public void TryAsStringTest4() => Assert.IsTrue(RelationProperty.FromUri(new Uri("http://folker.de/")).Value!.TryAsString(out _));
+
+    [TestMethod]
+    public void TryAsStringTest5()
+        => Assert.IsTrue(RelationProperty.FromVCard(new VCard() { Organizations = new OrganizationProperty("Org") }).Value!.TryAsString(out _));
+
+    [TestMethod]
+    public void TryAsStringTest6()
+        => Assert.IsTrue(RelationProperty.FromVCard(new VCard() { NameViews = new NameProperty("Folker") }).Value!.TryAsString(out _));
+
+    [TestMethod]
+    public void TryAsStringTest7()
+        => Assert.IsTrue(RelationProperty.FromVCard(new VCard() { DisplayNames = new TextProperty("Folker") }).Value!.TryAsString(out _));
+
+    [TestMethod]
+    public void TryAsStringTest8()
+    {
+        Assert.IsTrue(RelationProperty.FromVCard(
+            new VCard()
+            {
+                Organizations = new OrganizationProperty("Org"),
+                DisplayNames = Array.Empty<TextProperty>(),
+                NameViews = Array.Empty<NameProperty>()
+            }).Value!.TryAsString(out _));
+    }
+
+    [TestMethod]
+    public void TryAsStringTest9()
+    {
+        Assert.IsFalse(RelationProperty.FromVCard(
+            new VCard()
+            {
+                Organizations = Array.Empty<OrganizationProperty>(),
+                DisplayNames = Array.Empty<TextProperty>(),
+                NameViews = Array.Empty<NameProperty>()
+            }).Value!.TryAsString(out _));
     }
 }

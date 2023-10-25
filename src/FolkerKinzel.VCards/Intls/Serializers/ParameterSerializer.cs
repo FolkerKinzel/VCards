@@ -349,14 +349,14 @@ internal abstract class ParameterSerializer
         {
             string key = parameter.Key;
 
-            if (key is null)
+            if (string.IsNullOrWhiteSpace(key))
             {
                 continue;
             }
 
             key = key.Trim();
 
-            if (key.Length == 0 || string.IsNullOrWhiteSpace(parameter.Value) || IsKnownParameter(key))
+            if (string.IsNullOrWhiteSpace(parameter.Value) || IsKnownParameter(key))
             {
                 continue;
             }

@@ -41,7 +41,6 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     public bool Equals(GeoCoordinate? other)
     {
         const double _6 = 0.000001;
-
         return other is not null && (Math.Abs(this.Latitude - other.Latitude) < _6) && (Math.Abs(this.Longitude - other.Longitude) < _6);
     }
 
@@ -53,7 +52,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <returns><c>true</c> if the values of <paramref name="left"/> and <paramref name="right"/>
     /// are equal, otherwise <c>false</c>.</returns>
     public static bool operator ==(GeoCoordinate? left, GeoCoordinate? right) 
-        => object.Equals(left, right) || (left?.Equals(right) ?? false);
+        => ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
 
     /// <summary>
     /// Overloads the not-equal-to operator for <see cref="GeoCoordinate"/> instances.
@@ -72,7 +71,6 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     public override int GetHashCode()
     {
         const int prec = 1000000;
-
         return HashCode.Combine(Math.Floor(Latitude * prec), Math.Floor(Longitude * prec));
     }
 

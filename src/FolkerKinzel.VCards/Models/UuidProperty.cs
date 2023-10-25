@@ -48,12 +48,11 @@ public sealed class UuidProperty : VCardProperty, IEquatable<UuidProperty>
     public override object Clone() => new UuidProperty(this);
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-        => obj is UuidProperty other && Equals(other);
-
+    public override bool Equals(object? obj) => Equals(obj as UuidProperty);
+       
     /// <inheritdoc />
     public bool Equals(UuidProperty? other)
-        => other != null && Value.Equals(other.Value);
+        => (other is not null) && Value.Equals(other.Value);
 
     /// <inheritdoc />
     public override int GetHashCode() => HashCode.Combine(Value);

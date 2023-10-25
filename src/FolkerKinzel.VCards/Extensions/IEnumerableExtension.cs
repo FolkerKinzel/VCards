@@ -225,7 +225,7 @@ public static class IEnumerableExtension
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
     /// objects to search. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
-    /// values.</param>
+    /// references.</param>
     /// <param name="ignoreEmptyItems"> Pass <c>false</c> to include empty items in the return value
     /// or <c>true</c> to ignore them. ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> 
     /// returns <c>true</c>.) <c>null</c> values will always be ignored.</param>
@@ -337,7 +337,7 @@ public static class IEnumerableExtension
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
-    /// objects to search. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
+    /// objects to search. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// references.</param>
     /// <param name="filter">A <see cref="Func{T, TResult}"/> which allows additional filtering of
     /// the items, or <c>null</c> to not perform additional filtering. The arguments of the delegate 
@@ -382,7 +382,7 @@ public static class IEnumerableExtension
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
-    /// objects to sort. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
+    /// objects to sort. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// references.</param>
     /// <param name="discardEmptyItems">Pass <c>false</c> to include empty items in the return value. 
     /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
@@ -410,7 +410,7 @@ public static class IEnumerableExtension
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
-    /// objects to sort. The collection may be <c>null</c>, or empty, or may contain <c>null</c> 
+    /// objects to sort. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// values.</param>
     /// <param name="discardEmptyItems">Pass <c>false</c> to include empty items in the return value. 
     /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
@@ -440,10 +440,25 @@ public static class IEnumerableExtension
                           : values.OrderByIndexIntl(discardEmptyItems);
 
 
+    /// <summary>
+    /// Groups the <see cref="VCardProperty"/> objects in <paramref name="values"/>
+    /// by their <see cref="VCardProperty.Group"/> identifier.
+    /// </summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
+    /// derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects to group. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// values.</param>
+    /// <returns>A collection of <see cref="IGrouping{TKey, TElement}"/> instances whose Keys are the found
+    /// <see cref="VCardProperty.Group"/> identifiers and their Values are guaranteed to not be
+    /// <c>null</c>. If <paramref name="values"/> is <c>null</c> an empty collection is returned.</returns>
+    /// <remarks>
+    /// The comparison of <see cref="VCardProperty.Group"/> identifiers is case-insensitive 
+    /// (see RFC 6350, 3.3).
+    /// </remarks>
     internal static IEnumerable<IGrouping<string?, TSource>> GroupByVCardGroup<TSource>(
         this IEnumerable<TSource?>? values) where TSource : VCardProperty
         => values?.WhereNotNull()
-                  .GroupBy(x => x.Group, StringComparer.OrdinalIgnoreCase)
+                  .GroupBy(static x => x.Group, StringComparer.OrdinalIgnoreCase)
            ?? Enumerable.Empty<IGrouping<string?, TSource>>();
-       // Group names are case insensitive (see RFC 6350, 3.3)
 }

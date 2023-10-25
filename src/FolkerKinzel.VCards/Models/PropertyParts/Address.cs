@@ -49,7 +49,6 @@ public sealed class Address
         Country = country;
     }
 
-
     internal Address()
     {
         PostOfficeBox =
@@ -60,7 +59,6 @@ public sealed class Address
         PostalCode =
         Country = ReadOnlyStringCollection.Empty;
     }
-
 
     internal Address(string vCardValue, VcfDeserializationInfo info, VCdVersion version)
     {
