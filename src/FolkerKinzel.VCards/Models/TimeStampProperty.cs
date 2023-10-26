@@ -82,7 +82,7 @@ public sealed class TimeStampProperty : VCardProperty
 
         StringBuilder worker = serializer.Worker;
         _ = worker.Clear();
-        DateAndOrTimeConverter.AppendTimeStampTo(worker, this.Value, serializer.Version);
+        DateTimeConverter.AppendTimeStampTo(worker, this.Value, serializer.Version);
         _ = worker.Mask(serializer.Version);
         _ = serializer.Builder.Append(worker);
     }

@@ -73,7 +73,7 @@ public abstract class DateAndOrTimeProperty
     /// that <paramref name="month"/> has in a leap year.</para>
     /// </exception>
     public static DateAndOrTimeProperty FromDate(int month, int day, string? propertyGroup = null)
-        => FromDate(new DateOnly(DateAndOrTimeConverter.FIRST_LEAP_YEAR, month, day), propertyGroup);
+        => FromDate(new DateOnly(DateTimeConverter.FIRST_LEAP_YEAR, month, day), propertyGroup);
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a date in the Gregorian

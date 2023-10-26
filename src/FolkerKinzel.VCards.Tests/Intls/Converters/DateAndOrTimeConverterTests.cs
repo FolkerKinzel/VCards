@@ -6,7 +6,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 [TestClass]
 public class DateAndOrTimeConverterTests
 {
-    private readonly DateAndOrTimeConverter _conv = new();
+    private readonly DateTimeConverter _conv = new();
 
     [TestMethod]
     public void DateTest()
@@ -108,8 +108,8 @@ public class DateAndOrTimeConverterTests
         { 
             var builder = new StringBuilder();
             dt.Switch(
-                dateOnly => DateAndOrTimeConverter.AppendDateTo(builder, dateOnly, version),
-                dto => DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, dto, version)
+                dateOnly => DateTimeConverter.AppendDateTo(builder, dateOnly, version),
+                dto => DateTimeConverter.AppendDateAndOrTimeTo(builder, dto, version)
             );
             return builder.ToString();
         }
@@ -135,8 +135,8 @@ public class DateAndOrTimeConverterTests
         {
             var builder = new StringBuilder();
             dt.Switch(
-                dateOnly => DateAndOrTimeConverter.AppendDateTo(builder, dateOnly, version),
-                dto => DateAndOrTimeConverter.AppendTimeStampTo(builder, dto, version)
+                dateOnly => DateTimeConverter.AppendDateTo(builder, dateOnly, version),
+                dto => DateTimeConverter.AppendTimeStampTo(builder, dto, version)
             );
             return builder.ToString();
         }
@@ -156,7 +156,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest1()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, default, VCdVersion.V3_0);
+        DateTimeConverter.AppendDateAndOrTimeTo(builder, default, VCdVersion.V3_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -165,7 +165,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest2a()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
+        DateTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -173,7 +173,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest2b()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 2, 0,0,0, DateTimeKind.Utc), VCdVersion.V4_0);
+        DateTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 2, 0,0,0, DateTimeKind.Utc), VCdVersion.V4_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -182,7 +182,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest2c()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V3_0);
+        DateTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V3_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -199,7 +199,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest3()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0);
+        DateTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0);
         string s = builder.ToString();
         Assert.IsTrue(s.StartsWith("--"));
     }
@@ -208,7 +208,7 @@ public class DateAndOrTimeConverterTests
     [TestMethod]
     [DataRow(null)]
     [DataRow("This is a very very long string that is longer than 64 characters.")]
-    public void TryParseTest1(string? input) => Assert.IsFalse(new DateAndOrTimeConverter().TryParse(input.AsSpan(), out _));
+    public void TryParseTest1(string? input) => Assert.IsFalse(new DateTimeConverter().TryParse(input.AsSpan(), out _));
 
 
 

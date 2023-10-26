@@ -7,7 +7,7 @@ using OneOf;
 namespace FolkerKinzel.VCards.Intls.Converters;
 
 /// <threadsafety static="true" instance="false" />
-internal sealed class DateAndOrTimeConverter
+internal sealed class DateTimeConverter
 {
     internal const int FIRST_LEAP_YEAR = 4;
     private const int MAX_DATE_TIME_STRING_LENGTH = 64;
@@ -63,6 +63,8 @@ internal sealed class DateAndOrTimeConverter
     #endif
     internal bool TryParse(ReadOnlySpan<char> roSpan, out OneOf<DateOnly, DateTimeOffset> oneOf)
     {
+        Debug.Assert(!roSpan.StartsWith('T'));
+
         oneOf = default;
 
         // Test auf Länge nötig, um StackOverflowException auszuschließen

@@ -16,7 +16,7 @@ public static class DateTimeOffsetExtension
     /// relevant <see cref="DateTimeOffset.Year"/> property, otherwise
     /// <c>false</c>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool HasYear(this DateTimeOffset value) => DateAndOrTimeConverter.HasYear(value);
+    public static bool HasYear(this DateTimeOffset value) => DateTimeConverter.HasYear(value);
 
     /// <summary>
     /// Indicates whether the date part of <paramref name="value"/> contains relevant
@@ -28,5 +28,5 @@ public static class DateTimeOffsetExtension
     /// <returns><c>true</c> if <paramref name="value"/> has a
     /// relevant date part, otherwise <c>false</c>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool HasDate(this DateTimeOffset value) => DateAndOrTimeConverter.HasDate(value);
+    public static bool HasDate(this DateTimeOffset value) => DateTimeConverter.HasDate(value);
 }

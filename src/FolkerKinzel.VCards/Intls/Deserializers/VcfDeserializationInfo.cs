@@ -9,7 +9,7 @@ internal sealed class VcfDeserializationInfo
     private const int MAX_STRINGBUILDER_CAPACITY = 4096 * 4;
     internal const int INITIAL_PARAMETERLIST_CAPACITY = 8;
 
-    private DateAndOrTimeConverter? _dateAndOrTimeConverter;
+    private DateTimeConverter? _dateAndOrTimeConverter;
     private TimeConverter? _timeConverter;
 
     internal StringBuilder Builder { get; } = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY);
@@ -18,11 +18,11 @@ internal sealed class VcfDeserializationInfo
 
     internal List<KeyValuePair<string, string>> ParameterList { get; } = new();
 
-    internal DateAndOrTimeConverter DateAndOrTimeConverter
+    internal DateTimeConverter DateAndOrTimeConverter
     {
         get
         {
-            this._dateAndOrTimeConverter ??= new DateAndOrTimeConverter();
+            this._dateAndOrTimeConverter ??= new DateTimeConverter();
             return this._dateAndOrTimeConverter;
         }
     }

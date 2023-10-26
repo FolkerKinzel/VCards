@@ -20,8 +20,8 @@ internal sealed class DateTimeOffsetProperty : DateAndOrTimeProperty
 
     /// <inheritdoc />
     public override bool IsEmpty
-        => !DateAndOrTimeConverter.HasDate(Value) && 
-           !DateAndOrTimeConverter.HasTime(Value);
+        => !DateTimeConverter.HasDate(Value) && 
+           !DateTimeConverter.HasTime(Value);
 
     /// <inheritdoc />
     public override object Clone() => new DateTimeOffsetProperty(this);
@@ -33,7 +33,7 @@ internal sealed class DateTimeOffsetProperty : DateAndOrTimeProperty
     }
 
     internal override void AppendValue(VcfSerializer serializer) 
-        => DateAndOrTimeConverter.AppendDateAndOrTimeTo(serializer.Builder,
+        => DateTimeConverter.AppendDateAndOrTimeTo(serializer.Builder,
                                                         Value,
                                                         serializer.Version);
 }

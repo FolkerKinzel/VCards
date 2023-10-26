@@ -17,5 +17,5 @@ public static class DateOnlyExtension
     /// <c>false</c>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool HasYear(this DateOnly value)
-        => value.Year > DateAndOrTimeConverter.FIRST_LEAP_YEAR;
+        => value.Year > DateTimeConverter.FIRST_LEAP_YEAR;
 }

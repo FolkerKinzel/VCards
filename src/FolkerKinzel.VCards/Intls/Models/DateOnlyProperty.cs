@@ -28,7 +28,7 @@ internal sealed class DateOnlyProperty : DateAndOrTimeProperty
     }
 
     internal override void AppendValue(VcfSerializer serializer)
-        => DateAndOrTimeConverter.AppendDateTo(serializer.Builder,
+        => DateTimeConverter.AppendDateTo(serializer.Builder,
                                                Value,
                                                serializer.Version);
 }
