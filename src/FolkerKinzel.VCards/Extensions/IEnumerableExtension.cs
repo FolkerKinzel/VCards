@@ -449,9 +449,10 @@ public static class IEnumerableExtension
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
     /// objects to group. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// values.</param>
-    /// <returns>A collection of <see cref="IGrouping{TKey, TElement}"/> instances whose Keys are the found
-    /// <see cref="VCardProperty.Group"/> identifiers and their Values are guaranteed to not be
-    /// <c>null</c>. If <paramref name="values"/> is <c>null</c> an empty collection is returned.</returns>
+    /// <returns>A collection of <see cref="IGrouping{TKey, TElement}"/> instances whose Keys are the
+    /// <see cref="VCardProperty.Group"/> identifiers and/or <c>null</c>. The Values of the groups are 
+    /// guaranteed to be not <c>null</c>. If the parameter <paramref name="values"/> is <c>null</c> an 
+    /// empty collection is returned.</returns>
     /// <remarks>
     /// The comparison of <see cref="VCardProperty.Group"/> identifiers is case-insensitive 
     /// (see RFC 6350, 3.3).
@@ -460,5 +461,27 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? values) where TSource : VCardProperty
         => values?.WhereNotNull()
                   .GroupBy(static x => x.Group, StringComparer.OrdinalIgnoreCase)
+           ?? Enumerable.Empty<IGrouping<string?, TSource>>();
+
+    /// <summary>
+    /// Groups the <see cref="VCardProperty"/> objects in <paramref name="values"/>
+    /// by their <see cref="ParameterSection.AltID"/>s.
+    /// </summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
+    /// derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects to group. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// values.</param>
+    /// <returns>A collection of <see cref="IGrouping{TKey, TElement}"/> instances whose Keys are the
+    /// <see cref="ParameterSection.AltID"/>s and/or <c>null</c>. The Values of the groups are guaranteed 
+    /// to be not <c>null</c>. If the parameter <paramref name="values"/> is <c>null</c> an empty collection
+    /// is returned.</returns>
+    /// <remarks>
+    /// The method performs an ordinal character comparison of the <see cref="ParameterSection.AltID"/>s.
+    /// </remarks>
+    internal static IEnumerable<IGrouping<string?, TSource>> GroupByAltID<TSource>(
+        this IEnumerable<TSource?>? values) where TSource : VCardProperty
+        => values?.WhereNotNull()
+                  .GroupBy(static x => x.Parameters.AltID, StringComparer.Ordinal)
            ?? Enumerable.Empty<IGrouping<string?, TSource>>();
 }

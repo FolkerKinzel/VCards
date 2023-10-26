@@ -34,15 +34,18 @@ public class DateTimeOffsetExtensionTests
     [TestMethod()]
     public void HasYearTest3()
     {
-        Assert.IsTrue(new TimeConverter().TryParse("T170000+02".AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> oneOf));
+        Assert.IsTrue(new TimeConverter().TryParse("T170000+0200".AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> oneOf));
         Assert.IsTrue(oneOf.IsT1);
         Assert.IsFalse(oneOf.AsT1.HasYear());
         Assert.IsFalse(oneOf.AsT1.HasDate());
     }
 
     [TestMethod()]
-    public void HasDateTest()
+    public void HasYearTest4()
     {
-
+        Assert.IsTrue(new TimeConverter().TryParse("T--17+0200".AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> oneOf));
+        Assert.IsTrue(oneOf.IsT1);
+        Assert.IsFalse(oneOf.AsT1.HasYear());
+        Assert.IsFalse(oneOf.AsT1.HasDate());
     }
 }

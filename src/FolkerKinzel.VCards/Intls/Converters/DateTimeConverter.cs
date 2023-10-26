@@ -64,10 +64,11 @@ internal sealed class DateTimeConverter
     internal bool TryParse(ReadOnlySpan<char> roSpan, out OneOf<DateOnly, DateTimeOffset> oneOf)
     {
         Debug.Assert(!roSpan.StartsWith('T'));
+        Debug.Assert(roSpan.Trim().Length == roSpan.Length);
 
         oneOf = default;
 
-        // Test auf Länge nötig, um StackOverflowException auszuschließen
+        // Test the length to avoid a StackOverflowException when stackalloc
         if (roSpan.Length > MAX_DATE_TIME_STRING_LENGTH)
         {
             return false;

@@ -73,6 +73,7 @@ internal sealed class TimeConverter
                                               styles,
                                               out DateTimeOffset dtOffset))
             {
+                dtOffset = new DateTimeOffset(2, 1, 1, dtOffset.Hour, dtOffset.Minute, dtOffset.Second, dtOffset.Offset);
                 oneOf = dtOffset;
                 return true;
             }

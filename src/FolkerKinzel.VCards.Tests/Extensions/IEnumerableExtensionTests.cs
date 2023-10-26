@@ -392,4 +392,31 @@ public class IEnumerableExtensionTests
         TextProperty[]? props = null;
         Assert.IsNotNull(props.GroupByVCardGroup());
     }
+
+    [TestMethod]
+    public void GroupByAltIDTest1()
+    {
+        TextProperty[]? props = null;
+        Assert.IsNotNull(props.GroupByAltID());
+    }
+
+    [TestMethod]
+    public void GroupByAltIDTest2()
+    {
+        TextProperty prop1 = new TextProperty("1");
+        TextProperty prop2 = new TextProperty("2");
+        TextProperty prop3 = new TextProperty("3");
+        TextProperty prop4 = new TextProperty("4");
+        TextProperty prop5 = new TextProperty("5");
+        prop1.Parameters.AltID = "A";
+        prop2.Parameters.AltID = "A";
+        prop3.Parameters.AltID = "a";
+
+        TextProperty?[]? props = new[] { null, prop1, null, prop2, null, prop3, null, prop4, null, prop5, null };
+        var groups = props.GroupByAltID();
+
+        Assert.AreEqual(3, groups.Count());
+        Assert.IsTrue(groups.Any(gr => gr.Key is null));
+        Assert.IsTrue(groups.All(gr => gr.SelectMany(x => x).All(x => x != null)));
+    }
 }

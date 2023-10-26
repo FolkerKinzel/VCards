@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 [TestClass]
-public class DateAndOrTimeConverterTests
+public class DateTimeConverterTests
 {
     private readonly DateTimeConverter _conv = new();
 
@@ -207,8 +207,8 @@ public class DateAndOrTimeConverterTests
 
     [TestMethod]
     [DataRow(null)]
-    [DataRow("This is a very very long string that is longer than 64 characters.")]
-    public void TryParseTest1(string? input) => Assert.IsFalse(new DateTimeConverter().TryParse(input.AsSpan(), out _));
+    [DataRow("A very very loooooooooooooooooooooooooong string that is longer than 64 characters.")]
+    public void TryParseTest1(string? input) => Assert.IsFalse(_conv.TryParse(input.AsSpan(), out _));
 
 
 
@@ -218,8 +218,5 @@ public class DateAndOrTimeConverterTests
     [DataRow("--bb")]
     [DataRow("--bbTau")]
     public void TryParseTest2(string input) => Assert.IsFalse(_conv.TryParse(input.AsSpan(), out _));
-
-    
-
 }
 

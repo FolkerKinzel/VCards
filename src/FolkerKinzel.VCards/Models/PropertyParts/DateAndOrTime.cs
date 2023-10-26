@@ -11,9 +11,9 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary>
 /// Encapsulates the value of a <see cref="DateAndOrTimeProperty"/> object.
-/// This can be either a <see cref="System.DateOnly"/>, a 
-/// <see cref="System.DateTimeOffset"/>, a <see cref="System.TimeOnly"/>, 
-/// or a <see cref="string"/>.
+/// This can be a <see cref="System.DateOnly"/> value, a 
+/// <see cref="System.DateTimeOffset"/> value, a <see cref="System.TimeOnly"/>
+/// value, or a <see cref="string"/>.
 /// </summary>
 /// <seealso cref="DateAndOrTimeProperty"/>
 public sealed partial class DateAndOrTime
@@ -39,16 +39,16 @@ public sealed partial class DateAndOrTime
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <remarks>
-    /// <para>A <see cref="DateTimeOffset"/> value may contain</para>
-    /// <list type="bullet">
-    /// <item>a <see cref="VCdDataType.DateTime"/>,</item>
-    /// <item>a <see cref="VCdDataType.Time"/> with a <see cref="VCdDataType.UtcOffset"/>, or</item>
-    /// <item>a <see cref="VCdDataType.UtcOffset"/></item>
-    /// </list>
+    /// <para>A <see cref="System.DateTimeOffset"/> value may contain either a 
+    /// <see cref="VCdDataType.DateTime"/> or a <see cref="VCdDataType.Time"/> with a 
+    /// <see cref="VCdDataType.UtcOffset"/>.
+    /// </para>
+    /// <para>
     /// Parts of the contained data may be irrelevant. Use the extension methods
     /// <see cref="DateTimeOffsetExtension.HasYear(System.DateTimeOffset)"/> and
     /// <see cref="DateTimeOffsetExtension.HasDate(System.DateTimeOffset)"/> to
     /// check this.
+    /// </para>
     /// </remarks>
     public DateTimeOffset? DateTimeOffset => IsDateTimeOffset ? AsDateTimeOffset : null;
 
@@ -78,16 +78,31 @@ public sealed partial class DateAndOrTime
     /// parameter is passed uninitialized.</param>
     /// <returns><c>true</c> if the conversion was successful, otherwise <c>false</c>.
     /// </returns>
-    /// <remarks>The conversion succeeds if the encapsulated value is either a
-    /// <see cref="System.DateOnly"/> or a <see cref="System.DateTimeOffset"/>.</remarks>
+    /// <remarks>
+    /// <para>
+    /// The conversion fails in any case if the encapsulated value is a
+    /// <see cref="System.TimeOnly"/>.
+    /// </para>
+    /// <para>
+    /// The <see cref="System.DateOnly.Year"/> part of <paramref name="value"/> may
+    /// be irrelevant. Check this with the extension method <see cref="DateOnlyExtension.HasYear"/>.
+    /// </para>
+    /// </remarks>
+    /// 
     public bool TryAsDateOnly(out DateOnly value)
     {
         var result = _oneOf.Match<(DateOnly Value, bool Result)>
          (
           dateOnly => (dateOnly, true),
-          dtOffset => (new DateOnly(dtOffset.Year, dtOffset.Month, dtOffset.Day), true),
+          dtOffset => dtOffset.HasDate() 
+                        ? (new DateOnly(dtOffset.Year, dtOffset.Month, dtOffset.Day), true)
+                        : (default, false),
           timeOnly => (default, false),
-          str => (default, false)
+          str => System.DateOnly.TryParse(str, 
+                                          CultureInfo.CurrentCulture,
+                                          DateTimeStyles.AllowWhiteSpaces,
+                                          out DateOnly dOnly) ? (dOnly, true)
+                                                              : (default, false)
          );
 
         value = result.Value;
@@ -103,9 +118,17 @@ public sealed partial class DateAndOrTime
     /// parameter is passed uninitialized.</param>
     /// <returns><c>true</c> if the conversion was successful, otherwise <c>false</c>.
     /// </returns>
-    /// <remarks>If the encapsulated value is a <see cref="System.DateOnly"/>, 12 hours
+    /// <remarks>
+    /// <para>
+    /// If the encapsulated value is a <see cref="System.DateOnly"/>, 12 hours
     /// are added to the resulting <see cref="System.DateTimeOffset"/> in order
-    /// to avoid wrapping the date.</remarks>
+    /// to avoid wrapping the date.
+    /// </para>
+    /// <para>Parts of the information stored in <paramref name="value"/> may be
+    /// irrelevant. Check this with the extension methods 
+    /// <see cref="DateTimeOffsetExtension.HasYear(System.DateTimeOffset)"/> and
+    /// <see cref="DateTimeOffsetExtension.HasDate(System.DateTimeOffset)"/>.</para>
+    /// </remarks>
     public bool TryAsDateTimeOffset(out DateTimeOffset value)
     {
         var result = _oneOf.Match<(DateTimeOffset Value, bool Result)>
