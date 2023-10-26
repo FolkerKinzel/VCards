@@ -56,8 +56,8 @@ public abstract class DateAndOrTimeProperty
     /// Gregorian calendar.
     /// </summary>
     /// <param name="month">The month (1 bis 12).</param>
-    /// <param name="day">The day (1 through the number of days in <paramref name="month"/>).
-    /// (A leap year may be assumed.)</param>
+    /// <param name="day">The day (1 through the number of days in <paramref name="month"/> -
+    /// a leap year may be assumed.)</param>
     /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>

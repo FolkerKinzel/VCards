@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Tests;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -127,5 +128,17 @@ public class DateAndOrTimePropertyTests
         Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
     }
 
+
+    [TestMethod]
+    public void FromDateTest1()
+    {
+        const string group = "Group";
+        var prop = DateAndOrTimeProperty.FromDate(2, 29, group);
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsNotNull(prop.Value.DateOnly);
+        Assert.IsFalse(prop.Value.DateOnly.Value.HasYear());
+        Assert.AreEqual(2, prop.Value.DateOnly.Value.Month);
+        Assert.AreEqual(29, prop.Value.DateOnly.Value.Day);
+    }
 
 }
