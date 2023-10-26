@@ -263,7 +263,7 @@ public static class IEnumerableExtension
     /// of the items, or <c>null</c> to not perform additional filtering. The arguments of the 
     /// delegate are guaranteed to not be <c>null</c>.</param>
     /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value. 
-    /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
+    /// ("Empty" means that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
     /// values will always be ignored.</param>
     /// <returns>
     /// <para>
@@ -306,7 +306,7 @@ public static class IEnumerableExtension
     /// references.</param>
     /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value
     /// or <c>true</c> to ignore them.
-    /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
+    /// ("Empty" means that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
     /// values will always be ignored.</param>
     /// <returns>
     /// <para>
@@ -343,7 +343,7 @@ public static class IEnumerableExtension
     /// the items, or <c>null</c> to not perform additional filtering. The arguments of the delegate 
     /// are guaranteed to not be <c>null</c>.</param>
     /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the return value. 
-    /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
+    /// ("Empty" means that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
     /// values will always be ignored.</param>
     /// <returns>
     /// <para>
@@ -385,7 +385,7 @@ public static class IEnumerableExtension
     /// objects to sort. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// references.</param>
     /// <param name="discardEmptyItems">Pass <c>false</c> to include empty items in the return value. 
-    /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
+    /// ("Empty" means that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
     /// references are removed in any case.</param>
     /// <returns>A collection that contains the items of <paramref name="values"/> ordered ascending
     /// by the value of their <see cref="ParameterSection.Preference"/> property. The returned collection 
@@ -413,7 +413,7 @@ public static class IEnumerableExtension
     /// objects to sort. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// values.</param>
     /// <param name="discardEmptyItems">Pass <c>false</c> to include empty items in the return value. 
-    /// ("Empty" means, that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
+    /// ("Empty" means that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
     /// references are removed in any case.</param>
     /// <returns>
     /// <para>

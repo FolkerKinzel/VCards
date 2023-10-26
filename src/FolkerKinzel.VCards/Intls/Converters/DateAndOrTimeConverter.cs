@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
 using OneOf;
 
@@ -8,8 +9,12 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 /// <threadsafety static="true" instance="false" />
 internal sealed class DateAndOrTimeConverter
 {
-    private const int FIRST_LEAP_YEAR = 4;
+    internal const int FIRST_LEAP_YEAR = 4;
     private const int MAX_DATE_TIME_STRING_LENGTH = 64;
+
+    private static readonly DateTimeOffset _minYear = new DateTime(5, 1, 1, 14, 0, 0);
+    private static readonly DateTimeOffset _minDate = new DateTime(3, 12, 31, 10, 0, 0);
+
 
     private readonly string[] _dateOnlyFormats = new string[]
     {
@@ -33,21 +38,24 @@ internal sealed class DateAndOrTimeConverter
             "yyyyMMddTHHmmzzz",
             "yyyyMMddTHHmmsszz",
             "yyyyMMddTHHmmsszzz",
-            "THH",
-            "THHmm",
-            "THHmmss",
-            "THHzz",
-            "THHzzz",
-            "THHmmzz",
-            "THHmmzzz",
-            "THHmmsszz",
-            "THHmmsszzz",
-            "T-mmss",
-            "T-mmsszz",
-            "T-mmsszzz",
-            "T--ss",
-            "T--sszz",
-            "T--sszzz"
+
+            // Handled by TimeConverter:
+
+            //"THH",
+            //"THHmm",
+            //"THHmmss",
+            //"THHzz",
+            //"THHzzz",
+            //"THHmmzz",
+            //"THHmmzzz",
+            //"THHmmsszz",
+            //"THHmmsszzz",
+            //"T-mmss",
+            //"T-mmsszz",
+            //"T-mmsszzz",
+            //"T--ss",
+            //"T--sszz",
+            //"T--sszzz"
     };
 
     #if NET5_0_OR_GREATER
@@ -96,7 +104,11 @@ internal sealed class DateAndOrTimeConverter
                 Span<char> slice = span.Slice(leapYear.Length);
                 roSpan.CopyTo(slice);
 
-                if (DateOnly.TryParseExact(span, _dateOnlyFormats, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out DateOnly dateOnly))
+                if (DateOnly.TryParseExact(span,
+                                           _dateOnlyFormats,
+                                           CultureInfo.InvariantCulture,
+                                           DateTimeStyles.AllowWhiteSpaces,
+                                           out DateOnly dateOnly))
                 {
                     oneOf = dateOnly;
                     return true;
@@ -139,7 +151,11 @@ internal sealed class DateAndOrTimeConverter
 
         if (IsDateOnly(span))
         {
-            if (DateOnly.TryParseExact(span, _dateOnlyFormats, CultureInfo.InvariantCulture, styles, out DateOnly dateOnly))
+            if (DateOnly.TryParseExact(span,
+                                       _dateOnlyFormats,
+                                       CultureInfo.InvariantCulture,
+                                       styles,
+                                       out DateOnly dateOnly))
             {
                 oneOf = dateOnly;
                 return true;
@@ -157,7 +173,11 @@ internal sealed class DateAndOrTimeConverter
                 styles |= DateTimeStyles.AssumeLocal;
             }
 
-            if (_DateTimeOffset.TryParseExact(span, _modelStrings, CultureInfo.InvariantCulture, styles, out DateTimeOffset offset))
+            if (_DateTimeOffset.TryParseExact(span,
+                                              _modelStrings,
+                                              CultureInfo.InvariantCulture,
+                                              styles,
+                                              out DateTimeOffset offset))
             {
                 oneOf = offset;
                 return true;
@@ -180,12 +200,14 @@ internal sealed class DateAndOrTimeConverter
         {
             case VCdVersion.V2_1:
             case VCdVersion.V3_0:
-                _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}T{3:00}:{4:00}:{5:00}Z",
-                    dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
+                _ = builder.AppendFormat(CultureInfo.InvariantCulture,
+                                         "{0:0000}-{1:00}-{2:00}T{3:00}:{4:00}:{5:00}Z",
+                                          dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
                 break;
             default:
-                _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}{1:00}{2:00}T{3:00}{4:00}{5:00}Z",
-                    dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
+                _ = builder.AppendFormat(CultureInfo.InvariantCulture,
+                                         "{0:0000}{1:00}{2:00}T{3:00}{4:00}{5:00}Z",
+                                          dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
                 break;
         }
 
@@ -200,30 +222,39 @@ internal sealed class DateAndOrTimeConverter
             case VCdVersion.V2_1:
             case VCdVersion.V3_0:
                 {
-                    _ = dt.Year >= FIRST_LEAP_YEAR
-                        ? builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}", dt.Year, dt.Month, dt.Day)
-                        : builder.AppendFormat(CultureInfo.InvariantCulture, "--{0:00}-{1:00}", dt.Month, dt.Day);
+                    _ = dt.HasYear()
+                        ? builder.AppendFormat(CultureInfo.InvariantCulture,
+                                               "{0:0000}-{1:00}-{2:00}",
+                                                dt.Year, dt.Month, dt.Day)
+                        : builder.AppendFormat(CultureInfo.InvariantCulture,
+                                               "--{0:00}-{1:00}", 
+                                               dt.Month, dt.Day);
                     break;
                 }
             default: // vCard 4.0
                 {
-                    _ = dt.Year >= FIRST_LEAP_YEAR
-                        ? builder.AppendFormat(CultureInfo.InvariantCulture, "{0:0000}{1:00}{2:00}", dt.Year, dt.Month, dt.Day)
-                        : builder.AppendFormat(CultureInfo.InvariantCulture, "--{0:00}{1:00}", dt.Month, dt.Day);
+                    _ = dt.HasYear()
+                        ? builder.AppendFormat(CultureInfo.InvariantCulture,
+                                               "{0:0000}{1:00}{2:00}", 
+                                               dt.Year, dt.Month, dt.Day)
+                        : builder.AppendFormat(CultureInfo.InvariantCulture,
+                                               "--{0:00}{1:00}",
+                                               dt.Month, dt.Day);
                     break;
                 }
         }//switch
     }
 
     internal static void AppendDateAndOrTimeTo(StringBuilder builder,
-        DateTimeOffset dt, VCdVersion version)
+                                               DateTimeOffset dt,
+                                               VCdVersion version)
     {
-        if (HasDateComponent(dt))
+        if (HasDate(dt))
         {
             AppendDateTo(builder, DateOnly.FromDateTime(dt.Date), version);
         }
 
-        if (HasTimeComponent(dt))
+        if (HasTime(dt))
         {
             builder.Append('T');
             TimeConverter.AppendTimeTo(builder, dt, version);
@@ -231,10 +262,13 @@ internal sealed class DateAndOrTimeConverter
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static bool HasDateComponent(DateTimeOffset dt)
-        => !(dt.Year < FIRST_LEAP_YEAR && dt.Month == 1 && dt.Day == 1);
+    internal static bool HasDate(DateTimeOffset dt) => dt > _minDate;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static bool HasTimeComponent(DateTimeOffset dt)
+    internal static bool HasYear(DateTimeOffset dt) => dt > _minYear;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static bool HasTime(DateTimeOffset dt)
         => dt.TimeOfDay != TimeSpan.Zero || dt.Offset != TimeSpan.Zero;
+
 }

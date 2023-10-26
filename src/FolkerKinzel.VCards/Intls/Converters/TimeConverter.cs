@@ -19,12 +19,15 @@ internal sealed class TimeConverter
 
     private readonly string[] _modelStrings = new string[]
     {
+        // These patterns are needed if the input ends with 'Z'
         "HH",
         "HHmm",
         "HHmmss",
         "HH:mm:ss", //vCard 2.1
         "-mmss",
         "--ss",
+
+
         "HH:mm:sszzz", //vCard 2.1
         "HH:mm:sszz",
         "HHzz",
@@ -64,7 +67,11 @@ internal sealed class TimeConverter
                 styles |= DateTimeStyles.AssumeLocal;
             }
 
-            if (_DateTimeOffset.TryParseExact(roSpan, _modelStrings, CultureInfo.InvariantCulture, styles, out DateTimeOffset dtOffset))
+            if (_DateTimeOffset.TryParseExact(roSpan,
+                                              _modelStrings,
+                                              CultureInfo.InvariantCulture,
+                                              styles,
+                                              out DateTimeOffset dtOffset))
             {
                 oneOf = dtOffset;
                 return true;
@@ -72,7 +79,11 @@ internal sealed class TimeConverter
         }
         else
         {
-            if (TimeOnly.TryParseExact(roSpan, _timeOnlyPatterns, CultureInfo.InvariantCulture, styles, out TimeOnly timeOnly))
+            if (TimeOnly.TryParseExact(roSpan,
+                                       _timeOnlyPatterns,
+                                       CultureInfo.InvariantCulture,
+                                       styles,
+                                       out TimeOnly timeOnly))
             {
                 oneOf = timeOnly;
                 return true;
@@ -81,7 +92,8 @@ internal sealed class TimeConverter
 
         return false;
 
-        static bool ContainsUtcOffset(ReadOnlySpan<char> span) => span.TrimStart('-').ContainsAny("+-".AsSpan());
+        static bool ContainsUtcOffset(ReadOnlySpan<char> span) 
+            => span.TrimStart('-').ContainsAny("+-".AsSpan());
     }
 
     internal static void AppendTimeTo(StringBuilder builder, TimeOnly dt, VCdVersion version)
@@ -91,15 +103,17 @@ internal sealed class TimeConverter
             case VCdVersion.V2_1:
             case VCdVersion.V3_0:
                 {
-                    _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}:{2:00}",
-                        dt.Hour, dt.Minute, dt.Second);
+                    _ = builder.AppendFormat(CultureInfo.InvariantCulture,
+                                             "{0:00}:{1:00}:{2:00}",
+                                              dt.Hour, dt.Minute, dt.Second);
 
                     break;
                 }
             default: // vCard 4.0
                 {
-                    _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0:00}{1:00}{2:00}",
-                        dt.Hour, dt.Minute, dt.Second);
+                    _ = builder.AppendFormat(CultureInfo.InvariantCulture,
+                                             "{0:00}{1:00}{2:00}",
+                                             dt.Hour, dt.Minute, dt.Second);
                     break;
                 }
         }
@@ -124,12 +138,16 @@ internal sealed class TimeConverter
                 case VCdVersion.V2_1:
                 case VCdVersion.V3_0:
                     {
-                        _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
+                        _ = builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                 "{0}{1:00}:{2:00}",
+                                                 sign, utcOffset.Hours, utcOffset.Minutes);
                         break;
                     }
                 default: // vCard 4.0
                     {
-                        _ = builder.AppendFormat(CultureInfo.InvariantCulture, "{0}{1:00}:{2:00}", sign, utcOffset.Hours, utcOffset.Minutes);
+                        _ = builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                 "{0}{1:00}:{2:00}",
+                                                 sign, utcOffset.Hours, utcOffset.Minutes);
                         break;
                     }
             }

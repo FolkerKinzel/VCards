@@ -1,7 +1,7 @@
 namespace FolkerKinzel.VCards.Extensions;
 
-    /// <summary>Extension methods that make working with the <see cref="VcfOptions"
-    /// /> enum easier.</summary>
+/// <summary>Extension methods that make working with the <see cref="VcfOptions"
+/// /> enum easier.</summary>
 public static class VcfOptionsExtension
 {
     /// <summary>Sets all the flags set in <paramref name="flags" /> in <paramref name="value"

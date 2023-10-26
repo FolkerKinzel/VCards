@@ -20,8 +20,8 @@ internal sealed class DateTimeOffsetProperty : DateAndOrTimeProperty
 
     /// <inheritdoc />
     public override bool IsEmpty
-        => !DateAndOrTimeConverter.HasDateComponent(Value) && 
-           !DateAndOrTimeConverter.HasTimeComponent(Value);
+        => !DateAndOrTimeConverter.HasDate(Value) && 
+           !DateAndOrTimeConverter.HasTime(Value);
 
     /// <inheritdoc />
     public override object Clone() => new DateTimeOffsetProperty(this);

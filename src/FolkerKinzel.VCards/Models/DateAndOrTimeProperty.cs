@@ -1,4 +1,5 @@
 using System.Collections;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -49,6 +50,30 @@ public abstract class DateAndOrTimeProperty
     /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => base.IsEmpty;
+
+    /// <summary>
+    /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a recurring date in the
+    /// Gregorian calendar.
+    /// </summary>
+    /// <param name="month">The month (1 bis 12).</param>
+    /// <param name="day">The day (1 through the number of days in <paramref name="month"/>).
+    /// (A leap year may be assumed.)</param>
+    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
+    /// <remarks>
+    /// This overload is intended to be used for recurring dates, like, e.g., birthdays, or 
+    /// if the year is unknown.
+    /// </remarks>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <para><paramref name="month"/> is less than 1 or greater than 12.</para>
+    /// <para>-or-</para>
+    /// <para><paramref name="day"/> is less than 1 or greater than the number of days 
+    /// that <paramref name="month"/> has in a leap year.</para>
+    /// </exception>
+    public static DateAndOrTimeProperty FromDate(int month, int day, string? propertyGroup = null)
+        => FromDate(new DateOnly(DateAndOrTimeConverter.FIRST_LEAP_YEAR, month, day), propertyGroup);
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a date in the Gregorian
@@ -217,8 +242,12 @@ public abstract class DateAndOrTimeProperty
         {
             DateOnlyProperty dateOnlyProperty => new DateAndOrTime(dateOnlyProperty.Value),
             TimeOnlyProperty timeOnlyProperty => new DateAndOrTime(timeOnlyProperty.Value),
-            DateTimeOffsetProperty dateTimeOffsetProperty => dateTimeOffsetProperty.IsEmpty ? null : new DateAndOrTime(dateTimeOffsetProperty.Value),
-            DateTimeTextProperty dateTimeTextProperty => dateTimeTextProperty.IsEmpty ? null : new DateAndOrTime(dateTimeTextProperty.Value),
+            DateTimeOffsetProperty dateTimeOffsetProperty
+                                        => dateTimeOffsetProperty.IsEmpty ? null 
+                                                                          : new DateAndOrTime(dateTimeOffsetProperty.Value),
+            DateTimeTextProperty dateTimeTextProperty 
+                                        => dateTimeTextProperty.IsEmpty ? null 
+                                                                        : new DateAndOrTime(dateTimeTextProperty.Value),
             _ => null
         };
     }

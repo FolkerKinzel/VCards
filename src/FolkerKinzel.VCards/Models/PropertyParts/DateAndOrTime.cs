@@ -3,6 +3,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using OneOf;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models.Enums;
+
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -24,12 +27,29 @@ public sealed partial class DateAndOrTime
     /// Gets the encapsulated <see cref="System.DateOnly"/> value
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
+    /// <remarks>
+    /// If the <see cref="DateOnly.Year"/> is less than 5 it should be treated a
+    /// irrelevant. Use the extension method <see cref="DateOnlyExtension.HasYear"/>
+    /// to check this.
+    /// </remarks>
     public DateOnly? DateOnly => IsDateOnly ? AsDateOnly : null;
 
     /// <summary>
     /// Gets the encapsulated <see cref="System.DateTimeOffset"/> value
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
+    /// <remarks>
+    /// <para>A <see cref="DateTimeOffset"/> value may contain</para>
+    /// <list type="bullet">
+    /// <item>a <see cref="VCdDataType.DateTime"/>,</item>
+    /// <item>a <see cref="VCdDataType.Time"/> with a <see cref="VCdDataType.UtcOffset"/>, or</item>
+    /// <item>a <see cref="VCdDataType.UtcOffset"/></item>
+    /// </list>
+    /// Parts of the contained data may be irrelevant. Use the extension methods
+    /// <see cref="DateTimeOffsetExtension.HasYear(System.DateTimeOffset)"/> and
+    /// <see cref="DateTimeOffsetExtension.HasDate(System.DateTimeOffset)"/> to
+    /// check this.
+    /// </remarks>
     public DateTimeOffset? DateTimeOffset => IsDateTimeOffset ? AsDateTimeOffset : null;
 
     /// <summary>
@@ -48,7 +68,6 @@ public sealed partial class DateAndOrTime
     /// Gets the encapsulated value.
     /// </summary>
     public object Value => this._oneOf.Value;
-
 
     /// <summary>
     /// Tries to convert the encapsulated data to a <see cref="System.DateOnly"/> value.
