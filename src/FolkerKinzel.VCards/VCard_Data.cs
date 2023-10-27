@@ -89,6 +89,7 @@ public sealed partial class VCard
                 foreach(VCardProperty? vcProp in numerable) 
                 {
                     string? group = vcProp?.Group;
+
                     if (group != null)
                     {
                         yield return group;

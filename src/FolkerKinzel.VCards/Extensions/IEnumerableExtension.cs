@@ -215,7 +215,6 @@ public static class IEnumerableExtension
                                      VcfOptions options = VcfOptions.Default)
         => VCard.ToVcfString(vCards, version, tzConverter, options);
 
-
     /// <summary>
     /// Gets the most preferred <see cref="VCardProperty"/> from a collection of
     /// <see cref="VCardProperty"/> objects and allows to specify whether or not
@@ -439,7 +438,6 @@ public static class IEnumerableExtension
         => values is null ? Enumerable.Empty<TSource>()
                           : values.OrderByIndexIntl(discardEmptyItems);
 
-
     /// <summary>
     /// Groups the <see cref="VCardProperty"/> objects in <paramref name="values"/>
     /// by their <see cref="VCardProperty.Group"/> identifier.
@@ -485,7 +483,6 @@ public static class IEnumerableExtension
                   .GroupBy(static x => x.Parameters.AltID, StringComparer.Ordinal)
            ?? Enumerable.Empty<IGrouping<string?, TSource>>();
 
-
     /// <summary>
     /// Generates a new value for the <see cref="ParameterSection.AltID"/> property that
     /// has not been used in <paramref name="values"/>.
@@ -513,5 +510,4 @@ public static class IEnumerableExtension
 
         return (++i).ToString();
     }
-
 }
