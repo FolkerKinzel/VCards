@@ -419,4 +419,20 @@ public class IEnumerableExtensionTests
         Assert.IsTrue(groups.Any(gr => gr.Key is null));
         Assert.IsTrue(groups.All(gr => gr.SelectMany(x => x).All(x => x != null)));
     }
+
+    [TestMethod]
+    public void NewAltIDTest1() => Assert.AreEqual(0, ((IEnumerable<TextProperty?>?)null).NewAltID());
+
+    [TestMethod]
+    public void NewAltIDTest2()
+    {
+        var props = new TextProperty[] { new TextProperty("1"), new TextProperty("2"), new TextProperty("3") };
+        Assert.AreEqual("0", props.NewAltID());
+        props[2].Parameters.AltID = "TheAltID";
+        Assert.AreEqual("0", props.NewAltID());
+        props[1].Parameters.AltID = "-25";
+        Assert.AreEqual("0", props.NewAltID());
+        props[0].Parameters.AltID = "41";
+        Assert.AreEqual("42", props.NewAltID());
+    }
 }

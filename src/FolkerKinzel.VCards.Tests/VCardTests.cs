@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -363,6 +364,30 @@ public class VCardTests
     public void ReferenceTest1()
     {
         _ = FolkerKinzel.VCards.VCard.Reference(null!);
+    }
+
+    [TestMethod]
+    public void GroupsTest1()
+    {
+        VCard vc = new VCard();
+
+        IEnumerable<string> groups = vc.GroupIDs;
+        Assert.IsFalse(groups.Any());
+
+        vc.Access = new AccessProperty(Models.Enums.Access.Public, " 4 1 ");
+        vc.TimeStamp = new TimeStampProperty();
+        vc.Addresses = new AddressProperty?[] {
+                                              null,
+                                              new AddressProperty("1", null, null, null, propertyGroup: " g r 1 "), 
+                                              new AddressProperty("2", null, null, null, propertyGroup: "41") 
+                                              };
+        vc.GeoCoordinates = new GeoProperty?[]{ 
+                                               new GeoProperty(new GeoCoordinate(1, 1), propertyGroup: "GR1"),
+                                               null,
+                                               new GeoProperty(new GeoCoordinate(2, 2))
+                                             };
+        Assert.AreEqual(2, vc.GroupIDs.Count());
+        Assert.AreEqual("42", vc.NewGroupID());
     }
 
 
