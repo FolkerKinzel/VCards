@@ -5,10 +5,11 @@ using OneOf;
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary>
-/// Encapsulates the value of a <see cref="RelationProperty"/> object.
-/// This can be either a <see cref="string"/>, a 
+/// Encapsulates the data that describes a relation with a person or
+/// organization.
+/// This can be a <see cref="string"/>, a 
 /// <see cref="VCards.VCard"/>, a <see cref="System.Guid"/>,
-/// or a <see cref="System.Uri"/>.
+/// or an absolute <see cref="System.Uri"/>.
 /// </summary>
 /// <seealso cref="RelationProperty"/>
 public sealed class Relation
@@ -24,21 +25,26 @@ public sealed class Relation
     public string? String => IsString ? AsStringIntl : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="VCards.VCard"/>
+    /// Gets the encapsulated <see cref="VCards.VCard"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     public VCard? VCard => IsVCard ? AsVCardIntl : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="System.Guid"/>
+    /// Gets the encapsulated <see cref="System.Guid"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
+    /// <remarks>
+    /// The <see cref="Guid"/> references another <see cref="VCard"/> with
+    /// its <see cref="VCard.UniqueIdentifier"/> property.
+    /// </remarks>
     public Guid? Guid => IsGuid ? AsGuidIntl : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="System.Uri"/>
+    /// Gets the encapsulated <see cref="System.Uri"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
+    /// <value>An absolute <see cref="System.Uri"/> or <c>null</c>.</value>
     public Uri? Uri => IsUri ? AsUriIntl : null;
 
     /// <summary>

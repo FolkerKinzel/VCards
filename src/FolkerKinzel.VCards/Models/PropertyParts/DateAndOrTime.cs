@@ -10,7 +10,7 @@ using FolkerKinzel.VCards.Models.Enums;
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary>
-/// Encapsulates the value of a <see cref="DateAndOrTimeProperty"/> object.
+/// Encapsulates data that describes a date and/or a time.
 /// This can be a <see cref="System.DateOnly"/> value, a 
 /// <see cref="System.DateTimeOffset"/> value, a <see cref="System.TimeOnly"/>
 /// value, or a <see cref="string"/>.
@@ -24,7 +24,7 @@ public sealed partial class DateAndOrTime
         => _oneOf = oneOf;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="System.DateOnly"/> value
+    /// Gets the encapsulated <see cref="System.DateOnly"/> value,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <remarks>
@@ -35,7 +35,7 @@ public sealed partial class DateAndOrTime
     public DateOnly? DateOnly => IsDateOnly ? AsDateOnly : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="System.DateTimeOffset"/> value
+    /// Gets the encapsulated <see cref="System.DateTimeOffset"/> value,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <remarks>
@@ -53,13 +53,13 @@ public sealed partial class DateAndOrTime
     public DateTimeOffset? DateTimeOffset => IsDateTimeOffset ? AsDateTimeOffset : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="System.TimeOnly"/> value
+    /// Gets the encapsulated <see cref="System.TimeOnly"/> value,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     public TimeOnly? TimeOnly => IsTimeOnly ? AsTimeOnly : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="string"/>
+    /// Gets the encapsulated <see cref="string"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     public string? String => IsString ? AsString : null;

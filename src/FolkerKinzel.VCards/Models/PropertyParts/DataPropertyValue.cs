@@ -7,9 +7,9 @@ using OneOf;
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary>
-/// Encapsulates the value of a <see cref="DataProperty"/> object.
+/// Encapsulates external data in a <see cref="VCards.VCard"/>.
 /// This can be either an array of <see cref="byte"/>s,
-/// a <see cref="System.Uri"/>, or a <see cref="string"/>.
+/// an absolute <see cref="System.Uri"/>, or a <see cref="string"/>.
 /// </summary>
 /// <seealso cref="DataProperty"/>
 public sealed partial class DataPropertyValue
@@ -20,19 +20,20 @@ public sealed partial class DataPropertyValue
         => _oneOf = oneOf;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="byte"/> array
+    /// Gets the encapsulated <see cref="byte"/> array,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     public byte[]? Bytes => IsBytes ? AsBytes : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="System.Uri"/>
+    /// Gets the encapsulated <see cref="System.Uri"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
+    /// <value>An absolute <see cref="System.Uri"/> or <c>null</c>.</value>
     public Uri? Uri => IsUri ? AsUri : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="string"/>
+    /// Gets the encapsulated <see cref="string"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     public string? String => IsString ? AsString : null;
