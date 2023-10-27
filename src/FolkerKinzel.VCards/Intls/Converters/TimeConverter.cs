@@ -94,7 +94,7 @@ internal sealed class TimeConverter
         return false;
 
         static bool ContainsUtcOffset(ReadOnlySpan<char> span) 
-            => span.TrimStart('-').ContainsAny("+-".AsSpan());
+            => span.TrimStart('-').ContainsAny("+-");
     }
 
     internal static void AppendTimeTo(StringBuilder builder, TimeOnly dt, VCdVersion version)

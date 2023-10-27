@@ -457,7 +457,7 @@ public static class IEnumerableExtension
     /// The comparison of <see cref="VCardProperty.Group"/> identifiers is case-insensitive 
     /// (see RFC 6350, 3.3).
     /// </remarks>
-    internal static IEnumerable<IGrouping<string?, TSource>> GroupByVCardGroup<TSource>(
+    public static IEnumerable<IGrouping<string?, TSource>> GroupByVCardGroup<TSource>(
         this IEnumerable<TSource?>? values) where TSource : VCardProperty
         => values?.WhereNotNull()
                   .GroupBy(static x => x.Group, StringComparer.OrdinalIgnoreCase)
@@ -479,9 +479,39 @@ public static class IEnumerableExtension
     /// <remarks>
     /// The method performs an ordinal character comparison of the <see cref="ParameterSection.AltID"/>s.
     /// </remarks>
-    internal static IEnumerable<IGrouping<string?, TSource>> GroupByAltID<TSource>(
+    public static IEnumerable<IGrouping<string?, TSource>> GroupByAltID<TSource>(
         this IEnumerable<TSource?>? values) where TSource : VCardProperty
         => values?.WhereNotNull()
                   .GroupBy(static x => x.Parameters.AltID, StringComparer.Ordinal)
            ?? Enumerable.Empty<IGrouping<string?, TSource>>();
+
+
+    /// <summary>
+    /// Generates a new value for the <see cref="ParameterSection.AltID"/> property that
+    /// has not been used in <paramref name="values"/>.
+    /// </summary>
+    /// <param name="values">The collection of <see cref="VCardProperty"/> objects to
+    /// examine. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// values.</param>
+    /// <returns>A new, unused value for the <see cref="ParameterSection.AltID"/> properties
+    /// of the objects in <paramref name="values"/>.</returns>
+    public static string NewAltID(this IEnumerable<VCardProperty?>? values)
+    {
+        IEnumerable<string> numerable = values?.Select(x => x?.Parameters.AltID)
+                                               .WhereNotNull()
+                                               .Distinct()
+                                         ?? Enumerable.Empty<string>();
+        int i = -1;
+
+        foreach (string altID in numerable)
+        {
+            if(int.TryParse(altID, out int result) && i < result)
+            {
+                i = result;
+            }
+        }
+
+        return (++i).ToString();
+    }
+
 }

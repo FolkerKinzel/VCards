@@ -57,6 +57,47 @@ public sealed partial class VCard
                 _ => false
             });
 
+    public IEnumerable<string> Groups => EnumerateGroups().Distinct(StringComparer.OrdinalIgnoreCase);
+
+    public string NewGroupID()
+    {
+        int i = -1;
+
+        foreach (var group in Groups)
+        {
+            if(int.TryParse(group, out int result) && result > i)
+            {
+                i = result;
+            }
+        }
+
+        return (++i).ToString();
+    }
+    
+    private IEnumerable<string> EnumerateGroups()
+    {
+        foreach (var kvp in _propDic)
+        {
+            if(kvp.Value is VCardProperty prop && prop.Group != null)
+            {
+                yield return prop.Group;
+                continue;
+            }
+
+            if(kvp.Value is IEnumerable<VCardProperty?> numerable)
+            {
+                foreach(VCardProperty? vcProp in numerable) 
+                {
+                    string? group = vcProp?.Group;
+                    if (group != null)
+                    {
+                        yield return group;
+                    }
+                }
+            }
+        }
+    }
+
     /// <summary> <c>VERSION</c>: Version of the vCard standard. <c>(2,3,4)</c></summary>
     public VCdVersion Version
     {

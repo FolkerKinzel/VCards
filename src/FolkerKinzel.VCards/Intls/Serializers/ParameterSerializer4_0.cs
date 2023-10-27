@@ -955,7 +955,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
             {
                 char c = _worker[i];
 
-                if (c == ',' || c == ';')
+                if (c is ',' or ';' or ':')
                 {
                     mustBeQuoted = true;
                 }

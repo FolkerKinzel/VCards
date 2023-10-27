@@ -21,7 +21,7 @@ internal static partial class StringExtension
             return value != null && 
                   (
                     value.Contains(';') ||
-                    (version >= VCdVersion.V3_0 && value.ContainsAny(",\r,\n".AsSpan())) ||
+                    (version >= VCdVersion.V3_0 && value.ContainsAny(",\r,\n")) ||
                     (version >= VCdVersion.V4_0 && value.Contains('\\'))
                    );
         }

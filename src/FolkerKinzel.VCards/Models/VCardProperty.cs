@@ -50,7 +50,7 @@ public abstract class VCardProperty : ICloneable
     public string? Group
     {
         get => _group;
-        set => _group = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+        set => _group = string.IsNullOrWhiteSpace(value) ? null : value.Replace(" ", "");
     }
 
     /// <summary>Contains the data of the parameter section of a vCard property.</summary>
