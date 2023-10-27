@@ -304,4 +304,12 @@ END:VCARD";
         Assert.AreEqual(mobilePhoneNumber, prop?.Value);
         Assert.AreEqual(imppTypes, prop?.Parameters.InstantMessengerType);
     }
+
+    //[TestMethod]
+    //public void CapacityIssueTest1()
+    //{
+    //    var vc = VCard.LoadVcf(TestFiles.PhotoV3vcf)[0];
+
+    //    string s = vc.ToVcfString();
+    //}
 }

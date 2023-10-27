@@ -26,6 +26,7 @@ internal abstract class VcfSerializer : IDisposable
     [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     internal const string X_KADDRESSBOOK_X_IMAddress = "X-KADDRESSBOOK-X-IMAddress";
 
+    private readonly char[] _byteCounterArr = new char[1];
     private readonly TextWriter _writer;
 
     protected VcfSerializer(TextWriter writer,
@@ -418,39 +419,39 @@ internal abstract class VcfSerializer : IDisposable
             }
         }
     }
-
+   
     protected virtual void AppendLineFolding()
     {
         int counter = 0;
 
-        Encoding enc = Encoding.UTF8;
-        char[] arr = new char[1];
-
-        // nach einem Softlinebreak muss noch mindestens 1 Zeichen
-        // folgen:
+        // After a soft linebreak at least 1 char must remain:
         for (int i = 0; i < Builder.Length - 1; i++)
         {
             char c = Builder[i];
 
-
-            arr[0] = c;
-            counter += enc.GetByteCount(arr);
+            counter += GetByteCount(c);
 
             if (counter < VCard.MAX_BYTES_PER_LINE)
             {
                 continue;
             }
-            else if (counter > VCard.MAX_BYTES_PER_LINE)
+            
+            if (counter > VCard.MAX_BYTES_PER_LINE)
             {
-                i--; // ein Zeichen zurück
+                i--; // one char back
             }
-
 
             _ = Builder.Insert(++i, VCard.NewLine);
             i += VCard.NewLine.Length;
             _ = Builder.Insert(i, ' ');
-            counter = 1; // um das Leerzeichen vorschieben
+            counter = 1; // line start + ' '
         }
+    }
+
+    private int GetByteCount(char c)
+    {
+        _byteCounterArr[0] = c;
+        return Encoding.UTF8.GetByteCount(_byteCounterArr);
     }
 
     #region Append
