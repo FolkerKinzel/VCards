@@ -4,6 +4,10 @@ namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static class IEnumerableExtension
 {
+    internal static bool IsSingleton(this IEnumerable<VCardProperty?>? values, bool ignoreEmptyItems)
+        => ignoreEmptyItems ? values?.WhereNotEmpty().Take(2).Count() == 1
+                            : values?.WhereNotNull().Take(2).Count() == 1;
+
     internal static IEnumerable<TSource> WhereNotNull<TSource>(this IEnumerable<TSource?> values)
         => values.Where(static x => x != null)!;
 
