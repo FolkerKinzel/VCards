@@ -387,7 +387,7 @@ public class VCardTests
                                                new GeoProperty(new GeoCoordinate(2, 2))
                                              };
         Assert.AreEqual(2, vc.GroupIDs.Count());
-        Assert.AreEqual("42", vc.NewGroupID());
+        Assert.AreEqual("42", vc.NewGroup());
     }
 
 

@@ -305,11 +305,94 @@ END:VCARD";
         Assert.AreEqual(imppTypes, prop?.Parameters.InstantMessengerType);
     }
 
-    //[TestMethod]
-    //public void CapacityIssueTest1()
-    //{
-    //    var vc = VCard.LoadVcf(TestFiles.PhotoV3vcf)[0];
+    [TestMethod]
+    public void PreserveTimeZoneAndGeoTest1()
+    {
+        var adr = new AddressProperty("1", "", "", "", "");
+        adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
+        adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
+        Assert.IsNotNull(adr.Parameters.Label);
 
-    //    string s = vc.ToVcfString();
-    //}
+        var vCard = new VCard { Addresses = adr };
+
+        string vcf = vCard.ToVcfString(VCdVersion.V3_0);
+
+        vCard = VCard.ParseVcf(vcf)[0];
+
+        Assert.IsNotNull(vCard.Addresses);
+        adr = vCard.Addresses.First();
+        Assert.IsNotNull(adr!.Parameters.Label);
+        Assert.IsNotNull(adr.Parameters.GeoPosition);
+        Assert.IsNotNull(adr.Parameters.TimeZone);
+    }
+
+    [TestMethod]
+    public void PreserveTimeZoneAndGeoTest2()
+    {
+        var adr = new AddressProperty("1", "", "", "", "");
+        adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
+        adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
+        Assert.IsNotNull(adr.Parameters.Label);
+
+        var vCard = new VCard { Addresses = adr };
+        adr.Group = vCard.NewGroup();
+
+        string vcf = vCard.ToVcfString(VCdVersion.V3_0);
+
+        vCard = VCard.ParseVcf(vcf)[0];
+
+        Assert.IsNotNull(vCard.Addresses);
+        adr = vCard.Addresses.First();
+        Assert.IsNotNull(adr!.Parameters.Label);
+        Assert.IsNotNull(adr.Parameters.GeoPosition);
+        Assert.IsNotNull(adr.Parameters.TimeZone);
+    }
+
+    [TestMethod]
+    public void DisplayNameTest1()
+    {
+        var nm = new NameProperty("Kinzel", "Folker");
+
+        var vCard = new VCard { NameViews = nm };
+
+        string vcf = vCard.ToVcfString(VCdVersion.V3_0);
+
+        vCard = VCard.ParseVcf(vcf)[0];
+
+        Assert.IsNotNull(vCard.DisplayNames);
+        TextProperty tProp = vCard.DisplayNames.First()!;
+        Assert.AreEqual("Folker Kinzel", tProp.Value);
+    }
+
+    [TestMethod]
+    public void DisplayNameTest2()
+    {
+        var vCard = new VCard { NameViews = new NameProperty?[] { null } };
+
+        string vcf = vCard.ToVcfString(VCdVersion.V3_0);
+
+        vCard = VCard.ParseVcf(vcf)[0];
+
+        Assert.IsNotNull(vCard.DisplayNames);
+        TextProperty tProp = vCard.DisplayNames.First()!;
+        Assert.IsFalse(tProp.IsEmpty);
+    }
+
+    [TestMethod]
+    public void DisplayNameTest3()
+    {
+        var vCard = new VCard();
+
+        string vcf = vCard.ToVcfString(VCdVersion.V3_0, options: VcfOptions.Default.Set(VcfOptions.WriteEmptyProperties));
+
+        vCard = VCard.ParseVcf(vcf)[0];
+
+        Assert.IsNotNull(vCard.DisplayNames);
+        TextProperty tProp = vCard.DisplayNames.First()!;
+        Assert.IsTrue(tProp.IsEmpty);
+
+        Assert.IsNotNull(vCard.NameViews);
+        NameProperty nProp = vCard.NameViews.First()!;
+        Assert.IsTrue(nProp.IsEmpty);
+    }
 }

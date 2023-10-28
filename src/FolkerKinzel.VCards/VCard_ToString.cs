@@ -1,4 +1,7 @@
 using System.Collections;
+using System.Linq;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 
@@ -14,30 +17,24 @@ public sealed partial class VCard
         _ = sb.Append("Version: ").Append(GetVersionString(this.Version))
             .Append(Environment.NewLine);
 
-        foreach (KeyValuePair<VCdProp, object> prop in this._propDic.OrderBy(x => x.Key))
+        foreach (
+            KeyValuePair<VCdProp, VCardProperty> kvp in this._propDic
+            .OrderBy(x => x.Key)
+            .Select(
+                  static x => x.Value is IEnumerable<VCardProperty?> prop 
+                                ? prop.WhereNotNull()
+                                      .Select<VCardProperty, KeyValuePair<VCdProp, VCardProperty>>
+                                      (
+                                        v => new KeyValuePair<VCdProp, VCardProperty>(x.Key, v)
+                                      )
+                                : Enumerable.Repeat(new KeyValuePair<VCdProp, VCardProperty>(x.Key, (VCardProperty)x.Value), 1))
+            .SelectMany(x => x)
+            .GroupBy(x => x.Value.Group, StringComparer.OrdinalIgnoreCase)
+            .OrderBy(x => x.Key)
+            .SelectMany(static x => x.OrderBy(z => z.Value.Parameters.Preference))
+            )
         {
-            switch (prop.Value)
-            {
-                case IEnumerable numerable:
-                    Debug.Assert(numerable != null);
-
-                    foreach (object? o in numerable)
-                    {
-                        if (o is null)
-                        {
-                            continue;
-                        }
-
-                        var vcdProp = (VCardProperty)o;
-                        AppendProperty(prop.Key, vcdProp);
-                    }
-                    break;
-                case VCardProperty vcdProp:
-                    AppendProperty(prop.Key, vcdProp);
-                    break;
-                default:
-                    break;
-            }
+            AppendProperty(kvp.Key, kvp.Value);
         }
 
         sb.Length -= Environment.NewLine.Length;

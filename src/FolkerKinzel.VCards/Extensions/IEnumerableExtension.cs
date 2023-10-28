@@ -231,8 +231,8 @@ public static class IEnumerableExtension
     /// <returns>
     /// <para>
     /// The most preferred <see cref="VCardProperty"/> from <paramref name="values"/>,
-    /// or <c>null</c> if <paramref name="values"/> is empty, contains only <c>null</c> references,
-    /// or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.
+    /// or <c>null</c> if <paramref name="values"/> is <c>null</c>, empty, contains only <c>null</c> 
+    /// references, or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.
     /// </para>
     /// <para>"Most preferred" is defined as the <see cref="VCardProperty"/> with the lowest
     /// <see cref="ParameterSection.Preference"/> value.</para>
@@ -267,10 +267,11 @@ public static class IEnumerableExtension
     /// <returns>
     /// <para>
     /// The most preferred <see cref="VCardProperty"/> from <paramref name="values"/>
-    /// that passes the <paramref name="filter"/>, or <c>null</c>
+    /// that passes the <paramref name="filter"/>, or <c>null</c> if no such item could be found.
+    /// This happens in any case
     /// </para>
     /// <list type="bullet">
-    /// <item>if no such item could be found,</item>
+    /// <item>if <paramref name="values"/> is <c>null</c>,</item>
     /// <item>if <paramref name="values"/> is empty,</item>
     /// <item>if <paramref name="values"/> contains only <c>null</c> references,</item>
     /// <item>or if <paramref name="values"/> contains only empty items and 
@@ -310,8 +311,8 @@ public static class IEnumerableExtension
     /// <returns>
     /// <para>
     /// The first <see cref="VCardProperty"/> from <paramref name="values"/>,
-    /// or <c>null</c> if <paramref name="values"/> is empty, contains only <c>null</c> references,
-    /// or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.
+    /// or <c>null</c> if <paramref name="values"/> is <c>null</c>, empty, contains only <c>null</c> 
+    /// references, or contains only empty items and <paramref name="ignoreEmptyItems"/> is <c>true</c>.
     /// </para>
     /// <para>
     /// "First" is defined as the item with the lowest <see cref="ParameterSection.Index"/>
@@ -347,10 +348,11 @@ public static class IEnumerableExtension
     /// <returns>
     /// <para>
     /// The first <see cref="VCardProperty"/> from <paramref name="values"/> that passes the 
-    /// <paramref name="filter"/>, or <c>null</c>
+    /// <paramref name="filter"/>, or <c>null</c> if no such item could be found. This happens
+    /// in any case
     /// </para>
     /// <list type="bullet">
-    /// <item>if no such item could be found,</item>
+    /// <item>if <paramref name="values"/> is <c>null</c>,</item>
     /// <item>if <paramref name="values"/> is empty,</item>
     /// <item>if <paramref name="values"/> contains only <c>null</c> references,</item>
     /// <item>or if <paramref name="values"/> contains only empty items and 
@@ -527,11 +529,57 @@ public static class IEnumerableExtension
         return (++i).ToString();
     }
 
-
-    public static TSource? FirstOrNullWithGroup<TSource>(
+    /// <summary>
+    /// Gets the first <see cref="VCardProperty"/> in a collection
+    /// whose <see cref="VCardProperty.Group"/> identifier matches
+    /// a specified <see cref="VCardProperty.Group"/> identifier.
+    /// </summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained 
+    /// to be a class that's derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects to search. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// references.</param>
+    /// <param name="group">The <see cref="VCardProperty.Group"/> identifier
+    /// to compare with.</param>
+    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the search. 
+    /// ("Empty" means that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
+    /// values will always be ignored.</param>
+    /// <returns>The first item in <paramref name="values"/> whose <see cref="VCardProperty.Group"/> 
+    /// identifier matches <paramref name="group"/>, or <c>null</c> if no such item could be found.</returns>
+    /// <remarks>
+    /// The comparison of group identifiers is case-insensitive.
+    /// </remarks>
+    public static TSource? FirstOrNullIsMemberOf<TSource>(
         this IEnumerable<TSource?>? values,
-        string? groupID,
+        string? group,
         bool ignoreEmptyItems = true) where TSource : VCardProperty 
-        => values?.FirstOrNullIntl(x => StringComparer.OrdinalIgnoreCase.Equals(groupID, x.Group),
+        => values?.FirstOrNullIntl(x => StringComparer.OrdinalIgnoreCase.Equals(group, x.Group),
                                         ignoreEmptyItems);
+
+
+    /// <summary>
+    /// Indicates whether <paramref name="values"/> contains an item that has the
+    /// specified <see cref="VCardProperty.Group"/> identifier.
+    /// </summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
+    /// derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects to search. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// references.</param>
+    /// <param name="group">The <see cref="VCardProperty.Group"/> identifier
+    /// to compare with.</param>
+    /// <param name="ignoreEmptyItems">Pass <c>false</c> to include empty items in the search. 
+    /// ("Empty" means that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
+    /// values will always be ignored.</param>
+    /// <returns><c>true</c> if an item with the
+    /// specified <see cref="VCardProperty.Group"/> identifier could be found in 
+    /// <paramref name="values"/>, otherwise <c>false</c>.</returns>
+    /// <remarks>
+    /// The comparison of group identifiers is case-insensitive.
+    /// </remarks>
+    public static bool ContainsGroup<TSource>(
+        this IEnumerable<TSource?>? values,
+        string? group,
+        bool ignoreEmptyItems = true) where TSource : VCardProperty
+        => values.FirstOrNullIsMemberOf(group, ignoreEmptyItems) != null;
 }

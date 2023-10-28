@@ -216,4 +216,26 @@ public class V2Tests
 
     }
 
+    [TestMethod]
+    public void PreserveTimeZoneAndGeoTest1()
+    {
+        var adr = new AddressProperty("1", "", "", "", "");
+        adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
+        adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
+        Assert.IsNotNull(adr.Parameters.Label);
+
+        var vCard = new VCard { Addresses = adr };
+
+        string vcf = vCard.ToVcfString(VCdVersion.V2_1);
+
+        vCard = VCard.ParseVcf(vcf)[0];
+
+        Assert.IsNotNull(vCard.Addresses);
+        adr = vCard.Addresses.First();
+        Assert.IsNotNull(adr!.Parameters.Label);
+        Assert.IsNotNull(adr.Parameters.GeoPosition);
+        Assert.IsNotNull(adr.Parameters.TimeZone);
+    }
+
+    
 }

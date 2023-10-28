@@ -83,7 +83,7 @@ public sealed partial class VCard
     /// </summary>
     /// <returns>A new <see cref="VCardProperty.Group"/> identifier that doesn't
     /// yet has been used in the <see cref="VCard"/> instance.</returns>
-    public string NewGroupID()
+    public string NewGroup()
     {
         int i = -1;
 

@@ -282,10 +282,10 @@ public sealed partial class VCard
                             var para = textProp.Parameters;
                             XMessengerParameterConverter.ConvertToInstantMessengerType(para);
 
-                            if(vcfRow.Key is PropKeys.NonStandard.InstantMessenger.X_SKYPE or 
+                            if (vcfRow.Key is PropKeys.NonStandard.InstantMessenger.X_SKYPE or
                                PropKeys.NonStandard.InstantMessenger.X_SKYPE_USERNAME)
                             {
-                                textProp.Parameters.PhoneType = 
+                                textProp.Parameters.PhoneType =
                                     textProp.Parameters.PhoneType.Set(PhoneTypes.Voice | PhoneTypes.Video);
                             }
                             AddCopyToPhoneNumbers(textProp, para);
@@ -431,7 +431,98 @@ public sealed partial class VCard
             vcfRowsParsed++;
         }//foreach
 
+        if (Version is VCdVersion.V2_1 or VCdVersion.V3_0)
+        {
+            ConnectTimeZonesWithAddresses();
+            ConnectGeoCoordinatesWithAddresses();
+        }
     }//ctor
+
+    private void ConnectTimeZonesWithAddresses()
+    {
+        if (TimeZones is null || Addresses is null)
+        {
+            return;
+        }
+
+        var groups = Addresses.Cast<VCardProperty>()
+                              .Concat(TimeZones)
+                              .GroupByVCardGroup()
+                              .ToArray();
+
+        foreach (var group in groups)
+        {
+            if (group.Key != null)
+            {
+                if (group.FirstOrDefault(static x => x is TimeZoneProperty)
+                    is TimeZoneProperty tzProp)
+                {
+                    foreach (var prop in group)
+                    {
+                        if (prop is AddressProperty adrProp)
+                        {
+                            prop.Parameters.TimeZone = tzProp.Value;
+                        }
+                    }
+                }
+            }
+            else // Group == null
+            {
+                if (group.FirstOrDefault(static x => x is TimeZoneProperty)
+                    is TimeZoneProperty tzProp)
+                {
+                    if(group.PrefOrNull(static x => x is AddressProperty) 
+                        is AddressProperty adrProp)
+                    {
+                        adrProp.Parameters.TimeZone = tzProp.Value;
+                    }
+                }
+            }
+        }
+    }
+
+    private void ConnectGeoCoordinatesWithAddresses()
+    {
+        if (GeoCoordinates is null || Addresses is null)
+        {
+            return;
+        }
+
+        var groups = Addresses.Cast<VCardProperty>()
+                              .Concat(GeoCoordinates)
+                              .GroupByVCardGroup()
+                              .ToArray();
+
+        foreach (var group in groups)
+        {
+            if (group.Key != null)
+            {
+                if (group.FirstOrDefault(static x => x is GeoProperty)
+                    is GeoProperty geoProp)
+                {
+                    foreach (var prop in group)
+                    {
+                        if (prop is AddressProperty adrProp)
+                        {
+                            prop.Parameters.GeoPosition = geoProp.Value;
+                        }
+                    }
+                }
+            }
+            else // Group == null
+            {
+                if (group.FirstOrDefault(static x => x is GeoProperty)
+                    is GeoProperty geoProp)
+                {
+                    if (group.PrefOrNull(static x => x is AddressProperty)
+                        is AddressProperty adrProp)
+                    {
+                        adrProp.Parameters.GeoPosition = geoProp.Value;
+                    }
+                }
+            }
+        }
+    }
 
     private void AddCopyToPhoneNumbers(TextProperty textProp, ParameterSection para)
     {
@@ -446,7 +537,7 @@ public sealed partial class VCard
     {
         labelRow.UnMask(Version);
 
-        IEnumerable<AddressProperty>? addresses = 
+        IEnumerable<AddressProperty>? addresses =
             Addresses?.Where(x => x!.Parameters.Label == null)
                       .GroupByVCardGroup()
                       .FirstOrDefault(x => StringComparer.OrdinalIgnoreCase.Equals(labelRow.Group, x.Key));
@@ -457,7 +548,7 @@ public sealed partial class VCard
             return;
         }
 
-        if (addresses.Take(2).Count() == 1) 
+        if (addresses.Take(2).Count() == 1)
         {
             Assign(labelRow, addresses.First());
             return;
@@ -476,7 +567,7 @@ public sealed partial class VCard
                 return;
             }
         }
-        
+
         if (labelRow.Parameters.PropertyClass.HasValue)
         {
             AddressProperty? address = addresses

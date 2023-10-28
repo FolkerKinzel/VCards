@@ -115,84 +115,29 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
         foreach (AddressProperty prop in value.OrderByPrefIntl(IgnoreEmptyItems))
         {
-            bool isPref = first && multiple && prop!.Parameters.Preference < 100;
-            first = false;
+            bool isPref = first && multiple && prop.Parameters.Preference < 100;
 
-            // AddressProperty.IsEmpty ist auch dann false, wenn lediglich
-            // AddressProperty.Parameters.Label != null ist:
+            // AddressProperty.IsEmpty returns false if only
+            // AddressProperty.Parameters.Label != null:
             if (!prop!.Value.IsEmpty || !IgnoreEmptyItems)
             {
                 BuildProperty(VCard.PropKeys.ADR, prop, isPref);
             }
 
             PreserveLabel(prop, isPref);
-            PreserveGeoCoordinate(multiple, prop, isPref);
-            PreserveTimeZoneID(multiple, prop, isPref);
+
+            if (first)
+            {
+                PreserveGeoCoordinate(prop);
+                PreserveTimeZoneID(prop);
+            }
+
+            first = false;
+
 
             if (!multiple) { break; }
         }
     }
-
-    private void PreserveLabel(AddressProperty prop, bool isPref)
-    {
-        string? label = prop.Parameters.Label;
-
-        if (label != null)
-        {
-            var labelProp = new TextProperty(label, prop.Group);
-            labelProp.Parameters.Assign(prop.Parameters);
-            BuildProperty(VCard.PropKeys.LABEL, labelProp, isPref);
-        }
-    }
-
-    private void PreserveGeoCoordinate(bool multiple, AddressProperty prop, bool isPref)
-    {
-        GeoCoordinate? geo = prop.Parameters.GeoPosition;
-
-        if (geo != null)
-        {
-            GeoProperty? geoProp = VCardToSerialize
-                                      .GeoCoordinates?
-                                      .PrefOrNullIntl(IgnoreEmptyItems);
-
-            if (geoProp is null ||
-                (multiple && prop.Group != null &&
-                    VCardToSerialize
-                        .GeoCoordinates
-                        .FirstOrNullWithGroup(prop.Group, IgnoreEmptyItems) == null))
-            {
-                var newGeoProp = new GeoProperty(geo, prop.Group);
-                BuildProperty(VCard.PropKeys.GEO,
-                              newGeoProp,
-                              isPref && (geoProp?.Parameters.Preference ?? 100) == 100);
-            }
-        }
-    }
-
-    private void PreserveTimeZoneID(bool multiple, AddressProperty prop, bool isPref)
-    {
-        TimeZoneID? tz = prop.Parameters.TimeZone;
-
-        if (tz != null)
-        {
-            TimeZoneProperty? tzProp = VCardToSerialize
-                                            .TimeZones?
-                                            .PrefOrNullIntl(IgnoreEmptyItems);
-
-            if (tzProp is null ||
-                (multiple && prop.Group != null &&
-                    VCardToSerialize
-                     .TimeZones
-                     .FirstOrNullWithGroup(prop.Group, IgnoreEmptyItems) == null))
-            {
-                var newTZProperty = new TimeZoneProperty(tz, prop.Group);
-                BuildProperty(VCard.PropKeys.TZ,
-                              newTZProperty,
-                              isPref && (tzProp?.Parameters.Preference ?? 100) == 100);
-            }
-        }
-    }
-
 
     protected override void AppendAnniversaryViews(IEnumerable<DateAndOrTimeProperty?> value)
         => base.AppendAnniversaryViews(value);
@@ -201,26 +146,9 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         => BuildFirstProperty(VCard.PropKeys.BDAY, 
                               value, 
                               static x => x is DateOnlyProperty or DateTimeOffsetProperty);
-   
+
     protected override void AppendDisplayNames(IEnumerable<TextProperty?> value)
-    {
-        Debug.Assert(value != null);
-
-        TextProperty? displayName = value.PrefOrNullIntl(IgnoreEmptyItems);
-
-        if (displayName is null)
-        {
-            var name = VCardToSerialize.NameViews?.FirstOrNullIntl(IgnoreEmptyItems);
-
-            if (name is not null)
-            {
-                displayName = new TextProperty(name.ToDisplayName());
-            }
-        }
-
-        BuildProperty(VCard.PropKeys.FN, 
-                      displayName ?? new TextProperty(IgnoreEmptyItems ? "?" : null));
-    }
+        => BuildPrefProperty(VCard.PropKeys.FN, value);
 
     protected override void AppendEMails(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.EMAIL, value);
@@ -296,4 +224,55 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     protected override void AppendURLs(IEnumerable<TextProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.URL, value);
+
+    private void PreserveLabel(AddressProperty prop, bool isPref)
+    {
+        string? label = prop.Parameters.Label;
+
+        if (label != null)
+        {
+            var labelProp = new TextProperty(label, prop.Group);
+            labelProp.Parameters.Assign(prop.Parameters);
+            BuildProperty(VCard.PropKeys.LABEL, labelProp, isPref);
+        }
+    }
+
+    private void PreserveGeoCoordinate(AddressProperty prop)
+    {
+        GeoCoordinate? geo = prop.Parameters.GeoPosition;
+
+        if (geo != null)
+        {
+            GeoProperty? geoProp = VCardToSerialize
+                                      .GeoCoordinates?
+                                      .PrefOrNullIntl(IgnoreEmptyItems);
+
+            if (geoProp is null)
+            {
+                BuildProperty(VCard.PropKeys.GEO,
+                              new GeoProperty(geo, prop.Group),
+                              false);
+            }
+        }
+    }
+
+    private void PreserveTimeZoneID(AddressProperty prop)
+    {
+        TimeZoneID? tz = prop.Parameters.TimeZone;
+
+        if (tz != null)
+        {
+            TimeZoneProperty? tzProp = VCardToSerialize
+                                            .TimeZones?
+                                            .PrefOrNullIntl(IgnoreEmptyItems);
+
+            if (tzProp is null)
+            {
+                BuildProperty(VCard.PropKeys.TZ,
+                              new TimeZoneProperty(tz, prop.Group),
+                              false);
+            }
+        }
+    }
+
 }

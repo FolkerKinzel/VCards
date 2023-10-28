@@ -1,4 +1,4 @@
-﻿// Compile for .NET 7.0 or above and FolkerKinzel.VCards 6.0.0-beta.1 or above
+﻿// Compile for .NET 7.0 or higher and FolkerKinzel.VCards 6.0.0-beta.2 or higher
 using FolkerKinzel.VCards;
 
 // It's recommended to use a namespace-alias for better readability of
@@ -82,7 +82,6 @@ public static class VCardExample
             var pidMapProp = new VC::PropertyIDMappingProperty(pidMap);
             vcard.PropertyIDMappings = pidMapProp;
 
-            const string groupName = "gr1";
             var phoneHome = new VC::TextProperty("tel:+49-123-9876543");
             phoneHome.Parameters.DataType = VC::Enums.VCdDataType.Uri;
             phoneHome.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Home;
@@ -99,26 +98,18 @@ public static class VCardExample
                                              | VC::Enums.PhoneTypes.Voice;
             phoneWork.Parameters.PropertyIDs = new VC::PropertyID(2, pidMap);
 
-
+            // Unless specified, an address label is automatically applied to the AddressProperty object.
+            // Specifying the country helps to correctly format this label.
+            // Applying a group name to the AddressProperty helps to automatically preserve its Label,
+            // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
             var adrWorkProp = new VC::AddressProperty
-                ("Friedrichstraße 22", "Berlin", null, "10117", "Germany", propertyGroup: groupName);
+                ("Friedrichstraße 22", "Berlin", null, "10117", "Germany", propertyGroup: vcard.NewGroup());
             adrWorkProp.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
-            adrWorkProp.Parameters.AddressType = VC::Enums.AddressTypes.Dom | VC::Enums.AddressTypes.Intl | VC::Enums.AddressTypes.Postal | VC::Enums.AddressTypes.Parcel;
+            adrWorkProp.Parameters.AddressType = VC::Enums.AddressTypes.Dom | VC::Enums.AddressTypes.Intl | 
+                                                 VC::Enums.AddressTypes.Postal | VC::Enums.AddressTypes.Parcel;
             vcard.Addresses = adrWorkProp;
-
-            var tz = VC::TimeZoneID.Parse("Europe/Berlin");
-            var geo = new VC::GeoCoordinate(52.51182050685474, 13.389581454284256);
-
-            // vCard 4.0 allows to specify the time zone and geographical
-            // position in the Parameters of an AddressProperty.
-            // These entries are ignored when writing older vCard versions:
-            adrWorkProp.Parameters.TimeZone = tz;
-            adrWorkProp.Parameters.GeoPosition = geo;
-
-            // Make separate TZ and GEO Properties to preserve the time zone
-            // and geographical Position in older vCard versions:
-            vcard.TimeZones = new VC::TimeZoneProperty(tz, groupName);
-            vcard.GeoCoordinates = new VC::GeoProperty(geo, groupName);
+            adrWorkProp.Parameters.TimeZone = VC::TimeZoneID.Parse("Europe/Berlin");
+            adrWorkProp.Parameters.GeoPosition = new VC::GeoCoordinate(52.51182050685474, 13.389581454284256);
 
             vcard.Phones = new VC::TextProperty[]
             {
@@ -185,9 +176,7 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2023-10-25T21:32:06Z
-gr1.TZ:+01:00
-gr1.GEO:52.511821;13.389581
+REV:2023-10-28T15:59:49Z
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
  Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
@@ -196,18 +185,20 @@ TITLE:CEO
 ORG:Millers Company;C#;Webdesign
 BDAY:1984-03-28
 X-ANNIVERSARY:2006-07-14
-gr1.ADR;DOM;INTL;POSTAL;PARCEL;WORK;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:;;F=
+0.ADR;DOM;INTL;POSTAL;PARCEL;WORK;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:;;F=
 riedrichstra=C3=9Fe 22;Berlin;;10117;Germany
-gr1.LABEL;DOM;INTL;POSTAL;PARCEL;WORK;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Fri=
+0.LABEL;DOM;INTL;POSTAL;PARCEL;WORK;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Fri=
 edrichstra=C3=9Fe 22=0D=0A10117 Berlin=0D=0AGERMANY
+0.GEO:52.511821;13.389581
+0.TZ:+01:00
 TEL;HOME;VOICE;BBS:tel:+49-123-9876543
 TEL;WORK;VOICE;MSG;CELL;BBS:tel:+49-321-1234567
 EMAIL;PREF;INTERNET:kaethe_mueller@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- 6L49AWHlVPGmZOV4vGkrALHNIH4tMgdyR37+TTZcjSh5Xmrrw7TeFFhQ4ZcvrSj
- TGOUARW6ma4AW5H7Z
+ U1TqeQMG+xWiglU6bGGVzFF0QGnYacpFAmvN9G42XP3x3K1MjVqC5hDIoDa8z40
+ MNgYWVlvzWoK26jLi
 
 END:VCARD
 
@@ -216,25 +207,25 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2023-10-25T21:32:06Z
-gr1.TZ:+01:00
-gr1.GEO:52.511821;13.389581
+REV:2023-10-28T15:59:49Z
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
 BDAY;VALUE=DATE:1984-03-28
 X-ANNIVERSARY:2006-07-14
-gr1.ADR;TYPE=WORK,DOM,INTL,POSTAL,PARCEL:;;Friedrichstraße 22;Berlin;;1011
- 7;Germany
-gr1.LABEL;TYPE=WORK,DOM,INTL,POSTAL,PARCEL:Friedrichstraße 22\n10117 Berli
- n\nGERMANY
+0.ADR;TYPE=WORK,DOM,INTL,POSTAL,PARCEL:;;Friedrichstraße 22;Berlin;;10117;
+ Germany
+0.LABEL;TYPE=WORK,DOM,INTL,POSTAL,PARCEL:Friedrichstraße 22\n10117 Berlin\
+ nGERMANY
+0.GEO:52.511821;13.389581
+0.TZ:+01:00
 TEL;TYPE=HOME,VOICE,BBS:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:6L49AWHlVPGmZOV4vGkrALHNIH4tMgdyR37+TTZcjSh5Xmrr
- w7TeFFhQ4ZcvrSjTGOUARW6ma4AW5H7Z
+PHOTO;ENCODING=b;TYPE=JPEG:U1TqeQMG+xWiglU6bGGVzFF0QGnYacpFAmvN9G42XP3x3K1M
+ jVqC5hDIoDa8z40MNgYWVlvzWoK26jLi
 END:VCARD
 
 
@@ -242,25 +233,23 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20231025T213206Z
-gr1.TZ:Europe/Berlin
-gr1.GEO:geo:52.511821,13.389581
+REV:20231028T155949Z
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
 BDAY;VALUE=DATE:19840328
 ANNIVERSARY;VALUE=DATE:20060714
-gr1.ADR;TYPE=WORK;LABEL=Friedrichstraße 22\n10117 Berlin\nGERMANY;GEO="geo
- :52.511821,13.389581";TZ=Europe/Berlin:;;Friedrichstraße 22;Berlin;;10117
- ;Germany
+0.ADR;TYPE=WORK;LABEL=Friedrichstraße 22\n10117 Berlin\nGERMANY;GEO="geo:5
+ 2.511821,13.389581";TZ=Europe/Berlin:;;Friedrichstraße 22;Berlin;;10117;G
+ ermany
 TEL;TYPE=HOME,VOICE;VALUE=URI;PID=1.1:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=2.1:tel:+49-321-1234567
 EMAIL;TYPE=WORK;PREF=1:kaethe_mueller@internet.com
 RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT:Paul Müller-Risinowsk
  y
-PHOTO:data:image/jpeg;base64,6L49AWHlVPGmZOV4vGkrALHNIH4tMgdyR37+TTZcjSh5Xm
- rrw7TeFFhQ4ZcvrSjTGOUARW6ma4AW5H7Z
+PHOTO:data:image/jpeg;base64,U1TqeQMG+xWiglU6bGGVzFF0QGnYacpFAmvN9G42XP3x3K
+ 1MjVqC5hDIoDa8z40MNgYWVlvzWoK26jLi
 CLIENTPIDMAP:1;http://folkerkinzel.de/file1.htm
 END:VCARD
 
@@ -269,16 +258,12 @@ Read VCard:
 
 Version: 3.0
 
+[EMailType: EMAIL]
+[Preference: 1]
+EMails: kaethe_mueller@internet.com
+
 [DataType: TimeStamp]
-TimeStamp: 10/25/2023 21:32:06 +00:00
-
-[Group: gr1]
-TimeZones: +01:00
-
-[Group: gr1]
-GeoCoordinates:
-    Latitude:    52.511821
-    Longitude:   13.389581
+TimeStamp: 10/28/2023 15:59:49 +00:00
 
 DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 
@@ -299,19 +284,6 @@ BirthDayViews: System.DateOnly: 03/28/1984
 
 AnniversaryViews: System.DateOnly: 07/14/2006
 
-[PropertyClass: Work]
-[AddressType: Dom, Intl, Postal, Parcel]
-[Label:
-    Friedrichstraße 22
-    10117 Berlin
-    GERMANY]
-[Group: gr1]
-Addresses:
-    Street:     Friedrichstraße 22
-    Locality:   Berlin
-    PostalCode: 10117
-    Country:    Germany
-
 [PropertyClass: Home]
 [PhoneType: Voice, BBS]
 Phones: tel:+49-123-9876543
@@ -320,10 +292,6 @@ Phones: tel:+49-123-9876543
 [PhoneType: Voice, Msg, Cell, BBS]
 Phones: tel:+49-321-1234567
 
-[EMailType: EMAIL]
-[Preference: 1]
-EMails: kaethe_mueller@internet.com
-
 [Relation: Spouse]
 [DataType: Text]
 Relations: System.String: Paul Müller-Risinowsky
@@ -331,4 +299,29 @@ Relations: System.String: Paul Müller-Risinowsky
 [Encoding: Base64]
 [MediaType: image/jpeg]
 Photos: System.Byte[]: 60 Bytes
+
+[Group: 0]
+TimeZones: +01:00
+
+[Group: 0]
+GeoCoordinates:
+    Latitude:    52.511821
+    Longitude:   13.389581
+
+[PropertyClass: Work]
+[AddressType: Dom, Intl, Postal, Parcel]
+[Label:
+    Friedrichstraße 22
+    10117 Berlin
+    GERMANY]
+[GeoPosition:
+    Latitude:    52.511821
+    Longitude:   13.389581]
+[TimeZone: +01:00]
+[Group: 0]
+Addresses:
+    Street:     Friedrichstraße 22
+    Locality:   Berlin
+    PostalCode: 10117
+    Country:    Germany
  */

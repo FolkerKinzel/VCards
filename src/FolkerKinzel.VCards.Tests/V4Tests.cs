@@ -231,5 +231,21 @@ public class V4Tests
         Assert.AreEqual(VCdDataType.Text, fb2.Parameters.DataType);
     }
 
+
+    [TestMethod]
+    public void DisplayNameTest1()
+    {
+        var nm = new NameProperty("Kinzel", "Folker");
+
+        var vCard = new VCard { NameViews = nm };
+
+        string vcf = vCard.ToVcfString(VCdVersion.V4_0);
+
+        vCard = VCard.ParseVcf(vcf)[0];
+
+        Assert.IsNotNull(vCard.DisplayNames);
+        TextProperty tProp = vCard.DisplayNames.First()!;
+        Assert.AreEqual("Folker Kinzel", tProp.Value);
+    }
 }
 

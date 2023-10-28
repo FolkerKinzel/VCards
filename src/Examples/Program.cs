@@ -1,6 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using FolkerKinzel.MimeTypes;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
 
 namespace Examples;
 

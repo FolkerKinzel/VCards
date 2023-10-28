@@ -126,24 +126,25 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     {
         Debug.Assert(value != null);
 
-        TextProperty[] displNames = value.OrderByPrefIntl(IgnoreEmptyItems).ToArray();
+        IEnumerable<TextProperty> displNames = value.OrderByPrefIntl(IgnoreEmptyItems);
 
-        if (displNames.Length == 0)
+        if (!displNames.Any())
         {
-            string? displName = VCardToSerialize.NameViews?.FirstOrNull(ignoreEmptyItems: true)?
-                                                           .ToDisplayName() 
-                                                           ?? (IgnoreEmptyItems ? "?" : null);
+            var name = VCardToSerialize.NameViews?.FirstOrNullIntl(IgnoreEmptyItems);
 
-            var textProp = new TextProperty(displName);
-            BuildProperty(VCard.PropKeys.FN, textProp);
-        }
-        else
-        {
-            for (int i = 0; i < displNames.Length; i++)
+            if (name is not null)
             {
-                BuildProperty(VCard.PropKeys.FN, displNames[i]);
+                var tProp = new TextProperty(name.ToDisplayName(), name.Group);
+                tProp.Parameters.Assign(name.Parameters);
+                displNames = tProp;
+            }
+            else
+            {
+                displNames = new TextProperty(IgnoreEmptyItems ? "?" : null);
             }
         }
+        
+        BuildPropertyCollection(VCard.PropKeys.FN, displNames);
     }
 
     protected override void AppendEMails(IEnumerable<TextProperty?> value)

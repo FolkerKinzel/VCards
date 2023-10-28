@@ -42,24 +42,24 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
         foreach (AddressProperty? prop in value.OrderByPrefIntl(IgnoreEmptyItems))
         {
-            bool isPref = first && prop!.Parameters.Preference < 100;
-            first = false;
+            bool isPref = first && prop.Parameters.Preference < 100;
 
-            // AddressProperty.IsEmpty ist auch dann false, wenn lediglich
-            // AddressProperty.Parameters.Label != null ist:
+            // AddressProperty.IsEmpty returns false if only
+            // AddressProperty.Parameters.Label != null:
             if (!prop!.Value.IsEmpty || !IgnoreEmptyItems)
             {
                 BuildProperty(VCard.PropKeys.ADR, prop, isPref);
             }
 
-            string? label = prop.Parameters.Label;
+            PreserveLabel(prop, isPref);
 
-            if (label != null)
+            if (first)
             {
-                var labelProp = new TextProperty(label, prop.Group);
-                labelProp.Parameters.Assign(prop.Parameters);
-                BuildProperty(VCard.PropKeys.LABEL, labelProp, isPref);
+                PreserveGeoCoordinate(prop);
+                PreserveTimeZoneID(prop);
             }
+
+            first = false;
         }
     }
 
@@ -89,7 +89,8 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
             if (name is not null)
             {
-                displayName = new TextProperty(name.ToDisplayName());
+                displayName = new TextProperty(name.ToDisplayName(), name.Group);
+                displayName.Parameters.Assign(name.Parameters);
             }
         }
 
@@ -232,4 +233,55 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal override void AppendBase64EncodedData(byte[]? data)
         => _ = Builder.AppendBase64(data);
+
+
+    private void PreserveLabel(AddressProperty prop, bool isPref)
+    {
+        string? label = prop.Parameters.Label;
+
+        if (label != null)
+        {
+            var labelProp = new TextProperty(label, prop.Group);
+            labelProp.Parameters.Assign(prop.Parameters);
+            BuildProperty(VCard.PropKeys.LABEL, labelProp, isPref);
+        }
+    }
+
+    private void PreserveGeoCoordinate(AddressProperty prop)
+    {
+        GeoCoordinate? geo = prop.Parameters.GeoPosition;
+
+        if (geo != null)
+        {
+            GeoProperty? geoProp = VCardToSerialize
+                                      .GeoCoordinates?
+                                      .PrefOrNullIntl(IgnoreEmptyItems);
+
+            if (geoProp is null)
+            {
+                BuildProperty(VCard.PropKeys.GEO,
+                              new GeoProperty(geo, prop.Group),
+                              false);
+            }
+        }
+    }
+
+    private void PreserveTimeZoneID(AddressProperty prop)
+    {
+        TimeZoneID? tz = prop.Parameters.TimeZone;
+
+        if (tz != null)
+        {
+            TimeZoneProperty? tzProp = VCardToSerialize
+                                            .TimeZones?
+                                            .PrefOrNullIntl(IgnoreEmptyItems);
+
+            if (tzProp is null)
+            {
+                BuildProperty(VCard.PropKeys.TZ,
+                              new TimeZoneProperty(tz, prop.Group),
+                              false);
+            }
+        }
+    }
 }

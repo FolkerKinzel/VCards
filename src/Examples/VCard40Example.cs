@@ -1,4 +1,4 @@
-﻿// Compile for .NET 7.0 or above and FolkerKinzel.VCards 6.0.0-beta.1 or above
+﻿// Compile for .NET 7.0 or higher and FolkerKinzel.VCards 6.0.0-beta.1 or higher
 using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Extensions;
 

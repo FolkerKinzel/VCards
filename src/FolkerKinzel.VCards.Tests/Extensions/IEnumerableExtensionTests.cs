@@ -421,7 +421,7 @@ public class IEnumerableExtensionTests
     }
 
     [TestMethod]
-    public void NewAltIDTest1() => Assert.AreEqual(0, ((IEnumerable<TextProperty?>?)null).NewAltID());
+    public void NewAltIDTest1() => Assert.AreEqual("0", ((IEnumerable<TextProperty?>?)null).NewAltID());
 
     [TestMethod]
     public void NewAltIDTest2()
@@ -434,5 +434,20 @@ public class IEnumerableExtensionTests
         Assert.AreEqual("0", props.NewAltID());
         props[0].Parameters.AltID = "41";
         Assert.AreEqual("42", props.NewAltID());
+    }
+
+    [TestMethod]
+    public void ContainsGroupTest1()
+    {
+        const string group = "gr";
+        TextProperty? prop = null;
+        Assert.IsFalse(prop.ContainsGroup(group));
+        prop = new TextProperty("");
+        Assert.IsFalse(prop.ContainsGroup(group));
+        prop.Group = group;
+        Assert.IsFalse(prop.ContainsGroup(group));
+        Assert.IsTrue(prop.ContainsGroup(group, ignoreEmptyItems: false));
+        Assert.IsTrue(prop.ContainsGroup("GR", ignoreEmptyItems: false));
+        Assert.IsFalse(prop.ContainsGroup("42", ignoreEmptyItems: false));
     }
 }

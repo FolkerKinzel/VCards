@@ -220,7 +220,7 @@ public sealed partial class TimeZoneID
 
 
     [GeneratedRegex(UTC_OFFSET_PATTERN, RegexOptions.CultureInvariant, 50)]
-    internal static partial Regex UtcOffsetRegex();
+    private static partial Regex UtcOffsetRegex();
 #endif
 }
 
