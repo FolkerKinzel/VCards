@@ -134,6 +134,47 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
                 BuildProperty(VCard.PropKeys.LABEL, labelProp, isPref);
             }
 
+            GeoCoordinate? geo = prop.Parameters.GeoPosition;
+            
+            if (geo != null) 
+            {
+                GeoProperty? geoProp = VCardToSerialize
+                                          .GeoCoordinates?
+                                          .PrefOrNullIntl(IgnoreEmptyItems);
+
+                if (geoProp is null || 
+                    (multiple && prop.Group != null && 
+                        VCardToSerialize
+                            .GeoCoordinates
+                            .FirstOrNullWithVCardGroup(prop.Group, IgnoreEmptyItems) == null))
+                {
+                    var newGeoProp = new GeoProperty(geo, prop.Group);
+                    BuildProperty(VCard.PropKeys.GEO, 
+                                  newGeoProp,
+                                  isPref && (geoProp?.Parameters.Preference ?? 100) == 100);
+                }
+            }
+
+            TimeZoneID? tz = prop.Parameters.TimeZone; 
+
+            if (tz != null) 
+            {
+                TimeZoneProperty? tzProp = VCardToSerialize
+                                                .TimeZones?
+                                                .PrefOrNullIntl(IgnoreEmptyItems);
+
+                if (tzProp is null ||
+                    (multiple && prop.Group != null && 
+                        VCardToSerialize
+                         .TimeZones
+                         .FirstOrNullWithVCardGroup(prop.Group, IgnoreEmptyItems) == null))
+                {
+                    var newTZProperty = new TimeZoneProperty(tz, prop.Group);
+                    BuildProperty(VCard.PropKeys.TZ,
+                                  newTZProperty,
+                                  isPref && (tzProp?.Parameters.Preference ?? 100)== 100);
+                }
+
             if (!multiple) { break; }
         }
     }

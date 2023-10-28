@@ -526,4 +526,12 @@ public static class IEnumerableExtension
 
         return (++i).ToString();
     }
+
+
+    public static TSource? FirstOrNullWithVCardGroup<TSource>(
+        this IEnumerable<TSource?>? values,
+        string? groupID,
+        bool ignoreEmptyItems = true) where TSource : VCardProperty 
+        => values?.FirstOrNullIntl(x => StringComparer.OrdinalIgnoreCase.Equals(groupID, x.Group),
+                                        ignoreEmptyItems);
 }
