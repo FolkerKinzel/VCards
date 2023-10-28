@@ -528,7 +528,7 @@ public static class IEnumerableExtension
     }
 
 
-    public static TSource? FirstOrNullWithVCardGroup<TSource>(
+    public static TSource? FirstOrNullWithGroup<TSource>(
         this IEnumerable<TSource?>? values,
         string? groupID,
         bool ignoreEmptyItems = true) where TSource : VCardProperty 
