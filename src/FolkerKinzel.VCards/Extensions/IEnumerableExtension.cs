@@ -1,6 +1,7 @@
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.Extensions;
 
@@ -373,7 +374,7 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? values,
         Func<TSource, bool>? filter = null,
         bool ignoreEmptyItems = true) where TSource : VCardProperty
-        => filter is null ? values?.FirstOrNullIntl(ignoreEmptyItems) 
+        => filter is null ? values?.FirstOrNullIntl(ignoreEmptyItems)
                           : values?.FirstOrNullIntl(filter, ignoreEmptyItems);
 
     /// <summary>
@@ -520,7 +521,7 @@ public static class IEnumerableExtension
 
         foreach (string altID in numerable)
         {
-            if(int.TryParse(altID, out int result) && i < result)
+            if (int.TryParse(altID, out int result) && i < result)
             {
                 i = result;
             }
@@ -552,7 +553,7 @@ public static class IEnumerableExtension
     public static TSource? FirstOrNullIsMemberOf<TSource>(
         this IEnumerable<TSource?>? values,
         string? group,
-        bool ignoreEmptyItems = true) where TSource : VCardProperty 
+        bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values?.FirstOrNullIntl(x => StringComparer.OrdinalIgnoreCase.Equals(group, x.Group),
                                         ignoreEmptyItems);
 
@@ -582,4 +583,50 @@ public static class IEnumerableExtension
         string? group,
         bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values.FirstOrNullIsMemberOf(group, ignoreEmptyItems) != null;
+
+
+    //public static IEnumerable<T?>? Concatenate<T>(
+    //    this IEnumerable<T?>? currentElement, IEnumerable<T?>? value) where T : VCardProperty, IEnumerable<T>
+    //{
+    //    switch (currentElement)
+    //    {
+    //        case null:
+    //            return value;
+    //        case List<T?> list:
+    //            {
+    //                if (value is null)
+    //                {
+    //                    list.Add(null);
+    //                }
+    //                else
+    //                {
+    //                    list.AddRange(value);
+    //                }
+
+    //                return list;
+    //            }
+    //        case T enumerable:
+    //            {
+    //                var tList = new List<T?>(enumerable);
+
+    //                if (value is null)
+    //                {
+    //                    tList.Add(null);
+    //                }
+    //                else
+    //                {
+    //                    tList.AddRange(value);
+    //                }
+
+    //                return tList;
+    //            }
+
+    //        default:
+    //            throw new ArgumentOutOfRangeException(nameof(currentElement));
+    //    };
+    //}
+
+    public static IEnumerable<TSource?>? ConcatWith<TSource>(
+        this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty 
+        => Enumerable.Concat(first ?? Enumerable.Empty<TSource>(), second ?? Enumerable.Empty<TSource>());
 }

@@ -1,5 +1,6 @@
 ﻿// Compile for .NET 7.0 or higher and FolkerKinzel.VCards 6.0.0-beta.2 or higher
 using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Extensions;
 
 // It's recommended to use a namespace-alias for better readability of
 // your code and better usability of Visual Studio IntelliSense:
@@ -53,7 +54,7 @@ public static class VCardExample
                             middleName: new string[] { "Alexandra", "Caroline" },
                             prefix: new string[] { "Prof.", "Dr." }
                         );
-            var vcard = new VCard
+            var vCard = new VCard
             {
                 // Although NameViews is of Type IEnumerable<NameProperty?>
                 // you can assign a single NameProperty instance because NameProperty
@@ -74,19 +75,25 @@ public static class VCardExample
             string photoFilePath = Path.Combine(directoryPath, photoFileName);
             CreatePhoto(photoFilePath);
 
-            vcard.Photos = VC::DataProperty.FromFile(photoFilePath);
+            vCard.Photos = VC::DataProperty.FromFile(photoFilePath);
 
             // This shows how to create a PropertyIDMapping, which helps to identify vCard-Properties
             // even if they are located in vCards that come from different sources (vCard 4.0 only):
             var pidMap = new VC::PropertyIDMapping(1, new Uri("http://folkerKinzel.de/file1.htm"));
             var pidMapProp = new VC::PropertyIDMappingProperty(pidMap);
-            vcard.PropertyIDMappings = pidMapProp;
+            vCard.PropertyIDMappings = pidMapProp;
 
             var phoneHome = new VC::TextProperty("tel:+49-123-9876543");
             phoneHome.Parameters.DataType = VC::Enums.VCdDataType.Uri;
             phoneHome.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Home;
             phoneHome.Parameters.PhoneType = VC::Enums.PhoneTypes.Voice | VC::Enums.PhoneTypes.BBS;
             phoneHome.Parameters.PropertyIDs = new VC::PropertyID(1, pidMap);
+
+            // Phones is null here. The extension method ConcatWith would not be needed in this case:
+            // phoneHome could be assigned directly. ConcatWith is only used here to show that it
+            // encapsulates all the null checking and will not throw.
+            // (Don't forget to assign the result!)
+            vCard.Phones = vCard.Phones.ConcatWith(phoneHome);
 
             var phoneWork = new VC::TextProperty("tel:+49-321-1234567");
             phoneWork.Parameters.DataType = VC::Enums.VCdDataType.Uri;
@@ -98,33 +105,36 @@ public static class VCardExample
                                              | VC::Enums.PhoneTypes.Voice;
             phoneWork.Parameters.PropertyIDs = new VC::PropertyID(2, pidMap);
 
+            vCard.Phones = vCard.Phones.ConcatWith(phoneWork);
+
             // Unless specified, an address label is automatically applied to the AddressProperty object.
             // Specifying the country helps to correctly format this label.
             // Applying a group name to the AddressProperty helps to automatically preserve its Label,
             // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
             var adrWorkProp = new VC::AddressProperty
-                ("Friedrichstraße 22", "Berlin", null, "10117", "Germany", propertyGroup: vcard.NewGroup());
+                ("Friedrichstraße 22", "Berlin", null, "10117", "Germany", propertyGroup: vCard.NewGroup());
             adrWorkProp.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
             adrWorkProp.Parameters.AddressType = VC::Enums.AddressTypes.Dom | VC::Enums.AddressTypes.Intl | 
                                                  VC::Enums.AddressTypes.Postal | VC::Enums.AddressTypes.Parcel;
-            vcard.Addresses = adrWorkProp;
             adrWorkProp.Parameters.TimeZone = VC::TimeZoneID.Parse("Europe/Berlin");
             adrWorkProp.Parameters.GeoPosition = new VC::GeoCoordinate(52.51182050685474, 13.389581454284256);
-
-            vcard.Phones = new VC::TextProperty[]
-            {
-                    phoneHome, phoneWork
-            };
+            vCard.Addresses = adrWorkProp;
 
             var prefMail = new VC::TextProperty("kaethe_mueller@internet.com");
             prefMail.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
             prefMail.Parameters.Preference = 1;
 
-            vcard.EMails = prefMail;
+            vCard.EMails = prefMail;
 
-            vcard.BirthDayViews = VC::DateAndOrTimeProperty.FromDate(1984, 3, 28);
+            var otherMail = new VC::TextProperty("mailto:kaethe_at_home@internet.com");
+            otherMail.Parameters.DataType = VC.Enums.VCdDataType.Uri;
+            otherMail.Parameters.PropertyClass = VC.Enums.PropertyClassTypes.Home;
 
-            vcard.Relations = VC::RelationProperty.FromText
+            vCard.EMails = vCard.EMails.Concat(otherMail);
+
+            vCard.BirthDayViews = VC::DateAndOrTimeProperty.FromDate(1984, 3, 28);
+
+            vCard.Relations = VC::RelationProperty.FromText
                 (
                     "Paul Müller-Risinowsky",
                     VC::Enums.RelationTypes.Spouse
@@ -132,8 +142,8 @@ public static class VCardExample
                     | VC::Enums.RelationTypes.Colleague
                 );
 
-            vcard.AnniversaryViews = VC::DateAndOrTimeProperty.FromDate(2006, 7, 14);
-            return vcard;
+            vCard.AnniversaryViews = VC::DateAndOrTimeProperty.FromDate(2006, 7, 14);
+            return vCard;
         }
 
         void WriteResultsToConsole(VCard vcard)
@@ -176,7 +186,7 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2023-10-29T10:39:40Z
+REV:2023-10-29T14:59:36Z
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
  Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
@@ -194,11 +204,12 @@ edrichstra=C3=9Fe 22=0D=0A10117 Berlin=0D=0AGERMANY
 TEL;HOME;VOICE;BBS:tel:+49-123-9876543
 TEL;WORK;VOICE;MSG;CELL;BBS:tel:+49-321-1234567
 EMAIL;PREF;INTERNET:kaethe_mueller@internet.com
+EMAIL;INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- Bi44Jxk9dv2qnC5t7gwNN4YTasKHBfMhZWVcdY/Ir/O8YE7jFOGAJWHk27UkBRv
- eif9/rhpwiEHbXB+G
+ 6Pc/bcvrA564kuxnZwJZj7dtnW+yaWEQeX9ymQ9+VyOdFOogOhzClmxjYWR+V+U
+ rxejxL+7DKj8CSAa3
 
 END:VCARD
 
@@ -207,7 +218,7 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2023-10-29T10:39:40Z
+REV:2023-10-29T14:59:36Z
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
@@ -223,9 +234,10 @@ X-ANNIVERSARY:2006-07-14
 TEL;TYPE=HOME,VOICE,BBS:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
+EMAIL;TYPE=INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:Bi44Jxk9dv2qnC5t7gwNN4YTasKHBfMhZWVcdY/Ir/O8YE7j
- FOGAJWHk27UkBRveif9/rhpwiEHbXB+G
+PHOTO;ENCODING=b;TYPE=JPEG:6Pc/bcvrA564kuxnZwJZj7dtnW+yaWEQeX9ymQ9+VyOdFOog
+ OhzClmxjYWR+V+UrxejxL+7DKj8CSAa3
 END:VCARD
 
 
@@ -233,7 +245,7 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20231029T103940Z
+REV:20231029T145936Z
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
 TITLE:CEO
@@ -246,10 +258,11 @@ ANNIVERSARY;VALUE=DATE:20060714
 TEL;TYPE=HOME,VOICE;VALUE=URI;PID=1.1:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=2.1:tel:+49-321-1234567
 EMAIL;TYPE=WORK;PREF=1:kaethe_mueller@internet.com
+EMAIL;TYPE=HOME;VALUE=URI:mailto:kaethe_at_home@internet.com
 RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT:Paul Müller-Risinowsk
  y
-PHOTO:data:image/jpeg;base64,Bi44Jxk9dv2qnC5t7gwNN4YTasKHBfMhZWVcdY/Ir/O8YE
- 7jFOGAJWHk27UkBRveif9/rhpwiEHbXB+G
+PHOTO:data:image/jpeg;base64,6Pc/bcvrA564kuxnZwJZj7dtnW+yaWEQeX9ymQ9+VyOdFO
+ ogOhzClmxjYWR+V+UrxejxL+7DKj8CSAa3
 CLIENTPIDMAP:1;http://folkerkinzel.de/file1.htm
 END:VCARD
 
@@ -263,7 +276,7 @@ Version: 3.0
 EMails: kaethe_mueller@internet.com
 
 [DataType: TimeStamp]
-TimeStamp: 10/29/2023 10:39:40 +00:00
+TimeStamp: 10/29/2023 14:59:36 +00:00
 
 DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 
@@ -291,6 +304,9 @@ Phones: tel:+49-123-9876543
 [PropertyClass: Work]
 [PhoneType: Voice, Msg, Cell, BBS]
 Phones: tel:+49-321-1234567
+
+[EMailType: EMAIL]
+EMails: mailto:kaethe_at_home@internet.com
 
 [Relation: Spouse]
 [DataType: Text]

@@ -450,4 +450,51 @@ public class IEnumerableExtensionTests
         Assert.IsTrue(prop.ContainsGroup("GR", ignoreEmptyItems: false));
         Assert.IsFalse(prop.ContainsGroup("42", ignoreEmptyItems: false));
     }
+
+    [TestMethod]
+    public void ConcatenateTest1()
+    {
+        var vc = new VCard();
+
+        vc.DisplayNames = vc.DisplayNames.Concatenate(null);
+
+        vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
+        vc.DisplayNames = vc.DisplayNames.Concatenate(null);
+        vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
+        vc.DisplayNames = vc.DisplayNames.Concatenate(null);
+        vc.DisplayNames = new TextProperty("Hi");
+        vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
+
+    }
+
+    [TestMethod]
+    public void ConcatenateTest2()
+    {
+        var vc = new VCard();
+
+        vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
+
+        vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
+        vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
+        vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
+        vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
+        vc.DisplayNames = new TextProperty("Hi");
+        vc.DisplayNames = vc.DisplayNames.Concat(new TextProperty("Hi"));
+    }
+
+    [TestMethod]
+    public void ConcatenateTest3()
+    {
+        var vc = new VCard();
+
+        vc.Relations = vc.Relations.ConcatWith(null);
+        vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
+        vc.Relations = vc.Relations.ConcatWith(null);
+        vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
+        vc.Relations = vc.Relations.ConcatWith(null);
+        vc.Relations = RelationProperty.FromText("Hi");
+        vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
+    }
+
+
 }

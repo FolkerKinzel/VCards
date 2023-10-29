@@ -1,3 +1,5 @@
+using FolkerKinzel.VCards.Models;
+
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
 internal static class Assigner
@@ -20,3 +22,26 @@ internal static class Assigner
         };
     }
 }
+
+
+//internal static class Assigner2
+//{
+//    internal static IEnumerable<T?>? Concatenate<T>(
+//        this T? newElement, T? currentElement) where T : VCardProperty, IEnumerable<T?>
+//    {
+//        switch (currentElement)
+//        {
+//            case null:
+//                return newElement;
+//            case List<T?> list:
+//                list.Add(newElement);
+//                return list;
+//            case T t:
+//                return new List<T?>() { t, newElement };
+
+//            default:
+//                throw new ArgumentOutOfRangeException(nameof(currentElement));
+//        };
+//    }
+
+//}
