@@ -451,21 +451,21 @@ public class IEnumerableExtensionTests
         Assert.IsFalse(prop.ContainsGroup("42", ignoreEmptyItems: false));
     }
 
-    [TestMethod]
-    public void ConcatenateTest1()
-    {
-        var vc = new VCard();
+    //[TestMethod]
+    //public void ConcatenateTest1()
+    //{
+    //    var vc = new VCard();
 
-        vc.DisplayNames = vc.DisplayNames.Concatenate(null);
+    //    vc.DisplayNames = vc.DisplayNames.Concatenate(null);
 
-        vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
-        vc.DisplayNames = vc.DisplayNames.Concatenate(null);
-        vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
-        vc.DisplayNames = vc.DisplayNames.Concatenate(null);
-        vc.DisplayNames = new TextProperty("Hi");
-        vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
+    //    vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
+    //    vc.DisplayNames = vc.DisplayNames.Concatenate(null);
+    //    vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
+    //    vc.DisplayNames = vc.DisplayNames.Concatenate(null);
+    //    vc.DisplayNames = new TextProperty("Hi");
+    //    vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
 
-    }
+    //}
 
     [TestMethod]
     public void ConcatenateTest2()

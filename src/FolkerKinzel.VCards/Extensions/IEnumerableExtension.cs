@@ -629,7 +629,7 @@ public static class IEnumerableExtension
     /// <summary>
     /// Concatenates two sequences of <see cref="VCardProperty"/> objects. 
     /// (<see cref="VCardProperty"/> ojects that implement <see cref="IEnumerable{T}">IEnumerable&lt;VCardPoperty&gt;</see>
-    /// are such a sequence themselves.)
+    /// are themselves such a sequence.)
     /// </summary>
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
