@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -237,5 +238,58 @@ public class V2Tests
         Assert.IsNotNull(adr.Parameters.TimeZone);
     }
 
-    
+    [TestMethod]
+    public void EmbeddedBytesTest1()
+    {
+        var vCard = new VCard { Photos = DataProperty.FromBytes(null) };
+
+        string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.WriteEmptyProperties));
+
+        vCard = VCard.ParseVcf(s)[0];
+        Assert.IsNotNull(vCard.Photos);
+        Assert.IsTrue(vCard.Photos!.First()!.IsEmpty);
+    }
+
+    [TestMethod]
+    public void LineWrappingTest1()
+    {
+        var bytes = Enumerable.Range(0 - 255, 255).Select(x => (byte)x).ToArray();
+        var agent = new VCard
+        {
+            DisplayNames = new TextProperty("007"),
+            Notes = new TextProperty("ÄÖÜ Veeeeeeeeeeeeeeeeeeeeeeeeeery veeeeeeeeeeeeeeeeeeeeeeeeeeeery looooooooooooooooooooooooooooooooong Quoted-Printable text"),
+            Photos = DataProperty.FromBytes(bytes)
+        };
+
+        var vCard = new VCard
+        {
+            DisplayNames = new TextProperty("Secret Service"),
+            Relations = RelationProperty.FromVCard(agent, RelationTypes.Agent | RelationTypes.Colleague)
+        };
+
+        string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.AppendAgentAsSeparateVCard));
+
+        IList<VCard> vCards = VCard.ParseVcf(s);
+        Assert.AreEqual(2, vCards.Count);
+        Assert.IsNotNull(vCards[0].Relations);
+    }
+
+    [TestMethod]
+    public void EmptyAgentTest()
+    {
+        const string agent = """
+            BEGIN:VCARD
+            VERSION:2.1
+            FN:Secret Service
+            N:?;;;;
+            AGENT:
+
+            END:VCARD
+
+            """;
+
+        IList<VCard> vcs = VCard.ParseVcf(agent);
+        Assert.AreEqual(1, vcs.Count);
+        Assert.IsNotNull(vcs[0].Relations);
+    }
 }

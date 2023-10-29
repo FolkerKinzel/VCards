@@ -38,7 +38,7 @@ public sealed partial class VCard
     /// </para>
     /// <para>
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
-    /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
+    /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
     /// <see cref="RelationTypes.Agent" /> flag is set. 
@@ -99,7 +99,7 @@ public sealed partial class VCard
     /// </para>
     /// <para>
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
-    /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
+    /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
     /// <see cref="RelationTypes.Agent" /> flag is set. 
@@ -134,7 +134,7 @@ public sealed partial class VCard
 
         if (version < VCdVersion.V4_0)
         {
-            if (options.IsSet(VcfOptions.IncludeAgentAsSeparateVCard))
+            if (options.IsSet(VcfOptions.AppendAgentAsSeparateVCard))
             {
                 AppendAgents(list);
             }
@@ -232,7 +232,7 @@ public sealed partial class VCard
     /// </para>
     /// <para>
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
-    /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
+    /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
     /// <see cref="RelationTypes.Agent" /> flag is set. 
@@ -290,7 +290,7 @@ public sealed partial class VCard
     /// </para>
     /// <para>
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
-    /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
+    /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
     /// <see cref="RelationTypes.Agent" /> flag is set. 
@@ -333,7 +333,7 @@ public sealed partial class VCard
     /// </para>
     /// <para>
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
-    /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
+    /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
     /// <see cref="RelationTypes.Agent" /> flag is set. 
@@ -378,7 +378,7 @@ public sealed partial class VCard
     /// </para>
     /// <para>
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
-    /// option <see cref="VcfOptions.IncludeAgentAsSeparateVCard" /> and if in the
+    /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
     /// <see cref="RelationTypes.Agent" /> flag is set. 

@@ -1,6 +1,7 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -84,6 +85,8 @@ public sealed partial class VCard
         int vcfRowsToParse = queue.Count;
         int vcfRowsParsed = 0;
 
+        List<TextProperty>? labels = null;
+
         while (queue.Count != 0)
         {
             VcfRow? vcfRow = queue.Dequeue();
@@ -115,14 +118,8 @@ public sealed partial class VCard
                     Addresses = new AddressProperty(vcfRow, this.Version).GetAssignment(Addresses);
                     break;
                 case PropKeys.LABEL:
-                    if (vcfRowsParsed < vcfRowsToParse)
-                    {
-                        queue.Enqueue(vcfRow);
-                    }
-                    else
-                    {
-                        AssignLabelToAddress(vcfRow);
-                    }
+                    labels ??= new List<TextProperty>();
+                    labels.Add(new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.REV:
                     TimeStamp = new TimeStampProperty(vcfRow);
@@ -430,13 +427,90 @@ public sealed partial class VCard
 
             vcfRowsParsed++;
         }//foreach
+        
 
         if (Version is VCdVersion.V2_1 or VCdVersion.V3_0)
         {
+            if (labels != null)
+            {
+                AssignLabelsToAddresses(labels);
+            }
+
             ConnectTimeZonesWithAddresses();
             ConnectGeoCoordinatesWithAddresses();
         }
     }//ctor
+
+    private void AssignLabelsToAddresses(List<TextProperty> labels)
+    {
+        if (labels.Count == 1 && Addresses.IsSingleton(ignoreEmptyItems: false))
+        {
+            Assign(labels[0], Addresses.First()!);
+            return;
+        }
+
+        var groups = labels.Cast<VCardProperty>()
+                           .Concat(Addresses! ?? Enumerable.Empty<VCardProperty>())
+                           .GroupByVCardGroup();
+
+        foreach (var group in groups)
+        {
+            if (group.Key != null)
+            {
+                if (group.PrefOrNullIntl(static x => x is TextProperty, ignoreEmptyItems: false)
+                     is TextProperty label)
+                {
+                    if (group.PrefOrNullIntl(static x => x is AddressProperty, ignoreEmptyItems: false)
+                        is AddressProperty adrProp)
+                    {
+                        Assign(label, adrProp);
+                    }
+                    else
+                    {
+                        Addresses = CreateEmptyAddressPropertyWithLabel(label).GetAssignment(Addresses);
+                    }
+                }
+            }
+            else // Group by parameters
+            {
+                var paraGroup = group.GroupBy(x => new { x.Parameters.PropertyClass, x.Parameters.AddressType, x.Parameters.Preference });
+
+                foreach (var para in paraGroup)
+                {
+                    if (para.PrefOrNull(static x => x is TextProperty, ignoreEmptyItems: false)
+                        is TextProperty label)
+                    {
+                        if (para.PrefOrNullIntl(static x => x is AddressProperty, ignoreEmptyItems: false)
+                            is AddressProperty adrProp)
+                        {
+                            Assign(label, adrProp);
+                        }
+                        else
+                        {
+                            Addresses = CreateEmptyAddressPropertyWithLabel(label).GetAssignment(Addresses);
+                        }
+                    }
+                }
+            }
+        }
+
+        static AddressProperty CreateEmptyAddressPropertyWithLabel(TextProperty label)
+        {
+            var adrProp = new AddressProperty("", null, null, null, appendLabel: false);
+            adrProp.Parameters.Assign(label.Parameters);
+            adrProp.Parameters.Label = label.Value;
+            return adrProp;
+        }
+
+        static void Assign(TextProperty labelRow, AddressProperty address)
+        {
+            address.Parameters.Label = labelRow.Value;
+            if (address.Parameters.CharSet is null)
+            {
+                address.Parameters.CharSet = labelRow.Parameters.CharSet;
+            }
+        }
+    }
 
     private void ConnectTimeZonesWithAddresses()
     {
@@ -447,8 +521,7 @@ public sealed partial class VCard
 
         var groups = Addresses.Cast<VCardProperty>()
                               .Concat(TimeZones)
-                              .GroupByVCardGroup()
-                              .ToArray();
+                              .GroupByVCardGroup();
 
         foreach (var group in groups)
         {
@@ -490,8 +563,7 @@ public sealed partial class VCard
 
         var groups = Addresses.Cast<VCardProperty>()
                               .Concat(GeoCoordinates)
-                              .GroupByVCardGroup()
-                              .ToArray();
+                              .GroupByVCardGroup();
 
         foreach (var group in groups)
         {
@@ -530,101 +602,6 @@ public sealed partial class VCard
            (!Phones?.Any(x => x!.Value == textProp.Value) ?? true))
         {
             Phones = textProp.GetAssignment(Phones);
-        }
-    }
-
-    private void AssignLabelToAddress(VcfRow labelRow)
-    {
-        labelRow.UnMask(Version);
-
-        IEnumerable<AddressProperty>? addresses =
-            Addresses?.Where(x => x!.Parameters.Label == null)
-                      .GroupByVCardGroup()
-                      .FirstOrDefault(x => StringComparer.OrdinalIgnoreCase.Equals(labelRow.Group, x.Key));
-
-        if (addresses is null)
-        {
-            Addresses = CreateEmptyAddressPropertyWithLabel(labelRow).GetAssignment(Addresses);
-            return;
-        }
-
-        if (addresses.Take(2).Count() == 1)
-        {
-            Assign(labelRow, addresses.First());
-            return;
-        }
-
-        if (labelRow.Parameters.PropertyClass.HasValue && labelRow.Parameters.AddressType.HasValue)
-        {
-            AddressProperty? address = addresses
-                .Where(x => x.Parameters.PropertyClass.IsSet(labelRow.Parameters.PropertyClass.Value) &&
-                            x.Parameters.AddressType.IsSet(labelRow.Parameters.AddressType.Value))
-                .FirstOrDefault();
-
-            if (address != null)
-            {
-                Assign(labelRow, address);
-                return;
-            }
-        }
-
-        if (labelRow.Parameters.PropertyClass.HasValue)
-        {
-            AddressProperty? address = addresses
-                .Where(x => x.Parameters.PropertyClass.IsSet(labelRow.Parameters.PropertyClass.Value))
-                .FirstOrDefault();
-
-            if (address != null)
-            {
-                Assign(labelRow, address);
-                return;
-            }
-        }
-
-        if (labelRow.Parameters.AddressType.HasValue)
-        {
-            AddressProperty? address = addresses
-                .Where(x => x.Parameters.AddressType.IsSet(labelRow.Parameters.AddressType.Value))
-                .FirstOrDefault();
-
-            if (address != null)
-            {
-                Assign(labelRow, address);
-                return;
-            }
-        }
-
-        Debug.Assert(addresses.Any());
-        Debug.Assert(!addresses.Any(x => x is null));
-
-        AddressProperty? addressWithEqualPreference = addresses
-            .Where(x => x!.Parameters.Preference == labelRow.Parameters.Preference)
-            .FirstOrDefault();
-
-        if (addressWithEqualPreference is null)
-        {
-            Addresses = CreateEmptyAddressPropertyWithLabel(labelRow).GetAssignment(Addresses);
-        }
-        else
-        {
-            Assign(labelRow, addressWithEqualPreference);
-        }
-
-        static AddressProperty CreateEmptyAddressPropertyWithLabel(VcfRow vcfRow)
-        {
-            var adrProp = new AddressProperty("", null, null, null, appendLabel: false);
-            adrProp.Parameters.Assign(vcfRow.Parameters);
-            adrProp.Parameters.Label = vcfRow.Value;
-            return adrProp;
-        }
-
-        static void Assign(VcfRow labelRow, AddressProperty address)
-        {
-            address.Parameters.Label = labelRow.Value;
-            if (address.Parameters.CharSet is null)
-            {
-                address.Parameters.CharSet = labelRow.Parameters.CharSet;
-            }
         }
     }
 }

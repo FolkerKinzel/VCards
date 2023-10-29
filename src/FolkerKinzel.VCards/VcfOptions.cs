@@ -50,7 +50,7 @@ public enum VcfOptions
 
     /// <summary>Set the flag to append in vCard&#160;2.1 and vCard&#160;3.0 embedded 
     /// <c>AGENT</c>-vCards in the VCF file to the main vCard.</summary>
-    IncludeAgentAsSeparateVCard = 1 << 2,
+    AppendAgentAsSeparateVCard = 1 << 2,
 
     /// <summary> Set the flag to write non-standard parameters to the VCF file.
     /// </summary>

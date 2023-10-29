@@ -85,7 +85,8 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
         if (displayName is null)
         {
-            var name = VCardToSerialize.NameViews?.FirstOrNullIntl(IgnoreEmptyItems);
+            Debug.Assert(VCardToSerialize.NameViews != null);
+            var name = VCardToSerialize.NameViews.FirstOrNullIntl(IgnoreEmptyItems);
 
             if (name is not null)
             {
@@ -163,7 +164,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
         NameProperty name = value.FirstOrNullIntl(IgnoreEmptyItems)
                             ?? (IgnoreEmptyItems
-                                ? new NameProperty(new string[] { "?" })
+                                ? new NameProperty("?")
                                 : new NameProperty());
 
         BuildProperty(VCard.PropKeys.N, name);

@@ -67,7 +67,7 @@ internal sealed class RelationVCardProperty : RelationProperty
         StringBuilder worker = serializer.Worker;
 
         string vc = Value.ToVcfString(serializer.Version, 
-                                      options: serializer.Options.Unset(VcfOptions.IncludeAgentAsSeparateVCard));
+                                      options: serializer.Options.Unset(VcfOptions.AppendAgentAsSeparateVCard));
 
         if (serializer.Version == VCdVersion.V3_0)
         {

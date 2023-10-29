@@ -28,12 +28,14 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     internal override void AppendBase64EncodedData(byte[]? data)
     {
+        // Append the NewLine in any case: The parser
+        // needs it to detect the end of the Base64
+        _ = Builder.Append(VCard.NewLine);
+
         if (data is null)
         {
             return;
         }
-
-        _ = Builder.Append(VCard.NewLine);
 
         int i = Builder.Length;
         _ = Builder.AppendBase64(data);
@@ -58,7 +60,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         {
             char c = Builder[i];
 
-            if (c == '\r') //Quoted-Printable-Softlinebreak
+            if (c == '\r') //Quoted-Printable soft line break in an embedded AGENT vCard
             {
                 i++;         // '\n'
                 counter = 0;
@@ -66,18 +68,18 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
             }
             else
             {
-                counter++; //nach Quoted-Printable nur noch ASCII-Zeichen
+                counter++; // normal ASCII characters
 
                 if (counter == VCard.MAX_BYTES_PER_LINE)
                 {
-                    if (Builder[i + 1] == '\r') //Quoted-Printable-Softlinebreak
+                    if (Builder[i + 1] == '\r') //Quoted-Printable soft line break in an embedded AGENT vCard
                     {
                         i += QuotedPrintable.NEW_LINE.Length;
                         counter = 0;
                         continue;
                     }
 
-                    // mindestens 1 Zeichen pro Zeile:
+                    // at least 1 char per line:
                     for (int j = 0; j < counter - 1; j++) // suche das letzte vorhergehende 
                     {                                     // Leerzeichen und füge
                         int current = i - j;              // davor einen Linebreak ein
@@ -86,20 +88,20 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
                         if (c == ' ' || c == '\t')
                         {
                             _ = Builder.Insert(current, VCard.NewLine);
-                            i = current += VCard.NewLine.Length + 1; // das Leerzeichen
-                            counter = 1; // um das Leerzeichen vorschieben
+                            i = current += VCard.NewLine.Length + 1; // SPACE or TAB char
+                            counter = 1; // offset of the SPACE or TAB char
 
-                            break; // innere for-Schleife
+                            break; // inner for-loop
                         }
                     }// for
                 }
-                else if (counter > VCard.MAX_BYTES_PER_LINE) // das tritt nur auf, wenn vorher kein 
-                {                                            // Leerzeichen gefunden wurde
+                else if (counter > VCard.MAX_BYTES_PER_LINE) // if none SPACE or TAB char 
+                {                                            // has been found before
                     if (c == ' ' || c == '\t')
                     {
                         _ = Builder.Insert(i, VCard.NewLine);
-                        i += VCard.NewLine.Length + 1; // das Leerzeichen
-                        counter = 1; // um das Leerzeichen vorschieben
+                        i += VCard.NewLine.Length + 1; // SPACE or TAB char
+                        counter = 1; // offset of the SPACE or TAB char
                     }
                 }
             }
@@ -183,7 +185,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
         NameProperty? name = value.FirstOrNullIntl(IgnoreEmptyItems)
                              ?? (IgnoreEmptyItems
-                                   ? new NameProperty(new string[] { "?" })
+                                   ? new NameProperty( "?" )
                                    : new NameProperty());
         BuildProperty(VCard.PropKeys.N, name);
     }

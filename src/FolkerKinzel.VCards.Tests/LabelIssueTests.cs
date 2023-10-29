@@ -100,4 +100,26 @@ public class LabelIssueTests
             x => x!.Parameters!.Label!.Contains(street4)));
 
     }
+
+    [TestMethod]
+    public void LabelTest3()
+    {
+        const string vcf = """
+            BEGIN:VCARD
+            VERSION:2.1
+            ADR;POSTAL:;;1;;;;
+            ADR;PARCEL:;;2;;;;
+            LABEL;WORK;DOM;PREF:3
+            LABEL;HOME;POSTAL:4
+            LABEL;POSTAL:1
+            LABEL;WORK:5
+            END:VCARD
+            """;
+
+        var vcs = VCard.ParseVcf(vcf);
+        IEnumerable<AddressProperty?>? adr = vcs[0].Addresses;
+        Assert.IsNotNull(adr);
+        Assert.AreEqual(5, adr.Count());
+        Assert.IsTrue(adr.Any(x => x.Value.Street[0] == "1" && x.Parameters.Label == "1"));
+    }
 }
