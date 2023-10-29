@@ -478,8 +478,20 @@ public class IEnumerableExtensionTests
         vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
         vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
         vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
+        Assert.AreEqual(3, vc.DisplayNames.Where(x => x == null).Count());
         vc.DisplayNames = new TextProperty("Hi");
-        vc.DisplayNames = vc.DisplayNames.Concat(new TextProperty("Hi"));
+        vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
+
+        var props = new TextProperty[] { new TextProperty("1"), new TextProperty("2") };
+        vc.DisplayNames = vc.DisplayNames.ConcatWith(props);
+
+        var nested = new List<TextProperty[]>();
+        nested.Add(props);
+        IEnumerable<IEnumerable<TextProperty>> nested2 = nested;
+        
+        // This MUST not compile:
+        //vc.DisplayNames = vc.DisplayNames.ConcatWith(nested2);
+
     }
 
     [TestMethod]

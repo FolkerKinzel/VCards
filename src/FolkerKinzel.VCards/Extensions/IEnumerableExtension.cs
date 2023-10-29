@@ -634,17 +634,15 @@ public static class IEnumerableExtension
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="first">The first sequence (or <see cref="VCardProperty"/> object) to concatenate or <c>null</c>.</param>
-    /// <param name="second">The second sequence (or <see cref="VCardProperty"/> object) to concatenate or <c>null</c>.</param>
-    /// <returns>An <see cref="IEnumerable{T}"/> that contains the concatenated elements of the two input 
-    /// sequences, or <c>null</c> if both are <c>null</c>.</returns>
+    /// <param name="second">The second sequence (or <see cref="VCardProperty"/> object) to concatenate or <c>null</c>.
+    /// If <paramref name="second"/> is <c>null</c> a <c>null</c> reference is appended to <paramref name="first"/>.</param>
+    /// <returns>An <see cref="IEnumerable{T}"/> that contains the concatenated elements of the two input sequences.</returns>
     /// <remarks>
     /// The method works similar to <see cref="Enumerable.Concat{TSource}(IEnumerable{TSource}, IEnumerable{TSource})"/>
     /// but differs in that it can be called on <c>null</c> references and that it accepts <c>null</c> references as
     /// argument.
     /// </remarks>
-    public static IEnumerable<TSource?>? ConcatWith<TSource>(
+    public static IEnumerable<TSource?> ConcatWith<TSource>(
         this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty 
-        => second is null && first is null
-                ? null
-                : Enumerable.Concat(first ?? Enumerable.Empty<TSource>(), second ?? Enumerable.Empty<TSource>());
+        => Enumerable.Concat(first ?? Enumerable.Empty<TSource>(), second ?? Enumerable.Repeat<TSource?>(null, 1));
 }
