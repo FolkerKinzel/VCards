@@ -91,7 +91,7 @@ public static class VCardExample
 
             // Phones is null here. The extension method ConcatWith would not be needed in this case:
             // phoneHome could be assigned directly. ConcatWith is only used here to show that it
-            // encapsulates all the null checking and will not throw.
+            // encapsulates all the null checking and will not throw on null references.
             // (Don't forget to assign the result!)
             vCard.Phones = vCard.Phones.ConcatWith(phoneHome);
 

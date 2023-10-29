@@ -92,7 +92,7 @@ enums. Extension methods help to savely evaluate and manipulate these nullable e
 information defined by the vCard standard. Extension methods for these data types help to overcome these issues.
 - Most of the properties of the VCard class are of a specialized Type of `IEnumerable<VCardProperty>?`. Extension methods
 encapsulate most of the necessary null checking and Linq operations that are needed to retrieve the relevant data from these 
-properties.
+properties or to store something there.
 - Some operations work with collections of VCard objects (e.g., saving several VCard objects together in a common VCF file). 
 Extension methods allow to perform these operations directly on these collections.
 
