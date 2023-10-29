@@ -176,7 +176,7 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2023-10-28T15:59:49Z
+REV:2023-10-29T10:39:40Z
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
  Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
@@ -197,8 +197,8 @@ EMAIL;PREF;INTERNET:kaethe_mueller@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- U1TqeQMG+xWiglU6bGGVzFF0QGnYacpFAmvN9G42XP3x3K1MjVqC5hDIoDa8z40
- MNgYWVlvzWoK26jLi
+ Bi44Jxk9dv2qnC5t7gwNN4YTasKHBfMhZWVcdY/Ir/O8YE7jFOGAJWHk27UkBRv
+ eif9/rhpwiEHbXB+G
 
 END:VCARD
 
@@ -207,7 +207,7 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2023-10-28T15:59:49Z
+REV:2023-10-29T10:39:40Z
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
@@ -224,8 +224,8 @@ TEL;TYPE=HOME,VOICE,BBS:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:U1TqeQMG+xWiglU6bGGVzFF0QGnYacpFAmvN9G42XP3x3K1M
- jVqC5hDIoDa8z40MNgYWVlvzWoK26jLi
+PHOTO;ENCODING=b;TYPE=JPEG:Bi44Jxk9dv2qnC5t7gwNN4YTasKHBfMhZWVcdY/Ir/O8YE7j
+ FOGAJWHk27UkBRveif9/rhpwiEHbXB+G
 END:VCARD
 
 
@@ -233,7 +233,7 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20231028T155949Z
+REV:20231029T103940Z
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
 TITLE:CEO
@@ -248,8 +248,8 @@ TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=2.1:tel:+49-321-1234567
 EMAIL;TYPE=WORK;PREF=1:kaethe_mueller@internet.com
 RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT:Paul Müller-Risinowsk
  y
-PHOTO:data:image/jpeg;base64,U1TqeQMG+xWiglU6bGGVzFF0QGnYacpFAmvN9G42XP3x3K
- 1MjVqC5hDIoDa8z40MNgYWVlvzWoK26jLi
+PHOTO:data:image/jpeg;base64,Bi44Jxk9dv2qnC5t7gwNN4YTasKHBfMhZWVcdY/Ir/O8YE
+ 7jFOGAJWHk27UkBRveif9/rhpwiEHbXB+G
 CLIENTPIDMAP:1;http://folkerkinzel.de/file1.htm
 END:VCARD
 
@@ -263,7 +263,7 @@ Version: 3.0
 EMails: kaethe_mueller@internet.com
 
 [DataType: TimeStamp]
-TimeStamp: 10/28/2023 15:59:49 +00:00
+TimeStamp: 10/29/2023 10:39:40 +00:00
 
 DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 

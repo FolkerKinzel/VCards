@@ -471,16 +471,18 @@ public sealed partial class VCard
                     }
                 }
             }
-            else // Group by parameters
+            else // group by parameters
             {
-                var paraGroup = group.GroupBy(x => new { x.Parameters.PropertyClass, x.Parameters.AddressType, x.Parameters.Preference });
+                var paraGroup = group.GroupBy(x => new { x.Parameters.PropertyClass,
+                                                         x.Parameters.AddressType, 
+                                                         x.Parameters.Preference });
 
                 foreach (var para in paraGroup)
                 {
-                    if (para.PrefOrNull(static x => x is TextProperty, ignoreEmptyItems: false)
+                    if (para.FirstOrDefault(static x => x is TextProperty)
                         is TextProperty label)
                     {
-                        if (para.PrefOrNullIntl(static x => x is AddressProperty, ignoreEmptyItems: false)
+                        if (para.FirstOrDefault(static x => x is AddressProperty)
                             is AddressProperty adrProp)
                         {
                             Assign(label, adrProp);
