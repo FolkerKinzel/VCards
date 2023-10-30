@@ -14,8 +14,8 @@ internal class DataPropertyDerived : DataProperty
     {
     }
 
-    public DataPropertyDerived(ParameterSection parameterSection, string? propertyGroup) 
-        : base(parameterSection, propertyGroup)
+    public DataPropertyDerived(ParameterSection parameters, string? group) 
+        : base(parameters, group)
     {
     }
 

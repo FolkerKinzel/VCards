@@ -16,9 +16,9 @@ internal sealed class EmbeddedBytesProperty : DataProperty
         : base(prop) => Value = prop.Value;
 
     internal EmbeddedBytesProperty(byte[]? arr,
-                                   string? propertyGroup,
-                                   ParameterSection parameterSection)
-        : base(parameterSection, propertyGroup)
+                                   string? group,
+                                   ParameterSection parameters)
+        : base(parameters, group)
     {
         if (arr != null && arr.Length != 0)
         {

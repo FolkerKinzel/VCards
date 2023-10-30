@@ -21,18 +21,18 @@ public abstract class VCardProperty : ICloneable
     /// <summary>Constructor called by derived classes.</summary>
     /// <param name="parameters">A <see cref="ParameterSection" /> object that represents
     /// the parameter part of a vCard property.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <exception cref="ArgumentNullException"> <paramref name="parameters" /> is <c>null</c>.</exception>
-    protected VCardProperty(ParameterSection parameters, string? propertyGroup)
+    protected VCardProperty(ParameterSection parameters, string? group)
     {
         if (parameters is null)
         {
             throw new ArgumentNullException(nameof(parameters));
         }
         Parameters = parameters;
-        Group = propertyGroup;
+        Group = group;
 
     }
 
@@ -68,7 +68,6 @@ public abstract class VCardProperty : ICloneable
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => Value?.ToString() ?? "<null>";
 
-
     internal bool BuildProperty(VcfSerializer serializer)
     {
         Asserts(serializer);
@@ -95,9 +94,9 @@ public abstract class VCardProperty : ICloneable
         // vermeidet, dass das Line-Wrapping in vCard 2.1 durchgeführt wird, wenn es schon wegen
         // QuotedPrintable oder Base64 gemacht worden ist:
         return !(serializer.Version == VCdVersion.V2_1 &&
-            (Parameters.Encoding == ValueEncoding.QuotedPrintable || Parameters.Encoding == ValueEncoding.Base64));
+            (Parameters.Encoding ==
+                ValueEncoding.QuotedPrintable || Parameters.Encoding == ValueEncoding.Base64));
     }
-
 
     internal virtual void PrepareForVcfSerialization(VcfSerializer serializer)
     {
@@ -110,9 +109,7 @@ public abstract class VCardProperty : ICloneable
         this.Parameters.CharSet = null;
     }
 
-
     internal abstract void AppendValue(VcfSerializer serializer);
-
 
     [ExcludeFromCodeCoverage]
     [Conditional("DEBUG")]

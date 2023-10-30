@@ -403,17 +403,17 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void GroupByAltIDTest2()
     {
-        TextProperty prop1 = new TextProperty("1");
-        TextProperty prop2 = new TextProperty("2");
-        TextProperty prop3 = new TextProperty("3");
-        TextProperty prop4 = new TextProperty("4");
-        TextProperty prop5 = new TextProperty("5");
+        var prop1 = new TextProperty("1");
+        var prop2 = new TextProperty("2");
+        var prop3 = new TextProperty("3");
+        var prop4 = new TextProperty("4");
+        var prop5 = new TextProperty("5");
         prop1.Parameters.AltID = "A";
         prop2.Parameters.AltID = "A";
         prop3.Parameters.AltID = "a";
 
         TextProperty?[]? props = new[] { null, prop1, null, prop2, null, prop3, null, prop4, null, prop5, null };
-        var groups = props.GroupByAltID();
+        IEnumerable<IGrouping<string?, TextProperty>> groups = props.GroupByAltID();
 
         Assert.AreEqual(3, groups.Count());
         Assert.IsTrue(groups.Any(gr => gr.Key is null));
@@ -482,12 +482,14 @@ public class IEnumerableExtensionTests
         vc.DisplayNames = new TextProperty("Hi");
         vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
 
-        var props = new TextProperty[] { new TextProperty("1"), new TextProperty("2") };
+        var props = new TextProperty?[] { new TextProperty("1"), null,  new TextProperty("2") };
         vc.DisplayNames = vc.DisplayNames.ConcatWith(props);
 
-        var nested = new List<TextProperty[]>();
-        nested.Add(props);
-        IEnumerable<IEnumerable<TextProperty>> nested2 = nested;
+        var nested = new List<TextProperty?[]>
+        {
+            props
+        };
+        IEnumerable<IEnumerable<TextProperty?>> nested2 = nested;
         
         // This MUST not compile:
         //vc.DisplayNames = vc.DisplayNames.ConcatWith(nested2);
@@ -507,6 +509,52 @@ public class IEnumerableExtensionTests
         vc.Relations = RelationProperty.FromText("Hi");
         vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
     }
+
+
+    //[TestMethod]
+    //public void ConcatenateTest4()
+    //{
+    //    var vc = new VCard();
+
+    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(null);
+
+    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(new TextProperty("Hi"));
+    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(null);
+    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(new TextProperty("Hi"));
+    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(null);
+    //    Assert.AreEqual(3, vc.DisplayNames.Where(x => x == null).Count());
+    //    vc.DisplayNames = new TextProperty("Hi");
+    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(new TextProperty("Hi"));
+
+    //    var props = new TextProperty?[] { new TextProperty("1"), null, new TextProperty("2") };
+    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(props);
+
+    //    var nested = new List<TextProperty?[]>();
+    //    nested.Add(props);
+    //    IEnumerable<IEnumerable<TextProperty?>> nested2 = nested;
+
+    //    // This MUST not compile:
+    //    //vc.DisplayNames = vc.DisplayNames.ConcatWith2(nested2);
+
+    //}
+
+    //[TestMethod]
+    //public void ConcatenateTest5()
+    //{
+    //    var vc = new VCard();
+
+    //    vc.Relations = vc.Relations.ConcatWith2(null);
+    //    vc.Relations = vc.Relations.ConcatWith2(RelationProperty.FromText("Hi"));
+    //    vc.Relations = vc.Relations.ConcatWith2(null);
+    //    vc.Relations = vc.Relations.ConcatWith2(RelationProperty.FromText("Hi"));
+    //    vc.Relations = vc.Relations.ConcatWith2(null);
+    //    vc.Relations = RelationProperty.FromText("Hi");
+    //    vc.Relations = vc.Relations.ConcatWith2(RelationProperty.FromText("Hi"));
+    //    vc.Relations = null;
+    //    vc.Relations = vc.Relations.ConcatWith2(null);
+    //    Assert.IsNotNull(vc.Relations);
+    //    Assert.AreEqual(null, vc.Relations.First());
+    //}
 
 
 }

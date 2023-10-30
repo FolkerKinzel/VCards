@@ -15,12 +15,8 @@ public sealed class ProfileProperty : TextProperty
     private ProfileProperty(ProfileProperty prop) : base(prop) { }
 
     /// <summary>  Initializes a new <see cref="ProfileProperty" /> object. </summary>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public ProfileProperty(string? propertyGroup = null) 
-        : base(PROFILE_PROPERTY_VALUE, propertyGroup) { }
-
+    public ProfileProperty() 
+        : base(PROFILE_PROPERTY_VALUE, null) { }
 
     internal ProfileProperty(VcfRow row, VCdVersion version) : base(row, version) { }
 
@@ -30,7 +26,6 @@ public sealed class ProfileProperty : TextProperty
     /// <inheritdoc />
     public override object Clone() => new ProfileProperty(this);
 
-
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
@@ -38,7 +33,6 @@ public sealed class ProfileProperty : TextProperty
         this.Parameters.Encoding = null;
         this.Parameters.CharSet = null;
     }
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {

@@ -33,7 +33,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// <param name="middleName">Additional Name(s)</param>
     /// <param name="prefix">Honorific Prefix(es)</param>
     /// <param name="suffix">Honorific Suffix(es)</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <seealso cref="ToDisplayName" />
@@ -43,7 +43,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
         IEnumerable<string?>? middleName = null,
         IEnumerable<string?>? prefix = null,
         IEnumerable<string?>? suffix = null,
-        string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+        string? group = null) : base(new ParameterSection(), group)
     {
         Value = new Name(lastName: ReadOnlyCollectionConverter.ToReadOnlyCollection(lastName),
                          firstName: ReadOnlyCollectionConverter.ToReadOnlyCollection(firstName),
@@ -58,7 +58,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// <param name="middleName">Additional Name</param>
     /// <param name="prefix">Honorific Prefix</param>
     /// <param name="suffix">Honorific Suffix</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <seealso cref="ToDisplayName" />
@@ -68,7 +68,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
         string? middleName = null,
         string? prefix = null,
         string? suffix = null,
-        string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+        string? group = null) : base(new ParameterSection(), group)
     {
         Value = new Name(lastName: ReadOnlyCollectionConverter.ToReadOnlyCollection(lastName),
                          firstName: ReadOnlyCollectionConverter.ToReadOnlyCollection(firstName),
@@ -76,7 +76,6 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
                          prefix: ReadOnlyCollectionConverter.ToReadOnlyCollection(prefix),
                          suffix: ReadOnlyCollectionConverter.ToReadOnlyCollection(suffix));
     }
-
 
     internal NameProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
@@ -119,7 +118,6 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
     
-
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         base.PrepareForVcfSerialization(serializer);
@@ -134,7 +132,6 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
         }
     }
 
-
     internal override void AppendValue(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
@@ -142,7 +139,6 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
         StringBuilder builder = serializer.Builder;
         int valueStartIndex = builder.Length;
-
 
         Value.AppendVCardString(serializer);
 

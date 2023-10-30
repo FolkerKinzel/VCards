@@ -28,12 +28,12 @@ public abstract class DateAndOrTimeProperty
     /// Constructor used by derived classes.
     /// </summary>
     /// <param name="parameters">The <see cref="ParameterSection"/>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     protected DateAndOrTimeProperty(ParameterSection parameters,
-                                    string? propertyGroup)
-        : base(parameters, propertyGroup) { }
+                                    string? group)
+        : base(parameters, group) { }
 
     /// <summary>
     /// The data provided by the <see cref="DateAndOrTimeProperty"/>.
@@ -58,7 +58,7 @@ public abstract class DateAndOrTimeProperty
     /// <param name="month">The month (1 bis 12).</param>
     /// <param name="day">The day (1 through the number of days in <paramref name="month"/> -
     /// a leap year may be assumed.)</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
@@ -72,8 +72,8 @@ public abstract class DateAndOrTimeProperty
     /// <para><paramref name="day"/> is less than 1 or greater than the number of days 
     /// that <paramref name="month"/> has in a leap year.</para>
     /// </exception>
-    public static DateAndOrTimeProperty FromDate(int month, int day, string? propertyGroup = null)
-        => FromDate(new DateOnly(DateTimeConverter.FIRST_LEAP_YEAR, month, day), propertyGroup);
+    public static DateAndOrTimeProperty FromDate(int month, int day, string? group = null)
+        => FromDate(new DateOnly(DateTimeConverter.FIRST_LEAP_YEAR, month, day), group);
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a date in the Gregorian
@@ -82,7 +82,7 @@ public abstract class DateAndOrTimeProperty
     /// <param name="year">The year (1 bis 9999).</param>
     /// <param name="month">The month (1 bis 12).</param>
     /// <param name="day">The day (1 through the number of days in <paramref name="month"/>).</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
@@ -94,47 +94,47 @@ public abstract class DateAndOrTimeProperty
     /// <para><paramref name="day"/> is less than 1 or greater than the number of days in 
     /// <paramref name="month"/>.</para>
     /// </exception>
-    public static DateAndOrTimeProperty FromDate(int year, int month, int day, string? propertyGroup = null)
-        => FromDate(new DateOnly(year, month, day), propertyGroup);
+    public static DateAndOrTimeProperty FromDate(int year, int month, int day, string? group = null)
+        => FromDate(new DateOnly(year, month, day), group);
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a <see cref="DateOnly"/> 
     /// value.
     /// </summary>
     /// <param name="date">The <see cref="DateOnly"/> value.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
     public static DateAndOrTimeProperty FromDate(DateOnly date,
-                                                 string? propertyGroup = null)
+                                                 string? group = null)
         => new DateOnlyProperty(date,
                                 new ParameterSection() { DataType = VCdDataType.Date },
-                                propertyGroup);
+                                group);
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a <see cref="System.DateTime"/> or
     /// <see cref="DateTimeOffset"/> value.
     /// </summary>
     /// <param name="dateTime">A <see cref="System.DateTime"/> or <see cref="DateTimeOffset"/> value.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
     /// <remarks><see cref="System.DateTime"/> has an implicit conversion to <see cref="DateTimeOffset"/>.
     /// </remarks>
     public static DateAndOrTimeProperty FromDateTime(DateTimeOffset dateTime,
-                                                     string? propertyGroup = null)
+                                                     string? group = null)
         => new DateTimeOffsetProperty(dateTime,
                                       new ParameterSection() { DataType = VCdDataType.DateAndOrTime },
-                                      propertyGroup);
+                                      group);
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a time.
     /// </summary>
     /// <param name="hour">The hours (0 through 23).</param>
     /// <param name="minute">The minutes (0 through 59).</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
@@ -144,27 +144,27 @@ public abstract class DateAndOrTimeProperty
     /// <para><paramref name="minute"/> is less than 0 or greater than 59.</para>
     /// </exception>
     public static DateAndOrTimeProperty FromTime(int hour, int minute,
-                                                 string? propertyGroup = null)
-        => FromTime(new TimeOnly(hour, minute), propertyGroup);
+                                                 string? group = null)
+        => FromTime(new TimeOnly(hour, minute), group);
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a 
     /// <see cref="TimeOnly"/> value.
     /// </summary>
     /// <param name="time">A <see cref="TimeOnly"/> value.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
     public static DateAndOrTimeProperty FromTime(TimeOnly time,
-                                                 string? propertyGroup = null)
+                                                 string? group = null)
         => new TimeOnlyProperty(time,
                                 new ParameterSection() { DataType = VCdDataType.Time },
-                                propertyGroup);
+                                group);
 
     /// <summary> Creates a new <see cref="DateAndOrTimeProperty"/> instance from text. </summary>
     /// <param name="text">Any text or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
@@ -174,9 +174,9 @@ public abstract class DateAndOrTimeProperty
     /// </code>
     /// </example>
     public static DateAndOrTimeProperty FromText(string? text,
-                                                 string? propertyGroup = null)
+                                                 string? group = null)
     {
-        var prop = new DateTimeTextProperty(new TextProperty(text, propertyGroup));
+        var prop = new DateTimeTextProperty(new TextProperty(text, group));
         prop.Parameters.DataType = VCdDataType.Text;
         return prop;
     }

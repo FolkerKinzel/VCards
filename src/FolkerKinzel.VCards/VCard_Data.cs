@@ -412,7 +412,7 @@ public sealed partial class VCard
     /// VCF file, if there is no standard equivalent for it. You can control this behavior
     /// with <see cref="VcfOptions" />. It is therefore not recommended to assign
     /// <see cref="NonStandardProperty" /> objects with these 
-    /// <see cref="NonStandardProperty.PropertyKey"/>s to this property.
+    /// <see cref="NonStandardProperty.XName"/>s to this property.
     /// </para>
     /// <para>
     /// These vCard properties are the following: 

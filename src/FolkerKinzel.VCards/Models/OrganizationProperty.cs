@@ -25,18 +25,17 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
     /// </summary>
     /// <param name="organizationName">Organization name or <c>null</c>.</param>
     /// <param name="organizationalUnits">Organization unit(s) or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public OrganizationProperty(string? organizationName,
                                 IEnumerable<string?>? organizationalUnits = null,
-                                string? propertyGroup = null) : base(new ParameterSection(), propertyGroup)
+                                string? group = null) : base(new ParameterSection(), group)
     {
         var list = new List<string>() { organizationName ?? "" };
         list.AddRange(organizationalUnits?.WhereNotNull() ?? Array.Empty<string>());
         Value = new Organization(list);
     }
-
 
     internal OrganizationProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
@@ -78,7 +77,6 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         base.PrepareForVcfSerialization(serializer);
@@ -91,7 +89,6 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
     }
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {

@@ -145,7 +145,7 @@ public sealed partial class VCard
 
                 var relationUuid = new RelationUuidProperty(
                     vc.UniqueIdentifier.Value,
-                    propertyGroup: vcdProp.Group);
+                    group: vcdProp.Group);
 
                 relationUuid.Parameters.Assign(vcdProp.Parameters);
                 relations.Add(relationUuid);
@@ -262,7 +262,7 @@ public sealed partial class VCard
                     var vcardProp = new RelationVCardProperty(
                                         referencedVCard,
                                         guidProp.Parameters.Relation,
-                                        propertyGroup: guidProp.Group);
+                                        group: guidProp.Group);
                     vcardProp.Parameters.Assign(guidProp.Parameters);
 
                     _ = relations.Remove(guidProp);

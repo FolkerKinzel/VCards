@@ -21,11 +21,11 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 
     /// <summary>  Initializes a new <see cref="GeoProperty" /> object. </summary>
     /// <param name="value">A <see cref="GeoCoordinate" /> object or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public GeoProperty(GeoCoordinate? value, string? propertyGroup = null)
-        : base(new ParameterSection(), propertyGroup) => this.Value = value;
+    public GeoProperty(GeoCoordinate? value, string? group = null)
+        : base(new ParameterSection(), group) => this.Value = value;
 
 
     internal GeoProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
@@ -57,7 +57,6 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 
     /// <inheritdoc />
     protected override object? GetVCardPropertyValue() => Value;
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {

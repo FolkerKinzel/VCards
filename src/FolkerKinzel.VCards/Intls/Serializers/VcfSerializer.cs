@@ -629,7 +629,7 @@ internal abstract class VcfSerializer : IDisposable
                 continue;
             }
 
-            BuildProperty(nonStandardProp.PropertyKey,
+            BuildProperty(nonStandardProp.XName,
                           nonStandardProp,
                           nonStandardProp.Parameters.Preference == 1);
         }

@@ -12,15 +12,14 @@ internal sealed class TimeOnlyProperty : DateAndOrTimeProperty
 
     internal TimeOnlyProperty(TimeOnly value,
                             ParameterSection parameters,
-                            string? propertyGroup)
-        : base(parameters, propertyGroup) => Value = value;
+                            string? group)
+        : base(parameters, group) => Value = value;
 
     public new TimeOnly Value { get; }
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone() => new TimeOnlyProperty(this);
-
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

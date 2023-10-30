@@ -18,13 +18,13 @@ internal sealed class RelationUuidProperty : RelationProperty
     /// person's vCard.</param>
     /// <param name="relation">A single <see cref="RelationTypes" /> value or a combination
     /// of several <see cref="RelationTypes" /> values or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     internal RelationUuidProperty(Guid uuid,
                                   RelationTypes? relation = null,
-                                  string? propertyGroup = null)
-        : base(relation, propertyGroup)
+                                  string? group = null)
+        : base(relation, group)
     {
         Parameters.DataType = VCdDataType.Uri;
         Value = uuid;

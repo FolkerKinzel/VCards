@@ -19,11 +19,11 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
 
     /// <summary>  Initializes a new <see cref="TimeZoneProperty" /> object. </summary>
     /// <param name="value">A <see cref="TimeZoneInfo" /> object or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public TimeZoneProperty(TimeZoneID? value, string? propertyGroup = null)
-        : base(new ParameterSection(), propertyGroup) => Value = value;
+    public TimeZoneProperty(TimeZoneID? value, string? group = null)
+        : base(new ParameterSection(), group) => Value = value;
 
 
     internal TimeZoneProperty(VcfRow vcfRow, VCdVersion version)
@@ -58,7 +58,6 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {

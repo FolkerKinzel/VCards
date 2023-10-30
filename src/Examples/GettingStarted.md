@@ -19,7 +19,7 @@ using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Extensions;
 
 // These two namespaces may be published, but it's not
-// recommended as they contain lots of classes and enums:
+// recommended because they contain a lot of classes and enums:
 // using FolkerKinzel.VCards.Models;
 // using FolkerKinzel.VCards.Models.Enums;
 
@@ -42,12 +42,12 @@ public static class NameSpaceAliasDemo
 
 ## The data model explained
 
-The data model used by this library is aligned to the vCard 4.0 standard (RFC6350). This means, every read vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are   converted back. 
+The data model used by this library is aligned to the vCard 4.0 standard (RFC 6350). This means that every vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized they are converted back. 
 
 A vCard is represented by the `VCard` class.
 
 ### The VCardProperty class
-The data model of the `VCard` class is built on classes, that are derived from `VCardProperty`.
+The data model of the `VCard` class is built on classes that are derived from `VCardProperty`.
 
 `VCardProperty` exposes the following members:
 ```csharp
@@ -72,9 +72,9 @@ In this example corresponds
 (Classes that are derived from `VCardProperty` hide the generic implementation of `VCardProperty.Value` in order to return derived classes instead of `System.Object?`.)
 
 ### Naming conventions
-Most properties of the `VCard` class are collections. It has to do with, that many properties are allowed to have more than one instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.
+Most properties of the `VCard` class are collections. It has to do with that many properties are allowed to have more than one instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.
             
-A special feature are properties whose name ends with "Views": These are properties, which actually is only one instance allowed, but vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same `AltID` parameter  on each of these versions.
+A special feature are properties whose name ends with "Views": These are properties that actually is only one instance allowed, but vCard 4.0 enables you to have different versions of that single instance (e.g., in different languages). You must set the same `AltID` parameter  on each of these versions.
             
 Most classes derived from `VCardProperty` implement `IEnumerable<T>` in order to be assignable to collection properties without having to be wrapped in an Array or List.
 
@@ -98,9 +98,9 @@ Extension methods allow to perform these operations directly on these collection
 
 
 ## Reading the project reference
-At the [GitHub Releases page](https://github.com/FolkerKinzel/VCards/releases) there is a detailed project reference to each version of the Nuget package as CHM file in the Assets. On some systems, the content of this CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox - if it is present - in the lower right corner of the General tab in the Properties dialog.
+At the [GitHub Releases page](https://github.com/FolkerKinzel/VCards/releases) there is a detailed project reference to each version of the Nuget package as CHM file in the Assets. On some systems the content of this CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox - if it is present - in the lower right corner of the General tab in the Properties dialog.
 
-Uppercase words, which are often found at the beginning of the documentation for a .NET property, are identifiers from the vCard standard. Digits in brackets, which can be found at the end of the documentation for a .NET property, e.g. `(2,3,4)`, describe which with vCard standard the content of the .NET property is compatible.
+Uppercase words, which are often found at the beginning of the documentation for a .NET property, are identifiers from the vCard standard. Digits in brackets, which can be found at the end of the documentation for a .NET property, e.g. `(2,3,4)`, describe with which vCard standard the content of the .NET property is compatible.
             
 The digits have the following meaning:
 - `2`: vCard 2.1,

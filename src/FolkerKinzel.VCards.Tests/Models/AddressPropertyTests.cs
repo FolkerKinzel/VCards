@@ -21,7 +21,7 @@ public class AddressPropertyTests
     [TestMethod()]
     public void AddressPropertyTest()
     {
-        var adr = new AddressProperty(STREET, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PO_BOX, EXTENDED_ADDRESS, propertyGroup: GROUP);
+        var adr = new AddressProperty(STREET, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PO_BOX, EXTENDED_ADDRESS, group: GROUP);
 
         Assert.IsNotNull(adr);
         Assert.AreEqual(STREET, adr.Value.Street[0]);
@@ -47,7 +47,7 @@ public class AddressPropertyTests
             new string[] { PO_BOX },
             new string[] { EXTENDED_ADDRESS },
 
-            propertyGroup: GROUP);
+            group: GROUP);
 
         Assert.IsNotNull(adr);
         Assert.AreEqual(STREET, adr.Value.Street[0]);
@@ -89,7 +89,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V2_1;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new("", null, null, null, appendLabel: false);
+        AddressProperty adr = new("", null, null, null, autoLabel: false);
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard
@@ -131,7 +131,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V3_0;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new("", null, null, null, appendLabel: false);
+        AddressProperty adr = new("", null, null, null, autoLabel: false);
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard

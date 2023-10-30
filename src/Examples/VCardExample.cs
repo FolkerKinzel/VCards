@@ -112,7 +112,7 @@ public static class VCardExample
             // Applying a group name to the AddressProperty helps to automatically preserve its Label,
             // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
             var adrWorkProp = new VC::AddressProperty
-                ("Friedrichstraße 22", "Berlin", null, "10117", "Germany", propertyGroup: vCard.NewGroup());
+                ("Friedrichstraße 22", "Berlin", null, "10117", "Germany", group: vCard.NewGroup());
             adrWorkProp.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
             adrWorkProp.Parameters.AddressType = VC::Enums.AddressTypes.Dom | VC::Enums.AddressTypes.Intl | 
                                                  VC::Enums.AddressTypes.Postal | VC::Enums.AddressTypes.Parcel;

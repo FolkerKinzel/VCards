@@ -13,8 +13,8 @@ internal class DateAndOrTimePropertyDerived : DateAndOrTimeProperty
     {
     }
 
-    public DateAndOrTimePropertyDerived(ParameterSection parameters, string? propertyGroup) 
-        : base(parameters, propertyGroup)
+    public DateAndOrTimePropertyDerived(ParameterSection parameters, string? group) 
+        : base(parameters, group)
     {
     }
 

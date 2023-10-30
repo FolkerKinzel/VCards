@@ -3,18 +3,14 @@
 [TestClass()]
 public class KindPropertyTests
 {
-    private const string GROUP = "myGroup";
-
-
     [TestMethod()]
     public void KindPropertyTest1()
     {
         const Enums.VCdKind kind = Enums.VCdKind.Application;
 
-        var prop = new KindProperty(kind, GROUP);
+        var prop = new KindProperty(kind);
 
         Assert.AreEqual(kind, prop.Value);
-        Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
     }
 
@@ -24,7 +20,7 @@ public class KindPropertyTests
     {
         const Enums.VCdKind kind = Enums.VCdKind.Application;
 
-        var prop = new KindProperty(kind, GROUP);
+        var prop = new KindProperty(kind);
 
         var vcard = new VCard
         {
@@ -45,7 +41,6 @@ public class KindPropertyTests
         prop = vcard.Kind;
 
         Assert.AreEqual(kind, prop!.Value);
-        Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
     }
 }

@@ -31,9 +31,9 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
     /// <summary>ctor</summary>
     /// <param name="parameters" />
-    /// <param name="propertyGroup" />
-    internal DataProperty(ParameterSection parameters, string? propertyGroup)
-        : base(parameters, propertyGroup) { }
+    /// <param name="group" />
+    internal DataProperty(ParameterSection parameters, string? group)
+        : base(parameters, group) { }
 
     /// <summary> The data provided by the <see cref="DataProperty" />.</summary>
     public new DataPropertyValue? Value
@@ -72,7 +72,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the file content
     /// or <c>null</c> to get the <paramref name="mimeType"/> automatically from the
     /// file type extension.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
@@ -81,19 +81,19 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <exception cref="IOException">The file could not be loaded.</exception>
     public static DataProperty FromFile(string filePath,
                                         string? mimeType = null,
-                                        string? propertyGroup = null)
+                                        string? group = null)
        => mimeType is null
             ? new EmbeddedBytesProperty(LoadFile(filePath),
-                                        propertyGroup,
+                                        group,
                                         new ParameterSection() 
                                         { 
                                             MediaType = MimeString.FromFileName(filePath)
                                         })
             : MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
                ? new EmbeddedBytesProperty(LoadFile(filePath),
-                                           propertyGroup,
+                                           group,
                                            new ParameterSection() { MediaType = mimeInfo.ToString() })
-               : FromFile(filePath, null, propertyGroup);
+               : FromFile(filePath, null, group);
 
     /// <summary>
     /// Creates a new <see cref="DataProperty"/> instance that embeds an array of 
@@ -102,17 +102,17 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <param name="bytes">The <see cref="byte"/>s to embed or <c>null</c>.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="bytes"/>
     /// or <c>null</c> for <c>application/octet-stream</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
     public static DataProperty FromBytes(byte[]? bytes,
                                          string? mimeType = MimeString.OctetStream,
-                                         string? propertyGroup = null)
+                                         string? group = null)
         => new EmbeddedBytesProperty
            (
              bytes,
-             propertyGroup,
+             group,
              new ParameterSection()
              {
                  MediaType = MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
@@ -127,7 +127,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <param name="text">The text to embed or <c>null</c>.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="text"/>
     /// or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
@@ -138,9 +138,9 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <seealso cref="VCard.Keys"/>
     public static DataProperty FromText(string? text,
                                         string? mimeType = null,
-                                        string? propertyGroup = null)
+                                        string? group = null)
     {
-        var textProp = new TextProperty(text, propertyGroup);
+        var textProp = new TextProperty(text, group);
         textProp.Parameters.MediaType =
             MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
                            ? mimeInfo.ToString()
@@ -156,7 +156,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <param name="uri">An absolute <see cref="Uri"/> or <c>null</c>.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the 
     /// data the <paramref name="uri"/> points to, or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
@@ -164,8 +164,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// an absolute <see cref="Uri"/>.</exception>
     public static DataProperty FromUri(Uri? uri,
                                        string? mimeType = null,
-                                       string? propertyGroup = null)
-        => uri is null ? FromBytes(null, mimeType, propertyGroup)
+                                       string? group = null)
+        => uri is null ? FromBytes(null, mimeType, group)
                        : new ReferencedDataProperty
            (
              new UriProperty(uri.IsAbsoluteUri
@@ -178,7 +178,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                                                   ? mimeInfo.ToString() 
                                                                   : null 
                              },
-                             propertyGroup)
+                             group)
            );
 
     /// <inheritdoc />

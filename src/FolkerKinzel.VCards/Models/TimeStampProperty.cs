@@ -20,30 +20,23 @@ public sealed class TimeStampProperty : VCardProperty
 
     /// <summary> Initializes a new <see cref="TimeStampProperty" /> object that 
     /// encapsulates the time of its constructor call as a UTC time stamp.</summary>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <remarks>The constructor sets the <see cref="ParameterSection.DataType" /> parameter 
     /// to the value <see cref="VCdDataType.TimeStamp" />.</remarks>
-    public TimeStampProperty(string? propertyGroup = null)
-        : this(DateTimeOffset.UtcNow, propertyGroup) { }
+    public TimeStampProperty()
+        : this(DateTimeOffset.UtcNow) { }
 
 
     /// <summary>  Initializes a new <see cref="TimeStampProperty" /> object with
     /// the specified time stamp. </summary>
     /// <param name="value">The <see cref="DateTimeOffset" /> value to embed.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <remarks> The constructor sets the <see cref="ParameterSection.DataType" /> parameter 
     /// to the value <see cref="VCdDataType.TimeStamp" />. </remarks>
-    public TimeStampProperty(DateTimeOffset value, string? propertyGroup = null)
-        : base(new ParameterSection(), propertyGroup)
+    public TimeStampProperty(DateTimeOffset value)
+        : base(new ParameterSection(), null)
     {
         Value = value;
         Parameters.DataType = VCdDataType.TimeStamp;
     }
-
 
     internal TimeStampProperty(VcfRow vcfRow)
         : base(vcfRow.Parameters, vcfRow.Group)

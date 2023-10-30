@@ -5,17 +5,14 @@ namespace FolkerKinzel.VCards.Models.Tests;
 [TestClass()]
 public class ProfilePropertyTests
 {
-    private const string GROUP = "myGroup";
-
     [TestMethod()]
     public void ProfilePropertyTest1()
     {
 
-        var prop = new ProfileProperty(GROUP);
+        var prop = new ProfileProperty();
 
         Assert.IsNotNull(prop);
         Assert.IsNotNull(prop.Value);
-        Assert.AreEqual(GROUP, prop.Group);
         Assert.AreEqual("VCARD", prop.Value);
 
         string s = prop.Value;
@@ -32,7 +29,7 @@ public class ProfilePropertyTests
     public void ProfilePropertyTest2()
     {
 
-        var prop = new ProfileProperty(GROUP);
+        var prop = new ProfileProperty();
 
         var vcard = new VCard
         {
@@ -52,7 +49,6 @@ public class ProfilePropertyTests
 
         prop = vcard.Profile;
 
-        Assert.AreEqual(GROUP, prop!.Group);
         Assert.IsFalse(prop.IsEmpty);
     }
 

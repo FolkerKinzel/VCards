@@ -25,12 +25,12 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     /// <summary> Initializes a new <see cref="GenderProperty" /> object. </summary>
     /// <param name="sex">Standardized information about the gender of a person.</param>
     /// <param name="genderIdentity">Free text describing the gender identity.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public GenderProperty(Enums.Gender? sex,
                           string? genderIdentity = null,
-                          string? propertyGroup = null) : base(new ParameterSection(), propertyGroup) 
+                          string? group = null) : base(new ParameterSection(), group) 
         => Value = new GenderInfo(sex, genderIdentity);
 
 
@@ -85,7 +85,6 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
-
 
     internal override void AppendValue(VcfSerializer serializer) => Value.AppendVCardStringTo(serializer);
 }

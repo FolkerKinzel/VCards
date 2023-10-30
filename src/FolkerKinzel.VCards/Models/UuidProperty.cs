@@ -24,12 +24,8 @@ public sealed class UuidProperty : VCardProperty, IEquatable<UuidProperty>
     /// <summary> Initializes a new <see cref="UuidProperty" /> object with a 
     /// specified <see cref="Guid"/>. </summary>
     /// <param name="uuid">A <see cref="Guid" /> value.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public UuidProperty(Guid uuid, string? propertyGroup = null)
-        : base(new ParameterSection(), propertyGroup) => Value = uuid;
-
+    public UuidProperty(Guid uuid)
+        : base(new ParameterSection(), null) => Value = uuid;
 
     internal UuidProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
             => Value = UuidConverter.ToGuid(vcfRow.Value);
@@ -80,7 +76,6 @@ public sealed class UuidProperty : VCardProperty, IEquatable<UuidProperty>
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {

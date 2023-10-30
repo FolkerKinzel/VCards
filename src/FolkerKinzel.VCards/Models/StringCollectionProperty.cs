@@ -21,11 +21,11 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
     /// <summary>Initializes a new <see cref="StringCollectionProperty" /> object.</summary>
     /// <param name="value">A collection of <see cref="string" />s or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public StringCollectionProperty(IEnumerable<string?>? value, string? propertyGroup = null) 
-        : base(new ParameterSection(), propertyGroup)
+    public StringCollectionProperty(IEnumerable<string?>? value, string? group = null) 
+        : base(new ParameterSection(), group)
     {
         this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
 
@@ -37,11 +37,11 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
     /// <summary>Initializes a new <see cref="StringCollectionProperty" /> object.</summary>
     /// <param name="value">A <see cref="string" /> or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public StringCollectionProperty(string? value, string? propertyGroup = null)
-        : base(new ParameterSection(), propertyGroup)
+    public StringCollectionProperty(string? value, string? group = null)
+        : base(new ParameterSection(), group)
     {
         this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
 

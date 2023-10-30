@@ -13,8 +13,8 @@ internal sealed class DateOnlyProperty : DateAndOrTimeProperty
 
     internal DateOnlyProperty(DateOnly value,
                               ParameterSection parameters,
-                              string? propertyGroup)
-        : base(parameters, propertyGroup) => Value = value;
+                              string? group)
+        : base(parameters, group) => Value = value;
 
     public new DateOnly Value { get; }
 

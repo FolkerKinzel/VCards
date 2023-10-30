@@ -324,7 +324,7 @@ public class VCardTests
         var vc = new VCard();
         Assert.IsTrue(vc.IsEmpty());
 
-        var adr = new AddressProperty("  ", null, null, postalCode: "", appendLabel: false);
+        var adr = new AddressProperty("  ", null, null, postalCode: "", autoLabel: false);
         adr.Parameters.Label = "  ";
 
         vc.Addresses = new AddressProperty?[] { null, adr };
@@ -354,35 +354,29 @@ public class VCardTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void DereferenceTest1()
-    {
-        _ = FolkerKinzel.VCards.VCard.Dereference(null!).Count();
-    }
+    public void DereferenceTest1() => _ = FolkerKinzel.VCards.VCard.Dereference(null!).Count();
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void ReferenceTest1()
-    {
-        _ = FolkerKinzel.VCards.VCard.Reference(null!);
-    }
+    public void ReferenceTest1() => _ = FolkerKinzel.VCards.VCard.Reference(null!);
 
     [TestMethod]
     public void GroupsTest1()
     {
-        VCard vc = new VCard();
+        var vc = new VCard();
 
         IEnumerable<string> groups = vc.GroupIDs;
         Assert.IsFalse(groups.Any());
 
-        vc.Access = new AccessProperty(Models.Enums.Access.Public, " 4 1 ");
+        vc.DisplayNames = new TextProperty("Donald", " 4 1 ");
         vc.TimeStamp = new TimeStampProperty();
         vc.Addresses = new AddressProperty?[] {
                                               null,
-                                              new AddressProperty("1", null, null, null, propertyGroup: " g r 1 "), 
-                                              new AddressProperty("2", null, null, null, propertyGroup: "41") 
+                                              new AddressProperty("1", null, null, null, group: " g r 1 "), 
+                                              new AddressProperty("2", null, null, null, group: "41") 
                                               };
         vc.GeoCoordinates = new GeoProperty?[]{ 
-                                               new GeoProperty(new GeoCoordinate(1, 1), propertyGroup: "GR1"),
+                                               new GeoProperty(new GeoCoordinate(1, 1), group: "GR1"),
                                                null,
                                                new GeoProperty(new GeoCoordinate(2, 2))
                                              };

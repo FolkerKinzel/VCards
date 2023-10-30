@@ -14,13 +14,13 @@ internal class RelationPropertyDerived : RelationProperty
     {
     }
 
-    public RelationPropertyDerived(ParameterSection parameters, string? propertyGroup)
-        : base(parameters, propertyGroup)
+    public RelationPropertyDerived(ParameterSection parameters, string? group)
+        : base(parameters, group)
     {
     }
 
-    public RelationPropertyDerived(RelationTypes? relation, string? propertyGroup)
-        : base(relation, propertyGroup)
+    public RelationPropertyDerived(RelationTypes? relation, string? group)
+        : base(relation, group)
     {
     }
 

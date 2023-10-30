@@ -443,7 +443,7 @@ public sealed partial class VCard
 
     private void AssignLabelsToAddresses(List<TextProperty> labels)
     {
-        if (labels.Count == 1 && Addresses.IsSingleton(ignoreEmptyItems: false))
+        if (labels.Count == 1 && Addresses.IsSingle(ignoreEmptyItems: false))
         {
             Assign(labels[0], Addresses.First()!);
             return;
@@ -498,7 +498,7 @@ public sealed partial class VCard
 
         static AddressProperty CreateEmptyAddressPropertyWithLabel(TextProperty label)
         {
-            var adrProp = new AddressProperty("", null, null, null, appendLabel: false);
+            var adrProp = new AddressProperty("", null, null, null, autoLabel: false);
             adrProp.Parameters.Assign(label.Parameters);
             adrProp.Parameters.Label = label.Value;
             return adrProp;

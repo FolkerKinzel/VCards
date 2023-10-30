@@ -28,52 +28,51 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     /// <param name="prop">The <see cref="NonStandardProperty"/> instance to clone.</param>
     private NonStandardProperty(NonStandardProperty prop) : base(prop)
     {
-        PropertyKey = prop.PropertyKey;
+        XName = prop.XName;
         Value = prop.Value;
     }
 
     /// <summary>Initializes a new <see cref="NonStandardProperty" /> object.</summary>
-    /// <param name="propertyKey">The key ("name") of the non-standard vCard property
+    /// <param name="xName">The key ("name") of the non-standard vCard property
     /// (format: <c>X-NAME</c>).</param>
     /// <param name="value">The value of the vCard property: any data encoded as <see
     /// cref="string" /> or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"> <paramref name="propertyKey" /> is
+    /// <exception cref="ArgumentNullException"> <paramref name="xName" /> is
     /// <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="propertyKey" /> is not
+    /// <exception cref="ArgumentException"> <paramref name="xName" /> is not
     /// a valid X-NAME.</exception>
-    public NonStandardProperty(string propertyKey, string? value, string? propertyGroup = null)
-        : base(new ParameterSection(), propertyGroup)
+    public NonStandardProperty(string xName, string? value, string? group = null)
+        : base(new ParameterSection(), group)
     {
-        if (propertyKey == null)
+        if (xName == null)
         {
-            throw new ArgumentNullException(nameof(propertyKey));
+            throw new ArgumentNullException(nameof(xName));
         }
 
-        if (propertyKey.Length < 3 ||
-            !propertyKey.StartsWith("X-", StringComparison.OrdinalIgnoreCase) ||
-             propertyKey.Contains(' ', StringComparison.Ordinal))
+        if (xName.Length < 3 ||
+            !xName.StartsWith("X-", StringComparison.OrdinalIgnoreCase) ||
+             xName.Contains(' ', StringComparison.Ordinal))
         {
             throw new ArgumentException(
-                Res.NoXName, nameof(propertyKey));
+                Res.NoXName, nameof(xName));
         }
 
-        PropertyKey = propertyKey;
+        XName = xName;
         Value = value;
     }
-
 
     internal NonStandardProperty(VcfRow vcfRow)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        PropertyKey = vcfRow.Key;
+        XName = vcfRow.Key;
         Value = string.IsNullOrEmpty(vcfRow.Value) ? null : vcfRow.Value;
     }
 
     /// <summary>The key ("name") of the vCard property.</summary>
-    public string PropertyKey { get; }
+    public string XName { get; }
 
     /// <summary>The data provided by the <see cref="NonStandardProperty" /> (raw <see
     /// cref="string" /> data).</summary>
@@ -91,7 +90,7 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     {
         var sb = new StringBuilder();
 
-        _ = sb.Append("Key:   ").AppendLine(PropertyKey);
+        _ = sb.Append($"{nameof(XName)}: ").AppendLine(XName);
         _ = sb.Append("Value: ").Append(Value);
 
         return sb.ToString();
@@ -110,12 +109,10 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     IEnumerator IEnumerable.GetEnumerator()
         => ((IEnumerable<NonStandardProperty>)this).GetEnumerator();
 
-
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         // MUST not call the base class implementation!
     }
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {

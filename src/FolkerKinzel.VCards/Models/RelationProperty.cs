@@ -31,20 +31,20 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// <summary> Constructor used by derived classes when parsing VCF. </summary>
     /// <param name="parameters">The <see cref="ParameterSection" /> of the 
     /// newly initialized <see cref="RelationProperty" /> object.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    protected RelationProperty(ParameterSection parameters, string? propertyGroup)
-        : base(parameters, propertyGroup) { }
+    protected RelationProperty(ParameterSection parameters, string? group)
+        : base(parameters, group) { }
 
     /// <summary>Constructor used by derived classes.</summary>
     /// <param name="relation">A single <see cref="RelationTypes" /> value, a combination
     /// of several <see cref="RelationTypes" /> values, or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    protected RelationProperty(RelationTypes? relation, string? propertyGroup)
-        : base(new ParameterSection(), propertyGroup)
+    protected RelationProperty(RelationTypes? relation, string? group)
+        : base(new ParameterSection(), group)
         => this.Parameters.Relation = relation;
 
     /// <summary>
@@ -76,7 +76,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// person or organization that <paramref name="uri"/> represents. 
     /// <see cref="ParameterSection.Relation"/> of the returned instance will be
     /// set to this value.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="RelationProperty"/> instance.</returns>
@@ -84,9 +84,9 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// an absolute <see cref="Uri"/>.</exception>
     public static RelationProperty FromUri(Uri? uri,
                                            RelationTypes? relation = null,
-                                           string? propertyGroup = null)
+                                           string? group = null)
         => uri is null
-            ? FromText(null, relation, propertyGroup)
+            ? FromText(null, relation, group)
             : !uri.IsAbsoluteUri
                 ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)), nameof(uri))
                 : UuidConverter.IsUuidUri(uri.OriginalString)
@@ -95,7 +95,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
                           (
                             new UriProperty(uri,
                                             new ParameterSection() { Relation = relation },
-                                            propertyGroup)
+                                            group)
                           );
 
     /// <summary>
@@ -107,15 +107,15 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// person or organization that the <paramref name="text"/> represents.
     /// <see cref="ParameterSection.Relation"/> of the returned instance will be
     /// set to this value.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="RelationProperty"/> instance.</returns>
     public static RelationProperty FromText(string? text,
                                             RelationTypes? relation = null,
-                                            string? propertyGroup = null)
+                                            string? group = null)
     {
-        var prop = new TextProperty(text, propertyGroup);
+        var prop = new TextProperty(text, group);
         prop.Parameters.Relation = relation;
         prop.Parameters.DataType = VCdDataType.Text;
 
@@ -131,7 +131,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// person or organization to whose vCard the <paramref name="uuid"/> refers. 
     /// <see cref="ParameterSection.Relation"/> of the returned instance will be
     /// set to this value.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="RelationProperty"/> instance.</returns>
@@ -145,8 +145,8 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// </remarks>
     public static RelationProperty FromGuid(Guid uuid,
                                             RelationTypes? relation = null,
-                                            string? propertyGroup = null)
-        => new RelationUuidProperty(uuid, relation, propertyGroup);
+                                            string? group = null)
+        => new RelationUuidProperty(uuid, relation, group);
 
     /// <summary>
     /// Creates a new <see cref="RelationProperty"/> object from a <see cref="VCard"/>.
@@ -157,7 +157,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// person or organization that the <paramref name="vCard"/> represents.
     /// <see cref="ParameterSection.Relation"/> of the returned instance will be
     /// set to this value.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the returned <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the returned <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>A <see cref="RelationProperty"/> object that provides a copy of <paramref name="vCard"/>.
@@ -180,11 +180,11 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// </example>
     public static RelationProperty FromVCard(VCard? vCard,
                                              RelationTypes? relation = null,
-                                             string? propertyGroup = null)
+                                             string? group = null)
         => vCard is null
-            ? FromText(null, relation, propertyGroup)
+            ? FromText(null, relation, group)
             // Clone vcard in order to avoid circular references:
-            : new RelationVCardProperty((VCard)vCard.Clone(), relation, propertyGroup);
+            : new RelationVCardProperty((VCard)vCard.Clone(), relation, group);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -218,7 +218,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
         {
             var relation = new RelationUuidProperty(UuidConverter.ToGuid(vcfRow.Value),
                                                     vcfRow.Parameters.Relation,
-                                                    propertyGroup: vcfRow.Group);
+                                                    group: vcfRow.Group);
 
             relation.Parameters.Assign(vcfRow.Parameters);
 
@@ -228,7 +228,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
         {
             var relation = new RelationUriProperty
                 (
-                new UriProperty(uri, vcfRow.Parameters, propertyGroup: vcfRow.Group)
+                new UriProperty(uri, vcfRow.Parameters, group: vcfRow.Group)
                 );
 
             return relation;

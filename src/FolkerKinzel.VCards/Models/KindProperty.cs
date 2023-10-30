@@ -19,16 +19,11 @@ public sealed class KindProperty : VCardProperty
 
     /// <summary>  Initializes a new <see cref="KindProperty" /> object. </summary>
     /// <param name="value">A member of the <see cref="VCdKind" /> enum.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public KindProperty(VCdKind value, string? propertyGroup = null)
-        : base(new ParameterSection(), propertyGroup) => Value = value;
-
+    public KindProperty(VCdKind value)
+        : base(new ParameterSection(), null) => Value = value;
 
     internal KindProperty(VcfRow vcfRow)
         : base(vcfRow.Parameters, vcfRow.Group) => Value = VCdKindConverter.Parse(vcfRow.Value);
-
 
     /// <summary> The data provided by the <see cref="KindProperty" />.
     /// </summary>
@@ -46,7 +41,6 @@ public sealed class KindProperty : VCardProperty
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {

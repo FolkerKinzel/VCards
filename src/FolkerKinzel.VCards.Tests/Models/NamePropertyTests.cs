@@ -17,7 +17,7 @@ public class NamePropertyTests
     [TestMethod()]
     public void NamePropertyTest1()
     {
-        var adr = new NameProperty(LAST_NAME, FIRST_NAME, MIDDLE_NAME, PREFIX, SUFFIX, propertyGroup: GROUP);
+        var adr = new NameProperty(LAST_NAME, FIRST_NAME, MIDDLE_NAME, PREFIX, SUFFIX, group: GROUP);
 
         Assert.IsNotNull(adr);
         Assert.AreEqual(LAST_NAME, adr.Value.LastName[0]);
@@ -39,7 +39,7 @@ public class NamePropertyTests
             new string[] { PREFIX },
             new string[] { SUFFIX },
 
-            propertyGroup: GROUP);
+            group: GROUP);
 
         Assert.IsNotNull(adr);
         Assert.AreEqual(LAST_NAME, adr.Value.LastName[0]);

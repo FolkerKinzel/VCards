@@ -5,8 +5,6 @@ namespace FolkerKinzel.VCards.Models.Tests;
 [TestClass]
 public class TimeStampPropertyTests
 {
-    private const string GROUP = "myGroup";
-
     [TestMethod]
     public void TimeStampPropertyTest1a()
     {
@@ -19,9 +17,7 @@ public class TimeStampPropertyTests
     [TestMethod]
     public void TimeStampPropertyTest1b()
     {
-        var prop = new TimeStampProperty(GROUP);
-
-        Assert.AreEqual(GROUP, prop.Group);
+        var prop = new TimeStampProperty();
         Assert.AreNotEqual(default, prop.Value);
     }
 
@@ -41,9 +37,7 @@ public class TimeStampPropertyTests
     {
         DateTimeOffset now = DateTimeOffset.UtcNow;
 
-        var prop = new TimeStampProperty(now, GROUP);
-
-        Assert.AreEqual(GROUP, prop.Group);
+        var prop = new TimeStampProperty(now);
         Assert.AreEqual(now, prop.Value);
     }
 

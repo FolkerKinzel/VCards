@@ -11,8 +11,8 @@ internal sealed class UriProperty : VCardProperty
     private UriProperty(UriProperty prop)
         : base(prop) => Value = prop.Value;
 
-    internal UriProperty(Uri value, ParameterSection parameterSection, string? propertyGroup)
-        : base(parameterSection, propertyGroup)
+    internal UriProperty(Uri value, ParameterSection parameters, string? group)
+        : base(parameters, group)
     {
         Debug.Assert(value.IsAbsoluteUri);
 

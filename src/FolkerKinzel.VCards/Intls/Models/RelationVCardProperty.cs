@@ -17,7 +17,7 @@ internal sealed class RelationVCardProperty : RelationProperty
     /// a relationship, or <c>null</c>.</param>
     /// <param name="relation">A single <see cref="RelationTypes" /> value or a combination
     /// of several <see cref="RelationTypes" /> values or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <remarks>
@@ -28,8 +28,8 @@ internal sealed class RelationVCardProperty : RelationProperty
     /// </note>
     /// </remarks>
     internal RelationVCardProperty(
-        VCard vcard, RelationTypes? relation = null, string? propertyGroup = null)
-        : base(relation, propertyGroup)
+        VCard vcard, RelationTypes? relation = null, string? group = null)
+        : base(relation, group)
     {
         Debug.Assert(vcard != null);
 
@@ -46,7 +46,6 @@ internal sealed class RelationVCardProperty : RelationProperty
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override object Clone()
         => new RelationVCardProperty(this);
-
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

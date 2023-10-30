@@ -584,52 +584,10 @@ public static class IEnumerableExtension
         bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values.FirstOrNullIsMemberOf(group, ignoreEmptyItems) != null;
 
-
-    //public static IEnumerable<T?>? Concatenate<T>(
-    //    this IEnumerable<T?>? currentElement, IEnumerable<T?>? value) where T : VCardProperty, IEnumerable<T>
-    //{
-    //    switch (currentElement)
-    //    {
-    //        case null:
-    //            return value;
-    //        case List<T?> list:
-    //            {
-    //                if (value is null)
-    //                {
-    //                    list.Add(null);
-    //                }
-    //                else
-    //                {
-    //                    list.AddRange(value);
-    //                }
-
-    //                return list;
-    //            }
-    //        case T enumerable:
-    //            {
-    //                var tList = new List<T?>(enumerable);
-
-    //                if (value is null)
-    //                {
-    //                    tList.Add(null);
-    //                }
-    //                else
-    //                {
-    //                    tList.AddRange(value);
-    //                }
-
-    //                return tList;
-    //            }
-
-    //        default:
-    //            throw new ArgumentOutOfRangeException(nameof(currentElement));
-    //    };
-    //}
-
     /// <summary>
     /// Concatenates two sequences of <see cref="VCardProperty"/> objects. 
-    /// (<see cref="VCardProperty"/> ojects that implement <see cref="IEnumerable{T}">IEnumerable&lt;VCardPoperty&gt;</see>
-    /// are themselves such a sequence.)
+    /// (Most <see cref="VCardProperty"/> ojects implement <see cref="IEnumerable{T}">IEnumerable&lt;VCardPoperty&gt;</see>
+    /// and are themselves such a sequence.)
     /// </summary>
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
@@ -638,11 +596,36 @@ public static class IEnumerableExtension
     /// If <paramref name="second"/> is <c>null</c> a <c>null</c> reference is appended to <paramref name="first"/>.</param>
     /// <returns>An <see cref="IEnumerable{T}"/> that contains the concatenated elements of the two input sequences.</returns>
     /// <remarks>
-    /// The method works similar to <see cref="Enumerable.Concat{TSource}(IEnumerable{TSource}, IEnumerable{TSource})"/>
-    /// but differs in that it can be called on <c>null</c> references and that it accepts <c>null</c> references as
+    /// The method works similar to <see cref="System.Linq.Enumerable.Concat{TSource}(IEnumerable{TSource}, IEnumerable{TSource})"/>
+    /// but differs in that it can be called on <c>null</c> references and in that it accepts <c>null</c> references as
     /// argument.
     /// </remarks>
     public static IEnumerable<TSource?> ConcatWith<TSource>(
-        this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty 
+        this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
         => Enumerable.Concat(first ?? Enumerable.Empty<TSource>(), second ?? Enumerable.Repeat<TSource?>(null, 1));
+
+
+    //public static IEnumerable<TSource?> ConcatWith2<TSource>(
+    //    this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
+    //{
+    //    return first switch
+    //    {
+    //        null => second is null ? new List<TSource?>() { null } : second,
+    //        List<TSource?> list => AddSecondToList(list, second),
+    //        _ => AddSecondToList(first.ToList(), second),
+    //    };
+
+    //    static List<TSource?> AddSecondToList(List<TSource?> list, IEnumerable<TSource?>? second)
+    //    {
+    //        if (second is null)
+    //        {
+    //            list.Add(null);
+    //        }
+    //        else
+    //        {
+    //            list.AddRange(second);
+    //        }
+    //        return list;
+    //    }
+    //}
 }

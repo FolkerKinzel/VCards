@@ -18,7 +18,7 @@ public class AddressOrderConverterTests
     [DataRow("Venezuela", AddressOrder.Venezuela)]
     public void GetAddressOrderTest1(string? input, object? expected)
     {
-        var addr = new AddressProperty(null, null, null, postalCode: null, country: input, appendLabel: false);
+        var addr = new AddressProperty(null, null, null, postalCode: null, country: input, autoLabel: false);
         AddressOrder? order = addr.Value.GetAddressOrder();
         Assert.AreEqual((AddressOrder?)expected, order);
     }

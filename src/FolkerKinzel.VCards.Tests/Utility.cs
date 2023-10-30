@@ -141,7 +141,7 @@ internal static class Utility
             TimeZones = new TimeZoneProperty(TimeZoneID.Parse(TimeZoneInfo.Local.Id)),
             DisplayNames = new TextProperty("Folker"),
             OrgDirectories = new TextProperty("OrgDirectory"),
-            Profile = new ProfileProperty("Group"),
+            Profile = new ProfileProperty(),
             Categories = new StringCollectionProperty(new string[] { "Person", "Data" }),
             TimeStamp = new TimeStampProperty(),
             EMails = email1,

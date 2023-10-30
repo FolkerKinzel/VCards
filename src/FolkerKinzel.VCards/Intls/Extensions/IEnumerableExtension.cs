@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Intls.Extensions;
 internal static class IEnumerableExtension
 {
     
-    internal static bool IsSingleton([NotNullWhen(true)] this IEnumerable<VCardProperty?>? values, bool ignoreEmptyItems)
+    internal static bool IsSingle([NotNullWhen(true)] this IEnumerable<VCardProperty?>? values, bool ignoreEmptyItems)
         => ignoreEmptyItems ? values?.WhereNotEmpty().Take(2).Count() == 1
                             : values?.WhereNotNull().Take(2).Count() == 1;
 

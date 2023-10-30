@@ -18,11 +18,8 @@ public sealed class AccessProperty : VCardProperty
 
     /// <summary> Initializes a new <see cref="AccessProperty" /> object. </summary>
     /// <param name="value">A member of the <see cref="Access" /> enum.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public AccessProperty(Access value, string? propertyGroup = null)
-        : base(new ParameterSection(), propertyGroup) => Value = value;
+    public AccessProperty(Access value)
+        : base(new ParameterSection(), null) => Value = value;
 
 
     internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
@@ -43,7 +40,6 @@ public sealed class AccessProperty : VCardProperty
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object GetVCardPropertyValue() => Value;
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {

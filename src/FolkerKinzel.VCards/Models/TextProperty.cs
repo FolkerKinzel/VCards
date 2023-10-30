@@ -18,15 +18,15 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
     /// <summary>Initializes a new <see cref="TextProperty" /> object.</summary>
     /// <param name="value">A <see cref="string" /> or <c>null</c>.</param>
-    /// <param name="propertyGroup">Identifier of the group of <see cref="VCardProperty"
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public TextProperty(string? value, string? propertyGroup = null)
-        : base(new ParameterSection(), propertyGroup)
+    public TextProperty(string? value, string? group = null)
+        : base(new ParameterSection(), group)
         => Value = string.IsNullOrWhiteSpace(value) ? null : value;
 
-
-    internal TextProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
+    internal TextProperty(VcfRow vcfRow, VCdVersion version) 
+        : base(vcfRow.Parameters, vcfRow.Group)
     {
         vcfRow.UnMask(version);
         Value = vcfRow.Value.Length == 0 ? null : vcfRow.Value;
@@ -58,7 +58,6 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
@@ -71,7 +70,6 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
     }
-
 
     internal override void AppendValue(VcfSerializer serializer)
     {

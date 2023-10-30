@@ -6,7 +6,7 @@ using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Extensions;
 
 // These two namespaces may be published, but it's not
-// recommended as they contain lots of classes and enums:
+// recommended because they contain a lot of classes and enums:
 // using FolkerKinzel.VCards.Models;
 // using FolkerKinzel.VCards.Models.Enums;
 
