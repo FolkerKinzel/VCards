@@ -24,6 +24,7 @@
 	<ItemGroup>
 		<Compile Remove="AnsiFilterTests.cs" />
 		<Compile Remove="Intls\Converters\MimeTypeConverterTests_OBSOLETE.cs" />
+		<Compile Remove="Intls\Deserializers\AssignerTests.cs" />
 		<Compile Remove="Intls\Deserializers\DigitParserTests.cs" />
 		<Compile Remove="Intls\Extensions\CharExtensionTests.cs" />
 		<Compile Remove="Intls\Extensions\DoubleExtensionsTests.cs" />

@@ -7,6 +7,8 @@ internal class Program
 {
     private static void Main()
     {
+        _ = BenchmarkRunner.Run<HasFlagBench>();
+
         //_ = BenchmarkRunner.Run<ConcatWithBench>();
 
         //_ = BenchmarkRunner.Run<MustMaskBench>();

@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>6.0.0-beta.2</Version>
-    <FileVersion>6.0.0.102</FileVersion>
+    <FileVersion>6.0.0.109</FileVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v6.0.0-beta.2</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
@@ -63,6 +63,7 @@
     <Compile Remove="AnsiFilter_old.cs" />
     <Compile Remove="Intls\Converters\MimeTypeConverter_OBSOLETE.cs" />
     <Compile Remove="Intls\Converters\TextEncodingConverter.cs" />
+    <Compile Remove="Intls\Deserializers\Assigner.cs" />
     <Compile Remove="Intls\Deserializers\VcfRow_ctor - NET40.cs" />
     <Compile Remove="Intls\Encodings\Base64.cs" />
     <Compile Remove="Intls\Extensions\DoubleExtension.cs" />
