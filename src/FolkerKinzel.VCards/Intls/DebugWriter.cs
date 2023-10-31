@@ -4,6 +4,7 @@ internal static class DebugWriter
 {
     [Conditional("DEBUG")]
     [ExcludeFromCodeCoverage]
+    [DebuggerStepThrough]
     internal static void WriteMethodHeader(string? MethodName)
     {
         const int HEADER_LENGTH = 40;
