@@ -11,6 +11,10 @@ public static class AnsiFilterExample
     /// shows their content in the text editor. The encoding is selected automatically.
     /// </summary>
     /// <param name="directoryPath">Path to the directory containing the example files.</param>
+    /// <remarks>
+    /// See the VCF files used in this example at
+    /// https://github.com/FolkerKinzel/VCards/tree/master/src/Examples/AnsiFilterExamples
+    /// </remarks>
     public static void LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
     {
         // If you have to read VCF files which might have ANSI encodings, use the AnsiFilter
