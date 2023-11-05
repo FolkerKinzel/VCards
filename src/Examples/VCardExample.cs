@@ -25,7 +25,7 @@ public static class VCardExample
         VCard vcard = InitializeTheVCardAndFillItWithData(directoryPath, photoFileName);
 
         // Implements ITimeZoneIDConverter to convert IANA time zone names to UTC-Offsets.
-        // (See the implementation in the example below.)
+        // (See the implementation as separate example.)
         VC::ITimeZoneIDConverter tzConverter = new TimeZoneIDConverter();
 
         // Save vcard as vCard 2.1:
@@ -186,7 +186,7 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2023-10-29T14:59:36Z
+REV:2023-11-05T17:08:00Z
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
  Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
@@ -208,8 +208,8 @@ EMAIL;INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- 6Pc/bcvrA564kuxnZwJZj7dtnW+yaWEQeX9ymQ9+VyOdFOogOhzClmxjYWR+V+U
- rxejxL+7DKj8CSAa3
+ 5ECH58vce32AyCU9zt4UrIR6UEWNDTPgSpBN0lYawaWmMG6/voEl3VOaWdNmMZ1
+ EgurNky9KcHzkFZdB
 
 END:VCARD
 
@@ -218,7 +218,7 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2023-10-29T14:59:36Z
+REV:2023-11-05T17:08:00Z
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
@@ -236,8 +236,8 @@ TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 EMAIL;TYPE=INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:6Pc/bcvrA564kuxnZwJZj7dtnW+yaWEQeX9ymQ9+VyOdFOog
- OhzClmxjYWR+V+UrxejxL+7DKj8CSAa3
+PHOTO;ENCODING=b;TYPE=JPEG:5ECH58vce32AyCU9zt4UrIR6UEWNDTPgSpBN0lYawaWmMG6/
+ voEl3VOaWdNmMZ1EgurNky9KcHzkFZdB
 END:VCARD
 
 
@@ -245,7 +245,7 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20231029T145936Z
+REV:20231105T170800Z
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
 TITLE:CEO
@@ -261,8 +261,8 @@ EMAIL;TYPE=WORK;PREF=1:kaethe_mueller@internet.com
 EMAIL;TYPE=HOME;VALUE=URI:mailto:kaethe_at_home@internet.com
 RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT:Paul Müller-Risinowsk
  y
-PHOTO:data:image/jpeg;base64,6Pc/bcvrA564kuxnZwJZj7dtnW+yaWEQeX9ymQ9+VyOdFO
- ogOhzClmxjYWR+V+UrxejxL+7DKj8CSAa3
+PHOTO:data:image/jpeg;base64,5ECH58vce32AyCU9zt4UrIR6UEWNDTPgSpBN0lYawaWmMG
+ 6/voEl3VOaWdNmMZ1EgurNky9KcHzkFZdB
 CLIENTPIDMAP:1;http://folkerkinzel.de/file1.htm
 END:VCARD
 
@@ -276,7 +276,7 @@ Version: 3.0
 EMails: kaethe_mueller@internet.com
 
 [DataType: TimeStamp]
-TimeStamp: 10/29/2023 14:59:36 +00:00
+TimeStamp: 11/05/2023 17:08:00 +00:00
 
 DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 

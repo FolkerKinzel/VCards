@@ -603,29 +603,4 @@ public static class IEnumerableExtension
     public static IEnumerable<TSource?> ConcatWith<TSource>(
         this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
         => Enumerable.Concat(first ?? Enumerable.Empty<TSource>(), second ?? Enumerable.Repeat<TSource?>(null, 1));
-
-
-    //public static IEnumerable<TSource?> ConcatWith2<TSource>(
-    //    this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
-    //{
-    //    return first switch
-    //    {
-    //        null => second is null ? new List<TSource?>() { null } : second,
-    //        List<TSource?> list => AddSecondToList(list, second),
-    //        _ => AddSecondToList(first.ToList(), second),
-    //    };
-
-    //    static List<TSource?> AddSecondToList(List<TSource?> list, IEnumerable<TSource?>? second)
-    //    {
-    //        if (second is null)
-    //        {
-    //            list.Add(null);
-    //        }
-    //        else
-    //        {
-    //            list.AddRange(second);
-    //        }
-    //        return list;
-    //    }
-    //}
 }

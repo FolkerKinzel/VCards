@@ -22,10 +22,6 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "FolkerKinzel.VCards.Referen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{03CA0779-41BB-4F0F-9124-713CB2344F49}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FolkerKinzel.TimeZoneConverters", "FolkerKinzel.TimeZoneConverters\FolkerKinzel.TimeZoneConverters.csproj", "{7AF65024-FE27-4F66-9431-F0CFBD6B42BF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FolkerKinzel.TimeZoneConvertersTests", "FolkerKinzel.TimeZoneConvertersTests\FolkerKinzel.TimeZoneConvertersTests.csproj", "{5DAB06F3-CA87-4BC4-9AF7-D8B368EEEADA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,14 +46,6 @@ Global
 		{03CA0779-41BB-4F0F-9124-713CB2344F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03CA0779-41BB-4F0F-9124-713CB2344F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03CA0779-41BB-4F0F-9124-713CB2344F49}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7AF65024-FE27-4F66-9431-F0CFBD6B42BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7AF65024-FE27-4F66-9431-F0CFBD6B42BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7AF65024-FE27-4F66-9431-F0CFBD6B42BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7AF65024-FE27-4F66-9431-F0CFBD6B42BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DAB06F3-CA87-4BC4-9AF7-D8B368EEEADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DAB06F3-CA87-4BC4-9AF7-D8B368EEEADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DAB06F3-CA87-4BC4-9AF7-D8B368EEEADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DAB06F3-CA87-4BC4-9AF7-D8B368EEEADA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

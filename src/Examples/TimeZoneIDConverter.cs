@@ -5,9 +5,9 @@ using VC = FolkerKinzel.VCards.Models;
 namespace Examples;
 
 /// <summary>
-/// Example implementation of FolkerKinzel.VCards.Models.ITimeZoneIDConverter to convert IANA time zone names
-/// into UTC offsets in order to be compatible to older vCard clients when writing vCard 2.1 or vCard 3.0.
-/// This example uses the nuget package TimeZoneConverter. ( https://www.nuget.org/packages/TimeZoneConverter/ )
+/// Example implementation of <see cref="FolkerKinzel.VCards.Models.ITimeZoneIDConverter"/> to convert IANA time 
+/// zone names into UTC offsets in order to be compatible to older vCard clients when writing vCard 2.1 or vCard 3.0.
+/// This example uses the nuget package TimeZoneConverter ( https://www.nuget.org/packages/TimeZoneConverter/ ).
 /// </summary>
 public class TimeZoneIDConverter : VC::ITimeZoneIDConverter
 {
@@ -15,7 +15,7 @@ public class TimeZoneIDConverter : VC::ITimeZoneIDConverter
     public bool TryConvertToUtcOffset(string timeZoneID, out TimeSpan utcOffset)
     {
         // Convert at least IANA time zone names:
-        if (TimeZoneConverter.TZConvert.TryGetTimeZoneInfo(timeZoneID, out TimeZoneInfo tzInfo))
+        if (TimeZoneConverter.TZConvert.TryGetTimeZoneInfo(timeZoneID, out TimeZoneInfo? tzInfo))
         {
             utcOffset = tzInfo.BaseUtcOffset;
             return true;

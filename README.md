@@ -14,13 +14,14 @@ It allows
 Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from such files.
 The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards are not completely compliant, incompliant data is silently ignored when converting from one vCard standard to another. To minimize this kind of data loss, the library tries to preserve incompliant data using well-known x-name properties. The usage of such x-name properties can be controlled via options (VcfOptions).
 
-[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v6.0.0-beta.2)
+[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v6.0.0)
 
 Read the ["Getting Started" tutorial](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/GettingStarted.md) if you are new to this library!
 
 ### Code Examples
 - [Getting started](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/GettingStarted.md)
 - [Reading and writing of VCF files](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/VCardExample.cs)
+- [Example implementation of ITimeZoneIDConverter](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/TimeZoneIDConverter.cs)
 - [Automatic detection of VCF files written with ANSI encodings](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/AnsiFilterExample.cs)
 - [Reading and writing GROUP vCards](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/VCard40Example.cs)
 - [Connecting vCards](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/EmbeddedVCardExample.cs)
