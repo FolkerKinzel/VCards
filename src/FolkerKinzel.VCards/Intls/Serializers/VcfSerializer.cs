@@ -133,7 +133,7 @@ internal abstract class VcfSerializer : IDisposable
             VCdVersion.V2_1 => new Vcf_2_1Serializer(writer, options, tzConverter),
             VCdVersion.V3_0 => new Vcf_3_0Serializer(writer, options, tzConverter),
             VCdVersion.V4_0 => new Vcf_4_0Serializer(writer, options),
-            _ => throw new ArgumentException(Res.UndefinedEnumValue, nameof(version))
+            _ => throw new ArgumentOutOfRangeException(nameof(version))
         };
     }
 

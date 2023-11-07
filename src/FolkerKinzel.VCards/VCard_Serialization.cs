@@ -48,7 +48,11 @@ public sealed partial class VCard
     /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> or <paramref
     /// name="vCards" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
-    /// file path or <paramref name="version" /> has an undefined value.</exception>
+    /// file path.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOptions"/> 
+    /// enum.
+    /// </exception>
     /// <exception cref="IOException">The file could not be written.</exception>
     public static void SaveVcf(
         string fileName,
@@ -109,8 +113,13 @@ public sealed partial class VCard
     /// <exception cref="ArgumentNullException"> <paramref name="stream" /> or <paramref
     /// name="vCards" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="stream" /> does not support
-    /// write operations or <paramref name="version" /> has an undefined value.</exception>
+    /// write operations.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOptions"/> 
+    /// enum.
+    /// </exception>
     /// <exception cref="IOException">I/O error.</exception>
+    /// 
     /// <exception cref="ObjectDisposedException"> <paramref name="stream" /> was already
     /// closed.</exception>
     public static void SerializeVcf(Stream stream,
@@ -240,8 +249,11 @@ public sealed partial class VCard
     /// </remarks>
     /// <seealso cref="ITimeZoneIDConverter" />
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="version" /> has an undefined
-    /// value.</exception>
+    /// 
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOptions"/> 
+    /// enum.
+    /// </exception>
     /// <exception cref="OutOfMemoryException">The system is out of memory.</exception>
     public static string ToVcfString(
         IEnumerable<VCard?> vCards,
@@ -299,7 +311,11 @@ public sealed partial class VCard
     /// <seealso cref="ITimeZoneIDConverter" />
     /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
-    /// file path or <paramref name="version" /> has an undefined value.</exception>
+    /// file path.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOptions"/> 
+    /// enum.
+    /// </exception>
     /// <exception cref="IOException">The file could not be written.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void SaveVcf(
@@ -342,7 +358,11 @@ public sealed partial class VCard
     /// <seealso cref="ITimeZoneIDConverter" />
     /// <exception cref="ArgumentNullException"> <paramref name="stream" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="stream" /> does not support
-    /// write operations or <paramref name="version" /> has an undefined value.</exception>
+    /// write operations.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOptions"/> 
+    /// enum.
+    /// </exception>
     /// <exception cref="IOException">I/O error.</exception>
     /// <exception cref="ObjectDisposedException"> <paramref name="stream" /> was already
     /// closed.</exception>
@@ -385,8 +405,10 @@ public sealed partial class VCard
     /// </para>
     /// </remarks>
     /// <seealso cref="ITimeZoneIDConverter" />
-    /// <exception cref="ArgumentException"> <paramref name="version" /> has an undefined
-    /// value.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOptions"/> 
+    /// enum.
+    /// </exception>
     /// <exception cref="OutOfMemoryException">The system is out of memory.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string ToVcfString(VCdVersion version = DEFAULT_VERSION, ITimeZoneIDConverter? tzConverter = null, VcfOptions options = VcfOptions.Default)
