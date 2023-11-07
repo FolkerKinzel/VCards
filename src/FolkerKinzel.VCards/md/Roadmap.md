@@ -2,6 +2,8 @@
 ## Roadmap
 
 ### 7.0.0
+- Mark the usage of `VCard.InstantMessengerHandles` as Obsolete error
+- Mark the usage of `VCdProp.InstantMessengerHandles` as Obsolete error
 
 
 - [ ] Add DateOnlyProperty. (Use nuget package Portable.System.DateTimeOnly.)

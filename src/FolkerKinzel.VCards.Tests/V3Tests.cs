@@ -176,6 +176,8 @@ public class V3Tests
         string s = vc.ToVcfString();
 
         vc = VCard.ParseVcf(s);
+
+        Assert.AreEqual(2, vc.Count);
     }
 
 
@@ -247,13 +249,40 @@ END:VCARD";
 
         var vcard = new VCard
         {
-            InstantMessengerHandles = whatsAppImpp
+            InstantMessengers = whatsAppImpp
         };
 
         string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteXExtensions);
         vcard = VCard.ParseVcf(vcfString)[0];
 
-        whatsAppImpp = vcard.InstantMessengerHandles?.First();
+        whatsAppImpp = vcard.InstantMessengers?.First();
+
+        Assert.AreEqual(mobilePhoneNumber, whatsAppImpp?.Value);
+        Assert.AreEqual(messengerTypes, whatsAppImpp?.Parameters.InstantMessengerType);
+    }
+
+    [TestMethod]
+    public void ImppTest2()
+    {
+        const string mobilePhoneNumber = "tel:+1-234-567-89";
+        var whatsAppImpp = new TextProperty(mobilePhoneNumber);
+
+        const ImppTypes messengerTypes = ImppTypes.Personal
+                                | ImppTypes.Business
+                                | ImppTypes.Mobile;
+
+        whatsAppImpp.Parameters.InstantMessengerType = ImppTypes.Mobile;
+        whatsAppImpp.Parameters.PropertyClass = PropertyClassTypes.Home | PropertyClassTypes.Work;
+
+        var vcard = new VCard
+        {
+            InstantMessengers = whatsAppImpp
+        };
+
+        string vcfString = vcard.ToVcfString(options: VcfOptions.Default);
+        vcard = VCard.ParseVcf(vcfString)[0];
+
+        whatsAppImpp = vcard.InstantMessengers?.First();
 
         Assert.AreEqual(mobilePhoneNumber, whatsAppImpp?.Value);
         Assert.AreEqual(messengerTypes, whatsAppImpp?.Parameters.InstantMessengerType);
@@ -270,14 +299,14 @@ END:VCARD";
 
         var vcard = new VCard
         {
-            InstantMessengerHandles = prop
+            InstantMessengers = prop
         };
 
         string vcfString = vcard.ToVcfString(options: (VcfOptions.Default | VcfOptions.WriteXExtensions).Unset(VcfOptions.WriteImppExtension));
         vcard = VCard.ParseVcf(vcfString)[0];
 
-        Assert.AreEqual(1, vcard.InstantMessengerHandles!.Count());
-        prop = vcard.InstantMessengerHandles?.First();
+        Assert.AreEqual(1, vcard.InstantMessengers!.Count());
+        prop = vcard.InstantMessengers?.First();
         Assert.AreEqual(mobilePhoneNumber, prop?.Value);
         Assert.AreEqual(PropertyClassTypes.Home, prop?.Parameters.PropertyClass);
         Assert.AreEqual(imppTypes, prop?.Parameters.InstantMessengerType);
@@ -294,13 +323,13 @@ END:VCARD";
 
         var vcard = new VCard
         {
-            InstantMessengerHandles = prop
+            InstantMessengers = prop
         };
 
         string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteXExtensions);
         vcard = VCard.ParseVcf(vcfString)[0];
-        Assert.AreEqual(1, vcard.InstantMessengerHandles!.Count());
-        prop = vcard.InstantMessengerHandles!.First();
+        Assert.AreEqual(1, vcard.InstantMessengers!.Count());
+        prop = vcard.InstantMessengers!.First();
         Assert.AreEqual(mobilePhoneNumber, prop?.Value);
         Assert.AreEqual(imppTypes, prop?.Parameters.InstantMessengerType);
     }

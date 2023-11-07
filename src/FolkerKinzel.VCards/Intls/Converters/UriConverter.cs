@@ -61,7 +61,9 @@ internal static class UriConverter
         }
 
 #if NETSTANDARD2_0 || NET461
-        if(segment.ContainsAny(Path.GetInvalidPathChars()))
+        // On Windows this is never true but NETSTANDARD2_0 can
+        // be used on several platforms
+        if (segment.ContainsAny(Path.GetInvalidPathChars()))
         {
             return MimeCache.DefaultFileTypeExtension;
         }

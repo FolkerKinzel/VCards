@@ -46,7 +46,7 @@ internal static class WhatsAppDemo1
             },
 
             // Add the WhatsApp-Handle:
-            InstantMessengerHandles = new VC::TextProperty[]
+            InstantMessengers = new VC::TextProperty[]
             {
                     whatsAppImpp
             },

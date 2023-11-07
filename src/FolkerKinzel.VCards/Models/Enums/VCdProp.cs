@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace FolkerKinzel.VCards.Models.Enums;
 
 /// <summary>Named constants to access the properties of a <see cref="VCard" />
@@ -110,7 +112,13 @@ public enum VCdProp
     URLs,
 
     /// <summary> <c>IMPP</c>: List of instant messenger handles. <c>(3,4)</c></summary>
-    InstantMessengerHandles,
+    InstantMessengers,
+
+    /// <summary> <c>IMPP</c>: List of instant messenger handles. <c>(3,4)</c></summary>
+    [Obsolete("Use InstantMessengers instead.", false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Browsable(false)]
+    InstantMessengerHandles = InstantMessengers,
 
     /// <summary> <c>KEY</c>: Public encryption keys associated with the vCard object.
     /// <c>(2,3,4)</c></summary>

@@ -292,4 +292,46 @@ public class V2Tests
         Assert.AreEqual(1, vcs.Count);
         Assert.IsNotNull(vcs[0].Relations);
     }
+
+    [TestMethod]
+    public void UsingTheWhatsAppTypeTest()
+    {
+        const string whatsAppNumber = "+1-234-567-89";
+        var xiamoiMobilePhone = new TextProperty(whatsAppNumber);
+        xiamoiMobilePhone.Parameters.NonStandard = new KeyValuePair<string, string>[]
+        {
+                new KeyValuePair<string, string>("TYPE", "WhatsApp")
+        };
+
+        // Initialize the VCard:
+        var vcard = new VCard
+        {
+            NameViews = new NameProperty[]
+            {
+                    new NameProperty(lastName: null, firstName: "zzMad Perla 45")
+            },
+
+            DisplayNames = new TextProperty[]
+            {
+                    new TextProperty("zzMad Perla 45")
+            },
+
+            Phones = new TextProperty[]
+            {
+                    xiamoiMobilePhone
+            }
+        };
+
+        // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
+        // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
+        string vcfString = vcard.ToVcfString(version: VCdVersion.V2_1, options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
+
+        // Parse the VCF string:
+        vcard = VCard.ParseVcf(vcfString)[0];
+
+        // Find the WhatsApp number:
+        Assert.AreEqual(whatsAppNumber, vcard.Phones?
+            .FirstOrDefault(x => x?.Parameters.NonStandard?.Any(x => x.Key == "TYPE" && x.Value == "WhatsApp") ?? false)?
+            .Value);
+    }
 }

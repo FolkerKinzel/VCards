@@ -263,7 +263,7 @@ internal abstract class VcfSerializer : IDisposable
                 case VCdProp.URLs:
                     AppendURLs((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.InstantMessengerHandles:
+                case VCdProp.InstantMessengers:
                     AppendInstantMessengerHandles((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case VCdProp.Keys:

@@ -248,8 +248,8 @@ public sealed partial class VCard
                     }
                     break;
                 case PropKeys.IMPP:
-                    InstantMessengerHandles = 
-                        Concat(InstantMessengerHandles, new TextProperty(vcfRow, this.Version));
+                    InstantMessengers = 
+                        Concat(InstantMessengers, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.NonStandard.InstantMessenger.X_AIM:
                 case PropKeys.NonStandard.InstantMessenger.X_GADUGADU:
@@ -274,9 +274,9 @@ public sealed partial class VCard
                         var textProp = new TextProperty(vcfRow, this.Version);
 
                         if (textProp.Value != null && 
-                            (InstantMessengerHandles?.All(x => x?.Value != textProp.Value) ?? true))
+                            (InstantMessengers?.All(x => x?.Value != textProp.Value) ?? true))
                         {
-                            InstantMessengerHandles = Concat(InstantMessengerHandles, textProp);
+                            InstantMessengers = Concat(InstantMessengers, textProp);
 
                             var para = textProp.Parameters;
                             XMessengerParameterConverter.ConvertToInstantMessengerType(para);

@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
@@ -300,10 +301,27 @@ public sealed partial class VCard
     /// represents. If the URI can be used for voice and/or video, the 
     /// <see cref="VCard.Phones" /> property SHOULD be used in addition to this 
     /// property.</remarks>
+    [Obsolete("Use InstantMessengers instead.", false)]
+    [Browsable(false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
     public IEnumerable<TextProperty?>? InstantMessengerHandles
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.InstantMessengerHandles);
-        set => Set(VCdProp.InstantMessengerHandles, value);
+        get => InstantMessengers;
+        set => InstantMessengers = value;
+    }
+
+    /// <summary> <c>IMPP</c>: List of instant messenger handles. <c>(3,4)</c></summary>
+    /// <remarks>
+    /// <see cref="TextProperty.Value" /> should specify a URI for instant messaging 
+    /// and presence protocol communications with the object the <see cref="VCard"/> 
+    /// represents. If the URI can be used for voice and/or video, the 
+    /// <see cref="VCard.Phones" /> property SHOULD be used in addition to this 
+    /// property.</remarks>
+    public IEnumerable<TextProperty?>? InstantMessengers
+    {
+        get => Get<IEnumerable<TextProperty?>?>(VCdProp.InstantMessengers);
+        set => Set(VCdProp.InstantMessengers, value);
     }
 
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested

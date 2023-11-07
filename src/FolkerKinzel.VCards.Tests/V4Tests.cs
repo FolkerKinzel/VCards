@@ -151,7 +151,7 @@ public class V4Tests
     }
 
     [TestMethod]
-    public void MembersTest()
+    public void MembersTest1()
     {
         var vc = new VCard
         {
@@ -168,6 +168,27 @@ public class V4Tests
         vc = list[0];
 
         Assert.IsNotNull(vc.Members);
+    }
+
+    [TestMethod]
+    public void MembersTest2()
+    {
+        var vc = new VCard
+        {
+            Members = RelationProperty.FromText("http://folkers-website.de"),
+        };
+
+        Assert.IsNotNull(vc.Members);
+
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+
+        Assert.IsNotNull(list);
+        Assert.AreEqual(1, list.Count);
+        vc = list[0];
+
+        Assert.IsNotNull(vc.Members);
+        Assert.IsNotNull(vc.Kind);
+        Assert.AreEqual(VCdKind.Group, vc.Kind.Value);
     }
 
     [TestMethod]
@@ -246,6 +267,32 @@ public class V4Tests
         Assert.IsNotNull(vCard.DisplayNames);
         TextProperty tProp = vCard.DisplayNames.First()!;
         Assert.AreEqual("Folker Kinzel", tProp.Value);
+    }
+
+    [TestMethod]
+    public void ImppTest1()
+    {
+        const string mobilePhoneNumber = "tel:+1-234-567-89";
+        var whatsAppImpp = new TextProperty(mobilePhoneNumber);
+
+        const ImppTypes messengerTypes = ImppTypes.Personal
+                                | ImppTypes.Business
+                                | ImppTypes.Mobile;
+
+        whatsAppImpp.Parameters.InstantMessengerType = messengerTypes;
+
+        var vcard = new VCard
+        {
+            InstantMessengers = new TextProperty?[] { null, whatsAppImpp }
+        };
+
+        string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: VcfOptions.Default);
+        vcard = VCard.ParseVcf(vcfString)[0];
+
+        whatsAppImpp = vcard.InstantMessengers?.First();
+
+        Assert.AreEqual(mobilePhoneNumber, whatsAppImpp?.Value);
+        Assert.AreEqual(PropertyClassTypes.Home | PropertyClassTypes.Work, whatsAppImpp?.Parameters.PropertyClass);
     }
 }
 

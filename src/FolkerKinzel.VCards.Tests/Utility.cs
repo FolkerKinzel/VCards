@@ -116,6 +116,7 @@ internal static class Utility
         source.Parameters.Context = " ";
         source.Parameters.Context = "VCARD";
 
+#pragma warning disable CS0618 // Type or member is obsolete
         return new VCard
         {
             NameViews = names,
@@ -170,6 +171,7 @@ internal static class Utility
             NonStandard = nonStandard,
             XmlProperties = xml1,
         };
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 }
 
