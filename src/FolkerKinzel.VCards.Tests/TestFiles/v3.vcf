@@ -1,5 +1,6 @@
 BEGIN:VCARD
 VERSION:3.0
+SOURCE;VALUE=URI;CONTEXT=VCARD:http://folker.de/vcard.vcf
 FN:Folker Kinzel
 N:Kinzel;Folker;;;
 item1.EMAIL;TYPE=INTERNET:email1@wumms.de
@@ -21,7 +22,7 @@ VERSION:3.0
 FN:KMS Außenstelle
 N:KMS;WSF;;;
 EMAIL;TYPE=INTERNET: blablö@blub.com
-TEL;TYPE=HOME:03443-303776
+TEL;TYPE=HOME:01234-303776
 item1.TEL:03443-333440
 item1.X-ABLabel:homeFax
 item2.ORG:KMS Außenstelle

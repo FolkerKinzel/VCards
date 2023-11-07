@@ -274,6 +274,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     {
         AppendValue(ParaSection.DataType);
         AppendContext();
+        AppendNonStandardParameters();
     }
 
     protected override void BuildTelPara(bool isPref)

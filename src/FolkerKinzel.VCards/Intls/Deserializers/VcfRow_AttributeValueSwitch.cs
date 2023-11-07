@@ -11,7 +11,7 @@ internal sealed partial class VcfRow
     private static string ParseAttributeKeyFromValue(string value)
     {
         const string ENCODING_PROPERTY = ParameterSection.ParameterKey.ENCODING;
-        const string CONTEXT_PROPERTY = ParameterSection.ParameterKey.CONTEXT;
+        //const string CONTEXT_PROPERTY = ParameterSection.ParameterKey.CONTEXT;
         const string CHARSET_PROPERTY = ParameterSection.ParameterKey.CHARSET;
         const string TYPE_PROPERTY = ParameterSection.ParameterKey.TYPE;
         const string LANGUAGE_PROPERTY = ParameterSection.ParameterKey.LANGUAGE;
@@ -36,8 +36,8 @@ internal sealed partial class VcfRow
             case "7BIT":
                 return ENCODING_PROPERTY;
 
-            case "VCARD":
-                return CONTEXT_PROPERTY;
+            //case "VCARD":
+            //    return CONTEXT_PROPERTY;
 
             //Phone
             case ParameterSection.TypeValue.PREF:

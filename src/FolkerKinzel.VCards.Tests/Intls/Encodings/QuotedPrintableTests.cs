@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Intls.Encodings.Tests;
 
 [TestClass]
@@ -50,4 +51,7 @@ public class QuotedPrintableTests
         Assert.AreNotEqual(quoted[quoted.Length - 1], ' ');
         Assert.AreEqual(2, quoted.GetLinesCount());
     }
+
+    [TestMethod]
+    public void TruncatedTextTest1() => Assert.AreEqual("abc", QuotedPrintable.Decode("abc=C", null));
 }

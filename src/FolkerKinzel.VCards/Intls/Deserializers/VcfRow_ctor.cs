@@ -106,6 +106,10 @@ internal sealed partial class VcfRow
 
                 SplitParameterKeyAndValue(parameterTuples, parameter);
             }
+            else
+            {
+                parameterStartIndex = splitIndex + 1;
+            }
         }
 
         int length = parameterSection.Length - parameterStartIndex;
