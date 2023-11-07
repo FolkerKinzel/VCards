@@ -12,11 +12,11 @@ public sealed class GenderInfo
     /// <summary> Initializes a new <see cref="GenderInfo" /> object. </summary>
     /// <param name="gender">Standardized information about the gender of the object
     /// the <see cref="VCard"/> represents.</param>
-    /// <param name="genderIdentity">Free text describing the gender identity.</param>
-    internal GenderInfo(Gender? gender, string? genderIdentity)
+    /// <param name="identity">Free text describing the gender identity.</param>
+    internal GenderInfo(Gender? gender, string? identity)
     {
         Gender = gender;
-        GenderIdentity = string.IsNullOrWhiteSpace(genderIdentity) ? null : genderIdentity;
+        Identity = string.IsNullOrWhiteSpace(identity) ? null : identity;
     }
 
     /// <summary>Standardized information about the gender of the object the 
@@ -24,11 +24,11 @@ public sealed class GenderInfo
     public Gender? Gender { get; }
 
     /// <summary>Free text describing the gender identity.</summary>
-    public string? GenderIdentity { get; }
+    public string? Identity { get; }
 
     /// <summary> Returns <c>true</c> if the <see cref="GenderInfo" /> object does not 
     /// contain any usable data, otherwise <c>false</c>.</summary>
-    public bool IsEmpty => !Gender.HasValue && GenderIdentity is null;
+    public bool IsEmpty => !Gender.HasValue && Identity is null;
 
     /// <inheritdoc/>
     public override string ToString()
@@ -40,14 +40,14 @@ public sealed class GenderInfo
             s += Gender.ToString();
         }
 
-        if (GenderIdentity != null)
+        if (Identity != null)
         {
             if (s.Length != 0)
             {
                 s += "; ";
             }
 
-            s += GenderIdentity;
+            s += Identity;
         }
 
         return s;
@@ -62,10 +62,10 @@ public sealed class GenderInfo
         }
 
 
-        if (GenderIdentity != null)
+        if (Identity != null)
         {
             StringBuilder worker = serializer.Worker;
-            _ = worker.Clear().Append(GenderIdentity).Mask(serializer.Version);
+            _ = worker.Clear().Append(Identity).Mask(serializer.Version);
 
             _ = builder.Append(';').Append(worker);
         }

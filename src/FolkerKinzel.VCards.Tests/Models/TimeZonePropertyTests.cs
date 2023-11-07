@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -64,4 +65,10 @@ public class TimeZonePropertyTests
         Assert.AreEqual(0, serializer.Builder.Length);
     }
 
+    [TestMethod]
+    public void IEnumerableTest1()
+    {
+        var prop = new TimeZoneProperty(TimeZoneID.Parse("+01"));
+        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+    }
 }

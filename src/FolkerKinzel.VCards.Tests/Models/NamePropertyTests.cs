@@ -108,4 +108,11 @@ public class NamePropertyTests
         string? s = name.ToDisplayName();
         Assert.IsNull(s);
     }
+
+    [TestMethod]
+    public void IEnumerableTest1()
+    {
+        var prop = new NameProperty("Duck");
+        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+    }
 }

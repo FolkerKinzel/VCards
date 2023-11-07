@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Models.Tests;
+﻿using FolkerKinzel.VCards.Tests;
+
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class GeoPropertyTests
@@ -45,5 +47,15 @@ public class GeoPropertyTests
         Assert.AreEqual(geo, prop!.Value);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
+    }
+
+    [TestMethod]
+    public void IEnumerableTest1()
+    {
+        const string GROUP = "group";
+        var prop = new GeoProperty(42, 42, GROUP);
+        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+        Assert.AreEqual(GROUP, prop.Group, true);
+
     }
 }

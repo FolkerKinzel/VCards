@@ -23,15 +23,15 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
         => Value = prop.Value;
 
     /// <summary> Initializes a new <see cref="GenderProperty" /> object. </summary>
-    /// <param name="sex">Standardized information about the gender of a person.</param>
-    /// <param name="genderIdentity">Free text describing the gender identity.</param>
+    /// <param name="gender">Standardized information about the gender of a person.</param>
+    /// <param name="identity">Free text describing the gender identity.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public GenderProperty(Enums.Gender? sex,
-                          string? genderIdentity = null,
+    public GenderProperty(Enums.Gender? gender,
+                          string? identity = null,
                           string? group = null) : base(new ParameterSection(), group) 
-        => Value = new GenderInfo(sex, genderIdentity);
+        => Value = new GenderInfo(gender, identity);
 
 
     internal GenderProperty(VcfRow vcfRow, VCdVersion version)

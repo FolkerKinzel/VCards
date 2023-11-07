@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -60,4 +61,10 @@ public class PropertyIDMappingPropertyTests
         Assert.AreEqual(0, serializer.Builder.Length);
     }
 
+    [TestMethod]
+    public void IEnumerableTest1()
+    {
+        var prop = new PropertyIDMappingProperty(4, new Uri("https://contoso.com"));
+        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+    }
 }

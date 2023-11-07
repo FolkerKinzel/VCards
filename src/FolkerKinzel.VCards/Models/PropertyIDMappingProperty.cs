@@ -24,6 +24,18 @@ public sealed class PropertyIDMappingProperty : VCardProperty, IEnumerable<Prope
         : base(new ParameterSection(), null)
         => Value = value;
 
+    /// <summary>  Initializes a new <see cref="PropertyIDMappingProperty" /> object. 
+    /// </summary>
+    /// <param name="id">Local ID of the mapping (value: 1 - 9).</param>
+    /// <param name="mapping">A <see cref="Uri" /> that uniquely identifies a 
+    /// vCard-property across different versions of the same vCard.</param>
+    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> is less
+    /// than 1 or greater than 9.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="mapping" /> is 
+    /// <c>null</c>.</exception>
+    public PropertyIDMappingProperty(int id, Uri mapping)
+        : this(new PropertyIDMapping(id, mapping)) { }
+
     /// <summary>ctor</summary>
     /// <param name="vcfRow" />
     /// <exception cref="ArgumentException" />

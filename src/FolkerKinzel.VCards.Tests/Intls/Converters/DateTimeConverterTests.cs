@@ -204,6 +204,15 @@ public class DateTimeConverterTests
         Assert.IsTrue(s.StartsWith("--"));
     }
 
+    [TestMethod]
+    public void AppendDateToTest1()
+    {
+        var builder = new StringBuilder();
+        DateTimeConverter.AppendDateTo(builder, new DateOnly(4, 5, 1), VCdVersion.V3_0);
+        string s = builder.ToString();
+        Assert.IsTrue(s.StartsWith("--"));
+    }
+
 
     [TestMethod]
     [DataRow(null)]

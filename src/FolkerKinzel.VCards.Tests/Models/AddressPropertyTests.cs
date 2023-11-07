@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -207,5 +208,12 @@ public class AddressPropertyTests
         Assert.IsTrue(adr.Value.IsEmpty);
         Assert.IsFalse(adr.IsEmpty);
         Assert.AreEqual(labelText, adr.Parameters.Label);
+    }
+
+    [TestMethod]
+    public void IEnumerableTest1()
+    {
+        var prop = new AddressProperty("Elm Street", null, null, null);
+        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 }

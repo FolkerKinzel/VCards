@@ -112,7 +112,8 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     }
 
     /// <inheritdoc />
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<NameProperty>)this).GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() 
+        => ((IEnumerable<NameProperty>)this).GetEnumerator();
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

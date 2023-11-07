@@ -197,5 +197,10 @@ public class DataPropertyTests
         Assert.IsTrue(prop.IsEmpty);
     }
 
-    
+    [TestMethod]
+    public void IEnumerableTest1()
+    {
+        var prop = DataProperty.FromText("Hi");
+        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+    }
 }

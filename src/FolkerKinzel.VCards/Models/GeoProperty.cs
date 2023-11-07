@@ -27,6 +27,19 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
     public GeoProperty(GeoCoordinate? value, string? group = null)
         : base(new ParameterSection(), group) => this.Value = value;
 
+    /// <summary>
+    /// Initializes a new <see cref="GeoProperty" /> object.
+    /// </summary>
+    /// <param name="latitude">Latitude (value between -90 and 90).</param>
+    /// <param name="longitude">Longitude (value between -180 and 180).</param>
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    ///  <exception cref="ArgumentOutOfRangeException"> <paramref name="latitude" />
+    /// or <paramref name="longitude" /> does not have a valid value.</exception>
+    public GeoProperty(double latitude, double longitude, string? group = null)
+        : this(new GeoCoordinate(latitude, longitude), group) { }
+
 
     internal GeoProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
     {

@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -64,5 +65,12 @@ public class OrganizationPropertyTests
         var prop = new OrganizationProperty(row, VCdVersion.V3_0);
 
         Assert.IsNotNull(prop.Value);
+    }
+
+    [TestMethod]
+    public void IEnumerableTest1()
+    {
+        var prop = new OrganizationProperty("Contoso");
+        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 }

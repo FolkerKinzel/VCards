@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Models.Tests;
+﻿using FolkerKinzel.VCards.Tests;
+
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass()]
 public class NonStandardPropertyTests
@@ -38,5 +40,12 @@ public class NonStandardPropertyTests
         var prop = new NonStandardProperty(KEY, VALUE, GROUP);
 
         Assert.IsNotNull(prop.ToString());
+    }
+
+    [TestMethod]
+    public void IEnumerableTest1()
+    {
+        var prop = new NonStandardProperty("X-TEST", "val");
+        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 }

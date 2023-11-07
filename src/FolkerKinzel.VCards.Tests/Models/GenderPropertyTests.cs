@@ -1,5 +1,7 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -26,7 +28,7 @@ public class GenderPropertyTests
         Assert.IsNotNull(genderProp.Value);
         Assert.AreEqual(expectedGroup, genderProp.Group);
         Assert.AreEqual(expectedSex, genderProp.Value.Gender);
-        Assert.AreEqual(expectedGenderIdentity, genderProp.Value.GenderIdentity);
+        Assert.AreEqual(expectedGenderIdentity, genderProp.Value.Identity);
     }
 
 
@@ -54,7 +56,7 @@ public class GenderPropertyTests
         Assert.IsNotNull(genderProp.Value);
         Assert.AreEqual(expectedGroup, genderProp.Group);
         Assert.AreEqual(expectedSex, genderProp.Value.Gender);
-        Assert.AreEqual(expectedGenderIdentity, genderProp.Value.GenderIdentity);
+        Assert.AreEqual(expectedGenderIdentity, genderProp.Value.Identity);
     }
 
 
@@ -83,8 +85,16 @@ public class GenderPropertyTests
 
         Assert.IsNotNull(prop);
         Assert.AreEqual(Gender.Female, prop!.Value.Gender);
-        Assert.AreEqual(IDENTITY, prop!.Value.GenderIdentity);
+        Assert.AreEqual(IDENTITY, prop!.Value.Identity);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
+    }
+
+
+    [TestMethod]
+    public void IEnumerableTest1()
+    {
+        var prop = new GenderProperty(Gender.Other);
+        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 }
