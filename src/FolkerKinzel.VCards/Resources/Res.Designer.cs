@@ -61,29 +61,11 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The content to embed is too large..
-        /// </summary>
-        internal static string ContentTooLarge {
-            get {
-                return ResourceManager.GetString("ContentTooLarge", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The length of the identifier is more than one digit..
         /// </summary>
         internal static string IdentifierTooLong {
             get {
                 return ResourceManager.GetString("IdentifierTooLong", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid internet media type..
-        /// </summary>
-        internal static string InvalidMimeType {
-            get {
-                return ResourceManager.GetString("InvalidMimeType", resourceCulture);
             }
         }
         
@@ -124,15 +106,6 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The input does not represent a DataUrl..
-        /// </summary>
-        internal static string NoDataUrl {
-            get {
-                return ResourceManager.GetString("NoDataUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The XML element did not explicitly specify an own namespace..
         /// </summary>
         internal static string NoNameSpace {
@@ -169,7 +142,7 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The XML element is in the reserved vCard&#160;4.0-namespace..
+        ///   Looks up a localized string similar to The XML element is in the reserved vCard 4.0-namespace..
         /// </summary>
         internal static string ReservedNameSpace {
             get {
@@ -183,15 +156,6 @@ namespace FolkerKinzel.VCards.Resources {
         internal static string StreamNotWritable {
             get {
                 return ResourceManager.GetString("StreamNotWritable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The value is not defined..
-        /// </summary>
-        internal static string UndefinedEnumValue {
-            get {
-                return ResourceManager.GetString("UndefinedEnumValue", resourceCulture);
             }
         }
     }
