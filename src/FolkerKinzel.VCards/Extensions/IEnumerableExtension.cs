@@ -1,7 +1,6 @@
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.Extensions;
 
@@ -231,7 +230,7 @@ public static class IEnumerableExtension
     /// <see cref="VCardProperty"/> objects and allows to specify whether or not
     /// to ignore empty items.
     /// </summary>
-    /// <typeparam name="T">Generic type parameter that's constrained to be a class that's 
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
     /// objects to search. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
@@ -255,8 +254,9 @@ public static class IEnumerableExtension
     /// because the <see cref="ParameterSection.Preference"/> has no meaning in such properties.
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static T? PrefOrNull<T>(this IEnumerable<T?>? values,
-                                   bool ignoreEmptyItems) where T : VCardProperty
+    public static TSource? PrefOrNull<TSource>(this IEnumerable<TSource?>? values,
+                                               bool ignoreEmptyItems)
+        where TSource : VCardProperty
         => values?.PrefOrNullIntl(ignoreEmptyItems);
 
     /// <summary>
@@ -299,10 +299,10 @@ public static class IEnumerableExtension
     /// searched with <see cref="FirstOrNull{TSource}(IEnumerable{TSource}?, Func{TSource, bool}, bool)"/>
     /// because the <see cref="ParameterSection.Preference"/> has no meaning in such properties.
     /// </remarks>
-    public static TSource? PrefOrNull<TSource>(
-        this IEnumerable<TSource?>? values,
-        Func<TSource, bool>? filter = null,
-        bool ignoreEmptyItems = true) where TSource : VCardProperty
+    public static TSource? PrefOrNull<TSource>(this IEnumerable<TSource?>? values,
+                                               Func<TSource, bool>? filter = null,
+                                               bool ignoreEmptyItems = true)
+        where TSource : VCardProperty
         => filter is null ? values?.PrefOrNullIntl(ignoreEmptyItems)
                           : values?.PrefOrNullIntl(filter, ignoreEmptyItems);
 
@@ -331,11 +331,6 @@ public static class IEnumerableExtension
     /// is assumed.
     /// </para>
     /// </returns>
-    /// <remarks>
-    /// The method is especially useful to search <see cref="VCard"/> properties with names 
-    /// that end with <c>*views</c>. For all other plural-named <see cref="VCard"/> properties use 
-    /// <see cref="PrefOrNull{TSource}(IEnumerable{TSource}?, bool)"/>.
-    /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TSource? FirstOrNull<TSource>(
         this IEnumerable<TSource?>? values, bool ignoreEmptyItems) where TSource : VCardProperty
@@ -375,11 +370,6 @@ public static class IEnumerableExtension
     /// is assumed.
     /// </para>
     /// </returns>
-    /// <remarks>
-    /// The method is especially useful to search <see cref="VCard"/> properties with names that end 
-    /// with <c>*views</c>. For all other plural-named <see cref="VCard"/> properties use 
-    /// <see cref="PrefOrNull{TSource}(IEnumerable{TSource}?, Func{TSource, bool}, bool)"/>.
-    /// </remarks>
     public static TSource? FirstOrNull<TSource>(
         this IEnumerable<TSource?>? values,
         Func<TSource, bool>? filter = null,
@@ -410,8 +400,9 @@ public static class IEnumerableExtension
     /// <see cref="ParameterSection.Preference"/> has no meaning in such properties.
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IEnumerable<TSource> OrderByPref<TSource>(
-        this IEnumerable<TSource?>? values, bool discardEmptyItems = true) where TSource : VCardProperty
+    public static IEnumerable<TSource> OrderByPref<TSource>(this IEnumerable<TSource?>? values,
+                                                            bool discardEmptyItems = true)
+        where TSource : VCardProperty
         => values is null ? Enumerable.Empty<TSource>()
                           : values.OrderByPrefIntl(discardEmptyItems);
 
@@ -440,14 +431,10 @@ public static class IEnumerableExtension
     /// an empty collection will be returned. 
     /// </para>
     /// </returns>
-    /// <remarks>
-    /// The method is useful to examine <see cref="VCard"/> properties with names that ends with
-    /// <c>*views</c>. For all other plural-named <see cref="VCard"/> properties use 
-    /// <see cref="OrderByPref{TSource}(IEnumerable{TSource}?, bool)"/>.
-    /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IEnumerable<TSource> OrderByIndex<TSource>(
-        this IEnumerable<TSource?>? values, bool discardEmptyItems = true) where TSource : VCardProperty
+    public static IEnumerable<TSource> OrderByIndex<TSource>(this IEnumerable<TSource?>? values,
+                                                             bool discardEmptyItems = true)
+        where TSource : VCardProperty
         => values is null ? Enumerable.Empty<TSource>()
                           : values.OrderByIndexIntl(discardEmptyItems);
 
@@ -507,7 +494,7 @@ public static class IEnumerableExtension
     /// The method performs an ordinal character comparison of the <see cref="ParameterSection.AltID"/>s.
     /// </remarks>
     public static IEnumerable<IGrouping<string?, TSource>> GroupByAltID<TSource>(
-        this IEnumerable<TSource?>? values) where TSource : VCardProperty
+        this IEnumerable<TSource?>? values) where TSource : VCardProperty, IEnumerable<TSource>
         => values?.WhereNotNull()
                   .GroupBy(static x => x.Parameters.AltID, StringComparer.Ordinal)
            ?? Enumerable.Empty<IGrouping<string?, TSource>>();
@@ -543,7 +530,7 @@ public static class IEnumerableExtension
     /// <summary>
     /// Gets the first <see cref="VCardProperty"/> in a collection
     /// whose <see cref="VCardProperty.Group"/> identifier matches
-    /// a specified <see cref="VCardProperty.Group"/> identifier.
+    /// the specified <see cref="VCardProperty.Group"/> identifier.
     /// </summary>
     /// <typeparam name="TSource">Generic type parameter that's constrained 
     /// to be a class that's derived from <see cref="VCardProperty"/>.</typeparam>
@@ -566,7 +553,6 @@ public static class IEnumerableExtension
         bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values?.FirstOrNullIntl(x => StringComparer.OrdinalIgnoreCase.Equals(group, x.Group),
                                         ignoreEmptyItems);
-
 
     /// <summary>
     /// Indicates whether <paramref name="values"/> contains an item that has the
@@ -615,8 +601,8 @@ public static class IEnumerableExtension
         => Enumerable.Concat(first ?? Enumerable.Empty<TSource>(), second ?? Enumerable.Repeat<TSource?>(null, 1));
 
     public static void SetPreferences<TSource>(this IEnumerable<TSource?>? values,
-                                               bool skipEmptyItems = true)
-        where TSource : VCardProperty
+                                                               bool skipEmptyItems = true)
+        where TSource : VCardProperty, IEnumerable<TSource>
     {
         if (values is null)
         {
@@ -625,17 +611,35 @@ public static class IEnumerableExtension
 
         int cnt = 1;
 
+        foreach (var item in values.Distinct())
+        {
+            if (item != null)
+            {
+                item.Parameters.Preference = (!skipEmptyItems || !item.IsEmpty) ? cnt++ : 100;
+            }
+        }
+    }
+
+    public static void UnsetPreferences<TSource>(this IEnumerable<TSource?>? values)
+        where TSource : VCardProperty, IEnumerable<TSource>
+    {
+        if (values is null)
+        {
+            return;
+        }
+
         foreach (var item in values)
         {
-            if (item != null && (!skipEmptyItems || !item.IsEmpty))
+            if (item != null)
             {
-                item.Parameters.Preference = cnt++;
+                item.Parameters.Preference = 100;
             }
         }
     }
 
     public static void SetIndexes<TSource>(this IEnumerable<TSource?>? values,
-                                           bool skipEmptyItems = true) where TSource : VCardProperty
+                                                           bool skipEmptyItems = true)
+        where TSource : VCardProperty, IEnumerable<TSource>
     {
         if (values is null)
         {
@@ -644,17 +648,34 @@ public static class IEnumerableExtension
 
         int idx = 1;
 
+        foreach (var item in values.Distinct())
+        {
+            if (item != null)
+            {
+                item.Parameters.Index = (!skipEmptyItems || !item.IsEmpty) ? idx++ : null;
+            }
+        }
+    }
+
+    public static void UnsetIndexes<TSource>(this IEnumerable<TSource?>? values)
+        where TSource : VCardProperty, IEnumerable<TSource>
+    {
+        if (values is null)
+        {
+            return;
+        }
+
         foreach (var item in values)
         {
-            if (item != null && (!skipEmptyItems || !item.IsEmpty))
+            if (item != null)
             {
-                item.Parameters.Index = idx++;
+                item.Parameters.Index = null;
             }
         }
     }
 
     public static void SetAltID<TSource>(this IEnumerable<TSource?>? values,
-                                         string? altID) where TSource : VCardProperty
+                                         string? altID) where TSource : VCardProperty, IEnumerable<TSource>
     {
         if (values is null)
         {
@@ -669,4 +690,14 @@ public static class IEnumerableExtension
             }
         }
     }
+
+    //public static IEnumerable<TSource> WithPref<TSource>(this IEnumerable<TSource?>? values,
+    //                                                     TSource? pref,
+    //                                                     bool ignoreEmptyItems = true)
+    //    where TSource : VCardProperty, IEnumerable<TSource>
+    //{
+    //    var coll = pref is null ? values.OrderByPref(false) : pref.Concat(values.OrderByPref(false));
+    //    coll.SetPreferences(ignoreEmptyItems);
+    //    return coll;
+    //}
 }

@@ -19,7 +19,7 @@ public sealed partial class VCard
 
         foreach (
             KeyValuePair<VCdProp, VCardProperty> kvp in this._propDic
-            .OrderBy(x => x.Key)
+            .OrderBy(static x => x.Key)
             .Select(
                   static x => x.Value is IEnumerable<VCardProperty?> prop 
                                 ? prop.WhereNotNull()
@@ -28,10 +28,10 @@ public sealed partial class VCard
                                         v => new KeyValuePair<VCdProp, VCardProperty>(x.Key, v)
                                       )
                                 : Enumerable.Repeat(new KeyValuePair<VCdProp, VCardProperty>(x.Key, (VCardProperty)x.Value), 1))
-            .SelectMany(x => x)
-            .GroupBy(x => x.Value.Group, StringComparer.OrdinalIgnoreCase)
-            .OrderBy(x => x.Key)
-            .SelectMany(static x => x.OrderBy(z => z.Value.Parameters.Preference))
+            .SelectMany(static x => x.OrderBy(static z => z.Value.Parameters.Preference))
+            .GroupBy(static x => x.Value.Group, StringComparer.OrdinalIgnoreCase)
+            .OrderBy(static x => x.Key)
+            .SelectMany(static x => x)
             )
         {
             AppendProperty(kvp.Key, kvp.Value);

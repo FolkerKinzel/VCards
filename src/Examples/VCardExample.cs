@@ -122,15 +122,13 @@ public static class VCardExample
 
             var prefMail = new VC::TextProperty("kaethe_mueller@internet.com");
             prefMail.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
-            prefMail.Parameters.Preference = 1;
-
-            vCard.EMails = prefMail;
 
             var otherMail = new VC::TextProperty("mailto:kaethe_at_home@internet.com");
             otherMail.Parameters.DataType = VC.Enums.VCdDataType.Uri;
             otherMail.Parameters.PropertyClass = VC.Enums.PropertyClassTypes.Home;
 
-            vCard.EMails = vCard.EMails.Concat(otherMail);
+            vCard.EMails = prefMail.Concat(otherMail);
+            vCard.EMails.SetPreferences();
 
             vCard.BirthDayViews = VC::DateAndOrTimeProperty.FromDate(1984, 3, 28);
 
@@ -186,7 +184,7 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2023-11-05T17:08:00Z
+REV:2023-11-08T22:49:39Z
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
  Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
@@ -208,8 +206,8 @@ EMAIL;INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- 5ECH58vce32AyCU9zt4UrIR6UEWNDTPgSpBN0lYawaWmMG6/voEl3VOaWdNmMZ1
- EgurNky9KcHzkFZdB
+ Us1CkvGtP+w7pd9V099fa2IlkpiMahWPYOoeaC/mJHwdfPkkHmlASKFjvXx16+u
+ zuBpaOI76p4YpkaxR
 
 END:VCARD
 
@@ -218,7 +216,7 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2023-11-05T17:08:00Z
+REV:2023-11-08T22:49:39Z
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
@@ -236,8 +234,8 @@ TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 EMAIL;TYPE=INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:5ECH58vce32AyCU9zt4UrIR6UEWNDTPgSpBN0lYawaWmMG6/
- voEl3VOaWdNmMZ1EgurNky9KcHzkFZdB
+PHOTO;ENCODING=b;TYPE=JPEG:Us1CkvGtP+w7pd9V099fa2IlkpiMahWPYOoeaC/mJHwdfPkk
+ HmlASKFjvXx16+uzuBpaOI76p4YpkaxR
 END:VCARD
 
 
@@ -245,7 +243,7 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20231105T170800Z
+REV:20231108T224939Z
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
 TITLE:CEO
@@ -258,11 +256,11 @@ ANNIVERSARY;VALUE=DATE:20060714
 TEL;TYPE=HOME,VOICE;VALUE=URI;PID=1.1:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=2.1:tel:+49-321-1234567
 EMAIL;TYPE=WORK;PREF=1:kaethe_mueller@internet.com
-EMAIL;TYPE=HOME;VALUE=URI:mailto:kaethe_at_home@internet.com
+EMAIL;TYPE=HOME;PREF=2;VALUE=URI:mailto:kaethe_at_home@internet.com
 RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT:Paul Müller-Risinowsk
  y
-PHOTO:data:image/jpeg;base64,5ECH58vce32AyCU9zt4UrIR6UEWNDTPgSpBN0lYawaWmMG
- 6/voEl3VOaWdNmMZ1EgurNky9KcHzkFZdB
+PHOTO:data:image/jpeg;base64,Us1CkvGtP+w7pd9V099fa2IlkpiMahWPYOoeaC/mJHwdfP
+ kkHmlASKFjvXx16+uzuBpaOI76p4YpkaxR
 CLIENTPIDMAP:1;http://folkerkinzel.de/file1.htm
 END:VCARD
 
@@ -271,12 +269,8 @@ Read VCard:
 
 Version: 3.0
 
-[EMailType: EMAIL]
-[Preference: 1]
-EMails: kaethe_mueller@internet.com
-
 [DataType: TimeStamp]
-TimeStamp: 11/05/2023 17:08:00 +00:00
+TimeStamp: 11/08/2023 22:49:39 +00:00
 
 DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 
@@ -304,6 +298,10 @@ Phones: tel:+49-123-9876543
 [PropertyClass: Work]
 [PhoneType: Voice, Msg, Cell, BBS]
 Phones: tel:+49-321-1234567
+
+[EMailType: EMAIL]
+[Preference: 1]
+EMails: kaethe_mueller@internet.com
 
 [EMailType: EMAIL]
 EMails: mailto:kaethe_at_home@internet.com
