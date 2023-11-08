@@ -49,29 +49,29 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
         SetAltID(props);
         BuildPropertyCollection(propertyKey, props);
 
-        ///////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
 
         static void SetAltID(IEnumerable<VCardProperty?> props)
         {
             Debug.Assert(props != null);
 
-            VCardProperty[] arr = props.WhereNotNull().ToArray()!;
-
-            if (arr.Length <= 1)
+            if (props.WhereNotNull().Take(2).Count() <= 1)
             {
                 return;
             }
 
-            string altID = arr.FirstOrDefault(
-                static x => x.Parameters.AltID != null)?.Parameters.AltID ?? "1";
+            string altID = props.FirstOrDefault(
+                static x => x?.Parameters.AltID != null)?.Parameters.AltID ?? "1";
 
-            foreach (VCardProperty prop in arr)
+            foreach (VCardProperty? prop in props)
             {
-                prop.Parameters.AltID = altID;
+                if (prop != null)
+                {
+                    prop.Parameters.AltID = altID;
+                }
             }
         }
     }
-
     #region Append
 
     protected override void AppendAddresses(IEnumerable<AddressProperty?> value)

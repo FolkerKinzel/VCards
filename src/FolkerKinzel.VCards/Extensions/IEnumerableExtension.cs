@@ -613,4 +613,60 @@ public static class IEnumerableExtension
     public static IEnumerable<TSource?> ConcatWith<TSource>(
         this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
         => Enumerable.Concat(first ?? Enumerable.Empty<TSource>(), second ?? Enumerable.Repeat<TSource?>(null, 1));
+
+    public static void SetPreferences<TSource>(this IEnumerable<TSource?>? values,
+                                               bool skipEmptyItems = true)
+        where TSource : VCardProperty
+    {
+        if (values is null)
+        {
+            return;
+        }
+
+        int cnt = 1;
+
+        foreach (var item in values)
+        {
+            if (item != null && (!skipEmptyItems || !item.IsEmpty))
+            {
+                item.Parameters.Preference = cnt++;
+            }
+        }
+    }
+
+    public static void SetIndexes<TSource>(this IEnumerable<TSource?>? values,
+                                           bool skipEmptyItems = true) where TSource : VCardProperty
+    {
+        if (values is null)
+        {
+            return;
+        }
+
+        int idx = 1;
+
+        foreach (var item in values)
+        {
+            if (item != null && (!skipEmptyItems || !item.IsEmpty))
+            {
+                item.Parameters.Index = idx++;
+            }
+        }
+    }
+
+    public static void SetAltID<TSource>(this IEnumerable<TSource?>? values,
+                                         string? altID) where TSource : VCardProperty
+    {
+        if (values is null)
+        {
+            return;
+        }
+
+        foreach (var item in values)
+        {
+            if (item != null)
+            {
+                item.Parameters.AltID = altID;
+            }
+        }
+    }
 }

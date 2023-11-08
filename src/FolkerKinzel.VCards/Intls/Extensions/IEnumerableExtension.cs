@@ -4,7 +4,22 @@ namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static class IEnumerableExtension
 {
-    
+    //public static void SetAltIDIntl<TSource>(this IEnumerable<TSource?> values,
+    //                                         string? altID) where TSource : VCardProperty
+    //{
+    //    Debug.Assert(values != null);
+
+    //    foreach (var item in values)
+    //    {
+    //        if (item is null)
+    //        {
+    //            continue;
+    //        }
+
+    //        item.Parameters.AltID = altID;
+    //    }
+    //}
+
     internal static bool IsSingle([NotNullWhen(true)] this IEnumerable<VCardProperty?>? values, bool ignoreEmptyItems)
         => ignoreEmptyItems ? values?.WhereNotEmpty().Take(2).Count() == 1
                             : values?.WhereNotNull().Take(2).Count() == 1;
