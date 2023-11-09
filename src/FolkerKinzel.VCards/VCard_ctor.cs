@@ -23,7 +23,7 @@ public sealed partial class VCard
 
         Func<ICloneable?, object?> cloner = Cloned;
 
-        foreach (KeyValuePair<VCdProp, object> kvp in vCard._propDic)
+        foreach (KeyValuePair<Prop, object> kvp in vCard._propDic)
         {
             Set(kvp.Key, kvp.Value switch
             {
@@ -231,8 +231,8 @@ public sealed partial class VCard
                     else if (GenderViews is null && vcfRow.Value != null)
                     {
                         GenderViews = vcfRow.Value.StartsWith("F", true, CultureInfo.InvariantCulture)
-                            ? new GenderProperty(Models.Enums.Gender.Female)
-                            : new GenderProperty(Models.Enums.Gender.Male);
+                            ? new GenderProperty(Models.Enums.Sex.Female)
+                            : new GenderProperty(Models.Enums.Sex.Male);
                     }
                     break;
                 case PropKeys.NonStandard.X_WAB_GENDER:
@@ -243,8 +243,8 @@ public sealed partial class VCard
                     else
                     {
                         GenderViews ??= vcfRow.Value.Contains('1', StringComparison.Ordinal)
-                                            ? new GenderProperty(Models.Enums.Gender.Female)
-                                            : new GenderProperty(Models.Enums.Gender.Male);
+                                            ? new GenderProperty(Models.Enums.Sex.Female)
+                                            : new GenderProperty(Models.Enums.Sex.Male);
                     }
                     break;
                 case PropKeys.IMPP:
@@ -285,7 +285,7 @@ public sealed partial class VCard
                                PropKeys.NonStandard.InstantMessenger.X_SKYPE_USERNAME)
                             {
                                 textProp.Parameters.PhoneType =
-                                    textProp.Parameters.PhoneType.Set(PhoneTypes.Voice | PhoneTypes.Video);
+                                    textProp.Parameters.PhoneType.Set(Tel.Voice | Tel.Video);
                             }
                             AddCopyToPhoneNumbers(textProp, para);
                         }
@@ -318,10 +318,10 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (Relations?.All(static x => x!.Parameters.Relation != RelationTypes.Spouse) ?? true)
+                    else if (Relations?.All(static x => x!.Parameters.Relation != Rel.Spouse) ?? true)
                     {
-                        vcfRow.Parameters.DataType = VCdDataType.Text; // führt dazu, dass eine RelationTextProperty erzeugt wird
-                        vcfRow.Parameters.Relation = RelationTypes.Spouse;
+                        vcfRow.Parameters.DataType = Data.Text; // führt dazu, dass eine RelationTextProperty erzeugt wird
+                        vcfRow.Parameters.Relation = Rel.Spouse;
 
                         Relations = Concat(Relations, RelationProperty.Parse(vcfRow, this.Version));
                     }
@@ -334,10 +334,10 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (Relations?.All(x => !x!.Parameters.Relation.IsSet(RelationTypes.Agent)) ?? true)
+                    else if (Relations?.All(x => !x!.Parameters.Relation.IsSet(Rel.Agent)) ?? true)
                     {
-                        vcfRow.Parameters.DataType ??= VCdDataType.Text;
-                        vcfRow.Parameters.Relation = RelationTypes.Agent;
+                        vcfRow.Parameters.DataType ??= Data.Text;
+                        vcfRow.Parameters.Relation = Rel.Agent;
 
                         Relations = Concat(Relations, RelationProperty.Parse(vcfRow, this.Version));
                     }
@@ -346,7 +346,7 @@ public sealed partial class VCard
                 case PropKeys.AGENT:
                     if (string.IsNullOrWhiteSpace(vcfRow.Value))
                     {
-                        Relations = Concat(Relations, RelationProperty.FromText(null, RelationTypes.Agent, vcfRow.Group));
+                        Relations = Concat(Relations, RelationProperty.FromText(null, Rel.Agent, vcfRow.Group));
                     }
                     else
                     {
@@ -356,18 +356,18 @@ public sealed partial class VCard
                             Relations = Concat(Relations,
                                                nested is null
                                                ? RelationProperty.FromText(vcfRow.Value,
-                                                                           RelationTypes.Agent,
+                                                                           Rel.Agent,
                                                                            vcfRow.Group)
                                                // use the ctor directly because nested can't be a circular
                                                // reference and therefore don't neeed to be cloned:
                                                : new RelationVCardProperty(nested,
-                                                                           RelationTypes.Agent,
+                                                                           Rel.Agent,
                                                                            vcfRow.Group));
                         }
                         else
                         {
-                            vcfRow.Parameters.DataType ??= VCdDataType.Text;
-                            vcfRow.Parameters.Relation = RelationTypes.Agent;
+                            vcfRow.Parameters.DataType ??= Data.Text;
+                            vcfRow.Parameters.Relation = Rel.Agent;
 
                             Relations = Concat(Relations, RelationProperty.Parse(vcfRow, this.Version));
                         }
@@ -609,7 +609,7 @@ public sealed partial class VCard
 
     private void AddCopyToPhoneNumbers(TextProperty textProp, ParameterSection para)
     {
-        if ((para.PhoneType.IsSet(PhoneTypes.Voice) || para.PhoneType.IsSet(PhoneTypes.Video)) &&
+        if ((para.PhoneType.IsSet(Tel.Voice) || para.PhoneType.IsSet(Tel.Video)) &&
            (!Phones?.Any(x => x!.Value == textProp.Value) ?? true))
         {
             Phones = Concat(Phones, textProp);

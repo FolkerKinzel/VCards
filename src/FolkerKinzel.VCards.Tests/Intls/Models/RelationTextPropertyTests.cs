@@ -13,7 +13,7 @@ public class RelationTextPropertyTests
     [TestMethod]
     public void RelationTextPropertyTest1()
     {
-        const RelationTypes relation = RelationTypes.Acquaintance;
+        const Rel relation = Rel.Acquaintance;
         string text = "Bruno Hübchen";
 
         var prop = RelationProperty.FromText(text, relation, GROUP);
@@ -23,14 +23,14 @@ public class RelationTextPropertyTests
         Assert.IsFalse(prop.IsEmpty);
 
         Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Text, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Text, prop.Parameters.DataType);
     }
 
 
     [TestMethod]
     public void RelationTextPropertyTest2()
     {
-        const RelationTypes relation = RelationTypes.Acquaintance;
+        const Rel relation = Rel.Acquaintance;
         string text = "Bruno Hübchen";
 
         var prop = RelationProperty.FromText(text, relation, GROUP);
@@ -59,14 +59,14 @@ public class RelationTextPropertyTests
         Assert.IsFalse(prop.IsEmpty);
 
         Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Text, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Text, prop.Parameters.DataType);
     }
 
 
     [TestMethod]
     public void RelationTextPropertyTest3()
     {
-        const RelationTypes relation = RelationTypes.Agent;
+        const Rel relation = Rel.Agent;
         string text = "Bruno Hübchen";
 
         var prop = RelationProperty.FromText(text, relation, GROUP);
@@ -95,7 +95,7 @@ public class RelationTextPropertyTests
         Assert.IsFalse(prop.IsEmpty);
 
         Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Text, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Text, prop.Parameters.DataType);
     }
 
     [TestMethod]

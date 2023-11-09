@@ -30,7 +30,7 @@ internal sealed class DateTimeTextProperty : DateAndOrTimeProperty
     {
         Debug.Assert(ReferenceEquals(Parameters, _textProp.Parameters));
         _textProp.PrepareForVcfSerialization(serializer);
-        Parameters.DataType = VCdDataType.Text;
+        Parameters.DataType = Data.Text;
     }
 
     internal override void AppendValue(VcfSerializer serializer)

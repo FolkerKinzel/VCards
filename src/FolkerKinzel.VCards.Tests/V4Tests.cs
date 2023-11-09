@@ -156,7 +156,7 @@ public class V4Tests
         var vc = new VCard
         {
             Members = RelationProperty.FromText("http://folkers-website.de"),
-            Kind = new KindProperty(VCdKind.Group)
+            Kind = new KindProperty(Kind.Group)
         };
 
         Assert.IsNotNull(vc.Members);
@@ -188,7 +188,7 @@ public class V4Tests
 
         Assert.IsNotNull(vc.Members);
         Assert.IsNotNull(vc.Kind);
-        Assert.AreEqual(VCdKind.Group, vc.Kind.Value);
+        Assert.AreEqual(Kind.Group, vc.Kind.Value);
     }
 
     [TestMethod]
@@ -201,15 +201,15 @@ public class V4Tests
         const string plain = "text/plain";
 
         var fburl1 = new TextProperty(workUrl);
-        fburl1.Parameters.PropertyClass = PropertyClassTypes.Work;
+        fburl1.Parameters.PropertyClass = PCl.Work;
         fburl1.Parameters.Preference = 1;
-        fburl1.Parameters.DataType = VCdDataType.Uri;
+        fburl1.Parameters.DataType = Data.Uri;
         fburl1.Parameters.MediaType = calendar;
 
         var fburl2 = new TextProperty(homeUrl);
-        fburl2.Parameters.PropertyClass = PropertyClassTypes.Home;
+        fburl2.Parameters.PropertyClass = PCl.Home;
         fburl2.Parameters.Preference = 2;
-        fburl2.Parameters.DataType = VCdDataType.Text;
+        fburl2.Parameters.DataType = Data.Text;
         fburl2.Parameters.MediaType = plain;
 
         var vc = new VCard
@@ -239,17 +239,17 @@ public class V4Tests
 
         Assert.IsNotNull(fb1);
         Assert.AreEqual(workUrl, fb1.Value);
-        Assert.AreEqual(PropertyClassTypes.Work, fb1.Parameters.PropertyClass);
+        Assert.AreEqual(PCl.Work, fb1.Parameters.PropertyClass);
         Assert.AreEqual(calendar, fb1.Parameters.MediaType);
-        Assert.AreEqual(VCdDataType.Uri, fb1.Parameters.DataType);
+        Assert.AreEqual(Data.Uri, fb1.Parameters.DataType);
 
         TextProperty fb2 = fburls!.FirstOrDefault(x => x != null && x.Parameters.Preference == 2)!;
 
         Assert.IsNotNull(fb2);
         Assert.AreEqual(homeUrl, fb2.Value);
-        Assert.AreEqual(PropertyClassTypes.Home, fb2.Parameters.PropertyClass);
+        Assert.AreEqual(PCl.Home, fb2.Parameters.PropertyClass);
         Assert.AreEqual(plain, fb2.Parameters.MediaType);
-        Assert.AreEqual(VCdDataType.Text, fb2.Parameters.DataType);
+        Assert.AreEqual(Data.Text, fb2.Parameters.DataType);
     }
 
 
@@ -275,9 +275,9 @@ public class V4Tests
         const string mobilePhoneNumber = "tel:+1-234-567-89";
         var whatsAppImpp = new TextProperty(mobilePhoneNumber);
 
-        const ImppTypes messengerTypes = ImppTypes.Personal
-                                | ImppTypes.Business
-                                | ImppTypes.Mobile;
+        const Impp messengerTypes = Impp.Personal
+                                | Impp.Business
+                                | Impp.Mobile;
 
         whatsAppImpp.Parameters.InstantMessengerType = messengerTypes;
 
@@ -292,7 +292,7 @@ public class V4Tests
         whatsAppImpp = vcard.InstantMessengers?.First();
 
         Assert.AreEqual(mobilePhoneNumber, whatsAppImpp?.Value);
-        Assert.AreEqual(PropertyClassTypes.Home | PropertyClassTypes.Work, whatsAppImpp?.Parameters.PropertyClass);
+        Assert.AreEqual(PCl.Home | PCl.Work, whatsAppImpp?.Parameters.PropertyClass);
     }
 }
 

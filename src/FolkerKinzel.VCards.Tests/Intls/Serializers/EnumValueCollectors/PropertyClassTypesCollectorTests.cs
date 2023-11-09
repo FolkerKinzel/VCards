@@ -8,7 +8,7 @@ public class PropertyClassTypesCollectorTests
     [TestMethod()]
     public void CollectValueStringsTest()
     {
-        PropertyClassTypes? type = PropertyClassTypes.Home | PropertyClassTypes.Work;
+        PCl? type = PCl.Home | PCl.Work;
 
         var list = new List<string>();
 
@@ -32,10 +32,10 @@ public class PropertyClassTypesCollectorTests
     [TestMethod()]
     public void DetectAllEnumValues()
     {
-        var arr = (PropertyClassTypes[])Enum.GetValues(typeof(PropertyClassTypes));
+        var arr = (PCl[])Enum.GetValues(typeof(PCl));
         var list = new List<string>(1);
 
-        foreach (PropertyClassTypes item in arr)
+        foreach (PCl item in arr)
         {
             list.Clear();
             EnumValueCollector.Collect(item, list);
@@ -48,10 +48,10 @@ public class PropertyClassTypesCollectorTests
     [TestMethod()]
     public void RoundTrip()
     {
-        var arr = (PropertyClassTypes[])Enum.GetValues(typeof(PropertyClassTypes));
+        var arr = (PCl[])Enum.GetValues(typeof(PCl));
         var list = new List<string>(1);
 
-        foreach (PropertyClassTypes item in arr)
+        foreach (PCl item in arr)
         {
             list.Clear();
             EnumValueCollector.Collect(item, list);
@@ -59,9 +59,9 @@ public class PropertyClassTypesCollectorTests
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
 
-            PropertyClassTypes comp;
+            PCl comp;
 
-            comp = (PropertyClassTypes)Enum.Parse(typeof(PropertyClassTypes), list[0], true);
+            comp = (PCl)Enum.Parse(typeof(PCl), list[0], true);
 
             Assert.AreEqual(comp, item);
         }

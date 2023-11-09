@@ -3,15 +3,15 @@ using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards;
 
-public sealed partial class VCard : IEnumerable<KeyValuePair<VCdProp, object>>, IEnumerable<VCard>
+public sealed partial class VCard : IEnumerable<KeyValuePair<Prop, object>>, IEnumerable<VCard>
 {
     /// <summary>Returns an enumerator, which iterates through the properties of the
     /// <see cref="VCard" /> object.</summary>
     /// <returns>An Enumerator for the <see cref="VCard" />.</returns>
-    public IEnumerator<KeyValuePair<VCdProp, object>> GetEnumerator() => ((IEnumerable<KeyValuePair<VCdProp, object>>)_propDic).GetEnumerator();
+    public IEnumerator<KeyValuePair<Prop, object>> GetEnumerator() => ((IEnumerable<KeyValuePair<Prop, object>>)_propDic).GetEnumerator();
 
     /// <inheritdoc />
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<KeyValuePair<VCdProp, object>>)_propDic).GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<KeyValuePair<Prop, object>>)_propDic).GetEnumerator();
 
     /// <summary>Explicit implementation of <see cref="IEnumerable{T}"> IEnumerable&lt;VCard&gt;</see>,
     /// which enables to pass a single <see cref="VCard" /> object to a method or property

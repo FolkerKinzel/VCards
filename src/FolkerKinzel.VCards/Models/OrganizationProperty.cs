@@ -85,7 +85,7 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
 
         if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
-            this.Parameters.Encoding = ValueEncoding.QuotedPrintable;
+            this.Parameters.Encoding = Enc.QuotedPrintable;
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
     }
@@ -99,7 +99,7 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
 
         Value.AppendVCardStringTo(serializer);
 
-        if (Parameters.Encoding == ValueEncoding.QuotedPrintable)
+        if (Parameters.Encoding == Enc.QuotedPrintable)
         {
             string toEncode = builder.ToString(valueStartIndex, builder.Length - valueStartIndex);
             builder.Length = valueStartIndex;

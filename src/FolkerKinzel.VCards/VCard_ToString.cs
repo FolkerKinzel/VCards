@@ -18,16 +18,16 @@ public sealed partial class VCard
             .Append(Environment.NewLine);
 
         foreach (
-            KeyValuePair<VCdProp, VCardProperty> kvp in this._propDic
+            KeyValuePair<Prop, VCardProperty> kvp in this._propDic
             .OrderBy(static x => x.Key)
             .Select(
                   static x => x.Value is IEnumerable<VCardProperty?> prop 
                                 ? prop.WhereNotNull()
-                                      .Select<VCardProperty, KeyValuePair<VCdProp, VCardProperty>>
+                                      .Select<VCardProperty, KeyValuePair<Prop, VCardProperty>>
                                       (
-                                        v => new KeyValuePair<VCdProp, VCardProperty>(x.Key, v)
+                                        v => new KeyValuePair<Prop, VCardProperty>(x.Key, v)
                                       )
-                                : Enumerable.Repeat(new KeyValuePair<VCdProp, VCardProperty>(x.Key, (VCardProperty)x.Value), 1))
+                                : Enumerable.Repeat(new KeyValuePair<Prop, VCardProperty>(x.Key, (VCardProperty)x.Value), 1))
             .SelectMany(static x => x.OrderBy(static z => z.Value.Parameters.Preference))
             .GroupBy(static x => x.Value.Group, StringComparer.OrdinalIgnoreCase)
             .OrderBy(static x => x.Key)
@@ -56,7 +56,7 @@ public sealed partial class VCard
 
         // ////////////////////////////////
 
-        void AppendProperty(VCdProp key, VCardProperty vcdProp)
+        void AppendProperty(Prop key, VCardProperty vcdProp)
         {
             const string INDENT = "    ";
             string s = vcdProp.Parameters.ToString();

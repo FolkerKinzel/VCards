@@ -15,8 +15,8 @@ internal sealed class RelationVCardProperty : RelationProperty
     /// </summary>
     /// <param name="vcard">The <see cref="VCard" /> of a person, with whom there is
     /// a relationship, or <c>null</c>.</param>
-    /// <param name="relation">A single <see cref="RelationTypes" /> value or a combination
-    /// of several <see cref="RelationTypes" /> values or <c>null</c>.</param>
+    /// <param name="relation">A single <see cref="Rel" /> value or a combination
+    /// of several <see cref="Rel" /> values or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
@@ -28,13 +28,13 @@ internal sealed class RelationVCardProperty : RelationProperty
     /// </note>
     /// </remarks>
     internal RelationVCardProperty(
-        VCard vcard, RelationTypes? relation = null, string? group = null)
+        VCard vcard, Rel? relation = null, string? group = null)
         : base(relation, group)
     {
         Debug.Assert(vcard != null);
 
         Value = vcard;
-        Parameters.DataType = VCdDataType.VCard;
+        Parameters.DataType = Data.VCard;
     }
 
     public new VCard Value
@@ -53,7 +53,7 @@ internal sealed class RelationVCardProperty : RelationProperty
 
         base.PrepareForVcfSerialization(serializer);
 
-        Parameters.DataType = VCdDataType.VCard;
+        Parameters.DataType = Data.VCard;
     }
 
     internal override void AppendValue(VcfSerializer serializer)

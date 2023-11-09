@@ -50,17 +50,17 @@ public sealed partial class ParameterSection
                 case ParameterKey.VALUE:
                     {
                         string valValue = CleanParameterValue(parameter.Value, builder);
-                        VCdDataType? dataType = VCdDataTypeConverter.Parse(valValue);
+                        Data? dataType = DataConverter.Parse(valValue);
                         this.DataType = dataType;
 
                         if (!dataType.HasValue)
                         {
-                            ContentLocation contentLocation = ContentLocationConverter.Parse(valValue);
+                            Loc contentLocation = LocConverter.Parse(valValue);
                             this.ContentLocation = contentLocation;
 
-                            if (contentLocation == ContentLocation.Url)
+                            if (contentLocation == Loc.Url)
                             {
-                                this.DataType = VCdDataType.Uri;
+                                this.DataType = Data.Uri;
                             }
                         }
 
@@ -106,7 +106,7 @@ public sealed partial class ParameterSection
                     }
                 case ParameterKey.GEO:
                     if (GeoCoordinate.TryParse(parameter.Value.AsSpan().Trim().Trim(info.AllQuotes), 
-                                               out FolkerKinzel.VCards.Models.GeoCoordinate? geo))
+                                               out GeoCoordinate? geo))
                     {
                         this.GeoPosition = geo;
                     }
@@ -137,7 +137,7 @@ public sealed partial class ParameterSection
                     this.Calendar = parameter.Value.Trim().Trim(info.AllQuotes);
                     break;
                 case ParameterKey.ENCODING:
-                    this.Encoding = ValueEncodingConverter.Parse(parameter.Value);
+                    this.Encoding = EncConverter.Parse(parameter.Value);
                     break;
                 case ParameterKey.CHARSET:
                     this.CharSet = parameter.Value.Trim().Trim(info.AllQuotes);
@@ -171,7 +171,7 @@ public sealed partial class ParameterSection
                 case ParameterKey.LEVEL:
                     if (propertyKey == VCard.PropKeys.NonStandard.EXPERTISE)
                     {
-                        ExpertiseLevel? expertise = ExpertiseLevelConverter.Parse(CleanLevelValue(parameter.Value, builder));
+                        Expertise? expertise = ExpertiseConverter.Parse(CleanLevelValue(parameter.Value, builder));
 
                         if (expertise.HasValue)
                         {
@@ -184,7 +184,7 @@ public sealed partial class ParameterSection
                     }
                     else // HOBBY oder INTEREST
                     {
-                        InterestLevel? interest = InterestLevelConverter.Parse(CleanLevelValue(parameter.Value, builder));
+                        Interest? interest = InterestConverter.Parse(CleanLevelValue(parameter.Value, builder));
 
                         if (interest.HasValue)
                         {
@@ -317,10 +317,10 @@ public sealed partial class ParameterSection
                 this.Preference = 1;
                 return true;
             case TypeValue.HOME:
-                this.PropertyClass = this.PropertyClass.Set(Enums.PropertyClassTypes.Home);
+                this.PropertyClass = this.PropertyClass.Set(Enums.PCl.Home);
                 return true;
             case TypeValue.WORK:
-                this.PropertyClass = this.PropertyClass.Set(Enums.PropertyClassTypes.Work);
+                this.PropertyClass = this.PropertyClass.Set(Enums.PCl.Work);
                 return true;
             default:
                 break;
@@ -331,7 +331,7 @@ public sealed partial class ParameterSection
             case VCard.PropKeys.LABEL:
             case VCard.PropKeys.ADR:
                 {
-                    AddressTypes? addressType = AddressTypesConverter.Parse(typeValue);
+                    Adr? addressType = AdrConverter.Parse(typeValue);
 
                     if (addressType.HasValue)
                     {
@@ -357,7 +357,7 @@ public sealed partial class ParameterSection
             case PropKeys.NonStandard.InstantMessenger.X_TWITTER:
             case PropKeys.NonStandard.InstantMessenger.X_YAHOO:
                 {
-                    PhoneTypes? phoneType = PhoneTypesConverter.Parse(typeValue);
+                    Tel? phoneType = TelConverter.Parse(typeValue);
 
                     if (phoneType.HasValue)
                     {
@@ -369,7 +369,7 @@ public sealed partial class ParameterSection
                 }
             case VCard.PropKeys.RELATED:
                 {
-                    RelationTypes? relType = RelationTypesConverter.Parse(typeValue);
+                    Rel? relType = RelConverter.Parse(typeValue);
 
                     if (relType.HasValue)
                     {
@@ -394,7 +394,7 @@ public sealed partial class ParameterSection
                 break;
             case VCard.PropKeys.IMPP:
                 {
-                    ImppTypes? imppType = ImppTypesConverter.Parse(typeValue);
+                    Impp? imppType = ImppConverter.Parse(typeValue);
 
                     if (imppType.HasValue)
                     {

@@ -18,9 +18,9 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     protected override void ReplenishRequiredProperties()
     {
         if ((VCardToSerialize.Members?.Any(x => x != null && (!x.IsEmpty || !IgnoreEmptyItems)) ?? false)
-            && (VCardToSerialize.Kind?.Value != VCdKind.Group))
+            && (VCardToSerialize.Kind?.Value != Kind.Group))
         {
-            VCardToSerialize.Kind = new KindProperty(VCdKind.Group);
+            VCardToSerialize.Kind = new KindProperty(Kind.Group);
         }
 
         if (VCardToSerialize.DisplayNames is null)
@@ -190,14 +190,14 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
                 continue;
             }
 
-            if (prop.Parameters.InstantMessengerType.IsSet(ImppTypes.Personal))
+            if (prop.Parameters.InstantMessengerType.IsSet(Impp.Personal))
             {
-                prop.Parameters.PropertyClass = prop.Parameters.PropertyClass.Set(PropertyClassTypes.Home);
+                prop.Parameters.PropertyClass = prop.Parameters.PropertyClass.Set(PCl.Home);
             }
 
-            if (prop.Parameters.InstantMessengerType.IsSet(ImppTypes.Business))
+            if (prop.Parameters.InstantMessengerType.IsSet(Impp.Business))
             {
-                prop.Parameters.PropertyClass = prop.Parameters.PropertyClass.Set(PropertyClassTypes.Work);
+                prop.Parameters.PropertyClass = prop.Parameters.PropertyClass.Set(PCl.Work);
             }
 
             BuildProperty(VCard.PropKeys.IMPP, prop);

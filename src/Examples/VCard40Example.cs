@@ -41,7 +41,7 @@ public static class VCard40Example
         var composersVCard = new VCard
         {
             DisplayNames = new VC::TextProperty("Composers"),
-            Kind = new VC::KindProperty(VC::Enums.VCdKind.Group),
+            Kind = new VC::KindProperty(VC::Enums.Kind.Group),
             Members = members
         };
 

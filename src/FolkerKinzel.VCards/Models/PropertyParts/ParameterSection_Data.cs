@@ -33,12 +33,12 @@ public sealed partial class ParameterSection
 
     /// <summary> <c>TYPE</c>: Specifies the type of a postal delivery address. 
     /// <c>(2,3)</c></summary>
-    public AddressTypes? AddressType
+    public Adr? AddressType
     {
-        get => Get<AddressTypes?>(VCdParam.AddressType);
+        get => Get<Adr?>(VCdParam.AddressType);
         set
         {
-            value = (value == default(AddressTypes)) ? null : value;
+            value = (value == default(Adr)) ? null : value;
             Set(VCdParam.AddressType, value);
         }
     }
@@ -71,18 +71,18 @@ public sealed partial class ParameterSection
 
     /// <summary><c>VALUE</c>: Indicates where the actual content of the property 
     /// is located. <c>(2)</c></summary>
-    public ContentLocation ContentLocation
+    public Loc ContentLocation
     {
-        get => Get<ContentLocation>(VCdParam.ContentLocation);
+        get => Get<Loc>(VCdParam.ContentLocation);
         set
         {
             Set(VCdParam.ContentLocation, value);
 
-            if (value != ContentLocation.Inline)
+            if (value != Loc.Inline)
             {
-                DataType = VCdDataType.Uri;
+                DataType = Data.Uri;
             }
-            else if (DataType == VCdDataType.Uri)
+            else if (DataType == Data.Uri)
             {
                 DataType = null;
             }
@@ -100,14 +100,14 @@ public sealed partial class ParameterSection
 
     /// <summary><c>VALUE</c>: Indicates which of the data types predefined by the vCard
     /// standard the content of the vCard property corresponds to. <c>(3,4)</c></summary>
-    public VCdDataType? DataType
+    public Data? DataType
     {
-        get => Get<VCdDataType?>(VCdParam.DataType);
+        get => Get<Data?>(VCdParam.DataType);
         set => Set(VCdParam.DataType, value);
     }
 
     /// <summary> <c>TYPE</c>: Describes the type of an e-mail address. <c>(2,3)</c></summary>
-    /// <value>Use only the constants defined in the <see cref="Enums.EMailType" /> class!</value>
+    /// <value>Use only the constants defined in the <see cref="Enums.EMail" /> class!</value>
     public string? EMailType
     {
         get => Get<string?>(VCdParam.EMailType);
@@ -121,21 +121,21 @@ public sealed partial class ParameterSection
     /// this has to be done manually. 
     /// </para>
     /// <para>
-    /// In vCard&#160;3.0 only <see cref="ValueEncoding.Base64" /> is permitted. 
+    /// In vCard&#160;3.0 only <see cref="Enc.Base64" /> is permitted. 
     /// </para>
     /// </value>
-    public ValueEncoding? Encoding
+    public Enc? Encoding
     {
-        get => Get<ValueEncoding?>(VCdParam.Encoding);
+        get => Get<Enc?>(VCdParam.Encoding);
         set => Set(VCdParam.Encoding, value);
     }
 
     /// <summary> <c>LEVEL</c>: A person's level of expertise. <c>(4 - RFC&#160;6715)</c></summary>
     /// <remarks> Used for the property <see cref="VCard.Expertises">VCard.Expertises</see>.
     /// </remarks>
-    public ExpertiseLevel? Expertise
+    public Expertise? Expertise
     {
-        get => Get<ExpertiseLevel?>(VCdParam.Expertise);
+        get => Get<Expertise?>(VCdParam.Expertise);
         set => Set(VCdParam.Expertise, value);
     }
 
@@ -153,9 +153,9 @@ public sealed partial class ParameterSection
     /// using a <see cref="VCardProperty.Group"/> identifier.
     /// </note>
     /// </remarks>
-    public FolkerKinzel.VCards.Models.GeoCoordinate? GeoPosition
+    public GeoCoordinate? GeoPosition
     {
-        get => Get<FolkerKinzel.VCards.Models.GeoCoordinate?>(VCdParam.GeoPosition);
+        get => Get<VCards.GeoCoordinate?>(VCdParam.GeoPosition);
         set => Set(VCdParam.GeoPosition, value);
     }
 
@@ -179,9 +179,9 @@ public sealed partial class ParameterSection
 
     /// <summary><c>TYPE</c>: Description of an instant messenger address. <c>(3 - RFC&#160;4770)</c>
     /// </summary>
-    public ImppTypes? InstantMessengerType
+    public Impp? InstantMessengerType
     {
-        get => Get<ImppTypes?>(VCdParam.InstantMessengerType);
+        get => Get<Impp?>(VCdParam.InstantMessengerType);
         set => Set(VCdParam.InstantMessengerType, value);
     }
 
@@ -189,9 +189,9 @@ public sealed partial class ParameterSection
     /// </summary>
     /// <remarks>Used for the properties <see cref="VCard.Hobbies">VCard.Hobbies</see>
     /// and <see cref="VCard.Interests">VCard.Interests</see>.</remarks>
-    public InterestLevel? Interest
+    public Interest? Interest
     {
-        get => Get<InterestLevel?>(VCdParam.Interest);
+        get => Get<Interest?>(VCdParam.Interest);
         set => Set(VCdParam.Interest, value);
     }
 
@@ -270,12 +270,12 @@ public sealed partial class ParameterSection
     }
 
     /// <summary><c>TYPE</c>: Describes a phone number. <c>(2,3,4)</c></summary>
-    public PhoneTypes? PhoneType
+    public Tel? PhoneType
     {
-        get => Get<PhoneTypes?>(VCdParam.PhoneType);
+        get => Get<Tel?>(VCdParam.PhoneType);
         set
         {
-            value = (value == default(PhoneTypes)) ? null : value;
+            value = (value == default(Tel)) ? null : value;
             Set(VCdParam.PhoneType, value);
         }
     }
@@ -311,12 +311,12 @@ public sealed partial class ParameterSection
 
     /// <summary> <c>TYPE</c>: Indicates, wether a <see cref="VCardProperty" /> is related
     /// to an individual's work place or to an individual's personal life. <c>(2,3,4)</c></summary>
-    public PropertyClassTypes? PropertyClass
+    public PCl? PropertyClass
     {
-        get => Get<PropertyClassTypes?>(VCdParam.PropertyClass);
+        get => Get<PCl?>(VCdParam.PropertyClass);
         set
         {
-            value = (value == default(PropertyClassTypes)) ? null : value;
+            value = (value == default(PCl)) ? null : value;
             Set(VCdParam.PropertyClass, value);
         }
     }
@@ -333,12 +333,12 @@ public sealed partial class ParameterSection
     /// a person. <c>(4)</c></summary>
     /// <remarks> Used in the <see cref="VCard.Relations">VCard.Relations</see> 
     /// property (<c>RELATED</c>).</remarks>
-    public RelationTypes? Relation
+    public Rel? Relation
     {
-        get => Get<RelationTypes?>(VCdParam.Relation);
+        get => Get<Rel?>(VCdParam.Relation);
         set
         {
-            value = (value == default(RelationTypes)) ? null : value;
+            value = (value == default(Rel)) ? null : value;
             Set(VCdParam.Relation, value);
         }
     }

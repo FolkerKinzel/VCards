@@ -12,40 +12,40 @@ public class GenderPropertyTests
     private const string IDENTITY = "identity";
 
     [DataTestMethod()]
-    [DataRow(GROUP, Gender.Male, null)]
-    [DataRow(GROUP, Gender.Female, null)]
-    [DataRow(GROUP, Gender.Other, null)]
-    [DataRow(GROUP, Gender.Unknown, null)]
-    [DataRow(GROUP, Gender.NonOrNotApplicable, null)]
+    [DataRow(GROUP, Sex.Male, null)]
+    [DataRow(GROUP, Sex.Female, null)]
+    [DataRow(GROUP, Sex.Other, null)]
+    [DataRow(GROUP, Sex.Unknown, null)]
+    [DataRow(GROUP, Sex.NonOrNotApplicable, null)]
     [DataRow(GROUP, null, null)]
     [DataRow(null, null, IDENTITY)]
-    [DataRow(null, Gender.Female, IDENTITY)]
-    [DataRow(GROUP, Gender.Female, IDENTITY)]
-    public void GenderPropertyTest1(string? expectedGroup, Gender? expectedSex, string? expectedGenderIdentity)
+    [DataRow(null, Sex.Female, IDENTITY)]
+    [DataRow(GROUP, Sex.Female, IDENTITY)]
+    public void GenderPropertyTest1(string? expectedGroup, Sex? expectedSex, string? expectedGenderIdentity)
     {
         var genderProp = new GenderProperty(expectedSex, expectedGenderIdentity, expectedGroup);
 
         Assert.IsNotNull(genderProp.Value);
         Assert.AreEqual(expectedGroup, genderProp.Group);
-        Assert.AreEqual(expectedSex, genderProp.Value.Gender);
+        Assert.AreEqual(expectedSex, genderProp.Value.Sex);
         Assert.AreEqual(expectedGenderIdentity, genderProp.Value.Identity);
     }
 
 
     [DataTestMethod()]
-    [DataRow(GROUP + ".GENDER:M", GROUP, Gender.Male, null)]
-    [DataRow(GROUP + ".GENDER:F", GROUP, Gender.Female, null)]
-    [DataRow(GROUP + ".GENDER:O", GROUP, Gender.Other, null)]
-    [DataRow(GROUP + ".GENDER:U", GROUP, Gender.Unknown, null)]
-    [DataRow(GROUP + ".GENDER:N", GROUP, Gender.NonOrNotApplicable, null)]
+    [DataRow(GROUP + ".GENDER:M", GROUP, Sex.Male, null)]
+    [DataRow(GROUP + ".GENDER:F", GROUP, Sex.Female, null)]
+    [DataRow(GROUP + ".GENDER:O", GROUP, Sex.Other, null)]
+    [DataRow(GROUP + ".GENDER:U", GROUP, Sex.Unknown, null)]
+    [DataRow(GROUP + ".GENDER:N", GROUP, Sex.NonOrNotApplicable, null)]
     [DataRow(GROUP + ".GENDER:", GROUP, null, null)]
     [DataRow(GROUP + ".GENDER:;", GROUP, null, null)]
     [DataRow(GROUP + ".GENDER: ; ", GROUP, null, null)]
     [DataRow("GENDER: ;" + IDENTITY, null, null, IDENTITY)]
-    [DataRow("GENDER:F;" + IDENTITY, null, Gender.Female, IDENTITY)]
-    [DataRow(GROUP + ".GENDER:F;" + IDENTITY, GROUP, Gender.Female, IDENTITY)]
-    [DataRow(GROUP + ".GENDER:F;", GROUP, Gender.Female, null)]
-    public void GenderPropertyTest2(string s, string? expectedGroup, Gender? expectedSex, string? expectedGenderIdentity)
+    [DataRow("GENDER:F;" + IDENTITY, null, Sex.Female, IDENTITY)]
+    [DataRow(GROUP + ".GENDER:F;" + IDENTITY, GROUP, Sex.Female, IDENTITY)]
+    [DataRow(GROUP + ".GENDER:F;", GROUP, Sex.Female, null)]
+    public void GenderPropertyTest2(string s, string? expectedGroup, Sex? expectedSex, string? expectedGenderIdentity)
     {
         var vcfRow = VcfRow.Parse(s, new VcfDeserializationInfo());
 
@@ -55,7 +55,7 @@ public class GenderPropertyTests
 
         Assert.IsNotNull(genderProp.Value);
         Assert.AreEqual(expectedGroup, genderProp.Group);
-        Assert.AreEqual(expectedSex, genderProp.Value.Gender);
+        Assert.AreEqual(expectedSex, genderProp.Value.Sex);
         Assert.AreEqual(expectedGenderIdentity, genderProp.Value.Identity);
     }
 
@@ -63,7 +63,7 @@ public class GenderPropertyTests
     [TestMethod]
     public void GenderPropertyTest3()
     {
-        var prop = new GenderProperty(Gender.Female, IDENTITY, GROUP);
+        var prop = new GenderProperty(Sex.Female, IDENTITY, GROUP);
 
         var vcard = new VCard
         {
@@ -84,7 +84,7 @@ public class GenderPropertyTests
         prop = vcard.GenderViews!.First() as GenderProperty;
 
         Assert.IsNotNull(prop);
-        Assert.AreEqual(Gender.Female, prop!.Value.Gender);
+        Assert.AreEqual(Sex.Female, prop!.Value.Sex);
         Assert.AreEqual(IDENTITY, prop!.Value.Identity);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
@@ -94,7 +94,7 @@ public class GenderPropertyTests
     [TestMethod]
     public void IEnumerableTest1()
     {
-        var prop = new GenderProperty(Gender.Other);
+        var prop = new GenderProperty(Sex.Other);
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 }

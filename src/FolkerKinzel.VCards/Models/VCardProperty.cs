@@ -95,14 +95,14 @@ public abstract class VCardProperty : ICloneable
         // QuotedPrintable oder Base64 gemacht worden ist:
         return !(serializer.Version == VCdVersion.V2_1 &&
             (Parameters.Encoding ==
-                ValueEncoding.QuotedPrintable || Parameters.Encoding == ValueEncoding.Base64));
+                Enc.QuotedPrintable || Parameters.Encoding == Enc.Base64));
     }
 
     internal virtual void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         Debug.Assert(serializer != null);
 
-        if (this.Parameters.Encoding != ValueEncoding.Base64)
+        if (this.Parameters.Encoding != Enc.Base64)
         {
             this.Parameters.Encoding = null;
         }

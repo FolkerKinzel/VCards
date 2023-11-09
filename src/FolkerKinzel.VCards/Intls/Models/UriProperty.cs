@@ -17,7 +17,7 @@ internal sealed class UriProperty : VCardProperty
         Debug.Assert(value.IsAbsoluteUri);
 
         Value = value;
-        Parameters.DataType = VCdDataType.Uri;
+        Parameters.DataType = Data.Uri;
     }
 
     public new Uri Value { get; }
@@ -39,16 +39,16 @@ internal sealed class UriProperty : VCardProperty
         {
             if (UriConverter.IsContentId(Value))
             {
-                Parameters.ContentLocation = ContentLocation.ContentID;
+                Parameters.ContentLocation = Loc.Cid;
             }
-            else if (Parameters.ContentLocation != ContentLocation.ContentID)
+            else if (Parameters.ContentLocation != Loc.Cid)
             {
-                Parameters.ContentLocation = ContentLocation.Url;
+                Parameters.ContentLocation = Loc.Url;
             }
         }
         else
         {
-            Parameters.DataType = VCdDataType.Uri;
+            Parameters.DataType = Data.Uri;
         }
     }
     

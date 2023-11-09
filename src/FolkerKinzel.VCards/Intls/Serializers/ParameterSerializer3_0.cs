@@ -17,9 +17,9 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     private readonly Action<ParameterSerializer3_0> _collectPhoneTypes = static serializer
         => {
-               const PhoneTypes DEFINED_PHONE_TYPES = PhoneTypes.Voice | PhoneTypes.Fax | PhoneTypes.Msg |
-               PhoneTypes.Cell | PhoneTypes.Pager | PhoneTypes.BBS | PhoneTypes.Modem | PhoneTypes.Car |
-               PhoneTypes.ISDN | PhoneTypes.Video | PhoneTypes.PCS;
+               const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Fax | Tel.Msg |
+               Tel.Cell | Tel.Pager | Tel.BBS | Tel.Modem | Tel.Car |
+               Tel.ISDN | Tel.Video | Tel.PCS;
          
                EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
                                           serializer._stringCollectionList);
@@ -57,15 +57,15 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     protected override void BuildAgentPara()
     {
-        if (ParaSection.DataType == VCdDataType.Uri)
+        if (ParaSection.DataType == Data.Uri)
         {
-            AppendValue(VCdDataType.Uri);
+            AppendValue(Data.Uri);
         }
     }
 
     protected override void BuildBdayPara()
     {
-        Debug.Assert(ParaSection.DataType != VCdDataType.Text);
+        Debug.Assert(ParaSection.DataType != Data.Text);
 
         AppendValue(ParaSection.DataType);
     }
@@ -119,12 +119,12 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Clear();
         _actionList.Add(this._collectKeyType);
 
-        if (ParaSection.DataType == VCdDataType.Text)
+        if (ParaSection.DataType == Data.Text)
         {
-            AppendValue(VCdDataType.Text);
+            AppendValue(Data.Text);
         }
 
-        if (ParaSection.Encoding == ValueEncoding.Base64)
+        if (ParaSection.Encoding == Enc.Base64)
         {
             AppendBase64Encoding();
         }
@@ -149,12 +149,12 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Clear();
         _actionList.Add(_collectImageType);
 
-        if (ParaSection.DataType == VCdDataType.Uri)
+        if (ParaSection.DataType == Data.Uri)
         {
-            AppendValue(VCdDataType.Uri);
+            AppendValue(Data.Uri);
         }
 
-        if (ParaSection.Encoding == ValueEncoding.Base64)
+        if (ParaSection.Encoding == Enc.Base64)
         {
             AppendBase64Encoding();
         }
@@ -208,12 +208,12 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Add(_collectImageType);
 
 
-        if (ParaSection.DataType == VCdDataType.Uri)
+        if (ParaSection.DataType == Data.Uri)
         {
-            AppendValue(VCdDataType.Uri);
+            AppendValue(Data.Uri);
         }
 
-        if (ParaSection.Encoding == ValueEncoding.Base64)
+        if (ParaSection.Encoding == Enc.Base64)
         {
             AppendBase64Encoding();
         }
@@ -257,12 +257,12 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Add(_collectSoundType);
 
 
-        if (ParaSection.DataType == VCdDataType.Uri)
+        if (ParaSection.DataType == Data.Uri)
         {
-            AppendValue(VCdDataType.Uri);
+            AppendValue(Data.Uri);
         }
         
-        if(ParaSection.Encoding == ValueEncoding.Base64)
+        if(ParaSection.Encoding == Enc.Base64)
         {
             AppendBase64Encoding();
         }
@@ -325,7 +325,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
         AppendValue(ParaSection.DataType);
 
-        if (ParaSection.Encoding == ValueEncoding.Base64)
+        if (ParaSection.Encoding == Enc.Base64)
         {
             AppendBase64Encoding();
         }
@@ -396,12 +396,12 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     #region Append
 
-    private void AppendValue(VCdDataType? dataType)
+    private void AppendValue(Data? dataType)
     {
-        const VCdDataType DEFINED_DATA_TYPES =
-            VCdDataType.Uri | VCdDataType.Text | VCdDataType.Date | VCdDataType.Time | VCdDataType.DateTime |
-            VCdDataType.Integer | VCdDataType.Boolean | VCdDataType.Float | VCdDataType.Binary |
-            VCdDataType.PhoneNumber | VCdDataType.VCard | VCdDataType.UtcOffset;
+        const Data DEFINED_DATA_TYPES =
+            Data.Uri | Data.Text | Data.Date | Data.Time | Data.DateTime |
+            Data.Integer | Data.Boolean | Data.Float | Data.Binary |
+            Data.PhoneNumber | Data.VCard | Data.UtcOffset;
 
         string? s = (dataType & DEFINED_DATA_TYPES).ToVcfString();
 
@@ -521,7 +521,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     }
 
     private void DoCollectEmailType() 
-        => _stringCollectionList.Add(ParaSection.EMailType ?? EMailType.SMTP);
+        => _stringCollectionList.Add(ParaSection.EMailType ?? EMail.SMTP);
 
     private void DoCollectMediaType()
     {

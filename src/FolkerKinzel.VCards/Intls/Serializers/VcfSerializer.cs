@@ -174,150 +174,150 @@ internal abstract class VcfSerializer : IDisposable
 
     private void AppendProperties()
     {
-        foreach (KeyValuePair<VCdProp, object> kvp in 
-            ((IEnumerable<KeyValuePair<VCdProp, object>>)VCardToSerialize).OrderBy(x => x.Key))
+        foreach (KeyValuePair<Prop, object> kvp in 
+            ((IEnumerable<KeyValuePair<Prop, object>>)VCardToSerialize).OrderBy(x => x.Key))
         {
             switch (kvp.Key)
             {
-                case VCdProp.Profile:
+                case Prop.Profile:
                     AppendProfile((ProfileProperty)kvp.Value);
                     break;
-                case VCdProp.Kind:
+                case Prop.Kind:
                     AppendKind((KindProperty)kvp.Value);
                     break;
-                case VCdProp.Mailer:
+                case Prop.Mailer:
                     AppendMailer((TextProperty)kvp.Value);
                     break;
-                case VCdProp.ProdID:
+                case Prop.ProdID:
                     AppendProdID((TextProperty)kvp.Value);
                     break;
-                case VCdProp.TimeStamp:
+                case Prop.TimeStamp:
                     AppendLastRevision((TimeStampProperty)kvp.Value);
                     break;
-                case VCdProp.UniqueIdentifier:
+                case Prop.UniqueIdentifier:
                     AppendUniqueIdentifier((UuidProperty)kvp.Value);
                     break;
-                case VCdProp.Categories:
+                case Prop.Categories:
                     AppendCategories((IEnumerable<StringCollectionProperty?>)kvp.Value);
                     break;
-                case VCdProp.TimeZones:
+                case Prop.TimeZones:
                     AppendTimeZones((IEnumerable<TimeZoneProperty?>)kvp.Value);
                     break;
-                case VCdProp.GeoCoordinates:
+                case Prop.GeoCoordinates:
                     AppendGeoCoordinates((IEnumerable<GeoProperty?>)kvp.Value);
                     break;
-                case VCdProp.Access:
+                case Prop.Access:
                     AppendAccess((AccessProperty)kvp.Value);
                     break;
-                case VCdProp.Sources:
+                case Prop.Sources:
                     AppendSources((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.DirectoryName:
+                case Prop.DirectoryName:
                     AppendDirectoryName((TextProperty)kvp.Value);
                     break;
-                case VCdProp.DisplayNames:
+                case Prop.DisplayNames:
                     AppendDisplayNames((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.NameViews:
+                case Prop.NameViews:
                     AppendNameViews((IEnumerable<NameProperty?>)kvp.Value);
                     break;
-                case VCdProp.GenderViews:
+                case Prop.GenderViews:
                     AppendGenderViews((IEnumerable<GenderProperty?>)kvp.Value);
                     break;
-                case VCdProp.NickNames:
+                case Prop.NickNames:
                     AppendNickNames((IEnumerable<StringCollectionProperty?>)kvp.Value);
                     break;
-                case VCdProp.Titles:
+                case Prop.Titles:
                     AppendTitles((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Roles:
+                case Prop.Roles:
                     AppendRoles((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Organizations:
+                case Prop.Organizations:
                     AppendOrganizations((IEnumerable<OrganizationProperty?>)kvp.Value);
                     break;
-                case VCdProp.BirthDayViews:
+                case Prop.BirthDayViews:
                     AppendBirthDayViews((IEnumerable<DateAndOrTimeProperty?>)kvp.Value);
                     break;
-                case VCdProp.BirthPlaceViews:
+                case Prop.BirthPlaceViews:
                     AppendBirthPlaceViews((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.AnniversaryViews:
+                case Prop.AnniversaryViews:
                     AppendAnniversaryViews((IEnumerable<DateAndOrTimeProperty?>)kvp.Value);
                     break;
-                case VCdProp.DeathDateViews:
+                case Prop.DeathDateViews:
                     AppendDeathDateViews((IEnumerable<DateAndOrTimeProperty?>)kvp.Value);
                     break;
-                case VCdProp.DeathPlaceViews:
+                case Prop.DeathPlaceViews:
                     AppendDeathPlaceViews((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Addresses:
+                case Prop.Addresses:
                     AppendAddresses((IEnumerable<AddressProperty?>)kvp.Value);
                     break;
-                case VCdProp.Phones:
+                case Prop.Phones:
                     AppendPhones((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.EMails:
+                case Prop.EMails:
                     AppendEMails((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.URLs:
+                case Prop.URLs:
                     AppendURLs((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.InstantMessengers:
+                case Prop.InstantMessengers:
                     AppendInstantMessengerHandles((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Keys:
+                case Prop.Keys:
                     AppendKeys((IEnumerable<DataProperty?>)kvp.Value);
                     break;
-                case VCdProp.CalendarAddresses:
+                case Prop.CalendarAddresses:
                     AppendCalendarAddresses((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.CalendarUserAddresses:
+                case Prop.CalendarUserAddresses:
                     AppendCalendarUserAddresses((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.FreeOrBusyUrls:
+                case Prop.FreeOrBusyUrls:
                     AppendFreeBusyUrls((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Relations:
+                case Prop.Relations:
                     AppendRelations((IEnumerable<RelationProperty?>)kvp.Value);
                     break;
-                case VCdProp.Members:
+                case Prop.Members:
                     AppendMembers((IEnumerable<RelationProperty?>)kvp.Value);
                     break;
-                case VCdProp.OrgDirectories:
+                case Prop.OrgDirectories:
                     AppendOrgDirectories((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Expertises:
+                case Prop.Expertises:
                     AppendExpertises((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Interests:
+                case Prop.Interests:
                     AppendInterests((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Hobbies:
+                case Prop.Hobbies:
                     AppendHobbies((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Languages:
+                case Prop.Languages:
                     AppendLanguages((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Notes:
+                case Prop.Notes:
                     AppendNotes((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.XmlProperties:
+                case Prop.XmlProperties:
                     AppendXmlProperties((IEnumerable<XmlProperty?>)kvp.Value);
                     break;
-                case VCdProp.Logos:
+                case Prop.Logos:
                     AppendLogos((IEnumerable<DataProperty?>)kvp.Value);
                     break;
-                case VCdProp.Photos:
+                case Prop.Photos:
                     AppendPhotos((IEnumerable<DataProperty?>)kvp.Value);
                     break;
-                case VCdProp.Sounds:
+                case Prop.Sounds:
                     AppendSounds((IEnumerable<DataProperty?>)kvp.Value);
                     break;
-                case VCdProp.PropertyIDMappings:
+                case Prop.PropertyIDMappings:
                     AppendPropertyIDMappings((IEnumerable<PropertyIDMappingProperty?>)kvp.Value);
                     break;
-                case VCdProp.NonStandard:
+                case Prop.NonStandard:
                     AppendNonStandardProperties((IEnumerable<NonStandardProperty?>)kvp.Value);
                     break;
                 default:
@@ -544,11 +544,11 @@ internal abstract class VcfSerializer : IDisposable
     {
         Debug.Assert(value != null);
 
-        if (value.FirstOrDefault(x => x?.Value?.Gender != null) is GenderProperty pref)
+        if (value.FirstOrDefault(x => x?.Value?.Sex != null) is GenderProperty pref)
         {
-            Gender sex = pref.Value.Gender!.Value;
+            Sex sex = pref.Value.Sex!.Value;
 
-            if (sex != Gender.Male && sex != Gender.Female)
+            if (sex != Sex.Male && sex != Sex.Female)
             {
                 return;
             }
@@ -559,7 +559,7 @@ internal abstract class VcfSerializer : IDisposable
 
                 var xGender = new NonStandardProperty(
                     propKey,
-                    sex == Gender.Male ? "Male" : "Female", pref.Group);
+                    sex == Sex.Male ? "Male" : "Female", pref.Group);
 
                 BuildProperty(propKey, xGender);
             }
@@ -570,7 +570,7 @@ internal abstract class VcfSerializer : IDisposable
 
                 var xGender = new NonStandardProperty(
                     propKey,
-                    sex == Gender.Male ? "2" : "1", pref.Group);
+                    sex == Sex.Male ? "2" : "1", pref.Group);
 
                 BuildProperty(propKey, xGender);
             }
@@ -664,7 +664,7 @@ internal abstract class VcfSerializer : IDisposable
 
     protected virtual void AppendRelations(IEnumerable<RelationProperty?> value)
     {
-        RelationProperty? agent = value.PrefOrNullIntl(static x => x.Parameters.Relation.IsSet(RelationTypes.Agent),
+        RelationProperty? agent = value.PrefOrNullIntl(static x => x.Parameters.Relation.IsSet(Rel.Agent),
                                                        IgnoreEmptyItems);
 
         if (agent != null)
@@ -672,7 +672,7 @@ internal abstract class VcfSerializer : IDisposable
             BuildProperty(VCard.PropKeys.AGENT, agent);
         }
 
-        RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.Relation.IsSet(RelationTypes.Spouse), 
+        RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.Relation.IsSet(Rel.Spouse), 
                                                         IgnoreEmptyItems);
                    
         if (spouse != null)
@@ -726,7 +726,7 @@ internal abstract class VcfSerializer : IDisposable
 
             Debug.Assert(name != null);
             return RelationProperty.FromText(name, 
-                                             vcardProp.Parameters.Relation ?? RelationTypes.Spouse,
+                                             vcardProp.Parameters.Relation ?? Rel.Spouse,
                                              vcardProp.Group);
         }
     }

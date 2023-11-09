@@ -1,4 +1,3 @@
-using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 
 
@@ -100,7 +99,7 @@ public sealed partial class VCard
 
         /// <summary> <c>MEMBER</c>:
         /// Defines a member that is part of the group that this <see cref="VCard"/> represents.
-        /// The <see cref="VCard.Kind" /> property must be set to <see cref="VCdKind.Group" />
+        /// The <see cref="VCard.Kind" /> property must be set to <see cref="Kind.Group" />
         /// in order to use this property. <c>(4)</c>
         /// </summary>
         internal const string MEMBER = "MEMBER";

@@ -22,7 +22,7 @@ public class EmbeddedTextPropertyTests
 
         Assert.AreEqual(group, prop.Group);
         Assert.AreEqual(mimeString, prop.Parameters.MediaType);
-        Assert.AreEqual(VCdDataType.Text, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Text, prop.Parameters.DataType);
 
         string? ext = prop.GetFileTypeExtension();
         Assert.AreEqual(".htm", ext);

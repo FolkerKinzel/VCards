@@ -15,7 +15,7 @@ public class ParameterSectionTests
         var info = new VcfDeserializationInfo();
         var para = new ParameterSection("BDAY", new Dictionary<string, string>() { { "VALUE", value } }, info);
 
-        Assert.AreEqual(para.DataType, Enums.VCdDataType.Date);
+        Assert.AreEqual(para.DataType, Enums.Data.Date);
     }
 
     [TestMethod]

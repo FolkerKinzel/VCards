@@ -1,6 +1,7 @@
 ﻿// Compile for .NET 7.0 or higher and FolkerKinzel.VCards 6.0.0-beta.2 or higher
 using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models.Enums;
 
 // It's recommended to use a namespace-alias for better readability of
 // your code and better usability of Visual Studio IntelliSense:
@@ -26,7 +27,7 @@ public static class VCardExample
 
         // Implements ITimeZoneIDConverter to convert IANA time zone names to UTC-Offsets.
         // (See the implementation as separate example.)
-        VC::ITimeZoneIDConverter tzConverter = new TimeZoneIDConverter();
+        ITimeZoneIDConverter tzConverter = new TimeZoneIDConverter();
 
         // Save vcard as vCard 2.1:
         vcard.SaveVcf(v2FilePath, VCdVersion.V2_1, tzConverter);
@@ -79,15 +80,14 @@ public static class VCardExample
 
             // This shows how to create a PropertyIDMapping, which helps to identify vCard-Properties
             // even if they are located in vCards that come from different sources (vCard 4.0 only):
-            var pidMap = new VC::PropertyIDMapping(1, new Uri("http://folkerKinzel.de/file1.htm"));
-            var pidMapProp = new VC::PropertyIDMappingProperty(pidMap);
+            var pidMapProp = new VC::PropertyIDMappingProperty(1, new Uri("http://folkerKinzel.de/file1.htm"));
             vCard.PropertyIDMappings = pidMapProp;
 
             var phoneHome = new VC::TextProperty("tel:+49-123-9876543");
-            phoneHome.Parameters.DataType = VC::Enums.VCdDataType.Uri;
-            phoneHome.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Home;
-            phoneHome.Parameters.PhoneType = VC::Enums.PhoneTypes.Voice | VC::Enums.PhoneTypes.BBS;
-            phoneHome.Parameters.PropertyIDs = new VC::PropertyID(1, pidMap);
+            phoneHome.Parameters.DataType = Data.Uri;
+            phoneHome.Parameters.PropertyClass = PCl.Home;
+            phoneHome.Parameters.PhoneType = Tel.Voice | Tel.BBS;
+            phoneHome.Parameters.PropertyIDs = new PropertyID(1, pidMapProp.Value);
 
             // Phones is null here. The extension method ConcatWith would not be needed in this case:
             // phoneHome could be assigned directly. ConcatWith is only used here to show that it
@@ -96,14 +96,10 @@ public static class VCardExample
             vCard.Phones = vCard.Phones.ConcatWith(phoneHome);
 
             var phoneWork = new VC::TextProperty("tel:+49-321-1234567");
-            phoneWork.Parameters.DataType = VC::Enums.VCdDataType.Uri;
-            phoneWork.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
-            phoneWork.Parameters.PhoneType = VC::Enums.PhoneTypes.Cell
-                                             | VC::Enums.PhoneTypes.Text
-                                             | VC::Enums.PhoneTypes.Msg
-                                             | VC::Enums.PhoneTypes.BBS
-                                             | VC::Enums.PhoneTypes.Voice;
-            phoneWork.Parameters.PropertyIDs = new VC::PropertyID(2, pidMap);
+            phoneWork.Parameters.DataType = Data.Uri;
+            phoneWork.Parameters.PropertyClass = PCl.Work;
+            phoneWork.Parameters.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
+            phoneWork.Parameters.PropertyIDs = new PropertyID(2, pidMapProp.Value);
 
             vCard.Phones = vCard.Phones.ConcatWith(phoneWork);
 
@@ -113,19 +109,19 @@ public static class VCardExample
             // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
             var adrWorkProp = new VC::AddressProperty
                 ("Friedrichstraße 22", "Berlin", null, "10117", "Germany", group: vCard.NewGroup());
-            adrWorkProp.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
-            adrWorkProp.Parameters.AddressType = VC::Enums.AddressTypes.Dom | VC::Enums.AddressTypes.Intl | 
-                                                 VC::Enums.AddressTypes.Postal | VC::Enums.AddressTypes.Parcel;
-            adrWorkProp.Parameters.TimeZone = VC::TimeZoneID.Parse("Europe/Berlin");
-            adrWorkProp.Parameters.GeoPosition = new VC::GeoCoordinate(52.51182050685474, 13.389581454284256);
+            adrWorkProp.Parameters.PropertyClass = PCl.Work;
+            adrWorkProp.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel;
+            adrWorkProp.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
+            adrWorkProp.Parameters.GeoPosition = 
+                new GeoCoordinate(52.51182050685474, 13.389581454284256);
             vCard.Addresses = adrWorkProp;
 
             var prefMail = new VC::TextProperty("kaethe_mueller@internet.com");
-            prefMail.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Work;
+            prefMail.Parameters.PropertyClass = PCl.Work;
 
             var otherMail = new VC::TextProperty("mailto:kaethe_at_home@internet.com");
-            otherMail.Parameters.DataType = VC.Enums.VCdDataType.Uri;
-            otherMail.Parameters.PropertyClass = VC.Enums.PropertyClassTypes.Home;
+            otherMail.Parameters.DataType = Data.Uri;
+            otherMail.Parameters.PropertyClass = PCl.Home;
 
             vCard.EMails = prefMail.Concat(otherMail);
             vCard.EMails.SetPreferences();
@@ -135,9 +131,7 @@ public static class VCardExample
             vCard.Relations = VC::RelationProperty.FromText
                 (
                     "Paul Müller-Risinowsky",
-                    VC::Enums.RelationTypes.Spouse
-                    | VC::Enums.RelationTypes.CoResident
-                    | VC::Enums.RelationTypes.Colleague
+                    Rel.Spouse | Rel.CoResident | Rel.Colleague
                 );
 
             vCard.AnniversaryViews = VC::DateAndOrTimeProperty.FromDate(2006, 7, 14);

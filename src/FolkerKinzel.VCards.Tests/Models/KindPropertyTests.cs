@@ -6,7 +6,7 @@ public class KindPropertyTests
     [TestMethod()]
     public void KindPropertyTest1()
     {
-        const Enums.VCdKind kind = Enums.VCdKind.Application;
+        const Enums.Kind kind = Enums.Kind.Application;
 
         var prop = new KindProperty(kind);
 
@@ -18,7 +18,7 @@ public class KindPropertyTests
     [TestMethod()]
     public void KindPropertyTest2()
     {
-        const Enums.VCdKind kind = Enums.VCdKind.Application;
+        const Enums.Kind kind = Enums.Kind.Application;
 
         var prop = new KindProperty(kind);
 

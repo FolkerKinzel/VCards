@@ -29,7 +29,7 @@ public class IEnumerableExtensionTests
                 Relations = new RelationProperty?[]
                 {
                     null,
-                    new RelationVCardProperty(agent, RelationTypes.Agent | RelationTypes.CoWorker, "otherGroup" )
+                    new RelationVCardProperty(agent, Rel.Agent | Rel.CoWorker, "otherGroup" )
                 }
             }
         };

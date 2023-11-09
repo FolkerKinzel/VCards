@@ -43,22 +43,22 @@ internal sealed partial class VcfRow
             case ParameterSection.TypeValue.PREF:
             case ParameterSection.TypeValue.WORK:
             case ParameterSection.TypeValue.HOME:
-            case PhoneTypesConverter.PhoneTypesValue.VOICE:
-            case PhoneTypesConverter.PhoneTypesValue.FAX:
-            case PhoneTypesConverter.PhoneTypesValue.MSG:
-            case PhoneTypesConverter.PhoneTypesValue.CELL:
-            case PhoneTypesConverter.PhoneTypesValue.PAGER:
-            case PhoneTypesConverter.PhoneTypesValue.BBS:
-            case PhoneTypesConverter.PhoneTypesValue.MODEM:
-            case PhoneTypesConverter.PhoneTypesValue.CAR:
-            case PhoneTypesConverter.PhoneTypesValue.ISDN:
-            case PhoneTypesConverter.PhoneTypesValue.VIDEO:
+            case TelConverter.PhoneTypesValue.VOICE:
+            case TelConverter.PhoneTypesValue.FAX:
+            case TelConverter.PhoneTypesValue.MSG:
+            case TelConverter.PhoneTypesValue.CELL:
+            case TelConverter.PhoneTypesValue.PAGER:
+            case TelConverter.PhoneTypesValue.BBS:
+            case TelConverter.PhoneTypesValue.MODEM:
+            case TelConverter.PhoneTypesValue.CAR:
+            case TelConverter.PhoneTypesValue.ISDN:
+            case TelConverter.PhoneTypesValue.VIDEO:
 
             //Postal
-            case AddressTypesConverter.AddressTypesValue.DOM:
-            case AddressTypesConverter.AddressTypesValue.INTL:
-            case AddressTypesConverter.AddressTypesValue.POSTAL:
-            case AddressTypesConverter.AddressTypesValue.PARCEL:
+            case AdrConverter.AddressTypesValue.DOM:
+            case AdrConverter.AddressTypesValue.INTL:
+            case AdrConverter.AddressTypesValue.POSTAL:
+            case AdrConverter.AddressTypesValue.PARCEL:
 
             //E-Mail
             case "INTERNET":
@@ -123,10 +123,10 @@ internal sealed partial class VcfRow
             case Const.KeyTypeValue.PGP:
                 return TYPE_PROPERTY;
 
-            case ContentLocationConverter.Values.INLINE:
-            case ContentLocationConverter.Values.CID:
-            case ContentLocationConverter.Values.CONTENT_ID:
-            case ContentLocationConverter.Values.URL:
+            case LocConverter.Values.INLINE:
+            case LocConverter.Values.CID:
+            case LocConverter.Values.CONTENT_ID:
+            case LocConverter.Values.URL:
                 return VALUE_PROPERTY;
             default:
                 break;

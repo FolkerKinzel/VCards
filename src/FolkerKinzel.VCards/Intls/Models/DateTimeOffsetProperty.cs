@@ -29,7 +29,7 @@ internal sealed class DateTimeOffsetProperty : DateAndOrTimeProperty
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         base.PrepareForVcfSerialization(serializer);
-        Parameters.DataType = VCdDataType.DateAndOrTime;
+        Parameters.DataType = Data.DateAndOrTime;
     }
 
     internal override void AppendValue(VcfSerializer serializer) 

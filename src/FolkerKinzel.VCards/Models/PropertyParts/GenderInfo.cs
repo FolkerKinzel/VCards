@@ -10,34 +10,34 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 public sealed class GenderInfo
 {
     /// <summary> Initializes a new <see cref="GenderInfo" /> object. </summary>
-    /// <param name="gender">Standardized information about the gender of the object
+    /// <param name="sex">Standardized information about the sex of the object
     /// the <see cref="VCard"/> represents.</param>
     /// <param name="identity">Free text describing the gender identity.</param>
-    internal GenderInfo(Gender? gender, string? identity)
+    internal GenderInfo(Sex? sex, string? identity)
     {
-        Gender = gender;
+        Sex = sex;
         Identity = string.IsNullOrWhiteSpace(identity) ? null : identity;
     }
 
     /// <summary>Standardized information about the gender of the object the 
     /// <see cref="VCard"/> represents.</summary>
-    public Gender? Gender { get; }
+    public Sex? Sex { get; }
 
     /// <summary>Free text describing the gender identity.</summary>
     public string? Identity { get; }
 
     /// <summary> Returns <c>true</c> if the <see cref="GenderInfo" /> object does not 
     /// contain any usable data, otherwise <c>false</c>.</summary>
-    public bool IsEmpty => !Gender.HasValue && Identity is null;
+    public bool IsEmpty => !Sex.HasValue && Identity is null;
 
     /// <inheritdoc/>
     public override string ToString()
     {
         string s = "";
 
-        if (Gender.HasValue)
+        if (Sex.HasValue)
         {
-            s += Gender.ToString();
+            s += Sex.ToString();
         }
 
         if (Identity != null)
@@ -56,9 +56,9 @@ public sealed class GenderInfo
     internal void AppendVCardStringTo(VcfSerializer serializer)
     {
         StringBuilder builder = serializer.Builder;
-        if (Gender.HasValue)
+        if (Sex.HasValue)
         {
-            _ = builder.Append(Gender.ToVcfString());
+            _ = builder.Append(Sex.ToVcfString());
         }
 
 

@@ -19,13 +19,13 @@ public class TimeOnlyPropertyTests
         Assert.IsInstanceOfType(prop, typeof(TimeOnlyProperty));
         Assert.AreEqual(group, prop.Group);
         Assert.AreEqual(dto, prop.Value?.TimeOnly);
-        Assert.AreEqual(VCdDataType.Time, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Time, prop.Parameters.DataType);
 
         var clone = (DateAndOrTimeProperty)prop.Clone();
         Assert.IsInstanceOfType(prop, typeof(TimeOnlyProperty));
         Assert.AreEqual(group, prop.Group);
         Assert.AreEqual(dto, prop.Value?.TimeOnly);
-        Assert.AreEqual(VCdDataType.Time, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Time, prop.Parameters.DataType);
 
         Assert.AreNotSame(clone, prop);
     }
@@ -40,7 +40,7 @@ public class TimeOnlyPropertyTests
         var prop = DateAndOrTimeProperty.FromTime(dto);
 
         prop.PrepareForVcfSerialization(serializer);
-        Assert.AreEqual(VCdDataType.Time, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Time, prop.Parameters.DataType);
     }
 
     [TestMethod]

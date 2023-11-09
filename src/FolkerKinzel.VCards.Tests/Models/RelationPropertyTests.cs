@@ -19,7 +19,7 @@ internal class RelationPropertyDerived : RelationProperty
     {
     }
 
-    public RelationPropertyDerived(RelationTypes? relation, string? group)
+    public RelationPropertyDerived(Rel? relation, string? group)
         : base(relation, group)
     {
     }
@@ -33,7 +33,7 @@ public class RelationPropertyTests
 {
     private class TestIEnumerable : RelationProperty
     {
-        public TestIEnumerable() : base(Enums.RelationTypes.Contact, null) { }
+        public TestIEnumerable() : base(Enums.Rel.Contact, null) { }
         public override object Clone() => throw new NotImplementedException();
         protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
         internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();

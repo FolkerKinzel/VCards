@@ -109,7 +109,7 @@ public abstract class DateAndOrTimeProperty
     public static DateAndOrTimeProperty FromDate(DateOnly date,
                                                  string? group = null)
         => new DateOnlyProperty(date,
-                                new ParameterSection() { DataType = VCdDataType.Date },
+                                new ParameterSection() { DataType = Data.Date },
                                 group);
 
     /// <summary>
@@ -126,7 +126,7 @@ public abstract class DateAndOrTimeProperty
     public static DateAndOrTimeProperty FromDateTime(DateTimeOffset dateTime,
                                                      string? group = null)
         => new DateTimeOffsetProperty(dateTime,
-                                      new ParameterSection() { DataType = VCdDataType.DateAndOrTime },
+                                      new ParameterSection() { DataType = Data.DateAndOrTime },
                                       group);
 
     /// <summary>
@@ -159,7 +159,7 @@ public abstract class DateAndOrTimeProperty
     public static DateAndOrTimeProperty FromTime(TimeOnly time,
                                                  string? group = null)
         => new TimeOnlyProperty(time,
-                                new ParameterSection() { DataType = VCdDataType.Time },
+                                new ParameterSection() { DataType = Data.Time },
                                 group);
 
     /// <summary> Creates a new <see cref="DateAndOrTimeProperty"/> instance from text. </summary>
@@ -177,7 +177,7 @@ public abstract class DateAndOrTimeProperty
                                                  string? group = null)
     {
         var prop = new DateTimeTextProperty(new TextProperty(text, group));
-        prop.Parameters.DataType = VCdDataType.Text;
+        prop.Parameters.DataType = Data.Text;
         return prop;
     }
 
@@ -204,14 +204,14 @@ public abstract class DateAndOrTimeProperty
 
         var dataType = vcfRow.Parameters.DataType;
 
-        if (dataType == VCdDataType.Text)
+        if (dataType == Data.Text)
         {
             return new DateTimeTextProperty(vcfRow, version);
         }
 
         ReadOnlySpan<char> valueSpan = vcfRow.Value.AsSpan().Trim();
 
-        return dataType == VCdDataType.Time || valueSpan.StartsWith('T')
+        return dataType == Data.Time || valueSpan.StartsWith('T')
             ? vcfRow.Info.TimeConverter.TryParse(valueSpan, out OneOf<TimeOnly, DateTimeOffset> oneOf1)
                 ? oneOf1.Match<DateAndOrTimeProperty>
                     (

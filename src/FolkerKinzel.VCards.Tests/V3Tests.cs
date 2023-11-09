@@ -240,12 +240,12 @@ END:VCARD";
         const string mobilePhoneNumber = "tel:+1-234-567-89";
         var whatsAppImpp = new TextProperty(mobilePhoneNumber);
 
-        const ImppTypes messengerTypes = ImppTypes.Personal
-                                | ImppTypes.Business
-                                | ImppTypes.Mobile;
-        whatsAppImpp.Parameters.InstantMessengerType = ImppTypes.Personal
-                                                     | ImppTypes.Business
-                                                     | ImppTypes.Mobile;
+        const Impp messengerTypes = Impp.Personal
+                                | Impp.Business
+                                | Impp.Mobile;
+        whatsAppImpp.Parameters.InstantMessengerType = Impp.Personal
+                                                     | Impp.Business
+                                                     | Impp.Mobile;
 
         var vcard = new VCard
         {
@@ -267,12 +267,12 @@ END:VCARD";
         const string mobilePhoneNumber = "tel:+1-234-567-89";
         var whatsAppImpp = new TextProperty(mobilePhoneNumber);
 
-        const ImppTypes messengerTypes = ImppTypes.Personal
-                                | ImppTypes.Business
-                                | ImppTypes.Mobile;
+        const Impp messengerTypes = Impp.Personal
+                                | Impp.Business
+                                | Impp.Mobile;
 
-        whatsAppImpp.Parameters.InstantMessengerType = ImppTypes.Mobile;
-        whatsAppImpp.Parameters.PropertyClass = PropertyClassTypes.Home | PropertyClassTypes.Work;
+        whatsAppImpp.Parameters.InstantMessengerType = Impp.Mobile;
+        whatsAppImpp.Parameters.PropertyClass = PCl.Home | PCl.Work;
 
         var vcard = new VCard
         {
@@ -293,7 +293,7 @@ END:VCARD";
     {
         const string mobilePhoneNumber = "skype:+1-234-567-89";
         var prop = new TextProperty(mobilePhoneNumber);
-        const ImppTypes imppTypes = ImppTypes.Mobile | ImppTypes.Personal;
+        const Impp imppTypes = Impp.Mobile | Impp.Personal;
 
         prop.Parameters.InstantMessengerType = imppTypes;
 
@@ -308,7 +308,7 @@ END:VCARD";
         Assert.AreEqual(1, vcard.InstantMessengers!.Count());
         prop = vcard.InstantMessengers?.First();
         Assert.AreEqual(mobilePhoneNumber, prop?.Value);
-        Assert.AreEqual(PropertyClassTypes.Home, prop?.Parameters.PropertyClass);
+        Assert.AreEqual(PCl.Home, prop?.Parameters.PropertyClass);
         Assert.AreEqual(imppTypes, prop?.Parameters.InstantMessengerType);
 
     }
@@ -318,7 +318,7 @@ END:VCARD";
     {
         const string mobilePhoneNumber = "skype:+1-234-567-89";
         var prop = new TextProperty(mobilePhoneNumber);
-        const ImppTypes imppTypes = ImppTypes.Mobile | ImppTypes.Personal;
+        const Impp imppTypes = Impp.Mobile | Impp.Personal;
         prop.Parameters.InstantMessengerType = imppTypes;
 
         var vcard = new VCard

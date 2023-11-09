@@ -16,17 +16,17 @@ internal sealed class RelationUuidProperty : RelationProperty
     /// example, be the value of the vCard property <c>UID</c> 
     /// (<see cref="VCard.UniqueIdentifier">VCard.UniqueIdentifier</see>) of this 
     /// person's vCard.</param>
-    /// <param name="relation">A single <see cref="RelationTypes" /> value or a combination
-    /// of several <see cref="RelationTypes" /> values or <c>null</c>.</param>
+    /// <param name="relation">A single <see cref="Rel" /> value or a combination
+    /// of several <see cref="Rel" /> values or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     internal RelationUuidProperty(Guid uuid,
-                                  RelationTypes? relation = null,
+                                  Rel? relation = null,
                                   string? group = null)
         : base(relation, group)
     {
-        Parameters.DataType = VCdDataType.Uri;
+        Parameters.DataType = Data.Uri;
         Value = uuid;
     }
     
@@ -49,8 +49,8 @@ internal sealed class RelationUuidProperty : RelationProperty
 
         base.PrepareForVcfSerialization(serializer);
 
-        Parameters.DataType = VCdDataType.Uri;
-        Parameters.ContentLocation = ContentLocation.ContentID;
+        Parameters.DataType = Data.Uri;
+        Parameters.ContentLocation = Loc.Cid;
     }
 
     internal override void AppendValue(VcfSerializer serializer)

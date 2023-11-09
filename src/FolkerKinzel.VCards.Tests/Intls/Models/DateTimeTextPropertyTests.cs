@@ -38,7 +38,7 @@ public class DateTimeTextPropertyTests
         Assert.AreEqual(now, prop2!.Value);
         Assert.AreEqual(GROUP, prop2.Group);
         Assert.IsFalse(prop2.IsEmpty);
-        Assert.AreEqual(VCdDataType.Text, prop2.Parameters.DataType);
+        Assert.AreEqual(Data.Text, prop2.Parameters.DataType);
     }
 
     [TestMethod]

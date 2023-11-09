@@ -46,9 +46,9 @@ internal sealed class EmbeddedBytesProperty : DataProperty
 
         base.PrepareForVcfSerialization(serializer);
 
-        Parameters.ContentLocation = ContentLocation.Inline;
-        Parameters.DataType = VCdDataType.Binary;
-        Parameters.Encoding = ValueEncoding.Base64;
+        Parameters.ContentLocation = Loc.Inline;
+        Parameters.DataType = Data.Binary;
+        Parameters.Encoding = Enc.Base64;
     }
 
     internal override void AppendValue(VcfSerializer serializer)

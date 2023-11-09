@@ -23,16 +23,16 @@ namespace FolkerKinzel.VCards;
 /// </example>
 public sealed partial class VCard
 {
-    private readonly Dictionary<VCdProp, object> _propDic = new();
+    private readonly Dictionary<Prop, object> _propDic = new();
 
     [return: MaybeNull]
-    private T Get<T>(VCdProp prop) where T : class?
+    private T Get<T>(Prop prop) where T : class?
         => _propDic.ContainsKey(prop)
         ? (T)_propDic[prop]
         : default;
 
 
-    private void Set(VCdProp prop, object? value)
+    private void Set(Prop prop, object? value)
     {
         if (value is null)
         {
@@ -109,16 +109,16 @@ public sealed partial class VCard
     /// <see cref="VCard"/>. <c>(3)</c></summary>
     public AccessProperty? Access
     {
-        get => Get<AccessProperty?>(VCdProp.Access);
-        set => Set(VCdProp.Access, value);
+        get => Get<AccessProperty?>(Prop.Access);
+        set => Set(Prop.Access, value);
     }
 
     /// <summary> <c>ADR</c>: A structured representation of the physical delivery address
     /// for the vCard object. <c>(2,3,4)</c></summary>
     public IEnumerable<AddressProperty?>? Addresses
     {
-        get => Get<IEnumerable<AddressProperty?>?>(VCdProp.Addresses);
-        set => Set(VCdProp.Addresses, value);
+        get => Get<IEnumerable<AddressProperty?>?>(Prop.Addresses);
+        set => Set(Prop.Addresses, value);
     }
 
     /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
@@ -127,8 +127,8 @@ public sealed partial class VCard
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<DateAndOrTimeProperty?>? AnniversaryViews
     {
-        get => Get<IEnumerable<DateAndOrTimeProperty?>?>(VCdProp.AnniversaryViews);
-        set => Set(VCdProp.AnniversaryViews, value);
+        get => Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop.AnniversaryViews);
+        set => Set(Prop.AnniversaryViews, value);
     }
 
     /// <summary> <c>BDAY</c>: Date of birth of the individual associated with the vCard.
@@ -138,8 +138,8 @@ public sealed partial class VCard
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<DateAndOrTimeProperty?>? BirthDayViews
     {
-        get => Get<IEnumerable<DateAndOrTimeProperty?>?>(VCdProp.BirthDayViews);
-        set => Set(VCdProp.BirthDayViews, value);
+        get => Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop.BirthDayViews);
+        set => Set(Prop.BirthDayViews, value);
     }
 
     /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
@@ -149,31 +149,31 @@ public sealed partial class VCard
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<TextProperty?>? BirthPlaceViews
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.BirthPlaceViews);
-        set => Set(VCdProp.BirthPlaceViews, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.BirthPlaceViews);
+        set => Set(Prop.BirthPlaceViews, value);
     }
 
     /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4)</c></summary>
     public IEnumerable<TextProperty?>? CalendarAddresses
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.CalendarAddresses);
-        set => Set(VCdProp.CalendarAddresses, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.CalendarAddresses);
+        set => Set(Prop.CalendarAddresses, value);
     }
 
     /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
     /// the person's calendar. <c>(4)</c></summary>
     public IEnumerable<TextProperty?>? CalendarUserAddresses
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.CalendarUserAddresses);
-        set => Set(VCdProp.CalendarUserAddresses, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.CalendarUserAddresses);
+        set => Set(Prop.CalendarUserAddresses, value);
     }
 
     /// <summary> <c>CATEGORIES</c>: Lists of "tags" that can be used to describe the
     /// object represented by this vCard. <c>(3,4)</c></summary>
     public IEnumerable<StringCollectionProperty?>? Categories
     {
-        get => Get<IEnumerable<StringCollectionProperty?>?>(VCdProp.Categories);
-        set => Set(VCdProp.Categories, value);
+        get => Get<IEnumerable<StringCollectionProperty?>?>(Prop.Categories);
+        set => Set(Prop.Categories, value);
     }
 
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
@@ -182,8 +182,8 @@ public sealed partial class VCard
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<DateAndOrTimeProperty?>? DeathDateViews
     {
-        get => Get<IEnumerable<DateAndOrTimeProperty?>?>(VCdProp.DeathDateViews);
-        set => Set(VCdProp.DeathDateViews, value);
+        get => Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop.DeathDateViews);
+        set => Set(Prop.DeathDateViews, value);
     }
 
     /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
@@ -193,16 +193,16 @@ public sealed partial class VCard
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<TextProperty?>? DeathPlaceViews
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.DeathPlaceViews);
-        set => Set(VCdProp.DeathPlaceViews, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.DeathPlaceViews);
+        set => Set(Prop.DeathPlaceViews, value);
     }
 
     /// <summary> <c>NAME</c>: Provides a textual representation of the 
     /// <see cref="Sources" /> property. <c>(3)</c></summary>
     public TextProperty? DirectoryName
     {
-        get => Get<TextProperty?>(VCdProp.DirectoryName);
-        set => Set(VCdProp.DirectoryName, value);
+        get => Get<TextProperty?>(Prop.DirectoryName);
+        set => Set(Prop.DirectoryName, value);
     }
 
     /// <summary> <c>FN</c>: The formatted name string associated with the vCard object.
@@ -222,16 +222,16 @@ public sealed partial class VCard
     /// <seealso cref="NameProperty.ToDisplayName" />
     public IEnumerable<TextProperty?>? DisplayNames
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.DisplayNames);
-        set => Set(VCdProp.DisplayNames, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.DisplayNames);
+        set => Set(Prop.DisplayNames, value);
     }
 
     /// <summary> <c>EMAIL</c>: The addresses for electronic mail communication with
     /// the vCard object. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? EMails
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.EMails);
-        set => Set(VCdProp.EMails, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.EMails);
+        set => Set(Prop.EMails, value);
     }
 
     /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has
@@ -240,8 +240,8 @@ public sealed partial class VCard
     /// <see cref="ParameterSection.Expertise" />!</remarks>
     public IEnumerable<TextProperty?>? Expertises
     {
-        get => Get<IEnumerable<TextProperty>>(VCdProp.Expertises);
-        set => Set(VCdProp.Expertises, value);
+        get => Get<IEnumerable<TextProperty>>(Prop.Expertises);
+        set => Set(Prop.Expertises, value);
     }
 
     /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
@@ -257,8 +257,8 @@ public sealed partial class VCard
     /// </remarks>
     public IEnumerable<TextProperty?>? FreeOrBusyUrls
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.FreeOrBusyUrls);
-        set => Set(VCdProp.FreeOrBusyUrls, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.FreeOrBusyUrls);
+        set => Set(Prop.FreeOrBusyUrls, value);
     }
 
     /// <summary> <c>GENDER</c>: Defines the person's gender. <c>(4)</c></summary>
@@ -267,8 +267,8 @@ public sealed partial class VCard
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<GenderProperty?>? GenderViews
     {
-        get => Get<IEnumerable<GenderProperty?>?>(VCdProp.GenderViews);
-        set => Set(VCdProp.GenderViews, value);
+        get => Get<IEnumerable<GenderProperty?>?>(Prop.GenderViews);
+        set => Set(Prop.GenderViews, value);
     }
 
     /// <summary> <c>GEO</c>: Specifies latitudes and longitudes. <c>(2,3,4)</c></summary>
@@ -280,8 +280,8 @@ public sealed partial class VCard
     /// </remarks>
     public IEnumerable<GeoProperty?>? GeoCoordinates
     {
-        get => Get<IEnumerable<GeoProperty?>?>(VCdProp.GeoCoordinates);
-        set => Set(VCdProp.GeoCoordinates, value);
+        get => Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates);
+        set => Set(Prop.GeoCoordinates, value);
     }
 
     /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
@@ -290,8 +290,8 @@ public sealed partial class VCard
     /// <see cref="ParameterSection.Interest" />.</remarks>
     public IEnumerable<TextProperty?>? Hobbies
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.Hobbies);
-        set => Set(VCdProp.Hobbies, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Hobbies);
+        set => Set(Prop.Hobbies, value);
     }
 
     /// <summary> <c>IMPP</c>: List of instant messenger handles. <c>(3,4)</c></summary>
@@ -320,8 +320,8 @@ public sealed partial class VCard
     /// property.</remarks>
     public IEnumerable<TextProperty?>? InstantMessengers
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.InstantMessengers);
-        set => Set(VCdProp.InstantMessengers, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.InstantMessengers);
+        set => Set(Prop.InstantMessengers, value);
     }
 
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
@@ -330,8 +330,8 @@ public sealed partial class VCard
     /// <see cref="ParameterSection.Interest" />!</remarks>
     public IEnumerable<TextProperty?>? Interests
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.Interests);
-        set => Set(VCdProp.Interests, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Interests);
+        set => Set(Prop.Interests, value);
     }
 
     /// <summary> <c>KEY</c>: Public encryption keys associated with the vCard object.
@@ -340,30 +340,30 @@ public sealed partial class VCard
     /// in the VCF file as a Base64 encoded block of text.</value>
     public IEnumerable<DataProperty?>? Keys
     {
-        get => Get<IEnumerable<DataProperty?>?>(VCdProp.Keys);
-        set => Set(VCdProp.Keys, value);
+        get => Get<IEnumerable<DataProperty?>?>(Prop.Keys);
+        set => Set(Prop.Keys, value);
     }
 
     /// <summary> <c>KIND</c>: Defines the type of entity, that this vCard represents.
     /// <c>(4)</c></summary>
     public KindProperty? Kind
     {
-        get => Get<KindProperty?>(VCdProp.Kind);
-        set => Set(VCdProp.Kind, value);
+        get => Get<KindProperty?>(Prop.Kind);
+        set => Set(Prop.Kind, value);
     }
 
     /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
     public IEnumerable<TextProperty?>? Languages
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.Languages);
-        set => Set(VCdProp.Languages, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Languages);
+        set => Set(Prop.Languages, value);
     }
 
     /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
     public TimeStampProperty? TimeStamp
     {
-        get => Get<TimeStampProperty?>(VCdProp.TimeStamp);
-        set => Set(VCdProp.TimeStamp, value);
+        get => Get<TimeStampProperty?>(Prop.TimeStamp);
+        set => Set(Prop.TimeStamp, value);
     }
 
     /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
@@ -371,20 +371,20 @@ public sealed partial class VCard
     /// <c>(2,3,4)</c></summary>
     public IEnumerable<DataProperty?>? Logos
     {
-        get => Get<IEnumerable<DataProperty?>?>(VCdProp.Logos);
-        set => Set(VCdProp.Logos, value);
+        get => Get<IEnumerable<DataProperty?>?>(Prop.Logos);
+        set => Set(Prop.Logos, value);
     }
 
     /// <summary> <c>MAILER</c>: Type of e-mail program used. <c>(2,3)</c></summary>
     public TextProperty? Mailer
     {
-        get => Get<TextProperty?>(VCdProp.Mailer);
-        set => Set(VCdProp.Mailer, value);
+        get => Get<TextProperty?>(Prop.Mailer);
+        set => Set(Prop.Mailer, value);
     }
 
     /// <summary> <c>MEMBER</c>:
     /// Defines a member that is part of the group that this <see cref="VCard"/> represents.
-    /// The <see cref="VCard.Kind" /> property must be set to <see cref="VCdKind.Group" />
+    /// The <see cref="VCard.Kind" /> property must be set to <see cref="Kind.Group" />
     /// in order to use this property. <c>(4)</c>
     /// </summary>
     /// <remarks>
@@ -394,8 +394,8 @@ public sealed partial class VCard
     /// </remarks>
     public IEnumerable<RelationProperty?>? Members
     {
-        get => Get<IEnumerable<RelationProperty?>?>(VCdProp.Members);
-        set => Set(VCdProp.Members, value);
+        get => Get<IEnumerable<RelationProperty?>?>(Prop.Members);
+        set => Set(Prop.Members, value);
     }
 
     /// <summary> <c>N</c>: A structured representation of the name of the person, place
@@ -405,16 +405,16 @@ public sealed partial class VCard
     /// e.g. be useful, if the property is displayed in different languages.</remarks>
     public IEnumerable<NameProperty?>? NameViews
     {
-        get => Get<IEnumerable<NameProperty?>?>(VCdProp.NameViews);
-        set => Set(VCdProp.NameViews, value);
+        get => Get<IEnumerable<NameProperty?>?>(Prop.NameViews);
+        set => Set(Prop.NameViews, value);
     }
 
     /// <summary> <c>NICKNAME</c>: One or more descriptive/familiar names for the object
     /// represented by this vCard. <c>(3,4)</c></summary>
     public IEnumerable<StringCollectionProperty?>? NickNames
     {
-        get => Get<IEnumerable<StringCollectionProperty?>?>(VCdProp.NickNames);
-        set => Set(VCdProp.NickNames, value);
+        get => Get<IEnumerable<StringCollectionProperty?>?>(Prop.NickNames);
+        set => Set(Prop.NickNames, value);
     }
 
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
@@ -512,24 +512,24 @@ public sealed partial class VCard
     /// </remarks>
     public IEnumerable<NonStandardProperty?>? NonStandard
     {
-        get => Get<IEnumerable<NonStandardProperty?>?>(VCdProp.NonStandard);
-        set => Set(VCdProp.NonStandard, value);
+        get => Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandard);
+        set => Set(Prop.NonStandard, value);
     }
 
     /// <summary> <c>NOTE</c>: Specifies supplemental informations or comments, that
     /// are associated with the vCard. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? Notes
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.Notes);
-        set => Set(VCdProp.Notes, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Notes);
+        set => Set(Prop.Notes, value);
     }
 
     /// <summary> <c>ORG</c>: The name and optionally the unit(s) of the organization
     /// associated with the vCard object. <c>(2,3,4)</c></summary>
     public IEnumerable<OrganizationProperty?>? Organizations
     {
-        get => Get<IEnumerable<OrganizationProperty?>?>(VCdProp.Organizations);
-        set => Set(VCdProp.Organizations, value);
+        get => Get<IEnumerable<OrganizationProperty?>?>(Prop.Organizations);
+        set => Set(Prop.Organizations, value);
     }
 
     /// <summary> <c>ORG-DIRECTORY</c>: A URI representing the person's work place,
@@ -537,24 +537,24 @@ public sealed partial class VCard
     /// 6715)</c></summary>
     public IEnumerable<TextProperty?>? OrgDirectories
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.OrgDirectories);
-        set => Set(VCdProp.OrgDirectories, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.OrgDirectories);
+        set => Set(Prop.OrgDirectories, value);
     }
 
     /// <summary> <c>TEL</c>: Canonical number strings for a telephone numbers for 
     /// telephony communication with the vCard object. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? Phones
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.Phones);
-        set => Set(VCdProp.Phones, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Phones);
+        set => Set(Prop.Phones, value);
     }
 
     /// <summary> <c>PHOTO</c>: Image(s) or photograph(s) of the individual associated
     /// with the vCard. <c>(2,3,4)</c></summary>
     public IEnumerable<DataProperty?>? Photos
     {
-        get => Get<IEnumerable<DataProperty>>(VCdProp.Photos);
-        set => Set(VCdProp.Photos, value);
+        get => Get<IEnumerable<DataProperty>>(Prop.Photos);
+        set => Set(Prop.Photos, value);
     }
 
     /// <summary> <c>PRODID</c>: The identifier for the product that created the vCard
@@ -564,47 +564,47 @@ public sealed partial class VCard
     /// Names in RFC 3406.</value>
     public TextProperty? ProdID
     {
-        get => Get<TextProperty?>(VCdProp.ProdID);
-        set => Set(VCdProp.ProdID, value);
+        get => Get<TextProperty?>(Prop.ProdID);
+        set => Set(Prop.ProdID, value);
     }
 
     /// <summary> <c>PROFILE</c>: States that the <see cref="VCard"/> is a vCard. <c>(3)</c></summary>
     public ProfileProperty? Profile
     {
-        get => Get<ProfileProperty?>(VCdProp.Profile);
-        set => Set(VCdProp.Profile, value);
+        get => Get<ProfileProperty?>(Prop.Profile);
+        set => Set(Prop.Profile, value);
     }
 
     /// <summary> <c>CLIENTPIDMAP</c>: Mappings for <see cref="PropertyID" />s. It is
     /// used for synchronizing different revisions of the same vCard. <c>(4)</c></summary>
     public IEnumerable<PropertyIDMappingProperty?>? PropertyIDMappings
     {
-        get => Get<IEnumerable<PropertyIDMappingProperty?>?>(VCdProp.PropertyIDMappings);
-        set => Set(VCdProp.PropertyIDMappings, value);
+        get => Get<IEnumerable<PropertyIDMappingProperty?>?>(Prop.PropertyIDMappings);
+        set => Set(Prop.PropertyIDMappings, value);
     }
 
     /// <summary> <c>RELATED</c>: Other entities that the person or organization is 
     /// related to. <c>(4)</c></summary>
     public IEnumerable<RelationProperty?>? Relations
     {
-        get => Get<IEnumerable<RelationProperty?>?>(VCdProp.Relations);
-        set => Set(VCdProp.Relations, value);
+        get => Get<IEnumerable<RelationProperty?>?>(Prop.Relations);
+        set => Set(Prop.Relations, value);
     }
 
     /// <summary> <c>ROLE</c>: The role, occupation, or business category of the vCard
     /// object within an organization. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? Roles
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.Roles);
-        set => Set(VCdProp.Roles, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Roles);
+        set => Set(Prop.Roles, value);
     }
 
     /// <summary> <c>SOUND</c>: Specifies the pronunciation of the <see cref="VCard.DisplayNames"
     /// /> property of the <see cref="VCard" />-object. <c>(2,3,4)</c></summary>
     public IEnumerable<DataProperty?>? Sounds
     {
-        get => Get<IEnumerable<DataProperty?>?>(VCdProp.Sounds);
-        set => Set(VCdProp.Sounds, value);
+        get => Get<IEnumerable<DataProperty?>?>(Prop.Sounds);
+        set => Set(Prop.Sounds, value);
     }
 
     /// <summary> <c>SOURCE</c>: URLs that can be used to get the latest version of
@@ -612,8 +612,8 @@ public sealed partial class VCard
     /// <remarks>vCard&#160;3.0 only allows one instance of this property.</remarks>
     public IEnumerable<TextProperty?>? Sources
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.Sources);
-        set => Set(VCdProp.Sources, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Sources);
+        set => Set(Prop.Sources, value);
     }
 
     /// <summary> <c>TZ</c>: The time zone(s) of the vCard object. <c>(2,3,4)</c></summary>
@@ -625,8 +625,8 @@ public sealed partial class VCard
     /// </remarks>
     public IEnumerable<TimeZoneProperty?>? TimeZones
     {
-        get => Get<IEnumerable<TimeZoneProperty?>?>(VCdProp.TimeZones);
-        set => Set(VCdProp.TimeZones, value);
+        get => Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones);
+        set => Set(Prop.TimeZones, value);
     }
 
     /// <summary> <c>TITLE</c>: Specifies the job title, functional position or function
@@ -634,8 +634,8 @@ public sealed partial class VCard
     /// <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? Titles
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.Titles);
-        set => Set(VCdProp.Titles, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Titles);
+        set => Set(Prop.Titles, value);
     }
 
     /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
@@ -644,23 +644,23 @@ public sealed partial class VCard
     /// only supports UUIDs.</value>
     public UuidProperty? UniqueIdentifier
     {
-        get => Get<UuidProperty?>(VCdProp.UniqueIdentifier);
-        set => Set(VCdProp.UniqueIdentifier, value);
+        get => Get<UuidProperty?>(Prop.UniqueIdentifier);
+        set => Set(Prop.UniqueIdentifier, value);
     }
 
     /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? URLs
     {
-        get => Get<IEnumerable<TextProperty?>?>(VCdProp.URLs);
-        set => Set(VCdProp.URLs, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.URLs);
+        set => Set(Prop.URLs, value);
     }
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
     public IEnumerable<XmlProperty?>? XmlProperties
     {
-        get => Get<IEnumerable<XmlProperty?>?>(VCdProp.XmlProperties);
-        set => Set(VCdProp.XmlProperties, value);
+        get => Get<IEnumerable<XmlProperty?>?>(Prop.XmlProperties);
+        set => Set(Prop.XmlProperties, value);
     }
 
     private IEnumerable<string> EnumerateGroups()

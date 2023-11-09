@@ -24,7 +24,7 @@ internal sealed class DateOnlyProperty : DateAndOrTimeProperty
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         base.PrepareForVcfSerialization(serializer);
-        Parameters.DataType = VCdDataType.Date;
+        Parameters.DataType = Data.Date;
     }
 
     internal override void AppendValue(VcfSerializer serializer)

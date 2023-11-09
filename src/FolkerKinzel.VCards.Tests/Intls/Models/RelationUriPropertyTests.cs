@@ -13,7 +13,7 @@ public class RelationUriPropertyTests
     [TestMethod]
     public void RelationUriPropertyTest1()
     {
-        const RelationTypes relation = RelationTypes.Acquaintance;
+        const Rel relation = Rel.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
         var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
@@ -22,14 +22,14 @@ public class RelationUriPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
 
     [TestMethod]
     public void RelationUriPropertyTest2()
     {
-        const RelationTypes relation = RelationTypes.Acquaintance;
+        const Rel relation = Rel.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
         var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
@@ -57,14 +57,14 @@ public class RelationUriPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
 
     [TestMethod]
     public void RelationUriPropertyTest3()
     {
-        const RelationTypes relation = RelationTypes.Agent;
+        const Rel relation = Rel.Agent;
         var uri = new Uri("http://test.ääh.com/", UriKind.Absolute);
 
         var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
@@ -92,13 +92,13 @@ public class RelationUriPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
     [TestMethod]
     public void RelationUriPropertyTest4()
     {
-        const RelationTypes relation = RelationTypes.Agent;
+        const Rel relation = Rel.Agent;
         var uri = new Uri("cid:test.com/", UriKind.Absolute);
 
         var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
@@ -126,7 +126,7 @@ public class RelationUriPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
 
@@ -142,7 +142,7 @@ public class RelationUriPropertyTests
         var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
 
         prop.PrepareForVcfSerialization(serializer);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
 }

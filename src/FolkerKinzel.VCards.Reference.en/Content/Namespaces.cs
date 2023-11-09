@@ -5,21 +5,21 @@ using FolkerKinzel.VCards;
 // it contains useful extension methods:
 using FolkerKinzel.VCards.Extensions;
 
-// These two namespaces may be published, but it's not
-// recommended because they contain a lot of classes and enums:
-// using FolkerKinzel.VCards.Models;
-// using FolkerKinzel.VCards.Models.Enums;
+// This namespace contains often used enums. Decide
+// yourself whether to publish this namespace or to use
+// a namespace alias.
+using FolkerKinzel.VCards.Models.Enums;
 
-// Instead of publishing the two namespaces above
-// better use a namespace alias:
+// Instead of publishing the following namespace better
+// use a namespace alias, because the namespace contains
+// a lot of classes:
 using VC = FolkerKinzel.VCards.Models;
 
-namespace NameSpaceAliasDemos
+namespace NameSpaceAliasDemos;
+
+public static class NameSpaceAliasDemo
 {
-    public static class NameSpaceAliasDemo
-    {
-        public static void HowToUseTheNameSpaceAlias() =>
-            _ = VC::RelationProperty.FromText("Folker", VC::Enums.RelationTypes.Contact);
-    }
+    public static void HowToUseTheNameSpaceAlias() =>
+        _ = VC::RelationProperty.FromText("Folker", Rel.Contact);
 }
 

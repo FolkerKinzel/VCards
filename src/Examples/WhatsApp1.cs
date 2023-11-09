@@ -14,23 +14,23 @@ internal static class WhatsAppDemo1
         // The IMPP-Extension (Instant Messaging [IM] and Presence Protocol [PP] applications)
         // is available in vCard 3.0 through RFC 4770:
         var whatsAppImpp = new VC::TextProperty(mobilePhoneNumber);
-        whatsAppImpp.Parameters.InstantMessengerType = VC::Enums.ImppTypes.Personal
-                                                     | VC::Enums.ImppTypes.Business
-                                                     | VC::Enums.ImppTypes.Mobile;
+        whatsAppImpp.Parameters.InstantMessengerType = VC::Enums.Impp.Personal
+                                                     | VC::Enums.Impp.Business
+                                                     | VC::Enums.Impp.Mobile;
 
 
         // The vCard 4.0 standard RFC 6350 recommends to add an additional TEL entry
         // if the instant messenging device supports voice and/or video.
         // I think, that's a good practice also in vCard 3.0.
         var xiamoiMobilePhone = new VC::TextProperty(mobilePhoneNumber.Substring(4));
-        xiamoiMobilePhone.Parameters.PropertyClass = VC::Enums.PropertyClassTypes.Home
-                                                   | VC::Enums.PropertyClassTypes.Work;
-        xiamoiMobilePhone.Parameters.PhoneType = VC::Enums.PhoneTypes.Voice
-                                                   | VC::Enums.PhoneTypes.BBS
-                                                   | VC::Enums.PhoneTypes.Cell
-                                                   | VC::Enums.PhoneTypes.Msg
-                                                   | VC::Enums.PhoneTypes.Text
-                                                   | VC::Enums.PhoneTypes.Video;
+        xiamoiMobilePhone.Parameters.PropertyClass = VC::Enums.PCl.Home
+                                                   | VC::Enums.PCl.Work;
+        xiamoiMobilePhone.Parameters.PhoneType = VC::Enums.Tel.Voice
+                                                   | VC::Enums.Tel.BBS
+                                                   | VC::Enums.Tel.Cell
+                                                   | VC::Enums.Tel.Msg
+                                                   | VC::Enums.Tel.Text
+                                                   | VC::Enums.Tel.Video;
 
         // Initialize the VCard:
         var vcard = new VCard

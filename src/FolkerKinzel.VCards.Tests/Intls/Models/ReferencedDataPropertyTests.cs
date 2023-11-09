@@ -64,11 +64,11 @@ public class ReferencedDataPropertyTests
         var serializer = new Vcf_2_1Serializer(writer, VcfOptions.Default, null);
 
         var prop = DataProperty.FromUri(null);
-        prop.Parameters.ContentLocation = ContentLocation.Url;
-        prop.Parameters.DataType = VCdDataType.Uri;
+        prop.Parameters.ContentLocation = Loc.Url;
+        prop.Parameters.DataType = Data.Uri;
 
         prop.PrepareForVcfSerialization(serializer);
-        Assert.AreEqual(ContentLocation.Inline, prop.Parameters.ContentLocation);
+        Assert.AreEqual(Loc.Inline, prop.Parameters.ContentLocation);
     }
 
 
@@ -82,8 +82,8 @@ public class ReferencedDataPropertyTests
         var prop = DataProperty.FromUri(uri);
 
         prop.PrepareForVcfSerialization(serializer);
-        Assert.AreEqual(ContentLocation.ContentID, prop.Parameters.ContentLocation);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(Loc.Cid, prop.Parameters.ContentLocation);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 }
 

@@ -10,19 +10,19 @@ internal static class XMessengerParameterConverter
     {
         Debug.Assert(par is not null);
 
-        if (par.InstantMessengerType.IsSet(ImppTypes.Personal) || par.PropertyClass.IsSet(PropertyClassTypes.Home))
+        if (par.InstantMessengerType.IsSet(Impp.Personal) || par.PropertyClass.IsSet(PCl.Home))
         {
-            par.PropertyClass = par.PropertyClass.Set(PropertyClassTypes.Home);
+            par.PropertyClass = par.PropertyClass.Set(PCl.Home);
         }
 
-        if (par.InstantMessengerType.IsSet(ImppTypes.Business) || par.PropertyClass.IsSet(PropertyClassTypes.Work))
+        if (par.InstantMessengerType.IsSet(Impp.Business) || par.PropertyClass.IsSet(PCl.Work))
         {
-            par.PropertyClass = par.PropertyClass.Set(PropertyClassTypes.Work);
+            par.PropertyClass = par.PropertyClass.Set(PCl.Work);
         }
 
-        if (par.InstantMessengerType.IsSet(ImppTypes.Mobile) || par.PhoneType.IsSet(PhoneTypes.PCS))
+        if (par.InstantMessengerType.IsSet(Impp.Mobile) || par.PhoneType.IsSet(Tel.PCS))
         {
-            par.PhoneType = par.PhoneType.Set(PhoneTypes.PCS);
+            par.PhoneType = par.PhoneType.Set(Tel.PCS);
         }
     }
 
@@ -30,19 +30,19 @@ internal static class XMessengerParameterConverter
     {
         Debug.Assert(par is not null);
 
-        if (par.PhoneType.IsSet(PhoneTypes.PCS))
+        if (par.PhoneType.IsSet(Tel.PCS))
         {
-            par.InstantMessengerType = par.InstantMessengerType.Set(ImppTypes.Mobile);
+            par.InstantMessengerType = par.InstantMessengerType.Set(Impp.Mobile);
         }
 
-        if (par.PropertyClass.IsSet(PropertyClassTypes.Home))
+        if (par.PropertyClass.IsSet(PCl.Home))
         {
-            par.InstantMessengerType = par.InstantMessengerType.Set(ImppTypes.Personal);
+            par.InstantMessengerType = par.InstantMessengerType.Set(Impp.Personal);
         }
 
-        if (par.PropertyClass.IsSet(PropertyClassTypes.Work))
+        if (par.PropertyClass.IsSet(PCl.Work))
         {
-            par.InstantMessengerType = par.InstantMessengerType.Set(ImppTypes.Business);
+            par.InstantMessengerType = par.InstantMessengerType.Set(Impp.Business);
         }
     }
 }

@@ -140,12 +140,12 @@ public class V2Tests
         var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", autoLabel: false);
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
-        addr0.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
-        addr0.Parameters.PropertyClass = PropertyClassTypes.Home;
+        addr0.Parameters.AddressType = Adr.Postal | Adr.Parcel;
+        addr0.Parameters.PropertyClass = PCl.Home;
 
         var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", autoLabel: false);
-        addr1.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
-        addr1.Parameters.PropertyClass = PropertyClassTypes.Work;
+        addr1.Parameters.AddressType = Adr.Postal | Adr.Parcel;
+        addr1.Parameters.PropertyClass = PCl.Work;
         addr1.Parameters.Label = label1;
 
         var vc = new VCard
@@ -174,12 +174,12 @@ public class V2Tests
         var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", autoLabel: false);
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
-        addr0.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
-        addr0.Parameters.PropertyClass = PropertyClassTypes.Home;
+        addr0.Parameters.AddressType = Adr.Postal | Adr.Parcel;
+        addr0.Parameters.PropertyClass = PCl.Home;
 
         var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", autoLabel: false);
-        addr1.Parameters.AddressType = AddressTypes.Postal | AddressTypes.Parcel;
-        addr1.Parameters.PropertyClass = PropertyClassTypes.Work;
+        addr1.Parameters.AddressType = Adr.Postal | Adr.Parcel;
+        addr1.Parameters.PropertyClass = PCl.Work;
         addr1.Parameters.Label = label1;
 
         var vc = new VCard
@@ -206,14 +206,14 @@ public class V2Tests
     {
         var vc = new VCard
         {
-            Relations = RelationProperty.FromVCard(new VCard { NameViews = new NameProperty("wife", "best") }, RelationTypes.Spouse)
+            Relations = RelationProperty.FromVCard(new VCard { NameViews = new NameProperty("wife", "best") }, Rel.Spouse)
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
         vc = VCard.ParseVcf(vcf)[0];
 
         Assert.IsNotNull(vc.Relations);
-        Assert.AreEqual(RelationTypes.Spouse, vc.Relations?.First()?.Parameters.Relation);
+        Assert.AreEqual(Rel.Spouse, vc.Relations?.First()?.Parameters.Relation);
 
     }
 
@@ -264,7 +264,7 @@ public class V2Tests
         var vCard = new VCard
         {
             DisplayNames = new TextProperty("Secret Service"),
-            Relations = RelationProperty.FromVCard(agent, RelationTypes.Agent | RelationTypes.Colleague)
+            Relations = RelationProperty.FromVCard(agent, Rel.Agent | Rel.Colleague)
         };
 
         string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.AppendAgentAsSeparateVCard));

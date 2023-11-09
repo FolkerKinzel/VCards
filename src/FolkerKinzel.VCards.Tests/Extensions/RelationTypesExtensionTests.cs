@@ -15,44 +15,44 @@ public class RelationTypesExtensionTests
     [TestMethod()]
     public void RelationTypesTest()
     {
-        RelationTypes? tp = null;
+        Rel? tp = null;
 
-        Assert.IsFalse(tp.IsSet(RelationTypes.Agent));
+        Assert.IsFalse(tp.IsSet(Rel.Agent));
 
-        tp = tp.Set(RelationTypes.Agent);
-        Assert.IsTrue(tp.IsSet(RelationTypes.Agent));
+        tp = tp.Set(Rel.Agent);
+        Assert.IsTrue(tp.IsSet(Rel.Agent));
         Assert.IsTrue(tp.HasValue);
 
         // Set doppelt aufrufen
-        tp = tp.Set(RelationTypes.Agent);
-        Assert.IsTrue(tp.IsSet(RelationTypes.Agent));
+        tp = tp.Set(Rel.Agent);
+        Assert.IsTrue(tp.IsSet(Rel.Agent));
         Assert.IsTrue(tp.HasValue);
 
-        tp = tp.Set(RelationTypes.Contact);
-        Assert.IsTrue(tp.IsSet(RelationTypes.Contact));
-        Assert.IsTrue(tp.IsSet(RelationTypes.Agent));
+        tp = tp.Set(Rel.Contact);
+        Assert.IsTrue(tp.IsSet(Rel.Contact));
+        Assert.IsTrue(tp.IsSet(Rel.Agent));
         Assert.IsTrue(tp.HasValue);
 
-        tp = tp.Unset(RelationTypes.Contact);
-        Assert.IsFalse(tp.IsSet(RelationTypes.Contact));
-        Assert.IsTrue(tp.IsSet(RelationTypes.Agent));
+        tp = tp.Unset(Rel.Contact);
+        Assert.IsFalse(tp.IsSet(Rel.Contact));
+        Assert.IsTrue(tp.IsSet(Rel.Agent));
         Assert.IsTrue(tp.HasValue);
 
         // Unset doppelt aufrufen:
-        tp = tp.Unset(RelationTypes.Contact);
-        Assert.IsFalse(tp.IsSet(RelationTypes.Contact));
-        Assert.IsTrue(tp.IsSet(RelationTypes.Agent));
+        tp = tp.Unset(Rel.Contact);
+        Assert.IsFalse(tp.IsSet(Rel.Contact));
+        Assert.IsTrue(tp.IsSet(Rel.Agent));
         Assert.IsTrue(tp.HasValue);
 
         // letztes Flag löschen
-        tp = tp.Unset(RelationTypes.Agent);
-        Assert.IsFalse(tp.IsSet(RelationTypes.Agent));
+        tp = tp.Unset(Rel.Agent);
+        Assert.IsFalse(tp.IsSet(Rel.Agent));
         Assert.IsFalse(tp.HasValue);
 
         // Unset auf null aufrufen:
-        tp = tp.Unset(RelationTypes.Agent);
+        tp = tp.Unset(Rel.Agent);
 
-        Assert.IsFalse(tp.IsSet(RelationTypes.Agent));
+        Assert.IsFalse(tp.IsSet(Rel.Agent));
         Assert.IsFalse(tp.HasValue);
     }
 

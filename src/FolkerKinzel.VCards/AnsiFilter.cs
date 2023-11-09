@@ -190,7 +190,7 @@ public class AnsiFilter
         {
             foreach (var vCard in vCards.Where(x => x.Version == VCdVersion.V2_1))
             {
-                IEnumerable<KeyValuePair<VCdProp, object>> keyValuePairs = vCard;
+                IEnumerable<KeyValuePair<Prop, object>> keyValuePairs = vCard;
 
                 string? charSet = keyValuePairs
                     .Where(x => x.Value is IEnumerable<AddressProperty> or IEnumerable<NameProperty> or IEnumerable<TextProperty>)

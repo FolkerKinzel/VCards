@@ -21,7 +21,7 @@ public sealed class TimeStampProperty : VCardProperty
     /// <summary> Initializes a new <see cref="TimeStampProperty" /> object that 
     /// encapsulates the time of its constructor call as a UTC time stamp.</summary>
     /// <remarks>The constructor sets the <see cref="ParameterSection.DataType" /> parameter 
-    /// to the value <see cref="VCdDataType.TimeStamp" />.</remarks>
+    /// to the value <see cref="Data.TimeStamp" />.</remarks>
     public TimeStampProperty()
         : this(DateTimeOffset.UtcNow) { }
 
@@ -30,12 +30,12 @@ public sealed class TimeStampProperty : VCardProperty
     /// the specified time stamp. </summary>
     /// <param name="value">The <see cref="DateTimeOffset" /> value to embed.</param>
     /// <remarks> The constructor sets the <see cref="ParameterSection.DataType" /> parameter 
-    /// to the value <see cref="VCdDataType.TimeStamp" />. </remarks>
+    /// to the value <see cref="Data.TimeStamp" />. </remarks>
     public TimeStampProperty(DateTimeOffset value)
         : base(new ParameterSection(), null)
     {
         Value = value;
-        Parameters.DataType = VCdDataType.TimeStamp;
+        Parameters.DataType = Data.TimeStamp;
     }
 
     internal TimeStampProperty(VcfRow vcfRow)
@@ -48,7 +48,7 @@ public sealed class TimeStampProperty : VCardProperty
             Value = value.Match<DateTimeOffset>(
                 dateOnly => new DateTimeOffset(dateOnly.ToDateTime(TimeOnly.MinValue, DateTimeKind.Local)),
                 dateTimeOffset => dateTimeOffset);
-            Parameters.DataType = VCdDataType.TimeStamp;
+            Parameters.DataType = Data.TimeStamp;
         }
     }
 

@@ -120,16 +120,16 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
             {
                 ParameterSection parameters = prop.Parameters;
 
-                if (parameters.PropertyClass.IsSet(PropertyClassTypes.Home))
+                if (parameters.PropertyClass.IsSet(PCl.Home))
                 {
                     parameters.InstantMessengerType =
-                        parameters.InstantMessengerType.Set(ImppTypes.Personal);
+                        parameters.InstantMessengerType.Set(Impp.Personal);
                 }
 
-                if (parameters.PropertyClass.IsSet(PropertyClassTypes.Work))
+                if (parameters.PropertyClass.IsSet(PCl.Work))
                 {
                     parameters.InstantMessengerType =
-                        parameters.InstantMessengerType.Set(ImppTypes.Business);
+                        parameters.InstantMessengerType.Set(Impp.Business);
                 }
 
                 BuildProperty(VCard.PropKeys.IMPP,

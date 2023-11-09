@@ -40,8 +40,8 @@ public sealed partial class DateAndOrTime
     /// </summary>
     /// <remarks>
     /// <para>A <see cref="System.DateTimeOffset"/> value may contain either a 
-    /// <see cref="VCdDataType.DateTime"/> or a <see cref="VCdDataType.Time"/> with a 
-    /// <see cref="VCdDataType.UtcOffset"/>.
+    /// <see cref="Data.DateTime"/> or a <see cref="Data.Time"/> with a 
+    /// <see cref="Data.UtcOffset"/>.
     /// </para>
     /// <para>
     /// Parts of the contained data may be irrelevant. Use the extension methods

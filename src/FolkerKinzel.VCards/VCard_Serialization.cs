@@ -41,7 +41,7 @@ public sealed partial class VCard
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
-    /// <see cref="RelationTypes.Agent" /> flag is set. 
+    /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
     /// <seealso cref="ITimeZoneIDConverter" />
@@ -106,7 +106,7 @@ public sealed partial class VCard
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
-    /// <see cref="RelationTypes.Agent" /> flag is set. 
+    /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
     /// <seealso cref="ITimeZoneIDConverter" />
@@ -203,7 +203,7 @@ public sealed partial class VCard
                 }
 
                 if (vCard.Relations.PrefOrNullIntl(x => x is RelationVCardProperty &&
-                                                        x.Parameters.Relation.IsSet(RelationTypes.Agent),
+                                                        x.Parameters.Relation.IsSet(Rel.Agent),
                                                         ignoreEmptyItems: true) is RelationVCardProperty agent)
                 {
                     if (!list.Contains(agent.Value))
@@ -244,7 +244,7 @@ public sealed partial class VCard
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
-    /// <see cref="RelationTypes.Agent" /> flag is set. 
+    /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
     /// <seealso cref="ITimeZoneIDConverter" />
@@ -305,7 +305,7 @@ public sealed partial class VCard
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
-    /// <see cref="RelationTypes.Agent" /> flag is set. 
+    /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
     /// <seealso cref="ITimeZoneIDConverter" />
@@ -352,7 +352,7 @@ public sealed partial class VCard
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
-    /// <see cref="RelationTypes.Agent" /> flag is set. 
+    /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
     /// <seealso cref="ITimeZoneIDConverter" />
@@ -401,7 +401,7 @@ public sealed partial class VCard
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.Relation" /> parameter the 
-    /// <see cref="RelationTypes.Agent" /> flag is set. 
+    /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
     /// <seealso cref="ITimeZoneIDConverter" />

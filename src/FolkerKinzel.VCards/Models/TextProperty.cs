@@ -66,7 +66,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
         if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
-            this.Parameters.Encoding = ValueEncoding.QuotedPrintable;
+            this.Parameters.Encoding = Enc.QuotedPrintable;
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
     }
@@ -80,7 +80,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
         if (serializer.Version == VCdVersion.V2_1)
         {
-            _ = this.Parameters.Encoding == ValueEncoding.QuotedPrintable
+            _ = this.Parameters.Encoding == Enc.QuotedPrintable
                 ? builder.Append(QuotedPrintable.Encode(Value, builder.Length))
                 : builder.Append(Value);
         }

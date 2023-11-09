@@ -16,8 +16,8 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
 
     private readonly Action<ParameterSerializer2_1> _collectPhoneTypes = static serializer =>
     {
-        const PhoneTypes DEFINED_PHONE_TYPES = PhoneTypes.Voice | PhoneTypes.Fax | PhoneTypes.Msg | PhoneTypes.Cell |
-        PhoneTypes.Pager | PhoneTypes.BBS | PhoneTypes.Modem | PhoneTypes.Car | PhoneTypes.ISDN | PhoneTypes.Video;
+        const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Fax | Tel.Msg | Tel.Cell |
+        Tel.Pager | Tel.BBS | Tel.Modem | Tel.Car | Tel.ISDN | Tel.Video;
 
         EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
                                    serializer._stringCollectionList);
@@ -322,10 +322,10 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
     {
         switch (ParaSection.Encoding)
         {
-            case ValueEncoding.Base64:
+            case Enc.Base64:
                 AppendParameter(ParameterSection.ParameterKey.ENCODING, "BASE64");
                 break;
-            case ValueEncoding.QuotedPrintable:
+            case Enc.QuotedPrintable:
                 AppendParameter(ParameterSection.ParameterKey.ENCODING, "QUOTED-PRINTABLE");
                 AppendParameter(ParameterSection.ParameterKey.CHARSET, VCard.DEFAULT_CHARSET);
                 break;
@@ -418,14 +418,14 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
         {
             AppendV2_1Type(ParameterSection.TypeValue.PREF);
         }
-        AppendV2_1Type(ParaSection.EMailType ?? EMailType.SMTP);
+        AppendV2_1Type(ParaSection.EMailType ?? EMail.SMTP);
     }
 
     private void AppendValue()
     {
-        ContentLocation contentLocation = ParaSection.ContentLocation;
+        Loc contentLocation = ParaSection.ContentLocation;
 
-        if (contentLocation != ContentLocation.Inline)
+        if (contentLocation != Loc.Inline)
         {
             AppendParameter(ParameterSection.ParameterKey.VALUE, contentLocation.ToVcfString());
         }

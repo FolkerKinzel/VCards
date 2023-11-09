@@ -145,7 +145,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
             MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
                            ? mimeInfo.ToString()
                            : null;
-        textProp.Parameters.DataType = VCdDataType.Text;
+        textProp.Parameters.DataType = Data.Text;
         return new EmbeddedTextProperty(textProp);
     }
 
@@ -216,7 +216,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                     : FromText(vcfRow.Value, info.MimeType.ToString(), vcfRow.Group);
         }
 
-        if (vcfRow.Parameters.Encoding == ValueEncoding.Base64)
+        if (vcfRow.Parameters.Encoding == Enc.Base64)
         {
             return new EmbeddedBytesProperty
                        (
@@ -226,14 +226,14 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                         );
         }
 
-        if (vcfRow.Parameters.DataType == VCdDataType.Uri ||
-            vcfRow.Parameters.DataType == VCdDataType.Text)
+        if (vcfRow.Parameters.DataType == Data.Uri ||
+            vcfRow.Parameters.DataType == Data.Text)
         {
             return TryAsUri(vcfRow, version);
         }
 
         // Quoted-Printable encoded binary data:
-        if (vcfRow.Parameters.Encoding == ValueEncoding.QuotedPrintable &&
+        if (vcfRow.Parameters.Encoding == Enc.QuotedPrintable &&
             vcfRow.Parameters.MediaType != null)
         {
             return new EmbeddedBytesProperty

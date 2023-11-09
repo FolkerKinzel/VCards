@@ -8,19 +8,19 @@ public class RelationTypesConverterTests
     [TestMethod]
     public void ParseTest1()
     {
-        foreach (RelationTypes rel in (RelationTypes[])Enum.GetValues(typeof(RelationTypes)))
+        foreach (Rel rel in (Rel[])Enum.GetValues(typeof(Rel)))
         {
-            RelationTypes? rel2 = RelationTypesConverter.Parse(RelationTypesConverter.ToVcfString(rel)!.ToUpperInvariant());
+            Rel? rel2 = RelConverter.Parse(RelConverter.ToVcfString(rel)!.ToUpperInvariant());
             Assert.AreEqual(rel, rel2);
         }
 
-        Assert.IsNull(RelationTypesConverter.Parse("NICHT_VORHANDEN"));
+        Assert.IsNull(RelConverter.Parse("NICHT_VORHANDEN"));
     }
 
     [TestMethod]
-    public void ParseTest2() => Assert.IsNull(RelationTypesConverter.Parse(null));
+    public void ParseTest2() => Assert.IsNull(RelConverter.Parse(null));
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
-    public void ToVcfStringTest() => _ = RelationTypesConverter.ToVcfString((RelationTypes)4711);
+    public void ToVcfStringTest() => _ = RelConverter.ToVcfString((Rel)4711);
 }

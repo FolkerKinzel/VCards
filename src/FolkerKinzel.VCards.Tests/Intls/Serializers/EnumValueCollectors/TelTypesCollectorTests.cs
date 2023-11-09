@@ -9,7 +9,7 @@ public class TelTypesCollectorTests
     [TestMethod()]
     public void CollectValueStringsTest()
     {
-        PhoneTypes? tel = PhoneTypes.Voice | PhoneTypes.Msg;
+        Tel? tel = Tel.Voice | Tel.Msg;
 
         var list = new List<string>();
 
@@ -35,11 +35,11 @@ public class TelTypesCollectorTests
     [TestMethod()]
     public void DetectAllEnumValues()
     {
-        var arr = (PhoneTypes[])Enum.GetValues(typeof(PhoneTypes));
+        var arr = (Tel[])Enum.GetValues(typeof(Tel));
 
         var list = new List<string>(1);
 
-        foreach (PhoneTypes item in arr)
+        foreach (Tel item in arr)
         {
             list.Clear();
             EnumValueCollector.Collect(item, list);
@@ -53,11 +53,11 @@ public class TelTypesCollectorTests
     [TestMethod()]
     public void RoundTrip()
     {
-        var arr = (PhoneTypes[])Enum.GetValues(typeof(PhoneTypes));
+        var arr = (Tel[])Enum.GetValues(typeof(Tel));
 
         var list = new List<string>(1);
 
-        foreach (PhoneTypes item in arr)
+        foreach (Tel item in arr)
         {
             list.Clear();
             EnumValueCollector.Collect(item, list);
@@ -71,12 +71,12 @@ public class TelTypesCollectorTests
             //Assert.AreEqual(comp.Value, item);
 
 
-            PhoneTypes? comp = PhoneTypesConverter.Parse(list[0]);
+            Tel? comp = TelConverter.Parse(list[0]);
 
             Assert.IsTrue(comp.HasValue);
             Assert.AreEqual(comp!.Value, item);
 
-            var comp2 = (PhoneTypes)Enum.Parse(typeof(PhoneTypes), list[0], true);
+            var comp2 = (Tel)Enum.Parse(typeof(Tel), list[0], true);
 
             Assert.AreEqual(comp, comp2);
         }

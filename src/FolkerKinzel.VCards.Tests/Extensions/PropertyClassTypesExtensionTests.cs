@@ -15,44 +15,44 @@ public class PropertyClassTypesExtensionTests
     [TestMethod()]
     public void PropertyClassTypesTest()
     {
-        PropertyClassTypes? tp = null;
+        PCl? tp = null;
 
-        Assert.IsFalse(tp.IsSet(PropertyClassTypes.Home));
+        Assert.IsFalse(tp.IsSet(PCl.Home));
 
-        tp = tp.Set(PropertyClassTypes.Home);
-        Assert.IsTrue(tp.IsSet(PropertyClassTypes.Home));
+        tp = tp.Set(PCl.Home);
+        Assert.IsTrue(tp.IsSet(PCl.Home));
         Assert.IsTrue(tp.HasValue);
 
         // Set doppelt aufrufen
-        tp = tp.Set(PropertyClassTypes.Home);
-        Assert.IsTrue(tp.IsSet(PropertyClassTypes.Home));
+        tp = tp.Set(PCl.Home);
+        Assert.IsTrue(tp.IsSet(PCl.Home));
         Assert.IsTrue(tp.HasValue);
 
-        tp = tp.Set(PropertyClassTypes.Work);
-        Assert.IsTrue(tp.IsSet(PropertyClassTypes.Work));
-        Assert.IsTrue(tp.IsSet(PropertyClassTypes.Home));
+        tp = tp.Set(PCl.Work);
+        Assert.IsTrue(tp.IsSet(PCl.Work));
+        Assert.IsTrue(tp.IsSet(PCl.Home));
         Assert.IsTrue(tp.HasValue);
 
-        tp = tp.Unset(PropertyClassTypes.Work);
-        Assert.IsFalse(tp.IsSet(PropertyClassTypes.Work));
-        Assert.IsTrue(tp.IsSet(PropertyClassTypes.Home));
+        tp = tp.Unset(PCl.Work);
+        Assert.IsFalse(tp.IsSet(PCl.Work));
+        Assert.IsTrue(tp.IsSet(PCl.Home));
         Assert.IsTrue(tp.HasValue);
 
         // Unset doppelt aufrufen:
-        tp = tp.Unset(PropertyClassTypes.Work);
-        Assert.IsFalse(tp.IsSet(PropertyClassTypes.Work));
-        Assert.IsTrue(tp.IsSet(PropertyClassTypes.Home));
+        tp = tp.Unset(PCl.Work);
+        Assert.IsFalse(tp.IsSet(PCl.Work));
+        Assert.IsTrue(tp.IsSet(PCl.Home));
         Assert.IsTrue(tp.HasValue);
 
         // letztes Flag löschen
-        tp = tp.Unset(PropertyClassTypes.Home);
-        Assert.IsFalse(tp.IsSet(PropertyClassTypes.Home));
+        tp = tp.Unset(PCl.Home);
+        Assert.IsFalse(tp.IsSet(PCl.Home));
         Assert.IsFalse(tp.HasValue);
 
         // Unset auf null aufrufen:
-        tp = tp.Unset(PropertyClassTypes.Home);
+        tp = tp.Unset(PCl.Home);
 
-        Assert.IsFalse(tp.IsSet(PropertyClassTypes.Home));
+        Assert.IsFalse(tp.IsSet(PCl.Home));
         Assert.IsFalse(tp.HasValue);
     }
 }

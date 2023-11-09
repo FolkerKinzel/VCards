@@ -33,7 +33,7 @@ internal sealed class RelationTextProperty : RelationProperty
     {
         Debug.Assert(serializer != null);
         _textProp.PrepareForVcfSerialization(serializer);
-        Parameters.DataType = VCdDataType.Text;
+        Parameters.DataType = Data.Text;
     }
 
     internal override void AppendValue(VcfSerializer serializer)
