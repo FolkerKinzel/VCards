@@ -16,7 +16,7 @@ public class OrganizationPropertyTests
     [DataRow(null, "ABC, Inc.", null)]
     public void OrganizationPropertyTest1(string? expectedGroup, string? expectedOrganizationName, string[] expectedOrganizationalUnits)
     {
-        var orgProp = new OrganizationProperty(expectedOrganizationName, expectedOrganizationalUnits, expectedGroup);
+        var orgProp = new OrgProperty(expectedOrganizationName, expectedOrganizationalUnits, expectedGroup);
 
         Assert.IsNotNull(orgProp.Value);
         Assert.AreEqual(expectedGroup, orgProp.Group);
@@ -48,7 +48,7 @@ public class OrganizationPropertyTests
         var vcfRow = VcfRow.Parse(s, new VcfDeserializationInfo());
         Assert.IsNotNull(vcfRow);
 
-        var orgProp = new OrganizationProperty(vcfRow!, VCdVersion.V4_0);
+        var orgProp = new OrgProperty(vcfRow!, VCdVersion.V4_0);
 
         Assert.IsNotNull(orgProp.Value);
         Assert.AreEqual(expectedGroup, orgProp.Group);
@@ -62,7 +62,7 @@ public class OrganizationPropertyTests
     {
         VcfRow row = VcfRow.Parse("ORG:", new VcfDeserializationInfo())!;
 
-        var prop = new OrganizationProperty(row, VCdVersion.V3_0);
+        var prop = new OrgProperty(row, VCdVersion.V3_0);
 
         Assert.IsNotNull(prop.Value);
     }
@@ -70,7 +70,7 @@ public class OrganizationPropertyTests
     [TestMethod]
     public void IEnumerableTest1()
     {
-        var prop = new OrganizationProperty("Contoso");
+        var prop = new OrgProperty("Contoso");
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 }

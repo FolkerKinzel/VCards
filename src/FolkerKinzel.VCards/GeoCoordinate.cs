@@ -1,5 +1,4 @@
 using System.Globalization;
-
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;

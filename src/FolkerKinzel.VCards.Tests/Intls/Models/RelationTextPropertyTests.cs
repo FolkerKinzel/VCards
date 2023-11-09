@@ -22,7 +22,7 @@ public class RelationTextPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
 
-        Assert.AreEqual(relation, prop.Parameters.Relation);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
         Assert.AreEqual(Data.Text, prop.Parameters.DataType);
     }
 
@@ -58,7 +58,7 @@ public class RelationTextPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
 
-        Assert.AreEqual(relation, prop.Parameters.Relation);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
         Assert.AreEqual(Data.Text, prop.Parameters.DataType);
     }
 
@@ -94,7 +94,7 @@ public class RelationTextPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
 
-        Assert.AreEqual(relation, prop.Parameters.Relation);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
         Assert.AreEqual(Data.Text, prop.Parameters.DataType);
     }
 

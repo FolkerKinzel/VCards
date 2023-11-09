@@ -40,8 +40,8 @@ public sealed partial class VCard
                 IEnumerable<NameProperty?> namePropEnumerable => namePropEnumerable.Select(cloner).Cast<NameProperty?>().ToArray(),
                 RelationProperty relProp => relProp.Clone(),
                 IEnumerable<RelationProperty?> relPropEnumerable => relPropEnumerable.Select(cloner).Cast<RelationProperty?>().ToArray(),
-                OrganizationProperty orgProp => orgProp.Clone(),
-                IEnumerable<OrganizationProperty?> orgPropEnumerable => orgPropEnumerable.Select(cloner).Cast<OrganizationProperty?>().ToArray(),
+                OrgProperty orgProp => orgProp.Clone(),
+                IEnumerable<OrgProperty?> orgPropEnumerable => orgPropEnumerable.Select(cloner).Cast<OrgProperty?>().ToArray(),
                 StringCollectionProperty strCollProp => strCollProp.Clone(),
                 IEnumerable<StringCollectionProperty?> strCollPropEnumerable => strCollPropEnumerable.Select(cloner).Cast<StringCollectionProperty?>().ToArray(),
                 GenderProperty sexProp => sexProp.Clone(),
@@ -153,7 +153,7 @@ public sealed partial class VCard
                     catch { }
                     break;
                 case PropKeys.ORG:
-                    Organizations = Concat(Organizations, new OrganizationProperty(vcfRow, this.Version));
+                    Organizations = Concat(Organizations, new OrgProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.GEO:
                     GeoCoordinates = Concat(GeoCoordinates, new GeoProperty(vcfRow));
@@ -318,10 +318,10 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (Relations?.All(static x => x!.Parameters.Relation != Rel.Spouse) ?? true)
+                    else if (Relations?.All(static x => x!.Parameters.RelationType != Rel.Spouse) ?? true)
                     {
                         vcfRow.Parameters.DataType = Data.Text; // führt dazu, dass eine RelationTextProperty erzeugt wird
-                        vcfRow.Parameters.Relation = Rel.Spouse;
+                        vcfRow.Parameters.RelationType = Rel.Spouse;
 
                         Relations = Concat(Relations, RelationProperty.Parse(vcfRow, this.Version));
                     }
@@ -334,10 +334,10 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (Relations?.All(x => !x!.Parameters.Relation.IsSet(Rel.Agent)) ?? true)
+                    else if (Relations?.All(x => !x!.Parameters.RelationType.IsSet(Rel.Agent)) ?? true)
                     {
                         vcfRow.Parameters.DataType ??= Data.Text;
-                        vcfRow.Parameters.Relation = Rel.Agent;
+                        vcfRow.Parameters.RelationType = Rel.Agent;
 
                         Relations = Concat(Relations, RelationProperty.Parse(vcfRow, this.Version));
                     }
@@ -367,7 +367,7 @@ public sealed partial class VCard
                         else
                         {
                             vcfRow.Parameters.DataType ??= Data.Text;
-                            vcfRow.Parameters.Relation = Rel.Agent;
+                            vcfRow.Parameters.RelationType = Rel.Agent;
 
                             Relations = Concat(Relations, RelationProperty.Parse(vcfRow, this.Version));
                         }

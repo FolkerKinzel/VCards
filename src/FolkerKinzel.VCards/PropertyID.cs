@@ -1,5 +1,4 @@
 using System.Collections;
-
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 

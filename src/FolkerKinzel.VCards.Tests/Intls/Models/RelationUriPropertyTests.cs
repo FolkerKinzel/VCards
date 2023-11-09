@@ -16,12 +16,12 @@ public class RelationUriPropertyTests
         const Rel relation = Rel.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
+        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         Assert.AreEqual(uri, prop.Value);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.AreEqual(relation, prop.Parameters.Relation);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
         Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
@@ -32,7 +32,7 @@ public class RelationUriPropertyTests
         const Rel relation = Rel.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
+        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         var vcard = new VCard
         {
@@ -56,7 +56,7 @@ public class RelationUriPropertyTests
         Assert.AreEqual(uri, prop!.Value);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.AreEqual(relation, prop.Parameters.Relation);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
         Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
@@ -67,7 +67,7 @@ public class RelationUriPropertyTests
         const Rel relation = Rel.Agent;
         var uri = new Uri("http://test.ääh.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
+        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         var vcard = new VCard
         {
@@ -91,7 +91,7 @@ public class RelationUriPropertyTests
         Assert.AreEqual(uri, prop!.Value);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.AreEqual(relation, prop.Parameters.Relation);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
         Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
@@ -101,7 +101,7 @@ public class RelationUriPropertyTests
         const Rel relation = Rel.Agent;
         var uri = new Uri("cid:test.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
+        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         var vcard = new VCard
         {
@@ -125,7 +125,7 @@ public class RelationUriPropertyTests
         Assert.AreEqual(uri, prop!.Value);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.AreEqual(relation, prop.Parameters.Relation);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
         Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 

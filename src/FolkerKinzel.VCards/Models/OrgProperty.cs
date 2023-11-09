@@ -12,23 +12,23 @@ namespace FolkerKinzel.VCards.Models;
 /// about the organization to which the <see cref="VCard"/> object is associated.</summary>
 /// <seealso cref="VCard.Organizations"/>
 /// <seealso cref="Organization"/>
-public sealed class OrganizationProperty : VCardProperty, IEnumerable<OrganizationProperty>
+public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
 {
     /// <summary>
     /// <summary>Copy ctor.</summary>
     /// </summary>
-    /// <param name="prop">The <see cref="OrganizationProperty"/> instance to clone.</param>
-    private OrganizationProperty(OrganizationProperty prop) : base(prop)
+    /// <param name="prop">The <see cref="OrgProperty"/> instance to clone.</param>
+    private OrgProperty(OrgProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary> Initializes a new <see cref="OrganizationProperty" /> object.
+    /// <summary> Initializes a new <see cref="OrgProperty" /> object.
     /// </summary>
     /// <param name="organizationName">Organization name or <c>null</c>.</param>
     /// <param name="organizationalUnits">Organization unit(s) or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public OrganizationProperty(string? organizationName,
+    public OrgProperty(string? organizationName,
                                 IEnumerable<string?>? organizationalUnits = null,
                                 string? group = null) : base(new ParameterSection(), group)
     {
@@ -37,7 +37,7 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
         Value = new Organization(list);
     }
 
-    internal OrganizationProperty(VcfRow vcfRow, VCdVersion version)
+    internal OrgProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
         Debug.Assert(vcfRow != null);
@@ -52,7 +52,7 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
         Value = new Organization(list);
     }
 
-    /// <summary> The data provided by the  <see cref="OrganizationProperty" />. </summary>
+    /// <summary> The data provided by the  <see cref="OrgProperty" />. </summary>
     public new Organization Value
     {
         get;
@@ -62,16 +62,16 @@ public sealed class OrganizationProperty : VCardProperty, IEnumerable<Organizati
     public override bool IsEmpty => Value.IsEmpty;
 
     /// <inheritdoc />
-    public override object Clone() => new OrganizationProperty(this);
+    public override object Clone() => new OrgProperty(this);
 
     /// <inheritdoc />
-    IEnumerator<OrganizationProperty> IEnumerable<OrganizationProperty>.GetEnumerator()
+    IEnumerator<OrgProperty> IEnumerable<OrgProperty>.GetEnumerator()
     {
         yield return this;
     }
 
     /// <inheritdoc />
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<OrganizationProperty>)this).GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<OrgProperty>)this).GetEnumerator();
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

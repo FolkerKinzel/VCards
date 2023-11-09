@@ -1,6 +1,5 @@
 using FolkerKinzel.VCards.Models.Enums;
 
-
 namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard

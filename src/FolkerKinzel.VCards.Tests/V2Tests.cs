@@ -213,7 +213,7 @@ public class V2Tests
         vc = VCard.ParseVcf(vcf)[0];
 
         Assert.IsNotNull(vc.Relations);
-        Assert.AreEqual(Rel.Spouse, vc.Relations?.First()?.Parameters.Relation);
+        Assert.AreEqual(Rel.Spouse, vc.Relations?.First()?.Parameters.RelationType);
 
     }
 

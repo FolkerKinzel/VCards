@@ -1,13 +1,3 @@
-/* Unmerged change from project 'FolkerKinzel.VCards (net7.0)'
-Before:
-namespace FolkerKinzel.VCards.Models;
-After:
-using FolkerKinzel;
-using FolkerKinzel.VCards;
-using FolkerKinzel.VCards;
-using FolkerKinzel.VCards.Models;
-*/
-
 namespace FolkerKinzel.VCards;
 
 /// <summary>Defines a method that converts a <see cref="string" />, which represents

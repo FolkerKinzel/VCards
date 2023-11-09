@@ -373,7 +373,7 @@ public sealed partial class ParameterSection
 
                     if (relType.HasValue)
                     {
-                        this.Relation = this.Relation.Set(relType.Value);
+                        this.RelationType = this.RelationType.Set(relType.Value);
                         return true;
                     }
 

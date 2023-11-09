@@ -19,7 +19,6 @@ public sealed class Name
     private const int MIDDLE_NAME = 2;
     private const int PREFIX = 3;
     private const int SUFFIX = 4;
-
     
     internal Name(
         ReadOnlyCollection<string> lastName,
@@ -35,7 +34,6 @@ public sealed class Name
         Suffix = suffix;
     }
 
-
     internal Name()
     {
         LastName =
@@ -44,7 +42,6 @@ public sealed class Name
         Prefix =
         Suffix = ReadOnlyStringCollection.Empty;
     }
-
 
     internal Name(string vCardValue, VcfDeserializationInfo info, VCdVersion version)
     {
@@ -377,7 +374,6 @@ public sealed class Name
             _ = builder.Append(worker);
         }
     }
-
 
     internal bool NeedsToBeQpEncoded()
         => LastName.Any(StringExtension.NeedsToBeQpEncoded) ||

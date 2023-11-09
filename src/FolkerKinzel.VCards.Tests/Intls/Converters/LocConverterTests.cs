@@ -15,7 +15,7 @@ public class LocConverterTests
             Assert.AreEqual(kind, kind2);
 
             cIdString = kind.ToVcfString();
-            cIdString = cIdString == "CID" ? "ContentId" : cIdString;
+            cIdString = cIdString == "CID" ? "Cid" : cIdString;
 
             object kind3 = Enum.Parse(typeof(Loc), cIdString, true);
             Assert.AreEqual(kind, kind3);

@@ -35,7 +35,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
             };
 
     private readonly Action<ParameterSerializer4_0> _collectRelationTypes = static serializer
-        => EnumValueCollector.Collect(serializer.ParaSection.Relation,
+        => EnumValueCollector.Collect(serializer.ParaSection.RelationType,
                                       serializer._stringCollectionList);
 
     public ParameterSerializer4_0(VcfOptions options) : base(options) { }

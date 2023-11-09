@@ -92,7 +92,6 @@ public sealed partial class VCard
         return VCard.Dereference(vCardList, false).ToList();
     }
 
-
     private static VCard? ParseNestedVcard(string? content,
                                            VcfDeserializationInfo info,
                                            VCdVersion versionHint)

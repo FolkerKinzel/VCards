@@ -40,7 +40,7 @@ public sealed partial class VCard
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
-    /// on whose <see cref="ParameterSection.Relation" /> parameter the 
+    /// on whose <see cref="ParameterSection.RelationType" /> parameter the 
     /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
@@ -105,7 +105,7 @@ public sealed partial class VCard
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
-    /// on whose <see cref="ParameterSection.Relation" /> parameter the 
+    /// on whose <see cref="ParameterSection.RelationType" /> parameter the 
     /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
@@ -203,7 +203,7 @@ public sealed partial class VCard
                 }
 
                 if (vCard.Relations.PrefOrNullIntl(x => x is RelationVCardProperty &&
-                                                        x.Parameters.Relation.IsSet(Rel.Agent),
+                                                        x.Parameters.RelationType.IsSet(Rel.Agent),
                                                         ignoreEmptyItems: true) is RelationVCardProperty agent)
                 {
                     if (!list.Contains(agent.Value))
@@ -243,7 +243,7 @@ public sealed partial class VCard
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
-    /// on whose <see cref="ParameterSection.Relation" /> parameter the 
+    /// on whose <see cref="ParameterSection.RelationType" /> parameter the 
     /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
@@ -304,7 +304,7 @@ public sealed partial class VCard
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
-    /// on whose <see cref="ParameterSection.Relation" /> parameter the 
+    /// on whose <see cref="ParameterSection.RelationType" /> parameter the 
     /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
@@ -351,7 +351,7 @@ public sealed partial class VCard
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
-    /// on whose <see cref="ParameterSection.Relation" /> parameter the 
+    /// on whose <see cref="ParameterSection.RelationType" /> parameter the 
     /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
@@ -400,7 +400,7 @@ public sealed partial class VCard
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
     /// option <see cref="VcfOptions.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
-    /// on whose <see cref="ParameterSection.Relation" /> parameter the 
+    /// on whose <see cref="ParameterSection.RelationType" /> parameter the 
     /// <see cref="Rel.Agent" /> flag is set. 
     /// </para>
     /// </remarks>
@@ -470,7 +470,7 @@ public sealed partial class VCard
                 }
 
                 members[i] = Uri.TryCreate(textProp.Value?.Trim(), UriKind.Absolute, out Uri? uri)
-                    ? RelationProperty.FromUri(uri, prop.Parameters.Relation, prop.Group)
+                    ? RelationProperty.FromUri(uri, prop.Parameters.RelationType, prop.Group)
                     : RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(textProp.Value) });
             }
         }

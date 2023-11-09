@@ -6,7 +6,6 @@ using OneOf;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models.Enums;
 
-
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary>

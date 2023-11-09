@@ -243,7 +243,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     protected override void AppendNotes(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.NOTE, value);
 
-    protected override void AppendOrganizations(IEnumerable<OrganizationProperty?> value)
+    protected override void AppendOrganizations(IEnumerable<OrgProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.ORG, value);
 
     protected override void AppendOrgDirectories(IEnumerable<TextProperty?> value)

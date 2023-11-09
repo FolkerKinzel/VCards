@@ -333,13 +333,13 @@ public sealed partial class ParameterSection
     /// a person. <c>(4)</c></summary>
     /// <remarks> Used in the <see cref="VCard.Relations">VCard.Relations</see> 
     /// property (<c>RELATED</c>).</remarks>
-    public Rel? Relation
+    public Rel? RelationType
     {
-        get => Get<Rel?>(VCdParam.Relation);
+        get => Get<Rel?>(VCdParam.RelationType);
         set
         {
             value = (value == default(Rel)) ? null : value;
-            Set(VCdParam.Relation, value);
+            Set(VCdParam.RelationType, value);
         }
     }
 

@@ -77,7 +77,6 @@ public sealed class Organization
         return sb.ToString();
     }
 
-
     internal void AppendVCardStringTo(VcfSerializer serializer)
     {
         StringBuilder builder = serializer.Builder;

@@ -102,7 +102,7 @@ public class RelationTests
 
     [TestMethod]
     public void TryAsStringTest5()
-        => Assert.IsTrue(RelationProperty.FromVCard(new VCard() { Organizations = new OrganizationProperty("Org") }).Value!.TryAsString(out _));
+        => Assert.IsTrue(RelationProperty.FromVCard(new VCard() { Organizations = new OrgProperty("Org") }).Value!.TryAsString(out _));
 
     [TestMethod]
     public void TryAsStringTest6()
@@ -118,7 +118,7 @@ public class RelationTests
         Assert.IsTrue(RelationProperty.FromVCard(
             new VCard()
             {
-                Organizations = new OrganizationProperty("Org"),
+                Organizations = new OrgProperty("Org"),
                 DisplayNames = Array.Empty<TextProperty>(),
                 NameViews = Array.Empty<NameProperty>()
             }).Value!.TryAsString(out _));
@@ -130,7 +130,7 @@ public class RelationTests
         Assert.IsFalse(RelationProperty.FromVCard(
             new VCard()
             {
-                Organizations = Array.Empty<OrganizationProperty>(),
+                Organizations = Array.Empty<OrgProperty>(),
                 DisplayNames = Array.Empty<TextProperty>(),
                 NameViews = Array.Empty<NameProperty>()
             }).Value!.TryAsString(out _));

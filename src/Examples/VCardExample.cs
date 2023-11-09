@@ -63,7 +63,7 @@ public static class VCardExample
                 // implementation of IEnumerable<T>
                 NameViews = name,
                 DisplayNames = new VC.TextProperty(name.ToDisplayName()),
-                Organizations = new VC::OrganizationProperty
+                Organizations = new VC::OrgProperty
                                 (
                                     "Millers Company",
                                     new string[] { "C#", "Webdesign" }

@@ -92,8 +92,8 @@ internal static class Utility
 
         var rel1 = RelationProperty.FromText("Agent", Rel.Agent);
         var rel2 = RelationProperty.FromText("Spouse");
-        rel2.Parameters.Relation = default(Rel);
-        rel2.Parameters.Relation = Rel.Spouse | Rel.CoResident;
+        rel2.Parameters.RelationType = default(Rel);
+        rel2.Parameters.RelationType = Rel.Spouse | Rel.CoResident;
 
 
         var nonStandard1 = new NonStandardProperty("X-NON-STANDARD", "The value");
@@ -167,7 +167,7 @@ internal static class Utility
             },
 
             Relations = new RelationProperty[] { rel1, rel2 },
-            Organizations = new OrganizationProperty("The ÄÖÜ Organization", new string[] { "Department", "Office" }),
+            Organizations = new OrgProperty("The ÄÖÜ Organization", new string[] { "Department", "Office" }),
             NonStandard = nonStandard,
             XmlProperties = xml1,
         };

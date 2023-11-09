@@ -234,7 +234,7 @@ internal abstract class VcfSerializer : IDisposable
                     AppendRoles((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case Prop.Organizations:
-                    AppendOrganizations((IEnumerable<OrganizationProperty?>)kvp.Value);
+                    AppendOrganizations((IEnumerable<OrgProperty?>)kvp.Value);
                     break;
                 case Prop.BirthDayViews:
                     AppendBirthDayViews((IEnumerable<DateAndOrTimeProperty?>)kvp.Value);
@@ -642,7 +642,7 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendNickNames(IEnumerable<StringCollectionProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendOrganizations(IEnumerable<OrganizationProperty?> value) { }
+    protected virtual void AppendOrganizations(IEnumerable<OrgProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendOrgDirectories(IEnumerable<TextProperty?> value) { }
@@ -664,7 +664,7 @@ internal abstract class VcfSerializer : IDisposable
 
     protected virtual void AppendRelations(IEnumerable<RelationProperty?> value)
     {
-        RelationProperty? agent = value.PrefOrNullIntl(static x => x.Parameters.Relation.IsSet(Rel.Agent),
+        RelationProperty? agent = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Agent),
                                                        IgnoreEmptyItems);
 
         if (agent != null)
@@ -672,7 +672,7 @@ internal abstract class VcfSerializer : IDisposable
             BuildProperty(VCard.PropKeys.AGENT, agent);
         }
 
-        RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.Relation.IsSet(Rel.Spouse), 
+        RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Spouse), 
                                                         IgnoreEmptyItems);
                    
         if (spouse != null)
@@ -726,7 +726,7 @@ internal abstract class VcfSerializer : IDisposable
 
             Debug.Assert(name != null);
             return RelationProperty.FromText(name, 
-                                             vcardProp.Parameters.Relation ?? Rel.Spouse,
+                                             vcardProp.Parameters.RelationType ?? Rel.Spouse,
                                              vcardProp.Group);
         }
     }

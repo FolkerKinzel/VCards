@@ -526,9 +526,9 @@ public sealed partial class VCard
 
     /// <summary> <c>ORG</c>: The name and optionally the unit(s) of the organization
     /// associated with the vCard object. <c>(2,3,4)</c></summary>
-    public IEnumerable<OrganizationProperty?>? Organizations
+    public IEnumerable<OrgProperty?>? Organizations
     {
-        get => Get<IEnumerable<OrganizationProperty?>?>(Prop.Organizations);
+        get => Get<IEnumerable<OrgProperty?>?>(Prop.Organizations);
         set => Set(Prop.Organizations, value);
     }
 
