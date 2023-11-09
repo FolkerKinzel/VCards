@@ -294,24 +294,7 @@ public sealed partial class VCard
         set => Set(Prop.Hobbies, value);
     }
 
-    /// <summary> <c>IMPP</c>: List of instant messenger handles. <c>(3,4)</c></summary>
-    /// <remarks>
-    /// <see cref="TextProperty.Value" /> should specify a URI for instant messaging 
-    /// and presence protocol communications with the object the <see cref="VCard"/> 
-    /// represents. If the URI can be used for voice and/or video, the 
-    /// <see cref="VCard.Phones" /> property SHOULD be used in addition to this 
-    /// property.</remarks>
-    [Obsolete("Use InstantMessengers instead.", false)]
-    [Browsable(false)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-    public IEnumerable<TextProperty?>? InstantMessengerHandles
-    {
-        get => InstantMessengers;
-        set => InstantMessengers = value;
-    }
-
-    /// <summary> <c>IMPP</c>: List of instant messenger handles. <c>(3,4)</c></summary>
+    /// <summary> <c>IMPP</c>: Instant messenger handles. <c>(3,4)</c></summary>
     /// <remarks>
     /// <see cref="TextProperty.Value" /> should specify a URI for instant messaging 
     /// and presence protocol communications with the object the <see cref="VCard"/> 

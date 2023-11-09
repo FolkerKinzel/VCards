@@ -111,14 +111,8 @@ public enum Prop
     /// some way. <c>(2,3,4)</c></summary>
     URLs,
 
-    /// <summary> <c>IMPP</c>: List of instant messenger handles. <c>(3,4)</c></summary>
+    /// <summary> <c>IMPP</c>: Instant messenger handles. <c>(3,4)</c></summary>
     InstantMessengers,
-
-    /// <summary> <c>IMPP</c>: List of instant messenger handles. <c>(3,4)</c></summary>
-    [Obsolete("Use InstantMessengers instead.", false)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [Browsable(false)]
-    InstantMessengerHandles = InstantMessengers,
 
     /// <summary> <c>KEY</c>: Public encryption keys associated with the vCard object.
     /// <c>(2,3,4)</c></summary>
