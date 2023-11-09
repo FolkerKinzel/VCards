@@ -7,7 +7,8 @@ internal class Program
 {
     private static void Main()
     {
-        _ = BenchmarkRunner.Run<HasFlagBench>();
+        _ = BenchmarkRunner.Run<EnumerableBench>();
+        //_ = BenchmarkRunner.Run<HasFlagBench>();
 
         //_ = BenchmarkRunner.Run<ConcatWithBench>();
 

@@ -4,22 +4,6 @@ namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static class IEnumerableExtension
 {
-    //public static void SetAltIDIntl<TSource>(this IEnumerable<TSource?> values,
-    //                                         string? altID) where TSource : VCardProperty
-    //{
-    //    Debug.Assert(values != null);
-
-    //    foreach (var item in values)
-    //    {
-    //        if (item is null)
-    //        {
-    //            continue;
-    //        }
-
-    //        item.Parameters.AltID = altID;
-    //    }
-    //}
-
     internal static bool IsSingle([NotNullWhen(true)] this IEnumerable<VCardProperty?>? values, bool ignoreEmptyItems)
         => ignoreEmptyItems ? values?.WhereNotEmpty().Take(2).Count() == 1
                             : values?.WhereNotNull().Take(2).Count() == 1;
@@ -29,7 +13,15 @@ internal static class IEnumerableExtension
 
     internal static IEnumerable<TSource> WhereNotNullAnd<TSource>(
         this IEnumerable<TSource?> values, Func<TSource, bool> filter) where TSource : VCardProperty
-        => values.Where(x => x != null && filter(x))!;
+    {
+        foreach (var item in values)
+        {
+            if (item != null && filter(item))
+            {
+                yield return item;
+            }
+        }
+    }
 
     internal static IEnumerable<TSource> WhereNotEmpty<TSource>(
         this IEnumerable<TSource?> values) where TSource : VCardProperty
@@ -37,7 +29,15 @@ internal static class IEnumerableExtension
 
     internal static IEnumerable<TSource> WhereNotEmptyAnd<TSource>(
         this IEnumerable<TSource?> values, Func<TSource, bool> filter) where TSource : VCardProperty
-        => values.Where(x => x != null && !x.IsEmpty && filter(x))!;
+    {
+        foreach (var item in values)
+        {
+            if (item != null && !item.IsEmpty && filter(item))
+            {
+                yield return item;
+            }
+        }
+    }
 
     internal static IEnumerable<TSource> OrderByPrefIntl<TSource>(
         this IEnumerable<TSource?> values, bool discardEmptyItems) where TSource : VCardProperty
