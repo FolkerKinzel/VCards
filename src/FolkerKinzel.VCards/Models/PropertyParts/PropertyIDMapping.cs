@@ -1,7 +1,7 @@
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Resources;
 
-namespace FolkerKinzel.VCards.Models;
+namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary> 
 /// Connects the local <see cref="PropertyID.Mapping" /> of a <see cref="VCardProperty" 
@@ -13,30 +13,30 @@ namespace FolkerKinzel.VCards.Models;
 public sealed class PropertyIDMapping
 {
     /// <summary>Initializes a new <see cref="PropertyIDMapping" /> object.</summary>
-    /// <param name="id">Local ID of the mapping (value: 1 - 9).</param>
-    /// <param name="mapping">A <see cref="Uri" /> that uniquely identifies a 
+    /// <param name="localID">Local ID of the mapping (value: 1 - 9).</param>
+    /// <param name="globalID">A <see cref="Uri" /> that uniquely identifies a 
     /// vCard-property across different versions of the same vCard.</param>
-    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> is less
+    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="localID" /> is less
     /// than 1 or greater than 9.</exception>
-    /// <exception cref="ArgumentNullException"> <paramref name="mapping" /> is 
+    /// <exception cref="ArgumentNullException"> <paramref name="globalID" /> is 
     /// <c>null</c>.</exception>
-    public PropertyIDMapping(int id, Uri mapping)
+    internal PropertyIDMapping(int localID, Uri globalID)
     {
-        id.ValidateID(nameof(id));
+        localID.ValidateID(nameof(localID));
 
-        ID = id;
-        Mapping = mapping ?? throw new ArgumentNullException(nameof(mapping));
+        LocalID = localID;
+        GlobalID = globalID ?? throw new ArgumentNullException(nameof(globalID));
     }
 
     /// <summary>Gets the Local ID of the mapping.</summary>
-    public int ID
+    public int LocalID
     {
         get;
     }
 
     /// <summary>Gets the <see cref="Uri" /> that serves as a cross-platform identifier
     /// for the mapping.</summary>
-    public Uri Mapping
+    public Uri GlobalID
     {
         get;
     }
@@ -111,6 +111,6 @@ public sealed class PropertyIDMapping
     internal void AppendTo(StringBuilder builder)
     {
         Debug.Assert(builder != null);
-        _ = builder.Append(ID).Append(';').Append(Mapping);
+        _ = builder.Append(LocalID).Append(';').Append(GlobalID);
     }
 }

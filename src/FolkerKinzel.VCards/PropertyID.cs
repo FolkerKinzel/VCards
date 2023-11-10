@@ -1,13 +1,14 @@
 using System.Collections;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards;
 
 /// <summary>Encapsulates information that is used to uniquely identify an instance
 /// of a <see cref="VCardProperty" />.</summary>
 /// <seealso cref="Models.PropertyParts.ParameterSection.PropertyIDs"/>
-/// <seealso cref="Models.PropertyIDMapping"/>
+/// <seealso cref="Models.PropertyParts.PropertyIDMapping"/>
 /// <seealso cref="Models.PropertyIDMappingProperty"/>
 /// <seealso cref="VCard.PropertyIDMappings"/>
 public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
@@ -16,24 +17,24 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     private readonly byte _data;
 
     /// <summary>Initializes a new <see cref="PropertyID" /> object with the local ID
-    /// of the vCard property and - optionally - a <see cref="PropertyIDMapping" />
+    /// of the vCard property and - optionally - a <see cref="PropertyIDMappingProperty" />
     /// object that allows the identification of the vCard property across different
     /// version states of the same vCard.</summary>
     /// <param name="id">The local ID of the vCard property (value: 1 - 9). The name 
     /// of the vCard property and this number uniquely identify a property locally.</param>
-    /// <param name="mapping">A <see cref="PropertyIDMapping" /> object or <c>null</c>.
-    /// The mapping is used to identify 
-    /// a vCard property between different version states of the same vCard.</param>
+    /// <param name="mapping">A <see cref="PropertyIDMappingProperty" /> or <c>null</c>.
+    /// The mapping is used to identify a vCard-property platform-independent between 
+    /// different version states of the same vCard.</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> is less
     /// than 1 or greater than 9.</exception>
-    public PropertyID(int id, PropertyIDMapping? mapping = null)
+    public PropertyID(int id, PropertyIDMappingProperty? mapping = null)
     {
         id.ValidateID(nameof(id));
         _data = (byte)id;
 
-        if (mapping is not null)
+        if (mapping?.Value != null)
         {
-            _data |= (byte)(mapping.ID << MAPPING_SHIFT);
+            _data |= (byte)(mapping.Value.LocalID << MAPPING_SHIFT);
         }
     }
 
@@ -42,7 +43,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// <see cref="VCardProperty" />.</summary>
     /// <param name="id">The local ID of the vCard property (Value: 1 - 9). The name of the vCard 
     /// property and this number uniquely identify a property locally.</param>
-    /// <param name="mapping"> <see cref="PropertyIDMapping.ID" /> of the mapping of the 
+    /// <param name="mapping"> <see cref="PropertyIDMapping.LocalID" /> of the mapping of the 
     /// <see cref="VCardProperty" /> (value: 1 - 9) or <c>null</c> to not specify any mapping. 
     /// The mapping is used to identify a vCard property between different version states of the 
     /// same vCard.</param>
@@ -72,7 +73,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     public int ID => _data & 0xF;
 
     /// <summary>
-    /// Gets the <see cref="PropertyIDMapping.ID" /> of the <see cref="PropertyIDMapping"
+    /// Gets the <see cref="PropertyIDMapping.LocalID" /> of the <see cref="PropertyIDMapping"
     /// /> object with which the <see cref="PropertyID" /> object is connected, or <c>null</c>
     /// if the <see cref="PropertyID" /> object is not connected with any <see
     /// cref="PropertyIDMapping" />.
@@ -133,7 +134,6 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 
     #endregion
 
-
     internal static void ParseInto(List<PropertyID> list, string pids)
     {
         if (pids.Length == 0)
@@ -193,7 +193,6 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
             catch (ArgumentOutOfRangeException) { }
         }
     }
-
 
     internal void AppendTo(StringBuilder builder)
     {

@@ -1,6 +1,9 @@
 ﻿#if !NETCOREAPP3_1
 using FolkerKinzel.Strings.Polyfills;
+using FolkerKinzel.VCards.Models.PropertyParts;
 #endif
+
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -11,7 +14,7 @@ public class PropertyIDMappingTests
     public void PropertyIDMappingTest1()
     {
         var pidMap = new PropertyIDMapping(5, new Uri("http://folkerkinzel.de/"));
-        Assert.AreEqual(5, pidMap.ID);
+        Assert.AreEqual(5, pidMap.LocalID);
     }
 
     [DataTestMethod()]
@@ -41,8 +44,8 @@ public class PropertyIDMappingTests
 
         var mapping = PropertyIDMapping.Parse(pidMap);
 
-        Assert.AreEqual(2, mapping.ID);
-        Assert.AreEqual(new Uri(pidMap.Substring(2)), mapping.Mapping);
+        Assert.AreEqual(2, mapping.LocalID);
+        Assert.AreEqual(new Uri(pidMap.Substring(2)), mapping.GlobalID);
     }
 
     [TestMethod]
@@ -52,8 +55,8 @@ public class PropertyIDMappingTests
 
         var mapping = PropertyIDMapping.Parse(pidMap);
 
-        Assert.AreEqual(2, mapping.ID);
-        Assert.AreEqual(new Uri(pidMap.Substring(6)), mapping.Mapping);
+        Assert.AreEqual(2, mapping.LocalID);
+        Assert.AreEqual(new Uri(pidMap.Substring(6)), mapping.GlobalID);
     }
 
     [TestMethod]

@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Tests;
@@ -33,8 +34,8 @@ public class PropertyIDMappingPropertyTests
         prop = vcard.PropertyIDMappings!.First() as PropertyIDMappingProperty;
 
         Assert.IsNotNull(prop);
-        Assert.AreEqual(pidMap.ID, prop!.Value?.ID);
-        Assert.AreEqual(pidMap.Mapping, prop!.Value?.Mapping);
+        Assert.AreEqual(pidMap.LocalID, prop!.Value?.LocalID);
+        Assert.AreEqual(pidMap.GlobalID, prop!.Value?.GlobalID);
         Assert.IsNull(prop.Group);
         Assert.IsFalse(prop.IsEmpty);
     }
