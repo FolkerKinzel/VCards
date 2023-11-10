@@ -38,7 +38,7 @@ internal static class Utility
         adr1.Parameters.Index = 0;
         adr1.Parameters.Language = "de";
         adr1.Parameters.SortAs = sortAs;
-        var pidMap = new PropertyIDMapping(5, new Uri("http://folkerkinzel.de"));
+        var pidMap = new PropertyIDMappingProperty(5, new Uri("http://folkerkinzel.de"));
         adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, pidMap), new PropertyID(2) };
         adr1.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Parcel | Adr.Postal;
 
@@ -116,7 +116,6 @@ internal static class Utility
         source.Parameters.Context = " ";
         source.Parameters.Context = "VCARD";
 
-#pragma warning disable CS0618 // Type or member is obsolete
         return new VCard
         {
             NameViews = names,
@@ -159,7 +158,7 @@ internal static class Utility
             Mailer = new TextProperty("The Mailer"),
             Languages = new TextProperty("de"),
             Notes = new TextProperty("Kommentar"),
-            PropertyIDMappings = new PropertyIDMappingProperty(new PropertyIDMapping(7, new Uri("http://folkerkinzel.de"))),
+            PropertyIDMappings = new PropertyIDMappingProperty(7, new Uri("http://folkerkinzel.de")),
 
             InstantMessengers = new TextProperty[]
             {
@@ -171,7 +170,6 @@ internal static class Utility
             NonStandard = nonStandard,
             XmlProperties = xml1,
         };
-#pragma warning restore CS0618 // Type or member is obsolete
     }
 }
 

@@ -87,7 +87,7 @@ public static class VCardExample
             phoneHome.Parameters.DataType = Data.Uri;
             phoneHome.Parameters.PropertyClass = PCl.Home;
             phoneHome.Parameters.PhoneType = Tel.Voice | Tel.BBS;
-            phoneHome.Parameters.PropertyIDs = new PropertyID(1, pidMapProp.Value);
+            phoneHome.Parameters.PropertyIDs = new PropertyID(1, pidMapProp);
 
             // Phones is null here. The extension method ConcatWith would not be needed in this case:
             // phoneHome could be assigned directly. ConcatWith is only used here to show that it
@@ -99,7 +99,7 @@ public static class VCardExample
             phoneWork.Parameters.DataType = Data.Uri;
             phoneWork.Parameters.PropertyClass = PCl.Work;
             phoneWork.Parameters.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
-            phoneWork.Parameters.PropertyIDs = new PropertyID(2, pidMapProp.Value);
+            phoneWork.Parameters.PropertyIDs = new PropertyID(2, pidMapProp);
 
             vCard.Phones = vCard.Phones.ConcatWith(phoneWork);
 

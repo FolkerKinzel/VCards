@@ -12,12 +12,11 @@ public class PropertyIDMappingPropertyTests
     [TestMethod()]
     public void PropertyIDMappingPropertyTest1()
     {
-        var pidMap = new PropertyIDMapping(7, new Uri("http://folkerkinzel.de/"));
-        var prop = new PropertyIDMappingProperty(pidMap);
+        var prop = new PropertyIDMappingProperty(7, new Uri("http://folkerkinzel.de/"));
 
         var vcard = new VCard
         {
-            PropertyIDMappings = new PropertyIDMappingProperty?[] { prop, null, new PropertyIDMappingProperty((PropertyIDMapping?)null) }
+            PropertyIDMappings = new PropertyIDMappingProperty?[] { prop, null }
         };
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
@@ -31,11 +30,11 @@ public class PropertyIDMappingPropertyTests
 
         Assert.IsNotNull(vcard.PropertyIDMappings);
 
-        prop = vcard.PropertyIDMappings!.First() as PropertyIDMappingProperty;
+        PropertyIDMappingProperty? prop2 = vcard.PropertyIDMappings!.First();
 
         Assert.IsNotNull(prop);
-        Assert.AreEqual(pidMap.LocalID, prop!.Value?.LocalID);
-        Assert.AreEqual(pidMap.GlobalID, prop!.Value?.GlobalID);
+        Assert.AreEqual(prop2!.Value!.LocalID, prop!.Value?.LocalID);
+        Assert.AreEqual(prop2!.Value!.GlobalID, prop!.Value?.GlobalID);
         Assert.IsNull(prop.Group);
         Assert.IsFalse(prop.IsEmpty);
     }
@@ -55,7 +54,8 @@ public class PropertyIDMappingPropertyTests
     [TestMethod]
     public void AppendValueTest1()
     {
-        var prop = new PropertyIDMappingProperty((PropertyIDMapping?)null);
+        var row = VcfRow.Parse("CLIENTPIDMAP:", new VcfDeserializationInfo());
+        var prop = new PropertyIDMappingProperty(row!);
         Assert.IsTrue(prop.IsEmpty);
         using var writer = new StringWriter();
         var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);

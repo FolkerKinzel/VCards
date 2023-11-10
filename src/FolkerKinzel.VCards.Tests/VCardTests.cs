@@ -246,8 +246,8 @@ public class VCardTests
     {
         var textProp = new TextProperty("Test");
 
-        var pidMap1 = new PropertyIDMapping(5, new Uri("http://folkerkinzel.de/file1.htm"));
-        var pidMap2 = new PropertyIDMapping(8, new Uri("http://folkerkinzel.de/file2.htm"));
+        var pidMap1 = new PropertyIDMappingProperty(5, new Uri("http://folkerkinzel.de/file1.htm"));
+        var pidMap2 = new PropertyIDMappingProperty(8, new Uri("http://folkerkinzel.de/file2.htm"));
         textProp.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(1, pidMap1), new PropertyID(7), new PropertyID(1, pidMap2) };
 
         var vc = new VCard()

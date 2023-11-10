@@ -1,11 +1,8 @@
 ﻿#if !NETCOREAPP3_1
 using FolkerKinzel.Strings.Polyfills;
-using FolkerKinzel.VCards.Models.PropertyParts;
 #endif
 
-using FolkerKinzel.VCards.Models.PropertyParts;
-
-namespace FolkerKinzel.VCards.Models.Tests;
+namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 
 [TestClass]
 public class PropertyIDMappingTests
