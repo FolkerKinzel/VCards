@@ -1,6 +1,6 @@
 using FolkerKinzel.VCards.Extensions;
 
-namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named constants to classify the scope of a vCard property. The constants
 /// can be combined.</summary>

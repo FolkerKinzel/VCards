@@ -15,7 +15,14 @@ public class ParameterSectionTests
         var info = new VcfDeserializationInfo();
         var para = new ParameterSection("BDAY", new Dictionary<string, string>() { { "VALUE", value } }, info);
 
+
+/* Unmerged change from project 'FolkerKinzel.VCards.Tests (net7.0)'
+Before:
         Assert.AreEqual(para.DataType, Enums.Data.Date);
+After:
+        Assert.AreEqual(para.DataType, Data.Date);
+*/
+        Assert.AreEqual(para.DataType, VCards.Enums.Data.Date);
     }
 
     [TestMethod]

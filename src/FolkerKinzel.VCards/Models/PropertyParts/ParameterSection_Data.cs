@@ -1,4 +1,4 @@
-using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -107,7 +107,7 @@ public sealed partial class ParameterSection
     }
 
     /// <summary> <c>TYPE</c>: Describes the type of an e-mail address. <c>(2,3)</c></summary>
-    /// <value>Use only the constants defined in the <see cref="Enums.EMail" /> class!</value>
+    /// <value>Use only the constants defined in the <see cref="VCards.Enums.EMail" /> class!</value>
     public string? EMailType
     {
         get => Get<string?>(VCdParam.EMailType);

@@ -1,4 +1,5 @@
 using System.Globalization;
+using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 

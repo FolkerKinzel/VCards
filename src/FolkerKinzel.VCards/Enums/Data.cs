@@ -1,4 +1,4 @@
-namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named constants to specify the data type of the value of a vCard property.</summary>
 public enum Data

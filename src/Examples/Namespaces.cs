@@ -8,7 +8,7 @@ using FolkerKinzel.VCards.Extensions;
 // This namespace contains often used enums. Decide
 // yourself whether to publish this namespace or to use
 // a namespace alias.
-using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Enums;
 
 // Instead of publishing the following namespace better
 // use a namespace alias, because the namespace contains

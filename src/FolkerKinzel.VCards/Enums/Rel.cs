@@ -1,6 +1,6 @@
 using FolkerKinzel.VCards.Extensions;
 
-namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named constants to describe the type of relationship with a person
 /// or organization. The constants can be combined.</summary>

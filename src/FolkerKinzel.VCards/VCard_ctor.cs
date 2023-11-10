@@ -1,10 +1,10 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Globalization;
 
@@ -231,8 +231,17 @@ public sealed partial class VCard
                     else if (GenderViews is null && vcfRow.Value != null)
                     {
                         GenderViews = vcfRow.Value.StartsWith("F", true, CultureInfo.InvariantCulture)
+
+/* Unmerged change from project 'FolkerKinzel.VCards (net7.0)'
+Before:
                             ? new GenderProperty(Models.Enums.Sex.Female)
                             : new GenderProperty(Models.Enums.Sex.Male);
+After:
+                            ? new GenderProperty(Sex.Female)
+                            : new GenderProperty(Sex.Male);
+*/
+                            ? new GenderProperty(Enums.Sex.Female)
+                            : new GenderProperty(Enums.Sex.Male);
                     }
                     break;
                 case PropKeys.NonStandard.X_WAB_GENDER:
@@ -243,8 +252,17 @@ public sealed partial class VCard
                     else
                     {
                         GenderViews ??= vcfRow.Value.Contains('1', StringComparison.Ordinal)
+
+/* Unmerged change from project 'FolkerKinzel.VCards (net7.0)'
+Before:
                                             ? new GenderProperty(Models.Enums.Sex.Female)
                                             : new GenderProperty(Models.Enums.Sex.Male);
+After:
+                                            ? new GenderProperty(Sex.Female)
+                                            : new GenderProperty(Sex.Male);
+*/
+                                            ? new GenderProperty(Enums.Sex.Female)
+                                            : new GenderProperty(Enums.Sex.Male);
                     }
                     break;
                 case PropKeys.IMPP:

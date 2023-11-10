@@ -1,12 +1,12 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
-    /// <summary> Spezialisierung der <see cref="RelationProperty" />-Klasse, um den
-    /// Namen einer Person, zu der eine Beziehung besteht, anzugeben. </summary>
+/// <summary> Spezialisierung der <see cref="RelationProperty" />-Klasse, um den
+/// Namen einer Person, zu der eine Beziehung besteht, anzugeben. </summary>
 internal sealed class RelationTextProperty : RelationProperty
 {
     private readonly TextProperty _textProp;

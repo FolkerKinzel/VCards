@@ -1,12 +1,12 @@
 using System.Globalization;
 using System.IO;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;

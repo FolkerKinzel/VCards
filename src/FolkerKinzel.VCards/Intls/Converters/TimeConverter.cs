@@ -1,4 +1,5 @@
 using System.Globalization;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using OneOf;
 

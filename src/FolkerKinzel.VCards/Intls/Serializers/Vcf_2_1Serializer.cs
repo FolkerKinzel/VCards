@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;

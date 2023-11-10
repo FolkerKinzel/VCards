@@ -1,6 +1,6 @@
 using FolkerKinzel.VCards.Extensions;
 
-namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named constants to specify the type of an instant messenger handle
 /// in vCard&#160;3.0. The constants can be combined.</summary>

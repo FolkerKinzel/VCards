@@ -1,6 +1,6 @@
 using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>
 /// Named constants to specify the parameter <see cref="ParameterSection.Interest"

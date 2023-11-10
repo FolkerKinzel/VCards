@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Runtime.CompilerServices;
+using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Tests;
 

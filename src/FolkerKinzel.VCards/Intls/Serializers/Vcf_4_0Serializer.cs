@@ -1,8 +1,8 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 

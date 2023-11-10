@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using FolkerKinzel.VCards.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;

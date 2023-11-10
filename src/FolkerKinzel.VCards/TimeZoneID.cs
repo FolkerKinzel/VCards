@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards;
 

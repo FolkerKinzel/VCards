@@ -75,8 +75,8 @@
     <Compile Remove="Models\DateTimeOffsetProperty_OBSOLETE.cs" />
     <Compile Remove="Models\DateTimeProperty_OBSOLETE.cs" />
     <Compile Remove="Models\DateTimeTextProperty_OBSOLETE.cs" />
-    <Compile Remove="Models\Enums\DataEncoding.cs" />
-    <Compile Remove="Models\Enums\SizeRestriction.cs" />
+    <Compile Remove="Enums\DataEncoding.cs" />
+    <Compile Remove="Enums\SizeRestriction.cs" />
     <Compile Remove="Models\PropertyParts\MimeType.cs" />
     <Compile Remove="MultiAnsiFilter.cs" />
   </ItemGroup>

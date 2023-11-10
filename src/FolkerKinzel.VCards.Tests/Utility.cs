@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -161,7 +161,7 @@ internal static class Utility
             Notes = new TextProperty("Kommentar"),
             PropertyIDMappings = new PropertyIDMappingProperty(new PropertyIDMapping(7, new Uri("http://folkerkinzel.de"))),
 
-            InstantMessengerHandles = new TextProperty[]
+            InstantMessengers = new TextProperty[]
             {
                     impp1, impp2, impp3, impp4, impp5, impp6, impp7, impp8, impp9, impp10, impp11, impp12
             },

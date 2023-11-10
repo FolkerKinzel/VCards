@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
+﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;

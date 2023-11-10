@@ -1,8 +1,8 @@
 using System.Collections;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using OneOf;
 

@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;

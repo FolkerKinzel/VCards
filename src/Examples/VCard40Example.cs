@@ -1,5 +1,6 @@
 ﻿// Compile for .NET 7.0 or higher and FolkerKinzel.VCards 6.0.0-beta.1 or higher
 using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 
 // It's recommended to use a namespace-alias for better readability of
@@ -41,7 +42,7 @@ public static class VCard40Example
         var composersVCard = new VCard
         {
             DisplayNames = new VC::TextProperty("Composers"),
-            Kind = new VC::KindProperty(VC::Enums.Kind.Group),
+            Kind = new VC::KindProperty(Kind.Group),
             Members = members
         };
 

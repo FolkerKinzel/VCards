@@ -1,4 +1,4 @@
-namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named Constants to specify the type of object the vCard represents.</summary>
 public enum Kind

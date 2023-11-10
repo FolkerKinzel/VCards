@@ -1,4 +1,4 @@
-namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named constants to indicate in vCard&#160;3.0 which level of confidentiality
 /// applies to the vCard.</summary>

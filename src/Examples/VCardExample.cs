@@ -1,7 +1,7 @@
 ﻿// Compile for .NET 7.0 or higher and FolkerKinzel.VCards 6.0.0-beta.2 or higher
 using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Models.Enums;
 
 // It's recommended to use a namespace-alias for better readability of
 // your code and better usability of Visual Studio IntelliSense:

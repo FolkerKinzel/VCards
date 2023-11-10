@@ -1,10 +1,10 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
 using FolkerKinzel.VCards.Intls.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -33,7 +33,7 @@ public class RelationPropertyTests
 {
     private class TestIEnumerable : RelationProperty
     {
-        public TestIEnumerable() : base(Enums.Rel.Contact, null) { }
+        public TestIEnumerable() : base(Rel.Contact, null) { }
         public override object Clone() => throw new NotImplementedException();
         protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
         internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();

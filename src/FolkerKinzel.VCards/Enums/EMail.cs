@@ -1,4 +1,4 @@
-namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named constants to describe the type of an e-mail address.</summary>
 public static class EMail

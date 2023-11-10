@@ -1,8 +1,8 @@
 using System.Collections;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 
@@ -207,7 +207,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
 
     internal static RelationProperty Parse(VcfRow vcfRow, VCdVersion version)
     {
-        if (string.IsNullOrWhiteSpace(vcfRow.Value) || vcfRow.Parameters.DataType == Enums.Data.Text)
+        if (string.IsNullOrWhiteSpace(vcfRow.Value) || vcfRow.Parameters.DataType == Data.Text)
         {
             return new RelationTextProperty(vcfRow, version);
         }

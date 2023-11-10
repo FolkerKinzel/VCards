@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Resources;
 

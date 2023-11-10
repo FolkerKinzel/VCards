@@ -1,4 +1,4 @@
-namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named constants to indicate in vCard&#160;2.1 where the content of a vCard
 /// property is located.</summary>

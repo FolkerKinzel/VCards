@@ -1,4 +1,4 @@
-namespace FolkerKinzel.VCards;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named constants to indicate the VCF version.</summary>
 public enum VCdVersion

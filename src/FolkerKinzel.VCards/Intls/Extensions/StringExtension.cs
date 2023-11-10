@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using FolkerKinzel.Strings;
 using FolkerKinzel.Strings.Polyfills;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;

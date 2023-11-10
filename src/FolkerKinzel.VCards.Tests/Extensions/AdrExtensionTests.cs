@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Extensions.Tests;
 

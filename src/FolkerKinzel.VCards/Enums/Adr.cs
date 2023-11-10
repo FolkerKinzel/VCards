@@ -1,6 +1,6 @@
 using FolkerKinzel.VCards.Extensions;
 
-namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named constants to describe the type of a postal address in vCards.
 /// The constants can be combined.</summary>

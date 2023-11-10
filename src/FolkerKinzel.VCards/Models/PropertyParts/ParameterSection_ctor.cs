@@ -1,8 +1,8 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.Enums;
 using static FolkerKinzel.VCards.VCard;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
@@ -317,10 +317,24 @@ public sealed partial class ParameterSection
                 this.Preference = 1;
                 return true;
             case TypeValue.HOME:
+
+/* Unmerged change from project 'FolkerKinzel.VCards (net7.0)'
+Before:
                 this.PropertyClass = this.PropertyClass.Set(Enums.PCl.Home);
+After:
+                this.PropertyClass = this.PropertyClass.Set(PCl.Home);
+*/
+                this.PropertyClass = this.PropertyClass.Set(VCards.Enums.PCl.Home);
                 return true;
             case TypeValue.WORK:
+
+/* Unmerged change from project 'FolkerKinzel.VCards (net7.0)'
+Before:
                 this.PropertyClass = this.PropertyClass.Set(Enums.PCl.Work);
+After:
+                this.PropertyClass = this.PropertyClass.Set(PCl.Work);
+*/
+                this.PropertyClass = this.PropertyClass.Set(VCards.Enums.PCl.Work);
                 return true;
             default:
                 break;

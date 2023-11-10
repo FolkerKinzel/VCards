@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace FolkerKinzel.VCards.Models.Enums;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named constants to access the properties of a <see cref="VCard" />
 /// object.</summary>

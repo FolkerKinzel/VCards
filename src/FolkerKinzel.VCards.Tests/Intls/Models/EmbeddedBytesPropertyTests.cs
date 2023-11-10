@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -1,5 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Models.Enums;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Converters;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests;
 

@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using FolkerKinzel.Strings;
-using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Enums;
 
 namespace Benchmarks;
 

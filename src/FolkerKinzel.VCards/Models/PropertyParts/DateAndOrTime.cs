@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using OneOf;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
