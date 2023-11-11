@@ -315,7 +315,7 @@ internal abstract class VcfSerializer : IDisposable
                     AppendSounds((IEnumerable<DataProperty?>)kvp.Value);
                     break;
                 case Prop.VCardClients:
-                    AppendPropertyIDMappings((IEnumerable<VCardClientProperty?>)kvp.Value);
+                    AppendVCardClients((IEnumerable<VCardClientProperty?>)kvp.Value);
                     break;
                 case Prop.NonStandard:
                     AppendNonStandardProperties((IEnumerable<NonStandardProperty?>)kvp.Value);
@@ -660,7 +660,7 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendProfile(ProfileProperty value) { }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendPropertyIDMappings(IEnumerable<VCardClientProperty?> value) { }
+    protected virtual void AppendVCardClients(IEnumerable<VCardClientProperty?> value) { }
 
     protected virtual void AppendRelations(IEnumerable<RelationProperty?> value)
     {

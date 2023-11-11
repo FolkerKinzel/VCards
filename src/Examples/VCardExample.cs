@@ -79,15 +79,15 @@ public static class VCardExample
             vCard.Photos = VC::DataProperty.FromFile(photoFilePath);
 
             // This shows how to create a PropertyIDMapping, which helps to identify vCard-Properties
-            // even if they are located in vCards that come from different sources (vCard 4.0 only):
-            var pidMapProp = new VC::PropertyIDMappingProperty(1, new Uri("http://folkerKinzel.de/file1.htm"));
-            vCard.VCardClients = pidMapProp;
+            // even if they are located in vCards that come from different sources (vCard 4.0 only).
+            // As the first step the current application has to be registered in order to enable
+            // global property-identification.
+            vCard.RegisterApp(new Uri("http://folker.de/myid.xml"));
 
             var phoneHome = new VC::TextProperty("tel:+49-123-9876543");
             phoneHome.Parameters.DataType = Data.Uri;
             phoneHome.Parameters.PropertyClass = PCl.Home;
             phoneHome.Parameters.PhoneType = Tel.Voice | Tel.BBS;
-            phoneHome.Parameters.PropertyIDs = new PropertyID(1, pidMapProp);
 
             // Phones is null here. The extension method ConcatWith would not be needed in this case:
             // phoneHome could be assigned directly. ConcatWith is only used here to show that it
@@ -95,13 +95,19 @@ public static class VCardExample
             // (Don't forget to assign the result!)
             vCard.Phones = vCard.Phones.ConcatWith(phoneHome);
 
+            // SetPropertyID gives the VCardProperty a PropertyID if it doesn't yet have had any
+            // and preserves the referential integrity.
+            // Pay attention to call this method only AFTER the VCardProperty has been Assigned
+            // to the VCard:
+            phoneHome.Parameters.SetPropertyID(vCard.Phones, vCard);
+
             var phoneWork = new VC::TextProperty("tel:+49-321-1234567");
             phoneWork.Parameters.DataType = Data.Uri;
             phoneWork.Parameters.PropertyClass = PCl.Work;
             phoneWork.Parameters.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
-            phoneWork.Parameters.PropertyIDs = new PropertyID(2, pidMapProp);
 
             vCard.Phones = vCard.Phones.ConcatWith(phoneWork);
+            phoneWork.Parameters.SetPropertyID(vCard.Phones, vCard);
 
             // Unless specified, an address label is automatically applied to the AddressProperty object.
             // Specifying the country helps to correctly format this label.

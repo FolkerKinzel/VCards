@@ -4,6 +4,11 @@ namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static class IEnumerableExtension
 {
+#if NET461
+    internal static IEnumerable<TSource> Append<TSource>(this IEnumerable<TSource> sources, TSource value)
+        => sources.Concat(Enumerable.Repeat(value, 1));
+#endif
+
     internal static bool IsSingle([NotNullWhen(true)] this IEnumerable<VCardProperty?>? values, bool ignoreEmptyItems)
         => ignoreEmptyItems ? values?.WhereNotEmpty().Take(2).Count() == 1
                             : values?.WhereNotNull().Take(2).Count() == 1;

@@ -28,26 +28,43 @@ public sealed class VCardClientProperty : VCardProperty, IEnumerable<VCardClient
     /// <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="globalID" /> is 
     /// not a valid URI.</exception>
+    /// <remarks>
+    /// <note type="caution">
+    /// Using this constructor in own code endangers the referential integrity. Prefer using
+    /// <see cref="VCard.RegisterApp(Uri)"/> instead.
+    /// </note>
+    /// </remarks>
     public VCardClientProperty(int localID, string globalID)
-        : base(new ParameterSection(), null)
-        => Value = new VCardClient(localID, globalID);
+        : this(new VCardClient(localID, globalID)) { }
 
-    /// <summary>ctor</summary>
-    /// <param name="vcfRow" />
-    /// <exception cref="FormatException" />
-    internal VCardClientProperty(VcfRow vcfRow)
-        : base(vcfRow.Parameters, vcfRow.Group)
+    /// <summary>
+    /// Initializes a new <see cref="VCardClientProperty" /> object. 
+    /// </summary>
+    /// <param name="client">The <see cref="VCardClient"/> object that will
+    /// be the encapsulated <see cref="VCardClientProperty.Value"/>.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="client"/> is <c>null</c>.</exception>
+    public VCardClientProperty(VCardClient client) 
+        : base(new ParameterSection(), null)
+        => Value = client ?? throw new ArgumentNullException(nameof(client));
+
+    private VCardClientProperty(VCardClient client, ParameterSection parameters, string? group)
+        : base(parameters, group) => Value = client;
+
+    internal static bool TryParse(VcfRow vcfRow, [NotNullWhen(true)] out VCardClientProperty? prop)
     {
-        if (string.IsNullOrWhiteSpace(vcfRow.Value))
+        prop = null;
+
+        if(VCardClient.TryParse(vcfRow.Value, out VCardClient? client))
         {
-            return;
+            prop = new VCardClientProperty(client, vcfRow.Parameters, vcfRow.Group);
+            return true;
         }
 
-        Value = VCardClient.Parse(vcfRow.Value);
+        return false;
     }
 
     /// <summary> The data provided by the <see cref="VCardClientProperty" />. </summary>
-    public new VCardClient? Value
+    public new VCardClient Value
     {
         get;
     }

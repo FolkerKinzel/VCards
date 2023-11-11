@@ -231,15 +231,6 @@ public sealed partial class VCard
                     else if (GenderViews is null && vcfRow.Value != null)
                     {
                         GenderViews = vcfRow.Value.StartsWith("F", true, CultureInfo.InvariantCulture)
-
-/* Unmerged change from project 'FolkerKinzel.VCards (net7.0)'
-Before:
-                            ? new GenderProperty(Models.Enums.Sex.Female)
-                            : new GenderProperty(Models.Enums.Sex.Male);
-After:
-                            ? new GenderProperty(Sex.Female)
-                            : new GenderProperty(Sex.Male);
-*/
                             ? new GenderProperty(Enums.Sex.Female)
                             : new GenderProperty(Enums.Sex.Male);
                     }
@@ -252,21 +243,12 @@ After:
                     else
                     {
                         GenderViews ??= vcfRow.Value.Contains('1', StringComparison.Ordinal)
-
-/* Unmerged change from project 'FolkerKinzel.VCards (net7.0)'
-Before:
-                                            ? new GenderProperty(Models.Enums.Sex.Female)
-                                            : new GenderProperty(Models.Enums.Sex.Male);
-After:
-                                            ? new GenderProperty(Sex.Female)
-                                            : new GenderProperty(Sex.Male);
-*/
                                             ? new GenderProperty(Enums.Sex.Female)
                                             : new GenderProperty(Enums.Sex.Male);
                     }
                     break;
                 case PropKeys.IMPP:
-                    InstantMessengers = 
+                    InstantMessengers =
                         Concat(InstantMessengers, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.NonStandard.InstantMessenger.X_AIM:
@@ -291,7 +273,7 @@ After:
                     {
                         var textProp = new TextProperty(vcfRow, this.Version);
 
-                        if (textProp.Value != null && 
+                        if (textProp.Value != null &&
                             (InstantMessengers?.All(x => x?.Value != textProp.Value) ?? true))
                         {
                             InstantMessengers = Concat(InstantMessengers, textProp);
@@ -398,13 +380,10 @@ After:
                     XmlProperties = Concat(XmlProperties, new XmlProperty(vcfRow));
                     break;
                 case PropKeys.CLIENTPIDMAP:
-                    VCardClientProperty prop;
-                    try
+                    if (VCardClientProperty.TryParse(vcfRow, out VCardClientProperty? prop))
                     {
-                        prop = new VCardClientProperty(vcfRow);
                         VCardClients = Concat(VCardClients, prop);
                     }
-                    catch { }
                     break;
                 case PropKeys.PRODID:
                     ProdID = new TextProperty(vcfRow, this.Version);
@@ -445,7 +424,7 @@ After:
 
             vcfRowsParsed++;
         }//foreach
-        
+
 
         if (Version is VCdVersion.V2_1 or VCdVersion.V3_0)
         {
@@ -500,9 +479,12 @@ After:
             }
             else // group by parameters
             {
-                var paraGroup = group.GroupBy(x => new { x.Parameters.PropertyClass,
-                                                         x.Parameters.AddressType, 
-                                                         x.Parameters.Preference });
+                var paraGroup = group.GroupBy(x => new
+                {
+                    x.Parameters.PropertyClass,
+                    x.Parameters.AddressType,
+                    x.Parameters.Preference
+                });
 
                 foreach (var para in paraGroup)
                 {
@@ -573,7 +555,7 @@ After:
                 if (group.FirstOrDefault(static x => x is TimeZoneProperty)
                     is TimeZoneProperty tzProp)
                 {
-                    if(group.PrefOrNull(static x => x is AddressProperty) 
+                    if (group.PrefOrNull(static x => x is AddressProperty)
                         is AddressProperty adrProp)
                     {
                         adrProp.Parameters.TimeZone = tzProp.Value;

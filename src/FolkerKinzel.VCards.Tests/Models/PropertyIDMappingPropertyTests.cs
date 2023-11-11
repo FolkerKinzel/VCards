@@ -12,7 +12,7 @@ public class PropertyIDMappingPropertyTests
     [TestMethod()]
     public void PropertyIDMappingPropertyTest1()
     {
-        var prop = new PropertyIDMappingProperty(7, new Uri("http://folkerkinzel.de/"));
+        var prop = new VCardClientProperty(7, "http://folkerkinzel.de/");
 
         var vcard = new VCard
         {
@@ -42,31 +42,25 @@ public class PropertyIDMappingPropertyTests
 
 
     [TestMethod]
-    public void GetValueTest()
+    public void TryParseTest1()
     {
         VcfRow row = VcfRow.Parse("PidMap:", new VcfDeserializationInfo())!;
-        var prop = new VCardClientProperty(row);
-
-        Assert.IsNull(prop.Value);
+        Assert.IsFalse(VCardClientProperty.TryParse(row, out _));
     }
 
 
     [TestMethod]
-    public void AppendValueTest1()
+    public void TryParseTest2()
     {
         var row = VcfRow.Parse("CLIENTPIDMAP:", new VcfDeserializationInfo());
-        var prop = new VCardClientProperty(row!);
-        Assert.IsTrue(prop.IsEmpty);
-        using var writer = new StringWriter();
-        var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
-        prop.AppendValue(serializer);
-        Assert.AreEqual(0, serializer.Builder.Length);
+        Assert.IsFalse(VCardClientProperty.TryParse(row!, out _));
+        
     }
 
     [TestMethod]
     public void IEnumerableTest1()
     {
-        var prop = new PropertyIDMappingProperty(4, new Uri("https://contoso.com"));
+        var prop = new VCardClientProperty(4, "https://contoso.com");
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 }

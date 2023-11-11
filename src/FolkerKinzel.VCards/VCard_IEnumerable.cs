@@ -21,4 +21,7 @@ public sealed partial class VCard : IEnumerable<KeyValuePair<Prop, object>>, IEn
     {
         yield return this;
     }
+
+    public IEnumerable<KeyValuePair<Prop, object>> AsProperties() => this as IEnumerable<KeyValuePair<Prop, object>>;
+
 }

@@ -21,7 +21,13 @@ public sealed class VCardClient
     /// <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="globalID" /> is 
     /// not a valid URI.</exception>
-    internal VCardClient(int localID, string globalID)
+    /// <remarks>
+    /// <note type="caution">
+    /// Using this constructor in own code endangers the referential integrity. Prefer using
+    /// <see cref="VCard.RegisterApp(Uri)"/> instead.
+    /// </note>
+    /// </remarks>
+    public VCardClient(int localID, string globalID)
     {
         localID.ValidateID(nameof(localID));
         LocalID = localID;
@@ -54,30 +60,35 @@ public sealed class VCardClient
 
     /// <summary>Parses a <see cref="string" /> that represents a vCard&#160;4.0 Property-ID Mapping. </summary>
     /// <param name="s">The <see cref="string"/> to parse.</param>
-    /// <returns>A <see cref="VCardClient" /> instance.</returns>
-    /// <exception cref="FormatException">
-    /// <paramref name="s" /> is not a <see cref="VCardClient" />.</exception>
-    internal static VCardClient Parse(string s)
+    /// <param name="client">The parsed <see cref="VCardClient"/> if the method returns <c>true</c>,
+    /// otherwise <c>null</c>.</param>
+    /// <returns><c>true</c> if <see cref="s"/> could be parsed, otherwise <c>false</c>.</returns>
+    internal static bool TryParse(string s, [NotNullWhen(true)] out VCardClient? client)
     {
         Debug.Assert(s != null);
+        client = null;
 
         var span = s.AsSpan();
         int separatorIdx = span.IndexOf(';');
 
         if(separatorIdx < 1)
         {
-            throw new FormatException();
+            return false;
         }
 
-        int mappingNumber = _Int.Parse(span.Slice(0, separatorIdx));
+        if(!_Int.TryParse(span.Slice(0, separatorIdx), out int mappingNumber))
+        { 
+            return false;
+        }
 
         try
         {
-            return new VCardClient(mappingNumber, span.Slice(separatorIdx + 1).Trim().ToString());
+            client = new VCardClient(mappingNumber, span.Slice(separatorIdx + 1).Trim().ToString());
+            return true;
         }
         catch
         {
-            throw new FormatException();
+            return false;
         }
     }
 

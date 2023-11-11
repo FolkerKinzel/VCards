@@ -1,8 +1,11 @@
 using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards;
 
@@ -633,10 +636,62 @@ public sealed partial class VCard
 
     /// <summary> <c>CLIENTPIDMAP</c>: Global identifiers of the vCard clients
     /// that edited the vCard. <c>(4)</c></summary>
+    /// <remarks>
+    /// <note type="caution">
+    /// Setting this property in own code endangers the referential integrity. Prefer 
+    /// using <see cref="VCard.RegisterApp(Uri)"/> instead.
+    /// </note>
+    /// </remarks>
     public IEnumerable<VCardClientProperty?>? VCardClients
     {
         get => Get<IEnumerable<VCardClientProperty?>?>(Prop.VCardClients);
         set => Set(Prop.VCardClients, value);
+    }
+
+    private VCardClientProperty? _currentApp;
+    public VCardClient? CurrentApplication
+    {
+        get
+        {
+            if(_currentApp != null)
+            {
+                if(VCardClients?.Contains(_currentApp) ?? false) 
+                {
+                    return _currentApp.Value;
+                }
+
+                _currentApp = null;
+            }
+
+            return null;
+        }
+    }
+
+    public void RegisterApp(Uri globalID)
+    {
+        if(!(globalID?.IsAbsoluteUri ?? throw new ArgumentNullException(nameof(globalID))))
+        {
+            throw new ArgumentException(string.Format(Res.RelativeUri, nameof(globalID)),  nameof(globalID));
+        }
+
+        string globalIDString = globalID.AbsoluteUri;
+
+        if(VCardClients is null)
+        {
+            _currentApp = new VCardClientProperty(1, globalIDString);
+            VCardClients = _currentApp;
+        }
+
+        if(!VCardClients.Any(x => StringComparer.Ordinal.Equals(globalIDString, x?.Value?.GlobalID)))
+        {
+            _currentApp = new VCardClientProperty
+                (
+                VCardClients.WhereNotNull().Select(static x => x.Value.LocalID).Append(0).Max() + 1,
+                globalIDString
+                );
+
+            VCardClients = VCardClients.ConcatWith(_currentApp);
+        }
     }
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>

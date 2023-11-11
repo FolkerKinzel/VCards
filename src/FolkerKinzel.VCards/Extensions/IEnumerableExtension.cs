@@ -599,7 +599,10 @@ public static class IEnumerableExtension
     /// </remarks>
     public static IEnumerable<TSource?> ConcatWith<TSource>(
         this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
-        => Enumerable.Concat(first ?? Enumerable.Empty<TSource>(), second ?? Enumerable.Repeat<TSource?>(null, 1));
+    {
+        second ??= Enumerable.Repeat<TSource?>(null, 1);
+        return first is null ? second : first.Concat(second);
+    }
 
     public static void SetPreferences<TSource>(this IEnumerable<TSource?>? values,
                                                                bool skipEmptyItems = true)

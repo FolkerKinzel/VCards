@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -20,16 +22,23 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// of the vCard property and this number uniquely identify a <see cref="VCardProperty"/> 
     /// in the <see cref="VCard"/> instance. 
     /// (A positive <see cref="int"/>, not zero.)</param>
-    /// <param name="client">A <see cref="VCardClientProperty" /> to enable global identification
+    /// <param name="client">A <see cref="VCardClient" /> to enable global identification
     /// of the vCard property, or <c>null</c> to have only local identification.
+    /// (Normally this is <see cref="VCard.CurrentApplication"/>.)
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> is less
     /// than 1.</exception>
-    public PropertyID(int id, VCardClientProperty? client = null)
+    /// <remarks>
+    /// <note type="caution">
+    /// Using this constructor in own code endangers the referential integrity. Prefer using
+    /// <see cref="ParameterSection.SetPropertyID(IEnumerable{VCardProperty?}, VCard)"/> instead.
+    /// </note>
+    /// </remarks>
+    public PropertyID(int id, VCardClient? client = null)
     {
         id.ValidateID(nameof(id));
         ID = id;
-        Client = client?.Value?.LocalID;
+        Client = client?.LocalID;
     }
 
     /// <summary>Initializes a new <see cref="PropertyID" /> object with the local number of the 
@@ -43,7 +52,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// (The value is a positive <see cref="int"/>, not zero.)</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> or <paramref name="client"/>
     /// is less than 1.</exception>
-    private PropertyID(int id, int? client = null)
+    private PropertyID(int id, int? client)
     {
         id.ValidateID(nameof(id));
         ID = id;
@@ -122,62 +131,111 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 
     internal static void ParseInto(List<PropertyID> list, string pids)
     {
-        if (pids.Length == 0)
+        var span = pids.AsSpan();
+
+        int sepIdx;
+        PropertyID? propID;
+
+        while ((sepIdx = span.IndexOf(',')) != -1)
         {
-            return;
+            if(TryParsePropertyID(span.Slice(0, sepIdx), out propID))
+            {
+                list.Add(propID);
+            }
+
+            span = span.Slice(sepIdx + 1);
         }
 
-        int index = 0;
-
-        int id = 0;
-        int? mapping = null;
-        bool parseMapping = false;
-
-        while (index < pids.Length)
+        if (TryParsePropertyID(span, out propID))
         {
-            char c = pids[index++];
+            list.Add(propID);
+        }
 
-            if (c == ',')
+
+        static bool TryParsePropertyID(ReadOnlySpan<char> value, [NotNullWhen(true)] out PropertyID? propID)
+        {
+            propID = null;
+
+            int sepIdx = value.IndexOf('.');
+
+            return sepIdx == -1
+                ? _Int.TryParse(value, out int id) && TryCreatePropertyID(id, null, out propID)
+                : _Int.TryParse(value.Slice(0, sepIdx), out id)
+                    && _Int.TryParse(value.Slice(sepIdx + 1), out int client)
+                    && TryCreatePropertyID(id, client, out propID);
+
+            static bool TryCreatePropertyID(int id, int? client, [NotNullWhen(true)] out PropertyID? propID)
             {
                 try
                 {
-                    list.Add(new PropertyID(id, mapping));
+                    propID = new PropertyID(id, client);
+                    return true;
                 }
-                catch (ArgumentOutOfRangeException) { }
-
-                id = 0;
-                mapping = null;
-                parseMapping = false;
-            }
-            else if (c == '.')
-            {
-                parseMapping = true;
-            }
-            else if (c.IsAsciiDigit())
-            {
-                if (parseMapping)
+                catch
                 {
-                    // Exception bei mehrstelligen Nummern:
-                    mapping = mapping.HasValue ? 0 : c.ParseDecimalDigit();
+                    propID = null;
+                    return false;
                 }
-                else
-                {
-                    // Exception bei mehrstelligen Nummern:
-                    id = id == 0 ? c.ParseDecimalDigit() : 0;
-                }
-            }//else
-        }//while
-
-        // if vermeidet unnötige Exception, falls der letzte Wert (standardungerecht)
-        // mit einem Komma endet
-        if (id != 0)
-        {
-            try
-            {
-                list.Add(new PropertyID(id, mapping));
             }
-            catch (ArgumentOutOfRangeException) { }
         }
+
+
+        //if (span.Length == 0)
+        //{
+        //    return;
+        //}
+
+        //int index = 0;
+
+        //int id = 0;
+        //int? mapping = null;
+        //bool parseMapping = false;
+
+        //while (index < pids.Length)
+        //{
+        //    char c = pids[index++];
+
+        //    if (c == ',')
+        //    {
+        //        try
+        //        {
+        //            list.Add(new PropertyID(id, mapping));
+        //        }
+        //        catch (ArgumentOutOfRangeException) { }
+
+        //        id = 0;
+        //        mapping = null;
+        //        parseMapping = false;
+        //    }
+        //    else if (c == '.')
+        //    {
+        //        parseMapping = true;
+        //    }
+        //    else if (c.IsAsciiDigit())
+        //    {
+        //        if (parseMapping)
+        //        {
+        //            // Exception bei mehrstelligen Nummern:
+        //            mapping = mapping.HasValue ? 0 : c.ParseDecimalDigit();
+        //        }
+        //        else
+        //        {
+        //            // Exception bei mehrstelligen Nummern:
+        //            id = id == 0 ? c.ParseDecimalDigit() : 0;
+        //        }
+        //    }//else
+        //}//while
+
+        //// if vermeidet unnötige Exception, falls der letzte Wert (standardungerecht)
+        //// mit einem Komma endet
+        //if (id != 0)
+        //{
+        //    try
+        //    {
+        //        list.Add(new PropertyID(id, mapping));
+        //    }
+        //    catch (ArgumentOutOfRangeException) { }
+        //}
     }
 
     internal void AppendTo(StringBuilder builder)

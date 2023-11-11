@@ -38,7 +38,7 @@ internal static class Utility
         adr1.Parameters.Index = 0;
         adr1.Parameters.Language = "de";
         adr1.Parameters.SortAs = sortAs;
-        var pidMap = new PropertyIDMappingProperty(5, new Uri("http://folkerkinzel.de"));
+        var pidMap = new Models.PropertyParts.VCardClient(7, "http://www.contoso.com/");
         adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, pidMap), new PropertyID(2) };
         adr1.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Parcel | Adr.Postal;
 
@@ -116,7 +116,7 @@ internal static class Utility
         source.Parameters.Context = " ";
         source.Parameters.Context = "VCARD";
 
-        return new VCard
+        var vc = new VCard
         {
             NameViews = names,
             Phones = tel1,
@@ -158,7 +158,6 @@ internal static class Utility
             Mailer = new TextProperty("The Mailer"),
             Languages = new TextProperty("de"),
             Notes = new TextProperty("Kommentar"),
-            VCardClients = new PropertyIDMappingProperty(7, new Uri("http://folkerkinzel.de")),
 
             InstantMessengers = new TextProperty[]
             {
@@ -170,6 +169,11 @@ internal static class Utility
             NonStandard = nonStandard,
             XmlProperties = xml1,
         };
+
+        vc.RegisterApp(new Uri("http://folkerkinzel.de"));
+
+
+        return vc;
     }
 }
 

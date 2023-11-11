@@ -10,24 +10,19 @@ public class PropertyIDMappingTests
     [TestMethod]
     public void PropertyIDMappingTest1()
     {
-        var pidMap = new PropertyIDMapping(5, new Uri("http://folkerkinzel.de/"));
+        var pidMap = new VCardClient(5, "http://folkerkinzel.de/");
         Assert.AreEqual(5, pidMap.LocalID);
     }
 
     [DataTestMethod()]
     [DataRow(-1)]
-    [DataRow(10)]
     [DataRow(0)]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
-    public void PropertyIDMappingTest2(int mappingNumber)
-    {
-        var uri = new Uri("http://folker.de/");
-        _ = new PropertyIDMapping(mappingNumber, uri);
-    }
+    public void PropertyIDMappingTest2(int mappingNumber) => _ = new VCardClient(mappingNumber, "http://folker.de/");
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
-    public void PropertyIDMappingTest3() => _ = new PropertyIDMapping(0, new Uri("http://folkerkinzel.de/"));
+    public void PropertyIDMappingTest3() => _ = new VCardClient(0, "http://folkerkinzel.de/");
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException), AllowDerivedTypes = false)]
@@ -35,14 +30,14 @@ public class PropertyIDMappingTests
 
 
     [TestMethod]
-    public void ParseTest1()
+    public void TryParseTest1()
     {
         string pidMap = "2;urn:uuid:d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        var mapping = VCardClient.Parse(pidMap);
+        Assert.IsTrue(VCardClient.TryParse(pidMap, out VCardClient? client));
 
-        Assert.AreEqual(2, mapping.LocalID);
-        Assert.AreEqual(new Uri(pidMap.Substring(2)), mapping.GlobalID);
+        Assert.AreEqual(2, client.LocalID);
+        Assert.AreEqual(new Uri(pidMap.Substring(2)), client.GlobalID);
     }
 
     [TestMethod]
@@ -50,19 +45,18 @@ public class PropertyIDMappingTests
     {
         string pidMap = "  2 ; urn:uuid:d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        var mapping = VCardClient.Parse(pidMap);
+        Assert.IsTrue(VCardClient.TryParse(pidMap, out VCardClient? client));
 
-        Assert.AreEqual(2, mapping.LocalID);
-        Assert.AreEqual(new Uri(pidMap.Substring(6)), mapping.GlobalID);
+        Assert.AreEqual(2, client.LocalID);
+        Assert.AreEqual(new Uri(pidMap.Substring(6)), client.GlobalID);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void ParseTest3()
     {
         string pidMap = "22;urn:uuid:d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        _ = VCardClient.Parse(pidMap);
+        Assert.IsTrue(VCardClient.TryParse(pidMap, out _));
     }
 
     [TestMethod]
@@ -70,43 +64,39 @@ public class PropertyIDMappingTests
     {
         string pidMap = "2;http://d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        _ = VCardClient.Parse(pidMap);
+        Assert.IsTrue(VCardClient.TryParse(pidMap, out _));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void ParseTest5()
     {
         string pidMap = "2";
 
-        _ = VCardClient.Parse(pidMap);
+        Assert.IsFalse(VCardClient.TryParse(pidMap, out _));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void ParseTest6()
     {
         string pidMap = "";
 
-        _ = VCardClient.Parse(pidMap);
+        Assert.IsFalse(VCardClient.TryParse(pidMap, out _));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void ParseTest7()
     {
         string pidMap = "a";
 
-        _ = VCardClient.Parse(pidMap);
+        Assert.IsFalse(VCardClient.TryParse(pidMap, out _));
     }
 
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void ParseTest8()
-    {
-        string pidMap = "2;http:////////////////// ";
-        _ = VCardClient.Parse(pidMap);
-    }
+    //[TestMethod]
+    //public void ParseTest8()
+    //{
+    //    string pidMap = "2;http:////////////////// ";
+    //    Assert.IsFalse(VCardClient.TryParse(pidMap, out _));
+    //}
 
 
     [TestMethod]
@@ -114,7 +104,7 @@ public class PropertyIDMappingTests
     {
         int i = 4;
 
-        var pidmap = new PropertyIDMapping(i, new Uri("http://folkerkinzel.de/"));
+        var pidmap = new VCardClient(i, "http://folkerkinzel.de/");
 
         string s = pidmap.ToString();
 

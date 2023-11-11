@@ -326,7 +326,7 @@ public sealed partial class ParameterSection
     /// <see cref="VCardProperty" />. <c>(4)</c></summary>
     /// <remarks>
     /// It's recommended to use always 
-    /// <see cref="AttachPropertyID(IEnumerable{VCardProperty?}, VCardClientProperty?)"/>
+    /// <see cref="SetPropertyID(IEnumerable{VCardProperty?}, VCardClientProperty?)"/>
     /// to attach a <see cref="PropertyID"/>.
     /// </remarks>
     public IEnumerable<PropertyID?>? PropertyIDs
@@ -335,33 +335,47 @@ public sealed partial class ParameterSection
         set => Set(VCdParam.PropertyIDs, value);
     }
 
-    public void AttachPropertyID(IEnumerable<VCardProperty?> props, VCardClientProperty? client)
+    public void SetPropertyID(IEnumerable<VCardProperty?> props, VCard vCard)
     {
         if(props == null)
         {
             throw new ArgumentNullException(nameof(props));
         }
 
-        if (!props.Any(x => object.ReferenceEquals(this, x.Parameters)))
+        if(vCard is null)
+        { 
+            throw new ArgumentNullException(nameof(vCard)); 
+        }
+
+        if (!props.Any(x => object.ReferenceEquals(this, x?.Parameters)))
+        {
+            throw new InvalidOperationException();
+        }
+
+        if(!vCard.AsProperties().Any(x => object.ReferenceEquals(props, x.Value)))
         {
             throw new InvalidOperationException();
         }
 
         var propIDs = PropertyIDs ?? Enumerable.Empty<PropertyID>();
+        int? clientLocalID = vCard.CurrentApplication?.LocalID;
 
-        int? clientLocalID = client?.Value?.LocalID;
-        if (propIDs.WhereNotNull().Any(x => x.Client == clientLocalID)) { return; }
+        if (propIDs.WhereNotNull().Any(x => x.Client == clientLocalID)) 
+        {
+            return;
+        }
 
         var id = props.WhereNotNull()
-            .Select(x => x.Parameters.PropertyIDs)
+            .Select(static x => x.Parameters.PropertyIDs)
             .WhereNotNull()
-            .SelectMany(x => x)
+            .SelectMany(static x => x)
             .WhereNotNull()
             .Where(x => x.Client == clientLocalID)
-            .Select(x => x.ID)
+            .Select(static x => x.ID)
+            .Append(0)
             .Max() + 1;
 
-        var propID = new PropertyID(id, client);
+        var propID = new PropertyID(id, vCard.CurrentApplication);
         PropertyIDs = propIDs.Concat(propID);
     }
 
