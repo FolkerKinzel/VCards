@@ -178,7 +178,7 @@ public enum Prop
 
     /// <summary> <c>CLIENTPIDMAP</c>: Mappings for <see cref="PropertyID" />s. It is
     /// used for synchronizing different revisions of the same vCard. <c>(4)</c></summary>
-    PropertyIDMappings,
+    VCardClients,
 
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
     NonStandard

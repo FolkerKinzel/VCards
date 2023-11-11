@@ -1,0 +1,73 @@
+using System.Collections;
+using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Models.PropertyParts;
+
+namespace FolkerKinzel.VCards.Models;
+
+/// <summary>Encapsulates information that is used to identify a vCard client globally, 
+/// and locally inside the <see cref="VCard"/></summary>
+/// <seealso cref="VCardClient"/>
+/// <seealso cref="VCard.VCardClients"/>
+public sealed class VCardClientProperty : VCardProperty, IEnumerable<VCardClientProperty>
+{
+    /// <summary>Copy ctor.</summary>
+    /// <param name="prop">The <see cref="VCardClientProperty"/> instance
+    /// to clone.</param>
+    private VCardClientProperty(VCardClientProperty prop) : base(prop)
+        => Value = prop.Value;
+
+    /// <summary>  Initializes a new <see cref="VCardClientProperty" /> object. 
+    /// </summary>
+    /// <param name="localID">Local ID that identifies the <see cref="VCardClient"/>
+    /// in the <see cref="ParameterSection.PropertyIDs"/>. (A positive <see cref="int"/>, not zero.)</param>
+    /// <param name="globalID">A URI that identifies the <see cref="VCardClient"/> globally.</param>
+    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="localID" /> is less
+    /// than 1.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="globalID" /> is 
+    /// <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="globalID" /> is 
+    /// not a valid URI.</exception>
+    public VCardClientProperty(int localID, string globalID)
+        : base(new ParameterSection(), null)
+        => Value = new VCardClient(localID, globalID);
+
+    /// <summary>ctor</summary>
+    /// <param name="vcfRow" />
+    /// <exception cref="FormatException" />
+    internal VCardClientProperty(VcfRow vcfRow)
+        : base(vcfRow.Parameters, vcfRow.Group)
+    {
+        if (string.IsNullOrWhiteSpace(vcfRow.Value))
+        {
+            return;
+        }
+
+        Value = VCardClient.Parse(vcfRow.Value);
+    }
+
+    /// <summary> The data provided by the <see cref="VCardClientProperty" />. </summary>
+    public new VCardClient? Value
+    {
+        get;
+    }
+
+    /// <inheritdoc />
+    public override object Clone() => new VCardClientProperty(this);
+
+    /// <inheritdoc />
+    IEnumerator<VCardClientProperty> IEnumerable<VCardClientProperty>.GetEnumerator()
+    {
+        yield return this;
+    }
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator()
+        => ((IEnumerable<VCardClientProperty>)this).GetEnumerator();
+
+    /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected override object? GetVCardPropertyValue() => Value;
+
+    internal override void AppendValue(VcfSerializer serializer) => Value?.AppendTo(serializer.Builder);
+}

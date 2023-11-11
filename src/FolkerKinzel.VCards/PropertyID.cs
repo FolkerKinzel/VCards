@@ -5,55 +5,54 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards;
 
-/// <summary>Encapsulates information that is used to uniquely identify an instance
-/// of a <see cref="VCardProperty" />.</summary>
+/// <summary>Encapsulates information that is used to identify an instance
+/// of a <see cref="VCardProperty" /> globally.</summary>
 /// <seealso cref="Models.PropertyParts.ParameterSection.PropertyIDs"/>
-/// <seealso cref="Models.PropertyParts.PropertyIDMapping"/>
-/// <seealso cref="Models.PropertyIDMappingProperty"/>
-/// <seealso cref="VCard.PropertyIDMappings"/>
+/// <seealso cref="Models.PropertyParts.VCardClient"/>
+/// <seealso cref="Models.VCardClientProperty"/>
+/// <seealso cref="VCard.VCardClients"/>
 public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 {
     /// <summary>Initializes a new <see cref="PropertyID" /> object with the local ID
-    /// of the vCard property and - optionally - a <see cref="PropertyIDMappingProperty" />
-    /// object that allows the identification of the vCard property across different
-    /// version states of the same vCard.</summary>
-    /// <param name="id">The local ID of the vCard property. The name 
-    /// of the vCard property and this number uniquely identify a property locally. 
-    /// (The value is positive <see cref="int"/>, not zero.)</param>
-    /// <param name="mapping">A <see cref="PropertyIDMappingProperty" /> or <c>null</c>.
-    /// The mapping is used to identify a vCard-property platform-independent between 
-    /// different version states of the same vCard.</param>
+    /// of the <see cref="VCardProperty"/> and - optionally - a <see cref="VCardClientProperty" />
+    /// object that allows global identifying of the vCard property.</summary>
+    /// <param name="id">The local ID of the <see cref="VCardProperty"/>. The name 
+    /// of the vCard property and this number uniquely identify a <see cref="VCardProperty"/> 
+    /// in the <see cref="VCard"/> instance. 
+    /// (A positive <see cref="int"/>, not zero.)</param>
+    /// <param name="client">A <see cref="VCardClientProperty" /> to enable global identification
+    /// of the vCard property, or <c>null</c> to have only local identification.
+    /// </param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> is less
     /// than 1.</exception>
-    public PropertyID(int id, PropertyIDMappingProperty? mapping = null)
+    public PropertyID(int id, VCardClientProperty? client = null)
     {
         id.ValidateID(nameof(id));
         ID = id;
-        Mapping = mapping?.Value?.LocalID;
+        Client = client?.Value?.LocalID;
     }
 
     /// <summary>Initializes a new <see cref="PropertyID" /> object with the local number of the 
-    /// <see cref="VCardProperty" /> and the number of the mapping of this 
-    /// <see cref="VCardProperty" />.</summary>
+    /// <see cref="VCardProperty" /> and the <see cref="VCardClient.LocalID"/> of the 
+    /// <see cref="VCardClient"/>.</summary>
     /// <param name="id">The local ID of the vCard property. The name of the vCard 
-    /// property and this number uniquely identify a property locally. (The value is positive 
+    /// property and this number uniquely identify a property locally. (The value is a positive 
     /// <see cref="int"/>, not zero.)</param>
-    /// <param name="mapping"> <see cref="PropertyIDMapping.LocalID" /> of the 
-    /// <see cref="PropertyIDMapping"/> used to identify the vCard-property platform-independent 
-    /// between different version states of the same vCard, or <c>null</c> to not specify any mapping. 
-    /// (The value is positive <see cref="int"/>, not zero.)</param>
-    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> or <paramref name="mapping"/>
+    /// <param name="client"> <see cref="VCardClient.LocalID" /> of the 
+    /// <see cref="VCardClient"/>, or <c>null</c> to not specify any <see cref="VCardClient"/>. 
+    /// (The value is a positive <see cref="int"/>, not zero.)</param>
+    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> or <paramref name="client"/>
     /// is less than 1.</exception>
-    private PropertyID(int id, int? mapping = null)
+    private PropertyID(int id, int? client = null)
     {
         id.ValidateID(nameof(id));
         ID = id;
 
-        if (mapping.HasValue)
+        if (client.HasValue)
         {
-            int mappingValue = mapping.Value;
-            mappingValue.ValidateID(nameof(mapping));
-            Mapping = mappingValue;
+            int clientValue = client.Value;
+            clientValue.ValidateID(nameof(client));
+            Client = clientValue;
         }
     }
 
@@ -67,12 +66,12 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     public int ID { get; }
 
     /// <summary>
-    /// Gets the <see cref="PropertyIDMapping.LocalID" /> of the <see cref="PropertyIDMapping"
+    /// Gets the <see cref="VCardClient.LocalID" /> of the <see cref="VCardClient"
     /// /> object with which the <see cref="PropertyID" /> object is connected, or <c>null</c>
     /// if the <see cref="PropertyID" /> object is not connected with any <see
-    /// cref="PropertyIDMapping" />.
+    /// cref="VCardClient" />.
     /// </summary>
-    public int? Mapping { get; }
+    public int? Client { get; }
 
     /// <inheritdoc/>
     public override string ToString()
@@ -97,10 +96,10 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     public override bool Equals(object? obj) => obj is PropertyID other && Equals(other);
 
     /// <inheritdoc />
-    public bool Equals(PropertyID? other) => other is not null && ID == other.ID && Mapping == other.Mapping;
+    public bool Equals(PropertyID? other) => other is not null && ID == other.ID && Client == other.Client;
 
     /// <inheritdoc />
-    public override int GetHashCode() => HashCode.Combine(ID, Mapping);
+    public override int GetHashCode() => HashCode.Combine(ID, Client);
 
     /// <summary>Compares two <see cref="PropertyID" /> objects. The result indicates
     /// whether the values of the two <see cref="PropertyID" /> objects are equal.</summary>
@@ -187,10 +186,10 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 
         _ = builder.Append(ID);
 
-        if (Mapping.HasValue)
+        if (Client.HasValue)
         {
             _ = builder.Append('.');
-            _ = builder.Append(Mapping.Value);
+            _ = builder.Append(Client.Value);
         }
     }
 }

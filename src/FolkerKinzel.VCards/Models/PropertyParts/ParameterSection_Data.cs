@@ -1,4 +1,5 @@
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -323,10 +324,45 @@ public sealed partial class ParameterSection
 
     /// <summary> <c>PID</c>: <see cref="PropertyID" />s to identify the 
     /// <see cref="VCardProperty" />. <c>(4)</c></summary>
+    /// <remarks>
+    /// It's recommended to use always 
+    /// <see cref="AttachPropertyID(IEnumerable{VCardProperty?}, VCardClientProperty?)"/>
+    /// to attach a <see cref="PropertyID"/>.
+    /// </remarks>
     public IEnumerable<PropertyID?>? PropertyIDs
     {
         get => Get<IEnumerable<PropertyID?>?>(VCdParam.PropertyIDs);
         set => Set(VCdParam.PropertyIDs, value);
+    }
+
+    public void AttachPropertyID(IEnumerable<VCardProperty?> props, VCardClientProperty? client)
+    {
+        if(props == null)
+        {
+            throw new ArgumentNullException(nameof(props));
+        }
+
+        if (!props.Any(x => object.ReferenceEquals(this, x.Parameters)))
+        {
+            throw new InvalidOperationException();
+        }
+
+        var propIDs = PropertyIDs ?? Enumerable.Empty<PropertyID>();
+
+        int? clientLocalID = client?.Value?.LocalID;
+        if (propIDs.WhereNotNull().Any(x => x.Client == clientLocalID)) { return; }
+
+        var id = props.WhereNotNull()
+            .Select(x => x.Parameters.PropertyIDs)
+            .WhereNotNull()
+            .SelectMany(x => x)
+            .WhereNotNull()
+            .Where(x => x.Client == clientLocalID)
+            .Select(x => x.ID)
+            .Max() + 1;
+
+        var propID = new PropertyID(id, client);
+        PropertyIDs = propIDs.Concat(propID);
     }
 
     /// <summary> <c>TYPE</c>: Specifies the type of relationship with 

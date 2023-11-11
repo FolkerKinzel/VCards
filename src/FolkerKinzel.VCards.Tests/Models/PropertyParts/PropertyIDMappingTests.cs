@@ -31,7 +31,7 @@ public class PropertyIDMappingTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException), AllowDerivedTypes = false)]
-    public void PropertyIDMappingTest4() => _ = new PropertyIDMapping(3, null!);
+    public void PropertyIDMappingTest4() => _ = new VCardClient(3, null!);
 
 
     [TestMethod]
@@ -39,7 +39,7 @@ public class PropertyIDMappingTests
     {
         string pidMap = "2;urn:uuid:d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        var mapping = PropertyIDMapping.Parse(pidMap);
+        var mapping = VCardClient.Parse(pidMap);
 
         Assert.AreEqual(2, mapping.LocalID);
         Assert.AreEqual(new Uri(pidMap.Substring(2)), mapping.GlobalID);
@@ -50,7 +50,7 @@ public class PropertyIDMappingTests
     {
         string pidMap = "  2 ; urn:uuid:d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        var mapping = PropertyIDMapping.Parse(pidMap);
+        var mapping = VCardClient.Parse(pidMap);
 
         Assert.AreEqual(2, mapping.LocalID);
         Assert.AreEqual(new Uri(pidMap.Substring(6)), mapping.GlobalID);
@@ -62,7 +62,7 @@ public class PropertyIDMappingTests
     {
         string pidMap = "22;urn:uuid:d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        _ = PropertyIDMapping.Parse(pidMap);
+        _ = VCardClient.Parse(pidMap);
     }
 
     [TestMethod]
@@ -70,7 +70,7 @@ public class PropertyIDMappingTests
     {
         string pidMap = "2;http://d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        _ = PropertyIDMapping.Parse(pidMap);
+        _ = VCardClient.Parse(pidMap);
     }
 
     [TestMethod]
@@ -79,7 +79,7 @@ public class PropertyIDMappingTests
     {
         string pidMap = "2";
 
-        _ = PropertyIDMapping.Parse(pidMap);
+        _ = VCardClient.Parse(pidMap);
     }
 
     [TestMethod]
@@ -88,7 +88,7 @@ public class PropertyIDMappingTests
     {
         string pidMap = "";
 
-        _ = PropertyIDMapping.Parse(pidMap);
+        _ = VCardClient.Parse(pidMap);
     }
 
     [TestMethod]
@@ -97,7 +97,7 @@ public class PropertyIDMappingTests
     {
         string pidMap = "a";
 
-        _ = PropertyIDMapping.Parse(pidMap);
+        _ = VCardClient.Parse(pidMap);
     }
 
     [TestMethod]
@@ -105,7 +105,7 @@ public class PropertyIDMappingTests
     public void ParseTest8()
     {
         string pidMap = "2;http:////////////////// ";
-        _ = PropertyIDMapping.Parse(pidMap);
+        _ = VCardClient.Parse(pidMap);
     }
 
 

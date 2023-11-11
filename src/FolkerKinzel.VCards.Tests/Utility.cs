@@ -158,7 +158,7 @@ internal static class Utility
             Mailer = new TextProperty("The Mailer"),
             Languages = new TextProperty("de"),
             Notes = new TextProperty("Kommentar"),
-            PropertyIDMappings = new PropertyIDMappingProperty(7, new Uri("http://folkerkinzel.de")),
+            VCardClients = new PropertyIDMappingProperty(7, new Uri("http://folkerkinzel.de")),
 
             InstantMessengers = new TextProperty[]
             {

@@ -5,25 +5,23 @@ using FolkerKinzel.VCards.Resources;
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary> 
-/// Connects the local <see cref="PropertyID.Mapping" /> of a <see cref="VCardProperty" 
-/// /> with a <see cref="Uri" />, which uniquely identifies a vCard-property across 
-/// different versions of the same vCard.
+/// Identifies a vCard client globally, and locally inside the <see cref="VCard"/>.
 /// </summary>
-/// <seealso cref="PropertyIDMappingProperty"/>
-/// <seealso cref="VCard.PropertyIDMappings"/>
-public sealed class PropertyIDMapping
+/// <seealso cref="VCardClientProperty"/>
+/// <seealso cref="VCard.VCardClients"/>
+public sealed class VCardClient
 {
-    /// <summary>Initializes a new <see cref="PropertyIDMapping" /> object.</summary>
-    /// <param name="localID">Local ID of the mapping. (A positive <see cref="int"/>, not zero.)</param>
-    /// <param name="globalID">A URI that uniquely identifies a 
-    /// vCard-property platform-independent across different versions of the same vCard.</param>
+    /// <summary>Initializes a new <see cref="VCardClient" /> object.</summary>
+    /// <param name="localID">Local ID that identifies the <see cref="VCardClient"/>
+    /// in the <see cref="ParameterSection.PropertyIDs"/>. (A positive <see cref="int"/>, not zero.)</param>
+    /// <param name="globalID">A URI that identifies the <see cref="VCardClient"/> globally.</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="localID" /> is less
     /// than 1.</exception>
     /// <exception cref="ArgumentNullException"><paramref name="globalID" /> is 
     /// <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="globalID" /> is 
     /// not a valid URI.</exception>
-    internal PropertyIDMapping(int localID, string globalID)
+    internal VCardClient(int localID, string globalID)
     {
         localID.ValidateID(nameof(localID));
         LocalID = localID;
@@ -34,14 +32,13 @@ public sealed class PropertyIDMapping
                             : globalID;
     }
 
-    /// <summary>Gets the Local ID of the mapping.</summary>
+    /// <summary>Gets the Local ID.</summary>
     public int LocalID
     {
         get;
     }
 
-    /// <summary>Gets the URI that serves as a cross-platform identifier
-    /// for the mapping.</summary>
+    /// <summary>Gets the URI that serves as a global identifier.</summary>
     public string GlobalID
     {
         get;
@@ -57,10 +54,10 @@ public sealed class PropertyIDMapping
 
     /// <summary>Parses a <see cref="string" /> that represents a vCard&#160;4.0 Property-ID Mapping. </summary>
     /// <param name="s">The <see cref="string"/> to parse.</param>
-    /// <returns>A <see cref="PropertyIDMapping" /> instance.</returns>
+    /// <returns>A <see cref="VCardClient" /> instance.</returns>
     /// <exception cref="FormatException">
-    /// <paramref name="s" /> is not a <see cref="PropertyIDMapping" />.</exception>
-    internal static PropertyIDMapping Parse(string s)
+    /// <paramref name="s" /> is not a <see cref="VCardClient" />.</exception>
+    internal static VCardClient Parse(string s)
     {
         Debug.Assert(s != null);
 
@@ -76,7 +73,7 @@ public sealed class PropertyIDMapping
 
         try
         {
-            return new PropertyIDMapping(mappingNumber, span.Slice(separatorIdx + 1).ToString());
+            return new VCardClient(mappingNumber, span.Slice(separatorIdx + 1).Trim().ToString());
         }
         catch
         {

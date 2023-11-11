@@ -15,12 +15,12 @@ public class PropertyIDTests
         var pid = new PropertyID(5, new PropertyIDMappingProperty(7, new Uri("http://folkerkinzel.de/")));
 
         Assert.AreEqual(5, pid.ID);
-        Assert.AreEqual(7, pid.Mapping);
+        Assert.AreEqual(7, pid.Client);
 
         pid = new PropertyID(5);
 
         Assert.AreEqual(5, pid.ID);
-        Assert.IsNull(pid.Mapping);
+        Assert.IsNull(pid.Client);
     }
 
 

@@ -81,7 +81,7 @@ public static class VCardExample
             // This shows how to create a PropertyIDMapping, which helps to identify vCard-Properties
             // even if they are located in vCards that come from different sources (vCard 4.0 only):
             var pidMapProp = new VC::PropertyIDMappingProperty(1, new Uri("http://folkerKinzel.de/file1.htm"));
-            vCard.PropertyIDMappings = pidMapProp;
+            vCard.VCardClients = pidMapProp;
 
             var phoneHome = new VC::TextProperty("tel:+49-123-9876543");
             phoneHome.Parameters.DataType = Data.Uri;

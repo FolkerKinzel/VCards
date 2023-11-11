@@ -16,7 +16,7 @@ public class PropertyIDMappingPropertyTests
 
         var vcard = new VCard
         {
-            PropertyIDMappings = new PropertyIDMappingProperty?[] { prop, null }
+            VCardClients = new VCardClientProperty?[] { prop, null }
         };
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
@@ -28,9 +28,9 @@ public class PropertyIDMappingPropertyTests
 
         vcard = list[0];
 
-        Assert.IsNotNull(vcard.PropertyIDMappings);
+        Assert.IsNotNull(vcard.VCardClients);
 
-        PropertyIDMappingProperty? prop2 = vcard.PropertyIDMappings!.First();
+        VCardClientProperty? prop2 = vcard.VCardClients!.First();
 
         Assert.IsNotNull(prop);
         Assert.AreEqual(prop2!.Value!.LocalID, prop!.Value?.LocalID);
@@ -45,7 +45,7 @@ public class PropertyIDMappingPropertyTests
     public void GetValueTest()
     {
         VcfRow row = VcfRow.Parse("PidMap:", new VcfDeserializationInfo())!;
-        var prop = new PropertyIDMappingProperty(row);
+        var prop = new VCardClientProperty(row);
 
         Assert.IsNull(prop.Value);
     }
@@ -55,7 +55,7 @@ public class PropertyIDMappingPropertyTests
     public void AppendValueTest1()
     {
         var row = VcfRow.Parse("CLIENTPIDMAP:", new VcfDeserializationInfo());
-        var prop = new PropertyIDMappingProperty(row!);
+        var prop = new VCardClientProperty(row!);
         Assert.IsTrue(prop.IsEmpty);
         using var writer = new StringWriter();
         var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);

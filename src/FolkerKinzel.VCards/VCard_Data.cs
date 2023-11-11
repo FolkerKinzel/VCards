@@ -358,7 +358,7 @@ public sealed partial class VCard
         set => Set(Prop.Logos, value);
     }
 
-    /// <summary> <c>MAILER</c>: Type of e-mail program used. <c>(2,3)</c></summary>
+    /// <summary> <c>MAILER</c>: Name of the e-mail program. <c>(2,3)</c></summary>
     public TextProperty? Mailer
     {
         get => Get<TextProperty?>(Prop.Mailer);
@@ -558,14 +558,6 @@ public sealed partial class VCard
         set => Set(Prop.Profile, value);
     }
 
-    /// <summary> <c>CLIENTPIDMAP</c>: Mappings for <see cref="PropertyID" />s. It is
-    /// used for synchronizing different revisions of the same vCard. <c>(4)</c></summary>
-    public IEnumerable<PropertyIDMappingProperty?>? PropertyIDMappings
-    {
-        get => Get<IEnumerable<PropertyIDMappingProperty?>?>(Prop.PropertyIDMappings);
-        set => Set(Prop.PropertyIDMappings, value);
-    }
-
     /// <summary> <c>RELATED</c>: Other entities that the person or organization is 
     /// related to. <c>(4)</c></summary>
     public IEnumerable<RelationProperty?>? Relations
@@ -637,6 +629,14 @@ public sealed partial class VCard
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.URLs);
         set => Set(Prop.URLs, value);
+    }
+
+    /// <summary> <c>CLIENTPIDMAP</c>: Global identifiers of the vCard clients
+    /// that edited the vCard. <c>(4)</c></summary>
+    public IEnumerable<VCardClientProperty?>? VCardClients
+    {
+        get => Get<IEnumerable<VCardClientProperty?>?>(Prop.VCardClients);
+        set => Set(Prop.VCardClients, value);
     }
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
