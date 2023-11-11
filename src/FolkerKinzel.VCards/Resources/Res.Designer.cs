@@ -61,33 +61,6 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of the identifier is more than one digit..
-        /// </summary>
-        internal static string IdentifierTooLong {
-            get {
-                return ResourceManager.GetString("IdentifierTooLong", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The ID of the property mapping is missing..
-        /// </summary>
-        internal static string MissingMappingID {
-            get {
-                return ResourceManager.GetString("MissingMappingID", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No URI is specified..
-        /// </summary>
-        internal static string MissingUri {
-            get {
-                return ResourceManager.GetString("MissingUri", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The value references not an ANSI encoding..
         /// </summary>
         internal static string NoAnsiEncoding {
@@ -115,6 +88,15 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The value is not a valid URI..
+        /// </summary>
+        internal static string NotAUri {
+            get {
+                return ResourceManager.GetString("NotAUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The argument is not a valid X-Name..
         /// </summary>
         internal static string NoXName {
@@ -124,7 +106,7 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The value must be between 1 and 9..
+        ///   Looks up a localized string similar to The value must be a positive integer. (Zero is not allowed.).
         /// </summary>
         internal static string PidValue {
             get {

@@ -13,53 +13,47 @@ namespace FolkerKinzel.VCards;
 /// <seealso cref="VCard.PropertyIDMappings"/>
 public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 {
-    private const int MAPPING_SHIFT = 4;
-    private readonly byte _data;
-
     /// <summary>Initializes a new <see cref="PropertyID" /> object with the local ID
     /// of the vCard property and - optionally - a <see cref="PropertyIDMappingProperty" />
     /// object that allows the identification of the vCard property across different
     /// version states of the same vCard.</summary>
-    /// <param name="id">The local ID of the vCard property (value: 1 - 9). The name 
-    /// of the vCard property and this number uniquely identify a property locally.</param>
+    /// <param name="id">The local ID of the vCard property. The name 
+    /// of the vCard property and this number uniquely identify a property locally. 
+    /// (The value is positive <see cref="int"/>, not zero.)</param>
     /// <param name="mapping">A <see cref="PropertyIDMappingProperty" /> or <c>null</c>.
     /// The mapping is used to identify a vCard-property platform-independent between 
     /// different version states of the same vCard.</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> is less
-    /// than 1 or greater than 9.</exception>
+    /// than 1.</exception>
     public PropertyID(int id, PropertyIDMappingProperty? mapping = null)
     {
         id.ValidateID(nameof(id));
-        _data = (byte)id;
-
-        if (mapping?.Value != null)
-        {
-            _data |= (byte)(mapping.Value.LocalID << MAPPING_SHIFT);
-        }
+        ID = id;
+        Mapping = mapping?.Value?.LocalID;
     }
 
     /// <summary>Initializes a new <see cref="PropertyID" /> object with the local number of the 
     /// <see cref="VCardProperty" /> and the number of the mapping of this 
     /// <see cref="VCardProperty" />.</summary>
-    /// <param name="id">The local ID of the vCard property (Value: 1 - 9). The name of the vCard 
-    /// property and this number uniquely identify a property locally.</param>
-    /// <param name="mapping"> <see cref="PropertyIDMapping.LocalID" /> of the mapping of the 
-    /// <see cref="VCardProperty" /> (value: 1 - 9) or <c>null</c> to not specify any mapping. 
-    /// The mapping is used to identify a vCard property between different version states of the 
-    /// same vCard.</param>
+    /// <param name="id">The local ID of the vCard property. The name of the vCard 
+    /// property and this number uniquely identify a property locally. (The value is positive 
+    /// <see cref="int"/>, not zero.)</param>
+    /// <param name="mapping"> <see cref="PropertyIDMapping.LocalID" /> of the 
+    /// <see cref="PropertyIDMapping"/> used to identify the vCard-property platform-independent 
+    /// between different version states of the same vCard, or <c>null</c> to not specify any mapping. 
+    /// (The value is positive <see cref="int"/>, not zero.)</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> or <paramref name="mapping"/>
-    /// is less than 1 or greater than 9.</exception>
+    /// is less than 1.</exception>
     private PropertyID(int id, int? mapping = null)
     {
         id.ValidateID(nameof(id));
-        _data = (byte)id;
+        ID = id;
 
         if (mapping.HasValue)
         {
             int mappingValue = mapping.Value;
             mappingValue.ValidateID(nameof(mapping));
-
-            _data |= (byte)(mapping.Value << MAPPING_SHIFT);
+            Mapping = mappingValue;
         }
     }
 
@@ -70,7 +64,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// of the vCard property to which this object is assigned and the value of the 
     /// <see cref="ID" /> of the <see cref="PropertyID" /> object, which is 
     /// assigned to this <see cref="VCardProperty" />.</remarks>
-    public int ID => _data & 0xF;
+    public int ID { get; }
 
     /// <summary>
     /// Gets the <see cref="PropertyIDMapping.LocalID" /> of the <see cref="PropertyIDMapping"
@@ -78,14 +72,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// if the <see cref="PropertyID" /> object is not connected with any <see
     /// cref="PropertyIDMapping" />.
     /// </summary>
-    public int? Mapping
-    {
-        get
-        {
-            int value = _data >> MAPPING_SHIFT;
-            return value == 0 ? null : value;
-        }
-    }
+    public int? Mapping { get; }
 
     /// <inheritdoc/>
     public override string ToString()
