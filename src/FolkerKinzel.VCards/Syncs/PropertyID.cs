@@ -5,13 +5,13 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards;
+namespace FolkerKinzel.VCards.Syncs;
 
 /// <summary>Encapsulates information that is used to identify an instance
 /// of a <see cref="VCardProperty" /> globally.</summary>
-/// <seealso cref="Models.PropertyParts.ParameterSection.PropertyIDs"/>
-/// <seealso cref="Models.PropertyParts.VCardClient"/>
-/// <seealso cref="Models.VCardClientProperty"/>
+/// <seealso cref="ParameterSection.PropertyIDs"/>
+/// <seealso cref="VCardClient"/>
+/// <seealso cref="VCardClientProperty"/>
 /// <seealso cref="VCard.VCardClients"/>
 public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 {
@@ -138,7 +138,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 
         while ((sepIdx = span.IndexOf(',')) != -1)
         {
-            if(TryParsePropertyID(span.Slice(0, sepIdx), out propID))
+            if (TryParsePropertyID(span.Slice(0, sepIdx), out propID))
             {
                 list.Add(propID);
             }
@@ -178,64 +178,6 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
                 }
             }
         }
-
-
-        //if (span.Length == 0)
-        //{
-        //    return;
-        //}
-
-        //int index = 0;
-
-        //int id = 0;
-        //int? mapping = null;
-        //bool parseMapping = false;
-
-        //while (index < pids.Length)
-        //{
-        //    char c = pids[index++];
-
-        //    if (c == ',')
-        //    {
-        //        try
-        //        {
-        //            list.Add(new PropertyID(id, mapping));
-        //        }
-        //        catch (ArgumentOutOfRangeException) { }
-
-        //        id = 0;
-        //        mapping = null;
-        //        parseMapping = false;
-        //    }
-        //    else if (c == '.')
-        //    {
-        //        parseMapping = true;
-        //    }
-        //    else if (c.IsAsciiDigit())
-        //    {
-        //        if (parseMapping)
-        //        {
-        //            // Exception bei mehrstelligen Nummern:
-        //            mapping = mapping.HasValue ? 0 : c.ParseDecimalDigit();
-        //        }
-        //        else
-        //        {
-        //            // Exception bei mehrstelligen Nummern:
-        //            id = id == 0 ? c.ParseDecimalDigit() : 0;
-        //        }
-        //    }//else
-        //}//while
-
-        //// if vermeidet unnötige Exception, falls der letzte Wert (standardungerecht)
-        //// mit einem Komma endet
-        //if (id != 0)
-        //{
-        //    try
-        //    {
-        //        list.Add(new PropertyID(id, mapping));
-        //    }
-        //    catch (ArgumentOutOfRangeException) { }
-        //}
     }
 
     internal void AppendTo(StringBuilder builder)

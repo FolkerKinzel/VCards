@@ -1,6 +1,9 @@
 ﻿#if !NETCOREAPP3_1
 using FolkerKinzel.Strings.Polyfills;
+using FolkerKinzel.VCards.Syncs;
 #endif
+
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 

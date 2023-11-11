@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Enums;
 

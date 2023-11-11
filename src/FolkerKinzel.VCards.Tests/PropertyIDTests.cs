@@ -4,6 +4,7 @@ using FolkerKinzel.Strings.Polyfills;
 
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Tests;
 

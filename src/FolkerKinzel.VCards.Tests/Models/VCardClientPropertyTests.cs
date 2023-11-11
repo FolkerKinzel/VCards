@@ -3,14 +3,15 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
-[TestClass()]
-public class PropertyIDMappingPropertyTests
+[TestClass]
+public class VCardClientPropertyTests
 {
-    [TestMethod()]
-    public void PropertyIDMappingPropertyTest1()
+    [TestMethod]
+    public void VCardClientTest1()
     {
         var prop = new VCardClientProperty(7, "http://folkerkinzel.de/");
 
@@ -39,6 +40,9 @@ public class PropertyIDMappingPropertyTests
         Assert.IsFalse(prop.IsEmpty);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void VCardClientPropertyTest2() => _ = new VCardClientProperty(null!);
 
 
     [TestMethod]

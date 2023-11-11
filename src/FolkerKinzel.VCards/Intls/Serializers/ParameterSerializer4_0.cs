@@ -12,6 +12,7 @@ using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 

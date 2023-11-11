@@ -1,5 +1,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 

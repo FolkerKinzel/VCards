@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Syncs;
 using static FolkerKinzel.VCards.VCard;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;

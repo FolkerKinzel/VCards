@@ -1,6 +1,7 @@
 ﻿using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -38,7 +39,7 @@ internal static class Utility
         adr1.Parameters.Index = 0;
         adr1.Parameters.Language = "de";
         adr1.Parameters.SortAs = sortAs;
-        var pidMap = new Models.PropertyParts.VCardClient(7, "http://www.contoso.com/");
+        var pidMap = new VCardClient(7, "http://www.contoso.com/");
         adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, pidMap), new PropertyID(2) };
         adr1.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Parcel | Adr.Postal;
 

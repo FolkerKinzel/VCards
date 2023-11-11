@@ -1,8 +1,10 @@
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Syncs;
 
 /// <summary> 
 /// Identifies a vCard client globally, and locally inside the <see cref="VCard"/>.
@@ -71,13 +73,13 @@ public sealed class VCardClient
         var span = s.AsSpan();
         int separatorIdx = span.IndexOf(';');
 
-        if(separatorIdx < 1)
+        if (separatorIdx < 1)
         {
             return false;
         }
 
-        if(!_Int.TryParse(span.Slice(0, separatorIdx), out int mappingNumber))
-        { 
+        if (!_Int.TryParse(span.Slice(0, separatorIdx), out int mappingNumber))
+        {
             return false;
         }
 

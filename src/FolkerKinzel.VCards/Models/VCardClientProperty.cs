@@ -2,6 +2,7 @@ using System.Collections;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -86,5 +87,5 @@ public sealed class VCardClientProperty : VCardProperty, IEnumerable<VCardClient
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-    internal override void AppendValue(VcfSerializer serializer) => Value?.AppendTo(serializer.Builder);
+    internal override void AppendValue(VcfSerializer serializer) => Value.AppendTo(serializer.Builder);
 }
