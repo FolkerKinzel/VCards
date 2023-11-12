@@ -17,7 +17,7 @@ public class VCardClientPropertyTests
 
         var vcard = new VCard
         {
-            VCardClients = new VCardClientProperty?[] { prop, null }
+            VCardApps = new VCardClientProperty?[] { prop, null }
         };
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
@@ -29,9 +29,9 @@ public class VCardClientPropertyTests
 
         vcard = list[0];
 
-        Assert.IsNotNull(vcard.VCardClients);
+        Assert.IsNotNull(vcard.VCardApps);
 
-        VCardClientProperty? prop2 = vcard.VCardClients!.First();
+        VCardClientProperty? prop2 = vcard.VCardApps!.First();
 
         Assert.IsNotNull(prop);
         Assert.AreEqual(prop2!.Value!.LocalID, prop!.Value?.LocalID);

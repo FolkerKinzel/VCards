@@ -248,8 +248,8 @@ public class VCardTests
     {
         var textProp = new TextProperty("Test");
 
-        var pidMap1 = new VCardClient(5, "http://folkerkinzel.de/file1.htm");
-        var pidMap2 = new VCardClient(8, "http://folkerkinzel.de/file2.htm");
+        var pidMap1 = new App(5, "http://folkerkinzel.de/file1.htm");
+        var pidMap2 = new App(8, "http://folkerkinzel.de/file2.htm");
         textProp.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(1, pidMap1), new PropertyID(7), new PropertyID(1, pidMap2) };
 
         var vc = new VCard()
@@ -389,12 +389,11 @@ public class VCardTests
 
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void RegisterAppTest1() => new VCard().RegisterApp(null!);
+    public void RegisterAppTest1() => VCard.RegisterApp(null);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void RegisterAppTest2() => new VCard().RegisterApp(new Uri("../IamRelative", UriKind.Relative));
+    public void RegisterAppTest2() => VCard.RegisterApp(new Uri("../IamRelative", UriKind.Relative));
 
 
     [TestMethod]
@@ -407,24 +406,24 @@ public class VCardTests
         var uri1 = new Uri(folker, UriKind.Absolute);
         var uri2 = new Uri(contoso, UriKind.Absolute);
 
-        Assert.IsNull(vc.VCardClients);
+        Assert.IsNull(vc.VCardApps);
 
-        vc.RegisterApp(uri1);
-        Assert.IsNotNull(vc.VCardClients);
-        Assert.AreEqual(folker, vc.VCardClients.First()!.Value.GlobalID);
-        Assert.AreEqual(folker, vc.ExecutingApp?.GlobalID);
+        vc.RegisterAppInInstance(uri1);
+        Assert.IsNotNull(vc.VCardApps);
+        Assert.AreEqual(folker, vc.VCardApps.First()!.Value.GlobalID);
+        Assert.AreEqual(folker, vc.AppID?.GlobalID);
 
-        vc.VCardClients = vc.VCardClients.ConcatWith(null);
+        vc.VCardApps = vc.VCardApps.ConcatWith(null);
 
-        vc.RegisterApp(uri2);
-        Assert.AreEqual(contoso, vc.ExecutingApp?.GlobalID);
-        Assert.AreEqual(3, vc.VCardClients.Count());
+        vc.RegisterAppInInstance(uri2);
+        Assert.AreEqual(contoso, vc.AppID?.GlobalID);
+        Assert.AreEqual(3, vc.VCardApps.Count());
 
 
-        vc.RegisterApp(uri1);
-        Assert.AreEqual(folker, vc.VCardClients.First()!.Value.GlobalID);
-        Assert.AreEqual(folker, vc.ExecutingApp?.GlobalID);
-        Assert.AreEqual(3, vc.VCardClients.Count());
+        vc.RegisterAppInInstance(uri1);
+        Assert.AreEqual(folker, vc.VCardApps.First()!.Value.GlobalID);
+        Assert.AreEqual(folker, vc.AppID?.GlobalID);
+        Assert.AreEqual(3, vc.VCardApps.Count());
     }
 
     [TestMethod]
@@ -435,12 +434,12 @@ public class VCardTests
         vc.DisplayNames = tProp.ConcatWith(null);
 
         Assert.IsNull(tProp.Parameters.PropertyIDs);
-        Assert.IsNull(vc.VCardClients);
+        Assert.IsNull(vc.VCardApps);
 
         vc.SetPropertyIDs();
         Assert.IsNotNull(tProp.Parameters.PropertyIDs);
         Assert.AreEqual(1, tProp.Parameters.PropertyIDs.Count());
-        Assert.IsNull(vc.VCardClients);
+        Assert.IsNull(vc.VCardApps);
 
         const string folker = "http://folker.de/id";
         //const string contoso = "http://contoso.com/id";
@@ -448,18 +447,18 @@ public class VCardTests
         var uri1 = new Uri(folker, UriKind.Absolute);
         //var uri2 = new Uri(contoso, UriKind.Absolute);
 
-        vc.RegisterApp(uri1);
-        Assert.IsNotNull(vc.VCardClients);
+        vc.RegisterAppInInstance(uri1);
+        Assert.IsNotNull(vc.VCardApps);
 
         vc.SetPropertyIDs();
         Assert.AreEqual(2, tProp.Parameters.PropertyIDs.Count());
-        Assert.IsTrue(vc.VCardClients.All(x => x?.Parameters.PropertyIDs == null));
+        Assert.IsTrue(vc.VCardApps.All(x => x?.Parameters.PropertyIDs == null));
 
         vc.SetPropertyIDs();
         Assert.AreEqual(2, tProp.Parameters.PropertyIDs.Count());
 
-        vc.VCardClients = null;
-        Assert.IsNull(vc.ExecutingApp);
+        vc.VCardApps = null;
+        Assert.IsNull(vc.AppID);
     }
 
 

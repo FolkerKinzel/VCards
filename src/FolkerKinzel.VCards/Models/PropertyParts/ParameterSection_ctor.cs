@@ -77,11 +77,7 @@ public sealed partial class ParameterSection
                     }
                 case ParameterKey.PID:
                     {
-                        List<PropertyID> list = (List<PropertyID>?)this.PropertyIDs ?? new List<PropertyID>();
-                        this.PropertyIDs = list;
-
-                        PropertyID.ParseInto(list, parameter.Value);
-
+                        this.PropertyIDs = PropertyID.Parse(parameter.Value);
                         break;
                     }
                 case ParameterKey.TYPE:

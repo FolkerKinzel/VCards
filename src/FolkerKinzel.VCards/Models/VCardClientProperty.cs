@@ -8,8 +8,8 @@ namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates information that is used to identify a vCard client globally, 
 /// and locally inside the <see cref="VCard"/></summary>
-/// <seealso cref="VCardClient"/>
-/// <seealso cref="VCard.VCardClients"/>
+/// <seealso cref="App"/>
+/// <seealso cref="VCard.VCardApps"/>
 public sealed class VCardClientProperty : VCardProperty, IEnumerable<VCardClientProperty>
 {
     /// <summary>Copy ctor.</summary>
@@ -20,9 +20,9 @@ public sealed class VCardClientProperty : VCardProperty, IEnumerable<VCardClient
 
     /// <summary>  Initializes a new <see cref="VCardClientProperty" /> object. 
     /// </summary>
-    /// <param name="localID">Local ID that identifies the <see cref="VCardClient"/>
+    /// <param name="localID">Local ID that identifies the <see cref="App"/>
     /// in the <see cref="ParameterSection.PropertyIDs"/>. (A positive <see cref="int"/>, not zero.)</param>
-    /// <param name="globalID">A URI that identifies the <see cref="VCardClient"/> globally.</param>
+    /// <param name="globalID">A URI that identifies the <see cref="App"/> globally.</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="localID" /> is less
     /// than 1.</exception>
     /// <exception cref="ArgumentNullException"> <paramref name="globalID" /> is 
@@ -32,30 +32,30 @@ public sealed class VCardClientProperty : VCardProperty, IEnumerable<VCardClient
     /// <remarks>
     /// <note type="caution">
     /// Using this constructor in own code endangers the referential integrity. Prefer using
-    /// <see cref="VCard.RegisterApp(Uri)"/> instead.
+    /// <see cref="VCard.RegisterAppInInstance(Uri)"/> instead.
     /// </note>
     /// </remarks>
     public VCardClientProperty(int localID, string globalID)
-        : this(new VCardClient(localID, globalID)) { }
+        : this(new App(localID, globalID)) { }
 
     /// <summary>
     /// Initializes a new <see cref="VCardClientProperty" /> object. 
     /// </summary>
-    /// <param name="client">The <see cref="VCardClient"/> object that will
+    /// <param name="client">The <see cref="App"/> object that will
     /// be the encapsulated <see cref="VCardClientProperty.Value"/>.</param>
     /// <exception cref="ArgumentNullException"><paramref name="client"/> is <c>null</c>.</exception>
-    public VCardClientProperty(VCardClient client) 
+    public VCardClientProperty(App client) 
         : base(new ParameterSection(), null)
         => Value = client ?? throw new ArgumentNullException(nameof(client));
 
-    private VCardClientProperty(VCardClient client, ParameterSection parameters, string? group)
+    private VCardClientProperty(App client, ParameterSection parameters, string? group)
         : base(parameters, group) => Value = client;
 
     internal static bool TryParse(VcfRow vcfRow, [NotNullWhen(true)] out VCardClientProperty? prop)
     {
         prop = null;
 
-        if(VCardClient.TryParse(vcfRow.Value, out VCardClient? client))
+        if(App.TryParse(vcfRow.Value, out App? client))
         {
             prop = new VCardClientProperty(client, vcfRow.Parameters, vcfRow.Group);
             return true;
@@ -65,7 +65,7 @@ public sealed class VCardClientProperty : VCardProperty, IEnumerable<VCardClient
     }
 
     /// <summary> The data provided by the <see cref="VCardClientProperty" />. </summary>
-    public new VCardClient Value
+    public new App Value
     {
         get;
     }

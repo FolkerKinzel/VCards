@@ -10,108 +10,88 @@ public class PropertyIDTests
     [TestMethod]
     public void CtorTest()
     {
-        var pid = new PropertyID(5, new VCardClient(7, "http://folkerkinzel.de/"));
+        var pid = new PropertyID(5, new App(7, "http://folkerkinzel.de/"));
 
         Assert.AreEqual(5, pid.ID);
-        Assert.AreEqual(7, pid.Client);
+        Assert.AreEqual(7, pid.App);
 
         pid = new PropertyID(5);
 
         Assert.AreEqual(5, pid.ID);
-        Assert.IsNull(pid.Client);
+        Assert.IsNull(pid.App);
     }
 
 
     [TestMethod]
-    public void ParseIntoTest1()
+    public void ParseTest1() => Assert.AreEqual(0, PropertyID.Parse("").Count());
+
+
+    [TestMethod]
+    public void ParseTest2()
     {
-        var list = new List<PropertyID>();
-
-        PropertyID.ParseInto(list, "");
-
-        Assert.AreEqual(0, list.Count);
+        IEnumerable<PropertyID> list = PropertyID.Parse("4");
+        Assert.AreEqual(1, list.Count());
+        Assert.AreEqual(new PropertyID(4), list.First());
     }
 
 
     [TestMethod]
-    public void ParseIntoTest2()
+    public void ParseTest3()
     {
-        var list = new List<PropertyID>();
+        IEnumerable<PropertyID> list = PropertyID.Parse("4.9");
 
-        PropertyID.ParseInto(list, "4");
+        Assert.AreEqual(1, list.Count());
+        var pidMap = new App(9, "http://folkerkinzel.de/");
 
-        Assert.AreEqual(1, list.Count);
-        Assert.AreEqual(new PropertyID(4), list[0]);
+        Assert.AreEqual(new PropertyID(4, pidMap), list.First());
     }
 
 
     [TestMethod]
-    public void ParseIntoTest3()
+    public void ParseTest4()
     {
-        var list = new List<PropertyID>();
+        IEnumerable<PropertyID> list = PropertyID.Parse("4.9,7.5");
 
-        PropertyID.ParseInto(list, "4.9");
-
-        Assert.AreEqual(1, list.Count);
-        var pidMap = new VCardClient(9, "http://folkerkinzel.de/");
-
-        Assert.AreEqual(new PropertyID(4, pidMap), list[0]);
+        Assert.AreEqual(2, list.Count());
+        string uri = "http://folker.de/";
+        Assert.AreEqual(new PropertyID(4, new App(9, uri)), list.First());
+        Assert.AreEqual(new PropertyID(7, new App(5, uri)), list.ElementAt(1));
     }
 
 
     [TestMethod]
-    public void ParseIntoTest4()
+    public void ParseTest5()
     {
-        var list = new List<PropertyID>();
+        IEnumerable<PropertyID> list = PropertyID.Parse(" 4 . 9 , 7 . 5 ");
 
-        PropertyID.ParseInto(list, "4.9,7.5");
-
-        Assert.AreEqual(2, list.Count);
-        var uri = "http://folker.de/";
-        Assert.AreEqual(new PropertyID(4, new VCardClient(9, uri)), list[0]);
-        Assert.AreEqual(new PropertyID(7, new VCardClient(5, uri)), list[1]);
+        Assert.AreEqual(2, list.Count());
+        string uri = "http://folker.de/";
+        Assert.AreEqual(new PropertyID(4, new App(9, uri)), list.First());
+        Assert.AreEqual(new PropertyID(7, new App(5, uri)), list.ElementAt(1));
     }
 
 
     [TestMethod]
-    public void ParseIntoTest5()
+    public void ParseTest6()
     {
-        var list = new List<PropertyID>();
+        IEnumerable<PropertyID> list = PropertyID.Parse("4.9,6.0,7.5");
 
-        PropertyID.ParseInto(list, " 4 . 9 , 7 . 5 ");
-
-        Assert.AreEqual(2, list.Count);
-        var uri = "http://folker.de/";
-        Assert.AreEqual(new PropertyID(4, new VCardClient(9, uri)), list[0]);
-        Assert.AreEqual(new PropertyID(7, new VCardClient(5, uri)), list[1]);
+        Assert.AreEqual(2, list.Count());
+        string uri = "http://folker.de/";
+        Assert.AreEqual(new PropertyID(4, new App(9, uri)), list.First());
+        Assert.AreEqual(new PropertyID(7, new App(5, uri)), list.ElementAt(1));
     }
 
 
     [TestMethod]
-    public void ParseIntoTest6()
+    public void ParseTest7()
     {
-        var list = new List<PropertyID>();
+        IEnumerable<PropertyID> list = PropertyID.Parse("9,22.15,7,2.0");
 
-        PropertyID.ParseInto(list, "4.9,6.0,7.5");
-
-        Assert.AreEqual(2, list.Count);
-        var uri = "http://folker.de/";
-        Assert.AreEqual(new PropertyID(4, new VCardClient(9, uri)), list[0]);
-        Assert.AreEqual(new PropertyID(7, new VCardClient(5, uri)), list[1]);
-    }
-
-
-    [TestMethod]
-    public void ParseIntoTest7()
-    {
-        var list = new List<PropertyID>();
-
-        PropertyID.ParseInto(list, "9,22.15,7,2.0");
-
-        Assert.AreEqual(3, list.Count);
-        Assert.AreEqual(new PropertyID(9), list[0]);
-        Assert.AreEqual(new PropertyID(22, new VCardClient(15, "http://www.contoso.com/")), list[1]);
-        Assert.AreEqual(new PropertyID(7), list[2]);
+        Assert.AreEqual(3, list.Count());
+        Assert.AreEqual(new PropertyID(9), list.First());
+        Assert.AreEqual(new PropertyID(22, new App(15, "http://www.contoso.com/")), list.ElementAt(1));
+        Assert.AreEqual(new PropertyID(7), list.ElementAt(2));
     }
 
 
@@ -147,10 +127,10 @@ public class PropertyIDTests
     {
         const string uriStr = "http://folkers-website.de";
         var id1 = new PropertyID(7);
-        var id2 = new PropertyID(7, new VCardClient(5, uriStr));
-        var id3 = new PropertyID(7, new VCardClient(5, uriStr));
-        var id4 = new PropertyID(5, new VCardClient(5, uriStr));
-        var id5 = new PropertyID(7, new VCardClient(5, "http://other-website"));
+        var id2 = new PropertyID(7, new App(5, uriStr));
+        var id3 = new PropertyID(7, new App(5, uriStr));
+        var id4 = new PropertyID(5, new App(5, uriStr));
+        var id5 = new PropertyID(7, new App(5, "http://other-website"));
         var id6 = new PropertyID(5);
 
         Assert.AreNotEqual(id1, id2);
@@ -234,8 +214,8 @@ public class PropertyIDTests
     [TestMethod]
     public void ToStringTest1()
     {
-        var uri = "http://folker.de/";
-        var pid = new PropertyID(5, new VCardClient(7, uri));
+        string uri = "http://folker.de/";
+        var pid = new PropertyID(5, new App(7, uri));
 
         string s = pid.ToString();
 

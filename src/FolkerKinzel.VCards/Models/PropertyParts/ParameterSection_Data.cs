@@ -323,18 +323,12 @@ public sealed partial class ParameterSection
         }
     }
 
-    /// <summary> <c>PID</c>: <see cref="PropertyID" />s to identify the 
+    /// <summary> <c>PID</c>: Gets the <see cref="PropertyID" />s to identify the 
     /// <see cref="VCardProperty" />. <c>(4)</c></summary>
-    /// <remarks>
-    /// Setting this property in own code endangers the referential integrity.
-    /// It's recommended to use always 
-    /// <see cref="SetPropertyID(IEnumerable{VCardProperty?}, VCardClientProperty?)"/>
-    /// to attach a <see cref="PropertyID"/>.
-    /// </remarks>
     public IEnumerable<PropertyID?>? PropertyIDs
     {
         get => Get<IEnumerable<PropertyID?>?>(VCdParam.PropertyIDs);
-        set => Set(VCdParam.PropertyIDs, value);
+        internal set => Set(VCdParam.PropertyIDs, value);
     }
 
     /// <summary> <c>TYPE</c>: Specifies the type of relationship with 

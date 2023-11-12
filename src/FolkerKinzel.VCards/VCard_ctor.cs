@@ -13,7 +13,10 @@ namespace FolkerKinzel.VCards;
 public sealed partial class VCard
 {
     /// <summary>Initializes a new <see cref="VCard" /> object.</summary>
-    public VCard() { }
+    public VCard()
+    { 
+        Sync = new Sync(this); 
+    }
 
     /// <summary>Copy ctor.</summary>
     /// <param name="vCard">The <see cref="VCard"/> instance to clone.</param>
@@ -60,7 +63,10 @@ public sealed partial class VCard
                 ICloneable cloneable => cloneable.Clone(), // AccessProperty, KindProperty, TimeStampProperty, UuidProperty
                 _ => kvp.Value
             });
-        }
+        }//foreach
+
+        // Must be the last in ctor
+        Sync = new Sync(this);
 
         /////////////////////////////////////////////////
         static object? Cloned(ICloneable? x) => x?.Clone();
@@ -382,7 +388,7 @@ public sealed partial class VCard
                 case PropKeys.CLIENTPIDMAP:
                     if (VCardClientProperty.TryParse(vcfRow, out VCardClientProperty? prop))
                     {
-                        VCardClients = Concat(VCardClients, prop);
+                        VCardApps = Concat(VCardApps, prop);
                     }
                     break;
                 case PropKeys.PRODID:
@@ -436,6 +442,9 @@ public sealed partial class VCard
             ConnectTimeZonesWithAddresses();
             ConnectGeoCoordinatesWithAddresses();
         }
+
+        // Must be the last in ctor:
+        Sync = new Sync(this);
     }//ctor
 
 

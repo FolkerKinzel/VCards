@@ -8,7 +8,7 @@ public sealed partial class ParameterSection
     /// <summary>
     /// Sets the <see cref="PropertyID"/> for the <see cref="VCardProperty"/> 
     /// object this <see cref="ParameterSection"/> belongs to, depending on the 
-    /// current value of <see cref="VCard.ExecutingApp"/>.
+    /// current value of <see cref="VCard.AppID"/>.
     /// </summary>
     /// <param name="props">The collection of <see cref="VCardProperty"/>
     /// objects the current instance belongs to.</param>
@@ -16,7 +16,7 @@ public sealed partial class ParameterSection
     /// belongs to.</param>
     /// <remarks>
     /// <note type="important">
-    /// Call <see cref="VCard.RegisterApp(Uri)"/> before calling this method!
+    /// Call <see cref="VCard.RegisterAppInInstance(Uri)"/> before calling this method!
     /// </note>
     /// <para>
     /// <see cref="PropertyID"/>s (stored in <see cref="PropertyIDs"/>)
@@ -61,9 +61,9 @@ public sealed partial class ParameterSection
     internal void SetPropertyIDIntl(IEnumerable<VCardProperty?> props, VCard vCard)
     {
         var propIDs = PropertyIDs ?? Enumerable.Empty<PropertyID>();
-        int? clientLocalID = vCard.ExecutingApp?.LocalID;
+        int? clientLocalID = vCard.Sync.AppID?.LocalID;
 
-        if (propIDs.Any(x => (x != null) && (x.Client == clientLocalID)))
+        if (propIDs.Any(x => (x != null) && (x.App == clientLocalID)))
         {
             return;
         }
@@ -72,12 +72,12 @@ public sealed partial class ParameterSection
             .Select(static x => x.Parameters.PropertyIDs)
             .SelectMany(static x => x ?? Enumerable.Empty<PropertyID>())
             .WhereNotNull()
-            .Where(x => x.Client == clientLocalID)
+            .Where(x => x.App == clientLocalID)
             .Select(static x => x.ID)
             .Append(0)
             .Max() + 1;
 
-        var propID = new PropertyID(id, vCard.ExecutingApp);
+        var propID = new PropertyID(id, vCard.Sync.AppID);
         PropertyIDs = propIDs.Concat(propID);
     }
 }

@@ -28,7 +28,6 @@ namespace FolkerKinzel.VCards;
 public sealed partial class VCard
 {
     private readonly Dictionary<Prop, object> _propDic = new();
-    private VCardClientProperty? _currentApp;
 
 
     [return: MaybeNull]
@@ -104,6 +103,8 @@ public sealed partial class VCard
 
         return (++i).ToString();
     }
+
+    public Sync Sync { get; }
 
     /// <summary> <c>VERSION</c>: Version of the vCard standard. <c>(2,3,4)</c></summary>
     public VCdVersion Version
@@ -182,27 +183,7 @@ public sealed partial class VCard
         set => Set(Prop.Categories, value);
     }
 
-    /// <summary>
-    /// Gets the identifier of the application that is registered as
-    /// executing app.
-    /// </summary>
-    public VCardClient? ExecutingApp
-    {
-        get
-        {
-            if (_currentApp != null)
-            {
-                if (VCardClients?.Contains(_currentApp) ?? false)
-                {
-                    return _currentApp.Value;
-                }
-
-                _currentApp = null;
-            }
-
-            return null;
-        }
-    }
+    
 
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if they
@@ -659,18 +640,12 @@ public sealed partial class VCard
         set => Set(Prop.URLs, value);
     }
 
-    /// <summary> <c>CLIENTPIDMAP</c>: Global identifiers of the vCard clients
+    /// <summary> <c>CLIENTPIDMAP</c>: Gets the identifiers of the vCard clients
     /// that edited the vCard. <c>(4)</c></summary>
-    /// <remarks>
-    /// <note type="caution">
-    /// Setting this property in own code endangers the referential integrity. Prefer 
-    /// using <see cref="VCard.RegisterApp(Uri)"/> instead.
-    /// </note>
-    /// </remarks>
-    public IEnumerable<VCardClientProperty?>? VCardClients
+    public IEnumerable<VCardClientProperty?>? VCardApps
     {
         get => Get<IEnumerable<VCardClientProperty?>?>(Prop.VCardClients);
-        set => Set(Prop.VCardClients, value);
+        internal set => Set(Prop.VCardClients, value);
     }
 
     

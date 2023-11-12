@@ -10,21 +10,21 @@ namespace FolkerKinzel.VCards.Syncs;
 /// <summary>Encapsulates information that is used to identify an instance
 /// of a <see cref="VCardProperty" />.</summary>
 /// <seealso cref="ParameterSection.PropertyIDs"/>
-/// <seealso cref="VCardClient"/>
+/// <seealso cref="Syncs.App"/>
 /// <seealso cref="VCardClientProperty"/>
-/// <seealso cref="VCard.VCardClients"/>
+/// <seealso cref="VCard.VCardApps"/>
 public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 {
     /// <summary>Initializes a new <see cref="PropertyID" /> object with the local ID
-    /// of the <see cref="VCardProperty"/> and - optionally - a <see cref="VCardClient" />
+    /// of the <see cref="VCardProperty"/> and - optionally - a <see cref="Syncs.App" />
     /// object that allows global identification of the vCard property.</summary>
     /// <param name="id">The local ID of the <see cref="VCardProperty"/>. The name 
     /// of the vCard property and this number uniquely identify a <see cref="VCardProperty"/> 
     /// in the <see cref="VCard"/> instance. 
     /// (A positive <see cref="int"/>, not zero.)</param>
-    /// <param name="client">A <see cref="VCardClient" /> object to enable global identification
+    /// <param name="client">A <see cref="Syncs.App" /> object to enable global identification
     /// of the vCard property, or <c>null</c> to have only local identification.
-    /// (The value normally is <see cref="VCard.ExecutingApp"/>.)
+    /// (The value normally is <see cref="VCard.AppID"/>.)
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> is less
     /// than 1.</exception>
@@ -35,21 +35,21 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// <see cref="ParameterSection.SetPropertyID(IEnumerable{VCardProperty?}, VCard)"/> instead.
     /// </note>
     /// </remarks>
-    public PropertyID(int id, VCardClient? client = null)
+    internal PropertyID(int id, App? client = null)
     {
         id.ValidateID(nameof(id));
         ID = id;
-        Client = client?.LocalID;
+        App = client?.LocalID;
     }
 
     /// <summary>Initializes a new <see cref="PropertyID" /> object with the local number of the 
-    /// <see cref="VCardProperty" /> and the <see cref="VCardClient.LocalID"/> of the 
-    /// <see cref="VCardClient"/>.</summary>
+    /// <see cref="VCardProperty" /> and the <see cref="App.LocalID"/> of the 
+    /// <see cref="Syncs.App"/>.</summary>
     /// <param name="id">The local ID of the vCard property. The name of the vCard 
     /// property and this number uniquely identify a property locally. (The value is a positive 
     /// <see cref="int"/>, not zero.)</param>
-    /// <param name="client"> <see cref="VCardClient.LocalID" /> of the 
-    /// <see cref="VCardClient"/>, or <c>null</c> to not specify any <see cref="VCardClient"/>. 
+    /// <param name="client"> <see cref="App.LocalID" /> of the 
+    /// <see cref="Syncs.App"/>, or <c>null</c> to not specify any <see cref="Syncs.App"/>. 
     /// (The value is a positive <see cref="int"/>, not zero.)</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> or <paramref name="client"/>
     /// is less than 1.</exception>
@@ -62,7 +62,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
         {
             int clientValue = client.Value;
             clientValue.ValidateID(nameof(client));
-            Client = clientValue;
+            App = clientValue;
         }
     }
 
@@ -74,15 +74,15 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     public int ID { get; }
 
     /// <summary>
-    /// Gets the <see cref="VCardClient.LocalID" /> of the <see cref="VCardClient"
+    /// Gets the <see cref="App.LocalID" /> of the <see cref="Syncs.App"
     /// /> object with which the <see cref="PropertyID" /> object is connected, or <c>null</c>
     /// if the <see cref="PropertyID" /> object is not connected with any <see
-    /// cref="VCardClient" />.
+    /// cref="Syncs.App" />.
     /// </summary>
-    /// <seealso cref="VCard.ExecutingApp"/>
-    /// <seealso cref="VCard.RegisterApp(Uri)"/>
-    /// <seealso cref="VCard.VCardClients"/>
-    public int? Client { get; }
+    /// <seealso cref="VCard.AppID"/>
+    /// <seealso cref="VCard.RegisterAppInInstance(Uri)"/>
+    /// <seealso cref="VCard.VCardApps"/>
+    public int? App { get; }
 
     /// <inheritdoc/>
     public override string ToString()
@@ -107,10 +107,10 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     public override bool Equals(object? obj) => obj is PropertyID other && Equals(other);
 
     /// <inheritdoc />
-    public bool Equals(PropertyID? other) => other is not null && ID == other.ID && Client == other.Client;
+    public bool Equals(PropertyID? other) => other is not null && ID == other.ID && App == other.App;
 
     /// <inheritdoc />
-    public override int GetHashCode() => HashCode.Combine(ID, Client);
+    public override int GetHashCode() => HashCode.Combine(ID, App);
 
     /// <summary>Compares two <see cref="PropertyID" /> objects. The result indicates
     /// whether the values of the two <see cref="PropertyID" /> objects are equal.</summary>
@@ -131,18 +131,20 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 
     #endregion
 
-    internal static void ParseInto(List<PropertyID> list, string pids)
+    internal static IEnumerable<PropertyID> Parse(string pids)
     {
         var span = pids.AsSpan();
 
         int sepIdx;
         PropertyID? propID;
 
+        var coll = Enumerable.Empty<PropertyID>();
+
         while ((sepIdx = span.IndexOf(',')) != -1)
         {
             if (TryParsePropertyID(span.Slice(0, sepIdx), out propID))
             {
-                list.Add(propID);
+                coll.Concat(propID);
             }
 
             span = span.Slice(sepIdx + 1);
@@ -150,8 +152,10 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 
         if (TryParsePropertyID(span, out propID))
         {
-            list.Add(propID);
+            coll.Concat(propID);
         }
+
+        return coll;
 
         static bool TryParsePropertyID(ReadOnlySpan<char> value, [NotNullWhen(true)] out PropertyID? propID)
         {
@@ -187,10 +191,10 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 
         _ = builder.Append(ID);
 
-        if (Client.HasValue)
+        if (App.HasValue)
         {
             _ = builder.Append('.');
-            _ = builder.Append(Client.Value);
+            _ = builder.Append(App.Value);
         }
     }
 }

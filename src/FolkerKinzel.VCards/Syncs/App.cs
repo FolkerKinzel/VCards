@@ -10,13 +10,13 @@ namespace FolkerKinzel.VCards.Syncs;
 /// Identifies a vCard client globally, and locally inside the <see cref="VCard"/>.
 /// </summary>
 /// <seealso cref="VCardClientProperty"/>
-/// <seealso cref="VCard.VCardClients"/>
-public sealed class VCardClient
+/// <seealso cref="VCard.VCardApps"/>
+public sealed class App
 {
-    /// <summary>Initializes a new <see cref="VCardClient" /> object.</summary>
-    /// <param name="localID">Local ID that identifies the <see cref="VCardClient"/>
+    /// <summary>Initializes a new <see cref="App" /> object.</summary>
+    /// <param name="localID">Local ID that identifies the <see cref="App"/>
     /// in the <see cref="ParameterSection.PropertyIDs"/>. (A positive <see cref="int"/>, not zero.)</param>
-    /// <param name="globalID">A URI that identifies the <see cref="VCardClient"/> globally.</param>
+    /// <param name="globalID">A URI that identifies the <see cref="App"/> globally.</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="localID" /> is less
     /// than 1.</exception>
     /// <exception cref="ArgumentNullException"><paramref name="globalID" /> is 
@@ -26,10 +26,10 @@ public sealed class VCardClient
     /// <remarks>
     /// <note type="caution">
     /// Using this constructor in own code endangers the referential integrity. Prefer using
-    /// <see cref="VCard.RegisterApp(Uri)"/> instead.
+    /// <see cref="VCard.RegisterAppInInstance(Uri)"/> instead.
     /// </note>
     /// </remarks>
-    public VCardClient(int localID, string globalID)
+    internal App(int localID, string globalID)
     {
         localID.ValidateID(nameof(localID));
         LocalID = localID;
@@ -62,10 +62,10 @@ public sealed class VCardClient
 
     /// <summary>Parses a <see cref="string" /> that represents a vCard&#160;4.0 Property-ID Mapping. </summary>
     /// <param name="s">The <see cref="string"/> to parse.</param>
-    /// <param name="client">The parsed <see cref="VCardClient"/> if the method returns <c>true</c>,
+    /// <param name="client">The parsed <see cref="App"/> if the method returns <c>true</c>,
     /// otherwise <c>null</c>.</param>
     /// <returns><c>true</c> if <see cref="s"/> could be parsed, otherwise <c>false</c>.</returns>
-    internal static bool TryParse(string s, [NotNullWhen(true)] out VCardClient? client)
+    internal static bool TryParse(string s, [NotNullWhen(true)] out App? client)
     {
         Debug.Assert(s != null);
         client = null;
@@ -85,7 +85,7 @@ public sealed class VCardClient
 
         try
         {
-            client = new VCardClient(mappingNumber, span.Slice(separatorIdx + 1).Trim().ToString());
+            client = new App(mappingNumber, span.Slice(separatorIdx + 1).Trim().ToString());
             return true;
         }
         catch

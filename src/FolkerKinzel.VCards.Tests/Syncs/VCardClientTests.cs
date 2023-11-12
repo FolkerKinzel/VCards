@@ -10,7 +10,7 @@ public class VCardClientTests
     [TestMethod]
     public void PropertyIDMappingTest1()
     {
-        var pidMap = new VCardClient(5, "http://folkerkinzel.de/");
+        var pidMap = new App(5, "http://folkerkinzel.de/");
         Assert.AreEqual(5, pidMap.LocalID);
     }
 
@@ -18,15 +18,15 @@ public class VCardClientTests
     [DataRow(-1)]
     [DataRow(0)]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
-    public void PropertyIDMappingTest2(int mappingNumber) => _ = new VCardClient(mappingNumber, "http://folker.de/");
+    public void PropertyIDMappingTest2(int mappingNumber) => _ = new App(mappingNumber, "http://folker.de/");
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
-    public void PropertyIDMappingTest3() => _ = new VCardClient(0, "http://folkerkinzel.de/");
+    public void PropertyIDMappingTest3() => _ = new App(0, "http://folkerkinzel.de/");
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException), AllowDerivedTypes = false)]
-    public void PropertyIDMappingTest4() => _ = new VCardClient(3, null!);
+    public void PropertyIDMappingTest4() => _ = new App(3, null!);
 
 
     [TestMethod]
@@ -34,7 +34,7 @@ public class VCardClientTests
     {
         string pidMap = "2;urn:uuid:d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        Assert.IsTrue(VCardClient.TryParse(pidMap, out VCardClient? client));
+        Assert.IsTrue(App.TryParse(pidMap, out App? client));
 
         Assert.AreEqual(2, client.LocalID);
         Assert.AreEqual(new Uri(pidMap.Substring(2)), client.GlobalID);
@@ -45,7 +45,7 @@ public class VCardClientTests
     {
         string pidMap = "  2 ; urn:uuid:d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        Assert.IsTrue(VCardClient.TryParse(pidMap, out VCardClient? client));
+        Assert.IsTrue(App.TryParse(pidMap, out App? client));
 
         Assert.AreEqual(2, client.LocalID);
         Assert.AreEqual(new Uri(pidMap.Substring(6)), client.GlobalID);
@@ -56,7 +56,7 @@ public class VCardClientTests
     {
         string pidMap = "22;urn:uuid:d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        Assert.IsTrue(VCardClient.TryParse(pidMap, out _));
+        Assert.IsTrue(App.TryParse(pidMap, out _));
     }
 
     [TestMethod]
@@ -64,7 +64,7 @@ public class VCardClientTests
     {
         string pidMap = "2;http://d89c9c7a-2e1b-4832-82de-7e992d95faa5";
 
-        Assert.IsTrue(VCardClient.TryParse(pidMap, out _));
+        Assert.IsTrue(App.TryParse(pidMap, out _));
     }
 
     [TestMethod]
@@ -72,7 +72,7 @@ public class VCardClientTests
     {
         string pidMap = "2";
 
-        Assert.IsFalse(VCardClient.TryParse(pidMap, out _));
+        Assert.IsFalse(App.TryParse(pidMap, out _));
     }
 
     [TestMethod]
@@ -80,7 +80,7 @@ public class VCardClientTests
     {
         string pidMap = "";
 
-        Assert.IsFalse(VCardClient.TryParse(pidMap, out _));
+        Assert.IsFalse(App.TryParse(pidMap, out _));
     }
 
     [TestMethod]
@@ -88,7 +88,7 @@ public class VCardClientTests
     {
         string pidMap = "a";
 
-        Assert.IsFalse(VCardClient.TryParse(pidMap, out _));
+        Assert.IsFalse(App.TryParse(pidMap, out _));
     }
 
     //[TestMethod]
@@ -104,7 +104,7 @@ public class VCardClientTests
     {
         int i = 4;
 
-        var pidmap = new VCardClient(i, "http://folkerkinzel.de/");
+        var pidmap = new App(i, "http://folkerkinzel.de/");
 
         string s = pidmap.ToString();
 

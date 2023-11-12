@@ -23,6 +23,13 @@ public static class VCardExample
         string v3FilePath = Path.Combine(directoryPath, v3FileName);
         string v4FilePath = Path.Combine(directoryPath, v4FileName);
 
+        // To enable the mechanism of global data synchronization, which allows to
+        // identify identical vCard-Properties even if they are located in VCF files that
+        // come from different sources (vCard 4.0 only), the executing application has to
+        // be registered with a URI. This has to be done only once at the startup of the 
+        // application.
+        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+
         VCard vcard = InitializeTheVCardAndFillItWithData(directoryPath, photoFileName);
 
         // Implements ITimeZoneIDConverter to convert IANA time zone names to UTC-Offsets.
@@ -96,7 +103,7 @@ public static class VCardExample
             vCard.Phones = vCard.Phones.ConcatWith(phoneWork);
 
             // Unless specified, an address label is automatically applied to the AddressProperty object.
-            // Specifying the country helps to correctly format this label.
+            // Specifying the country helps to format this label correctly.
             // Applying a group name to the AddressProperty helps to automatically preserve its Label,
             // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
             var adrWorkProp = new VC::AddressProperty
@@ -128,13 +135,8 @@ public static class VCardExample
 
             vCard.AnniversaryViews = VC::DateAndOrTimeProperty.FromDate(2006, 7, 14);
 
-            // This shows how to enable the mechanism of data synchronization that allows to
-            // identify identical vCard-Properties even if they are located in VCF files that
-            // come from different sources (vCard 4.0 only).
-            // As the first step the current application has to be registered in order to enable
-            // global property-identification.
-            vCard.RegisterApp(new Uri("http://folker.de/myid.xml"));
-            vCard.SetPropertyIDs();
+            // Sets the PropertyIDs to allow data synchronization in vCard 4.0
+            vCard.Sync.SetPropertyIDs();
 
             return vCard;
         }

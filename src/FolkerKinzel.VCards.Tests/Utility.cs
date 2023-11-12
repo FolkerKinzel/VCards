@@ -39,7 +39,7 @@ internal static class Utility
         adr1.Parameters.Index = 0;
         adr1.Parameters.Language = "de";
         adr1.Parameters.SortAs = sortAs;
-        var pidMap = new VCardClient(7, "http://www.contoso.com/");
+        var pidMap = new App(7, "http://www.contoso.com/");
         adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, pidMap), new PropertyID(2) };
         adr1.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Parcel | Adr.Postal;
 
@@ -171,7 +171,7 @@ internal static class Utility
             XmlProperties = xml1,
         };
 
-        vc.RegisterApp(new Uri("http://folkerkinzel.de"));
+        vc.RegisterAppInInstance(new Uri("http://folkerkinzel.de"));
 
 
         return vc;
