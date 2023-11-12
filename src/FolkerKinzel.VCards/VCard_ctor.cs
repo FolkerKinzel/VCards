@@ -7,6 +7,7 @@ using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Globalization;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards;
 
@@ -15,7 +16,7 @@ public sealed partial class VCard
     /// <summary>Initializes a new <see cref="VCard" /> object.</summary>
     public VCard()
     { 
-        Sync = new Sync(this); 
+        Sync = new SyncOperation(this); 
     }
 
     /// <summary>Copy ctor.</summary>
@@ -66,7 +67,7 @@ public sealed partial class VCard
         }//foreach
 
         // Must be the last in ctor
-        Sync = new Sync(this);
+        Sync = new SyncOperation(this);
 
         /////////////////////////////////////////////////
         static object? Cloned(ICloneable? x) => x?.Clone();
@@ -444,7 +445,7 @@ public sealed partial class VCard
         }
 
         // Must be the last in ctor:
-        Sync = new Sync(this);
+        Sync = new SyncOperation(this);
     }//ctor
 
 
