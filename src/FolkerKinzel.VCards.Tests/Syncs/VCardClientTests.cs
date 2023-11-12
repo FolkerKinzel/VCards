@@ -1,14 +1,11 @@
 ﻿#if !NETCOREAPP3_1
 using FolkerKinzel.Strings.Polyfills;
-using FolkerKinzel.VCards.Syncs;
 #endif
 
-using FolkerKinzel.VCards.Syncs;
-
-namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+namespace FolkerKinzel.VCards.Syncs.Tests;
 
 [TestClass]
-public class PropertyIDMappingTests
+public class VCardClientTests
 {
     [TestMethod]
     public void PropertyIDMappingTest1()

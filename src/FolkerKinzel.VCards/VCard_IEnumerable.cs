@@ -1,5 +1,6 @@
 using System.Collections;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards;
 
@@ -22,6 +23,20 @@ public sealed partial class VCard : IEnumerable<KeyValuePair<Prop, object>>, IEn
         yield return this;
     }
 
-    public IEnumerable<KeyValuePair<Prop, object>> AsProperties() => this as IEnumerable<KeyValuePair<Prop, object>>;
+    /// <summary>
+    /// Gets this instance as <see cref="IEnumerable{T}"/> that allows to iterate over the stored
+    /// properties.
+    /// </summary>
+    /// <returns>An <see cref="IEnumerable{T}"/> that allows to iterate over the stored
+    /// properties.</returns>
+    /// <remarks>
+    /// <note type="tip">
+    /// Each <see cref="KeyValuePair{TKey, TValue}.Value"/> is either a <see cref="VCardProperty"/>
+    /// or an <see cref="IEnumerable{T}">IEnumerable&lt;VCardProperty?&gt;</see>.
+    /// </note>
+    /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public IEnumerable<KeyValuePair<Prop, object>> AsProperties() 
+        => this as IEnumerable<KeyValuePair<Prop, object>>;
 
 }

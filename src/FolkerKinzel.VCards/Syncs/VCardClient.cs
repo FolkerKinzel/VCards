@@ -46,7 +46,7 @@ public sealed class VCardClient
         get;
     }
 
-    /// <summary>Gets the URI that serves as a global identifier.</summary>
+    /// <summary>Gets the URI that serves as global identifier.</summary>
     public string GlobalID
     {
         get;

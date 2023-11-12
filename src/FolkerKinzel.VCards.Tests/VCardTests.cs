@@ -1,9 +1,8 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -376,16 +375,91 @@ public class VCardTests
         vc.TimeStamp = new TimeStampProperty();
         vc.Addresses = new AddressProperty?[] {
                                               null,
-                                              new AddressProperty("1", null, null, null, group: " g r 1 "), 
-                                              new AddressProperty("2", null, null, null, group: "41") 
+                                              new AddressProperty("1", null, null, null, group: " g r 1 "),
+                                              new AddressProperty("2", null, null, null, group: "41")
                                               };
-        vc.GeoCoordinates = new GeoProperty?[]{ 
+        vc.GeoCoordinates = new GeoProperty?[]{
                                                new GeoProperty(new GeoCoordinate(1, 1), group: "GR1"),
                                                null,
                                                new GeoProperty(new GeoCoordinate(2, 2))
                                              };
         Assert.AreEqual(2, vc.GroupIDs.Count());
         Assert.AreEqual("42", vc.NewGroup());
+    }
+
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void RegisterAppTest1() => new VCard().RegisterApp(null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void RegisterAppTest2() => new VCard().RegisterApp(new Uri("../IamRelative", UriKind.Relative));
+
+
+    [TestMethod]
+    public void RegisterAppTest3()
+    {
+        var vc = new VCard();
+        const string folker = "http://folker.de/id";
+        const string contoso = "urn:uuid:42bcd5a7-1699-4514-87b4-056edf68e9cc";
+
+        var uri1 = new Uri(folker, UriKind.Absolute);
+        var uri2 = new Uri(contoso, UriKind.Absolute);
+
+        Assert.IsNull(vc.VCardClients);
+
+        vc.RegisterApp(uri1);
+        Assert.IsNotNull(vc.VCardClients);
+        Assert.AreEqual(folker, vc.VCardClients.First()!.Value.GlobalID);
+        Assert.AreEqual(folker, vc.ExecutingApp?.GlobalID);
+
+        vc.VCardClients = vc.VCardClients.ConcatWith(null);
+
+        vc.RegisterApp(uri2);
+        Assert.AreEqual(contoso, vc.ExecutingApp?.GlobalID);
+        Assert.AreEqual(3, vc.VCardClients.Count());
+
+
+        vc.RegisterApp(uri1);
+        Assert.AreEqual(folker, vc.VCardClients.First()!.Value.GlobalID);
+        Assert.AreEqual(folker, vc.ExecutingApp?.GlobalID);
+        Assert.AreEqual(3, vc.VCardClients.Count());
+    }
+
+    [TestMethod]
+    public void SetPropertyIDsTest1()
+    {
+        var vc = new VCard();
+        var tProp = new TextProperty("Donald");
+        vc.DisplayNames = tProp.ConcatWith(null);
+
+        Assert.IsNull(tProp.Parameters.PropertyIDs);
+        Assert.IsNull(vc.VCardClients);
+
+        vc.SetPropertyIDs();
+        Assert.IsNotNull(tProp.Parameters.PropertyIDs);
+        Assert.AreEqual(1, tProp.Parameters.PropertyIDs.Count());
+        Assert.IsNull(vc.VCardClients);
+
+        const string folker = "http://folker.de/id";
+        //const string contoso = "http://contoso.com/id";
+
+        var uri1 = new Uri(folker, UriKind.Absolute);
+        //var uri2 = new Uri(contoso, UriKind.Absolute);
+
+        vc.RegisterApp(uri1);
+        Assert.IsNotNull(vc.VCardClients);
+
+        vc.SetPropertyIDs();
+        Assert.AreEqual(2, tProp.Parameters.PropertyIDs.Count());
+        Assert.IsTrue(vc.VCardClients.All(x => x?.Parameters.PropertyIDs == null));
+
+        vc.SetPropertyIDs();
+        Assert.AreEqual(2, tProp.Parameters.PropertyIDs.Count());
+
+        vc.VCardClients = null;
+        Assert.IsNull(vc.ExecutingApp);
     }
 
 

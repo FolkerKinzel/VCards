@@ -28,6 +28,8 @@ namespace FolkerKinzel.VCards;
 public sealed partial class VCard
 {
     private readonly Dictionary<Prop, object> _propDic = new();
+    private VCardClientProperty? _currentApp;
+
 
     [return: MaybeNull]
     private T Get<T>(Prop prop) where T : class?
@@ -178,6 +180,28 @@ public sealed partial class VCard
     {
         get => Get<IEnumerable<StringCollectionProperty?>?>(Prop.Categories);
         set => Set(Prop.Categories, value);
+    }
+
+    /// <summary>
+    /// Gets the identifier of the application that is registered as
+    /// executing app.
+    /// </summary>
+    public VCardClient? ExecutingApp
+    {
+        get
+        {
+            if (_currentApp != null)
+            {
+                if (VCardClients?.Contains(_currentApp) ?? false)
+                {
+                    return _currentApp.Value;
+                }
+
+                _currentApp = null;
+            }
+
+            return null;
+        }
     }
 
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
@@ -649,51 +673,7 @@ public sealed partial class VCard
         set => Set(Prop.VCardClients, value);
     }
 
-    private VCardClientProperty? _currentApp;
-    public VCardClient? CurrentApplication
-    {
-        get
-        {
-            if(_currentApp != null)
-            {
-                if(VCardClients?.Contains(_currentApp) ?? false) 
-                {
-                    return _currentApp.Value;
-                }
-
-                _currentApp = null;
-            }
-
-            return null;
-        }
-    }
-
-    public void RegisterApp(Uri globalID)
-    {
-        if(!(globalID?.IsAbsoluteUri ?? throw new ArgumentNullException(nameof(globalID))))
-        {
-            throw new ArgumentException(string.Format(Res.RelativeUri, nameof(globalID)),  nameof(globalID));
-        }
-
-        string globalIDString = globalID.AbsoluteUri;
-
-        if(VCardClients is null)
-        {
-            _currentApp = new VCardClientProperty(1, globalIDString);
-            VCardClients = _currentApp;
-        }
-
-        if(!VCardClients.Any(x => StringComparer.Ordinal.Equals(globalIDString, x?.Value?.GlobalID)))
-        {
-            _currentApp = new VCardClientProperty
-                (
-                VCardClients.WhereNotNull().Select(static x => x.Value.LocalID).Append(0).Max() + 1,
-                globalIDString
-                );
-
-            VCardClients = VCardClients.ConcatWith(_currentApp);
-        }
-    }
+    
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
     public IEnumerable<XmlProperty?>? XmlProperties

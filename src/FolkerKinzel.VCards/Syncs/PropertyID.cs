@@ -8,7 +8,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 namespace FolkerKinzel.VCards.Syncs;
 
 /// <summary>Encapsulates information that is used to identify an instance
-/// of a <see cref="VCardProperty" /> globally.</summary>
+/// of a <see cref="VCardProperty" />.</summary>
 /// <seealso cref="ParameterSection.PropertyIDs"/>
 /// <seealso cref="VCardClient"/>
 /// <seealso cref="VCardClientProperty"/>
@@ -16,21 +16,22 @@ namespace FolkerKinzel.VCards.Syncs;
 public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 {
     /// <summary>Initializes a new <see cref="PropertyID" /> object with the local ID
-    /// of the <see cref="VCardProperty"/> and - optionally - a <see cref="VCardClientProperty" />
-    /// object that allows global identifying of the vCard property.</summary>
+    /// of the <see cref="VCardProperty"/> and - optionally - a <see cref="VCardClient" />
+    /// object that allows global identification of the vCard property.</summary>
     /// <param name="id">The local ID of the <see cref="VCardProperty"/>. The name 
     /// of the vCard property and this number uniquely identify a <see cref="VCardProperty"/> 
     /// in the <see cref="VCard"/> instance. 
     /// (A positive <see cref="int"/>, not zero.)</param>
-    /// <param name="client">A <see cref="VCardClient" /> to enable global identification
+    /// <param name="client">A <see cref="VCardClient" /> object to enable global identification
     /// of the vCard property, or <c>null</c> to have only local identification.
-    /// (Normally this is <see cref="VCard.CurrentApplication"/>.)
+    /// (The value normally is <see cref="VCard.ExecutingApp"/>.)
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> is less
     /// than 1.</exception>
     /// <remarks>
     /// <note type="caution">
     /// Using this constructor in own code endangers the referential integrity. Prefer using
+    /// <see cref="VCard.SetPropertyIDs"/> or
     /// <see cref="ParameterSection.SetPropertyID(IEnumerable{VCardProperty?}, VCard)"/> instead.
     /// </note>
     /// </remarks>
@@ -65,13 +66,11 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
         }
     }
 
-    /// <summary>Gets the local ID of the <see cref="VCardProperty" /> to which the
-    /// <see cref="PropertyID" /> object is assigned.</summary>
+    /// <summary>Gets the local ID of the <see cref="VCardProperty" />.</summary>
     /// <remarks>
     /// The local key for identifying a <see cref="VCardProperty" /> consists of the name 
-    /// of the vCard property to which this object is assigned and the value of the 
-    /// <see cref="ID" /> of the <see cref="PropertyID" /> object, which is 
-    /// assigned to this <see cref="VCardProperty" />.</remarks>
+    /// of the vCard property to which this instance is assigned and the value of this
+    /// property.</remarks>
     public int ID { get; }
 
     /// <summary>
@@ -80,6 +79,9 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// if the <see cref="PropertyID" /> object is not connected with any <see
     /// cref="VCardClient" />.
     /// </summary>
+    /// <seealso cref="VCard.ExecutingApp"/>
+    /// <seealso cref="VCard.RegisterApp(Uri)"/>
+    /// <seealso cref="VCard.VCardClients"/>
     public int? Client { get; }
 
     /// <inheritdoc/>
@@ -150,7 +152,6 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
         {
             list.Add(propID);
         }
-
 
         static bool TryParsePropertyID(ReadOnlySpan<char> value, [NotNullWhen(true)] out PropertyID? propID)
         {

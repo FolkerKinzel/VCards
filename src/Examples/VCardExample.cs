@@ -78,12 +78,6 @@ public static class VCardExample
 
             vCard.Photos = VC::DataProperty.FromFile(photoFilePath);
 
-            // This shows how to create a PropertyIDMapping, which helps to identify vCard-Properties
-            // even if they are located in vCards that come from different sources (vCard 4.0 only).
-            // As the first step the current application has to be registered in order to enable
-            // global property-identification.
-            vCard.RegisterApp(new Uri("http://folker.de/myid.xml"));
-
             var phoneHome = new VC::TextProperty("tel:+49-123-9876543");
             phoneHome.Parameters.DataType = Data.Uri;
             phoneHome.Parameters.PropertyClass = PCl.Home;
@@ -95,19 +89,11 @@ public static class VCardExample
             // (Don't forget to assign the result!)
             vCard.Phones = vCard.Phones.ConcatWith(phoneHome);
 
-            // SetPropertyID gives the VCardProperty a PropertyID if it doesn't yet have had any
-            // and preserves the referential integrity.
-            // Pay attention to call this method only AFTER the VCardProperty has been Assigned
-            // to the VCard:
-            phoneHome.Parameters.SetPropertyID(vCard.Phones, vCard);
-
             var phoneWork = new VC::TextProperty("tel:+49-321-1234567");
             phoneWork.Parameters.DataType = Data.Uri;
             phoneWork.Parameters.PropertyClass = PCl.Work;
             phoneWork.Parameters.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
-
             vCard.Phones = vCard.Phones.ConcatWith(phoneWork);
-            phoneWork.Parameters.SetPropertyID(vCard.Phones, vCard);
 
             // Unless specified, an address label is automatically applied to the AddressProperty object.
             // Specifying the country helps to correctly format this label.
@@ -141,6 +127,15 @@ public static class VCardExample
                 );
 
             vCard.AnniversaryViews = VC::DateAndOrTimeProperty.FromDate(2006, 7, 14);
+
+            // This shows how to enable the mechanism of data synchronization that allows to
+            // identify identical vCard-Properties even if they are located in VCF files that
+            // come from different sources (vCard 4.0 only).
+            // As the first step the current application has to be registered in order to enable
+            // global property-identification.
+            vCard.RegisterApp(new Uri("http://folker.de/myid.xml"));
+            vCard.SetPropertyIDs();
+
             return vCard;
         }
 
@@ -184,7 +179,7 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2023-11-08T22:49:39Z
+REV:2023-11-11T22:17:05Z
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
  Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
@@ -206,8 +201,8 @@ EMAIL;INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- Us1CkvGtP+w7pd9V099fa2IlkpiMahWPYOoeaC/mJHwdfPkkHmlASKFjvXx16+u
- zuBpaOI76p4YpkaxR
+ X1MKzsSClKUY5cxwGqVwkqK4Jy0L5Hn0Igp2prOLWWrHfCS8xVCsohXN3l/7EvY
+ FbsgkhRYAIetO2Lo8
 
 END:VCARD
 
@@ -216,7 +211,7 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2023-11-08T22:49:39Z
+REV:2023-11-11T22:17:05Z
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
@@ -234,8 +229,8 @@ TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 EMAIL;TYPE=INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:Us1CkvGtP+w7pd9V099fa2IlkpiMahWPYOoeaC/mJHwdfPkk
- HmlASKFjvXx16+uzuBpaOI76p4YpkaxR
+PHOTO;ENCODING=b;TYPE=JPEG:X1MKzsSClKUY5cxwGqVwkqK4Jy0L5Hn0Igp2prOLWWrHfCS8
+ xVCsohXN3l/7EvYFbsgkhRYAIetO2Lo8
 END:VCARD
 
 
@@ -243,25 +238,25 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20231108T224939Z
-FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
+REV:20231111T221705Z
+FN;PID=1.1:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
-TITLE:CEO
-ORG:Millers Company;C#;Webdesign
+TITLE;PID=1.1:CEO
+ORG;PID=1.1:Millers Company;C#;Webdesign
 BDAY;VALUE=DATE:19840328
 ANNIVERSARY;VALUE=DATE:20060714
 0.ADR;TYPE=WORK;LABEL=Friedrichstraße 22\n10117 Berlin\nGERMANY;GEO="geo:5
- 2.511821,13.389581";TZ=Europe/Berlin:;;Friedrichstraße 22;Berlin;;10117;G
- ermany
+ 2.511821,13.389581";TZ=Europe/Berlin;PID=1.1:;;Friedrichstraße 22;Berlin;
+ ;10117;Germany
 TEL;TYPE=HOME,VOICE;VALUE=URI;PID=1.1:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=2.1:tel:+49-321-1234567
-EMAIL;TYPE=WORK;PREF=1:kaethe_mueller@internet.com
-EMAIL;TYPE=HOME;PREF=2;VALUE=URI:mailto:kaethe_at_home@internet.com
-RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT:Paul Müller-Risinowsk
- y
-PHOTO:data:image/jpeg;base64,Us1CkvGtP+w7pd9V099fa2IlkpiMahWPYOoeaC/mJHwdfP
- kkHmlASKFjvXx16+uzuBpaOI76p4YpkaxR
-CLIENTPIDMAP:1;http://folkerkinzel.de/file1.htm
+EMAIL;TYPE=WORK;PREF=1;PID=1.1:kaethe_mueller@internet.com
+EMAIL;TYPE=HOME;PREF=2;VALUE=URI;PID=2.1:mailto:kaethe_at_home@internet.com
+RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT;PID=1.1:Paul Müller-R
+ isinowsky
+PHOTO;PID=1.1:data:image/jpeg;base64,X1MKzsSClKUY5cxwGqVwkqK4Jy0L5Hn0Igp2pr
+ OLWWrHfCS8xVCsohXN3l/7EvYFbsgkhRYAIetO2Lo8
+CLIENTPIDMAP:1;http://folker.de/myid.xml
 END:VCARD
 
 
@@ -270,7 +265,7 @@ Read VCard:
 Version: 3.0
 
 [DataType: TimeStamp]
-TimeStamp: 11/08/2023 22:49:39 +00:00
+TimeStamp: 11/11/2023 22:17:05 +00:00
 
 DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 
@@ -306,7 +301,7 @@ EMails: kaethe_mueller@internet.com
 [EMailType: EMAIL]
 EMails: mailto:kaethe_at_home@internet.com
 
-[Relation: Spouse]
+[RelationType: Spouse]
 [DataType: Text]
 Relations: System.String: Paul Müller-Risinowsky
 

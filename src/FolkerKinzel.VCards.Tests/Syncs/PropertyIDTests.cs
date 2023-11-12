@@ -2,11 +2,7 @@
 using FolkerKinzel.Strings.Polyfills;
 #endif
 
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Syncs;
-
-namespace FolkerKinzel.VCards.Tests;
+namespace FolkerKinzel.VCards.Syncs.Tests;
 
 [TestClass]
 public class PropertyIDTests
@@ -229,8 +225,8 @@ public class PropertyIDTests
 
         foreach (object? item in numerable)
         {
-            Assert.IsTrue((item as PropertyID) == id1);
-            Assert.IsFalse((item as PropertyID) != id1);
+            Assert.IsTrue(item as PropertyID == id1);
+            Assert.IsFalse(item as PropertyID != id1);
         }
     }
 
