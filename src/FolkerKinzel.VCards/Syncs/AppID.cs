@@ -17,27 +17,13 @@ public sealed class AppID
     /// <param name="localID">Local ID that identifies the <see cref="AppID"/>
     /// in the <see cref="ParameterSection.PropertyIDs"/>. (A positive <see cref="int"/>, not zero.)</param>
     /// <param name="globalID">A URI that identifies the <see cref="AppID"/> globally.</param>
-    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="localID" /> is less
-    /// than 1.</exception>
-    /// <exception cref="ArgumentNullException"><paramref name="globalID" /> is 
-    /// <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="globalID" /> is 
-    /// not a valid URI.</exception>
-    /// <remarks>
-    /// <note type="caution">
-    /// Using this constructor in own code endangers the referential integrity. Prefer using
-    /// <see cref="VCard.RegisterAppInInstance(Uri)"/> instead.
-    /// </note>
-    /// </remarks>
     internal AppID(int localID, string globalID)
     {
-        localID.ValidateID(nameof(localID));
-        LocalID = localID;
+        Debug.Assert(localID.ValidateID());
+        Debug.Assert(!string.IsNullOrWhiteSpace(globalID));
 
-        GlobalID = string.IsNullOrWhiteSpace(globalID)
-                            ? globalID is null ? throw new ArgumentNullException(nameof(globalID))
-                                               : throw new ArgumentException(Res.NotAUri, nameof(globalID))
-                            : globalID;
+        LocalID = localID;
+        GlobalID = globalID; 
     }
 
     /// <summary>Gets the Local ID.</summary>
@@ -78,20 +64,23 @@ public sealed class AppID
             return false;
         }
 
-        if (!_Int.TryParse(span.Slice(0, separatorIdx), out int mappingNumber))
+        if (!_Int.TryParse(span.Slice(0, separatorIdx), out int localID))
         {
             return false;
         }
 
-        try
+        string globalID = span.Slice(separatorIdx + 1).Trim().ToString();
+
+        if(Validate(localID, globalID))
         {
-            client = new AppID(mappingNumber, span.Slice(separatorIdx + 1).Trim().ToString());
+            client = new AppID(localID, globalID);
             return true;
         }
-        catch
-        {
-            return false;
-        }
+        
+        return false;
+
+        static bool Validate(int localID, string globalID) => 
+            localID.ValidateID() && !string.IsNullOrWhiteSpace(globalID);
     }
 
 

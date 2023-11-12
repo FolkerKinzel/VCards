@@ -35,9 +35,9 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// <see cref="ParameterSection.SetPropertyID(IEnumerable{VCardProperty?}, VCard)"/> instead.
     /// </note>
     /// </remarks>
-    internal PropertyID(int id, AppID? client = null)
+    internal PropertyID(int id, AppID? client)
     {
-        id.ValidateID(nameof(id));
+        Debug.Assert(id.ValidateID());
         ID = id;
         App = client?.LocalID;
     }
@@ -51,19 +51,13 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// <param name="client"> <see cref="AppID.LocalID" /> of the 
     /// <see cref="Syncs.AppID"/>, or <c>null</c> to not specify any <see cref="Syncs.AppID"/>. 
     /// (The value is a positive <see cref="int"/>, not zero.)</param>
-    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> or <paramref name="client"/>
-    /// is less than 1.</exception>
     private PropertyID(int id, int? client)
     {
-        id.ValidateID(nameof(id));
-        ID = id;
+        Debug.Assert(id.ValidateID());
+        Debug.Assert(client.ValidateID());
 
-        if (client.HasValue)
-        {
-            int clientValue = client.Value;
-            clientValue.ValidateID(nameof(client));
-            App = clientValue;
-        }
+        ID = id;
+        App = client;
     }
 
     /// <summary>Gets the local ID of the <see cref="VCardProperty" />.</summary>
@@ -171,16 +165,14 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 
             static bool TryCreatePropertyID(int id, int? client, [NotNullWhen(true)] out PropertyID? propID)
             {
-                try
+                if (id.ValidateID() && client.ValidateID())
                 {
                     propID = new PropertyID(id, client);
                     return true;
                 }
-                catch
-                {
-                    propID = null;
-                    return false;
-                }
+
+                propID = null;
+                return false;
             }
         }
     }
