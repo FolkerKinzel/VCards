@@ -13,11 +13,11 @@ public class VCardClientPropertyTests
     [TestMethod]
     public void VCardClientTest1()
     {
-        var prop = new VCardClientProperty(7, "http://folkerkinzel.de/");
+        var prop = new AppIDProperty(7, "http://folkerkinzel.de/");
 
         var vcard = new VCard
         {
-            VCardApps = new VCardClientProperty?[] { prop, null }
+            AppIDs = new AppIDProperty?[] { prop, null }
         };
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
@@ -29,9 +29,9 @@ public class VCardClientPropertyTests
 
         vcard = list[0];
 
-        Assert.IsNotNull(vcard.VCardApps);
+        Assert.IsNotNull(vcard.AppIDs);
 
-        VCardClientProperty? prop2 = vcard.VCardApps!.First();
+        AppIDProperty? prop2 = vcard.AppIDs!.First();
 
         Assert.IsNotNull(prop);
         Assert.AreEqual(prop2!.Value!.LocalID, prop!.Value?.LocalID);
@@ -42,14 +42,14 @@ public class VCardClientPropertyTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void VCardClientPropertyTest2() => _ = new VCardClientProperty(null!);
+    public void VCardClientPropertyTest2() => _ = new AppIDProperty(null!);
 
 
     [TestMethod]
     public void TryParseTest1()
     {
         VcfRow row = VcfRow.Parse("PidMap:", new VcfDeserializationInfo())!;
-        Assert.IsFalse(VCardClientProperty.TryParse(row, out _));
+        Assert.IsFalse(AppIDProperty.TryParse(row, out _));
     }
 
 
@@ -57,14 +57,14 @@ public class VCardClientPropertyTests
     public void TryParseTest2()
     {
         var row = VcfRow.Parse("CLIENTPIDMAP:", new VcfDeserializationInfo());
-        Assert.IsFalse(VCardClientProperty.TryParse(row!, out _));
+        Assert.IsFalse(AppIDProperty.TryParse(row!, out _));
         
     }
 
     [TestMethod]
     public void IEnumerableTest1()
     {
-        var prop = new VCardClientProperty(4, "https://contoso.com");
+        var prop = new AppIDProperty(4, "https://contoso.com");
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 }

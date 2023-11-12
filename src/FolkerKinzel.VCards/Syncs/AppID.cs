@@ -9,14 +9,14 @@ namespace FolkerKinzel.VCards.Syncs;
 /// <summary> 
 /// Identifies a vCard client globally, and locally inside the <see cref="VCard"/>.
 /// </summary>
-/// <seealso cref="VCardClientProperty"/>
-/// <seealso cref="VCard.VCardApps"/>
-public sealed class App
+/// <seealso cref="AppIDProperty"/>
+/// <seealso cref="VCard.AppIDs"/>
+public sealed class AppID
 {
-    /// <summary>Initializes a new <see cref="App" /> object.</summary>
-    /// <param name="localID">Local ID that identifies the <see cref="App"/>
+    /// <summary>Initializes a new <see cref="AppID" /> object.</summary>
+    /// <param name="localID">Local ID that identifies the <see cref="AppID"/>
     /// in the <see cref="ParameterSection.PropertyIDs"/>. (A positive <see cref="int"/>, not zero.)</param>
-    /// <param name="globalID">A URI that identifies the <see cref="App"/> globally.</param>
+    /// <param name="globalID">A URI that identifies the <see cref="AppID"/> globally.</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="localID" /> is less
     /// than 1.</exception>
     /// <exception cref="ArgumentNullException"><paramref name="globalID" /> is 
@@ -29,7 +29,7 @@ public sealed class App
     /// <see cref="VCard.RegisterAppInInstance(Uri)"/> instead.
     /// </note>
     /// </remarks>
-    internal App(int localID, string globalID)
+    internal AppID(int localID, string globalID)
     {
         localID.ValidateID(nameof(localID));
         LocalID = localID;
@@ -62,10 +62,10 @@ public sealed class App
 
     /// <summary>Parses a <see cref="string" /> that represents a vCard&#160;4.0 Property-ID Mapping. </summary>
     /// <param name="s">The <see cref="string"/> to parse.</param>
-    /// <param name="client">The parsed <see cref="App"/> if the method returns <c>true</c>,
+    /// <param name="client">The parsed <see cref="AppID"/> if the method returns <c>true</c>,
     /// otherwise <c>null</c>.</param>
     /// <returns><c>true</c> if <see cref="s"/> could be parsed, otherwise <c>false</c>.</returns>
-    internal static bool TryParse(string s, [NotNullWhen(true)] out App? client)
+    internal static bool TryParse(string s, [NotNullWhen(true)] out AppID? client)
     {
         Debug.Assert(s != null);
         client = null;
@@ -85,7 +85,7 @@ public sealed class App
 
         try
         {
-            client = new App(mappingNumber, span.Slice(separatorIdx + 1).Trim().ToString());
+            client = new AppID(mappingNumber, span.Slice(separatorIdx + 1).Trim().ToString());
             return true;
         }
         catch

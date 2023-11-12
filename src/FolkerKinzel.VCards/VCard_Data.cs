@@ -104,7 +104,11 @@ public sealed partial class VCard
         return (++i).ToString();
     }
 
-    public Sync Sync { get; }
+    /// <summary>
+    /// Provides a <see cref="Sync"/> instance that allows to perform
+    /// data synchronization with the <see cref="VCard"/> instance.
+    /// </summary>
+    public SyncOperation Sync { get; }
 
     /// <summary> <c>VERSION</c>: Version of the vCard standard. <c>(2,3,4)</c></summary>
     public VCdVersion Version
@@ -136,6 +140,22 @@ public sealed partial class VCard
     {
         get => Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop.AnniversaryViews);
         set => Set(Prop.AnniversaryViews, value);
+    }
+
+    /// <summary> <c>CLIENTPIDMAP</c>: Gets the identifiers of the vCard clients
+    /// that edited the vCard. <c>(4)</c></summary>
+    /// <remarks>
+    /// The value of this property can change when calling the methods of the
+    /// <see cref="Syncs.SyncOperation"/> object provided by the <see cref="Sync"/>
+    /// property.
+    /// </remarks>
+    /// <seealso cref="Sync"/>
+    /// <seealso cref="Syncs.SyncOperation"/>
+    /// <seealso cref="AppID"/>
+    public IEnumerable<AppIDProperty>? AppIDs
+    {
+        get => Get<IEnumerable<AppIDProperty>?>(Prop.VCardClients);
+        internal set => Set(Prop.VCardClients, value);
     }
 
     /// <summary> <c>BDAY</c>: Date of birth of the individual associated with the vCard.
@@ -639,16 +659,6 @@ public sealed partial class VCard
         get => Get<IEnumerable<TextProperty?>?>(Prop.URLs);
         set => Set(Prop.URLs, value);
     }
-
-    /// <summary> <c>CLIENTPIDMAP</c>: Gets the identifiers of the vCard clients
-    /// that edited the vCard. <c>(4)</c></summary>
-    public IEnumerable<VCardClientProperty?>? VCardApps
-    {
-        get => Get<IEnumerable<VCardClientProperty?>?>(Prop.VCardClients);
-        internal set => Set(Prop.VCardClients, value);
-    }
-
-    
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
     public IEnumerable<XmlProperty?>? XmlProperties

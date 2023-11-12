@@ -55,8 +55,8 @@ public sealed partial class VCard
                 IEnumerable<DataProperty?> dataPropEnumerable => dataPropEnumerable.Select(cloner).Cast<DataProperty?>().ToArray(),
                 NonStandardProperty nStdProp => nStdProp.Clone(),
                 IEnumerable<NonStandardProperty?> nStdPropEnumerable => nStdPropEnumerable.Select(cloner).Cast<NonStandardProperty?>().ToArray(),
-                VCardClientProperty pidMapProp => pidMapProp.Clone(),
-                IEnumerable<VCardClientProperty?> pidMapPropEnumerable => pidMapPropEnumerable.Select(cloner).Cast<VCardClientProperty?>().ToArray(),
+                AppIDProperty pidMapProp => pidMapProp.Clone(),
+                IEnumerable<AppIDProperty?> pidMapPropEnumerable => pidMapPropEnumerable.Select(cloner).Cast<AppIDProperty?>().ToArray(),
                 TimeZoneProperty tzProp => tzProp.Clone(),
                 IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(cloner).Cast<TimeZoneProperty?>().ToArray(),
 
@@ -386,9 +386,9 @@ public sealed partial class VCard
                     XmlProperties = Concat(XmlProperties, new XmlProperty(vcfRow));
                     break;
                 case PropKeys.CLIENTPIDMAP:
-                    if (VCardClientProperty.TryParse(vcfRow, out VCardClientProperty? prop))
+                    if (AppIDProperty.TryParse(vcfRow, out AppIDProperty? prop))
                     {
-                        VCardApps = Concat(VCardApps, prop);
+                        AppIDs = Concat(AppIDs, prop);
                     }
                     break;
                 case PropKeys.PRODID:

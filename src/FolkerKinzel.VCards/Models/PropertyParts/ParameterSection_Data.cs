@@ -323,11 +323,19 @@ public sealed partial class ParameterSection
         }
     }
 
-    /// <summary> <c>PID</c>: Gets the <see cref="PropertyID" />s to identify the 
-    /// <see cref="VCardProperty" />. <c>(4)</c></summary>
-    public IEnumerable<PropertyID?>? PropertyIDs
+    /// <summary> <c>PID</c>: Gets the <see cref="PropertyID" />s used 
+    /// to identify the <see cref="VCardProperty" />. <c>(4)</c></summary>
+    /// <remarks>
+    /// The value of this property can change when calling the methods of
+    /// the <see cref="Syncs.SyncOperation"/> object provided by the <see cref="VCard.Sync"/>
+    /// property.
+    /// </remarks>
+    /// <seealso cref="VCard.Sync"/>
+    /// <seealso cref="Syncs.SyncOperation"/>
+    /// <seealso cref="PropertyID"/>
+    public IEnumerable<PropertyID>? PropertyIDs
     {
-        get => Get<IEnumerable<PropertyID?>?>(VCdParam.PropertyIDs);
+        get => Get<IEnumerable<PropertyID>?>(VCdParam.PropertyIDs);
         internal set => Set(VCdParam.PropertyIDs, value);
     }
 

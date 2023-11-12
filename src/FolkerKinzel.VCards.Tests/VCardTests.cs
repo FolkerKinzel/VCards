@@ -248,8 +248,8 @@ public class VCardTests
     {
         var textProp = new TextProperty("Test");
 
-        var pidMap1 = new App(5, "http://folkerkinzel.de/file1.htm");
-        var pidMap2 = new App(8, "http://folkerkinzel.de/file2.htm");
+        var pidMap1 = new AppID(5, "http://folkerkinzel.de/file1.htm");
+        var pidMap2 = new AppID(8, "http://folkerkinzel.de/file2.htm");
         textProp.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(1, pidMap1), new PropertyID(7), new PropertyID(1, pidMap2) };
 
         var vc = new VCard()
@@ -406,24 +406,24 @@ public class VCardTests
         var uri1 = new Uri(folker, UriKind.Absolute);
         var uri2 = new Uri(contoso, UriKind.Absolute);
 
-        Assert.IsNull(vc.VCardApps);
+        Assert.IsNull(vc.AppIDs);
 
         vc.RegisterAppInInstance(uri1);
-        Assert.IsNotNull(vc.VCardApps);
-        Assert.AreEqual(folker, vc.VCardApps.First()!.Value.GlobalID);
+        Assert.IsNotNull(vc.AppIDs);
+        Assert.AreEqual(folker, vc.AppIDs.First()!.Value.GlobalID);
         Assert.AreEqual(folker, vc.AppID?.GlobalID);
 
-        vc.VCardApps = vc.VCardApps.ConcatWith(null);
+        vc.AppIDs = vc.AppIDs.ConcatWith(null);
 
         vc.RegisterAppInInstance(uri2);
         Assert.AreEqual(contoso, vc.AppID?.GlobalID);
-        Assert.AreEqual(3, vc.VCardApps.Count());
+        Assert.AreEqual(3, vc.AppIDs.Count());
 
 
         vc.RegisterAppInInstance(uri1);
-        Assert.AreEqual(folker, vc.VCardApps.First()!.Value.GlobalID);
+        Assert.AreEqual(folker, vc.AppIDs.First()!.Value.GlobalID);
         Assert.AreEqual(folker, vc.AppID?.GlobalID);
-        Assert.AreEqual(3, vc.VCardApps.Count());
+        Assert.AreEqual(3, vc.AppIDs.Count());
     }
 
     [TestMethod]
@@ -434,12 +434,12 @@ public class VCardTests
         vc.DisplayNames = tProp.ConcatWith(null);
 
         Assert.IsNull(tProp.Parameters.PropertyIDs);
-        Assert.IsNull(vc.VCardApps);
+        Assert.IsNull(vc.AppIDs);
 
         vc.SetPropertyIDs();
         Assert.IsNotNull(tProp.Parameters.PropertyIDs);
         Assert.AreEqual(1, tProp.Parameters.PropertyIDs.Count());
-        Assert.IsNull(vc.VCardApps);
+        Assert.IsNull(vc.AppIDs);
 
         const string folker = "http://folker.de/id";
         //const string contoso = "http://contoso.com/id";
@@ -448,16 +448,16 @@ public class VCardTests
         //var uri2 = new Uri(contoso, UriKind.Absolute);
 
         vc.RegisterAppInInstance(uri1);
-        Assert.IsNotNull(vc.VCardApps);
+        Assert.IsNotNull(vc.AppIDs);
 
         vc.SetPropertyIDs();
         Assert.AreEqual(2, tProp.Parameters.PropertyIDs.Count());
-        Assert.IsTrue(vc.VCardApps.All(x => x?.Parameters.PropertyIDs == null));
+        Assert.IsTrue(vc.AppIDs.All(x => x?.Parameters.PropertyIDs == null));
 
         vc.SetPropertyIDs();
         Assert.AreEqual(2, tProp.Parameters.PropertyIDs.Count());
 
-        vc.VCardApps = null;
+        vc.AppIDs = null;
         Assert.IsNull(vc.AppID);
     }
 

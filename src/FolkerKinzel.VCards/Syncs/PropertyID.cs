@@ -10,19 +10,19 @@ namespace FolkerKinzel.VCards.Syncs;
 /// <summary>Encapsulates information that is used to identify an instance
 /// of a <see cref="VCardProperty" />.</summary>
 /// <seealso cref="ParameterSection.PropertyIDs"/>
-/// <seealso cref="Syncs.App"/>
-/// <seealso cref="VCardClientProperty"/>
-/// <seealso cref="VCard.VCardApps"/>
+/// <seealso cref="Syncs.AppID"/>
+/// <seealso cref="AppIDProperty"/>
+/// <seealso cref="VCard.AppIDs"/>
 public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 {
     /// <summary>Initializes a new <see cref="PropertyID" /> object with the local ID
-    /// of the <see cref="VCardProperty"/> and - optionally - a <see cref="Syncs.App" />
+    /// of the <see cref="VCardProperty"/> and - optionally - a <see cref="Syncs.AppID" />
     /// object that allows global identification of the vCard property.</summary>
     /// <param name="id">The local ID of the <see cref="VCardProperty"/>. The name 
     /// of the vCard property and this number uniquely identify a <see cref="VCardProperty"/> 
     /// in the <see cref="VCard"/> instance. 
     /// (A positive <see cref="int"/>, not zero.)</param>
-    /// <param name="client">A <see cref="Syncs.App" /> object to enable global identification
+    /// <param name="client">A <see cref="Syncs.AppID" /> object to enable global identification
     /// of the vCard property, or <c>null</c> to have only local identification.
     /// (The value normally is <see cref="VCard.AppID"/>.)
     /// </param>
@@ -35,7 +35,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// <see cref="ParameterSection.SetPropertyID(IEnumerable{VCardProperty?}, VCard)"/> instead.
     /// </note>
     /// </remarks>
-    internal PropertyID(int id, App? client = null)
+    internal PropertyID(int id, AppID? client = null)
     {
         id.ValidateID(nameof(id));
         ID = id;
@@ -43,13 +43,13 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     }
 
     /// <summary>Initializes a new <see cref="PropertyID" /> object with the local number of the 
-    /// <see cref="VCardProperty" /> and the <see cref="App.LocalID"/> of the 
-    /// <see cref="Syncs.App"/>.</summary>
+    /// <see cref="VCardProperty" /> and the <see cref="AppID.LocalID"/> of the 
+    /// <see cref="Syncs.AppID"/>.</summary>
     /// <param name="id">The local ID of the vCard property. The name of the vCard 
     /// property and this number uniquely identify a property locally. (The value is a positive 
     /// <see cref="int"/>, not zero.)</param>
-    /// <param name="client"> <see cref="App.LocalID" /> of the 
-    /// <see cref="Syncs.App"/>, or <c>null</c> to not specify any <see cref="Syncs.App"/>. 
+    /// <param name="client"> <see cref="AppID.LocalID" /> of the 
+    /// <see cref="Syncs.AppID"/>, or <c>null</c> to not specify any <see cref="Syncs.AppID"/>. 
     /// (The value is a positive <see cref="int"/>, not zero.)</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> or <paramref name="client"/>
     /// is less than 1.</exception>
@@ -74,14 +74,14 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     public int ID { get; }
 
     /// <summary>
-    /// Gets the <see cref="App.LocalID" /> of the <see cref="Syncs.App"
+    /// Gets the <see cref="AppID.LocalID" /> of the <see cref="Syncs.AppID"
     /// /> object with which the <see cref="PropertyID" /> object is connected, or <c>null</c>
     /// if the <see cref="PropertyID" /> object is not connected with any <see
-    /// cref="Syncs.App" />.
+    /// cref="Syncs.AppID" />.
     /// </summary>
     /// <seealso cref="VCard.AppID"/>
     /// <seealso cref="VCard.RegisterAppInInstance(Uri)"/>
-    /// <seealso cref="VCard.VCardApps"/>
+    /// <seealso cref="VCard.AppIDs"/>
     public int? App { get; }
 
     /// <inheritdoc/>

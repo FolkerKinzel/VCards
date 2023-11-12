@@ -10,7 +10,7 @@ public class PropertyIDTests
     [TestMethod]
     public void CtorTest()
     {
-        var pid = new PropertyID(5, new App(7, "http://folkerkinzel.de/"));
+        var pid = new PropertyID(5, new AppID(7, "http://folkerkinzel.de/"));
 
         Assert.AreEqual(5, pid.ID);
         Assert.AreEqual(7, pid.App);
@@ -41,7 +41,7 @@ public class PropertyIDTests
         IEnumerable<PropertyID> list = PropertyID.Parse("4.9");
 
         Assert.AreEqual(1, list.Count());
-        var pidMap = new App(9, "http://folkerkinzel.de/");
+        var pidMap = new AppID(9, "http://folkerkinzel.de/");
 
         Assert.AreEqual(new PropertyID(4, pidMap), list.First());
     }
@@ -54,8 +54,8 @@ public class PropertyIDTests
 
         Assert.AreEqual(2, list.Count());
         string uri = "http://folker.de/";
-        Assert.AreEqual(new PropertyID(4, new App(9, uri)), list.First());
-        Assert.AreEqual(new PropertyID(7, new App(5, uri)), list.ElementAt(1));
+        Assert.AreEqual(new PropertyID(4, new AppID(9, uri)), list.First());
+        Assert.AreEqual(new PropertyID(7, new AppID(5, uri)), list.ElementAt(1));
     }
 
 
@@ -66,8 +66,8 @@ public class PropertyIDTests
 
         Assert.AreEqual(2, list.Count());
         string uri = "http://folker.de/";
-        Assert.AreEqual(new PropertyID(4, new App(9, uri)), list.First());
-        Assert.AreEqual(new PropertyID(7, new App(5, uri)), list.ElementAt(1));
+        Assert.AreEqual(new PropertyID(4, new AppID(9, uri)), list.First());
+        Assert.AreEqual(new PropertyID(7, new AppID(5, uri)), list.ElementAt(1));
     }
 
 
@@ -78,8 +78,8 @@ public class PropertyIDTests
 
         Assert.AreEqual(2, list.Count());
         string uri = "http://folker.de/";
-        Assert.AreEqual(new PropertyID(4, new App(9, uri)), list.First());
-        Assert.AreEqual(new PropertyID(7, new App(5, uri)), list.ElementAt(1));
+        Assert.AreEqual(new PropertyID(4, new AppID(9, uri)), list.First());
+        Assert.AreEqual(new PropertyID(7, new AppID(5, uri)), list.ElementAt(1));
     }
 
 
@@ -90,7 +90,7 @@ public class PropertyIDTests
 
         Assert.AreEqual(3, list.Count());
         Assert.AreEqual(new PropertyID(9), list.First());
-        Assert.AreEqual(new PropertyID(22, new App(15, "http://www.contoso.com/")), list.ElementAt(1));
+        Assert.AreEqual(new PropertyID(22, new AppID(15, "http://www.contoso.com/")), list.ElementAt(1));
         Assert.AreEqual(new PropertyID(7), list.ElementAt(2));
     }
 
@@ -127,10 +127,10 @@ public class PropertyIDTests
     {
         const string uriStr = "http://folkers-website.de";
         var id1 = new PropertyID(7);
-        var id2 = new PropertyID(7, new App(5, uriStr));
-        var id3 = new PropertyID(7, new App(5, uriStr));
-        var id4 = new PropertyID(5, new App(5, uriStr));
-        var id5 = new PropertyID(7, new App(5, "http://other-website"));
+        var id2 = new PropertyID(7, new AppID(5, uriStr));
+        var id3 = new PropertyID(7, new AppID(5, uriStr));
+        var id4 = new PropertyID(5, new AppID(5, uriStr));
+        var id5 = new PropertyID(7, new AppID(5, "http://other-website"));
         var id6 = new PropertyID(5);
 
         Assert.AreNotEqual(id1, id2);
@@ -215,7 +215,7 @@ public class PropertyIDTests
     public void ToStringTest1()
     {
         string uri = "http://folker.de/";
-        var pid = new PropertyID(5, new App(7, uri));
+        var pid = new PropertyID(5, new AppID(7, uri));
 
         string s = pid.ToString();
 

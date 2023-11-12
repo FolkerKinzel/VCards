@@ -267,7 +267,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     protected override void AppendProdID(TextProperty value)
         => BuildProperty(VCard.PropKeys.PRODID, value);
 
-    protected override void AppendVCardClients(IEnumerable<VCardClientProperty?> value)
+    protected override void AppendVCardClients(IEnumerable<AppIDProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.CLIENTPIDMAP, value);
 
     protected override void AppendRelations(IEnumerable<RelationProperty?> value)
