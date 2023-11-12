@@ -8,13 +8,6 @@ public class KindPropertyTests
     [TestMethod()]
     public void KindPropertyTest1()
     {
-
-/* Unmerged change from project 'FolkerKinzel.VCards.Tests (net7.0)'
-Before:
-        const Enums.Kind kind = Enums.Kind.Application;
-After:
-        const Kind kind = Kind.Application;
-*/
         const VCards.Enums.Kind kind = VCards.Enums.Kind.Application;
 
         var prop = new KindProperty(kind);
@@ -27,13 +20,6 @@ After:
     [TestMethod()]
     public void KindPropertyTest2()
     {
-
-/* Unmerged change from project 'FolkerKinzel.VCards.Tests (net7.0)'
-Before:
-        const Enums.Kind kind = Enums.Kind.Application;
-After:
-        const Kind kind = Kind.Application;
-*/
         const VCards.Enums.Kind kind = VCards.Enums.Kind.Application;
 
         var prop = new KindProperty(kind);

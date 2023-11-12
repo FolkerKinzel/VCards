@@ -1,13 +1,5 @@
 using System.Globalization;
 using FolkerKinzel.VCards.Enums;
-
-/* Unmerged change from project 'FolkerKinzel.VCards (net7.0)'
-Before:
-using FolkerKinzel.VCards.Extensions;
-After:
-using FolkerKinzel.VCards;
-using FolkerKinzel.VCards.Extensions;
-*/
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -720,13 +712,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     private void AppendGeo()
     {
-
-/* Unmerged change from project 'FolkerKinzel.VCards (net7.0)'
-Before:
-        FolkerKinzel.VCards.Models.GeoCoordinate? geo = ParaSection.GeoPosition;
-After:
-        GeoCoordinate? geo = ParaSection.GeoPosition;
-*/
         VCards.GeoCoordinate? geo = ParaSection.GeoPosition;
 
         if (geo is null)
