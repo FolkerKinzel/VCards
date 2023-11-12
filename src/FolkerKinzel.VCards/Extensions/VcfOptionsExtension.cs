@@ -1,3 +1,5 @@
+using FolkerKinzel.VCards.Enums;
+
 namespace FolkerKinzel.VCards.Extensions;
 
 /// <summary>Extension methods that make working with the <see cref="VcfOptions"

@@ -15,7 +15,7 @@ public class PropertyIDTests
         Assert.AreEqual(5, pid.ID);
         Assert.AreEqual(7, pid.App);
 
-        pid = new PropertyID(5);
+        pid = new PropertyID(5, null);
 
         Assert.AreEqual(5, pid.ID);
         Assert.IsNull(pid.App);
@@ -31,7 +31,7 @@ public class PropertyIDTests
     {
         IEnumerable<PropertyID> list = PropertyID.Parse("4");
         Assert.AreEqual(1, list.Count());
-        Assert.AreEqual(new PropertyID(4), list.First());
+        Assert.AreEqual(new PropertyID(4, null), list.First());
     }
 
 
@@ -89,9 +89,9 @@ public class PropertyIDTests
         IEnumerable<PropertyID> list = PropertyID.Parse("9,22.15,7,2.0");
 
         Assert.AreEqual(3, list.Count());
-        Assert.AreEqual(new PropertyID(9), list.First());
+        Assert.AreEqual(new PropertyID(9, null), list.First());
         Assert.AreEqual(new PropertyID(22, new AppID(15, "http://www.contoso.com/")), list.ElementAt(1));
-        Assert.AreEqual(new PropertyID(7), list.ElementAt(2));
+        Assert.AreEqual(new PropertyID(7, null), list.ElementAt(2));
     }
 
 
@@ -111,27 +111,26 @@ public class PropertyIDTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
-    public void CtorExceptionTest1() => _ = new PropertyID(0);
+    public void CtorExceptionTest1() => _ = new PropertyID(0, null);
 
 
     [TestMethod]
-    public void CtorExceptionTest3() => _ = new PropertyID(10);
+    public void CtorExceptionTest3() => _ = new PropertyID(10, null);
 
 
-    [TestMethod]
-    public void CtorExceptionTest4() => _ = new PropertyID(10, null);
+    
 
 
     [TestMethod]
     public void EqualsTest1()
     {
         const string uriStr = "http://folkers-website.de";
-        var id1 = new PropertyID(7);
+        var id1 = new PropertyID(7, null);
         var id2 = new PropertyID(7, new AppID(5, uriStr));
         var id3 = new PropertyID(7, new AppID(5, uriStr));
         var id4 = new PropertyID(5, new AppID(5, uriStr));
         var id5 = new PropertyID(7, new AppID(5, "http://other-website"));
-        var id6 = new PropertyID(5);
+        var id6 = new PropertyID(5, null);
 
         Assert.AreNotEqual(id1, id2);
         Assert.AreNotEqual(id1.GetHashCode(), id2.GetHashCode());
@@ -154,14 +153,14 @@ public class PropertyIDTests
     [TestMethod]
     public void EqualsTest2()
     {
-        var propID = new PropertyID(7);
+        var propID = new PropertyID(7, null);
         Assert.IsFalse(propID.Equals(7));
     }
 
     [TestMethod]
     public void EqualityOperatorTest1()
     {
-        var propID1 = new PropertyID(7);
+        var propID1 = new PropertyID(7, null);
         PropertyID propID2 = propID1;
 
         Assert.IsTrue(propID1 == propID2);
@@ -178,7 +177,7 @@ public class PropertyIDTests
     public void EqualityOperatorTest3()
     {
         PropertyID? propID1 = null;
-        var propID = new PropertyID(7);
+        var propID = new PropertyID(7, null);
 
         Assert.IsFalse(propID1 == propID);
     }
@@ -186,8 +185,8 @@ public class PropertyIDTests
     [TestMethod]
     public void EqualityOperatorTest4()
     {
-        var propID1 = new PropertyID(5);
-        var propID2 = new PropertyID(7);
+        var propID1 = new PropertyID(5, null);
+        var propID2 = new PropertyID(7, null);
 
         Assert.IsFalse(propID1 == propID2);
     }
@@ -195,7 +194,7 @@ public class PropertyIDTests
     [TestMethod]
     public void IEnumerableTest()
     {
-        var id1 = new PropertyID(7);
+        var id1 = new PropertyID(7, null);
         PropertyID? id2 = id1;
         Assert.IsTrue(id1 == id2);
         id2 = null;
@@ -228,7 +227,7 @@ public class PropertyIDTests
     [TestMethod]
     public void ToStringTest2()
     {
-        var pid = new PropertyID(5);
+        var pid = new PropertyID(5, null);
 
         string s = pid.ToString();
 

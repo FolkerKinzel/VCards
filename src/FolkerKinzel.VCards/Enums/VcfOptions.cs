@@ -2,7 +2,7 @@ using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards;
+namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>Named constants to specify options for writing VCF files. The constants
 /// can be combined.</summary>
@@ -35,12 +35,13 @@ public enum VcfOptions
     /// <summary>All flags are unset.</summary>
     None = 0,
 
-    /// <summary> Default setting (corresponds to  <see cref="WriteGroups" /> | <see
-    /// cref="WriteRfc6474Extensions" /> | <see cref="WriteRfc6715Extensions" /> | <see
-    /// cref="WriteImppExtension" /> | <see cref="WriteXExtensions" /> | <see cref="AllowMultipleAdrAndLabelInVCard21"
-    /// />) </summary>
-    Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions | 
-              WriteImppExtension | WriteXExtensions | AllowMultipleAdrAndLabelInVCard21,
+    /// <summary> Default setting (corresponds to  <see cref="WriteGroups" />
+    /// | <see cref="WriteRfc6474Extensions" /> | <see cref="WriteRfc6715Extensions" /> 
+    /// | <see cref="WriteImppExtension" /> | <see cref="WriteXExtensions" /> 
+    /// | <see cref="AllowMultipleAdrAndLabelInVCard21" /> | <see cref="UpdateTimeStamp"/>) </summary>
+    Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions 
+            | WriteImppExtension | WriteXExtensions 
+            | AllowMultipleAdrAndLabelInVCard21 | UpdateTimeStamp,
 
     /// <summary>Set the flag to write property group identifiers.</summary>
     WriteGroups = 1,
@@ -94,5 +95,11 @@ public enum VcfOptions
 
     /// <summary>Set the flag to allow multiple "ADR" and "LABEL" properties to be written
     /// into a vCard&#160;2.1.</summary>
-    AllowMultipleAdrAndLabelInVCard21 = 1 << 12
+    AllowMultipleAdrAndLabelInVCard21 = 1 << 12,
+
+    /// <summary>
+    /// Set the flag to update the <see cref="VCard.TimeStamp"/> property automatically when
+    /// serializing VCF.
+    /// </summary>
+    UpdateTimeStamp = 1 << 13,
 }

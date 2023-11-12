@@ -12,8 +12,24 @@ public sealed partial class VCard
 {
     private static bool _isAppRegistered;
     
+    /// <summary>
+    /// The global identifier of the executing application.
+    /// </summary>
+    /// <remarks>
+    /// Call <see cref="VCard.RegisterApp(Uri?)"/> at application startup
+    /// to set this property and to enable global data synchronization.
+    /// </remarks>
     public static string? App { get; private set; }
 
+    /// <summary>
+    /// Provides a <see cref="Sync"/> instance that allows to perform
+    /// data synchronization with the <see cref="VCard"/> instance.
+    /// </summary>
+    /// <remarks>
+    /// Call <see cref="VCard.RegisterApp(Uri?)"/> once before using any
+    /// of the methods the <see cref="SyncOperation"/> object provides.
+    /// </remarks>
+    public SyncOperation Sync { get; }
 
     /// <summary>
     /// Registers the executing application with its global identifier.

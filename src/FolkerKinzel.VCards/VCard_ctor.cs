@@ -14,9 +14,15 @@ namespace FolkerKinzel.VCards;
 public sealed partial class VCard
 {
     /// <summary>Initializes a new <see cref="VCard" /> object.</summary>
-    public VCard()
+    public VCard(bool setUniqueIdentifier = true)
     { 
-        Sync = new SyncOperation(this); 
+        if(setUniqueIdentifier)
+        {
+            UniqueIdentifier = new UuidProperty();
+        }
+
+        // Should be the last in ctor:
+        Sync = new SyncOperation(this);
     }
 
     /// <summary>Copy ctor.</summary>
@@ -389,7 +395,7 @@ public sealed partial class VCard
                 case PropKeys.CLIENTPIDMAP:
                     if (AppIDProperty.TryParse(vcfRow, out AppIDProperty? prop))
                     {
-                        AppIDs = Concat(AppIDs, prop);
+                        AppIDs = AppIDs?.Concat(prop) ?? prop;
                     }
                     break;
                 case PropKeys.PRODID:

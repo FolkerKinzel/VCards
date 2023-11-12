@@ -161,6 +161,12 @@ public sealed partial class VCard
         foreach (VCard vCard in list)
         {
             vCard.Version = version;
+
+            if(options.HasFlag(VcfOptions.UpdateTimeStamp))
+            {
+                vCard.TimeStamp = new TimeStampProperty();
+            }
+
             serializer.Serialize(vCard);
         }
 
@@ -368,10 +374,10 @@ public sealed partial class VCard
     /// closed.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void SerializeVcf(Stream stream,
-                          VCdVersion version = DEFAULT_VERSION,
-                          ITimeZoneIDConverter? tzConverter = null,
-                          VcfOptions options = VcfOptions.Default,
-                          bool leaveStreamOpen = false)
+                             VCdVersion version = DEFAULT_VERSION,
+                             ITimeZoneIDConverter? tzConverter = null,
+                             VcfOptions options = VcfOptions.Default,
+                             bool leaveStreamOpen = false)
 
         => VCard.SerializeVcf(stream, this, version, tzConverter, options, leaveStreamOpen);
 
