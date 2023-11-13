@@ -50,13 +50,30 @@ public sealed partial class VCard
     /// </remarks>
     /// <seealso cref="App"/>
     /// <seealso cref="Sync"/>
-    /// <exception cref="ArgumentException"><paramref name="globalID"/> is not an absolute <see cref="Uri"/>.</exception>
-    /// <exception cref="InvalidOperationException">The method has been called more than once.</exception>
+    /// <exception cref="ArgumentException"><paramref name="globalID"/> is not an absolute
+    /// <see cref="Uri"/>.</exception>
+    /// <exception cref="InvalidOperationException"> An attempt was made to register
+    /// different <see cref="Uri"/>s.</exception>
     public static void RegisterApp(Uri? globalID)
     {
         if (_isAppRegistered)
         {
-            throw new InvalidOperationException();
+            if (globalID is null)
+            {
+                if(App != null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                return;
+            }
+
+            if (!globalID.IsAbsoluteUri || globalID.AbsoluteUri != App)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return;
         }
 
         if (globalID is null)
