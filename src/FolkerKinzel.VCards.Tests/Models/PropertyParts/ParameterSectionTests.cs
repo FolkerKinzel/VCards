@@ -36,67 +36,25 @@ public class ParameterSectionTests
         sec.Assign(sec);
     }
 
-
     [TestMethod]
-    public void SetPropertyIDTest1()
+    public void AddressTypeTest1()
     {
-        var vc = new VCard();
-        var arr = new TextProperty[] { new TextProperty("Donald"), new TextProperty("Duck") };
-        vc.DisplayNames = arr;
-
-        arr[0].Parameters.SetPropertyID(vc.DisplayNames, vc);
-        Assert.AreEqual(1, arr[0].Parameters.PropertyIDs.First()!.ID);
-
-        arr[1].Parameters.SetPropertyID(vc.DisplayNames, vc);
-        Assert.AreEqual(2, arr[1].Parameters.PropertyIDs.First()!.ID);
-
-        var list = new List<PropertyID?>(arr[1].Parameters.PropertyIDs!);
-        list.Insert(0, null);
-        arr[1].Parameters.PropertyIDs = list;
-
-        arr[1].Parameters.SetPropertyID(vc.DisplayNames, vc);
-        Assert.AreEqual(2, arr[1].Parameters.PropertyIDs.Count());
+        var sec = new ParameterSection();
+        sec.AddressType = default(Adr);
+        Assert.IsNull(sec.AddressType);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void SetPropertyIDTest2()
+    public void IndexTest1()
     {
-        var vc = new VCard();
-        var arr = new TextProperty[] { new TextProperty("Donald"), new TextProperty("Duck") };
-        vc.DisplayNames = arr;
+        var sec = new ParameterSection();
+        sec.Index = -7;
+        Assert.AreEqual(1, sec.Index);
 
-        arr[0].Parameters.SetPropertyID(vc.DisplayNames, null!);
-    }
+        sec.Index = 1;
+        Assert.AreEqual(1, sec.Index);
 
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void SetPropertyIDTest3()
-    {
-        var vc = new VCard();
-        var arr = new TextProperty[] { new TextProperty("Donald"), new TextProperty("Duck") };
-        vc.DisplayNames = arr;
-
-        arr[0].Parameters.SetPropertyID(null!, vc);
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetPropertyIDTest4()
-    {
-        var vc = new VCard();
-        var arr = new TextProperty?[] { null, new TextProperty("Donald"), new TextProperty("Duck") };
-
-        arr[1]!.Parameters.SetPropertyID(arr, vc);
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetPropertyIDTest5()
-    {
-        var vc = new VCard();
-        vc.DisplayNames = new TextProperty("Duck");
-
-        new TextProperty("Donald").Parameters.SetPropertyID(vc.DisplayNames, vc);
+        sec.Index = null;
+        Assert.IsNull(sec.Index);
     }
 }

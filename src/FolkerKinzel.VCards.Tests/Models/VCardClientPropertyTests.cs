@@ -1,9 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Syncs;
 using FolkerKinzel.VCards.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -13,11 +11,11 @@ public class VCardClientPropertyTests
     [TestMethod]
     public void VCardClientTest1()
     {
-        var prop = new AppIDProperty(7, "http://folkerkinzel.de/");
+        var prop = new AppIDProperty(new AppID(7, "http://folkerkinzel.de/"));
 
         var vcard = new VCard
         {
-            AppIDs = new AppIDProperty?[] { prop, null }
+            AppIDs = prop
         };
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
@@ -41,30 +39,17 @@ public class VCardClientPropertyTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void VCardClientPropertyTest2() => _ = new AppIDProperty(null!);
-
-
-    [TestMethod]
-    public void TryParseTest1()
-    {
-        VcfRow row = VcfRow.Parse("PidMap:", new VcfDeserializationInfo())!;
-        Assert.IsFalse(AppIDProperty.TryParse(row, out _));
-    }
-
-
-    [TestMethod]
     public void TryParseTest2()
     {
         var row = VcfRow.Parse("CLIENTPIDMAP:", new VcfDeserializationInfo());
         Assert.IsFalse(AppIDProperty.TryParse(row!, out _));
-        
+
     }
 
     [TestMethod]
     public void IEnumerableTest1()
     {
-        var prop = new AppIDProperty(4, "https://contoso.com");
+        var prop = new AppIDProperty(new AppID(4, "https://contoso.com"));
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 }

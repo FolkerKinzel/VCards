@@ -15,6 +15,8 @@ public static class VCard40Example
     {
         const string vcfExtension = ".vcf";
 
+        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+
         // Note that argument validation and exception handling is completely omitted in this
         // example. The following "if" statement only ensures, that the method doesn't destroy
         // valueable data.
@@ -114,7 +116,6 @@ public static class VCard40Example
         }
     }
 
-
     private static VCard InitializeComposerVCard(
         string composersName, DateOnly birthDate, DateOnly deathDate)
     {
@@ -156,12 +157,14 @@ composersVCard:
 BEGIN:VCARD
 VERSION:4.0
 KIND:group
-FN:Composers
-MEMBER;VALUE=URI:urn:uuid:f3f879b0-b1fb-481d-8a6b-44b8989b1a58
-MEMBER;VALUE=URI:urn:uuid:dca80599-cece-4cac-ae9f-a18f08fe6e1b
-MEMBER;VALUE=URI:urn:uuid:6ce8b30e-2750-45a1-9e61-4041505400fa
+REV:20231113T205916Z
+UID:urn:uuid:37eae851-8fed-4562-a753-57d5bbca8280
+FN;PID=1.1:Composers
+MEMBER;VALUE=URI;PID=1.1:urn:uuid:f166bb68-b252-4f48-b6e5-791a209814f6
+MEMBER;VALUE=URI;PID=2.1:urn:uuid:579bbfc2-8366-4095-b70f-11205a6151e0
+MEMBER;VALUE=URI;PID=3.1:urn:uuid:6b05a04b-9440-4d6d-b770-2a5b9f07bc25
+CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
 END:VCARD
 
 What year was Beethoven born?: 1770
-.
 */

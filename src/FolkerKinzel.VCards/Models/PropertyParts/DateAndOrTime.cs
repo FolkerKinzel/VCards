@@ -1,10 +1,7 @@
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Globalization;
-using OneOf;
-using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -19,7 +16,7 @@ public sealed partial class DateAndOrTime
 {
     private readonly OneOf<DateOnly, DateTimeOffset, TimeOnly, string> _oneOf;
 
-    internal DateAndOrTime(OneOf<DateOnly, DateTimeOffset, TimeOnly, string> oneOf) 
+    internal DateAndOrTime(OneOf<DateOnly, DateTimeOffset, TimeOnly, string> oneOf)
         => _oneOf = oneOf;
 
     /// <summary>
@@ -93,11 +90,11 @@ public sealed partial class DateAndOrTime
         var result = _oneOf.Match<(DateOnly Value, bool Result)>
          (
           dateOnly => (dateOnly, true),
-          dtOffset => dtOffset.HasDate() 
+          dtOffset => dtOffset.HasDate()
                         ? (new DateOnly(dtOffset.Year, dtOffset.Month, dtOffset.Day), true)
                         : (default, false),
           timeOnly => (default, false),
-          str => System.DateOnly.TryParse(str, 
+          str => System.DateOnly.TryParse(str,
                                           CultureInfo.CurrentCulture,
                                           DateTimeStyles.AllowWhiteSpaces,
                                           out DateOnly dOnly) ? (dOnly, true)
@@ -188,9 +185,9 @@ public sealed partial class DateAndOrTime
     public TResult Convert<TResult>(Func<DateOnly, TResult> dateFunc,
                                     Func<DateTimeOffset, TResult> dtoFunc,
                                     Func<TimeOnly, TResult> timeFunc,
-                                    Func<string, TResult> stringFunc) 
+                                    Func<string, TResult> stringFunc)
         => _oneOf.Match(dateFunc, dtoFunc, timeFunc, stringFunc);
-    
+
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => _oneOf.ToString();

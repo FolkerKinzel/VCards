@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using FolkerKinzel.VCards.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 
@@ -97,6 +98,13 @@ public class DateAndOrTimeTests
         Assert.AreEqual(expected, result);
     }
 
-    
+    [TestMethod]
+    public void TryAsDateTest1() 
+        => Assert.IsFalse(new DateAndOrTime(new DateTimeOffset(2, 1, 1, 17, 24, 32, TimeSpan.FromHours(1))).TryAsDateOnly(out _));
+
+    [TestMethod]
+    public void TryAsDateTest2()
+        => Assert.IsTrue(new DateAndOrTime(new DateOnly(2023, 11, 11).ToString(CultureInfo.CurrentCulture)).TryAsDateOnly(out _));
+
 
 }

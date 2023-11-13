@@ -61,7 +61,7 @@ public sealed class SyncOperation
         bool any = false;
 
         foreach (IEnumerable<VCardProperty?> coll in _vCard.AsProperties()
-            .Where(x => x.Key != Prop.VCardClients && x.Value is IEnumerable<VCardProperty?>)
+            .Where(x => x.Key != Prop.AppIDs && x.Value is IEnumerable<VCardProperty?>)
             .Select(x => x.Value)
             .Cast<IEnumerable<VCardProperty?>>())
         {
@@ -114,53 +114,6 @@ public sealed class SyncOperation
         }
     }
 
-    ///// <summary>
-    ///// Performs the "Global Context Simplification" as described in
-    ///// RFC&#160;6350, 7.2.5.
-    ///// </summary>
-    ///// <remarks>
-    ///// This method can be called after the data synchronization has 
-    ///// completed. It removes the <see cref="AppIDProperty"/> objects
-    ///// that reference foreign vCard clients and all the 
-    ///// <see cref="PropertyID"/>s set by these clients from the <see cref="VCard"/>
-    ///// instance and replaces them by own <see cref="PropertyID"/>s.
-    ///// </remarks>
-    //public void Simplify()
-    //{
-    //    foreach (IEnumerable<VCardProperty?> coll in _vCard.AsProperties()
-    //        .Where(x => x.Value is IEnumerable<VCardProperty?>)
-    //        .Select(x => x.Value)
-    //        .Cast<IEnumerable<VCardProperty?>>())
-    //    {
-    //        int? localAppID = CurrentAppID?.LocalID;
-    //        bool resetAppIDs = localAppID.HasValue && localAppID.Value != 1;
-
-    //        _vCard.AppIDs = null;
-    //        RegisterAppInVCardInstance(VCard.App);
-
-    //        foreach (VCardProperty? prop in coll)
-    //        {
-    //            if (prop != null)
-    //            {
-    //                var arr =
-    //                    prop.Parameters.PropertyIDs?
-    //                    .Where(x => x.App == localAppID).ToArray();
-
-    //                if (arr != null && resetAppIDs)
-    //                {
-    //                    for (int i = 0; i < arr.Length; i++)
-    //                    {
-    //                        arr[i] = new PropertyID(arr[i].ID, CurrentAppID);
-    //                    }
-    //                }
-    //            }
-    //        }
-
-    //        SetPropertyIDs();
-    //    }
-    //}
-
-    
     private void RegisterAppInVCardInstance(string? globalID)
     {
         if (globalID is null)

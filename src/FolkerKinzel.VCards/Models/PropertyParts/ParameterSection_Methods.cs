@@ -55,7 +55,10 @@ public sealed partial class ParameterSection
             }
         }
 
-        sb.Length -= Environment.NewLine.Length;
+        if (sb.Length >= Environment.NewLine.Length)
+        {
+            sb.Length -= Environment.NewLine.Length;
+        }
 
         return sb.ToString();
     }
@@ -63,14 +66,16 @@ public sealed partial class ParameterSection
 
     private static void AppendValue(StringBuilder sb, KeyValuePair<VCdParam, object> para)
     {
+        Debug.Assert(para.Value != null);
+        Debug.Assert(para.Value.ToString() != null);
+
         const string INDENT = "    ";
 
         _ = sb.Append('[').Append(para.Key).Append(": ");
 
-        string? valStr = para.Value?.ToString();
+        string valStr = para.Value.ToString()!;
 
-        if (valStr != null &&
-            valStr.Contains(Environment.NewLine, StringComparison.Ordinal))
+        if(valStr.Contains(Environment.NewLine, StringComparison.Ordinal))
         {
             string[] arr = valStr.Split(Environment.NewLine, StringSplitOptions.None);
 

@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Extensions.Tests;
 
@@ -18,5 +19,22 @@ public class IEnumerableExtensionTests
     {
         var props = new TextProperty[] { new TextProperty(null), new TextProperty("1") };
         CollectionAssert.AreNotEqual(props, props.OrderByIndexIntl(true).ToArray());
+    }
+
+    [TestMethod]
+    public void IsSingleTest1()
+    {
+        var propEmpty = new TextProperty(null);
+        var prop = new TextProperty("Hi");
+        TextProperty? nullProp = null;
+
+        Assert.IsFalse(Array.Empty<TextProperty>().IsSingle(true));
+        Assert.IsFalse(Array.Empty<TextProperty>().IsSingle(false));
+        Assert.IsFalse(propEmpty.Concat(propEmpty).IsSingle(true));
+        Assert.IsFalse(propEmpty.Concat(propEmpty).IsSingle(false));
+        Assert.IsTrue(prop.IsSingle(true));
+        Assert.IsTrue(prop.IsSingle(false));
+        Assert.IsFalse(nullProp.IsSingle(true));
+        Assert.IsFalse(nullProp.IsSingle(false));
     }
 }

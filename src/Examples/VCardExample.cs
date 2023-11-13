@@ -134,9 +134,6 @@ public static class VCardExample
 
             vCard.AnniversaryViews = VC::DateAndOrTimeProperty.FromDate(2006, 7, 14);
 
-            // Sets the PropertyIDs to allow data synchronization in vCard 4.0
-            vCard.Sync.SetPropertyIDs();
-
             return vCard;
         }
 
@@ -180,8 +177,8 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2023-11-12T22:38:38Z
-UID:561925f1-d291-4060-b95f-80e4069f28b6
+REV:2023-11-13T20:53:33Z
+UID:1c1b8586-e8d0-4307-83d1-fc3f65197e85
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
  Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
@@ -203,8 +200,8 @@ EMAIL;INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- Wk1OdHYnF/MOkjWTfY1fVHedQWeKG4vcpaByz2HOV/tHzERcQlpxtdu6jFfE84+
- j27EGTHhL6O86+z8d
+ t3yYbWftGZMcD29OH/DlMXvDvZTUk2QuO1ZTpOhEzQVgqTmaiu9uWP/m8+0iVsn
+ TTfKbTdz9ku35nxoe
 
 END:VCARD
 
@@ -213,8 +210,8 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2023-11-12T22:38:38Z
-UID:561925f1-d291-4060-b95f-80e4069f28b6
+REV:2023-11-13T20:53:33Z
+UID:1c1b8586-e8d0-4307-83d1-fc3f65197e85
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 TITLE:CEO
@@ -232,8 +229,8 @@ TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 EMAIL;TYPE=INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:Wk1OdHYnF/MOkjWTfY1fVHedQWeKG4vcpaByz2HOV/tHzERc
- Qlpxtdu6jFfE84+j27EGTHhL6O86+z8d
+PHOTO;ENCODING=b;TYPE=JPEG:t3yYbWftGZMcD29OH/DlMXvDvZTUk2QuO1ZTpOhEzQVgqTma
+ iu9uWP/m8+0iVsnTTfKbTdz9ku35nxoe
 END:VCARD
 
 
@@ -241,8 +238,8 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20231112T223838Z
-UID:urn:uuid:561925f1-d291-4060-b95f-80e4069f28b6
+REV:20231113T205333Z
+UID:urn:uuid:1c1b8586-e8d0-4307-83d1-fc3f65197e85
 FN;PID=1.1:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
 TITLE;PID=1.1:CEO
@@ -258,8 +255,8 @@ EMAIL;TYPE=WORK;PREF=1;PID=1.1:kaethe_mueller@internet.com
 EMAIL;TYPE=HOME;PREF=2;VALUE=URI;PID=2.1:mailto:kaethe_at_home@internet.com
 RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT;PID=1.1:Paul Müller-R
  isinowsky
-PHOTO;PID=1.1:data:image/jpeg;base64,Wk1OdHYnF/MOkjWTfY1fVHedQWeKG4vcpaByz2
- HOV/tHzERcQlpxtdu6jFfE84+j27EGTHhL6O86+z8d
+PHOTO;PID=1.1:data:image/jpeg;base64,t3yYbWftGZMcD29OH/DlMXvDvZTUk2QuO1ZTpO
+ hEzQVgqTmaiu9uWP/m8+0iVsnTTfKbTdz9ku35nxoe
 CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
 END:VCARD
 
@@ -269,9 +266,9 @@ Read VCard:
 Version: 3.0
 
 [DataType: TimeStamp]
-TimeStamp: 11/12/2023 22:38:38 +00:00
+TimeStamp: 11/13/2023 20:53:33 +00:00
 
-UniqueIdentifier: 561925f1-d291-4060-b95f-80e4069f28b6
+UniqueIdentifier: 1c1b8586-e8d0-4307-83d1-fc3f65197e85
 
 DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 

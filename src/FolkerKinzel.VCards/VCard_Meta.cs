@@ -12,15 +12,14 @@ public sealed partial class VCard
     /// any usable data, otherwise <c>false</c>.</returns>
     public bool IsEmpty() =>
         !_propDic
-            .Select(x => x.Value)
-            .Any(x => x switch
+            .Where(static x => x.Key is not (Prop.TimeStamp or Prop.AppIDs or Prop.UniqueIdentifier))
+            .Select(static x => x.Value)
+            .Any(static x => x switch
             {
                 VCardProperty prop => !prop.IsEmpty,
                 IEnumerable<VCardProperty?> numerable => numerable.Any(x => !(x?.IsEmpty ?? true)),
                 _ => false
             });
-
-    
 
     /// <summary>
     /// Gets an <see cref="IEnumerable{T}"/> of <see cref="string"/>s that can be used

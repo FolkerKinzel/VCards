@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Text;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
 
@@ -535,5 +536,13 @@ public class VcfReaderTests
         }
 
         Assert.AreEqual(count1, count2);
+    }
+
+
+    [TestMethod]
+    [ExpectedException(typeof(DecoderFallbackException))]
+    public void HandleExceptionTest()
+    {
+        _ = VCard.LoadVcf(TestFiles.AnsiIssueVcf, new UTF8Encoding(false, true));
     }
 }

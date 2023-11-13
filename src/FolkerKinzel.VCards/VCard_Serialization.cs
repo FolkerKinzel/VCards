@@ -131,7 +131,7 @@ public sealed partial class VCard
     {
         DebugWriter.WriteMethodHeader(
             $"{nameof(VCard)}.{nameof(SerializeVcf)}({nameof(Stream)}, IEnumerable<{nameof(VCard)}?>");
-        
+
         ValidateArguments(stream, vCards, leaveStreamOpen);
         using VcfSerializer serializer = VcfSerializer.GetSerializer(stream,
                                                                      leaveStreamOpen,
@@ -162,7 +162,7 @@ public sealed partial class VCard
         {
             vCard.Version = version;
 
-            if(options.HasFlag(VcfOptions.UpdateTimeStamp))
+            if (options.HasFlag(VcfOptions.UpdateTimeStamp))
             {
                 vCard.TimeStamp = new TimeStampProperty();
             }

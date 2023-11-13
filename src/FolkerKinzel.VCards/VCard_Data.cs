@@ -87,8 +87,8 @@ public sealed partial class VCard
     /// <seealso cref="AppID"/>
     public IEnumerable<AppIDProperty>? AppIDs
     {
-        get => Get<IEnumerable<AppIDProperty>?>(Prop.VCardClients);
-        internal set => Set(Prop.VCardClients, value);
+        get => Get<IEnumerable<AppIDProperty>?>(Prop.AppIDs);
+        internal set => Set(Prop.AppIDs, value);
     }
 
     /// <summary> <c>BDAY</c>: Date of birth of the individual associated with the vCard.
@@ -574,7 +574,8 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
-    /// unique identifier, associated with the object. <c>(2,3,4)</c></summary>
+    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
+    /// </summary>
     /// <value>Although the standard allows any strings for identification, the library
     /// only supports UUIDs.</value>
     public UuidProperty? UniqueIdentifier

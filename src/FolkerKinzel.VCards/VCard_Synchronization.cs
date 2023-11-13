@@ -93,4 +93,10 @@ public sealed partial class VCard
         _isAppRegistered = true;
         App = globalID.AbsoluteUri;
     }
+
+
+    /// <summary>
+    /// Resets <see cref="_isAppRegistered"/> to enable unit tests.
+    /// </summary>
+    internal static void SyncTestReset() => _isAppRegistered = false;
 }

@@ -20,4 +20,17 @@ public class UuidPropertyTests
 
         Assert.IsFalse(o1.Equals(42));
     }
+
+    [TestMethod]
+    public void EqualityOperatorTest1()
+    {
+        var uid1 = new UuidProperty();
+#pragma warning disable CS1718 // Comparison made to same variable
+        Assert.IsTrue(uid1 == uid1);
+#pragma warning restore CS1718 // Comparison made to same variable
+
+        UuidProperty? uid2 = null;
+        Assert.IsTrue(uid2 == null);
+        Assert.IsFalse(uid2 == uid1);
+    }
 }

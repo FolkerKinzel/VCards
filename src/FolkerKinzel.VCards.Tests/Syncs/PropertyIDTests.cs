@@ -82,7 +82,6 @@ public class PropertyIDTests
         Assert.AreEqual(new PropertyID(7, new AppID(5, uri)), list.ElementAt(1));
     }
 
-
     [TestMethod]
     public void ParseTest7()
     {
@@ -94,32 +93,18 @@ public class PropertyIDTests
         Assert.AreEqual(new PropertyID(7, null), list.ElementAt(2));
     }
 
+    [TestMethod]
+    public void ParseTest8()
+    {
+        IEnumerable<PropertyID> list = PropertyID.Parse("-7,22.-15,-2.8,xyz,xy.7,7.xy");
 
-    //[TestMethod]
-    //public void ParseIntoTest8()
-    //{
-    //    var list = new List<PropertyID>();
+        Assert.AreEqual(0, list.Count());
+    }
 
-    //    PropertyID.ParseInto(list, " \"4.9\"");
-
-    //    Assert.AreEqual(1, list.Count);
-
-    //    var uri = "http://folker.de/";
-    //    Assert.AreEqual(new PropertyID(4, new VCardClient(9, uri)), list[0]);
-    //}
 
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = false)]
-    public void CtorExceptionTest1() => _ = new PropertyID(0, null);
-
-
-    [TestMethod]
-    public void CtorExceptionTest3() => _ = new PropertyID(10, null);
-
-
-    
-
+    public void PropertyIDTest3() => _ = new PropertyID(10, null);
 
     [TestMethod]
     public void EqualsTest1()
@@ -204,8 +189,8 @@ public class PropertyIDTests
 
         foreach (object? item in numerable)
         {
-            Assert.IsTrue(item as PropertyID == id1);
-            Assert.IsFalse(item as PropertyID != id1);
+            Assert.IsTrue((item as PropertyID) == id1);
+            Assert.IsFalse((item as PropertyID) != id1);
         }
     }
 

@@ -45,5 +45,4 @@ Console Output:
 prop1, DisplayName: Donald Duck
 prop2, DisplayName: <null>
 prop3, DisplayName: Dagobert Duck
-.
 */

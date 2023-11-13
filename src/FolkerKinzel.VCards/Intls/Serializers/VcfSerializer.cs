@@ -321,7 +321,7 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.Sounds:
                     AppendSounds((IEnumerable<DataProperty?>)kvp.Value);
                     break;
-                case Prop.VCardClients:
+                case Prop.AppIDs:
                     AppendVCardClients((IEnumerable<AppIDProperty?>)kvp.Value);
                     break;
                 case Prop.NonStandard:

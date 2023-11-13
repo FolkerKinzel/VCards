@@ -9,6 +9,9 @@ internal static class Utility
 {
     internal static VCard CreateVCard()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(new Uri("http://folkerkinzel.de"));
+
         string[] sortAs = new string[] { "Entenhausen", "Elmstreet" };
 
         var tel1 = new TextProperty("123");
@@ -40,7 +43,7 @@ internal static class Utility
         adr1.Parameters.Language = "de";
         adr1.Parameters.SortAs = sortAs;
         var pidMap = new AppID(7, "http://www.contoso.com/");
-        adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, pidMap), new PropertyID(2) };
+        adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, pidMap), new PropertyID(2, null) };
         adr1.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Parcel | Adr.Postal;
 
         var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
@@ -119,6 +122,7 @@ internal static class Utility
 
         var vc = new VCard
         {
+            AppIDs = new AppIDProperty(pidMap),
             NameViews = names,
             Phones = tel1,
             Hobbies = hobby1,
@@ -170,9 +174,6 @@ internal static class Utility
             NonStandard = nonStandard,
             XmlProperties = xml1,
         };
-
-        vc.RegisterAppInInstance(new Uri("http://folkerkinzel.de"));
-
 
         return vc;
     }

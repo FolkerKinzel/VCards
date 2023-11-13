@@ -138,7 +138,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
         {
             if (TryParsePropertyID(span.Slice(0, sepIdx), out propID))
             {
-                coll.Concat(propID);
+                coll = coll.Concat(propID);
             }
 
             span = span.Slice(sepIdx + 1);
@@ -146,7 +146,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 
         if (TryParsePropertyID(span, out propID))
         {
-            coll.Concat(propID);
+            coll = coll.Concat(propID);
         }
 
         return coll;

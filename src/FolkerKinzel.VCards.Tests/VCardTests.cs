@@ -389,78 +389,50 @@ public class VCardTests
 
 
     [TestMethod]
-    public void RegisterAppTest1() => VCard.RegisterApp(null);
+    public void RegisterAppTest1()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void RegisterAppTest2() => VCard.RegisterApp(new Uri("../IamRelative", UriKind.Relative));
-
-
-    [TestMethod]
-    public void RegisterAppTest3()
+    public void RegisterAppTest2()
     {
-        var vc = new VCard();
-        const string folker = "http://folker.de/id";
-        const string contoso = "urn:uuid:42bcd5a7-1699-4514-87b4-056edf68e9cc";
-
-        var uri1 = new Uri(folker, UriKind.Absolute);
-        var uri2 = new Uri(contoso, UriKind.Absolute);
-
-        Assert.IsNull(vc.AppIDs);
-
-        vc.RegisterAppInInstance(uri1);
-        Assert.IsNotNull(vc.AppIDs);
-        Assert.AreEqual(folker, vc.AppIDs.First()!.Value.GlobalID);
-        Assert.AreEqual(folker, vc.Sync.CurrentAppID?.GlobalID);
-
-        vc.AppIDs = vc.AppIDs.ConcatWith(null);
-
-        vc.RegisterAppInInstance(uri2);
-        Assert.AreEqual(contoso, vc.Sync.CurrentAppID?.GlobalID);
-        Assert.AreEqual(3, vc.AppIDs.Count());
-
-
-        vc.RegisterAppInInstance(uri1);
-        Assert.AreEqual(folker, vc.AppIDs.First()!.Value.GlobalID);
-        Assert.AreEqual(folker, vc.Sync.CurrentAppID?.GlobalID);
-        Assert.AreEqual(3, vc.AppIDs.Count());
+        VCard.SyncTestReset();
+        VCard.RegisterApp(new Uri("../IamRelative", UriKind.Relative));
     }
 
-    [TestMethod]
-    public void SetPropertyIDsTest1()
-    {
-        var vc = new VCard();
-        var tProp = new TextProperty("Donald");
-        vc.DisplayNames = tProp.ConcatWith(null);
 
-        Assert.IsNull(tProp.Parameters.PropertyIDs);
-        Assert.IsNull(vc.AppIDs);
+    //[TestMethod]
+    //public void RegisterAppTest3()
+    //{
+    //    var vc = new VCard();
+    //    const string folker = "http://folker.de/id";
+    //    const string contoso = "urn:uuid:42bcd5a7-1699-4514-87b4-056edf68e9cc";
 
-        vc.SetPropertyIDs();
-        Assert.IsNotNull(tProp.Parameters.PropertyIDs);
-        Assert.AreEqual(1, tProp.Parameters.PropertyIDs.Count());
-        Assert.IsNull(vc.AppIDs);
+    //    var uri1 = new Uri(folker, UriKind.Absolute);
+    //    var uri2 = new Uri(contoso, UriKind.Absolute);
 
-        const string folker = "http://folker.de/id";
-        //const string contoso = "http://contoso.com/id";
+    //    Assert.IsNull(vc.AppIDs);
 
-        var uri1 = new Uri(folker, UriKind.Absolute);
-        //var uri2 = new Uri(contoso, UriKind.Absolute);
+    //    vc.RegisterAppInInstance(uri1);
+    //    Assert.IsNotNull(vc.AppIDs);
+    //    Assert.AreEqual(folker, vc.AppIDs.First()!.Value.GlobalID);
+    //    Assert.AreEqual(folker, vc.Sync.CurrentAppID?.GlobalID);
 
-        vc.RegisterAppInInstance(uri1);
-        Assert.IsNotNull(vc.AppIDs);
+    //    vc.AppIDs = vc.AppIDs.ConcatWith(null);
 
-        vc.SetPropertyIDs();
-        Assert.AreEqual(2, tProp.Parameters.PropertyIDs.Count());
-        Assert.IsTrue(vc.AppIDs.All(x => x?.Parameters.PropertyIDs == null));
+    //    vc.RegisterAppInInstance(uri2);
+    //    Assert.AreEqual(contoso, vc.Sync.CurrentAppID?.GlobalID);
+    //    Assert.AreEqual(3, vc.AppIDs.Count());
 
-        vc.SetPropertyIDs();
-        Assert.AreEqual(2, tProp.Parameters.PropertyIDs.Count());
 
-        vc.AppIDs = null;
-        Assert.IsNull(vc.Sync.CurrentAppID);
-    }
-
+    //    vc.RegisterAppInInstance(uri1);
+    //    Assert.AreEqual(folker, vc.AppIDs.First()!.Value.GlobalID);
+    //    Assert.AreEqual(folker, vc.Sync.CurrentAppID?.GlobalID);
+    //    Assert.AreEqual(3, vc.AppIDs.Count());
+    //}
 
     //[TestMethod]
     //public void EqualsTest1()
