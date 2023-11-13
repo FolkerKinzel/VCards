@@ -42,7 +42,8 @@ public sealed partial class VCard
     /// <para>
     /// The registration of the executing application is needed for the global data 
     /// synchronization mechanism introduced with vCard&#160;4.0. Call this method
-    /// only once at the startup of the application.
+    /// only once at the startup of the application: It's not allowed to register
+    /// different <see cref="Uri"/>s within a single application.
     /// </para>
     /// <para>
     /// The method sets the static property <see cref="App"/>.
@@ -50,6 +51,7 @@ public sealed partial class VCard
     /// </remarks>
     /// <seealso cref="App"/>
     /// <seealso cref="Sync"/>
+    /// <seealso cref="SyncOperation"/>
     /// <exception cref="ArgumentException"><paramref name="globalID"/> is not an absolute
     /// <see cref="Uri"/>.</exception>
     /// <exception cref="InvalidOperationException"> An attempt was made to register
