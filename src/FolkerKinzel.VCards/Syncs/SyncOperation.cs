@@ -10,6 +10,11 @@ namespace FolkerKinzel.VCards.Syncs;
 /// Provides methods that perform data synchronization operations on
 /// the <see cref="VCard"/> instance.
 /// </summary>
+/// <note type="important">
+/// Call <see cref="VCard.RegisterApp(Uri?)"/> before calling any of 
+/// these methods.
+/// </note>
+/// <seealso cref="VCard.Sync"/>
 public sealed class SyncOperation
 {
     private readonly VCard _vCard;
@@ -33,19 +38,22 @@ public sealed class SyncOperation
     public AppID? CurrentAppID { get; private set; }
 
     /// <summary>
-    /// Sets the <see cref="PropertyID"/>s to all <see cref="VCardProperty"/> objects, which
-    /// can have more than one instance inside the <see cref="VCard"/>, depending on the 
-    /// value of <see cref="CurrentAppID"/>.
+    /// Marks the <see cref="VCardProperty"/> objects with <see cref="PropertyID"/>s.
     /// </summary>
     /// <remarks>
-    /// <note type="important">
-    /// Don't forget to call <see cref="RegisterAppInInstance(Uri)"/> before calling this
-    /// method.
-    /// </note>
+    /// <para>
+    /// The method sets the <see cref="PropertyID"/>s to the <see cref="VCardProperty"/> objects that
+    /// doesn't yet have one depending on the 
+    /// value of <see cref="CurrentAppID"/>, and adds <see cref="CurrentAppID"/> to <see cref="VCard.AppIDs"/>
+    /// if it's not yet there.
+    /// </para>
     /// <para>
     /// <see cref="PropertyID"/>s (stored in <see cref="ParameterSection.PropertyIDs"/>)
     /// enable the global data synchronization mechanism introduced with vCard&#160;4.0.
-    /// The method can be called several times.
+    /// </para>
+    /// <para>
+    /// The method is called automatically when serializing vCard&#160;4.0 using <see cref="VcfOptions.Default"/>
+    /// but it may be called several times without causing any damage.
     /// </para>
     /// </remarks>
     public void SetPropertyIDs()
@@ -78,14 +86,13 @@ public sealed class SyncOperation
     }
 
     /// <summary>
-    /// Removes all <see cref="PropertyID"/> and <see cref="AppIDProperty"/> objects
-    /// from the <see cref="VCard"/> instance.
+    /// Resets the data synchronization mechanism.
     /// </summary>
     /// <remarks>
-    /// <note type="caution">
-    /// This method disables the data synchronization mechanism. Call this
-    /// method only when problems occur.
-    /// </note>
+    /// The method removes all <see cref="PropertyID"/> and <see cref="AppIDProperty"/> 
+    /// objects from the <see cref="VCard"/> instance. Call this method when the 
+    /// data synchronization has been completed (see RFC&#160;6350, 7.2.5. "Global 
+    /// Context Simplification").
     /// </remarks>
     public void Reset()
     {
@@ -107,51 +114,51 @@ public sealed class SyncOperation
         }
     }
 
-    /// <summary>
-    /// Performs the "Global Context Simplification" as described in
-    /// RFC&#160;6350, 7.2.5.
-    /// </summary>
-    /// <remarks>
-    /// This method can be called after the data synchronization has 
-    /// completed. It removes the <see cref="AppIDProperty"/> objects
-    /// that reference foreign vCard clients and all the 
-    /// <see cref="PropertyID"/>s set by these clients from the <see cref="VCard"/>
-    /// instance and replaces them by own <see cref="PropertyID"/>s.
-    /// </remarks>
-    public void Simplify()
-    {
-        foreach (IEnumerable<VCardProperty?> coll in _vCard.AsProperties()
-            .Where(x => x.Value is IEnumerable<VCardProperty?>)
-            .Select(x => x.Value)
-            .Cast<IEnumerable<VCardProperty?>>())
-        {
-            int? localAppID = CurrentAppID?.LocalID;
-            bool resetAppIDs = localAppID.HasValue && localAppID.Value != 1;
+    ///// <summary>
+    ///// Performs the "Global Context Simplification" as described in
+    ///// RFC&#160;6350, 7.2.5.
+    ///// </summary>
+    ///// <remarks>
+    ///// This method can be called after the data synchronization has 
+    ///// completed. It removes the <see cref="AppIDProperty"/> objects
+    ///// that reference foreign vCard clients and all the 
+    ///// <see cref="PropertyID"/>s set by these clients from the <see cref="VCard"/>
+    ///// instance and replaces them by own <see cref="PropertyID"/>s.
+    ///// </remarks>
+    //public void Simplify()
+    //{
+    //    foreach (IEnumerable<VCardProperty?> coll in _vCard.AsProperties()
+    //        .Where(x => x.Value is IEnumerable<VCardProperty?>)
+    //        .Select(x => x.Value)
+    //        .Cast<IEnumerable<VCardProperty?>>())
+    //    {
+    //        int? localAppID = CurrentAppID?.LocalID;
+    //        bool resetAppIDs = localAppID.HasValue && localAppID.Value != 1;
 
-            _vCard.AppIDs = null;
-            RegisterAppInVCardInstance(VCard.App);
+    //        _vCard.AppIDs = null;
+    //        RegisterAppInVCardInstance(VCard.App);
 
-            foreach (VCardProperty? prop in coll)
-            {
-                if (prop != null)
-                {
-                    var arr =
-                        prop.Parameters.PropertyIDs?
-                        .Where(x => x.App == localAppID).ToArray();
+    //        foreach (VCardProperty? prop in coll)
+    //        {
+    //            if (prop != null)
+    //            {
+    //                var arr =
+    //                    prop.Parameters.PropertyIDs?
+    //                    .Where(x => x.App == localAppID).ToArray();
 
-                    if (arr != null && resetAppIDs)
-                    {
-                        for (int i = 0; i < arr.Length; i++)
-                        {
-                            arr[i] = new PropertyID(arr[i].ID, CurrentAppID);
-                        }
-                    }
-                }
-            }
+    //                if (arr != null && resetAppIDs)
+    //                {
+    //                    for (int i = 0; i < arr.Length; i++)
+    //                    {
+    //                        arr[i] = new PropertyID(arr[i].ID, CurrentAppID);
+    //                    }
+    //                }
+    //            }
+    //        }
 
-            SetPropertyIDs();
-        }
-    }
+    //        SetPropertyIDs();
+    //    }
+    //}
 
     
     private void RegisterAppInVCardInstance(string? globalID)

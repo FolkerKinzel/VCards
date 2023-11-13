@@ -26,7 +26,7 @@ public static class RelExtension
     /// in <paramref name="flags" /> are set on it.</param>
     /// <param name="flags">A single <see cref="Rel" /> value or a combination
     /// of several <see cref="Rel" /> values.</param>
-    /// <returns>Returns <c>true</c>, if all flags set in <paramref name="flags" />
+    /// <returns>Returns <c>true</c> if all flags set in <paramref name="flags" />
     /// are also set in <paramref name="value" />. If <paramref name="value" /> is <c>null</c>,
     /// <c>false</c> is returned.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

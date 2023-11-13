@@ -27,7 +27,7 @@ public sealed partial class DateAndOrTime
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <remarks>
-    /// If the <see cref="DateOnly.Year"/> is less than 5 it should be treated a
+    /// If the <see cref="DateOnly.Year"/> is less than 5, it should be treated a
     /// irrelevant. Use the extension method <see cref="DateOnlyExtension.HasYear"/>
     /// to check this.
     /// </remarks>

@@ -144,6 +144,11 @@ internal abstract class VcfSerializer : IDisposable
         VCardToSerialize = vCard;
         ReplenishRequiredProperties();
 
+        if(Options.HasFlag(VcfOptions.SetPropertyIDs)) 
+        {
+            SetPropertyIDs();
+        }
+
         ResetBuilders();
         _writer.WriteLine("BEGIN:VCARD");
         _writer.Write(VCard.PropKeys.VERSION);
@@ -154,6 +159,8 @@ internal abstract class VcfSerializer : IDisposable
 
         _writer.WriteLine("END:VCARD");
     }
+
+    protected virtual void SetPropertyIDs() => VCardToSerialize.Sync.SetPropertyIDs();
 
     protected abstract void ReplenishRequiredProperties();
 

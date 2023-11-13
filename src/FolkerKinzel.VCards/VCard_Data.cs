@@ -222,9 +222,9 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>GENDER</c>: Defines the person's gender. <c>(4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if they
+    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public IEnumerable<GenderProperty?>? GenderViews
     {
         get => Get<IEnumerable<GenderProperty?>?>(Prop.GenderViews);

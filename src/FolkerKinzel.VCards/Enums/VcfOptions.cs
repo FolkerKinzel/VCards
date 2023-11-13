@@ -1,6 +1,7 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Enums;
 
@@ -38,10 +39,11 @@ public enum VcfOptions
     /// <summary> Default setting (corresponds to  <see cref="WriteGroups" />
     /// | <see cref="WriteRfc6474Extensions" /> | <see cref="WriteRfc6715Extensions" /> 
     /// | <see cref="WriteImppExtension" /> | <see cref="WriteXExtensions" /> 
-    /// | <see cref="AllowMultipleAdrAndLabelInVCard21" /> | <see cref="UpdateTimeStamp"/>) </summary>
+    /// | <see cref="AllowMultipleAdrAndLabelInVCard21" /> | <see cref="UpdateTimeStamp"/>
+    /// | <see cref="SetPropertyIDs"/>) </summary>
     Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions 
-            | WriteImppExtension | WriteXExtensions 
-            | AllowMultipleAdrAndLabelInVCard21 | UpdateTimeStamp,
+            | WriteImppExtension | WriteXExtensions | AllowMultipleAdrAndLabelInVCard21 
+            | UpdateTimeStamp | SetPropertyIDs,
 
     /// <summary>Set the flag to write property group identifiers.</summary>
     WriteGroups = 1,
@@ -102,4 +104,10 @@ public enum VcfOptions
     /// serializing VCF.
     /// </summary>
     UpdateTimeStamp = 1 << 13,
+
+    /// <summary>
+    /// Set the flag to call <see cref="SyncOperation.SetPropertyIDs"/> automatically when serializing
+    /// a <see cref="VCard"/> as vCard 4.0 (or higher).
+    /// </summary>
+    SetPropertyIDs = 1 << 14,
 }

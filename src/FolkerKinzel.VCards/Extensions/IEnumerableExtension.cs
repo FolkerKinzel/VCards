@@ -37,8 +37,8 @@ public static class IEnumerableExtension
     /// </note>
     /// <para>
     /// The method is - if necessary - automatically called by the serialization methods
-    /// of <see cref="VCard" />. It only makes sense to use it in your own code, if
-    /// a <see cref="VCard" /> object is to be saved as vCard&#160;4.0 and if each VCF file
+    /// of <see cref="VCard" />. It only makes sense to use it in your own code if
+    /// a <see cref="VCard" /> object is to be saved as vCard&#160;4.0, and if each VCF file
     /// should only contain a single vCard. (As a rule, this approach is not advantageous
     /// as it endangers referential integrity.)
     /// </para>
@@ -46,7 +46,7 @@ public static class IEnumerableExtension
     /// <example>
     /// <para>
     /// The example demonstrates how a <see cref="VCard" /> object can be saved as a
-    /// vCard&#160;4.0, if it is intended that a VCF file should only contain one single
+    /// vCard&#160;4.0 if it is intended that a VCF file should only contain one single
     /// vCard. The example may also show that this approach is generally not advantageous,
     /// because it endangers referential integrity.
     /// </para>
@@ -328,7 +328,7 @@ public static class IEnumerableExtension
     /// </para>
     /// <para>
     /// "First" is defined as the item with the lowest <see cref="ParameterSection.Index"/>
-    /// value. If <see cref="ParameterSection.Index"/> is <c>null</c>&#160;<see cref="int.MaxValue"/>
+    /// value. If <see cref="ParameterSection.Index"/> is <c>null</c>, <see cref="int.MaxValue"/>
     /// is assumed.
     /// </para>
     /// </returns>
@@ -367,7 +367,7 @@ public static class IEnumerableExtension
     /// </list>
     /// <para>
     /// "First" is defined as the item with the lowest <see cref="ParameterSection.Index"/>
-    /// value. If <see cref="ParameterSection.Index"/> is <c>null</c>&#160;<see cref="int.MaxValue"/>
+    /// value. If <see cref="ParameterSection.Index"/> is <c>null</c>, <see cref="int.MaxValue"/>
     /// is assumed.
     /// </para>
     /// </returns>
@@ -392,7 +392,7 @@ public static class IEnumerableExtension
     /// references are removed in any case.</param>
     /// <returns>A collection that contains the items of <paramref name="values"/> ordered ascending
     /// by the value of their <see cref="ParameterSection.Preference"/> property. The returned collection 
-    /// won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c>
+    /// won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c>,
     /// an empty collection will be returned.</returns>
     /// <remarks>
     /// The method is useful to examine <see cref="VCard"/> properties with plural names but not
@@ -423,12 +423,12 @@ public static class IEnumerableExtension
     /// <para>
     /// A collection that contains the items of <paramref name="values"/> ordered ascending
     /// by the value of their <see cref="ParameterSection.Index"/> property. If the
-    /// <see cref="ParameterSection.Index"/> property is <c>null</c>&#160;<see cref="int.MaxValue"/>
+    /// <see cref="ParameterSection.Index"/> property is <c>null</c>, <see cref="int.MaxValue"/>
     /// is assumed.
     /// </para>
     /// <para>
     /// The returned collection 
-    /// won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c>
+    /// won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c>,
     /// an empty collection will be returned. 
     /// </para>
     /// </returns>
@@ -457,7 +457,7 @@ public static class IEnumerableExtension
     /// </para>
     /// <para>
     /// The Values of the groups are guaranteed to be not <c>null</c>. If the method parameter 
-    /// <paramref name="values"/> is <c>null</c> an empty collection is returned.
+    /// <paramref name="values"/> is <c>null</c>, an empty collection is returned.
     /// </para>
     /// </returns>
     /// <remarks>
@@ -488,7 +488,7 @@ public static class IEnumerableExtension
     /// </para>
     /// <para>
     /// The Values of the groups are guaranteed to be not <c>null</c>. If the parameter 
-    /// <paramref name="values"/> is <c>null</c> an empty collection is returned.
+    /// <paramref name="values"/> is <c>null</c>, an empty collection is returned.
     /// </para>
     /// </returns>
     /// <remarks>
@@ -590,7 +590,7 @@ public static class IEnumerableExtension
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="first">The first sequence (or <see cref="VCardProperty"/> object) to concatenate or <c>null</c>.</param>
     /// <param name="second">The second sequence (or <see cref="VCardProperty"/> object) to concatenate or <c>null</c>.
-    /// If <paramref name="second"/> is <c>null</c> a <c>null</c> reference is appended to <paramref name="first"/>.</param>
+    /// If <paramref name="second"/> is <c>null</c>, a <c>null</c> reference is appended to <paramref name="first"/>.</param>
     /// <returns>An <see cref="IEnumerable{T}"/> that contains the concatenated elements of the two input sequences.</returns>
     /// <remarks>
     /// The method works similar to <see cref="System.Linq.Enumerable.Concat{TSource}(IEnumerable{TSource}, IEnumerable{TSource})"/>
