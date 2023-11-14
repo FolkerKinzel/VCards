@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FolkerKinzel.VCards;
+﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
 using VC = FolkerKinzel.VCards.Models;
 

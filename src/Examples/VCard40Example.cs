@@ -1,4 +1,4 @@
-﻿// Compile for .NET 7.0 or higher and FolkerKinzel.VCards 6.0.0-beta.1 or higher
+﻿// Compile for .NET 8.0 or higher and FolkerKinzel.VCards 7.0.0-beta.1 or higher
 using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;

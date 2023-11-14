@@ -21,7 +21,6 @@ public enum PCl
     /// personal life.</summary>
     Home = 1,
 
-
     /// <summary> <c>WORK</c>: Implies that the property is related to an individual's
     /// work place.</summary>
     Work = 2

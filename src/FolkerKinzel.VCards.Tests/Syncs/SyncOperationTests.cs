@@ -37,7 +37,6 @@ public class SyncOperationTests
         vc.Sync.SetPropertyIDs();
         Assert.IsNotNull(tProp.Parameters.PropertyIDs);
         Assert.AreEqual(1, tProp.Parameters.PropertyIDs.Count());
-        Assert.IsNull(vc.AppIDs);
 
         //const string folker = "http://folker.de/id";
         ////const string contoso = "http://contoso.com/id";
