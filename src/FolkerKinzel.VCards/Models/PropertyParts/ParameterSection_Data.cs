@@ -8,7 +8,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 /// <threadsafety static="true" instance="false" />
 public sealed partial class ParameterSection
 {
-    private readonly Dictionary<VCdParam, object> _propDic = new();
+    private readonly Dictionary<VCdParam, object> _propDic = [];
 
     [return: MaybeNull]
     private T Get<T>(VCdParam prop)
@@ -16,7 +16,7 @@ public sealed partial class ParameterSection
 
     private void Set<T>(VCdParam prop, T value)
     {
-        if (value is null || value.Equals(default))
+        if (value is null || value.Equals(default(T)))
         {
             _ = _propDic.Remove(prop);
         }

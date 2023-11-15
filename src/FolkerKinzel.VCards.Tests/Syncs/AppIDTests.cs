@@ -22,7 +22,7 @@ public class AppIDTests
         Assert.IsTrue(AppID.TryParse(pidMap, out AppID? client));
 
         Assert.AreEqual(2, client.LocalID);
-        Assert.AreEqual(new Uri(pidMap.Substring(2)), client.GlobalID);
+        Assert.AreEqual(pidMap.Substring(2), client.GlobalID);
     }
 
     [TestMethod]
@@ -33,7 +33,7 @@ public class AppIDTests
         Assert.IsTrue(AppID.TryParse(pidMap, out AppID? client));
 
         Assert.AreEqual(2, client.LocalID);
-        Assert.AreEqual(new Uri(pidMap.Substring(6)), client.GlobalID);
+        Assert.AreEqual(pidMap.Substring(6), client.GlobalID);
     }
 
     [TestMethod]

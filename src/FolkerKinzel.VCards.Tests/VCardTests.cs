@@ -3,12 +3,14 @@ using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Syncs;
 using FolkerKinzel.VCards.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FolkerKinzel.VCards.Tests;
 
 [TestClass]
 public class VCardTests
 {
+    [NotNull]
     public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
 
 
@@ -53,10 +55,10 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new TextProperty("Folker") }
+            DisplayNames = new TextProperty[] { new("Folker") }
         };
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, $"SaveTest_{version}.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, $"SaveTest_{version}.vcf");
 
         vcard.SaveVcf(path, version);
 
@@ -78,7 +80,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new TextProperty("Folker") }
+            DisplayNames = new TextProperty[] { new("Folker") }
         };
 
         vcard.SaveVcf(null!);
@@ -91,7 +93,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new TextProperty("Folker") }
+            DisplayNames = new TextProperty[] { new("Folker") }
         };
 
         vcard.SaveVcf("   ");
@@ -107,7 +109,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new TextProperty("Folker") }
+            DisplayNames = new TextProperty[] { new("Folker") }
         };
 
         vcard.SerializeVcf(null!, version);
@@ -122,7 +124,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new TextProperty("Folker") }
+            DisplayNames = new TextProperty[] { new("Folker") }
         };
 
         using var ms = new MemoryStream();
@@ -146,7 +148,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new TextProperty("Folker") }
+            DisplayNames = new TextProperty[] { new("Folker") }
         };
 
         using var ms = new MemoryStream();
@@ -166,7 +168,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new TextProperty("Folker") }
+            DisplayNames = new TextProperty[] { new("Folker") }
         };
 
         using var ms = new MemoryStream();
@@ -184,7 +186,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new TextProperty("Folker") }
+            DisplayNames = new TextProperty[] { new("Folker") }
         };
 
         using var ms = new MemoryStream();
@@ -218,7 +220,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new TextProperty("Folker") }
+            DisplayNames = new TextProperty[] { new("Folker") }
         };
 
         string s = vcard.ToVcfString(version);
@@ -250,7 +252,7 @@ public class VCardTests
 
         var pidMap1 = new AppID(5, "http://folkerkinzel.de/file1.htm");
         var pidMap2 = new AppID(8, "http://folkerkinzel.de/file2.htm");
-        textProp.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(1, pidMap1), new PropertyID(7, null), new PropertyID(1, pidMap2) };
+        textProp.Parameters.PropertyIDs = new PropertyID[] { new(1, pidMap1), new(7, null), new(1, pidMap2) };
 
         var vc = new VCard()
         {
@@ -337,7 +339,7 @@ public class VCardTests
         Assert.IsTrue(vc.IsEmpty());
 
         var text = new TextProperty("  ");
-        var names = new TextProperty?[] { null, text, new TextProperty(null) };
+        var names = new TextProperty?[] { null, text, new(null) };
         vc.DisplayNames = names;
         Assert.IsTrue(vc.IsEmpty());
 
@@ -375,13 +377,13 @@ public class VCardTests
         vc.TimeStamp = new TimeStampProperty();
         vc.Addresses = new AddressProperty?[] {
                                               null,
-                                              new AddressProperty("1", null, null, null, group: " g r 1 "),
-                                              new AddressProperty("2", null, null, null, group: "41")
+                                              new("1", null, null, null, group: " g r 1 "),
+                                              new("2", null, null, null, group: "41")
                                               };
         vc.GeoCoordinates = new GeoProperty?[]{
-                                               new GeoProperty(new GeoCoordinate(1, 1), group: "GR1"),
+                                               new(new GeoCoordinate(1, 1), group: "GR1"),
                                                null,
-                                               new GeoProperty(new GeoCoordinate(2, 2))
+                                               new(new GeoCoordinate(2, 2))
                                              };
         Assert.AreEqual(2, vc.GroupIDs.Count());
         Assert.AreEqual("42", vc.NewGroup());

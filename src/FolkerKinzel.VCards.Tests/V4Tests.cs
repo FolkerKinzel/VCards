@@ -55,7 +55,7 @@ public class V4Tests
 
         vcard.Notes = new TextProperty[]
         {
-                new TextProperty(UNITEXT)
+                new(UNITEXT)
         };
 
         vcard.Keys = DataProperty.FromText(ASCIITEXT);

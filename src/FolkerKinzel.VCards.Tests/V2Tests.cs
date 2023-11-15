@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
@@ -78,7 +77,7 @@ public class V2Tests
 
         vcard.Notes = new TextProperty[]
         {
-                new TextProperty(UNITEXT)
+                new(UNITEXT)
         };
 
         vcard.Keys = DataProperty.FromText(ASCIITEXT);
@@ -300,7 +299,7 @@ public class V2Tests
         var xiamoiMobilePhone = new TextProperty(whatsAppNumber);
         xiamoiMobilePhone.Parameters.NonStandard = new KeyValuePair<string, string>[]
         {
-                new KeyValuePair<string, string>("TYPE", "WhatsApp")
+                new("TYPE", "WhatsApp")
         };
 
         // Initialize the VCard:
@@ -308,12 +307,12 @@ public class V2Tests
         {
             NameViews = new NameProperty[]
             {
-                    new NameProperty(lastName: null, firstName: "zzMad Perla 45")
+                    new(lastName: null, firstName: "zzMad Perla 45")
             },
 
             DisplayNames = new TextProperty[]
             {
-                    new TextProperty("zzMad Perla 45")
+                    new("zzMad Perla 45")
             },
 
             Phones = new TextProperty[]

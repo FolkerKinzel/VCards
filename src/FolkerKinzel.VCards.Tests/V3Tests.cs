@@ -81,7 +81,7 @@ public class V3Tests
 
         vcard.Notes = new TextProperty[]
         {
-                new TextProperty(UNITEXT)
+                new(UNITEXT)
         };
 
         vcard.Keys = DataProperty.FromText(ASCIITEXT);
@@ -130,17 +130,17 @@ public class V3Tests
 
         vcard.NameViews = new NameProperty[]
         {
-                new NameProperty("Test", "Paul", null, null, null)
+                new("Test", "Paul", null, null, null)
         };
 
         vcard.DisplayNames = new TextProperty[]
         {
-                new TextProperty("Paul Test")
+                new("Paul Test")
         };
 
         vcard.Notes = new TextProperty[]
         {
-                new TextProperty(UNITEXT)
+                new(UNITEXT)
         };
 
         vcard.SaveVcf(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Paul Test.vcf"));
@@ -213,7 +213,7 @@ END:VCARD";
         var xiamoiMobilePhone = new TextProperty(whatsAppNumber);
         xiamoiMobilePhone.Parameters.NonStandard = new KeyValuePair<string, string>[]
         {
-                new KeyValuePair<string, string>("TYPE", "WhatsApp")
+                new("TYPE", "WhatsApp")
         };
 
         var vcard = new VCard

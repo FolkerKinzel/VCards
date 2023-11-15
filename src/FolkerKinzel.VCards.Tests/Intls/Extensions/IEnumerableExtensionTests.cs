@@ -8,16 +8,16 @@ public class IEnumerableExtensionTests
 {
     [TestMethod]
     public void FirstOrNullIntlTest1()
-        => Assert.IsNotNull(new TextProperty[] { new TextProperty(null) }.FirstOrNullIntl(false));
+        => Assert.IsNotNull(new TextProperty[] { new(null) }.FirstOrNullIntl(false));
 
     [TestMethod]
     public void PrefOrNullIntlTest1()
-        => Assert.IsNotNull(new TextProperty[] { new TextProperty(null) }.PrefOrNullIntl(static x => true, false));
+        => Assert.IsNotNull(new TextProperty[] { new(null) }.PrefOrNullIntl(static x => true, false));
 
     [TestMethod]
     public void OrderByIndexTest1()
     {
-        var props = new TextProperty[] { new TextProperty(null), new TextProperty("1") };
+        var props = new TextProperty[] { new(null), new("1") };
         CollectionAssert.AreNotEqual(props, props.OrderByIndexIntl(true).ToArray());
     }
 

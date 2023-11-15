@@ -43,7 +43,7 @@ internal static class Utility
         adr1.Parameters.Language = "de";
         adr1.Parameters.SortAs = sortAs;
         var pidMap = new AppID(7, "http://www.contoso.com/");
-        adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, pidMap), new PropertyID(2, null) };
+        adr1.Parameters.PropertyIDs = new PropertyID[] { new(3, pidMap), new(2, null) };
         adr1.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Parcel | Adr.Postal;
 
         var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
@@ -102,7 +102,7 @@ internal static class Utility
 
         var nonStandard1 = new NonStandardProperty("X-NON-STANDARD", "The value");
         nonStandard1.Parameters.NonStandard
-            = new KeyValuePair<string, string>[] { new KeyValuePair<string, string>("X-NONSTD", "para-value") };
+            = new KeyValuePair<string, string>[] { new("X-NONSTD", "para-value") };
 
         var nonStandard2 = new NonStandardProperty("X-WAKEUP", "07:00:00");
         nonStandard2.Parameters.DataType = Data.Time;

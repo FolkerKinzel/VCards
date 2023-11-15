@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Enums;
+﻿using System.Diagnostics.CodeAnalysis;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,6 +9,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests;
 [TestClass]
 public class IEnumerableExtensionTests
 {
+    [NotNull]
     public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
 
     private static List<VCard?> GenerateVCardList()
@@ -17,14 +19,14 @@ public class IEnumerableExtensionTests
             DisplayNames = new TextProperty?[]
             {
                 null,
-                new TextProperty("The Agent", "myGroup")
+                new("The Agent", "myGroup")
             }
         };
 
-        return new List<VCard?>
-        {
+        return
+        [
             null,
-            new VCard()
+            new()
             {
                 Relations = new RelationProperty?[]
                 {
@@ -32,7 +34,7 @@ public class IEnumerableExtensionTests
                     new RelationVCardProperty(agent, Rel.Agent | Rel.CoWorker, "otherGroup" )
                 }
             }
-        };
+        ];
     }
 
     [TestMethod]
@@ -89,7 +91,7 @@ public class IEnumerableExtensionTests
     [ExpectedException(typeof(ArgumentException))]
     public void SaveVcfTest_InvalidFilename(VCdVersion version)
     {
-        var list = new List<VCard?>() { new VCard() };
+        var list = new List<VCard?>() { new() };
 
         string path = "   ";
 
@@ -106,7 +108,7 @@ public class IEnumerableExtensionTests
     {
         var list = new List<VCard?>();
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_Empty.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_Empty.vcf");
 
         list.SaveVcf(path, version);
 
@@ -122,7 +124,7 @@ public class IEnumerableExtensionTests
     {
         List<VCard?>? list = null;
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_Empty.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_Empty.vcf");
 
         list!.SaveVcf(path, version);
     }
@@ -134,7 +136,7 @@ public class IEnumerableExtensionTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void SaveVcfTest_fileNameNull(VCdVersion version)
     {
-        var list = new List<VCard?>() { new VCard() };
+        var list = new List<VCard?>() { new() };
 
         list.SaveVcf(null!, version);
     }
@@ -144,7 +146,7 @@ public class IEnumerableExtensionTests
     {
         List<VCard?> list = GenerateVCardList();
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v2.1.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_v2.1.vcf");
 
         list.SaveVcf(path, VCdVersion.V2_1);
 
@@ -159,7 +161,7 @@ public class IEnumerableExtensionTests
     {
         List<VCard?> list = GenerateVCardList();
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v3.0.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_v3.0.vcf");
 
         list.SaveVcf(path, VCdVersion.V3_0);
 
@@ -175,7 +177,7 @@ public class IEnumerableExtensionTests
     {
         List<VCard?> list = GenerateVCardList();
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v4.0.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_v4.0.vcf");
 
         list.SaveVcf(path, VCdVersion.V4_0);
 
@@ -412,7 +414,7 @@ public class IEnumerableExtensionTests
         prop2.Parameters.AltID = "A";
         prop3.Parameters.AltID = "a";
 
-        TextProperty?[]? props = new[] { null, prop1, null, prop2, null, prop3, null, prop4, null, prop5, null };
+        TextProperty?[]? props = [null, prop1, null, prop2, null, prop3, null, prop4, null, prop5, null];
         IEnumerable<IGrouping<string?, TextProperty>> groups = props.GroupByAltID();
 
         Assert.AreEqual(3, groups.Count());
@@ -426,7 +428,7 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void NewAltIDTest2()
     {
-        var props = new TextProperty[] { new TextProperty("1"), new TextProperty("2"), new TextProperty("3") };
+        var props = new TextProperty[] { new("1"), new("2"), new("3") };
         Assert.AreEqual("0", props.NewAltID());
         props[2].Parameters.AltID = "TheAltID";
         Assert.AreEqual("0", props.NewAltID());
@@ -482,7 +484,7 @@ public class IEnumerableExtensionTests
         vc.DisplayNames = new TextProperty("Hi");
         vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
 
-        var props = new TextProperty?[] { new TextProperty("1"), null,  new TextProperty("2") };
+        var props = new TextProperty?[] { new("1"), null,  new("2") };
         vc.DisplayNames = vc.DisplayNames.ConcatWith(props);
 
         var nested = new List<TextProperty?[]>
@@ -510,6 +512,98 @@ public class IEnumerableExtensionTests
         vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
     }
 
+    [TestMethod]
+    public void SetPreferencesTest1()
+    {
+        TextProperty?[]? arr = null;
+
+        arr.SetPreferences();
+        arr.UnsetPreferences();
+            
+        arr = [new("1"), null, new(null), new("2")];
+
+        arr.SetPreferences();
+        Assert.AreEqual(1, arr[0]!.Parameters.Preference);
+        Assert.AreEqual(100, arr[2]!.Parameters.Preference);
+        Assert.AreEqual(2, arr[3]!.Parameters.Preference);
+
+        arr.UnsetPreferences();
+        Assert.AreEqual(100, arr[0]!.Parameters.Preference);
+        Assert.AreEqual(100, arr[2]!.Parameters.Preference);
+        Assert.AreEqual(100, arr[3]!.Parameters.Preference);
+
+        arr.SetPreferences(skipEmptyItems: false);
+        Assert.AreEqual(1, arr[0]!.Parameters.Preference);
+        Assert.AreEqual(2, arr[2]!.Parameters.Preference);
+        Assert.AreEqual(3, arr[3]!.Parameters.Preference);
+
+        arr.SetPreferences();
+        Assert.AreEqual(1, arr[0]!.Parameters.Preference);
+        Assert.AreEqual(100, arr[2]!.Parameters.Preference);
+        Assert.AreEqual(2, arr[3]!.Parameters.Preference);
+    }
+
+
+    [TestMethod]
+    public void SetIndexesTest1()
+    {
+        TextProperty?[]? arr = null;
+
+        arr.SetIndexes();
+        arr.UnsetIndexes();
+
+        arr = [new("1"), null, new(null), new("2")];
+
+        arr.SetIndexes();
+        Assert.AreEqual(1, arr[0]!.Parameters.Index);
+        Assert.AreEqual(null, arr[2]!.Parameters.Index);
+        Assert.AreEqual(2, arr[3]!.Parameters.Index);
+
+        arr.UnsetIndexes();
+        Assert.AreEqual(null, arr[0]!.Parameters.Index);
+        Assert.AreEqual(null, arr[2]!.Parameters.Index);
+        Assert.AreEqual(null, arr[3]!.Parameters.Index);
+
+        arr.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, arr[0]!.Parameters.Index);
+        Assert.AreEqual(2, arr[2]!.Parameters.Index);
+        Assert.AreEqual(3, arr[3]!.Parameters.Index);
+
+        arr.SetIndexes();
+        Assert.AreEqual(1, arr[0]!.Parameters.Index);
+        Assert.AreEqual(null, arr[2]!.Parameters.Index);
+        Assert.AreEqual(2, arr[3]!.Parameters.Index);
+    }
+
+    [TestMethod]
+    public void SetAltIDTest1()
+    {
+        TextProperty?[]? arr = null;
+
+        arr.SetAltID("1");
+
+        arr = [new("1"), null, new(null), new("2")];
+
+        arr.SetAltID("1");
+        Assert.AreEqual("1", arr[0]!.Parameters.AltID);
+        Assert.AreEqual("1", arr[2]!.Parameters.AltID);
+        Assert.AreEqual("1", arr[3]!.Parameters.AltID);
+
+        //arr.UnsetIndexes();
+        //Assert.AreEqual(null, arr[0]!.Parameters.Index);
+        //Assert.AreEqual(null, arr[2]!.Parameters.Index);
+        //Assert.AreEqual(null, arr[3]!.Parameters.Index);
+
+        //arr.SetIndexes(skipEmptyItems: false);
+        //Assert.AreEqual(1, arr[0]!.Parameters.Index);
+        //Assert.AreEqual(2, arr[2]!.Parameters.Index);
+        //Assert.AreEqual(3, arr[3]!.Parameters.Index);
+
+        //arr.SetIndexes();
+        //Assert.AreEqual(1, arr[0]!.Parameters.Index);
+        //Assert.AreEqual(null, arr[2]!.Parameters.Index);
+        //Assert.AreEqual(2, arr[3]!.Parameters.Index);
+    }
 
     //[TestMethod]
     //public void ConcatenateTest4()

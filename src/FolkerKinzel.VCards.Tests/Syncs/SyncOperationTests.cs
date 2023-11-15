@@ -10,7 +10,7 @@ public class SyncOperationTests
     public void SetPropertyIDsTest1()
     {
         var vc = new VCard();
-        var arr = new TextProperty[] { new TextProperty("Donald"), new TextProperty("Duck") };
+        var arr = new TextProperty[] { new("Donald"), new("Duck") };
         vc.DisplayNames = arr;
 
         vc.Sync.SetPropertyIDs();
