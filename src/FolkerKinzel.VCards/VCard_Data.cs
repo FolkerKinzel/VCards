@@ -261,10 +261,10 @@ public sealed partial class VCard
     /// represents. If the URI can be used for voice and/or video, the 
     /// <see cref="VCard.Phones" /> property SHOULD be used in addition to this 
     /// property.</remarks>
-    public IEnumerable<TextProperty?>? InstantMessengers
+    public IEnumerable<TextProperty?>? Messengers
     {
-        get => Get<IEnumerable<TextProperty?>?>(Prop.InstantMessengers);
-        set => Set(Prop.InstantMessengers, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Messengers);
+        set => Set(Prop.Messengers, value);
     }
 
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
@@ -300,13 +300,6 @@ public sealed partial class VCard
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.Languages);
         set => Set(Prop.Languages, value);
-    }
-
-    /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
-    public TimeStampProperty? TimeStamp
-    {
-        get => Get<TimeStampProperty?>(Prop.TimeStamp);
-        set => Set(Prop.TimeStamp, value);
     }
 
     /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
@@ -363,9 +356,9 @@ public sealed partial class VCard
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
     /// <remarks>
     /// <para>
-    /// <see cref="NonStandard" /> contains all vCard properties that could not 
+    /// <see cref="NonStandards" /> contains all vCard properties that could not 
     /// be evaluated, when parsing the vCard. To serialize the content of 
-    /// <see cref="NonStandard" /> into a VCF file, the flag 
+    /// <see cref="NonStandards" /> into a VCF file, the flag 
     /// <see cref="VcfOptions.WriteNonStandardProperties"/> has to be set. 
     /// </para>
     /// <para>
@@ -453,7 +446,7 @@ public sealed partial class VCard
     /// </item>
     /// </list>
     /// </remarks>
-    public IEnumerable<NonStandardProperty?>? NonStandard
+    public IEnumerable<NonStandardProperty?>? NonStandards
     {
         get => Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandard);
         set => Set(Prop.NonStandard, value);
@@ -551,6 +544,17 @@ public sealed partial class VCard
         set => Set(Prop.Sources, value);
     }
 
+    /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
+    /// <remarks>
+    /// With <see cref="VcfOptions.Default"/> the flag <see cref="VcfOptions.UpdateTimeStamp"/> is set. So 
+    /// this property is normally updated automatically when serializing VCF.
+    /// </remarks>
+    public TimeStampProperty? TimeStamp
+    {
+        get => Get<TimeStampProperty?>(Prop.TimeStamp);
+        set => Set(Prop.TimeStamp, value);
+    }
+
     /// <summary> <c>TZ</c>: The time zone(s) of the vCard object. <c>(2,3,4)</c></summary>
     /// <remarks>
     /// <note type="tip">
@@ -586,16 +590,16 @@ public sealed partial class VCard
 
     /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>
-    public IEnumerable<TextProperty?>? URLs
+    public IEnumerable<TextProperty?>? Urls
     {
-        get => Get<IEnumerable<TextProperty?>?>(Prop.URLs);
-        set => Set(Prop.URLs, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Urls);
+        set => Set(Prop.Urls, value);
     }
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
-    public IEnumerable<XmlProperty?>? XmlProperties
+    public IEnumerable<XmlProperty?>? Xmls
     {
-        get => Get<IEnumerable<XmlProperty?>?>(Prop.XmlProperties);
-        set => Set(Prop.XmlProperties, value);
+        get => Get<IEnumerable<XmlProperty?>?>(Prop.Xmls);
+        set => Set(Prop.Xmls, value);
     }
 }

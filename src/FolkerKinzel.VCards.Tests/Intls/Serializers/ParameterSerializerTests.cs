@@ -22,12 +22,12 @@ public class ParameterSerializerTests
         dic[""] = "not there";
         dic["TYPE"] = "NON-STANDARD";
         prop.Parameters.NonStandard = dic;
-        var vc = new VCard { NonStandard = prop };
+        var vc = new VCard { NonStandards = prop };
 
         string s = vc.ToVcfString(options: VcfOptions.All);
 
         vc = VCard.ParseVcf(s)[0];
-        prop = vc.NonStandard!.First();
+        prop = vc.NonStandards!.First();
         Assert.AreEqual(2, prop!.Parameters.NonStandard!.Count());
     }
 }

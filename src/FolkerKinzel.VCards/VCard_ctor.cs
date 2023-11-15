@@ -156,7 +156,7 @@ public sealed partial class VCard
                     Notes = Concat(Notes, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.URL:
-                    URLs = Concat(URLs, new TextProperty(vcfRow, Version));
+                    Urls = Concat(Urls, new TextProperty(vcfRow, Version));
                     break;
                 case PropKeys.UID:
                     try
@@ -261,8 +261,8 @@ public sealed partial class VCard
                     }
                     break;
                 case PropKeys.IMPP:
-                    InstantMessengers =
-                        Concat(InstantMessengers, new TextProperty(vcfRow, this.Version));
+                    Messengers =
+                        Concat(Messengers, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.NonStandard.InstantMessenger.X_AIM:
                 case PropKeys.NonStandard.InstantMessenger.X_GADUGADU:
@@ -287,9 +287,9 @@ public sealed partial class VCard
                         var textProp = new TextProperty(vcfRow, this.Version);
 
                         if (textProp.Value != null &&
-                            (InstantMessengers?.All(x => x?.Value != textProp.Value) ?? true))
+                            (Messengers?.All(x => x?.Value != textProp.Value) ?? true))
                         {
-                            InstantMessengers = Concat(InstantMessengers, textProp);
+                            Messengers = Concat(Messengers, textProp);
 
                             var para = textProp.Parameters;
                             XMessengerParameterConverter.ConvertToInstantMessengerType(para);
@@ -390,7 +390,7 @@ public sealed partial class VCard
                     this.Profile = new ProfileProperty(vcfRow, this.Version);
                     break;
                 case PropKeys.XML:
-                    XmlProperties = Concat(XmlProperties, new XmlProperty(vcfRow));
+                    Xmls = Concat(Xmls, new XmlProperty(vcfRow));
                     break;
                 case PropKeys.CLIENTPIDMAP:
                     if (AppIDProperty.TryParse(vcfRow, out AppIDProperty? prop))
@@ -431,7 +431,7 @@ public sealed partial class VCard
                     OrgDirectories = Concat(OrgDirectories, new TextProperty(vcfRow, this.Version));
                     break;
                 default:
-                    NonStandard = Concat(NonStandard, new NonStandardProperty(vcfRow));
+                    NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
                     break;
             };//switch
 

@@ -153,7 +153,7 @@ internal static class Utility
             Roles = new TextProperty("Rechte Hand"),
             Titles = new TextProperty("Sündenbock"),
             UniqueIdentifier = new UuidProperty(),
-            URLs = new TextProperty("www.folker.com"),
+            Urls = new TextProperty("www.folker.com"),
             DirectoryName = new TextProperty("Webseite"),
             Access = new AccessProperty(Access.Confidential),
             GenderViews = new GenderProperty(Sex.NonOrNotApplicable),
@@ -164,15 +164,15 @@ internal static class Utility
             Languages = new TextProperty("de"),
             Notes = new TextProperty("Kommentar"),
 
-            InstantMessengers = new TextProperty[]
+            Messengers = new TextProperty[]
             {
                     impp1, impp2, impp3, impp4, impp5, impp6, impp7, impp8, impp9, impp10, impp11, impp12
             },
 
             Relations = new RelationProperty[] { rel1, rel2 },
             Organizations = new OrgProperty("The ÄÖÜ Organization", new string[] { "Department", "Office" }),
-            NonStandard = nonStandard,
-            XmlProperties = xml1,
+            NonStandards = nonStandard,
+            Xmls = xml1,
         };
 
         return vc;

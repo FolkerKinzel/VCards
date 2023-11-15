@@ -267,10 +267,10 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.EMails:
                     AppendEMails((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case Prop.URLs:
+                case Prop.Urls:
                     AppendURLs((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case Prop.InstantMessengers:
+                case Prop.Messengers:
                     AppendInstantMessengerHandles((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case Prop.Keys:
@@ -309,7 +309,7 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.Notes:
                     AppendNotes((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case Prop.XmlProperties:
+                case Prop.Xmls:
                     AppendXmlProperties((IEnumerable<XmlProperty?>)kvp.Value);
                     break;
                 case Prop.Logos:

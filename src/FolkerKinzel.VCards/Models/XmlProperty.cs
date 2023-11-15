@@ -7,7 +7,7 @@ namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates the data of the vCard property <c>XML</c>, which enables
 /// embedded XML data in VCF files.</summary>
-/// <seealso cref="VCard.XmlProperties"/>
+/// <seealso cref="VCard.Xmls"/>
 /// <seealso cref="XElement"/>
 public sealed class XmlProperty : TextProperty, IEnumerable<XmlProperty>
 {

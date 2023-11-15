@@ -39,7 +39,7 @@ internal static class WhatsAppDemo1
             },
 
             // Add the WhatsApp-Handle:
-            InstantMessengers = new VC::TextProperty[]
+            Messengers = new VC::TextProperty[]
             {
                     whatsAppImpp
             },

@@ -604,6 +604,38 @@ public static class IEnumerableExtension
         return first is null ? second : first.Concat(second);
     }
 
+    /// <summary>
+    /// Removes each occurrence of <paramref name="value"/> from <paramref name="values"/>.
+    /// </summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
+    /// derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects to edit. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// references.</param>
+    /// <param name="value">The <see cref="VCardProperty"/> to remove or <c>null</c> to remove
+    /// <c>null</c> references.</param>
+    /// <returns><paramref name="values"/> without occurrences of <paramref name="value"/>.
+    /// If <paramref name="values"/> is <c>null</c>, <c>null</c> is returned.</returns>
+    public static IEnumerable<TSource?>? Remove<TSource>(
+        this IEnumerable<TSource?>? values, TSource? value) where TSource : VCardProperty 
+        => values?.Where(x => x != value);
+
+    /// <summary>
+    /// Removes each item that matches the specified <paramref name="predicate"/> from 
+    /// <paramref name="values"/>.</summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class 
+    /// that's derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects to edit. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// references.</param>
+    /// <param name="predicate">A <see cref="Func{T, TResult}"/> that returns <c>true</c> for
+    /// items that are to remove.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"><paramref name="predicate"/> is <c>null</c>.</exception>
+    public static IEnumerable<TSource?>? Remove<TSource>(
+        this IEnumerable<TSource?>? values, Func<TSource?, bool> predicate) where TSource : VCardProperty
+        => predicate is null ? throw new ArgumentNullException(nameof(predicate))
+                             : (values?.Where(x => !predicate(x)));
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Preference"/> properties of 

@@ -17,9 +17,9 @@ public sealed class AccessProperty : VCardProperty
     private AccessProperty(AccessProperty prop) : base(prop) => Value = prop.Value;
 
     /// <summary> Initializes a new <see cref="AccessProperty" /> object. </summary>
-    /// <param name="value">A member of the <see cref="Access" /> enum.</param>
-    public AccessProperty(Access value)
-        : base(new ParameterSection(), null) => Value = value;
+    /// <param name="access">A member of the <see cref="Access" /> enum.</param>
+    public AccessProperty(Access access)
+        : base(new ParameterSection(), null) => Value = access;
 
 
     internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)

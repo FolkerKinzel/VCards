@@ -22,7 +22,7 @@ namespace FolkerKinzel.VCards.Models;
 /// </para>
 /// </note>
 /// </remarks>
-/// <seealso cref="VCard.NonStandard"/>
+/// <seealso cref="VCard.NonStandards"/>
 public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandardProperty>
 {
     /// <summary>Copy ctor.</summary>

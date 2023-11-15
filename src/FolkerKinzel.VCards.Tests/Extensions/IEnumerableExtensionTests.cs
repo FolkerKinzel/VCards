@@ -588,67 +588,21 @@ public class IEnumerableExtensionTests
         Assert.AreEqual("1", arr[0]!.Parameters.AltID);
         Assert.AreEqual("1", arr[2]!.Parameters.AltID);
         Assert.AreEqual("1", arr[3]!.Parameters.AltID);
-
-        //arr.UnsetIndexes();
-        //Assert.AreEqual(null, arr[0]!.Parameters.Index);
-        //Assert.AreEqual(null, arr[2]!.Parameters.Index);
-        //Assert.AreEqual(null, arr[3]!.Parameters.Index);
-
-        //arr.SetIndexes(skipEmptyItems: false);
-        //Assert.AreEqual(1, arr[0]!.Parameters.Index);
-        //Assert.AreEqual(2, arr[2]!.Parameters.Index);
-        //Assert.AreEqual(3, arr[3]!.Parameters.Index);
-
-        //arr.SetIndexes();
-        //Assert.AreEqual(1, arr[0]!.Parameters.Index);
-        //Assert.AreEqual(null, arr[2]!.Parameters.Index);
-        //Assert.AreEqual(2, arr[3]!.Parameters.Index);
     }
 
-    //[TestMethod]
-    //public void ConcatenateTest4()
-    //{
-    //    var vc = new VCard();
+    [TestMethod]
+    public void RemoveTest1()
+    {
+        IEnumerable<TextProperty?>? numerable = null;
+        Assert.IsNull(numerable.Remove(new TextProperty("Hi")));
+    }
 
-    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(null);
-
-    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(new TextProperty("Hi"));
-    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(null);
-    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(new TextProperty("Hi"));
-    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(null);
-    //    Assert.AreEqual(3, vc.DisplayNames.Where(x => x == null).Count());
-    //    vc.DisplayNames = new TextProperty("Hi");
-    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(new TextProperty("Hi"));
-
-    //    var props = new TextProperty?[] { new TextProperty("1"), null, new TextProperty("2") };
-    //    vc.DisplayNames = vc.DisplayNames.ConcatWith2(props);
-
-    //    var nested = new List<TextProperty?[]>();
-    //    nested.Add(props);
-    //    IEnumerable<IEnumerable<TextProperty?>> nested2 = nested;
-
-    //    // This MUST not compile:
-    //    //vc.DisplayNames = vc.DisplayNames.ConcatWith2(nested2);
-
-    //}
-
-    //[TestMethod]
-    //public void ConcatenateTest5()
-    //{
-    //    var vc = new VCard();
-
-    //    vc.Relations = vc.Relations.ConcatWith2(null);
-    //    vc.Relations = vc.Relations.ConcatWith2(RelationProperty.FromText("Hi"));
-    //    vc.Relations = vc.Relations.ConcatWith2(null);
-    //    vc.Relations = vc.Relations.ConcatWith2(RelationProperty.FromText("Hi"));
-    //    vc.Relations = vc.Relations.ConcatWith2(null);
-    //    vc.Relations = RelationProperty.FromText("Hi");
-    //    vc.Relations = vc.Relations.ConcatWith2(RelationProperty.FromText("Hi"));
-    //    vc.Relations = null;
-    //    vc.Relations = vc.Relations.ConcatWith2(null);
-    //    Assert.IsNotNull(vc.Relations);
-    //    Assert.AreEqual(null, vc.Relations.First());
-    //}
+    [TestMethod]
+    public void RemoveTest2()
+    {
+        IEnumerable<TextProperty?>? numerable = null;
+        Assert.IsNull(numerable.Remove(x => x?.Value == "Hi"));
+    }
 
 
 }

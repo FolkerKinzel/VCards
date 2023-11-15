@@ -110,10 +110,10 @@ public enum Prop
 
     /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>
-    URLs,
+    Urls,
 
     /// <summary> <c>IMPP</c>: Instant messenger handles. <c>(3,4)</c></summary>
-    InstantMessengers,
+    Messengers,
 
     /// <summary> <c>KEY</c>: Public encryption keys associated with the vCard object.
     /// <c>(2,3,4)</c></summary>
@@ -163,7 +163,7 @@ public enum Prop
     Notes,
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
-    XmlProperties,
+    Xmls,
 
     /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
     /// is associated with the individual to which the vCard belongs. <c>(2,3,4)</c></summary>

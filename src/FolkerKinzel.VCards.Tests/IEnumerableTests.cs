@@ -14,17 +14,17 @@ public class IEnumerableTests
 
         var vc = new VCard
         {
-            XmlProperties = new XmlProperty(new XElement(f + "Test"))
+            Xmls = new XmlProperty(new XElement(f + "Test"))
         };
 
-        IEnumerable enumerable = vc.XmlProperties;
+        IEnumerable enumerable = vc.Xmls;
 
         foreach (object? item in enumerable)
         {
             Assert.IsNotNull(item);
         }
 
-        Assert.IsNotNull(vc.XmlProperties.FirstOrDefault());
+        Assert.IsNotNull(vc.Xmls.FirstOrDefault());
     }
 
 

@@ -283,13 +283,13 @@ public class V4Tests
 
         var vcard = new VCard
         {
-            InstantMessengers = new TextProperty?[] { null, whatsAppImpp }
+            Messengers = new TextProperty?[] { null, whatsAppImpp }
         };
 
         string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: VcfOptions.Default);
         vcard = VCard.ParseVcf(vcfString)[0];
 
-        whatsAppImpp = vcard.InstantMessengers?.First();
+        whatsAppImpp = vcard.Messengers?.First();
 
         Assert.AreEqual(mobilePhoneNumber, whatsAppImpp?.Value);
         Assert.AreEqual(PCl.Home | PCl.Work, whatsAppImpp?.Parameters.PropertyClass);
