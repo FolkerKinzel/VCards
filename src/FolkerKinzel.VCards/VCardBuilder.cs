@@ -104,21 +104,171 @@ public sealed class VCardBuilder
 
     public VCardBuilder AddAnniversaryView() => throw new NotImplementedException();
 
+    public VCardBuilder ClearAnniversaryViews()
+    {
+        _vCard.AnniversaryViews = null;
+        return this;
+    }
+
+    public VCardBuilder RemoveAnniversaryView(DateAndOrTimeProperty? prop)
+    {
+        _vCard.AnniversaryViews = _vCard.AnniversaryViews.Remove(prop);
+        return this;
+    }
+
+    public VCardBuilder RemoveAnniversaryView(Func<DateAndOrTimeProperty?, bool> predicate)
+    {
+        _vCard.AnniversaryViews = _vCard.AnniversaryViews.Remove(predicate);
+        return this;
+    }
+
     public VCardBuilder AddBirthDayView() => throw new NotImplementedException();
+
+    public VCardBuilder ClearBirthDayViews()
+    {
+        _vCard.BirthDayViews = null;
+        return this;
+    }
+
+    public VCardBuilder RemoveBirthDayView(DateAndOrTimeProperty? prop)
+    {
+        _vCard.BirthDayViews = _vCard.BirthDayViews.Remove(prop);
+        return this;
+    }
+
+    public VCardBuilder RemoveBirthDayView(Func<DateAndOrTimeProperty?, bool> predicate)
+    {
+        _vCard.BirthDayViews = _vCard.BirthDayViews.Remove(predicate);
+        return this;
+    }
 
     public VCardBuilder AddBirthPlaceView() => throw new NotImplementedException();
 
+    public VCardBuilder ClearBirthPlaceViews()
+    {
+        _vCard.BirthPlaceViews = null;
+        return this;
+    }
+
+    public VCardBuilder RemoveBirthPlaceView(TextProperty? prop)
+    {
+        _vCard.BirthPlaceViews = _vCard.BirthPlaceViews.Remove(prop);
+        return this;
+    }
+
+    public VCardBuilder RemoveBirthPlaceView(Func<TextProperty?, bool> predicate)
+    {
+        _vCard.BirthPlaceViews = _vCard.BirthPlaceViews.Remove(predicate);
+        return this;
+    }
+
     public VCardBuilder AddCalendarAddress() => throw new NotImplementedException();
+
+    public VCardBuilder ClearCalendarAddresses()
+    {
+        _vCard.CalendarAddresses = null;
+        return this;
+    }
+
+    public VCardBuilder RemoveCalendarAddress(TextProperty? prop)
+    {
+        _vCard.CalendarAddresses = _vCard.CalendarAddresses.Remove(prop);
+        return this;
+    }
+
+    public VCardBuilder RemoveCalendarAddress(Func<TextProperty?, bool> predicate)
+    {
+        _vCard.CalendarAddresses = _vCard.CalendarAddresses.Remove(predicate);
+        return this;
+    }
 
     public VCardBuilder AddCalendarUserAddress() => throw new NotImplementedException();
 
+    public VCardBuilder ClearCalendarUserAddresses()
+    {
+        _vCard.CalendarUserAddresses = null;
+        return this;
+    }
+
+    public VCardBuilder RemoveCalendarUserAddress(TextProperty? prop)
+    {
+        _vCard.CalendarUserAddresses = _vCard.CalendarUserAddresses.Remove(prop);
+        return this;
+    }
+
+    public VCardBuilder RemoveCalendarUserAddress(Func<TextProperty?, bool> predicate)
+    {
+        _vCard.CalendarUserAddresses = _vCard.CalendarUserAddresses.Remove(predicate);
+        return this;
+    }
+
     public VCardBuilder AddCategory() => throw new NotImplementedException();
+
+    public VCardBuilder ClearCategories()
+    {
+        _vCard.Categories = null;
+        return this;
+    }
+
+    public VCardBuilder RemoveCategory(StringCollectionProperty? prop)
+    {
+        _vCard.Categories = _vCard.Categories.Remove(prop);
+        return this;
+    }
+
+    public VCardBuilder RemoveCategory(Func<StringCollectionProperty?, bool> predicate)
+    {
+        _vCard.Categories = _vCard.Categories.Remove(predicate);
+        return this;
+    }
 
     public VCardBuilder AddDeathDateView() => throw new NotImplementedException();
 
+    public VCardBuilder ClearDeathDateViews()
+    {
+        _vCard.DeathDateViews = null;
+        return this;
+    }
+
+    public VCardBuilder RemoveDeathDateView(StringCollectionProperty? prop)
+    {
+        _vCard.DeathDateViews = _vCard.DeathDateViews.Remove(prop);
+        return this;
+    }
+
+    public VCardBuilder RemoveDeathDateView(Func<DateAndOrTimeProperty?, bool> predicate)
+    {
+        _vCard.DeathDateViews = _vCard.DeathDateViews.Remove(predicate);
+        return this;
+    }
+
     public VCardBuilder AddDeathPlaceView() => throw new NotImplementedException();
 
+    public VCardBuilder ClearDeathPlaceViews()
+    {
+        _vCard.DeathPlaceViews = null;
+        return this;
+    }
+
+    public VCardBuilder RemoveDeathPlaceView(TextProperty? prop)
+    {
+        _vCard.DeathPlaceViews = _vCard.DeathPlaceViews.Remove(prop);
+        return this;
+    }
+
+    public VCardBuilder RemoveDeathPlaceView(Func<TextProperty?, bool> predicate)
+    {
+        _vCard.DeathPlaceViews = _vCard.DeathPlaceViews.Remove(predicate);
+        return this;
+    }
+
     public VCardBuilder SetDirectoryName() => throw new NotImplementedException();
+
+    public VCardBuilder ClearDirectoryName()
+    {
+        _vCard.DirectoryName = null;
+        return this;
+    }
 
     public VCardBuilder AddDisplayName() => throw new NotImplementedException();
 
