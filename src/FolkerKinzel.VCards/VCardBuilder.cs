@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using FolkerKinzel.VCards.Enums;
+﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards;
 
-public sealed class VCardBuilder
+public sealed partial class VCardBuilder
 {
     private readonly VCard _vCard;
 
@@ -23,336 +22,10 @@ public sealed class VCardBuilder
 
     public VCard Build() => _vCard;
 
-    public VCardBuilder SetAccess(Access access)
-    {
-       _vCard.Access = new AccessProperty(access);
-       return this;
-    }
-
-    public VCardBuilder ClearAccess()
-    {
-        _vCard.Access = null;
-        return this;
-    }
-
-    public VCardBuilder AddAddress(string? street,
-                                   string? locality,
-                                   string? region,
-                                   string? postalCode,
-                                   string? country = null,
-                                   string? group = null,
-                                   Action<ParameterSection>? parameters = null,
-                                   bool pref = false,
-                                   bool autoLabel = true)
-    {
-        _vCard.Addresses = AddProperty(new AddressProperty(street, locality, region, postalCode, country, group, autoLabel),
-                                          _vCard.Addresses,
-                                          parameters,
-                                          pref);
-
-        return this;
-    }
-
-    public VCardBuilder AddAddress(IEnumerable<string?>? street,
-                                   IEnumerable<string?>? locality,
-                                   IEnumerable<string?>? region,
-                                   IEnumerable<string?>? postalCode,
-                                   IEnumerable<string?>? country = null,
-                                   string? group = null,
-                                   Action<ParameterSection>? parameters = null,
-                                   bool pref = false,
-                                   bool autoLabel = true)
-    {
-        _vCard.Addresses = AddProperty(new AddressProperty(street, locality, region, postalCode, country, group, autoLabel),
-                                          _vCard.Addresses,
-                                          parameters,
-                                          pref);
-
-        return this;
-    }
-
-    public VCardBuilder ClearAddresses()
-    {
-        _vCard.Addresses = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveAddress(AddressProperty? prop)
-    {
-        _vCard.Addresses = _vCard.Addresses.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveAddress(Func<AddressProperty?, bool> predicate)
-    {
-        _vCard.Addresses = _vCard.Addresses.Remove(predicate);
-        return this;
-    }
-
-    public VCardBuilder AddAnniversaryView(int year, int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
-    {
-        _vCard.AnniversaryViews = AddProperty(DateAndOrTimeProperty.FromDate(year, month, day, group),
-                                              _vCard.AnniversaryViews,
-                                              parameters,
-                                              false);
-        return this;
-    }
-
-    public VCardBuilder AddAnniversaryView(int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
-    {
-        _vCard.AnniversaryViews = AddProperty(DateAndOrTimeProperty.FromDate(month, day, group),
-                                              _vCard.AnniversaryViews,
-                                              parameters,
-                                              false);
-        return this;
-    }
-
-    public VCardBuilder AddAnniversaryView(DateOnly date, string? group = null, Action<ParameterSection>? parameters = null)
-    {
-        _vCard.AnniversaryViews = AddProperty(DateAndOrTimeProperty.FromDate(date, group),
-                                              _vCard.AnniversaryViews,
-                                              parameters,
-                                              false);
-        return this;
-    }
-
-    public VCardBuilder ClearAnniversaryViews()
-    {
-        _vCard.AnniversaryViews = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveAnniversaryView(DateAndOrTimeProperty? prop)
-    {
-        _vCard.AnniversaryViews = _vCard.AnniversaryViews.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveAnniversaryView(Func<DateAndOrTimeProperty?, bool> predicate)
-    {
-        _vCard.AnniversaryViews = _vCard.AnniversaryViews.Remove(predicate);
-        return this;
-    }
 
 
-    public VCardBuilder AddBirthDayView(int year, int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
-    {
-        _vCard.BirthDayViews = AddProperty(DateAndOrTimeProperty.FromDate(year, month, day, group),
-                                              _vCard.BirthDayViews,
-                                              parameters,
-                                              false);
-        return this;
-    }
 
-    public VCardBuilder AddBirthDayView(int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
-    {
-        _vCard.BirthDayViews = AddProperty(DateAndOrTimeProperty.FromDate(month, day, group),
-                                              _vCard.BirthDayViews,
-                                              parameters,
-                                              false);
-        return this;
-    }
-
-    public VCardBuilder AddBirthDayView(DateOnly date, string? group = null, Action<ParameterSection>? parameters = null)
-    {
-        _vCard.BirthDayViews = AddProperty(DateAndOrTimeProperty.FromDate(date, group),
-                                              _vCard.BirthDayViews,
-                                              parameters,
-                                              false);
-        return this;
-    }
-
-    public VCardBuilder ClearBirthDayViews()
-    {
-        _vCard.BirthDayViews = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveBirthDayView(DateAndOrTimeProperty? prop)
-    {
-        _vCard.BirthDayViews = _vCard.BirthDayViews.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveBirthDayView(Func<DateAndOrTimeProperty?, bool> predicate)
-    {
-        _vCard.BirthDayViews = _vCard.BirthDayViews.Remove(predicate);
-        return this;
-    }
-
-    public VCardBuilder AddBirthPlaceView(string? value, string? group = null, Action<ParameterSection>? parameters = null)
-    {
-        _vCard.BirthPlaceViews = AddProperty(new TextProperty(value, group),
-                                              _vCard.BirthPlaceViews,
-                                              parameters,
-                                              false);
-        return this;
-    }
-
-    public VCardBuilder ClearBirthPlaceViews()
-    {
-        _vCard.BirthPlaceViews = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveBirthPlaceView(TextProperty? prop)
-    {
-        _vCard.BirthPlaceViews = _vCard.BirthPlaceViews.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveBirthPlaceView(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.BirthPlaceViews = _vCard.BirthPlaceViews.Remove(predicate);
-        return this;
-    }
-
-    public VCardBuilder AddCalendarAddress(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.CalendarAddresses = AddProperty(new TextProperty(value, group),
-                                              _vCard.CalendarAddresses,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearCalendarAddresses()
-    {
-        _vCard.CalendarAddresses = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveCalendarAddress(TextProperty? prop)
-    {
-        _vCard.CalendarAddresses = _vCard.CalendarAddresses.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveCalendarAddress(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.CalendarAddresses = _vCard.CalendarAddresses.Remove(predicate);
-        return this;
-    }
-
-    public VCardBuilder AddCalendarUserAddress(string? value,
-                                               string? group = null,
-                                               Action<ParameterSection>? parameters = null,
-                                               bool pref = false)
-    {
-        _vCard.CalendarUserAddresses = AddProperty(new TextProperty(value, group),
-                                                   _vCard.CalendarUserAddresses,
-                                                   parameters,
-                                                   pref);
-        return this;
-    }
-
-    public VCardBuilder ClearCalendarUserAddresses()
-    {
-        _vCard.CalendarUserAddresses = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveCalendarUserAddress(TextProperty? prop)
-    {
-        _vCard.CalendarUserAddresses = _vCard.CalendarUserAddresses.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveCalendarUserAddress(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.CalendarUserAddresses = _vCard.CalendarUserAddresses.Remove(predicate);
-        return this;
-    }
-
-    public VCardBuilder AddCategory() => throw new NotImplementedException();
-
-    public VCardBuilder ClearCategories()
-    {
-        _vCard.Categories = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveCategory(StringCollectionProperty? prop)
-    {
-        _vCard.Categories = _vCard.Categories.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveCategory(Func<StringCollectionProperty?, bool> predicate)
-    {
-        _vCard.Categories = _vCard.Categories.Remove(predicate);
-        return this;
-    }
-
-
-    public VCardBuilder AddDeathDateView(int year, int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
-    {
-        _vCard.DeathDateViews = AddProperty(DateAndOrTimeProperty.FromDate(year, month, day, group),
-                                              _vCard.DeathDateViews,
-                                              parameters,
-                                              false);
-        return this;
-    }
-
-    
-
-    public VCardBuilder AddDeathDateView(DateOnly date, string? group = null, Action<ParameterSection>? parameters = null)
-    {
-        _vCard.DeathDateViews = AddProperty(DateAndOrTimeProperty.FromDate(date, group),
-                                              _vCard.DeathDateViews,
-                                              parameters,
-                                              false);
-        return this;
-    }
-
-    public VCardBuilder ClearDeathDateViews()
-    {
-        _vCard.DeathDateViews = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveDeathDateView(StringCollectionProperty? prop)
-    {
-        _vCard.DeathDateViews = _vCard.DeathDateViews.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveDeathDateView(Func<DateAndOrTimeProperty?, bool> predicate)
-    {
-        _vCard.DeathDateViews = _vCard.DeathDateViews.Remove(predicate);
-        return this;
-    }
-
-
-    public VCardBuilder AddDeathPlaceView(string? value, string? group = null, Action<ParameterSection>? parameters = null)
-    {
-        _vCard.DeathPlaceViews = AddProperty(new TextProperty(value, group),
-                                              _vCard.DeathPlaceViews,
-                                              parameters,
-                                              false);
-        return this;
-    }
-
-    public VCardBuilder ClearDeathPlaceViews()
-    {
-        _vCard.DeathPlaceViews = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveDeathPlaceView(TextProperty? prop)
-    {
-        _vCard.DeathPlaceViews = _vCard.DeathPlaceViews.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveDeathPlaceView(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.DeathPlaceViews = _vCard.DeathPlaceViews.Remove(predicate);
-        return this;
-    }
+  
 
     public VCardBuilder SetDirectoryName() => throw new NotImplementedException();
 
@@ -363,228 +36,7 @@ public sealed class VCardBuilder
     }
 
 
-    public VCardBuilder AddDisplayName(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.DisplayNames = AddProperty(new TextProperty(value, group),
-                                              _vCard.DisplayNames,
-                                              parameters,
-                                              pref);
-        return this;
-    }
 
-    public VCardBuilder ClearDisplayNames()
-    {
-        _vCard.DisplayNames = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveDisplayName(TextProperty? prop)
-    {
-        _vCard.DisplayNames = _vCard.DisplayNames.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveDisplayName(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.DisplayNames = _vCard.DisplayNames.Remove(predicate);
-        return this;
-    }
-
-
-    public VCardBuilder AddEMail(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.EMails = AddProperty(new TextProperty(value, group),
-                                              _vCard.EMails,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearEMails()
-    {
-        _vCard.EMails = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveEMail(TextProperty? prop)
-    {
-        _vCard.EMails = _vCard.EMails.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveEMail(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.EMails = _vCard.EMails.Remove(predicate);
-        return this;
-    }
-
-    public VCardBuilder AddExpertise(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.Expertises = AddProperty(new TextProperty(value, group),
-                                              _vCard.Expertises,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearExpertises()
-    {
-        _vCard.Expertises = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveExpertise(TextProperty? prop)
-    {
-        _vCard.Expertises = _vCard.Expertises.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveExpertise(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.Expertises = _vCard.Expertises.Remove(predicate);
-        return this;
-    }
-
-
-    public VCardBuilder AddFreeOrBusyUrl(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.FreeOrBusyUrls = AddProperty(new TextProperty(value, group),
-                                              _vCard.FreeOrBusyUrls,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearFreeOrBusyUrls()
-    {
-        _vCard.FreeOrBusyUrls = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveFreeOrBusyUrl(TextProperty? prop)
-    {
-        _vCard.FreeOrBusyUrls = _vCard.FreeOrBusyUrls.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveFreeOrBusyUrl(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.FreeOrBusyUrls = _vCard.FreeOrBusyUrls.Remove(predicate);
-        return this;
-    }
-
-    public VCardBuilder AddGenderView() => throw new NotImplementedException();
-
-    public VCardBuilder ClearGenderViews()
-    {
-        _vCard.GenderViews = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveGenderView(GenderProperty? prop)
-    {
-        _vCard.GenderViews = _vCard.GenderViews.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveGenderView(Func<GenderProperty?, bool> predicate)
-    {
-        _vCard.GenderViews = _vCard.GenderViews.Remove(predicate);
-        return this;
-    }
-
-    public VCardBuilder AddGeoCoordinate() => throw new NotImplementedException();
-
-    public VCardBuilder ClearGeoCoordinates()
-    {
-        _vCard.GeoCoordinates = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveGeoCoordinate(GeoProperty? prop)
-    {
-        _vCard.GeoCoordinates = _vCard.GeoCoordinates.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveGeoCoordinate(Func<GeoProperty?, bool> predicate)
-    {
-        _vCard.GeoCoordinates = _vCard.GeoCoordinates.Remove(predicate);
-        return this;
-    }
-
-
-    public VCardBuilder AddHobby(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.Hobbies = AddProperty(new TextProperty(value, group),
-                                              _vCard.Hobbies,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearHobbies()
-    {
-        _vCard.Hobbies = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveHobby(TextProperty? prop)
-    {
-        _vCard.Hobbies = _vCard.Hobbies.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveHobby(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.Hobbies = _vCard.Hobbies.Remove(predicate);
-        return this;
-    }
-
-    public VCardBuilder AddMessenger(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.Messengers = AddProperty(new TextProperty(value, group),
-                                              _vCard.Messengers,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearMessengers()
-    {
-        _vCard.Messengers = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveMessenger(TextProperty? prop)
-    {
-        _vCard.Messengers = _vCard.Messengers.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveMessenger(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.Messengers = _vCard.Messengers.Remove(predicate);
-        return this;
-    }
 
 
     public VCardBuilder AddInterest(string? value,
@@ -592,7 +44,7 @@ public sealed class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.Interests = AddProperty(new TextProperty(value, group),
+        _vCard.Interests = Add(new TextProperty(value, group),
                                               _vCard.Interests,
                                               parameters,
                                               pref);
@@ -619,7 +71,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder AddKey() => throw new NotImplementedException();
 
-    
+
 
     public VCardBuilder ClearKeys()
     {
@@ -653,7 +105,7 @@ public sealed class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.Languages = AddProperty(new TextProperty(value, group),
+        _vCard.Languages = Add(new TextProperty(value, group),
                                               _vCard.Languages,
                                               parameters,
                                               pref);
@@ -746,7 +198,30 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddNickName() => throw new NotImplementedException();
+
+    public VCardBuilder AddNickName(string? value,
+                                               string? group = null,
+                                               Action<ParameterSection>? parameters = null,
+                                               bool pref = false)
+    {
+        _vCard.NickNames = Add(new StringCollectionProperty(value, group),
+                                                   _vCard.NickNames,
+                                                   parameters,
+                                                   pref);
+        return this;
+    }
+
+    public VCardBuilder AddNickName(IEnumerable<string?>? value,
+                                               string? group = null,
+                                               Action<ParameterSection>? parameters = null,
+                                               bool pref = false)
+    {
+        _vCard.NickNames = Add(new StringCollectionProperty(value, group),
+                                                   _vCard.NickNames,
+                                                   parameters,
+                                                   pref);
+        return this;
+    }
 
     public VCardBuilder ClearNickNames()
     {
@@ -792,7 +267,7 @@ public sealed class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.Notes = AddProperty(new TextProperty(value, group),
+        _vCard.Notes = Add(new TextProperty(value, group),
                                               _vCard.Notes,
                                               parameters,
                                               pref);
@@ -843,7 +318,7 @@ public sealed class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.OrgDirectories = AddProperty(new TextProperty(value, group),
+        _vCard.OrgDirectories = Add(new TextProperty(value, group),
                                               _vCard.OrgDirectories,
                                               parameters,
                                               pref);
@@ -874,7 +349,7 @@ public sealed class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.Phones = AddProperty(new TextProperty(value, group),
+        _vCard.Phones = Add(new TextProperty(value, group),
                                               _vCard.Phones,
                                               parameters,
                                               pref);
@@ -961,7 +436,7 @@ public sealed class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.Roles = AddProperty(new TextProperty(value, group),
+        _vCard.Roles = Add(new TextProperty(value, group),
                                               _vCard.Roles,
                                               parameters,
                                               pref);
@@ -1012,7 +487,7 @@ public sealed class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.Sources = AddProperty(new TextProperty(value, group),
+        _vCard.Sources = Add(new TextProperty(value, group),
                                               _vCard.Sources,
                                               parameters,
                                               pref);
@@ -1045,7 +520,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddTimeZone() => throw new NotImplementedException();
+
+    public VCardBuilder AddTimeZone(TimeZoneID? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.TimeZones = Add(new TimeZoneProperty(value, group),
+                                              _vCard.TimeZones,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearTimeZones()
     {
@@ -1072,7 +558,7 @@ public sealed class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.Titles = AddProperty(new TextProperty(value, group),
+        _vCard.Titles = Add(new TextProperty(value, group),
                                               _vCard.Titles,
                                               parameters,
                                               pref);
@@ -1111,7 +597,7 @@ public sealed class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.Urls = AddProperty(new TextProperty(value, group),
+        _vCard.Urls = Add(new TextProperty(value, group),
                                               _vCard.Urls,
                                               parameters,
                                               pref);
@@ -1156,7 +642,7 @@ public sealed class VCardBuilder
         return this;
     }
 
-    private IEnumerable<TSource?> AddProperty<TSource>(TSource prop,
+    private IEnumerable<TSource?> Add<TSource>(TSource prop,
                                                        IEnumerable<TSource?>? coll,
                                                        Action<ParameterSection>? parameters,
                                                        bool pref)
