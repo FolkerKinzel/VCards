@@ -29,6 +29,12 @@ public sealed class VCardBuilder
        return this;
     }
 
+    public VCardBuilder ClearAccess()
+    {
+        _vCard.Access = null;
+        return this;
+    }
+
     public VCardBuilder AddAddress(string? street,
                                    string? locality,
                                    string? region,
@@ -83,7 +89,32 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddAnniversaryView() => throw new NotImplementedException();
+    public VCardBuilder AddAnniversaryView(int year, int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
+    {
+        _vCard.AnniversaryViews = AddProperty(DateAndOrTimeProperty.FromDate(year, month, day, group),
+                                              _vCard.AnniversaryViews,
+                                              parameters,
+                                              false);
+        return this;
+    }
+
+    public VCardBuilder AddAnniversaryView(int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
+    {
+        _vCard.AnniversaryViews = AddProperty(DateAndOrTimeProperty.FromDate(month, day, group),
+                                              _vCard.AnniversaryViews,
+                                              parameters,
+                                              false);
+        return this;
+    }
+
+    public VCardBuilder AddAnniversaryView(DateOnly date, string? group = null, Action<ParameterSection>? parameters = null)
+    {
+        _vCard.AnniversaryViews = AddProperty(DateAndOrTimeProperty.FromDate(date, group),
+                                              _vCard.AnniversaryViews,
+                                              parameters,
+                                              false);
+        return this;
+    }
 
     public VCardBuilder ClearAnniversaryViews()
     {
@@ -103,7 +134,33 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddBirthDayView() => throw new NotImplementedException();
+
+    public VCardBuilder AddBirthDayView(int year, int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
+    {
+        _vCard.BirthDayViews = AddProperty(DateAndOrTimeProperty.FromDate(year, month, day, group),
+                                              _vCard.BirthDayViews,
+                                              parameters,
+                                              false);
+        return this;
+    }
+
+    public VCardBuilder AddBirthDayView(int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
+    {
+        _vCard.BirthDayViews = AddProperty(DateAndOrTimeProperty.FromDate(month, day, group),
+                                              _vCard.BirthDayViews,
+                                              parameters,
+                                              false);
+        return this;
+    }
+
+    public VCardBuilder AddBirthDayView(DateOnly date, string? group = null, Action<ParameterSection>? parameters = null)
+    {
+        _vCard.BirthDayViews = AddProperty(DateAndOrTimeProperty.FromDate(date, group),
+                                              _vCard.BirthDayViews,
+                                              parameters,
+                                              false);
+        return this;
+    }
 
     public VCardBuilder ClearBirthDayViews()
     {
@@ -123,7 +180,14 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddBirthPlaceView() => throw new NotImplementedException();
+    public VCardBuilder AddBirthPlaceView(string? value, string? group = null, Action<ParameterSection>? parameters = null)
+    {
+        _vCard.BirthPlaceViews = AddProperty(new TextProperty(value, group),
+                                              _vCard.BirthPlaceViews,
+                                              parameters,
+                                              false);
+        return this;
+    }
 
     public VCardBuilder ClearBirthPlaceViews()
     {
@@ -143,7 +207,17 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddCalendarAddress() => throw new NotImplementedException();
+    public VCardBuilder AddCalendarAddress(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.CalendarAddresses = AddProperty(new TextProperty(value, group),
+                                              _vCard.CalendarAddresses,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearCalendarAddresses()
     {
@@ -163,7 +237,17 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddCalendarUserAddress() => throw new NotImplementedException();
+    public VCardBuilder AddCalendarUserAddress(string? value,
+                                               string? group = null,
+                                               Action<ParameterSection>? parameters = null,
+                                               bool pref = false)
+    {
+        _vCard.CalendarUserAddresses = AddProperty(new TextProperty(value, group),
+                                                   _vCard.CalendarUserAddresses,
+                                                   parameters,
+                                                   pref);
+        return this;
+    }
 
     public VCardBuilder ClearCalendarUserAddresses()
     {
@@ -203,7 +287,26 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddDeathDateView() => throw new NotImplementedException();
+
+    public VCardBuilder AddDeathDateView(int year, int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
+    {
+        _vCard.DeathDateViews = AddProperty(DateAndOrTimeProperty.FromDate(year, month, day, group),
+                                              _vCard.DeathDateViews,
+                                              parameters,
+                                              false);
+        return this;
+    }
+
+    
+
+    public VCardBuilder AddDeathDateView(DateOnly date, string? group = null, Action<ParameterSection>? parameters = null)
+    {
+        _vCard.DeathDateViews = AddProperty(DateAndOrTimeProperty.FromDate(date, group),
+                                              _vCard.DeathDateViews,
+                                              parameters,
+                                              false);
+        return this;
+    }
 
     public VCardBuilder ClearDeathDateViews()
     {
@@ -223,7 +326,15 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddDeathPlaceView() => throw new NotImplementedException();
+
+    public VCardBuilder AddDeathPlaceView(string? value, string? group = null, Action<ParameterSection>? parameters = null)
+    {
+        _vCard.DeathPlaceViews = AddProperty(new TextProperty(value, group),
+                                              _vCard.DeathPlaceViews,
+                                              parameters,
+                                              false);
+        return this;
+    }
 
     public VCardBuilder ClearDeathPlaceViews()
     {
@@ -251,7 +362,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddDisplayName() => throw new NotImplementedException();
+
+    public VCardBuilder AddDisplayName(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.DisplayNames = AddProperty(new TextProperty(value, group),
+                                              _vCard.DisplayNames,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearDisplayNames()
     {
@@ -271,7 +393,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddEMail() => throw new NotImplementedException();
+
+    public VCardBuilder AddEMail(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.EMails = AddProperty(new TextProperty(value, group),
+                                              _vCard.EMails,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearEMails()
     {
@@ -291,7 +424,17 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddExpertise() => throw new NotImplementedException();
+    public VCardBuilder AddExpertise(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.Expertises = AddProperty(new TextProperty(value, group),
+                                              _vCard.Expertises,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearExpertises()
     {
@@ -311,7 +454,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddFreeOrBusyUrl() => throw new NotImplementedException();
+
+    public VCardBuilder AddFreeOrBusyUrl(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.FreeOrBusyUrls = AddProperty(new TextProperty(value, group),
+                                              _vCard.FreeOrBusyUrls,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearFreeOrBusyUrls()
     {
@@ -371,7 +525,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddHobby() => throw new NotImplementedException();
+
+    public VCardBuilder AddHobby(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.Hobbies = AddProperty(new TextProperty(value, group),
+                                              _vCard.Hobbies,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearHobbies()
     {
@@ -391,7 +556,17 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddMessenger() => throw new NotImplementedException();
+    public VCardBuilder AddMessenger(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.Messengers = AddProperty(new TextProperty(value, group),
+                                              _vCard.Messengers,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearMessengers()
     {
@@ -411,7 +586,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddInterest() => throw new NotImplementedException();
+
+    public VCardBuilder AddInterest(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.Interests = AddProperty(new TextProperty(value, group),
+                                              _vCard.Interests,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearInterests()
     {
@@ -432,6 +618,8 @@ public sealed class VCardBuilder
     }
 
     public VCardBuilder AddKey() => throw new NotImplementedException();
+
+    
 
     public VCardBuilder ClearKeys()
     {
@@ -459,7 +647,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddLanguage() => throw new NotImplementedException();
+
+    public VCardBuilder AddLanguage(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.Languages = AddProperty(new TextProperty(value, group),
+                                              _vCard.Languages,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearLanguages()
     {
@@ -587,7 +786,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddNote() => throw new NotImplementedException();
+
+    public VCardBuilder AddNote(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.Notes = AddProperty(new TextProperty(value, group),
+                                              _vCard.Notes,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearNotes()
     {
@@ -627,7 +837,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddOrgDirectory() => throw new NotImplementedException();
+
+    public VCardBuilder AddOrgDirectory(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.OrgDirectories = AddProperty(new TextProperty(value, group),
+                                              _vCard.OrgDirectories,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearOrgDirectories()
     {
@@ -647,7 +868,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddPhone() => throw new NotImplementedException();
+
+    public VCardBuilder AddPhone(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.Phones = AddProperty(new TextProperty(value, group),
+                                              _vCard.Phones,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearPhones()
     {
@@ -723,7 +955,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddRole() => throw new NotImplementedException();
+
+    public VCardBuilder AddRole(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.Roles = AddProperty(new TextProperty(value, group),
+                                              _vCard.Roles,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearRoles()
     {
@@ -763,7 +1006,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddSource() => throw new NotImplementedException();
+
+    public VCardBuilder AddSource(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.Sources = AddProperty(new TextProperty(value, group),
+                                              _vCard.Sources,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearSources()
     {
@@ -812,7 +1066,18 @@ public sealed class VCardBuilder
     }
 
 
-    public VCardBuilder AddTitle() => throw new NotImplementedException();
+
+    public VCardBuilder AddTitle(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.Titles = AddProperty(new TextProperty(value, group),
+                                              _vCard.Titles,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearTitles()
     {
@@ -840,7 +1105,18 @@ public sealed class VCardBuilder
         return this;
     }
 
-    public VCardBuilder AddUrl() => throw new NotImplementedException();
+
+    public VCardBuilder AddUrl(string? value,
+                                           string? group = null,
+                                           Action<ParameterSection>? parameters = null,
+                                           bool pref = false)
+    {
+        _vCard.Urls = AddProperty(new TextProperty(value, group),
+                                              _vCard.Urls,
+                                              parameters,
+                                              pref);
+        return this;
+    }
 
     public VCardBuilder ClearUrls()
     {
