@@ -399,7 +399,7 @@ public sealed partial class VCard
                     }
                     break;
                 case PropKeys.PRODID:
-                    ProdID = new TextProperty(vcfRow, this.Version);
+                    ProductID = new TextProperty(vcfRow, this.Version);
                     break;
                 case PropKeys.NAME:
                     this.DirectoryName = new TextProperty(vcfRow, this.Version);

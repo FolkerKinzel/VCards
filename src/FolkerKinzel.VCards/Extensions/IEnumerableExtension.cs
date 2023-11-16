@@ -786,13 +786,5 @@ public static class IEnumerableExtension
         }
     }
 
-    //public static IEnumerable<TSource> WithPref<TSource>(this IEnumerable<TSource?>? values,
-    //                                                     TSource? pref,
-    //                                                     bool ignoreEmptyItems = true)
-    //    where TSource : VCardProperty, IEnumerable<TSource>
-    //{
-    //    var coll = pref is null ? values.OrderByPref(false) : pref.Concat(values.OrderByPref(false));
-    //    coll.SetPreferences(ignoreEmptyItems);
-    //    return coll;
-    //}
+    
 }

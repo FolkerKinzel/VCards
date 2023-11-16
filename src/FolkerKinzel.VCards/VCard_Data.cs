@@ -498,10 +498,10 @@ public sealed partial class VCard
     /// <value>The name should be unique worldwide. It should therefore conform to the
     /// specification for Formal Public Identifiers [ISO 9070] or Universal Resource
     /// Names in RFC 3406.</value>
-    public TextProperty? ProdID
+    public TextProperty? ProductID
     {
-        get => Get<TextProperty?>(Prop.ProdID);
-        set => Set(Prop.ProdID, value);
+        get => Get<TextProperty?>(Prop.ProductID);
+        set => Set(Prop.ProductID, value);
     }
 
     /// <summary> <c>PROFILE</c>: States that the <see cref="VCard"/> is a vCard. <c>(3)</c></summary>
@@ -536,8 +536,8 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>SOURCE</c>: URLs that can be used to get the latest version of
-    /// this vCard.<c>(3,4)</c></summary>
-    /// <remarks>vCard&#160;3.0 only allows one instance of this property.</remarks>
+    /// this vCard. <c>(3,4)</c></summary>
+    /// <remarks>vCard&#160;3.0 allows only one instance of this property.</remarks>
     public IEnumerable<TextProperty?>? Sources
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.Sources);

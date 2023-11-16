@@ -1,3 +1,5 @@
+- `VCardBuilder` adds a fluent API to build and edit VCards.
+- The vCard 4.0 data synchronization mechanism (PID and CLIENTPIDMAP) has been completely rewritten.
 - New constructor overload `GeoProperty(double, double, string?)`
 - New constructor overload `PropertyIDMappingProperty(int, Uri)`
 - New extension methods:
@@ -16,6 +18,12 @@ void UnsetIndexes<TSource>(this IEnumerable<TSource?>?)
 
 void SetAltID<TSource>(this IEnumerable<TSource?>?, string?) 
         where TSource : VCardProperty, IEnumerable<TSource>;
+
+IEnumerable<TSource?>? Remove<TSource>(this IEnumerable<TSource?>?, TSource?) 
+        where TSource : VCardProperty;
+
+ IEnumerable<TSource?>? Remove<TSource>(this IEnumerable<TSource?>?, Func<TSource?, bool>) 
+        where TSource : VCardProperty;
 ```
 - Performance optimization
 

@@ -195,7 +195,7 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.Mailer:
                     AppendMailer((TextProperty)kvp.Value);
                     break;
-                case Prop.ProdID:
+                case Prop.ProductID:
                     AppendProdID((TextProperty)kvp.Value);
                     break;
                 case Prop.TimeStamp:

@@ -114,9 +114,9 @@ public class V4Tests
         Assert.IsNull(vcard.DirectoryName);
         Assert.IsNotNull(vcard.TimeStamp);
         Assert.IsNull(vcard.Mailer);
-        Assert.IsNotNull(vcard.ProdID);
-        vcard.ProdID = null;
-        Assert.IsNull(vcard.ProdID);
+        Assert.IsNotNull(vcard.ProductID);
+        vcard.ProductID = null;
+        Assert.IsNull(vcard.ProductID);
     }
 
     [TestMethod]

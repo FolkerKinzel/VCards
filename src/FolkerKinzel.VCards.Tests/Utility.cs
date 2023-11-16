@@ -137,7 +137,7 @@ internal static class Utility
             DeathDateViews = DateAndOrTimeProperty.FromText("Later"),
             DeathPlaceViews = new TextProperty("Somewhere"),
             BirthPlaceViews = new TextProperty("Dessau"),
-            ProdID = new TextProperty("Testcode"),
+            ProductID = new TextProperty("Testcode"),
             Addresses = adr1,
             CalendarAddresses = new TextProperty("Calender address"),
             CalendarUserAddresses = new TextProperty("Calendar user address"),

@@ -48,7 +48,7 @@ public enum Prop
 
     /// <summary> <c>PRODID</c>: The identifier for the product that created the vCard
     /// object. <c>(3,4)</c></summary>
-    ProdID,
+    ProductID,
 
     /// <summary> <c>FN</c>: The formatted name string associated with the vCard object.
     /// <c>(2,3,4)</c></summary>
