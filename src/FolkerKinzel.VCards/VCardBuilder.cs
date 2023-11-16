@@ -39,7 +39,7 @@ public sealed class VCardBuilder
                                    bool pref = false,
                                    bool autoLabel = true)
     {
-        _vCard.Addresses = AppendProperty(new AddressProperty(street, locality, region, postalCode, country, group, autoLabel),
+        _vCard.Addresses = AddProperty(new AddressProperty(street, locality, region, postalCode, country, group, autoLabel),
                                           _vCard.Addresses,
                                           parameters,
                                           pref);
@@ -57,7 +57,7 @@ public sealed class VCardBuilder
                                    bool pref = false,
                                    bool autoLabel = true)
     {
-        _vCard.Addresses = AppendProperty(new AddressProperty(street, locality, region, postalCode, country, group, autoLabel),
+        _vCard.Addresses = AddProperty(new AddressProperty(street, locality, region, postalCode, country, group, autoLabel),
                                           _vCard.Addresses,
                                           parameters,
                                           pref);
@@ -81,25 +81,6 @@ public sealed class VCardBuilder
     {
         _vCard.Addresses = _vCard.Addresses.Remove(predicate);
         return this;
-    }
-
-    private IEnumerable<TSource?> AppendProperty<TSource>(TSource prop,
-                                                          IEnumerable<TSource?>? coll,
-                                                          Action<ParameterSection>? parameters,
-                                                          bool pref)
-        where TSource : VCardProperty, IEnumerable<TSource>
-    {
-        parameters?.Invoke(prop.Parameters);
-
-        coll = coll is null ? prop 
-                            : pref ? prop.Concat(coll.OrderByPref(false)) 
-                                   : coll.Concat(prop);
-        if(pref)
-        { 
-            coll.SetPreferences(false); 
-        }
-
-        return coll;
     }
 
     public VCardBuilder AddAnniversaryView() => throw new NotImplementedException();
@@ -340,5 +321,22 @@ public sealed class VCardBuilder
 
     public VCardBuilder AddXml() => throw new NotImplementedException();
 
+    private IEnumerable<TSource?> AddProperty<TSource>(TSource prop,
+                                                          IEnumerable<TSource?>? coll,
+                                                          Action<ParameterSection>? parameters,
+                                                          bool pref)
+        where TSource : VCardProperty, IEnumerable<TSource>
+    {
+        parameters?.Invoke(prop.Parameters);
 
+        coll = coll is null ? prop
+                            : pref ? prop.Concat(coll.OrderByPref(false))
+                                   : coll.Concat(prop);
+        if (pref)
+        {
+            coll.SetPreferences(false);
+        }
+
+        return coll;
+    }
 }
