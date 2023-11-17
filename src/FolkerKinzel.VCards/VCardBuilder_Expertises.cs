@@ -32,7 +32,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveExpertise(Func<TextProperty?, bool> predicate)
+    public VCardBuilder RemoveExpertise(Func<TextProperty, bool> predicate)
     {
         _vCard.Expertises = _vCard.Expertises.Remove(predicate);
         return this;

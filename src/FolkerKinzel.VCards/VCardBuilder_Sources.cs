@@ -31,7 +31,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveSource(Func<TextProperty?, bool> predicate)
+    public VCardBuilder RemoveSource(Func<TextProperty, bool> predicate)
     {
         _vCard.Sources = _vCard.Sources.Remove(predicate);
         return this;

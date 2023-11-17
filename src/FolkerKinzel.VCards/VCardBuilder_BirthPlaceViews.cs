@@ -29,7 +29,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveBirthPlaceView(Func<TextProperty?, bool> predicate)
+    public VCardBuilder RemoveBirthPlaceView(Func<TextProperty, bool> predicate)
     {
         _vCard.BirthPlaceViews = _vCard.BirthPlaceViews.Remove(predicate);
         return this;

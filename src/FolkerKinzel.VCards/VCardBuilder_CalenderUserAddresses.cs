@@ -32,7 +32,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveCalendarUserAddress(Func<TextProperty?, bool> predicate)
+    public VCardBuilder RemoveCalendarUserAddress(Func<TextProperty, bool> predicate)
     {
         _vCard.CalendarUserAddresses = _vCard.CalendarUserAddresses.Remove(predicate);
         return this;

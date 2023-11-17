@@ -633,9 +633,9 @@ public static class IEnumerableExtension
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"><paramref name="predicate"/> is <c>null</c>.</exception>
     public static IEnumerable<TSource?>? Remove<TSource>(
-        this IEnumerable<TSource?>? values, Func<TSource?, bool> predicate) where TSource : VCardProperty
+        this IEnumerable<TSource?>? values, Func<TSource, bool> predicate) where TSource : VCardProperty
         => predicate is null ? throw new ArgumentNullException(nameof(predicate))
-                             : (values?.Where(x => !predicate(x)));
+                             : (values?.Where(x => x is null || !predicate(x)));
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Preference"/> properties of 

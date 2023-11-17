@@ -43,7 +43,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveNickName(Func<StringCollectionProperty?, bool> predicate)
+    public VCardBuilder RemoveNickName(Func<StringCollectionProperty, bool> predicate)
     {
         _vCard.NickNames = _vCard.NickNames.Remove(predicate);
         return this;

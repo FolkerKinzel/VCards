@@ -44,7 +44,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveCategory(Func<StringCollectionProperty?, bool> predicate)
+    public VCardBuilder RemoveCategory(Func<StringCollectionProperty, bool> predicate)
     {
         _vCard.Categories = _vCard.Categories.Remove(predicate);
         return this;

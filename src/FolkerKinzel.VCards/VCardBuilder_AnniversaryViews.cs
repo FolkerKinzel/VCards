@@ -55,7 +55,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveAnniversaryView(Func<DateAndOrTimeProperty?, bool> predicate)
+    public VCardBuilder RemoveAnniversaryView(Func<DateAndOrTimeProperty, bool> predicate)
     {
         _vCard.AnniversaryViews = _vCard.AnniversaryViews.Remove(predicate);
         return this;

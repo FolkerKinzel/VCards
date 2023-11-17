@@ -31,7 +31,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveRole(Func<TextProperty?, bool> predicate)
+    public VCardBuilder RemoveRole(Func<TextProperty, bool> predicate)
     {
         _vCard.Roles = _vCard.Roles.Remove(predicate);
         return this;

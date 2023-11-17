@@ -31,7 +31,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveFreeOrBusyUrl(Func<TextProperty?, bool> predicate)
+    public VCardBuilder RemoveFreeOrBusyUrl(Func<TextProperty, bool> predicate)
     {
         _vCard.FreeOrBusyUrls = _vCard.FreeOrBusyUrls.Remove(predicate);
         return this;

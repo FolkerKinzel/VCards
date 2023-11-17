@@ -48,7 +48,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveDeathDateView(Func<DateAndOrTimeProperty?, bool> predicate)
+    public VCardBuilder RemoveDeathDateView(Func<DateAndOrTimeProperty, bool> predicate)
     {
         _vCard.DeathDateViews = _vCard.DeathDateViews.Remove(predicate);
         return this;

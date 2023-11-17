@@ -32,7 +32,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveInterest(Func<TextProperty?, bool> predicate)
+    public VCardBuilder RemoveInterest(Func<TextProperty, bool> predicate)
     {
         _vCard.Interests = _vCard.Interests.Remove(predicate);
         return this;

@@ -31,7 +31,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveDisplayName(Func<TextProperty?, bool> predicate)
+    public VCardBuilder RemoveDisplayName(Func<TextProperty, bool> predicate)
     {
         _vCard.DisplayNames = _vCard.DisplayNames.Remove(predicate);
         return this;

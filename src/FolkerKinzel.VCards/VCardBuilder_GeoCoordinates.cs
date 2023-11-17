@@ -45,7 +45,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveGeoCoordinate(Func<GeoProperty?, bool> predicate)
+    public VCardBuilder RemoveGeoCoordinate(Func<GeoProperty, bool> predicate)
     {
         _vCard.GeoCoordinates = _vCard.GeoCoordinates.Remove(predicate);
         return this;

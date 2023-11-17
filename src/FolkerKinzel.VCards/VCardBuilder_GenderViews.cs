@@ -32,7 +32,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveGenderView(Func<GenderProperty?, bool> predicate)
+    public VCardBuilder RemoveGenderView(Func<GenderProperty, bool> predicate)
     {
         _vCard.GenderViews = _vCard.GenderViews.Remove(predicate);
         return this;

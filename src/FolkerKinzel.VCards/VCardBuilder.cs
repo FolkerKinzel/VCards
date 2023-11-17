@@ -46,7 +46,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveKey(Func<DataProperty?, bool> predicate)
+    public VCardBuilder RemoveKey(Func<DataProperty, bool> predicate)
     {
         _vCard.Keys = _vCard.Keys.Remove(predicate);
         return this;
@@ -75,7 +75,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveLogo(Func<DataProperty?, bool> predicate)
+    public VCardBuilder RemoveLogo(Func<DataProperty, bool> predicate)
     {
         _vCard.Logos = _vCard.Logos.Remove(predicate);
         return this;
@@ -103,7 +103,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveMember(Func<RelationProperty?, bool> predicate)
+    public VCardBuilder RemoveMember(Func<RelationProperty, bool> predicate)
     {
         _vCard.Members = _vCard.Members.Remove(predicate);
         return this;
@@ -123,7 +123,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveNameView(Func<NameProperty?, bool> predicate)
+    public VCardBuilder RemoveNameView(Func<NameProperty, bool> predicate)
     {
         _vCard.NameViews = _vCard.NameViews.Remove(predicate);
         return this;
@@ -144,7 +144,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveNonStandard(Func<NonStandardProperty?, bool> predicate)
+    public VCardBuilder RemoveNonStandard(Func<NonStandardProperty, bool> predicate)
     {
         _vCard.NonStandards = _vCard.NonStandards.Remove(predicate);
         return this;
@@ -165,7 +165,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveOrganization(Func<OrgProperty?, bool> predicate)
+    public VCardBuilder RemoveOrganization(Func<OrgProperty, bool> predicate)
     {
         _vCard.Organizations = _vCard.Organizations.Remove(predicate);
         return this;
@@ -186,7 +186,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemovePhoto(Func<DataProperty?, bool> predicate)
+    public VCardBuilder RemovePhoto(Func<DataProperty, bool> predicate)
     {
         _vCard.Photos = _vCard.Photos.Remove(predicate);
         return this;
@@ -222,7 +222,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveRelation(Func<RelationProperty?, bool> predicate)
+    public VCardBuilder RemoveRelation(Func<RelationProperty, bool> predicate)
     {
         _vCard.Relations = _vCard.Relations.Remove(predicate);
         return this;
@@ -243,7 +243,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveSound(Func<DataProperty?, bool> predicate)
+    public VCardBuilder RemoveSound(Func<DataProperty, bool> predicate)
     {
         _vCard.Sounds = _vCard.Sounds.Remove(predicate);
         return this;
@@ -292,7 +292,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveUrl(Func<TextProperty?, bool> predicate)
+    public VCardBuilder RemoveUrl(Func<TextProperty, bool> predicate)
     {
         _vCard.Urls = _vCard.Urls.Remove(predicate);
         return this;
@@ -312,7 +312,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveXml(Func<XmlProperty?, bool> predicate)
+    public VCardBuilder RemoveXml(Func<XmlProperty, bool> predicate)
     {
         _vCard.Xmls = _vCard.Xmls.Remove(predicate);
         return this;

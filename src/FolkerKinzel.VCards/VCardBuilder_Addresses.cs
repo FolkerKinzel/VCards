@@ -55,7 +55,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveAddress(Func<AddressProperty?, bool> predicate)
+    public VCardBuilder RemoveAddress(Func<AddressProperty, bool> predicate)
     {
         _vCard.Addresses = _vCard.Addresses.Remove(predicate);
         return this;

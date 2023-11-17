@@ -31,7 +31,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveTimeZone(Func<TimeZoneProperty?, bool> predicate)
+    public VCardBuilder RemoveTimeZone(Func<TimeZoneProperty, bool> predicate)
     {
         _vCard.TimeZones = _vCard.TimeZones.Remove(predicate);
         return this;

@@ -32,7 +32,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveLanguage(Func<TextProperty?, bool> predicate)
+    public VCardBuilder RemoveLanguage(Func<TextProperty, bool> predicate)
     {
         _vCard.Languages = _vCard.Languages.Remove(predicate);
         return this;

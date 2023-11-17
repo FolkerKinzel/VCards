@@ -32,7 +32,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveOrgDirectory(Func<TextProperty?, bool> predicate)
+    public VCardBuilder RemoveOrgDirectory(Func<TextProperty, bool> predicate)
     {
         _vCard.OrgDirectories = _vCard.OrgDirectories.Remove(predicate);
         return this;
