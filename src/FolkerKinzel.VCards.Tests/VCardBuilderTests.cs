@@ -16,7 +16,7 @@ public class VCardBuilderTests
         VCard vc = builder.Build();
         Assert.IsNotNull(vc);
         Assert.IsInstanceOfType(vc, typeof(VCard));
-        Assert.IsNotNull(vc.UniqueIdentifier);
+        Assert.IsNotNull(vc.ID);
     }
 
     [TestMethod()]
@@ -28,7 +28,7 @@ public class VCardBuilderTests
         VCard vc = builder.Build();
         Assert.IsNotNull(vc);
         Assert.IsInstanceOfType(vc, typeof(VCard));
-        Assert.IsNull(vc.UniqueIdentifier);
+        Assert.IsNull(vc.ID);
 
     }
 

@@ -126,7 +126,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// Creates a new <see cref="RelationProperty"/> instance from a <c>Guid</c>.
     /// </summary>
     /// <param name="uuid">A <see cref="Guid"/> that refers to the vCard of the person
-    /// or organization via its <see cref="VCard.UniqueIdentifier"/> property (<c>UID</c>).</param>
+    /// or organization via its <see cref="VCard.ID"/> property (<c>UID</c>).</param>
     /// <param name="relationType">Standardized description of the relationship with the
     /// person or organization to whose vCard the <paramref name="uuid"/> refers. 
     /// <see cref="ParameterSection.RelationType"/> of the returned instance will be

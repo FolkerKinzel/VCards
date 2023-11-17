@@ -12,7 +12,7 @@ public sealed partial class VCard
     /// any usable data, otherwise <c>false</c>.</returns>
     public bool IsEmpty() =>
         !_propDic
-            .Where(static x => x.Key is not (Prop.TimeStamp or Prop.AppIDs or Prop.UniqueIdentifier))
+            .Where(static x => x.Key is not (Prop.TimeStamp or Prop.AppIDs or Prop.ID))
             .Select(static x => x.Value)
             .Any(static x => x switch
             {

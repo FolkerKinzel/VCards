@@ -254,6 +254,17 @@ public sealed partial class VCard
         set => Set(Prop.Hobbies, value);
     }
 
+    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
+    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
+    /// </summary>
+    /// <value>Although the standard allows any strings for identification, the library
+    /// only supports UUIDs.</value>
+    public UuidProperty? ID
+    {
+        get => Get<UuidProperty?>(Prop.ID);
+        set => Set(Prop.ID, value);
+    }
+
     /// <summary> <c>IMPP</c>: Instant messenger handles. <c>(3,4)</c></summary>
     /// <remarks>
     /// <see cref="TextProperty.Value" /> should specify a URI for instant messaging 
@@ -577,16 +588,7 @@ public sealed partial class VCard
         set => Set(Prop.Titles, value);
     }
 
-    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
-    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>Although the standard allows any strings for identification, the library
-    /// only supports UUIDs.</value>
-    public UuidProperty? UniqueIdentifier
-    {
-        get => Get<UuidProperty?>(Prop.UniqueIdentifier);
-        set => Set(Prop.UniqueIdentifier, value);
-    }
+    
 
     /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>

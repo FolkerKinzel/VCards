@@ -152,7 +152,7 @@ internal static class Utility
             EMails = email1,
             Roles = new TextProperty("Rechte Hand"),
             Titles = new TextProperty("Sündenbock"),
-            UniqueIdentifier = new UuidProperty(),
+            ID = new UuidProperty(),
             Urls = new TextProperty("www.folker.com"),
             DirectoryName = new TextProperty("Webseite"),
             Access = new AccessProperty(Access.Confidential),

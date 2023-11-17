@@ -250,22 +250,10 @@ public sealed partial class VCardBuilder
     }
 
 
-    public VCardBuilder SetTimeStamp() => throw new NotImplementedException();
-
-    public VCardBuilder ClearTimeStamp()
-    {
-        _vCard.TimeStamp = null;
-        return this;
-    }
+    
 
 
-    public VCardBuilder SetUniqueIdentifier() => throw new NotImplementedException();
-
-    public VCardBuilder ClearUniqueIdentifier()
-    {
-        _vCard.UniqueIdentifier = null;
-        return this;
-    }
+    
 
 
     

@@ -14,7 +14,7 @@ internal sealed class RelationUuidProperty : RelationProperty
     /// </summary>
     /// <param name="uuid">UUID of a person to whom a relationship exists. This can, for 
     /// example, be the value of the vCard property <c>UID</c> 
-    /// (<see cref="VCard.UniqueIdentifier">VCard.UniqueIdentifier</see>) of this 
+    /// (<see cref="VCard.ID">VCard.UniqueIdentifier</see>) of this 
     /// person's vCard.</param>
     /// <param name="relation">A single <see cref="Rel" /> value or a combination
     /// of several <see cref="Rel" /> values or <c>null</c>.</param>

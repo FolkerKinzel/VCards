@@ -14,11 +14,14 @@ namespace FolkerKinzel.VCards;
 public sealed partial class VCard
 {
     /// <summary>Initializes a new <see cref="VCard" /> object.</summary>
-    public VCard(bool setUniqueIdentifier = true)
+    /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/>
+    /// property with a newly created <see cref="UuidProperty"/>, otherwise
+    /// <c>false</c>.</param>
+    public VCard(bool setID = true)
     { 
-        if(setUniqueIdentifier)
+        if(setID)
         {
-            UniqueIdentifier = new UuidProperty();
+            ID = new UuidProperty();
         }
 
         // Should be the last in ctor:
@@ -161,7 +164,7 @@ public sealed partial class VCard
                 case PropKeys.UID:
                     try
                     {
-                        UniqueIdentifier = new UuidProperty(vcfRow);
+                        ID = new UuidProperty(vcfRow);
                     }
                     catch { }
                     break;

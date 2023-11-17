@@ -36,7 +36,7 @@ public sealed class Relation
     /// </summary>
     /// <remarks>
     /// The <see cref="Guid"/> references another <see cref="VCard"/> with
-    /// its <see cref="VCard.UniqueIdentifier"/> property.
+    /// its <see cref="VCard.ID"/> property.
     /// </remarks>
     public Guid? Guid => IsGuid ? AsGuidIntl : null;
 

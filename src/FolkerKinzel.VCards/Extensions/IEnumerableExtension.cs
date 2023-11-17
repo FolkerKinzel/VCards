@@ -14,16 +14,16 @@ public static class IEnumerableExtension
     /// <see cref = "VCard" /> objects passed as a collection as well as those which
     /// had been embedded in their <see cref="VCard.Relations"/> property. The previously 
     /// embedded <see cref="VCard"/> objects are now referenced by <see cref = "RelationProperty" /> 
-    /// objects that are initialized with the value of the <see cref="VCard.UniqueIdentifier"/>
+    /// objects that are initialized with the value of the <see cref="VCard.ID"/>
     /// property of these previously embedded <see cref="VCard"/>s.
     /// </summary>
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
     /// may be empty or may contain <c>null</c> values.</param>
     /// <returns> A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/> 
     /// objects previously embedded in the <see cref="VCard.Relations"/> property are appended 
-    /// separately and referenced through their <see cref="VCard.UniqueIdentifier"/> property. 
+    /// separately and referenced through their <see cref="VCard.ID"/> property. 
     /// (If the appended <see cref="VCard" /> objects did not already have a 
-    /// <see cref="VCard.UniqueIdentifier" /> property, the method automatically assigns them 
+    /// <see cref="VCard.ID" /> property, the method automatically assigns them 
     /// a new one.)
     /// </returns>
     /// <remarks>
@@ -63,14 +63,14 @@ public static class IEnumerableExtension
 
     /// <summary>
     /// Returns a collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
-    /// referenced by their <see cref="VCard.UniqueIdentifier"/> property are embedded in 
+    /// referenced by their <see cref="VCard.ID"/> property are embedded in 
     /// <see cref ="RelationProperty"/> objects, provided that <paramref name="vCards"/> 
     /// contains these <see cref="VCard"/> objects.</summary>
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
     /// may be empty or may contain <c>null</c> values.</param>
     /// 
     /// <returns> A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
-    /// referenced by their <see cref="VCard.UniqueIdentifier"/> property are embedded in 
+    /// referenced by their <see cref="VCard.ID"/> property are embedded in 
     /// <see cref ="RelationProperty"/> objects, provided that <paramref name="vCards"/>
     /// contains these <see cref="VCard"/> objects.</returns>
     /// <remarks>

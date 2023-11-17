@@ -201,7 +201,7 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.TimeStamp:
                     AppendLastRevision((TimeStampProperty)kvp.Value);
                     break;
-                case Prop.UniqueIdentifier:
+                case Prop.ID:
                     AppendUniqueIdentifier((UuidProperty)kvp.Value);
                     break;
                 case Prop.Categories:
