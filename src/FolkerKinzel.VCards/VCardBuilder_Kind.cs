@@ -7,9 +7,12 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCardBuilder
 {
-    public VCardBuilder SetKind(Kind value)
+    public VCardBuilder SetKind(Kind value, string? group = null, Action<ParameterSection>? parameters = null)
     {
-        _vCard.Kind = new KindProperty(value);
+        var prop = new KindProperty(value, group);
+        parameters?.Invoke(prop.Parameters);
+
+        _vCard.Kind = prop;
         return this;
     }
 

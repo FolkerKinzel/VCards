@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -16,8 +17,11 @@ public sealed class ProfileProperty : TextProperty
     private ProfileProperty(ProfileProperty prop) : base(prop) { }
 
     /// <summary>  Initializes a new <see cref="ProfileProperty" /> object. </summary>
-    public ProfileProperty() 
-        : base(PROFILE_PROPERTY_VALUE, null) { }
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    public ProfileProperty(string? group = null) 
+        : base(PROFILE_PROPERTY_VALUE, group) { }
 
     internal ProfileProperty(VcfRow row, VCdVersion version) : base(row, version) { }
 

@@ -7,9 +7,9 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCardBuilder
 {
-    public VCardBuilder SetProfile()
+    public VCardBuilder SetProfile(string? group = null)
     {
-        _vCard.Profile = new ProfileProperty();
+        _vCard.Profile = new ProfileProperty(group);
         return this;
     }
 

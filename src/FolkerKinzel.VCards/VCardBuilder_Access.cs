@@ -7,9 +7,9 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCardBuilder
 {
-    public VCardBuilder SetAccess(Access access)
+    public VCardBuilder SetAccess(Access access, string? group = null)
     {
-        _vCard.Access = new AccessProperty(access);
+        _vCard.Access = new AccessProperty(access, group);
         return this;
     }
 

@@ -19,13 +19,19 @@ public sealed class UuidProperty : VCardProperty, IEquatable<UuidProperty>
 
     /// <summary> Initializes a new <see cref="UuidProperty" /> object with a
     /// new <see cref="Guid" />. </summary>
-    public UuidProperty() : this(Guid.NewGuid()) { }
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    public UuidProperty(string? group = null) : this(Guid.NewGuid(), group) { }
 
     /// <summary> Initializes a new <see cref="UuidProperty" /> object with a 
     /// specified <see cref="Guid"/>. </summary>
     /// <param name="uuid">A <see cref="Guid" /> value.</param>
-    public UuidProperty(Guid uuid)
-        : base(new ParameterSection(), null) => Value = uuid;
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    public UuidProperty(Guid uuid, string? group = null)
+        : base(new ParameterSection(), group) => Value = uuid;
 
     internal UuidProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
             => Value = UuidConverter.ToGuid(vcfRow.Value);

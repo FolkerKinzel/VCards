@@ -7,9 +7,9 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCardBuilder
 {
-    public VCardBuilder SetDirectoryName(string? value)
+    public VCardBuilder SetDirectoryName(string? value, string? group = null)
     {
-        _vCard.DirectoryName = new TextProperty(value);
+        _vCard.DirectoryName = new TextProperty(value, group);
         return this;
     }
 

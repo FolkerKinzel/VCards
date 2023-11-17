@@ -18,8 +18,11 @@ public sealed class AccessProperty : VCardProperty
 
     /// <summary> Initializes a new <see cref="AccessProperty" /> object. </summary>
     /// <param name="access">A member of the <see cref="Access" /> enum.</param>
-    public AccessProperty(Access access)
-        : base(new ParameterSection(), null) => Value = access;
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    public AccessProperty(Access access, string? group = null)
+        : base(new ParameterSection(), group) => Value = access;
 
 
     internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)

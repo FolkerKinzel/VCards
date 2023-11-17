@@ -7,15 +7,19 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCardBuilder
 {
-    public VCardBuilder SetTimeStamp()
+    public VCardBuilder SetTimeStamp(string? group = null, Action<ParameterSection>? parameters = null)
     {
-        _vCard.TimeStamp = new TimeStampProperty();
+        var prop = new TimeStampProperty(group);
+        parameters?.Invoke(prop.Parameters);
+        _vCard.TimeStamp = prop;
         return this;
     }
 
-    public VCardBuilder SetTimeStamp(DateTimeOffset value)
+    public VCardBuilder SetTimeStamp(DateTimeOffset value, string? group = null, Action<ParameterSection>? parameters = null)
     {
-        _vCard.TimeStamp = new TimeStampProperty(value);
+        var prop = new TimeStampProperty(value, group);
+        parameters?.Invoke(prop.Parameters);
+        _vCard.TimeStamp = prop;
         return this;
     }
 

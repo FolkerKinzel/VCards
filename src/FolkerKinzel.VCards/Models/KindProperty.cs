@@ -19,8 +19,11 @@ public sealed class KindProperty : VCardProperty
 
     /// <summary>  Initializes a new <see cref="KindProperty" /> object. </summary>
     /// <param name="value">A member of the <see cref="Kind" /> enum.</param>
-    public KindProperty(Kind value)
-        : base(new ParameterSection(), null) => Value = value;
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    public KindProperty(Kind value, string? group = null)
+        : base(new ParameterSection(), group) => Value = value;
 
     internal KindProperty(VcfRow vcfRow)
         : base(vcfRow.Parameters, vcfRow.Group) => Value = KindConverter.Parse(vcfRow.Value);
