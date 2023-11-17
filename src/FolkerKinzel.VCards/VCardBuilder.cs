@@ -21,15 +21,9 @@ public sealed partial class VCardBuilder
         => new(vCard ?? throw new ArgumentNullException(nameof(vCard)));
 
     public VCard Build() => _vCard;
-  
 
-    public VCardBuilder SetDirectoryName() => throw new NotImplementedException();
 
-    public VCardBuilder ClearDirectoryName()
-    {
-        _vCard.DirectoryName = null;
-        return this;
-    }
+    
 
 
     public VCardBuilder AddKey() => throw new NotImplementedException();
@@ -52,13 +46,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder SetKind() => throw new NotImplementedException();
-
-    public VCardBuilder ClearKind()
-    {
-        _vCard.Kind = null;
-        return this;
-    }
+    
 
 
     public VCardBuilder AddLogo() => throw new NotImplementedException();
@@ -81,13 +69,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder SetMailer() => throw new NotImplementedException();
-
-    public VCardBuilder ClearMailer()
-    {
-        _vCard.Mailer = null;
-        return this;
-    }
+    
 
     public VCardBuilder AddMember() => throw new NotImplementedException();
 
@@ -192,21 +174,9 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder SetProductID() => throw new NotImplementedException();
+    
 
-    public VCardBuilder ClearProductID()
-    {
-        _vCard.ProductID = null;
-        return this;
-    }
-
-    public VCardBuilder SetProfile() => throw new NotImplementedException();
-
-    public VCardBuilder ClearProfile()
-    {
-        _vCard.Profile = null;
-        return this;
-    }
+    
 
     public VCardBuilder AddRelation() => throw new NotImplementedException();
 
