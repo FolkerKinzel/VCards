@@ -21,10 +21,6 @@ public sealed partial class VCardBuilder
         => new(vCard ?? throw new ArgumentNullException(nameof(vCard)));
 
     public VCard Build() => _vCard;
-
-
-
-
   
 
     public VCardBuilder SetDirectoryName() => throw new NotImplementedException();
@@ -36,42 +32,7 @@ public sealed partial class VCardBuilder
     }
 
 
-
-
-
-    public VCardBuilder AddInterest(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.Interests = Add(new TextProperty(value, group),
-                                              _vCard.Interests,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearInterests()
-    {
-        _vCard.Interests = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveInterest(TextProperty? prop)
-    {
-        _vCard.Interests = _vCard.Interests.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveInterest(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.Interests = _vCard.Interests.Remove(predicate);
-        return this;
-    }
-
     public VCardBuilder AddKey() => throw new NotImplementedException();
-
-
 
     public VCardBuilder ClearKeys()
     {
@@ -99,36 +60,6 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-
-    public VCardBuilder AddLanguage(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.Languages = Add(new TextProperty(value, group),
-                                              _vCard.Languages,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearLanguages()
-    {
-        _vCard.Languages = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveLanguage(TextProperty? prop)
-    {
-        _vCard.Languages = _vCard.Languages.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveLanguage(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.Languages = _vCard.Languages.Remove(predicate);
-        return this;
-    }
 
     public VCardBuilder AddLogo() => throw new NotImplementedException();
 
@@ -198,49 +129,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-
-    public VCardBuilder AddNickName(string? value,
-                                               string? group = null,
-                                               Action<ParameterSection>? parameters = null,
-                                               bool pref = false)
-    {
-        _vCard.NickNames = Add(new StringCollectionProperty(value, group),
-                                                   _vCard.NickNames,
-                                                   parameters,
-                                                   pref);
-        return this;
-    }
-
-    public VCardBuilder AddNickName(IEnumerable<string?>? value,
-                                               string? group = null,
-                                               Action<ParameterSection>? parameters = null,
-                                               bool pref = false)
-    {
-        _vCard.NickNames = Add(new StringCollectionProperty(value, group),
-                                                   _vCard.NickNames,
-                                                   parameters,
-                                                   pref);
-        return this;
-    }
-
-    public VCardBuilder ClearNickNames()
-    {
-        _vCard.NickNames = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveNickName(StringCollectionProperty? prop)
-    {
-        _vCard.NickNames = _vCard.NickNames.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveNickName(Func<StringCollectionProperty?, bool> predicate)
-    {
-        _vCard.NickNames = _vCard.NickNames.Remove(predicate);
-        return this;
-    }
-
+ 
     public VCardBuilder AddNonStandard() => throw new NotImplementedException();
 
     public VCardBuilder ClearNonStandards()
@@ -262,36 +151,6 @@ public sealed partial class VCardBuilder
     }
 
 
-    public VCardBuilder AddNote(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.Notes = Add(new TextProperty(value, group),
-                                              _vCard.Notes,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearNotes()
-    {
-        _vCard.Notes = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveNote(TextProperty? prop)
-    {
-        _vCard.Notes = _vCard.Notes.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveNote(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.Notes = _vCard.Notes.Remove(predicate);
-        return this;
-    }
-
     public VCardBuilder AddOrganization() => throw new NotImplementedException();
 
     public VCardBuilder ClearOrganizations()
@@ -312,67 +171,6 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-
-    public VCardBuilder AddOrgDirectory(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.OrgDirectories = Add(new TextProperty(value, group),
-                                              _vCard.OrgDirectories,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearOrgDirectories()
-    {
-        _vCard.OrgDirectories = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveOrgDirectory(TextProperty? prop)
-    {
-        _vCard.OrgDirectories = _vCard.OrgDirectories.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveOrgDirectory(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.OrgDirectories = _vCard.OrgDirectories.Remove(predicate);
-        return this;
-    }
-
-
-    public VCardBuilder AddPhone(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.Phones = Add(new TextProperty(value, group),
-                                              _vCard.Phones,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearPhones()
-    {
-        _vCard.Phones = null;
-        return this;
-    }
-
-    public VCardBuilder RemovePhone(TextProperty? prop)
-    {
-        _vCard.Phones = _vCard.Phones.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemovePhone(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.Phones = _vCard.Phones.Remove(predicate);
-        return this;
-    }
 
     public VCardBuilder AddPhoto() => throw new NotImplementedException();
 
@@ -431,36 +229,6 @@ public sealed partial class VCardBuilder
     }
 
 
-    public VCardBuilder AddRole(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.Roles = Add(new TextProperty(value, group),
-                                              _vCard.Roles,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearRoles()
-    {
-        _vCard.Roles = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveRole(TextProperty? prop)
-    {
-        _vCard.Roles = _vCard.Roles.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveRole(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.Roles = _vCard.Roles.Remove(predicate);
-        return this;
-    }
-
     public VCardBuilder AddSound() => throw new NotImplementedException();
 
     public VCardBuilder ClearSounds()
@@ -482,36 +250,6 @@ public sealed partial class VCardBuilder
     }
 
 
-    public VCardBuilder AddSource(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.Sources = Add(new TextProperty(value, group),
-                                              _vCard.Sources,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearSources()
-    {
-        _vCard.Sources = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveSource(TextProperty? prop)
-    {
-        _vCard.Sources = _vCard.Sources.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveSource(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.Sources = _vCard.Sources.Remove(predicate);
-        return this;
-    }
-
     public VCardBuilder SetTimeStamp() => throw new NotImplementedException();
 
     public VCardBuilder ClearTimeStamp()
@@ -520,68 +258,6 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-
-    public VCardBuilder AddTimeZone(TimeZoneID? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.TimeZones = Add(new TimeZoneProperty(value, group),
-                                              _vCard.TimeZones,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearTimeZones()
-    {
-        _vCard.TimeZones = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveTimeZone(TimeZoneProperty? prop)
-    {
-        _vCard.TimeZones = _vCard.TimeZones.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveTimeZone(Func<TimeZoneProperty?, bool> predicate)
-    {
-        _vCard.TimeZones = _vCard.TimeZones.Remove(predicate);
-        return this;
-    }
-
-
-
-    public VCardBuilder AddTitle(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.Titles = Add(new TextProperty(value, group),
-                                              _vCard.Titles,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearTitles()
-    {
-        _vCard.Titles = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveTitle(TextProperty? prop)
-    {
-        _vCard.Titles = _vCard.Titles.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveTitle(Func<TextProperty?, bool> predicate)
-    {
-        _vCard.Titles = _vCard.Titles.Remove(predicate);
-        return this;
-    }
 
     public VCardBuilder SetUniqueIdentifier() => throw new NotImplementedException();
 
