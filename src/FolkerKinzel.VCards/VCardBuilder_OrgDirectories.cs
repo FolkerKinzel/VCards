@@ -26,11 +26,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveOrgDirectory(TextProperty? prop)
-    {
-        _vCard.OrgDirectories = _vCard.OrgDirectories.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveOrgDirectory(TextProperty? prop)
+    //{
+    //    _vCard.OrgDirectories = _vCard.OrgDirectories.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveOrgDirectory(Func<TextProperty, bool> predicate)
     {

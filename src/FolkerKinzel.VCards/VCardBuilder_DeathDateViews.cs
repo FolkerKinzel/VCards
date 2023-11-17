@@ -42,11 +42,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveDeathDateView(DateAndOrTimeProperty? prop)
-    {
-        _vCard.DeathDateViews = _vCard.DeathDateViews.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveDeathDateView(DateAndOrTimeProperty? prop)
+    //{
+    //    _vCard.DeathDateViews = _vCard.DeathDateViews.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveDeathDateView(Func<DateAndOrTimeProperty, bool> predicate)
     {

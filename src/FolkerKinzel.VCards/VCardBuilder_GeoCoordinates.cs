@@ -39,11 +39,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveGeoCoordinate(GeoProperty? prop)
-    {
-        _vCard.GeoCoordinates = _vCard.GeoCoordinates.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveGeoCoordinate(GeoProperty? prop)
+    //{
+    //    _vCard.GeoCoordinates = _vCard.GeoCoordinates.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveGeoCoordinate(Func<GeoProperty, bool> predicate)
     {

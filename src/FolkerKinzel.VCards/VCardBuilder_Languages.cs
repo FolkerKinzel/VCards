@@ -26,11 +26,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveLanguage(TextProperty? prop)
-    {
-        _vCard.Languages = _vCard.Languages.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveLanguage(TextProperty? prop)
+    //{
+    //    _vCard.Languages = _vCard.Languages.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveLanguage(Func<TextProperty, bool> predicate)
     {

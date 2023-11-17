@@ -26,11 +26,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveNote(TextProperty? prop)
-    {
-        _vCard.Notes = _vCard.Notes.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveNote(TextProperty? prop)
+    //{
+    //    _vCard.Notes = _vCard.Notes.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveNote(Func<TextProperty, bool> predicate)
     {

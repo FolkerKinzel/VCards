@@ -40,11 +40,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveKey(DataProperty? prop)
-    {
-        _vCard.Keys = _vCard.Keys.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveKey(DataProperty? prop)
+    //{
+    //    _vCard.Keys = _vCard.Keys.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveKey(Func<DataProperty, bool> predicate)
     {
@@ -69,11 +69,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveLogo(DataProperty? prop)
-    {
-        _vCard.Logos = _vCard.Logos.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveLogo(DataProperty? prop)
+    //{
+    //    _vCard.Logos = _vCard.Logos.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveLogo(Func<DataProperty, bool> predicate)
     {
@@ -97,11 +97,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveMember(RelationProperty? prop)
-    {
-        _vCard.Members = _vCard.Members.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveMember(RelationProperty? prop)
+    //{
+    //    _vCard.Members = _vCard.Members.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveMember(Func<RelationProperty, bool> predicate)
     {
@@ -117,11 +117,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveNameView(NameProperty? prop)
-    {
-        _vCard.NameViews = _vCard.NameViews.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveNameView(NameProperty? prop)
+    //{
+    //    _vCard.NameViews = _vCard.NameViews.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveNameView(Func<NameProperty, bool> predicate)
     {
@@ -138,11 +138,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveNonStandard(NonStandardProperty? prop)
-    {
-        _vCard.NonStandards = _vCard.NonStandards.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveNonStandard(NonStandardProperty? prop)
+    //{
+    //    _vCard.NonStandards = _vCard.NonStandards.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveNonStandard(Func<NonStandardProperty, bool> predicate)
     {
@@ -159,11 +159,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveOrganization(OrgProperty? prop)
-    {
-        _vCard.Organizations = _vCard.Organizations.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveOrganization(OrgProperty? prop)
+    //{
+    //    _vCard.Organizations = _vCard.Organizations.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveOrganization(Func<OrgProperty, bool> predicate)
     {
@@ -180,11 +180,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemovePhoto(DataProperty? prop)
-    {
-        _vCard.Photos = _vCard.Photos.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemovePhoto(DataProperty? prop)
+    //{
+    //    _vCard.Photos = _vCard.Photos.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemovePhoto(Func<DataProperty, bool> predicate)
     {
@@ -216,11 +216,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveRelation(RelationProperty? prop)
-    {
-        _vCard.Relations = _vCard.Relations.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveRelation(RelationProperty? prop)
+    //{
+    //    _vCard.Relations = _vCard.Relations.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveRelation(Func<RelationProperty, bool> predicate)
     {
@@ -237,11 +237,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveSound(DataProperty? prop)
-    {
-        _vCard.Sounds = _vCard.Sounds.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveSound(DataProperty? prop)
+    //{
+    //    _vCard.Sounds = _vCard.Sounds.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveSound(Func<DataProperty, bool> predicate)
     {
@@ -268,35 +268,7 @@ public sealed partial class VCardBuilder
     }
 
 
-    public VCardBuilder AddUrl(string? value,
-                                           string? group = null,
-                                           Action<ParameterSection>? parameters = null,
-                                           bool pref = false)
-    {
-        _vCard.Urls = Add(new TextProperty(value, group),
-                                              _vCard.Urls,
-                                              parameters,
-                                              pref);
-        return this;
-    }
-
-    public VCardBuilder ClearUrls()
-    {
-        _vCard.Urls = null;
-        return this;
-    }
-
-    public VCardBuilder RemoveUrl(TextProperty? prop)
-    {
-        _vCard.Urls = _vCard.Urls.Remove(prop);
-        return this;
-    }
-
-    public VCardBuilder RemoveUrl(Func<TextProperty, bool> predicate)
-    {
-        _vCard.Urls = _vCard.Urls.Remove(predicate);
-        return this;
-    }
+    
 
     public VCardBuilder AddXml() => throw new NotImplementedException();
 
@@ -306,11 +278,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveXml(XmlProperty? prop)
-    {
-        _vCard.Xmls = _vCard.Xmls.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveXml(XmlProperty? prop)
+    //{
+    //    _vCard.Xmls = _vCard.Xmls.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveXml(Func<XmlProperty, bool> predicate)
     {

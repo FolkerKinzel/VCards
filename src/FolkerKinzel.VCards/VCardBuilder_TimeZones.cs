@@ -25,11 +25,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveTimeZone(TimeZoneProperty? prop)
-    {
-        _vCard.TimeZones = _vCard.TimeZones.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveTimeZone(TimeZoneProperty? prop)
+    //{
+    //    _vCard.TimeZones = _vCard.TimeZones.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveTimeZone(Func<TimeZoneProperty, bool> predicate)
     {

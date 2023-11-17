@@ -25,11 +25,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveFreeOrBusyUrl(TextProperty? prop)
-    {
-        _vCard.FreeOrBusyUrls = _vCard.FreeOrBusyUrls.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveFreeOrBusyUrl(TextProperty? prop)
+    //{
+    //    _vCard.FreeOrBusyUrls = _vCard.FreeOrBusyUrls.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveFreeOrBusyUrl(Func<TextProperty, bool> predicate)
     {

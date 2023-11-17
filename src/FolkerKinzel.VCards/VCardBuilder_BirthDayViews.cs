@@ -50,11 +50,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveBirthDayView(DateAndOrTimeProperty? prop)
-    {
-        _vCard.BirthDayViews = _vCard.BirthDayViews.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveBirthDayView(DateAndOrTimeProperty? prop)
+    //{
+    //    _vCard.BirthDayViews = _vCard.BirthDayViews.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveBirthDayView(Func<DateAndOrTimeProperty, bool> predicate)
     {

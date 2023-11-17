@@ -38,11 +38,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveCategory(StringCollectionProperty? prop)
-    {
-        _vCard.Categories = _vCard.Categories.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveCategory(StringCollectionProperty? prop)
+    //{
+    //    _vCard.Categories = _vCard.Categories.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveCategory(Func<StringCollectionProperty, bool> predicate)
     {

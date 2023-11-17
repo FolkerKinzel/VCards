@@ -26,11 +26,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveGenderView(GenderProperty? prop)
-    {
-        _vCard.GenderViews = _vCard.GenderViews.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveGenderView(GenderProperty? prop)
+    //{
+    //    _vCard.GenderViews = _vCard.GenderViews.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveGenderView(Func<GenderProperty, bool> predicate)
     {

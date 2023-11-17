@@ -25,11 +25,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveRole(TextProperty? prop)
-    {
-        _vCard.Roles = _vCard.Roles.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveRole(TextProperty? prop)
+    //{
+    //    _vCard.Roles = _vCard.Roles.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveRole(Func<TextProperty, bool> predicate)
     {

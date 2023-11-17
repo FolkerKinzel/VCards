@@ -13,7 +13,7 @@ public class VCardBuilderTests
         var builder = VCardBuilder.Create();
         Assert.IsNotNull(builder);
         Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
-        var vc = builder.Build();
+        VCard vc = builder.Build();
         Assert.IsNotNull(vc);
         Assert.IsInstanceOfType(vc, typeof(VCard));
         Assert.IsNotNull(vc.UniqueIdentifier);
@@ -25,7 +25,7 @@ public class VCardBuilderTests
         var builder = VCardBuilder.Create(setUniqueIdentifier: false);
         Assert.IsNotNull(builder);
         Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
-        var vc = builder.Build();
+        VCard vc = builder.Build();
         Assert.IsNotNull(vc);
         Assert.IsInstanceOfType(vc, typeof(VCard));
         Assert.IsNull(vc.UniqueIdentifier);
@@ -87,12 +87,9 @@ public class VCardBuilderTests
         Assert.AreEqual(Adr.Intl, prop2.Parameters.AddressType);
         Assert.IsNull(prop2.Parameters.Label);
         Assert.AreEqual("gr1", prop2.Group);
-        CollectionAssert.Contains(vc.Addresses.ToArray(), null);
-        vc = VCardBuilder.Create(vc).RemoveAddress((AddressProperty?)null).Build();
-        Assert.IsFalse(vc.Addresses!.Any(x => x is null));
-        Assert.IsTrue(vc.Addresses!.Any(x => x!.Value.Street[0] == "3"));
-        vc = VCardBuilder.Create(vc).RemoveAddress(x => x!.Value.Street[0] == "3").Build();
-        Assert.IsFalse(vc.Addresses!.Any(x => x!.Value.Street[0] == "3"));
+        Assert.IsTrue(vc.Addresses!.Any(x => x?.Value.Street[0] == "3"));
+        vc = VCardBuilder.Create(vc).RemoveAddress(x => x.Value.Street[0] == "3").Build();
+        Assert.IsFalse(vc.Addresses!.Any(x => x?.Value.Street[0] == "3"));
         vc = VCardBuilder.Create(vc).ClearAddresses().Build();
         Assert.IsNull(vc.Addresses);
     }
@@ -114,12 +111,6 @@ public class VCardBuilderTests
         Assert.AreEqual(Adr.Intl, prop2.Parameters.AddressType);
         Assert.IsNull(prop2.Parameters.Label);
         Assert.AreEqual("gr1", prop2.Group);
-
-    }
-
-    [TestMethod()]
-    public void ClearAddressesTest()
-    {
 
     }
 

@@ -26,11 +26,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveHobby(TextProperty? prop)
-    {
-        _vCard.Hobbies = _vCard.Hobbies.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveHobby(TextProperty? prop)
+    //{
+    //    _vCard.Hobbies = _vCard.Hobbies.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveHobby(Func<TextProperty, bool> predicate)
     {

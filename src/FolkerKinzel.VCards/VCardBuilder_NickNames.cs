@@ -37,11 +37,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveNickName(StringCollectionProperty? prop)
-    {
-        _vCard.NickNames = _vCard.NickNames.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveNickName(StringCollectionProperty? prop)
+    //{
+    //    _vCard.NickNames = _vCard.NickNames.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveNickName(Func<StringCollectionProperty, bool> predicate)
     {

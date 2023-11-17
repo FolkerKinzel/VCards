@@ -25,11 +25,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveSource(TextProperty? prop)
-    {
-        _vCard.Sources = _vCard.Sources.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveSource(TextProperty? prop)
+    //{
+    //    _vCard.Sources = _vCard.Sources.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveSource(Func<TextProperty, bool> predicate)
     {

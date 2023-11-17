@@ -49,11 +49,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveAddress(AddressProperty? prop)
-    {
-        _vCard.Addresses = _vCard.Addresses.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveAddress(AddressProperty? prop)
+    //{
+    //    _vCard.Addresses = _vCard.Addresses.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveAddress(Func<AddressProperty, bool> predicate)
     {

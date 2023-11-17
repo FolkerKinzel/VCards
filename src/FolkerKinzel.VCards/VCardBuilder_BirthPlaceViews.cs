@@ -23,11 +23,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveBirthPlaceView(TextProperty? prop)
-    {
-        _vCard.BirthPlaceViews = _vCard.BirthPlaceViews.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveBirthPlaceView(TextProperty? prop)
+    //{
+    //    _vCard.BirthPlaceViews = _vCard.BirthPlaceViews.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveBirthPlaceView(Func<TextProperty, bool> predicate)
     {

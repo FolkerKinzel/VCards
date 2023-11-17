@@ -25,11 +25,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveCalendarAddress(TextProperty? prop)
-    {
-        _vCard.CalendarAddresses = _vCard.CalendarAddresses.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveCalendarAddress(TextProperty? prop)
+    //{
+    //    _vCard.CalendarAddresses = _vCard.CalendarAddresses.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveCalendarAddress(Func<TextProperty, bool> predicate)
     {

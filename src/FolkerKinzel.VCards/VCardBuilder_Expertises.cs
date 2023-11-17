@@ -26,11 +26,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveExpertise(TextProperty? prop)
-    {
-        _vCard.Expertises = _vCard.Expertises.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveExpertise(TextProperty? prop)
+    //{
+    //    _vCard.Expertises = _vCard.Expertises.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveExpertise(Func<TextProperty, bool> predicate)
     {

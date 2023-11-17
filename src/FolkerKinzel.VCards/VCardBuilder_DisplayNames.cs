@@ -25,11 +25,11 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    public VCardBuilder RemoveDisplayName(TextProperty? prop)
-    {
-        _vCard.DisplayNames = _vCard.DisplayNames.Remove(prop);
-        return this;
-    }
+    //public VCardBuilder RemoveDisplayName(TextProperty? prop)
+    //{
+    //    _vCard.DisplayNames = _vCard.DisplayNames.Remove(prop);
+    //    return this;
+    //}
 
     public VCardBuilder RemoveDisplayName(Func<TextProperty, bool> predicate)
     {

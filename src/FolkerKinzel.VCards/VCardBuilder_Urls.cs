@@ -7,34 +7,33 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCardBuilder
 {
-
-    public VCardBuilder AddInterest(string? value,
+    public VCardBuilder AddUrl(string? value,
                                            string? group = null,
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.Interests = Add(new TextProperty(value, group),
-                                              _vCard.Interests,
+        _vCard.Urls = Add(new TextProperty(value, group),
+                                              _vCard.Urls,
                                               parameters,
                                               pref);
         return this;
     }
 
-    public VCardBuilder ClearInterests()
+    public VCardBuilder ClearUrls()
     {
-        _vCard.Interests = null;
+        _vCard.Urls = null;
         return this;
     }
 
-    //public VCardBuilder RemoveInterest(TextProperty? prop)
+    //public VCardBuilder RemoveUrl(TextProperty? prop)
     //{
-    //    _vCard.Interests = _vCard.Interests.Remove(prop);
+    //    _vCard.Urls = _vCard.Urls.Remove(prop);
     //    return this;
     //}
 
-    public VCardBuilder RemoveInterest(Func<TextProperty, bool> predicate)
+    public VCardBuilder RemoveUrl(Func<TextProperty, bool> predicate)
     {
-        _vCard.Interests = _vCard.Interests.Remove(predicate);
+        _vCard.Urls = _vCard.Urls.Remove(predicate);
         return this;
     }
 }
