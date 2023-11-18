@@ -25,13 +25,13 @@ public readonly struct TextSingletonBuilder
         var property = new TextProperty(value, group);
         parameters?.Invoke(property.Parameters);
 
-        Builder._vCard.Set(Prop, property);
+        Builder.VCard.Set(Prop, property);
         return _builder!;
     }
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop, null);
+        Builder.VCard.Set(Prop, null);
         return _builder!;
     }
 }

@@ -19,13 +19,13 @@ public readonly struct KindBuilder
         var property = new KindProperty(value, group);
         parameters?.Invoke(property.Parameters);
 
-        Builder._vCard.Set(Prop.Kind, property);
+        Builder.VCard.Set(Prop.Kind, property);
         return _builder!;
     }
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop.Kind, null);
+        Builder.VCard.Set(Prop.Kind, null);
         return _builder!;
     }
 }

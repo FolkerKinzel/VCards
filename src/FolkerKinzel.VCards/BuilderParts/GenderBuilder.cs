@@ -18,8 +18,8 @@ public readonly struct GenderBuilder
                             string? group = null,
                             Action<ParameterSection>? parameters = null)
     {
-        Builder._vCard.Set(Prop.GenderViews, VCardBuilder.Add(new GenderProperty(sex, identity, group),
-                                                  Builder._vCard.Get<IEnumerable<GenderProperty?>?>(Prop.GenderViews),
+        Builder.VCard.Set(Prop.GenderViews, VCardBuilder.Add(new GenderProperty(sex, identity, group),
+                                                  Builder.VCard.Get<IEnumerable<GenderProperty?>?>(Prop.GenderViews),
                                                   parameters,
                                                   false));
         return _builder!;
@@ -27,13 +27,13 @@ public readonly struct GenderBuilder
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop.GenderViews, null);
+        Builder.VCard.Set(Prop.GenderViews, null);
         return _builder!;
     }
 
     public VCardBuilder Remove(Func<GenderProperty, bool> predicate)
     {
-        Builder._vCard.Set(Prop.GenderViews, Builder._vCard.Get<IEnumerable<GenderProperty?>?>(Prop.GenderViews).Remove(predicate));
+        Builder.VCard.Set(Prop.GenderViews, Builder.VCard.Get<IEnumerable<GenderProperty?>?>(Prop.GenderViews).Remove(predicate));
         return _builder!;
     }
 }

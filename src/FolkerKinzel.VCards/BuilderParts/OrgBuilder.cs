@@ -20,9 +20,9 @@ public readonly struct OrgBuilder
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
-        Builder._vCard.Set(Prop.Organizations,
+        Builder.VCard.Set(Prop.Organizations,
                            VCardBuilder.Add(new OrgProperty(organizationName, organizationalUnits, group),
-                                            Builder._vCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations),
+                                            Builder.VCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations),
                                             parameters,
                                             pref));
         return _builder!;
@@ -30,14 +30,14 @@ public readonly struct OrgBuilder
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop.Organizations, null);
+        Builder.VCard.Set(Prop.Organizations, null);
         return _builder!;
     }
 
     public VCardBuilder Remove(Func<OrgProperty, bool> predicate)
     {
-        Builder._vCard.Set(Prop.Organizations,
-                           Builder._vCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations).Remove(predicate));
+        Builder.VCard.Set(Prop.Organizations,
+                           Builder.VCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations).Remove(predicate));
         return _builder!;
     }
 }

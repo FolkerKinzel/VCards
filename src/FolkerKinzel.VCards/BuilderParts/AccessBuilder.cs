@@ -15,13 +15,13 @@ public readonly struct AccessBuilder
     public VCardBuilder Set(Access value,
                             string? group = null)
     {
-        Builder._vCard.Set(Prop.Access, new AccessProperty(value, group));
+        Builder.VCard.Set(Prop.Access, new AccessProperty(value, group));
         return _builder!;
     }
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop.Access, null);
+        Builder.VCard.Set(Prop.Access, null);
         return _builder!;
     }
 }

@@ -19,13 +19,13 @@ public readonly struct UuidBuilder
         var property = new UuidProperty(value, group);
         parameters?.Invoke(property.Parameters);
 
-        Builder._vCard.Set(Prop.ID, property);
+        Builder.VCard.Set(Prop.ID, property);
         return _builder!;
     }
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop.ID, null);
+        Builder.VCard.Set(Prop.ID, null);
         return _builder!;
     }
 }

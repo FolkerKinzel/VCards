@@ -23,9 +23,9 @@ public readonly struct AddressBuilder
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
-        Builder._vCard.Set(Prop.Addresses,
+        Builder.VCard.Set(Prop.Addresses,
                            VCardBuilder.Add(new AddressProperty(street, locality, region, postalCode, country, autoLabel, group),
-                           Builder._vCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
+                           Builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
                            parameters,
                            pref));
         return _builder!;
@@ -41,9 +41,9 @@ public readonly struct AddressBuilder
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
-        Builder._vCard.Set(Prop.Addresses,
+        Builder.VCard.Set(Prop.Addresses,
                            VCardBuilder.Add(new AddressProperty(street, locality, region, postalCode, country, autoLabel, group),
-                           Builder._vCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
+                           Builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
                            parameters,
                            pref));
         return _builder!;
@@ -51,13 +51,13 @@ public readonly struct AddressBuilder
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop.Addresses, null);
+        Builder.VCard.Set(Prop.Addresses, null);
         return _builder!;
     }
 
     public VCardBuilder Remove(Func<AddressProperty, bool> predicate)
     {
-        Builder._vCard.Set(Prop.Addresses, Builder._vCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses).Remove(predicate));
+        Builder.VCard.Set(Prop.Addresses, Builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses).Remove(predicate));
         return _builder!;
     }
 

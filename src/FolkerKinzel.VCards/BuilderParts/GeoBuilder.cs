@@ -18,8 +18,8 @@ public readonly struct GeoBuilder
                             string? group = null,
                             Action<ParameterSection>? parameters = null)
     {
-        Builder._vCard.Set(Prop.GeoCoordinates, VCardBuilder.Add(new GeoProperty(latitude, longitude, group),
-                                                  Builder._vCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
+        Builder.VCard.Set(Prop.GeoCoordinates, VCardBuilder.Add(new GeoProperty(latitude, longitude, group),
+                                                  Builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
                                                   parameters,
                                                   false));
         return _builder!;
@@ -29,8 +29,8 @@ public readonly struct GeoBuilder
                             string? group = null,
                             Action<ParameterSection>? parameters = null)
     {
-        Builder._vCard.Set(Prop.GeoCoordinates, VCardBuilder.Add(new GeoProperty(value, group),
-                                                  Builder._vCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
+        Builder.VCard.Set(Prop.GeoCoordinates, VCardBuilder.Add(new GeoProperty(value, group),
+                                                  Builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
                                                   parameters,
                                                   false));
         return _builder!;
@@ -38,13 +38,13 @@ public readonly struct GeoBuilder
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop.GeoCoordinates, null);
+        Builder.VCard.Set(Prop.GeoCoordinates, null);
         return _builder!;
     }
 
     public VCardBuilder Remove(Func<GeoProperty, bool> predicate)
     {
-        Builder._vCard.Set(Prop.GeoCoordinates, Builder._vCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates).Remove(predicate));
+        Builder.VCard.Set(Prop.GeoCoordinates, Builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates).Remove(predicate));
         return _builder!;
     }
 }

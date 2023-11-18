@@ -23,8 +23,8 @@ public readonly struct TextViewBuilder
                             string? group = null,
                             Action<ParameterSection>? parameters = null)
     {
-        Builder._vCard.Set(Prop, VCardBuilder.Add(new TextProperty(value, group),
-                                                  Builder._vCard.Get<IEnumerable<TextProperty?>?>(Prop),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(new TextProperty(value, group),
+                                                  Builder.VCard.Get<IEnumerable<TextProperty?>?>(Prop),
                                                   parameters,
                                                   false));
         return _builder!;
@@ -32,13 +32,13 @@ public readonly struct TextViewBuilder
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop, null);
+        Builder.VCard.Set(Prop, null);
         return _builder!;
     }
 
     public VCardBuilder Remove(Func<TextProperty, bool> predicate)
     {
-        Builder._vCard.Set(Prop, Builder._vCard.Get<IEnumerable<TextProperty?>?>(Prop).Remove(predicate));
+        Builder.VCard.Set(Prop, Builder.VCard.Get<IEnumerable<TextProperty?>?>(Prop).Remove(predicate));
         return _builder!;
     }
 }

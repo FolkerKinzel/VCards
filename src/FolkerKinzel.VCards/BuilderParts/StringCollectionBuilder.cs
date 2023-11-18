@@ -24,8 +24,8 @@ public readonly struct StringCollectionBuilder
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
-        Builder._vCard.Set(Prop, VCardBuilder.Add(new StringCollectionProperty(value, group),
-                                                  Builder._vCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(new StringCollectionProperty(value, group),
+                                                  Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
         return _builder!;
@@ -36,8 +36,8 @@ public readonly struct StringCollectionBuilder
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
-        Builder._vCard.Set(Prop, VCardBuilder.Add(new StringCollectionProperty(value, group),
-                                                  Builder._vCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(new StringCollectionProperty(value, group),
+                                                  Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
         return _builder!;
@@ -45,13 +45,13 @@ public readonly struct StringCollectionBuilder
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop, null);
+        Builder.VCard.Set(Prop, null);
         return _builder!;
     }
 
     public VCardBuilder Remove(Func<StringCollectionProperty, bool> predicate)
     {
-        Builder._vCard.Set(Prop, Builder._vCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop).Remove(predicate));
+        Builder.VCard.Set(Prop, Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop).Remove(predicate));
         return _builder!;
     }
 }

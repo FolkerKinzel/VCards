@@ -19,13 +19,13 @@ public readonly struct TimeStampBuilder
         var property = new TimeStampProperty(value, group);
         parameters?.Invoke(property.Parameters);
 
-        Builder._vCard.Set(Prop.TimeStamp, property);
+        Builder.VCard.Set(Prop.TimeStamp, property);
         return _builder!;
     }
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop.TimeStamp, null);
+        Builder.VCard.Set(Prop.TimeStamp, null);
         return _builder!;
     }
 }

@@ -13,13 +13,13 @@ public readonly struct ProfileBuilder
 
     public VCardBuilder Set(string? group = null)
     {
-        Builder._vCard.Set(Prop.Profile, new ProfileProperty(group));
+        Builder.VCard.Set(Prop.Profile, new ProfileProperty(group));
         return _builder!;
     }
 
     public VCardBuilder Clear()
     {
-        Builder._vCard.Set(Prop.Profile, null);
+        Builder.VCard.Set(Prop.Profile, null);
         return _builder!;
     }
 }

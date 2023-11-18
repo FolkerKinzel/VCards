@@ -10,9 +10,9 @@ namespace FolkerKinzel.VCards;
 
 public sealed class VCardBuilder
 {
-    internal readonly VCard _vCard;
+    internal VCard VCard { get; }
 
-    private VCardBuilder(VCard vCard) => _vCard = vCard;
+    private VCardBuilder(VCard vCard) => VCard = vCard;
 
     public static VCardBuilder Create(bool setUniqueIdentifier = true)
         => new(new VCard(setUniqueIdentifier));
@@ -20,12 +20,12 @@ public sealed class VCardBuilder
     public static VCardBuilder Create(VCard vCard)
         => new(vCard ?? throw new ArgumentNullException(nameof(vCard)));
 
-    public VCard Build() => _vCard;
+    public VCard Build() => VCard;
 
     ///////////////////////////////////////////////////////////////////
 
     /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
-    /// <see cref="VCard"/>. <c>(3)</c></summary>
+    /// <see cref="VCards.VCard"/>. <c>(3)</c></summary>
     public AccessBuilder Access => new AccessBuilder(this);
 
     /// <summary> <c>ADR</c>: A structured representation of the physical delivery address
@@ -114,7 +114,7 @@ public sealed class VCardBuilder
     /// property is determined by the value of <see cref="ParameterSection.Preference" />. 
     /// URLs of the type <c>FTP</c> [RFC1738] or <c>HTTP</c> [RFC2616] refer to an
     /// iCalendar object [RFC5545], which represents a snapshot of the next weeks or 
-    /// months with data for the busy time of the subject the <see cref="VCard"/> 
+    /// months with data for the busy time of the subject the <see cref="VCards.VCard"/> 
     /// represents. If the iCalendar object is a file, its file extension should 
     /// be ".ifb".
     /// </remarks>
@@ -202,7 +202,7 @@ public sealed class VCardBuilder
     /// <summary> <c>IMPP</c>: Instant messenger handles. <c>(3,4)</c></summary>
     /// <remarks>
     /// <see cref="TextProperty.Value" /> should specify a URI for instant messaging 
-    /// and presence protocol communications with the object the <see cref="VCard"/> 
+    /// and presence protocol communications with the object the <see cref="VCards.VCard"/> 
     /// represents. If the URI can be used for voice and/or video, the 
     /// <see cref="VCard.Phones" /> property SHOULD be used in addition to this 
     /// property.</remarks>
@@ -358,7 +358,7 @@ public sealed class VCardBuilder
     /// Names in RFC 3406.</value>
     public TextSingletonBuilder ProductID => new TextSingletonBuilder(this, Prop.ProductID);
 
-    /// <summary> <c>PROFILE</c>: States that the <see cref="VCard"/> is a vCard. <c>(3)</c></summary>
+    /// <summary> <c>PROFILE</c>: States that the <see cref="VCards.VCard"/> is a vCard. <c>(3)</c></summary>
     public ProfileBuilder Profile => new ProfileBuilder(this);
 
     ///// <summary> <c>RELATED</c>: Other entities that the person or organization is 
@@ -421,7 +421,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder ClearKeys()
     {
-        _vCard.Keys = null;
+        VCard.Keys = null;
         return this;
     }
 
@@ -433,7 +433,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder RemoveKey(Func<DataProperty, bool> predicate)
     {
-        _vCard.Keys = _vCard.Keys.Remove(predicate);
+        VCard.Keys = VCard.Keys.Remove(predicate);
         return this;
     }
 
@@ -441,7 +441,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder ClearLogos()
     {
-        _vCard.Logos = null;
+        VCard.Logos = null;
         return this;
     }
 
@@ -453,7 +453,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder RemoveLogo(Func<DataProperty, bool> predicate)
     {
-        _vCard.Logos = _vCard.Logos.Remove(predicate);
+        VCard.Logos = VCard.Logos.Remove(predicate);
         return this;
     }
 
@@ -463,7 +463,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder ClearMembers()
     {
-        _vCard.Members = null;
+        VCard.Members = null;
         return this;
     }
 
@@ -475,7 +475,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder RemoveMember(Func<RelationProperty, bool> predicate)
     {
-        _vCard.Members = _vCard.Members.Remove(predicate);
+        VCard.Members = VCard.Members.Remove(predicate);
         return this;
     }
 
@@ -483,7 +483,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder ClearNameViews()
     {
-        _vCard.NameViews = null;
+        VCard.NameViews = null;
         return this;
     }
 
@@ -495,7 +495,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder RemoveNameView(Func<NameProperty, bool> predicate)
     {
-        _vCard.NameViews = _vCard.NameViews.Remove(predicate);
+        VCard.NameViews = VCard.NameViews.Remove(predicate);
         return this;
     }
 
@@ -504,7 +504,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder ClearNonStandards()
     {
-        _vCard.NonStandards = null;
+        VCard.NonStandards = null;
         return this;
     }
 
@@ -516,7 +516,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder RemoveNonStandard(Func<NonStandardProperty, bool> predicate)
     {
-        _vCard.NonStandards = _vCard.NonStandards.Remove(predicate);
+        VCard.NonStandards = VCard.NonStandards.Remove(predicate);
         return this;
     }
 
@@ -525,7 +525,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder ClearOrganizations()
     {
-        _vCard.Organizations = null;
+        VCard.Organizations = null;
         return this;
     }
 
@@ -537,7 +537,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder RemoveOrganization(Func<OrgProperty, bool> predicate)
     {
-        _vCard.Organizations = _vCard.Organizations.Remove(predicate);
+        VCard.Organizations = VCard.Organizations.Remove(predicate);
         return this;
     }
 
@@ -546,7 +546,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder ClearPhotos()
     {
-        _vCard.Photos = null;
+        VCard.Photos = null;
         return this;
     }
 
@@ -558,7 +558,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder RemovePhoto(Func<DataProperty, bool> predicate)
     {
-        _vCard.Photos = _vCard.Photos.Remove(predicate);
+        VCard.Photos = VCard.Photos.Remove(predicate);
         return this;
     }
 
@@ -566,7 +566,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder ClearRelations()
     {
-        _vCard.Relations = null;
+        VCard.Relations = null;
         return this;
     }
 
@@ -578,7 +578,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder RemoveRelation(Func<RelationProperty, bool> predicate)
     {
-        _vCard.Relations = _vCard.Relations.Remove(predicate);
+        VCard.Relations = VCard.Relations.Remove(predicate);
         return this;
     }
 
@@ -587,7 +587,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder ClearSounds()
     {
-        _vCard.Sounds = null;
+        VCard.Sounds = null;
         return this;
     }
 
@@ -599,7 +599,7 @@ public sealed class VCardBuilder
 
     public VCardBuilder RemoveSound(Func<DataProperty, bool> predicate)
     {
-        _vCard.Sounds = _vCard.Sounds.Remove(predicate);
+        VCard.Sounds = VCard.Sounds.Remove(predicate);
         return this;
     }
 
