@@ -21,11 +21,11 @@ public class NamePropertyTests
         var adr = new NameProperty(LAST_NAME, FIRST_NAME, MIDDLE_NAME, PREFIX, SUFFIX, group: GROUP);
 
         Assert.IsNotNull(adr);
-        Assert.AreEqual(LAST_NAME, adr.Value.LastName[0]);
-        Assert.AreEqual(FIRST_NAME, adr.Value.FirstName[0]);
-        Assert.AreEqual(MIDDLE_NAME, adr.Value.MiddleName[0]);
-        Assert.AreEqual(PREFIX, adr.Value.Prefix[0]);
-        Assert.AreEqual(SUFFIX, adr.Value.Suffix[0]);
+        Assert.AreEqual(LAST_NAME, adr.Value.FamilyNames[0]);
+        Assert.AreEqual(FIRST_NAME, adr.Value.GivenNames[0]);
+        Assert.AreEqual(MIDDLE_NAME, adr.Value.AdditionalNames[0]);
+        Assert.AreEqual(PREFIX, adr.Value.Prefixes[0]);
+        Assert.AreEqual(SUFFIX, adr.Value.Suffixes[0]);
         Assert.AreEqual(GROUP, adr.Group);
         Assert.IsFalse(adr.IsEmpty);
     }
@@ -43,11 +43,11 @@ public class NamePropertyTests
             group: GROUP);
 
         Assert.IsNotNull(adr);
-        Assert.AreEqual(LAST_NAME, adr.Value.LastName[0]);
-        Assert.AreEqual(FIRST_NAME, adr.Value.FirstName[0]);
-        Assert.AreEqual(MIDDLE_NAME, adr.Value.MiddleName[0]);
-        Assert.AreEqual(PREFIX, adr.Value.Prefix[0]);
-        Assert.AreEqual(SUFFIX, adr.Value.Suffix[0]);
+        Assert.AreEqual(LAST_NAME, adr.Value.FamilyNames[0]);
+        Assert.AreEqual(FIRST_NAME, adr.Value.GivenNames[0]);
+        Assert.AreEqual(MIDDLE_NAME, adr.Value.AdditionalNames[0]);
+        Assert.AreEqual(PREFIX, adr.Value.Prefixes[0]);
+        Assert.AreEqual(SUFFIX, adr.Value.Suffixes[0]);
         Assert.AreEqual(GROUP, adr.Group);
         Assert.IsFalse(adr.IsEmpty);
     }

@@ -182,5 +182,5 @@ public enum Prop
     AppIDs,
 
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
-    NonStandard
+    NonStandards
 }

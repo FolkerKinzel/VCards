@@ -324,7 +324,7 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.AppIDs:
                     AppendVCardClients((IEnumerable<AppIDProperty?>)kvp.Value);
                     break;
-                case Prop.NonStandard:
+                case Prop.NonStandards:
                     AppendNonStandardProperties((IEnumerable<NonStandardProperty?>)kvp.Value);
                     break;
                 default:

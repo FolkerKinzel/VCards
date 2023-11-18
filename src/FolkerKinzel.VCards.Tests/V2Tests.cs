@@ -307,7 +307,7 @@ public class V2Tests
         {
             NameViews = new NameProperty[]
             {
-                    new(lastName: null, firstName: "zzMad Perla 45")
+                    new(familyName: null, givenName: "zzMad Perla 45")
             },
 
             DisplayNames = new TextProperty[]

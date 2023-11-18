@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards;
 
+
 public sealed partial class VCardBuilder
 {
     public VCardBuilder AddAnniversaryView(int year, int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
@@ -37,6 +38,15 @@ public sealed partial class VCardBuilder
     public VCardBuilder AddAnniversaryView(DateTimeOffset dateTime, string? group = null, Action<ParameterSection>? parameters = null)
     {
         _vCard.AnniversaryViews = VCardBuilder.Add(DateAndOrTimeProperty.FromDateTime(dateTime, group),
+                                              _vCard.AnniversaryViews,
+                                              parameters,
+                                              false);
+        return this;
+    }
+
+    public VCardBuilder AddAnniversaryView(TimeOnly time, string? group = null, Action<ParameterSection>? parameters = null)
+    {
+        _vCard.AnniversaryViews = VCardBuilder.Add(DateAndOrTimeProperty.FromTime(time, group),
                                               _vCard.AnniversaryViews,
                                               parameters,
                                               false);

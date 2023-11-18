@@ -12,7 +12,9 @@ public sealed partial class ParameterSection
 
     [return: MaybeNull]
     private T Get<T>(VCdParam prop)
-        => _propDic.ContainsKey(prop) ? (T)_propDic[prop] : default;
+        => this._propDic.TryGetValue(prop, out object? value)
+               ? (T)value 
+               : default;
 
     private void Set<T>(VCdParam prop, T value)
     {

@@ -44,16 +44,13 @@ public class VCardBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void CreateTest4()
-    {
-        var builder = VCardBuilder.Create(null!);
-    }
+    public void CreateTest4() => _ = VCardBuilder.Create(null!);
 
     [TestMethod()]
     public void SetAccessTest()
     {
         VCard vc = VCardBuilder.Create()
-                               .SetAccess(Access.Private)
+                               .Access.Set(Access.Private)
                                .Build();
         Assert.IsNotNull (vc.Access);
         Assert.AreEqual(Access.Private, vc.Access.Value);
@@ -64,13 +61,13 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .AddAddress("Elm Street", null, null, null, 
+            .Addresses.Add("Elm Street", null, null, null, 
                          group: "gr1", parameters: p => p.AddressType = Adr.Intl, 
                          autoLabel: false)
-            .AddAddress("Schlossallee", null, null, null,
+            .Addresses.Add("Schlossallee", null, null, null,
                          parameters: p => p.AddressType = Adr.Dom, pref: true)
-            .AddAddress("3", null, null, null)
-            .AddAddress("4", null, null, null)
+            .Addresses.Add("3", null, null, null)
+            .Addresses.Add("4", null, null, null)
             .Build();
 
         vc.Addresses = vc.Addresses.ConcatWith(null);
@@ -88,9 +85,11 @@ public class VCardBuilderTests
         Assert.IsNull(prop2.Parameters.Label);
         Assert.AreEqual("gr1", prop2.Group);
         Assert.IsTrue(vc.Addresses!.Any(x => x?.Value.Street[0] == "3"));
-        vc = VCardBuilder.Create(vc).RemoveAddress(x => x.Value.Street[0] == "3").Build();
+        vc = VCardBuilder.Create(vc).Addresses.Remove(x => x.Value.Street[0] == "3").Build();
         Assert.IsFalse(vc.Addresses!.Any(x => x?.Value.Street[0] == "3"));
-        vc = VCardBuilder.Create(vc).ClearAddresses().Build();
+        vc = VCardBuilder.Create(vc)
+                         .Addresses.Clear()
+                         .Build();
         Assert.IsNull(vc.Addresses);
     }
 
@@ -99,7 +98,7 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .AddAddress(Enumerable.Repeat("Elm Street", 1), null, null, null,
+            .Addresses.Add(Enumerable.Repeat("Elm Street", 1), null, null, null,
                          group: "gr1", parameters: p => p.AddressType = Adr.Intl,
                          autoLabel: false)
             .Build();
@@ -117,7 +116,9 @@ public class VCardBuilderTests
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
     public void RemoveAddressTest1() 
-        => _ = VCardBuilder.Create().RemoveAddress((Func<AddressProperty?, bool>)null!).Build();
+        => _ = VCardBuilder.Create()
+                           .Addresses.Remove((Func<AddressProperty?, bool>)null!)
+                           .Build();
 
     [TestMethod()]
     public void AddAnniversaryViewTest()

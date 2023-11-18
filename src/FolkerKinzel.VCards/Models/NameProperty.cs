@@ -28,34 +28,34 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
         => Value = prop.Value;
 
     /// <summary>  Initializes a new <see cref="NameProperty" /> object. </summary>
-    /// <param name="lastName">Family Name(s) (also known as surname(s))</param>
-    /// <param name="firstName">Given Name(s) (first name(s))</param>
-    /// <param name="middleName">Additional Name(s)</param>
-    /// <param name="prefix">Honorific Prefix(es)</param>
-    /// <param name="suffix">Honorific Suffix(es)</param>
+    /// <param name="familyNames">Family Names (also known as surnames)</param>
+    /// <param name="givenNames">Given Names (first names)</param>
+    /// <param name="additionalNames">Additional Names (middle names)</param>
+    /// <param name="prefixes">Honorific Prefixes</param>
+    /// <param name="suffixes">Honorific Suffixes</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <seealso cref="ToDisplayName" />
     public NameProperty(
-        IEnumerable<string?>? lastName = null,
-        IEnumerable<string?>? firstName = null,
-        IEnumerable<string?>? middleName = null,
-        IEnumerable<string?>? prefix = null,
-        IEnumerable<string?>? suffix = null,
+        IEnumerable<string?>? familyNames = null,
+        IEnumerable<string?>? givenNames = null,
+        IEnumerable<string?>? additionalNames = null,
+        IEnumerable<string?>? prefixes = null,
+        IEnumerable<string?>? suffixes = null,
         string? group = null) : base(new ParameterSection(), group)
     {
-        Value = new Name(lastName: ReadOnlyCollectionConverter.ToReadOnlyCollection(lastName),
-                         firstName: ReadOnlyCollectionConverter.ToReadOnlyCollection(firstName),
-                         middleName: ReadOnlyCollectionConverter.ToReadOnlyCollection(middleName),
-                         prefix: ReadOnlyCollectionConverter.ToReadOnlyCollection(prefix),
-                         suffix: ReadOnlyCollectionConverter.ToReadOnlyCollection(suffix));
+        Value = new Name(familyNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(familyNames),
+                         givenNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(givenNames),
+                         additionalNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(additionalNames),
+                         prefixes: ReadOnlyCollectionConverter.ToReadOnlyCollection(prefixes),
+                         suffixes: ReadOnlyCollectionConverter.ToReadOnlyCollection(suffixes));
     }
 
     /// <summary>  Initializes a new <see cref="NameProperty" /> object. </summary>
-    /// <param name="lastName">Family Name (also known as surname)</param>
-    /// <param name="firstName">Given Name (first name)</param>
-    /// <param name="middleName">Additional Name</param>
+    /// <param name="familyName">Family Name (also known as surname)</param>
+    /// <param name="givenName">Given Name (first name)</param>
+    /// <param name="additionalName">Additional Name (middle name)</param>
     /// <param name="prefix">Honorific Prefix</param>
     /// <param name="suffix">Honorific Suffix</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
@@ -63,18 +63,18 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <seealso cref="ToDisplayName" />
     public NameProperty(
-        string? lastName,
-        string? firstName = null,
-        string? middleName = null,
+        string? familyName,
+        string? givenName = null,
+        string? additionalName = null,
         string? prefix = null,
         string? suffix = null,
         string? group = null) : base(new ParameterSection(), group)
     {
-        Value = new Name(lastName: ReadOnlyCollectionConverter.ToReadOnlyCollection(lastName),
-                         firstName: ReadOnlyCollectionConverter.ToReadOnlyCollection(firstName),
-                         middleName: ReadOnlyCollectionConverter.ToReadOnlyCollection(middleName),
-                         prefix: ReadOnlyCollectionConverter.ToReadOnlyCollection(prefix),
-                         suffix: ReadOnlyCollectionConverter.ToReadOnlyCollection(suffix));
+        Value = new Name(familyNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(familyName),
+                         givenNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(givenName),
+                         additionalNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(additionalName),
+                         prefixes: ReadOnlyCollectionConverter.ToReadOnlyCollection(prefix),
+                         suffixes: ReadOnlyCollectionConverter.ToReadOnlyCollection(suffix));
     }
 
     internal NameProperty(VcfRow vcfRow, VCdVersion version)
@@ -112,13 +112,13 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     }
 
     /// <inheritdoc />
-    IEnumerator IEnumerable.GetEnumerator() 
+    IEnumerator IEnumerable.GetEnumerator()
         => ((IEnumerable<NameProperty>)this).GetEnumerator();
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
-    
+
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         base.PrepareForVcfSerialization(serializer);

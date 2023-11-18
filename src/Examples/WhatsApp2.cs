@@ -19,7 +19,7 @@ internal static class WhatsAppDemo2
         {
             NameViews = new VC::NameProperty[]
             {
-                    new VC::NameProperty(lastName: null, firstName: "zzMad Perla 45")
+                    new VC::NameProperty(familyName: null, givenName: "zzMad Perla 45")
             },
 
             DisplayNames = new VC::TextProperty[]

@@ -25,7 +25,7 @@ public sealed class TimeStampProperty : VCardProperty
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <remarks>The constructor sets the <see cref="ParameterSection.DataType" /> parameter 
     /// to the value <see cref="Data.TimeStamp" />.</remarks>
-    public TimeStampProperty(string? group = null)
+    internal TimeStampProperty(string? group = null)
         : this(DateTimeOffset.UtcNow, group) { }
 
 

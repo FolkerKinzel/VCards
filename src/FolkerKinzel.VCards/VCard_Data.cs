@@ -22,16 +22,16 @@ namespace FolkerKinzel.VCards;
 /// </example>
 public sealed partial class VCard
 {
-    private readonly Dictionary<Prop, object> _propDic = new();
+    private readonly Dictionary<Prop, object> _propDic = [];
 
     [return: MaybeNull]
-    private T Get<T>(Prop prop) where T : class?
-        => _propDic.ContainsKey(prop)
-        ? (T)_propDic[prop]
-        : default;
+    internal T Get<T>(Prop prop) where T : class?
+        => this._propDic.TryGetValue(prop, out object? value)
+                    ? (T)value 
+                    : default;
 
 
-    private void Set(Prop prop, object? value)
+    internal void Set(Prop prop, object? value)
     {
         if (value is null)
         {
@@ -265,19 +265,6 @@ public sealed partial class VCard
         set => Set(Prop.ID, value);
     }
 
-    /// <summary> <c>IMPP</c>: Instant messenger handles. <c>(3,4)</c></summary>
-    /// <remarks>
-    /// <see cref="TextProperty.Value" /> should specify a URI for instant messaging 
-    /// and presence protocol communications with the object the <see cref="VCard"/> 
-    /// represents. If the URI can be used for voice and/or video, the 
-    /// <see cref="VCard.Phones" /> property SHOULD be used in addition to this 
-    /// property.</remarks>
-    public IEnumerable<TextProperty?>? Messengers
-    {
-        get => Get<IEnumerable<TextProperty?>?>(Prop.Messengers);
-        set => Set(Prop.Messengers, value);
-    }
-
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
     /// in, but does not necessarily take part in. <c>(4 - RFC 6715)</c></summary>
     /// <remarks> Define the level of interest in the parameter 
@@ -343,6 +330,19 @@ public sealed partial class VCard
     {
         get => Get<IEnumerable<RelationProperty?>?>(Prop.Members);
         set => Set(Prop.Members, value);
+    }
+
+    /// <summary> <c>IMPP</c>: Instant messenger handles. <c>(3,4)</c></summary>
+    /// <remarks>
+    /// <see cref="TextProperty.Value" /> should specify a URI for instant messaging 
+    /// and presence protocol communications with the object the <see cref="VCard"/> 
+    /// represents. If the URI can be used for voice and/or video, the 
+    /// <see cref="VCard.Phones" /> property SHOULD be used in addition to this 
+    /// property.</remarks>
+    public IEnumerable<TextProperty?>? Messengers
+    {
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Messengers);
+        set => Set(Prop.Messengers, value);
     }
 
     /// <summary> <c>N</c>: A structured representation of the name of the person, place
@@ -459,8 +459,8 @@ public sealed partial class VCard
     /// </remarks>
     public IEnumerable<NonStandardProperty?>? NonStandards
     {
-        get => Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandard);
-        set => Set(Prop.NonStandard, value);
+        get => Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards);
+        set => Set(Prop.NonStandards, value);
     }
 
     /// <summary> <c>NOTE</c>: Specifies supplemental informations or comments, that
@@ -587,8 +587,6 @@ public sealed partial class VCard
         get => Get<IEnumerable<TextProperty?>?>(Prop.Titles);
         set => Set(Prop.Titles, value);
     }
-
-    
 
     /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>

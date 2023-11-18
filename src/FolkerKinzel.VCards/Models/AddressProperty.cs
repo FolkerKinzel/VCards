@@ -24,11 +24,11 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="region">The region (e.g. state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
+    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <seealso cref="AttachLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressProperty(IEnumerable<string?>? street,
@@ -36,8 +36,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                            IEnumerable<string?>? region,
                            IEnumerable<string?>? postalCode,
                            IEnumerable<string?>? country = null,
-                           string? group = null,
-                           bool autoLabel = true)
+                           bool autoLabel = true,
+                           string? group = null)
 #pragma warning disable CS0618 // Type or member is obsolete
         : this(street: street,
                locality: locality,
@@ -46,8 +46,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                country: country,
                postOfficeBox: null,
                extendedAddress: null,
-               group: group,
-               autoLabel: autoLabel)
+               autoLabel: autoLabel,
+               group: group)
     { }
 #pragma warning restore CS0618 // Type or member is obsolete
 
@@ -60,11 +60,11 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
     /// <param name="extendedAddress">The extended address (e.g. apartment or suite
     /// number). (Don't use this parameter!)</param>
+    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <seealso cref="AttachLabel" />
     [Obsolete("Don't use this constructor.", false)]
     public AddressProperty(IEnumerable<string?>? street,
@@ -74,8 +74,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                            IEnumerable<string?>? country,
                            IEnumerable<string?>? postOfficeBox,
                            IEnumerable<string?>? extendedAddress,
-                           string? group = null,
-                           bool autoLabel = true) : base(new ParameterSection(), group)
+                           bool autoLabel = true,
+                           string? group = null) : base(new ParameterSection(), group)
     {
         Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
                             locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
@@ -97,11 +97,11 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="region">The region (e.g. state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
+    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <seealso cref="AttachLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressProperty(
@@ -110,8 +110,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         string? region,
         string? postalCode,
         string? country = null,
-        string? group = null,
-        bool autoLabel = true)
+        bool autoLabel = true,
+        string? group = null)
 #pragma warning disable CS0618 // Type or member is obsolete
         : this(street: street,
               locality: locality,
@@ -120,8 +120,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
               country: country,
               postOfficeBox: null,
               extendedAddress: null,
-              group: group,
-              autoLabel: autoLabel)
+              autoLabel: autoLabel,
+              group: group)
     { }
 #pragma warning restore CS0618 // Type or member is obsolete
 
@@ -134,11 +134,11 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
     /// <param name="extendedAddress">The extended address (e.g. apartment or suite
     /// number). (Don't use this parameter!)</param>
+    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <seealso cref="AttachLabel" />
     [Obsolete("Don't use this constructor.", false)]
     public AddressProperty(
@@ -149,8 +149,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         string? country,
         string? postOfficeBox,
         string? extendedAddress,
-        string? group = null,
-        bool autoLabel = true)
+        bool autoLabel = true,
+        string? group = null)
         : base(new ParameterSection(), group)
     {
         Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),

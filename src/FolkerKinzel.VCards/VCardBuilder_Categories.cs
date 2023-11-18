@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards;
 
+
 public sealed partial class VCardBuilder
 {
 

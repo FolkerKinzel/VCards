@@ -57,10 +57,10 @@ public static class VCardExample
         {
             var name = new VC::NameProperty
                         (
-                            lastName: new string[] { "Müller-Risinowsky" },
-                            firstName: new string[] { "Käthe" },
-                            middleName: new string[] { "Alexandra", "Caroline" },
-                            prefix: new string[] { "Prof.", "Dr." }
+                            familyNames: new string[] { "Müller-Risinowsky" },
+                            givenNames: new string[] { "Käthe" },
+                            additionalNames: new string[] { "Alexandra", "Caroline" },
+                            prefixes: new string[] { "Prof.", "Dr." }
                         );
             var vCard = new VCard
             {
