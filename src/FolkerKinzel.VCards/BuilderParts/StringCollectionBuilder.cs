@@ -9,6 +9,7 @@ public readonly struct StringCollectionBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     public Prop Prop { get; }
@@ -28,7 +29,7 @@ public readonly struct StringCollectionBuilder
                                                   Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Add(IEnumerable<string?>? value,
@@ -40,18 +41,18 @@ public readonly struct StringCollectionBuilder
                                                   Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop, null);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Remove(Func<StringCollectionProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop, Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop).Remove(predicate));
-        return _builder!;
+        return _builder;
     }
 }

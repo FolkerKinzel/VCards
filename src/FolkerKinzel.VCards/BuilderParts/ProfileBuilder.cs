@@ -7,6 +7,7 @@ public readonly struct ProfileBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     internal ProfileBuilder(VCardBuilder builder) => _builder = builder;
@@ -14,12 +15,12 @@ public readonly struct ProfileBuilder
     public VCardBuilder Set(string? group = null)
     {
         Builder.VCard.Set(Prop.Profile, new ProfileProperty(group));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.Profile, null);
-        return _builder!;
+        return _builder;
     }
 }

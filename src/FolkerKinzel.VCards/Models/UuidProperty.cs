@@ -19,7 +19,10 @@ public sealed class UuidProperty : VCardProperty, IEquatable<UuidProperty>
 
     /// <summary> Initializes a new <see cref="UuidProperty" /> object with a
     /// new <see cref="Guid" />. </summary>
-    internal UuidProperty() : this(Guid.NewGuid(), null) { }
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    public UuidProperty(string? group = null) : this(Guid.NewGuid(), group) { }
 
     /// <summary> Initializes a new <see cref="UuidProperty" /> object with a 
     /// specified <see cref="Guid"/>. </summary>

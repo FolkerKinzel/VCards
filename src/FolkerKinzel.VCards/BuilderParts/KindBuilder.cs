@@ -8,6 +8,7 @@ public readonly struct KindBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     internal KindBuilder(VCardBuilder builder) => _builder = builder;
@@ -20,12 +21,12 @@ public readonly struct KindBuilder
         parameters?.Invoke(property.Parameters);
 
         Builder.VCard.Set(Prop.Kind, property);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.Kind, null);
-        return _builder!;
+        return _builder;
     }
 }

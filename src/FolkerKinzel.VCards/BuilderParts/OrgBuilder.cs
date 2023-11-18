@@ -10,6 +10,7 @@ public readonly struct OrgBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     internal OrgBuilder(VCardBuilder builder) => _builder = builder;
@@ -25,20 +26,20 @@ public readonly struct OrgBuilder
                                             Builder.VCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations),
                                             parameters,
                                             pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.Organizations, null);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Remove(Func<OrgProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.Organizations,
                            Builder.VCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations).Remove(predicate));
-        return _builder!;
+        return _builder;
     }
 }
 

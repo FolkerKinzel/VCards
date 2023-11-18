@@ -8,6 +8,7 @@ public readonly struct TextSingletonBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     public Prop Prop { get; }
@@ -26,12 +27,12 @@ public readonly struct TextSingletonBuilder
         parameters?.Invoke(property.Parameters);
 
         Builder.VCard.Set(Prop, property);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop, null);
-        return _builder!;
+        return _builder;
     }
 }

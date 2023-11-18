@@ -10,6 +10,7 @@ public readonly struct RelationBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     public Prop Prop { get; }
@@ -30,7 +31,7 @@ public readonly struct RelationBuilder
                                                   Builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Add(string? text,
@@ -43,7 +44,7 @@ public readonly struct RelationBuilder
                                                   Builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Add(VCard? vCard,
@@ -56,7 +57,7 @@ public readonly struct RelationBuilder
                                                   Builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Add(Uri? uri,
@@ -69,19 +70,19 @@ public readonly struct RelationBuilder
                                                   Builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop, null);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Remove(Func<RelationProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop, Builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop).Remove(predicate));
-        return _builder!;
+        return _builder;
     }
 }
 

@@ -10,6 +10,7 @@ public readonly struct XmlBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     internal XmlBuilder(VCardBuilder builder) => _builder = builder;
@@ -24,19 +25,19 @@ public readonly struct XmlBuilder
                                             Builder.VCard.Get<IEnumerable<XmlProperty?>?>(Prop.Xmls),
                                             parameters,
                                             pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.Xmls, null);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Remove(Func<XmlProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.Xmls, Builder.VCard.Get<IEnumerable<XmlProperty?>?>(Prop.Xmls).Remove(predicate));
-        return _builder!;
+        return _builder;
     }
 }
 

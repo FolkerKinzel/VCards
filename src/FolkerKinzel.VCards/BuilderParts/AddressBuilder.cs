@@ -9,6 +9,7 @@ public readonly struct AddressBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     internal AddressBuilder(VCardBuilder builder) => _builder = builder;
@@ -28,7 +29,7 @@ public readonly struct AddressBuilder
                            Builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
                            parameters,
                            pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Add(IEnumerable<string?>? street,
@@ -46,19 +47,19 @@ public readonly struct AddressBuilder
                            Builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
                            parameters,
                            pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.Addresses, null);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Remove(Func<AddressProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.Addresses, Builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses).Remove(predicate));
-        return _builder!;
+        return _builder;
     }
 
 }

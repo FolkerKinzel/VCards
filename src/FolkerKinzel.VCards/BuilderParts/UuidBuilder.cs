@@ -8,9 +8,20 @@ public readonly struct UuidBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     internal UuidBuilder(VCardBuilder builder) => _builder = builder;
+
+    public VCardBuilder Set(string? group = null,
+                            Action<ParameterSection>? parameters = null)
+    {
+        var property = new UuidProperty(group);
+        parameters?.Invoke(property.Parameters);
+
+        Builder.VCard.Set(Prop.ID, property);
+        return _builder;
+    }
 
     public VCardBuilder Set(Guid value,
                             string? group = null,
@@ -20,12 +31,12 @@ public readonly struct UuidBuilder
         parameters?.Invoke(property.Parameters);
 
         Builder.VCard.Set(Prop.ID, property);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.ID, null);
-        return _builder!;
+        return _builder;
     }
 }

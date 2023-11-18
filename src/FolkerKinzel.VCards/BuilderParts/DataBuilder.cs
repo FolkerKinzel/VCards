@@ -11,6 +11,7 @@ public readonly struct DataBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     public Prop Prop { get; }
@@ -31,7 +32,7 @@ public readonly struct DataBuilder
                                                   Builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder AddBytes(byte[]? bytes,
@@ -44,7 +45,7 @@ public readonly struct DataBuilder
                                                   Builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder AddText(string? text,
@@ -57,7 +58,7 @@ public readonly struct DataBuilder
                                                   Builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder AddUri(Uri? uri,
@@ -70,19 +71,19 @@ public readonly struct DataBuilder
                                                   Builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop, null);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Remove(Func<DataProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop, Builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop).Remove(predicate));
-        return _builder!;
+        return _builder;
     }
 }
 

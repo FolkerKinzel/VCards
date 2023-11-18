@@ -10,6 +10,7 @@ public readonly struct NonStandardBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     internal NonStandardBuilder(VCardBuilder builder) => _builder = builder;
@@ -25,20 +26,20 @@ public readonly struct NonStandardBuilder
                                             Builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards),
                                             parameters,
                                             pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.NonStandards, null);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Remove(Func<NonStandardProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.NonStandards,
                            Builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards).Remove(predicate));
-        return _builder!;
+        return _builder;
     }
 }
 

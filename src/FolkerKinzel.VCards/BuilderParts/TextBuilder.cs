@@ -9,6 +9,7 @@ public readonly struct TextBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     public Prop Prop { get; }
@@ -28,18 +29,18 @@ public readonly struct TextBuilder
                                                   Builder.VCard.Get<IEnumerable<TextProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop, null);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Remove(Func<TextProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop, Builder.VCard.Get<IEnumerable<TextProperty?>?>(Prop).Remove(predicate));
-        return _builder!;
+        return _builder;
     }
 }

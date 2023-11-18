@@ -146,6 +146,8 @@ public sealed class VCardBuilder
     /// </summary>
     /// <value>Although the standard allows any strings for identification, the library
     /// only supports UUIDs.</value>
+    /// <remarks>As a default setting each newly created <see cref="VCard"/> gets an <see cref="ID"/>
+    /// automatically.</remarks>
     public UuidBuilder ID => new UuidBuilder(this);
 
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
@@ -154,15 +156,11 @@ public sealed class VCardBuilder
     /// <see cref="ParameterSection.Interest" />!</remarks>
     public TextBuilder Interests => new TextBuilder(this, Prop.Interests);
 
-    ///// <summary> <c>KEY</c>: Public encryption keys associated with the vCard object.
-    ///// <c>(2,3,4)</c></summary>
-    ///// <value>It may point to an external URL, may be plain text, or may be embedded
-    ///// in the VCF file as a Base64 encoded block of text.</value>
-    //public IEnumerable<DataProperty?>? Keys
-    //{
-    //    get => Get<IEnumerable<DataProperty?>?>(Prop.Keys);
-    //    set => Set(Prop.Keys, value);
-    //}
+    /// <summary> <c>KEY</c>: Public encryption keys associated with the vCard object.
+    /// <c>(2,3,4)</c></summary>
+    /// <value>It may point to an external URL, may be plain text, or may be embedded
+    /// in the VCF file as a Base64 encoded block of text.</value>
+    public DataBuilder Keys => new DataBuilder(this, Prop.Keys);
 
     /// <summary> <c>KIND</c>: Defines the type of entity, that this vCard represents.
     /// <c>(4)</c></summary>
@@ -171,33 +169,25 @@ public sealed class VCardBuilder
     /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
     public TextBuilder Languages => new TextBuilder(this, Prop.Languages);
 
-    ///// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
-    ///// is associated with the individual to which the <see cref="VCard"/> belongs. 
-    ///// <c>(2,3,4)</c></summary>
-    //public IEnumerable<DataProperty?>? Logos
-    //{
-    //    get => Get<IEnumerable<DataProperty?>?>(Prop.Logos);
-    //    set => Set(Prop.Logos, value);
-    //}
+    /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
+    /// is associated with the individual to which the <see cref="VCard"/> belongs. 
+    /// <c>(2,3,4)</c></summary>
+    public DataBuilder Logos => new DataBuilder(this, Prop.Logos);
 
     /// <summary> <c>MAILER</c>: Name of the e-mail program. <c>(2,3)</c></summary>
     public TextSingletonBuilder Mailer => new TextSingletonBuilder(this, Prop.Mailer);
 
-    ///// <summary> <c>MEMBER</c>:
-    ///// Defines a member that is part of the group that this <see cref="VCard"/> represents.
-    ///// The <see cref="VCard.Kind" /> property must be set to <see cref="Kind.Group" />
-    ///// in order to use this property. <c>(4)</c>
-    ///// </summary>
-    ///// <remarks>
-    ///// If the <see cref="Relation"/> property embeds a <see cref="string"/> value, it will
-    ///// be converted to the <see cref="DisplayNames"/> property of a <see cref="VCard"/> 
-    ///// object if it can't be converted to an absolute <see cref="Uri"/>.
-    ///// </remarks>
-    //public IEnumerable<RelationProperty?>? Members
-    //{
-    //    get => Get<IEnumerable<RelationProperty?>?>(Prop.Members);
-    //    set => Set(Prop.Members, value);
-    //}
+    /// <summary> <c>MEMBER</c>:
+    /// Defines a member that is part of the group that this <see cref="VCard"/> represents.
+    /// The <see cref="VCard.Kind" /> property must be set to <see cref="Kind.Group" />
+    /// in order to use this property. <c>(4)</c>
+    /// </summary>
+    /// <remarks>
+    /// If the <see cref="Relation"/> property embeds a <see cref="string"/> value, it will
+    /// be converted to the <see cref="DisplayNames"/> property of a <see cref="VCard"/> 
+    /// object if it can't be converted to an absolute <see cref="Uri"/>.
+    /// </remarks>
+    public RelationBuilder Members => new RelationBuilder(this, Prop.Members);
 
     /// <summary> <c>IMPP</c>: Instant messenger handles. <c>(3,4)</c></summary>
     /// <remarks>
@@ -208,131 +198,119 @@ public sealed class VCardBuilder
     /// property.</remarks>
     public TextBuilder Messengers => new TextBuilder(this, Prop.Messengers);
 
-    ///// <summary> <c>N</c>: A structured representation of the name of the person, place
-    ///// or thing associated with the vCard object. <c>(2,3,4)</c></summary>
-    ///// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    ///// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    ///// e.g. be useful, if the property is displayed in different languages.</remarks>
-    //public IEnumerable<NameProperty?>? NameViews
-    //{
-    //    get => Get<IEnumerable<NameProperty?>?>(Prop.NameViews);
-    //    set => Set(Prop.NameViews, value);
-    //}
+    /// <summary> <c>N</c>: A structured representation of the name of the person, place
+    /// or thing associated with the vCard object. <c>(2,3,4)</c></summary>
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
+    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
+    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    public NameBuilder NameViews => new NameBuilder(this);
 
     /// <summary> <c>NICKNAME</c>: One or more descriptive/familiar names for the object
     /// represented by this vCard. <c>(3,4)</c></summary>
     public StringCollectionBuilder NickNames => new StringCollectionBuilder(this, Prop.NickNames);
 
-    ///// <summary>vCard-Properties that don't belong to the standard.</summary>
-    ///// <remarks>
-    ///// <para>
-    ///// <see cref="NonStandards" /> contains all vCard properties that could not 
-    ///// be evaluated, when parsing the vCard. To serialize the content of 
-    ///// <see cref="NonStandards" /> into a VCF file, the flag 
-    ///// <see cref="VcfOptions.WriteNonStandardProperties"/> has to be set. 
-    ///// </para>
-    ///// <para>
-    ///// Some <see cref="NonStandardProperty" /> objects are automatically added to the 
-    ///// VCF file, if there is no standard equivalent for it. You can control this behavior
-    ///// with <see cref="VcfOptions" />. It is therefore not recommended to assign
-    ///// <see cref="NonStandardProperty" /> objects with these 
-    ///// <see cref="NonStandardProperty.XName"/>s to this property.
-    ///// </para>
-    ///// <para>
-    ///// These vCard properties are the following: 
-    ///// </para>
-    ///// <list type="bullet">
-    ///// <item>
-    ///// <c>X-AIM</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-ANNIVERSARY</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-EVOLUTION-SPOUSE</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-EVOLUTION-ANNIVERSARY</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-GADUGADU</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-GENDER</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-GOOGLE-TALK</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-GROUPWISE</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-GTALK</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-ICQ</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-JABBER</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-KADDRESSBOOK-X-ANNIVERSARY</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-KADDRESSBOOK-X-IMADDRESS</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-KADDRESSBOOK-X-SPOUSENAME</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-MS-IMADDRESS</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-MSN</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-SKYPE</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-SKYPE-USERNAME</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-SPOUSE</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-TWITTER</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-WAB-GENDER</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-WAB-WEDDING_ANNIVERSARY</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-WAB-SPOUSE_NAME</c>
-    ///// </item>
-    ///// <item>
-    ///// <c>X-YAHOO</c>
-    ///// </item>
-    ///// </list>
-    ///// </remarks>
-    //public IEnumerable<NonStandardProperty?>? NonStandards
-    //{
-    //    get => Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandard);
-    //    set => Set(Prop.NonStandard, value);
-    //}
+    /// <summary>vCard-Properties that don't belong to the standard.</summary>
+    /// <remarks>
+    /// <para>
+    /// <see cref="NonStandards" /> contains all vCard properties that could not 
+    /// be evaluated, when parsing the vCard. To serialize the content of 
+    /// <see cref="NonStandards" /> into a VCF file, the flag 
+    /// <see cref="VcfOptions.WriteNonStandardProperties"/> has to be set. 
+    /// </para>
+    /// <para>
+    /// Some <see cref="NonStandardProperty" /> objects are automatically added to the 
+    /// VCF file, if there is no standard equivalent for it. You can control this behavior
+    /// with <see cref="VcfOptions" />. It is therefore not recommended to assign
+    /// <see cref="NonStandardProperty" /> objects with these 
+    /// <see cref="NonStandardProperty.XName"/>s to this property.
+    /// </para>
+    /// <para>
+    /// These vCard properties are the following: 
+    /// </para>
+    /// <list type="bullet">
+    /// <item>
+    /// <c>X-AIM</c>
+    /// </item>
+    /// <item>
+    /// <c>X-ANNIVERSARY</c>
+    /// </item>
+    /// <item>
+    /// <c>X-EVOLUTION-SPOUSE</c>
+    /// </item>
+    /// <item>
+    /// <c>X-EVOLUTION-ANNIVERSARY</c>
+    /// </item>
+    /// <item>
+    /// <c>X-GADUGADU</c>
+    /// </item>
+    /// <item>
+    /// <c>X-GENDER</c>
+    /// </item>
+    /// <item>
+    /// <c>X-GOOGLE-TALK</c>
+    /// </item>
+    /// <item>
+    /// <c>X-GROUPWISE</c>
+    /// </item>
+    /// <item>
+    /// <c>X-GTALK</c>
+    /// </item>
+    /// <item>
+    /// <c>X-ICQ</c>
+    /// </item>
+    /// <item>
+    /// <c>X-JABBER</c>
+    /// </item>
+    /// <item>
+    /// <c>X-KADDRESSBOOK-X-ANNIVERSARY</c>
+    /// </item>
+    /// <item>
+    /// <c>X-KADDRESSBOOK-X-IMADDRESS</c>
+    /// </item>
+    /// <item>
+    /// <c>X-KADDRESSBOOK-X-SPOUSENAME</c>
+    /// </item>
+    /// <item>
+    /// <c>X-MS-IMADDRESS</c>
+    /// </item>
+    /// <item>
+    /// <c>X-MSN</c>
+    /// </item>
+    /// <item>
+    /// <c>X-SKYPE</c>
+    /// </item>
+    /// <item>
+    /// <c>X-SKYPE-USERNAME</c>
+    /// </item>
+    /// <item>
+    /// <c>X-SPOUSE</c>
+    /// </item>
+    /// <item>
+    /// <c>X-TWITTER</c>
+    /// </item>
+    /// <item>
+    /// <c>X-WAB-GENDER</c>
+    /// </item>
+    /// <item>
+    /// <c>X-WAB-WEDDING_ANNIVERSARY</c>
+    /// </item>
+    /// <item>
+    /// <c>X-WAB-SPOUSE_NAME</c>
+    /// </item>
+    /// <item>
+    /// <c>X-YAHOO</c>
+    /// </item>
+    /// </list>
+    /// </remarks>
+    public NonStandardBuilder NonStandards => new NonStandardBuilder(this);
 
     /// <summary> <c>NOTE</c>: Specifies supplemental informations or comments, that
     /// are associated with the vCard. <c>(2,3,4)</c></summary>
     public TextBuilder Notes => new TextBuilder(this, Prop.Notes);
 
-    ///// <summary> <c>ORG</c>: The name and optionally the unit(s) of the organization
-    ///// associated with the vCard object. <c>(2,3,4)</c></summary>
-    //public IEnumerable<OrgProperty?>? Organizations
-    //{
-    //    get => Get<IEnumerable<OrgProperty?>?>(Prop.Organizations);
-    //    set => Set(Prop.Organizations, value);
-    //}
+    /// <summary> <c>ORG</c>: The name and optionally the unit(s) of the organization
+    /// associated with the vCard object. <c>(2,3,4)</c></summary>
+    public OrgBuilder Organizations => new OrgBuilder(this);
 
     /// <summary> <c>ORG-DIRECTORY</c>: A URI representing the person's work place,
     /// which can be used to look up information on the person's co-workers. <c>(RFC
@@ -343,13 +321,9 @@ public sealed class VCardBuilder
     /// telephony communication with the vCard object. <c>(2,3,4)</c></summary>
     public TextBuilder Phones => new TextBuilder(this, Prop.Phones);
 
-    ///// <summary> <c>PHOTO</c>: Image(s) or photograph(s) of the individual associated
-    ///// with the vCard. <c>(2,3,4)</c></summary>
-    //public IEnumerable<DataProperty?>? Photos
-    //{
-    //    get => Get<IEnumerable<DataProperty>>(Prop.Photos);
-    //    set => Set(Prop.Photos, value);
-    //}
+    /// <summary> <c>PHOTO</c>: Image(s) or photograph(s) of the individual associated
+    /// with the vCard. <c>(2,3,4)</c></summary>
+    public DataBuilder Photos => new DataBuilder(this, Prop.Photos);
 
     /// <summary> <c>PRODID</c>: The identifier for the product that created the vCard
     /// object. <c>(3,4)</c></summary>
@@ -361,31 +335,22 @@ public sealed class VCardBuilder
     /// <summary> <c>PROFILE</c>: States that the <see cref="VCards.VCard"/> is a vCard. <c>(3)</c></summary>
     public ProfileBuilder Profile => new ProfileBuilder(this);
 
-    ///// <summary> <c>RELATED</c>: Other entities that the person or organization is 
-    ///// related to. <c>(4)</c></summary>
-    //public IEnumerable<RelationProperty?>? Relations
-    //{
-    //    get => Get<IEnumerable<RelationProperty?>?>(Prop.Relations);
-    //    set => Set(Prop.Relations, value);
-    //}
+    /// <summary> <c>RELATED</c>: Other entities that the person or organization is 
+    /// related to. <c>(4)</c></summary>
+    public RelationBuilder Relations => new RelationBuilder(this, Prop.Relations);
 
     /// <summary> <c>ROLE</c>: The role, occupation, or business category of the vCard
     /// object within an organization. <c>(2,3,4)</c></summary>
     public TextBuilder Roles => new TextBuilder(this, Prop.Roles);
 
-    ///// <summary> <c>SOUND</c>: Specifies the pronunciation of the <see cref="VCard.DisplayNames"
-    ///// /> property of the <see cref="VCard" />-object. <c>(2,3,4)</c></summary>
-    //public IEnumerable<DataProperty?>? Sounds
-    //{
-    //    get => Get<IEnumerable<DataProperty?>?>(Prop.Sounds);
-    //    set => Set(Prop.Sounds, value);
-    //}
+    /// <summary> <c>SOUND</c>: Specifies the pronunciation of the <see cref="VCard.DisplayNames"
+    /// /> property of the <see cref="VCard" />-object. <c>(2,3,4)</c></summary>
+    public DataBuilder Sounds => new DataBuilder(this, Prop.Sounds);
 
     /// <summary> <c>SOURCE</c>: URLs that can be used to get the latest version of
     /// this vCard. <c>(3,4)</c></summary>
     /// <remarks>vCard&#160;3.0 allows only one instance of this property.</remarks>
     public TextBuilder Sources => new TextBuilder(this, Prop.Sources);
-
 
     /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
     /// <remarks>
@@ -417,191 +382,191 @@ public sealed class VCardBuilder
 
 
     ////////////////////////////////////////////////////////////////////
-    public VCardBuilder AddKey() => throw new NotImplementedException();
+    //public VCardBuilder AddKey() => throw new NotImplementedException();
 
-    public VCardBuilder ClearKeys()
-    {
-        VCard.Keys = null;
-        return this;
-    }
-
-    //public VCardBuilder RemoveKey(DataProperty? prop)
+    //public VCardBuilder ClearKeys()
     //{
-    //    _vCard.Keys = _vCard.Keys.Remove(prop);
+    //    VCard.Keys = null;
     //    return this;
     //}
 
-    public VCardBuilder RemoveKey(Func<DataProperty, bool> predicate)
-    {
-        VCard.Keys = VCard.Keys.Remove(predicate);
-        return this;
-    }
+    ////public VCardBuilder RemoveKey(DataProperty? prop)
+    ////{
+    ////    _vCard.Keys = _vCard.Keys.Remove(prop);
+    ////    return this;
+    ////}
 
-    public VCardBuilder AddLogo() => throw new NotImplementedException();
-
-    public VCardBuilder ClearLogos()
-    {
-        VCard.Logos = null;
-        return this;
-    }
-
-    //public VCardBuilder RemoveLogo(DataProperty? prop)
+    //public VCardBuilder RemoveKey(Func<DataProperty, bool> predicate)
     //{
-    //    _vCard.Logos = _vCard.Logos.Remove(prop);
+    //    VCard.Keys = VCard.Keys.Remove(predicate);
     //    return this;
     //}
 
-    public VCardBuilder RemoveLogo(Func<DataProperty, bool> predicate)
-    {
-        VCard.Logos = VCard.Logos.Remove(predicate);
-        return this;
-    }
+    //public VCardBuilder AddLogo() => throw new NotImplementedException();
+
+    //public VCardBuilder ClearLogos()
+    //{
+    //    VCard.Logos = null;
+    //    return this;
+    //}
+
+    ////public VCardBuilder RemoveLogo(DataProperty? prop)
+    ////{
+    ////    _vCard.Logos = _vCard.Logos.Remove(prop);
+    ////    return this;
+    ////}
+
+    //public VCardBuilder RemoveLogo(Func<DataProperty, bool> predicate)
+    //{
+    //    VCard.Logos = VCard.Logos.Remove(predicate);
+    //    return this;
+    //}
 
     
 
-    public VCardBuilder AddMember() => throw new NotImplementedException();
+    //public VCardBuilder AddMember() => throw new NotImplementedException();
 
-    public VCardBuilder ClearMembers()
-    {
-        VCard.Members = null;
-        return this;
-    }
-
-    //public VCardBuilder RemoveMember(RelationProperty? prop)
+    //public VCardBuilder ClearMembers()
     //{
-    //    _vCard.Members = _vCard.Members.Remove(prop);
+    //    VCard.Members = null;
     //    return this;
     //}
 
-    public VCardBuilder RemoveMember(Func<RelationProperty, bool> predicate)
-    {
-        VCard.Members = VCard.Members.Remove(predicate);
-        return this;
-    }
+    ////public VCardBuilder RemoveMember(RelationProperty? prop)
+    ////{
+    ////    _vCard.Members = _vCard.Members.Remove(prop);
+    ////    return this;
+    ////}
 
-    public VCardBuilder AddNameView() => throw new NotImplementedException();
-
-    public VCardBuilder ClearNameViews()
-    {
-        VCard.NameViews = null;
-        return this;
-    }
-
-    //public VCardBuilder RemoveNameView(NameProperty? prop)
+    //public VCardBuilder RemoveMember(Func<RelationProperty, bool> predicate)
     //{
-    //    _vCard.NameViews = _vCard.NameViews.Remove(prop);
+    //    VCard.Members = VCard.Members.Remove(predicate);
     //    return this;
     //}
 
-    public VCardBuilder RemoveNameView(Func<NameProperty, bool> predicate)
-    {
-        VCard.NameViews = VCard.NameViews.Remove(predicate);
-        return this;
-    }
+    //public VCardBuilder AddNameView() => throw new NotImplementedException();
+
+    //public VCardBuilder ClearNameViews()
+    //{
+    //    VCard.NameViews = null;
+    //    return this;
+    //}
+
+    ////public VCardBuilder RemoveNameView(NameProperty? prop)
+    ////{
+    ////    _vCard.NameViews = _vCard.NameViews.Remove(prop);
+    ////    return this;
+    ////}
+
+    //public VCardBuilder RemoveNameView(Func<NameProperty, bool> predicate)
+    //{
+    //    VCard.NameViews = VCard.NameViews.Remove(predicate);
+    //    return this;
+    //}
 
  
-    public VCardBuilder AddNonStandard() => throw new NotImplementedException();
+    //public VCardBuilder AddNonStandard() => throw new NotImplementedException();
 
-    public VCardBuilder ClearNonStandards()
-    {
-        VCard.NonStandards = null;
-        return this;
-    }
-
-    //public VCardBuilder RemoveNonStandard(NonStandardProperty? prop)
+    //public VCardBuilder ClearNonStandards()
     //{
-    //    _vCard.NonStandards = _vCard.NonStandards.Remove(prop);
+    //    VCard.NonStandards = null;
     //    return this;
     //}
 
-    public VCardBuilder RemoveNonStandard(Func<NonStandardProperty, bool> predicate)
-    {
-        VCard.NonStandards = VCard.NonStandards.Remove(predicate);
-        return this;
-    }
+    ////public VCardBuilder RemoveNonStandard(NonStandardProperty? prop)
+    ////{
+    ////    _vCard.NonStandards = _vCard.NonStandards.Remove(prop);
+    ////    return this;
+    ////}
 
-
-    public VCardBuilder AddOrganization() => throw new NotImplementedException();
-
-    public VCardBuilder ClearOrganizations()
-    {
-        VCard.Organizations = null;
-        return this;
-    }
-
-    //public VCardBuilder RemoveOrganization(OrgProperty? prop)
+    //public VCardBuilder RemoveNonStandard(Func<NonStandardProperty, bool> predicate)
     //{
-    //    _vCard.Organizations = _vCard.Organizations.Remove(prop);
+    //    VCard.NonStandards = VCard.NonStandards.Remove(predicate);
     //    return this;
     //}
 
-    public VCardBuilder RemoveOrganization(Func<OrgProperty, bool> predicate)
-    {
-        VCard.Organizations = VCard.Organizations.Remove(predicate);
-        return this;
-    }
 
+    //public VCardBuilder AddOrganization() => throw new NotImplementedException();
 
-    public VCardBuilder AddPhoto() => throw new NotImplementedException();
-
-    public VCardBuilder ClearPhotos()
-    {
-        VCard.Photos = null;
-        return this;
-    }
-
-    //public VCardBuilder RemovePhoto(DataProperty? prop)
+    //public VCardBuilder ClearOrganizations()
     //{
-    //    _vCard.Photos = _vCard.Photos.Remove(prop);
+    //    VCard.Organizations = null;
     //    return this;
     //}
 
-    public VCardBuilder RemovePhoto(Func<DataProperty, bool> predicate)
-    {
-        VCard.Photos = VCard.Photos.Remove(predicate);
-        return this;
-    }
+    ////public VCardBuilder RemoveOrganization(OrgProperty? prop)
+    ////{
+    ////    _vCard.Organizations = _vCard.Organizations.Remove(prop);
+    ////    return this;
+    ////}
 
-    public VCardBuilder AddRelation() => throw new NotImplementedException();
-
-    public VCardBuilder ClearRelations()
-    {
-        VCard.Relations = null;
-        return this;
-    }
-
-    //public VCardBuilder RemoveRelation(RelationProperty? prop)
+    //public VCardBuilder RemoveOrganization(Func<OrgProperty, bool> predicate)
     //{
-    //    _vCard.Relations = _vCard.Relations.Remove(prop);
+    //    VCard.Organizations = VCard.Organizations.Remove(predicate);
     //    return this;
     //}
 
-    public VCardBuilder RemoveRelation(Func<RelationProperty, bool> predicate)
-    {
-        VCard.Relations = VCard.Relations.Remove(predicate);
-        return this;
-    }
 
+    //public VCardBuilder AddPhoto() => throw new NotImplementedException();
 
-    public VCardBuilder AddSound() => throw new NotImplementedException();
-
-    public VCardBuilder ClearSounds()
-    {
-        VCard.Sounds = null;
-        return this;
-    }
-
-    //public VCardBuilder RemoveSound(DataProperty? prop)
+    //public VCardBuilder ClearPhotos()
     //{
-    //    _vCard.Sounds = _vCard.Sounds.Remove(prop);
+    //    VCard.Photos = null;
     //    return this;
     //}
 
-    public VCardBuilder RemoveSound(Func<DataProperty, bool> predicate)
-    {
-        VCard.Sounds = VCard.Sounds.Remove(predicate);
-        return this;
-    }
+    ////public VCardBuilder RemovePhoto(DataProperty? prop)
+    ////{
+    ////    _vCard.Photos = _vCard.Photos.Remove(prop);
+    ////    return this;
+    ////}
+
+    //public VCardBuilder RemovePhoto(Func<DataProperty, bool> predicate)
+    //{
+    //    VCard.Photos = VCard.Photos.Remove(predicate);
+    //    return this;
+    //}
+
+    //public VCardBuilder AddRelation() => throw new NotImplementedException();
+
+    //public VCardBuilder ClearRelations()
+    //{
+    //    VCard.Relations = null;
+    //    return this;
+    //}
+
+    ////public VCardBuilder RemoveRelation(RelationProperty? prop)
+    ////{
+    ////    _vCard.Relations = _vCard.Relations.Remove(prop);
+    ////    return this;
+    ////}
+
+    //public VCardBuilder RemoveRelation(Func<RelationProperty, bool> predicate)
+    //{
+    //    VCard.Relations = VCard.Relations.Remove(predicate);
+    //    return this;
+    //}
+
+
+    //public VCardBuilder AddSound() => throw new NotImplementedException();
+
+    //public VCardBuilder ClearSounds()
+    //{
+    //    VCard.Sounds = null;
+    //    return this;
+    //}
+
+    ////public VCardBuilder RemoveSound(DataProperty? prop)
+    ////{
+    ////    _vCard.Sounds = _vCard.Sounds.Remove(prop);
+    ////    return this;
+    ////}
+
+    //public VCardBuilder RemoveSound(Func<DataProperty, bool> predicate)
+    //{
+    //    VCard.Sounds = VCard.Sounds.Remove(predicate);
+    //    return this;
+    //}
 
 
     //public VCardBuilder AddXml() => throw new NotImplementedException();
@@ -623,6 +588,10 @@ public sealed class VCardBuilder
     //    _vCard.Xmls = _vCard.Xmls.Remove(predicate);
     //    return this;
     //}
+
+
+    //////////////////////////////////////////////////////////////////////////
+    
 
     internal static IEnumerable<TSource?> Add<TSource>(TSource prop,
                                                        IEnumerable<TSource?>? coll,

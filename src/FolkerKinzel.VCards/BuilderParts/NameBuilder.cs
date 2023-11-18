@@ -10,6 +10,7 @@ public readonly struct NameBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     internal NameBuilder(VCardBuilder builder) => _builder = builder;
@@ -31,7 +32,7 @@ public readonly struct NameBuilder
                            Builder.VCard.Get<IEnumerable<NameProperty?>?>(Prop.NameViews),
                            parameters,
                            false));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Add(string? familyName,
@@ -52,19 +53,19 @@ public readonly struct NameBuilder
                            Builder.VCard.Get<IEnumerable<NameProperty?>?>(Prop.NameViews),
                            parameters,
                            false));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.NameViews, null);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Remove(Func<NameProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.NameViews, Builder.VCard.Get<IEnumerable<NameProperty?>?>(Prop.NameViews).Remove(predicate));
-        return _builder!;
+        return _builder;
     }
 }
 

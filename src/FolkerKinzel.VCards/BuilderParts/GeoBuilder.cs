@@ -9,6 +9,7 @@ public readonly struct GeoBuilder
 {
     private readonly VCardBuilder? _builder;
 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
 
     internal GeoBuilder(VCardBuilder builder) => _builder = builder;
@@ -22,7 +23,7 @@ public readonly struct GeoBuilder
                                                   Builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
                                                   parameters,
                                                   false));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Add(GeoCoordinate? value,
@@ -33,18 +34,18 @@ public readonly struct GeoBuilder
                                                   Builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
                                                   parameters,
                                                   false));
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.GeoCoordinates, null);
-        return _builder!;
+        return _builder;
     }
 
     public VCardBuilder Remove(Func<GeoProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.GeoCoordinates, Builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates).Remove(predicate));
-        return _builder!;
+        return _builder;
     }
 }
