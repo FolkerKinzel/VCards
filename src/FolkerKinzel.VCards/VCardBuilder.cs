@@ -248,7 +248,7 @@ public sealed partial class VCardBuilder
         return this;
     }
 
-    private IEnumerable<TSource?> Add<TSource>(TSource prop,
+    private static IEnumerable<TSource?> Add<TSource>(TSource prop,
                                                        IEnumerable<TSource?>? coll,
                                                        Action<ParameterSection>? parameters,
                                                        bool pref)

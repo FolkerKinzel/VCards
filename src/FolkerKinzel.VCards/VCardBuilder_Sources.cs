@@ -12,7 +12,7 @@ public sealed partial class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.Sources = Add(new TextProperty(value, group),
+        _vCard.Sources = VCardBuilder.Add(new TextProperty(value, group),
                                               _vCard.Sources,
                                               parameters,
                                               pref);

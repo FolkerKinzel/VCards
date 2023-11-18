@@ -12,7 +12,7 @@ public sealed partial class VCardBuilder
                                          Action<ParameterSection>? parameters = null,
                                          bool pref = false)
     {
-        _vCard.TimeZones = Add(new TimeZoneProperty(value, group),
+        _vCard.TimeZones = VCardBuilder.Add(new TimeZoneProperty(value, group),
                                               _vCard.TimeZones,
                                               parameters,
                                               pref);

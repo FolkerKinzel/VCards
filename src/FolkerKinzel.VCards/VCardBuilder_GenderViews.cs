@@ -13,7 +13,7 @@ public sealed partial class VCardBuilder
                                            string? group = null,
                                            Action<ParameterSection>? parameters = null)
     {
-        _vCard.GenderViews = Add(new GenderProperty(sex, identity, group),
+        _vCard.GenderViews = VCardBuilder.Add(new GenderProperty(sex, identity, group),
                                               _vCard.GenderViews,
                                               parameters,
                                               false);

@@ -14,7 +14,7 @@ public sealed partial class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.GeoCoordinates = Add(new GeoProperty(latitude, longitude, group),
+        _vCard.GeoCoordinates = VCardBuilder.Add(new GeoProperty(latitude, longitude, group),
                                               _vCard.GeoCoordinates,
                                               parameters,
                                               pref);
@@ -26,7 +26,7 @@ public sealed partial class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.GeoCoordinates = Add(new GeoProperty(value, group),
+        _vCard.GeoCoordinates = VCardBuilder.Add(new GeoProperty(value, group),
                                               _vCard.GeoCoordinates,
                                               parameters,
                                               pref);

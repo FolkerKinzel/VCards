@@ -13,7 +13,7 @@ public sealed partial class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.Hobbies = Add(new TextProperty(value, group),
+        _vCard.Hobbies = VCardBuilder.Add(new TextProperty(value, group),
                                               _vCard.Hobbies,
                                               parameters,
                                               pref);

@@ -13,7 +13,7 @@ public sealed partial class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.OrgDirectories = Add(new TextProperty(value, group),
+        _vCard.OrgDirectories = VCardBuilder.Add(new TextProperty(value, group),
                                               _vCard.OrgDirectories,
                                               parameters,
                                               pref);

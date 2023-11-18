@@ -12,7 +12,7 @@ public sealed partial class VCardBuilder
                                            Action<ParameterSection>? parameters = null,
                                            bool pref = false)
     {
-        _vCard.CalendarAddresses = Add(new TextProperty(value, group),
+        _vCard.CalendarAddresses = VCardBuilder.Add(new TextProperty(value, group),
                                               _vCard.CalendarAddresses,
                                               parameters,
                                               pref);

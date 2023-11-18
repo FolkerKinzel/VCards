@@ -10,7 +10,7 @@ public sealed partial class VCardBuilder
 
     public VCardBuilder AddDeathPlaceView(string? value, string? group = null, Action<ParameterSection>? parameters = null)
     {
-        _vCard.DeathPlaceViews = Add(new TextProperty(value, group),
+        _vCard.DeathPlaceViews = VCardBuilder.Add(new TextProperty(value, group),
                                               _vCard.DeathPlaceViews,
                                               parameters,
                                               false);

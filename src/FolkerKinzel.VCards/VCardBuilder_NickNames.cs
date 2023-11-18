@@ -12,7 +12,7 @@ public sealed partial class VCardBuilder
                                             Action<ParameterSection>? parameters = null,
                                             bool pref = false)
     {
-        _vCard.NickNames = Add(new StringCollectionProperty(value, group),
+        _vCard.NickNames = VCardBuilder.Add(new StringCollectionProperty(value, group),
                                                    _vCard.NickNames,
                                                    parameters,
                                                    pref);
@@ -24,7 +24,7 @@ public sealed partial class VCardBuilder
                                                Action<ParameterSection>? parameters = null,
                                                bool pref = false)
     {
-        _vCard.NickNames = Add(new StringCollectionProperty(value, group),
+        _vCard.NickNames = VCardBuilder.Add(new StringCollectionProperty(value, group),
                                                    _vCard.NickNames,
                                                    parameters,
                                                    pref);

@@ -17,7 +17,7 @@ public sealed partial class VCardBuilder
                                    bool pref = false,
                                    bool autoLabel = true)
     {
-        _vCard.Addresses = Add(new AddressProperty(street, locality, region, postalCode, country, group, autoLabel),
+        _vCard.Addresses = VCardBuilder.Add(new AddressProperty(street, locality, region, postalCode, country, group, autoLabel),
                                           _vCard.Addresses,
                                           parameters,
                                           pref);
@@ -35,7 +35,7 @@ public sealed partial class VCardBuilder
                                    bool pref = false,
                                    bool autoLabel = true)
     {
-        _vCard.Addresses = Add(new AddressProperty(street, locality, region, postalCode, country, group, autoLabel),
+        _vCard.Addresses = VCardBuilder.Add(new AddressProperty(street, locality, region, postalCode, country, group, autoLabel),
                                           _vCard.Addresses,
                                           parameters,
                                           pref);

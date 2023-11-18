@@ -10,7 +10,7 @@ public sealed partial class VCardBuilder
 
     public VCardBuilder AddBirthPlaceView(string? value, string? group = null, Action<ParameterSection>? parameters = null)
     {
-        _vCard.BirthPlaceViews = Add(new TextProperty(value, group),
+        _vCard.BirthPlaceViews = VCardBuilder.Add(new TextProperty(value, group),
                                               _vCard.BirthPlaceViews,
                                               parameters,
                                               false);

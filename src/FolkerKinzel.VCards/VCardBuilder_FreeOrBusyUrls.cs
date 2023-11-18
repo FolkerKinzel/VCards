@@ -12,7 +12,7 @@ public sealed partial class VCardBuilder
                                           Action<ParameterSection>? parameters = null,
                                           bool pref = false)
     {
-        _vCard.FreeOrBusyUrls = Add(new TextProperty(value, group),
+        _vCard.FreeOrBusyUrls = VCardBuilder.Add(new TextProperty(value, group),
                                               _vCard.FreeOrBusyUrls,
                                               parameters,
                                               pref);
