@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.BuilderParts;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
@@ -777,3 +778,137 @@ public readonly struct NameBuilder
         return _builder!;
     }
 }
+
+public readonly struct DataBuilder
+{
+    private readonly VCardBuilder? _builder;
+
+    private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
+
+    public Prop Prop { get; }
+
+    internal DataBuilder(VCardBuilder builder, Prop prop)
+    {
+        _builder = builder;
+        Prop = prop;
+    }
+
+    public VCardBuilder AddFile(string filePath,
+                                string? mimeType = null,
+                                string? group = null,
+                                Action<ParameterSection>? parameters = null,
+                                bool pref = false)
+    {
+        Builder._vCard.Set(Prop, VCardBuilder.Add(DataProperty.FromFile(filePath, mimeType, group),
+                                                  Builder._vCard.Get<IEnumerable<DataProperty?>?>(Prop),
+                                                  parameters,
+                                                  pref));
+        return _builder!;
+    }
+
+    public VCardBuilder AddBytes(byte[]? bytes,
+                                 string? mimeType = MimeString.OctetStream,
+                                 string? group = null,
+                                 Action<ParameterSection>? parameters = null,
+                                 bool pref = false)
+    {
+        Builder._vCard.Set(Prop, VCardBuilder.Add(DataProperty.FromBytes(bytes, mimeType, group),
+                                                  Builder._vCard.Get<IEnumerable<DataProperty?>?>(Prop),
+                                                  parameters,
+                                                  pref));
+        return _builder!;
+    }
+
+    public VCardBuilder AddText(string? text,
+                                string? mimeType = null,
+                                string? group = null,
+                                Action<ParameterSection>? parameters = null,
+                                bool pref = false)
+    {
+        Builder._vCard.Set(Prop, VCardBuilder.Add(DataProperty.FromText(text, mimeType, group),
+                                                  Builder._vCard.Get<IEnumerable<DataProperty?>?>(Prop),
+                                                  parameters,
+                                                  pref));
+        return _builder!;
+    }
+
+    public VCardBuilder AddUri(Uri? uri,
+                               string? mimeType = null,
+                               string? group = null,
+                               Action<ParameterSection>? parameters = null,
+                               bool pref = false)
+    {
+        Builder._vCard.Set(Prop, VCardBuilder.Add(DataProperty.FromUri(uri, mimeType, group),
+                                                  Builder._vCard.Get<IEnumerable<DataProperty?>?>(Prop),
+                                                  parameters,
+                                                  pref));
+        return _builder!;
+    }
+
+    public VCardBuilder Clear()
+    {
+        Builder._vCard.Set(Prop, null);
+        return _builder!;
+    }
+
+    public VCardBuilder Remove(Func<DataProperty, bool> predicate)
+    {
+        Builder._vCard.Set(Prop, Builder._vCard.Get<IEnumerable<DataProperty?>?>(Prop).Remove(predicate));
+        return _builder!;
+    }
+}
+
+
+public readonly struct RelationBuilder
+{
+    private readonly VCardBuilder? _builder;
+
+    private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
+
+    public Prop Prop { get; }
+
+    internal RelationBuilder(VCardBuilder builder, Prop prop)
+    {
+        _builder = builder;
+        Prop = prop;
+    }
+
+    public VCardBuilder Add(Guid uuid,
+                            Rel? relationType,
+                            string? group = null,
+                            Action<ParameterSection>? parameters = null,
+                            bool pref = false)
+    {
+        Builder._vCard.Set(Prop, VCardBuilder.Add(RelationProperty.FromGuid(uuid, relationType, group),
+                                                  Builder._vCard.Get<IEnumerable<RelationProperty?>?>(Prop),
+                                                  parameters,
+                                                  pref));
+        return _builder!;
+    }
+
+    public VCardBuilder Add(string? text,
+                            Rel? relationType,
+                            string? group = null,
+                            Action<ParameterSection>? parameters = null,
+                            bool pref = false)
+    {
+        Builder._vCard.Set(Prop, VCardBuilder.Add(RelationProperty.FromText(text, relationType, group),
+                                                  Builder._vCard.Get<IEnumerable<RelationProperty?>?>(Prop),
+                                                  parameters,
+                                                  pref));
+        return _builder!;
+    }
+
+    public VCardBuilder Clear()
+    {
+        Builder._vCard.Set(Prop, null);
+        return _builder!;
+    }
+
+    public VCardBuilder Remove(Func<RelationProperty, bool> predicate)
+    {
+        Builder._vCard.Set(Prop, Builder._vCard.Get<IEnumerable<RelationProperty?>?>(Prop).Remove(predicate));
+        return _builder!;
+    }
+}
+
