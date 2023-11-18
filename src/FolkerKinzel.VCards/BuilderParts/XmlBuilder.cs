@@ -16,13 +16,13 @@ public readonly struct XmlBuilder
     internal XmlBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder Add(XElement? value,
-                            string? group = null,
+                            Func<VCard, string?>? group = null,
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
         Builder.VCard.Set(Prop.Xmls,
-                           VCardBuilder.Add(new XmlProperty(value, group),
-                                            Builder.VCard.Get<IEnumerable<XmlProperty?>?>(Prop.Xmls),
+                           VCardBuilder.Add(new XmlProperty(value, group?.Invoke(_builder.VCard)),
+                                            _builder.VCard.Get<IEnumerable<XmlProperty?>?>(Prop.Xmls),
                                             parameters,
                                             pref));
         return _builder;
@@ -36,7 +36,8 @@ public readonly struct XmlBuilder
 
     public VCardBuilder Remove(Func<XmlProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop.Xmls, Builder.VCard.Get<IEnumerable<XmlProperty?>?>(Prop.Xmls).Remove(predicate));
+        Builder.VCard.Set(Prop.Xmls,
+                          _builder.VCard.Get<IEnumerable<XmlProperty?>?>(Prop.Xmls).Remove(predicate));
         return _builder;
     }
 }

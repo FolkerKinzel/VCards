@@ -1,5 +1,4 @@
-﻿// Compile for .NET 8.0 or higher and FolkerKinzel.VCards 7.0.0-beta.1 or higher
-using FolkerKinzel.VCards;
+﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 
@@ -55,86 +54,62 @@ public static class VCardExample
 
         static VCard InitializeTheVCardAndFillItWithData(string directoryPath, string photoFileName)
         {
-            var name = new VC::NameProperty
-                        (
-                            familyNames: new string[] { "Müller-Risinowsky" },
-                            givenNames: new string[] { "Käthe" },
-                            additionalNames: new string[] { "Alexandra", "Caroline" },
-                            prefixes: new string[] { "Prof.", "Dr." }
-                        );
-            var vCard = new VCard
-            {
-                // Although NameViews is of Type IEnumerable<NameProperty?>
-                // you can assign a single NameProperty instance because NameProperty
-                // (like almost all classes derived from VCardProperty) has an explicit
-                // implementation of IEnumerable<T>
-                NameViews = name,
-                DisplayNames = new VC.TextProperty(name.ToDisplayName()),
-                Organizations = new VC::OrgProperty
-                                (
-                                    "Millers Company",
-                                    new string[] { "C#", "Webdesign" }
-                                ),
-                Titles = new VC::TextProperty("CEO"),
-            };
-
             // Creates a small "Photo" file for demonstration purposes:
             string photoFilePath = Path.Combine(directoryPath, photoFileName);
             CreatePhoto(photoFilePath);
 
-            vCard.Photos = VC::DataProperty.FromFile(photoFilePath);
-
-            var phoneHome = new VC::TextProperty("tel:+49-123-9876543");
-            phoneHome.Parameters.DataType = Data.Uri;
-            phoneHome.Parameters.PropertyClass = PCl.Home;
-            phoneHome.Parameters.PhoneType = Tel.Voice | Tel.BBS;
-
-            // Phones is null here. The extension method ConcatWith would not be needed in this case:
-            // phoneHome could be assigned directly. ConcatWith is only used here to show that it
-            // encapsulates all the null checking and will not throw on null references.
-            // (Don't forget to assign the result!)
-            vCard.Phones = vCard.Phones.ConcatWith(phoneHome);
-
-            var phoneWork = new VC::TextProperty("tel:+49-321-1234567");
-            phoneWork.Parameters.DataType = Data.Uri;
-            phoneWork.Parameters.PropertyClass = PCl.Work;
-            phoneWork.Parameters.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
-            vCard.Phones = vCard.Phones.ConcatWith(phoneWork);
-
-            // Unless specified, an address label is automatically applied to the AddressProperty object.
-            // Specifying the country helps to format this label correctly.
-            // Applying a group name to the AddressProperty helps to automatically preserve its Label,
-            // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
-            var adrWorkProp = new VC::AddressProperty
-                ("Friedrichstraße 22", "Berlin", null, "10117", "Germany", group: vCard.NewGroup());
-            adrWorkProp.Parameters.PropertyClass = PCl.Work;
-            adrWorkProp.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel;
-            adrWorkProp.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
-            adrWorkProp.Parameters.GeoPosition = 
-                new GeoCoordinate(52.51182050685474, 13.389581454284256);
-            vCard.Addresses = adrWorkProp;
-
-            var prefMail = new VC::TextProperty("kaethe_mueller@internet.com");
-            prefMail.Parameters.PropertyClass = PCl.Work;
-
-            var otherMail = new VC::TextProperty("mailto:kaethe_at_home@internet.com");
-            otherMail.Parameters.DataType = Data.Uri;
-            otherMail.Parameters.PropertyClass = PCl.Home;
-
-            vCard.EMails = prefMail.Concat(otherMail);
-            vCard.EMails.SetPreferences();
-
-            vCard.BirthDayViews = VC::DateAndOrTimeProperty.FromDate(1984, 3, 28);
-
-            vCard.Relations = VC::RelationProperty.FromText
-                (
-                    "Paul Müller-Risinowsky",
-                    Rel.Spouse | Rel.CoResident | Rel.Colleague
-                );
-
-            vCard.AnniversaryViews = VC::DateAndOrTimeProperty.FromDate(2006, 7, 14);
-
-            return vCard;
+            return VCardBuilder
+                .Create()
+                .NameViews.Add(familyNames: ["Müller-Risinowsky"],
+                               givenNames: ["Käthe"],
+                               additionalNames: ["Alexandra", "Caroline"],
+                               prefixes: ["Prof.", "Dr."],
+                               displayName: static (builder, prop) => builder.Add(prop.ToDisplayName())
+                               )
+                .Organizations.Add("Millers Company", ["C#", "Webdesign"])
+                .Titles.Add("CEO")
+                .Photos.AddFile(photoFilePath)
+                .Phones.Add("tel:+49-123-9876543",
+                                parameters: static p =>
+                                {
+                                    p.DataType = Data.Uri;
+                                    p.PropertyClass = PCl.Home;
+                                    p.PhoneType = Tel.Voice | Tel.BBS;
+                                }
+                            )
+                .Phones.Add("tel:+49-321-1234567",
+                                parameters: static p =>
+                                {
+                                    p.DataType = Data.Uri;
+                                    p.PropertyClass = PCl.Work;
+                                    p.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
+                                }
+                           )
+                // Unless specified, an address label is automatically applied to the AddressProperty object.
+                // Specifying the country helps to format this label correctly.
+                // Applying a group name to the AddressProperty helps to automatically preserve its Label,
+                // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
+                .Addresses.Add("Friedrichstraße 22", "Berlin", null, "10117", "Germany",
+                                parameters: static p =>
+                                {
+                                    p.PropertyClass = PCl.Work;
+                                    p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel;
+                                    p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
+                                    p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
+                                },
+                                group: static vc => vc.NewGroup())
+                .EMails.Add("mailto:kaethe_at_home@internet.com",
+                             parameters: static p =>
+                             {
+                                 p.DataType = Data.Uri;
+                                 p.PropertyClass = PCl.Home;
+                             })
+                .EMails.Add("kaethe_mueller@internet.com", pref: true,
+                             parameters: static p => p.PropertyClass = PCl.Work)
+                .BirthDayViews.Add(1984, 3, 28)
+                .Relations.Add("Paul Müller-Risinowsky", Rel.Spouse | Rel.CoResident | Rel.Colleague)
+                .AnniversaryViews.Add(2006, 7, 14)
+                .Build();
         }
 
         void WriteResultsToConsole(VCard vcard)

@@ -14,13 +14,14 @@ public readonly struct KindBuilder
     internal KindBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder Set(Kind value,
-                            string? group = null,
+                            Func<VCard, string?>? group = null,
                             Action<ParameterSection>? parameters = null)
     {
-        var property = new KindProperty(value, group);
+        var vc = Builder.VCard;
+        var property = new KindProperty(value, group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 
-        Builder.VCard.Set(Prop.Kind, property);
+        vc.Set(Prop.Kind, property);
         return _builder;
     }
 

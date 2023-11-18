@@ -20,13 +20,14 @@ public readonly struct TextSingletonBuilder
     }
 
     public VCardBuilder Set(string? value,
-                            string? group = null,
+                            Func<VCard, string?>? group = null,
                             Action<ParameterSection>? parameters = null)
     {
-        var property = new TextProperty(value, group);
+        var vc = Builder.VCard;
+        var property = new TextProperty(value, group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 
-        Builder.VCard.Set(Prop, property);
+        vc.Set(Prop, property);
         return _builder;
     }
 

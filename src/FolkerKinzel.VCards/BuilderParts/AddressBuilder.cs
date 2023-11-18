@@ -20,13 +20,14 @@ public readonly struct AddressBuilder
                             string? postalCode,
                             string? country = null,
                             bool autoLabel = true,
-                            string? group = null,
+                            Func<VCard,string?>? group = null,
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
         Builder.VCard.Set(Prop.Addresses,
-                           VCardBuilder.Add(new AddressProperty(street, locality, region, postalCode, country, autoLabel, group),
-                           Builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
+                           VCardBuilder.Add(new AddressProperty(
+                               street, locality, region, postalCode, country, autoLabel, group?.Invoke(_builder.VCard)),
+                           _builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
                            parameters,
                            pref));
         return _builder;
@@ -38,13 +39,13 @@ public readonly struct AddressBuilder
                             IEnumerable<string?>? postalCode,
                             IEnumerable<string?>? country = null,
                             bool autoLabel = true,
-                            string? group = null,
+                            Func<VCard, string?>? group = null,
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
         Builder.VCard.Set(Prop.Addresses,
-                           VCardBuilder.Add(new AddressProperty(street, locality, region, postalCode, country, autoLabel, group),
-                           Builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
+                           VCardBuilder.Add(new AddressProperty(street, locality, region, postalCode, country, autoLabel, group?.Invoke(_builder.VCard)),
+                           _builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
                            parameters,
                            pref));
         return _builder;
@@ -58,7 +59,7 @@ public readonly struct AddressBuilder
 
     public VCardBuilder Remove(Func<AddressProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop.Addresses, Builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses).Remove(predicate));
+        Builder.VCard.Set(Prop.Addresses, _builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses).Remove(predicate));
         return _builder;
     }
 

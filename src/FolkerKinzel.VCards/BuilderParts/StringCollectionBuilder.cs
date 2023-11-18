@@ -21,24 +21,24 @@ public readonly struct StringCollectionBuilder
     }
 
     public VCardBuilder Add(string? value,
-                            string? group = null,
+                            Func<VCard, string?>? group = null,
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(new StringCollectionProperty(value, group),
-                                                  Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(new StringCollectionProperty(value, group?.Invoke(_builder.VCard)),
+                                                  _builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
         return _builder;
     }
 
     public VCardBuilder Add(IEnumerable<string?>? value,
-                            string? group = null,
+                            Func<VCard, string?>? group = null,
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(new StringCollectionProperty(value, group),
-                                                  Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(new StringCollectionProperty(value, group?.Invoke(_builder.VCard)),
+                                                  _builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
         return _builder;
@@ -52,7 +52,7 @@ public readonly struct StringCollectionBuilder
 
     public VCardBuilder Remove(Func<StringCollectionProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop, Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop).Remove(predicate));
+        Builder.VCard.Set(Prop, _builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop).Remove(predicate));
         return _builder;
     }
 }

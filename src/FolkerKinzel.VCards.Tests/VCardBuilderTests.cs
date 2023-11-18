@@ -61,9 +61,11 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add("Elm Street", null, null, null, 
-                         group: "gr1", parameters: p => p.AddressType = Adr.Intl, 
-                         autoLabel: false)
+            .Addresses.Add("Elm Street", null, null, null,
+                            autoLabel: false,
+                            parameters: p => p.AddressType = Adr.Intl,
+                            group: vc => "gr1"
+                            )
             .Addresses.Add("Schlossallee", null, null, null,
                          parameters: p => p.AddressType = Adr.Dom, pref: true)
             .Addresses.Add("3", null, null, null)
@@ -99,8 +101,10 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .Addresses.Add(Enumerable.Repeat("Elm Street", 1), null, null, null,
-                         group: "gr1", parameters: p => p.AddressType = Adr.Intl,
-                         autoLabel: false)
+                           autoLabel: false,
+                           parameters: p => p.AddressType = Adr.Intl,
+                           group: vc => "gr1"
+                         )
             .Build();
 
         AddressProperty prop2 = vc.Addresses!.First()!;

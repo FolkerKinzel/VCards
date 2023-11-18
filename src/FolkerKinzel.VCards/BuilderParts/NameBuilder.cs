@@ -20,18 +20,24 @@ public readonly struct NameBuilder
                             IEnumerable<string?>? additionalNames = null,
                             IEnumerable<string?>? prefixes = null,
                             IEnumerable<string?>? suffixes = null,
-                            string? group = null,
-                            Action<ParameterSection>? parameters = null)
+                            Func<VCard, string?>? group = null,
+                            Action<ParameterSection>? parameters = null,
+                            Action<TextBuilder, NameProperty>? displayName = null)
     {
-        Builder.VCard.Set(Prop.NameViews,
-                           VCardBuilder.Add(new NameProperty(familyNames,
-                                                             givenNames,
-                                                             additionalNames,
-                                                             prefixes,
-                                                             suffixes, group),
-                           Builder.VCard.Get<IEnumerable<NameProperty?>?>(Prop.NameViews),
-                           parameters,
-                           false));
+        var vc = Builder.VCard;
+        var prop = new NameProperty(familyNames,
+                                    givenNames,
+                                    additionalNames,
+                                    prefixes,
+                                    suffixes, group?.Invoke(vc));
+        vc.Set(Prop.NameViews,
+               VCardBuilder.Add(prop,
+               vc.Get<IEnumerable<NameProperty?>?>(Prop.NameViews),
+               parameters,
+               false));
+
+        displayName?.Invoke(Builder.DisplayNames, prop);
+
         return _builder;
     }
 
@@ -40,19 +46,25 @@ public readonly struct NameBuilder
                             string? additionalName = null,
                             string? prefix = null,
                             string? suffix = null,
-                            string? group = null,
-                            Action<ParameterSection>? parameters = null)
+                            Func<VCard, string?>? group = null,
+                            Action<ParameterSection>? parameters = null,
+                            Action<TextBuilder, NameProperty>? displayName = null)
     {
-        Builder.VCard.Set(Prop.NameViews,
-                           VCardBuilder.Add(new NameProperty(familyName,
-                                                             givenName,
-                                                             additionalName,
-                                                             prefix,
-                                                             suffix,
-                                                             group),
-                           Builder.VCard.Get<IEnumerable<NameProperty?>?>(Prop.NameViews),
-                           parameters,
-                           false));
+        var vc = Builder.VCard;
+        var prop = new NameProperty(familyName,
+                                    givenName,
+                                    additionalName,
+                                    prefix,
+                                    suffix,
+                                    group?.Invoke(vc));
+        vc.Set(Prop.NameViews,
+               VCardBuilder.Add(prop,
+                                vc.Get<IEnumerable<NameProperty?>?>(Prop.NameViews),
+                                parameters,
+                                false));
+
+        displayName?.Invoke(Builder.DisplayNames, prop);
+
         return _builder;
     }
 
@@ -64,7 +76,7 @@ public readonly struct NameBuilder
 
     public VCardBuilder Remove(Func<NameProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop.NameViews, Builder.VCard.Get<IEnumerable<NameProperty?>?>(Prop.NameViews).Remove(predicate));
+        Builder.VCard.Set(Prop.NameViews, _builder.VCard.Get<IEnumerable<NameProperty?>?>(Prop.NameViews).Remove(predicate));
         return _builder;
     }
 }

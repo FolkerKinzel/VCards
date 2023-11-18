@@ -15,13 +15,13 @@ public readonly struct TimeZoneBuilder
     internal TimeZoneBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder Add(TimeZoneID? value,
-                            string? group = null,
+                            Func<VCard, string?>? group = null,
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
         Builder.VCard.Set(Prop.TimeZones, 
-                          VCardBuilder.Add(new TimeZoneProperty(value, group),
-                                           Builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones),
+                          VCardBuilder.Add(new TimeZoneProperty(value, group?.Invoke(_builder.VCard)),
+                                           _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones),
                                            parameters,
                                            pref));
         return _builder;
@@ -35,7 +35,8 @@ public readonly struct TimeZoneBuilder
 
     public VCardBuilder Remove(Func<TimeZoneProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop.TimeZones, Builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones).Remove(predicate));
+        Builder.VCard.Set(Prop.TimeZones,
+                          _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones).Remove(predicate));
         return _builder;
     }
 }

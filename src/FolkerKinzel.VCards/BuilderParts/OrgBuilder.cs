@@ -17,13 +17,13 @@ public readonly struct OrgBuilder
 
     public VCardBuilder Add(string? organizationName,
                             IEnumerable<string?>? organizationalUnits = null,
-                            string? group = null,
+                            Func<VCard, string?>? group = null,
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
         Builder.VCard.Set(Prop.Organizations,
-                           VCardBuilder.Add(new OrgProperty(organizationName, organizationalUnits, group),
-                                            Builder.VCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations),
+                           VCardBuilder.Add(new OrgProperty(organizationName, organizationalUnits, group?.Invoke(_builder.VCard)),
+                                            _builder.VCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations),
                                             parameters,
                                             pref));
         return _builder;
@@ -38,7 +38,7 @@ public readonly struct OrgBuilder
     public VCardBuilder Remove(Func<OrgProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.Organizations,
-                           Builder.VCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations).Remove(predicate));
+                           _builder.VCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations).Remove(predicate));
         return _builder;
     }
 }

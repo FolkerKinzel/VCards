@@ -17,13 +17,13 @@ public readonly struct NonStandardBuilder
 
     public VCardBuilder Add(string xName,
                             string? value,
-                            string? group = null,
+                            Func<VCard, string?>? group = null,
                             Action<ParameterSection>? parameters = null,
                             bool pref = false)
     {
         Builder.VCard.Set(Prop.NonStandards,
-                           VCardBuilder.Add(new NonStandardProperty(xName, value, group),
-                                            Builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards),
+                           VCardBuilder.Add(new NonStandardProperty(xName, value, group?.Invoke(_builder.VCard)),
+                                            _builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards),
                                             parameters,
                                             pref));
         return _builder;
@@ -38,7 +38,7 @@ public readonly struct NonStandardBuilder
     public VCardBuilder Remove(Func<NonStandardProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.NonStandards,
-                           Builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards).Remove(predicate));
+                          _builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards).Remove(predicate));
         return _builder;
     }
 }

@@ -24,12 +24,12 @@ public readonly struct DataBuilder
 
     public VCardBuilder AddFile(string filePath,
                                 string? mimeType = null,
-                                string? group = null,
+                                Func<VCard, string?>? group = null,
                                 Action<ParameterSection>? parameters = null,
                                 bool pref = false)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromFile(filePath, mimeType, group),
-                                                  Builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromFile(filePath, mimeType, group?.Invoke(_builder.VCard)),
+                                                  _builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
         return _builder;
@@ -37,12 +37,12 @@ public readonly struct DataBuilder
 
     public VCardBuilder AddBytes(byte[]? bytes,
                                  string? mimeType = MimeString.OctetStream,
-                                 string? group = null,
+                                 Func<VCard, string?>? group = null,
                                  Action<ParameterSection>? parameters = null,
                                  bool pref = false)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromBytes(bytes, mimeType, group),
-                                                  Builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromBytes(bytes, mimeType, group?.Invoke(_builder.VCard)),
+                                                  _builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
         return _builder;
@@ -50,12 +50,12 @@ public readonly struct DataBuilder
 
     public VCardBuilder AddText(string? text,
                                 string? mimeType = null,
-                                string? group = null,
+                                Func<VCard, string?>? group = null,
                                 Action<ParameterSection>? parameters = null,
                                 bool pref = false)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromText(text, mimeType, group),
-                                                  Builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromText(text, mimeType, group?.Invoke(_builder.VCard)),
+                                                  _builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
         return _builder;
@@ -63,12 +63,12 @@ public readonly struct DataBuilder
 
     public VCardBuilder AddUri(Uri? uri,
                                string? mimeType = null,
-                               string? group = null,
+                               Func<VCard, string?>? group = null,
                                Action<ParameterSection>? parameters = null,
                                bool pref = false)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromUri(uri, mimeType, group),
-                                                  Builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromUri(uri, mimeType, group?.Invoke(_builder.VCard)),
+                                                  _builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
                                                   parameters,
                                                   pref));
         return _builder;
@@ -82,7 +82,7 @@ public readonly struct DataBuilder
 
     public VCardBuilder Remove(Func<DataProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop, Builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop).Remove(predicate));
+        Builder.VCard.Set(Prop, _builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop).Remove(predicate));
         return _builder;
     }
 }

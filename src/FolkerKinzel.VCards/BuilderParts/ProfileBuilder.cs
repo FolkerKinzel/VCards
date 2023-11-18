@@ -12,9 +12,9 @@ public readonly struct ProfileBuilder
 
     internal ProfileBuilder(VCardBuilder builder) => _builder = builder;
 
-    public VCardBuilder Set(string? group = null)
+    public VCardBuilder Set(Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop.Profile, new ProfileProperty(group));
+        Builder.VCard.Set(Prop.Profile, new ProfileProperty(group?.Invoke(_builder.VCard)));
         return _builder;
     }
 

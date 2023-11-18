@@ -15,9 +15,9 @@ public readonly struct AccessBuilder
     internal AccessBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder Set(Access value,
-                            string? group = null)
+                            Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop.Access, new AccessProperty(value, group));
+        Builder.VCard.Set(Prop.Access, new AccessProperty(value, group?.Invoke(_builder.VCard)));
         return _builder;
     }
 

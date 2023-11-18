@@ -20,54 +20,54 @@ public readonly struct DateAndOrTimeBuilder
         Prop = prop;
     }
 
-    public VCardBuilder Add(int year, int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
+    public VCardBuilder Add(int year, int month, int day, Func<VCard, string?>? group = null, Action<ParameterSection>? parameters = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromDate(year, month, day, group),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromDate(year, month, day, group?.Invoke(_builder.VCard)),
                                                   Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop),
                                                   parameters,
                                                   false));
         return _builder;
     }
 
-    public VCardBuilder Add(int month, int day, string? group = null, Action<ParameterSection>? parameters = null)
+    public VCardBuilder Add(int month, int day, Func<VCard, string?>? group = null, Action<ParameterSection>? parameters = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromDate(month, day, group),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromDate(month, day, group?.Invoke(_builder.VCard)),
                                                   Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop),
                                                   parameters,
                                                   false));
         return _builder;
     }
 
-    public VCardBuilder Add(DateOnly date, string? group = null, Action<ParameterSection>? parameters = null)
+    public VCardBuilder Add(DateOnly date, Func<VCard, string?>? group = null, Action<ParameterSection>? parameters = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromDate(date, group),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromDate(date, group?.Invoke(_builder.VCard)),
                                                   Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop),
                                                   parameters,
                                                   false));
         return _builder;
     }
 
-    public VCardBuilder Add(DateTimeOffset dateTime, string? group = null, Action<ParameterSection>? parameters = null)
+    public VCardBuilder Add(DateTimeOffset dateTime, Func<VCard, string?>? group = null, Action<ParameterSection>? parameters = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromDateTime(dateTime, group),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromDateTime(dateTime, group?.Invoke(_builder.VCard)),
                                                   Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop),
                                                   parameters,
                                                   false));
         return _builder;
     }
 
-    public VCardBuilder Add(TimeOnly time, string? group = null, Action<ParameterSection>? parameters = null)
+    public VCardBuilder Add(TimeOnly time, Func<VCard, string?>? group = null, Action<ParameterSection>? parameters = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromTime(time, group),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromTime(time, group?.Invoke(_builder.VCard)),
                                                   Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop),
                                                   parameters,
                                                   false));
         return _builder;
     }
 
-    public VCardBuilder Add(string? text, string? group = null, Action<ParameterSection>? parameters = null)
+    public VCardBuilder Add(string? text, Func<VCard, string?>? group = null, Action<ParameterSection>? parameters = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromText(text, group),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(DateAndOrTimeProperty.FromText(text, group?.Invoke(_builder.VCard)),
                                                   Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop),
                                                   parameters,
                                                   false));
