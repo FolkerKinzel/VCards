@@ -16,8 +16,8 @@ public readonly struct GeoBuilder
 
     public VCardBuilder Add(double latitude,
                             double longitude,
-                            Func<VCard, string?>? group = null,
-                            Action<ParameterSection>? parameters = null)
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.GeoCoordinates, VCardBuilder.Add(new GeoProperty(latitude, longitude, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
@@ -27,8 +27,8 @@ public readonly struct GeoBuilder
     }
 
     public VCardBuilder Add(GeoCoordinate? value,
-                            Func<VCard, string?>? group = null,
-                            Action<ParameterSection>? parameters = null)
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.GeoCoordinates, VCardBuilder.Add(new GeoProperty(value, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),

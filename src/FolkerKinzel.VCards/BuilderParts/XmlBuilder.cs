@@ -16,9 +16,9 @@ public readonly struct XmlBuilder
     internal XmlBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder Add(XElement? value,
-                            Func<VCard, string?>? group = null,
+                            bool pref = false,
                             Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.Xmls,
                            VCardBuilder.Add(new XmlProperty(value, group?.Invoke(_builder.VCard)),

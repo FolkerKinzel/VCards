@@ -24,9 +24,9 @@ public readonly struct DataBuilder
 
     public VCardBuilder AddFile(string filePath,
                                 string? mimeType = null,
-                                Func<VCard, string?>? group = null,
+                                bool pref = false,
                                 Action<ParameterSection>? parameters = null,
-                                bool pref = false)
+                                Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromFile(filePath, mimeType, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
@@ -37,9 +37,9 @@ public readonly struct DataBuilder
 
     public VCardBuilder AddBytes(byte[]? bytes,
                                  string? mimeType = MimeString.OctetStream,
-                                 Func<VCard, string?>? group = null,
+                                 bool pref = false,
                                  Action<ParameterSection>? parameters = null,
-                                 bool pref = false)
+                                 Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromBytes(bytes, mimeType, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
@@ -50,9 +50,9 @@ public readonly struct DataBuilder
 
     public VCardBuilder AddText(string? text,
                                 string? mimeType = null,
-                                Func<VCard, string?>? group = null,
+                                bool pref = false,
                                 Action<ParameterSection>? parameters = null,
-                                bool pref = false)
+                                Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromText(text, mimeType, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
@@ -63,9 +63,9 @@ public readonly struct DataBuilder
 
     public VCardBuilder AddUri(Uri? uri,
                                string? mimeType = null,
-                               Func<VCard, string?>? group = null,
-                               Action<ParameterSection>? parameters = null,
-                               bool pref = false)
+                               bool pref = false, 
+                               Action<ParameterSection>? parameters = null, 
+                               Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromUri(uri, mimeType, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),

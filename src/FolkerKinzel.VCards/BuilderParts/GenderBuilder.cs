@@ -16,8 +16,8 @@ public readonly struct GenderBuilder
 
     public VCardBuilder Add(Sex? sex,
                           string? identity = null,
-                            Func<VCard, string?>? group = null,
-                            Action<ParameterSection>? parameters = null)
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.GenderViews, VCardBuilder.Add(new GenderProperty(sex, identity, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<GenderProperty?>?>(Prop.GenderViews),

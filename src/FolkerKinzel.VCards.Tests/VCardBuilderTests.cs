@@ -67,7 +67,7 @@ public class VCardBuilderTests
                             group: vc => "gr1"
                             )
             .Addresses.Add("Schlossallee", null, null, null,
-                         parameters: p => p.AddressType = Adr.Dom, pref: true)
+                         pref: true, parameters: p => p.AddressType = Adr.Dom)
             .Addresses.Add("3", null, null, null)
             .Addresses.Add("4", null, null, null)
             .Build();

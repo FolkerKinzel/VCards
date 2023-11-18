@@ -23,9 +23,9 @@ public readonly struct RelationBuilder
 
     public VCardBuilder Add(Guid uuid,
                             Rel? relationType = null,
-                            Func<VCard, string?>? group = null,
+                            bool pref = false,
                             Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop, VCardBuilder.Add(RelationProperty.FromGuid(uuid, relationType, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),
@@ -36,9 +36,9 @@ public readonly struct RelationBuilder
 
     public VCardBuilder Add(string? text,
                             Rel? relationType = null,
-                            Func<VCard, string?>? group = null,
+                            bool pref = false,
                             Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop, VCardBuilder.Add(RelationProperty.FromText(text, relationType, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),
@@ -49,9 +49,9 @@ public readonly struct RelationBuilder
 
     public VCardBuilder Add(VCard? vCard,
                             Rel? relationType = null,
-                            Func<VCard, string?>? group = null,
-                            Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            bool pref = false, 
+                            Action<ParameterSection>? parameters = null, 
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop, VCardBuilder.Add(RelationProperty.FromVCard(vCard, relationType, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),
@@ -62,9 +62,9 @@ public readonly struct RelationBuilder
 
     public VCardBuilder Add(Uri? uri,
                             Rel? relationType = null,
-                            Func<VCard, string?>? group = null,
-                            Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            bool pref = false,
+                            Action<ParameterSection>? parameters = null, 
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop, VCardBuilder.Add(RelationProperty.FromUri(uri, relationType, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),

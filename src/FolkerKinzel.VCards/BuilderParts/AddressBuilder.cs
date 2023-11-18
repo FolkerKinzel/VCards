@@ -20,9 +20,9 @@ public readonly struct AddressBuilder
                             string? postalCode,
                             string? country = null,
                             bool autoLabel = true,
-                            Func<VCard,string?>? group = null,
+                            bool pref = false,
                             Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.Addresses,
                            VCardBuilder.Add(new AddressProperty(
@@ -39,9 +39,9 @@ public readonly struct AddressBuilder
                             IEnumerable<string?>? postalCode,
                             IEnumerable<string?>? country = null,
                             bool autoLabel = true,
-                            Func<VCard, string?>? group = null,
+                            bool pref = false,
                             Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.Addresses,
                            VCardBuilder.Add(new AddressProperty(street, locality, region, postalCode, country, autoLabel, group?.Invoke(_builder.VCard)),

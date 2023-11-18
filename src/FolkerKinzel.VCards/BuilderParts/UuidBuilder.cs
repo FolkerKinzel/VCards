@@ -13,8 +13,8 @@ public readonly struct UuidBuilder
 
     internal UuidBuilder(VCardBuilder builder) => _builder = builder;
 
-    public VCardBuilder Set(Func<VCard, string?>? group = null,
-                            Action<ParameterSection>? parameters = null)
+    public VCardBuilder Set(Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
     {
         var vc = Builder.VCard;
         var property = new UuidProperty(group?.Invoke(vc));

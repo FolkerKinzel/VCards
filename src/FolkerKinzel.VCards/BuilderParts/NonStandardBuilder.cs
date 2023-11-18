@@ -17,9 +17,9 @@ public readonly struct NonStandardBuilder
 
     public VCardBuilder Add(string xName,
                             string? value,
-                            Func<VCard, string?>? group = null,
+                            bool pref = false,
                             Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.NonStandards,
                            VCardBuilder.Add(new NonStandardProperty(xName, value, group?.Invoke(_builder.VCard)),

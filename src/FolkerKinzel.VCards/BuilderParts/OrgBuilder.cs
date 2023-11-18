@@ -17,9 +17,9 @@ public readonly struct OrgBuilder
 
     public VCardBuilder Add(string? organizationName,
                             IEnumerable<string?>? organizationalUnits = null,
-                            Func<VCard, string?>? group = null,
+                            bool pref = false,
                             Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.Organizations,
                            VCardBuilder.Add(new OrgProperty(organizationName, organizationalUnits, group?.Invoke(_builder.VCard)),

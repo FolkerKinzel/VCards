@@ -14,12 +14,15 @@ public sealed class VCardBuilder
 
     private VCardBuilder(VCard vCard) => VCard = vCard;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static VCardBuilder Create(bool setUniqueIdentifier = true)
         => new(new VCard(setUniqueIdentifier));
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static VCardBuilder Create(VCard vCard)
         => new(vCard ?? throw new ArgumentNullException(nameof(vCard)));
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCard Build() => VCard;
 
     ///////////////////////////////////////////////////////////////////

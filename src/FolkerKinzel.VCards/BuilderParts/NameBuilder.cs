@@ -20,8 +20,8 @@ public readonly struct NameBuilder
                             IEnumerable<string?>? additionalNames = null,
                             IEnumerable<string?>? prefixes = null,
                             IEnumerable<string?>? suffixes = null,
-                            Func<VCard, string?>? group = null,
                             Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null,
                             Action<TextBuilder, NameProperty>? displayName = null)
     {
         var vc = Builder.VCard;

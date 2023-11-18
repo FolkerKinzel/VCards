@@ -21,9 +21,9 @@ public readonly struct StringCollectionBuilder
     }
 
     public VCardBuilder Add(string? value,
-                            Func<VCard, string?>? group = null,
+                            bool pref = false,
                             Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop, VCardBuilder.Add(new StringCollectionProperty(value, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),
@@ -33,9 +33,9 @@ public readonly struct StringCollectionBuilder
     }
 
     public VCardBuilder Add(IEnumerable<string?>? value,
-                            Func<VCard, string?>? group = null,
+                            bool pref = false, 
                             Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop, VCardBuilder.Add(new StringCollectionProperty(value, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(Prop),

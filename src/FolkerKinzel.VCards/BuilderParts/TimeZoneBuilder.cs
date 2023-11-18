@@ -15,9 +15,9 @@ public readonly struct TimeZoneBuilder
     internal TimeZoneBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder Add(TimeZoneID? value,
-                            Func<VCard, string?>? group = null,
+                            bool pref = false,
                             Action<ParameterSection>? parameters = null,
-                            bool pref = false)
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.TimeZones, 
                           VCardBuilder.Add(new TimeZoneProperty(value, group?.Invoke(_builder.VCard)),

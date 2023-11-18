@@ -21,8 +21,8 @@ public readonly struct TextViewBuilder
     }
 
     public VCardBuilder Add(string? value,
-                            Func<VCard, string?>? group = null,
-                            Action<ParameterSection>? parameters = null)
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop, VCardBuilder.Add(new TextProperty(value, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<TextProperty?>?>(Prop),

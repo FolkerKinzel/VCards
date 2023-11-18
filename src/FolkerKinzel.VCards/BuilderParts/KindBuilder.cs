@@ -14,8 +14,8 @@ public readonly struct KindBuilder
     internal KindBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder Set(Kind value,
-                            Func<VCard, string?>? group = null,
-                            Action<ParameterSection>? parameters = null)
+                            Action<ParameterSection>? parameters = null, 
+                            Func<VCard, string?>? group = null)
     {
         var vc = Builder.VCard;
         var property = new KindProperty(value, group?.Invoke(vc));

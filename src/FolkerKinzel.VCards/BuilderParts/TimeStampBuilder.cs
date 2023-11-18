@@ -14,8 +14,8 @@ public readonly struct TimeStampBuilder
     internal TimeStampBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder Set(DateTimeOffset value,
-                            Func<VCard, string?>? group = null,
-                            Action<ParameterSection>? parameters = null)
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
     {
         var vc = Builder.VCard;
         var property = new TimeStampProperty(value, group?.Invoke(vc));
