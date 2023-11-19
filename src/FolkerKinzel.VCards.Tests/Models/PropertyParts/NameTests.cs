@@ -35,6 +35,7 @@ public class NameTests
     [DataRow(";;ä;;")]
     [DataRow(";;;ä;")]
     [DataRow(";;;;ä")]
+    [DataRow("ä;ä;ä;ä;ä")]
     public void NeedsToBeQPEncodedTest1(string input)
         => Assert.IsTrue(new Name(input, new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
 

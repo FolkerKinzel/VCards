@@ -144,7 +144,7 @@ internal abstract class VcfSerializer : IDisposable
         VCardToSerialize = vCard;
         ReplenishRequiredProperties();
 
-        if(Options.HasFlag(VcfOptions.SetPropertyIDs)) 
+        if (Options.HasFlag(VcfOptions.SetPropertyIDs))
         {
             SetPropertyIDs();
         }
@@ -161,6 +161,17 @@ internal abstract class VcfSerializer : IDisposable
     }
 
     protected virtual void SetPropertyIDs() => VCardToSerialize.Sync.SetPropertyIDs();
+
+    //protected virtual void SetIndexes()
+    //{
+    //    foreach (IEnumerable<VCardProperty?> coll in VCardToSerialize.AsProperties()
+    //                                                 .Select(x => x.Value)
+    //                                                 .Where(x => x is IEnumerable<VCardProperty?>)
+    //                                                 .Cast<IEnumerable<VCardProperty?>>())
+    //    {
+    //        coll.SetIndexes(IgnoreEmptyItems);
+    //    }
+    //}
 
     protected abstract void ReplenishRequiredProperties();
 
@@ -181,7 +192,7 @@ internal abstract class VcfSerializer : IDisposable
 
     private void AppendProperties()
     {
-        foreach (KeyValuePair<Prop, object> kvp in 
+        foreach (KeyValuePair<Prop, object> kvp in
             ((IEnumerable<KeyValuePair<Prop, object>>)VCardToSerialize).OrderBy(x => x.Key))
         {
             switch (kvp.Key)
@@ -341,7 +352,7 @@ internal abstract class VcfSerializer : IDisposable
         }
 
         PropertyKey = propertyKey;
-        
+
         IsPref = isPref;
 
         if (prop.BuildProperty(this))
@@ -364,7 +375,7 @@ internal abstract class VcfSerializer : IDisposable
             {
                 bool isPref = first && prop.Parameters.Preference < 100;
                 first = false;
-               
+
                 XMessengerParameterConverter.ConvertFromInstantMessengerType(prop.Parameters);
 
                 string val = prop.Value!;
@@ -419,14 +430,14 @@ internal abstract class VcfSerializer : IDisposable
         if (Options.HasFlag(VcfOptions.WriteKAddressbookExtensions))
         {
             TextProperty? prop = value.PrefOrNullIntl(IgnoreEmptyItems);
-                                 
+
             if (prop != null)
             {
                 BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_IMAddress, prop, prop.Parameters.Preference < 100);
             }
         }
     }
-   
+
     protected virtual void AppendLineFolding()
     {
         int counter = 0;
@@ -442,7 +453,7 @@ internal abstract class VcfSerializer : IDisposable
             {
                 continue;
             }
-            
+
             if (counter > VCard.MAX_BYTES_PER_LINE)
             {
                 i--; // one char back
@@ -679,9 +690,9 @@ internal abstract class VcfSerializer : IDisposable
             BuildProperty(VCard.PropKeys.AGENT, agent);
         }
 
-        RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Spouse), 
+        RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Spouse),
                                                         IgnoreEmptyItems);
-                   
+
         if (spouse != null)
         {
             if (spouse is RelationVCardProperty vCardProp)
@@ -732,7 +743,7 @@ internal abstract class VcfSerializer : IDisposable
             }
 
             Debug.Assert(name != null);
-            return RelationProperty.FromText(name, 
+            return RelationProperty.FromText(name,
                                              vcardProp.Parameters.RelationType ?? Rel.Spouse,
                                              vcardProp.Group);
         }
