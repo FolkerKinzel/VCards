@@ -64,7 +64,7 @@ public sealed partial class VCard
             {
                 if(App != null)
                 {
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException(Res.MultipleCalls);
                 }
 
                 return;
@@ -72,7 +72,7 @@ public sealed partial class VCard
 
             if (!globalID.IsAbsoluteUri || globalID.AbsoluteUri != App)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException(Res.MultipleCalls);
             }
 
             return;

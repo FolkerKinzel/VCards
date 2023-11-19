@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -8,7 +9,7 @@ public readonly struct ProfileBuilder
     private readonly VCardBuilder? _builder;
 
     [MemberNotNull(nameof(_builder))] 
-    private VCardBuilder Builder => _builder ?? throw new InvalidOperationException();
+    private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
     internal ProfileBuilder(VCardBuilder builder) => _builder = builder;
 

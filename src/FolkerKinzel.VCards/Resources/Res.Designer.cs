@@ -61,6 +61,24 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t instantiate the struct yourself. Use VCardBuilder instead..
+        /// </summary>
+        internal static string DefaultCtor {
+            get {
+                return ResourceManager.GetString("DefaultCtor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The method may only be called once..
+        /// </summary>
+        internal static string MultipleCalls {
+            get {
+                return ResourceManager.GetString("MultipleCalls", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value references not an ANSI encoding..
         /// </summary>
         internal static string NoAnsiEncoding {
