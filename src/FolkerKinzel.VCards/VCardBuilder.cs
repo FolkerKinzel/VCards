@@ -25,6 +25,26 @@ public sealed class VCardBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCard Build() => VCard;
 
+
+    internal static IEnumerable<TSource?> Add<TSource>(TSource prop,
+                                                       IEnumerable<TSource?>? coll,
+                                                       Action<ParameterSection>? parameters,
+                                                       bool pref)
+        where TSource : VCardProperty, IEnumerable<TSource>
+    {
+        parameters?.Invoke(prop.Parameters);
+
+        coll = coll is null ? prop
+                            : pref ? prop.Concat(coll.OrderByPref(false))
+                                   : coll.Concat(prop);
+        if (pref)
+        {
+            coll.SetPreferences(false);
+        }
+
+        return coll;
+    }
+
     ///////////////////////////////////////////////////////////////////
 
     /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
@@ -37,22 +57,22 @@ public sealed class VCardBuilder
 
     /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful, if the property is displayed in different languages.</remarks>
     public DateAndOrTimeBuilder AnniversaryViews => new DateAndOrTimeBuilder(this, Prop.AnniversaryViews);
 
     /// <summary> <c>BDAY</c>: Date of birth of the individual associated with the vCard.
     /// <c>(2,3,4)</c></summary>
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful, if the property is displayed in different languages.</remarks>
     public DateAndOrTimeBuilder BirthDayViews => new DateAndOrTimeBuilder(this, Prop.BirthDayViews);
     
     /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
     /// RFC 6474)</c></summary>
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful, if the property is displayed in different languages.</remarks>
     public TextViewBuilder BirthPlaceViews => new TextViewBuilder(this, Prop.BirthPlaceViews);
 
     /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4)</c></summary>
@@ -68,15 +88,15 @@ public sealed class VCardBuilder
 
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful, if the property is displayed in different languages.</remarks>
     public DateAndOrTimeBuilder DeathDateViews => new DateAndOrTimeBuilder(this, Prop.DeathDateViews);
 
     /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
     /// RFC 6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful, if the property is displayed in different languages.</remarks>
     public TextViewBuilder DeathPlaceViews => new TextViewBuilder(this, Prop.DeathPlaceViews);
 
     /// <summary> <c>NAME</c>: Provides a textual representation of the 
@@ -204,8 +224,8 @@ public sealed class VCardBuilder
     /// <summary> <c>N</c>: A structured representation of the name of the person, place
     /// or thing associated with the vCard object. <c>(2,3,4)</c></summary>
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful, if the property is displayed in different languages.</remarks>
     public NameBuilder NameViews => new NameBuilder(this);
 
     /// <summary> <c>NICKNAME</c>: One or more descriptive/familiar names for the object
@@ -307,7 +327,7 @@ public sealed class VCardBuilder
     /// </remarks>
     public NonStandardBuilder NonStandards => new NonStandardBuilder(this);
 
-    /// <summary> <c>NOTE</c>: Specifies supplemental informations or comments, that
+    /// <summary> <c>NOTE</c>: Specifies supplemental informations or comments that
     /// are associated with the vCard. <c>(2,3,4)</c></summary>
     public TextBuilder Notes => new TextBuilder(this, Prop.Notes);
 
@@ -382,237 +402,5 @@ public sealed class VCardBuilder
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
     public XmlBuilder Xmls => new XmlBuilder(this);
-
-
-    ////////////////////////////////////////////////////////////////////
-    //public VCardBuilder AddKey() => throw new NotImplementedException();
-
-    //public VCardBuilder ClearKeys()
-    //{
-    //    VCard.Keys = null;
-    //    return this;
-    //}
-
-    ////public VCardBuilder RemoveKey(DataProperty? prop)
-    ////{
-    ////    _vCard.Keys = _vCard.Keys.Remove(prop);
-    ////    return this;
-    ////}
-
-    //public VCardBuilder RemoveKey(Func<DataProperty, bool> predicate)
-    //{
-    //    VCard.Keys = VCard.Keys.Remove(predicate);
-    //    return this;
-    //}
-
-    //public VCardBuilder AddLogo() => throw new NotImplementedException();
-
-    //public VCardBuilder ClearLogos()
-    //{
-    //    VCard.Logos = null;
-    //    return this;
-    //}
-
-    ////public VCardBuilder RemoveLogo(DataProperty? prop)
-    ////{
-    ////    _vCard.Logos = _vCard.Logos.Remove(prop);
-    ////    return this;
-    ////}
-
-    //public VCardBuilder RemoveLogo(Func<DataProperty, bool> predicate)
-    //{
-    //    VCard.Logos = VCard.Logos.Remove(predicate);
-    //    return this;
-    //}
-
-    
-
-    //public VCardBuilder AddMember() => throw new NotImplementedException();
-
-    //public VCardBuilder ClearMembers()
-    //{
-    //    VCard.Members = null;
-    //    return this;
-    //}
-
-    ////public VCardBuilder RemoveMember(RelationProperty? prop)
-    ////{
-    ////    _vCard.Members = _vCard.Members.Remove(prop);
-    ////    return this;
-    ////}
-
-    //public VCardBuilder RemoveMember(Func<RelationProperty, bool> predicate)
-    //{
-    //    VCard.Members = VCard.Members.Remove(predicate);
-    //    return this;
-    //}
-
-    //public VCardBuilder AddNameView() => throw new NotImplementedException();
-
-    //public VCardBuilder ClearNameViews()
-    //{
-    //    VCard.NameViews = null;
-    //    return this;
-    //}
-
-    ////public VCardBuilder RemoveNameView(NameProperty? prop)
-    ////{
-    ////    _vCard.NameViews = _vCard.NameViews.Remove(prop);
-    ////    return this;
-    ////}
-
-    //public VCardBuilder RemoveNameView(Func<NameProperty, bool> predicate)
-    //{
-    //    VCard.NameViews = VCard.NameViews.Remove(predicate);
-    //    return this;
-    //}
-
- 
-    //public VCardBuilder AddNonStandard() => throw new NotImplementedException();
-
-    //public VCardBuilder ClearNonStandards()
-    //{
-    //    VCard.NonStandards = null;
-    //    return this;
-    //}
-
-    ////public VCardBuilder RemoveNonStandard(NonStandardProperty? prop)
-    ////{
-    ////    _vCard.NonStandards = _vCard.NonStandards.Remove(prop);
-    ////    return this;
-    ////}
-
-    //public VCardBuilder RemoveNonStandard(Func<NonStandardProperty, bool> predicate)
-    //{
-    //    VCard.NonStandards = VCard.NonStandards.Remove(predicate);
-    //    return this;
-    //}
-
-
-    //public VCardBuilder AddOrganization() => throw new NotImplementedException();
-
-    //public VCardBuilder ClearOrganizations()
-    //{
-    //    VCard.Organizations = null;
-    //    return this;
-    //}
-
-    ////public VCardBuilder RemoveOrganization(OrgProperty? prop)
-    ////{
-    ////    _vCard.Organizations = _vCard.Organizations.Remove(prop);
-    ////    return this;
-    ////}
-
-    //public VCardBuilder RemoveOrganization(Func<OrgProperty, bool> predicate)
-    //{
-    //    VCard.Organizations = VCard.Organizations.Remove(predicate);
-    //    return this;
-    //}
-
-
-    //public VCardBuilder AddPhoto() => throw new NotImplementedException();
-
-    //public VCardBuilder ClearPhotos()
-    //{
-    //    VCard.Photos = null;
-    //    return this;
-    //}
-
-    ////public VCardBuilder RemovePhoto(DataProperty? prop)
-    ////{
-    ////    _vCard.Photos = _vCard.Photos.Remove(prop);
-    ////    return this;
-    ////}
-
-    //public VCardBuilder RemovePhoto(Func<DataProperty, bool> predicate)
-    //{
-    //    VCard.Photos = VCard.Photos.Remove(predicate);
-    //    return this;
-    //}
-
-    //public VCardBuilder AddRelation() => throw new NotImplementedException();
-
-    //public VCardBuilder ClearRelations()
-    //{
-    //    VCard.Relations = null;
-    //    return this;
-    //}
-
-    ////public VCardBuilder RemoveRelation(RelationProperty? prop)
-    ////{
-    ////    _vCard.Relations = _vCard.Relations.Remove(prop);
-    ////    return this;
-    ////}
-
-    //public VCardBuilder RemoveRelation(Func<RelationProperty, bool> predicate)
-    //{
-    //    VCard.Relations = VCard.Relations.Remove(predicate);
-    //    return this;
-    //}
-
-
-    //public VCardBuilder AddSound() => throw new NotImplementedException();
-
-    //public VCardBuilder ClearSounds()
-    //{
-    //    VCard.Sounds = null;
-    //    return this;
-    //}
-
-    ////public VCardBuilder RemoveSound(DataProperty? prop)
-    ////{
-    ////    _vCard.Sounds = _vCard.Sounds.Remove(prop);
-    ////    return this;
-    ////}
-
-    //public VCardBuilder RemoveSound(Func<DataProperty, bool> predicate)
-    //{
-    //    VCard.Sounds = VCard.Sounds.Remove(predicate);
-    //    return this;
-    //}
-
-
-    //public VCardBuilder AddXml() => throw new NotImplementedException();
-
-    //public VCardBuilder ClearXmls()
-    //{
-    //    _vCard.Xmls = null;
-    //    return this;
-    //}
-
-    ////public VCardBuilder RemoveXml(XmlProperty? prop)
-    ////{
-    ////    _vCard.Xmls = _vCard.Xmls.Remove(prop);
-    ////    return this;
-    ////}
-
-    //public VCardBuilder RemoveXml(Func<XmlProperty, bool> predicate)
-    //{
-    //    _vCard.Xmls = _vCard.Xmls.Remove(predicate);
-    //    return this;
-    //}
-
-
-    //////////////////////////////////////////////////////////////////////////
-    
-
-    internal static IEnumerable<TSource?> Add<TSource>(TSource prop,
-                                                       IEnumerable<TSource?>? coll,
-                                                       Action<ParameterSection>? parameters,
-                                                       bool pref)
-        where TSource : VCardProperty, IEnumerable<TSource>
-    {
-        parameters?.Invoke(prop.Parameters);
-
-        coll = coll is null ? prop
-                            : pref ? prop.Concat(coll.OrderByPref(false))
-                                   : coll.Concat(prop);
-        if (pref)
-        {
-            coll.SetPreferences(false);
-        }
-
-        return coll;
-    }
 }
 
