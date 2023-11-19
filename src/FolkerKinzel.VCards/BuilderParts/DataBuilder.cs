@@ -49,13 +49,13 @@ public readonly struct DataBuilder
         return _builder;
     }
 
-    public VCardBuilder AddText(string? text,
+    public VCardBuilder AddText(string? passWord,
                                 string? mimeType = null,
                                 bool pref = false,
                                 Action<ParameterSection>? parameters = null,
                                 Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromText(text, mimeType, group?.Invoke(_builder.VCard)),
+        Builder.VCard.Set(Prop, VCardBuilder.Add(DataProperty.FromText(passWord, mimeType, group?.Invoke(_builder.VCard)),
                                                   _builder.VCard.Get<IEnumerable<DataProperty?>?>(Prop),
                                                   parameters,
                                                   pref));

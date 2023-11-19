@@ -18,40 +18,20 @@ public sealed class AppIDProperty : VCardProperty, IEnumerable<AppIDProperty>
     private AppIDProperty(AppIDProperty prop) : base(prop)
         => Value = prop.Value;
 
-    ///// <summary>  Initializes a new <see cref="AppIDProperty" /> object. 
-    ///// </summary>
-    ///// <param name="localID">Local ID that identifies the <see cref="AppID"/>
-    ///// in the <see cref="ParameterSection.PropertyIDs"/>. (A positive <see cref="int"/>, not zero.)</param>
-    ///// <param name="globalID">A URI that identifies the <see cref="AppID"/> globally.</param>
-    ///// <exception cref="ArgumentOutOfRangeException"> <paramref name="localID" /> is less
-    ///// than 1.</exception>
-    ///// <exception cref="ArgumentNullException"> <paramref name="globalID" /> is 
-    ///// <c>null</c>.</exception>
-    ///// <exception cref="ArgumentException"> <paramref name="globalID" /> is 
-    ///// not a valid URI.</exception>
-    ///// <remarks>
-    ///// <note type="caution">
-    ///// Using this constructor in own code endangers the referential integrity. Prefer using
-    ///// <see cref="VCard.RegisterAppInInstance(Uri)"/> instead.
-    ///// </note>
-    ///// </remarks>
-    //public AppIDProperty(int localID, string globalID)
-    //    : this(new AppID(localID, globalID)) { }
-
     /// <summary>
     /// Initializes a new <see cref="AppIDProperty" /> object. 
     /// </summary>
-    /// <param name="appID">The <see cref="AppID"/> object that will
+    /// <param name="value">The <see cref="AppID"/> object that will
     /// be the encapsulated <see cref="AppIDProperty.Value"/>.</param>
-    internal AppIDProperty(AppID appID)
+    internal AppIDProperty(AppID value)
         : base(new ParameterSection(), null)
     {
-        Debug.Assert(appID != null);
-        Value = appID;
+        Debug.Assert(value != null);
+        Value = value;
     }
 
-    private AppIDProperty(AppID appID, ParameterSection parameters, string? group)
-        : base(parameters, group) => Value = appID;
+    private AppIDProperty(AppID value, ParameterSection parameters, string? group)
+        : base(parameters, group) => Value = value;
 
     internal static bool TryParse(VcfRow vcfRow, [NotNullWhen(true)] out AppIDProperty? prop)
     {

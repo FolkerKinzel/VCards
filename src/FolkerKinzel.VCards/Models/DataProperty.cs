@@ -124,23 +124,23 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <summary>
     /// Creates a new <see cref="DataProperty"/> instance that embeds text in a vCard.
     /// </summary>
-    /// <param name="text">The text to embed or <c>null</c>.</param>
-    /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="text"/>
+    /// <param name="passWord">The text to embed or <c>null</c>.</param>
+    /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="passWord"/>
     /// or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
     /// <remarks>
-    /// The vCard standard allows to write a password as plain text to the <c>KEY</c> property.
+    /// The vCard standard only allows to write a password as plain text to the <c>KEY</c> property.
     /// <see cref="VCard.Keys">(See VCard.Keys.)</see>
     /// </remarks>
     /// <seealso cref="VCard.Keys"/>
-    public static DataProperty FromText(string? text,
+    public static DataProperty FromText(string? passWord,
                                         string? mimeType = null,
                                         string? group = null)
     {
-        var textProp = new TextProperty(text, group);
+        var textProp = new TextProperty(passWord, group);
         textProp.Parameters.MediaType =
             MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
                            ? mimeInfo.ToString()

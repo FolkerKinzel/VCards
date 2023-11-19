@@ -23,17 +23,17 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
 
     /// <summary> Initializes a new <see cref="OrgProperty" /> object.
     /// </summary>
-    /// <param name="organizationName">Organization name or <c>null</c>.</param>
-    /// <param name="organizationalUnits">Organization unit(s) or <c>null</c>.</param>
+    /// <param name="orgName">Organization name or <c>null</c>.</param>
+    /// <param name="orgUnits">Organization unit(s) or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public OrgProperty(string? organizationName,
-                                IEnumerable<string?>? organizationalUnits = null,
-                                string? group = null) : base(new ParameterSection(), group)
+    public OrgProperty(string? orgName,
+                       IEnumerable<string?>? orgUnits = null,
+                       string? group = null) : base(new ParameterSection(), group)
     {
-        var list = new List<string>() { organizationName ?? "" };
-        list.AddRange(organizationalUnits?.WhereNotNull() ?? Array.Empty<string>());
+        var list = new List<string>() { orgName ?? "" };
+        list.AddRange(orgUnits?.WhereNotNull() ?? Array.Empty<string>());
         Value = new Organization(list);
     }
 

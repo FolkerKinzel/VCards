@@ -16,14 +16,14 @@ public readonly struct OrgBuilder
 
     internal OrgBuilder(VCardBuilder builder) => _builder = builder;
 
-    public VCardBuilder Add(string? organizationName,
-                            IEnumerable<string?>? organizationalUnits = null,
+    public VCardBuilder Add(string? orgName,
+                            IEnumerable<string?>? orgUnits = null,
                             bool pref = false,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.Organizations,
-                           VCardBuilder.Add(new OrgProperty(organizationName, organizationalUnits, group?.Invoke(_builder.VCard)),
+                           VCardBuilder.Add(new OrgProperty(orgName, orgUnits, group?.Invoke(_builder.VCard)),
                                             _builder.VCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations),
                                             parameters,
                                             pref));

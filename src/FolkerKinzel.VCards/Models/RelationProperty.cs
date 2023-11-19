@@ -183,7 +183,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
                                              string? group = null)
         => vCard is null
             ? FromText(null, relationType, group)
-            // Clone vcard in order to avoid circular references:
+            // Clone vCard in order to avoid circular references:
             : new RelationVCardProperty((VCard)vCard.Clone(), relationType, group);
 
     /// <inheritdoc />
