@@ -66,9 +66,9 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public IEnumerable<DateAndOrTimeProperty?>? AnniversaryViews
     {
         get => Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop.AnniversaryViews);
@@ -93,9 +93,9 @@ public sealed partial class VCard
 
     /// <summary> <c>BDAY</c>: Date of birth of the individual associated with the vCard.
     /// <c>(2,3,4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public IEnumerable<DateAndOrTimeProperty?>? BirthDayViews
     {
         get => Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop.BirthDayViews);
@@ -104,9 +104,9 @@ public sealed partial class VCard
 
     /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
     /// RFC 6474)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public IEnumerable<TextProperty?>? BirthPlaceViews
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.BirthPlaceViews);
@@ -137,9 +137,9 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
-    /// <remarks>Multiple instances are only allowed if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public IEnumerable<DateAndOrTimeProperty?>? DeathDateViews
     {
         get => Get<IEnumerable<DateAndOrTimeProperty?>?>(Prop.DeathDateViews);
@@ -148,9 +148,9 @@ public sealed partial class VCard
 
     /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
     /// RFC 6474)</c></summary>
-    /// <remarks>Multiple instances are only allowed if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public IEnumerable<TextProperty?>? DeathPlaceViews
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.DeathPlaceViews);
@@ -194,7 +194,7 @@ public sealed partial class VCard
         set => Set(Prop.EMails, value);
     }
 
-    /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has
+    /// <summary> <c>EXPERTISE</c>: A professional subject area that the person has
     /// knowledge of. <c>(RFC 6715)</c></summary>
     /// <remarks>Define the level of expertise in the parameter 
     /// <see cref="ParameterSection.Expertise" />!</remarks>
@@ -222,8 +222,8 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>GENDER</c>: Defines the person's gender. <c>(4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
     public IEnumerable<GenderProperty?>? GenderViews
     {
@@ -285,7 +285,7 @@ public sealed partial class VCard
         set => Set(Prop.Keys, value);
     }
 
-    /// <summary> <c>KIND</c>: Defines the type of entity, that this vCard represents.
+    /// <summary> <c>KIND</c>: Defines the type of entity that this vCard represents.
     /// <c>(4)</c></summary>
     public KindProperty? Kind
     {
@@ -347,9 +347,9 @@ public sealed partial class VCard
 
     /// <summary> <c>N</c>: A structured representation of the name of the person, place
     /// or thing associated with the vCard object. <c>(2,3,4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can
-    /// e.g. be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public IEnumerable<NameProperty?>? NameViews
     {
         get => Get<IEnumerable<NameProperty?>?>(Prop.NameViews);
@@ -463,7 +463,7 @@ public sealed partial class VCard
         set => Set(Prop.NonStandards, value);
     }
 
-    /// <summary> <c>NOTE</c>: Specifies supplemental informations or comments, that
+    /// <summary> <c>NOTE</c>: Specifies supplemental informations or comments that
     /// are associated with the vCard. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? Notes
     {

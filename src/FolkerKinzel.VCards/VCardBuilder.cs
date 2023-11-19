@@ -8,23 +8,48 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards;
 
+/// <summary>
+/// Provides a fluent API for building and editing <see cref="VCard"/> objects.
+/// </summary>
+/// <remarks>
+/// The <see cref="VCardBuilder"/> has properties with the same names as the <see cref="VCard"/>
+/// object. Each of these properties gets a struct that provides methods to edit the 
+/// corresponding <see cref="VCard"/> property. Each of these methods return the 
+/// <see cref="VCardBuilder"/> instance so that the calls can be chained.
+/// </remarks>
 public sealed class VCardBuilder
 {
-    internal VCard VCard { get; }
-
     private VCardBuilder(VCard vCard) => VCard = vCard;
 
+    /// <summary>
+    /// Creates a <see cref="VCardBuilder"/> that builds a new <see cref="VCard"/>
+    /// object.
+    /// </summary>
+    /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/> property
+    /// of the newly created <see cref="VCard"/> object automatically to a new 
+    /// <see cref="Guid"/>, otherwise <c>false</c>.</param>
+    /// <returns>The created <see cref="VCardBuilder"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static VCardBuilder Create(bool setUniqueIdentifier = true)
-        => new(new VCard(setUniqueIdentifier));
+    public static VCardBuilder Create(bool setID = true)
+        => new(new VCard(setID));
 
+    /// <summary>
+    /// Creates a <see cref="VCardBuilder"/> that edits an existing <see cref="VCard"/>
+    /// object.
+    /// </summary>
+    /// <param name="vCard">The <see cref="VCard"/> object to edit.</param>
+    /// <returns>The created <see cref="VCardBuilder"/>.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="vCard"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static VCardBuilder Create(VCard vCard)
         => new(vCard ?? throw new ArgumentNullException(nameof(vCard)));
 
+    /// <summary>
+    /// Returns the <see cref="VCard"/> object the builder has worked on.
+    /// </summary>
+    /// <returns>The <see cref="VCard"/> object.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCard Build() => VCard;
-
 
     internal static IEnumerable<TSource?> Add<TSource>(TSource prop,
                                                        IEnumerable<TSource?>? coll,
@@ -46,6 +71,8 @@ public sealed class VCardBuilder
     }
 
     ///////////////////////////////////////////////////////////////////
+    
+    internal VCard VCard { get; }
 
     /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
     /// <see cref="VCards.VCard"/>. <c>(3)</c></summary>
@@ -56,23 +83,23 @@ public sealed class VCardBuilder
     public AddressBuilder Addresses => new AddressBuilder(this);
 
     /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
-    /// e.g., be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public DateAndOrTimeBuilder AnniversaryViews => new DateAndOrTimeBuilder(this, Prop.AnniversaryViews);
 
     /// <summary> <c>BDAY</c>: Date of birth of the individual associated with the vCard.
     /// <c>(2,3,4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
-    /// e.g., be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public DateAndOrTimeBuilder BirthDayViews => new DateAndOrTimeBuilder(this, Prop.BirthDayViews);
-    
+
     /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
     /// RFC 6474)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
-    /// e.g., be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public TextViewBuilder BirthPlaceViews => new TextViewBuilder(this, Prop.BirthPlaceViews);
 
     /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4)</c></summary>
@@ -87,16 +114,16 @@ public sealed class VCardBuilder
     public StringCollectionBuilder Categories => new StringCollectionBuilder(this, Prop.Categories);
 
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
-    /// <remarks>Multiple instances are only allowed if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
-    /// e.g., be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public DateAndOrTimeBuilder DeathDateViews => new DateAndOrTimeBuilder(this, Prop.DeathDateViews);
 
     /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
     /// RFC 6474)</c></summary>
-    /// <remarks>Multiple instances are only allowed if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
-    /// e.g., be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public TextViewBuilder DeathPlaceViews => new TextViewBuilder(this, Prop.DeathPlaceViews);
 
     /// <summary> <c>NAME</c>: Provides a textual representation of the 
@@ -124,7 +151,7 @@ public sealed class VCardBuilder
     /// the vCard object. <c>(2,3,4)</c></summary>
     public TextBuilder EMails => new TextBuilder(this, Prop.EMails);
 
-    /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has
+    /// <summary> <c>EXPERTISE</c>: A professional subject area that the person has
     /// knowledge of. <c>(RFC 6715)</c></summary>
     /// <remarks>Define the level of expertise in the parameter 
     /// <see cref="ParameterSection.Expertise" />!</remarks>
@@ -144,8 +171,8 @@ public sealed class VCardBuilder
     public TextBuilder FreeOrBusyUrls => new TextBuilder(this, Prop.FreeOrBusyUrls);
 
     /// <summary> <c>GENDER</c>: Defines the person's gender. <c>(4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
     public GenderBuilder GenderViews => new GenderBuilder(this);
 
@@ -223,9 +250,9 @@ public sealed class VCardBuilder
 
     /// <summary> <c>N</c>: A structured representation of the name of the person, place
     /// or thing associated with the vCard object. <c>(2,3,4)</c></summary>
-    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only, if they
-    /// all have the same <see cref="ParameterSection.AltID" /> parameter. This can,
-    /// e.g., be useful, if the property is displayed in different languages.</remarks>
+    /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
+    /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
+    /// e.g., be useful if the property is displayed in different languages.</remarks>
     public NameBuilder NameViews => new NameBuilder(this);
 
     /// <summary> <c>NICKNAME</c>: One or more descriptive/familiar names for the object

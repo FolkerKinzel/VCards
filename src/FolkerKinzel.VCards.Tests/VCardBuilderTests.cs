@@ -22,7 +22,7 @@ public class VCardBuilderTests
     [TestMethod()]
     public void CreateTest2()
     {
-        var builder = VCardBuilder.Create(setUniqueIdentifier: false);
+        var builder = VCardBuilder.Create(setID: false);
         Assert.IsNotNull(builder);
         Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
         VCard vc = builder.Build();
