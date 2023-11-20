@@ -14,6 +14,9 @@ public class LabelIssueTests
     [TestMethod]
     public void LabelIssueTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var filter = new AnsiFilter();
         IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelIssueVcf, out string enc);
         Assert.IsNotNull(vCards);
@@ -42,6 +45,9 @@ public class LabelIssueTests
     [TestMethod]
     public void LabelTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var filter = new AnsiFilter();
         IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelTest1Vcf, out string enc);
         Assert.IsNotNull(vCards);
@@ -71,6 +77,9 @@ public class LabelIssueTests
     [TestMethod]
     public void LabelTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var filter = new AnsiFilter();
         IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelTest2Vcf, out string enc);
         Assert.IsNotNull(vCards);
@@ -104,6 +113,9 @@ public class LabelIssueTests
     [TestMethod]
     public void LabelTest3()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string vcf = """
             BEGIN:VCARD
             VERSION:2.1
@@ -126,6 +138,9 @@ public class LabelIssueTests
     [TestMethod]
     public void LabelTest4()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string vcf = """
             BEGIN:VCARD
             VERSION:2.1

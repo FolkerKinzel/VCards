@@ -10,6 +10,9 @@ public class IEnumerableTests
     [TestMethod]
     public void IEnumerableTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         XNamespace f = "f";
 
         var vc = new VCard
@@ -31,6 +34,9 @@ public class IEnumerableTests
     [TestMethod]
     public void IEnumerableTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vc = new VCard
         {
             BirthPlaceViews = new TextProperty("Lummerland")
@@ -50,6 +56,9 @@ public class IEnumerableTests
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>")]
     public void IEnumerableTest3()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vc = new VCard
         {
             BirthDayViews = DateAndOrTimeProperty.FromDateTime(DateTime.Now)

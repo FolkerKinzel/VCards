@@ -17,6 +17,8 @@ public sealed partial class VCard
     /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/>
     /// property with a newly created <see cref="UuidProperty"/>, otherwise
     /// <c>false</c>.</param>
+    /// <exception cref="InvalidOperationException">The executing application is
+    /// not yet registered with the <see cref="VCard"/> class.</exception>
     public VCard(bool setID = true)
     { 
         if(setID)
@@ -88,6 +90,8 @@ public sealed partial class VCard
     /// <param name="queue" />
     /// <param name="info" />
     /// <param name="versionHint" />
+    /// <exception cref="InvalidOperationException">The executing application is
+    /// not yet registered with the <see cref="VCard"/> class.</exception>
     private VCard(Queue<VcfRow> queue, VcfDeserializationInfo info, VCdVersion versionHint)
     {
         Debug.Assert(queue != null);

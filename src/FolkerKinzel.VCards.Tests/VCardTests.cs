@@ -53,6 +53,9 @@ public class VCardTests
     [DataRow(VCdVersion.V4_0)]
     public void SaveTest1(VCdVersion version)
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard
         {
             DisplayNames = new TextProperty[] { new("Folker") }
@@ -78,6 +81,9 @@ public class VCardTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void SaveTest_fileNameNull()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard
         {
             DisplayNames = new TextProperty[] { new("Folker") }
@@ -91,6 +97,9 @@ public class VCardTests
     [ExpectedException(typeof(ArgumentException))]
     public void SaveTest_InvalidFileName()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard
         {
             DisplayNames = new TextProperty[] { new("Folker") }
@@ -107,6 +116,9 @@ public class VCardTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void SerializeTest_StreamNull(VCdVersion version)
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard
         {
             DisplayNames = new TextProperty[] { new("Folker") }
@@ -146,6 +158,9 @@ public class VCardTests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void SerializeTest_CloseStream(VCdVersion version)
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard
         {
             DisplayNames = new TextProperty[] { new("Folker") }

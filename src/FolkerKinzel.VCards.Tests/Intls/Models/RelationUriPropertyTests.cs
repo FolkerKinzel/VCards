@@ -30,6 +30,9 @@ public class RelationUriPropertyTests
     [TestMethod]
     public void RelationUriPropertyTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const Rel relation = Rel.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
@@ -65,6 +68,9 @@ public class RelationUriPropertyTests
     [TestMethod]
     public void RelationUriPropertyTest3()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const Rel relation = Rel.Agent;
         var uri = new Uri("http://test.ääh.com/", UriKind.Absolute);
 
@@ -99,6 +105,9 @@ public class RelationUriPropertyTests
     [TestMethod]
     public void RelationUriPropertyTest4()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const Rel relation = Rel.Agent;
         var uri = new Uri("cid:test.com/", UriKind.Absolute);
 

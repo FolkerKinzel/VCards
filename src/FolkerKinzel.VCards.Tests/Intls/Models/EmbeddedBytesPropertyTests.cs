@@ -12,7 +12,10 @@ public class EmbeddedBytesPropertyTests
     [TestMethod]
     public void EmbeddedBytesPropertyTest1()
     {
-        var prop = DataProperty.FromBytes(Array.Empty<byte>(), "image/png");
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        var prop = DataProperty.FromBytes([], "image/png");
 
         Assert.IsInstanceOfType(prop, typeof(EmbeddedBytesProperty));
         Assert.IsNull(prop.Value);

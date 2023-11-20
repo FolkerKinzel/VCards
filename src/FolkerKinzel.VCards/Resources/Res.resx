@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppNotRegistered" xml:space="preserve">
+    <value>The executing application is not yet registered with the VCard class. Call the static VCard.RegisterApp method when the program starts!</value>
+  </data>
   <data name="DefaultCtor" xml:space="preserve">
     <value>Don't instantiate the struct yourself. Use VCardBuilder instead.</value>
   </data>

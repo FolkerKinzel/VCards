@@ -24,6 +24,9 @@ public class TimeZonePropertyTests
     [TestMethod()]
     public void TimeZonePropertyTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var tz = TimeZoneID.Parse(TimeZoneInfo.GetSystemTimeZones()[4].Id);
         var prop = new TimeZoneProperty(tz, GROUP);
 

@@ -10,7 +10,7 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard
 {
-    private static bool _isAppRegistered;
+    internal static bool IsAppRegistered { get; private set; }
     
     /// <summary>
     /// The global identifier of the executing application.
@@ -19,7 +19,7 @@ public sealed partial class VCard
     /// Call <see cref="VCard.RegisterApp(Uri?)"/> at application startup
     /// to set this property and to enable global data synchronization.
     /// </remarks>
-    public static string? App { get; private set; }
+    public static string? CurrentApp { get; private set; }
 
     /// <summary>
     /// Provides a <see cref="Sync"/> instance that allows to perform
@@ -46,10 +46,10 @@ public sealed partial class VCard
     /// different <see cref="Uri"/>s within a single application.
     /// </para>
     /// <para>
-    /// The method sets the static property <see cref="App"/>.
+    /// The method sets the static property <see cref="CurrentApp"/>.
     /// </para>
     /// </remarks>
-    /// <seealso cref="App"/>
+    /// <seealso cref="CurrentApp"/>
     /// <seealso cref="Sync"/>
     /// <seealso cref="SyncOperation"/>
     /// <exception cref="ArgumentException"><paramref name="globalID"/> is not an absolute
@@ -58,11 +58,11 @@ public sealed partial class VCard
     /// different <see cref="Uri"/>s.</exception>
     public static void RegisterApp(Uri? globalID)
     {
-        if (_isAppRegistered)
+        if (IsAppRegistered)
         {
             if (globalID is null)
             {
-                if(App != null)
+                if(CurrentApp != null)
                 {
                     throw new InvalidOperationException(Res.MultipleCalls);
                 }
@@ -70,7 +70,7 @@ public sealed partial class VCard
                 return;
             }
 
-            if (!globalID.IsAbsoluteUri || globalID.AbsoluteUri != App)
+            if (!globalID.IsAbsoluteUri || globalID.AbsoluteUri != CurrentApp)
             {
                 throw new InvalidOperationException(Res.MultipleCalls);
             }
@@ -80,7 +80,7 @@ public sealed partial class VCard
 
         if (globalID is null)
         {
-            _isAppRegistered = true;
+            IsAppRegistered = true;
             return;
         }
 
@@ -90,13 +90,13 @@ public sealed partial class VCard
                                         nameof(globalID));
         }
 
-        _isAppRegistered = true;
-        App = globalID.AbsoluteUri;
+        IsAppRegistered = true;
+        CurrentApp = globalID.AbsoluteUri;
     }
 
 
     /// <summary>
-    /// Resets <see cref="_isAppRegistered"/> to enable unit tests.
+    /// Resets <see cref="IsAppRegistered"/> to enable unit tests.
     /// </summary>
-    internal static void SyncTestReset() => _isAppRegistered = false;
+    internal static void SyncTestReset() => IsAppRegistered = false;
 }

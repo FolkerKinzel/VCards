@@ -61,6 +61,15 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The executing application is not yet registered with the VCard class. Call the static VCard.RegisterApp method when the program starts!.
+        /// </summary>
+        internal static string AppNotRegistered {
+            get {
+                return ResourceManager.GetString("AppNotRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t instantiate the struct yourself. Use VCardBuilder instead..
         /// </summary>
         internal static string DefaultCtor {

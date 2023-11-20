@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Syncs;
 
@@ -19,10 +20,17 @@ public sealed class SyncOperation
 {
     private readonly VCard _vCard;
 
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="vCard">The <see cref="VCard"/> instance the <see cref="Sync"/>
+    /// object will work with.</param>
+    /// <exception cref="InvalidOperationException">The executing application is
+    /// not yet registered with the <see cref="VCard"/> class.</exception>
     internal SyncOperation(VCard vCard)
     {
         _vCard = vCard;
-        RegisterAppInVCardInstance(VCard.App);
+        RegisterAppInVCardInstance();
     }
 
     /// <summary>
@@ -94,10 +102,12 @@ public sealed class SyncOperation
     /// data synchronization has been completed (see RFC&#160;6350, 7.2.5. "Global 
     /// Context Simplification").
     /// </remarks>
+    /// <exception cref="InvalidOperationException">The executing application is
+    /// not yet registered with the <see cref="VCard"/> class.</exception>
     public void Reset()
     {
         _vCard.AppIDs = null;
-        RegisterAppInVCardInstance(VCard.App);
+        RegisterAppInVCardInstance();
 
         foreach (IEnumerable<VCardProperty?> coll in _vCard.AsProperties()
             .Where(x => x.Value is IEnumerable<VCardProperty?>)
@@ -114,26 +124,36 @@ public sealed class SyncOperation
         }
     }
 
-    private void RegisterAppInVCardInstance(string? globalID)
+    /// <summary>
+    /// Registers the executing application in the VCard instance.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">The executing application is
+    /// not yet registered with the <see cref="VCard"/> class.</exception>
+    private void RegisterAppInVCardInstance()
     {
-        if (globalID is null)
+        if(!VCard.IsAppRegistered) 
+        {
+            throw new InvalidOperationException(Res.AppNotRegistered);
+        }
+
+        if (VCard.CurrentApp is null)
         {
             return;
         }
 
         if (_vCard.AppIDs is null)
         {
-            CurrentAppID = new AppID(1, globalID);
+            CurrentAppID = new AppID(1, VCard.CurrentApp);
             return;
         }
 
-        var resident = _vCard.AppIDs.FirstOrDefault(x => StringComparer.Ordinal.Equals(globalID, x.Value.GlobalID));
+        var resident = _vCard.AppIDs.FirstOrDefault(x => StringComparer.Ordinal.Equals(VCard.CurrentApp, x.Value.GlobalID));
 
         CurrentAppID = resident is null
             ? new AppID
                 (
                 _vCard.AppIDs.Select(static x => x.Value.LocalID).Append(0).Max() + 1,
-                globalID
+                VCard.CurrentApp
                 )
             : resident.Value;
     }

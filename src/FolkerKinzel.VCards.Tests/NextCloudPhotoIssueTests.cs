@@ -12,6 +12,9 @@ public class NextCloudPhotoIssueTests
     [TestMethod]
     public void NextCloudPhotoIssueTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         string contentsVCFFile = File.ReadAllText(TestFiles.NextCloudPhotoIssueTxt);
         VCard? convertedItem = VCard.ParseVcf(contentsVCFFile).FirstOrDefault();
         Assert.IsNotNull(convertedItem);

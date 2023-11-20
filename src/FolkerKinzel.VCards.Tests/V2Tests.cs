@@ -12,6 +12,9 @@ public class V2Tests
     [TestMethod]
     public void Parse()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         IList<VCard> vcard = VCard.LoadVcf(fileName: TestFiles.V2vcf);
 
         Assert.IsNotNull(vcard);
@@ -22,6 +25,9 @@ public class V2Tests
     [TestMethod]
     public void ParseOutlook()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         IList<VCard> vcard = VCard.LoadVcf(fileName: TestFiles.OutlookV2vcf);
 
         Assert.IsNotNull(vcard);
@@ -44,6 +50,9 @@ public class V2Tests
     [TestMethod]
     public void WriteEmptyVCard()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard();
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
@@ -64,6 +73,9 @@ public class V2Tests
     [TestMethod]
     public void TestLineWrapping()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard();
 
         const string UNITEXT = "Dies ist ein wirklich sehr sehr sehr langer Text mit ü, Ö, und ä " + "" +
@@ -116,6 +128,9 @@ public class V2Tests
     [TestMethod]
     public void SerializeVCard()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         string s = Utility.CreateVCard().ToVcfString(VCdVersion.V2_1, options: VcfOptions.All);
 
         Assert.IsNotNull(s);
@@ -133,6 +148,9 @@ public class V2Tests
     [TestMethod]
     public void MoreThanOneAddressTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string label0 = "Elmstreet 13";
         const string label1 = "Sackgasse 5";
 
@@ -167,6 +185,9 @@ public class V2Tests
     [TestMethod]
     public void MoreThanOneAddressTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string label0 = "Elmstreet 13";
         const string label1 = "Sackgasse 5";
 
@@ -203,6 +224,9 @@ public class V2Tests
     [TestMethod]
     public void SpouseTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vc = new VCard
         {
             Relations = RelationProperty.FromVCard(new VCard { NameViews = new NameProperty("wife", "best") }, Rel.Spouse)
@@ -219,6 +243,9 @@ public class V2Tests
     [TestMethod]
     public void PreserveTimeZoneAndGeoTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var adr = new AddressProperty("1", "", "", "", "");
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
@@ -240,6 +267,9 @@ public class V2Tests
     [TestMethod]
     public void EmbeddedBytesTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vCard = new VCard { Photos = DataProperty.FromBytes(null) };
 
         string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.WriteEmptyProperties));
@@ -252,6 +282,9 @@ public class V2Tests
     [TestMethod]
     public void LineWrappingTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var bytes = Enumerable.Range(0 - 255, 255).Select(x => (byte)x).ToArray();
         var agent = new VCard
         {
@@ -276,6 +309,9 @@ public class V2Tests
     [TestMethod]
     public void EmptyAgentTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string agent = """
             BEGIN:VCARD
             VERSION:2.1
@@ -295,6 +331,9 @@ public class V2Tests
     [TestMethod]
     public void UsingTheWhatsAppTypeTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string whatsAppNumber = "+1-234-567-89";
         var xiamoiMobilePhone = new TextProperty(whatsAppNumber);
         xiamoiMobilePhone.Parameters.NonStandard = new KeyValuePair<string, string>[]

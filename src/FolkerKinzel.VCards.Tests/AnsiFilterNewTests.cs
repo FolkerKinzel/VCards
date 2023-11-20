@@ -37,6 +37,9 @@ public class AnsiFilterNewTests
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>")]
     public void LoadVcfTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var filter = new AnsiFilter();
         Assert.IsNotNull(filter);
         Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName, true);
@@ -76,6 +79,9 @@ public class AnsiFilterNewTests
     [TestMethod]
     public void LoadVcfTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var filter = new AnsiFilter();
         Assert.IsNotNull(filter);
         Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName, true);
@@ -104,6 +110,9 @@ public class AnsiFilterNewTests
     [TestMethod]
     public void LoadVcfTest3()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var filter = new AnsiFilter();
         Assert.IsNotNull(filter);
         Assert.AreEqual("windows-1252", filter.FallbackEncodingWebName, true);
@@ -131,6 +140,9 @@ public class AnsiFilterNewTests
     [TestMethod]
     public void AnsiFilterTest6()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var filter = new AnsiFilter();
         _ = filter.LoadVcf(TestFiles.MultiAnsiFilterTests_v3Utf16Bom, out string enc);
         Assert.AreEqual("utf-8", enc, false);

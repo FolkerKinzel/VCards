@@ -11,6 +11,9 @@ public class AppIDPropertyTests
     [TestMethod]
     public void VCardClientTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var prop = new AppIDProperty(new AppID(7, "http://folkerkinzel.de/"));
 
         var vcard = new VCard

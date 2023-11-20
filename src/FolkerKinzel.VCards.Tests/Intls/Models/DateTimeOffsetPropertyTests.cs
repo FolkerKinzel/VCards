@@ -32,6 +32,9 @@ public class DateTimeOffsetPropertyTests
     [TestMethod]
     public void DateTimeOffsetPropertyTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var now = new DateTimeOffset(2021, 4, 4, 12, 41, 2, TimeSpan.FromHours(2));
 
         var prop = DateAndOrTimeProperty.FromDateTime(now, GROUP);

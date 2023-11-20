@@ -40,6 +40,9 @@ public class AccessPropertyTests
     [TestMethod()]
     public void AppendValueTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard
         {
             Access = new AccessProperty(VCards.Enums.Access.Private)

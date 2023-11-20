@@ -109,6 +109,9 @@ public class RelationPropertyTests
     [TestMethod]
     public void ValueTest3()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         VCardProperty prop = RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty("Folker") });
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(Relation));

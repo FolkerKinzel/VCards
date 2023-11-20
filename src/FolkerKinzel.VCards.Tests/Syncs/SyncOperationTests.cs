@@ -27,6 +27,8 @@ public class SyncOperationTests
     public void SetPropertyIDsTest2()
     {
         VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vc = new VCard();
         var tProp = new TextProperty("Donald");
         vc.DisplayNames = tProp.ConcatWith(null);

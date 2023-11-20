@@ -19,6 +19,8 @@ public sealed partial class VCard
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
+    /// <exception cref="InvalidOperationException">The executing application is
+    /// not yet registered with the <see cref="VCard"/> class.</exception>
     public static IList<VCard> LoadVcf(string fileName, Encoding? textEncoding = null)
     {
         using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
@@ -33,6 +35,8 @@ public sealed partial class VCard
     /// the content of <paramref name="vcf" />.</returns>
     /// <exception cref="ArgumentNullException"> <paramref name="vcf" /> is <c>null</c>.
     /// </exception>
+    /// <exception cref="InvalidOperationException">The executing application is
+    /// not yet registered with the <see cref="VCard"/> class.</exception>
     public static IList<VCard> ParseVcf(string vcf)
     {
         if (vcf == null)
@@ -54,6 +58,8 @@ public sealed partial class VCard
     /// </exception>
     /// <exception cref="IOException"> <paramref name="reader" />could not read from
     /// the <see cref="Stream" />.</exception>
+    /// <exception cref="InvalidOperationException">The executing application is
+    /// not yet registered with the <see cref="VCard"/> class.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IList<VCard> DeserializeVcf(TextReader reader)
         => DoParseVcf(reader ?? throw new ArgumentNullException(nameof(reader)));

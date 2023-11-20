@@ -30,6 +30,9 @@ public class RelationTextPropertyTests
     [TestMethod]
     public void RelationTextPropertyTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const Rel relation = Rel.Acquaintance;
         string text = "Bruno Hübchen";
 
@@ -66,6 +69,9 @@ public class RelationTextPropertyTests
     [TestMethod]
     public void RelationTextPropertyTest3()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const Rel relation = Rel.Agent;
         string text = "Bruno Hübchen";
 
