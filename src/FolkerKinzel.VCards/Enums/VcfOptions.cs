@@ -107,7 +107,15 @@ public enum VcfOptions
 
     /// <summary>
     /// Set the flag to call <see cref="SyncOperation.SetPropertyIDs"/> automatically when serializing
-    /// a <see cref="VCard"/> as vCard 4.0 (or higher).
+    /// a <see cref="VCard"/> as vCard&#160;4.0 (or higher).
     /// </summary>
     SetPropertyIDs = 1 << 14,
+
+    /// <summary>
+    /// Set the flag to set the <see cref="ParameterSection.Index"/> properties in all <see cref="VCardProperty"/>
+    /// collections that contains more than one item automatically when serializing vCard&#160;4.0 (or higher). 
+    /// The values depend on the positions of the <see cref="VCardProperty"/> objects in the collection 
+    /// and on the flag <see cref="WriteEmptyProperties"/>. Any previously existing values will be overwritten.
+    /// </summary>
+    SetIndexes = 1 << 15,
 }

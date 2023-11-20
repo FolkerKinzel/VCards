@@ -36,6 +36,11 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
         // Do nothing
     }
 
+    protected override void SetIndexes()
+    {
+        // Do nothing
+    }
+
     protected override void AppendAccess(AccessProperty value)
         => BuildProperty(VCard.PropKeys.CLASS, value, false);
 

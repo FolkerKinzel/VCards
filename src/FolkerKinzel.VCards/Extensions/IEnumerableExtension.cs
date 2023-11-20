@@ -713,25 +713,11 @@ public static class IEnumerableExtension
     /// of empty <see cref="VCardProperty"/> objects to <c>null</c>, or <c>false</c> to treat 
     /// empty <see cref="VCardProperty"/> objects like any other. (<c>null</c> references are 
     /// always skipped.)</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetIndexes<TSource>(this IEnumerable<TSource?>? values,
                                            bool skipEmptyItems = true)
-        where TSource : VCardProperty, IEnumerable<TSource>
-    {
-        if (values is null)
-        {
-            return;
-        }
-
-        int idx = 1;
-
-        foreach (var item in values.Distinct())
-        {
-            if (item != null)
-            {
-                item.Parameters.Index = (!skipEmptyItems || !item.IsEmpty) ? idx++ : null;
-            }
-        }
-    }
+        where TSource : VCardProperty, IEnumerable<TSource> 
+        => values?.SetIndexesIntl(skipEmptyItems);
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
@@ -742,22 +728,11 @@ public static class IEnumerableExtension
     /// <param name="values">An <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
     /// objects. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// references.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void UnsetIndexes<TSource>(this IEnumerable<TSource?>? values)
         where TSource : VCardProperty, IEnumerable<TSource>
-    {
-        if (values is null)
-        {
-            return;
-        }
-
-        foreach (var item in values)
-        {
-            if (item != null)
-            {
-                item.Parameters.Index = null;
-            }
-        }
-    }
+        => values?.UnsetIndexesIntl();
+    
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.AltID"/>s of the items in a 

@@ -32,6 +32,11 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         // Do nothing
     }
 
+    protected override void SetIndexes()
+    {
+        // Do nothing
+    }
+
     internal override void AppendBase64EncodedData(byte[]? data)
     {
         // Append the NewLine in any case: The parser

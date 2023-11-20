@@ -9,6 +9,32 @@ internal static class IEnumerableExtension
         => sources.Concat(Enumerable.Repeat(value, 1));
 #endif
 
+    internal static void SetIndexesIntl<TSource>(this IEnumerable<TSource?> values, bool skipEmptyItems)
+        where TSource : VCardProperty
+    {
+        int idx = 1;
+
+        foreach (var item in values.Distinct())
+        {
+            if (item != null)
+            {
+                item.Parameters.Index = (!skipEmptyItems || !item.IsEmpty) ? idx++ : null;
+            }
+        }
+    }
+
+    internal static void UnsetIndexesIntl<TSource>(this IEnumerable<TSource?> values)
+        where TSource : VCardProperty
+    {
+        foreach (var item in values)
+        {
+            if (item != null)
+            {
+                item.Parameters.Index = null;
+            }
+        }
+    }
+
     internal static bool IsSingle([NotNullWhen(true)] this IEnumerable<VCardProperty?>? values, bool ignoreEmptyItems)
         => ignoreEmptyItems ? values?.WhereNotEmpty().Take(2).Count() == 1
                             : values?.WhereNotNull().Take(2).Count() == 1;

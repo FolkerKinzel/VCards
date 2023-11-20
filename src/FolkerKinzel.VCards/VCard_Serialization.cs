@@ -61,10 +61,7 @@ public sealed partial class VCard
         ITimeZoneIDConverter? tzConverter = null,
         VcfOptions options = VcfOptions.Default)
     {
-        if (vCards is null)
-        {
-            throw new ArgumentNullException(nameof(vCards));
-        }
+        _ArgumentNullException.ThrowIfNull(vCards, nameof(vCards));
 
         // prevents an empty file from being written:
         if (!vCards.Any(x => x != null))
@@ -461,7 +458,12 @@ public sealed partial class VCard
 
     private void NormalizeMembers(VcfSerializer serializer)
     {
-        RelationProperty[] members = Members?.WhereNotNull().ToArray() ?? Array.Empty<RelationProperty>();
+        if(Members is null)
+        {
+            return;
+        }
+
+        RelationProperty[] members = Members.WhereNotNull().ToArray();
         Members = members;
 
         for (int i = 0; i < members.Length; i++)

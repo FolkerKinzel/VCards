@@ -149,6 +149,11 @@ internal abstract class VcfSerializer : IDisposable
             SetPropertyIDs();
         }
 
+        if(Options.HasFlag(VcfOptions.SetIndexes))
+        {
+            SetIndexes();
+        }
+
         ResetBuilders();
         _writer.WriteLine("BEGIN:VCARD");
         _writer.Write(VCard.PropKeys.VERSION);
@@ -162,16 +167,23 @@ internal abstract class VcfSerializer : IDisposable
 
     protected virtual void SetPropertyIDs() => VCardToSerialize.Sync.SetPropertyIDs();
 
-    //protected virtual void SetIndexes()
-    //{
-    //    foreach (IEnumerable<VCardProperty?> coll in VCardToSerialize.AsProperties()
-    //                                                 .Select(x => x.Value)
-    //                                                 .Where(x => x is IEnumerable<VCardProperty?>)
-    //                                                 .Cast<IEnumerable<VCardProperty?>>())
-    //    {
-    //        coll.SetIndexes(IgnoreEmptyItems);
-    //    }
-    //}
+    protected virtual void SetIndexes()
+    {
+        foreach (IEnumerable<VCardProperty?> coll in VCardToSerialize.AsProperties()
+                                                     .Where(static x =>  (x.Value is IEnumerable<VCardProperty?>) && (x.Key != Prop.AppIDs))
+                                                     .Select(static x => x.Value)
+                                                     .Cast<IEnumerable<VCardProperty?>>())
+        {
+            if (coll.IsSingle(IgnoreEmptyItems))
+            {
+                coll.UnsetIndexesIntl();
+            }
+            else
+            {
+                coll.SetIndexesIntl(IgnoreEmptyItems);
+            }
+        }
+    }
 
     protected abstract void ReplenishRequiredProperties();
 
@@ -193,7 +205,7 @@ internal abstract class VcfSerializer : IDisposable
     private void AppendProperties()
     {
         foreach (KeyValuePair<Prop, object> kvp in
-            ((IEnumerable<KeyValuePair<Prop, object>>)VCardToSerialize).OrderBy(x => x.Key))
+            ((IEnumerable<KeyValuePair<Prop, object>>)VCardToSerialize).OrderBy(static x => x.Key))
         {
             switch (kvp.Key)
             {
