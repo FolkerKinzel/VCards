@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Tests;
 namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
-public class VCardClientPropertyTests
+public class AppIDPropertyTests
 {
     [TestMethod]
     public void VCardClientTest1()

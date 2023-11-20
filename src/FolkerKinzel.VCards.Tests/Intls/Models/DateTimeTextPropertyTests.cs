@@ -73,5 +73,16 @@ public class DateTimeTextPropertyTests
         Assert.IsNotNull(s);
         Assert.IsTrue(s.Length > 0);
     }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = DateAndOrTimeProperty.FromText("text");
+
+        var prop2 = (DateAndOrTimeProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value!.String, prop2.Value!.String);
+        Assert.AreNotSame(prop1, prop2);
+    }
 }
 

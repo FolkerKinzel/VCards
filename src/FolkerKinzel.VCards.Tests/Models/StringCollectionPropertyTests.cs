@@ -105,4 +105,15 @@ public class StringCollectionPropertyTests
         var prop = new StringCollectionProperty("");
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new StringCollectionProperty("text");
+
+        var prop2 = (StringCollectionProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value, prop2.Value);
+        Assert.AreNotSame(prop1, prop2);
+    }
 }

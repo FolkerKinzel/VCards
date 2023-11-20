@@ -48,4 +48,16 @@ public class NonStandardPropertyTests
         var prop = new NonStandardProperty("X-TEST", "val");
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new NonStandardProperty("X-TEST", "val");
+
+        var prop2 = (NonStandardProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value, prop2.Value);
+        Assert.AreSame(prop1.XName, prop2.XName);
+        Assert.AreNotSame(prop1, prop2);
+    }
 }

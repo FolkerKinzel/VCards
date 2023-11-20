@@ -1,4 +1,6 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Enums;
+
+using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -55,5 +57,16 @@ public class AccessPropertyTests
         Assert.AreEqual(VCards.Enums.Access.Private, vcard.Access.Value);
     }
 
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new AccessProperty(Access.Private);
+
+        var prop2 = (AccessProperty)prop1.Clone();
+
+        Assert.AreEqual(prop1.Value, prop2.Value);
+        Assert.AreNotSame(prop1, prop2);
+
+    }
 
 }

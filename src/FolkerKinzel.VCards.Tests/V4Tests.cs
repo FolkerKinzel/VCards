@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -175,7 +176,7 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromText("http://folkers-website.de"),
+            Members = RelationProperty.FromText("Important Member"),
         };
 
         Assert.IsNotNull(vc.Members);
@@ -183,12 +184,75 @@ public class V4Tests
         IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.AreEqual(2, list.Count);
         vc = list[0];
 
         Assert.IsNotNull(vc.Members);
         Assert.IsNotNull(vc.Kind);
         Assert.AreEqual(Kind.Group, vc.Kind.Value);
+    }
+
+    [TestMethod] 
+    public void MembersTest3() 
+    {
+        var vc = new VCard
+        {
+            Members = RelationProperty.FromVCard( VCardBuilder.Create(setID: false)
+                                                              .DisplayNames.Add("Important Member")
+                                                              .ID.Set(Guid.Empty)
+                                                              .Build()),
+        };
+
+        Assert.IsNotNull(vc.Members);
+
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+
+        Assert.AreEqual(2, list.Count);
+        vc = list[1];
+
+        Assert.AreNotEqual(Guid.Empty, vc.ID?.Value);
+    }
+
+    [TestMethod]
+    public void MembersTest4()
+    {
+        var vc = new VCard
+        {
+            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false).DisplayNames.Add("Important Member").Build()),
+        };
+
+        Assert.IsNotNull(vc.Members);
+        Assert.IsNull(vc.Members!.First()?.Value?.VCard?.ID);
+
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+
+        Assert.AreEqual(2, list.Count);
+        vc = list[1];
+
+        Assert.IsNotNull(vc.ID);
+    }
+
+    [TestMethod]
+    public void MembersTest5()
+    {
+        var guid = Guid.NewGuid();
+        var vc = new VCard
+        {
+            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false)
+                                                              .DisplayNames.Add("Important Member")
+                                                              .ID.Set(guid)
+                                                              .Build()) 
+                      .Concat(RelationProperty.FromGuid(guid)),
+        };
+
+        Assert.IsNotNull(vc.Members);
+
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+
+        Assert.AreEqual(2, list.Count);
+
+        list = VCard.ParseVcf(list.ToVcfString(VCdVersion.V4_0));
+        Assert.AreEqual(2, list.Count);
     }
 
     [TestMethod]

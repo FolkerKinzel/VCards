@@ -85,7 +85,7 @@ public sealed partial class VCard
         {
             VCard vcard = vCards[i];
 
-            if (vcard.Members != null || vcard.Relations != null)
+            if (HasRelationVCardProperty(vcard.Relations) || HasRelationVCardProperty(vcard.Members))
             {
                 vcard = (VCard)vcard.Clone();
                 vCards[i] = vcard;
@@ -106,6 +106,9 @@ public sealed partial class VCard
                     DoSetReferences(vCards, relations);
                 }
             }
+
+            static bool HasRelationVCardProperty(IEnumerable<RelationProperty?>? props)
+                => props?.Any(static x => x is RelationVCardProperty) ?? false;
         }
 
         static void DoSetReferences(List<VCard> vCardList, List<RelationProperty?> relations)

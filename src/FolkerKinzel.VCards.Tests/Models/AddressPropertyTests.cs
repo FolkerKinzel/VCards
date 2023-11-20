@@ -217,4 +217,15 @@ public class AddressPropertyTests
         var prop = new AddressProperty("Elm Street", null, null, null);
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new AddressProperty("street", null, null, null);
+
+        var prop2 = (AddressProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value, prop2.Value);
+        Assert.AreNotSame(prop1, prop2);
+    }
 }

@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -143,6 +144,18 @@ public class RelationUriPropertyTests
 
         prop.PrepareForVcfSerialization(serializer);
         Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
+    }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = RelationProperty.FromUri(new Uri("http://folker.de/", UriKind.Absolute));
+
+        var prop2 = (RelationProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value!.Uri, prop2.Value!.Uri);
+        Assert.AreNotSame(prop1, prop2);
+
     }
 
 }

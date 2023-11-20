@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Tests;
 namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass()]
-public class OrganizationPropertyTests
+public class OrgPropertyTests
 {
     private const string GROUP = "myGroup";
 

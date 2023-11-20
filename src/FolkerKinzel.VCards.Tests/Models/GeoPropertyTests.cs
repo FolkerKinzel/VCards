@@ -58,4 +58,15 @@ public class GeoPropertyTests
         Assert.AreEqual(GROUP, prop.Group, true);
 
     }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new GeoProperty(15.7, 14.8);
+
+        var prop2 = (GeoProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value, prop2.Value);
+        Assert.AreNotSame(prop1, prop2);
+    }
 }
