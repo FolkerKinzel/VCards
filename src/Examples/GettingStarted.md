@@ -1,17 +1,21 @@
 ﻿# Getting Started
 Read here:
 - [The usage of the namespaces](#the-usage-of-the-namespaces)
+- [The first step: application registration](#the-first-step-application-registration)
 - [The data model explained](#the-data-model-explained)
   - [The VCardProperty class](#the-vcardproperty-class)
   - [Naming conventions](#naming-conventions)
 - [Efficient building and evaluating of VCard objects](#efficient-building-and-evaluating-of-vcard-objects)
+  - [Building and editing of VCard objects using VCardBuilder](#building-and-editing-of-vcard-objects-using-vcardbuilder)
   - [Extension methods](#extension-methods)
 - [Reading the project reference](#reading-the-project-reference)
 - [Documents of the vCard standard](#documents-of-the-vcard-standard)
 
+
 ## The usage of the namespaces
 ```csharp
-// Publish this namespace - it contains the VCard class:
+// Publish this namespace - it contains the VCard class
+// and the VCardBuilder class:
 using FolkerKinzel.VCards;
 
 // It's recommended to publish also this namespace -
@@ -23,19 +27,25 @@ using FolkerKinzel.VCards.Extensions;
 // a namespace alias.
 using FolkerKinzel.VCards.Enums;
 
-// Instead of publishing the following namespace better
-// use a namespace alias, because the namespace contains
-// a lot of classes:
-using VC = FolkerKinzel.VCards.Models;
-
-namespace NameSpaceAliasDemos;
-
-public static class NameSpaceAliasDemo
-{
-    public static void HowToUseTheNameSpaceAlias() =>
-        _ = VC::RelationProperty.FromText("Folker", Rel.Contact);
-}
+// Since VCardBuilder exists, the model classes normally
+// don't need to be instantiated in own code:
+// using FolkerKinzel.VCards.Models;
 ```
+## The first step: application registration
+As the first step, the executing application has to be registered with the `VCard` class
+when the program starts.
+
+Call the static `VCard.RegisterApp` method with an absolute URI as an argument. Although it is 
+allowed to call this method with the <c>null</c> argument, this is
+not recommended. (UUID-URNs are ideal for the task.) Call the method before any other
+method of the library and only once in the lifetime of your application. The URI
+should be the same everytime the application runs.
+
+Example:
+```csharp
+VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+```
+To learn more about what's the use of application registration and how it works read the [detailed article]().
 
 ## The data model explained
 
@@ -76,7 +86,71 @@ A special feature are properties whose name ends with "Views": These are propert
 Most classes derived from `VCardProperty` implement `IEnumerable<T>` in order to be assignable to collection properties without having to be wrapped in an Array or List.
 
 ## Efficient building and evaluating of VCard objects
+### Building and editing of VCard objects using VCardBuilder
+The `VCardBuilder` class provides a fluent API for building and editing VCard objects.
 
+The properties of the VCardBuilder class have the same names as those of the VCard class. Each of these 
+properties gets a struct that provides methods to edit the corresponding <see cref="VCard"/> property. 
+Each of these methods return the VCardBuilder instance so that the calls can be chained.
+
+The `Create` methods initialize a VCardBuilder instance. The `Build` method returns the VCard object
+the VCardBuilder had worked on.
+
+See how it can be used:
+```csharp
+VCard vCard = VCardBuilder
+                .Create()
+                .NameViews.Add(familyNames: ["Müller-Risinowsky"],
+                               givenNames: ["Käthe"],
+                               additionalNames: ["Alexandra", "Caroline"],
+                               prefixes: ["Prof.", "Dr."],
+                               displayName: static (builder, prop) => builder.Add(prop.ToDisplayName())
+                               )
+                .Organizations.Add("Millers Company", ["C#", "Webdesign"])
+                .Titles.Add("CEO")
+                .Photos.AddFile(photoFilePath)
+                .Phones.Add("tel:+49-123-9876543",
+                                parameters: static p =>
+                                {
+                                    p.DataType = Data.Uri;
+                                    p.PropertyClass = PCl.Home;
+                                    p.PhoneType = Tel.Voice | Tel.BBS;
+                                }
+                            )
+                .Phones.Add("tel:+49-321-1234567",
+                                parameters: static p =>
+                                {
+                                    p.DataType = Data.Uri;
+                                    p.PropertyClass = PCl.Work;
+                                    p.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
+                                }
+                           )
+                // Unless specified, an address label is automatically applied to the AddressProperty object.
+                // Specifying the country helps to format this label correctly.
+                // Applying a group name to the AddressProperty helps to automatically preserve its Label,
+                // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
+                .Addresses.Add("Friedrichstraße 22", "Berlin", null, "10117", "Germany",
+                                parameters: static p =>
+                                {
+                                    p.PropertyClass = PCl.Work;
+                                    p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel;
+                                    p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
+                                    p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
+                                },
+                                group: static vc => vc.NewGroup())
+                .EMails.Add("mailto:kaethe_at_home@internet.com",
+                             parameters: static p =>
+                             {
+                                 p.DataType = Data.Uri;
+                                 p.PropertyClass = PCl.Home;
+                             })
+                .EMails.Add("kaethe_mueller@internet.com", pref: true,
+                             parameters: static p => p.PropertyClass = PCl.Work)
+                .BirthDayViews.Add(1984, 3, 28)
+                .Relations.Add("Paul Müller-Risinowsky", Rel.Spouse | Rel.CoResident | Rel.Colleague)
+                .AnniversaryViews.Add(2006, 7, 14)
+                .Build();
+```
 ### Extension methods
 The namespace `FolkerKinzel.VCards.Extensions` contains several extension methods that makes working with VCard objects 
 more efficient and less error prone. It's therefore strongly recommended to publish this namespace when working with this
@@ -87,7 +161,7 @@ The methods help in the following cases:
 enums. Extension methods help to savely evaluate and manipulate these nullable enum values.
 - The .NET data types for date and time (such like DateOnly or DateTimeOffset) are not fully compliant with the date-time
 information defined by the vCard standard. Extension methods for these data types help to overcome these issues.
-- Most of the properties of the VCard class are of a specialized Type of `IEnumerable<VCardProperty>?`. Extension methods
+- Most of the properties of the VCard class are of a specialized Type of `IEnumerable<VCardProperty?>?`. Extension methods
 encapsulate most of the necessary null checking and Linq operations that are needed to retrieve the relevant data from these 
 properties or to store something there.
 - Some operations work with collections of VCard objects (e.g., saving several VCard objects together in a common VCF file). 

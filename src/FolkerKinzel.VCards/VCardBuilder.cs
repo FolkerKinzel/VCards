@@ -12,8 +12,9 @@ namespace FolkerKinzel.VCards;
 /// Provides a fluent API for building and editing <see cref="VCard"/> objects.
 /// </summary>
 /// <remarks>
-/// The <see cref="VCardBuilder"/> has properties with the same names as the <see cref="VCard"/>
-/// object. Each of these properties gets a struct that provides methods to edit the 
+/// The properties of the <see cref="VCardBuilder"/> class have the same names as those
+/// of the <see cref="VCard"/> class. Each of these properties gets a struct that provides
+/// methods to edit the 
 /// corresponding <see cref="VCard"/> property. Each of these methods return the 
 /// <see cref="VCardBuilder"/> instance so that the calls can be chained.
 /// </remarks>

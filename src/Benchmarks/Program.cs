@@ -1,13 +1,15 @@
 ﻿using System;
 using BenchmarkDotNet.Running;
+using FolkerKinzel.VCards;
 
 namespace Benchmarks;
+
 
 internal class Program
 {
     private static void Main()
     {
-        _ = BenchmarkRunner.Run<EnumerableBench>();
+        //_ = BenchmarkRunner.Run<EnumerableBench>();
         //_ = BenchmarkRunner.Run<HasFlagBench>();
 
         //_ = BenchmarkRunner.Run<ConcatWithBench>();

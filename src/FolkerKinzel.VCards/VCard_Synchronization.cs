@@ -48,6 +48,12 @@ public sealed partial class VCard
     /// <para>
     /// The method sets the static property <see cref="CurrentApp"/>.
     /// </para>
+    /// <para>
+    /// Although it is allowed to call this method with the <c>null</c> argument, this is
+    /// not recommended. (UUID-URNs are ideal for the task.) Call the method before any other
+    /// method of the library and only once in the lifetime of your application. The URI
+    /// should be the same everytime the application runs.
+    /// </para>
     /// </remarks>
     /// <seealso cref="CurrentApp"/>
     /// <seealso cref="Sync"/>

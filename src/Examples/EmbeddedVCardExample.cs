@@ -10,6 +10,13 @@ public static class EmbeddedVCardExample
 {
     public static void FromVCardExample()
     {
+        // In order to use the VCard class, the executing application MUST be registered
+        // with it. To do this, call the static method VCard.RegisterApp with an absolute
+        // Uri once when the program starts. (UUID URNs are ideal for this.) This registration
+        // is used for the data synchronization mechanism introduced with vCard 4.0 (PID and
+        // CLIENTPIDMAP).
+        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+
         // This will work as expected:
         var vc1 = new VCard
         {

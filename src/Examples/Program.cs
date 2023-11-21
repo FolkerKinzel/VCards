@@ -24,11 +24,13 @@ internal class Program
 
         _ = Directory.CreateDirectory(directoryPath);
 
+        NoPidExample.SaveWithoutPropertyIdentification();
+
         //EmbeddedVCardExample.FromVCardExample();
 
         //WhatsAppDemo1.IntegrateWhatsAppNumberUsingIMPP();
         //WhatsAppDemo2.UsingTheWhatsAppType();
-         VCardExample.ReadingAndWritingVCard(directoryPath);
+        // VCardExample.ReadingAndWritingVCard(directoryPath);
          //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
 
         //StartAnsiFilterExample();

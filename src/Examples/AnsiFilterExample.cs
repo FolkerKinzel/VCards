@@ -1,5 +1,4 @@
-﻿// Compile for .NET 7.0 or above and FolkerKinzel.VCards 6.0.0-beta.1 or above
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using FolkerKinzel.VCards;
 
 namespace Examples;
@@ -17,6 +16,13 @@ public static class AnsiFilterExample
     /// </remarks>
     public static void LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
     {
+        // In order to use the VCard class, the executing application MUST be registered
+        // with it. To do this, call the static method VCard.RegisterApp with an absolute
+        // Uri once when the program starts. (UUID URNs are ideal for this.) This registration
+        // is used for the data synchronization mechanism introduced with vCard 4.0 (PID and
+        // CLIENTPIDMAP).
+        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+
         // If you have to read VCF files which might have ANSI encodings, use the AnsiFilter
         // to read them automatically with the right encoding.
         // Give the constructor the ANSI code page as an argument which is most likely. This
