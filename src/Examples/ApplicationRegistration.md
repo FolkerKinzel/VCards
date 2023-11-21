@@ -17,7 +17,7 @@ object is instantiated.
 Yes. The library cannot guess your intentions.
 ## How is the application registration to be done?
 Call the static `VCard.RegisterApp` method with an absolute URI as an argument. Although it is 
-allowed to call this method with the <c>null</c> argument, this is
+allowed to call this method with the `null` argument, this is
 not recommended. (UUID-URNs are ideal for the task.) Call the method before any other
 method of the library and only once in the lifetime of your application. The URI
 should be the same everytime the application runs.
@@ -27,7 +27,7 @@ Example:
 VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
 ```
 ## If I don't like PIDs and CLIENTPIDMAPs, can I write vCard 4.0 without them?
-Of course, but application registration is still needed.
+Yes, of course, but application registration is still needed.
 
 Example:
 ```csharp

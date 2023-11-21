@@ -45,7 +45,7 @@ Example:
 ```csharp
 VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
 ```
-To learn more about what's the use of application registration and how it works read the [detailed article]().
+To learn more about what's the use of application registration and how it works read the [detailed article](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/ApplicationRegistration.md).
 
 ## The data model explained
 
