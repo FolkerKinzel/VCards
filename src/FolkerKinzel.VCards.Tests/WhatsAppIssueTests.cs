@@ -6,6 +6,9 @@ public class WhatsAppIssueTests
     [TestMethod]
     public void WhatsAppIssueTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         IList<VCard> list = VCard.LoadVcf(TestFiles.WhatsAppIssueVcf);
         Assert.AreNotEqual(0, list.Count);
 

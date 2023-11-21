@@ -18,6 +18,9 @@ public class VcfSerializerTests
     [TestMethod]
     public void ResetBuildersTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         using var stream = new MemoryStream();
         using var serializer = VcfSerializer.GetSerializer(stream, false, VCdVersion.V3_0, VcfOptions.Default, null);
 
@@ -35,6 +38,9 @@ public class VcfSerializerTests
     [TestMethod]
     public void AppendLineFoldingTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vc = new VCard { DisplayNames = new TextProperty("A" + new string('ä', 80)) };
 
         string s = vc.ToVcfString();

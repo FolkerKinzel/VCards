@@ -409,15 +409,70 @@ public class VCardTests
     public void RegisterAppTest1()
     {
         VCard.SyncTestReset();
+
+        VCard.RegisterApp(null);
         VCard.RegisterApp(null);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void RegisterAppTest2()
+    {
+        const string uri = "http://absolute.com/";
+        VCard.SyncTestReset();
+        VCard.RegisterApp(new Uri(uri));
+        VCard.RegisterApp(new Uri(uri));
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void RegisterAppTest3()
     {
         VCard.SyncTestReset();
         VCard.RegisterApp(new Uri("../IamRelative", UriKind.Relative));
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void RegisterAppTest4()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(new Uri("http://absolute.com/"));
+        VCard.RegisterApp(new Uri("http://other.com/"));
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void RegisterAppTest5()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+        VCard.RegisterApp(new Uri("http://other.com/"));
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void RegisterAppTest6()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(new Uri("http://other.com/"));
+        VCard.RegisterApp(null);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void RegisterAppTest7()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(new Uri("http://absolute.com/"));
+        VCard.RegisterApp(new Uri("../IamRelative", UriKind.Relative));
+    }
+
+    [TestMethod]
+    [ExpectedException (typeof(InvalidOperationException))]
+    public void VCardTest1()
+    {
+        VCard.SyncTestReset();
+        _ = new VCard();
     }
 
 

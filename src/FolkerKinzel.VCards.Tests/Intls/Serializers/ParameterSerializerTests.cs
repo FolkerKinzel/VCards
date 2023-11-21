@@ -15,6 +15,9 @@ public class ParameterSerializerTests
     [TestMethod]
     public void NonStandardParameterTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var prop = new NonStandardProperty("X-PROP", "01234");
         var dic = new Dictionary<string, string>();
         dic["X-TEST"] = "test";

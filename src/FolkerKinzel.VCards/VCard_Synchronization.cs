@@ -86,6 +86,7 @@ public sealed partial class VCard
 
         if (globalID is null)
         {
+            CurrentApp = null; // set this to have no problems with unit tests
             IsAppRegistered = true;
             return;
         }
