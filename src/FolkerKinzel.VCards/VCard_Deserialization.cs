@@ -20,7 +20,7 @@ public sealed partial class VCard
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
     /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class.</exception>
+    /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     public static IList<VCard> LoadVcf(string fileName, Encoding? textEncoding = null)
     {
         using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
@@ -36,7 +36,7 @@ public sealed partial class VCard
     /// <exception cref="ArgumentNullException"> <paramref name="vcf" /> is <c>null</c>.
     /// </exception>
     /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class.</exception>
+    /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     public static IList<VCard> ParseVcf(string vcf)
     {
         if (vcf == null)
@@ -59,7 +59,7 @@ public sealed partial class VCard
     /// <exception cref="IOException"> <paramref name="reader" />could not read from
     /// the <see cref="Stream" />.</exception>
     /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class.</exception>
+    /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IList<VCard> DeserializeVcf(TextReader reader)
         => DoParseVcf(reader ?? throw new ArgumentNullException(nameof(reader)));

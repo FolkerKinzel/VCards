@@ -18,7 +18,7 @@ public sealed partial class VCard
     /// property with a newly created <see cref="UuidProperty"/>, otherwise
     /// <c>false</c>.</param>
     /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class.</exception>
+    /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     public VCard(bool setID = true)
     { 
         if(setID)

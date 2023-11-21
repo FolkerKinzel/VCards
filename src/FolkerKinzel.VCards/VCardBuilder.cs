@@ -29,6 +29,8 @@ public sealed class VCardBuilder
     /// of the newly created <see cref="VCard"/> object automatically to a new 
     /// <see cref="Guid"/>, otherwise <c>false</c>.</param>
     /// <returns>The created <see cref="VCardBuilder"/>.</returns>
+    /// <exception cref="InvalidOperationException">The executing application is
+    /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static VCardBuilder Create(bool setID = true)
         => new(new VCard(setID));

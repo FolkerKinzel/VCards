@@ -102,8 +102,6 @@ public sealed class SyncOperation
     /// data synchronization has been completed (see RFC&#160;6350, 7.2.5. "Global 
     /// Context Simplification").
     /// </remarks>
-    /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class.</exception>
     public void Reset()
     {
         _vCard.AppIDs = null;

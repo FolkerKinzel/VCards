@@ -42,7 +42,7 @@ public sealed partial class VCard
     /// <para>
     /// The registration of the executing application is needed for the global data 
     /// synchronization mechanism introduced with vCard&#160;4.0. Call this method
-    /// only once at the startup of the application: It's not allowed to register
+    /// once at the startup of the application: It's not allowed to register
     /// different <see cref="Uri"/>s within a single application.
     /// </para>
     /// <para>

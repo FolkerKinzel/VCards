@@ -18,37 +18,37 @@ public static class VCardExample
 
     public static void ReadingAndWritingVCard(string directoryPath)
     {
+        // In order to use the VCard class, the executing application MUST be registered
+        // with it. To do this, call the static method VCard.RegisterApp with an absolute
+        // Uri once when the program starts. (UUID URNs are ideal for this.) This registration
+        // is used for the data synchronization mechanism introduced with vCard 4.0 (PID and
+        // CLIENTPIDMAP).
+        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+
         string v2FilePath = Path.Combine(directoryPath, v2FileName);
         string v3FilePath = Path.Combine(directoryPath, v3FileName);
         string v4FilePath = Path.Combine(directoryPath, v4FileName);
 
-        // To enable the mechanism of global data synchronization, which allows to
-        // identify identical vCard-Properties even if they are located in VCF files that
-        // come from different sources (vCard 4.0 only), the executing application has to
-        // be registered with a URI. This has to be done only once at the startup of the 
-        // application.
-        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
-
-        VCard vcard = InitializeTheVCardAndFillItWithData(directoryPath, photoFileName);
+        VCard vCard = InitializeTheVCardAndFillItWithData(directoryPath, photoFileName);
 
         // Implements ITimeZoneIDConverter to convert IANA time zone names to UTC-Offsets.
         // (See the implementation as separate example.)
         ITimeZoneIDConverter tzConverter = new TimeZoneIDConverter();
 
-        // Save vcard as vCard 2.1:
-        vcard.SaveVcf(v2FilePath, VCdVersion.V2_1, tzConverter);
+        // Save vCard as vCard 2.1:
+        vCard.SaveVcf(v2FilePath, VCdVersion.V2_1, tzConverter);
 
-        // Save vcard as vCard 3.0:
+        // Save vCard as vCard 3.0:
         // You don't need to specify the version: Version 3.0 is the default.
-        vcard.SaveVcf(v3FilePath, tzConverter: tzConverter);
+        vCard.SaveVcf(v3FilePath, tzConverter: tzConverter);
 
-        // Save vcard as vCard 4.0. (A time zone converter is not needed):
-        vcard.SaveVcf(v4FilePath, VCdVersion.V4_0);
+        // Save vCard as vCard 4.0. (A time zone converter is not needed):
+        vCard.SaveVcf(v4FilePath, VCdVersion.V4_0);
 
         // Load vCard:
-        vcard = VCard.LoadVcf(v3FilePath)[0];
+        vCard = VCard.LoadVcf(v3FilePath)[0];
 
-        WriteResultsToConsole(vcard);
+        WriteResultsToConsole(vCard);
 
         ///////////////////////////////////////////////////////////////
 
