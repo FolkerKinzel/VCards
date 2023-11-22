@@ -8,6 +8,18 @@ namespace FolkerKinzel.VCards;
 /// <summary>Encapsulates information about the geographical position.</summary>
 public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 {
+    private const double _6 = 0.000001;
+
+    /// <summary>
+    /// Distance in meters for 1° at the Equator.
+    /// </summary>
+    private const double ONE_DEGREE_DISTANCE = 111300;
+
+    /// <summary>
+    /// Minimum recognized distance.
+    /// </summary>
+    private const double MIN_DISTANCE = ONE_DEGREE_DISTANCE * _6;
+
     /// <summary> Initializes a new <see cref="GeoCoordinate" /> objekt. </summary>
     /// <param name="latitude">Latitude (value between -90 and 90).</param>
     /// <param name="longitude">Longitude (value between -180 and 180).</param>
@@ -39,10 +51,23 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     public double Longitude { get; }
 
     /// <inheritdoc />
-    public bool Equals(GeoCoordinate? other)
+    public bool Equals(GeoCoordinate? other) => other is not null && ComputeDistance(other) <= MIN_DISTANCE;
+
+
+    /// <summary>
+    /// Computes the distance between this and <paramref name="other"/> in m simply with 
+    /// Pythagoras (that's precisely enough for very short distances).
+    /// </summary>
+    /// <param name="other">The <see cref="GeoCoordinate"/> to compare with.</param>
+    /// <returns>The distance in m between this and <paramref name="other"/>.</returns>
+    private double ComputeDistance(GeoCoordinate other)
     {
-        const double _6 = 0.000001;
-        return other is not null && Math.Abs(Latitude - other.Latitude) < _6 && Math.Abs(Longitude - other.Longitude) < _6;
+        double latRad = (Latitude + other.Latitude) * Math.PI / 360;
+
+        double dLat = ONE_DEGREE_DISTANCE * (Latitude - other.Latitude);
+        double dLong = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * (Longitude - other.Longitude);
+
+        return Math.Sqrt(dLat * dLat + dLong * dLong);
     }
 
     /// <summary>
@@ -71,8 +96,13 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <inheritdoc />
     public override int GetHashCode()
     {
-        const int prec = 1000000;
-        return HashCode.Combine(Math.Floor(Latitude * prec), Math.Floor(Longitude * prec));
+        double oneDegreeLongitudeDistance = ONE_DEGREE_DISTANCE * Math.Cos(Latitude * Math.PI / 180);
+
+        double longi = oneDegreeLongitudeDistance < MIN_DISTANCE 
+                                 ? 0 
+                                 : Math.Floor(Longitude * oneDegreeLongitudeDistance / MIN_DISTANCE);
+
+        return HashCode.Combine(Latitude, longi);
     }
 
     /// <inheritdoc/>

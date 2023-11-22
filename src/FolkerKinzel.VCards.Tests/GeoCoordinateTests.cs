@@ -36,6 +36,7 @@ public class GeoCoordinateTests
     [DataRow(0, 5.1234563, 0, 5.1234561, true)]
     [DataRow(0, 0, 0, 0, true)]
     [DataRow(5.123456, 17, 5.123457, 17, false)]
+    [DataRow(89.99999, -17.5, 89.99999, -17.6, true)]
     public void EqualsTest(double latitude1, double longitude1, double latitude2, double longitude2, bool expected)
     {
         var geo1 = new GeoCoordinate(latitude1, longitude1);
