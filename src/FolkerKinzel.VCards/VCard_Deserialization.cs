@@ -24,7 +24,7 @@ public sealed partial class VCard
     public static IList<VCard> LoadVcf(string fileName, Encoding? textEncoding = null)
     {
         using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
-        return DoParseVcf(reader);
+        return DoDeserializeVcf(reader);
     }
 
     /// <summary>Parses a <see cref="string" />, that represents the content of a VCF
@@ -45,7 +45,7 @@ public sealed partial class VCard
         }
 
         using var reader = new StringReader(vcf);
-        return DoParseVcf(reader);
+        return DoDeserializeVcf(reader);
     }
 
     /// <summary>Deserializes a VCF file using a <see cref="TextReader" />.</summary>
@@ -62,13 +62,13 @@ public sealed partial class VCard
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IList<VCard> DeserializeVcf(TextReader reader)
-        => DoParseVcf(reader ?? throw new ArgumentNullException(nameof(reader)));
+        => DoDeserializeVcf(reader ?? throw new ArgumentNullException(nameof(reader)));
 
-    private static List<VCard> DoParseVcf(TextReader reader,
+    private static List<VCard> DoDeserializeVcf(TextReader reader,
                                           VCdVersion versionHint = VCdVersion.V2_1)
     {
         Debug.Assert(reader != null);
-        DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoParseVcf) + "(TextReader)");
+        DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoDeserializeVcf) + "(TextReader)");
 
         var vCardList = new List<VCard>();
         var info = new VcfDeserializationInfo();
@@ -110,7 +110,7 @@ public sealed partial class VCard
 
         using var reader = new StringReader(content ?? string.Empty);
 
-        List<VCard> list = DoParseVcf(reader, versionHint);
+        List<VCard> list = DoDeserializeVcf(reader, versionHint);
 
         return list.FirstOrDefault();
     }
