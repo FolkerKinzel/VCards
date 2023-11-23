@@ -65,7 +65,7 @@ public sealed partial class VCard
         => DoDeserializeVcf(reader ?? throw new ArgumentNullException(nameof(reader)));
 
     private static List<VCard> DoDeserializeVcf(TextReader reader,
-                                          VCdVersion versionHint = VCdVersion.V2_1)
+                                                VCdVersion versionHint = VCdVersion.V2_1)
     {
         Debug.Assert(reader != null);
         DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoDeserializeVcf) + "(TextReader)");
