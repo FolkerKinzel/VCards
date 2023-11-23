@@ -86,7 +86,6 @@ public sealed partial class VCard
 
         if (globalID is null)
         {
-            CurrentApp = null; // set this to have no problems with unit tests
             IsAppRegistered = true;
             return;
         }
@@ -103,7 +102,12 @@ public sealed partial class VCard
 
 
     /// <summary>
-    /// Resets <see cref="IsAppRegistered"/> to enable unit tests.
+    /// Resets <see cref="CurrentApp"/> and <see cref="IsAppRegistered"/>
+    /// to enable unit tests.
     /// </summary>
-    internal static void SyncTestReset() => IsAppRegistered = false;
+    internal static void SyncTestReset()
+    {
+        CurrentApp = null;
+        IsAppRegistered = false;
+    }
 }
