@@ -35,27 +35,15 @@ internal static class WhatsAppDemo1
         // Initialize the VCard:
         var vcard = new VCard
         {
-            NameViews = new VC::NameProperty[]
-            {
-                    new VC::NameProperty(familyName: null, givenName: "zzMad Perla 45")
-            },
+            NameViews = new VC::NameProperty(familyName: null, givenName: "zzMad Perla 45"),
 
-            DisplayNames = new VC::TextProperty[]
-            {
-                    new VC::TextProperty("zzMad Perla 45")
-            },
+            DisplayNames = new VC::TextProperty("zzMad Perla 45"),
 
             // Add the WhatsApp-Handle:
-            Messengers = new VC::TextProperty[]
-            {
-                    whatsAppImpp
-            },
+            Messengers = whatsAppImpp,
 
             // Add the mobile phone too:
-            Phones = new VC::TextProperty[]
-            {
-                    xiamoiMobilePhone
-            }
+            Phones = xiamoiMobilePhone
         };
 
         Console.WriteLine(vcard.ToVcfString());

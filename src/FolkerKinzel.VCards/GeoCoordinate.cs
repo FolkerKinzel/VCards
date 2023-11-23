@@ -53,11 +53,11 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     public double Longitude { get; }
 
     /// <inheritdoc />
-    public override bool Equals(object? obj) => Equals(obj as GeoCoordinate);
+    public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as GeoCoordinate);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool Equals(GeoCoordinate? other) => Equals(other, 0);
+    public bool Equals([NotNullWhen(true)] GeoCoordinate? other) => Equals(other, 0);
 
     /// <summary>
     /// Indicates whether the current object is equal to <paramref name="other"/>
@@ -71,7 +71,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <returns><c>true</c> if the geographical position of <paramref name="other"/>
     /// is no further away than <paramref name="minDistance"/> meters from that of the 
     /// current instance, otherwise <c>false</c>.</returns>
-    public bool Equals(GeoCoordinate? other, int minDistance)
+    public bool Equals([NotNullWhen(true)] GeoCoordinate? other, int minDistance)
     {
         if (other != null)
         {

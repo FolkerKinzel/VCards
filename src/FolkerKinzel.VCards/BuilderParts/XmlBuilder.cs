@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.ComponentModel;
+using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
@@ -7,6 +8,7 @@ using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
+[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals", Justification = "<Pending>")]
 public readonly struct XmlBuilder
 {
     private readonly VCardBuilder? _builder;
@@ -41,5 +43,18 @@ public readonly struct XmlBuilder
                           _builder.VCard.Get<IEnumerable<XmlProperty?>?>(Prop.Xmls).Remove(predicate));
         return _builder;
     }
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override bool Equals([NotNullWhen(true)] object? obj) => base.Equals(obj);
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override int GetHashCode() => base.GetHashCode();
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string ToString() => base.ToString()!;
+
 }
 
