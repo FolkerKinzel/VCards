@@ -9,16 +9,15 @@ namespace FolkerKinzel.VCards.BuilderParts;
 public readonly struct TextBuilder
 {
     private readonly VCardBuilder? _builder;
+    private readonly Prop _prop;
 
     [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
-    public Prop Prop { get; }
-
     internal TextBuilder(VCardBuilder builder, Prop prop)
     {
         _builder = builder;
-        Prop = prop;
+        _prop = prop;
     }
 
     public VCardBuilder Add(string? value,
@@ -26,8 +25,8 @@ public readonly struct TextBuilder
                             Action<ParameterSection>? parameters = null, 
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(new TextProperty(value, group?.Invoke(_builder.VCard)),
-                                                  _builder.VCard.Get<IEnumerable<TextProperty?>?>(Prop),
+        Builder.VCard.Set(_prop, VCardBuilder.Add(new TextProperty(value, group?.Invoke(_builder.VCard)),
+                                                  _builder.VCard.Get<IEnumerable<TextProperty?>?>(_prop),
                                                   parameters,
                                                   pref));
         return _builder;
@@ -35,13 +34,13 @@ public readonly struct TextBuilder
 
     public VCardBuilder Clear()
     {
-        Builder.VCard.Set(Prop, null);
+        Builder.VCard.Set(_prop, null);
         return _builder;
     }
 
     public VCardBuilder Remove(Func<TextProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop, _builder.VCard.Get<IEnumerable<TextProperty?>?>(Prop).Remove(predicate));
+        Builder.VCard.Set(_prop, _builder.VCard.Get<IEnumerable<TextProperty?>?>(_prop).Remove(predicate));
         return _builder;
     }
 }

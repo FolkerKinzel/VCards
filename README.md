@@ -20,7 +20,7 @@ Read the ["Getting Started" tutorial](https://github.com/FolkerKinzel/VCards/blo
 
 ### Code Examples
 - [Getting started](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/GettingStarted.md)
-- [Application registration](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/ApplicationRegistration.md)
+- [Initializing the library](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/ApplicationRegistration.md)
 - [Reading and writing of VCF files](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/VCardExample.cs)
 - [Example implementation of ITimeZoneIDConverter](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/TimeZoneIDConverter.cs)
 - [Automatic detection of VCF files written with ANSI encodings](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/AnsiFilterExample.cs)

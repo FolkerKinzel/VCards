@@ -1,7 +1,6 @@
 ﻿# Getting Started
 Read here:
-- [The usage of the namespaces](#the-usage-of-the-namespaces)
-- [The first step: application registration](#the-first-step-application-registration)
+- [The first step: initializing the library and the usage of the namespaces](#the-first-step-initializing-the-library-and-the-usage-of-the-namespaces)
 - [The data model explained](#the-data-model-explained)
   - [The VCardProperty class](#the-vcardproperty-class)
   - [Naming conventions](#naming-conventions)
@@ -12,7 +11,22 @@ Read here:
 - [Documents of the vCard standard](#documents-of-the-vcard-standard)
 
 
-## The usage of the namespaces
+## The first step: initializing the library and the usage of the namespaces
+As the first step, the executing application has to be registered with the `VCard` class
+when the program starts. This registration is used for the data synchronization mechanism 
+introduced with vCard 4.0 (PID and CLIENTPIDMAP).
+
+Call the static `VCard.RegisterApp` method with an absolute URI as an argument. Although it is 
+allowed to call this method with the `null` argument, this is
+not recommended. (UUID-URNs are ideal for the task.) Call the method before any other
+method of the library and only once in the lifetime the application. The URI
+should be the same everytime the application runs.
+
+To learn more about what's the use of application registration and how it works, read the 
+[detailed article](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/ApplicationRegistration.md).
+
+The following code gives an example of application registration and shows the usage of the
+namespaces:
 ```csharp
 // Publish this namespace - it contains the VCard class
 // and the VCardBuilder class:
@@ -30,22 +44,10 @@ using FolkerKinzel.VCards.Enums;
 // Since VCardBuilder exists, the model classes normally
 // don't need to be instantiated in own code:
 // using FolkerKinzel.VCards.Models;
-```
-## The first step: application registration
-As the first step, the executing application has to be registered with the `VCard` class
-when the program starts.
 
-Call the static `VCard.RegisterApp` method with an absolute URI as an argument. Although it is 
-allowed to call this method with the <c>null</c> argument, this is
-not recommended. (UUID-URNs are ideal for the task.) Call the method before any other
-method of the library and only once in the lifetime of your application. The URI
-should be the same everytime the application runs.
-
-Example:
-```csharp
+// Application registration:
 VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
 ```
-To learn more about what's the use of application registration and how it works read the [detailed article](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/ApplicationRegistration.md).
 
 ## The data model explained
 
@@ -76,7 +78,7 @@ In this example corresponds
 - `TEL;TYPE=home,voice;VALUE=uri` to VCardProperty.Parameters and
 - `tel:+49-123-4567` to VCardProperty.Value.
             
-(Classes that are derived from `VCardProperty` hide the generic implementation of `VCardProperty.Value` in order to return derived classes instead of `System.Object?`.)
+(Classes derived from `VCardProperty` hide the generic implementation of `VCardProperty.Value` in order to return derived classes instead of `System.Object?`.)
 
 ### Naming conventions
 Most properties of the `VCard` class are collections. It has to do with that many properties are allowed to have more than one instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.

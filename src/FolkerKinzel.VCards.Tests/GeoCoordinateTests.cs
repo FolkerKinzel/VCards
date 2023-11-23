@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Tests;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace FolkerKinzel.VCards.Tests;
 
 [TestClass]
 public class GeoCoordinateTests
@@ -28,6 +30,13 @@ public class GeoCoordinateTests
     public void GeoCoordinateTest2(double latitude, double longitude) => _ = new GeoCoordinate(latitude, longitude);
 
 
+    [TestMethod]
+    public void GeoCoordinateTest3()
+    {
+        var geo = new GeoCoordinate(52, -180);
+        Assert.AreEqual(180, geo.Longitude, 0.1);
+    }
+
     [DataTestMethod()]
     //[DataRow(double.NaN, 15, 27, double.NaN, true)]
     //[DataRow(double.NegativeInfinity, 15, 27, double.PositiveInfinity, true)]
@@ -37,7 +46,7 @@ public class GeoCoordinateTests
     [DataRow(0, 0, 0, 0, true)]
     [DataRow(5.123456, 17, 5.123457, 17, false)]
     [DataRow(89.99999, -17.5, 89.99999, -17.6, true)]
-    public void EqualsTest(double latitude1, double longitude1, double latitude2, double longitude2, bool expected)
+    public void EqualsTest4(double latitude1, double longitude1, double latitude2, double longitude2, bool expected)
     {
         var geo1 = new GeoCoordinate(latitude1, longitude1);
         var geo2 = new GeoCoordinate(latitude2, longitude2);
@@ -49,6 +58,24 @@ public class GeoCoordinateTests
         if (expected)
         {
             Assert.AreEqual(geo1.GetHashCode(), geo2.GetHashCode());
+        }
+    }
+
+    [DataTestMethod()]
+    [DataRow(51.05022555003223, 12.130624133575036, 51.04930951936781, 12.128100583930106, true, 1000)]
+    [DataRow(51.05022555003223, 12.130624133575036, 51.04930951936781, 12.128100583930106, false, 100)]
+    [DataRow(89.99, 180.0, 89.99, -179.9999, true, 10000)]
+    public void EqualsTest5(double latitude1, double longitude1, double latitude2, double longitude2, bool expected, int minDistance)
+    {
+        var geo1 = new GeoCoordinate(latitude1, longitude1);
+        var geo2 = new GeoCoordinate(latitude2, longitude2);
+
+        Assert.AreEqual(expected, geo1.Equals(geo2, minDistance));
+        
+
+        if (expected)
+        {
+            Assert.AreEqual(geo1.GetHashCode(minDistance), geo2.GetHashCode(minDistance));
         }
     }
 

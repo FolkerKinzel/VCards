@@ -13,6 +13,7 @@
 	</Target>
 	<ItemGroup>
 		<Compile Remove="AnsiFilterExample_old.cs" />
+		<Compile Remove="Namespaces.cs" />
 		<Compile Remove="NullableTest.cs" />
 	</ItemGroup>
 	<ItemGroup>

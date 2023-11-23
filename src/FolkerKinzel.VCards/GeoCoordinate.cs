@@ -16,7 +16,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     private const double ONE_DEGREE_DISTANCE = 111300;
 
     /// <summary>
-    /// Minimum recognized distance.
+    /// Minimum recognized distance (11,13 cm).
     /// </summary>
     private const double MIN_DISTANCE = ONE_DEGREE_DISTANCE * _6;
 
@@ -40,6 +40,8 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
             throw new ArgumentOutOfRangeException(nameof(longitude));
         }
 
+        longitude = longitude <= -180 ? 180 : longitude;
+
         Latitude = Math.Round(latitude, 6, MidpointRounding.ToEven);
         Longitude = Math.Round(longitude, 6, MidpointRounding.ToEven);
     }
@@ -51,23 +53,63 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     public double Longitude { get; }
 
     /// <inheritdoc />
-    public bool Equals(GeoCoordinate? other) => other is not null && ComputeDistance(other) <= MIN_DISTANCE;
+    public override bool Equals(object? obj) => Equals(obj as GeoCoordinate);
 
+    /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool Equals(GeoCoordinate? other) => Equals(other, 0);
 
     /// <summary>
-    /// Computes the distance between this and <paramref name="other"/> in m simply with 
+    /// Indicates whether the current object is equal to <paramref name="other"/>
+    /// and allows to define equality by specifying a distance within that geographical
+    /// positions are considered equal.
+    /// </summary>
+    /// <param name="other">A <see cref="GeoCoordinate"/> object to compare with the 
+    /// current instance, or <c>null</c>.</param>
+    /// <param name="minDistance">A distance in <c>m</c> within that geographical
+    /// positions are considered equal. (The recognized minimum is about 12 cm.)</param>
+    /// <returns><c>true</c> if the geographical position of <paramref name="other"/>
+    /// is no further away than <paramref name="minDistance"/> meters from that of the 
+    /// current instance, otherwise <c>false</c>.</returns>
+    public bool Equals(GeoCoordinate? other, int minDistance)
+    {
+        if (other != null)
+        {
+            double minDist = minDistance < 1 ? MIN_DISTANCE : minDistance;
+            return ComputeDistance(other, minDist) < minDist;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Computes the distance between this and <paramref name="other"/> in <c>m</c> simply with 
     /// Pythagoras (that's precisely enough for very short distances).
     /// </summary>
     /// <param name="other">The <see cref="GeoCoordinate"/> to compare with.</param>
-    /// <returns>The distance in m between this and <paramref name="other"/>.</returns>
-    private double ComputeDistance(GeoCoordinate other)
+    /// <param name="minDistance">Minimum distance in <c>m</c> for which <see cref="GeoCoordinate"/>
+    /// objects are considered different.</param>
+    /// <returns>The distance in <c>m</c> between this and <paramref name="other"/>.</returns>
+    private double ComputeDistance(GeoCoordinate other, double minDistance)
     {
-        double latRad = (Latitude + other.Latitude) * Math.PI / 360;
+        double diffLat = ONE_DEGREE_DISTANCE * (Latitude - other.Latitude);
 
-        double dLat = ONE_DEGREE_DISTANCE * (Latitude - other.Latitude);
-        double dLong = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * (Longitude - other.Longitude);
+        // radians of the average latitude
+        double latRad = (Latitude + other.Latitude) * (Math.PI / 360);
 
-        return Math.Sqrt(dLat * dLat + dLong * dLong);
+        // Normalize longitudes (-179,999999999° => 180°)
+        // Because the distance between this and other is very large when Latitude and other.Latitude
+        // differ a lot latRad can be used here.
+        double longitude = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * (Longitude + 180) < minDistance 
+                           ? 180 
+                           : Longitude;
+        double otherLongitude = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * (other.Longitude + 180) < minDistance 
+                                ? 180 
+                                : other.Longitude;
+
+        double diffLong = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * (longitude - otherLongitude);
+
+        return Math.Sqrt(diffLat * diffLat + diffLong * diffLong);
     }
 
     /// <summary>
@@ -91,18 +133,30 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         => !(left == right);
 
     /// <inheritdoc />
-    public override bool Equals(object? obj) => Equals(obj as GeoCoordinate);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override int GetHashCode() => GetHashCode(0);
 
-    /// <inheritdoc />
-    public override int GetHashCode()
+    /// <summary>
+    /// Generates a hash code for the current instance and allows to specify
+    /// a distance within that differences between geographical positions are
+    /// ignored.
+    /// </summary>
+    /// <param name="minDistance">A distance in <c>m</c> within that geographical
+    /// positions are considered equal. (The recognized minimum is about 12 cm.)</param>
+    /// <returns>A hash code for the current object.</returns>
+    public int GetHashCode(int minDistance)
     {
-        double oneDegreeLongitudeDistance = ONE_DEGREE_DISTANCE * Math.Cos(Latitude * Math.PI / 180);
+        double minDist = minDistance < 1 ? MIN_DISTANCE : minDistance;
 
-        double longi = oneDegreeLongitudeDistance < MIN_DISTANCE 
+        double lati = Math.Floor(Latitude * ONE_DEGREE_DISTANCE / minDist);
+
+        double oneDegreeLongitudeDistance = ONE_DEGREE_DISTANCE * Math.Cos(Latitude * (Math.PI / 180));
+
+        double longi = oneDegreeLongitudeDistance < minDist 
                                  ? 0 
-                                 : Math.Floor(Longitude * oneDegreeLongitudeDistance / MIN_DISTANCE);
+                                 : Math.Floor(Longitude * oneDegreeLongitudeDistance / minDist);
 
-        return HashCode.Combine(Latitude, longi);
+        return HashCode.Combine(lati, longi);
     }
 
     /// <inheritdoc/>
@@ -111,10 +165,11 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         string latitude = Latitude.ToString("F6");
         string longitude = Longitude.ToString("F6");
 
-
-        return $"Latitude:  {latitude,11}{Environment.NewLine}Longitude: {longitude,11}";
+        return $"""
+                Latitude:  {latitude,11}
+                Longitude: {longitude,11}
+                """;
     }
-
 
     internal static bool TryParse(ReadOnlySpan<char> value, out GeoCoordinate? coordinate)
     {

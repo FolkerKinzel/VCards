@@ -22,6 +22,8 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "FolkerKinzel.VCards.Referen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{03CA0779-41BB-4F0F-9124-713CB2344F49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Namespaces", "Namespaces\Namespaces.csproj", "{A5EF618F-3AAD-4E8C-8F5F-06B143DC402E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{03CA0779-41BB-4F0F-9124-713CB2344F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03CA0779-41BB-4F0F-9124-713CB2344F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03CA0779-41BB-4F0F-9124-713CB2344F49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5EF618F-3AAD-4E8C-8F5F-06B143DC402E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5EF618F-3AAD-4E8C-8F5F-06B143DC402E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5EF618F-3AAD-4E8C-8F5F-06B143DC402E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5EF618F-3AAD-4E8C-8F5F-06B143DC402E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

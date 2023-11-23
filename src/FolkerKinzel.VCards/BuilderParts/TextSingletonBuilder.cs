@@ -12,7 +12,7 @@ public readonly struct TextSingletonBuilder
     [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
-    public Prop Prop { get; }
+    private Prop Prop { get; }
 
     internal TextSingletonBuilder(VCardBuilder builder, Prop prop)
     {

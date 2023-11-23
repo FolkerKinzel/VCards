@@ -1,5 +1,4 @@
-﻿// Compile for .NET 8.0 or higher and FolkerKinzel.VCards 7.0.0-beta.1 or higher
-using FolkerKinzel.VCards;
+﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 
@@ -13,8 +12,8 @@ public static class VCard40Example
 {
     public static void SaveSingleVCardAsVcf(string directoryPath)
     {
-        // In order to use the VCard class, the executing application MUST be registered
-        // with it. To do this, call the static method VCard.RegisterApp with an absolute
+        // In order to initialize the library, the executing application MUST be registered
+        // with the VCard class. To do this, call the static method VCard.RegisterApp with an absolute
         // Uri once when the program starts. (UUID URNs are ideal for this.) This registration
         // is used for the data synchronization mechanism introduced with vCard 4.0 (PID and
         // CLIENTPIDMAP).
@@ -36,22 +35,17 @@ public static class VCard40Example
         }
 
         // Initialize a group vCard with composers names and live dates:
-        var members = new VC::RelationProperty[]
-        {
-                VC::RelationProperty.FromVCard(InitializeComposerVCard(
-                    "Sergei Rachmaninoff", new DateOnly(1873,4,1), new DateOnly(1943,3,28))),
-                VC::RelationProperty.FromVCard(InitializeComposerVCard(
-                    "Ludwig van Beethoven", new DateOnly(1770,12,17), new DateOnly(1827,3,26))),
-                VC :: RelationProperty.FromVCard(InitializeComposerVCard(
-                    "Frédéric Chopin", new DateOnly(1810,3,1), new DateOnly(1849,10,17)))
-        };
-
-        var composersVCard = new VCard
-        {
-            DisplayNames = new VC::TextProperty("Composers"),
-            Kind = new VC::KindProperty(Kind.Group),
-            Members = members
-        };
+        VCard? composersVCard = VCardBuilder
+            .Create()
+            .DisplayNames.Add("Composers")
+            .Kind.Set(Kind.Group)
+            .Members.Add(InitializeComposerVCard(
+                    "Sergei Rachmaninoff", new DateOnly(1873, 4, 1), new DateOnly(1943, 3, 28)))
+            .Members.Add(InitializeComposerVCard(
+                    "Ludwig van Beethoven", new DateOnly(1770, 12, 17), new DateOnly(1827, 3, 26)))
+            .Members.Add(InitializeComposerVCard(
+                    "Frédéric Chopin", new DateOnly(1810, 3, 1), new DateOnly(1849, 10, 17)))
+            .Build();
 
         // Replace the embedded VCards in composersVCard.Members with Guid
         // references in order to save them as separate vCard 4.0 .VCF files.
@@ -123,16 +117,11 @@ public static class VCard40Example
 
     private static VCard InitializeComposerVCard(
         string composersName, DateOnly birthDate, DateOnly deathDate)
-    {
-        var vCard = new VCard
-        {
-            DisplayNames = new VC::TextProperty(composersName),
-            BirthDayViews = VC::DateAndOrTimeProperty.FromDate(birthDate),
-            DeathDateViews = VC::DateAndOrTimeProperty.FromDate(deathDate)
-        };
-
-        return vCard;
-    }
+        => VCardBuilder.Create()
+                       .DisplayNames.Add(composersName)
+                       .BirthDayViews.Add(birthDate)
+                       .DeathDateViews.Add(deathDate)
+                       .Build();
 
     private static bool TryFindBeethovensBirthday(VCard composersVCard, out DateOnly birthDay)
     {

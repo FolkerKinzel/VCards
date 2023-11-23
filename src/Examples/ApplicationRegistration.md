@@ -1,12 +1,12 @@
-﻿# Application registration
-As the first step, the executing application has to be registered with the `VCard` class
-when the program starts. This section describes this process by answering fictitious questions.
+﻿# Initializing the library
+Before the `VCard` class can be used, the executing application has to be registered with it.
+This section describes this process by answering fictitious questions.
 ## What's the use of application registration?
 With the vCard 4.0 standard a data synchronization mechanism using PID parameters and CLIENTPIDMAP
 properties has been introduced. This is very helpful when merging or updating vCards.
 
 vCard properties get assigned a local ID that is connected with a global identifier of the application
-that created the local ID. The global identifier is used to distinguish between the different local IDs 
+that created the local ID. The global identifier is used to distinguish between different local IDs 
 that might have been assigned to the same vCard property by different applications.
 
 Each VCard object needs to be registered with the application to make this work. The library does this 

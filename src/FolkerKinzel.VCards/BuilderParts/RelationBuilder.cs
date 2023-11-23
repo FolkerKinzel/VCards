@@ -10,16 +10,15 @@ namespace FolkerKinzel.VCards.BuilderParts;
 public readonly struct RelationBuilder
 {
     private readonly VCardBuilder? _builder;
+    private readonly Prop _prop;
 
     [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
-    public Prop Prop { get; }
-
     internal RelationBuilder(VCardBuilder builder, Prop prop)
     {
         _builder = builder;
-        Prop = prop;
+        _prop = prop;
     }
 
     public VCardBuilder Add(Guid uuid,
@@ -28,8 +27,8 @@ public readonly struct RelationBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(RelationProperty.FromGuid(uuid, relationType, group?.Invoke(_builder.VCard)),
-                                                  _builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),
+        Builder.VCard.Set(_prop, VCardBuilder.Add(RelationProperty.FromGuid(uuid, relationType, group?.Invoke(_builder.VCard)),
+                                                  _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop),
                                                   parameters,
                                                   pref));
         return _builder;
@@ -41,8 +40,8 @@ public readonly struct RelationBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(RelationProperty.FromText(text, relationType, group?.Invoke(_builder.VCard)),
-                                                  _builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),
+        Builder.VCard.Set(_prop, VCardBuilder.Add(RelationProperty.FromText(text, relationType, group?.Invoke(_builder.VCard)),
+                                                  _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop),
                                                   parameters,
                                                   pref));
         return _builder;
@@ -54,8 +53,8 @@ public readonly struct RelationBuilder
                             Action<ParameterSection>? parameters = null, 
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(RelationProperty.FromVCard(vCard, relationType, group?.Invoke(_builder.VCard)),
-                                                  _builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),
+        Builder.VCard.Set(_prop, VCardBuilder.Add(RelationProperty.FromVCard(vCard, relationType, group?.Invoke(_builder.VCard)),
+                                                  _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop),
                                                   parameters,
                                                   pref));
         return _builder;
@@ -67,8 +66,8 @@ public readonly struct RelationBuilder
                             Action<ParameterSection>? parameters = null, 
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop, VCardBuilder.Add(RelationProperty.FromUri(uri, relationType, group?.Invoke(_builder.VCard)),
-                                                  _builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop),
+        Builder.VCard.Set(_prop, VCardBuilder.Add(RelationProperty.FromUri(uri, relationType, group?.Invoke(_builder.VCard)),
+                                                  _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop),
                                                   parameters,
                                                   pref));
         return _builder;
@@ -76,13 +75,13 @@ public readonly struct RelationBuilder
 
     public VCardBuilder Clear()
     {
-        Builder.VCard.Set(Prop, null);
+        Builder.VCard.Set(_prop, null);
         return _builder;
     }
 
     public VCardBuilder Remove(Func<RelationProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop, _builder.VCard.Get<IEnumerable<RelationProperty?>?>(Prop).Remove(predicate));
+        Builder.VCard.Set(_prop, _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop).Remove(predicate));
         return _builder;
     }
 }
