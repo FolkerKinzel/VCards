@@ -22,10 +22,10 @@ public class GeoCoordinateTests
     [DataRow(double.NaN, 15)]
     [DataRow(15, double.NegativeInfinity)]
     [DataRow(double.PositiveInfinity, 15)]
-    [DataRow(-91, 15)]
-    [DataRow(91, 15)]
-    [DataRow(15, 181)]
-    [DataRow(15, -181)]
+    [DataRow(-101, 15)]
+    [DataRow(101, 15)]
+    [DataRow(15, 201)]
+    [DataRow(15, -201)]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void GeoCoordinateTest2(double latitude, double longitude) => _ = new GeoCoordinate(latitude, longitude);
 
@@ -33,8 +33,8 @@ public class GeoCoordinateTests
     [TestMethod]
     public void GeoCoordinateTest3()
     {
-        var geo = new GeoCoordinate(52, -180);
-        Assert.AreEqual(180, geo.Longitude, 0.1);
+        var geo = new GeoCoordinate(52, -181);
+        Assert.AreEqual(179, geo.Longitude, 0.1);
     }
 
     [DataTestMethod()]
@@ -46,6 +46,7 @@ public class GeoCoordinateTests
     [DataRow(0, 0, 0, 0, true)]
     [DataRow(5.123456, 17, 5.123457, 17, false)]
     [DataRow(89.99999, -17.5, 89.99999, -17.6, true)]
+    [DataRow(52, -180, 52, 180, true)]
     public void EqualsTest4(double latitude1, double longitude1, double latitude2, double longitude2, bool expected)
     {
         var geo1 = new GeoCoordinate(latitude1, longitude1);

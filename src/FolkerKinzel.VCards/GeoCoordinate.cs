@@ -30,17 +30,33 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <seealso cref="ParameterSection.GeoPosition"/>
     public GeoCoordinate(double latitude, double longitude)
     {
-        if (double.IsNaN(latitude) || latitude < -90.0000001 || latitude > 90.0000001)
+        if (double.IsNaN(latitude) || latitude < -100.0 || latitude > 100.0)
         {
             throw new ArgumentOutOfRangeException(nameof(latitude));
         }
 
-        if (double.IsNaN(longitude) || longitude < -180.0000001 || longitude > 180.0000001)
+        if (double.IsNaN(longitude) || longitude < -200.0 || longitude > 200.0)
         {
             throw new ArgumentOutOfRangeException(nameof(longitude));
         }
 
-        longitude = longitude <= -180 ? 180 : longitude;
+        if (latitude > 90.0)
+        {
+            latitude = 180.0 - latitude;
+        }
+        else if(latitude < -90.0)
+        {
+            latitude = -180.0 - latitude;
+        }
+
+        if(longitude < -180.0)
+        {
+            longitude += 360.0;
+        }
+        else if(longitude > 180.0)
+        {
+            longitude -= 360.0;
+        }
 
         Latitude = Math.Round(latitude, 6, MidpointRounding.ToEven);
         Longitude = Math.Round(longitude, 6, MidpointRounding.ToEven);
@@ -99,7 +115,11 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         
         // take the shortest direction around the globe:
         double diffAngleLong = Math.Abs(Longitude - other.Longitude);
-        diffAngleLong = diffAngleLong > 180.0 ? diffAngleLong - 180.0 : diffAngleLong;
+
+        if(diffAngleLong > 180.0)
+        {
+            diffAngleLong -= 180.0;
+        }
 
         double diffLong = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * diffAngleLong;
 
