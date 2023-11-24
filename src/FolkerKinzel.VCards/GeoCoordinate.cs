@@ -99,7 +99,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         
         // take the shortest direction around the globe:
         double diffAngleLong = Math.Abs(Longitude - other.Longitude);
-        diffAngleLong = diffAngleLong > 180 ? diffAngleLong - 180 : diffAngleLong;
+        diffAngleLong = diffAngleLong > 180.0 ? diffAngleLong - 180.0 : diffAngleLong;
 
         double diffLong = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * diffAngleLong;
 
