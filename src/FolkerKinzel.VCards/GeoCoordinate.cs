@@ -96,18 +96,12 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         // radians of the average latitude
         double latRad = (Latitude + other.Latitude) * (Math.PI / 360);
+        
+        // take the shortest direction around the globe:
+        double diffAngleLong = Math.Abs(Longitude - other.Longitude);
+        diffAngleLong = diffAngleLong > 180 ? diffAngleLong - 180 : diffAngleLong;
 
-        // Normalize longitudes (-179,999999999° => 180°)
-        // Because the distance between this and other is very large when Latitude and other.Latitude
-        // differ a lot latRad can be used here.
-        double longitude = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * (Longitude + 180) < minDistance 
-                           ? 180 
-                           : Longitude;
-        double otherLongitude = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * (other.Longitude + 180) < minDistance 
-                                ? 180 
-                                : other.Longitude;
-
-        double diffLong = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * (longitude - otherLongitude);
+        double diffLong = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * diffAngleLong;
 
         return Math.Sqrt(diffLat * diffLat + diffLong * diffLong);
     }
