@@ -42,6 +42,14 @@ internal static class _Double
 #else
         => double.Parse(s, style, provider);
 #endif
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out double result)
+#if NET461 || NETSTANDARD2_0
+        => double.TryParse(s.ToString(), style, provider, out result);
+#else
+        => double.TryParse(s, style, provider, out result);
+#endif
 }
 
 

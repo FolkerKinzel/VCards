@@ -2,6 +2,7 @@ using System.Globalization;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.Strings.Polyfills;
 
 namespace FolkerKinzel.VCards;
 
@@ -19,16 +20,19 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// Minimum recognized distance (11,13 cm).
     /// </summary>
     private const double MIN_DISTANCE = ONE_DEGREE_DISTANCE * _6;
+    private const string GEO_URI_PROTOCOL = "geo:";
 
     /// <summary> Initializes a new <see cref="GeoCoordinate" /> objekt. </summary>
     /// <param name="latitude">Latitude (value between -90 and 90).</param>
     /// <param name="longitude">Longitude (value between -180 and 180).</param>
+    /// <param name="uncertainty">The amount of uncertainty in the location as a 
+    /// value in meters, or <c>null</c> to leave this unspecified.</param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="latitude" />
     /// or <paramref name="longitude" /> does not have a valid value.</exception>
     /// <seealso cref="GeoProperty"/>
     /// <seealso cref="VCard.GeoCoordinates"/>
     /// <seealso cref="ParameterSection.GeoPosition"/>
-    public GeoCoordinate(double latitude, double longitude)
+    public GeoCoordinate(double latitude, double longitude, double? uncertainty = null)
     {
         if (double.IsNaN(latitude) || latitude < -100.0 || latitude > 100.0)
         {
@@ -40,6 +44,18 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
             throw new ArgumentOutOfRangeException(nameof(longitude));
         }
 
+        if (uncertainty.HasValue)
+        {
+            double val = uncertainty.Value;
+
+            if (double.IsNaN(val) || val < 0.0 || double.IsInfinity(val))
+            {
+                throw new ArgumentOutOfRangeException(nameof(uncertainty));
+            }
+
+            Uncertainty = (float)Math.Round(val, 1, MidpointRounding.ToEven);
+        }
+
         NormalizeLatitude(ref latitude, ref longitude);
         longitude = NormalizeLongitude(longitude);
 
@@ -48,7 +64,9 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         static double NormalizeLongitude(double longitude)
         {
-            if (longitude < -180.0)
+            // RFC 5870, 3.4.4
+            // -180 and 180 are equal
+            if (longitude <= -180.0)
             {
                 longitude += 360.0;
             }
@@ -62,7 +80,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         static void NormalizeLatitude(ref double latitude, ref double longitude)
         {
-            // fly over the Pole
+            // flying over the pole
             if (latitude > 90.0)
             {
                 latitude = 180.0 - latitude;
@@ -72,6 +90,13 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
             {
                 latitude = -180.0 - latitude;
                 longitude = WrapLongitude(longitude);
+            }
+
+            // Longitude should be '0' at the poles
+            // See RFC 5870, 3.4.2
+            if (90.0 - Math.Abs(latitude) < _6)
+            {
+                longitude = 0;
             }
 
             static double WrapLongitude(double longitude)
@@ -85,34 +110,43 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <summary>Longitude.</summary>
     public double Longitude { get; }
 
+    /// <summary>
+    /// The amount of uncertainty in the location as a value in meters, or <c>null</c>
+    /// if this is not specified.
+    /// </summary>
+    /// <remarks>If the value is <c>null</c> or zero, this implementation has a minimal 
+    /// uncertainty of about 12 cm.</remarks>
+    public float? Uncertainty { get; }
+
     /// <inheritdoc />
     public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as GeoCoordinate);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool Equals([NotNullWhen(true)] GeoCoordinate? other) => Equals(other, 0);
+    public bool Equals([NotNullWhen(true)] GeoCoordinate? other)
+        => other != null
+           && other.Latitude == Latitude
+           && other.Longitude == Longitude
+           && other.Uncertainty == Uncertainty;
 
     /// <summary>
-    /// Indicates whether the current object is equal to <paramref name="other"/>
-    /// and allows to define equality by specifying a distance within that geographical
-    /// positions are considered equal.
+    /// Indicates whether the current object desribes a geographical position that is 
+    /// equal to that of <paramref name="other"/>.
     /// </summary>
     /// <param name="other">A <see cref="GeoCoordinate"/> object to compare with the 
-    /// current instance, or <c>null</c>.</param>
-    /// <param name="uncertainty">A distance in <c>m</c> within that geographical
-    /// positions are considered equal. (The recognized minimum is about 12 cm.)</param>
+    /// current instance.</param>
+    /// 
     /// <returns><c>true</c> if the geographical position of <paramref name="other"/>
-    /// is no further away than <paramref name="uncertainty"/> meters from that of the 
-    /// current instance, otherwise <c>false</c>.</returns>
-    public bool Equals([NotNullWhen(true)] GeoCoordinate? other, int uncertainty)
+    /// is equal to that of the current instance, otherwise <c>false</c>.</returns>
+    public bool IsEqualPosition(GeoCoordinate other)
     {
-        if (other != null)
+        if (other is null)
         {
-            double minDist = uncertainty < 1 ? MIN_DISTANCE : uncertainty;
-            return ComputeDistance(other) < minDist;
+            throw new ArgumentNullException(nameof(other));
         }
 
-        return false;
+        double minDist = (Uncertainty ?? 0) + (other.Uncertainty ?? 0);
+        return ComputeDistanceToCompareEquality(other) < (minDist < 0.2 ? MIN_DISTANCE : minDist);
     }
 
     /// <summary>
@@ -121,13 +155,13 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// </summary>
     /// <param name="other">The <see cref="GeoCoordinate"/> to compare with.</param>
     /// <returns>The distance in <c>m</c> between this and <paramref name="other"/>.</returns>
-    private double ComputeDistance(GeoCoordinate other)
+    private double ComputeDistanceToCompareEquality(GeoCoordinate other)
     {
         double diffLat = ONE_DEGREE_DISTANCE * (Latitude - other.Latitude);
 
         // radians of the average latitude
         double latRad = (Latitude + other.Latitude) * (Math.PI / 360);
-        
+
         double diffAngleLong = Math.Abs(Longitude - other.Longitude);
 
         // take the shortest direction around the globe:
@@ -163,36 +197,47 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override int GetHashCode() => GetHashCode(0);
+    public override int GetHashCode() => HashCode.Combine(Latitude, Longitude, Uncertainty);
 
-    /// <summary>
-    /// Generates a hash code for the current instance and allows to specify
-    /// a distance within that differences between geographical positions are
-    /// ignored.
-    /// </summary>
-    /// <param name="uncertainty">A distance in <c>m</c> within that geographical
-    /// positions are considered equal. (The recognized minimum is about 12 cm.)</param>
-    /// <returns>A hash code for the current object.</returns>
-    public int GetHashCode(int uncertainty)
-    {
-        double minDist = uncertainty < 1 ? MIN_DISTANCE : uncertainty;
+    ///// <summary>
+    ///// Generates a hash code for the current instance and allows to specify
+    ///// a distance within that differences between geographical positions are
+    ///// ignored.
+    ///// </summary>
+    ///// <param name="uncertainty">A distance in <c>m</c> within that geographical
+    ///// positions are considered equal. (The recognized minimum is about 12 cm.)</param>
+    ///// <returns>A hash code for the current object.</returns>
+    //public int GetHashCode(int uncertainty)
+    //{
+    //    double minDist = uncertainty < 1 ? MIN_DISTANCE : uncertainty;
 
-        double lati = Math.Floor(Latitude * ONE_DEGREE_DISTANCE / minDist);
+    //    double lati = Math.Floor(Latitude * ONE_DEGREE_DISTANCE / minDist);
 
-        double oneDegreeLongitudeDistance = ONE_DEGREE_DISTANCE * Math.Cos(Latitude * (Math.PI / 180));
+    //    double oneDegreeLongitudeDistance = ONE_DEGREE_DISTANCE * Math.Cos(Latitude * (Math.PI / 180));
 
-        double longi = oneDegreeLongitudeDistance < minDist 
-                                 ? 0 
-                                 : Math.Floor(Longitude * oneDegreeLongitudeDistance / minDist);
+    //    double longi = oneDegreeLongitudeDistance < minDist
+    //                             ? 0
+    //                             : Math.Floor(Longitude * oneDegreeLongitudeDistance / minDist);
 
-        return HashCode.Combine(lati, longi);
-    }
+    //    return HashCode.Combine(lati, longi);
+    //}
 
     /// <inheritdoc/>
     public override string ToString()
     {
         string latitude = Latitude.ToString("F6");
         string longitude = Longitude.ToString("F6");
+
+        if (Uncertainty.HasValue)
+        {
+            string m = Uncertainty.Value >= 0.1 ? "m" : "";
+
+            return $"""
+                Latitude:    {latitude}
+                Longitude:   {longitude}
+                Uncertainty: {Uncertainty.Value:F1} {m}
+                """;
+        }
 
         return $"""
                 Latitude:  {latitude,11}
@@ -204,9 +249,16 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     {
         coordinate = null;
 
+        value = value.TrimStart();
+
         if (value.IsEmpty)
         {
             return false;
+        }
+
+        if (IsGeoUri(value))
+        {
+            return TryParseGeoUri(value, out coordinate);
         }
 
         int startIndex = 0;
@@ -228,26 +280,100 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
             value = value.Slice(startIndex);
         }
 
-        int splitIndex = value.IndexOf(','); // vCard 4.0
+        int splitIndex = value.IndexOf(';');
 
-        if (splitIndex == -1)
-        {
-            splitIndex = value.IndexOf(';'); // vCard 3.0
-        }
-
-        try
-        {
-            NumberStyles numStyle = NumberStyles.AllowDecimalPoint
+        NumberStyles numStyle = NumberStyles.AllowDecimalPoint
                                   | NumberStyles.AllowLeadingSign
                                   | NumberStyles.AllowLeadingWhite
                                   | NumberStyles.AllowTrailingWhite;
 
-            CultureInfo culture = CultureInfo.InvariantCulture;
+        CultureInfo culture = CultureInfo.InvariantCulture;
+
+        if (!_Double.TryParse(value.Slice(0, splitIndex), numStyle, culture, out double latitude)
+            || !_Double.TryParse(value.Slice(splitIndex + 1), numStyle, culture, out double longitude))
+        {
+            return false;
+        }
+
+        try
+        {
+            coordinate = new GeoCoordinate(latitude, longitude);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool IsGeoUri(ReadOnlySpan<char> value) => value.StartsWith(GEO_URI_PROTOCOL, StringComparison.OrdinalIgnoreCase);
 
 
-            coordinate = new GeoCoordinate(
-                _Double.Parse(value.Slice(0, splitIndex), numStyle, culture),
-                _Double.Parse(value.Slice(splitIndex + 1), numStyle, culture));
+    private static bool TryParseGeoUri(ReadOnlySpan<char> value, out GeoCoordinate? coordinate)
+    {
+        coordinate = default;
+
+        value = value.Slice(GEO_URI_PROTOCOL.Length);
+
+        int splitIndex = value.IndexOf(',');
+
+        if (splitIndex == -1) { return false; }
+
+        NumberStyles styles = NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign;
+
+        if (!_Double.TryParse(value.Slice(0, splitIndex),
+                              styles,
+                              CultureInfo.InvariantCulture,
+                              out double latitude))
+        {
+            return false;
+        }
+
+        value = value.Slice(splitIndex + 1);
+
+        splitIndex = value.IndexOfAny(",;");
+
+        if (splitIndex == -1) { return false; }
+
+        if (!_Double.TryParse(value.Slice(0, splitIndex),
+                              styles,
+                              CultureInfo.InvariantCulture,
+                              out double longitude))
+        {
+            return false;
+        }
+
+        value = value.Slice(splitIndex);
+
+        const string uParameter = ";u=";
+
+        int uParameterStart = value.IndexOf(uParameter.AsSpan(), StringComparison.OrdinalIgnoreCase);
+
+        double? uncertainty = null;
+
+        if (uParameterStart != -1)
+        {
+            value = value.Slice(splitIndex + uParameter.Length);
+
+            int uParameterEnd = value.IndexOf(';');
+
+            if (uParameterEnd != -1)
+            {
+                value = value.Slice(0, uParameterEnd);
+            }
+
+            if (_Double.TryParse(value,
+                              styles,
+                              CultureInfo.InvariantCulture,
+                              out double uValue))
+            {
+                uncertainty = uValue;
+            }
+        }
+
+        try
+        {
+            coordinate = new GeoCoordinate(latitude, longitude, uncertainty);
             return true;
         }
         catch

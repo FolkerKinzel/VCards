@@ -38,19 +38,17 @@ public class GeoCoordinateTests
     }
 
     [DataTestMethod()]
-    //[DataRow(double.NaN, 15, 27, double.NaN, true)]
-    //[DataRow(double.NegativeInfinity, 15, 27, double.PositiveInfinity, true)]
-    [DataRow(5.123456, 0, 5.1234561, 0, true)]
-    [DataRow(0, 5.1234568, 0, 5.1234561, false)]
-    [DataRow(0, 5.1234563, 0, 5.1234561, true)]
-    [DataRow(0, 0, 0, 0, true)]
-    [DataRow(5.123456, 17, 5.123457, 17, false)]
-    [DataRow(89.99999, -17.5, 89.99999, -17.6, true)]
-    [DataRow(52, -180, 52, 180, true)]
-    public void EqualsTest4(double latitude1, double longitude1, double latitude2, double longitude2, bool expected)
+    [DataRow(5.123456, 0, null, 5.1234561, 0, null, true)]
+    [DataRow(0, 5.1234568, null, 0, 5.1234561, null, false)]
+    [DataRow(0, 5.1234563, null, 0, 5.1234561, null, true)]
+    [DataRow(0, 0, null, 0, 0, null, true)]
+    [DataRow(5.123456, 17, null, 5.123457, 17, null, false)]
+    [DataRow(89.99999, -17.5, null, 89.99999, -17.6, null, true)]
+    [DataRow(52, -180, null, 52, 180, null, true)]
+    public void EqualsTest4(double latitude1, double longitude1, double uncertainty1, double latitude2, double longitude2, double? uncertainty2, bool expected)
     {
-        var geo1 = new GeoCoordinate(latitude1, longitude1);
-        var geo2 = new GeoCoordinate(latitude2, longitude2);
+        var geo1 = new GeoCoordinate(latitude1, longitude1, uncertainty1);
+        var geo2 = new GeoCoordinate(latitude2, longitude2, uncertainty2);
 
         Assert.AreEqual(expected, geo1.Equals(geo2));
         Assert.AreEqual(expected, geo1 == geo2);
@@ -66,18 +64,12 @@ public class GeoCoordinateTests
     [DataRow(51.05022555003223, 12.130624133575036, 51.04930951936781, 12.128100583930106, true, 1000)]
     [DataRow(51.05022555003223, 12.130624133575036, 51.04930951936781, 12.128100583930106, false, 100)]
     [DataRow(89.99, 180.0, 89.99, -179.9999, true, 10000)]
-    public void EqualsTest5(double latitude1, double longitude1, double latitude2, double longitude2, bool expected, int minDistance)
+    public void IsEqualPositionTest1(double latitude1, double longitude1, double latitude2, double longitude2, bool expected, double? uncertainty)
     {
         var geo1 = new GeoCoordinate(latitude1, longitude1);
         var geo2 = new GeoCoordinate(latitude2, longitude2);
 
-        Assert.AreEqual(expected, geo1.Equals(geo2, minDistance));
-        
-
-        if (expected)
-        {
-            Assert.AreEqual(geo1.GetHashCode(minDistance), geo2.GetHashCode(minDistance));
-        }
+        Assert.AreEqual(expected, geo1.IsEqualPosition(geo2));
     }
 
 

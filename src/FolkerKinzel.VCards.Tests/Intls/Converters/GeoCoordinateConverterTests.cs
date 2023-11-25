@@ -22,13 +22,13 @@ public class GeoCoordinateConverterTests
 
 
     [DataTestMethod]
-    [DataRow(VCdVersion.V4_0, "geo:0.800000,0.700000")]
-    [DataRow(VCdVersion.V3_0, "0.800000;0.700000")]
-    [DataRow(VCdVersion.V2_1, "0.800000;0.700000")]
+    [DataRow(VCdVersion.V4_0, "geo:0.8,0.7;u=5")]
+    [DataRow(VCdVersion.V3_0, "0.8;0.7")]
+    [DataRow(VCdVersion.V2_1, "0.8;0.7")]
     public void AppendToTest1(VCdVersion version, string expected)
     {
         var sb = new StringBuilder();
-        GeoCoordinateConverter.AppendTo(sb, new GeoCoordinate(0.8, 0.7), version);
+        GeoCoordinateConverter.AppendTo(sb, new GeoCoordinate(0.8, 0.7, 5), version);
         Assert.AreEqual(expected, sb.ToString());
     }
 
@@ -50,6 +50,6 @@ public class GeoCoordinateConverterTests
     {
         var sb = new StringBuilder();
         GeoCoordinateConverter.AppendTo(sb, new GeoCoordinate(0.8, 0.7), VCdVersion.V3_0);
-        Assert.AreEqual("0.800000;0.700000", sb.ToString());
+        Assert.AreEqual("0.8;0.7", sb.ToString());
     }
 }
