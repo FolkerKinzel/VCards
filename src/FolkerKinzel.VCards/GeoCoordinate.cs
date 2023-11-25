@@ -40,9 +40,8 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
             throw new ArgumentOutOfRangeException(nameof(longitude));
         }
 
-        // Don't change the order: longitude MUST be normalized first.
-        longitude = NormalizeLongitude(longitude);
         NormalizeLatitude(ref latitude, ref longitude);
+        longitude = NormalizeLongitude(longitude);
 
         Latitude = Math.Round(latitude, 6, MidpointRounding.ToEven);
         Longitude = Math.Round(longitude, 6, MidpointRounding.ToEven);
@@ -63,19 +62,20 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         static void NormalizeLatitude(ref double latitude, ref double longitude)
         {
-            Debug.Assert(longitude <= 180.0);
-
             // fly over the Pole
             if (latitude > 90.0)
             {
                 latitude = 180.0 - latitude;
-                longitude = 180.0 - Math.Abs(longitude);
+                longitude = WrapLongitude(longitude);
             }
             else if (latitude < -90.0)
             {
                 latitude = -180.0 - latitude;
-                longitude = 180.0 - Math.Abs(longitude);
+                longitude = WrapLongitude(longitude);
             }
+
+            static double WrapLongitude(double longitude)
+                => longitude > 0.0 ? longitude - 180.0 : longitude + 180.0;
         }
     }
 
@@ -99,17 +99,17 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// </summary>
     /// <param name="other">A <see cref="GeoCoordinate"/> object to compare with the 
     /// current instance, or <c>null</c>.</param>
-    /// <param name="minDistance">A distance in <c>m</c> within that geographical
+    /// <param name="uncertainty">A distance in <c>m</c> within that geographical
     /// positions are considered equal. (The recognized minimum is about 12 cm.)</param>
     /// <returns><c>true</c> if the geographical position of <paramref name="other"/>
-    /// is no further away than <paramref name="minDistance"/> meters from that of the 
+    /// is no further away than <paramref name="uncertainty"/> meters from that of the 
     /// current instance, otherwise <c>false</c>.</returns>
-    public bool Equals([NotNullWhen(true)] GeoCoordinate? other, int minDistance)
+    public bool Equals([NotNullWhen(true)] GeoCoordinate? other, int uncertainty)
     {
         if (other != null)
         {
-            double minDist = minDistance < 1 ? MIN_DISTANCE : minDistance;
-            return ComputeDistance(other, minDist) < minDist;
+            double minDist = uncertainty < 1 ? MIN_DISTANCE : uncertainty;
+            return ComputeDistance(other) < minDist;
         }
 
         return false;
@@ -120,10 +120,8 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// Pythagoras (that's precisely enough for very short distances).
     /// </summary>
     /// <param name="other">The <see cref="GeoCoordinate"/> to compare with.</param>
-    /// <param name="minDistance">Minimum distance in <c>m</c> for which <see cref="GeoCoordinate"/>
-    /// objects are considered different.</param>
     /// <returns>The distance in <c>m</c> between this and <paramref name="other"/>.</returns>
-    private double ComputeDistance(GeoCoordinate other, double minDistance)
+    private double ComputeDistance(GeoCoordinate other)
     {
         double diffLat = ONE_DEGREE_DISTANCE * (Latitude - other.Latitude);
 
@@ -172,12 +170,12 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// a distance within that differences between geographical positions are
     /// ignored.
     /// </summary>
-    /// <param name="minDistance">A distance in <c>m</c> within that geographical
+    /// <param name="uncertainty">A distance in <c>m</c> within that geographical
     /// positions are considered equal. (The recognized minimum is about 12 cm.)</param>
     /// <returns>A hash code for the current object.</returns>
-    public int GetHashCode(int minDistance)
+    public int GetHashCode(int uncertainty)
     {
-        double minDist = minDistance < 1 ? MIN_DISTANCE : minDistance;
+        double minDist = uncertainty < 1 ? MIN_DISTANCE : uncertainty;
 
         double lati = Math.Floor(Latitude * ONE_DEGREE_DISTANCE / minDist);
 
