@@ -40,26 +40,43 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
             throw new ArgumentOutOfRangeException(nameof(longitude));
         }
 
-        if (latitude > 90.0)
-        {
-            latitude = 180.0 - latitude;
-        }
-        else if(latitude < -90.0)
-        {
-            latitude = -180.0 - latitude;
-        }
-
-        if(longitude < -180.0)
-        {
-            longitude += 360.0;
-        }
-        else if(longitude > 180.0)
-        {
-            longitude -= 360.0;
-        }
+        // Don't change the order: longitude MUST be normalized first.
+        longitude = NormalizeLongitude(longitude);
+        NormalizeLatitude(ref latitude, ref longitude);
 
         Latitude = Math.Round(latitude, 6, MidpointRounding.ToEven);
         Longitude = Math.Round(longitude, 6, MidpointRounding.ToEven);
+
+        static double NormalizeLongitude(double longitude)
+        {
+            if (longitude < -180.0)
+            {
+                longitude += 360.0;
+            }
+            else if (longitude > 180.0)
+            {
+                longitude -= 360.0;
+            }
+
+            return longitude;
+        }
+
+        static void NormalizeLatitude(ref double latitude, ref double longitude)
+        {
+            Debug.Assert(longitude <= 180.0);
+
+            // fly over the Pole
+            if (latitude > 90.0)
+            {
+                latitude = 180.0 - latitude;
+                longitude = 180.0 - Math.Abs(longitude);
+            }
+            else if (latitude < -90.0)
+            {
+                latitude = -180.0 - latitude;
+                longitude = 180.0 - Math.Abs(longitude);
+            }
+        }
     }
 
     /// <summary>Latitude.</summary>
@@ -113,12 +130,12 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         // radians of the average latitude
         double latRad = (Latitude + other.Latitude) * (Math.PI / 360);
         
-        // take the shortest direction around the globe:
         double diffAngleLong = Math.Abs(Longitude - other.Longitude);
 
-        if(diffAngleLong > 180.0)
+        // take the shortest direction around the globe:
+        if (diffAngleLong > 180.0)
         {
-            diffAngleLong -= 180.0;
+            diffAngleLong = 360.0 - diffAngleLong;
         }
 
         double diffLong = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * diffAngleLong;
