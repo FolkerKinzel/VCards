@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FolkerKinzel.VCards.Intls;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -13,10 +14,7 @@ public static class HelperExtensions
 
     private static IEnumerable EnumerateWeak(this IEnumerable source)
     {
-        if (source == null)
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
+        _ArgumentNullException.ThrowIfNull(source, nameof(source));
 
         foreach (object? o in source)
         {

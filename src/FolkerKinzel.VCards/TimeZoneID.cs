@@ -102,13 +102,12 @@ public sealed partial class TimeZoneID
 
             TimeSpanStyles styles = TimeSpanStyles.None;
 
-
-            if (Value.StartsWith("-", StringComparison.Ordinal))
+            if (Value.StartsWith('-'))
             {
                 startIndex = 1;
                 styles = TimeSpanStyles.AssumeNegative;
             }
-            else if (Value.StartsWith("+", StringComparison.Ordinal))
+            else if (Value.StartsWith('+'))
             {
                 startIndex = 1;
             }
@@ -191,7 +190,6 @@ public sealed partial class TimeZoneID
                 }
         }
     }
-
 
     [ExcludeFromCodeCoverage]
     private bool IsUtcOffset()

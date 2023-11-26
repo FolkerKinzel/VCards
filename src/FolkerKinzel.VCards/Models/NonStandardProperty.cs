@@ -1,4 +1,5 @@
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -48,10 +49,7 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     public NonStandardProperty(string xName, string? value, string? group = null)
         : base(new ParameterSection(), group)
     {
-        if (xName == null)
-        {
-            throw new ArgumentNullException(nameof(xName));
-        }
+        _ArgumentNullException.ThrowIfNull(xName, nameof(xName));
 
         if (xName.Length < 3 ||
             !xName.StartsWith("X-", StringComparison.OrdinalIgnoreCase) ||
