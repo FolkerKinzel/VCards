@@ -6,6 +6,7 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 internal static class GeoCoordinateConverter
 {
     private const string FLOAT_FORMAT = "0.0#####";
+    internal const string U_PARAMETER = ";u=";
 
     internal static void AppendTo(StringBuilder builder, GeoCoordinate? coordinate, VCdVersion version)
     {
@@ -31,7 +32,7 @@ internal static class GeoCoordinateConverter
                 _ = builder.Append("geo:").Append(latitude).Append(',').Append(longitude);
                 if(coordinate.Uncertainty.HasValue) 
                 {
-                    _ = builder.Append(";u=").Append(coordinate.Uncertainty.Value.ToString("0.",culture));
+                    _ = builder.Append(U_PARAMETER).Append(coordinate.Uncertainty.Value.ToString("0.",culture));
                 }
                 break;
         }//switch

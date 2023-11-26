@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.Strings.Polyfills;
+using FolkerKinzel.VCards.Intls;
 
 namespace FolkerKinzel.VCards;
 
@@ -138,16 +139,16 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// 
     /// <returns><c>true</c> if the geographical position of <paramref name="other"/>
     /// is equal to that of the current instance, otherwise <c>false</c>.</returns>
-    public bool IsEqualPosition(GeoCoordinate other)
+    public bool IsSamePosition(GeoCoordinate other)
     {
-        if (other is null)
-        {
-            throw new ArgumentNullException(nameof(other));
-        }
+        _ArgumentNullException.ThrowIfNull(other, nameof(other));
 
         double minDist = (Uncertainty ?? 0) + (other.Uncertainty ?? 0);
         return ComputeDistanceToCompareEquality(other) < (minDist < 0.2 ? MIN_DISTANCE : minDist);
     }
+
+    public static bool AreSamePosition(GeoCoordinate coordinate1, GeoCoordinate coordinate2)
+        => coordinate1?.IsSamePosition(coordinate2) ?? throw new ArgumentNullException(nameof(coordinate1));
 
     /// <summary>
     /// Computes the distance between this and <paramref name="other"/> in <c>m</c> simply with 
@@ -199,29 +200,6 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => HashCode.Combine(Latitude, Longitude, Uncertainty);
 
-    ///// <summary>
-    ///// Generates a hash code for the current instance and allows to specify
-    ///// a distance within that differences between geographical positions are
-    ///// ignored.
-    ///// </summary>
-    ///// <param name="uncertainty">A distance in <c>m</c> within that geographical
-    ///// positions are considered equal. (The recognized minimum is about 12 cm.)</param>
-    ///// <returns>A hash code for the current object.</returns>
-    //public int GetHashCode(int uncertainty)
-    //{
-    //    double minDist = uncertainty < 1 ? MIN_DISTANCE : uncertainty;
-
-    //    double lati = Math.Floor(Latitude * ONE_DEGREE_DISTANCE / minDist);
-
-    //    double oneDegreeLongitudeDistance = ONE_DEGREE_DISTANCE * Math.Cos(Latitude * (Math.PI / 180));
-
-    //    double longi = oneDegreeLongitudeDistance < minDist
-    //                             ? 0
-    //                             : Math.Floor(Longitude * oneDegreeLongitudeDistance / minDist);
-
-    //    return HashCode.Combine(lati, longi);
-    //}
-
     /// <inheritdoc/>
     public override string ToString()
     {
@@ -245,7 +223,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
                 """;
     }
 
-    internal static bool TryParse(ReadOnlySpan<char> value, out GeoCoordinate? coordinate)
+    internal static bool TryParse(ReadOnlySpan<char> value, [NotNullWhen(true)] out GeoCoordinate? coordinate)
     {
         coordinate = null;
 
@@ -261,26 +239,12 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
             return TryParseGeoUri(value, out coordinate);
         }
 
-        int startIndex = 0;
-
-        while (startIndex < value.Length)
-        {
-            char c = value[startIndex];
-
-            if (char.IsDigit(c) || c == '.') // ".8" == "0.8"
-            {
-                break;
-            }
-
-            startIndex++;
-        }
-
-        if (startIndex != 0)
-        {
-            value = value.Slice(startIndex);
-        }
-
         int splitIndex = value.IndexOf(';');
+
+        if (splitIndex == -1) 
+        {
+            return false;
+        }
 
         NumberStyles numStyle = NumberStyles.AllowDecimalPoint
                                   | NumberStyles.AllowLeadingSign
@@ -309,7 +273,8 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     private static bool IsGeoUri(ReadOnlySpan<char> value) => value.StartsWith(GEO_URI_PROTOCOL, StringComparison.OrdinalIgnoreCase);
 
 
-    private static bool TryParseGeoUri(ReadOnlySpan<char> value, out GeoCoordinate? coordinate)
+    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
+    private static bool TryParseGeoUri(ReadOnlySpan<char> value, [NotNullWhen(true)] out GeoCoordinate? coordinate)
     {
         coordinate = default;
 
@@ -333,41 +298,40 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         splitIndex = value.IndexOfAny(",;");
 
-        if (splitIndex == -1) { return false; }
-
-        if (!_Double.TryParse(value.Slice(0, splitIndex),
+        if (!_Double.TryParse(splitIndex == -1 ? value : value.Slice(0, splitIndex),
                               styles,
                               CultureInfo.InvariantCulture,
                               out double longitude))
         {
             return false;
         }
-
-        value = value.Slice(splitIndex);
-
-        const string uParameter = ";u=";
-
-        int uParameterStart = value.IndexOf(uParameter.AsSpan(), StringComparison.OrdinalIgnoreCase);
-
         double? uncertainty = null;
 
-        if (uParameterStart != -1)
+        if (splitIndex != -1)
         {
-            value = value.Slice(splitIndex + uParameter.Length);
 
-            int uParameterEnd = value.IndexOf(';');
+            value = value.Slice(splitIndex);
 
-            if (uParameterEnd != -1)
+            int uParameterStart = value.IndexOf(GeoCoordinateConverter.U_PARAMETER.AsSpan(), StringComparison.OrdinalIgnoreCase);
+
+            if (uParameterStart != -1)
             {
-                value = value.Slice(0, uParameterEnd);
-            }
+                value = value.Slice(uParameterStart + GeoCoordinateConverter.U_PARAMETER.Length);
 
-            if (_Double.TryParse(value,
-                              styles,
-                              CultureInfo.InvariantCulture,
-                              out double uValue))
-            {
-                uncertainty = uValue;
+                int uParameterEnd = value.IndexOf(';');
+
+                if (uParameterEnd != -1)
+                {
+                    value = value.Slice(0, uParameterEnd);
+                }
+
+                if (_Double.TryParse(value,
+                                  styles,
+                                  CultureInfo.InvariantCulture,
+                                  out double uValue))
+                {
+                    uncertainty = uValue;
+                }
             }
         }
 
