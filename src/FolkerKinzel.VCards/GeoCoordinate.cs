@@ -312,7 +312,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
             value = value.Slice(splitIndex);
 
-            int uParameterStart = value.IndexOf(GeoCoordinateConverter.U_PARAMETER.AsSpan(), StringComparison.OrdinalIgnoreCase);
+            int uParameterStart = value.IndexOf(GeoCoordinateConverter.U_PARAMETER, StringComparison.OrdinalIgnoreCase);
 
             if (uParameterStart != -1)
             {
