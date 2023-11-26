@@ -6,18 +6,11 @@ using System.Threading.Tasks;
 
 namespace FolkerKinzel.VCards.Tests;
 
-internal class FailStream : Stream
+internal class FailStream(Exception exception, Stream? innerStream = null, long throwPosition = 0) : Stream
 {
-    private readonly Stream? _innerStream;
-    private readonly Exception _exception;
-    private readonly long _throwPosition;
-
-    public FailStream(Exception exception, Stream? innerStream = null, long throwPosition = 0)
-    {
-        _exception = exception ?? throw new ArgumentNullException(nameof(exception));
-        this._innerStream = innerStream;
-        _throwPosition = throwPosition;
-    }
+    private readonly Stream? _innerStream = innerStream;
+    private readonly Exception _exception = exception ?? throw new ArgumentNullException(nameof(exception));
+    private readonly long _throwPosition = throwPosition;
 
     public override bool CanRead => _innerStream is null || _innerStream.CanRead;
 

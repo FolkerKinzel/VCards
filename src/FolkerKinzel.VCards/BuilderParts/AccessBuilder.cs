@@ -9,7 +9,6 @@ namespace FolkerKinzel.VCards.BuilderParts;
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals", Justification = "<Pending>")]
 public readonly struct AccessBuilder
 {
-    
     private readonly VCardBuilder? _builder;
 
     [MemberNotNull(nameof(_builder))]
@@ -41,5 +40,4 @@ public readonly struct AccessBuilder
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => base.ToString()!;
-
 }

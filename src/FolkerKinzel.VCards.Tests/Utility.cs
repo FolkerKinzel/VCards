@@ -7,12 +7,13 @@ namespace FolkerKinzel.VCards.Tests;
 
 internal static class Utility
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>")]
     internal static VCard CreateVCard()
     {
         VCard.SyncTestReset();
         VCard.RegisterApp(new Uri("http://folkerkinzel.de"));
 
-        string[] sortAs = new string[] { "Entenhausen", "Elmstreet" };
+        string[] sortAs = ["Entenhausen", "Elmstreet"];
 
         var tel1 = new TextProperty("123");
         tel1.Parameters.PhoneType = default(Tel);

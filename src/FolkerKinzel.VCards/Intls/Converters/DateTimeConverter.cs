@@ -17,16 +17,16 @@ internal sealed class DateTimeConverter
     private static readonly DateTimeOffset _minDate = new DateTime(3, 12, 31, 10, 0, 0);
 
 
-    private readonly string[] _dateOnlyFormats = new string[]
-    {
+    private readonly string[] _dateOnlyFormats =
+    [
         "yyyyMMdd",
         "yyyy",
         "yyyy-MM",
         "yyyy-MM-dd"
-    };
+    ];
 
-    private readonly string[] _modelStrings = new string[]
-    {
+    private readonly string[] _modelStrings =
+    [
             "yyyy-MM-ddTHH:mm:ss",
             "yyyy-MM-ddTHH:mm:sszzz",
             "yyyy-MM-ddTHH:mm:sszz",
@@ -57,7 +57,7 @@ internal sealed class DateTimeConverter
             //"T--ss",
             //"T--sszz",
             //"T--sszzz"
-    };
+    ];
 
     #if NET5_0_OR_GREATER
     [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]

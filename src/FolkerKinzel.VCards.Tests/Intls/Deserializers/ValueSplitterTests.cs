@@ -52,6 +52,7 @@ public class ValueSplitterTests
     [DataTestMethod]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ',', new string[] { @"Bun\,go", @"Bon\;go;Banga" })]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ';', new string[] { @"Bun\,go,Bon\;go", "Banga" })]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>")]
     public void GetEnumeratorTest2(string? valueString, char splitChar, string[] expected)
     {
         var valueSplitter = new ValueSplitter(splitChar, StringSplitOptions.None)
@@ -59,7 +60,7 @@ public class ValueSplitterTests
             ValueString = valueString
         };
 
-        string[] arr = valueSplitter.ToArray();
+        string[] arr = [.. valueSplitter];
         CollectionAssert.AreEqual(arr, expected, StringComparer.Ordinal);
     }
 
@@ -67,6 +68,7 @@ public class ValueSplitterTests
     [DataTestMethod]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ',', new string[] { @"Bun\,go", @"Bon\;go;Banga" })]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ';', new string[] { @"Bun\,go,Bon\;go", "Banga" })]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>")]
     public void GetEnumeratorTest3(string? valueString, char splitChar, string[] expected)
     {
         var valueSplitter = new ValueSplitter(splitChar, StringSplitOptions.None)

@@ -4,17 +4,15 @@ using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Tests;
 
-internal class TimeZoneIDConverterMock : ITimeZoneIDConverter
+internal class TimeZoneIDConverterMock(bool success) : ITimeZoneIDConverter
 {
-    public TimeZoneIDConverterMock(bool success) => Success = success;
-
     public bool TryConvertToUtcOffset(string timeZoneID, out TimeSpan utcOffset)
     {
         utcOffset = TimeSpan.Zero;
         return Success;
     }
 
-    internal bool Success { get; }
+    internal bool Success { get; } = success;
 }
 
 [TestClass]

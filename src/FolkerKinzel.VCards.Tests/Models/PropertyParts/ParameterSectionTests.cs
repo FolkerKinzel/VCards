@@ -39,16 +39,20 @@ public class ParameterSectionTests
     [TestMethod]
     public void AddressTypeTest1()
     {
-        var sec = new ParameterSection();
-        sec.AddressType = default(Adr);
+        var sec = new ParameterSection
+        {
+            AddressType = default(Adr)
+        };
         Assert.IsNull(sec.AddressType);
     }
 
     [TestMethod]
     public void IndexTest1()
     {
-        var sec = new ParameterSection();
-        sec.Index = -7;
+        var sec = new ParameterSection
+        {
+            Index = -7
+        };
         Assert.AreEqual(1, sec.Index);
 
         sec.Index = 1;

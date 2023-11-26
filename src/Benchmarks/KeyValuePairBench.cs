@@ -7,7 +7,7 @@ namespace Benchmarks;
 
 public class KeyValuePairBench
 {
-    private readonly List<(string Key, string Value)> _tupleList = new();
+    private readonly List<(string Key, string Value)> _tupleList = [];
 
     public List<(string Key, string Value)> TupleList => _tupleList;
 

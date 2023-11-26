@@ -272,8 +272,6 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
     private static bool IsGeoUri(ReadOnlySpan<char> value) => value.StartsWith(GEO_URI_PROTOCOL, StringComparison.OrdinalIgnoreCase);
 
-
-    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
     private static bool TryParseGeoUri(ReadOnlySpan<char> value, [NotNullWhen(true)] out GeoCoordinate? coordinate)
     {
         coordinate = default;

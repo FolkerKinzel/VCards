@@ -5,9 +5,9 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer2_1 : ParameterSerializer
+internal sealed class ParameterSerializer2_1(VcfOptions options) : ParameterSerializer(options)
 {
-    private readonly List<string> _stringCollectionList = new();
+    private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer2_1>> _actionList = new(2);
 
     private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes = static serializer
@@ -26,8 +26,6 @@ internal sealed class ParameterSerializer2_1 : ParameterSerializer
     private readonly Action<ParameterSerializer2_1> _collectAddressTypes = static serializer 
         => EnumValueCollector.Collect(serializer.ParaSection.AddressType,
                                       serializer._stringCollectionList);
-
-    public ParameterSerializer2_1(VcfOptions options) : base(options) { }
 
 
     #region Build

@@ -6,9 +6,9 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer3_0 : ParameterSerializer
+internal sealed class ParameterSerializer3_0(VcfOptions options) : ParameterSerializer(options)
 {
-    private readonly List<string> _stringCollectionList = new();
+    private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer3_0>> _actionList = new(2);
 
     private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes = static serializer
@@ -38,8 +38,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     private readonly Action<ParameterSerializer3_0> _collectEmailType = static serializer => serializer.DoCollectEmailType();
     private readonly Action<ParameterSerializer3_0> _collectSoundType = static serializer => serializer.DoCollectSoundType();
     private readonly Action<ParameterSerializer3_0> _collectMediaType = static serializer => serializer.DoCollectMediaType();
-
-    public ParameterSerializer3_0(VcfOptions options) : base(options) { }
 
     #region Build
 

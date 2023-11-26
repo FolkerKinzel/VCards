@@ -19,11 +19,13 @@ public class ParameterSerializerTests
         VCard.RegisterApp(null);
 
         var prop = new NonStandardProperty("X-PROP", "01234");
-        var dic = new Dictionary<string, string>();
-        dic["X-TEST"] = "test";
-        dic["X-NOTHING"] = "   ";
-        dic[""] = "not there";
-        dic["TYPE"] = "NON-STANDARD";
+        var dic = new Dictionary<string, string>
+        {
+            ["X-TEST"] = "test",
+            ["X-NOTHING"] = "   ",
+            [""] = "not there",
+            ["TYPE"] = "NON-STANDARD"
+        };
         prop.Parameters.NonStandard = dic;
         var vc = new VCard { NonStandards = prop };
 

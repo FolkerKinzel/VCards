@@ -295,7 +295,7 @@ public sealed partial class ParameterSection
     /// </remarks>
     public int Preference
     {
-        get => _propDic.ContainsKey(VCdParam.Preference) ? (int)_propDic[VCdParam.Preference] : PREF_MAX_VALUE;
+        get => _propDic.TryGetValue(VCdParam.Preference, out object? value) ? (int)value : PREF_MAX_VALUE;
 
         set
         {

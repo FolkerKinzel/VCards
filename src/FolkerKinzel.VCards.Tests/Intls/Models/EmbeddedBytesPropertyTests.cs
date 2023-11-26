@@ -39,7 +39,7 @@ public class EmbeddedBytesPropertyTests
     [TestMethod]
     public void EmbeddedBytesPropertyTest3()
     {
-        var prop = new EmbeddedBytesProperty(new byte[] {1,2,3}, null, new ParameterSection());
+        var prop = new EmbeddedBytesProperty([1,2,3], null, new ParameterSection());
         Assert.IsFalse(prop.IsEmpty);
 
         byte[] ? val1 = prop.Value;
@@ -52,7 +52,7 @@ public class EmbeddedBytesPropertyTests
     [TestMethod]
     public void CloneTest1()
     {
-        var prop1 = DataProperty.FromBytes(new byte[] { 1, 2, 3 });
+        var prop1 = DataProperty.FromBytes([1, 2, 3]);
         var prop2 = (DataProperty)prop1.Clone();
 
         Assert.IsNotNull(prop2);

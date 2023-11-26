@@ -138,7 +138,7 @@ public sealed partial class VCard
                     Addresses = Concat(Addresses, new AddressProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.LABEL:
-                    labels ??= new List<TextProperty>();
+                    labels ??= [];
                     labels.Add(new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.REV:
@@ -250,7 +250,7 @@ public sealed partial class VCard
                     }
                     else if (GenderViews is null && vcfRow.Value != null)
                     {
-                        GenderViews = vcfRow.Value.StartsWith("F", true, CultureInfo.InvariantCulture)
+                        GenderViews = vcfRow.Value.StartsWith('F') || vcfRow.Value.StartsWith('f')
                             ? new GenderProperty(Enums.Sex.Female)
                             : new GenderProperty(Enums.Sex.Male);
                     }

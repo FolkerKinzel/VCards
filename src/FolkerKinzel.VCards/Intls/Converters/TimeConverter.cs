@@ -8,18 +8,18 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 /// <threadsafety static="true" instance="false" />
 internal sealed class TimeConverter
 {
-    private readonly string[] _timeOnlyPatterns = new string[]
-    {
+    private readonly string[] _timeOnlyPatterns =
+    [
             "HH",
             "HHmm",
             "HHmmss",
             "HH:mm:ss", //vCard 2.1
             "-mmss",
             "--ss",
-    };
+    ];
 
-    private readonly string[] _modelStrings = new string[]
-    {
+    private readonly string[] _modelStrings =
+    [
         // These patterns are needed if the input ends with 'Z'
         "HH",
         "HHmm",
@@ -41,7 +41,7 @@ internal sealed class TimeConverter
         "-mmsszzz",
         "--sszz",
         "--sszzz"
-    };
+    ];
 
     internal bool TryParse(ReadOnlySpan<char> s, out OneOf<TimeOnly, DateTimeOffset> oneOf)
     {

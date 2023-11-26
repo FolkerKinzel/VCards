@@ -9,7 +9,7 @@ namespace Benchmarks;
 [MemoryDiagnoser]
 public class HasFlagBench
 {
-    private readonly Adr? _value = (Adr.Dom | Adr.Intl | Adr.Postal);
+    private readonly Adr? _value = Adr.Dom | Adr.Intl | Adr.Postal;
 
 
     [Benchmark]

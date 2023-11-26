@@ -8,9 +8,9 @@ using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer4_0 : ParameterSerializer
+internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSerializer(options)
 {
-    private readonly List<string> _stringCollectionList = new();
+    private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer4_0>> _actionList = new(2);
 
     private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes = static serializer
@@ -30,8 +30,6 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     private readonly Action<ParameterSerializer4_0> _collectRelationTypes = static serializer
         => EnumValueCollector.Collect(serializer.ParaSection.RelationType,
                                       serializer._stringCollectionList);
-
-    public ParameterSerializer4_0(VcfOptions options) : base(options) { }
 
     #region Build
 

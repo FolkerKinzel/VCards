@@ -14,9 +14,9 @@ internal sealed class VcfDeserializationInfo
 
     internal StringBuilder Builder { get; } = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY);
 
-    internal char[] AllQuotes { get; } = new char[] { '\"', '\'' };
+    internal char[] AllQuotes { get; } = ['\"', '\''];
 
-    internal List<KeyValuePair<string, string>> ParameterList { get; } = new();
+    internal List<KeyValuePair<string, string>> ParameterList { get; } = [];
 
     internal DateTimeConverter DateAndOrTimeConverter
     {

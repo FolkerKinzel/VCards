@@ -93,7 +93,7 @@ public sealed partial class ParameterSection
                             if (!ParseTypeParameter(typeValue, propertyKey))
                             {
                                 List<KeyValuePair<string, string>> nonStandardList = 
-                                    (List<KeyValuePair<string, string>>?)this.NonStandard ?? new List<KeyValuePair<string, string>>();
+                                    (List<KeyValuePair<string, string>>?)this.NonStandard ?? [];
                                 this.NonStandard = nonStandardList;
 
                                 nonStandardList.Add(new KeyValuePair<string, string>(parameter.Key, s));
@@ -116,7 +116,7 @@ public sealed partial class ParameterSection
                     break;
                 case ParameterKey.SORT_AS:
                     {
-                        List<string> list = (List<string>?)this.SortAs ?? new List<string>();
+                        List<string> list = (List<string>?)this.SortAs ?? [];
                         this.SortAs = list;
 
                         ValueSplitter commaSplitter = info.CommaSplitter;
@@ -223,7 +223,7 @@ public sealed partial class ParameterSection
     {
         List<KeyValuePair<string, string>> userAttributes
                                         = (List<KeyValuePair<string, string>>?)this.NonStandard 
-                                          ?? new List<KeyValuePair<string, string>>();
+                                          ?? [];
 
         this.NonStandard = userAttributes;
         userAttributes.Add(parameter);

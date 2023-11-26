@@ -71,7 +71,7 @@ public class DataPropertyTests
     [TestMethod]
     public void ValueTest4()
     {
-        VCardProperty prop = DataProperty.FromBytes(new byte[] {1,2,3});
+        VCardProperty prop = DataProperty.FromBytes([1,2,3]);
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(DataPropertyValue));
     }

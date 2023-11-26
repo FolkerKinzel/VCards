@@ -104,7 +104,7 @@ public class VcfSerializerTests
 
         //vc.Sync.SetPropertyIDs();
 
-        s = vc.ToVcfString(VCdVersion.V4_0, options: options);
+        _ = vc.ToVcfString(VCdVersion.V4_0, options: options);
 
         Assert.AreEqual(1, tProp1.Parameters.Index);
         Assert.AreEqual(null, tProp2.Parameters.Index);
