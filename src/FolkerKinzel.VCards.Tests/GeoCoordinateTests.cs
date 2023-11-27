@@ -26,11 +26,11 @@ public class GeoCoordinateTests
     [DataRow(101, 15, null)]
     [DataRow(15, 201, null)]
     [DataRow(15, -201, null)]
-    [DataRow(52, 16, double.NaN)]
-    [DataRow(52, 16, double.NegativeInfinity)]
-    [DataRow(52, 16, -42.0)]
+    [DataRow(52, 16, float.NaN)]
+    [DataRow(52, 16, float.NegativeInfinity)]
+    [DataRow(52, 16, -42.0F)]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
-    public void GeoCoordinateTest2(double latitude, double longitude, double uncertainty)
+    public void GeoCoordinateTest2(double latitude, double longitude, float? uncertainty)
         => _ = new GeoCoordinate(latitude, longitude, uncertainty);
 
 
@@ -41,8 +41,15 @@ public class GeoCoordinateTests
         Assert.AreEqual(179, geo.Longitude, 0.1);
     }
 
+    [TestMethod]
+    public void GeoCoordinateTest4()
+    {
+        var geo = new GeoCoordinate(52.123, -179.9999999);
+        Assert.AreEqual(180, geo.Longitude, 0.1);
+    }
+
     [DataTestMethod()]
-    [DataRow(50, 50, 0.0, 50, 50, null, false)]
+    [DataRow(50, 50, 0.0F, 50, 50, null, false)]
     [DataRow(90, 50, null, 90, 0, null, true)]
     [DataRow(-90, -50, null, -90, 0, null, true)]
     [DataRow(91, 45, null, 89, -135, null, true)]
@@ -56,7 +63,7 @@ public class GeoCoordinateTests
     [DataRow(0, 0, null, 0, 0, null, true)]
     [DataRow(5.123456, 17, null, 5.123457, 17, null, false)]
     [DataRow(52, -180, null, 52, 180, null, true)]
-    public void EqualsTest4(double latitude1, double longitude1, double? uncertainty1, double latitude2, double longitude2, double? uncertainty2, bool expected)
+    public void EqualsTest4(double latitude1, double longitude1, float? uncertainty1, double latitude2, double longitude2, float? uncertainty2, bool expected)
     {
         var geo1 = new GeoCoordinate(latitude1, longitude1, uncertainty1);
         var geo2 = new GeoCoordinate(latitude2, longitude2, uncertainty2);
@@ -72,16 +79,16 @@ public class GeoCoordinateTests
     }
 
     [DataTestMethod()]
-    [DataRow(51.05022555003223, 12.130624133575036, null, 51.04930951936781, 12.128100583930106, 1000.0, true)]
-    [DataRow(51.05022555003223, 12.130624133575036, null, 51.04930951936781, 12.128100583930106, 100.0, false)]
-    [DataRow(89.99, 180.0, null, 89.99, -179.9999, 10000.0, true)]
-    [DataRow(89.99999, -17.5, null, 89.99999, -17.6, null, true)]
+    [DataRow(51.05022555003223, 12.130624133575036, null, 51.04930951936781, 12.128100583930106, 1000.0F, true)]
+    [DataRow(51.05022555003223, 12.130624133575036, null, 51.04930951936781, 12.128100583930106, 100.0F, false)]
+    [DataRow(89.99, 180.0, null, 89.99, -179.9999, 10000.0F, true)]
+    [DataRow(89.99999, -17.5, null, 89.99999, -17.6F, null, true)]
     public void AreSamePositionTest1(double latitude1,
                                      double longitude1,
-                                     double? uncertainty1,
+                                     float? uncertainty1,
                                      double latitude2,
                                      double longitude2,
-                                     double? uncertainty2,
+                                     float? uncertainty2,
                                      bool expected)
     {
         var geo1 = new GeoCoordinate(latitude1, longitude1, uncertainty1);
@@ -129,10 +136,10 @@ public class GeoCoordinateTests
     [DataRow(5.1234568, 5.1234561, null)]
     [DataRow(0, 0, null)]
     [DataRow(5.123456, -170.123457, null)]
-    [DataRow(0, 0, 0.0)]
-    [DataRow(0, 0, 42.0)]
-    [DataRow(0, 0, 42.5)]
-    public void ToStringTest1(double latitude, double longitude, double? uncertainty)
+    [DataRow(0, 0, 0.0F)]
+    [DataRow(0, 0, 42.0F)]
+    [DataRow(0, 0, 42.5F)]
+    public void ToStringTest1(double latitude, double longitude, float? uncertainty)
     {
         var geo = new GeoCoordinate(latitude, longitude, uncertainty);
 

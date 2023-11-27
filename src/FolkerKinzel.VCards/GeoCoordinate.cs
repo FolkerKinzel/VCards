@@ -33,7 +33,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <seealso cref="GeoProperty"/>
     /// <seealso cref="VCard.GeoCoordinates"/>
     /// <seealso cref="ParameterSection.GeoPosition"/>
-    public GeoCoordinate(double latitude, double longitude, double? uncertainty = null)
+    public GeoCoordinate(double latitude, double longitude, float? uncertainty = null)
     {
         if (double.IsNaN(latitude) || latitude < -100.0 || latitude > 100.0)
         {
@@ -47,14 +47,18 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         if (uncertainty.HasValue)
         {
-            double val = uncertainty.Value;
+            float val = uncertainty.Value;
 
-            if (double.IsNaN(val) || val < 0.0 || double.IsInfinity(val))
+            if (float.IsNaN(val) || val < 0.0 || float.IsInfinity(val))
             {
                 throw new ArgumentOutOfRangeException(nameof(uncertainty));
             }
 
+#if NET461 || NETSTANDARD2_0
             Uncertainty = (float)Math.Round(val, 1, MidpointRounding.ToEven);
+#else
+            Uncertainty = MathF.Round(val, 1, MidpointRounding.ToEven);
+#endif
         }
 
         NormalizeLatitude(ref latitude, ref longitude);
@@ -62,6 +66,12 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         Latitude = Math.Round(latitude, 6, MidpointRounding.ToEven);
         Longitude = Math.Round(longitude, 6, MidpointRounding.ToEven);
+
+        // rounding can make Longitude -180 again:
+        if(Longitude == -180.0)
+        {
+            Longitude = 180.0;
+        }
 
         static double NormalizeLongitude(double longitude)
         {
@@ -303,7 +313,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         {
             return false;
         }
-        double? uncertainty = null;
+        float? uncertainty = null;
 
         if (splitIndex != -1)
         {
@@ -323,10 +333,10 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
                     value = value.Slice(0, uParameterEnd);
                 }
 
-                if (_Double.TryParse(value,
+                if (_Float.TryParse(value,
                                   styles,
                                   CultureInfo.InvariantCulture,
-                                  out double uValue))
+                                  out float uValue))
                 {
                     uncertainty = uValue;
                 }
