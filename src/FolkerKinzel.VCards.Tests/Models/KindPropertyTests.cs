@@ -34,12 +34,12 @@ public class KindPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        var list = VCard.ParseVcf(s).ToList();
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.AreEqual(1, list.Count());
 
-        vcard = list[0];
+        vcard = list.First();
 
         Assert.IsNotNull(vcard.Kind);
 

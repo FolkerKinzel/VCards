@@ -23,7 +23,7 @@ public sealed partial class VCard
     /// <exception cref="IOException">The file could not be loaded.</exception>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
-    public static IList<VCard> LoadVcf(string fileName, Encoding? textEncoding = null)
+    public static IEnumerable<VCard> LoadVcf(string fileName, Encoding? textEncoding = null)
     {
         using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
         return DoDeserializeVcf(reader);
@@ -39,7 +39,7 @@ public sealed partial class VCard
     /// </exception>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
-    public static IList<VCard> ParseVcf(string vcf)
+    public static IEnumerable<VCard> ParseVcf(string vcf)
     {
         _ArgumentNullException.ThrowIfNull(vcf, nameof(vcf));
 
@@ -66,21 +66,26 @@ public sealed partial class VCard
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IList<VCard> DeserializeVcf(Stream stream,
+    public static IEnumerable<VCard> DeserializeVcf(Stream stream,
                                               Encoding? textEncoding = null,
                                               bool leaveStreamOpen = false)
-    {
-        using var reader = new StreamReader(stream, textEncoding ?? Encoding.UTF8, true, 1024, leaveStreamOpen);
-        return DoDeserializeVcf(reader);
-    }
+        => DoDeserializeVcf(
+            new StreamReader(stream, textEncoding ?? Encoding.UTF8, true, 1024, leaveStreamOpen));
 
-    private static List<VCard> DoDeserializeVcf(TextReader reader,
-                                                VCdVersion versionHint = VCdVersion.V2_1)
+    private static IEnumerable<VCard> DoDeserializeVcf(TextReader reader,
+                                                VCdVersion versionHint = VCdVersion.V2_1,
+                                                bool dereference = true)
+        => dereference ? VCard.Dereference(YieldReturnVCards(reader, versionHint).ToArray(), false)
+                       : YieldReturnVCards(reader, versionHint);
+
+    private static IEnumerable<VCard> YieldReturnVCards(TextReader reader,
+                                                        VCdVersion versionHint = VCdVersion.V2_1)
     {
+        using var disposable = reader;
+
         Debug.Assert(reader != null);
         DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoDeserializeVcf) + "(TextReader)");
 
-        var vCardList = new List<VCard>();
         var info = new VcfDeserializationInfo();
         var vcfReader = new VcfReader(reader, info);
         var queue = new Queue<VcfRow>(DESERIALIZER_QUEUE_INITIAL_CAPACITY);
@@ -95,7 +100,8 @@ public sealed partial class VCard
             if (queue.Count != 0)
             {
                 var vCard = new VCard(queue, info, versionHint);
-                vCardList.Add(vCard);
+
+                yield return vCard;
 
                 Debug.WriteLine("");
                 Debug.WriteLine("", "Parsed " + nameof(VCard));
@@ -105,8 +111,6 @@ public sealed partial class VCard
                 queue.Clear();
             }
         } while (!vcfReader.EOF);
-
-        return VCard.Dereference(vCardList, false).ToList();
     }
 
     private static VCard? ParseNestedVcard(string content,
@@ -120,9 +124,7 @@ public sealed partial class VCard
 
         using var reader = new StringReader(content);
 
-        List<VCard> list = DoDeserializeVcf(reader, versionHint);
-
-        return list.FirstOrDefault();
+        return DoDeserializeVcf(reader, versionHint).FirstOrDefault();
     }
 
     [ExcludeFromCodeCoverage]

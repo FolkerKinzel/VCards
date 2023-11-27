@@ -76,7 +76,7 @@ public class VcfSerializerTests
         VCard.SyncTestReset();
         VCard.RegisterApp(uri);
 
-        vc = VCard.ParseVcf(s)[0];
+        vc = VCard.ParseVcf(s).First();
 
         tProp1 = vc.DisplayNames!.First()!;
         tProp2 = vc.DisplayNames!.ElementAt(1)!;

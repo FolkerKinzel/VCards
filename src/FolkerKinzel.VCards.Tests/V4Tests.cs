@@ -11,7 +11,7 @@ public class V4Tests
     [TestMethod]
     public void Parse()
     {
-        IList<VCard>? vcard = VCard.LoadVcf(TestFiles.V4vcf);
+        IList<VCard>? vcard = VCard.LoadVcf(TestFiles.V4vcf).ToList();
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -24,7 +24,7 @@ public class V4Tests
         var vcard = new VCard();
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-        IList<VCard>? cards = VCard.ParseVcf(s);
+        IList<VCard>? cards = VCard.ParseVcf(s).ToList();
 
         Assert.AreEqual(cards.Count, 1);
 
@@ -71,7 +71,7 @@ public class V4Tests
         Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
             .All(x => x != null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
-        _ = VCard.ParseVcf(s);
+        _ = VCard.ParseVcf(s).ToList();
 
         Assert.AreEqual(vcard.Keys?.First()?.Value?.String, ASCIITEXT);
         Assert.AreEqual("image/jpeg", vcard.Photos?.First()?.Parameters.MediaType);
@@ -103,7 +103,7 @@ public class V4Tests
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = VCard.ParseVcf(s).ToList();
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -129,7 +129,7 @@ public class V4Tests
         Assert.IsNotNull(vc.DeathPlaceViews);
         Assert.IsNotNull(vc.DeathDateViews);
 
-        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOptions.WriteRfc6474Extensions));
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOptions.WriteRfc6474Extensions)).ToList();
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -140,7 +140,7 @@ public class V4Tests
         Assert.IsNotNull(vc.DeathDateViews);
 
 
-        list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOptions.None));
+        list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOptions.None)).ToList();
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -162,7 +162,7 @@ public class V4Tests
 
         Assert.IsNotNull(vc.Members);
 
-        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0)).ToList();
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -181,7 +181,7 @@ public class V4Tests
 
         Assert.IsNotNull(vc.Members);
 
-        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0)).ToList();
 
         Assert.IsNotNull(list);
         Assert.AreEqual(2, list.Count);
@@ -205,7 +205,7 @@ public class V4Tests
 
         Assert.IsNotNull(vc.Members);
 
-        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0)).ToList();
 
         Assert.AreEqual(2, list.Count);
         vc = list[1];
@@ -224,7 +224,7 @@ public class V4Tests
         Assert.IsNotNull(vc.Members);
         Assert.IsNull(vc.Members!.First()?.Value?.VCard?.ID);
 
-        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0)).ToList();
 
         Assert.AreEqual(2, list.Count);
         vc = list[1];
@@ -247,11 +247,11 @@ public class V4Tests
 
         Assert.IsNotNull(vc.Members);
 
-        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0)).ToList();
 
         Assert.AreEqual(2, list.Count);
 
-        list = VCard.ParseVcf(list.ToVcfString(VCdVersion.V4_0));
+        list = VCard.ParseVcf(list.ToVcfString(VCdVersion.V4_0)).ToList();
         Assert.AreEqual(2, list.Count);
     }
 
@@ -285,7 +285,7 @@ public class V4Tests
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = VCard.ParseVcf(s).ToList();
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -326,7 +326,7 @@ public class V4Tests
 
         string vcf = vCard.ToVcfString(VCdVersion.V4_0);
 
-        vCard = VCard.ParseVcf(vcf)[0];
+        vCard = VCard.ParseVcf(vcf).First();
 
         Assert.IsNotNull(vCard.DisplayNames);
         TextProperty tProp = vCard.DisplayNames.First()!;
@@ -351,7 +351,7 @@ public class V4Tests
         };
 
         string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: VcfOptions.Default);
-        vcard = VCard.ParseVcf(vcfString)[0];
+        vcard = VCard.ParseVcf(vcfString).First();
 
         whatsAppImpp = vcard.Messengers?.First();
 

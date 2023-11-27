@@ -29,19 +29,19 @@ public class VCardTests
     [TestMethod]
     public void ParseTest_contentEmpty()
     {
-        IList<VCard> list = VCard.ParseVcf("");
-        Assert.AreEqual(0, list.Count);
+        var list = VCard.ParseVcf("").ToList();
+        Assert.AreEqual(0, list.Count());
     }
 
     [TestMethod]
     public void ParseTest1()
     {
-        IList<VCard> list = VCard.ParseVcf("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
-        Assert.AreEqual(1, list.Count);
+        var list = VCard.ParseVcf("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD").ToList();
+        Assert.AreEqual(1, list.Count());
 
-        Assert.IsNotNull(list[0].DisplayNames);
+        Assert.IsNotNull(list.First().DisplayNames);
 
-        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
+        TextProperty? dispNameProp = list.First().DisplayNames!.FirstOrDefault();
         Assert.IsNotNull(dispNameProp);
         Assert.AreEqual("Folker", dispNameProp?.Value);
     }
@@ -65,15 +65,15 @@ public class VCardTests
 
         vcard.SaveVcf(path, version);
 
-        IList<VCard> list = VCard.LoadVcf(path);
+        var list = VCard.LoadVcf(path);
 
-        Assert.AreEqual(1, list.Count);
-        Assert.IsNotNull(list[0].DisplayNames);
+        Assert.AreEqual(1, list.Count());
+        Assert.IsNotNull(list.First().DisplayNames);
 
-        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
+        TextProperty? dispNameProp = list.First().DisplayNames!.FirstOrDefault();
         Assert.IsNotNull(dispNameProp);
         Assert.AreEqual("Folker", dispNameProp?.Value);
-        Assert.AreEqual(version, list[0].Version);
+        Assert.AreEqual(version, list.First().Version);
     }
 
 
@@ -209,15 +209,15 @@ public class VCardTests
         vcard.SerializeVcf(ms, version, leaveStreamOpen: true);
         ms.Position = 0;
 
-        IList<VCard> list = VCard.DeserializeVcf(ms);
+        var list = VCard.DeserializeVcf(ms);
 
-        Assert.AreEqual(1, list.Count);
-        Assert.IsNotNull(list[0].DisplayNames);
+        Assert.AreEqual(1, list.Count());
+        Assert.IsNotNull(list.First().DisplayNames);
 
-        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
+        TextProperty? dispNameProp = list.First().DisplayNames!.FirstOrDefault();
         Assert.IsNotNull(dispNameProp);
         Assert.AreEqual("Folker", dispNameProp?.Value);
-        Assert.AreEqual(version, list[0].Version);
+        Assert.AreEqual(version, list.First().Version);
     }
 
 
@@ -239,15 +239,15 @@ public class VCardTests
 
         string s = vcard.ToVcfString(version);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        var list = VCard.ParseVcf(s).ToList();
 
-        Assert.AreEqual(1, list.Count);
-        Assert.IsNotNull(list[0].DisplayNames);
+        Assert.AreEqual(1, list.Count());
+        Assert.IsNotNull(list.First().DisplayNames);
 
-        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
+        TextProperty? dispNameProp = list.First().DisplayNames!.FirstOrDefault();
         Assert.IsNotNull(dispNameProp);
         Assert.AreEqual("Folker", dispNameProp?.Value);
-        Assert.AreEqual(version, list[0].Version);
+        Assert.AreEqual(version, list.First().Version);
     }
 
 
@@ -315,7 +315,7 @@ public class VCardTests
     public void DeserializeTest2()
     {
         var stream = new FailStream(new ArgumentOutOfRangeException());
-        IList<VCard> vCards = VCard.DeserializeVcf(stream);
+        var vCards = VCard.DeserializeVcf(stream);
         Assert.IsNotNull(vCards);
     }
 
@@ -323,16 +323,16 @@ public class VCardTests
     public void DeserializeTest3()
     {
         var stream = new FailStream(new OutOfMemoryException());
-        IList<VCard> vCards = VCard.DeserializeVcf(stream);
+        var vCards = VCard.DeserializeVcf(stream);
         Assert.IsNotNull(vCards);
     }
 
     [TestMethod]
     public void LoadCropped_2_1Test()
     {
-        IList<VCard> vCards = VCard.LoadVcf(TestFiles.Cropped_2_1vcf);
+        var vCards = VCard.LoadVcf(TestFiles.Cropped_2_1vcf);
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.AreEqual(1, vCards.Count());
     }
 
     [TestMethod]

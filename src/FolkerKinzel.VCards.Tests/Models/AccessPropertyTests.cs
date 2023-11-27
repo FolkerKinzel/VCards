@@ -50,11 +50,11 @@ public class AccessPropertyTests
 
         string serialized = vcard.ToVcfString();
 
-        IList<VCard> list = VCard.ParseVcf(serialized);
+        var list = VCard.ParseVcf(serialized).ToList();
 
-        Assert.AreEqual(1, list.Count);
+        Assert.AreEqual(1, list.Count());
 
-        vcard = list[0];
+        vcard = list.First();
         Assert.IsNotNull(vcard.Access);
 
         Assert.AreEqual(VCards.Enums.Access.Private, vcard.Access.Value);

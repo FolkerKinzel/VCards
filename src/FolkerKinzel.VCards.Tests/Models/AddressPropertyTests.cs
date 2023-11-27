@@ -105,10 +105,10 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = VCard.ParseVcf(vcf);
+        var cards = VCard.ParseVcf(vcf).ToList();
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
-        vc = cards[0];
+        Assert.AreEqual(1, cards.Count());
+        vc = cards.First();
         Assert.IsNull(vc.Addresses);
 
         adr.Parameters.Label = labelText;
@@ -117,11 +117,11 @@ public class AddressPropertyTests
         vc.Addresses = adr;
 
         vcf = vc.ToVcfString(version);
-        cards = VCard.ParseVcf(vcf);
+        cards = VCard.ParseVcf(vcf).ToList();
 
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
-        vc = cards[0];
+        Assert.AreEqual(1, cards.Count());
+        vc = cards.First();
         Assert.IsNotNull(vc.Addresses);
 
         adr = vc.Addresses!.First()!;
@@ -150,10 +150,10 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = VCard.ParseVcf(vcf);
+        IList<VCard> cards = VCard.ParseVcf(vcf).ToList();
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
-        vc = cards[0];
+        Assert.AreEqual(1, cards.Count());
+        vc = cards.First();
         Assert.IsNull(vc.Addresses);
 
         adr.Parameters.Label = labelText;
@@ -162,11 +162,11 @@ public class AddressPropertyTests
         vc.Addresses = adr;
 
         vcf = vc.ToVcfString(version);
-        cards = VCard.ParseVcf(vcf);
+        cards = VCard.ParseVcf(vcf).ToList();
 
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
-        vc = cards[0];
+        Assert.AreEqual(1, cards.Count());
+        vc = cards.First();
         Assert.IsNotNull(vc.Addresses);
 
         adr = vc.Addresses!.First()!;
@@ -195,10 +195,10 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = VCard.ParseVcf(vcf);
+        var cards = VCard.ParseVcf(vcf).ToList();
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
-        vc = cards[0];
+        Assert.AreEqual(1, cards.Count());
+        vc = cards.First();
         Assert.IsNull(vc.Addresses);
 
         adr.Parameters.Label = labelText;
@@ -207,11 +207,11 @@ public class AddressPropertyTests
         vc.Addresses = adr;
 
         vcf = vc.ToVcfString(version);
-        cards = VCard.ParseVcf(vcf);
+        cards = VCard.ParseVcf(vcf).ToList();
 
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
-        vc = cards[0];
+        Assert.AreEqual(1, cards.Count());
+        vc = cards.First();
         Assert.IsNotNull(vc.Addresses);
 
         adr = vc.Addresses!.First()!;

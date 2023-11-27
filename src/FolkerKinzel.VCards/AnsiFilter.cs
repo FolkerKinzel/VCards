@@ -136,7 +136,7 @@ public class AnsiFilter
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    public virtual IList<VCard> LoadVcf(string fileName) => LoadVcf(fileName, out _);
+    public virtual IEnumerable<VCard> LoadVcf(string fileName) => LoadVcf(fileName, out _);
 
     /// <summary>  Loads a VCF file and automatically selects the appropriate 
     /// <see cref="Encoding" />. </summary>
@@ -150,12 +150,12 @@ public class AnsiFilter
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    public virtual IList<VCard> LoadVcf(string fileName, out string encodingWebName)
+    public virtual IEnumerable<VCard> LoadVcf(string fileName, out string encodingWebName)
     {
         Reset();
         encodingWebName = _utf8.WebName;
 
-        IList<VCard> vCards = VCard.LoadVcf(fileName, _utf8);
+        IEnumerable<VCard> vCards = VCard.LoadVcf(fileName, _utf8);
 
         if(!HasError)
         {
@@ -185,7 +185,7 @@ public class AnsiFilter
 
         //////////////////////////////////////////////////////////
 
-        static string? GetCharsetFromVCards(IList<VCard> vCards)
+        static string? GetCharsetFromVCards(IEnumerable<VCard> vCards)
         {
             foreach (var vCard in vCards.Where(x => x.Version == VCdVersion.V2_1))
             {
@@ -203,7 +203,7 @@ public class AnsiFilter
         }
     }
 
-    private IList<VCard> ReadWithFallbackEncoding(string fileName, out string encodingWebName) 
+    private IEnumerable<VCard> ReadWithFallbackEncoding(string fileName, out string encodingWebName) 
     {
         encodingWebName = FallbackEncodingWebName;
         return VCard.LoadVcf(fileName, _ansi);

@@ -15,7 +15,7 @@ public class V2Tests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        IList<VCard> vcard = VCard.LoadVcf(fileName: TestFiles.V2vcf);
+        IList<VCard> vcard = VCard.LoadVcf(fileName: TestFiles.V2vcf).ToList();
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -28,7 +28,7 @@ public class V2Tests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        IList<VCard> vcard = VCard.LoadVcf(fileName: TestFiles.OutlookV2vcf);
+        IList<VCard> vcard = VCard.LoadVcf(fileName: TestFiles.OutlookV2vcf).ToList();
 
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.FirstOrDefault());
@@ -56,7 +56,7 @@ public class V2Tests
         var vcard = new VCard();
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
-        IList<VCard> cards = VCard.ParseVcf(s);
+        IList<VCard> cards = VCard.ParseVcf(s).ToList();
 
         Assert.AreEqual(cards.Count, 1);
 
@@ -135,7 +135,7 @@ public class V2Tests
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = VCard.ParseVcf(s).ToList();
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -171,7 +171,7 @@ public class V2Tests
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
-        IList<VCard> vCards = VCard.ParseVcf(vcf);
+        IList<VCard> vCards = VCard.ParseVcf(vcf).ToList();
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
@@ -210,7 +210,7 @@ public class V2Tests
         var arr = new VCard[] { vc };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Unset(VcfOptions.AllowMultipleAdrAndLabelInVCard21));
-        IList<VCard> vCards = VCard.ParseVcf(vcf);
+        IList<VCard> vCards = VCard.ParseVcf(vcf).ToList();
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
@@ -233,7 +233,7 @@ public class V2Tests
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
-        vc = VCard.ParseVcf(vcf)[0];
+        vc = VCard.ParseVcf(vcf).First();
 
         Assert.IsNotNull(vc.Relations);
         Assert.AreEqual(Rel.Spouse, vc.Relations?.First()?.Parameters.RelationType);
@@ -255,7 +255,7 @@ public class V2Tests
 
         string vcf = vCard.ToVcfString(VCdVersion.V2_1);
 
-        vCard = VCard.ParseVcf(vcf)[0];
+        vCard = VCard.ParseVcf(vcf).First();
 
         Assert.IsNotNull(vCard.Addresses);
         adr = vCard.Addresses.First();
@@ -274,7 +274,7 @@ public class V2Tests
 
         string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.WriteEmptyProperties));
 
-        vCard = VCard.ParseVcf(s)[0];
+        vCard = VCard.ParseVcf(s).First();
         Assert.IsNotNull(vCard.Photos);
         Assert.IsTrue(vCard.Photos!.First()!.IsEmpty);
     }
@@ -301,7 +301,7 @@ public class V2Tests
 
         string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.AppendAgentAsSeparateVCard));
 
-        IList<VCard> vCards = VCard.ParseVcf(s);
+        IList<VCard> vCards = VCard.ParseVcf(s).ToList();
         Assert.AreEqual(2, vCards.Count);
         Assert.IsNotNull(vCards[0].Relations);
     }
@@ -323,7 +323,7 @@ public class V2Tests
 
             """;
 
-        IList<VCard> vcs = VCard.ParseVcf(agent);
+        IList<VCard> vcs = VCard.ParseVcf(agent).ToList();
         Assert.AreEqual(1, vcs.Count);
         Assert.IsNotNull(vcs[0].Relations);
     }
@@ -365,7 +365,7 @@ public class V2Tests
         string vcfString = vcard.ToVcfString(version: VCdVersion.V2_1, options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
 
         // Parse the VCF string:
-        vcard = VCard.ParseVcf(vcfString)[0];
+        vcard = VCard.ParseVcf(vcfString).First();
 
         // Find the WhatsApp number:
         Assert.AreEqual(whatsAppNumber, vcard.Phones?

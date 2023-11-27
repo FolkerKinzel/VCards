@@ -18,11 +18,11 @@ public class LabelIssueTests
         VCard.RegisterApp(null);
 
         var filter = new AnsiFilter();
-        IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelIssueVcf, out string enc);
+        var vCards = filter.LoadVcf(TestFiles.LabelIssueVcf, out string enc).ToList();
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
-        Assert.IsNotNull(vCards[0]);
-        IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
+        Assert.AreEqual(1, vCards.Count());
+        Assert.IsNotNull(vCards.First());
+        IEnumerable<AddressProperty?>? addresses = vCards.First().Addresses;
         Assert.IsNotNull(addresses);
         Assert.AreEqual(3, addresses!.Count());
 
@@ -49,11 +49,11 @@ public class LabelIssueTests
         VCard.RegisterApp(null);
 
         var filter = new AnsiFilter();
-        IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelTest1Vcf, out string enc);
+        IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelTest1Vcf, out string enc).ToList();
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
-        Assert.IsNotNull(vCards[0]);
-        IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
+        Assert.AreEqual(1, vCards.Count());
+        Assert.IsNotNull(vCards.First());
+        IEnumerable<AddressProperty?>? addresses = vCards.First().Addresses;
         Assert.IsNotNull(addresses);
         Assert.AreEqual(3, addresses!.Count());
 
@@ -81,11 +81,11 @@ public class LabelIssueTests
         VCard.RegisterApp(null);
 
         var filter = new AnsiFilter();
-        IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelTest2Vcf, out string enc);
+        var vCards = filter.LoadVcf(TestFiles.LabelTest2Vcf, out string enc).ToList();
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
-        Assert.IsNotNull(vCards[0]);
-        IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
+        Assert.AreEqual(1, vCards.Count());
+        Assert.IsNotNull(vCards.First());
+        IEnumerable<AddressProperty?>? addresses = vCards.First().Addresses;
         Assert.IsNotNull(addresses);
         Assert.AreEqual(4, addresses!.Count());
 
@@ -128,7 +128,7 @@ public class LabelIssueTests
             END:VCARD
             """;
 
-        IList<VCard> vcs = VCard.ParseVcf(vcf);
+        IList<VCard> vcs = VCard.ParseVcf(vcf).ToList();
         IEnumerable<AddressProperty?>? adr = vcs[0].Addresses;
         Assert.IsNotNull(adr);
         Assert.AreEqual(5, adr.Count());
@@ -153,7 +153,7 @@ public class LabelIssueTests
             END:VCARD
             """;
 
-        IList<VCard> vcs = VCard.ParseVcf(vcf);
+        IList<VCard> vcs = VCard.ParseVcf(vcf).ToList();
         IEnumerable<AddressProperty?>? adr = vcs[0].Addresses;
         Assert.IsNotNull(adr);
         Assert.AreEqual(4, adr.Count());

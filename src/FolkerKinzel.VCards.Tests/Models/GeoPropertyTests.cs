@@ -36,12 +36,12 @@ public class GeoPropertyTests
 
         string s = vcard.ToVcfString();
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        var list = VCard.ParseVcf(s).ToList();
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.AreEqual(1, list.Count());
 
-        vcard = list[0];
+        vcard = list.First();
 
         Assert.IsNotNull(vcard.GeoCoordinates);
 

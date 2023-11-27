@@ -121,7 +121,7 @@ public class DataPropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = VCard.ParseVcf(vcf).First();
 
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Keys);
@@ -146,7 +146,7 @@ public class DataPropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = VCard.ParseVcf(vcf).First();
 
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Photos);
@@ -169,7 +169,7 @@ public class DataPropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = VCard.ParseVcf(vcf).First();
 
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Photos);
@@ -192,7 +192,7 @@ public class DataPropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = VCard.ParseVcf(vcf).First();
 
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Photos);
