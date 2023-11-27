@@ -83,8 +83,9 @@ public sealed partial class VCard
     /// <param name="tzConverter">An object that implements <see cref="ITimeZoneIDConverter"
     /// /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
     /// <param name="options">Options for serializing VCF. The flags can be combined.</param>
-    /// <param name="leaveStreamOpen"> <c>true</c> means that the method does not close
-    /// the underlying <see cref="Stream" />. The default value is <c>false</c>.</param>
+    /// <param name="leaveStreamOpen"> <c>true</c> means that <paramref name="stream"/> will
+    /// not be closed by the method. The default value is <c>false</c> to close 
+    /// <paramref name="stream"/> when the method returns.</param>
     /// 
     /// <remarks>
     /// <note type="caution">
@@ -169,10 +170,7 @@ public sealed partial class VCard
 
         static void ValidateArguments(Stream stream, IEnumerable<VCard?> vCards, bool leaveStreamOpen)
         {
-            if (stream is null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            _ArgumentNullException.ThrowIfNull(stream, nameof(stream));
 
             if (!stream.CanWrite)
             {
@@ -264,10 +262,7 @@ public sealed partial class VCard
         ITimeZoneIDConverter? tzConverter = null,
         VcfOptions options = VcfOptions.Default)
     {
-        if (vCards is null)
-        {
-            throw new ArgumentNullException(nameof(vCards));
-        }
+        _ArgumentNullException.ThrowIfNull(vCards, nameof(vCards));
 
         using var stream = new MemoryStream();
 
@@ -458,7 +453,7 @@ public sealed partial class VCard
 
     private void NormalizeMembers(VcfSerializer serializer)
     {
-        if(Members is null)
+        if (Members is null)
         {
             return;
         }

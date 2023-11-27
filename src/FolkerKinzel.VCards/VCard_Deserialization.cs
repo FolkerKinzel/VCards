@@ -1,3 +1,5 @@
+using System.IO;
+using System.Text;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -39,30 +41,38 @@ public sealed partial class VCard
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     public static IList<VCard> ParseVcf(string vcf)
     {
-        if (vcf == null)
-        {
-            throw new ArgumentNullException(nameof(vcf));
-        }
+        _ArgumentNullException.ThrowIfNull(vcf, nameof(vcf));
 
         using var reader = new StringReader(vcf);
         return DoDeserializeVcf(reader);
     }
 
     /// <summary>Deserializes a VCF file using a <see cref="TextReader" />.</summary>
-    /// <param name="reader">A <see cref="TextReader" />.</param>
+    /// <param name="stream">A <see cref="TextReader" />.</param>
+    /// <param name="textEncoding">The text encoding to use to read the file or <c>null</c>,
+    /// to read the file with the standard-compliant text encoding <see cref="Encoding.UTF8"
+    /// />.</param>
+    /// <param name="leaveStreamOpen"><c>true</c> means that <paramref name="stream"/> will
+    /// not be closed by the method. The default value is <c>false</c> to close 
+    /// <paramref name="stream"/> when the method returns.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
     /// the content of the VCF file.</returns>
-    /// <exception cref="ArgumentNullException"> <paramref name="reader" /> is <c>null</c>.
+    /// <exception cref="ArgumentNullException"> <paramref name="stream" /> is <c>null</c>.
     /// </exception>
-    /// <exception cref="ObjectDisposedException"> <paramref name="reader" /> was closed.
+    /// <exception cref="ArgumentException"><paramref name="stream"/> doesn't support reading.</exception>
+    /// <exception cref="ObjectDisposedException"> <paramref name="stream" /> was closed.
     /// </exception>
-    /// <exception cref="IOException"> <paramref name="reader" />could not read from
-    /// the <see cref="Stream" />.</exception>
+    /// <exception cref="IOException"> Could not read from <paramref name="stream"/>.</exception>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IList<VCard> DeserializeVcf(TextReader reader)
-        => DoDeserializeVcf(reader ?? throw new ArgumentNullException(nameof(reader)));
+    public static IList<VCard> DeserializeVcf(Stream stream,
+                                              Encoding? textEncoding = null,
+                                              bool leaveStreamOpen = false)
+    {
+        using var reader = new StreamReader(stream, textEncoding ?? Encoding.UTF8, true, 1024, leaveStreamOpen);
+        return DoDeserializeVcf(reader);
+    }
 
     private static List<VCard> DoDeserializeVcf(TextReader reader,
                                                 VCdVersion versionHint = VCdVersion.V2_1)
@@ -99,7 +109,7 @@ public sealed partial class VCard
         return VCard.Dereference(vCardList, false).ToList();
     }
 
-    private static VCard? ParseNestedVcard(string? content,
+    private static VCard? ParseNestedVcard(string content,
                                            VcfDeserializationInfo info,
                                            VCdVersion versionHint)
     {
@@ -108,7 +118,7 @@ public sealed partial class VCard
             ? content
             : content.UnMask(info.Builder, versionHint);
 
-        using var reader = new StringReader(content ?? string.Empty);
+        using var reader = new StringReader(content);
 
         List<VCard> list = DoDeserializeVcf(reader, versionHint);
 

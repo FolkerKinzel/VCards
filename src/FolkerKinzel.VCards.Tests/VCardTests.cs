@@ -209,8 +209,7 @@ public class VCardTests
         vcard.SerializeVcf(ms, version, leaveStreamOpen: true);
         ms.Position = 0;
 
-        using var reader = new StreamReader(ms);
-        IList<VCard> list = VCard.DeserializeVcf(reader);
+        IList<VCard> list = VCard.DeserializeVcf(ms);
 
         Assert.AreEqual(1, list.Count);
         Assert.IsNotNull(list[0].DisplayNames);
@@ -316,8 +315,7 @@ public class VCardTests
     public void DeserializeTest2()
     {
         var stream = new FailStream(new ArgumentOutOfRangeException());
-        using var reader = new StreamReader(stream);
-        IList<VCard> vCards = VCard.DeserializeVcf(reader);
+        IList<VCard> vCards = VCard.DeserializeVcf(stream);
         Assert.IsNotNull(vCards);
     }
 
@@ -325,8 +323,7 @@ public class VCardTests
     public void DeserializeTest3()
     {
         var stream = new FailStream(new OutOfMemoryException());
-        using var reader = new StreamReader(stream);
-        IList<VCard> vCards = VCard.DeserializeVcf(reader);
+        IList<VCard> vCards = VCard.DeserializeVcf(stream);
         Assert.IsNotNull(vCards);
     }
 
