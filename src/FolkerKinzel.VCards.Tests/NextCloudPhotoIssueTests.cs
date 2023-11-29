@@ -16,7 +16,7 @@ public class NextCloudPhotoIssueTests
         VCard.RegisterApp(null);
 
         string contentsVCFFile = File.ReadAllText(TestFiles.NextCloudPhotoIssueTxt);
-        VCard? convertedItem = Vcf.ParseVcf(contentsVCFFile).FirstOrDefault();
+        VCard? convertedItem = Vcf.Parse(contentsVCFFile).FirstOrDefault();
         Assert.IsNotNull(convertedItem);
         Assert.IsNotNull(convertedItem!.Photos);
         Models.DataProperty? photo = convertedItem!.Photos!.FirstOrDefault();

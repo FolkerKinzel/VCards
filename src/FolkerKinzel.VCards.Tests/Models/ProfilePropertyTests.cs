@@ -42,7 +42,7 @@ public class ProfilePropertyTests
 
         string s = vcard.ToVcfString();
 
-        IList<VCard> list = Vcf.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);

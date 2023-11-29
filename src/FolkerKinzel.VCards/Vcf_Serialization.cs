@@ -54,7 +54,7 @@ public static partial class Vcf
     /// enum.
     /// </exception>
     /// <exception cref="IOException">The file could not be written.</exception>
-    public static void SaveVcf(
+    public static void Save(
         string fileName,
         IEnumerable<VCard?> vCards,
         VCdVersion version = VCard.DEFAULT_VERSION,
@@ -70,7 +70,7 @@ public static partial class Vcf
         }
 
         using FileStream stream = InitializeFileStream(fileName);
-        SerializeVcf(stream, vCards, version, tzConverter, options, false);
+        Serialize(stream, vCards, version, tzConverter, options, false);
     }
 
     /// <summary>Serializes a collection of <see cref="VCard" /> objects into a <see
@@ -120,15 +120,15 @@ public static partial class Vcf
     /// 
     /// <exception cref="ObjectDisposedException"> <paramref name="stream" /> was already
     /// closed.</exception>
-    public static void SerializeVcf(Stream stream,
-                                    IEnumerable<VCard?> vCards,
-                                    VCdVersion version = VCard.DEFAULT_VERSION,
-                                    ITimeZoneIDConverter? tzConverter = null,
-                                    VcfOptions options = VcfOptions.Default,
-                                    bool leaveStreamOpen = false)
+    public static void Serialize(Stream stream,
+                                 IEnumerable<VCard?> vCards,
+                                 VCdVersion version = VCard.DEFAULT_VERSION,
+                                 ITimeZoneIDConverter? tzConverter = null,
+                                 VcfOptions options = VcfOptions.Default,
+                                 bool leaveStreamOpen = false)
     {
         DebugWriter.WriteMethodHeader(
-            $"{nameof(VCard)}.{nameof(SerializeVcf)}({nameof(Stream)}, IEnumerable<{nameof(VCard)}?>");
+            $"{nameof(VCard)}.{nameof(Serialize)}({nameof(Stream)}, IEnumerable<{nameof(VCard)}?>");
 
         ValidateArguments(stream, vCards, leaveStreamOpen);
         using VcfSerializer serializer = VcfSerializer.GetSerializer(stream,
@@ -256,7 +256,7 @@ public static partial class Vcf
     /// enum.
     /// </exception>
     /// <exception cref="OutOfMemoryException">The system is out of memory.</exception>
-    public static string ToVcfString(
+    public static string ToString(
         IEnumerable<VCard?> vCards,
         VCdVersion version = VCard.DEFAULT_VERSION,
         ITimeZoneIDConverter? tzConverter = null,
@@ -266,14 +266,12 @@ public static partial class Vcf
 
         using var stream = new MemoryStream();
 
-        SerializeVcf(stream, vCards, version, tzConverter, options, leaveStreamOpen: true);
+        Serialize(stream, vCards, version, tzConverter, options, leaveStreamOpen: true);
 
         stream.Position = 0;
         using var reader = new StreamReader(stream, Encoding.UTF8);
         return reader.ReadToEnd();
     }
-
-
 
     #endregion
 
@@ -450,6 +448,4 @@ public static partial class Vcf
             throw new IOException(e.Message, e);
         }
     }
-
-   
 }

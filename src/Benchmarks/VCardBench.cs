@@ -21,7 +21,7 @@ public class VCardBench
     [Benchmark]
     public string ParseAndSerialize()
     {
-        IList<VCard> list = Vcf.ParseVcf(_vcardString);
+        IList<VCard> list = Vcf.Parse(_vcardString);
         return list.ToVcfString();
     }
 

@@ -128,7 +128,7 @@ public class LabelIssueTests
             END:VCARD
             """;
 
-        IList<VCard> vcs = Vcf.ParseVcf(vcf);
+        IList<VCard> vcs = Vcf.Parse(vcf);
         IEnumerable<AddressProperty?>? adr = vcs[0].Addresses;
         Assert.IsNotNull(adr);
         Assert.AreEqual(5, adr.Count());
@@ -153,7 +153,7 @@ public class LabelIssueTests
             END:VCARD
             """;
 
-        IList<VCard> vcs = Vcf.ParseVcf(vcf);
+        IList<VCard> vcs = Vcf.Parse(vcf);
         IEnumerable<AddressProperty?>? adr = vcs[0].Addresses;
         Assert.IsNotNull(adr);
         Assert.AreEqual(4, adr.Count());

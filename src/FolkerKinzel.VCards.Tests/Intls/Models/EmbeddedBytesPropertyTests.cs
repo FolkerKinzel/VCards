@@ -27,7 +27,7 @@ public class EmbeddedBytesPropertyTests
 
         var vc = new VCard() { Photos = prop };
         string vcf = vc.ToVcfString(VCdVersion.V4_0, options: VcfOptions.Default | VcfOptions.WriteEmptyProperties);
-        Assert.IsNotNull(Vcf.ParseVcf(vcf)[0].Photos);
+        Assert.IsNotNull(Vcf.Parse(vcf)[0].Photos);
     }
 
     [DataTestMethod]

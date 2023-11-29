@@ -106,7 +106,7 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = Vcf.ParseVcf(vcf);
+        IList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
         vc = cards[0];
@@ -118,7 +118,7 @@ public class AddressPropertyTests
         vc.Addresses = adr;
 
         vcf = vc.ToVcfString(version);
-        cards = Vcf.ParseVcf(vcf);
+        cards = Vcf.Parse(vcf);
 
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
@@ -151,7 +151,7 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = Vcf.ParseVcf(vcf);
+        IList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
         vc = cards[0];
@@ -163,7 +163,7 @@ public class AddressPropertyTests
         vc.Addresses = adr;
 
         vcf = vc.ToVcfString(version);
-        cards = Vcf.ParseVcf(vcf);
+        cards = Vcf.Parse(vcf);
 
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
@@ -196,7 +196,7 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = Vcf.ParseVcf(vcf);
+        IList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
         vc = cards[0];
@@ -208,7 +208,7 @@ public class AddressPropertyTests
         vc.Addresses = adr;
 
         vcf = vc.ToVcfString(version);
-        cards = Vcf.ParseVcf(vcf);
+        cards = Vcf.Parse(vcf);
 
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);

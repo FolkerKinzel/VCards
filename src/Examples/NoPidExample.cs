@@ -20,7 +20,7 @@ public static class NoPidExample
             END:VCARD
             """;
 
-        VCard vCard = Vcf.ParseVcf(vcf)[0];
+        VCard vCard = Vcf.Parse(vcf)[0];
 
         // Removes all existing PIDs and CLIENTPIDMAPs
         vCard.Sync.Reset();

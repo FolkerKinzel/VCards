@@ -156,7 +156,7 @@ public sealed class AnsiFilter
         Reset();
         encodingWebName = _utf8.WebName;
 
-        IList<VCard> vCards = Vcf.LoadVcf(fileName, _utf8);
+        IList<VCard> vCards = Vcf.Load(fileName, _utf8);
 
         if (!HasError)
         {
@@ -169,7 +169,7 @@ public sealed class AnsiFilter
         enc = IsUtf8(enc) ? _ansi : enc;
 
         encodingWebName = enc.WebName;
-        return Vcf.LoadVcf(fileName, enc);
+        return Vcf.Load(fileName, enc);
     }
 
     public IList<VCard> DeserializeVcf(Stream stream, out string encodingWebName, bool leaveStreamOpen = false)
@@ -187,7 +187,7 @@ public sealed class AnsiFilter
             encodingWebName = _utf8.WebName;
             long initialPosition = stream.Position;
 
-            IList<VCard> vCards = Vcf.DeserializeVcf(stream, _utf8, leaveStreamOpen: true);
+            IList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
 
             if (!HasError)
             {
@@ -202,7 +202,7 @@ public sealed class AnsiFilter
             enc = IsUtf8(enc) ? _ansi : enc;
 
             encodingWebName = enc.WebName;
-            return Vcf.DeserializeVcf(stream, enc, leaveStreamOpen);
+            return Vcf.Deserialize(stream, enc, leaveStreamOpen);
         }
         finally
         {
@@ -217,7 +217,7 @@ public sealed class AnsiFilter
         Reset();
         encodingWebName = _utf8.WebName;
 
-        IList<VCard> vCards = Vcf.DeserializeVcf(factory(), _utf8, leaveStreamOpen: false);
+        IList<VCard> vCards = Vcf.Deserialize(factory(), _utf8, leaveStreamOpen: false);
 
         if (!HasError)
         {
@@ -230,7 +230,7 @@ public sealed class AnsiFilter
         enc = IsUtf8(enc) ? _ansi : enc;
 
         encodingWebName = enc.WebName;
-        return Vcf.DeserializeVcf(factory(), enc, leaveStreamOpen: false);
+        return Vcf.Deserialize(factory(), enc, leaveStreamOpen: false);
     }
 
     private static string? GetCharsetFromVCards(IList<VCard> vCards)

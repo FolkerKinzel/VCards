@@ -25,10 +25,10 @@ public static partial class Vcf
     /// <exception cref="IOException">The file could not be loaded.</exception>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
-    public static IList<VCard> LoadVcf(string fileName, Encoding? textEncoding = null)
+    public static IList<VCard> Load(string fileName, Encoding? textEncoding = null)
     {
         using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
-        return DoDeserializeVcf(reader);
+        return DoDeserialize(reader);
     }
 
     /// <summary>Parses a <see cref="string" />, that represents the content of a VCF
@@ -41,12 +41,12 @@ public static partial class Vcf
     /// </exception>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
-    public static IList<VCard> ParseVcf(string vcf)
+    public static IList<VCard> Parse(string vcf)
     {
         _ArgumentNullException.ThrowIfNull(vcf, nameof(vcf));
 
         using var reader = new StringReader(vcf);
-        return DoDeserializeVcf(reader);
+        return DoDeserialize(reader);
     }
 
     /// <summary>Deserializes a VCF file using a <see cref="TextReader" />.</summary>
@@ -68,19 +68,19 @@ public static partial class Vcf
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IList<VCard> DeserializeVcf(Stream stream,
+    public static IList<VCard> Deserialize(Stream stream,
                                               Encoding? textEncoding = null,
                                               bool leaveStreamOpen = false)
     {
         using var reader = new StreamReader(stream, textEncoding ?? Encoding.UTF8, true, 1024, leaveStreamOpen);
-        return DoDeserializeVcf(reader);
+        return DoDeserialize(reader);
     }
 
-    internal static List<VCard> DoDeserializeVcf(TextReader reader,
+    internal static List<VCard> DoDeserialize(TextReader reader,
                                                  VCdVersion versionHint = VCdVersion.V2_1)
     {
         Debug.Assert(reader != null);
-        DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoDeserializeVcf) + "(TextReader)");
+        DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoDeserialize) + "(TextReader)");
 
         var vCardList = new List<VCard>();
         var info = new VcfDeserializationInfo();
@@ -112,8 +112,6 @@ public static partial class Vcf
 
         return vCardList;
     }
-
-    
 
     [ExcludeFromCodeCoverage]
     private static StreamReader InitializeStreamReader(string fileName, Encoding? textEncoding)

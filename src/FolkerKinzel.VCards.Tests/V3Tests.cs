@@ -12,7 +12,7 @@ public class V3Tests
     [TestMethod]
     public void ParseTest()
     {
-        IList<VCard>? vcard = Vcf.LoadVcf(TestFiles.V3vcf);
+        IList<VCard>? vcard = Vcf.Load(TestFiles.V3vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreEqual(2, vcard.Count);
@@ -22,7 +22,7 @@ public class V3Tests
     [TestMethod]
     public void ParseTest2()
     {
-        IList<VCard>? vcard = Vcf.LoadVcf(@"C:\Users\fkinz\OneDrive\Kontakte\Thunderbird\21-01-13.vcf");
+        IList<VCard>? vcard = Vcf.Load(@"C:\Users\fkinz\OneDrive\Kontakte\Thunderbird\21-01-13.vcf");
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -31,7 +31,7 @@ public class V3Tests
     [TestMethod]
     public void ParseTest3()
     {
-        IList<VCard>? vcard = Vcf.LoadVcf(TestFiles.PhotoV3vcf);
+        IList<VCard>? vcard = Vcf.Load(TestFiles.PhotoV3vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -45,7 +45,7 @@ public class V3Tests
 
         string s = vcard.ToVcfString(VCdVersion.V3_0);
 
-        IList<VCard>? cards = Vcf.ParseVcf(s);
+        IList<VCard>? cards = Vcf.Parse(s);
 
         Assert.AreEqual(cards.Count, 1);
 
@@ -96,7 +96,7 @@ public class V3Tests
         Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
             .All(x => x != null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
-        _ = Vcf.ParseVcf(s);
+        _ = Vcf.Parse(s);
 
         Assert.AreEqual(vcard.Keys?.First()?.Value?.String, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
@@ -154,7 +154,7 @@ public class V3Tests
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = Vcf.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
 
@@ -170,12 +170,12 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest2()
     {
-        IList<VCard> vc = Vcf.LoadVcf(TestFiles.PhotoV3vcf);
+        IList<VCard> vc = Vcf.Load(TestFiles.PhotoV3vcf);
         vc.Add(vc[0]);
 
         string s = vc.ToVcfString();
 
-        vc = Vcf.ParseVcf(s);
+        vc = Vcf.Parse(s);
 
         Assert.AreEqual(2, vc.Count);
     }
@@ -189,7 +189,7 @@ VERSION:3.0
 BDAY;Value=Time:05:30:00
 END:VCARD";
 
-        VCard vcard = Vcf.ParseVcf(vcardString)[0];
+        VCard vcard = Vcf.Parse(vcardString)[0];
 
         Assert.IsNotNull(vcard.BirthDayViews);
 
@@ -224,7 +224,7 @@ END:VCARD";
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
         string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
-        vcard = Vcf.ParseVcf(vcfString)[0];
+        vcard = Vcf.Parse(vcfString)[0];
 
         // Find the WhatsApp number:
         string? readWhatsAppNumber = vcard.Phones?
@@ -253,7 +253,7 @@ END:VCARD";
         };
 
         string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteXExtensions);
-        vcard = Vcf.ParseVcf(vcfString)[0];
+        vcard = Vcf.Parse(vcfString)[0];
 
         whatsAppImpp = vcard.Messengers?.First();
 
@@ -280,7 +280,7 @@ END:VCARD";
         };
 
         string vcfString = vcard.ToVcfString(options: VcfOptions.Default);
-        vcard = Vcf.ParseVcf(vcfString)[0];
+        vcard = Vcf.Parse(vcfString)[0];
 
         whatsAppImpp = vcard.Messengers?.First();
 
@@ -303,7 +303,7 @@ END:VCARD";
         };
 
         string vcfString = vcard.ToVcfString(options: (VcfOptions.Default | VcfOptions.WriteXExtensions).Unset(VcfOptions.WriteImppExtension));
-        vcard = Vcf.ParseVcf(vcfString)[0];
+        vcard = Vcf.Parse(vcfString)[0];
 
         Assert.AreEqual(1, vcard.Messengers!.Count());
         prop = vcard.Messengers?.First();
@@ -327,7 +327,7 @@ END:VCARD";
         };
 
         string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteXExtensions);
-        vcard = Vcf.ParseVcf(vcfString)[0];
+        vcard = Vcf.Parse(vcfString)[0];
         Assert.AreEqual(1, vcard.Messengers!.Count());
         prop = vcard.Messengers!.First();
         Assert.AreEqual(mobilePhoneNumber, prop?.Value);
@@ -346,7 +346,7 @@ END:VCARD";
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0);
 
-        vCard = Vcf.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.Addresses);
         adr = vCard.Addresses.First();
@@ -368,7 +368,7 @@ END:VCARD";
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0);
 
-        vCard = Vcf.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.Addresses);
         adr = vCard.Addresses.First();
@@ -386,7 +386,7 @@ END:VCARD";
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0);
 
-        vCard = Vcf.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.DisplayNames);
         TextProperty tProp = vCard.DisplayNames.First()!;
@@ -400,7 +400,7 @@ END:VCARD";
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0);
 
-        vCard = Vcf.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.DisplayNames);
         TextProperty tProp = vCard.DisplayNames.First()!;
@@ -414,7 +414,7 @@ END:VCARD";
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0, options: VcfOptions.Default.Set(VcfOptions.WriteEmptyProperties));
 
-        vCard = Vcf.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.DisplayNames);
         TextProperty tProp = vCard.DisplayNames.First()!;

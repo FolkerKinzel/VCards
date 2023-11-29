@@ -87,7 +87,7 @@ public static class VCard40Example
         foreach (string fileName in 
             Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"))
         {
-            vCardList.AddRange(Vcf.LoadVcf(fileName));
+            vCardList.AddRange(Vcf.Load(fileName));
         }
 
         // Make the reloaded VCard objects searchable:

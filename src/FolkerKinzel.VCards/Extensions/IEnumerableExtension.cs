@@ -141,7 +141,7 @@ public static class IEnumerableExtension
                                VCdVersion version = VCard.DEFAULT_VERSION,
                                ITimeZoneIDConverter? tzConverter = null,
                                VcfOptions options = VcfOptions.Default)
-        => Vcf.SaveVcf(fileName, vCards, version, tzConverter, options);
+        => Vcf.Save(fileName, vCards, version, tzConverter, options);
 
     /// <summary>Serializes a collection of <see cref="VCard" /> objects into a <see
     /// cref="Stream" /> using the VCF format.</summary>
@@ -187,7 +187,7 @@ public static class IEnumerableExtension
                                     ITimeZoneIDConverter? tzConverter = null,
                                     VcfOptions options = VcfOptions.Default,
                                     bool leaveStreamOpen = false)
-        => Vcf.SerializeVcf(stream, vCards, version, tzConverter, options, leaveStreamOpen);
+        => Vcf.Serialize(stream, vCards, version, tzConverter, options, leaveStreamOpen);
 
     /// <summary>Serializes <paramref name="vCards" /> as a <see cref="string" />, which
     /// represents the content of a VCF file.</summary>
@@ -224,7 +224,7 @@ public static class IEnumerableExtension
                                      VCdVersion version = VCard.DEFAULT_VERSION,
                                      ITimeZoneIDConverter? tzConverter = null,
                                      VcfOptions options = VcfOptions.Default)
-        => Vcf.ToVcfString(vCards, version, tzConverter, options);
+        => Vcf.ToString(vCards, version, tzConverter, options);
 
     /// <summary>
     /// Gets the most preferred <see cref="VCardProperty"/> from a collection of

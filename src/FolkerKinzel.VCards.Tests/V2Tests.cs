@@ -15,7 +15,7 @@ public class V2Tests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        IList<VCard> vcard = Vcf.LoadVcf(fileName: TestFiles.V2vcf);
+        IList<VCard> vcard = Vcf.Load(fileName: TestFiles.V2vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -28,7 +28,7 @@ public class V2Tests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        IList<VCard> vcard = Vcf.LoadVcf(fileName: TestFiles.OutlookV2vcf);
+        IList<VCard> vcard = Vcf.Load(fileName: TestFiles.OutlookV2vcf);
 
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.FirstOrDefault());
@@ -41,7 +41,7 @@ public class V2Tests
         Assert.AreEqual(photo?.Parameters.MediaType, "image/jpeg");
         //System.IO.File.WriteAllBytes(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"Testbild{dataUrl.GetFileExtension()}"), dataUrl.GetEmbeddedBytes());
 
-        Vcf.SaveVcf(System.IO.Path.Combine(
+        Vcf.Save(System.IO.Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"),
             vcard!, VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.WriteNonStandardProperties));
     }
@@ -56,7 +56,7 @@ public class V2Tests
         var vcard = new VCard();
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
-        IList<VCard> cards = Vcf.ParseVcf(s);
+        IList<VCard> cards = Vcf.Parse(s);
 
         Assert.AreEqual(cards.Count, 1);
 
@@ -102,7 +102,7 @@ public class V2Tests
         Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
             .All(x => x != null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
-        _ = Vcf.ParseVcf(s);
+        _ = Vcf.Parse(s);
 
         Assert.AreEqual(vcard.Keys?.First()?.Value?.String, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
@@ -135,7 +135,7 @@ public class V2Tests
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = Vcf.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -171,7 +171,7 @@ public class V2Tests
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
-        IList<VCard> vCards = Vcf.ParseVcf(vcf);
+        IList<VCard> vCards = Vcf.Parse(vcf);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
@@ -210,7 +210,7 @@ public class V2Tests
         var arr = new VCard[] { vc };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Unset(VcfOptions.AllowMultipleAdrAndLabelInVCard21));
-        IList<VCard> vCards = Vcf.ParseVcf(vcf);
+        IList<VCard> vCards = Vcf.Parse(vcf);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
@@ -233,7 +233,7 @@ public class V2Tests
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
-        vc = Vcf.ParseVcf(vcf)[0];
+        vc = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vc.Relations);
         Assert.AreEqual(Rel.Spouse, vc.Relations?.First()?.Parameters.RelationType);
@@ -255,7 +255,7 @@ public class V2Tests
 
         string vcf = vCard.ToVcfString(VCdVersion.V2_1);
 
-        vCard = Vcf.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.Addresses);
         adr = vCard.Addresses.First();
@@ -274,7 +274,7 @@ public class V2Tests
 
         string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.WriteEmptyProperties));
 
-        vCard = Vcf.ParseVcf(s)[0];
+        vCard = Vcf.Parse(s)[0];
         Assert.IsNotNull(vCard.Photos);
         Assert.IsTrue(vCard.Photos!.First()!.IsEmpty);
     }
@@ -301,7 +301,7 @@ public class V2Tests
 
         string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.AppendAgentAsSeparateVCard));
 
-        IList<VCard> vCards = Vcf.ParseVcf(s);
+        IList<VCard> vCards = Vcf.Parse(s);
         Assert.AreEqual(2, vCards.Count);
         Assert.IsNotNull(vCards[0].Relations);
     }
@@ -323,7 +323,7 @@ public class V2Tests
 
             """;
 
-        IList<VCard> vcs = Vcf.ParseVcf(agent);
+        IList<VCard> vcs = Vcf.Parse(agent);
         Assert.AreEqual(1, vcs.Count);
         Assert.IsNotNull(vcs[0].Relations);
     }
@@ -365,7 +365,7 @@ public class V2Tests
         string vcfString = vcard.ToVcfString(version: VCdVersion.V2_1, options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
 
         // Parse the VCF string:
-        vcard = Vcf.ParseVcf(vcfString)[0];
+        vcard = Vcf.Parse(vcfString)[0];
 
         // Find the WhatsApp number:
         Assert.AreEqual(whatsAppNumber, vcard.Phones?

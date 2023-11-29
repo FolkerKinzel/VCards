@@ -46,7 +46,7 @@ internal static class WhatsAppDemo2
         Console.WriteLine(vcfString);
 
         // Parse the VCF string:
-        vcard = Vcf.ParseVcf(vcfString)[0];
+        vcard = Vcf.Parse(vcfString)[0];
 
         // Find the WhatsApp number:
         string? whatsAppNumber = vcard.Phones?

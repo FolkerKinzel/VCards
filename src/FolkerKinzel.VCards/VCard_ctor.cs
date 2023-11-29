@@ -472,7 +472,7 @@ public sealed partial class VCard
 
             using var reader = new StringReader(content);
 
-            List<VCard> list = Vcf.DoDeserializeVcf(reader, versionHint);
+            List<VCard> list = Vcf.DoDeserialize(reader, versionHint);
 
             return list.FirstOrDefault();
         }
