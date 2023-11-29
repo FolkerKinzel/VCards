@@ -32,6 +32,31 @@ public static partial class Vcf
         return DoDeserialize(reader);
     }
 
+    public static IList<VCard> Load(string fileName, AnsiFilter filter)
+        => filter?.Load(fileName) ?? throw new ArgumentNullException(nameof(filter));
+
+    public static IEnumerable<VCard> LoadMany(IEnumerable<string?> fileNames,
+                                              AnsiFilter? filter = null)
+    {
+        _ArgumentNullException.ThrowIfNull(fileNames, nameof(fileNames));
+
+        foreach (var fileName in fileNames)
+        {
+            if(fileName is null)
+            {
+                continue;
+            }
+
+            IList<VCard> vCards = filter is null ? Load(fileName) 
+                                                 : filter.Load(fileName);
+
+            foreach (var vCard in vCards)
+            {
+                yield return vCard;
+            }
+        }
+    }
+
     /// <summary>Parses a <see cref="string" />, that represents the content of a VCF
     /// file.</summary>
     /// <param name="vcf">A <see cref="string" /> that represents the content of a VCF
@@ -74,15 +99,50 @@ public static partial class Vcf
     /// <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IList<VCard> Deserialize(Stream stream,
-                                              Encoding? textEncoding = null,
-                                              bool leaveStreamOpen = false)
+                                           Encoding? textEncoding = null,
+                                           bool leaveStreamOpen = false)
     {
         using var reader = new StreamReader(stream, textEncoding ?? Encoding.UTF8, true, 1024, leaveStreamOpen);
         return DoDeserialize(reader);
     }
 
+    public static IList<VCard> Deserialize(Func<Stream?> factory, AnsiFilter filter)
+        => filter?.Deserialize(factory) ?? throw new ArgumentNullException(nameof(filter));
+
+    public static IEnumerable<VCard> DeserializeMany(IEnumerable<Func<Stream?>?> factories, AnsiFilter? filter = null)
+    {
+        _ArgumentNullException.ThrowIfNull(factories, nameof(factories));
+
+        foreach (var factory in factories)
+        {
+            if (factory is null)
+            {
+                continue;
+            }
+
+            IList<VCard> vCards;
+
+            if (filter is null)
+            {
+                using var stream = factory();
+
+                vCards = stream is null ? Array.Empty<VCard>() 
+                                        : Deserialize(stream);
+            }
+            else
+            {
+                vCards = filter.Deserialize(factory);
+            }
+
+            foreach (var vCard in vCards)
+            {
+                yield return vCard;
+            }
+        }
+    }
+
     internal static List<VCard> DoDeserialize(TextReader reader,
-                                                 VCdVersion versionHint = VCdVersion.V2_1)
+                                              VCdVersion versionHint = VCdVersion.V2_1)
     {
         Debug.Assert(reader != null);
         DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoDeserialize) + "(TextReader)");
