@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Tests;
+﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 

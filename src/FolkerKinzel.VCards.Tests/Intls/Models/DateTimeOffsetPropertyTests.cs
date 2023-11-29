@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -16,7 +17,7 @@ public class DateTimeOffsetPropertyTests
     public void DateTimeOffsetPropertyTest1()
     {
 
-        DateAndOrTimeProperty prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.UtcNow, GROUP);
+        var prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.UtcNow, GROUP);
 
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.IsEmpty);

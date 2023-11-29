@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
@@ -68,16 +69,13 @@ public sealed partial class VCard
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     public static IEnumerable<VCard> Reference(IEnumerable<VCard?> vCards)
     {
-        if(vCards is null)
-        {
-            throw new ArgumentNullException(nameof(vCards));
-        }
+        // IEnumerable<VCard?> can be used here because the input is cloned.
+        _ArgumentNullException.ThrowIfNull(vCards, nameof(vCards));
 
         var list = vCards.WhereNotNull().ToList();
         ReferenceIntl(list);
         return list;
     }
-
 
     private static void ReferenceIntl(List<VCard> vCards)
     {
@@ -115,7 +113,7 @@ public sealed partial class VCard
         {
             Debug.Assert(relations.Where(x => x is RelationVCardProperty).All(x => !x!.IsEmpty));
 
-            IEnumerable<RelationVCardProperty> vcdProps = relations
+            RelationVCardProperty[] vcdProps = relations
                             .WhereNotNullAnd(static x => x is RelationVCardProperty)
                             .Cast<RelationVCardProperty>()
                             .ToArray(); // We need ToArray here because relations
@@ -200,44 +198,37 @@ public sealed partial class VCard
     /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IEnumerable<VCard> Dereference(IEnumerable<VCard?> vCards)
-        => vCards is null ? throw new ArgumentNullException(nameof(vCards)) 
-                          : Dereference(vCards, true);
+        => DereferenceIntl(vCards?
+                              .WhereNotNull()
+                              .Select(vcard => (vcard.Relations != null || vcard.Members != null) ? (VCard)vcard.Clone() : vcard)
+                              .ToArray() ?? throw new ArgumentNullException(nameof(vCards)));
 
 
-    private static IEnumerable<VCard> Dereference(IEnumerable<VCard?> vCards, bool clone)
+    private static IEnumerable<VCard> DereferenceIntl(IList<VCard> vCards)
     {
+        // Use IList<VCard> here instead of IEnumerable<VCard> to force the caller
+        // to pass something that is persisted in memory because vCards is enumerated 
+        // several times.
         Debug.Assert(vCards != null);
 
-        foreach (VCard? vcard in vCards)
+        foreach (VCard vc in vCards)
         {
-            if (vcard != null)
+            if (vc.Relations != null)
             {
-                if (vcard.Relations != null || vcard.Members != null)
-                {
-                    VCard vc = clone ? (VCard)vcard.Clone() : vcard;
+                List<RelationProperty?> relations = vc.Relations.ToList();
+                vc.Relations = relations;
+                DoDereference(relations, vCards);
+            }
 
-                    if (vc.Relations != null)
-                    {
-                        List<RelationProperty?> relations = vc.Relations.ToList();
-                        vc.Relations = relations;
-                        DoDereference(relations, vCards);
-                    }
-
-                    if (vc.Members != null)
-                    {
-                        List<RelationProperty?> members = vc.Members.ToList();
-                        vc.Members = members;
-                        DoDereference(members, vCards);
-                    }
-
-                    yield return vc;
-                }
-                else
-                {
-                    yield return vcard;
-                }
+            if (vc.Members != null)
+            {
+                List<RelationProperty?> members = vc.Members.ToList();
+                vc.Members = members;
+                DoDereference(members, vCards);
             }
         }
+
+        return vCards;
 
         static void DoDereference(List<RelationProperty?> relations, IEnumerable<VCard?> vCards)
         {

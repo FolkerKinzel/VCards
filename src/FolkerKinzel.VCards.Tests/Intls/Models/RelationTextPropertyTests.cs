@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
