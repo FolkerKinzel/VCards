@@ -46,7 +46,7 @@ public class RelationTextPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.ParseVcf(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -85,7 +85,7 @@ public class RelationTextPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.ParseVcf(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);

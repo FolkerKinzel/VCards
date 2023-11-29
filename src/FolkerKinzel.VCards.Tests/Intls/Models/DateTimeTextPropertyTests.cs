@@ -27,7 +27,7 @@ public class DateTimeTextPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.ParseVcf(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);

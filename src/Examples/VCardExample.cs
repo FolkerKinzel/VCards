@@ -46,7 +46,7 @@ public static class VCardExample
         vCard.SaveVcf(v4FilePath, VCdVersion.V4_0);
 
         // Load vCard:
-        vCard = VCard.LoadVcf(v3FilePath)[0];
+        vCard = Vcf.LoadVcf(v3FilePath)[0];
 
         WriteResultsToConsole(vCard);
 

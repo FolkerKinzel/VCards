@@ -50,7 +50,7 @@ public class DateAndOrTimePropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = Vcf.ParseVcf(vcf)[0];
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
         DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
@@ -70,7 +70,7 @@ public class DateAndOrTimePropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = Vcf.ParseVcf(vcf)[0];
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
         DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
@@ -90,7 +90,7 @@ public class DateAndOrTimePropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = Vcf.ParseVcf(vcf)[0];
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
         DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();

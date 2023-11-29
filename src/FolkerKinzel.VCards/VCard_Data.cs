@@ -1,4 +1,7 @@
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Intls.Models;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Syncs;
@@ -46,7 +49,7 @@ public sealed partial class VCard
     /// <summary> <c>VERSION</c>: Version of the vCard standard. <c>(2,3,4)</c></summary>
     public VCdVersion Version
     {
-        get; private set;
+        get; internal set;
     }
 
     /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
@@ -601,5 +604,35 @@ public sealed partial class VCard
     {
         get => Get<IEnumerable<XmlProperty?>?>(Prop.Xmls);
         set => Set(Prop.Xmls, value);
+    }
+
+
+
+    internal void NormalizeMembers(bool ignoreEmptyItems)
+    {
+        if (Members is null)
+        {
+            return;
+        }
+
+        RelationProperty[] members = Members.WhereNotNull().ToArray();
+        Members = members;
+
+        for (int i = 0; i < members.Length; i++)
+        {
+            RelationProperty prop = members[i];
+
+            if (prop is RelationTextProperty textProp)
+            {
+                if (textProp.IsEmpty && ignoreEmptyItems)
+                {
+                    continue;
+                }
+
+                members[i] = Uri.TryCreate(textProp.Value?.Trim(), UriKind.Absolute, out Uri? uri)
+                    ? RelationProperty.FromUri(uri, prop.Parameters.RelationType, prop.Group)
+                    : RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(textProp.Value) });
+            }
+        }
     }
 }

@@ -92,7 +92,7 @@ public sealed partial class VCard
     /// <param name="versionHint" />
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class.</exception>
-    private VCard(Queue<VcfRow> queue, VcfDeserializationInfo info, VCdVersion versionHint)
+    internal VCard(Queue<VcfRow> queue, VcfDeserializationInfo info, VCdVersion versionHint)
     {
         Debug.Assert(queue != null);
         Debug.Assert(info.Builder != null);
@@ -372,7 +372,7 @@ public sealed partial class VCard
                     {
                         if (vcfRow.Value.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                         {
-                            var nested = VCard.ParseNestedVcard(vcfRow.Value, info, this.Version);
+                            var nested = ParseNestedVcard(vcfRow.Value, info, this.Version);
                             Relations = Concat(Relations,
                                                nested is null
                                                ? RelationProperty.FromText(vcfRow.Value,
@@ -459,6 +459,23 @@ public sealed partial class VCard
 
         // Must be the last in ctor:
         Sync = new SyncOperation(this);
+
+
+        static VCard? ParseNestedVcard(string content,
+                                       VcfDeserializationInfo info,
+                                       VCdVersion versionHint)
+        {
+            // Version 2.1 is not masked:
+            content = versionHint == VCdVersion.V2_1
+                ? content
+                : content.UnMask(info.Builder, versionHint);
+
+            using var reader = new StringReader(content);
+
+            List<VCard> list = Vcf.DoDeserializeVcf(reader, versionHint);
+
+            return list.FirstOrDefault();
+        }
     }//ctor
 
 

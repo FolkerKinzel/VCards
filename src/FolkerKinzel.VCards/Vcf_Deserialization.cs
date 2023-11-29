@@ -7,8 +7,10 @@ using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards;
 
-public sealed partial class VCard
+public static partial class Vcf
 {
+    private const int DESERIALIZER_QUEUE_INITIAL_CAPACITY = 64;
+
     /// <summary>Loads a VCF file.</summary>
     /// <param name="fileName">Absolute or relative path to a VCF file.</param>
     /// <param name="textEncoding">The text encoding to use to read the file or <c>null</c>,
@@ -74,8 +76,8 @@ public sealed partial class VCard
         return DoDeserializeVcf(reader);
     }
 
-    private static List<VCard> DoDeserializeVcf(TextReader reader,
-                                                VCdVersion versionHint = VCdVersion.V2_1)
+    internal static List<VCard> DoDeserializeVcf(TextReader reader,
+                                                 VCdVersion versionHint = VCdVersion.V2_1)
     {
         Debug.Assert(reader != null);
         DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoDeserializeVcf) + "(TextReader)");
@@ -111,21 +113,7 @@ public sealed partial class VCard
         return vCardList;
     }
 
-    private static VCard? ParseNestedVcard(string content,
-                                           VcfDeserializationInfo info,
-                                           VCdVersion versionHint)
-    {
-        // Version 2.1 is not masked:
-        content = versionHint == VCdVersion.V2_1
-            ? content
-            : content.UnMask(info.Builder, versionHint);
-
-        using var reader = new StringReader(content);
-
-        List<VCard> list = DoDeserializeVcf(reader, versionHint);
-
-        return list.FirstOrDefault();
-    }
+    
 
     [ExcludeFromCodeCoverage]
     private static StreamReader InitializeStreamReader(string fileName, Encoding? textEncoding)

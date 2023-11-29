@@ -12,7 +12,6 @@ public sealed partial class VCard
     internal const string DEFAULT_CHARSET = "UTF-8";
     internal const VCdVersion DEFAULT_VERSION = VCdVersion.V3_0;
 
-    private const int DESERIALIZER_QUEUE_INITIAL_CAPACITY = 64;
 
     internal static class PropKeys
     {

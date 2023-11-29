@@ -9,7 +9,7 @@ public class WhatsAppIssueTests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        IList<VCard> list = VCard.LoadVcf(TestFiles.WhatsAppIssueVcf);
+        IList<VCard> list = Vcf.LoadVcf(TestFiles.WhatsAppIssueVcf);
         Assert.AreNotEqual(0, list.Count);
 
         IEnumerable<Models.TextProperty?>? phoneNumbers = list[0].Phones;

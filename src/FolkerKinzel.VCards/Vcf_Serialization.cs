@@ -10,7 +10,7 @@ using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards;
 
-public sealed partial class VCard
+public static partial class Vcf
 {
     #region static Methods
 
@@ -57,7 +57,7 @@ public sealed partial class VCard
     public static void SaveVcf(
         string fileName,
         IEnumerable<VCard?> vCards,
-        VCdVersion version = DEFAULT_VERSION,
+        VCdVersion version = VCard.DEFAULT_VERSION,
         ITimeZoneIDConverter? tzConverter = null,
         VcfOptions options = VcfOptions.Default)
     {
@@ -122,7 +122,7 @@ public sealed partial class VCard
     /// closed.</exception>
     public static void SerializeVcf(Stream stream,
                                     IEnumerable<VCard?> vCards,
-                                    VCdVersion version = DEFAULT_VERSION,
+                                    VCdVersion version = VCard.DEFAULT_VERSION,
                                     ITimeZoneIDConverter? tzConverter = null,
                                     VcfOptions options = VcfOptions.Default,
                                     bool leaveStreamOpen = false)
@@ -150,10 +150,10 @@ public sealed partial class VCard
         {
             foreach (var vCard in list)
             {
-                vCard.NormalizeMembers(serializer);
+                vCard.NormalizeMembers(serializer.IgnoreEmptyItems);
             }
 
-            ReferenceIntl(list);
+            VCard.ReferenceIntl(list);
         }
 
         foreach (VCard vCard in list)
@@ -266,7 +266,7 @@ public sealed partial class VCard
 
         using var stream = new MemoryStream();
 
-        VCard.SerializeVcf(stream, vCards, version, tzConverter, options, leaveStreamOpen: true);
+        SerializeVcf(stream, vCards, version, tzConverter, options, leaveStreamOpen: true);
 
         stream.Position = 0;
         using var reader = new StreamReader(stream, Encoding.UTF8);
@@ -451,31 +451,5 @@ public sealed partial class VCard
         }
     }
 
-    private void NormalizeMembers(VcfSerializer serializer)
-    {
-        if (Members is null)
-        {
-            return;
-        }
-
-        RelationProperty[] members = Members.WhereNotNull().ToArray();
-        Members = members;
-
-        for (int i = 0; i < members.Length; i++)
-        {
-            RelationProperty prop = members[i];
-
-            if (prop is RelationTextProperty textProp)
-            {
-                if (textProp.IsEmpty && serializer.IgnoreEmptyItems)
-                {
-                    continue;
-                }
-
-                members[i] = Uri.TryCreate(textProp.Value?.Trim(), UriKind.Absolute, out Uri? uri)
-                    ? RelationProperty.FromUri(uri, prop.Parameters.RelationType, prop.Group)
-                    : RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(textProp.Value) });
-            }
-        }
-    }
+   
 }

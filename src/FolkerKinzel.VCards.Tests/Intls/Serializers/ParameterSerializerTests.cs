@@ -32,7 +32,7 @@ public class ParameterSerializerTests
 
         string s = vc.ToVcfString(options: VcfOptions.All);
 
-        vc = VCard.ParseVcf(s)[0];
+        vc = Vcf.ParseVcf(s)[0];
         prop = vc.NonStandards!.First();
         Assert.AreEqual(2, prop!.Parameters.NonStandard!.Count());
     }

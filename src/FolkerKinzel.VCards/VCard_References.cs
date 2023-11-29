@@ -77,7 +77,7 @@ public sealed partial class VCard
         return list;
     }
 
-    private static void ReferenceIntl(List<VCard> vCards)
+    internal static void ReferenceIntl(List<VCard> vCards)
     {
         for (int i = vCards.Count - 1; i >= 0; i--)
         {
@@ -210,7 +210,7 @@ public sealed partial class VCard
         return arr;
     }
 
-    private static void DereferenceIntl(IList<VCard> vCards)
+    internal static void DereferenceIntl(IList<VCard> vCards)
     {
         // Use IList<VCard> here instead of IEnumerable<VCard> to force the caller
         // to pass something that is persisted in memory because vCards is enumerated 

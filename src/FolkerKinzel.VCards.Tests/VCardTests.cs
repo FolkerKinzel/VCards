@@ -16,27 +16,27 @@ public class VCardTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void LoadTest_fileNameNull() => _ = VCard.LoadVcf(null!);
+    public void LoadTest_fileNameNull() => _ = Vcf.LoadVcf(null!);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
-    public void LoadTest_invalidFileName() => _ = VCard.LoadVcf("  ");
+    public void LoadTest_invalidFileName() => _ = Vcf.LoadVcf("  ");
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void ParseTest_contentNull() => _ = VCard.ParseVcf(null!);
+    public void ParseTest_contentNull() => _ = Vcf.ParseVcf(null!);
 
     [TestMethod]
     public void ParseTest_contentEmpty()
     {
-        IList<VCard> list = VCard.ParseVcf("");
+        IList<VCard> list = Vcf.ParseVcf("");
         Assert.AreEqual(0, list.Count);
     }
 
     [TestMethod]
     public void ParseTest1()
     {
-        IList<VCard> list = VCard.ParseVcf("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
+        IList<VCard> list = Vcf.ParseVcf("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
         Assert.AreEqual(1, list.Count);
 
         Assert.IsNotNull(list[0].DisplayNames);
@@ -65,7 +65,7 @@ public class VCardTests
 
         vcard.SaveVcf(path, version);
 
-        IList<VCard> list = VCard.LoadVcf(path);
+        IList<VCard> list = Vcf.LoadVcf(path);
 
         Assert.AreEqual(1, list.Count);
         Assert.IsNotNull(list[0].DisplayNames);
@@ -209,7 +209,7 @@ public class VCardTests
         vcard.SerializeVcf(ms, version, leaveStreamOpen: true);
         ms.Position = 0;
 
-        IList<VCard> list = VCard.DeserializeVcf(ms);
+        IList<VCard> list = Vcf.DeserializeVcf(ms);
 
         Assert.AreEqual(1, list.Count);
         Assert.IsNotNull(list[0].DisplayNames);
@@ -223,7 +223,7 @@ public class VCardTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void DeserializeTest_readerNull() => _ = VCard.DeserializeVcf(null!);
+    public void DeserializeTest_readerNull() => _ = Vcf.DeserializeVcf(null!);
 
 
     [DataTestMethod]
@@ -239,7 +239,7 @@ public class VCardTests
 
         string s = vcard.ToVcfString(version);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.ParseVcf(s);
 
         Assert.AreEqual(1, list.Count);
         Assert.IsNotNull(list[0].DisplayNames);
@@ -256,7 +256,7 @@ public class VCardTests
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void ToVcfStringTest_vcardListNull1(VCdVersion version) => _ = VCard.ToVcfString(null!, version);
+    public void ToVcfStringTest_vcardListNull1(VCdVersion version) => _ = Vcf.ToVcfString(null!, version);
 
 
     [TestMethod]
@@ -308,14 +308,14 @@ public class VCardTests
     public void SeralizeVcfTest1()
     {
         using var stream = new MemoryStream();
-        VCard.SerializeVcf(stream, null!);
+        Vcf.SerializeVcf(stream, null!);
     }
 
     [TestMethod]
     public void DeserializeTest2()
     {
         var stream = new FailStream(new ArgumentOutOfRangeException());
-        IList<VCard> vCards = VCard.DeserializeVcf(stream);
+        IList<VCard> vCards = Vcf.DeserializeVcf(stream);
         Assert.IsNotNull(vCards);
     }
 
@@ -323,14 +323,14 @@ public class VCardTests
     public void DeserializeTest3()
     {
         var stream = new FailStream(new OutOfMemoryException());
-        IList<VCard> vCards = VCard.DeserializeVcf(stream);
+        IList<VCard> vCards = Vcf.DeserializeVcf(stream);
         Assert.IsNotNull(vCards);
     }
 
     [TestMethod]
     public void LoadCropped_2_1Test()
     {
-        IList<VCard> vCards = VCard.LoadVcf(TestFiles.Cropped_2_1vcf);
+        IList<VCard> vCards = Vcf.LoadVcf(TestFiles.Cropped_2_1vcf);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
     }
