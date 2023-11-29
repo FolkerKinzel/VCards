@@ -17,8 +17,7 @@ public class LabelIssueTests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        var filter = new AnsiFilter();
-        IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelIssueVcf, out string enc);
+        IList<VCard> vCards = Vcf.Load(TestFiles.LabelIssueVcf, new AnsiFilter());
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         Assert.IsNotNull(vCards[0]);
@@ -48,8 +47,7 @@ public class LabelIssueTests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        var filter = new AnsiFilter();
-        IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelTest1Vcf, out string enc);
+        IList<VCard> vCards = Vcf.Load(TestFiles.LabelTest1Vcf, new AnsiFilter());
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         Assert.IsNotNull(vCards[0]);
@@ -80,8 +78,7 @@ public class LabelIssueTests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        var filter = new AnsiFilter();
-        IList<VCard> vCards = filter.LoadVcf(TestFiles.LabelTest2Vcf, out string enc);
+        IList<VCard> vCards = Vcf.Load(TestFiles.LabelTest2Vcf, new AnsiFilter());
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         Assert.IsNotNull(vCards[0]);

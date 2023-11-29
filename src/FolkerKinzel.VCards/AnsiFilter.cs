@@ -91,7 +91,7 @@ public sealed class AnsiFilter
     /// <summary>
     /// The <see cref="Encoding"/> used to read the VCF file.
     /// </summary>
-    public Encoding UsedEncoding {  get; private set; }
+    public Encoding? UsedEncoding {  get; private set; }
 
     /// <summary>  Loads a VCF file and automatically selects the appropriate 
     /// <see cref="Encoding" />. </summary>
@@ -124,6 +124,8 @@ public sealed class AnsiFilter
 
     internal IList<VCard> Deserialize(Func<Stream?> factory)
     {
+        UsedEncoding = null;
+
         _ArgumentNullException.ThrowIfNull(factory, nameof(factory));
 
         Reset();
@@ -159,7 +161,10 @@ public sealed class AnsiFilter
         else
         {
             using var stream2 = factory();
-            return Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
+
+            return stream2 is null 
+                    ? Array.Empty<VCard>()
+                    : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }
     }
 

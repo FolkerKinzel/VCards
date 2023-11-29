@@ -37,14 +37,17 @@ public static class AnsiFilterExample
                 .EnumerateFiles(directoryPath)
                 .Where(x => StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(x), ".vcf")))
             {
-                IList<VCard> vCards = ansiFilter.LoadVcf(vcfFileName, out string encodingWebName);
-                WriteToTextFile(vcfFileName, vCards, encodingWebName, writer);
+                IList<VCard> vCards = Vcf.Load(vcfFileName, ansiFilter);
+                WriteToTextFile(vcfFileName, vCards, ansiFilter.UsedEncoding?.WebName, writer);
             }
         }
         ShowInTextEditorAndDelete(outFileName);
     }
            
-    private static void WriteToTextFile(string vcfFileName, IList<VCard> vCards, string encodingWebName, TextWriter writer)
+    private static void WriteToTextFile(string vcfFileName,
+                                        IList<VCard> vCards,
+                                        string? encodingWebName,
+                                        TextWriter writer)
     {
         const string indent = "    ";
         writer.Write(Path.GetFileName(vcfFileName));
