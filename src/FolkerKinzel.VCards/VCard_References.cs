@@ -197,14 +197,20 @@ public sealed partial class VCard
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.
     /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IEnumerable<VCard> Dereference(IEnumerable<VCard?> vCards)
-        => DereferenceIntl(vCards?
-                              .WhereNotNull()
-                              .Select(vcard => (vcard.Relations != null || vcard.Members != null) ? (VCard)vcard.Clone() : vcard)
-                              .ToArray() ?? throw new ArgumentNullException(nameof(vCards)));
+    public static IList<VCard> Dereference(IEnumerable<VCard?> vCards)
+    {
+        var arr = vCards?
+                  .WhereNotNull()
+                  .Select(vcard => (vcard.Relations != null || vcard.Members != null) 
+                                     ? (VCard)vcard.Clone() 
+                                     : vcard)
+                  .ToArray() ?? throw new ArgumentNullException(nameof(vCards));
 
+        DereferenceIntl(arr);
+        return arr;
+    }
 
-    private static IEnumerable<VCard> DereferenceIntl(IList<VCard> vCards)
+    private static void DereferenceIntl(IList<VCard> vCards)
     {
         // Use IList<VCard> here instead of IEnumerable<VCard> to force the caller
         // to pass something that is persisted in memory because vCards is enumerated 
@@ -227,8 +233,6 @@ public sealed partial class VCard
                 DoDereference(members, vCards);
             }
         }
-
-        return vCards;
 
         static void DoDereference(List<RelationProperty?> relations, IEnumerable<VCard?> vCards)
         {

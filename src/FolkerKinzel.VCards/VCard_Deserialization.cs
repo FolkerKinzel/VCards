@@ -106,7 +106,9 @@ public sealed partial class VCard
             }
         } while (!vcfReader.EOF);
 
-        return VCard.DereferenceIntl(vCardList).ToList();
+        VCard.DereferenceIntl(vCardList);
+
+        return vCardList;
     }
 
     private static VCard? ParseNestedVcard(string content,

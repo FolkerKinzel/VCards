@@ -99,7 +99,7 @@ public static class IEnumerableExtension
     /// </example>
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IEnumerable<VCard> DereferenceVCards(this IEnumerable<VCard?> vCards)
+    public static IList<VCard> DereferenceVCards(this IEnumerable<VCard?> vCards)
         => VCard.Dereference(vCards);
 
     /// <summary>Saves a collection of <see cref="VCard" /> objects in a common VCF
