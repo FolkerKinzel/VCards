@@ -49,10 +49,10 @@ public static class VCard40Example
 
         // Replace the embedded VCards in composersVCard.Members with Guid
         // references in order to save them as separate vCard 4.0 .VCF files.
-        // IMPORTANT: Never call ReferenceVCards() if you intend to serialize
+        // IMPORTANT: Never call Reference() if you intend to serialize
         // a vCard 2.1 or vCard 3.0 !
 
-        IEnumerable<VCard> referenced = composersVCard.ReferenceVCards();
+        IEnumerable<VCard> referenced = composersVCard.Reference();
         // (The extension method can be called on a single VCard because
         // VCard implements IEnumerable<VCard>.)
 
@@ -72,26 +72,21 @@ public static class VCard40Example
         // Make sure to save ALL VCard objects in `referenced` - otherwise
         // the information originally stored in `composersVCard` will be
         // irrevocably lost.
-        foreach (VCard vcard in referenced)
+        foreach (VCard vCard in referenced)
         {
             string fileName = Path.Combine(
                 directoryPath,
-                $"{vcard.DisplayNames!.First()!.Value}{vcfExtension}");
+                $"{vCard.DisplayNames!.First()!.Value}{vcfExtension}");
 
-            vcard.SaveVcf(fileName, VCdVersion.V4_0);
+            vCard.SaveVcf(fileName, VCdVersion.V4_0);
         }
 
         // Reload the .VCF files:
-        var vCardList = new List<VCard>();
-
-        foreach (string fileName in 
-            Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"))
-        {
-            vCardList.AddRange(Vcf.Load(fileName));
-        }
+        IEnumerable<VCard> vCards = 
+            Vcf.LoadMany(Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"));
 
         // Make the reloaded VCard objects searchable:
-        IEnumerable<VCard> dereferenced = vCardList.DereferenceVCards();
+        IEnumerable<VCard> dereferenced = vCards.Dereference();
 
         // Find the parsed result from "Composers.vcf":
         composersVCard = dereferenced

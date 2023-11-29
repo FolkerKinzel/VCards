@@ -45,7 +45,7 @@ public class IEnumerableExtensionTests
 
         List<VCard?>? list = GenerateVCardList();
 
-        list = list.ReferenceVCards().ToList()!;
+        list = list.Reference().ToList()!;
 
         Assert.AreEqual(2, list.Count);
 
@@ -79,12 +79,12 @@ public class IEnumerableExtensionTests
 
         List<VCard?>? list = GenerateVCardList();
 
-        list = list.ReferenceVCards().ToList()!;
+        list = list.Reference().ToList()!;
 
         Assert.AreEqual(2, list.Count);
         Assert.IsNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
 
-        list = list.DereferenceVCards().ToList()!;
+        list = list.Dereference().ToList()!;
 
         Assert.AreEqual(2, list.Count);
         Assert.IsNotNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));

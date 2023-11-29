@@ -58,7 +58,7 @@ public static class IEnumerableExtension
     /// </example>
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IEnumerable<VCard> ReferenceVCards(this IEnumerable<VCard?> vCards)
+    public static IEnumerable<VCard> Reference(this IEnumerable<VCard?> vCards)
         => VCard.Reference(vCards);
 
     /// <summary>
@@ -99,7 +99,7 @@ public static class IEnumerableExtension
     /// </example>
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IList<VCard> DereferenceVCards(this IEnumerable<VCard?> vCards)
+    public static IList<VCard> Dereference(this IEnumerable<VCard?> vCards)
         => VCard.Dereference(vCards);
 
     /// <summary>Saves a collection of <see cref="VCard" /> objects in a common VCF
@@ -141,7 +141,7 @@ public static class IEnumerableExtension
                                VCdVersion version = VCard.DEFAULT_VERSION,
                                ITimeZoneIDConverter? tzConverter = null,
                                VcfOptions options = VcfOptions.Default)
-        => Vcf.Save(fileName, vCards, version, tzConverter, options);
+        => Vcf.Save(vCards, fileName, version, tzConverter, options);
 
     /// <summary>Serializes a collection of <see cref="VCard" /> objects into a <see
     /// cref="Stream" /> using the VCF format.</summary>
@@ -187,7 +187,7 @@ public static class IEnumerableExtension
                                     ITimeZoneIDConverter? tzConverter = null,
                                     VcfOptions options = VcfOptions.Default,
                                     bool leaveStreamOpen = false)
-        => Vcf.Serialize(stream, vCards, version, tzConverter, options, leaveStreamOpen);
+        => Vcf.Serialize(vCards, stream, version, tzConverter, options, leaveStreamOpen);
 
     /// <summary>Serializes <paramref name="vCards" /> as a <see cref="string" />, which
     /// represents the content of a VCF file.</summary>

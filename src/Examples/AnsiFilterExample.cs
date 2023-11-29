@@ -23,14 +23,15 @@ public static class AnsiFilterExample
         // CLIENTPIDMAP).
         VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
 
-        // If you have to read VCF files which might have ANSI encodings, use the AnsiFilter
+        // If you have to read VCF files that might have ANSI encodings, use the AnsiFilter
         // to read them automatically with the right encoding.
-        // Give the constructor the ANSI code page as an argument which is most likely. This
+        // Give the constructor as an argument the ANSI code page that is most likely. This
         // will be the fallback code page if a VCF file couldn't be loaded as UTF-8 and didn't 
         // contain a CHARSET parameter. In our example we choose windows-1255 (Hebrew).
         var ansiFilter = new AnsiFilter(1255);
 
         var outFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
+
         using (StreamWriter writer = File.AppendText(outFileName))
         {
             foreach (string vcfFileName in Directory
@@ -41,6 +42,7 @@ public static class AnsiFilterExample
                 WriteToTextFile(vcfFileName, vCards, ansiFilter.UsedEncoding?.WebName, writer);
             }
         }
+
         ShowInTextEditorAndDelete(outFileName);
     }
            

@@ -308,7 +308,7 @@ public class VCardTests
     public void SeralizeVcfTest1()
     {
         using var stream = new MemoryStream();
-        Vcf.Serialize(stream, null!);
+        Vcf.Serialize(null!, stream);
     }
 
     [TestMethod]

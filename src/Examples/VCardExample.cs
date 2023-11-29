@@ -36,14 +36,14 @@ public static class VCardExample
         ITimeZoneIDConverter tzConverter = new TimeZoneIDConverter();
 
         // Save vCard as vCard 2.1:
-        vCard.SaveVcf(v2FilePath, VCdVersion.V2_1, tzConverter);
+        Vcf.Save(vCard, v2FilePath, VCdVersion.V2_1, tzConverter);
 
         // Save vCard as vCard 3.0:
         // You don't need to specify the version: Version 3.0 is the default.
-        vCard.SaveVcf(v3FilePath, tzConverter: tzConverter);
+        Vcf.Save(vCard, v3FilePath, tzConverter: tzConverter);
 
         // Save vCard as vCard 4.0. (A time zone converter is not needed):
-        vCard.SaveVcf(v4FilePath, VCdVersion.V4_0);
+        Vcf.Save(vCard, v4FilePath, VCdVersion.V4_0);
 
         // Load vCard:
         vCard = Vcf.Load(v3FilePath)[0];

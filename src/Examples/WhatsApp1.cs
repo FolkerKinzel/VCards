@@ -46,7 +46,7 @@ internal static class WhatsAppDemo1
             Phones = xiamoiMobilePhone
         };
 
-        Console.WriteLine(vcard.ToVcfString());
+        Console.WriteLine(Vcf.ToString(vcard));
     }
 }
 /*

@@ -41,9 +41,9 @@ public class V2Tests
         Assert.AreEqual(photo?.Parameters.MediaType, "image/jpeg");
         //System.IO.File.WriteAllBytes(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"Testbild{dataUrl.GetFileExtension()}"), dataUrl.GetEmbeddedBytes());
 
-        Vcf.Save(System.IO.Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"),
-            vcard!, VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.WriteNonStandardProperties));
+        Vcf.Save(vcard!,
+            System.IO.Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"), VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.WriteNonStandardProperties));
     }
 
 

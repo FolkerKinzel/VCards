@@ -53,8 +53,8 @@ public static partial class Vcf
     /// </exception>
     /// <exception cref="IOException">The file could not be written.</exception>
     public static void Save(
-        string fileName,
         IEnumerable<VCard?> vCards,
+        string fileName,
         VCdVersion version = VCard.DEFAULT_VERSION,
         ITimeZoneIDConverter? tzConverter = null,
         VcfOptions options = VcfOptions.Default)
@@ -68,7 +68,7 @@ public static partial class Vcf
         }
 
         using FileStream stream = InitializeFileStream(fileName);
-        Serialize(stream, vCards, version, tzConverter, options, false);
+        Serialize(vCards, stream, version, tzConverter, options, false);
     }
 
     /// <summary>Serializes a collection of <see cref="VCard" /> objects into a <see
@@ -118,8 +118,8 @@ public static partial class Vcf
     /// <exception cref="IOException">I/O error.</exception>
     /// <exception cref="ObjectDisposedException"> <paramref name="stream" /> was already
     /// closed.</exception>
-    public static void Serialize(Stream stream,
-                                 IEnumerable<VCard?> vCards,
+    public static void Serialize(IEnumerable<VCard?> vCards,
+                                 Stream stream,
                                  VCdVersion version = VCard.DEFAULT_VERSION,
                                  ITimeZoneIDConverter? tzConverter = null,
                                  VcfOptions options = VcfOptions.Default,
@@ -264,7 +264,7 @@ public static partial class Vcf
 
         using var stream = new MemoryStream();
 
-        Serialize(stream, vCards, version, tzConverter, options, leaveStreamOpen: true);
+        Serialize(vCards, stream, version, tzConverter, options, leaveStreamOpen: true);
 
         stream.Position = 0;
         using var reader = new StreamReader(stream, Encoding.UTF8);

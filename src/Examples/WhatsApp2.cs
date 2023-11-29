@@ -25,23 +25,24 @@ internal static class WhatsAppDemo2
         {
             NameViews = new VC::NameProperty[]
             {
-                    new(familyName: null, givenName: "zzMad Perla 45")
+                new(familyName: null, givenName: "zzMad Perla 45")
             },
 
             DisplayNames = new VC::TextProperty[]
             {
-                    new("zzMad Perla 45")
+                new("zzMad Perla 45")
             },
 
             Phones = new VC::TextProperty[]
             {
-                    xiamoiMobilePhone
+                xiamoiMobilePhone
             }
         };
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
-        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
+        string vcfString = Vcf.ToString(vcard,
+                                        options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
 
         Console.WriteLine(vcfString);
 
