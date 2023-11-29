@@ -18,6 +18,7 @@ public static partial class Vcf
     /// />.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
     /// the content of the VCF file.</returns>
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.
     /// </exception>
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
@@ -37,10 +38,12 @@ public static partial class Vcf
     /// file.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
     /// the content of <paramref name="vcf" />.</returns>
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vcf" /> is <c>null</c>.
     /// </exception>
     /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
+    /// not yet registered with the <see cref="VCard"/> class. (See 
+    /// <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     public static IList<VCard> Parse(string vcf)
     {
         _ArgumentNullException.ThrowIfNull(vcf, nameof(vcf));
@@ -59,6 +62,7 @@ public static partial class Vcf
     /// <paramref name="stream"/> when the method returns.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
     /// the content of the VCF file.</returns>
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="stream" /> is <c>null</c>.
     /// </exception>
     /// <exception cref="ArgumentException"><paramref name="stream"/> doesn't support reading.</exception>
@@ -66,7 +70,8 @@ public static partial class Vcf
     /// </exception>
     /// <exception cref="IOException"> Could not read from <paramref name="stream"/>.</exception>
     /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
+    /// not yet registered with the <see cref="VCard"/> class. (See 
+    /// <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IList<VCard> Deserialize(Stream stream,
                                               Encoding? textEncoding = null,
