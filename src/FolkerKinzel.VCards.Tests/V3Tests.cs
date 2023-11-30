@@ -12,6 +12,9 @@ public class V3Tests
     [TestMethod]
     public void ParseTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         IList<VCard>? vcard = Vcf.Load(TestFiles.V3vcf);
 
         Assert.IsNotNull(vcard);
@@ -22,6 +25,9 @@ public class V3Tests
     [TestMethod]
     public void ParseTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         IList<VCard>? vcard = Vcf.Load(@"C:\Users\fkinz\OneDrive\Kontakte\Thunderbird\21-01-13.vcf");
 
         Assert.IsNotNull(vcard);
@@ -31,6 +37,9 @@ public class V3Tests
     [TestMethod]
     public void ParseTest3()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         IList<VCard>? vcard = Vcf.Load(TestFiles.PhotoV3vcf);
 
         Assert.IsNotNull(vcard);
@@ -41,6 +50,9 @@ public class V3Tests
     [TestMethod]
     public void WriteEmptyVCardTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard();
 
         string s = vcard.ToVcfString(VCdVersion.V3_0);
@@ -65,6 +77,9 @@ public class V3Tests
     [TestMethod]
     public void LineWrappingTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard();
 
         string UNITEXT = "Dies ist ein wirklich sehr sehr sehr langer Text mit ü, Ö, und ä " + "" +
@@ -116,12 +131,14 @@ public class V3Tests
 
             return arr;
         }
-
     }
 
     [TestMethod]
     public void SaveTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard();
 
         string UNITEXT = "Dies ist ein wirklich sehr sehr sehr langer Text mit ü, Ö, und ä " + "" +
@@ -150,6 +167,9 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0, options: VcfOptions.All);
 
         Assert.IsNotNull(s);
@@ -170,7 +190,10 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest2()
     {
-        IList<VCard> vc = Vcf.Load(TestFiles.PhotoV3vcf);
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        IList<VCard> vc = Vcf.Load(TestFiles.PhotoV3vcf).ToList();
         vc.Add(vc[0]);
 
         string s = vc.ToVcfString();
@@ -184,6 +207,9 @@ public class V3Tests
     [TestMethod]
     public void TimeDataTypeTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string vcardString = @"BEGIN:VCARD
 VERSION:3.0
 BDAY;Value=Time:05:30:00
@@ -209,6 +235,9 @@ END:VCARD";
     [TestMethod]
     public void NonStandardParameterTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string whatsAppNumber = "+1-234-567-89";
         var xiamoiMobilePhone = new TextProperty(whatsAppNumber);
         xiamoiMobilePhone.Parameters.NonStandard = new KeyValuePair<string, string>[]
@@ -237,6 +266,9 @@ END:VCARD";
     [TestMethod]
     public void ImppTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string mobilePhoneNumber = "tel:+1-234-567-89";
         var whatsAppImpp = new TextProperty(mobilePhoneNumber);
 
@@ -264,6 +296,9 @@ END:VCARD";
     [TestMethod]
     public void ImppTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string mobilePhoneNumber = "tel:+1-234-567-89";
         var whatsAppImpp = new TextProperty(mobilePhoneNumber);
 
@@ -291,6 +326,9 @@ END:VCARD";
     [TestMethod]
     public void XMessengerTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string mobilePhoneNumber = "skype:+1-234-567-89";
         var prop = new TextProperty(mobilePhoneNumber);
         const Impp imppTypes = Impp.Mobile | Impp.Personal;
@@ -316,6 +354,9 @@ END:VCARD";
     [TestMethod]
     public void XMessengerTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string mobilePhoneNumber = "skype:+1-234-567-89";
         var prop = new TextProperty(mobilePhoneNumber);
         const Impp imppTypes = Impp.Mobile | Impp.Personal;
@@ -337,6 +378,9 @@ END:VCARD";
     [TestMethod]
     public void PreserveTimeZoneAndGeoTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var adr = new AddressProperty("1", "", "", "", "");
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
@@ -358,6 +402,9 @@ END:VCARD";
     [TestMethod]
     public void PreserveTimeZoneAndGeoTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var adr = new AddressProperty("1", "", "", "", "");
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
@@ -380,6 +427,9 @@ END:VCARD";
     [TestMethod]
     public void DisplayNameTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var nm = new NameProperty("Kinzel", "Folker");
 
         var vCard = new VCard { NameViews = nm };
@@ -396,6 +446,9 @@ END:VCARD";
     [TestMethod]
     public void DisplayNameTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vCard = new VCard { NameViews = new NameProperty?[] { null } };
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0);
@@ -410,6 +463,9 @@ END:VCARD";
     [TestMethod]
     public void DisplayNameTest3()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vCard = new VCard();
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0, options: VcfOptions.Default.Set(VcfOptions.WriteEmptyProperties));

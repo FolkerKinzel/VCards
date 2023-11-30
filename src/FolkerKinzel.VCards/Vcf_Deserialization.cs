@@ -9,8 +9,6 @@ namespace FolkerKinzel.VCards;
 
 public static partial class Vcf
 {
-    private const int DESERIALIZER_QUEUE_INITIAL_CAPACITY = 64;
-
     /// <summary>Loads a VCF file.</summary>
     /// <param name="fileName">Absolute or relative path to a VCF file.</param>
     /// <param name="textEncoding">The text encoding to use to read the file or <c>null</c>,
@@ -141,38 +139,13 @@ public static partial class Vcf
         }
     }
 
-    internal static List<VCard> DoDeserialize(TextReader reader,
+    internal static IList<VCard> DoDeserialize(TextReader reader,
                                               VCdVersion versionHint = VCdVersion.V2_1)
     {
         Debug.Assert(reader != null);
         DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoDeserialize) + "(TextReader)");
 
-        var vCardList = new List<VCard>();
-        var info = new VcfDeserializationInfo();
-        var vcfReader = new VcfRowReader(reader, info);
-        var queue = new Queue<VcfRow>(DESERIALIZER_QUEUE_INITIAL_CAPACITY);
-
-        do
-        {
-            foreach (VcfRow vcfRow in vcfReader)
-            {
-                queue.Enqueue(vcfRow);
-            }
-
-            if (queue.Count != 0)
-            {
-                var vCard = new VCard(queue, info, versionHint);
-                vCardList.Add(vCard);
-
-                Debug.WriteLine("");
-                Debug.WriteLine("", "Parsed " + nameof(VCard));
-                Debug.WriteLine("");
-                Debug.WriteLine(vCard);
-
-                queue.Clear();
-            }
-        } while (!vcfReader.EOF);
-
+        var vCardList = VcfReader.EnumerateVCards(reader, versionHint).ToArray();
         VCard.DereferenceIntl(vCardList);
 
         return vCardList;
