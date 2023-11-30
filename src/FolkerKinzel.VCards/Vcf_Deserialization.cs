@@ -149,7 +149,7 @@ public static partial class Vcf
 
         var vCardList = new List<VCard>();
         var info = new VcfDeserializationInfo();
-        var vcfReader = new VcfReader(reader, info);
+        var vcfReader = new VcfRowReader(reader, info);
         var queue = new Queue<VcfRow>(DESERIALIZER_QUEUE_INITIAL_CAPACITY);
 
         do

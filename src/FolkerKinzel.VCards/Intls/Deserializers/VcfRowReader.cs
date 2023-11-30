@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
-internal class VcfReader : IEnumerable<VcfRow>
+internal class VcfRowReader : IEnumerable<VcfRow>
 {
     private const string BEGIN_VCARD = "BEGIN:VCARD";
     private const string END_VCARD = "END:VCARD";
@@ -21,7 +21,7 @@ internal class VcfReader : IEnumerable<VcfRow>
     private readonly VCdVersion _versionHint;
 
 
-    internal VcfReader(TextReader reader, VcfDeserializationInfo info, VCdVersion versionHint = VCdVersion.V2_1)
+    internal VcfRowReader(TextReader reader, VcfDeserializationInfo info, VCdVersion versionHint = VCdVersion.V2_1)
     {
         this._reader = reader;
         this._info = info;

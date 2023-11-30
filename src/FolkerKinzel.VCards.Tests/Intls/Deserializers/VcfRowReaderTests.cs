@@ -6,13 +6,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
 
 [TestClass()]
-public class VcfReaderTests
+public class VcfRowReaderTests
 {
     [TestMethod()]
     public void VcfReaderCtorTest()
     {
         using var reader = new StringReader("");
-        _ = new VcfReader(reader, new VcfDeserializationInfo());
+        _ = new VcfRowReader(reader, new VcfDeserializationInfo());
     }
 
 
@@ -24,7 +24,7 @@ public class VcfReaderTests
 
         var list = new List<VcfRow>();
 
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         foreach (VcfRow vcfRow in vcReader)
         {
@@ -73,7 +73,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -105,7 +105,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -135,7 +135,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -163,7 +163,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -196,7 +196,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -229,7 +229,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -257,7 +257,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -286,7 +286,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -317,7 +317,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -350,7 +350,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -377,7 +377,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -404,7 +404,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -435,7 +435,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -460,7 +460,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -486,7 +486,7 @@ public class VcfReaderTests
             .AppendLine("END:VCARD");
 
         using var reader = new StringReader(sb.ToString());
-        var vcReader = new VcfReader(reader, new VcfDeserializationInfo());
+        var vcReader = new VcfRowReader(reader, new VcfDeserializationInfo());
 
         var list = new List<VcfRow>();
 
@@ -525,13 +525,13 @@ public class VcfReaderTests
 
         using (var reader1 = new StringReader(vCard))
         {
-            var vcfReader1 = new VcfReader(reader1, info);
+            var vcfReader1 = new VcfRowReader(reader1, info);
             count1 = vcfReader1.AsWeakEnumerable().Count();
         }
 
         using (var reader2 = new StringReader(vCard))
         {
-            var vcfReader2 = new VcfReader(reader2, info);
+            var vcfReader2 = new VcfRowReader(reader2, info);
             count2 = vcfReader2.Count();
         }
 
