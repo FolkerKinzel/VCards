@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="34.0.2" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />

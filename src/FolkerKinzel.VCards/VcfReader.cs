@@ -38,6 +38,7 @@ public sealed class VcfReader : IDisposable
 
                 queue.Clear();
             }
+
         } while (!vcfReader.EOF);
 
         [Conditional("DEBUG")]
