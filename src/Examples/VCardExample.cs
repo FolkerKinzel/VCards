@@ -1,10 +1,5 @@
 ﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Extensions;
-
-// It's recommended to use a namespace-alias for better readability of
-// your code and better usability of Visual Studio IntelliSense:
-using VC = FolkerKinzel.VCards.Models;
 
 namespace Examples;
 

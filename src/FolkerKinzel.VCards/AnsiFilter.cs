@@ -91,7 +91,7 @@ public sealed class AnsiFilter
     /// <summary>
     /// The <see cref="Encoding"/> used to read the VCF file.
     /// </summary>
-    public Encoding? UsedEncoding {  get; private set; }
+    public Encoding? UsedEncoding { get; private set; }
 
     /// <summary>  Loads a VCF file and automatically selects the appropriate 
     /// <see cref="Encoding" />. </summary>
@@ -115,7 +115,7 @@ public sealed class AnsiFilter
 
         string? charSet = GetCharsetFromVCards(vCards);
 
-        Encoding? enc =  charSet is null ? FallbackEncoding : TextEncodingConverter.GetEncoding(charSet);
+        Encoding? enc = charSet is null ? FallbackEncoding : TextEncodingConverter.GetEncoding(charSet);
         enc = IsUtf8(enc) ? FallbackEncoding : enc;
         UsedEncoding = enc;
 
@@ -132,12 +132,12 @@ public sealed class AnsiFilter
 
         using Stream? stream = factory();
 
-        if(stream is null)
+        if (stream is null)
         {
             return Array.Empty<VCard>();
         }
 
-        long initialPosition = stream.Position;
+        long initialPosition = stream.CanSeek ? stream.Position : 0;
 
         IList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
 
@@ -148,12 +148,12 @@ public sealed class AnsiFilter
 
         string? charSet = GetCharsetFromVCards(vCards);
 
-        Encoding? enc = charSet is null ? FallbackEncoding 
+        Encoding? enc = charSet is null ? FallbackEncoding
                                         : TextEncodingConverter.GetEncoding(charSet);
         enc = IsUtf8(enc) ? FallbackEncoding : enc;
         UsedEncoding = enc;
 
-        if(stream.CanSeek)
+        if (stream.CanSeek)
         {
             stream.Position = initialPosition;
             return Vcf.Deserialize(stream, enc, leaveStreamOpen: false);
@@ -162,7 +162,7 @@ public sealed class AnsiFilter
         {
             using var stream2 = factory();
 
-            return stream2 is null 
+            return stream2 is null
                     ? Array.Empty<VCard>()
                     : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }

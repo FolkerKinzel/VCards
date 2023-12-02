@@ -48,9 +48,9 @@ public static partial class Vcf
             IList<VCard> vCards = filter is null ? Load(fileName) 
                                                  : filter.Load(fileName);
 
-            foreach (var vCard in vCards)
+            for (int i = 0; i < vCards.Count; i++)
             {
-                yield return vCard;
+                yield return vCards[i];
             }
         }
     }
@@ -132,9 +132,9 @@ public static partial class Vcf
                 vCards = filter.Deserialize(factory);
             }
 
-            foreach (var vCard in vCards)
+            for (int i = 0; i < vCards.Count; i++)
             {
-                yield return vCard;
+                yield return vCards[i];
             }
         }
     }

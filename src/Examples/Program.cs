@@ -24,7 +24,9 @@ internal class Program
 
         _ = Directory.CreateDirectory(directoryPath);
 
-        VcfReaderExample.Example(@"..\..\..\LargeFile.vcf");
+        //VcfReaderExample.Example(@"..\..\..\LargeFile.vcf");
+
+        WebExample.Example();
 
         //NoPidExample.SaveWithoutPropertyIdentification();
 
