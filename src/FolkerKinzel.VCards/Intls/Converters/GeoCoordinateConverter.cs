@@ -10,7 +10,7 @@ internal static class GeoCoordinateConverter
 
     internal static void AppendTo(StringBuilder builder, GeoCoordinate? coordinate, VCdVersion version)
     {
-        Debug.Assert(builder != null);
+        Debug.Assert(builder is not null);
 
         if (coordinate is null)
         {
@@ -30,9 +30,9 @@ internal static class GeoCoordinateConverter
                 break;
             default:
                 _ = builder.Append("geo:").Append(latitude).Append(',').Append(longitude);
-                if(coordinate.Uncertainty.HasValue) 
+                if (coordinate.Uncertainty.HasValue)
                 {
-                    _ = builder.Append(U_PARAMETER).Append(coordinate.Uncertainty.Value.ToString("0.",culture));
+                    _ = builder.Append(U_PARAMETER).Append(coordinate.Uncertainty.Value.ToString("0.", culture));
                 }
                 break;
         }//switch

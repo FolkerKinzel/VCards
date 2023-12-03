@@ -16,7 +16,7 @@ internal static class IEnumerableExtension
 
         foreach (var item in values.Distinct())
         {
-            if (item != null)
+            if (item is not null)
             {
                 item.Parameters.Index = (!skipEmptyItems || !item.IsEmpty) ? idx++ : null;
             }
@@ -28,7 +28,7 @@ internal static class IEnumerableExtension
     {
         foreach (var item in values)
         {
-            if (item != null)
+            if (item is not null)
             {
                 item.Parameters.Index = null;
             }
@@ -40,14 +40,14 @@ internal static class IEnumerableExtension
                             : values?.WhereNotNull().Take(2).Count() == 1;
 
     internal static IEnumerable<TSource> WhereNotNull<TSource>(this IEnumerable<TSource?> values)
-        => values.Where(static x => x != null)!;
+        => values.Where(static x => x is not null)!;
 
     internal static IEnumerable<TSource> WhereNotNullAnd<TSource>(
         this IEnumerable<TSource?> values, Func<TSource, bool> filter) where TSource : VCardProperty
     {
         foreach (var item in values)
         {
-            if (item != null && filter(item))
+            if (item is not null && filter(item))
             {
                 yield return item;
             }
@@ -56,14 +56,14 @@ internal static class IEnumerableExtension
 
     internal static IEnumerable<TSource> WhereNotEmpty<TSource>(
         this IEnumerable<TSource?> values) where TSource : VCardProperty
-        => values.Where(static x => x != null && !x.IsEmpty)!;
+        => values.Where(static x => x is not null && !x.IsEmpty)!;
 
     internal static IEnumerable<TSource> WhereNotEmptyAnd<TSource>(
         this IEnumerable<TSource?> values, Func<TSource, bool> filter) where TSource : VCardProperty
     {
         foreach (var item in values)
         {
-            if (item != null && !item.IsEmpty && filter(item))
+            if (item is not null && !item.IsEmpty && filter(item))
             {
                 yield return item;
             }
@@ -88,7 +88,7 @@ internal static class IEnumerableExtension
     internal static TSource? PrefOrNullIntl<TSource>(
         this IEnumerable<TSource?> values,
         Func<TSource, bool> filter,
-        bool ignoreEmptyItems)  where TSource : VCardProperty
+        bool ignoreEmptyItems) where TSource : VCardProperty
         => ignoreEmptyItems ? values.WhereNotEmptyAnd(filter).OrderBy(GetPreference).FirstOrDefault()
                             : values.WhereNotNullAnd(filter).OrderBy(GetPreference).FirstOrDefault();
 
@@ -104,7 +104,7 @@ internal static class IEnumerableExtension
          => ignoreEmptyItems ? values.WhereNotEmptyAnd(filter).OrderBy(GetIndex).FirstOrDefault()
                              : values.WhereNotNullAnd(filter).OrderBy(GetIndex).FirstOrDefault();
 
-    
+
 
     private static int GetPreference(VCardProperty prop) => prop.Parameters.Preference;
 

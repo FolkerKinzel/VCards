@@ -30,7 +30,7 @@ public class UuidPropertyTests
 #pragma warning restore CS1718 // Comparison made to same variable
 
         UuidProperty? uid2 = null;
-        Assert.IsTrue(uid2 == null);
+        Assert.IsTrue(uid2 is null);
         Assert.IsFalse(uid2 == uid1);
     }
 }

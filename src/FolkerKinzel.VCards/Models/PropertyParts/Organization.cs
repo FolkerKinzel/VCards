@@ -40,8 +40,8 @@ public sealed class Organization
 
     internal bool NeedsToBeQpEncoded()
         => OrganizationName.NeedsToBeQpEncoded() ||
-           (OrganizationalUnits != null && OrganizationalUnits.Any(s => s.NeedsToBeQpEncoded()));
-    
+           (OrganizationalUnits is not null && OrganizationalUnits.Any(s => s.NeedsToBeQpEncoded()));
+
     /// <inheritdoc/>
     public override string ToString()
     {
@@ -52,12 +52,12 @@ public sealed class Organization
 
         int padLength = Math.Max(orgName.Length, orgUnit.Length) + 2;
 
-        if (OrganizationName != null)
+        if (OrganizationName is not null)
         {
             _ = sb.Append($"{orgName}: ".PadRight(padLength)).Append(OrganizationName);
         }
 
-        if (OrganizationalUnits != null)
+        if (OrganizationalUnits is not null)
         {
             if (sb.Length != 0)
             {
@@ -85,7 +85,7 @@ public sealed class Organization
         _ = worker.Clear().Append(OrganizationName).Mask(serializer.Version);
         _ = builder.Append(worker);
 
-        if (OrganizationalUnits != null)
+        if (OrganizationalUnits is not null)
         {
             for (int i = 0; i < OrganizationalUnits.Count; i++)
             {

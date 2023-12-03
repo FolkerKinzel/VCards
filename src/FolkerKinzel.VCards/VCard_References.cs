@@ -88,7 +88,7 @@ public sealed partial class VCard
                 vcard = (VCard)vcard.Clone();
                 vCards[i] = vcard;
 
-                if (vcard.Members != null)
+                if (vcard.Members is not null)
                 {
                     List<RelationProperty?> members = vcard.Members.ToList();
                     vcard.Members = members;
@@ -96,7 +96,7 @@ public sealed partial class VCard
                     DoSetReferences(vCards, members);
                 }
 
-                if (vcard.Relations != null)
+                if (vcard.Relations is not null)
                 {
                     List<RelationProperty?> relations = vcard.Relations.ToList();
                     vcard.Relations = relations;
@@ -121,7 +121,7 @@ public sealed partial class VCard
 
             foreach (RelationVCardProperty vcdProp in vcdProps)
             {
-                Debug.Assert(vcdProp != null);
+                Debug.Assert(vcdProp is not null);
 
                 _ = relations.Remove(vcdProp);
 
@@ -201,8 +201,8 @@ public sealed partial class VCard
     {
         var arr = vCards?
                   .WhereNotNull()
-                  .Select(vcard => (vcard.Relations != null || vcard.Members != null) 
-                                     ? (VCard)vcard.Clone() 
+                  .Select(vcard => (vcard.Relations is not null || vcard.Members is not null)
+                                     ? (VCard)vcard.Clone()
                                      : vcard)
                   .ToArray() ?? throw new ArgumentNullException(nameof(vCards));
 
@@ -215,18 +215,18 @@ public sealed partial class VCard
         // Use IList<VCard> here instead of IEnumerable<VCard> to force the caller
         // to pass something that is persisted in memory because vCards is enumerated 
         // several times.
-        Debug.Assert(vCards != null);
+        Debug.Assert(vCards is not null);
 
         foreach (VCard vc in vCards)
         {
-            if (vc.Relations != null)
+            if (vc.Relations is not null)
             {
                 List<RelationProperty?> relations = vc.Relations.ToList();
                 vc.Relations = relations;
                 DoDereference(relations, vCards);
             }
 
-            if (vc.Members != null)
+            if (vc.Members is not null)
             {
                 List<RelationProperty?> members = vc.Members.ToList();
                 vc.Members = members;
@@ -245,10 +245,10 @@ public sealed partial class VCard
             foreach (RelationUuidProperty guidProp in guidProps)
             {
                 VCard? referencedVCard =
-                    vCards.Where(x => x?.ID != null)
+                    vCards.Where(x => x?.ID is not null)
                           .FirstOrDefault(x => x!.ID!.Value == guidProp.Value);
 
-                if (referencedVCard != null)
+                if (referencedVCard is not null)
                 {
                     if (relations.Any(x => x is RelationVCardProperty xVc &&
                                            xVc.Value.ID == referencedVCard.ID))

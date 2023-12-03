@@ -7,14 +7,14 @@ internal static class AddressOrderConverter
 {
     internal static AddressOrder ToAddressOrder(this CultureInfo cultureInfo)
     {
-        Debug.Assert(cultureInfo != null);
+        Debug.Assert(cultureInfo is not null);
 
         string name = cultureInfo.Name;
         int separatorIndex = name.IndexOf('-');
 
-        if(separatorIndex == -1 || name.Length < separatorIndex + 3)
-        { 
-            return AddressOrder.Din; 
+        if (separatorIndex == -1 || name.Length < separatorIndex + 3)
+        {
+            return AddressOrder.Din;
         }
 
         string countryName = name.Substring(separatorIndex + 1, 2);
@@ -102,7 +102,7 @@ internal static class AddressOrderConverter
                        .Where(x => char.IsLetter(x))
                        .Select(x => char.ToUpperInvariant(x)).ToArray();
 
-        if(arr.Length == 0)
+        if (arr.Length == 0)
         {
             return null;
         }
@@ -171,7 +171,7 @@ internal static class AddressOrderConverter
                span.Contains("COLOMBI", StringComparison.Ordinal) || // Colombia
                span.Contains("VIET", StringComparison.Ordinal)  // Viet Nam
                ? AddressOrder.Usa
-               : span.StartsWith("PAPUA") || span.EndsWith("VENEZUELA") ? AddressOrder.Venezuela 
+               : span.StartsWith("PAPUA") || span.EndsWith("VENEZUELA") ? AddressOrder.Venezuela
                                                                         : AddressOrder.Din;
     }
 }

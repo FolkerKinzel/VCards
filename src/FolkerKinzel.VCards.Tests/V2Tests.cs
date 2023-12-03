@@ -100,7 +100,7 @@ public class V2Tests
         Assert.IsNotNull(s);
 
         Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
-            .All(x => x != null && x.Length <= VCard.MAX_BYTES_PER_LINE));
+            .All(x => x is not null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
         _ = Vcf.Parse(s);
 

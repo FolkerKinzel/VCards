@@ -68,7 +68,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         Longitude = Math.Round(longitude, 6, MidpointRounding.ToEven);
 
         // rounding can make Longitude -180 again:
-        if(Longitude == -180.0)
+        if (Longitude == -180.0)
         {
             Longitude = 180.0;
         }
@@ -135,7 +135,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Equals([NotNullWhen(true)] GeoCoordinate? other)
-        => other != null
+        => other is not null
            && other.Latitude == Latitude
            && other.Longitude == Longitude
            && other.Uncertainty == Uncertainty;
@@ -251,7 +251,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         int splitIndex = value.IndexOf(';');
 
-        if (splitIndex == -1) 
+        if (splitIndex == -1)
         {
             return false;
         }

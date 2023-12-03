@@ -13,7 +13,7 @@ internal static class InterestConverter
 
     internal static Interest? Parse(string val)
     {
-        Debug.Assert(val != null);
+        Debug.Assert(val is not null);
         Debug.Assert(StringComparer.Ordinal.Equals(val, val.ToLowerInvariant()));
 
         return val switch

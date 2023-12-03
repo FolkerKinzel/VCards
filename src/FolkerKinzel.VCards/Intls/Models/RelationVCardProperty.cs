@@ -31,7 +31,7 @@ internal sealed class RelationVCardProperty : RelationProperty
         VCard vcard, Rel? relation = null, string? group = null)
         : base(relation, group)
     {
-        Debug.Assert(vcard != null);
+        Debug.Assert(vcard is not null);
 
         Value = vcard;
         Parameters.DataType = Data.VCard;
@@ -49,7 +49,7 @@ internal sealed class RelationVCardProperty : RelationProperty
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         base.PrepareForVcfSerialization(serializer);
 
@@ -58,14 +58,14 @@ internal sealed class RelationVCardProperty : RelationProperty
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
-        Debug.Assert(Value != null);
+        Debug.Assert(serializer is not null);
+        Debug.Assert(Value is not null);
         Debug.Assert(serializer.Version < VCdVersion.V4_0);
 
         StringBuilder builder = serializer.Builder;
         StringBuilder worker = serializer.Worker;
 
-        string vc = Value.ToVcfString(serializer.Version, 
+        string vc = Value.ToVcfString(serializer.Version,
                                       options: serializer.Options.Unset(VcfOptions.AppendAgentAsSeparateVCard));
 
         if (serializer.Version == VCdVersion.V3_0)

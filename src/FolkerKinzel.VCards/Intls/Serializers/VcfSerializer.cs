@@ -75,12 +75,12 @@ internal abstract class VcfSerializer : IDisposable
                                        IEnumerable<T?> serializables,
                                        Func<T, bool>? filter = null) where T : VCardProperty
     {
-        Debug.Assert(serializables != null);
+        Debug.Assert(serializables is not null);
 
         VCardProperty? pref = filter is null ? serializables.PrefOrNullIntl(IgnoreEmptyItems)
                                              : serializables.PrefOrNullIntl(filter, IgnoreEmptyItems);
 
-        if (pref != null)
+        if (pref is not null)
         {
             BuildProperty(propertyKey, pref);
         }
@@ -90,12 +90,12 @@ internal abstract class VcfSerializer : IDisposable
                                          IEnumerable<T?> serializables,
                                          Func<T, bool>? filter = null) where T : VCardProperty
     {
-        Debug.Assert(serializables != null);
+        Debug.Assert(serializables is not null);
 
         VCardProperty? first = filter is null ? serializables.FirstOrNullIntl(IgnoreEmptyItems)
                                               : serializables.FirstOrNullIntl(filter, IgnoreEmptyItems);
 
-        if (first != null)
+        if (first is not null)
         {
             BuildProperty(propertyKey, first);
         }
@@ -103,7 +103,7 @@ internal abstract class VcfSerializer : IDisposable
 
     protected virtual void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> serializables)
     {
-        Debug.Assert(serializables != null);
+        Debug.Assert(serializables is not null);
 
         bool first = true;
 
@@ -139,7 +139,7 @@ internal abstract class VcfSerializer : IDisposable
 
     internal void Serialize(VCard vCard)
     {
-        Debug.Assert(vCard != null);
+        Debug.Assert(vCard is not null);
 
         VCardToSerialize = vCard;
         ReplenishRequiredProperties();
@@ -149,7 +149,7 @@ internal abstract class VcfSerializer : IDisposable
             SetPropertyIDs();
         }
 
-        if(Options.HasFlag(VcfOptions.SetIndexes))
+        if (Options.HasFlag(VcfOptions.SetIndexes))
         {
             SetIndexes();
         }
@@ -170,7 +170,7 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void SetIndexes()
     {
         foreach (IEnumerable<VCardProperty?> coll in VCardToSerialize.AsProperties()
-                                                     .Where(static x =>  (x.Value is IEnumerable<VCardProperty?>) && (x.Key != Prop.AppIDs))
+                                                     .Where(static x => (x.Value is IEnumerable<VCardProperty?>) && (x.Key != Prop.AppIDs))
                                                      .Select(static x => x.Value)
                                                      .Cast<IEnumerable<VCardProperty?>>())
         {
@@ -377,7 +377,7 @@ internal abstract class VcfSerializer : IDisposable
 
     protected void BuildXImpps(IEnumerable<TextProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
         if (Options.HasFlag(VcfOptions.WriteXExtensions))
         {
@@ -443,7 +443,7 @@ internal abstract class VcfSerializer : IDisposable
         {
             TextProperty? prop = value.PrefOrNullIntl(IgnoreEmptyItems);
 
-            if (prop != null)
+            if (prop is not null)
             {
                 BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_IMAddress, prop, prop.Parameters.Preference < 100);
             }
@@ -494,7 +494,7 @@ internal abstract class VcfSerializer : IDisposable
 
     protected virtual void AppendAnniversaryViews(IEnumerable<DateAndOrTimeProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
         if (value.WhereNotEmpty()
                  .FirstOrDefault(static x => x is DateOnlyProperty) is DateOnlyProperty pref)
@@ -572,9 +572,9 @@ internal abstract class VcfSerializer : IDisposable
 
     protected virtual void AppendGenderViews(IEnumerable<GenderProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
-        if (value.FirstOrDefault(x => x?.Value?.Sex != null) is GenderProperty pref)
+        if (value.FirstOrDefault(x => x?.Value?.Sex is not null) is GenderProperty pref)
         {
             Sex sex = pref.Value.Sex!.Value;
 
@@ -645,7 +645,7 @@ internal abstract class VcfSerializer : IDisposable
 
     protected void AppendNonStandardProperties(IEnumerable<NonStandardProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
         if (!this.Options.HasFlag(VcfOptions.WriteNonStandardProperties))
         {
@@ -697,7 +697,7 @@ internal abstract class VcfSerializer : IDisposable
         RelationProperty? agent = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Agent),
                                                        IgnoreEmptyItems);
 
-        if (agent != null)
+        if (agent is not null)
         {
             BuildProperty(VCard.PropKeys.AGENT, agent);
         }
@@ -705,7 +705,7 @@ internal abstract class VcfSerializer : IDisposable
         RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Spouse),
                                                         IgnoreEmptyItems);
 
-        if (spouse != null)
+        if (spouse is not null)
         {
             if (spouse is RelationVCardProperty vCardProp)
             {
@@ -744,7 +744,7 @@ internal abstract class VcfSerializer : IDisposable
             {
                 NameProperty? vcdName = vcardProp.Value?.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true);
 
-                if (vcdName != null)
+                if (vcdName is not null)
                 {
                     name = vcdName.ToDisplayName();
                 }
@@ -754,7 +754,7 @@ internal abstract class VcfSerializer : IDisposable
                 }
             }
 
-            Debug.Assert(name != null);
+            Debug.Assert(name is not null);
             return RelationProperty.FromText(name,
                                              vcardProp.Parameters.RelationType ?? Rel.Spouse,
                                              vcardProp.Group);

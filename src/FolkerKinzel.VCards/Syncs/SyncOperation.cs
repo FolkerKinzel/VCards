@@ -75,7 +75,7 @@ public sealed class SyncOperation
         {
             foreach (VCardProperty? prop in coll)
             {
-                if (prop != null)
+                if (prop is not null)
                 {
                     any = true;
                     SetPropertyID(prop.Parameters, coll);
@@ -83,9 +83,9 @@ public sealed class SyncOperation
             }
         }
 
-        if(any && CurrentAppID != null)
+        if (any && CurrentAppID is not null)
         {
-            if (!(_vCard.AppIDs?.Any(x => object.ReferenceEquals(x.Value, CurrentAppID)) ?? false)) 
+            if (!(_vCard.AppIDs?.Any(x => object.ReferenceEquals(x.Value, CurrentAppID)) ?? false))
             {
                 var newAppIDProp = new AppIDProperty(CurrentAppID);
                 _vCard.AppIDs = _vCard.AppIDs?.Concat(newAppIDProp) ?? newAppIDProp;
@@ -114,7 +114,7 @@ public sealed class SyncOperation
         {
             foreach (VCardProperty? prop in coll)
             {
-                if (prop != null)
+                if (prop is not null)
                 {
                     prop.Parameters.PropertyIDs = null;
                 }
@@ -129,7 +129,7 @@ public sealed class SyncOperation
     /// not yet registered with the <see cref="VCard"/> class.</exception>
     private void RegisterAppInVCardInstance()
     {
-        if(!VCard.IsAppRegistered) 
+        if (!VCard.IsAppRegistered)
         {
             throw new InvalidOperationException(Res.AppNotRegistered);
         }

@@ -9,7 +9,7 @@ internal static class StringBuilderExtension
 
     internal static StringBuilder UnMask(this StringBuilder builder, VCdVersion version)
     {
-        Debug.Assert(builder != null);
+        Debug.Assert(builder is not null);
 
         return version switch
         {
@@ -71,7 +71,7 @@ internal static class StringBuilderExtension
 
     internal static StringBuilder Mask(this StringBuilder builder, VCdVersion version)
     {
-        Debug.Assert(builder != null);
+        Debug.Assert(builder is not null);
 
         if (version == VCdVersion.V2_1)
         {
@@ -109,7 +109,7 @@ internal static class StringBuilderExtension
     /// <returns>A reference to <paramref name="builder"/>.</returns>
     internal static StringBuilder RemoveQuotes(this StringBuilder builder)
     {
-        Debug.Assert(builder != null);
+        Debug.Assert(builder is not null);
 
         if (builder.Length >= 1 && (builder[0] == '\"' || builder[0] == '\''))
         {
@@ -126,8 +126,8 @@ internal static class StringBuilderExtension
 
     internal static StringBuilder AppendReadableProperty(this StringBuilder sb, ReadOnlyCollection<string> strings, int? maxLen = null)
     {
-        Debug.Assert(sb != null);
-        Debug.Assert(strings != null);
+        Debug.Assert(sb is not null);
+        Debug.Assert(strings is not null);
         Debug.Assert(strings.All(x => !string.IsNullOrEmpty(x)));
 
         // Wenn strings leer ist, wird die Schleife nicht gestartet:
@@ -146,7 +146,7 @@ internal static class StringBuilderExtension
 
                 if (sb.Length != 0 && lineStartIndex != sb.Length)
                 {
-                    _ = sb.Length - lineStartIndex + entry.Length + 1 > maxLen.Value 
+                    _ = sb.Length - lineStartIndex + entry.Length + 1 > maxLen.Value
                         ? sb.AppendLine()
                         : sb.Append(' ');
                 }

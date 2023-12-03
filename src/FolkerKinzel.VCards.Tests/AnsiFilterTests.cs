@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace FolkerKinzel.VCards.Tests;
 
 [TestClass()]
-public class AnsiFilterNewTests
+public class AnsiFilterTests
 {
     private const string WIN1251 = "Віталій Володимирович Кличко";
     private const string WIN1252 = "Sören Täve Nüßlebaum";
@@ -117,7 +117,7 @@ public class AnsiFilterNewTests
     }
 
 
-        [TestMethod]
+    [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void AnsiFilterTest2() => _ = new AnsiFilter(4711);
 

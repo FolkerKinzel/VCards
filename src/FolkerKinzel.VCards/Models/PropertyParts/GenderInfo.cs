@@ -40,7 +40,7 @@ public sealed class GenderInfo
             s += Sex.ToString();
         }
 
-        if (Identity != null)
+        if (Identity is not null)
         {
             if (s.Length != 0)
             {
@@ -62,7 +62,7 @@ public sealed class GenderInfo
         }
 
 
-        if (Identity != null)
+        if (Identity is not null)
         {
             StringBuilder worker = serializer.Worker;
             _ = worker.Clear().Append(Identity).Mask(serializer.Version);

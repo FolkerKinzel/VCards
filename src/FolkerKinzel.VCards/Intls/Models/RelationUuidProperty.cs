@@ -29,7 +29,7 @@ internal sealed class RelationUuidProperty : RelationProperty
         Parameters.DataType = Data.Uri;
         Value = uuid;
     }
-    
+
     public new Guid Value
     {
         get;
@@ -45,7 +45,7 @@ internal sealed class RelationUuidProperty : RelationProperty
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         base.PrepareForVcfSerialization(serializer);
 
@@ -55,7 +55,7 @@ internal sealed class RelationUuidProperty : RelationProperty
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         _ = serializer.Builder.AppendUuid(Value, serializer.Version);
     }

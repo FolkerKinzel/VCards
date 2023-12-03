@@ -46,7 +46,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
     protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
         bool first = true;
 
@@ -55,7 +55,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
             bool isPref = first && prop.Parameters.Preference < 100;
 
             // AddressProperty.IsEmpty returns false if only
-            // AddressProperty.Parameters.Label != null:
+            // AddressProperty.Parameters.Label  is not null:
             if (!prop!.Value.IsEmpty || !IgnoreEmptyItems)
             {
                 BuildProperty(VCard.PropKeys.ADR, prop, isPref);
@@ -76,9 +76,9 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     protected override void AppendAnniversaryViews(IEnumerable<DateAndOrTimeProperty?> value)
         => base.AppendAnniversaryViews(value);
 
-    protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value) 
+    protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value)
         => BuildFirstProperty(VCard.PropKeys.BDAY,
-                              value, 
+                              value,
                               static x => x is DateOnlyProperty or DateTimeOffsetProperty);
 
     protected override void AppendCategories(IEnumerable<StringCollectionProperty?> value)
@@ -89,13 +89,13 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
     protected override void AppendDisplayNames(IEnumerable<TextProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
         TextProperty? displayName = value.PrefOrNullIntl(IgnoreEmptyItems);
 
         if (displayName is null)
         {
-            Debug.Assert(VCardToSerialize.NameViews != null);
+            Debug.Assert(VCardToSerialize.NameViews is not null);
             var name = VCardToSerialize.NameViews.FirstOrNullIntl(IgnoreEmptyItems);
 
             if (name is not null)
@@ -120,7 +120,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
     protected override void AppendInstantMessengerHandles(IEnumerable<TextProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
         if (Options.IsSet(VcfOptions.WriteImppExtension))
         {
@@ -170,7 +170,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
     protected override void AppendNameViews(IEnumerable<NameProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
         NameProperty name = value.FirstOrNullIntl(IgnoreEmptyItems)
                             ?? (IgnoreEmptyItems
@@ -183,7 +183,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
                                             .FirstOrDefault(static x => !string.IsNullOrWhiteSpace(x))?
                                                                                .Trim();
 
-        if (sortString != null)
+        if (sortString is not null)
         {
             var sortStringProp = new TextProperty(sortString, name.Group);
             sortStringProp.Parameters.Language = name.Parameters.Language;
@@ -224,7 +224,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
         => BuildPrefProperty(VCard.PropKeys.SOUND,
                              value,
                              static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
-    
+
     protected override void AppendSources(IEnumerable<TextProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.SOURCE, value);
 
@@ -250,7 +250,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         string? label = prop.Parameters.Label;
 
-        if (label != null)
+        if (label is not null)
         {
             var labelProp = new TextProperty(label, prop.Group);
             labelProp.Parameters.Assign(prop.Parameters);
@@ -262,7 +262,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         GeoCoordinate? geo = prop.Parameters.GeoPosition;
 
-        if (geo != null)
+        if (geo is not null)
         {
             GeoProperty? geoProp = VCardToSerialize
                                       .GeoCoordinates?
@@ -281,7 +281,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         TimeZoneID? tz = prop.Parameters.TimeZone;
 
-        if (tz != null)
+        if (tz is not null)
         {
             TimeZoneProperty? tzProp = VCardToSerialize
                                             .TimeZones?

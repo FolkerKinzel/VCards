@@ -106,7 +106,7 @@ public class DateTimeConverterTests
         Assert.AreEqual(dt, dt2);
 
         static string ToDateTimeString(in OneOf.OneOf<DateOnly, DateTimeOffset> dt, VCdVersion version)
-        { 
+        {
             var builder = new StringBuilder();
             dt.Switch(
                 dateOnly => DateTimeConverter.AppendDateTo(builder, dateOnly, version),
@@ -174,7 +174,7 @@ public class DateTimeConverterTests
     public void AppendDateTimeStringToTest2b()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 2, 0,0,0, DateTimeKind.Utc), VCdVersion.V4_0);
+        DateTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 2, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
         Assert.AreEqual(0, builder.Length);
     }
 

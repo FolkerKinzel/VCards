@@ -28,7 +28,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     }
 
     protected override void SetPropertyIDs()
-    { 
+    {
         // Do nothing
     }
 
@@ -121,7 +121,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     protected override void AppendAddresses(IEnumerable<AddressProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
         bool multiple = Options.IsSet(VcfOptions.AllowMultipleAdrAndLabelInVCard21);
         bool first = true;
@@ -131,7 +131,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
             bool isPref = first && multiple && prop.Parameters.Preference < 100;
 
             // AddressProperty.IsEmpty returns false if only
-            // AddressProperty.Parameters.Label != null:
+            // AddressProperty.Parameters.Label  is not null:
             if (!prop!.Value.IsEmpty || !IgnoreEmptyItems)
             {
                 BuildProperty(VCard.PropKeys.ADR, prop, isPref);
@@ -156,8 +156,8 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         => base.AppendAnniversaryViews(value);
 
     protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value)
-        => BuildFirstProperty(VCard.PropKeys.BDAY, 
-                              value, 
+        => BuildFirstProperty(VCard.PropKeys.BDAY,
+                              value,
                               static x => x is DateOnlyProperty or DateTimeOffsetProperty);
 
     protected override void AppendDisplayNames(IEnumerable<TextProperty?> value)
@@ -183,7 +183,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         => BuildProperty(VCard.PropKeys.REV, value);
 
     protected override void AppendLogos(IEnumerable<DataProperty?> value)
-        => BuildPrefProperty(VCard.PropKeys.LOGO, 
+        => BuildPrefProperty(VCard.PropKeys.LOGO,
                              value,
                              static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
@@ -192,11 +192,11 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     protected override void AppendNameViews(IEnumerable<NameProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
         NameProperty? name = value.FirstOrNullIntl(IgnoreEmptyItems)
                              ?? (IgnoreEmptyItems
-                                   ? new NameProperty( "?" )
+                                   ? new NameProperty("?")
                                    : new NameProperty());
         BuildProperty(VCard.PropKeys.N, name);
     }
@@ -211,7 +211,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         => BuildPropertyCollection(VCard.PropKeys.TEL, value);
 
     protected override void AppendPhotos(IEnumerable<DataProperty?> value)
-        => BuildPrefProperty(VCard.PropKeys.PHOTO, 
+        => BuildPrefProperty(VCard.PropKeys.PHOTO,
                              value,
                              static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
 
@@ -242,7 +242,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         string? label = prop.Parameters.Label;
 
-        if (label != null)
+        if (label is not null)
         {
             var labelProp = new TextProperty(label, prop.Group);
             labelProp.Parameters.Assign(prop.Parameters);
@@ -254,7 +254,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         GeoCoordinate? geo = prop.Parameters.GeoPosition;
 
-        if (geo != null)
+        if (geo is not null)
         {
             GeoProperty? geoProp = VCardToSerialize
                                       .GeoCoordinates?
@@ -273,7 +273,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         TimeZoneID? tz = prop.Parameters.TimeZone;
 
-        if (tz != null)
+        if (tz is not null)
         {
             TimeZoneProperty? tzProp = VCardToSerialize
                                             .TimeZones?

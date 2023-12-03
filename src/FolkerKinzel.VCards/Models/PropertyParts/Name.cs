@@ -20,7 +20,7 @@ public sealed class Name
     private const int ADDITIONAL_NAMES = 2;
     private const int PREFIXES = 3;
     private const int SUFFIXES = 4;
-    
+
     internal Name(
         ReadOnlyCollection<string> familyNames,
         ReadOnlyCollection<string> givenNames,
@@ -46,7 +46,7 @@ public sealed class Name
 
     internal Name(string vCardValue, VcfDeserializationInfo info, VCdVersion version)
     {
-        Debug.Assert(vCardValue != null);
+        Debug.Assert(vCardValue is not null);
 
         StringBuilder builder = info.Builder;
         ValueSplitter semicolonSplitter = info.SemiColonSplitter;
@@ -170,7 +170,7 @@ public sealed class Name
 
         // If the VCF file is invalid, properties could be null:
         // (LastName can never be null)
-        Debug.Assert(FamilyNames != null);
+        Debug.Assert(FamilyNames is not null);
         //FamilyNames ??= ReadOnlyCollectionString.Empty;
         GivenNames ??= ReadOnlyStringCollection.Empty;
         AdditionalNames ??= ReadOnlyStringCollection.Empty;

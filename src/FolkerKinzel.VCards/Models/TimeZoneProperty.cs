@@ -62,7 +62,7 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         Value?.AppendTo(serializer.Builder, serializer.Version, serializer.TimeZoneConverter);
     }

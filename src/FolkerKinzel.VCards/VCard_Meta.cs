@@ -66,7 +66,7 @@ public sealed partial class VCard
     {
         foreach (var kvp in _propDic)
         {
-            if (kvp.Value is VCardProperty prop && prop.Group != null)
+            if (kvp.Value is VCardProperty prop && prop.Group is not null)
             {
                 yield return prop.Group;
                 continue;
@@ -78,7 +78,7 @@ public sealed partial class VCard
                 {
                     string? group = vcProp?.Group;
 
-                    if (group != null)
+                    if (group is not null)
                     {
                         yield return group;
                     }

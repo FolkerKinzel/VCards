@@ -20,8 +20,8 @@ public sealed partial class VCard
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     public VCard(bool setID = true)
-    { 
-        if(setID)
+    {
+        if (setID)
         {
             ID = new UuidProperty();
         }
@@ -94,9 +94,9 @@ public sealed partial class VCard
     /// not yet registered with the <see cref="VCard"/> class.</exception>
     internal VCard(Queue<VcfRow> queue, VcfDeserializationInfo info, VCdVersion versionHint)
     {
-        Debug.Assert(queue != null);
-        Debug.Assert(info.Builder != null);
-        Debug.Assert(queue.All(x => x != null));
+        Debug.Assert(queue is not null);
+        Debug.Assert(info.Builder is not null);
+        Debug.Assert(queue.All(x => x is not null));
 
         this.Version = versionHint;
 
@@ -207,7 +207,7 @@ public sealed partial class VCard
 
                         if (!textProp.IsEmpty)
                         {
-                            if (NameViews != null)
+                            if (NameViews is not null)
                             {
                                 NameViews.First()!.Parameters.SortAs = new string?[] { textProp.Value };
                             }
@@ -248,7 +248,7 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (GenderViews is null && vcfRow.Value != null)
+                    else if (GenderViews is null && vcfRow.Value is not null)
                     {
                         GenderViews = vcfRow.Value.StartsWith('F') || vcfRow.Value.StartsWith('f')
                             ? new GenderProperty(Enums.Sex.Female)
@@ -293,7 +293,7 @@ public sealed partial class VCard
                     {
                         var textProp = new TextProperty(vcfRow, this.Version);
 
-                        if (textProp.Value != null &&
+                        if (textProp.Value is not null &&
                             (Messengers?.All(x => x?.Value != textProp.Value) ?? true))
                         {
                             Messengers = Concat(Messengers, textProp);
@@ -448,7 +448,7 @@ public sealed partial class VCard
 
         if (Version is VCdVersion.V2_1 or VCdVersion.V3_0)
         {
-            if (labels != null)
+            if (labels is not null)
             {
                 AssignLabelsToAddresses(labels);
             }
@@ -482,7 +482,7 @@ public sealed partial class VCard
     private static IEnumerable<TSource?> Concat<TSource>(
         IEnumerable<TSource?>? first, IEnumerable<TSource?> second) where TSource : VCardProperty
     {
-        Debug.Assert(second != null);
+        Debug.Assert(second is not null);
 
         return first?.Concat(second) ?? second;
     }
@@ -501,7 +501,7 @@ public sealed partial class VCard
 
         foreach (var group in groups)
         {
-            if (group.Key != null)
+            if (group.Key is not null)
             {
                 if (group.PrefOrNullIntl(static x => x is TextProperty, ignoreEmptyItems: false)
                      is TextProperty label)
@@ -576,7 +576,7 @@ public sealed partial class VCard
 
         foreach (var group in groups)
         {
-            if (group.Key != null)
+            if (group.Key is not null)
             {
                 if (group.FirstOrDefault(static x => x is TimeZoneProperty)
                     is TimeZoneProperty tzProp)
@@ -590,7 +590,7 @@ public sealed partial class VCard
                     }
                 }
             }
-            else // Group == null
+            else // Group  is null
             {
                 if (group.FirstOrDefault(static x => x is TimeZoneProperty)
                     is TimeZoneProperty tzProp)
@@ -618,7 +618,7 @@ public sealed partial class VCard
 
         foreach (var group in groups)
         {
-            if (group.Key != null)
+            if (group.Key is not null)
             {
                 if (group.FirstOrDefault(static x => x is GeoProperty)
                     is GeoProperty geoProp)
@@ -632,7 +632,7 @@ public sealed partial class VCard
                     }
                 }
             }
-            else // Group == null
+            else // Group  is null
             {
                 if (group.FirstOrDefault(static x => x is GeoProperty)
                     is GeoProperty geoProp)

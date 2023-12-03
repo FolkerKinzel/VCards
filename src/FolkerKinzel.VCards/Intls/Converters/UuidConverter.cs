@@ -62,7 +62,7 @@ internal static class UuidConverter
 
     internal static StringBuilder AppendUuid(this StringBuilder builder, Guid guid, VCdVersion version = VCdVersion.V4_0)
     {
-        Debug.Assert(builder != null);
+        Debug.Assert(builder is not null);
 
         if (version >= VCdVersion.V4_0)
         {

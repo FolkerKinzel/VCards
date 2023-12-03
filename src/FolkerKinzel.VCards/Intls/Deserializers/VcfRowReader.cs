@@ -102,7 +102,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
         }
 
         // needed if the VCF file contains more than one vCard
-        _info.Reset(); 
+        _info.Reset();
 
         bool isFirstLine = true;
         bool isVcard_2_1 = _versionHint == VCdVersion.V2_1;
@@ -110,7 +110,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
         string? s;
         do
         {
-            if(!ReadNextLine(out s))
+            if (!ReadNextLine(out s))
             {
                 yield break;
             }
@@ -123,7 +123,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 isVcard_2_1 = GetIsVcard_2_1(s);
             }
 
-            if (s.Length != 0 && char.IsWhiteSpace(s[0])) 
+            if (s.Length != 0 && char.IsWhiteSpace(s[0]))
             {
                 //vCard-Wrapping (This can't be "BEGIN:VCARD" or "END:VCARD".)
                 Debug.WriteLine("  == vCard Line-Wrapping detected ==");
@@ -134,7 +134,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 if (!isVcard_2_1)
                 {
                     //automatisch eingefügtes Leerzeichen wieder entfernen
-                    _ = _info.Builder.Remove(insertPosition, 1); 
+                    _ = _info.Builder.Remove(insertPosition, 1);
                 }
                 continue;
             }
@@ -159,7 +159,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                     {
                         VcfRow? vcfRow = CreateVcfRow(out _);
 
-                        if (vcfRow != null)
+                        if (vcfRow is not null)
                         {
                             yield return vcfRow;
                         }
@@ -189,7 +189,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                         {
                             VcfRow? vcfRow = CreateVcfRow(out _);
 
-                            if (vcfRow != null)
+                            if (vcfRow is not null)
                             {
                                 yield return vcfRow;
                             }
@@ -223,7 +223,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                     {
                         VcfRow? vcfRow = CreateVcfRow(out _);
 
-                        if (vcfRow != null)
+                        if (vcfRow is not null)
                         {
                             yield return vcfRow;
                         }
@@ -253,7 +253,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
                     VcfRow? vcfRow = CreateVcfRow(out _);
 
-                    if (vcfRow != null)
+                    if (vcfRow is not null)
                     {
                         yield return vcfRow;
                     }
@@ -287,7 +287,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
         while (s.Length == 0 || s[s.Length - 1] == '=')
         {
-            if(!ReadNextLine(out s))
+            if (!ReadNextLine(out s))
             {
                 return false;
             }
@@ -314,7 +314,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
         {
             _ = _info.Builder.Append(s);
 
-            if(!ReadNextLine(out s))
+            if (!ReadNextLine(out s))
             {
                 return false;
             }
@@ -333,7 +333,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
         do
         {
-            if(!ReadNextLine(out s))
+            if (!ReadNextLine(out s))
             {
                 return false;
             }
@@ -348,7 +348,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
             _ = _info.Builder.Append(VCard.NewLine).Append(s);
         }
         while (!s.StartsWith(END_VCARD, StringComparison.OrdinalIgnoreCase));
-        
+
         // wenn die eingebettete vCard eine weitere eingebettete vCard enthält,
         // scheitert das Parsen
 

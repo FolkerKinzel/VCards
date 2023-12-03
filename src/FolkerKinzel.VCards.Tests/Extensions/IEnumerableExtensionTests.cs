@@ -291,7 +291,7 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void PrefOrNullTest2()
     {
-        VCardProperty[]? props = new[] {new TextProperty(null)};
+        VCardProperty[]? props = new[] { new TextProperty(null) };
         Assert.IsNull(props.PrefOrNull());
     }
 
@@ -449,7 +449,7 @@ public class IEnumerableExtensionTests
 
         Assert.AreEqual(3, groups.Count());
         Assert.IsTrue(groups.Any(gr => gr.Key is null));
-        Assert.IsTrue(groups.All(gr => gr.SelectMany(x => x).All(x => x != null)));
+        Assert.IsTrue(groups.All(gr => gr.SelectMany(x => x).All(x => x is not null)));
     }
 
     [TestMethod]
@@ -513,11 +513,11 @@ public class IEnumerableExtensionTests
         vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
         vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
         vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
-        Assert.AreEqual(3, vc.DisplayNames.Where(x => x == null).Count());
+        Assert.AreEqual(3, vc.DisplayNames.Where(x => x is null).Count());
         vc.DisplayNames = new TextProperty("Hi");
         vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
 
-        var props = new TextProperty?[] { new("1"), null,  new("2") };
+        var props = new TextProperty?[] { new("1"), null, new("2") };
         vc.DisplayNames = vc.DisplayNames.ConcatWith(props);
 
         var nested = new List<TextProperty?[]>
@@ -525,7 +525,7 @@ public class IEnumerableExtensionTests
             props
         };
         IEnumerable<IEnumerable<TextProperty?>> nested2 = nested;
-        
+
         // This MUST not compile:
         //vc.DisplayNames = vc.DisplayNames.ConcatWith(nested2);
 
@@ -555,7 +555,7 @@ public class IEnumerableExtensionTests
 
         arr.SetPreferences();
         arr.UnsetPreferences();
-            
+
         arr = [new("1"), null, new(null), new("2")];
 
         arr.SetPreferences();

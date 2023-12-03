@@ -47,7 +47,7 @@ public sealed class KindProperty : VCardProperty
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         _ = serializer.Builder.Append(Value.ToVcfString());
     }

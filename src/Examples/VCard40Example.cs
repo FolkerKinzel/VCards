@@ -82,7 +82,7 @@ public static class VCard40Example
         }
 
         // Reload the .VCF files:
-        IEnumerable<VCard> vCards = 
+        IEnumerable<VCard> vCards =
             Vcf.LoadMany(Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"));
 
         // Make the reloaded VCard objects searchable:
@@ -105,7 +105,7 @@ public static class VCard40Example
             Console.Write("What year was Beethoven born?: ");
             Console.WriteLine(
                 TryFindBeethovensBirthday(composersVCard, out DateOnly birthDay)
-                   ? birthDay.Year 
+                   ? birthDay.Year
                    : "Don't know.");
         }
     }
@@ -123,13 +123,13 @@ public static class VCard40Example
         DateOnly date = default;
         bool found = composersVCard.Members
                 .OrderByPref()
-                .Where(x =>  x.Value!.VCard is not null)
+                .Where(x => x.Value!.VCard is not null)
                 .Select(x => x.Value!.VCard)
                     .FirstOrDefault(x => x!.DisplayNames?
                                            .Any(x => x?.Value == "Ludwig van Beethoven") ?? false)?
                     .BirthDayViews?
                     .FirstOrNull(x => x.Value?.TryAsDateOnly(out date) ?? false)
-                    != null;
+                     is not null;
 
         birthDay = date;
         return found;

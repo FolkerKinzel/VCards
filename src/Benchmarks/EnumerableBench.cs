@@ -56,7 +56,7 @@ public class EnumerableBench
     {
         foreach (var item in _arr)
         {
-            if (item != null)
+            if (item is not null)
             {
                 yield return item;
             }
@@ -67,7 +67,7 @@ public class EnumerableBench
     {
         foreach (TextProperty? item in _props)
         {
-            if (item != null && !item.IsEmpty)
+            if (item is not null && !item.IsEmpty)
             {
                 yield return item;
             }
@@ -78,7 +78,7 @@ public class EnumerableBench
     {
         foreach (TextProperty? item in _props)
         {
-            if (item != null && func(item))
+            if (item is not null && func(item))
             {
                 yield return item;
             }

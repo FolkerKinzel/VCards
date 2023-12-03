@@ -24,7 +24,7 @@ public sealed class AppID
         Debug.Assert(!string.IsNullOrWhiteSpace(globalID));
 
         LocalID = localID;
-        GlobalID = globalID; 
+        GlobalID = globalID;
     }
 
     /// <summary>Gets the Local ID.</summary>
@@ -54,7 +54,7 @@ public sealed class AppID
     /// <returns><c>true</c> if <see cref="s"/> could be parsed, otherwise <c>false</c>.</returns>
     internal static bool TryParse(string s, [NotNullWhen(true)] out AppID? client)
     {
-        Debug.Assert(s != null);
+        Debug.Assert(s is not null);
         client = null;
 
         var span = s.AsSpan();
@@ -72,22 +72,22 @@ public sealed class AppID
 
         string globalID = span.Slice(separatorIdx + 1).Trim().ToString();
 
-        if(Validate(localID, globalID))
+        if (Validate(localID, globalID))
         {
             client = new AppID(localID, globalID);
             return true;
         }
-        
+
         return false;
 
-        static bool Validate(int localID, string globalID) => 
+        static bool Validate(int localID, string globalID) =>
             localID.ValidateID() && !string.IsNullOrWhiteSpace(globalID);
     }
 
 
     internal void AppendTo(StringBuilder builder)
     {
-        Debug.Assert(builder != null);
+        Debug.Assert(builder is not null);
         _ = builder.Append(LocalID).Append(';').Append(GlobalID);
     }
 }

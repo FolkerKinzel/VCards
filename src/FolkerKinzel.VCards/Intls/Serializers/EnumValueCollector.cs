@@ -17,7 +17,7 @@ internal static class EnumValueCollector
     /// </remarks>
     internal static void Collect(Adr? addressType, List<string> list)
     {
-        Debug.Assert(list != null);
+        Debug.Assert(list is not null);
 
         if (!addressType.HasValue)
         {
@@ -49,7 +49,7 @@ internal static class EnumValueCollector
     /// </remarks>
     internal static void Collect(Impp? imppType, List<string> list)
     {
-        Debug.Assert(list != null);
+        Debug.Assert(list is not null);
 
         if (!imppType.HasValue)
         {
@@ -80,7 +80,7 @@ internal static class EnumValueCollector
     /// </remarks>
     internal static void Collect(Tel? phoneType, List<string> list)
     {
-        Debug.Assert(list != null);
+        Debug.Assert(list is not null);
 
         if (!phoneType.HasValue)
         {
@@ -111,7 +111,7 @@ internal static class EnumValueCollector
     /// </remarks>
     internal static void Collect(PCl? propertyClassType, List<string> list)
     {
-        Debug.Assert(list != null);
+        Debug.Assert(list is not null);
 
         if (!propertyClassType.HasValue)
         {
@@ -142,7 +142,7 @@ internal static class EnumValueCollector
     /// </remarks>
     internal static void Collect(Rel? relationType, List<string> list)
     {
-        Debug.Assert(list != null);
+        Debug.Assert(list is not null);
 
         if (!relationType.HasValue)
         {

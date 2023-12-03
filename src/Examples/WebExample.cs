@@ -1,26 +1,33 @@
 ﻿using System.Net;
+using System.Reflection.Metadata.Ecma335;
 using FolkerKinzel.VCards;
 
 namespace Examples;
 
 public static class WebExample
 {
+    private const string URI =
+        "https://raw.githubusercontent.com/FolkerKinzel/VCards/master/src/Examples/AnsiFilterExamples/German.vcf";
+
     private static readonly HttpClient _client = new();
 
-    public static void Example()
+    public static async Task AsyncExample()
     {
-        // In order to initialize the library, the executing application MUST be registered
-        // with the VCard class. 
-        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+        using var cts = new CancellationTokenSource();
 
-        using HttpResponseMessage response = _client.Send(new HttpRequestMessage
-             (HttpMethod.Get, 
-             "https://raw.githubusercontent.com/FolkerKinzel/VCards/master/src/Examples/AnsiFilterExamples/German.vcf"));
+        IList<VCard> vc = await Vcf.DeserializeAsync(t => _client.GetStreamAsync(URI, t),
+                                                     new AnsiFilter(),
+                                                     cts.Token);
+        Console.WriteLine(vc[0]);
+    }
 
-        IList<VCard> vc = Vcf.Deserialize(
-            () => response.Content.ReadAsStream(),
-            new AnsiFilter());
+    public static void SynchronousExample()
+    {
+        using HttpResponseMessage response =
+            _client.Send(new HttpRequestMessage(HttpMethod.Get, URI));
 
+        IList<VCard> vc = Vcf.Deserialize(() => response.Content.ReadAsStream(),
+                                          new AnsiFilter());
         Console.WriteLine(vc[0]);
     }
 }

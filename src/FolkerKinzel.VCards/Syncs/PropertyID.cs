@@ -180,7 +180,7 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 
     internal void AppendTo(StringBuilder builder)
     {
-        Debug.Assert(builder != null);
+        Debug.Assert(builder is not null);
 
         _ = builder.Append(ID);
 

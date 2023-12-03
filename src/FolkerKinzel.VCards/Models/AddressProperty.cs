@@ -234,8 +234,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     {
         base.PrepareForVcfSerialization(serializer);
 
-        Debug.Assert(serializer != null);
-        Debug.Assert(Value != null); // value ist nie null
+        Debug.Assert(serializer is not null);
+        Debug.Assert(Value is not null); // value ist nie null
 
         if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
@@ -246,8 +246,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
-        Debug.Assert(Value != null); // value ist nie null
+        Debug.Assert(serializer is not null);
+        Debug.Assert(Value is not null); // value ist nie null
 
 
         StringBuilder builder = serializer.Builder;

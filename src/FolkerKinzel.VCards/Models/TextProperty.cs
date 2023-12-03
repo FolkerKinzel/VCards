@@ -25,7 +25,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
         : base(new ParameterSection(), group)
         => Value = string.IsNullOrWhiteSpace(value) ? null : value;
 
-    internal TextProperty(VcfRow vcfRow, VCdVersion version) 
+    internal TextProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
         vcfRow.UnMask(version);
@@ -60,7 +60,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         base.PrepareForVcfSerialization(serializer);
 
@@ -73,7 +73,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         StringBuilder builder = serializer.Builder;
 

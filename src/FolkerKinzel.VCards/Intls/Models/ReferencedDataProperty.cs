@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Intls.Models;
 internal sealed class ReferencedDataProperty : DataProperty
 {
     private readonly UriProperty _uriProp;
-    
+
     internal ReferencedDataProperty(UriProperty prop)
         : base(prop.Parameters, prop.Group) => _uriProp = prop;
 
@@ -19,7 +19,7 @@ internal sealed class ReferencedDataProperty : DataProperty
     {
         string? mime = Parameters.MediaType;
 
-        return mime != null ? MimeString.ToFileTypeExtension(mime)
+        return mime is not null ? MimeString.ToFileTypeExtension(mime)
                             : UriConverter.GetFileTypeExtensionFromUri(Value);
     }
 

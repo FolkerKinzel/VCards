@@ -155,7 +155,7 @@ public class PropertyIDTests
     public void EqualityOperatorTest2()
     {
         PropertyID? propID1 = null;
-        Assert.IsTrue(propID1 == null);
+        Assert.IsTrue(propID1 is null);
     }
 
     [TestMethod]

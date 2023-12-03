@@ -99,7 +99,7 @@ public class GeoCoordinateTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AreSamePositionTest2() 
+    public void AreSamePositionTest2()
         => _ = GeoCoordinate.AreSamePosition(null!, new GeoCoordinate(45, 45));
 
     [TestMethod()]
@@ -153,7 +153,7 @@ public class GeoCoordinateTests
 
     [DataTestMethod()]
     //[DataRow("0.8,0.7")]
-    
+
     [DataRow("geo:0.8,0.7")]
     [DataRow("0.8;0.7")]
     //[DataRow(".8,0.7")]

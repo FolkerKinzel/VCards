@@ -40,7 +40,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
     internal OrgProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        Debug.Assert(vcfRow != null);
+        Debug.Assert(vcfRow is not null);
 
         vcfRow.DecodeQuotedPrintable();
 
@@ -81,7 +81,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
     {
         base.PrepareForVcfSerialization(serializer);
 
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
@@ -92,7 +92,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         StringBuilder builder = serializer.Builder;
         int valueStartIndex = builder.Length;

@@ -87,7 +87,7 @@ public sealed class Relation
             static guid => null,
             static uri => uri.ToString()
             );
-        return str != null;
+        return str is not null;
     }
 
     /// <summary>
@@ -134,7 +134,7 @@ public sealed class Relation
                                   Func<Guid, TResult> guidFunc,
                                   Func<Uri, TResult> uriFunc)
         => _oneOf.Match(stringFunc, vCardFunc, guidFunc, uriFunc);
-    
+
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => _oneOf.ToString();
@@ -154,7 +154,7 @@ public sealed class Relation
     private string AsStringIntl => _oneOf.AsT0;
 
     private VCard AsVCardIntl => _oneOf.AsT1;
-    
+
     private Guid AsGuidIntl => _oneOf.AsT2;
 
     private Uri AsUriIntl => _oneOf.AsT3;

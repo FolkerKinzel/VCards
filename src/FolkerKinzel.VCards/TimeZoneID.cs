@@ -149,7 +149,7 @@ public sealed partial class TimeZoneID
         utcOffset = default;
         return false;
     }
-    
+
     /// <inheritdoc/>
     public override string ToString() => Value;
 
@@ -157,7 +157,7 @@ public sealed partial class TimeZoneID
     internal void AppendTo(
         StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter)
     {
-        Debug.Assert(builder != null);
+        Debug.Assert(builder is not null);
 
         switch (version)
         {

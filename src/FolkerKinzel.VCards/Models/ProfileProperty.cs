@@ -20,7 +20,7 @@ public sealed class ProfileProperty : TextProperty
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public ProfileProperty(string? group = null) 
+    public ProfileProperty(string? group = null)
         : base(PROFILE_PROPERTY_VALUE, group) { }
 
     internal ProfileProperty(VcfRow row, VCdVersion version) : base(row, version) { }
@@ -33,7 +33,7 @@ public sealed class ProfileProperty : TextProperty
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         this.Parameters.Encoding = null;
         this.Parameters.CharSet = null;
@@ -41,7 +41,7 @@ public sealed class ProfileProperty : TextProperty
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         _ = serializer.Builder.Append(PROFILE_PROPERTY_VALUE);
     }

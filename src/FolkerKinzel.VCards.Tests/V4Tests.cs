@@ -69,7 +69,7 @@ public class V4Tests
         Assert.IsNotNull(s);
 
         Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
-            .All(x => x != null && x.Length <= VCard.MAX_BYTES_PER_LINE));
+            .All(x => x is not null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
         _ = Vcf.Parse(s);
 
@@ -93,7 +93,7 @@ public class V4Tests
         }
     }
 
-    
+
 
 
     [TestMethod]
@@ -192,12 +192,12 @@ public class V4Tests
         Assert.AreEqual(Kind.Group, vc.Kind.Value);
     }
 
-    [TestMethod] 
-    public void MembersTest3() 
+    [TestMethod]
+    public void MembersTest3()
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromVCard( VCardBuilder.Create(setID: false)
+            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false)
                                                               .DisplayNames.Add("Important Member")
                                                               .ID.Set(Guid.Empty)
                                                               .Build()),
@@ -241,7 +241,7 @@ public class V4Tests
             Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false)
                                                               .DisplayNames.Add("Important Member")
                                                               .ID.Set(guid)
-                                                              .Build()) 
+                                                              .Build())
                       .Concat(RelationProperty.FromGuid(guid)),
         };
 
@@ -299,7 +299,7 @@ public class V4Tests
         Assert.IsNotNull(fburls);
         Assert.AreEqual(2, fburls!.Count());
 
-        TextProperty fb1 = fburls!.FirstOrDefault(x => x != null && x.Parameters.Preference == 1)!;
+        TextProperty fb1 = fburls!.FirstOrDefault(x => x is not null && x.Parameters.Preference == 1)!;
 
         Assert.IsNotNull(fb1);
         Assert.AreEqual(workUrl, fb1.Value);
@@ -307,7 +307,7 @@ public class V4Tests
         Assert.AreEqual(calendar, fb1.Parameters.MediaType);
         Assert.AreEqual(Data.Uri, fb1.Parameters.DataType);
 
-        TextProperty fb2 = fburls!.FirstOrDefault(x => x != null && x.Parameters.Preference == 2)!;
+        TextProperty fb2 = fburls!.FirstOrDefault(x => x is not null && x.Parameters.Preference == 2)!;
 
         Assert.IsNotNull(fb2);
         Assert.AreEqual(homeUrl, fb2.Value);

@@ -14,12 +14,12 @@ internal static partial class StringExtension
     [return: NotNullIfNotNull(nameof(value))]
     internal static string? Mask(this string? value, StringBuilder sb, VCdVersion version)
     {
-        return MustMask(value, version) ? sb.Clear().Append(value).Mask(version).ToString() 
+        return MustMask(value, version) ? sb.Clear().Append(value).Mask(version).ToString()
                                         : value;
 
         static bool MustMask(string? value, VCdVersion version)
         {
-            return value != null && 
+            return value is not null &&
                   (
                     value.Contains(';') ||
                     (version >= VCdVersion.V3_0 && value.ContainsAny(",\r,\n")) ||
@@ -31,7 +31,7 @@ internal static partial class StringExtension
     [return: NotNullIfNotNull(nameof(value))]
     internal static string? UnMask(this string? value, StringBuilder sb, VCdVersion version)
     {
-        Debug.Assert(sb != null);
+        Debug.Assert(sb is not null);
 
         if (value is null || !value.Contains('\\'))
         {
@@ -41,7 +41,7 @@ internal static partial class StringExtension
         _ = sb.Clear().Append(value).UnMask(version);
 
         return sb.Length != value.Length
-                 ? sb.ToString() 
+                 ? sb.ToString()
                  : version == VCdVersion.V2_1
                        ? value
                        : sb.ToString();

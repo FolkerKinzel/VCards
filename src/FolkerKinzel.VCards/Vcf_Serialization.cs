@@ -62,7 +62,7 @@ public static partial class Vcf
         _ArgumentNullException.ThrowIfNull(vCards, nameof(vCards));
 
         // prevents an empty file from being written:
-        if (!vCards.Any(x => x != null))
+        if (!vCards.Any(x => x is not null))
         {
             return;
         }

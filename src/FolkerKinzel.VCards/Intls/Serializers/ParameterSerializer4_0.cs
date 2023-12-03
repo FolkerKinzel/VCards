@@ -18,14 +18,15 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
                                       serializer._stringCollectionList);
 
     private readonly Action<ParameterSerializer4_0> _collectPhoneTypes = static serializer
-        => {
-                const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Text | Tel.Fax | 
-                                                    Tel.Cell | Tel.Video | Tel.Pager |
-                                                    Tel.TextPhone;
-         
-                EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
-                                           serializer._stringCollectionList);
-            };
+        =>
+    {
+        const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Text | Tel.Fax |
+                                            Tel.Cell | Tel.Video | Tel.Pager |
+                                            Tel.TextPhone;
+
+        EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
+                                   serializer._stringCollectionList);
+    };
 
     private readonly Action<ParameterSerializer4_0> _collectRelationTypes = static serializer
         => EnumValueCollector.Collect(serializer.ParaSection.RelationType,
@@ -670,7 +671,7 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
     private void AppendAltId()
     {
         string? altId = ParaSection.AltID;
-        if (altId != null)
+        if (altId is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.ALTID, EscapeAndQuote(altId));
         }
@@ -679,7 +680,7 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
     private void AppendCalScale()
     {
         string? calScale = ParaSection.Calendar;
-        if (calScale != null)
+        if (calScale is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.ALTID, EscapeAndQuote(calScale));
         }
@@ -689,16 +690,16 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
     {
         string? exp = ParaSection.Expertise.ToVcfString();
 
-        if (exp != null)
+        if (exp is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, exp);
         }
-        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) 
-                 && ParaSection.NonStandard != null)
+        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters)
+                 && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL) 
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL)
                     && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
                     AppendParameter(ParameterSection.ParameterKey.LEVEL, kvp.Value);
@@ -743,11 +744,11 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
     {
         string? interest = ParaSection.Interest.ToVCardString();
 
-        if (interest != null)
+        if (interest is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, interest);
         }
-        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
@@ -764,7 +765,7 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
     {
         string? label = ParaSection.Label;
 
-        if (label != null)
+        if (label is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LABEL, EscapeAndQuote(label));
         }
@@ -774,7 +775,7 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
     {
         string? lang = ParaSection.Language;
 
-        if (lang != null)
+        if (lang is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LANGUAGE, EscapeAndQuote(lang));
         }
@@ -784,7 +785,7 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
     {
         string? mediaType = ParaSection.MediaType;
 
-        if (mediaType != null)
+        if (mediaType is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.MEDIATYPE, EscapeAndQuote(mediaType));
         }
@@ -866,7 +867,7 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
             _actionList[i](this);
         }
 
-        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
@@ -925,7 +926,7 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
 
         string? s = (dataType & DEFINED_DATA_TYPES).ToVcfString();
 
-        if (s != null)
+        if (s is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.VALUE, s);
         }

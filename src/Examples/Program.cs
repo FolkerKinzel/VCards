@@ -1,17 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using FolkerKinzel.MimeTypes;
-using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Models;
+﻿using System.Globalization;
+using FolkerKinzel.VCards;
 
 namespace Examples;
 
 internal class Program
 {
-    private static void Main()
+    private static async Task Main()
     {
+        // In order to initialize the library, the executing application MUST be registered
+        // with the VCard class. 
+        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+
         Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
@@ -26,7 +25,10 @@ internal class Program
 
         //VcfReaderExample.Example(@"..\..\..\LargeFile.vcf");
 
-        WebExample.Example();
+        //WebExample.SynchronousExample();
+
+        await WebExample.AsyncExample();
+
 
         //NoPidExample.SaveWithoutPropertyIdentification();
 
@@ -34,8 +36,8 @@ internal class Program
 
         //WhatsAppDemo1.IntegrateWhatsAppNumberUsingIMPP();
         //WhatsAppDemo2.UsingTheWhatsAppType();
-         //VCardExample.ReadingAndWritingVCard(directoryPath);
-         //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
+        //VCardExample.ReadingAndWritingVCard(directoryPath);
+        //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
 
         //StartAnsiFilterExample();
 

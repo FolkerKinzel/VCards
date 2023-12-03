@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards;
 public sealed partial class VCard
 {
     internal static bool IsAppRegistered { get; private set; }
-    
+
     /// <summary>
     /// The global identifier of the executing application.
     /// </summary>
@@ -68,7 +68,7 @@ public sealed partial class VCard
         {
             if (globalID is null)
             {
-                if(CurrentApp != null)
+                if (CurrentApp is not null)
                 {
                     throw new InvalidOperationException(Res.MultipleCalls);
                 }

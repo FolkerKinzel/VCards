@@ -85,8 +85,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
        => mimeType is null
             ? new EmbeddedBytesProperty(LoadFile(filePath),
                                         group,
-                                        new ParameterSection() 
-                                        { 
+                                        new ParameterSection()
+                                        {
                                             MediaType = MimeString.FromFileName(filePath)
                                         })
             : MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
@@ -175,8 +175,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                              new ParameterSection()
                              {
                                  MediaType = MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
-                                                                  ? mimeInfo.ToString() 
-                                                                  : null 
+                                                                  ? mimeInfo.ToString()
+                                                                  : null
                              },
                              group)
            );
@@ -234,7 +234,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
         // Quoted-Printable encoded binary data:
         if (vcfRow.Parameters.Encoding == Enc.QuotedPrintable &&
-            vcfRow.Parameters.MediaType != null)
+            vcfRow.Parameters.MediaType is not null)
         {
             return new EmbeddedBytesProperty
                    (

@@ -40,12 +40,12 @@ public static partial class Vcf
 
         foreach (var fileName in fileNames)
         {
-            if(fileName is null)
+            if (fileName is null)
             {
                 continue;
             }
 
-            IList<VCard> vCards = filter is null ? Load(fileName) 
+            IList<VCard> vCards = filter is null ? Load(fileName)
                                                  : filter.Load(fileName);
 
             for (int i = 0; i < vCards.Count; i++)
@@ -107,6 +107,11 @@ public static partial class Vcf
     public static IList<VCard> Deserialize(Func<Stream?> factory, AnsiFilter filter)
         => filter?.Deserialize(factory) ?? throw new ArgumentNullException(nameof(filter));
 
+    public static Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
+                                                      AnsiFilter filter,
+                                                      CancellationToken token = default)
+        => filter?.DeserializeAsync(factory, token) ?? throw new ArgumentNullException(nameof(filter));
+
     public static IEnumerable<VCard> DeserializeMany(IEnumerable<Func<Stream?>?> factories, AnsiFilter? filter = null)
     {
         _ArgumentNullException.ThrowIfNull(factories, nameof(factories));
@@ -124,7 +129,7 @@ public static partial class Vcf
             {
                 using var stream = factory();
 
-                vCards = stream is null ? Array.Empty<VCard>() 
+                vCards = stream is null ? Array.Empty<VCard>()
                                         : Deserialize(stream);
             }
             else
@@ -139,10 +144,60 @@ public static partial class Vcf
         }
     }
 
+#if !(NET461 || NETSTANDARD2_0)
+
+    public static async IAsyncEnumerable<VCard> DeserializeManyAsync(IEnumerable<Func<CancellationToken, Task<Stream>>?> factories,
+                                                               AnsiFilter? filter = null,
+                                                               [EnumeratorCancellation] CancellationToken token = default)
+    {
+        _ArgumentNullException.ThrowIfNull(factories, nameof(factories));
+
+        foreach (var factory in factories)
+        {
+            if (factory is null)
+            {
+                continue;
+            }
+
+            IList<VCard> vCards;
+
+            if (filter is null)
+            {
+                Stream? stream = null;
+
+                try
+                {
+                    stream = await factory(token).ConfigureAwait(false);
+                }
+                catch { }
+
+                if (stream is null)
+                {
+                    vCards = Array.Empty<VCard>();
+                }
+                else
+                {
+                    using var disposable = stream;
+                    vCards = Deserialize(stream);
+                }
+            }
+            else
+            {
+                vCards = await filter.DeserializeAsync(factory, token);
+            }
+
+            for (int i = 0; i < vCards.Count; i++)
+            {
+                yield return vCards[i];
+            }
+        }
+    }
+#endif
+
     internal static IList<VCard> DoDeserialize(TextReader reader,
                                               VCdVersion versionHint = VCdVersion.V2_1)
     {
-        Debug.Assert(reader != null);
+        Debug.Assert(reader is not null);
         DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoDeserialize) + "(TextReader)");
 
         var vCardList = VcfReader.EnumerateVCards(reader, versionHint).ToArray();

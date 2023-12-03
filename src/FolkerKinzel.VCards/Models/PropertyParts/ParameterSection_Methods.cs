@@ -66,8 +66,8 @@ public sealed partial class ParameterSection
 
     private static void AppendValue(StringBuilder sb, KeyValuePair<VCdParam, object> para)
     {
-        Debug.Assert(para.Value != null);
-        Debug.Assert(para.Value.ToString() != null);
+        Debug.Assert(para.Value is not null);
+        Debug.Assert(para.Value.ToString() is not null);
 
         const string INDENT = "    ";
 
@@ -75,7 +75,7 @@ public sealed partial class ParameterSection
 
         string valStr = para.Value.ToString()!;
 
-        if(valStr.Contains(Environment.NewLine, StringComparison.Ordinal))
+        if (valStr.Contains(Environment.NewLine, StringComparison.Ordinal))
         {
             string[] arr = valStr.Split(Environment.NewLine, StringSplitOptions.None);
 

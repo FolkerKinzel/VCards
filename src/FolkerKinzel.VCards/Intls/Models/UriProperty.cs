@@ -31,7 +31,7 @@ internal sealed class UriProperty : VCardProperty
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         base.PrepareForVcfSerialization(serializer);
 
@@ -51,10 +51,10 @@ internal sealed class UriProperty : VCardProperty
             Parameters.DataType = Data.Uri;
         }
     }
-    
+
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
         _ = serializer.Builder.Append(Value.AbsoluteUri);
     }
 }

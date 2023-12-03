@@ -77,7 +77,7 @@ public sealed class TimeStampProperty : VCardProperty
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         StringBuilder worker = serializer.Worker;
         _ = worker.Clear();

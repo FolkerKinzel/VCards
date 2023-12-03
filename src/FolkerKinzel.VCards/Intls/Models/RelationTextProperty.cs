@@ -20,7 +20,7 @@ internal sealed class RelationTextProperty : RelationProperty
                vcfRow.Group) => _textProp = new TextProperty(vcfRow, version);
 
     public new string? Value => _textProp.Value;
-    
+
     /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => _textProp.IsEmpty;
@@ -31,7 +31,7 @@ internal sealed class RelationTextProperty : RelationProperty
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
         _textProp.PrepareForVcfSerialization(serializer);
         Parameters.DataType = Data.Text;
     }

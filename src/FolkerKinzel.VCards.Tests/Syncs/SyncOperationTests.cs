@@ -51,7 +51,7 @@ public class SyncOperationTests
 
         //vc.SetPropertyIDs();
         //Assert.AreEqual(2, tProp.Parameters.PropertyIDs.Count());
-        //Assert.IsTrue(vc.AppIDs.All(x => x?.Parameters.PropertyIDs == null));
+        //Assert.IsTrue(vc.AppIDs.All(x => x?.Parameters.PropertyIDs is null));
 
         //vc.SetPropertyIDs();
         //Assert.AreEqual(2, tProp.Parameters.PropertyIDs.Count());

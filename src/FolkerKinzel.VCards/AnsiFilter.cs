@@ -168,6 +168,73 @@ public sealed class AnsiFilter
         }
     }
 
+    internal async Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
+                                                       CancellationToken token)
+    {
+        UsedEncoding = null;
+
+        _ArgumentNullException.ThrowIfNull(factory, nameof(factory));
+
+        Reset();
+
+        Stream? stream = null;
+
+        try
+        {
+            stream = await factory(token).ConfigureAwait(false);
+
+        }
+        catch { }
+
+        if (stream is null)
+        {
+            return Array.Empty<VCard>();
+        }
+
+        using var disposable1 = stream;
+
+        long initialPosition = stream.CanSeek ? stream.Position : 0;
+
+        IList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
+
+        if (!HasError)
+        {
+            return vCards;
+        }
+
+        string? charSet = GetCharsetFromVCards(vCards);
+
+        Encoding? enc = charSet is null ? FallbackEncoding
+                                        : TextEncodingConverter.GetEncoding(charSet);
+        enc = IsUtf8(enc) ? FallbackEncoding : enc;
+        UsedEncoding = enc;
+
+        if (stream.CanSeek)
+        {
+            stream.Position = initialPosition;
+            return Vcf.Deserialize(stream, enc, leaveStreamOpen: false);
+        }
+        else
+        {
+            stream = null;
+
+            try
+            {
+                stream = await factory(token).ConfigureAwait(false);
+            }
+            catch { }
+
+            if (stream is null)
+            {
+                return Array.Empty<VCard>();
+            }
+
+            using var disposable2 = stream;
+
+            return Vcf.Deserialize(stream, enc, leaveStreamOpen: false);
+        }
+    }
+
     private static string? GetCharsetFromVCards(IList<VCard> vCards)
     {
         foreach (var vCard in vCards.Where(x => x.Version == VCdVersion.V2_1))
@@ -178,9 +245,9 @@ public sealed class AnsiFilter
                 .Where(x => x.Value is IEnumerable<AddressProperty> or IEnumerable<NameProperty> or IEnumerable<TextProperty>)
                 .Select(x => x.Value as IEnumerable<VCardProperty>)
                 .SelectMany(x => x!)
-                .FirstOrDefault(x => x.Parameters.CharSet != null)?.Parameters.CharSet;
+                .FirstOrDefault(x => x.Parameters.CharSet is not null)?.Parameters.CharSet;
 
-            if (charSet != null) { return charSet; }
+            if (charSet is not null) { return charSet; }
         }
         return null;
     }

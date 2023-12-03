@@ -73,7 +73,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         GeoCoordinateConverter.AppendTo(serializer.Builder, Value, serializer.Version);
     }

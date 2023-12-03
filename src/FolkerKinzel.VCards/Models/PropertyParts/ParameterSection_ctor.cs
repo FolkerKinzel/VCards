@@ -92,7 +92,7 @@ public sealed partial class ParameterSection
                             Debug.Assert(typeValue.Length != 0);
                             if (!ParseTypeParameter(typeValue, propertyKey))
                             {
-                                List<KeyValuePair<string, string>> nonStandardList = 
+                                List<KeyValuePair<string, string>> nonStandardList =
                                     (List<KeyValuePair<string, string>>?)this.NonStandard ?? [];
                                 this.NonStandard = nonStandardList;
 
@@ -102,7 +102,7 @@ public sealed partial class ParameterSection
                         break;
                     }
                 case ParameterKey.GEO:
-                    if (GeoCoordinate.TryParse(parameter.Value.AsSpan().Trim().Trim(info.AllQuotes), 
+                    if (GeoCoordinate.TryParse(parameter.Value.AsSpan().Trim().Trim(info.AllQuotes),
                                                out GeoCoordinate? geo))
                     {
                         this.GeoPosition = geo;
@@ -209,8 +209,8 @@ public sealed partial class ParameterSection
     [Conditional("DEBUG")]
     private static void Asserts(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters)
     {
-        Debug.Assert(propertyKey != null);
-        Debug.Assert(propertyParameters != null);
+        Debug.Assert(propertyKey is not null);
+        Debug.Assert(propertyParameters is not null);
         Debug.Assert(!propertyParameters.Any(
             x => string.IsNullOrWhiteSpace(x.Key) || string.IsNullOrWhiteSpace(x.Value)
             ));
@@ -222,7 +222,7 @@ public sealed partial class ParameterSection
     private void AddNonStandardParameter(KeyValuePair<string, string> parameter)
     {
         List<KeyValuePair<string, string>> userAttributes
-                                        = (List<KeyValuePair<string, string>>?)this.NonStandard 
+                                        = (List<KeyValuePair<string, string>>?)this.NonStandard
                                           ?? [];
 
         this.NonStandard = userAttributes;

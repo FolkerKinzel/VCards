@@ -8,11 +8,11 @@ internal abstract class ParameterSerializer
 {
     private readonly StringBuilder _builder = new();
     protected readonly StringBuilder _worker = new();
-    
+
     protected ParameterSerializer(VcfOptions options) => this.Options = options;
 
     [NotNull]
-    protected ParameterSection? ParaSection { get;  private set; }
+    protected ParameterSection? ParaSection { get; private set; }
 
     protected VcfOptions Options { get; }
 
@@ -369,7 +369,7 @@ internal abstract class ParameterSerializer
 
         static bool IsKnownParameter(string key)
         {
-            Debug.Assert(key != null);
+            Debug.Assert(key is not null);
             Debug.Assert(StringComparer.Ordinal.Equals(key, key.Trim()));
 
             switch (key.ToUpperInvariant())

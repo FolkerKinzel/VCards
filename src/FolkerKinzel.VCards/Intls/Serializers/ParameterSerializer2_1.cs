@@ -23,7 +23,7 @@ internal sealed class ParameterSerializer2_1(VcfOptions options) : ParameterSeri
                                    serializer._stringCollectionList);
     };
 
-    private readonly Action<ParameterSerializer2_1> _collectAddressTypes = static serializer 
+    private readonly Action<ParameterSerializer2_1> _collectAddressTypes = static serializer
         => EnumValueCollector.Collect(serializer.ParaSection.AddressType,
                                       serializer._stringCollectionList);
 
@@ -339,7 +339,7 @@ internal sealed class ParameterSerializer2_1(VcfOptions options) : ParameterSeri
     {
         string? lang = ParaSection.Language;
 
-        if (lang != null && lang != "en-US")
+        if (lang is not null && lang != "en-US")
         {
             AppendParameter(ParameterSection.ParameterKey.LANGUAGE, lang);
         }
@@ -364,12 +364,12 @@ internal sealed class ParameterSerializer2_1(VcfOptions options) : ParameterSeri
             AppendV2_1Type(ParameterSection.TypeValue.PREF);
         }
 
-        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, 
-                                                            ParameterSection.ParameterKey.TYPE) 
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key,
+                                                            ParameterSection.ParameterKey.TYPE)
                     && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
                     AppendV2_1Type(kvp.Value);
@@ -382,7 +382,7 @@ internal sealed class ParameterSerializer2_1(VcfOptions options) : ParameterSeri
     {
         string? s = MimeTypeConverter.ImageTypeFromMimeType(ParaSection.MediaType);
 
-        if (s != null)
+        if (s is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.TYPE, s);
         }
@@ -392,7 +392,7 @@ internal sealed class ParameterSerializer2_1(VcfOptions options) : ParameterSeri
     {
         string? s = MimeTypeConverter.SoundTypeFromMimeType(ParaSection.MediaType);
 
-        if (s != null)
+        if (s is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.TYPE, s);
         }
@@ -402,7 +402,7 @@ internal sealed class ParameterSerializer2_1(VcfOptions options) : ParameterSeri
     {
         string? s = MimeTypeConverter.KeyTypeFromMimeType(ParaSection.MediaType);
 
-        if (s != null)
+        if (s is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.TYPE, s);
         }

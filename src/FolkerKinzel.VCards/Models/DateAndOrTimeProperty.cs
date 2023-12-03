@@ -200,7 +200,7 @@ public abstract class DateAndOrTimeProperty
 
     internal static DateAndOrTimeProperty Parse(VcfRow vcfRow, VCdVersion version)
     {
-        Debug.Assert(vcfRow != null);
+        Debug.Assert(vcfRow is not null);
 
         var dataType = vcfRow.Parameters.DataType;
 
@@ -243,10 +243,10 @@ public abstract class DateAndOrTimeProperty
             DateOnlyProperty dateOnlyProperty => new DateAndOrTime(dateOnlyProperty.Value),
             TimeOnlyProperty timeOnlyProperty => new DateAndOrTime(timeOnlyProperty.Value),
             DateTimeOffsetProperty dateTimeOffsetProperty
-                                        => dateTimeOffsetProperty.IsEmpty ? null 
+                                        => dateTimeOffsetProperty.IsEmpty ? null
                                                                           : new DateAndOrTime(dateTimeOffsetProperty.Value),
-            DateTimeTextProperty dateTimeTextProperty 
-                                        => dateTimeTextProperty.IsEmpty ? null 
+            DateTimeTextProperty dateTimeTextProperty
+                                        => dateTimeTextProperty.IsEmpty ? null
                                                                         : new DateAndOrTime(dateTimeTextProperty.Value),
             _ => null
         };

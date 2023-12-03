@@ -579,7 +579,7 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? values,
         string? group,
         bool ignoreEmptyItems = true) where TSource : VCardProperty
-        => values.FirstOrNullIsMemberOf(group, ignoreEmptyItems) != null;
+        => values.FirstOrNullIsMemberOf(group, ignoreEmptyItems) is not null;
 
     /// <summary>
     /// Concatenates two sequences of <see cref="VCardProperty"/> objects. 
@@ -617,7 +617,7 @@ public static class IEnumerableExtension
     /// <returns><paramref name="values"/> without occurrences of <paramref name="value"/>.
     /// If <paramref name="values"/> is <c>null</c>, <c>null</c> is returned.</returns>
     public static IEnumerable<TSource?>? Remove<TSource>(
-        this IEnumerable<TSource?>? values, TSource? value) where TSource : VCardProperty 
+        this IEnumerable<TSource?>? values, TSource? value) where TSource : VCardProperty
         => values?.Where(x => x != value);
 
     /// <summary>
@@ -665,7 +665,7 @@ public static class IEnumerableExtension
 
         foreach (var item in values.Distinct())
         {
-            if (item != null)
+            if (item is not null)
             {
                 item.Parameters.Preference = (!skipEmptyItems || !item.IsEmpty) ? cnt++ : 100;
             }
@@ -691,7 +691,7 @@ public static class IEnumerableExtension
 
         foreach (var item in values)
         {
-            if (item != null)
+            if (item is not null)
             {
                 item.Parameters.Preference = 100;
             }
@@ -716,7 +716,7 @@ public static class IEnumerableExtension
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetIndexes<TSource>(this IEnumerable<TSource?>? values,
                                            bool skipEmptyItems = true)
-        where TSource : VCardProperty, IEnumerable<TSource> 
+        where TSource : VCardProperty, IEnumerable<TSource>
         => values?.SetIndexesIntl(skipEmptyItems);
 
     /// <summary>
@@ -732,7 +732,7 @@ public static class IEnumerableExtension
     public static void UnsetIndexes<TSource>(this IEnumerable<TSource?>? values)
         where TSource : VCardProperty, IEnumerable<TSource>
         => values?.UnsetIndexesIntl();
-    
+
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.AltID"/>s of the items in a 
@@ -754,12 +754,12 @@ public static class IEnumerableExtension
 
         foreach (var item in values)
         {
-            if (item != null)
+            if (item is not null)
             {
                 item.Parameters.AltID = altID;
             }
         }
     }
 
-    
+
 }

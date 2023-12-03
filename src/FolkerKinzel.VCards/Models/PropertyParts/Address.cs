@@ -63,7 +63,7 @@ public sealed class Address
 
     internal Address(string vCardValue, VcfDeserializationInfo info, VCdVersion version)
     {
-        Debug.Assert(vCardValue != null);
+        Debug.Assert(vCardValue is not null);
 
         StringBuilder builder = info.Builder;
         ValueSplitter semicolonSplitter = info.SemiColonSplitter;
@@ -230,7 +230,7 @@ public sealed class Address
 
         // If the VCF file is invalid, properties could be null:
         // (PostOfficeBox can never be null)
-        Debug.Assert(PostOfficeBox != null);
+        Debug.Assert(PostOfficeBox is not null);
         //PostOfficeBox ??= ReadOnlyCollectionString.Empty;
         ExtendedAddress ??= ReadOnlyStringCollection.Empty;
         Street ??= ReadOnlyStringCollection.Empty;

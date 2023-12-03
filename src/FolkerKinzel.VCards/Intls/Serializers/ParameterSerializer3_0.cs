@@ -12,24 +12,25 @@ internal sealed class ParameterSerializer3_0(VcfOptions options) : ParameterSeri
     private readonly List<Action<ParameterSerializer3_0>> _actionList = new(2);
 
     private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes = static serializer
-        => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass, 
+        => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
                                       serializer._stringCollectionList);
 
     private readonly Action<ParameterSerializer3_0> _collectPhoneTypes = static serializer
-        => {
-               const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Fax | Tel.Msg |
-               Tel.Cell | Tel.Pager | Tel.BBS | Tel.Modem | Tel.Car |
-               Tel.ISDN | Tel.Video | Tel.PCS;
-         
-               EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
-                                          serializer._stringCollectionList);
-           };
+        =>
+    {
+        const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Fax | Tel.Msg |
+        Tel.Cell | Tel.Pager | Tel.BBS | Tel.Modem | Tel.Car |
+        Tel.ISDN | Tel.Video | Tel.PCS;
 
-    private readonly Action<ParameterSerializer3_0> _collectAddressTypes = static serializer 
+        EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
+                                   serializer._stringCollectionList);
+    };
+
+    private readonly Action<ParameterSerializer3_0> _collectAddressTypes = static serializer
         => EnumValueCollector.Collect(serializer.ParaSection.AddressType,
                                       serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer3_0> _collectImppTypes = static serializer 
+    private readonly Action<ParameterSerializer3_0> _collectImppTypes = static serializer
         => EnumValueCollector.Collect(serializer.ParaSection.InstantMessengerType,
                                       serializer._stringCollectionList);
 
@@ -259,8 +260,8 @@ internal sealed class ParameterSerializer3_0(VcfOptions options) : ParameterSeri
         {
             AppendValue(Data.Uri);
         }
-        
-        if(ParaSection.Encoding == Enc.Base64)
+
+        if (ParaSection.Encoding == Enc.Base64)
         {
             AppendBase64Encoding();
         }
@@ -403,7 +404,7 @@ internal sealed class ParameterSerializer3_0(VcfOptions options) : ParameterSeri
 
         string? s = (dataType & DEFINED_DATA_TYPES).ToVcfString();
 
-        if (s != null)
+        if (s is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.VALUE, s);
         }
@@ -413,20 +414,20 @@ internal sealed class ParameterSerializer3_0(VcfOptions options) : ParameterSeri
     {
         string? s = ParaSection.Context;
 
-        if (s != null)
+        if (s is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.CONTEXT, s);
         }
     }
 
-    private void AppendBase64Encoding() 
+    private void AppendBase64Encoding()
         => AppendParameter(ParameterSection.ParameterKey.ENCODING, "b");
 
     private void AppendLanguage()
     {
         string? lang = ParaSection.Language;
 
-        if (lang != null)
+        if (lang is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LANGUAGE, Mask(lang));
         }
@@ -446,12 +447,12 @@ internal sealed class ParameterSerializer3_0(VcfOptions options) : ParameterSeri
             _stringCollectionList.Add(ParameterSection.TypeValue.PREF);
         }
 
-        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) 
-            && ParaSection.NonStandard != null)
+        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters)
+            && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) 
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE)
                     && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
                     _stringCollectionList.Add(kvp.Value);
@@ -490,7 +491,7 @@ internal sealed class ParameterSerializer3_0(VcfOptions options) : ParameterSeri
     {
         string? s = MimeTypeConverter.KeyTypeFromMimeType(ParaSection.MediaType);
 
-        if (s != null)
+        if (s is not null)
         {
             _stringCollectionList.Add(Mask(s));
         }
@@ -500,7 +501,7 @@ internal sealed class ParameterSerializer3_0(VcfOptions options) : ParameterSeri
     {
         string? s = MimeTypeConverter.ImageTypeFromMimeType(ParaSection.MediaType);
 
-        if (s != null)
+        if (s is not null)
         {
             _stringCollectionList.Add(Mask(s));
         }
@@ -511,21 +512,21 @@ internal sealed class ParameterSerializer3_0(VcfOptions options) : ParameterSeri
     {
         string? s = MimeTypeConverter.SoundTypeFromMimeType(ParaSection.MediaType);
 
-        if (s != null)
+        if (s is not null)
         {
             _stringCollectionList.Add(Mask(s));
         }
 
     }
 
-    private void DoCollectEmailType() 
+    private void DoCollectEmailType()
         => _stringCollectionList.Add(ParaSection.EMailType ?? EMail.SMTP);
 
     private void DoCollectMediaType()
     {
         string? m = ParaSection.MediaType;
 
-        if (m != null)
+        if (m is not null)
         {
             _stringCollectionList.Add(Mask(m));
         }

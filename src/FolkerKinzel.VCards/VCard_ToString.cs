@@ -21,7 +21,7 @@ public sealed partial class VCard
             KeyValuePair<Prop, VCardProperty> kvp in this._propDic
             .OrderBy(static x => x.Key)
             .Select(
-                  static x => x.Value is IEnumerable<VCardProperty?> prop 
+                  static x => x.Value is IEnumerable<VCardProperty?> prop
                                 ? prop.WhereNotNull()
                                       .Select<VCardProperty, KeyValuePair<Prop, VCardProperty>>
                                       (
@@ -68,14 +68,14 @@ public sealed partial class VCard
                 _ = sb.AppendLine(s);
             }
 
-            if (vcdProp.Group != null)
+            if (vcdProp.Group is not null)
             {
                 _ = sb.Append('[').Append("Group: ").Append(vcdProp.Group).AppendLine("]");
             }
 
             string propStr = vcdProp.IsEmpty ? "<EMPTY>" : vcdProp.ToString();
 
-            if (propStr != null &&
+            if (propStr is not null &&
                 propStr.Contains(Environment.NewLine, StringComparison.Ordinal))
             {
                 string?[] arr = propStr.Split(Environment.NewLine, StringSplitOptions.None);

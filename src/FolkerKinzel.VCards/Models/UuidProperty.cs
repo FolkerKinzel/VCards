@@ -51,7 +51,7 @@ public sealed class UuidProperty : VCardProperty, IEquatable<UuidProperty>
 
     /// <inheritdoc />
     public override bool Equals(object? obj) => Equals(obj as UuidProperty);
-       
+
     /// <inheritdoc />
     public bool Equals(UuidProperty? other)
         => (other is not null) && Value.Equals(other.Value);
@@ -85,7 +85,7 @@ public sealed class UuidProperty : VCardProperty, IEquatable<UuidProperty>
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         _ = serializer.Builder.AppendUuid(this.Value, serializer.Version);
     }

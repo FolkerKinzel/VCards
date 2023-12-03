@@ -26,7 +26,28 @@ public class VcfTests
         Assert.AreEqual(0, vc.Count);
     }
 
-    
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public async Task DeserializeAsyncTest1()
+    {
+        _ = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream()), null!);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public async Task DeserializeAsyncTest2()
+    {
+        _ = await Vcf.DeserializeAsync(null!, new AnsiFilter());
+    }
+
+    [TestMethod]
+    public async Task DeserializeAsyncTest3()
+    {
+        IList<VCard> vc = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(null!), new AnsiFilter());
+        Assert.AreEqual(0, vc.Count);
+    }
+
+
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -66,9 +87,9 @@ public class VcfTests
         VCard.RegisterApp(null);
 
         VCard[] vc = Vcf.DeserializeMany([null,
-                                          () => new StreamDummy(File.OpenRead(TestFiles.AnsiIssueVcf), canSeek: false), 
-                                          () => null,
-                                          () => File.OpenRead(TestFiles.OutlookV2vcf)],
+            () => new StreamDummy(File.OpenRead(TestFiles.AnsiIssueVcf), canSeek: false),
+            () => null,
+            () => File.OpenRead(TestFiles.OutlookV2vcf)],
                                           new AnsiFilter()).ToArray();
 
         Assert.AreEqual("Lämmerweg 12", vc[0].Addresses!.First()!.Value.Street[0]);
