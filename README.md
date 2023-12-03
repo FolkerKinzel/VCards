@@ -24,7 +24,8 @@ Read the ["Getting Started" tutorial](https://github.com/FolkerKinzel/VCards/blo
 - [Reading and writing of VCF files](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/VCardExample.cs)
 - [Example implementation of ITimeZoneIDConverter](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/TimeZoneIDConverter.cs)
 - [Automatic detection of VCF files written with ANSI encodings](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/AnsiFilterExample.cs)
-- [Reading and writing GROUP vCards](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/VCard40Example.cs)
+- [Loading a VCF file from the internet](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/WebExample.cs)
+- [Reading and writing group vCards](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/VCard40Example.cs)
 - [Connecting vCards](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/EmbeddedVCardExample.cs)
 
 *_(All of the examples are in C# and with nullable reference types enabled. For the sake of 

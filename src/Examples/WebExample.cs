@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards;
+﻿using System.Net;
+using FolkerKinzel.VCards;
 
 namespace Examples;
 
@@ -15,11 +16,12 @@ public static class WebExample
         // CLIENTPIDMAP).
         VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
 
+        using HttpResponseMessage response = _client.Send(new HttpRequestMessage
+             (HttpMethod.Get, 
+             "https://raw.githubusercontent.com/FolkerKinzel/VCards/master/src/Examples/AnsiFilterExamples/German.vcf"));
+
         IList<VCard> vc = Vcf.Deserialize(
-            () => _client
-                  .GetStreamAsync("https://raw.githubusercontent.com/FolkerKinzel/VCards/master/src/Examples/AnsiFilterExamples/German.vcf")
-                  .GetAwaiter()
-                  .GetResult(),
+            () => response.Content.ReadAsStream(),
             new AnsiFilter());
 
         Console.WriteLine(vc[0]);
