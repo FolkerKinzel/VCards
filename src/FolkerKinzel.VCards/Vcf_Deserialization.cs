@@ -163,23 +163,10 @@ public static partial class Vcf
 
             if (filter is null)
             {
-                Stream? stream = null;
+                using Stream? stream = await factory(token).ConfigureAwait(false);
 
-                try
-                {
-                    stream = await factory(token).ConfigureAwait(false);
-                }
-                catch { }
-
-                if (stream is null)
-                {
-                    vCards = Array.Empty<VCard>();
-                }
-                else
-                {
-                    using var disposable = stream;
-                    vCards = Deserialize(stream);
-                }
+                vCards = stream is null ? Array.Empty<VCard>()
+                                        : Deserialize(stream);
             }
             else
             {

@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace FolkerKinzel.VCards.Tests;
+﻿namespace FolkerKinzel.VCards.Tests;
 
 [TestClass]
 public class VcfTests
@@ -113,6 +111,80 @@ public class VcfTests
 
         Assert.IsNull(Vcf.DeserializeMany([() => File.OpenRead(TestFiles.EmptyVcf)]).FirstOrDefault());
     }
+
+#if !NET48
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public async Task DeserializeManyAsyncTest1()
+    {
+        _ = await Vcf.DeserializeManyAsync(null!).CountAsync();
+    }
+
+    [TestMethod]
+    public async Task DeserializeManyAsyncTest2()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard vc = await Vcf.DeserializeManyAsync([null, t => Task.FromResult<Stream>( File.OpenRead(TestFiles.AnsiIssueVcf))], 
+                                                   new AnsiFilter()).FirstAsync();
+
+        Assert.AreEqual("Lämmerweg 12", vc.Addresses!.First()!.Value.Street[0]);
+
+    }
+
+    [TestMethod]
+    public async Task DeserializeManyAsyncTest3()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard[] vc = await Vcf.DeserializeManyAsync(
+            [ null, 
+            t => Task.FromResult<Stream>( File.OpenRead(TestFiles.AnsiIssueVcf)), 
+            t => Task.FromResult<Stream>(null!),
+            //t => throw new Exception(),
+            t => Task.FromResult<Stream>(File.OpenRead(TestFiles.OutlookV2vcf))]).ToArrayAsync();
+
+        Assert.AreNotEqual("Lämmerweg 12", vc[0].Addresses!.First()!.Value.Street[0]);
+    }
+
+    [TestMethod]
+    public async Task DeserializeManyAsyncTest4()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard[] vc = await Vcf.DeserializeManyAsync(
+            [null,
+            t => Task.FromResult<Stream>( new StreamDummy(File.OpenRead(TestFiles.AnsiIssueVcf), canSeek: false)),
+            t => Task.FromResult<Stream>( null!),
+            //t => throw new Exception(),
+            t => Task.FromResult<Stream>( File.OpenRead(TestFiles.OutlookV2vcf))],
+                                          new AnsiFilter()).ToArrayAsync();
+
+        Assert.AreEqual("Lämmerweg 12", vc[0].Addresses!.First()!.Value.Street[0]);
+
+    }
+
+    [TestMethod]
+    public async Task DeserializeManyAsyncTest5()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        Assert.IsNull(await Vcf.DeserializeManyAsync([]).FirstOrDefaultAsync());
+    }
+
+    [TestMethod]
+    public async Task DeserializeManyAsyncTest6()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        Assert.IsNull(await Vcf.DeserializeManyAsync([t => Task.FromResult<Stream>( File.OpenRead(TestFiles.EmptyVcf))]).FirstOrDefaultAsync());
+    }
+#endif
 
     [TestMethod]
     public void LoadTest1()

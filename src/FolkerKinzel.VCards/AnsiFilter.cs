@@ -177,21 +177,12 @@ public sealed class AnsiFilter
 
         Reset();
 
-        Stream? stream = null;
-
-        try
-        {
-            stream = await factory(token).ConfigureAwait(false);
-
-        }
-        catch { }
+        using Stream? stream = await factory(token).ConfigureAwait(false);
 
         if (stream is null)
         {
             return Array.Empty<VCard>();
         }
-
-        using var disposable1 = stream;
 
         long initialPosition = stream.CanSeek ? stream.Position : 0;
 
@@ -216,22 +207,10 @@ public sealed class AnsiFilter
         }
         else
         {
-            stream = null;
+            using Stream stream2 = await factory(token).ConfigureAwait(false);
 
-            try
-            {
-                stream = await factory(token).ConfigureAwait(false);
-            }
-            catch { }
-
-            if (stream is null)
-            {
-                return Array.Empty<VCard>();
-            }
-
-            using var disposable2 = stream;
-
-            return Vcf.Deserialize(stream, enc, leaveStreamOpen: false);
+            return stream2 is null ? Array.Empty<VCard>() 
+                                   : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }
     }
 
