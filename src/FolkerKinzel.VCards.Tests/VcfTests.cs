@@ -3,6 +3,13 @@
 [TestClass]
 public class VcfTests
 {
+    private class Counter
+    {
+        private int _count;
+
+        public int Count => _count++;
+    }
+
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void DeserializeTest1()

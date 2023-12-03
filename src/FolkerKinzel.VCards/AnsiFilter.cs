@@ -163,7 +163,7 @@ public sealed class AnsiFilter
             using var stream2 = factory();
 
             return stream2 is null
-                    ? Array.Empty<VCard>()
+                    ? vCards
                     : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }
     }
@@ -209,7 +209,7 @@ public sealed class AnsiFilter
         {
             using Stream stream2 = await factory(token).ConfigureAwait(false);
 
-            return stream2 is null ? Array.Empty<VCard>() 
+            return stream2 is null ? vCards
                                    : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }
     }
