@@ -10,6 +10,9 @@ public class VCardBuilderTests
     [TestMethod()]
     public void CreateTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var builder = VCardBuilder.Create();
         Assert.IsNotNull(builder);
         Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
@@ -22,6 +25,9 @@ public class VCardBuilderTests
     [TestMethod()]
     public void CreateTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var builder = VCardBuilder.Create(setID: false);
         Assert.IsNotNull(builder);
         Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
@@ -35,6 +41,9 @@ public class VCardBuilderTests
     [TestMethod()]
     public void CreateTest3()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vc = new VCard();
         var builder = VCardBuilder.Create(vc);
         Assert.IsNotNull(builder);
@@ -47,8 +56,11 @@ public class VCardBuilderTests
     public void CreateTest4() => _ = VCardBuilder.Create(null!);
 
     [TestMethod()]
-    public void SetAccessTest()
+    public void SetAccessTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         VCard vc = VCardBuilder.Create()
                                .Access.Set(Access.Private)
                                .Build();
@@ -57,8 +69,29 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
+    public void SetAccessTest2()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard vc = VCardBuilder.Create()
+                               .Access.Set(Access.Private, vc => "group")
+                               .Build();
+        Assert.IsNotNull(vc.Access);
+        Assert.AreEqual(Access.Private, vc.Access.Value);
+        Assert.AreEqual("group", vc.Access.Group);
+
+        VCardBuilder.Create(vc).Access.Clear();
+
+        Assert.IsNull(vc.Access);
+    }
+
+    [TestMethod()]
     public void AddAddressTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         VCard vc = VCardBuilder
             .Create()
             .Addresses.Add("Elm Street", null, null, null,
@@ -98,6 +131,9 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddAddressTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         VCard vc = VCardBuilder
             .Create()
             .Addresses.Add(Enumerable.Repeat("Elm Street", 1), null, null, null,
@@ -119,10 +155,15 @@ public class VCardBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void RemoveAddressTest1() 
-        => _ = VCardBuilder.Create()
-                           .Addresses.Remove((Func<AddressProperty?, bool>)null!)
-                           .Build();
+    public void RemoveAddressTest1()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        _ = VCardBuilder.Create()
+                               .Addresses.Remove((Func<AddressProperty?, bool>)null!)
+                               .Build();
+    }
 
     [TestMethod()]
     public void AddAnniversaryViewTest()
@@ -239,9 +280,35 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void SetKindTest()
+    public void SetKindTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder.Create()
+                               .Kind.Set(Kind.Group)
+                               .Build();
+        Assert.IsNotNull(vc.Kind);
+        Assert.AreEqual(Kind.Group, vc.Kind.Value);
+    }
+
+    [TestMethod()]
+    public void SetKindTest2()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard vc = VCardBuilder.Create()
+                               .Kind.Set(Kind.Group, p => p.NonStandard = [ new KeyValuePair<string, string>("X-PARA", "bla")], vc => "group")
+                               .Build();
+        Assert.IsNotNull(vc.Kind);
+        Assert.IsNotNull(vc.Kind.Parameters.NonStandard);
+        Assert.AreEqual(Kind.Group, vc.Kind.Value);
+        Assert.AreEqual("group", vc.Kind.Group);
+
+        VCardBuilder.Create(vc).Kind.Clear();
+
+        Assert.IsNull(vc.Kind);
     }
 
     [TestMethod()]
