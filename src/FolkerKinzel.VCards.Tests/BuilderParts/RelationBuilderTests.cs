@@ -1,0 +1,41 @@
+﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+
+[TestClass]
+public class RelationBuilderTests
+{
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void AddTest1() => new RelationBuilder().Add(Guid.Empty);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void AddTest2() => new RelationBuilder().Add("");
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void AddTest3() => new RelationBuilder().Add((Uri?)null);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void AddTest4() => new RelationBuilder().Add((VCard?)null);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void ClearTest1() => new RelationBuilder().Clear();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void RemoveTest1() => new RelationBuilder().Remove(p => true);
+
+    [TestMethod]
+    public void EqualsTest1()
+    {
+        Assert.IsFalse(new RelationBuilder().Equals((RelationBuilder?)null));
+
+        var builder = new RelationBuilder();
+        Assert.AreEqual(builder.GetHashCode(), ((object)builder).GetHashCode());
+    }
+
+    [TestMethod]
+    public void ToStringTest1() => Assert.IsNotNull(new RelationBuilder().ToString());
+}
