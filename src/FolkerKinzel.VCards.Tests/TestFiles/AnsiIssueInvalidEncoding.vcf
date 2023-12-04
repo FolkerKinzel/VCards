@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:2.1
+N;LANGUAGE=de:Rastral;Ralf
+FN:Ralf Rastral
+ADR;HOME;PREF;:;;Lämmerweg 12;Kleindorf;;98765;Deutschland
+LABEL;HOME;PREF;CHARSET=blabla;ENCODING=QUOTED-PRINTABLE:L=E4mmerweg 12=0D=0A=
+98765 Kleindorf
+END:VCARD
