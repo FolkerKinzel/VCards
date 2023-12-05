@@ -141,16 +141,20 @@ public class VCardBuilderTests
                            parameters: p => p.AddressType = Adr.Intl,
                            group: vc => "gr1"
                          )
+            .Addresses.Add(["2"], null, null, null, pref: true)
             .Build();
+
+        AddressProperty prop1 = vc.Addresses!.ElementAt(1)!;
+
+        Assert.AreEqual("Elm Street", prop1.Value.Street[0]);
+        Assert.AreEqual(2, prop1.Parameters.Preference);
+        Assert.AreEqual(Adr.Intl, prop1.Parameters.AddressType);
+        Assert.IsNull(prop1.Parameters.Label);
+        Assert.AreEqual("gr1", prop1.Group);
 
         AddressProperty prop2 = vc.Addresses!.First()!;
 
-        Assert.AreEqual("Elm Street", prop2.Value.Street[0]);
-        Assert.AreEqual(100, prop2.Parameters.Preference);
-        Assert.AreEqual(Adr.Intl, prop2.Parameters.AddressType);
-        Assert.IsNull(prop2.Parameters.Label);
-        Assert.AreEqual("gr1", prop2.Group);
-
+        Assert.IsNotNull(prop2.Parameters.Label);
     }
 
     [TestMethod()]
@@ -180,19 +184,61 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddBirthPlaceViewTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .BirthPlaceViews.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.BirthPlaceViews);
+        Assert.AreEqual(1, vc.BirthPlaceViews.Count());
     }
 
     [TestMethod()]
-    public void AddCalendarAddressTest()
+    public void AddCalendarAddressTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .CalendarAddresses.Add("1")
+            .CalendarAddresses.Add("2", pref: true, p => p.Index = 1, v => "g")
+            .Build();
+
+        Assert.IsNotNull(vc.CalendarAddresses);
+
+        TextProperty? first = vc.CalendarAddresses.First();
+        Assert.IsNotNull(first);
+        Assert.AreEqual("2", first.Value);
+        Assert.AreEqual("g", first.Group);
+        Assert.AreEqual(1, first.Parameters.Index!.Value);
+
+        VCardBuilder.Create(vc).CalendarAddresses.Remove(p => p.Value == "2");
+
+        Assert.IsNotNull(vc.CalendarAddresses);
+        Assert.AreEqual("1", vc.CalendarAddresses.First()!.Value);
+        Assert.AreEqual(1, vc.CalendarAddresses.Count());
+
+        VCardBuilder.Create(vc).CalendarAddresses.Clear();
+        Assert.IsNull(vc.CalendarAddresses);
     }
 
     [TestMethod()]
     public void AddCalendarUserAddressTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .CalendarUserAddresses.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.CalendarUserAddresses);
+        Assert.AreEqual(1, vc.CalendarUserAddresses.Count());
     }
 
     [TestMethod()]
@@ -210,37 +256,108 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddDeathPlaceViewTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .DeathPlaceViews.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.DeathPlaceViews);
+        Assert.AreEqual(1, vc.DeathPlaceViews.Count());
     }
 
     [TestMethod()]
-    public void SetDirectoryNameTest()
+    public void SetDirectoryNameTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder.Create()
+                               .DirectoryName.Set("1")
+                               .Build();
+        Assert.IsNotNull(vc.DirectoryName);
+        Assert.AreEqual("1", vc.DirectoryName.Value);
     }
 
     [TestMethod()]
+    public void SetDirectoryNameTest2()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard vc = VCardBuilder.Create()
+                               .DirectoryName.Set("1", p => p.Context = "VCARD", vc => "group")
+                               .Build();
+        Assert.IsNotNull(vc.DirectoryName);
+        Assert.AreEqual("1", vc.DirectoryName.Value);
+        Assert.AreEqual("group", vc.DirectoryName.Group);
+        Assert.AreEqual("VCARD", vc.DirectoryName.Parameters.Context);
+
+        VCardBuilder.Create(vc).DirectoryName.Clear();
+
+        Assert.IsNull(vc.DirectoryName);
+    }
+
+        [TestMethod()]
     public void AddDisplayNameTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .DisplayNames.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.DisplayNames);
+        Assert.AreEqual(1, vc.DisplayNames.Count());
     }
 
     [TestMethod()]
     public void AddEMailTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .EMails.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.EMails);
+        Assert.AreEqual(1, vc.EMails.Count());
     }
 
     [TestMethod()]
     public void AddExpertiseTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Expertises.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.Expertises);
+        Assert.AreEqual(1, vc.Expertises.Count());
     }
 
     [TestMethod()]
     public void AddFreeOrBusyUrlTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .FreeOrBusyUrls.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.FreeOrBusyUrls);
+        Assert.AreEqual(1, vc.FreeOrBusyUrls.Count());
     }
 
     [TestMethod()]
@@ -258,19 +375,46 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddHobbyTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Hobbies.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.Hobbies);
+        Assert.AreEqual(1, vc.Hobbies.Count());
     }
 
     [TestMethod()]
     public void AddMessengerTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Messengers.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.Messengers);
+        Assert.AreEqual(1, vc.Messengers.Count());
     }
 
     [TestMethod()]
     public void AddInterestTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Interests.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.Interests);
+        Assert.AreEqual(1, vc.Interests.Count());
     }
 
     [TestMethod()]
@@ -314,7 +458,16 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddLanguageTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Languages.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.Languages);
+        Assert.AreEqual(1, vc.Languages.Count());
     }
 
     [TestMethod()]
@@ -326,7 +479,14 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetMailerTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder.Create()
+                               .Mailer.Set("1")
+                               .Build();
+        Assert.IsNotNull(vc.Mailer);
+        Assert.AreEqual("1", vc.Mailer.Value);
     }
 
     [TestMethod()]
@@ -356,7 +516,16 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddNoteTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Notes.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.Notes);
+        Assert.AreEqual(1, vc.Notes.Count());
     }
 
     [TestMethod()]
@@ -368,13 +537,31 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddOrgDirectoryTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .OrgDirectories.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.OrgDirectories);
+        Assert.AreEqual(1, vc.OrgDirectories.Count());
     }
 
     [TestMethod()]
     public void AddPhoneTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Phones.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.Phones);
+        Assert.AreEqual(1, vc.Phones.Count());
     }
 
     [TestMethod()]
@@ -384,9 +571,16 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void SetProdIDTest()
+    public void SetProductIDTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder.Create()
+                               .ProductID.Set("1")
+                               .Build();
+        Assert.IsNotNull(vc.ProductID);
+        Assert.AreEqual("1", vc.ProductID.Value);
     }
 
     [TestMethod()]
@@ -404,7 +598,16 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddRoleTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Roles.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.Roles);
+        Assert.AreEqual(1, vc.Roles.Count());
     }
 
     [TestMethod()]
@@ -416,7 +619,16 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddSourceTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Sources.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.Sources);
+        Assert.AreEqual(1, vc.Sources.Count());
     }
 
     [TestMethod()]
@@ -434,7 +646,16 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddTitleTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Titles.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.Titles);
+        Assert.AreEqual(1, vc.Titles.Count());
     }
 
     [TestMethod()]
@@ -446,7 +667,16 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddUrlTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Urls.Add("1")
+            .Build();
+
+        Assert.IsNotNull(vc.Urls);
+        Assert.AreEqual(1, vc.Urls.Count());
     }
 
     [TestMethod()]
