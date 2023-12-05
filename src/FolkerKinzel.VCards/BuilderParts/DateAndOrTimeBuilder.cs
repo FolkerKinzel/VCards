@@ -99,5 +99,4 @@ public readonly struct DateAndOrTimeBuilder
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => base.ToString()!;
-
 }

@@ -200,7 +200,7 @@ public class V4Tests
             Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false)
                                                               .DisplayNames.Add("Important Member")
                                                               .ID.Set(Guid.Empty)
-                                                              .Build()),
+                                                              .VCard),
         };
 
         Assert.IsNotNull(vc.Members);
@@ -218,7 +218,7 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false).DisplayNames.Add("Important Member").Build()),
+            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false).DisplayNames.Add("Important Member").VCard),
         };
 
         Assert.IsNotNull(vc.Members);
@@ -241,7 +241,7 @@ public class V4Tests
             Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false)
                                                               .DisplayNames.Add("Important Member")
                                                               .ID.Set(guid)
-                                                              .Build())
+                                                              .VCard)
                       .Concat(RelationProperty.FromGuid(guid)),
         };
 

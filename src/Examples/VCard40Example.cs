@@ -45,7 +45,7 @@ public static class VCard40Example
                     "Ludwig van Beethoven", new DateOnly(1770, 12, 17), new DateOnly(1827, 3, 26)))
             .Members.Add(InitializeComposerVCard(
                     "Frédéric Chopin", new DateOnly(1810, 3, 1), new DateOnly(1849, 10, 17)))
-            .Build();
+            .VCard;
 
         // Replace the embedded VCards in composersVCard.Members with Guid
         // references in order to save them as separate vCard 4.0 .VCF files.
@@ -116,7 +116,7 @@ public static class VCard40Example
                        .DisplayNames.Add(composersName)
                        .BirthDayViews.Add(birthDate)
                        .DeathDateViews.Add(deathDate)
-                       .Build();
+                       .VCard;
 
     private static bool TryFindBeethovensBirthday(VCard composersVCard, out DateOnly birthDay)
     {

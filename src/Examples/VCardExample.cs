@@ -104,7 +104,7 @@ public static class VCardExample
                 .BirthDayViews.Add(1984, 3, 28)
                 .Relations.Add("Paul Müller-Risinowsky", Rel.Spouse | Rel.CoResident | Rel.Colleague)
                 .AnniversaryViews.Add(2006, 7, 14)
-                .Build();
+                .VCard;
         }
 
         void WriteResultsToConsole(VCard vcard)

@@ -47,12 +47,12 @@ public sealed class VCardBuilder
     public static VCardBuilder Create(VCard vCard)
         => new(vCard ?? throw new ArgumentNullException(nameof(vCard)));
 
-    /// <summary>
-    /// Returns the <see cref="VCard"/> object the builder has worked on.
-    /// </summary>
-    /// <returns>The <see cref="VCard"/> object.</returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public VCard Build() => VCard;
+    ///// <summary>
+    ///// Returns the <see cref="VCard"/> object the builder has worked on.
+    ///// </summary>
+    ///// <returns>The <see cref="VCard"/> object.</returns>
+    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //public VCard Build() => VCard;
 
     internal static IEnumerable<TSource?> Add<TSource>(TSource prop,
                                                        IEnumerable<TSource?>? coll,
@@ -75,7 +75,7 @@ public sealed class VCardBuilder
 
     ///////////////////////////////////////////////////////////////////
     
-    internal VCard VCard { get; }
+    public VCard VCard { get; }
 
     /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
     /// <see cref="VCards.VCard"/>. <c>(3)</c></summary>

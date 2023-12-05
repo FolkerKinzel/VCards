@@ -44,7 +44,7 @@ internal static class LongVCardCreator
                                givenName: name2.FirstName,
                                additionalName: name2.MiddleName,
                                displayName: (n, p) => n.Add(p.ToDisplayName()))
-                .Build()
+                .VCard
                 );
         }
 
