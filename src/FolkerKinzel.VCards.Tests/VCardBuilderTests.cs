@@ -445,9 +445,79 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void AddGeoCoordinateTest()
+    public void AddGeoCoordinateTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .GeoCoordinates.Add(null)
+            .VCard;
+
+        Assert.IsNotNull(vc.GeoCoordinates);
+        Assert.AreEqual(1, vc.GeoCoordinates.Count());
+
+        VCardBuilder
+            .Create(vc)
+            .GeoCoordinates.Remove(p => true);
+
+        Assert.IsNotNull(vc.GeoCoordinates);
+        Assert.AreEqual(0, vc.GeoCoordinates.Count());
+
+        VCardBuilder
+            .Create(vc)
+            .GeoCoordinates.Clear();
+
+        Assert.IsNull(vc.GeoCoordinates);
+    }
+
+    [TestMethod()]
+    public void AddGeoCoordinateTest2()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard vc = VCardBuilder
+            .Create()
+            .GeoCoordinates.Add(null, group: v => "g1")
+            .VCard;
+
+        Assert.IsNotNull(vc.GeoCoordinates);
+        Assert.AreEqual(1, vc.GeoCoordinates.Count());
+        Assert.AreEqual("g1", vc.GeoCoordinates.First()!.Group);
+    }
+
+    [TestMethod()]
+    public void AddGeoCoordinateTest3()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard vc = VCardBuilder
+            .Create()
+            .GeoCoordinates.Add(25, 25, group: v => "g1")
+            .VCard;
+
+        Assert.IsNotNull(vc.GeoCoordinates);
+        Assert.AreEqual(1, vc.GeoCoordinates.Count());
+        Assert.AreEqual("g1", vc.GeoCoordinates.First()!.Group);
+    }
+
+    [TestMethod()]
+    public void AddGeoCoordinateTest4()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard vc = VCardBuilder
+            .Create()
+            .GeoCoordinates.Add(25, 25)
+            .VCard;
+
+        Assert.IsNotNull(vc.GeoCoordinates);
+        Assert.AreEqual(1, vc.GeoCoordinates.Count());
+        Assert.AreEqual(null, vc.GeoCoordinates.First()!.Group);
     }
 
     [TestMethod()]
@@ -716,9 +786,47 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void AddTimeZoneTest()
+    public void AddTimeZoneTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .TimeZones.Add(null)
+            .VCard;
+
+        Assert.IsNotNull(vc.TimeZones);
+        Assert.AreEqual(1, vc.TimeZones.Count());
+
+        VCardBuilder
+            .Create(vc)
+            .TimeZones.Remove(p => true);
+
+        Assert.IsNotNull(vc.TimeZones);
+        Assert.AreEqual(0, vc.TimeZones.Count());
+
+        VCardBuilder
+            .Create(vc)
+            .TimeZones.Clear();
+
+        Assert.IsNull(vc.TimeZones);
+    }
+
+    [TestMethod()]
+    public void AddTimeZoneTest2()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard vc = VCardBuilder
+            .Create()
+            .TimeZones.Add(null, group: v => "g1")
+            .VCard;
+
+        Assert.IsNotNull(vc.TimeZones);
+        Assert.AreEqual(1, vc.TimeZones.Count());
+        Assert.AreEqual("g1", vc.TimeZones.First()!.Group);
     }
 
     [TestMethod()]

@@ -12,7 +12,7 @@ public readonly struct TimeZoneBuilder
 {
     private readonly VCardBuilder? _builder;
 
-    [MemberNotNull(nameof(_builder))] 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
     internal TimeZoneBuilder(VCardBuilder builder) => _builder = builder;
@@ -22,7 +22,7 @@ public readonly struct TimeZoneBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop.TimeZones, 
+        Builder.VCard.Set(Prop.TimeZones,
                           VCardBuilder.Add(new TimeZoneProperty(value, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones),
                                            parameters,
