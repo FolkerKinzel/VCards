@@ -644,10 +644,87 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void AddNameViewTest()
+    public void AddNameViewTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .NameViews.Add(["Miller"], ["John"], null, null,
+                            parameters: p => p.Language = "en",
+                            group: vc => "gr1",
+                            displayName: (b, p) => b.Add("John Miller")
+                            )
+            .NameViews.Add(["Müller"], ["Johann"], null, null,
+                         parameters: p => p.Language = "de")
+            .VCard;
+
+        vc.NameViews = vc.NameViews.ConcatWith(null);
+
+        NameProperty prop1 = vc.NameViews!.First()!;
+        NameProperty prop2 = vc.NameViews!.ElementAt(1)!;
+
+        Assert.IsNotNull(vc.NameViews?.FirstOrDefault());
+
+        Assert.AreEqual("Miller", prop1.Value.FamilyNames[0]);
+        Assert.AreEqual("en", prop1.Parameters.Language);
+        Assert.AreEqual("gr1", prop1.Group);
+
+        Assert.AreEqual("de", prop2.Parameters.Language);
+        
+        vc = VCardBuilder.Create(vc).NameViews.Remove(x => x.Parameters.Language == "de").VCard;
+        Assert.IsFalse(vc.NameViews!.Any(x => x?.Parameters.Language == "de"));
+        vc = VCardBuilder.Create(vc)
+                         .NameViews.Clear()
+                         .VCard;
+        Assert.IsNull(vc.NameViews);
     }
+
+    [TestMethod()]
+    public void AddNameViewTest2()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard vc = VCardBuilder
+            .Create()
+            .NameViews.Add("Miller", "John", null, null,
+                            parameters: p => p.Language = "en",
+                            group: vc => "gr1",
+                            displayName: (b, p) => b.Add("John Miller")
+                            )
+            .NameViews.Add("Müller", "Johann", null, null,
+                         parameters: p => p.Language = "de")
+            .VCard;
+
+        vc.NameViews = vc.NameViews.ConcatWith(null);
+
+        NameProperty prop1 = vc.NameViews!.First()!;
+        NameProperty prop2 = vc.NameViews!.ElementAt(1)!;
+
+        Assert.IsNotNull(vc.NameViews?.FirstOrDefault());
+
+        Assert.AreEqual("Miller", prop1.Value.FamilyNames[0]);
+        Assert.AreEqual("en", prop1.Parameters.Language);
+        Assert.AreEqual("gr1", prop1.Group);
+
+        Assert.AreEqual("de", prop2.Parameters.Language);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void RemoveNameViewTest1()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        _ = VCardBuilder
+            .Create()
+            .NameViews.Remove((Func<NameProperty?, bool>)null!)
+            .VCard;
+    }
+
 
     [TestMethod()]
     public void AddNickNameTest()
