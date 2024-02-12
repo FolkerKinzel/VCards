@@ -44,7 +44,7 @@ public sealed class VCardBuilder
     /// <returns>The created <see cref="VCardBuilder"/>.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="vCard"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static VCardBuilder Create(VCard vCard)
+    public static VCardBuilder Edit(VCard vCard)
         => new(vCard ?? throw new ArgumentNullException(nameof(vCard)));
 
     ///// <summary>

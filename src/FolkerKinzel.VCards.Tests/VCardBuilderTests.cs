@@ -45,7 +45,7 @@ public class VCardBuilderTests
         VCard.RegisterApp(null);
 
         var vc = new VCard();
-        var builder = VCardBuilder.Create(vc);
+        var builder = VCardBuilder.Edit(vc);
         Assert.IsNotNull(builder);
         Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
         Assert.AreSame(vc, builder.VCard);
@@ -53,7 +53,7 @@ public class VCardBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void CreateTest4() => _ = VCardBuilder.Create(null!);
+    public void CreateTest4() => _ = VCardBuilder.Edit(null!);
 
     [TestMethod()]
     public void SetAccessTest1()
@@ -81,7 +81,7 @@ public class VCardBuilderTests
         Assert.AreEqual(Access.Private, vc.Access.Value);
         Assert.AreEqual("group", vc.Access.Group);
 
-        VCardBuilder.Create(vc).Access.Clear();
+        VCardBuilder.Edit(vc).Access.Clear();
 
         Assert.IsNull(vc.Access);
     }
@@ -120,11 +120,10 @@ public class VCardBuilderTests
         Assert.IsNull(prop2.Parameters.Label);
         Assert.AreEqual("gr1", prop2.Group);
         Assert.IsTrue(vc.Addresses!.Any(x => x?.Value.Street[0] == "3"));
-        vc = VCardBuilder.Create(vc).Addresses.Remove(x => x.Value.Street[0] == "3").VCard;
+        VCardBuilder.Edit(vc).Addresses.Remove(x => x.Value.Street[0] == "3");
         Assert.IsFalse(vc.Addresses!.Any(x => x?.Value.Street[0] == "3"));
-        vc = VCardBuilder.Create(vc)
-                         .Addresses.Clear()
-                         .VCard;
+        VCardBuilder.Edit(vc)
+                         .Addresses.Clear();
         Assert.IsNull(vc.Addresses);
     }
 
@@ -220,12 +219,12 @@ public class VCardBuilderTests
         Assert.IsNotNull(vc.BirthDayViews);
         Assert.AreEqual(7, vc.BirthDayViews.Count());
 
-        VCardBuilder.Create(vc).BirthDayViews.Remove(p => p.Parameters.Language == "de-DE");
+        VCardBuilder.Edit(vc).BirthDayViews.Remove(p => p.Parameters.Language == "de-DE");
 
         Assert.IsNotNull(vc.BirthDayViews);
         Assert.AreEqual(6, vc.BirthDayViews.Count());
 
-        VCardBuilder.Create(vc).BirthDayViews.Clear();
+        VCardBuilder.Edit(vc).BirthDayViews.Clear();
         Assert.IsNull(vc.BirthDayViews);
     }
 
@@ -285,13 +284,13 @@ public class VCardBuilderTests
         Assert.AreEqual("g", first.Group);
         Assert.AreEqual(1, first.Parameters.Index!.Value);
 
-        VCardBuilder.Create(vc).CalendarAddresses.Remove(p => p.Value == "2");
+        VCardBuilder.Edit(vc).CalendarAddresses.Remove(p => p.Value == "2");
 
         Assert.IsNotNull(vc.CalendarAddresses);
         Assert.AreEqual("1", vc.CalendarAddresses.First()!.Value);
         Assert.AreEqual(1, vc.CalendarAddresses.Count());
 
-        VCardBuilder.Create(vc).CalendarAddresses.Clear();
+        VCardBuilder.Edit(vc).CalendarAddresses.Clear();
         Assert.IsNull(vc.CalendarAddresses);
     }
 
@@ -373,7 +372,7 @@ public class VCardBuilderTests
         Assert.AreEqual("group", vc.DirectoryName.Group);
         Assert.AreEqual("VCARD", vc.DirectoryName.Parameters.Context);
 
-        VCardBuilder.Create(vc).DirectoryName.Clear();
+        VCardBuilder.Edit(vc).DirectoryName.Clear();
 
         Assert.IsNull(vc.DirectoryName);
     }
@@ -459,14 +458,14 @@ public class VCardBuilderTests
         Assert.AreEqual(1, vc.GeoCoordinates.Count());
 
         VCardBuilder
-            .Create(vc)
+            .Edit(vc)
             .GeoCoordinates.Remove(p => true);
 
         Assert.IsNotNull(vc.GeoCoordinates);
         Assert.AreEqual(0, vc.GeoCoordinates.Count());
 
         VCardBuilder
-            .Create(vc)
+            .Edit(vc)
             .GeoCoordinates.Clear();
 
         Assert.IsNull(vc.GeoCoordinates);
@@ -566,9 +565,33 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void AddKeyTest()
+    public void AddKeyTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Keys.AddText("qwertz")
+            .Keys.AddText("1234", pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Keys);
+        Assert.AreEqual(2, vc.Keys.Count());
+        Assert.AreEqual("g", vc.Keys.First()?.Group);
+
+        VCardBuilder
+            .Edit(vc)
+            .Keys.Remove(p => p.Parameters.Preference == 1);
+
+        Assert.IsNotNull(vc.Keys);
+        Assert.AreEqual(1, vc.Keys.Count());
+
+        VCardBuilder
+            .Edit(vc)
+            .Keys.Clear();
+
+        Assert.IsNull(vc.Keys);
     }
 
     [TestMethod()]
@@ -598,7 +621,7 @@ public class VCardBuilderTests
         Assert.AreEqual(Kind.Group, vc.Kind.Value);
         Assert.AreEqual("group", vc.Kind.Group);
 
-        VCardBuilder.Create(vc).Kind.Clear();
+        VCardBuilder.Edit(vc).Kind.Clear();
 
         Assert.IsNull(vc.Kind);
     }
@@ -619,9 +642,37 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void AddLogoTest()
+    public void AddLogoTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Logos.AddFile(TestFiles.EmptyVcf)
+            .Logos.AddFile(TestFiles.EmptyVcf, pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Logos);
+        Assert.AreEqual(2, vc.Logos.Count());
+        Assert.AreEqual("g", vc.Logos.First()?.Group);
+    }
+
+    [TestMethod()]
+    public void AddLogoTest2()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        VCard vc = VCardBuilder
+            .Create()
+            .Logos.AddUri(new Uri("https://api.nuget.org/v3-flatcontainer/folkerkinzel.vcards/6.1.0/icon"))
+            .Logos.AddUri(new Uri("https://www.nuget.org/Content/gallery/img/logo-header.svg"), pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Logos);
+        Assert.AreEqual(2, vc.Logos.Count());
+        Assert.AreEqual("g", vc.Logos.First()?.Group);
     }
 
     [TestMethod()]
@@ -673,9 +724,9 @@ public class VCardBuilderTests
 
         Assert.AreEqual("de", prop2.Parameters.Language);
         
-        vc = VCardBuilder.Create(vc).NameViews.Remove(x => x.Parameters.Language == "de").VCard;
+        vc = VCardBuilder.Edit(vc).NameViews.Remove(x => x.Parameters.Language == "de").VCard;
         Assert.IsFalse(vc.NameViews!.Any(x => x?.Parameters.Language == "de"));
-        vc = VCardBuilder.Create(vc)
+        vc = VCardBuilder.Edit(vc)
                          .NameViews.Clear()
                          .VCard;
         Assert.IsNull(vc.NameViews);
@@ -792,7 +843,18 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddPhotoTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Photos.AddBytes([1,2,3,4])
+            .Photos.AddBytes([17,4], pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Photos);
+        Assert.AreEqual(2, vc.Photos.Count());
+        Assert.AreEqual("g", vc.Photos.First()?.Group);
     }
 
     [TestMethod()]
@@ -838,7 +900,18 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddSoundTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Sounds.AddBytes([1, 2, 3, 4])
+            .Sounds.AddBytes([17, 4], pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Sounds);
+        Assert.AreEqual(2, vc.Sounds.Count());
+        Assert.AreEqual("g", vc.Sounds.First()?.Group);
     }
 
     [TestMethod()]
@@ -877,14 +950,14 @@ public class VCardBuilderTests
         Assert.AreEqual(1, vc.TimeZones.Count());
 
         VCardBuilder
-            .Create(vc)
+            .Edit(vc)
             .TimeZones.Remove(p => true);
 
         Assert.IsNotNull(vc.TimeZones);
         Assert.AreEqual(0, vc.TimeZones.Count());
 
         VCardBuilder
-            .Create(vc)
+            .Edit(vc)
             .TimeZones.Clear();
 
         Assert.IsNull(vc.TimeZones);
