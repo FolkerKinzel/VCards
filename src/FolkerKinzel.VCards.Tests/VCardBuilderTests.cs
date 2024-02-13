@@ -440,7 +440,30 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddGenderViewTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
 
+        VCard vc = VCardBuilder
+            .Create()
+            .GenderViews.Add(Sex.NonOrNotApplicable)
+            .GenderViews.Add(Sex.NonOrNotApplicable, "AI", parameters: p => p.Language = "en", group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.GenderViews);
+        Assert.AreEqual(2, vc.GenderViews.Count());
+
+        VCardBuilder
+            .Edit(vc)
+            .GenderViews.Remove(p => p.Group == "g");
+
+        Assert.IsNotNull(vc.GenderViews);
+        Assert.AreEqual(1, vc.GenderViews.Count());
+
+        VCardBuilder
+            .Edit(vc)
+            .GenderViews.Clear();
+
+        Assert.IsNull(vc.GenderViews);
     }
 
     [TestMethod()]

@@ -23,13 +23,13 @@ public sealed class VCardBuilder
     private VCardBuilder(VCard vCard) => VCard = vCard;
 
     /// <summary>
-    /// Creates a <see cref="VCardBuilder"/> that builds a new <see cref="VCard"/>
+    /// Returns a <see cref="VCardBuilder"/> that creates a new <see cref="VCard"/>
     /// object.
     /// </summary>
     /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/> property
     /// of the newly created <see cref="VCard"/> object automatically to a new 
     /// <see cref="Guid"/>, otherwise <c>false</c>.</param>
-    /// <returns>The created <see cref="VCardBuilder"/>.</returns>
+    /// <returns>The <see cref="VCardBuilder"/> that creates a new <see cref="VCard"/>.</returns>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -37,11 +37,11 @@ public sealed class VCardBuilder
         => new(new VCard(setID));
 
     /// <summary>
-    /// Creates a <see cref="VCardBuilder"/> that edits an existing <see cref="VCard"/>
-    /// object.
+    /// Returns a <see cref="VCardBuilder"/> that edits the <see cref="VCard"/>
+    /// object that is passed to the method as argument.
     /// </summary>
     /// <param name="vCard">The <see cref="VCard"/> object to edit.</param>
-    /// <returns>The created <see cref="VCardBuilder"/>.</returns>
+    /// <returns>The <see cref="VCardBuilder"/> that that edits the <paramref name="vCard"/>.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="vCard"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static VCardBuilder Edit(VCard vCard)
@@ -74,7 +74,11 @@ public sealed class VCardBuilder
     }
 
     ///////////////////////////////////////////////////////////////////
-    
+
+    /// <summary>
+    /// Gets the <see cref="VCard"/> object the <see cref="VCardBuilder"/> works
+    /// with.
+    /// </summary>
     public VCard VCard { get; }
 
     /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
