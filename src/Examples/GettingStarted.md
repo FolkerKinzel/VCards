@@ -1,17 +1,16 @@
 ﻿# Getting Started
 Read here:
-- [The first step: initializing the library and the usage of the namespaces](#the-first-step-initializing-the-library-and-the-usage-of-the-namespaces)
+- [The usage of the namespaces](#the-usage-of-the-namespaces)
 - [The data model explained](#the-data-model-explained)
   - [The VCardProperty class](#the-vcardproperty-class)
   - [Naming conventions](#naming-conventions)
-- [Efficient building and evaluating of VCard objects](#efficient-building-and-evaluating-of-vcard-objects)
-  - [Building and editing of VCard objects using VCardBuilder](#building-and-editing-of-vcard-objects-using-vcardbuilder)
-  - [Extension methods](#extension-methods)
+- [Efficient building and editing of VCard objects using VCardBuilder](#efficient-building-and-editing-of-vcard-objects-using-vcardbuilder)
+- [Extension methods](#extension-methods)
 - [Reading the project reference](#reading-the-project-reference)
 - [Documents of the vCard standard](#documents-of-the-vcard-standard)
 
 
-## The first step: initializing the library and the usage of the namespaces
+## The usage of the namespaces
 As the first step, the executing application has to be registered with the `VCard` class
 when the program starts. This registration is used for the data synchronization mechanism 
 introduced with vCard 4.0 (PID and CLIENTPIDMAP).
@@ -25,7 +24,7 @@ should be the same everytime the application runs.
 To learn more about what's the use of application registration and how it works, read the 
 [detailed article](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/ApplicationRegistration.md).
 
-The following code gives an example of application registration and shows the usage of the
+The following code shows the usage of the
 namespaces:
 ```csharp
 // Publish this namespace - it contains the VCard class
@@ -44,9 +43,6 @@ using FolkerKinzel.VCards.Enums;
 // Since VCardBuilder exists, the model classes normally
 // don't need to be instantiated in own code:
 // using FolkerKinzel.VCards.Models;
-
-// Application registration:
-VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
 ```
 
 ## The data model explained
@@ -87,18 +83,19 @@ A special feature are properties whose name ends with "Views": These are propert
             
 Most classes derived from `VCardProperty` implement `IEnumerable<T>` in order to be assignable to collection properties without having to be wrapped in an Array or List.
 
-## Efficient building and evaluating of VCard objects
-### Building and editing of VCard objects using VCardBuilder
+## Efficient building and editing of VCard objects using VCardBuilder
 The `VCardBuilder` class provides a fluent API for building and editing VCard objects.
 
 The properties of the VCardBuilder class have the same names as those of the VCard class. Each of these 
 properties gets a struct that provides methods to edit the corresponding <see cref="VCard"/> property. 
 Each of these methods return the VCardBuilder instance so that the calls can be chained.
 
-The `Create` methods initialize a VCardBuilder instance. The `Build` method returns the VCard object
-the VCardBuilder had worked on.
+The `Create` method initializes a VCardBuilder instance that creates a new VCard instance. The `VCardBuilder.VCard` property gets 
+the VCard object the VCardBuilder has created.
 
-See how it can be used:
+Call the `VCardBuilder.Edit(VCard)` method to edit an existing VCard instance.
+
+See an example how `VCardBuilder` can be used:
 ```csharp
 VCard vCard = VCardBuilder
                 .Create()
@@ -151,9 +148,9 @@ VCard vCard = VCardBuilder
                 .BirthDayViews.Add(1984, 3, 28)
                 .Relations.Add("Paul Müller-Risinowsky", Rel.Spouse | Rel.CoResident | Rel.Colleague)
                 .AnniversaryViews.Add(2006, 7, 14)
-                .Build();
+                .VCard;
 ```
-### Extension methods
+## Extension methods
 The namespace `FolkerKinzel.VCards.Extensions` contains several extension methods that makes working with VCard objects 
 more efficient and less error prone. It's therefore strongly recommended to publish this namespace when working with this
 library. 
