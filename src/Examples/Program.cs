@@ -27,10 +27,10 @@ internal class Program
 
         //WebExample.SynchronousExample();
 
-        await WebExample.AsyncExample();
+        //await WebExample.AsyncExample();
 
 
-        //NoPidExample.SaveWithoutPropertyIdentification();
+        NoPidExample.RemovePropertyIdentification();
 
         //EmbeddedVCardExample.FromVCardExample();
 

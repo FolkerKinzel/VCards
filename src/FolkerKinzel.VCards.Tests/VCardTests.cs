@@ -465,11 +465,11 @@ public class VCardTests
     }
 
     [TestMethod]
-    [ExpectedException (typeof(InvalidOperationException))]
     public void VCardTest1()
     {
         VCard.SyncTestReset();
         _ = new VCard();
+        Assert.IsNull(VCard.App);
     }
 
 

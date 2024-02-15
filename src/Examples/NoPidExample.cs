@@ -6,10 +6,8 @@ namespace Examples;
 
 public static class NoPidExample
 {
-    public static void SaveWithoutPropertyIdentification()
+    public static void RemovePropertyIdentification()
     {
-        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
-
         const string vcf = """
             BEGIN:VCARD
             VERSION:4.0
@@ -25,9 +23,7 @@ public static class NoPidExample
         // Removes all existing PIDs and CLIENTPIDMAPs
         vCard.Sync.Reset();
 
-        VcfOptions options = VcfOptions.Default.Unset(VcfOptions.SetPropertyIDs);
-
-        Console.WriteLine(vCard.ToVcfString(VCdVersion.V4_0, options: options));
+        Console.WriteLine(vCard.ToVcfString(VCdVersion.V4_0));
     }
 }
 

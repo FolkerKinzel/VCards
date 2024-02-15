@@ -70,7 +70,7 @@ public class VcfSerializerTests
         tProp2.Parameters.Index = 2;
         tProp3.Parameters.Index = 1;
 
-        string s = vc.ToVcfString(VCdVersion.V4_0, options: VcfOptions.Default | VcfOptions.WriteEmptyProperties);
+        string s = vc.ToVcfString(VCdVersion.V4_0, options: VcfOptions.Default | VcfOptions.WriteEmptyProperties | VcfOptions.SetPropertyIDs);
 
         uri = new Uri("http://other.com/");
         VCard.SyncTestReset();
@@ -104,7 +104,7 @@ public class VcfSerializerTests
 
         //vc.Sync.SetPropertyIDs();
 
-        _ = vc.ToVcfString(VCdVersion.V4_0, options: options);
+        _ = vc.ToVcfString(VCdVersion.V4_0, options: options | VcfOptions.SetPropertyIDs);
 
         Assert.AreEqual(1, tProp1.Parameters.Index);
         Assert.AreEqual(null, tProp2.Parameters.Index);

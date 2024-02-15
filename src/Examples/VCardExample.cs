@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 
 namespace Examples;
 
@@ -13,11 +14,10 @@ public static class VCardExample
 
     public static void ReadingAndWritingVCard(string directoryPath)
     {
-        // In order to initialize the library, the executing application MUST be registered
-        // with the VCard class. To do this, call the static method VCard.RegisterApp with an absolute
-        // Uri once when the program starts. (UUID URNs are ideal for this.) This registration
-        // is used for the data synchronization mechanism introduced with vCard 4.0 (PID and
-        // CLIENTPIDMAP).
+        // Registering the executing application with the VCard class is a technical requirement
+        // when using the data synchronization mechanism introduced with vCard 4.0 (PID and
+        // CLIENTPIDMAP). To do this, call the static method VCard.RegisterApp with an absolute
+        // Uri once when the program starts. (UUID URNs are ideal for this.)
         VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
 
         string v2FilePath = Path.Combine(directoryPath, v2FileName);
@@ -38,7 +38,10 @@ public static class VCardExample
         Vcf.Save(vCard, v3FilePath, tzConverter: tzConverter);
 
         // Save vCard as vCard 4.0. (A time zone converter is not needed):
-        Vcf.Save(vCard, v4FilePath, VCdVersion.V4_0);
+        Vcf.Save(vCard,
+                 v4FilePath,
+                 VCdVersion.V4_0,
+                 options: VcfOptions.Default.Set(VcfOptions.SetPropertyIDs));
 
         // Load vCard:
         vCard = Vcf.Load(v3FilePath)[0];

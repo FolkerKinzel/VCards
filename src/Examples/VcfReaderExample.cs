@@ -6,8 +6,6 @@ public static class VcfReaderExample
 {
     public static void Example(string filePath)
     {
-        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
-
         using var textReader = new StreamReader(filePath);
         using var reader = new VcfReader(textReader);
 

@@ -131,27 +131,28 @@ public sealed class SyncOperation
     {
         if (!VCard.IsAppRegistered)
         {
-            throw new InvalidOperationException(Res.AppNotRegistered);
+            //throw new InvalidOperationException(Res.AppNotRegistered);
+            VCard.RegisterApp(null);
         }
 
-        if (VCard.CurrentApp is null)
+        if (VCard.App is null)
         {
             return;
         }
 
         if (_vCard.AppIDs is null)
         {
-            CurrentAppID = new AppID(1, VCard.CurrentApp);
+            CurrentAppID = new AppID(1, VCard.App);
             return;
         }
 
-        var resident = _vCard.AppIDs.FirstOrDefault(x => StringComparer.Ordinal.Equals(VCard.CurrentApp, x.Value.GlobalID));
+        var resident = _vCard.AppIDs.FirstOrDefault(x => StringComparer.Ordinal.Equals(VCard.App, x.Value.GlobalID));
 
         CurrentAppID = resident is null
             ? new AppID
                 (
                 _vCard.AppIDs.Select(static x => x.Value.LocalID).Append(0).Max() + 1,
-                VCard.CurrentApp
+                VCard.App
                 )
             : resident.Value;
     }

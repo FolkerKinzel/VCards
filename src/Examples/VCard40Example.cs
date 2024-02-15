@@ -12,13 +12,6 @@ public static class VCard40Example
 {
     public static void SaveSingleVCardAsVcf(string directoryPath)
     {
-        // In order to initialize the library, the executing application MUST be registered
-        // with the VCard class. To do this, call the static method VCard.RegisterApp with an absolute
-        // Uri once when the program starts. (UUID URNs are ideal for this.) This registration
-        // is used for the data synchronization mechanism introduced with vCard 4.0 (PID and
-        // CLIENTPIDMAP).
-        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
-
         const string vcfExtension = ".vcf";
 
         // Note that argument validation and exception handling is completely omitted in this
@@ -146,13 +139,12 @@ composersVCard:
 BEGIN:VCARD
 VERSION:4.0
 KIND:group
-REV:20231113T205916Z
-UID:urn:uuid:37eae851-8fed-4562-a753-57d5bbca8280
-FN;PID=1.1:Composers
-MEMBER;VALUE=URI;PID=1.1:urn:uuid:f166bb68-b252-4f48-b6e5-791a209814f6
-MEMBER;VALUE=URI;PID=2.1:urn:uuid:579bbfc2-8366-4095-b70f-11205a6151e0
-MEMBER;VALUE=URI;PID=3.1:urn:uuid:6b05a04b-9440-4d6d-b770-2a5b9f07bc25
-CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
+REV:20240215T212254Z
+UID:urn:uuid:51784d87-7ad3-4c47-a199-995544b3c769
+FN:Composers
+MEMBER;VALUE=URI:urn:uuid:1b5097d0-5e4b-457a-99b0-d0c988e45eb9
+MEMBER;VALUE=URI:urn:uuid:733732f0-75c0-44bb-8199-0ce56ce3c4d0
+MEMBER;VALUE=URI:urn:uuid:80971089-e932-4e73-a241-6b79415d00d2
 END:VCARD
 
 What year was Beethoven born?: 1770

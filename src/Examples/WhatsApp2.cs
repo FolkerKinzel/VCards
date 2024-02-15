@@ -9,13 +9,6 @@ internal static class WhatsAppDemo2
 {
     public static void UsingTheWhatsAppType()
     {
-        // In order to initialize the library, the executing application MUST be registered
-        // with the VCard class. To do this, call the static method VCard.RegisterApp with an absolute
-        // Uri once when the program starts. (UUID URNs are ideal for this.) This registration
-        // is used for the data synchronization mechanism introduced with vCard 4.0 (PID and
-        // CLIENTPIDMAP).
-        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
-
         var xiamoiMobilePhone = new VC::TextProperty("+1-234-567-89");
 
         xiamoiMobilePhone.Parameters.NonStandard = [ new KeyValuePair<string, string>("TYPE", "WhatsApp") ];
@@ -23,20 +16,9 @@ internal static class WhatsAppDemo2
         // Initialize the VCard:
         var vcard = new VCard
         {
-            NameViews = new VC::NameProperty[]
-            {
-                new(familyName: null, givenName: "zzMad Perla 45")
-            },
-
-            DisplayNames = new VC::TextProperty[]
-            {
-                new("zzMad Perla 45")
-            },
-
-            Phones = new VC::TextProperty[]
-            {
-                xiamoiMobilePhone
-            }
+            NameViews = [new(familyName: null, givenName: "zzMad Perla 45")],
+            DisplayNames = [new("zzMad Perla 45")],
+            Phones = xiamoiMobilePhone
         };
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the

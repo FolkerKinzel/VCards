@@ -19,7 +19,7 @@ public sealed partial class VCard
     /// Call <see cref="VCard.RegisterApp(Uri?)"/> at application startup
     /// to set this property and to enable global data synchronization.
     /// </remarks>
-    public static string? CurrentApp { get; private set; }
+    public static string? App { get; private set; }
 
     /// <summary>
     /// Provides a <see cref="Sync"/> instance that allows to perform
@@ -40,13 +40,13 @@ public sealed partial class VCard
     /// unique: UUID-URNs, e.g., are well suited.)</param>
     /// <remarks>
     /// <para>
-    /// The registration of the executing application is needed for the global data 
+    /// The registration of the executing application is a technical requirement for the global data 
     /// synchronization mechanism introduced with vCard&#160;4.0. Call this method
     /// once at the startup of the application: It's not allowed to register
     /// different <see cref="Uri"/>s within a single application.
     /// </para>
     /// <para>
-    /// The method sets the static property <see cref="CurrentApp"/>.
+    /// The method sets the static property <see cref="App"/>.
     /// </para>
     /// <para>
     /// Although it is allowed to call this method with the <c>null</c> argument, this is
@@ -55,30 +55,33 @@ public sealed partial class VCard
     /// should be the same everytime the application runs.
     /// </para>
     /// </remarks>
-    /// <seealso cref="CurrentApp"/>
+    /// <seealso cref="App"/>
     /// <seealso cref="Sync"/>
     /// <seealso cref="SyncOperation"/>
     /// <exception cref="ArgumentException"><paramref name="globalID"/> is not an absolute
     /// <see cref="Uri"/>.</exception>
-    /// <exception cref="InvalidOperationException"> An attempt was made to register
-    /// different <see cref="Uri"/>s.</exception>
+    /// <exception cref="InvalidOperationException">
+    /// <para>An attempt was made to register
+    /// different <see cref="Uri"/>s</para>
+    /// <para> - or - </para>
+    /// <para>the <see cref="VCard"/> class had been used before this method has been called.</para></exception>
     public static void RegisterApp(Uri? globalID)
     {
         if (IsAppRegistered)
         {
             if (globalID is null)
             {
-                if (CurrentApp is not null)
+                if (App is not null)
                 {
-                    throw new InvalidOperationException(Res.MultipleCalls);
+                    throw new InvalidOperationException(Res.AlreadyRegistered);
                 }
 
                 return;
             }
 
-            if (!globalID.IsAbsoluteUri || globalID.AbsoluteUri != CurrentApp)
+            if (!globalID.IsAbsoluteUri || globalID.AbsoluteUri != App)
             {
-                throw new InvalidOperationException(Res.MultipleCalls);
+                throw new InvalidOperationException(Res.AlreadyRegistered);
             }
 
             return;
@@ -97,17 +100,17 @@ public sealed partial class VCard
         }
 
         IsAppRegistered = true;
-        CurrentApp = globalID.AbsoluteUri;
+        App = globalID.AbsoluteUri;
     }
 
 
     /// <summary>
-    /// Resets <see cref="CurrentApp"/> and <see cref="IsAppRegistered"/>
+    /// Resets <see cref="App"/> and <see cref="IsAppRegistered"/>
     /// to enable unit tests.
     /// </summary>
     internal static void SyncTestReset()
     {
-        CurrentApp = null;
+        App = null;
         IsAppRegistered = false;
     }
 }

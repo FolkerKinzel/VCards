@@ -61,6 +61,15 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registering of the application has to be done before any other operation using the VCard class. Register the application only once within its lifetime!.
+        /// </summary>
+        internal static string AlreadyRegistered {
+            get {
+                return ResourceManager.GetString("AlreadyRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The executing application is not yet registered with the VCard class. Call the static VCard.RegisterApp method when the program starts!.
         /// </summary>
         internal static string AppNotRegistered {
@@ -75,15 +84,6 @@ namespace FolkerKinzel.VCards.Resources {
         internal static string DefaultCtor {
             get {
                 return ResourceManager.GetString("DefaultCtor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The method may only be called once..
-        /// </summary>
-        internal static string MultipleCalls {
-            get {
-                return ResourceManager.GetString("MultipleCalls", resourceCulture);
             }
         }
         

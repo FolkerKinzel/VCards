@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlreadyRegistered" xml:space="preserve">
+    <value>Registering of the application has to be done before any other operation using the VCard class. Register the application only once within its lifetime!</value>
+  </data>
   <data name="AppNotRegistered" xml:space="preserve">
     <value>The executing application is not yet registered with the VCard class. Call the static VCard.RegisterApp method when the program starts!</value>
   </data>
   <data name="DefaultCtor" xml:space="preserve">
     <value>Don't instantiate the struct yourself. Use VCardBuilder instead.</value>
-  </data>
-  <data name="MultipleCalls" xml:space="preserve">
-    <value>The method may only be called once.</value>
   </data>
   <data name="NoAnsiEncoding" xml:space="preserve">
     <value>The value references not an ANSI encoding.</value>
