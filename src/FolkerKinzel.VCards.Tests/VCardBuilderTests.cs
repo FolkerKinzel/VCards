@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Enums;
+﻿using FolkerKinzel.VCards.BuilderParts;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 
@@ -35,7 +36,6 @@ public class VCardBuilderTests
         Assert.IsNotNull(vc);
         Assert.IsInstanceOfType(vc, typeof(VCard));
         Assert.IsNull(vc.ID);
-
     }
 
     [TestMethod()]
@@ -714,7 +714,8 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddMemberTest()
     {
-
+        VCard.SyncTestReset();
+        Assert.IsInstanceOfType(VCardBuilder.Create().Members, typeof(RelationBuilder));
     }
 
     [TestMethod()]
@@ -809,7 +810,29 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddNonStandardTest()
     {
+        VCard.SyncTestReset();
 
+        VCard vc = VCardBuilder
+            .Create()
+            .NonStandards.Add("X-TEST", "first")
+            .NonStandards.Add("X-TEST", "second", group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.NonStandards);
+        Assert.AreEqual(2, vc.NonStandards.Count());
+
+        VCardBuilder
+            .Edit(vc)
+            .NonStandards.Remove(p => p.Group == "g");
+
+        Assert.IsNotNull(vc.NonStandards);
+        Assert.AreEqual(1, vc.NonStandards.Count());
+
+        VCardBuilder
+            .Edit(vc)
+            .NonStandards.Clear();
+
+        Assert.IsNull(vc.NonStandards);
     }
 
     [TestMethod()]
@@ -830,7 +853,29 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddOrganizationTest()
     {
+        VCard.SyncTestReset();
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Organizations.Add("Org1")
+            .Organizations.Add("Org2", ["sub"], group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Organizations);
+        Assert.AreEqual(2, vc.Organizations.Count());
+
+        VCardBuilder
+            .Edit(vc)
+            .Organizations.Remove(p => p.Group == "g");
+
+        Assert.IsNotNull(vc.Organizations);
+        Assert.AreEqual(1, vc.Organizations.Count());
+
+        VCardBuilder
+            .Edit(vc)
+            .Organizations.Clear();
+
+        Assert.IsNull(vc.Organizations);
     }
 
     [TestMethod()]
@@ -896,13 +941,99 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetProfileTest()
     {
+        VCard.SyncTestReset();
 
+        VCard vc = VCardBuilder.Create()
+                               .Profile.Set(vc => "group")
+                               .VCard;
+
+        Assert.IsNotNull(vc.Profile);
+        Assert.AreEqual("group", vc.Profile.Group);
+
+        VCardBuilder
+            .Edit(vc)
+            .Profile.Set();
+
+        Assert.IsNull(vc.Profile.Group);
+        VCardBuilder.Edit(vc).Profile.Clear();
+        Assert.IsNull(vc.Profile);
     }
 
     [TestMethod()]
-    public void AddRelationTest()
+    public void AddRelationTest1()
     {
+        VCard.SyncTestReset();
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Relations.Add(Guid.NewGuid())
+            .Relations.Add(Guid.NewGuid(), pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Relations);
+        Assert.AreEqual(2, vc.Relations.Count());
+        Assert.AreEqual("g", vc.Relations.First()?.Group);
+
+        VCardBuilder
+            .Edit(vc)
+            .Relations.Remove(p => p.Group == "g");
+
+        Assert.IsNotNull(vc.Relations);
+        Assert.AreEqual(1, vc.Relations.Count());
+
+        VCardBuilder
+            .Edit(vc)
+            .Relations.Clear();
+
+        Assert.IsNull(vc.Relations);
+    }
+
+    [TestMethod()]
+    public void AddRelationTest2()
+    {
+        VCard.SyncTestReset();
+
+        VCard vc = VCardBuilder
+            .Create()
+            .Relations.Add("Susi", Rel.Friend)
+            .Relations.Add("Horst", Rel.Neighbor, pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Relations);
+        Assert.AreEqual(2, vc.Relations.Count());
+        Assert.AreEqual("g", vc.Relations.First()?.Group);
+    }
+
+    [TestMethod()]
+    public void AddRelationTest3()
+    {
+        VCard.SyncTestReset();
+
+        VCard vc = VCardBuilder
+            .Create()
+            .Relations.Add(new Uri("http://www.Susi.de"), Rel.Friend)
+            .Relations.Add(new Uri("http://www.Horst.com"), Rel.Neighbor, pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Relations);
+        Assert.AreEqual(2, vc.Relations.Count());
+        Assert.AreEqual("g", vc.Relations.First()?.Group);
+    }
+
+    [TestMethod()]
+    public void AddRelationTest4()
+    {
+        VCard.SyncTestReset();
+
+        VCard vc = VCardBuilder
+            .Create()
+            .Relations.Add(VCardBuilder.Create().DisplayNames.Add("Susi").VCard, Rel.Friend)
+            .Relations.Add(VCardBuilder.Create().DisplayNames.Add("Horst").VCard, Rel.Neighbor, pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Relations);
+        Assert.AreEqual(2, vc.Relations.Count());
+        Assert.AreEqual("g", vc.Relations.First()?.Group);
     }
 
     [TestMethod()]
