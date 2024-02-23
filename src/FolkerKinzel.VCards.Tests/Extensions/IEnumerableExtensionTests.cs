@@ -16,11 +16,11 @@ public class IEnumerableExtensionTests
     {
         var agent = new VCard()
         {
-            DisplayNames = new TextProperty?[]
-            {
+            DisplayNames =
+            [
                 null,
                 new("The Agent", "myGroup")
-            }
+            ]
         };
 
         return
@@ -28,11 +28,11 @@ public class IEnumerableExtensionTests
             null,
             new()
             {
-                Relations = new RelationProperty?[]
-                {
+                Relations =
+                [
                     null,
                     new RelationVCardProperty(agent, Rel.Agent | Rel.CoWorker, "otherGroup" )
-                }
+                ]
             }
         ];
     }
@@ -640,5 +640,21 @@ public class IEnumerableExtensionTests
         Assert.IsNull(numerable.Remove(x => x?.Value == "Hi"));
     }
 
+    [TestMethod]
+    public void RemoveTest3()
+    {
+        var prop = new TextProperty("Hi");
+        IEnumerable<TextProperty?>? numerable = [prop];
+        Assert.IsNotNull(numerable.Remove(prop));
+    }
 
+    [TestMethod]
+    public void RemoveTest4()
+    {
+        var prop = new TextProperty("Hi");
+        IEnumerable<TextProperty?>? numerable = prop;
+        IEnumerable<TextProperty?>? newProp = numerable.Remove(prop);
+        Assert.IsNotNull(newProp);
+        Assert.AreEqual(0, newProp.Count());
+    }
 }

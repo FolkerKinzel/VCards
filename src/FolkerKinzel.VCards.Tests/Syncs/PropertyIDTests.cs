@@ -143,6 +143,14 @@ public class PropertyIDTests
     }
 
     [TestMethod]
+    public void EqualsTest2b()
+    {
+        var propID = new PropertyID(7, null);
+
+        Assert.IsTrue(propID.Equals((object)propID));
+    }
+
+    [TestMethod]
     public void EqualityOperatorTest1()
     {
         var propID1 = new PropertyID(7, null);

@@ -9,6 +9,8 @@ public class SyncOperationTests
     [TestMethod]
     public void SetPropertyIDsTest1()
     {
+        VCard.SyncTestReset();
+
         var vc = new VCard();
         var arr = new TextProperty[] { new("Donald"), new("Duck") };
         vc.DisplayNames = arr;
@@ -58,6 +60,19 @@ public class SyncOperationTests
 
         //vc.AppIDs = null;
         //Assert.IsNull(vc.Sync.CurrentAppID);
+    }
+
+    [TestMethod]
+    public void SetPropertyIDsTest3()
+    {
+        var uri = new Uri("http://folker.de/");
+        VCard.SyncTestReset();
+        VCard.RegisterApp(uri);
+        var vc = new VCard();
+
+        vc.Sync.SetPropertyIDs();
+
+        Assert.IsNull(vc.AppIDs);
     }
 
     [TestMethod()]

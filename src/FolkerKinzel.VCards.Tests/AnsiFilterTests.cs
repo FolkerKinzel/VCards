@@ -227,4 +227,18 @@ public class AnsiFilterTests
 
         Assert.AreNotEqual("Lämmerweg 12", vc.Addresses!.First()!.Value.Street[0]);
     }
+
+    [TestMethod]
+    public async Task DeserializeAsyncTest4()
+    {
+        VCard.SyncTestReset();
+
+        var filter = new AnsiFilter();
+
+        var cnt = new Counter();
+
+        VCard vc = (await filter.DeserializeAsync(t => Task.FromResult<Stream>(File.OpenRead(TestFiles.V4vcf)), default)).First();
+
+        Assert.AreEqual("Möhrke Gerda", vc.DisplayNames!.First()!.Value);
+    }
 }

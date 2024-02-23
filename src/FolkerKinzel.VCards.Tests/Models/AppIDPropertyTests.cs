@@ -56,4 +56,14 @@ public class AppIDPropertyTests
         var prop = new AppIDProperty(new AppID(4, "https://contoso.com"));
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
+
+    [TestMethod]
+    public void CloneTest()
+    {
+        var prop1 = new AppIDProperty(new AppID(4, "https://contoso.com"));
+        var prop2 = (AppIDProperty)prop1.Clone();
+        Assert.AreEqual(prop2.Value, prop1.Value);
+        Assert.AreNotSame(prop1, prop2);
+    }
+
 }

@@ -122,6 +122,7 @@ public sealed class AnsiFilter
         return Vcf.Load(fileName, enc);
     }
 
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", Justification = "<Pending>")]
     internal IList<VCard> Deserialize(Func<Stream?> factory)
     {
         UsedEncoding = null;
@@ -168,6 +169,7 @@ public sealed class AnsiFilter
         }
     }
 
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", Justification = "<Pending>")]
     internal async Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
                                                        CancellationToken token)
     {

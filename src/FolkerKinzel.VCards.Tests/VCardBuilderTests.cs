@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.BuilderParts;
+﻿using System.Xml.Linq;
+using FolkerKinzel.VCards.BuilderParts;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
@@ -253,15 +254,24 @@ public class VCardBuilderTests
     public void AddBirthPlaceViewTest()
     {
         VCard.SyncTestReset();
-        VCard.RegisterApp(null);
 
         VCard vc = VCardBuilder
             .Create()
             .BirthPlaceViews.Add("1")
+            .BirthPlaceViews.Add("one", parameters: p => p.Language = "en", group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.BirthPlaceViews);
+        Assert.AreEqual(2, vc.BirthPlaceViews.Count());
+
+        VCardBuilder.Edit(vc).BirthPlaceViews.Remove(p => p.Group == "g");
+
+        Assert.IsNotNull(vc.BirthPlaceViews);
         Assert.AreEqual(1, vc.BirthPlaceViews.Count());
+
+        VCardBuilder.Edit(vc).BirthPlaceViews.Clear();
+
+        Assert.IsNull(vc.BirthPlaceViews);
     }
 
     [TestMethod()]
@@ -310,9 +320,48 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void AddCategoryTest()
+    public void AddCategoryTest1()
     {
+        VCard.SyncTestReset();
 
+        VCard vc = VCardBuilder
+            .Create()
+            .Categories.Add("qwertz")
+            .Categories.Add("1234", pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Categories);
+        Assert.AreEqual(2, vc.Categories.Count());
+        Assert.AreEqual("g", vc.Categories.First()?.Group);
+
+        VCardBuilder
+            .Edit(vc)
+            .Categories.Remove(p => p.Parameters.Preference == 1);
+
+        Assert.IsNotNull(vc.Categories);
+        Assert.AreEqual(1, vc.Categories.Count());
+
+        VCardBuilder
+            .Edit(vc)
+            .Categories.Clear();
+
+        Assert.IsNull(vc.Categories);
+    }
+
+    [TestMethod]
+    public void AddCategoryTest2()
+    {
+        VCard.SyncTestReset();
+
+        VCard vc = VCardBuilder
+            .Create()
+            .Categories.Add(["qwertz", "bla"])
+            .Categories.Add(["1234"], pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Categories);
+        Assert.AreEqual(2, vc.Categories.Count());
+        Assert.AreEqual("g", vc.Categories.First()?.Group);
     }
 
     [TestMethod()]
@@ -377,7 +426,7 @@ public class VCardBuilderTests
         Assert.IsNull(vc.DirectoryName);
     }
 
-        [TestMethod()]
+    [TestMethod()]
     public void AddDisplayNameTest()
     {
         VCard.SyncTestReset();
@@ -618,6 +667,90 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
+    public void SetIDTest1()
+    {
+        VCard.SyncTestReset();
+
+        VCard vc = VCardBuilder
+            .Create()
+            .ID.Set(Guid.NewGuid())
+            .VCard;
+
+        Assert.IsNotNull(vc.ID);
+
+        VCardBuilder
+            .Edit(vc)
+            .ID.Clear();
+
+        Assert.IsNull(vc.ID);
+    }
+
+    [TestMethod()]
+    public void SetIDTest2()
+    {
+        VCard.SyncTestReset();
+
+        const string key = "X-Test";
+        const string val = "bla";
+
+        VCard vc = VCardBuilder
+            .Create()
+            .ID.Set(Guid.NewGuid(),
+                    parameters: p => p.NonStandard = [new KeyValuePair<string, string>(key, val)],
+                    group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.ID);
+        Assert.AreEqual("g", vc.ID.Group);
+
+        KeyValuePair<string, string> para = vc.ID.Parameters.NonStandard!.First();
+        Assert.AreEqual(key, para.Key);
+        Assert.AreEqual(val, para.Value);
+    }
+
+    [TestMethod()]
+    public void SetIDTest3()
+    {
+        VCard.SyncTestReset();
+
+        VCard vc = VCardBuilder
+            .Create()
+            .ID.Set()
+            .VCard;
+
+        Assert.IsNotNull(vc.ID);
+
+        VCardBuilder
+            .Edit(vc)
+            .ID.Clear();
+
+        Assert.IsNull(vc.ID);
+    }
+
+    [TestMethod()]
+    public void SetIDTest4()
+    {
+        VCard.SyncTestReset();
+
+        const string key = "X-Test";
+        const string val = "bla";
+
+        VCard vc = VCardBuilder
+            .Create()
+            .ID.Set(
+                    parameters: p => p.NonStandard = [new KeyValuePair<string, string>(key, val)],
+                    group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.ID);
+        Assert.AreEqual("g", vc.ID.Group);
+
+        KeyValuePair<string, string> para = vc.ID.Parameters.NonStandard!.First();
+        Assert.AreEqual(key, para.Key);
+        Assert.AreEqual(val, para.Value);
+    }
+
+    [TestMethod()]
     public void SetKindTest1()
     {
         VCard.SyncTestReset();
@@ -804,7 +937,8 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddNickNameTest()
     {
-
+        VCard.SyncTestReset();
+        Assert.IsInstanceOfType(VCardBuilder.Create().NickNames, typeof(StringCollectionBuilder));
     }
 
     [TestMethod()]
@@ -1084,9 +1218,51 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void SetTimeStampTest()
+    public void SetTimeStampTest1()
     {
+        VCard.SyncTestReset();
 
+        VCard vc = VCardBuilder
+            .Create()
+            .TimeStamp.Set(DateTimeOffset.UtcNow)
+            .VCard;
+
+        Assert.IsNotNull(vc.TimeStamp);
+
+        VCardBuilder
+            .Edit(vc)
+            .TimeStamp.Clear();
+
+        Assert.IsNull(vc.TimeStamp);
+    }
+
+    [TestMethod()]
+    public void SetTimeStampTest2()
+    {
+        VCard.SyncTestReset();
+
+        const string key = "X-Test";
+        const string val = "bla";
+
+        VCard vc = VCardBuilder
+            .Create()
+            .TimeStamp.Set(DateTimeOffset.UtcNow,
+                           parameters: p => p.NonStandard = [new KeyValuePair<string, string>(key, val)],
+                           group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.TimeStamp);
+        Assert.AreEqual("g", vc.TimeStamp.Group);
+
+        KeyValuePair<string, string> para = vc.TimeStamp.Parameters.NonStandard!.First();
+        Assert.AreEqual(key, para.Key);
+        Assert.AreEqual(val, para.Value);
+
+        VCardBuilder
+            .Edit(vc)
+            .TimeStamp.Clear();
+
+        Assert.IsNull(vc.TimeStamp);
     }
 
     [TestMethod()]
@@ -1149,12 +1325,6 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void SetUniqueIdentifierTest()
-    {
-
-    }
-
-    [TestMethod()]
     public void AddUrlTest()
     {
         VCard.SyncTestReset();
@@ -1172,6 +1342,31 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddXmlTest()
     {
+        VCard.SyncTestReset();
 
+        XNamespace ns = "http://www.contoso.com";
+
+        VCard vc = VCardBuilder
+            .Create()
+            .Xmls.Add(new XElement(ns + "Key1", "First"))
+            .Xmls.Add(new XElement(ns + "Key2", "Second"), pref: true, group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.Xmls);
+        Assert.AreEqual(2, vc.Xmls.Count());
+        Assert.AreEqual("Second", XElement.Parse(vc.Xmls.First()!.Value!).Value);
+
+        VCardBuilder
+            .Edit(vc)
+            .Xmls.Remove(p => p.Group == "g");
+
+        Assert.IsNotNull(vc.Xmls);
+        Assert.AreEqual(1, vc.Xmls.Count());
+
+        VCardBuilder
+            .Edit(vc)
+            .Xmls.Clear();
+
+        Assert.IsNull(vc.Xmls);
     }
 }
