@@ -76,6 +76,11 @@ public readonly struct DataBuilder
         return _builder;
     }
 
+    /// <summary>
+    /// Sets the specified property of the <see cref="VCardBuilder.VCard"/> to <c>null</c>.
+    /// </summary>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(_prop, null);

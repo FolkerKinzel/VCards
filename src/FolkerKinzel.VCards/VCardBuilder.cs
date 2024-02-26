@@ -76,7 +76,7 @@ public sealed class VCardBuilder
     ///////////////////////////////////////////////////////////////////
 
     /// <summary>
-    /// Gets the <see cref="VCard"/> object the <see cref="VCardBuilder"/> works
+    /// Gets the <see cref="FolkerKinzel.VCards.VCard"/> instance the <see cref="VCardBuilder"/> works
     /// with.
     /// </summary>
     public VCard VCard { get; }

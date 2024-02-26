@@ -31,6 +31,11 @@ public readonly struct XmlBuilder
         return _builder;
     }
 
+    /// <summary>
+    /// Sets the <see cref="VCard.Xmls"/> property to <c>null</c>.
+    /// </summary>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="XmlBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.Xmls, null);

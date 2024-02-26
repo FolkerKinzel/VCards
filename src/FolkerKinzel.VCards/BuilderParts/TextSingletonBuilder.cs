@@ -10,16 +10,15 @@ namespace FolkerKinzel.VCards.BuilderParts;
 public readonly struct TextSingletonBuilder
 {
     private readonly VCardBuilder? _builder;
+    private readonly Prop _prop;
 
     [MemberNotNull(nameof(_builder))] 
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
-    private Prop Prop { get; }
-
     internal TextSingletonBuilder(VCardBuilder builder, Prop prop)
     {
         _builder = builder;
-        Prop = prop;
+        _prop = prop;
     }
 
     public VCardBuilder Set(string? value,
@@ -30,13 +29,18 @@ public readonly struct TextSingletonBuilder
         var property = new TextProperty(value, group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 
-        vc.Set(Prop, property);
+        vc.Set(_prop, property);
         return _builder;
     }
 
+    /// <summary>
+    /// Sets the specified property of the <see cref="VCardBuilder.VCard"/> to <c>null</c>.
+    /// </summary>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TextSingletonBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Clear()
     {
-        Builder.VCard.Set(Prop, null);
+        Builder.VCard.Set(_prop, null);
         return _builder;
     }
 
