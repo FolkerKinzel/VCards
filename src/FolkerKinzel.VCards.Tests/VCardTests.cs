@@ -58,7 +58,7 @@ public class VCardTests
 
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new("Folker") }
+            DisplayNames = new TextProperty("Folker")
         };
 
         string path = Path.Combine(TestContext.TestRunResultsDirectory!, $"SaveTest_{version}.vcf");
@@ -86,7 +86,7 @@ public class VCardTests
 
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new("Folker") }
+            DisplayNames = new TextProperty("Folker") 
         };
 
         vcard.SaveVcf(null!);
@@ -102,7 +102,7 @@ public class VCardTests
 
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new("Folker") }
+            DisplayNames = new TextProperty("Folker")
         };
 
         vcard.SaveVcf("   ");
@@ -121,7 +121,7 @@ public class VCardTests
 
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new("Folker") }
+            DisplayNames = new TextProperty("Folker")
         };
 
         vcard.SerializeVcf(null!, version);
@@ -136,7 +136,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new("Folker") }
+            DisplayNames = new TextProperty("Folker")
         };
 
         using var ms = new MemoryStream();
@@ -163,7 +163,7 @@ public class VCardTests
 
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new("Folker") }
+            DisplayNames = new TextProperty("Folker")
         };
 
         using var ms = new MemoryStream();
@@ -183,7 +183,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new("Folker") }
+            DisplayNames = new TextProperty("Folker")
         };
 
         using var ms = new MemoryStream();
@@ -201,7 +201,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new("Folker") }
+            DisplayNames = new TextProperty("Folker")
         };
 
         using var ms = new MemoryStream();
@@ -234,7 +234,7 @@ public class VCardTests
     {
         var vcard = new VCard
         {
-            DisplayNames = new TextProperty[] { new("Folker") }
+            DisplayNames = new TextProperty("Folker")
         };
 
         string s = vcard.ToVcfString(version);
@@ -266,15 +266,15 @@ public class VCardTests
 
         var pidMap1 = new AppID(5, "http://folkerkinzel.de/file1.htm");
         var pidMap2 = new AppID(8, "http://folkerkinzel.de/file2.htm");
-        textProp.Parameters.PropertyIDs = new PropertyID[] { new(1, pidMap1), new(7, null), new(1, pidMap2) };
+        textProp.Parameters.PropertyIDs = [new(1, pidMap1), new(7, null), new(1, pidMap2)];
 
         var vc = new VCard()
         {
-            DisplayNames = new TextProperty?[]
-            {
+            DisplayNames =
+            [
                     null,
                     textProp
-            }
+            ]
         };
 
         string s = vc.ToString();
@@ -344,7 +344,7 @@ public class VCardTests
         var adr = new AddressProperty("  ", null, null, postalCode: "", autoLabel: false);
         adr.Parameters.Label = "  ";
 
-        vc.Addresses = new AddressProperty?[] { null, adr };
+        vc.Addresses = [null, adr];
         Assert.IsTrue(vc.IsEmpty());
 
         vc.BirthDayViews = DateAndOrTimeProperty.FromText(null);
@@ -387,16 +387,15 @@ public class VCardTests
 
         vc.DisplayNames = new TextProperty("Donald", " 4 1 ");
         vc.TimeStamp = new TimeStampProperty();
-        vc.Addresses = new AddressProperty?[] {
-                                              null,
-                                              new("1", null, null, null, group: " g r 1 "),
-                                              new("2", null, null, null, group: "41")
-                                              };
-        vc.GeoCoordinates = new GeoProperty?[]{
-                                               new(new GeoCoordinate(1, 1), group: "GR1"),
-                                               null,
-                                               new(new GeoCoordinate(2, 2))
-                                             };
+        vc.Addresses = [ null,
+                         new("1", null, null, null, group: " g r 1 "),
+                         new("2", null, null, null, group: "41")
+                       ];
+        vc.GeoCoordinates = [
+                              new(new GeoCoordinate(1, 1), group: "GR1"),
+                              null,
+                              new(new GeoCoordinate(2, 2))
+                            ];
         Assert.AreEqual(2, vc.GroupIDs.Count());
         Assert.AreEqual("42", vc.NewGroup());
     }
