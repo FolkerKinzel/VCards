@@ -3,21 +3,15 @@
 [TestClass]
 public class VcfTests
 {
-    
+
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void DeserializeTest1()
-    {
-        _ = Vcf.Deserialize(() => new MemoryStream(), null!);
-    }
+    public void DeserializeTest1() => _ = Vcf.Deserialize(() => new MemoryStream(), null!);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void DeserializeTest2()
-    {
-        _ = Vcf.Deserialize(null!, new AnsiFilter());
-    }
+    public void DeserializeTest2() => _ = Vcf.Deserialize(null!, new AnsiFilter());
 
     [TestMethod]
     public void DeserializeTest3()
@@ -28,17 +22,11 @@ public class VcfTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public async Task DeserializeAsyncTest1()
-    {
-        _ = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream()), null!);
-    }
+    public async Task DeserializeAsyncTest1() => _ = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream()), null!);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public async Task DeserializeAsyncTest2()
-    {
-        _ = await Vcf.DeserializeAsync(null!, new AnsiFilter());
-    }
+    public async Task DeserializeAsyncTest2() => _ = await Vcf.DeserializeAsync(null!, new AnsiFilter());
 
     [TestMethod]
     public async Task DeserializeAsyncTest3()
@@ -51,10 +39,7 @@ public class VcfTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void DeserializeManyTest1()
-    {
-        _ = Vcf.DeserializeMany(null!).Count();
-    }
+    public void DeserializeManyTest1() => _ = Vcf.DeserializeMany(null!).Count();
 
     [TestMethod]
     public void DeserializeManyTest2()
@@ -117,10 +102,7 @@ public class VcfTests
 #if !NET48
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public async Task DeserializeManyAsyncTest1()
-    {
-        _ = await Vcf.DeserializeManyAsync(null!).CountAsync();
-    }
+    public async Task DeserializeManyAsyncTest1() => _ = await Vcf.DeserializeManyAsync(null!).CountAsync();
 
     [TestMethod]
     public async Task DeserializeManyAsyncTest2()
@@ -201,24 +183,15 @@ public class VcfTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void LoadTest2()
-    {
-        _ = Vcf.Load(null!, new AnsiFilter());
-    }
+    public void LoadTest2() => _ = Vcf.Load(null!, new AnsiFilter());
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void LoadTest3()
-    {
-        _ = Vcf.Load(TestFiles.AnsiIssueVcf, (AnsiFilter)null!);
-    }
+    public void LoadTest3() => _ = Vcf.Load(TestFiles.AnsiIssueVcf, (AnsiFilter)null!);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void LoadManyTest1()
-    {
-        _ = Vcf.LoadMany(null!).Count();
-    }
+    public void LoadManyTest1() => _ = Vcf.LoadMany(null!).Count();
 
     [TestMethod]
     public void LoadManyTest2()
@@ -229,7 +202,6 @@ public class VcfTests
         VCard vc = Vcf.LoadMany([null, TestFiles.AnsiIssueVcf], new AnsiFilter()).First();
 
         Assert.AreEqual("Lämmerweg 12", vc.Addresses!.First()!.Value.Street[0]);
-
     }
 
     [TestMethod]

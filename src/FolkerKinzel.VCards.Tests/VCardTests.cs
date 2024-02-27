@@ -371,7 +371,7 @@ public class VCardTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void DereferenceTest1() => _ = FolkerKinzel.VCards.VCard.Dereference(null!).Count();
+    public void DereferenceTest1() => _ = FolkerKinzel.VCards.VCard.Dereference(null!).Count;
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

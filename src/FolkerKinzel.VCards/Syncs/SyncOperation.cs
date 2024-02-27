@@ -23,7 +23,7 @@ public sealed class SyncOperation
     /// <summary>
     /// ctor
     /// </summary>
-    /// <param name="vCard">The <see cref="VCard"/> instance the <see cref="Sync"/>
+    /// <param name="vCard">The <see cref="VCard"/> instance the <see cref="SyncOperation"/>
     /// object will work with.</param>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class.</exception>
@@ -159,7 +159,7 @@ public sealed class SyncOperation
 
     private void SetPropertyID(ParameterSection parameters, IEnumerable<VCardProperty?> props)
     {
-        var propIDs = parameters.PropertyIDs ?? Enumerable.Empty<PropertyID>();
+        var propIDs = parameters.PropertyIDs ?? [];
         int? appLocalID = CurrentAppID?.LocalID;
 
         if (propIDs.Any(x => x.App == appLocalID))
@@ -169,7 +169,7 @@ public sealed class SyncOperation
 
         var id = props.WhereNotNull()
             .Select(static x => x.Parameters.PropertyIDs)
-            .SelectMany(static x => x ?? Enumerable.Empty<PropertyID>())
+            .SelectMany(static x => x ?? [])
             .Where(x => x.App == appLocalID)
             .Select(static x => x.ID)
             .Append(0)

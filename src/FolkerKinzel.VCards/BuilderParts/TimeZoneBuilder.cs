@@ -7,7 +7,7 @@ using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
-[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals", Justification = "<Pending>")]
+//[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals", Justification = "<Pending>")]
 public readonly struct TimeZoneBuilder
 {
     private readonly VCardBuilder? _builder;
@@ -54,16 +54,16 @@ public readonly struct TimeZoneBuilder
         return _builder;
     }
 
-    /// <inheritdoc/>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override bool Equals([NotNullWhen(true)] object? obj) => base.Equals(obj);
+    ///// <inheritdoc/>
+    //[EditorBrowsable(EditorBrowsableState.Never)]
+    //public override bool Equals([NotNullWhen(true)] object? obj) => base.Equals(obj);
 
-    /// <inheritdoc/>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override int GetHashCode() => base.GetHashCode();
+    ///// <inheritdoc/>
+    //[EditorBrowsable(EditorBrowsableState.Never)]
+    //public override int GetHashCode() => base.GetHashCode();
 
-    /// <inheritdoc/>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override string ToString() => base.ToString()!;
+    ///// <inheritdoc/>
+    //[EditorBrowsable(EditorBrowsableState.Never)]
+    //public override string ToString() => base.ToString()!;
 
 }

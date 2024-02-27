@@ -20,7 +20,7 @@ namespace FolkerKinzel.VCards;
 /// been mandatory since vCard&#160;4.0. 
 /// </para>
 /// <para>
-/// This class is a wrapper around the <see cref="VCard" />.<see cref="VCard.LoadVcf(string, Encoding?)" /> 
+/// This class is a wrapper around the <see cref="Vcf.Load(string, Encoding?)" /> 
 /// method that initially loads the file as UTF-8. If a decoding error occurs, the method 
 /// examines the <see cref="VCard"/> objects for any <see cref="ParameterSection.CharSet"/> 
 /// (<c>CHARSET</c>) parameters, which provide an indication of the <see cref="Encoding"/> 

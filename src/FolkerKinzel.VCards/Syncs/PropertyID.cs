@@ -25,17 +25,10 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// (A positive <see cref="int"/>, not zero.)</param>
     /// <param name="client">A <see cref="Syncs.AppID" /> object to enable global identification
     /// of the vCard property, or <c>null</c> to have only local identification.
-    /// (The value normally is <see cref="VCard.AppID"/>.)
+    /// (The value normally is <see cref="Syncs.SyncOperation.CurrentAppID"/>.)
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException"> <paramref name="id" /> is less
     /// than 1.</exception>
-    /// <remarks>
-    /// <note type="caution">
-    /// Using this constructor in own code endangers the referential integrity. Prefer using
-    /// <see cref="VCard.SetPropertyIDs"/> or
-    /// <see cref="ParameterSection.SetPropertyID(IEnumerable{VCardProperty?}, VCard)"/> instead.
-    /// </note>
-    /// </remarks>
     internal PropertyID(int id, AppID? client)
     {
         Debug.Assert(id.ValidateID());
@@ -74,8 +67,9 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     /// if the <see cref="PropertyID" /> object is not connected with any <see
     /// cref="Syncs.AppID" />.
     /// </summary>
-    /// <seealso cref="VCard.AppID"/>
-    /// <seealso cref="VCard.RegisterAppInInstance(Uri)"/>
+    /// <seealso cref="AppID"/>
+    /// <seealso cref="VCard.RegisterApp(Uri?)"/>
+    /// <seealso cref="VCard.Sync"/>
     /// <seealso cref="VCard.AppIDs"/>
     public int? App { get; }
 

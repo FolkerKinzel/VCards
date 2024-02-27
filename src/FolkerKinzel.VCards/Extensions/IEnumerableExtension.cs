@@ -404,7 +404,7 @@ public static class IEnumerableExtension
     public static IEnumerable<TSource> OrderByPref<TSource>(this IEnumerable<TSource?>? values,
                                                             bool discardEmptyItems = true)
         where TSource : VCardProperty
-        => values is null ? Enumerable.Empty<TSource>()
+        => values is null ? []
                           : values.OrderByPrefIntl(discardEmptyItems);
 
     /// <summary>
@@ -436,7 +436,7 @@ public static class IEnumerableExtension
     public static IEnumerable<TSource> OrderByIndex<TSource>(this IEnumerable<TSource?>? values,
                                                              bool discardEmptyItems = true)
         where TSource : VCardProperty
-        => values is null ? Enumerable.Empty<TSource>()
+        => values is null ? []
                           : values.OrderByIndexIntl(discardEmptyItems);
 
     /// <summary>
@@ -514,7 +514,7 @@ public static class IEnumerableExtension
         IEnumerable<string> numerable = values?.Select(x => x?.Parameters.AltID)
                                                .WhereNotNull()
                                                .Distinct()
-                                         ?? Enumerable.Empty<string>();
+                                         ?? [];
         int i = -1;
 
         foreach (string altID in numerable)

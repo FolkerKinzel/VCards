@@ -51,7 +51,7 @@ public sealed class AppID
     /// <param name="s">The <see cref="string"/> to parse.</param>
     /// <param name="client">The parsed <see cref="AppID"/> if the method returns <c>true</c>,
     /// otherwise <c>null</c>.</param>
-    /// <returns><c>true</c> if <see cref="s"/> could be parsed, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if <paramref name="s"/> could be parsed, otherwise <c>false</c>.</returns>
     internal static bool TryParse(string s, [NotNullWhen(true)] out AppID? client)
     {
         Debug.Assert(s is not null);
