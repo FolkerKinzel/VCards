@@ -24,10 +24,10 @@ public readonly struct XmlBuilder
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.Xmls,
-                           VCardBuilder.Add(new XmlProperty(value, group?.Invoke(_builder.VCard)),
-                                            _builder.VCard.Get<IEnumerable<XmlProperty?>?>(Prop.Xmls),
-                                            parameters,
-                                            pref));
+                          VCardBuilder.Add(new XmlProperty(value, group?.Invoke(_builder.VCard)),
+                                           _builder.VCard.Get<IEnumerable<XmlProperty?>?>(Prop.Xmls),
+                                           parameters,
+                                           pref));
         return _builder;
     }
 
