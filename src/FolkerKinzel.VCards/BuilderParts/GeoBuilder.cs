@@ -51,6 +51,12 @@ public readonly struct GeoBuilder
         return _builder;
     }
 
+    /// <summary>
+    /// Removes <see cref="GeoProperty"/> objects that match a specified predicate from the <see cref="VCard.GeoCoordinates"/> property.
+    /// </summary>
+    /// <param name="predicate">A function that returns <c>true</c> for <see cref="GeoProperty"/> objects that shall be removed.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GeoBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<GeoProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.GeoCoordinates, _builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates).Remove(predicate));

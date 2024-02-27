@@ -58,6 +58,12 @@ public readonly struct StringCollectionBuilder
         return _builder;
     }
 
+    /// <summary>
+    /// Removes <see cref="StringCollectionProperty"/> objects that match a specified predicate from the specified property of the <see cref="VCardBuilder.VCard"/>.
+    /// </summary>
+    /// <param name="predicate">A function that returns <c>true</c> for <see cref="StringCollectionProperty"/> objects that shall be removed.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="StringCollectionBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<StringCollectionProperty, bool> predicate)
     {
         Builder.VCard.Set(_prop, _builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(_prop).Remove(predicate));

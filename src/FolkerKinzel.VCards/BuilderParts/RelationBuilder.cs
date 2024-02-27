@@ -86,6 +86,12 @@ public readonly struct RelationBuilder
         return _builder;
     }
 
+    /// <summary>
+    /// Removes <see cref="RelationProperty"/> objects that match a specified predicate from the specified property of the <see cref="VCardBuilder.VCard"/>.
+    /// </summary>
+    /// <param name="predicate">A function that returns <c>true</c> for <see cref="RelationProperty"/> objects that shall be removed.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RelationBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<RelationProperty, bool> predicate)
     {
         Builder.VCard.Set(_prop, _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop).Remove(predicate));

@@ -87,6 +87,12 @@ public readonly struct DateAndOrTimeBuilder
         return _builder;
     }
 
+    /// <summary>
+    /// Removes <see cref="DateAndOrTimeProperty"/> objects that match a specified predicate from the specified property of the <see cref="VCardBuilder.VCard"/>.
+    /// </summary>
+    /// <param name="predicate">A function that returns <c>true</c> for <see cref="DateAndOrTimeProperty"/> objects that shall be removed.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DateAndOrTimeBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<DateAndOrTimeProperty, bool> predicate)
     {
         Builder.VCard.Set(_prop, Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop).Remove(predicate));

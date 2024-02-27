@@ -33,6 +33,11 @@ public readonly struct TextViewBuilder
         return _builder;
     }
 
+    /// <summary>
+    /// Sets the specified property of the <see cref="VCardBuilder.VCard"/> to <c>null</c>.
+    /// </summary>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TextViewBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(_prop, null);
@@ -40,9 +45,10 @@ public readonly struct TextViewBuilder
     }
 
     /// <summary>
-    /// Sets the specified property of the <see cref="VCardBuilder.VCard"/> to <c>null</c>.
+    /// Removes <see cref="TextProperty"/> objects that match a specified predicate from the specified property of the <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TextViewBuilder"/> to be able to chain calls.</returns>
+    /// <param name="predicate">A function that returns <c>true</c> for <see cref="TextProperty"/> objects that shall be removed.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TextBuilder"/> to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<TextProperty, bool> predicate)
     {

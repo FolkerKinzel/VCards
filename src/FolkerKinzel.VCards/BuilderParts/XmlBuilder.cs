@@ -42,6 +42,12 @@ public readonly struct XmlBuilder
         return _builder;
     }
 
+    /// <summary>
+    /// Removes <see cref="XmlProperty"/> objects that match a specified predicate from the <see cref="VCard.Xmls"/> property.
+    /// </summary>
+    /// <param name="predicate">A function that returns <c>true</c> for <see cref="XmlProperty"/> objects that shall be removed.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="XmlBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<XmlProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.Xmls,

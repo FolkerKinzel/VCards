@@ -41,6 +41,12 @@ public readonly struct TimeZoneBuilder
         return _builder;
     }
 
+    /// <summary>
+    /// Removes <see cref="TimeZoneProperty"/> objects that match a specified predicate from the <see cref="VCard.GeoCoordinates"/> property.
+    /// </summary>
+    /// <param name="predicate">A function that returns <c>true</c> for <see cref="TimeZoneProperty"/> objects that shall be removed.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeZoneBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<TimeZoneProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.TimeZones,

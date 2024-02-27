@@ -82,6 +82,12 @@ public readonly struct NameBuilder
         return _builder;
     }
 
+    /// <summary>
+    /// Removes <see cref="NameProperty"/> objects that match a specified predicate from the <see cref="VCard.NameViews"/> property.
+    /// </summary>
+    /// <param name="predicate">A function that returns <c>true</c> for <see cref="NameProperty"/> objects that shall be removed.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<NameProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.NameViews, _builder.VCard.Get<IEnumerable<NameProperty?>?>(Prop.NameViews).Remove(predicate));
