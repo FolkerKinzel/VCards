@@ -35,7 +35,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    ///  <exception cref="ArgumentOutOfRangeException"> <paramref name="latitude" />
+    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="latitude" />
     /// or <paramref name="longitude" /> does not have a valid value.</exception>
     public GeoProperty(double latitude, double longitude, string? group = null)
         : this(new GeoCoordinate(latitude, longitude), group) { }

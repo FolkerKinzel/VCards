@@ -20,8 +20,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
     /// <summary> Initializes a new <see cref="AddressProperty" /> object.</summary>
     /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g. city).</param>
-    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="locality">The locality (e.g., city).</param>
+    /// <param name="region">The region (e.g., state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
     /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
@@ -58,7 +58,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
     /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
-    /// <param name="extendedAddress">The extended address (e.g. apartment or suite
+    /// <param name="extendedAddress">The extended address (e.g., apartment or suite
     /// number). (Don't use this parameter!)</param>
     /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
     /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
@@ -93,8 +93,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
     /// <summary>Initializes a new <see cref="AddressProperty" /> object. </summary>
     /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g. city).</param>
-    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="locality">The locality (e.g., city).</param>
+    /// <param name="region">The region (e.g., state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
     /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
@@ -127,12 +127,12 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
     /// <summary> Initializes a new <see cref="AddressProperty" /> object. </summary>
     /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g. city).</param>
-    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="locality">The locality (e.g., city).</param>
+    /// <param name="region">The region (e.g., state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
     /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
-    /// <param name="extendedAddress">The extended address (e.g. apartment or suite
+    /// <param name="extendedAddress">The extended address (e.g., apartment or suite
     /// number). (Don't use this parameter!)</param>
     /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
     /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
