@@ -7,6 +7,9 @@ using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards;
 
+/// <summary>
+/// Static class that provides methods to serialize and deserialize VCF files.
+/// </summary>
 public static partial class Vcf
 {
     /// <summary>Loads a VCF file.</summary>
