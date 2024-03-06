@@ -15,7 +15,7 @@ public sealed partial class VCard
 {
     /// <summary>Initializes a new <see cref="VCard" /> object.</summary>
     /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/>
-    /// property with a newly created <see cref="UuidProperty"/>, otherwise
+    /// property with a newly created <see cref="IDProperty"/>, otherwise
     /// <c>false</c>.</param>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
@@ -23,7 +23,7 @@ public sealed partial class VCard
     {
         if (setID)
         {
-            ID = new UuidProperty();
+            ID = new IDProperty();
         }
 
         // Should be the last in ctor:
@@ -168,7 +168,7 @@ public sealed partial class VCard
                 case PropKeys.UID:
                     try
                     {
-                        ID = new UuidProperty(vcfRow);
+                        ID = new IDProperty(vcfRow);
                     }
                     catch { }
                     break;

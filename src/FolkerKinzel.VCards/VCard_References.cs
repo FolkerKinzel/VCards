@@ -129,7 +129,7 @@ public sealed partial class VCard
 
                 if (vc.ID is null || vc.ID.IsEmpty)
                 {
-                    vc.ID = new UuidProperty();
+                    vc.ID = new IDProperty();
                 }
 
                 if (!vCardList.Any(c => vc.ID == c.ID))

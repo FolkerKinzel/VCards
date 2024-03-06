@@ -262,9 +262,9 @@ public sealed partial class VCard
     /// </summary>
     /// <value>Although the standard allows any strings for identification, the library
     /// only supports UUIDs.</value>
-    public UuidProperty? ID
+    public IDProperty? ID
     {
-        get => Get<UuidProperty?>(Prop.ID);
+        get => Get<IDProperty?>(Prop.ID);
         set => Set(Prop.ID, value);
     }
 

@@ -225,7 +225,7 @@ internal abstract class VcfSerializer : IDisposable
                     AppendLastRevision((TimeStampProperty)kvp.Value);
                     break;
                 case Prop.ID:
-                    AppendUniqueIdentifier((UuidProperty)kvp.Value);
+                    AppendUniqueIdentifier((IDProperty)kvp.Value);
                     break;
                 case Prop.Categories:
                     AppendCategories((IEnumerable<StringCollectionProperty?>)kvp.Value);
@@ -777,7 +777,7 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendTitles(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendUniqueIdentifier(UuidProperty value) { }
+    protected virtual void AppendUniqueIdentifier(IDProperty value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendURLs(IEnumerable<TextProperty?> value) { }

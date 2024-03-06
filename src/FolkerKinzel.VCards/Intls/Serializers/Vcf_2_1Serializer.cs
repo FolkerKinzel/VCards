@@ -232,7 +232,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendTitles(IEnumerable<TextProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.TITLE, value);
 
-    protected override void AppendUniqueIdentifier(UuidProperty value)
+    protected override void AppendUniqueIdentifier(IDProperty value)
         => BuildProperty(VCard.PropKeys.UID, value);
 
     protected override void AppendURLs(IEnumerable<TextProperty?> value)

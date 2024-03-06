@@ -19,7 +19,7 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
         => Value = prop.Value;
 
     /// <summary>  Initializes a new <see cref="TimeZoneProperty" /> object. </summary>
-    /// <param name="value">A <see cref="TimeZoneInfo" /> object or <c>null</c>.</param>
+    /// <param name="value">A <see cref="TimeZoneID" /> object or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>

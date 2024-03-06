@@ -1266,6 +1266,53 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
+    public void SetTimeStampTest3()
+    {
+        VCard.SyncTestReset();
+
+        VCard vc = VCardBuilder
+            .Create()
+            .TimeStamp.Set()
+            .VCard;
+
+        Assert.IsNotNull(vc.TimeStamp);
+
+        VCardBuilder
+            .Edit(vc)
+            .TimeStamp.Clear();
+
+        Assert.IsNull(vc.TimeStamp);
+    }
+
+    [TestMethod()]
+    public void SetTimeStampTest4()
+    {
+        VCard.SyncTestReset();
+
+        const string key = "X-Test";
+        const string val = "bla";
+
+        VCard vc = VCardBuilder
+            .Create()
+            .TimeStamp.Set(parameters: p => p.NonStandard = [new KeyValuePair<string, string>(key, val)],
+                           group: vc => "g")
+            .VCard;
+
+        Assert.IsNotNull(vc.TimeStamp);
+        Assert.AreEqual("g", vc.TimeStamp.Group);
+
+        KeyValuePair<string, string> para = vc.TimeStamp.Parameters.NonStandard!.First();
+        Assert.AreEqual(key, para.Key);
+        Assert.AreEqual(val, para.Value);
+
+        VCardBuilder
+            .Edit(vc)
+            .TimeStamp.Clear();
+
+        Assert.IsNull(vc.TimeStamp);
+    }
+
+    [TestMethod()]
     public void AddTimeZoneTest1()
     {
         VCard.SyncTestReset();
