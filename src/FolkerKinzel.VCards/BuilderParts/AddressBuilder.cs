@@ -10,7 +10,7 @@ using FolkerKinzel.VCards.Resources;
 namespace FolkerKinzel.VCards.BuilderParts;
 
 
-//[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals", Justification = "<Pending>")]
+[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals", Justification = "<Pending>")]
 public readonly struct AddressBuilder
 {
     private readonly VCardBuilder? _builder;
