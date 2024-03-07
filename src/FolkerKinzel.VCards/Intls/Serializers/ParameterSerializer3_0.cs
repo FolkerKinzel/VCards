@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer3_0(VcfOptions options) : ParameterSerializer(options)
+internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer(options)
 {
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer3_0>> _actionList = new(2);
@@ -447,7 +447,7 @@ internal sealed class ParameterSerializer3_0(VcfOptions options) : ParameterSeri
             _stringCollectionList.Add(ParameterSection.TypeValue.PREF);
         }
 
-        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters)
+        if (Options.HasFlag(Opts.WriteNonStandardParameters)
             && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)

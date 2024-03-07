@@ -41,7 +41,7 @@ public static class VCardExample
         Vcf.Save(vCard,
                  v4FilePath,
                  VCdVersion.V4_0,
-                 options: VcfOptions.Default.Set(VcfOptions.SetPropertyIDs));
+                 options: Opts.Default.Set(Opts.SetPropertyIDs));
 
         // Load vCard:
         vCard = Vcf.Load(v3FilePath)[0];
@@ -91,7 +91,7 @@ public static class VCardExample
                                 parameters: static p =>
                                 {
                                     p.PropertyClass = PCl.Work;
-                                    p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel;
+                                    p.AddressType = Addr.Dom | Addr.Intl | Addr.Postal | Addr.Parcel;
                                     p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
                                     p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
                                 },

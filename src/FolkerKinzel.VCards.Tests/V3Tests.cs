@@ -170,7 +170,7 @@ public class V3Tests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0, options: VcfOptions.All);
+        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0, options: Opts.All);
 
         Assert.IsNotNull(s);
 
@@ -252,7 +252,7 @@ END:VCARD";
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
-        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
+        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteNonStandardParameters);
         vcard = Vcf.Parse(vcfString)[0];
 
         // Find the WhatsApp number:
@@ -284,7 +284,7 @@ END:VCARD";
             Messengers = whatsAppImpp
         };
 
-        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteXExtensions);
+        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteXExtensions);
         vcard = Vcf.Parse(vcfString)[0];
 
         whatsAppImpp = vcard.Messengers?.First();
@@ -314,7 +314,7 @@ END:VCARD";
             Messengers = whatsAppImpp
         };
 
-        string vcfString = vcard.ToVcfString(options: VcfOptions.Default);
+        string vcfString = vcard.ToVcfString(options: Opts.Default);
         vcard = Vcf.Parse(vcfString)[0];
 
         whatsAppImpp = vcard.Messengers?.First();
@@ -340,7 +340,7 @@ END:VCARD";
             Messengers = prop
         };
 
-        string vcfString = vcard.ToVcfString(options: (VcfOptions.Default | VcfOptions.WriteXExtensions).Unset(VcfOptions.WriteImppExtension));
+        string vcfString = vcard.ToVcfString(options: (Opts.Default | Opts.WriteXExtensions).Unset(Opts.WriteImppExtension));
         vcard = Vcf.Parse(vcfString)[0];
 
         Assert.AreEqual(1, vcard.Messengers!.Count());
@@ -367,7 +367,7 @@ END:VCARD";
             Messengers = prop
         };
 
-        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteXExtensions);
+        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteXExtensions);
         vcard = Vcf.Parse(vcfString)[0];
         Assert.AreEqual(1, vcard.Messengers!.Count());
         prop = vcard.Messengers!.First();
@@ -468,7 +468,7 @@ END:VCARD";
 
         var vCard = new VCard();
 
-        string vcf = vCard.ToVcfString(VCdVersion.V3_0, options: VcfOptions.Default.Set(VcfOptions.WriteEmptyProperties));
+        string vcf = vCard.ToVcfString(VCdVersion.V3_0, options: Opts.Default.Set(Opts.WriteEmptyProperties));
 
         vCard = Vcf.Parse(vcf)[0];
 

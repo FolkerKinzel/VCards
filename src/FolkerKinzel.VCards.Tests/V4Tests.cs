@@ -99,7 +99,7 @@ public class V4Tests
     [TestMethod]
     public void SerializeVCard()
     {
-        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V4_0, options: VcfOptions.All);
+        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V4_0, options: Opts.All);
 
         Assert.IsNotNull(s);
 
@@ -129,7 +129,7 @@ public class V4Tests
         Assert.IsNotNull(vc.DeathPlaceViews);
         Assert.IsNotNull(vc.DeathDateViews);
 
-        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOptions.WriteRfc6474Extensions));
+        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: Opts.WriteRfc6474Extensions));
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -140,7 +140,7 @@ public class V4Tests
         Assert.IsNotNull(vc.DeathDateViews);
 
 
-        list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOptions.None));
+        list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: Opts.None));
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -350,7 +350,7 @@ public class V4Tests
             Messengers = new TextProperty?[] { null, whatsAppImpp }
         };
 
-        string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: VcfOptions.Default);
+        string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: Opts.Default);
         vcard = Vcf.Parse(vcfString)[0];
 
         whatsAppImpp = vcard.Messengers?.First();

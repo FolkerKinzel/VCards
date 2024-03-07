@@ -8,7 +8,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal sealed class Vcf_4_0Serializer : VcfSerializer
 {
-    internal Vcf_4_0Serializer(TextWriter writer, VcfOptions options)
+    internal Vcf_4_0Serializer(TextWriter writer, Opts options)
         : base(writer, options, new ParameterSerializer4_0(options), null) { }
 
     internal override VCdVersion Version => VCdVersion.V4_0;
@@ -85,7 +85,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendBirthPlaceViews(IEnumerable<TextProperty?> value)
     {
-        if (!Options.HasFlag(VcfOptions.WriteRfc6474Extensions))
+        if (!Options.HasFlag(Opts.WriteRfc6474Extensions))
         {
             return;
         }
@@ -104,7 +104,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendDeathDateViews(IEnumerable<DateAndOrTimeProperty?> value)
     {
-        if (!Options.IsSet(VcfOptions.WriteRfc6474Extensions))
+        if (!Options.IsSet(Opts.WriteRfc6474Extensions))
         {
             return;
         }
@@ -114,7 +114,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendDeathPlaceViews(IEnumerable<TextProperty?> value)
     {
-        if (!Options.IsSet(VcfOptions.WriteRfc6474Extensions))
+        if (!Options.IsSet(Opts.WriteRfc6474Extensions))
         {
             return;
         }
@@ -152,7 +152,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendExpertises(IEnumerable<TextProperty?> value)
     {
-        if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions))
+        if (!Options.IsSet(Opts.WriteRfc6715Extensions))
         {
             return;
         }
@@ -171,7 +171,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendHobbies(IEnumerable<TextProperty?> value)
     {
-        if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions))
+        if (!Options.IsSet(Opts.WriteRfc6715Extensions))
         {
             return;
         }
@@ -206,7 +206,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendInterests(IEnumerable<TextProperty?> value)
     {
-        if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions))
+        if (!Options.IsSet(Opts.WriteRfc6715Extensions))
         {
             return;
         }
@@ -248,7 +248,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendOrgDirectories(IEnumerable<TextProperty?> value)
     {
-        if (!Options.IsSet(VcfOptions.WriteRfc6715Extensions))
+        if (!Options.IsSet(Opts.WriteRfc6715Extensions))
         {
             return;
         }

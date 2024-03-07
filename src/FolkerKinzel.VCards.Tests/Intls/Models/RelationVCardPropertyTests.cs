@@ -21,7 +21,7 @@ public class RelationVCardPropertyTests
         Assert.AreNotSame(prop, prop2);
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
+        var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
         prop2.AppendValue(serializer);
 
         Assert.AreEqual(0, serializer.Builder.Length);

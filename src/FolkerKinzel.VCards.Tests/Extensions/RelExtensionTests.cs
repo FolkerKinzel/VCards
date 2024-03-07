@@ -10,7 +10,7 @@ using FolkerKinzel.VCards.Enums;
 namespace FolkerKinzel.VCards.Extensions.Tests;
 
 [TestClass()]
-public class RelationTypesExtensionTests
+public class RelExtensionTests
 {
     [TestMethod()]
     public void RelationTypesTest()

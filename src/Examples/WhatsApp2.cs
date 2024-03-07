@@ -24,7 +24,7 @@ internal static class WhatsAppDemo2
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
         string vcfString = Vcf.ToString(vcard,
-                                        options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
+                                        options: Opts.Default | Opts.WriteNonStandardParameters);
 
         Console.WriteLine(vcfString);
 

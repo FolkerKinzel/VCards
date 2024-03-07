@@ -37,12 +37,12 @@ public sealed partial class ParameterSection
 
     /// <summary> <c>TYPE</c>: Specifies the type of a postal delivery address. 
     /// <c>(2,3)</c></summary>
-    public Adr? AddressType
+    public Addr? AddressType
     {
-        get => Get<Adr?>(VCdParam.AddressType);
+        get => Get<Addr?>(VCdParam.AddressType);
         set
         {
-            value = (value == default(Adr)) ? null : value;
+            value = (value == default(Addr)) ? null : value;
             Set(VCdParam.AddressType, value);
         }
     }
@@ -265,7 +265,7 @@ public sealed partial class ParameterSection
 
     /// <summary>Non-standard attributes. <c>(2,3,4)</c></summary>
     /// <remarks> In order to write non-standardized attributes into a VCF file, the 
-    /// <see cref="VcfOptions.WriteNonStandardParameters">VcfOptions.WriteNonStandardParameters</see> 
+    /// <see cref="Opts.WriteNonStandardParameters">VcfOptions.WriteNonStandardParameters</see> 
     /// flag must be set explicitly when serializing the <see cref="VCard" /> object.</remarks>
     public IEnumerable<KeyValuePair<string, string>>? NonStandard
     {

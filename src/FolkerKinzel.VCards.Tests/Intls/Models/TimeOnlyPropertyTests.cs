@@ -34,7 +34,7 @@ public class TimeOnlyPropertyTests
     public void PrepareForVcfSerializationTest1()
     {
         using var writer = new StringWriter();
-        var serializer = new Vcf_2_1Serializer(writer, VcfOptions.Default, null);
+        var serializer = new Vcf_2_1Serializer(writer, Opts.Default, null);
 
         var dto = TimeOnly.FromDateTime(DateTime.Now);
         var prop = DateAndOrTimeProperty.FromTime(dto);
@@ -47,7 +47,7 @@ public class TimeOnlyPropertyTests
     public void AppendValueTest1()
     {
         using var writer = new StringWriter();
-        var serializer = new Vcf_2_1Serializer(writer, VcfOptions.Default, null);
+        var serializer = new Vcf_2_1Serializer(writer, Opts.Default, null);
 
         var dto = TimeOnly.FromDateTime(DateTime.Now);
         var prop = DateAndOrTimeProperty.FromTime(dto);

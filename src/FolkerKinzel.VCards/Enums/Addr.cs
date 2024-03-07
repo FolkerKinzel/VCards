@@ -7,11 +7,11 @@ namespace FolkerKinzel.VCards.Enums;
 /// <remarks>
 /// <note type="tip">
 /// When working with the enum use the extension methods from the 
-/// <see cref="AdrExtension" /> class.
+/// <see cref="AddrExtension" /> class.
 /// </note>
 /// </remarks>
 [Flags]
-public enum Adr
+public enum Addr
 {
     // CAUTION: If the enum is expanded, AdrConverter and
     // EnumValueCollector must be adjusted!

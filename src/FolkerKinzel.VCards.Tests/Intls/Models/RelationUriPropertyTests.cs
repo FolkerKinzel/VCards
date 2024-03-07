@@ -150,7 +150,7 @@ public class RelationUriPropertyTests
         prop.Parameters.Clear();
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
+        var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
 
         prop.PrepareForVcfSerialization(serializer);
         Assert.AreEqual(Data.Uri, prop.Parameters.DataType);

@@ -43,7 +43,7 @@ public class V2Tests
 
         Vcf.Save(vcard!,
             System.IO.Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"), VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.WriteNonStandardProperties));
+            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"), VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteNonStandardProperties));
     }
 
 
@@ -131,7 +131,7 @@ public class V2Tests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V2_1, options: VcfOptions.All);
+        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V2_1, options: Opts.All);
 
         Assert.IsNotNull(s);
 
@@ -157,11 +157,11 @@ public class V2Tests
         var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", autoLabel: false);
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
-        addr0.Parameters.AddressType = Adr.Postal | Adr.Parcel;
+        addr0.Parameters.AddressType = Addr.Postal | Addr.Parcel;
         addr0.Parameters.PropertyClass = PCl.Home;
 
         var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", autoLabel: false);
-        addr1.Parameters.AddressType = Adr.Postal | Adr.Parcel;
+        addr1.Parameters.AddressType = Addr.Postal | Addr.Parcel;
         addr1.Parameters.PropertyClass = PCl.Work;
         addr1.Parameters.Label = label1;
 
@@ -194,11 +194,11 @@ public class V2Tests
         var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", autoLabel: false);
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
-        addr0.Parameters.AddressType = Adr.Postal | Adr.Parcel;
+        addr0.Parameters.AddressType = Addr.Postal | Addr.Parcel;
         addr0.Parameters.PropertyClass = PCl.Home;
 
         var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", autoLabel: false);
-        addr1.Parameters.AddressType = Adr.Postal | Adr.Parcel;
+        addr1.Parameters.AddressType = Addr.Postal | Addr.Parcel;
         addr1.Parameters.PropertyClass = PCl.Work;
         addr1.Parameters.Label = label1;
 
@@ -209,7 +209,7 @@ public class V2Tests
 
         var arr = new VCard[] { vc };
 
-        string vcf = vc.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Unset(VcfOptions.AllowMultipleAdrAndLabelInVCard21));
+        string vcf = vc.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Unset(Opts.AllowMultipleAdrAndLabelInVCard21));
         IList<VCard> vCards = Vcf.Parse(vcf);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
@@ -272,7 +272,7 @@ public class V2Tests
 
         var vCard = new VCard { Photos = DataProperty.FromBytes(null) };
 
-        string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.WriteEmptyProperties));
+        string s = vCard.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteEmptyProperties));
 
         vCard = Vcf.Parse(s)[0];
         Assert.IsNotNull(vCard.Photos);
@@ -299,7 +299,7 @@ public class V2Tests
             Relations = RelationProperty.FromVCard(agent, Rel.Agent | Rel.Colleague)
         };
 
-        string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOptions.Default.Set(VcfOptions.AppendAgentAsSeparateVCard));
+        string s = vCard.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Set(Opts.AppendAgentAsSeparateVCard));
 
         IList<VCard> vCards = Vcf.Parse(s);
         Assert.AreEqual(2, vCards.Count);
@@ -362,7 +362,7 @@ public class V2Tests
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
-        string vcfString = vcard.ToVcfString(version: VCdVersion.V2_1, options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
+        string vcfString = vcard.ToVcfString(version: VCdVersion.V2_1, options: Opts.Default | Opts.WriteNonStandardParameters);
 
         // Parse the VCF string:
         vcard = Vcf.Parse(vcfString)[0];

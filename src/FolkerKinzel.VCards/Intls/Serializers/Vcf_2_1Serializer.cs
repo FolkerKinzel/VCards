@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 internal sealed class Vcf_2_1Serializer : VcfSerializer
 {
     internal Vcf_2_1Serializer(TextWriter writer,
-                               VcfOptions options,
+                               Opts options,
                                ITimeZoneIDConverter? tzConverter)
         : base(writer, options, new ParameterSerializer2_1(options), tzConverter) { }
 
@@ -123,7 +123,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         Debug.Assert(value is not null);
 
-        bool multiple = Options.IsSet(VcfOptions.AllowMultipleAdrAndLabelInVCard21);
+        bool multiple = Options.IsSet(Opts.AllowMultipleAdrAndLabelInVCard21);
         bool first = true;
 
         foreach (AddressProperty prop in value.OrderByPrefIntl(IgnoreEmptyItems))

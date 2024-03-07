@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -14,6 +15,23 @@ public readonly struct AccessBuilder
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
     internal AccessBuilder(VCardBuilder builder) => _builder = builder;
+
+
+    /// <summary>
+    /// Allows to edit the content of the <see cref="VCard.Access"/> property with a specified delegate.
+    /// </summary>
+    /// <param name="action">An <see cref="Action{T}"/> delegate that's invoked with the content of the <see cref="VCard.Access"/> property
+    /// as argument.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AccessBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="action"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    public VCardBuilder Edit(Action<AccessProperty?> action)
+    {
+        var prop = Builder.VCard.Access;
+        _ArgumentNullException.ThrowIfNull(action, nameof(action));
+        action.Invoke(prop);
+        return _builder;
+    }
 
     /// <summary>
     /// Sets the <see cref="VCard.Access"/> property to an <see cref="AccessProperty"/> instance that is newly 

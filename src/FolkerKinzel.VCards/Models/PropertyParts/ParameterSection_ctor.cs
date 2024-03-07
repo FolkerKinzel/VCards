@@ -328,7 +328,7 @@ public sealed partial class ParameterSection
             case VCard.PropKeys.LABEL:
             case VCard.PropKeys.ADR:
                 {
-                    Adr? addressType = AdrConverter.Parse(typeValue);
+                    Addr? addressType = AdrConverter.Parse(typeValue);
 
                     if (addressType.HasValue)
                     {

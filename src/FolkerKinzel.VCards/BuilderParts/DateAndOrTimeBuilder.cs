@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -20,6 +22,22 @@ public readonly struct DateAndOrTimeBuilder
     {
         _builder = builder;
         _prop = prop;
+    }
+
+    /// <summary>
+    /// Allows to edit the items of the specified property with a delegate.
+    /// </summary>
+    /// <param name="action">An <see cref="Action{T}"/> delegate that's invoked with the items of the specified property 
+    /// that are not <c>null</c>.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="action"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    public VCardBuilder Edit(Action<IEnumerable<DateAndOrTimeProperty>> action)
+    {
+        var props = Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop)?.WhereNotNull() ?? [];
+        _ArgumentNullException.ThrowIfNull(action, nameof(action));
+        action.Invoke(props);
+        return _builder;
     }
 
     /// <summary>

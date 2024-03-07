@@ -8,7 +8,7 @@ using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSerializer(options)
+internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer(options)
 {
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer4_0>> _actionList = new(2);
@@ -694,7 +694,7 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, exp);
         }
-        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters)
+        else if (Options.HasFlag(Opts.WriteNonStandardParameters)
                  && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
@@ -748,7 +748,7 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, interest);
         }
-        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
+        else if (Options.HasFlag(Opts.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
@@ -867,7 +867,7 @@ internal sealed class ParameterSerializer4_0(VcfOptions options) : ParameterSeri
             _actionList[i](this);
         }
 
-        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
+        if (Options.HasFlag(Opts.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {

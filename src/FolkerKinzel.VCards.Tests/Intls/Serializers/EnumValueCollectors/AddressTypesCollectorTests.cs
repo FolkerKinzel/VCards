@@ -9,7 +9,7 @@ public class AddressTypesCollectorTests
     [TestMethod()]
     public void CollectValueStringsTest()
     {
-        Adr? adr = Adr.Dom | Adr.Parcel;
+        Addr? adr = Addr.Dom | Addr.Parcel;
 
         var list = new List<string>();
 
@@ -34,10 +34,10 @@ public class AddressTypesCollectorTests
     [TestMethod()]
     public void DetectAllEnumValues()
     {
-        var arr = (Adr[])Enum.GetValues(typeof(Adr));
+        var arr = (Addr[])Enum.GetValues(typeof(Addr));
         var list = new List<string>(1);
 
-        foreach (Adr item in arr)
+        foreach (Addr item in arr)
         {
             list.Clear();
             EnumValueCollector.Collect(item, list);
@@ -51,10 +51,10 @@ public class AddressTypesCollectorTests
     [TestMethod()]
     public void RoundTrip()
     {
-        var arr = (Adr[])Enum.GetValues(typeof(Adr));
+        var arr = (Addr[])Enum.GetValues(typeof(Addr));
         var list = new List<string>(1);
 
-        foreach (Adr item in arr)
+        foreach (Addr item in arr)
         {
             list.Clear();
             EnumValueCollector.Collect(item, list);
@@ -62,13 +62,13 @@ public class AddressTypesCollectorTests
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
 
-            Adr? comp = AdrConverter.Parse(list[0]);
+            Addr? comp = AdrConverter.Parse(list[0]);
 
             Assert.IsTrue(comp.HasValue);
             Assert.AreEqual(comp!.Value, item);
 
-            var comp2 = (Adr)Enum.Parse(
-                typeof(Adr), list[0], true);
+            var comp2 = (Addr)Enum.Parse(
+                typeof(Addr), list[0], true);
 
             Assert.AreEqual(comp, comp2);
         }

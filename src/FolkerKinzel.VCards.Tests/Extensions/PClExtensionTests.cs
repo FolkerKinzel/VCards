@@ -10,7 +10,7 @@ using FolkerKinzel.VCards.Enums;
 namespace FolkerKinzel.VCards.Extensions.Tests;
 
 [TestClass()]
-public class PropertyClassTypesExtensionTests
+public class PClExtensionTests
 {
     [TestMethod()]
     public void PropertyClassTypesTest()

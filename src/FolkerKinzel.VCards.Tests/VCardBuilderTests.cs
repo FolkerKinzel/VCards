@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.BuilderParts;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -87,6 +88,18 @@ public class VCardBuilderTests
         Assert.IsNull(vc.Access);
     }
 
+    [TestMethod]
+    public void EditAccessTest1()
+    {
+        var builder = VCardBuilder.Create();
+        var prop = new AccessProperty(Access.Public);
+        builder.Access.Edit(p => prop = p);
+        Assert.IsNull(prop);
+        builder.Access.Set(Access.Private)
+               .Access.Edit(p => prop = p);
+        Assert.IsNotNull(prop);
+    }
+
     [TestMethod()]
     public void AddAddressTest1()
     {
@@ -97,11 +110,11 @@ public class VCardBuilderTests
             .Create()
             .Addresses.Add("Elm Street", null, null, null,
                             autoLabel: false,
-                            parameters: p => p.AddressType = Adr.Intl,
+                            parameters: p => p.AddressType = Addr.Intl,
                             group: vc => "gr1"
                             )
             .Addresses.Add("Schlossallee", null, null, null,
-                         pref: true, parameters: p => p.AddressType = Adr.Dom)
+                         pref: true, parameters: p => p.AddressType = Addr.Dom)
             .Addresses.Add("3", null, null, null)
             .Addresses.Add("4", null, null, null)
             .VCard;
@@ -113,11 +126,11 @@ public class VCardBuilderTests
 
         Assert.AreEqual("Schlossallee", prop1.Value.Street[0]);
         Assert.AreEqual(1, prop1.Parameters.Preference);
-        Assert.AreEqual(Adr.Dom, prop1.Parameters.AddressType);
+        Assert.AreEqual(Addr.Dom, prop1.Parameters.AddressType);
         Assert.IsNotNull(prop1.Parameters.Label);
         Assert.AreEqual("Elm Street", prop2.Value.Street[0]);
         Assert.AreEqual(2, prop2.Parameters.Preference);
-        Assert.AreEqual(Adr.Intl, prop2.Parameters.AddressType);
+        Assert.AreEqual(Addr.Intl, prop2.Parameters.AddressType);
         Assert.IsNull(prop2.Parameters.Label);
         Assert.AreEqual("gr1", prop2.Group);
         Assert.IsTrue(vc.Addresses!.Any(x => x?.Value.Street[0] == "3"));
@@ -138,7 +151,7 @@ public class VCardBuilderTests
             .Create()
             .Addresses.Add(Enumerable.Repeat("Elm Street", 1), null, null, null,
                            autoLabel: false,
-                           parameters: p => p.AddressType = Adr.Intl,
+                           parameters: p => p.AddressType = Addr.Intl,
                            group: vc => "gr1"
                          )
             .Addresses.Add(["2"], null, null, null, pref: true)
@@ -148,13 +161,27 @@ public class VCardBuilderTests
 
         Assert.AreEqual("Elm Street", prop1.Value.Street[0]);
         Assert.AreEqual(2, prop1.Parameters.Preference);
-        Assert.AreEqual(Adr.Intl, prop1.Parameters.AddressType);
+        Assert.AreEqual(Addr.Intl, prop1.Parameters.AddressType);
         Assert.IsNull(prop1.Parameters.Label);
         Assert.AreEqual("gr1", prop1.Group);
 
         AddressProperty prop2 = vc.Addresses!.First()!;
 
         Assert.IsNotNull(prop2.Parameters.Label);
+    }
+
+    [TestMethod]
+    public void EditAddressesTest1()
+    {
+        var builder = VCardBuilder.Create();
+        IEnumerable<AddressProperty?>? prop = null;
+        builder.Addresses.Edit(p => prop = p);
+        Assert.IsNotNull(prop);
+        Assert.IsFalse(prop.Any());
+        builder.VCard.Addresses = new AddressProperty("Elmstreet", null, null, null).ConcatWith(null);
+        builder.Addresses.Edit(p => prop = p);
+        Assert.IsTrue(prop.Any());
+        CollectionAssert.AllItemsAreNotNull(prop.ToArray());
     }
 
     [TestMethod()]
@@ -248,6 +275,20 @@ public class VCardBuilderTests
         CollectionAssert.AllItemsAreNotNull(vc.BirthDayViews.ToArray());
         Assert.IsTrue(vc.BirthDayViews.All(x => x!.Group == "g"));
         Assert.IsTrue(vc.BirthDayViews.All(x => x!.Parameters.Index.HasValue));
+    }
+
+    [TestMethod]
+    public void EditBirthDayViewsTest1()
+    {
+        var builder = VCardBuilder.Create();
+        IEnumerable<DateAndOrTimeProperty?>? prop = null;
+        builder.BirthDayViews.Edit(p => prop = p);
+        Assert.IsNotNull(prop);
+        Assert.IsFalse(prop.Any());
+        builder.VCard.BirthDayViews = DateAndOrTimeProperty.FromDate(12, 24).ConcatWith(null);
+        builder.BirthDayViews.Edit(p => prop = p);
+        Assert.IsTrue(prop.Any());
+        CollectionAssert.AllItemsAreNotNull(prop.ToArray());
     }
 
     [TestMethod()]
@@ -664,6 +705,20 @@ public class VCardBuilderTests
             .Keys.Clear();
 
         Assert.IsNull(vc.Keys);
+    }
+
+    [TestMethod]
+    public void EditKeysTest1()
+    {
+        var builder = VCardBuilder.Create();
+        IEnumerable<DataProperty?>? prop = null;
+        builder.Keys.Edit(p => prop = p);
+        Assert.IsNotNull(prop);
+        Assert.IsFalse(prop.Any());
+        builder.VCard.Keys = DataProperty.FromText("Password").ConcatWith(null);
+        builder.Keys.Edit(p => prop = p);
+        Assert.IsTrue(prop.Any());
+        CollectionAssert.AllItemsAreNotNull(prop.ToArray());
     }
 
     [TestMethod()]

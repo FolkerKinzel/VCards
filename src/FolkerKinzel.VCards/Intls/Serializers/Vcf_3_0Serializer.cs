@@ -10,7 +10,7 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 internal sealed class Vcf_3_0Serializer : VcfSerializer
 {
     internal Vcf_3_0Serializer(TextWriter writer,
-                               VcfOptions options,
+                               Opts options,
                                ITimeZoneIDConverter? tzConverter)
         : base(writer, options, new ParameterSerializer3_0(options), tzConverter) { }
 
@@ -122,7 +122,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         Debug.Assert(value is not null);
 
-        if (Options.IsSet(VcfOptions.WriteImppExtension))
+        if (Options.IsSet(Opts.WriteImppExtension))
         {
             bool first = true;
 

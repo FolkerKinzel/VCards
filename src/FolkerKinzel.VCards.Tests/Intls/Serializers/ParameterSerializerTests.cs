@@ -30,7 +30,7 @@ public class ParameterSerializerTests
         prop.Parameters.NonStandard = dic;
         var vc = new VCard { NonStandards = prop };
 
-        string s = vc.ToVcfString(options: VcfOptions.All);
+        string s = vc.ToVcfString(options: Opts.All);
 
         vc = Vcf.Parse(s)[0];
         prop = vc.NonStandards!.First();

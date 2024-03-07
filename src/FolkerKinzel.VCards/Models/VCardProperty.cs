@@ -77,7 +77,7 @@ public abstract class VCardProperty : ICloneable
 
         PrepareForVcfSerialization(serializer);
 
-        if (serializer.Options.IsSet(VcfOptions.WriteGroups) && Group is not null)
+        if (serializer.Options.IsSet(Opts.WriteGroups) && Group is not null)
         {
             _ = builder.Append(Group);
             _ = builder.Append('.');
@@ -117,7 +117,7 @@ public abstract class VCardProperty : ICloneable
     {
         Debug.Assert(serializer is not null);
         Debug.Assert(serializer.PropertyKey is not null);
-        Debug.Assert(!this.IsEmpty || serializer.Options.IsSet(VcfOptions.WriteEmptyProperties));
+        Debug.Assert(!this.IsEmpty || serializer.Options.IsSet(Opts.WriteEmptyProperties));
         Debug.Assert(serializer.Builder is not null);
     }
 }

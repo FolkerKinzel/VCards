@@ -9,12 +9,12 @@ internal abstract class ParameterSerializer
     private readonly StringBuilder _builder = new();
     protected readonly StringBuilder _worker = new();
 
-    protected ParameterSerializer(VcfOptions options) => this.Options = options;
+    protected ParameterSerializer(Opts options) => this.Options = options;
 
     [NotNull]
     protected ParameterSection? ParaSection { get; private set; }
 
-    protected VcfOptions Options { get; }
+    protected Opts Options { get; }
 
     internal StringBuilder Serialize(ParameterSection vCardPropertyParameter,
                                      string propertyKey,
@@ -341,7 +341,7 @@ internal abstract class ParameterSerializer
     protected void AppendNonStandardParameters()
     {
         if (this.ParaSection.NonStandard is null
-            || !Options.IsSet(VcfOptions.WriteNonStandardParameters))
+            || !Options.IsSet(Opts.WriteNonStandardParameters))
         {
             return;
         }

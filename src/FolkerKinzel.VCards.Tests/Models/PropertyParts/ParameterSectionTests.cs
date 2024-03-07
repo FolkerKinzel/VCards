@@ -41,7 +41,7 @@ public class ParameterSectionTests
     {
         var sec = new ParameterSection
         {
-            AddressType = default(Adr)
+            AddressType = default(Addr)
         };
         Assert.IsNull(sec.AddressType);
     }

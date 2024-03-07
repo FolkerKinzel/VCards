@@ -12,7 +12,7 @@ public class VcfSerializerTests
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void GetSerializerTest1()
     {
-        using var serializer = VcfSerializer.GetSerializer(new MemoryStream(), false, (VCdVersion)(-10000), VcfOptions.Default, null);
+        using var serializer = VcfSerializer.GetSerializer(new MemoryStream(), false, (VCdVersion)(-10000), Opts.Default, null);
     }
 
     [TestMethod]
@@ -22,7 +22,7 @@ public class VcfSerializerTests
         VCard.RegisterApp(null);
 
         using var stream = new MemoryStream();
-        using var serializer = VcfSerializer.GetSerializer(stream, false, VCdVersion.V3_0, VcfOptions.Default, null);
+        using var serializer = VcfSerializer.GetSerializer(stream, false, VCdVersion.V3_0, Opts.Default, null);
 
         serializer.Builder.Capacity = 20000;
         serializer.Worker.Capacity = 20000;
@@ -70,7 +70,7 @@ public class VcfSerializerTests
         tProp2.Parameters.Index = 2;
         tProp3.Parameters.Index = 1;
 
-        string s = vc.ToVcfString(VCdVersion.V4_0, options: VcfOptions.Default | VcfOptions.WriteEmptyProperties | VcfOptions.SetPropertyIDs);
+        string s = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default | Opts.WriteEmptyProperties | Opts.SetPropertyIDs);
 
         uri = new Uri("http://other.com/");
         VCard.SyncTestReset();
@@ -86,7 +86,7 @@ public class VcfSerializerTests
 
         vc.DisplayNames = Enumerable.Empty<TextProperty?>().ConcatWith(null).Concat(vc.DisplayNames!);
 
-        const VcfOptions options = VcfOptions.Default | VcfOptions.SetIndexes;
+        const Opts options = Opts.Default | Opts.SetIndexes;
 
         _ = vc.ToVcfString(VCdVersion.V2_1, options: options);
 
@@ -104,7 +104,7 @@ public class VcfSerializerTests
 
         //vc.Sync.SetPropertyIDs();
 
-        _ = vc.ToVcfString(VCdVersion.V4_0, options: options | VcfOptions.SetPropertyIDs);
+        _ = vc.ToVcfString(VCdVersion.V4_0, options: options | Opts.SetPropertyIDs);
 
         Assert.AreEqual(1, tProp1.Parameters.Index);
         Assert.AreEqual(null, tProp2.Parameters.Index);
@@ -112,7 +112,7 @@ public class VcfSerializerTests
         Assert.AreEqual(null, prodID.Parameters.Index);
         Assert.AreEqual(null, vc.AppIDs!.ElementAt(1).Parameters.Index);
 
-        _ = vc.ToVcfString(VCdVersion.V4_0, options: options | VcfOptions.WriteEmptyProperties);
+        _ = vc.ToVcfString(VCdVersion.V4_0, options: options | Opts.WriteEmptyProperties);
 
         Assert.AreEqual(1, tProp1.Parameters.Index);
         Assert.AreEqual(2, tProp2.Parameters.Index);

@@ -8,14 +8,14 @@ internal static class EnumValueCollector
 {
     /// <summary>Collects the names of the flags set in <paramref name="addressType" /> into <paramref name="list" />. 
     /// </summary>
-    /// <param name="addressType">The <see cref="Adr"/> value to parse.</param>
+    /// <param name="addressType">The <see cref="Addr"/> value to parse.</param>
     /// <param name="list">The list to collect in.</param>
     /// <remarks>
     /// <note type="caution">
     /// <paramref name="list" /> is not emptied by the method!
     /// </note>
     /// </remarks>
-    internal static void Collect(Adr? addressType, List<string> list)
+    internal static void Collect(Addr? addressType, List<string> list)
     {
         Debug.Assert(list is not null);
 
@@ -24,11 +24,11 @@ internal static class EnumValueCollector
             return;
         }
 
-        Adr value = addressType.Value & AdrConverter.DEFINED_ADDRESS_TYPES_VALUES;
+        Addr value = addressType.Value & AdrConverter.DEFINED_ADDRESS_TYPES_VALUES;
 
         for (int i = AdrConverter.ADDRESS_TYPES_MIN_BIT; i <= AdrConverter.ADDRESS_TYPES_MAX_BIT; i++)
         {
-            var flag = (Adr)(1 << i);
+            var flag = (Addr)(1 << i);
 
             if (value.HasFlag(flag))
             {

@@ -26,7 +26,7 @@ public class EmbeddedBytesPropertyTests
         Assert.AreEqual(".png", prop.GetFileTypeExtension());
 
         var vc = new VCard() { Photos = prop };
-        string vcf = vc.ToVcfString(VCdVersion.V4_0, options: VcfOptions.Default | VcfOptions.WriteEmptyProperties);
+        string vcf = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default | Opts.WriteEmptyProperties);
         Assert.IsNotNull(Vcf.Parse(vcf)[0].Photos);
     }
 

@@ -10,7 +10,7 @@ namespace FolkerKinzel.VCards.Enums;
 /// <remarks>
 /// <note type="tip">
 /// When working with the enum use the extension methods from the 
-/// <see cref="VcfOptionsExtension" /> class.
+/// <see cref="OptsExtension" /> class.
 /// </note>
 /// <para>
 /// Die Flags <see cref="WriteWabExtensions" />, <see cref="WriteXExtensions" />,
@@ -28,7 +28,7 @@ namespace FolkerKinzel.VCards.Enums;
 /// </para>
 /// </remarks>
 [Flags]
-public enum VcfOptions
+public enum Opts
 {
     /// <summary>All flags are set.</summary>
     All = -1,

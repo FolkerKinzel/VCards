@@ -373,12 +373,12 @@ public sealed partial class VCard
     /// <see cref="NonStandards" /> contains all vCard properties that could not 
     /// be evaluated, when parsing the vCard. To serialize the content of 
     /// <see cref="NonStandards" /> into a VCF file, the flag 
-    /// <see cref="VcfOptions.WriteNonStandardProperties"/> has to be set. 
+    /// <see cref="Opts.WriteNonStandardProperties"/> has to be set. 
     /// </para>
     /// <para>
     /// Some <see cref="NonStandardProperty" /> objects are automatically added to the 
     /// VCF file, if there is no standard equivalent for it. You can control this behavior
-    /// with <see cref="VcfOptions" />. It is therefore not recommended to assign
+    /// with <see cref="Opts" />. It is therefore not recommended to assign
     /// <see cref="NonStandardProperty" /> objects with these 
     /// <see cref="NonStandardProperty.XName"/>s to this property.
     /// </para>
@@ -560,7 +560,7 @@ public sealed partial class VCard
 
     /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
     /// <remarks>
-    /// With <see cref="VcfOptions.Default"/> the flag <see cref="VcfOptions.UpdateTimeStamp"/> is set. So 
+    /// With <see cref="Opts.Default"/> the flag <see cref="Opts.UpdateTimeStamp"/> is set. So 
     /// this property is normally updated automatically when serializing VCF.
     /// </remarks>
     public TimeStampProperty? TimeStamp

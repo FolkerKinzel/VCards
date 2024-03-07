@@ -23,7 +23,7 @@ public class NameTests
         var name = new Name(input, new VcfDeserializationInfo(), VCdVersion.V4_0);
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
+        var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
         name.AppendVCardString(serializer);
 
         Assert.AreEqual(input, serializer.Builder.ToString());
