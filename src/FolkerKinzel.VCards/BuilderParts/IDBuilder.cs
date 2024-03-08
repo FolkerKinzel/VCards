@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -15,6 +16,22 @@ public readonly struct IDBuilder
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
     internal IDBuilder(VCardBuilder builder) => _builder = builder;
+
+    /// <summary>
+    /// Allows to edit the content of the <see cref="VCard.ID"/> property with a specified delegate.
+    /// </summary>
+    /// <param name="action">An <see cref="Action{T}"/> delegate that's invoked with the content of the <see cref="VCard.ID"/> property
+    /// as argument.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="action"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    public VCardBuilder Edit(Action<IDProperty?> action)
+    {
+        var prop = Builder.VCard.ID;
+        _ArgumentNullException.ThrowIfNull(action, nameof(action));
+        action.Invoke(prop);
+        return _builder;
+    }
 
     /// <summary>
     /// Sets the <see cref="VCard.ID"/> property to a <see cref="IDProperty"/> instance that is newly 

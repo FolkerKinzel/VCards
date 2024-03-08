@@ -5,6 +5,14 @@ public class OrgBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void EditTest1() => new OrgBuilder().Edit(p => { });
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void EditTest2() => VCardBuilder.Create().Organizations.Edit(null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new OrgBuilder().Add(null);
 
     [TestMethod]

@@ -5,6 +5,14 @@ public class NonStandardBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void EditTest1() => new NonStandardBuilder().Edit(p => { });
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void EditTest2() => VCardBuilder.Create().NonStandards.Edit(null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new NonStandardBuilder().Add("X-TEST", null);
 
     [TestMethod]

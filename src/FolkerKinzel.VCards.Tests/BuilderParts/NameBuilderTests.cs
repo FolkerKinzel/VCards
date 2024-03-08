@@ -5,6 +5,14 @@ public class NameBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void EditTest1() => new NameBuilder().Edit(p => { });
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void EditTest2() => VCardBuilder.Create().NameViews.Edit(null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new NameBuilder().Add((string?)null);
 
     [TestMethod]

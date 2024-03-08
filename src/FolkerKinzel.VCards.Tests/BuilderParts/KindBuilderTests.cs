@@ -5,6 +5,14 @@ public class KindBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void EditTest1() => new KindBuilder().Edit(p => { });
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void EditTest2() => VCardBuilder.Create().Kind.Edit(null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void SetTest1() => new KindBuilder().Set(Enums.Kind.Individual);
 
     [TestMethod]

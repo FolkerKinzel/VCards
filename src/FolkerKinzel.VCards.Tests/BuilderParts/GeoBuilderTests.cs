@@ -5,6 +5,14 @@ public class GeoBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void EditTest1() => new GeoBuilder().Edit(p => { });
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void EditTest2() => VCardBuilder.Create().GeoCoordinates.Edit(null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new GeoBuilder().Add(null);
 
     [TestMethod]
