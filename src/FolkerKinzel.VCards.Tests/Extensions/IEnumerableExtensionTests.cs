@@ -510,6 +510,83 @@ public class IEnumerableExtensionTests
         vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
     }
 
+    [TestMethod]
+    public void SetPreferencesTest1()
+    {
+        TextProperty?[]? arr = null;
+
+        arr.SetPreferences();
+        arr.UnsetPreferences();
+
+        arr = new TextProperty?[] { new("1"), null, new(null), new("2") };
+
+        arr.SetPreferences();
+        Assert.AreEqual(1, arr[0]!.Parameters.Preference);
+        Assert.AreEqual(100, arr[2]!.Parameters.Preference);
+        Assert.AreEqual(2, arr[3]!.Parameters.Preference);
+
+        arr.UnsetPreferences();
+        Assert.AreEqual(100, arr[0]!.Parameters.Preference);
+        Assert.AreEqual(100, arr[2]!.Parameters.Preference);
+        Assert.AreEqual(100, arr[3]!.Parameters.Preference);
+
+        arr.SetPreferences(skipEmptyItems: false);
+        Assert.AreEqual(1, arr[0]!.Parameters.Preference);
+        Assert.AreEqual(2, arr[2]!.Parameters.Preference);
+        Assert.AreEqual(3, arr[3]!.Parameters.Preference);
+
+        arr.SetPreferences();
+        Assert.AreEqual(1, arr[0]!.Parameters.Preference);
+        Assert.AreEqual(100, arr[2]!.Parameters.Preference);
+        Assert.AreEqual(2, arr[3]!.Parameters.Preference);
+    }
+
+
+    [TestMethod]
+    public void SetIndexesTest1()
+    {
+        TextProperty?[]? arr = null;
+
+        arr.SetIndexes();
+        arr.UnsetIndexes();
+
+        arr = new TextProperty?[] { new("1"), null, new(null), new("2") };
+
+        arr.SetIndexes();
+        Assert.AreEqual(1, arr[0]!.Parameters.Index);
+        Assert.AreEqual(null, arr[2]!.Parameters.Index);
+        Assert.AreEqual(2, arr[3]!.Parameters.Index);
+
+        arr.UnsetIndexes();
+        Assert.AreEqual(null, arr[0]!.Parameters.Index);
+        Assert.AreEqual(null, arr[2]!.Parameters.Index);
+        Assert.AreEqual(null, arr[3]!.Parameters.Index);
+
+        arr.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, arr[0]!.Parameters.Index);
+        Assert.AreEqual(2, arr[2]!.Parameters.Index);
+        Assert.AreEqual(3, arr[3]!.Parameters.Index);
+
+        arr.SetIndexes();
+        Assert.AreEqual(1, arr[0]!.Parameters.Index);
+        Assert.AreEqual(null, arr[2]!.Parameters.Index);
+        Assert.AreEqual(2, arr[3]!.Parameters.Index);
+    }
+
+    [TestMethod]
+    public void SetAltIDTest1()
+    {
+        TextProperty?[]? arr = null;
+
+        arr.SetAltID("1");
+
+        arr = new TextProperty?[] { new("1"), null, new(null), new("2") };
+
+        arr.SetAltID("1");
+        Assert.AreEqual("1", arr[0]!.Parameters.AltID);
+        Assert.AreEqual("1", arr[2]!.Parameters.AltID);
+        Assert.AreEqual("1", arr[3]!.Parameters.AltID);
+    }
 
     //[TestMethod]
     //public void ConcatenateTest4()

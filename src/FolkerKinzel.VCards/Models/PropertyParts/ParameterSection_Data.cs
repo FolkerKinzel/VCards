@@ -14,7 +14,7 @@ public sealed partial class ParameterSection
 
     private void Set<T>(VCdParam prop, T value)
     {
-        if (value is null || value.Equals(default))
+        if (value is null || value.Equals(default(T)))
         {
             _ = _propDic.Remove(prop);
         }

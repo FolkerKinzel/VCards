@@ -600,6 +600,21 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
         => Enumerable.Concat(first ?? Enumerable.Empty<TSource>(), second ?? Enumerable.Repeat<TSource?>(null, 1));
 
+    /// <summary>
+    /// Sets the <see cref="ParameterSection.Preference"/> properties of 
+    /// the items in a <see cref="VCardProperty"/> collection depending on their position
+    /// in that collection and allows to specify whether to skip empty items in that process.
+    /// (The first item gets the highest preference <c>1</c>).)
+    /// </summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
+    /// derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">An <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// references.</param>
+    /// <param name="skipEmptyItems"><c>true</c> to give empty <see cref="VCardProperty"/> 
+    /// objects always the lowest <see cref="ParameterSection.Preference"/> (100), independently
+    /// of their position in the collection, or <c>false</c> to treat empty <see cref="VCardProperty"/> 
+    /// objects like any other. (<c>null</c> references are always skipped.)</param>
     public static void SetPreferences<TSource>(this IEnumerable<TSource?>? values,
                                                                bool skipEmptyItems = true)
         where TSource : VCardProperty, IEnumerable<TSource>
@@ -620,6 +635,15 @@ public static class IEnumerableExtension
         }
     }
 
+    /// <summary>
+    /// Resets the <see cref="ParameterSection.Preference"/> properties of 
+    /// the items in a <see cref="VCardProperty"/> collection to the lowest value (100).
+    /// </summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
+    /// derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">An <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// references.</param>
     public static void UnsetPreferences<TSource>(this IEnumerable<TSource?>? values)
         where TSource : VCardProperty, IEnumerable<TSource>
     {
@@ -637,6 +661,21 @@ public static class IEnumerableExtension
         }
     }
 
+    /// <summary>
+    /// Sets the <see cref="ParameterSection.Index"/> properties of 
+    /// the items in a <see cref="VCardProperty"/> collection ascending depending on their 
+    /// position in that collection and allows to specify whether to skip empty items in that 
+    /// process.
+    /// </summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
+    /// derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">An <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// references.</param>
+    /// <param name="skipEmptyItems"><c>true</c> to reset the <see cref="ParameterSection.Index"/> 
+    /// of empty <see cref="VCardProperty"/> objects to <c>null</c>, or <c>false</c> to treat 
+    /// empty <see cref="VCardProperty"/> objects like any other. (<c>null</c> references are 
+    /// always skipped.)</param>
     public static void SetIndexes<TSource>(this IEnumerable<TSource?>? values,
                                                            bool skipEmptyItems = true)
         where TSource : VCardProperty, IEnumerable<TSource>
@@ -657,6 +696,15 @@ public static class IEnumerableExtension
         }
     }
 
+    /// <summary>
+    /// Resets the <see cref="ParameterSection.Index"/> properties of 
+    /// the items in a <see cref="VCardProperty"/> collection to <c>null</c>.
+    /// </summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
+    /// derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">An <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// references.</param>
     public static void UnsetIndexes<TSource>(this IEnumerable<TSource?>? values)
         where TSource : VCardProperty, IEnumerable<TSource>
     {
@@ -674,6 +722,16 @@ public static class IEnumerableExtension
         }
     }
 
+    /// <summary>
+    /// Sets the <see cref="ParameterSection.AltID"/>s of the items in a 
+    /// <see cref="VCardProperty"/> collection to the specified value.
+    /// </summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
+    /// derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">An <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// references.</param>
+    /// <param name="altID">The value to assign.</param>
     public static void SetAltID<TSource>(this IEnumerable<TSource?>? values,
                                          string? altID) where TSource : VCardProperty, IEnumerable<TSource>
     {
