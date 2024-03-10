@@ -1,4 +1,5 @@
 - Fixes a bug in `ParameterSection`
+- .NET 8.0 support
 - New constructor overload `GeoProperty(double, double, string?)`
 - New constructor overload `PropertyIDMappingProperty(int, Uri)`
 - New extension methods:
