@@ -1,5 +1,7 @@
 - Fixes a bug in `ParameterSection`
 - .NET 8.0 support
+- Replaces the deprecated dependency `FolkerKinzel.Uris` with `FolkerKinzel.DataUrls`
+- Dependency update
 - New constructor overload `GeoProperty(double, double, string?)`
 - New constructor overload `PropertyIDMappingProperty(int, Uri)`
 - New extension methods:
@@ -20,6 +22,5 @@ void SetAltID<TSource>(this IEnumerable<TSource?>?, string?)
         where TSource : VCardProperty, IEnumerable<TSource>;
 ```
 - Performance optimization
-- Dependency update
 .
 >**Project reference:** On some systems the content of the CHM file in the Assets is blocked. Before opening the file right click on the file icon, select Properties, and **check the "Allow" checkbox** - if it is present - in the lower right corner of the General tab in the Properties dialog.

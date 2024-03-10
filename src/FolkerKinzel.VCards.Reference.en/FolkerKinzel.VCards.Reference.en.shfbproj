@@ -52,9 +52,9 @@
     <NamespaceSummaries>
       <NamespaceSummaryItem name="FolkerKinzel.VCards" isDocumented="True">Classes to read, write and convert VCF files.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.Models (Group)" isGroup="True" isDocumented="True">Namespaces, containing classes that represent the data model of a vCard.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="FolkerKinzel.VCards.Models" isDocumented="True">Classes, that represent the data model of a vCard.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models" isDocumented="True">Classes that represent the data model of a vCard.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.Models.Enums" isDocumented="True">Enums to describe vCard data.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="FolkerKinzel.VCards.Models.PropertyParts" isDocumented="True">Classes of the vCard data model that your application usually will not instantiate. Therefore it won't be necessary to expose this namespace in your code.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models.PropertyParts" isDocumented="True">Classes of the vCard data model that the application usually will not instantiate. Therefore it won't be necessary to expose this namespace in own code.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.Extensions" isDocumented="True">Extension methods</NamespaceSummaryItem></NamespaceSummaries>
     <VisibleItems>ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, ProtectedInternalAsProtected, NonBrowsable</VisibleItems>
     <RootNamespaceTitle>FolkerKinzel.VCards Namespaces</RootNamespaceTitle>
