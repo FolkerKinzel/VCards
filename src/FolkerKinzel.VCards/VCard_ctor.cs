@@ -214,7 +214,7 @@ public sealed partial class VCard
                             else
                             {
                                 var name = new NameProperty();
-                                name.Parameters.SortAs = new string?[] { textProp.Value };
+                                name.Parameters.SortAs = [textProp.Value];
                                 NameViews = name;
                             }
                         }

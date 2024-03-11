@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Runtime.CompilerServices;
 using FolkerKinzel.VCards.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -119,4 +120,7 @@ public class TimeZoneIDTests
 
         Assert.AreEqual(input, builder.ToString());
     }
+
+    [TestMethod]
+    public void ToStringTest() => Assert.IsNotNull(TimeZoneID.Parse("Europe/Berlin").ToString());
 }

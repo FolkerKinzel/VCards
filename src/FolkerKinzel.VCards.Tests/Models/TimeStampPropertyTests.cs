@@ -50,4 +50,11 @@ public class TimeStampPropertyTests
 
         Assert.IsFalse(prop.IsEmpty);
     }
+
+    [TestMethod]
+    public void GetValueTest()
+    {
+        VCardProperty prop = new TimeStampProperty();
+        Assert.IsNotNull(prop.Value);
+    }
 }

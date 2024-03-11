@@ -42,6 +42,7 @@ public sealed class VcfReader : IDisposable
         } while (!vcfReader.EOF);
 
         [Conditional("DEBUG")]
+        [ExcludeFromCodeCoverage]
         static void WriteDebug(VCard vCard)
         {
             Debug.WriteLine("");

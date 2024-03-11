@@ -115,6 +115,8 @@ public static partial class Vcf
                                                       CancellationToken token = default)
         => filter?.DeserializeAsync(factory, token) ?? throw new ArgumentNullException(nameof(filter));
 
+
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", Justification = "<Pending>")]
     public static IEnumerable<VCard> DeserializeMany(IEnumerable<Func<Stream?>?> factories, AnsiFilter? filter = null)
     {
         _ArgumentNullException.ThrowIfNull(factories, nameof(factories));

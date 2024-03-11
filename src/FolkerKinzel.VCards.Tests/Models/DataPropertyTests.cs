@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.Uris;
+﻿using FolkerKinzel.DataUrls;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;

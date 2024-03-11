@@ -131,6 +131,7 @@
     <Using Include="System.Text" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FolkerKinzel.DataUrls" Version="1.0.0-beta.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -139,9 +140,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FolkerKinzel.Uris" Version="5.2.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net461' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard2.1' Or '$(TargetFramework)' == 'net5.0'">
     <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.0" />
