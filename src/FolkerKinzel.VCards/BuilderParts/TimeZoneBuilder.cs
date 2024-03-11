@@ -9,7 +9,16 @@ using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
-[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals", Justification = "<Pending>")]
+/// <summary>
+/// Provides methods for editing the <see cref="VCard.TimeZones"/> property.
+/// </summary>
+/// <remarks>
+/// <note type="important">
+/// Only use this structure in conjunction with <see cref="VCardBuilder"/>!
+/// </note>
+/// </remarks>
+[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
+    Justification = "Overriding does not change the default behavior.")]
 public readonly struct TimeZoneBuilder
 {
     private readonly VCardBuilder? _builder;
@@ -22,11 +31,13 @@ public readonly struct TimeZoneBuilder
     /// <summary>
     /// Allows to edit the items of the <see cref="VCard.TimeZones"/> property with a specified delegate.
     /// </summary>
-    /// <param name="action">An <see cref="Action{T}"/> delegate that's invoked with the items of the <see cref="VCard.TimeZones"/> property 
-    /// that are not <c>null</c>.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeZoneBuilder"/> to be able to chain calls.</returns>
+    /// <param name="action">An <see cref="Action{T}"/> delegate that's invoked with the items of the 
+    /// <see cref="VCard.TimeZones"/> property that are not <c>null</c>.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeZoneBuilder"/> 
+    /// to be able to chain calls.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="action"/> is <c>null</c>.</exception>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Action<IEnumerable<TimeZoneProperty>> action)
     {
         var props = Builder.VCard.TimeZones?.WhereNotNull() ?? [];
@@ -40,16 +51,18 @@ public readonly struct TimeZoneBuilder
     /// initialized using the specified arguments, to the <see cref="VCard.TimeZones"/> property.
     /// </summary>
     /// <param name="value">A <see cref="TimeZoneID" /> object or <c>null</c>.</param>
-    /// <param name="pref">Pass <c>true</c> to give the newly created <see cref="VCardProperty"/> the highest preference <c>(1)</c>
-    /// and to downgrade the other instances in the collection.</param>
-    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the <see cref="ParameterSection"/> of the newly 
-    /// created <see cref="VCardProperty"/> as argument.</param>
-    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is called with the <see cref="VCardBuilder.VCard"/>
-    /// instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeZoneBuilder"/> to be able to chain calls.</returns>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    /// <param name="pref">Pass <c>true</c> to give the newly created <see cref="VCardProperty"/> 
+    /// the highest preference <c>(1)</c> and to downgrade the other instances in the collection.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
+    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that the 
+    /// <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
+    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeZoneBuilder"/> to 
+    /// be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(TimeZoneID? value,
                             bool pref = false,
                             Action<ParameterSection>? parameters = null,
@@ -59,15 +72,18 @@ public readonly struct TimeZoneBuilder
                           VCardBuilder.Add(new TimeZoneProperty(value, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones),
                                            parameters,
-                                           pref));
+                                           pref)
+                          );
         return _builder;
     }
 
     /// <summary>
     /// Sets the <see cref="VCard.TimeZones"/> property to <c>null</c>.
     /// </summary>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeZoneBuilder"/> to be able to chain calls.</returns>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeZoneBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.TimeZones, null);
@@ -75,17 +91,25 @@ public readonly struct TimeZoneBuilder
     }
 
     /// <summary>
-    /// Removes <see cref="TimeZoneProperty"/> objects that match a specified predicate from the <see cref="VCard.GeoCoordinates"/> property.
+    /// Removes <see cref="TimeZoneProperty"/> objects that match a specified predicate from the 
+    /// <see cref="VCard.GeoCoordinates"/> property.
     /// </summary>
-    /// <param name="predicate">A function that returns <c>true</c> for <see cref="TimeZoneProperty"/> objects that shall be removed.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeZoneBuilder"/> to be able to chain calls.</returns>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    /// <param name="predicate">A function that returns <c>true</c> for <see cref="TimeZoneProperty"/> 
+    /// objects that shall be removed.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeZoneBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<TimeZoneProperty, bool> predicate)
     {
         Builder.VCard.Set(Prop.TimeZones,
-                          _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones).Remove(predicate));
+                          _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones)
+                                        .Remove(predicate)
+                          );
         return _builder;
     }
+
+    // Overriding Equals, GetHashCode and ToString to hide these methods in IntelliSense:
 
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]

@@ -10,7 +10,16 @@ using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
-[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals", Justification = "<Pending>")]
+/// <summary>
+/// Provides methods for editing the <see cref="VCard.NameViews"/> property.
+/// </summary>
+/// <remarks>
+/// <note type="important">
+/// Only use this structure in conjunction with <see cref="VCardBuilder"/>!
+/// </note>
+/// </remarks>
+[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
+    Justification = "Overriding does not change the default behavior.")]
 public readonly struct NameBuilder
 {
     private readonly VCardBuilder? _builder;
@@ -23,11 +32,13 @@ public readonly struct NameBuilder
     /// <summary>
     /// Allows to edit the items of the <see cref="VCard.NameViews"/> property with a specified delegate.
     /// </summary>
-    /// <param name="action">An <see cref="Action{T}"/> delegate that's invoked with the items of the <see cref="VCard.NameViews"/> property 
-    /// that are not <c>null</c>.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> to be able to chain calls.</returns>
+    /// <param name="action">An <see cref="Action{T}"/> delegate that's invoked with the items of the 
+    /// <see cref="VCard.NameViews"/> property that are not <c>null</c>.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> 
+    /// to be able to chain calls.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="action"/> is <c>null</c>.</exception>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Action<IEnumerable<NameProperty>> action)
     {
         var props = Builder.VCard.NameViews?.WhereNotNull() ?? [];
@@ -45,16 +56,19 @@ public readonly struct NameBuilder
     /// <param name="additionalNames">Additional Names (middle names)</param>
     /// <param name="prefixes">Honorific Prefixes</param>
     /// <param name="suffixes">Honorific Suffixes</param>
-    /// <param name="displayName">An <see cref="Action{T1, T2}"/> delegate that's invoked with the <see cref="TextBuilder"/> the 
-    /// <see cref="VCardBuilder.DisplayNames"/> property returns and the newly created <see cref="NameProperty"/> instance as arguments.</param>
-    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the <see cref="ParameterSection"/> of the newly 
-    /// created <see cref="VCardProperty"/> as argument.</param>
-    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is called with the <see cref="VCardBuilder.VCard"/>
-    /// instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> to be able to chain calls.</returns>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    /// <param name="displayName">An <see cref="Action{T1, T2}"/> delegate that's invoked with the 
+    /// <see cref="TextBuilder"/> the <see cref="VCardBuilder.DisplayNames"/> property returns and 
+    /// the newly created <see cref="NameProperty"/> instance as arguments.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
+    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that the 
+    /// <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
+    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> 
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(IEnumerable<string?>? familyNames = null,
                             IEnumerable<string?>? givenNames = null,
                             IEnumerable<string?>? additionalNames = null,
@@ -90,16 +104,19 @@ public readonly struct NameBuilder
     /// <param name="additionalName">Additional Name (middle name)</param>
     /// <param name="prefix">Honorific Prefix</param>
     /// <param name="suffix">Honorific Suffix</param>
-    /// <param name="displayName">An <see cref="Action{T1, T2}"/> delegate that's invoked with the <see cref="TextBuilder"/> the 
-    /// <see cref="VCardBuilder.DisplayNames"/> property returns and the newly created <see cref="NameProperty"/> instance as arguments.</param>
-    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the <see cref="ParameterSection"/> of the newly 
-    /// created <see cref="VCardProperty"/> as argument.</param>
-    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is called with the <see cref="VCardBuilder.VCard"/>
-    /// instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> to be able to chain calls.</returns>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    /// <param name="displayName">An <see cref="Action{T1, T2}"/> delegate that's invoked with the 
+    /// <see cref="TextBuilder"/> the <see cref="VCardBuilder.DisplayNames"/> property returns and the newly
+    /// created <see cref="NameProperty"/> instance as arguments.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
+    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
+    /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
+    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> to 
+    /// be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(string? familyName,
                             string? givenName = null,
                             string? additionalName = null,
@@ -130,8 +147,10 @@ public readonly struct NameBuilder
     /// <summary>
     /// Sets the <see cref="VCard.NameViews"/> property to <c>null</c>.
     /// </summary>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> to be able to chain calls.</returns>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> 
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder Clear()
     {
         Builder.VCard.Set(Prop.NameViews, null);
@@ -139,16 +158,25 @@ public readonly struct NameBuilder
     }
 
     /// <summary>
-    /// Removes <see cref="NameProperty"/> objects that match a specified predicate from the <see cref="VCard.NameViews"/> property.
+    /// Removes <see cref="NameProperty"/> objects that match a specified predicate from the 
+    /// <see cref="VCard.NameViews"/> property.
     /// </summary>
-    /// <param name="predicate">A function that returns <c>true</c> for <see cref="NameProperty"/> objects that shall be removed.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> to be able to chain calls.</returns>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been initialized using the default constructor.</exception>
+    /// <param name="predicate">A function that returns <c>true</c> for <see cref="NameProperty"/> 
+    /// objects that shall be removed.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<NameProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop.NameViews, _builder.VCard.Get<IEnumerable<NameProperty?>?>(Prop.NameViews).Remove(predicate));
+        Builder.VCard.Set(Prop.NameViews, 
+                          _builder.VCard.Get<IEnumerable<NameProperty?>?>(Prop.NameViews)
+                                        .Remove(predicate)
+                          );
         return _builder;
     }
+
+    // Overriding Equals, GetHashCode and ToString to hide these methods in IntelliSense:
 
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]

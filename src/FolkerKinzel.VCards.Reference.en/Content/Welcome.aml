@@ -24,7 +24,7 @@
         are not completely compliant, incompliant data is silently ignored when converting from one
         vCard standard to another. To minimize this kind of data loss, the library tries to preserve incompliant data
         using well-known x-name properties. The usage of such x-name properties can be
-        controlled via options (VcfOptions).
+        controlled.
       </para>
       <autoOutline />
 
