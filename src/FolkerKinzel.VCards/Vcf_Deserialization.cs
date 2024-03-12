@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards;
 /// </summary>
 public static partial class Vcf
 {
-    /// <summary>Loads a VCF file.</summary>
+    /// <summary>Loads a VCF file and allows to specify the <see cref="Encoding"/>.</summary>
     /// <param name="fileName">Absolute or relative path to a VCF file.</param>
     /// <param name="textEncoding">The text encoding to use to read the file or <c>null</c>,
     /// to read the file with the standard-compliant text encoding <see cref="Encoding.UTF8"
