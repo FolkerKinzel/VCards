@@ -17,11 +17,11 @@ public sealed class AccessProperty : VCardProperty
     private AccessProperty(AccessProperty prop) : base(prop) => Value = prop.Value;
 
     /// <summary> Initializes a new <see cref="AccessProperty" /> object. </summary>
-    /// <param name="value">A member of the <see cref="Access" /> enum.</param>
+    /// <param name="value">A member of the <see cref="Acs" /> enum.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public AccessProperty(Access value, string? group = null)
+    public AccessProperty(Acs value, string? group = null)
         : base(new ParameterSection(), group) => Value = value;
 
 
@@ -32,7 +32,7 @@ public sealed class AccessProperty : VCardProperty
     public override bool IsEmpty => false;
 
     /// <summary>The data provided by the <see cref="AccessProperty" />.</summary>
-    public new Access Value
+    public new Acs Value
     {
         get;
     }

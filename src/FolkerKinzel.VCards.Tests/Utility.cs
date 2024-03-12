@@ -45,7 +45,7 @@ internal static class Utility
         adr1.Parameters.SortAs = sortAs;
         var pidMap = new AppID(7, "http://www.contoso.com/");
         adr1.Parameters.PropertyIDs = new PropertyID[] { new(3, pidMap), new(2, null) };
-        adr1.Parameters.AddressType = Addr.Dom | Addr.Intl | Addr.Parcel | Addr.Postal;
+        adr1.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Parcel | Adr.Postal;
 
         var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
         //logo1.Parameters.MediaType = "image/jpeg";
@@ -156,7 +156,7 @@ internal static class Utility
             ID = new IDProperty(),
             Urls = new TextProperty("www.folker.com"),
             DirectoryName = new TextProperty("Webseite"),
-            Access = new AccessProperty(Access.Confidential),
+            Access = new AccessProperty(Acs.Confidential),
             GenderViews = new GenderProperty(Sex.NonOrNotApplicable),
             GeoCoordinates = new GeoProperty(new GeoCoordinate(23.456, 49.654)),
             NickNames = new StringCollectionProperty(new string[] { "Genius", "The Brain" }),

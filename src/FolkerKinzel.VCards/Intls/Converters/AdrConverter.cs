@@ -12,35 +12,35 @@ internal static class AdrConverter
         internal const string PARCEL = "PARCEL";
     }
 
-    internal const Addr DEFINED_ADDRESS_TYPES_VALUES = Addr.Dom
-                                                             | Addr.Intl
-                                                             | Addr.Postal
-                                                             | Addr.Parcel;
+    internal const Adr DEFINED_ADDRESS_TYPES_VALUES = Adr.Dom
+                                                             | Adr.Intl
+                                                             | Adr.Postal
+                                                             | Adr.Parcel;
 
     internal const int ADDRESS_TYPES_MIN_BIT = 0;
     internal const int ADDRESS_TYPES_MAX_BIT = 3;
 
-    internal static Addr? Parse(string? typeValue)
+    internal static Adr? Parse(string? typeValue)
     {
         Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
 
         return typeValue switch
         {
-            AddressTypesValue.DOM => Addr.Dom,
-            AddressTypesValue.INTL => Addr.Intl,
-            AddressTypesValue.POSTAL => Addr.Postal,
-            AddressTypesValue.PARCEL => Addr.Parcel,
+            AddressTypesValue.DOM => Adr.Dom,
+            AddressTypesValue.INTL => Adr.Intl,
+            AddressTypesValue.POSTAL => Adr.Postal,
+            AddressTypesValue.PARCEL => Adr.Parcel,
             _ => null
         };
     }
 
-    internal static string ToVcfString(this Addr value)
+    internal static string ToVcfString(this Adr value)
         => value switch
         {
-            Addr.Dom => AddressTypesValue.DOM,
-            Addr.Intl => AddressTypesValue.INTL,
-            Addr.Postal => AddressTypesValue.POSTAL,
-            Addr.Parcel => AddressTypesValue.PARCEL,
+            Adr.Dom => AddressTypesValue.DOM,
+            Adr.Intl => AddressTypesValue.INTL,
+            Adr.Postal => AddressTypesValue.POSTAL,
+            Adr.Parcel => AddressTypesValue.PARCEL,
             _ => throw new ArgumentOutOfRangeException(nameof(value))
         };
 }

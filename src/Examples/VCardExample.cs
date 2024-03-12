@@ -91,7 +91,7 @@ public static class VCardExample
                                 parameters: static p =>
                                 {
                                     p.PropertyClass = PCl.Work;
-                                    p.AddressType = Addr.Dom | Addr.Intl | Addr.Postal | Addr.Parcel;
+                                    p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel;
                                     p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
                                     p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
                                 },

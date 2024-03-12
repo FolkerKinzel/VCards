@@ -37,12 +37,12 @@ public sealed partial class ParameterSection
 
     /// <summary> <c>TYPE</c>: Specifies the type of a postal delivery address. 
     /// <c>(2,3)</c></summary>
-    public Addr? AddressType
+    public Adr? AddressType
     {
-        get => Get<Addr?>(VCdParam.AddressType);
+        get => Get<Adr?>(VCdParam.AddressType);
         set
         {
-            value = (value == default(Addr)) ? null : value;
+            value = (value == default(Adr)) ? null : value;
             Set(VCdParam.AddressType, value);
         }
     }

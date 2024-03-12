@@ -157,11 +157,11 @@ public class V2Tests
         var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", autoLabel: false);
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
-        addr0.Parameters.AddressType = Addr.Postal | Addr.Parcel;
+        addr0.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr0.Parameters.PropertyClass = PCl.Home;
 
         var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", autoLabel: false);
-        addr1.Parameters.AddressType = Addr.Postal | Addr.Parcel;
+        addr1.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr1.Parameters.PropertyClass = PCl.Work;
         addr1.Parameters.Label = label1;
 
@@ -194,11 +194,11 @@ public class V2Tests
         var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", autoLabel: false);
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
-        addr0.Parameters.AddressType = Addr.Postal | Addr.Parcel;
+        addr0.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr0.Parameters.PropertyClass = PCl.Home;
 
         var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", autoLabel: false);
-        addr1.Parameters.AddressType = Addr.Postal | Addr.Parcel;
+        addr1.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr1.Parameters.PropertyClass = PCl.Work;
         addr1.Parameters.Label = label1;
 

@@ -49,7 +49,7 @@ public readonly struct AccessBuilder
     /// Sets the <see cref="VCard.Access"/> property to an <see cref="AccessProperty"/> instance that is 
     /// newly initialized using the specified arguments.
     /// </summary>
-    /// <param name="value">A member of the <see cref="Access" /> enum.</param>
+    /// <param name="value">A member of the <see cref="Acs" /> enum.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is 
@@ -58,7 +58,7 @@ public readonly struct AccessBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been
     /// initialized using the default constructor.</exception>
-    public VCardBuilder Set(Access value,
+    public VCardBuilder Set(Acs value,
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.Access, 

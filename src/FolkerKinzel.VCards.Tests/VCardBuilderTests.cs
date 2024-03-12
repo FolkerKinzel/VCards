@@ -64,10 +64,10 @@ public class VCardBuilderTests
         VCard.RegisterApp(null);
 
         VCard vc = VCardBuilder.Create()
-                               .Access.Set(Access.Private)
+                               .Access.Set(Acs.Private)
                                .VCard;
         Assert.IsNotNull (vc.Access);
-        Assert.AreEqual(Access.Private, vc.Access.Value);
+        Assert.AreEqual(Acs.Private, vc.Access.Value);
     }
 
     [TestMethod()]
@@ -77,10 +77,10 @@ public class VCardBuilderTests
         VCard.RegisterApp(null);
 
         VCard vc = VCardBuilder.Create()
-                               .Access.Set(Access.Private, vc => "group")
+                               .Access.Set(Acs.Private, vc => "group")
                                .VCard;
         Assert.IsNotNull(vc.Access);
-        Assert.AreEqual(Access.Private, vc.Access.Value);
+        Assert.AreEqual(Acs.Private, vc.Access.Value);
         Assert.AreEqual("group", vc.Access.Group);
 
         VCardBuilder.Create(vc).Access.Clear();
@@ -94,10 +94,10 @@ public class VCardBuilderTests
         VCard.SyncTestReset();
 
         var builder = VCardBuilder.Create();
-        var prop = new AccessProperty(Access.Public);
+        var prop = new AccessProperty(Acs.Public);
         builder.Access.Edit(p => prop = p);
         Assert.IsNull(prop);
-        builder.Access.Set(Access.Private)
+        builder.Access.Set(Acs.Private)
                .Access.Edit(p => prop = p);
         Assert.IsNotNull(prop);
     }
@@ -112,11 +112,11 @@ public class VCardBuilderTests
             .Create()
             .Addresses.Add("Elm Street", null, null, null,
                             autoLabel: false,
-                            parameters: p => p.AddressType = Addr.Intl,
+                            parameters: p => p.AddressType = Adr.Intl,
                             group: vc => "gr1"
                             )
             .Addresses.Add("Schlossallee", null, null, null,
-                         pref: true, parameters: p => p.AddressType = Addr.Dom)
+                         pref: true, parameters: p => p.AddressType = Adr.Dom)
             .Addresses.Add("3", null, null, null)
             .Addresses.Add("4", null, null, null)
             .VCard;
@@ -128,11 +128,11 @@ public class VCardBuilderTests
 
         Assert.AreEqual("Schlossallee", prop1.Value.Street[0]);
         Assert.AreEqual(1, prop1.Parameters.Preference);
-        Assert.AreEqual(Addr.Dom, prop1.Parameters.AddressType);
+        Assert.AreEqual(Adr.Dom, prop1.Parameters.AddressType);
         Assert.IsNotNull(prop1.Parameters.Label);
         Assert.AreEqual("Elm Street", prop2.Value.Street[0]);
         Assert.AreEqual(2, prop2.Parameters.Preference);
-        Assert.AreEqual(Addr.Intl, prop2.Parameters.AddressType);
+        Assert.AreEqual(Adr.Intl, prop2.Parameters.AddressType);
         Assert.IsNull(prop2.Parameters.Label);
         Assert.AreEqual("gr1", prop2.Group);
         Assert.IsTrue(vc.Addresses!.Any(x => x?.Value.Street[0] == "3"));
@@ -153,7 +153,7 @@ public class VCardBuilderTests
             .Create()
             .Addresses.Add(Enumerable.Repeat("Elm Street", 1), null, null, null,
                            autoLabel: false,
-                           parameters: p => p.AddressType = Addr.Intl,
+                           parameters: p => p.AddressType = Adr.Intl,
                            group: vc => "gr1"
                          )
             .Addresses.Add(["2"], null, null, null, pref: true)
@@ -163,7 +163,7 @@ public class VCardBuilderTests
 
         Assert.AreEqual("Elm Street", prop1.Value.Street[0]);
         Assert.AreEqual(2, prop1.Parameters.Preference);
-        Assert.AreEqual(Addr.Intl, prop1.Parameters.AddressType);
+        Assert.AreEqual(Adr.Intl, prop1.Parameters.AddressType);
         Assert.IsNull(prop1.Parameters.Label);
         Assert.AreEqual("gr1", prop1.Group);
 

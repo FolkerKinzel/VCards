@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FolkerKinzel.VCards.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
@@ -15,7 +16,7 @@ public class AccessBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void SetTest1() => new AccessBuilder().Set(Enums.Access.Public);
+    public void SetTest1() => new AccessBuilder().Set(Acs.Public);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
