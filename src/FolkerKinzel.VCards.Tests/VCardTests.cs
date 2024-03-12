@@ -471,6 +471,14 @@ public class VCardTests
         Assert.IsNull(VCard.App);
     }
 
+    [TestMethod]
+    public void CloneTest1()
+    {
+        VCard.SyncTestReset();
+        VCard vc1 = Utility.CreateVCard();
+        var vc2 = (VCard)vc1.Clone();
+        Assert.AreNotSame(vc1, vc2);
+    }
 
     //[TestMethod]
     //public void RegisterAppTest3()
