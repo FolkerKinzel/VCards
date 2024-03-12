@@ -468,7 +468,7 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? values) where TSource : VCardProperty
         => values?.WhereNotNull()
                   .GroupBy(static x => x.Group, StringComparer.OrdinalIgnoreCase)
-           ?? Enumerable.Empty<IGrouping<string?, TSource>>();
+           ?? [];
 
     /// <summary>
     /// Groups the <see cref="VCardProperty"/> objects in <paramref name="values"/>
@@ -498,7 +498,7 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? values) where TSource : VCardProperty, IEnumerable<TSource>
         => values?.WhereNotNull()
                   .GroupBy(static x => x.Parameters.AltID, StringComparer.Ordinal)
-           ?? Enumerable.Empty<IGrouping<string?, TSource>>();
+           ?? [];
 
     /// <summary>
     /// Generates a new value for the <see cref="ParameterSection.AltID"/> property that

@@ -141,14 +141,14 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
            && other.Uncertainty == Uncertainty;
 
     /// <summary>
-    /// Indicates whether the current object desribes a geographical position that is 
+    /// Indicates whether the current object desribes a geographical location that is 
     /// equal to that of <paramref name="other"/>.
     /// </summary>
     /// <param name="other">A <see cref="GeoCoordinate"/> object to compare with the 
     /// current instance.</param>
     /// 
-    /// <returns><c>true</c> if the geographical position of <paramref name="other"/>
-    /// is equal to that of the current instance, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the geographical location that <paramref name="other"/>
+    /// describes is equal to that of the current instance, otherwise <c>false</c>.</returns>
     public bool IsSamePosition(GeoCoordinate other)
     {
         _ArgumentNullException.ThrowIfNull(other, nameof(other));
@@ -157,6 +157,16 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         return ComputeDistanceToCompareEquality(other) < (minDist < 0.2 ? MIN_DISTANCE : minDist);
     }
 
+    /// <summary>
+    /// Compares two <see cref="GeoCoordinate"/> objects to determine whether both describe 
+    /// the same geographic location.
+    /// </summary>
+    /// <param name="coordinate1">The first <see cref="GeoCoordinate"/> object.</param>
+    /// <param name="coordinate2">The second <see cref="GeoCoordinate"/> object.</param>
+    /// <returns><c>true</c> if <paramref name="coordinate1"/> and <paramref name="coordinate2"/>
+    /// describe the same geographical location, otherwise <c>false</c>.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="coordinate1"/> or
+    /// <paramref name="coordinate2"/> is <c>null</c>.</exception>
     public static bool AreSamePosition(GeoCoordinate coordinate1, GeoCoordinate coordinate2)
         => coordinate1?.IsSamePosition(coordinate2) ?? throw new ArgumentNullException(nameof(coordinate1));
 

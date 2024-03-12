@@ -20,13 +20,14 @@ public static partial class Vcf
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
     /// the content of the VCF file.</returns>
     /// 
+    /// <remarks>When the method completes, the <see cref="VCard.Dereference(IEnumerable{VCard?})"/> 
+    /// method has already been called on the return value.</remarks>
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.
     /// </exception>
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     public static IList<VCard> Load(string fileName, Encoding? textEncoding = null)
     {
         using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
@@ -65,11 +66,11 @@ public static partial class Vcf
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
     /// the content of <paramref name="vcf" />.</returns>
     /// 
+    /// <remarks>When the method completes, the <see cref="VCard.Dereference(IEnumerable{VCard?})"/> 
+    /// method has already been called on the return value.</remarks>
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vcf" /> is <c>null</c>.
     /// </exception>
-    /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class. (See 
-    /// <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     public static IList<VCard> Parse(string vcf)
     {
         _ArgumentNullException.ThrowIfNull(vcf, nameof(vcf));
@@ -89,15 +90,15 @@ public static partial class Vcf
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
     /// the content of the VCF file.</returns>
     /// 
+    /// <remarks>When the method completes, the <see cref="VCard.Dereference(IEnumerable{VCard?})"/> 
+    /// method has already been called on the return value.</remarks>
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="stream" /> is <c>null</c>.
     /// </exception>
     /// <exception cref="ArgumentException"><paramref name="stream"/> doesn't support reading.</exception>
     /// <exception cref="ObjectDisposedException"> <paramref name="stream" /> was closed.
     /// </exception>
     /// <exception cref="IOException"> Could not read from <paramref name="stream"/>.</exception>
-    /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class. (See 
-    /// <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IList<VCard> Deserialize(Stream stream,
                                            Encoding? textEncoding = null,
@@ -152,8 +153,8 @@ public static partial class Vcf
 #if !(NET461 || NETSTANDARD2_0)
 
     public static async IAsyncEnumerable<VCard> DeserializeManyAsync(IEnumerable<Func<CancellationToken, Task<Stream>>?> factories,
-                                                               AnsiFilter? filter = null,
-                                                               [EnumeratorCancellation] CancellationToken token = default)
+                                                                     AnsiFilter? filter = null,
+                                                                     [EnumeratorCancellation] CancellationToken token = default)
     {
         _ArgumentNullException.ThrowIfNull(factories, nameof(factories));
 
@@ -170,7 +171,7 @@ public static partial class Vcf
             {
                 using Stream? stream = await factory(token).ConfigureAwait(false);
 
-                vCards = stream is null ? Array.Empty<VCard>()
+                vCards = stream is null ? []
                                         : Deserialize(stream);
             }
             else
