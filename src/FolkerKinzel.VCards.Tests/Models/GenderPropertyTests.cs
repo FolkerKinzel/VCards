@@ -112,4 +112,11 @@ public class GenderPropertyTests
         Assert.AreSame(prop1.Value, prop2.Value);
         Assert.AreNotSame(prop1, prop2);
     }
+
+    [TestMethod]
+    public void ToStringTest1()
+    {
+        var prop1 = new GenderProperty(Sex.Other, "difficult");
+        Assert.IsNotNull(prop1.ToString());
+    }
 }

@@ -181,6 +181,8 @@ public class VCardTests
     [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
     public void SerializeTest_StreamClosed(VCdVersion version)
     {
+        VCard.SyncTestReset();
+
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker")
@@ -199,6 +201,8 @@ public class VCardTests
     [DataRow(VCdVersion.V4_0)]
     public void DeserializeTest1(VCdVersion version)
     {
+        VCard.SyncTestReset();
+
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker")
@@ -232,6 +236,8 @@ public class VCardTests
     [DataRow(VCdVersion.V4_0)]
     public void ToVcfStringTest1(VCdVersion version)
     {
+        VCard.SyncTestReset();
+
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker")
@@ -262,6 +268,8 @@ public class VCardTests
     [TestMethod]
     public void ToStringTest1()
     {
+        VCard.SyncTestReset();
+
         var textProp = new TextProperty("Test");
 
         var pidMap1 = new AppID(5, "http://folkerkinzel.de/file1.htm");
@@ -281,6 +289,59 @@ public class VCardTests
 
         Assert.IsNotNull(s);
         Assert.IsFalse(string.IsNullOrWhiteSpace(s));
+    }
+
+    [TestMethod]
+    public void ToStringTest2()
+    {
+        const string group = "TheGroup";
+
+        VCard vc = VCardBuilder
+         .Create()
+         .DisplayNames.Add("Mickey", group: v => group)
+         .Notes.Add(null)
+         .VCard;
+
+        vc.ToVcfString();
+
+        string s = Vcf.Parse(Vcf.ToString(vc, VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteEmptyProperties)))[0].ToString();
+        StringAssert.Contains(s, group);
+        StringAssert.Contains(s, "2.1");
+        StringAssert.Contains(s, "<EMPTY>");
+    }
+
+    [TestMethod]
+    public void ToStringTest3()
+    {
+        const string group = "TheGroup";
+
+        VCard vc = VCardBuilder
+         .Create()
+         .DisplayNames.Add("Mickey", group: v => group)
+         .VCard;
+
+        vc.ToVcfString();
+
+        string s = Vcf.Parse(Vcf.ToString(vc, VCdVersion.V3_0))[0].ToString();
+        StringAssert.Contains(s, group);
+        StringAssert.Contains(s, "3.0");
+    }
+
+    [TestMethod]
+    public void ToStringTest4()
+    {
+        const string group = "TheGroup";
+
+        VCard vc = VCardBuilder
+         .Create()
+         .DisplayNames.Add("Mickey", group: v => group)
+         .VCard;
+
+        vc.ToVcfString();
+
+        string s = Vcf.Parse(Vcf.ToString(vc, VCdVersion.V4_0))[0].ToString();
+        StringAssert.Contains(s, group);
+        StringAssert.Contains(s, "4.0");
     }
 
 
@@ -466,7 +527,6 @@ public class VCardTests
     [TestMethod]
     public void VCardTest1()
     {
-        VCard.SyncTestReset();
         _ = new VCard();
         Assert.IsNull(VCard.App);
     }
@@ -474,7 +534,6 @@ public class VCardTests
     [TestMethod]
     public void CloneTest1()
     {
-        VCard.SyncTestReset();
         VCard vc1 = Utility.CreateVCard();
         var vc2 = (VCard)vc1.Clone();
         Assert.AreNotSame(vc1, vc2);

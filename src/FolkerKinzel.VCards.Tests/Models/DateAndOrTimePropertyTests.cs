@@ -150,4 +150,10 @@ public class DateAndOrTimePropertyTests
         Assert.AreEqual(29, prop.Value.DateOnly.Value.Day);
     }
 
+    [TestMethod]
+    public void ToStringTest1()
+    {
+        var prop = DateAndOrTimeProperty.FromDate(2, 29);
+        Assert.IsNotNull(prop.ToString());
+    }
 }

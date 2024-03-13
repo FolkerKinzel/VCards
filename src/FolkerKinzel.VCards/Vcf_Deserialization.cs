@@ -34,6 +34,11 @@ public static partial class Vcf
         return DoDeserialize(reader);
     }
 
+    /// <summary>Loads a VCF file and selects the right <see cref="Encoding"/> automatically.</summary>
+    /// <param name="fileName">Absolute or relative path to a VCF file.</param>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static IList<VCard> Load(string fileName, AnsiFilter filter)
         => filter?.Load(fileName) ?? throw new ArgumentNullException(nameof(filter));
 

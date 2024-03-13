@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -48,5 +49,12 @@ public class KindPropertyTests
 
         Assert.AreEqual(kind, prop!.Value);
         Assert.IsFalse(prop.IsEmpty);
+    }
+
+    [TestMethod]
+    public void GetVCardPropertyValueTest1()
+    {
+        VCardProperty prop = new KindProperty(Kind.Group);
+        Assert.AreEqual(Kind.Group, prop.Value);
     }
 }

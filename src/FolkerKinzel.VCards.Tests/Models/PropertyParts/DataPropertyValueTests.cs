@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 
@@ -43,5 +44,30 @@ public class DataPropertyValueTests
         Assert.IsNull(rel.String);
         Assert.IsNotNull(rel.Bytes);
         Assert.IsNull(rel.Uri);
+    }
+
+    [TestMethod]
+    public void ToStringTest1()
+    {
+        var prop = DataProperty.FromBytes([1, 2, 3]);
+        string s = prop.ToString();
+        StringAssert.Contains(s, "3 Bytes");
+    }
+
+    [TestMethod]
+    public void ToStringTest2()
+    {
+        var prop = DataProperty.FromUri(new Uri("http://contoso.com"));
+        string s = prop.ToString();
+        StringAssert.Contains(s, "contoso");
+    }
+
+    [TestMethod]
+    public void ToStringTest3()
+    {
+        const string passWord = "Simsalabim";
+        var prop = DataProperty.FromText(passWord);
+        string s = prop.ToString();
+        StringAssert.Contains(s, passWord);
     }
 }

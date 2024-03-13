@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -73,5 +74,13 @@ public class OrgPropertyTests
     {
         var prop = new OrgProperty("Contoso");
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+    }
+
+    [TestMethod]
+    public void ToStringTest1()
+    {
+        var prop = new OrgProperty("Contoso", ["Marketing", "Internet"]);
+        string s = prop.ToString();
+        Assert.IsNotNull(s);
     }
 }
