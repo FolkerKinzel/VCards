@@ -36,12 +36,31 @@ public static partial class Vcf
 
     /// <summary>Loads a VCF file and selects the right <see cref="Encoding"/> automatically.</summary>
     /// <param name="fileName">Absolute or relative path to a VCF file.</param>
-    /// <param name="filter"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <param name="filter">An <see cref="AnsiFilter"/> instance.</param>
+    /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
+    /// the content of the VCF file.</returns>
+    /// 
+    /// <remarks>When the method completes, the <see cref="VCard.Dereference(IEnumerable{VCard?})"/> 
+    /// method has already been called on the return value.</remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="fileName"/> or
+    /// <paramref name="filter"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
+    /// file path.</exception>
+    /// <exception cref="IOException">The file could not be loaded.</exception>
     public static IList<VCard> Load(string fileName, AnsiFilter filter)
         => filter?.Load(fileName) ?? throw new ArgumentNullException(nameof(filter));
 
+    /// <summary>
+    /// Loads a collection of VCF files and allows to specify an "AnsiFilter" instance for
+    /// selecting the right <see cref="Encoding"/> automatically.
+    /// </summary>
+    /// <param name="fileNames">A collection of absolute or relative paths to VCF files.</param>
+    /// <param name="filter">An <see cref="AnsiFilter"/> instance.</param>
+    /// <returns>A collection of parsed <see cref="VCard" /> objects.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="fileNames"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="fileNames" /> contains an
+    /// item that is neither <c>null</c> nor a valid file path.</exception>
+    /// <exception cref="IOException">A file could not be loaded.</exception>
     public static IEnumerable<VCard> LoadMany(IEnumerable<string?> fileNames,
                                               AnsiFilter? filter = null)
     {
@@ -84,16 +103,15 @@ public static partial class Vcf
         return DoDeserialize(reader);
     }
 
-    /// <summary>Deserializes a VCF file using a <see cref="TextReader" />.</summary>
-    /// <param name="stream">A <see cref="TextReader" />.</param>
-    /// <param name="textEncoding">The text encoding to use to read the file or <c>null</c>,
-    /// to read the file with the standard-compliant text encoding <see cref="Encoding.UTF8"
+    /// <summary>Deserializes a <see cref="Stream"/> of VCF data.</summary>
+    /// <param name="stream">The <see cref="Stream"/> to deserialize.</param>
+    /// <param name="textEncoding">The text encoding to use for deserialization or <c>null</c>,
+    /// to deserialize the <see cref="Stream"/> with the standard-compliant text encoding <see cref="Encoding.UTF8"
     /// />.</param>
     /// <param name="leaveStreamOpen"><c>true</c> means that <paramref name="stream"/> will
     /// not be closed by the method. The default value is <c>false</c> to close 
     /// <paramref name="stream"/> when the method returns.</param>
-    /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
-    /// the content of the VCF file.</returns>
+    /// <returns>A collection of parsed <see cref="VCard" /> objects.</returns>
     /// 
     /// <remarks>When the method completes, the <see cref="VCard.Dereference(IEnumerable{VCard?})"/> 
     /// method has already been called on the return value.</remarks>
@@ -113,8 +131,37 @@ public static partial class Vcf
         return DoDeserialize(reader);
     }
 
+    /// <summary>
+    /// Deserializes a <see cref="Stream"/> of VCF data and selects the right <see cref="Encoding"/>
+    /// automatically.
+    /// </summary>
+    /// <param name="factory">A function that returns a <see cref="Stream"/> or <c>null</c>.</param>
+    /// <param name="filter">An <see cref="AnsiFilter"/> instance.</param>
+    /// <returns>A collection of parsed <see cref="VCard" /> objects.</returns>
+    /// 
+    /// <remarks>
+    /// <para>
+    /// <see cref="AnsiFilter"/> only recognizes one <see cref="Encoding"/> per <see cref="Stream"/>.
+    /// This means that if the <see cref="Stream"/> that <paramref name="factory"/> returns contains 
+    /// VCF data with different <see cref="Encoding"/>s, decoding errors may occur.
+    /// </para>
+    /// <para>
+    /// Any <see cref="Stream"/>s that are used within the method will be closed when the method 
+    /// completes.
+    /// </para>
+    /// </remarks>
+    /// 
+    /// <exception cref="ArgumentNullException"><paramref name="factory"/> or 
+    /// <paramref name="filter"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">The <see cref="Stream"/> that <paramref name="factory"/> 
+    /// returns doesn't support reading.</exception>
+    /// <exception cref="ObjectDisposedException"> <paramref name="factory"/> returns a closed stream.
+    /// </exception>
+    /// <exception cref="IOException"> The method could not read from the <see cref="Stream"/>
+    /// that <paramref name="factory"/> returns.</exception>
     public static IList<VCard> Deserialize(Func<Stream?> factory, AnsiFilter filter)
         => filter?.Deserialize(factory) ?? throw new ArgumentNullException(nameof(filter));
+
 
     public static Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
                                                       AnsiFilter filter,
@@ -122,7 +169,8 @@ public static partial class Vcf
         => filter?.DeserializeAsync(factory, token) ?? throw new ArgumentNullException(nameof(filter));
 
 
-    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", Justification = "<Pending>")]
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", 
+        Justification = "Performance: The collection initializer creates a new List<VCard> instead of Array.Empty<VCard>().")]
     public static IEnumerable<VCard> DeserializeMany(IEnumerable<Func<Stream?>?> factories, AnsiFilter? filter = null)
     {
         _ArgumentNullException.ThrowIfNull(factories, nameof(factories));

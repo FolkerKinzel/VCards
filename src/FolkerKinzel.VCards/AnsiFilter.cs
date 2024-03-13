@@ -122,7 +122,8 @@ public sealed class AnsiFilter
         return Vcf.Load(fileName, enc);
     }
 
-    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", Justification = "<Pending>")]
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", 
+        Justification = "Performance: The collection initializer creates a new List<VCard> instead of Array.Empty<VCard>().")]
     internal IList<VCard> Deserialize(Func<Stream?> factory)
     {
         UsedEncoding = null;
@@ -138,7 +139,7 @@ public sealed class AnsiFilter
             return Array.Empty<VCard>();
         }
 
-        long initialPosition = stream.CanSeek ? stream.Position : 0;
+        long initialPosition = stream.Position;
 
         IList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
 
@@ -163,9 +164,17 @@ public sealed class AnsiFilter
         {
             using var stream2 = factory();
 
-            return stream2 is null
-                    ? vCards
-                    : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
+            if (stream2 is null)
+            {
+                return vCards;
+            }
+
+            for (int i = 0; i < initialPosition; i++)
+            {
+                _ = stream2.ReadByte();
+            }
+
+            return Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }
     }
 
@@ -186,7 +195,7 @@ public sealed class AnsiFilter
             return Array.Empty<VCard>();
         }
 
-        long initialPosition = stream.CanSeek ? stream.Position : 0;
+        long initialPosition = stream.Position;
 
         IList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
 
@@ -211,8 +220,17 @@ public sealed class AnsiFilter
         {
             using Stream stream2 = await factory(token).ConfigureAwait(false);
 
-            return stream2 is null ? vCards
-                                   : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
+            if (stream2 is null)
+            {
+                return vCards;
+            }
+            
+            for (int i = 0; i < initialPosition; i++)
+            {
+                _ = stream2.ReadByte();
+            }
+            
+            return Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }
     }
 
