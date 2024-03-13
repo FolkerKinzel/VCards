@@ -156,7 +156,7 @@ internal static class Utility
             ID = new IDProperty(),
             Urls = new TextProperty("www.folker.com"),
             DirectoryName = new TextProperty("Webseite"),
-            Access = new AccessProperty(Acs.Confidential),
+            Access = new AccessProperty(Access.Confidential),
             GenderViews = new GenderProperty(Sex.NonOrNotApplicable),
             GeoCoordinates = new GeoProperty(new GeoCoordinate(23.456, 49.654)),
             NickNames = new StringCollectionProperty(new string[] { "Genius", "The Brain" }),

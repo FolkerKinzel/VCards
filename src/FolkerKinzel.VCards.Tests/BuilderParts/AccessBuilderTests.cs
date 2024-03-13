@@ -16,7 +16,7 @@ public class AccessBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void SetTest1() => new AccessBuilder().Set(Acs.Public);
+    public void SetTest1() => new AccessBuilder().Set(Access.Public);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

@@ -8,18 +8,18 @@ public class AccessConverterTests
     [TestMethod]
     public void Roundtrip()
     {
-        foreach (Acs kind in (Acs[])Enum.GetValues(typeof(Acs)))
+        foreach (Access kind in (Access[])Enum.GetValues(typeof(Access)))
         {
-            Acs kind2 = AccessConverter.Parse(kind.ToString());
+            Access kind2 = AccessConverter.Parse(kind.ToString());
             Assert.AreEqual(kind, kind2);
-            object kind3 = Enum.Parse(typeof(Acs), kind.ToVCardString(), true);
+            object kind3 = Enum.Parse(typeof(Access), kind.ToVCardString(), true);
             Assert.AreEqual(kind, kind3);
         }
 
         // Test auf null
-        Assert.AreEqual(Acs.Public, AccessConverter.Parse(null));
+        Assert.AreEqual(Access.Public, AccessConverter.Parse(null));
 
         // Test auf nicht definiert
-        Assert.AreEqual(Acs.Public.ToVCardString(), ((Acs)4711).ToVCardString());
+        Assert.AreEqual(Access.Public.ToVCardString(), ((Access)4711).ToVCardString());
     }
 }

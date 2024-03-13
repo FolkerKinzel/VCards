@@ -64,10 +64,10 @@ public class VCardBuilderTests
         VCard.RegisterApp(null);
 
         VCard vc = VCardBuilder.Create()
-                               .Access.Set(Acs.Private)
+                               .Access.Set(Access.Private)
                                .VCard;
         Assert.IsNotNull (vc.Access);
-        Assert.AreEqual(Acs.Private, vc.Access.Value);
+        Assert.AreEqual(Access.Private, vc.Access.Value);
     }
 
     [TestMethod()]
@@ -77,10 +77,10 @@ public class VCardBuilderTests
         VCard.RegisterApp(null);
 
         VCard vc = VCardBuilder.Create()
-                               .Access.Set(Acs.Private, vc => "group")
+                               .Access.Set(Access.Private, vc => "group")
                                .VCard;
         Assert.IsNotNull(vc.Access);
-        Assert.AreEqual(Acs.Private, vc.Access.Value);
+        Assert.AreEqual(Access.Private, vc.Access.Value);
         Assert.AreEqual("group", vc.Access.Group);
 
         VCardBuilder.Create(vc).Access.Clear();
@@ -94,10 +94,10 @@ public class VCardBuilderTests
         VCard.SyncTestReset();
 
         var builder = VCardBuilder.Create();
-        var prop = new AccessProperty(Acs.Public);
+        var prop = new AccessProperty(Access.Public);
         builder.Access.Edit(p => prop = p);
         Assert.IsNull(prop);
-        builder.Access.Set(Acs.Private)
+        builder.Access.Set(Access.Private)
                .Access.Edit(p => prop = p);
         Assert.IsNotNull(prop);
     }
