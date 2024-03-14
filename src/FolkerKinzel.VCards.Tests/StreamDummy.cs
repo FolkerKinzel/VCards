@@ -21,25 +21,9 @@ internal class StreamDummy : Stream
     public override long Length => _stream.Length;
 
     public override long Position
-    { 
-        get
-        {
-            if (!CanSeek)
-            {
-                throw new NotSupportedException();
-            }
-
-            return _stream.Position;
-        }
-        set
-        {
-            if (!CanSeek)
-            {
-                throw new NotSupportedException();
-            }
-
-            _stream.Position = value;
-        }
+    {
+        get => CanSeek ? _stream.Position : throw new NotSupportedException();
+        set => _stream.Position = CanSeek ? value : throw new NotSupportedException();
     }
 
     public override void Flush() => _stream.Flush();
