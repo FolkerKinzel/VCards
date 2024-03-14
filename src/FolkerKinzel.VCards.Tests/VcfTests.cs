@@ -22,7 +22,7 @@ public class VcfTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public async Task DeserializeAsyncTest1() => _ = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream()), null!);
+    public async Task DeserializeAsyncTest1() => _ = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream()), (AnsiFilter)null!);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -35,6 +35,23 @@ public class VcfTests
         Assert.AreEqual(0, vc.Count);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public async Task DeserializeAsyncTest4() => _ = await Vcf.DeserializeAsync(null!);
+
+    [TestMethod]
+    public async Task DeserializeAsyncTest5()
+    {
+        IList<VCard> vc = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(null!));
+        Assert.AreEqual(0, vc.Count);
+    }
+
+    [TestMethod]
+    public async Task DeserializeAsyncTest6()
+    {
+        IList<VCard> vc = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream(File.ReadAllBytes(TestFiles.V4vcf))));
+        Assert.AreEqual(2, vc.Count);
+    }
 
 
     [TestMethod]

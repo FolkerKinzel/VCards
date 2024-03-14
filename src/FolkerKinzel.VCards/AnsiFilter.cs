@@ -123,7 +123,7 @@ public sealed class AnsiFilter
     }
 
     [SuppressMessage("Style", "IDE0301:Simplify collection initialization", 
-        Justification = "Performance: The collection initializer creates a new List<VCard> instead of Array.Empty<VCard>().")]
+        Justification = "Performance: The collection expression creates a new List<VCard> instead of Array.Empty<VCard>().")]
     internal IList<VCard> Deserialize(Func<Stream?> factory)
     {
         UsedEncoding = null;
@@ -139,7 +139,7 @@ public sealed class AnsiFilter
             return Array.Empty<VCard>();
         }
 
-        long initialPosition = stream.Position;
+        long initialPosition = stream.CanSeek ? stream.Position : 0;
 
         IList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
 
@@ -164,21 +164,13 @@ public sealed class AnsiFilter
         {
             using var stream2 = factory();
 
-            if (stream2 is null)
-            {
-                return vCards;
-            }
-
-            for (int i = 0; i < initialPosition; i++)
-            {
-                _ = stream2.ReadByte();
-            }
-
-            return Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
+            return stream2 is null ? vCards 
+                                   : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }
     }
 
-    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", Justification = "<Pending>")]
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", 
+        Justification = "Performance: The collection expression creates a new List<VCard> instead of Array.Empty<VCard>().")]
     internal async Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
                                                        CancellationToken token)
     {
@@ -195,7 +187,7 @@ public sealed class AnsiFilter
             return Array.Empty<VCard>();
         }
 
-        long initialPosition = stream.Position;
+        long initialPosition = stream.CanSeek ? stream.Position : 0;
 
         IList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
 
@@ -218,19 +210,10 @@ public sealed class AnsiFilter
         }
         else
         {
-            using Stream stream2 = await factory(token).ConfigureAwait(false);
+            using Stream? stream2 = await factory(token).ConfigureAwait(false);
 
-            if (stream2 is null)
-            {
-                return vCards;
-            }
-            
-            for (int i = 0; i < initialPosition; i++)
-            {
-                _ = stream2.ReadByte();
-            }
-            
-            return Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
+            return stream2 is null ? vCards 
+                                   : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }
     }
 

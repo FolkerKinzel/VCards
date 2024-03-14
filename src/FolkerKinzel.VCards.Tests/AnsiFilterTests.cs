@@ -176,7 +176,6 @@ public class AnsiFilterTests
     public void DeserializeTest3()
     {
         VCard.SyncTestReset();
-        VCard.RegisterApp(null);
 
         var filter = new AnsiFilter();
 
@@ -217,7 +216,6 @@ public class AnsiFilterTests
     public async Task DeserializeAsyncTest3()
     {
         VCard.SyncTestReset();
-        VCard.RegisterApp(null);
 
         var filter = new AnsiFilter();
 

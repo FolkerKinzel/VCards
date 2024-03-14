@@ -14,7 +14,7 @@ public static partial class Vcf
 {
     /// <summary>Loads a VCF file and allows to specify the <see cref="Encoding"/>.</summary>
     /// <param name="fileName">Absolute or relative path to a VCF file.</param>
-    /// <param name="textEncoding">The text encoding to use to read the file or <c>null</c>,
+    /// <param name="enc">The text encoding to use to read the file or <c>null</c>,
     /// to read the file with the standard-compliant text encoding <see cref="Encoding.UTF8"
     /// />.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
@@ -28,9 +28,9 @@ public static partial class Vcf
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    public static IList<VCard> Load(string fileName, Encoding? textEncoding = null)
+    public static IList<VCard> Load(string fileName, Encoding? enc = null)
     {
-        using StreamReader reader = InitializeStreamReader(fileName, textEncoding);
+        using StreamReader reader = InitializeStreamReader(fileName, enc);
         return DoDeserialize(reader);
     }
 
@@ -105,7 +105,7 @@ public static partial class Vcf
 
     /// <summary>Deserializes a <see cref="Stream"/> of VCF data.</summary>
     /// <param name="stream">The <see cref="Stream"/> to deserialize.</param>
-    /// <param name="textEncoding">The text encoding to use for deserialization or <c>null</c>,
+    /// <param name="enc">The text encoding to use for deserialization or <c>null</c>,
     /// to deserialize the <see cref="Stream"/> with the standard-compliant text encoding <see cref="Encoding.UTF8"
     /// />.</param>
     /// <param name="leaveStreamOpen"><c>true</c> means that <paramref name="stream"/> will
@@ -124,10 +124,10 @@ public static partial class Vcf
     /// <exception cref="IOException"> Could not read from <paramref name="stream"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IList<VCard> Deserialize(Stream stream,
-                                           Encoding? textEncoding = null,
+                                           Encoding? enc = null,
                                            bool leaveStreamOpen = false)
     {
-        using var reader = new StreamReader(stream, textEncoding ?? Encoding.UTF8, true, 1024, leaveStreamOpen);
+        using var reader = new StreamReader(stream, enc ?? Encoding.UTF8, true, 1024, leaveStreamOpen);
         return DoDeserialize(reader);
     }
 
@@ -162,13 +162,111 @@ public static partial class Vcf
     public static IList<VCard> Deserialize(Func<Stream?> factory, AnsiFilter filter)
         => filter?.Deserialize(factory) ?? throw new ArgumentNullException(nameof(filter));
 
+    /// <summary>
+    /// Deserializes a <see cref="Stream"/> of VCF data and selects the correct <see cref="Encoding"/>
+    /// automatically in an asynchronous operation.
+    /// </summary>
+    /// <param name="factory">A function that takes a <see cref="CancellationToken"/> as
+    /// argument and returns a <see cref="Stream"/> of VCF data as an 
+    /// asynchronous operation.</param>
+    /// <param name="enc">The text encoding to use for deserialization or <c>null</c>,
+    /// to deserialize the <see cref="Stream"/> with the standard-compliant text encoding <see cref="Encoding.UTF8"
+    /// />.</param>
+    /// <param name="token">A cancellation token that can be used by other objects or threads to 
+    /// receive notice of cancellation.</param>
+    /// <returns>The task object representing the asynchronous operation.</returns>
+    /// 
+    /// <remarks>
+    /// The <see cref="Stream"/>s that is used within the method will be closed when the method 
+    /// completes.
+    /// </remarks>
+    /// 
+    /// <exception cref="ArgumentNullException"><paramref name="factory"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">The <see cref="Stream"/> that <paramref name="factory"/> 
+    /// returns asynchronously doesn't support reading.</exception>
+    /// <exception cref="ObjectDisposedException"> <paramref name="factory"/> returns a closed stream.
+    /// </exception>
+    /// <exception cref="IOException"> The method could not read from the <see cref="Stream"/>.
+    /// </exception>
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
+        Justification = "Performance: The collection expression creates a new List<VCard> instead of Array.Empty<VCard>().")]
+    public static async Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
+                                                            Encoding? enc = null,
+                                                            CancellationToken token = default)
+    {
+        _ArgumentNullException.ThrowIfNull(factory, nameof(factory));
 
+        using Stream? stream = await factory(token).ConfigureAwait(false);
+
+        return stream is null ? Array.Empty<VCard>()
+                              : Deserialize(stream, enc);
+    }
+
+    /// <summary>
+    /// Deserializes a <see cref="Stream"/> of VCF data and selects the correct <see cref="Encoding"/>
+    /// automatically in an asynchronous operation.
+    /// </summary>
+    /// <param name="factory">A function that takes a <see cref="CancellationToken"/> as
+    /// argument and returns a <see cref="Stream"/> of VCF data as an 
+    /// asynchronous operation.</param>
+    /// <param name="filter">An <see cref="AnsiFilter"/> instance.</param>
+    /// <param name="token">A cancellation token that can be used by other objects or threads to 
+    /// receive notice of cancellation.</param>
+    /// <returns>The task object representing the asynchronous operation.</returns>
+    /// 
+    /// <remarks>
+    /// <para>
+    /// <see cref="AnsiFilter"/> only recognizes one <see cref="Encoding"/> per <see cref="Stream"/>.
+    /// This means that if a <see cref="Stream"/> contains VCF data with different <see cref="Encoding"/>s, 
+    /// decoding errors may occur.
+    /// </para>
+    /// <para>
+    /// Any <see cref="Stream"/>s that are used within the method will be closed when the method 
+    /// completes.
+    /// </para>
+    /// </remarks>
+    /// 
+    /// <exception cref="ArgumentNullException"><paramref name="factory"/> or 
+    /// <paramref name="filter"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">The <see cref="Stream"/> that <paramref name="factory"/> 
+    /// returns asynchronously doesn't support reading.</exception>
+    /// <exception cref="ObjectDisposedException"> <paramref name="factory"/> returns a closed stream.
+    /// </exception>
+    /// <exception cref="IOException"> The method could not read from the <see cref="Stream"/>.
+    /// </exception>
     public static Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
                                                       AnsiFilter filter,
                                                       CancellationToken token = default)
         => filter?.DeserializeAsync(factory, token) ?? throw new ArgumentNullException(nameof(filter));
 
 
+    /// <summary>
+    /// Deserializes a collection of <see cref="Stream"/>s of VCF data and allows to specify an 
+    /// <see cref="AnsiFilter"/> to select the correct <see cref="Encoding"/> automatically.
+    /// </summary>
+    /// <param name="factories">A collection of functions that return a either a 
+    /// <see cref="Stream"/> or <c>null</c>. The collection may return <c>null</c> values.</param>
+    /// <param name="filter">An <see cref="AnsiFilter"/> instance, or <c>null</c> to parse all
+    /// <see cref="Stream"/>s with the default <see cref="Encoding"/> UTF-8.</param>
+    /// <returns>A collection of parsed <see cref="VCard" /> objects.</returns>
+    /// 
+    /// <remarks>
+    /// <para>
+    /// <see cref="AnsiFilter"/> only recognizes one <see cref="Encoding"/> per <see cref="Stream"/>.
+    /// This means that if a <see cref="Stream"/> contains VCF data with different <see cref="Encoding"/>s, 
+    /// decoding errors may occur.
+    /// </para>
+    /// <para>
+    /// Any <see cref="Stream"/>s that are used within the method will be closed when the method 
+    /// completes.
+    /// </para>
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="factories"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">One of the <see cref="Stream"/>s doesn't support reading.</exception>
+    /// <exception cref="ObjectDisposedException">One of the functions in <paramref name="factories"/> returns a 
+    /// closed stream.
+    /// </exception>
+    /// <exception cref="IOException"> The method could not read from one of the <see cref="Stream"/>s.</exception>
     [SuppressMessage("Style", "IDE0301:Simplify collection initialization", 
         Justification = "Performance: The collection initializer creates a new List<VCard> instead of Array.Empty<VCard>().")]
     public static IEnumerable<VCard> DeserializeMany(IEnumerable<Func<Stream?>?> factories, AnsiFilter? filter = null)
@@ -205,6 +303,39 @@ public static partial class Vcf
 
 #if !(NET461 || NETSTANDARD2_0)
 
+    /// <summary>
+    /// Deserializes a collection of <see cref="Stream"/>s of VCF data in an asynchronous operation and allows to specify an 
+    /// <see cref="AnsiFilter"/> to select the right <see cref="Encoding"/> automatically.
+    /// </summary>
+    /// <param name="factories">A collection of functions that return a either a <see cref="Stream"/> or <c>null</c> as an 
+    /// asynchronous operation. The collection may return <c>null</c> values.</param>
+    /// <param name="filter">An <see cref="AnsiFilter"/> instance, or <c>null</c> to parse all
+    /// <see cref="Stream"/>s with the default <see cref="Encoding"/> UTF-8.</param>
+    /// <param name="token">A cancellation token that can be used by other objects or threads to receive notice of 
+    /// cancellation.</param>
+    /// <returns>A collection that provides asynchronous iteration over <see cref="VCard"/> values.</returns>
+    /// 
+    /// <remarks>
+    /// <note type="important">
+    /// This method is not available for .NET Framework and .NET Standard 2.0.
+    /// </note>
+    /// <para>
+    /// <see cref="AnsiFilter"/> only recognizes one <see cref="Encoding"/> per <see cref="Stream"/>.
+    /// This means that if a <see cref="Stream"/> contains VCF data with different <see cref="Encoding"/>s, 
+    /// decoding errors may occur.
+    /// </para>
+    /// <para>
+    /// Any <see cref="Stream"/>s that are used within the method will be closed when the method 
+    /// completes.
+    /// </para>
+    /// </remarks>
+    /// 
+    /// <exception cref="ArgumentNullException"><paramref name="factories"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException">One of the <see cref="Stream"/>s doesn't support reading.</exception>
+    /// <exception cref="ObjectDisposedException">One of the functions in <paramref name="factories"/> returns a 
+    /// closed stream.
+    /// </exception>
+    /// <exception cref="IOException"> The method could not read from one of the <see cref="Stream"/>s.</exception>
     public static async IAsyncEnumerable<VCard> DeserializeManyAsync(IEnumerable<Func<CancellationToken, Task<Stream>>?> factories,
                                                                      AnsiFilter? filter = null,
                                                                      [EnumeratorCancellation] CancellationToken token = default)
@@ -222,7 +353,7 @@ public static partial class Vcf
 
             if (filter is null)
             {
-                using Stream? stream = await factory(token).ConfigureAwait(false);
+                using Stream stream = await factory(token).ConfigureAwait(false);
 
                 vCards = stream is null ? []
                                         : Deserialize(stream);
