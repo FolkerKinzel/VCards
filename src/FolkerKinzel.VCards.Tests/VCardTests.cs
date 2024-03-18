@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Models;
+﻿using System.Diagnostics.CodeAnalysis;
+using FolkerKinzel.VCards.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -6,6 +7,7 @@ namespace FolkerKinzel.VCards.Tests;
 [TestClass]
 public class VCardTests
 {
+    [NotNull]
     public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
 
 
@@ -53,7 +55,7 @@ public class VCardTests
             DisplayNames = new TextProperty[] { new TextProperty("Folker") }
         };
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, $"SaveTest_{version}.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, $"SaveTest_{version}.vcf");
 
         vcard.SaveVcf(path, version);
 

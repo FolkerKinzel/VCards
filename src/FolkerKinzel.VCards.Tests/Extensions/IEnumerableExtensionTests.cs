@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Models;
+﻿using System.Diagnostics.CodeAnalysis;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,6 +9,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests;
 [TestClass]
 public class IEnumerableExtensionTests
 {
+    [NotNull]
     public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
 
     private static List<VCard?> GenerateVCardList()
@@ -106,7 +108,7 @@ public class IEnumerableExtensionTests
     {
         var list = new List<VCard?>();
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_Empty.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_Empty.vcf");
 
         list.SaveVcf(path, version);
 
@@ -122,7 +124,7 @@ public class IEnumerableExtensionTests
     {
         List<VCard?>? list = null;
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_Empty.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_Empty.vcf");
 
         list!.SaveVcf(path, version);
     }
@@ -144,7 +146,7 @@ public class IEnumerableExtensionTests
     {
         List<VCard?> list = GenerateVCardList();
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v2.1.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_v2.1.vcf");
 
         list.SaveVcf(path, VCdVersion.V2_1);
 
@@ -159,7 +161,7 @@ public class IEnumerableExtensionTests
     {
         List<VCard?> list = GenerateVCardList();
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v3.0.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_v3.0.vcf");
 
         list.SaveVcf(path, VCdVersion.V3_0);
 
@@ -175,7 +177,7 @@ public class IEnumerableExtensionTests
     {
         List<VCard?> list = GenerateVCardList();
 
-        string path = Path.Combine(TestContext!.TestRunResultsDirectory, "SaveVcfTest_v4.0.vcf");
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_v4.0.vcf");
 
         list.SaveVcf(path, VCdVersion.V4_0);
 
