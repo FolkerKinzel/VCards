@@ -131,7 +131,7 @@
     <Using Include="System.Text" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FolkerKinzel.DataUrls" Version="1.0.0-beta.1" />
+    <PackageReference Include="FolkerKinzel.DataUrls" Version="1.0.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
