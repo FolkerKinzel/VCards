@@ -1,8 +1,8 @@
 Version 7 is a large update. Existing code won't be able to consume this update without changes. It's therefore recommended to start new projects using this version.
 
 Some of the benefits of version 7:
-- `VCardBuilder` adds a **fluent API** to build and edit VCard objects. All features of the VCard data model are now available using only one class.
-- The vCard 4.0 data synchronization mechanism (PID and CLIENTPIDMAP) has been completely rewritten and works fully automatic with only 2 lines of code.
+- `VCardBuilder` is a **fluent API** for creating and editing VCard objects. All features of the VCard data model are now available using only one class.
+- The vCard 4.0 data synchronization mechanism (PID and CLIENTPIDMAP) has been completely rewritten and now works fully automatically with only 2 lines of code.
 - Shorter enum names and other refactoring lead to clear and beautiful code.
 - The new static `Vcf` class separates the VCF serialization from the `VCard` class, which represents the data model.
 - The functionality of `AnsiFilter` is now fully included in the deserialization methods of the `Vcf` class, e.g., in the new `LoadMany` or `DeserializeMany` methods.
