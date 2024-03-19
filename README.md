@@ -20,13 +20,14 @@ Read the ["Getting Started" tutorial](https://github.com/FolkerKinzel/VCards/blo
 
 ### Code Examples
 - [Getting started](src/Examples/GettingStarted.md)
-- [The vCard 4.0 data synchronization](src/Examples/DataSynchronization.md)
 - [Reading and writing of VCF files](src/Examples/VCardExample.cs)
 - [Example implementation of ITimeZoneIDConverter](src/Examples/TimeZoneIDConverter.cs)
 - [Automatic detection of VCF files written with ANSI encodings](src/Examples/AnsiFilterExample.cs)
+- [The vCard 4.0 data synchronization](src/Examples/DataSynchronization.md)
 - [Loading a VCF file from the internet](src/Examples/WebExample.cs)
 - [Reading and writing group vCards](src/Examples/VCard40Example.cs)
 - [Connecting vCards](src/Examples/EmbeddedVCardExample.cs)
+- [Parsing a very large VCF file](src/Examples/VcfReaderExample.cs)
 
 *_(All of the examples are in C# and with nullable reference types enabled. For the sake of 
 better readability, exception handling and parameter validation has been omitted.)_*

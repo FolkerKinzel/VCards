@@ -4,6 +4,8 @@ namespace Examples;
 
 public static class VcfReaderExample
 {
+    // Reads a very large VCF file whose contents cannot be
+    // completely held in memory.
     public static void Example(string filePath)
     {
         using var textReader = new StreamReader(filePath);
