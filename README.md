@@ -19,14 +19,14 @@ The same is for errors caused by incompliant data when serializing the vCard: Be
 Read the ["Getting Started" tutorial](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/GettingStarted.md) if you are new to this library!
 
 ### Code Examples
-- [Getting started](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/GettingStarted.md)
-- [The vCard 4.0 data synchronization](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/DataSynchronization.md)
-- [Reading and writing of VCF files](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/VCardExample.cs)
-- [Example implementation of ITimeZoneIDConverter](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/TimeZoneIDConverter.cs)
-- [Automatic detection of VCF files written with ANSI encodings](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/AnsiFilterExample.cs)
-- [Loading a VCF file from the internet](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/WebExample.cs)
-- [Reading and writing group vCards](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/VCard40Example.cs)
-- [Connecting vCards](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/EmbeddedVCardExample.cs)
+- [Getting started](src/Examples/GettingStarted.md)
+- [The vCard 4.0 data synchronization](src/Examples/DataSynchronization.md)
+- [Reading and writing of VCF files](src/Examples/VCardExample.cs)
+- [Example implementation of ITimeZoneIDConverter](src/Examples/TimeZoneIDConverter.cs)
+- [Automatic detection of VCF files written with ANSI encodings](src/Examples/AnsiFilterExample.cs)
+- [Loading a VCF file from the internet](src/Examples/WebExample.cs)
+- [Reading and writing group vCards](src/Examples/VCard40Example.cs)
+- [Connecting vCards](src/Examples/EmbeddedVCardExample.cs)
 
 *_(All of the examples are in C# and with nullable reference types enabled. For the sake of 
 better readability, exception handling and parameter validation has been omitted.)_*

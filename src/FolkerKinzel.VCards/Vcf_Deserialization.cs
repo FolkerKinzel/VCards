@@ -163,8 +163,7 @@ public static partial class Vcf
         => filter?.Deserialize(factory) ?? throw new ArgumentNullException(nameof(filter));
 
     /// <summary>
-    /// Deserializes a <see cref="Stream"/> of VCF data and selects the correct <see cref="Encoding"/>
-    /// automatically in an asynchronous operation.
+    /// Deserializes a <see cref="Stream"/> of VCF data in an asynchronous operation.
     /// </summary>
     /// <param name="factory">A function that takes a <see cref="CancellationToken"/> as
     /// argument and returns a <see cref="Stream"/> of VCF data as an 

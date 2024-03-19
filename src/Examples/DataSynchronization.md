@@ -12,6 +12,9 @@ automatically in the background; however, this requires the application to regis
 class. In order to avoid unexpected results, the registration has to be done before the first VCard
 object is instantiated.
 
+PID parameters and a CLIENTPIDMAP for the current application are automatically applied when writing
+a vCard 4.0 with the option `Opts.SetPropertyIDs`.
+
 ## How the application registration has to be done?
 Call the static `VCard.RegisterApp` method with an absolute URI as an argument. Although it is 
 allowed to call this method with the `null` argument, this is
@@ -30,9 +33,11 @@ Write a vCard 4.0 with the option `VcfOptions.SetPropertyIDs`:
 Vcf.Save(vCard,
          v4FilePath,
          VCdVersion.V4_0,
-         options: VcfOptions.Default.Set(VcfOptions.SetPropertyIDs));
+         options: Opts.Default.Set(Opts.SetPropertyIDs));
 ```
 (Alternatively call `VCard.Sync.SetPropertyIDs()` manually on the VCard instance.)
+
+See a [complete example](VCardExample.cs).
 
 ## How can I remove PIDs and CLIENTPIDMAPs from a vCard 4.0?
 Call `VCard.Sync.Reset()` on the VCard instance. This is is especially useful after a synchronization
