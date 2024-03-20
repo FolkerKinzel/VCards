@@ -1,7 +1,5 @@
 ﻿using FolkerKinzel.VCards;
-
-// It's recommended to use a namespace-alias for better readability of
-// your code and better usability of Visual Studio IntelliSense:
+using FolkerKinzel.VCards.Extensions;
 using VC = FolkerKinzel.VCards.Models;
 
 namespace Examples;
@@ -10,13 +8,6 @@ public static class EmbeddedVCardExample
 {
     public static void FromVCardExample()
     {
-        // In order to initialize the library, the executing application MUST be registered
-        // with the VCard class. To do this, call the static VCard.RegisterApp method with an
-        // absolute Uri once when the program starts. (UUID URNs are ideal for this.) This
-        // registration is used for the data synchronization mechanism introduced with vCard 4.0
-        // (PID and CLIENTPIDMAP).
-        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
-
         // This will work as expected:
         var vc1 = new VCard
         {
@@ -42,7 +33,7 @@ public static class EmbeddedVCardExample
         Console.WriteLine("prop3, DisplayName: {0}", GetDisplayName(prop3));
 
         static string GetDisplayName(VC::RelationProperty prop)
-            => prop.Value!.VCard!.DisplayNames?.FirstOrDefault()?.Value ?? "<null>";
+            => prop.Value!.VCard!.DisplayNames.PrefOrNull()?.Value ?? "<null>";
     }
 }
 

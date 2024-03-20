@@ -331,6 +331,13 @@ public class IEnumerableExtensionTests
     }
 
     [TestMethod]
+    public void PrefOrNullTest8()
+    {
+        VCardProperty[]? props = null;
+        Assert.IsNull(props.PrefOrNull(null));
+    }
+
+    [TestMethod]
     public void FirstOrNullTest1()
     {
         VCardProperty[]? props = null;
@@ -385,6 +392,13 @@ public class IEnumerableExtensionTests
     {
         VCardProperty[]? props = null;
         Assert.IsNull(props.FirstOrNull(static x => x is TextProperty));
+    }
+
+    [TestMethod]
+    public void FirstOrNullTest8()
+    {
+        VCardProperty[]? props = null;
+        Assert.IsNull(props.FirstOrNull(null));
     }
 
     [TestMethod]
