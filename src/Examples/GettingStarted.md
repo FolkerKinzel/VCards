@@ -154,7 +154,7 @@ properties or to store something there.
 Extension methods allow to perform these operations directly on these collections.
 
 ## Parsing and serializing VCF files using the Vcf class
-The `Vcf` class is a static class that contains a lot of methods for parsing and serializing of VCF files.
+The `Vcf` class is a static class that contains a lot of methods for parsing and serializing `VCard` objects from and to VCF files.
 
 ## Reading the project reference
 At the [GitHub Releases page](https://github.com/FolkerKinzel/VCards/releases) there is a detailed project reference to each version of the Nuget package as CHM file in the Assets. On some systems the content of this CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox - if it is present - in the lower right corner of the General tab in the Properties dialog.
