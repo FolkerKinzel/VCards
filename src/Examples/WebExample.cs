@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Reflection.Metadata.Ecma335;
-using FolkerKinzel.VCards;
+﻿using FolkerKinzel.VCards;
 
 namespace Examples;
 

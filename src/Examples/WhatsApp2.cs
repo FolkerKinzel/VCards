@@ -1,7 +1,7 @@
 ﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using VC = FolkerKinzel.VCards.Models;
+using Mod = FolkerKinzel.VCards.Models;
 
 namespace Examples;
 
@@ -9,7 +9,7 @@ internal static class WhatsAppDemo2
 {
     public static void UsingTheWhatsAppType()
     {
-        var xiamoiMobilePhone = new VC::TextProperty("+1-234-567-89");
+        var xiamoiMobilePhone = new Mod::TextProperty("+1-234-567-89");
 
         xiamoiMobilePhone.Parameters.NonStandard = [ new KeyValuePair<string, string>("TYPE", "WhatsApp") ];
 
