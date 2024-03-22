@@ -1,12 +1,14 @@
 ﻿# Getting Started
 Read here:
 - [The usage of the namespaces](#the-usage-of-the-namespaces)
-- [The data model explained](#the-data-model)
+- [The data model](#the-data-model)
+  - [The VCard class](#the-vcard-class)
   - [The VCardProperty class](#the-vcardproperty-class)
   - [Naming conventions](#naming-conventions)
 - [Efficient building and editing of VCard objects using VCardBuilder](#efficient-building-and-editing-of-vcard-objects-using-vcardbuilder)
 - [Extension methods](#extension-methods)
 - [Parsing and serializing VCF files using the Vcf class](#parsing-and-serializing-vcf-files-using-the-vcf-class)
+- [The vCard 4.0 data synchronization mechanism](#the-vcard-4.0-data-synchronization-mechanism)
 - [Reading the project reference](#reading-the-project-reference)
 - [Documents of the vCard standard](#documents-of-the-vcard-standard)
 
@@ -32,10 +34,10 @@ using FolkerKinzel.VCards.Enums;
 ```
 
 ## The data model
-
 The data model used by this library is aligned to the vCard 4.0 standard (RFC 6350). This means that every vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized they are converted back. 
 
-The content of a vCard is represented by the `VCard` class. (A VCF file may contain several vCards.)
+### The VCard class
+A VCF file consists of one or more vCards. The content of a vCard is represented by the `VCard` class.
 
 ### The VCardProperty class
 A vCard consists of several "properties". Accordingly the data model of the `VCard` class is built on classes that are derived from `VCardProperty`.
@@ -154,6 +156,13 @@ Extension methods allow these operations to be performed directly on these colle
 
 ## Parsing and serializing VCF files using the Vcf class
 The `Vcf` class is a static class that contains a lot of methods for serializing and parsing `VCard` objects to or from VCF files.
+
+## The vCard 4.0 data synchronization mechanism
+With the vCard 4.0 standard a data synchronization mechanism using PID parameters and CLIENTPIDMAP
+properties has been introduced. For this to work fully automatically, only two lines of code are 
+required.
+
+[Learn more](DataSynchronization.md)
 
 ## Reading the project reference
 At the [GitHub Releases page](https://github.com/FolkerKinzel/VCards/releases) there is a detailed project reference to each version of the Nuget package as CHM file in the Assets. On some systems the content of this CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox - if it is present - in the lower right corner of the General tab in the Properties dialog.

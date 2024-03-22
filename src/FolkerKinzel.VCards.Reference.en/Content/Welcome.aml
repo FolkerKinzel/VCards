@@ -46,10 +46,19 @@
         <para>
           The data model used by this library is aligned to the vCard 4.0 standard (RFC6350). This means that every
           vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are
-          converted back. A vCard is represented by the <codeInline>VCard</codeInline> class.
+          converted back.
         </para>
       </content>
       <sections>
+        <section address="VCard">
+          <title>The VCard Class</title>
+          <content>
+            <para>
+              A VCF file consists of one or more vCards. The content of a vCard is represented by the 
+              <codeInline>VCard</codeInline> class.
+            </para>
+          </content>
+        </section>
         <section address="VCardProperty">
           <title>The VCardProperty Class</title>
           <content>
@@ -184,6 +193,29 @@
       </content>
     </section>
 
+    <section address="DataSynchronization">
+      <title>The vCard 4.0 data synchronization mechanism</title>
+      <content>
+        <para>
+          With the vCard 4.0 standard a data synchronization mechanism using PID parameters and CLIENTPIDMAP
+          properties has been introduced. For this to work fully automatically, only two lines of code are
+          required:
+        </para>
+        <code>
+          // Registering the executing application with the VCard class is a technical requirement
+          // when using the data synchronization mechanism introduced with vCard 4.0 (PID and
+          // CLIENTPIDMAP). To do this, call the static method VCard.RegisterApp with an absolute
+          // Uri once when the program starts. (UUID URNs are ideal for this.)
+          VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+
+          //Write a vCard 4.0 with the option VcfOptions.SetPropertyIDs:
+          Vcf.Save(vCard,
+                   filePath,
+                   VCdVersion.V4_0,
+                   options: Opts.Default.Set(Opts.SetPropertyIDs));
+        </code>
+      </content>
+    </section>
 
     <section address="ReadingTheDocumentation">
       <title>Reading the Project Reference</title>

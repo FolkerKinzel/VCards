@@ -2,7 +2,7 @@
 [![NuGet](https://img.shields.io/nuget/v/FolkerKinzel.VCards)](https://www.nuget.org/packages/FolkerKinzel.VCards/)
 [![GitHub](https://img.shields.io/github/license/FolkerKinzel/VCards)](https://github.com/FolkerKinzel/VCards/blob/master/LICENSE)
 
-## .NET library for reading, writing and converting VCF files that comply with vCard standards 2.1, 3.0 and 4.0
+## .NET library for reading, writing, and converting VCF files that comply with vCard standards 2.1, 3.0 and 4.0
 
 FolkerKinzel.VCards is a full-featured .NET library for working with vCard files (*.vcf).
 

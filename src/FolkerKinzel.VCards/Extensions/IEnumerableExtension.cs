@@ -592,7 +592,7 @@ public static class IEnumerableExtension
     /// If <paramref name="second"/> is <c>null</c>, a <c>null</c> reference is appended to <paramref name="first"/>.</param>
     /// <returns>An <see cref="IEnumerable{T}"/> that contains the concatenated elements of the two input sequences.</returns>
     /// <remarks>
-    /// The method works similar to <see cref="System.Linq.Enumerable.Concat{TSource}(IEnumerable{TSource}, IEnumerable{TSource})"/>
+    /// The method works similar to <see cref="Enumerable.Concat{TSource}(IEnumerable{TSource}, IEnumerable{TSource})"/>
     /// but differs in that it can be called on <c>null</c> references and in that it accepts <c>null</c> references as
     /// argument.
     /// </remarks>
@@ -629,7 +629,8 @@ public static class IEnumerableExtension
     /// references.</param>
     /// <param name="predicate">A <see cref="Func{T, TResult}"/> that returns <c>true</c> for
     /// items that are to remove.</param>
-    /// <returns></returns>
+    /// <returns><paramref name="values"/> without the items that matches the <paramref name="predicate"/>.
+    /// If <paramref name="values"/> is <c>null</c>, <c>null</c> is returned.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="predicate"/> is <c>null</c>.</exception>
     public static IEnumerable<TSource?>? Remove<TSource>(
         this IEnumerable<TSource?>? values, Func<TSource, bool> predicate) where TSource : VCardProperty

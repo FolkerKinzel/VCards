@@ -31,7 +31,7 @@ VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
 Write a vCard 4.0 with the option `VcfOptions.SetPropertyIDs`:
 ```csharp
 Vcf.Save(vCard,
-         v4FilePath,
+         filePath,
          VCdVersion.V4_0,
          options: Opts.Default.Set(Opts.SetPropertyIDs));
 ```
