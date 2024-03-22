@@ -2,16 +2,17 @@
 [![NuGet](https://img.shields.io/nuget/v/FolkerKinzel.VCards)](https://www.nuget.org/packages/FolkerKinzel.VCards/)
 [![GitHub](https://img.shields.io/github/license/FolkerKinzel/VCards)](https://github.com/FolkerKinzel/VCards/blob/master/LICENSE)
 
-## .NET library to read, write, and convert VCF files that match the vCard standards 2.1, 3.0, and 4.0
+## .NET library for reading, writing and converting VCF files that comply with vCard standards 2.1, 3.0 and 4.0
 
-FolkerKinzel.VCards is a full featured .NET library to work with vCard files (*.vcf).</para>
+FolkerKinzel.VCards is a full-featured .NET library for working with vCard files (*.vcf).
 
 It allows
-- to load VCF files from the file system and to save them there,</para>
-- to serialize VCF files from and to Streams and</para>
-- to convert VCF files that match the vCard versions 2.1, 3.0, and 4.0 to each other.</para>
+- loading VCF files from the file system and storing them there,
+- serializing VCF files to and from streams,
+- and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.
 
 Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from such files.
+
 The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards are not completely compliant, incompliant data is silently ignored when converting from one vCard standard to another. To minimize this kind of data loss, the library tries to preserve incompliant data using well-known x-name properties. The usage of such x-name properties can be controlled.
 
 [Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v6.1.0)

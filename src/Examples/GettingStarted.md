@@ -1,7 +1,7 @@
 ﻿# Getting Started
 Read here:
 - [The usage of the namespaces](#the-usage-of-the-namespaces)
-- [The data model explained](#the-data-model-explained)
+- [The data model explained](#the-data-model)
   - [The VCardProperty class](#the-vcardproperty-class)
   - [Naming conventions](#naming-conventions)
 - [Efficient building and editing of VCard objects using VCardBuilder](#efficient-building-and-editing-of-vcard-objects-using-vcardbuilder)
@@ -31,7 +31,7 @@ using FolkerKinzel.VCards.Enums;
 // using FolkerKinzel.VCards.Models;
 ```
 
-## The data model explained
+## The data model
 
 The data model used by this library is aligned to the vCard 4.0 standard (RFC 6350). This means that every vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized they are converted back. 
 
@@ -65,7 +65,7 @@ In this example corresponds
 ### Naming conventions
 Most properties of the `VCard` class are collections. It has to do with that many properties are allowed to have more than one instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.
             
-A special feature are properties whose name ends with "Views": These are properties that actually is only one instance allowed, but vCard 4.0 enables you to have different versions of that single instance (e.g., in different languages). You must set the same `AltID` parameter  on each of these versions.
+A special feature are properties whose name ends with "Views": These are properties that actually is only one instance allowed, but vCard 4.0 allows to have different versions of that single instance (e.g., in different languages). The same `AltID` parameter has to be set on each instance.
             
 Most classes derived from `VCardProperty` implement `IEnumerable<T>` in order to be assignable to collection properties without having to be wrapped in an Array or List.
 
@@ -73,13 +73,12 @@ Most classes derived from `VCardProperty` implement `IEnumerable<T>` in order to
 The `VCardBuilder` class provides a fluent API for building and editing VCard objects.
 
 The properties of the VCardBuilder class have the same names as those of the VCard class. Each of these 
-properties gets a struct that provides methods to edit the corresponding <see cref="VCard"/> property. 
+properties gets a struct that provides methods to edit the corresponding VCard property. 
 Each of these methods return the VCardBuilder instance so that the calls can be chained.
 
-The `Create` method initializes a VCardBuilder instance that creates a new VCard instance. The `VCardBuilder.VCard` property gets 
-the VCard object the VCardBuilder has created.
-
-Call the `VCardBuilder.Edit(VCard)` method to edit an existing VCard instance.
+The `VCardBuilder.Create` method overloads initialize a VCardBuilder, which creates a new 
+VCard instance or edits an existing one. The `VCardBuilder.VCard` property gets the VCard 
+object that the VCardBuilder created or manipulated.
 
 See an example how `VCardBuilder` can be used:
 ```csharp
@@ -142,24 +141,24 @@ The namespace `FolkerKinzel.VCards.Extensions` contains several extension method
 more efficient and less error prone. It's recommended to publish this namespace when working with this
 library. 
 
-The methods help in the following cases:
+The methods are helpful in the following cases:
 - Most of the enums are Flags enums and most of the .NET properties with enum Types use the `Nullable<T>` variant of these 
 enums. Extension methods help to savely evaluate and manipulate these nullable enum values.
 - The .NET data types for date and time (such like DateOnly or DateTimeOffset) are not fully compliant with the date-time
 information defined by the vCard standard. Extension methods for these data types help to overcome these issues.
 - Most of the properties of the VCard class are of a specialized Type of `IEnumerable<VCardProperty?>?`. Extension methods
 encapsulate most of the necessary null checking and Linq operations that are needed to retrieve the relevant data from these 
-properties or to store something there.
+properties, or to store something there.
 - Some operations work with collections of VCard objects (e.g., saving several VCard objects together in a common VCF file). 
-Extension methods allow to perform these operations directly on these collections.
+Extension methods allow these operations to be performed directly on these collections.
 
 ## Parsing and serializing VCF files using the Vcf class
-The `Vcf` class is a static class that contains a lot of methods for parsing and serializing `VCard` objects from and to VCF files.
+The `Vcf` class is a static class that contains a lot of methods for serializing and parsing `VCard` objects to or from VCF files.
 
 ## Reading the project reference
 At the [GitHub Releases page](https://github.com/FolkerKinzel/VCards/releases) there is a detailed project reference to each version of the Nuget package as CHM file in the Assets. On some systems the content of this CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox - if it is present - in the lower right corner of the General tab in the Properties dialog.
 
-Uppercase words, which are often found at the beginning of the documentation for a .NET property, are identifiers from the vCard standard. Digits in brackets, which can be found at the end of the documentation for a .NET property, e.g. `(2,3,4)`, describe with which vCard standard the content of the .NET property is compatible.
+Uppercase words, which are often found at the beginning of the documentation for a .NET property, are identifiers from the vCard standard. Digits in brackets that can be found at the end of the documentation for a .NET property, e.g., `(2,3,4)`, describe which vCard standard the content of the .NET property is compatible with.
             
 The digits have the following meaning:
 - `2`: vCard 2.1,

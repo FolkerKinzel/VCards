@@ -2,17 +2,17 @@
 <topic id="397502cd-fe45-4dc2-a450-195693e7f902" revisionNumber="1">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
-      <para>FolkerKinzel.VCards is a full featured .NET library to work with vCard files (*.vcf).</para>
+      <para>FolkerKinzel.VCards is a full-featured .NET library for working with vCard files (*.vcf).</para>
       <para>It allows</para>
       <list class="bullet">
         <listItem>
-          <para>to load VCF files from the file system and to save them there,</para>
+          <para>loading VCF files from the file system and storing them there,</para>
         </listItem>
         <listItem>
-          <para>to serialize VCF files from and to Streams and</para>
+          <para>serializing VCF files to and from streams,</para>
         </listItem>
         <listItem>
-          <para>to convert VCF files, that match the vCard versions 2.1, 3.0 and 4.0, to each other.</para>
+          <para>and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.</para>
         </listItem>
       </list>
       <para>
@@ -31,7 +31,7 @@
     </introduction>
 
     <section address="NameSpaces">
-      <title>Usage of the Namespaces</title>
+      <title>The usage of the namespaces</title>
       <content>
         <para>The following code example provides tips for using the namespaces of the library.</para>
         <code language="c#" source=".\Content\Namespaces.cs"/>
@@ -40,10 +40,11 @@
 
 
     <section address="DataModel">
-      <title>The Data-Model Explained</title>
+      <title>The data model</title>
       <content>
+        <autoOutline/>
         <para>
-          The data model used by this library is aligned to the vCard 4.0 standard (RFC6350). This means, every read
+          The data model used by this library is aligned to the vCard 4.0 standard (RFC6350). This means that every
           vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are
           converted back. A vCard is represented by the <codeInline>VCard</codeInline> class.
         </para>
@@ -53,7 +54,7 @@
           <title>The VCardProperty Class</title>
           <content>
             <para>
-              The data model of the <codeInline>VCard</codeInline> class based on classes, that are derived from <codeInline>VCardProperty</codeInline>.
+              The data model of the <codeInline>VCard</codeInline> class is built on classes that are derived from <codeInline>VCardProperty</codeInline>.
             </para>
             <para>
               <codeInline>VCardProperty</codeInline> exposes the following members:
@@ -83,73 +84,137 @@
               </listItem>
             </list>
             <para>
-              (Classes that are derived from <codeInline>VCardProperty</codeInline> hide the generic implementation of 
-              <codeInline>VCardProperty.Value</codeInline> in order to return 
+              (Classes that are derived from <codeInline>VCardProperty</codeInline> hide the generic implementation of
+              <codeInline>VCardProperty.Value</codeInline> in order to return
               derived classes instead of <codeInline>System.Object?</codeInline>.)
+            </para>
+          </content>
+        </section>
+
+        <section address="NamingConventions">
+          <title>Naming Conventions</title>
+          <content>
+            <para>
+              Most properties of the <codeInline>VCard</codeInline> class are collections. It has to do with that many
+              properties are allowed to have more than one
+              instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.
+            </para>
+            <para>
+              A special feature are properties whose name ends with "Views": These are properties that actually is only
+              one instance allowed, but vCard 4.0 allows to have different versions of that single instance
+              (e.g., in different languages). The same `AltID` parameter has to be set on each instance.
+            </para>
+            <para>
+              Most classes derived from <codeInline>VCardProperty</codeInline> implement <codeInline>IEnumerable&lt;T&gt;</codeInline>
+              in order to be assignable to collection properties without having to be wrapped in an Array or List.
             </para>
           </content>
         </section>
       </sections>
     </section>
 
+    <section address="VCardBuilder">
+      <title>Efficient building and editing of VCard objects using VCardBuilder</title>
+      <content>
+        <para>The `VCardBuilder` class provides a fluent API for building and editing VCard objects.</para>
+        <para>
+          The properties of the VCardBuilder class have the same names as those of the VCard class. Each of these
+          properties gets a struct that provides methods to edit the corresponding VCard property.
+          Each of these methods return the VCardBuilder instance so that the calls can be chained.
+        </para>
+        <para>
+          The <codeInline>VCardBuilder.Create</codeInline> method overloads initialize a VCardBuilder, 
+          which creates a new
+          VCard instance or edits an existing one. The <codeInline>VCardBuilder.VCard</codeInline> property gets the VCard
+          object that the VCardBuilder created or manipulated.
+        </para>
+      </content>
+    </section>
+
+    <section address="ExtensionMethods">
+      <title>Extension methods</title>
+      <content>
+        <para>
+        The namespace <codeInline>FolkerKinzel.VCards.Extensions</codeInline> contains several extension methods 
+        that makes working with VCard objects
+        more efficient and less error prone. It's recommended to publish this namespace when working with this
+        library.
+        </para>
+        <para>
+          The methods are helpful in the following cases:
+        </para>
+        <list class="bullet">
+          <listItem>
+            <para>
+            Most of the enums are Flags enums and most of the .NET properties with enum Types use the <codeInline>
+              Nullable&lt;T&gt;</codeInline> variant of these
+          enums. Extension methods help to savely evaluate and manipulate these nullable enum values.
+        </para>
+        </listItem>
+          <listItem>
+            <para>
+              The .NET data types for date and time (such like DateOnly or DateTimeOffset) are not fully compliant with the date-time
+              information defined by the vCard standard. Extension methods for these data types help to overcome these issues.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              Most of the properties of the VCard class are of a specialized Type of <codeInline>IEnumerable&lt;VCardProperty?&gt;?</codeInline>.
+              Extension methods encapsulate most of the necessary null checking and Linq operations that are needed to retrieve the 
+              relevant data from these properties, or to store something there.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              Some operations work with collections of VCard objects (e.g., saving several VCard objects together in a common VCF file).
+              Extension methods allow these operations to be performed directly on these collections.
+            </para>
+          </listItem>
+        </list>
+      </content>
+    </section>
+
+    <section address="VcfClass">
+      <title>Parsing and serializing VCF files using the Vcf class</title>
+      <content>
+        <para>
+          The <codeInline>Vcf</codeInline> class is a static class that contains a lot of methods for serializing and 
+          parsing <codeInline>VCard</codeInline> objects to or from VCF files.
+        </para>
+      </content>
+    </section>
+
 
     <section address="ReadingTheDocumentation">
       <title>Reading the Project Reference</title>
       <content>
-        <autoOutline/>
+        <para>
+          Uppercase words, which are often found at the beginning of the documentation for a .NET property, are identifiers from the vCard standard.
+          Digits in brackets,
+          which can be found at the end of the documentation for a .NET property, e.g. <literal>(2,3,4)</literal>, describe which with vCard standard
+          the content of the .NET property is compatible.
+        </para>
+        <para>
+          The digits have the following meaning:
+        </para>
+        <list class="bullet">
+          <listItem>
+            <para>
+              <codeInline>2</codeInline>: vCard 2.1,
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <codeInline>3</codeInline>: vCard 3.0
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <codeInline>4</codeInline>: vCard 4.0
+            </para>
+          </listItem>
+        </list>
       </content>
-      <sections>
-        <section address="NamingConventions">
-          <title>Naming Conventions</title>
-          <content>
-            <para>
-              Most properties of the <codeInline>VCard</codeInline> class are collections. It has to do with, that many properties are allowed to have more than one
-              instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.
-            </para>
-            <para>
-              A special feature are properties, whose name ends with "Views": These are properties, which actually is only one instance allowed, but
-              vCard 4.0 enables you to have different versions of that single instance (e.g. in different languages). You must set the same <codeInline>AltID</codeInline> parameter
-              on each of these versions.
-            </para>
-            <para>
-              Most classes derived from <codeInline>VCardProperty</codeInline> implement <codeInline>IEnumerable&lt;T&gt;</codeInline> in
-              order to be assignable to collection properties without having to be wrapped in an Array or List.
-            </para>
-          </content>
-        </section>
-        
-        <section address="SpecialContent">
-          <title>Special Content</title>
-          <content>
-            <para>
-              Uppercase words, which are often found at the beginning of the documentation for a .NET property, are identifiers from the vCard standard.
-              Digits in brackets,
-              which can be found at the end of the documentation for a .NET property, e.g. <literal>(2,3,4)</literal>, describe which with vCard standard
-              the content of the .NET property is compatible.
-            </para>
-            <para>
-              The digits have the following meaning:
-            </para>
-            <list class="bullet">
-              <listItem>
-                <para>
-                  <codeInline>2</codeInline>: vCard 2.1,
-                </para>
-              </listItem>
-              <listItem>
-                <para>
-                  <codeInline>3</codeInline>: vCard 3.0
-                </para>
-              </listItem>
-              <listItem>
-                <para>
-                  <codeInline>4</codeInline>: vCard 4.0
-                </para>
-              </listItem>
-            </list>
-          </content>
-        </section>
-      </sections>
     </section>
 
     <section address="VcardStandard">
@@ -235,7 +300,7 @@
     </section>
 
 
-    
+
 
     <relatedTopics></relatedTopics>
 
