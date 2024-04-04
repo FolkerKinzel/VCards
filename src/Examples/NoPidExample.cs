@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Extensions;
 
 namespace Examples;
 
@@ -23,7 +22,7 @@ public static class NoPidExample
         // Removes all existing PIDs and CLIENTPIDMAPs
         vCard.Sync.Reset();
 
-        Console.WriteLine(vCard.ToVcfString(VCdVersion.V4_0));
+        Console.WriteLine(Vcf.ToString(vCard, VCdVersion.V4_0));
     }
 }
 

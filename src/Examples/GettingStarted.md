@@ -93,6 +93,7 @@ VCard vCard =
                    prefixes: ["Prof.", "Dr."],
                    displayName: static (builder, prop) => builder.Add(prop.ToDisplayName())
                    )
+    .GenderViews.Add(Sex.Female)
     .Organizations.Add("Millers Company", ["C#", "Webdesign"])
     .Titles.Add("CEO")
     .Photos.AddFile(photoFilePath)

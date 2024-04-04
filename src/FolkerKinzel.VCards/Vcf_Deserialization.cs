@@ -23,6 +23,10 @@ public static partial class Vcf
     /// <remarks>When the method completes, the <see cref="VCard.Dereference(IEnumerable{VCard?})"/> 
     /// method has already been called on the return value.</remarks>
     /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.
     /// </exception>
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
@@ -42,6 +46,11 @@ public static partial class Vcf
     /// 
     /// <remarks>When the method completes, the <see cref="VCard.Dereference(IEnumerable{VCard?})"/> 
     /// method has already been called on the return value.</remarks>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\AnsiFilterExample.cs"/>
+    /// </example>
+    /// 
     /// <exception cref="ArgumentNullException"><paramref name="fileName"/> or
     /// <paramref name="filter"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
@@ -57,6 +66,11 @@ public static partial class Vcf
     /// <param name="fileNames">A collection of absolute or relative paths to VCF files.</param>
     /// <param name="filter">An <see cref="AnsiFilter"/> instance.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects.</returns>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
+    /// </example>
+    /// 
     /// <exception cref="ArgumentNullException"><paramref name="fileNames"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="fileNames" /> contains an
     /// item that is neither <c>null</c> nor a valid file path.</exception>
@@ -93,6 +107,10 @@ public static partial class Vcf
     /// <remarks>When the method completes, the <see cref="VCard.Dereference(IEnumerable{VCard?})"/> 
     /// method has already been called on the return value.</remarks>
     /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\NoPidExample.cs"/>
+    /// </example>
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vcf" /> is <c>null</c>.
     /// </exception>
     public static IList<VCard> Parse(string vcf)
@@ -115,6 +133,8 @@ public static partial class Vcf
     /// 
     /// <remarks>When the method completes, the <see cref="VCard.Dereference(IEnumerable{VCard?})"/> 
     /// method has already been called on the return value.</remarks>
+    /// 
+    /// 
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="stream" /> is <c>null</c>.
     /// </exception>
@@ -150,6 +170,10 @@ public static partial class Vcf
     /// completes.
     /// </para>
     /// </remarks>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\WebExample.cs"/>
+    /// </example>
     /// 
     /// <exception cref="ArgumentNullException"><paramref name="factory"/> or 
     /// <paramref name="filter"/> is <c>null</c>.</exception>
@@ -224,6 +248,10 @@ public static partial class Vcf
     /// completes.
     /// </para>
     /// </remarks>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\WebExample.cs"/>
+    /// </example>
     /// 
     /// <exception cref="ArgumentNullException"><paramref name="factory"/> or 
     /// <paramref name="filter"/> is <c>null</c>.</exception>

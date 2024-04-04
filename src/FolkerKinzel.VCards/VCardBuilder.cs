@@ -18,6 +18,9 @@ namespace FolkerKinzel.VCards;
 /// corresponding <see cref="VCard"/> property. Each of these methods return the 
 /// <see cref="VCardBuilder"/> instance so that the calls can be chained.
 /// </remarks>
+/// <example>
+/// <code language="cs" source="..\Examples\VCardExample.cs"/>
+/// </example>
 public sealed class VCardBuilder
 {
     private VCardBuilder(VCard vCard) => VCard = vCard;
@@ -47,13 +50,6 @@ public sealed class VCardBuilder
     public static VCardBuilder Create(VCard vCard)
         => new(vCard ?? throw new ArgumentNullException(nameof(vCard)));
 
-    ///// <summary>
-    ///// Returns the <see cref="VCard"/> object the builder has worked on.
-    ///// </summary>
-    ///// <returns>The <see cref="VCard"/> object.</returns>
-    //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-    //public VCard Build() => VCard;
-
     internal static IEnumerable<TSource?> Add<TSource>(TSource prop,
                                                        IEnumerable<TSource?>? coll,
                                                        Action<ParameterSection>? parameters,
@@ -79,6 +75,9 @@ public sealed class VCardBuilder
     /// Gets the <see cref="FolkerKinzel.VCards.VCard"/> instance the <see cref="VCardBuilder"/> works
     /// with.
     /// </summary>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public VCard VCard { get; }
 
     /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
@@ -87,12 +86,18 @@ public sealed class VCardBuilder
 
     /// <summary> <c>ADR</c>: A structured representation of the physical delivery address
     /// for the vCard object. <c>(2,3,4)</c></summary>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public AddressBuilder Addresses => new AddressBuilder(this);
 
     /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public DateAndOrTimeBuilder AnniversaryViews => new DateAndOrTimeBuilder(this, Prop.AnniversaryViews);
 
     /// <summary> <c>BDAY</c>: Date of birth of the individual associated with the vCard.
@@ -100,6 +105,9 @@ public sealed class VCardBuilder
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public DateAndOrTimeBuilder BirthDayViews => new DateAndOrTimeBuilder(this, Prop.BirthDayViews);
 
     /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
@@ -156,6 +164,9 @@ public sealed class VCardBuilder
 
     /// <summary> <c>EMAIL</c>: The addresses for electronic mail communication with
     /// the vCard object. <c>(2,3,4)</c></summary>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public TextBuilder EMails => new TextBuilder(this, Prop.EMails);
 
     /// <summary> <c>EXPERTISE</c>: A professional subject area that the person has
@@ -181,6 +192,9 @@ public sealed class VCardBuilder
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public GenderBuilder GenderViews => new GenderBuilder(this);
 
     /// <summary> <c>GEO</c>: Specifies latitudes and longitudes. <c>(2,3,4)</c></summary>
@@ -260,6 +274,9 @@ public sealed class VCardBuilder
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public NameBuilder NameViews => new NameBuilder(this);
 
     /// <summary> <c>NICKNAME</c>: One or more descriptive/familiar names for the object
@@ -367,6 +384,9 @@ public sealed class VCardBuilder
 
     /// <summary> <c>ORG</c>: The name and optionally the unit(s) of the organization
     /// associated with the vCard object. <c>(2,3,4)</c></summary>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public OrgBuilder Organizations => new OrgBuilder(this);
 
     /// <summary> <c>ORG-DIRECTORY</c>: A URI representing the person's work place,
@@ -376,10 +396,16 @@ public sealed class VCardBuilder
 
     /// <summary> <c>TEL</c>: Canonical number strings for a telephone numbers for 
     /// telephony communication with the vCard object. <c>(2,3,4)</c></summary>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public TextBuilder Phones => new TextBuilder(this, Prop.Phones);
 
     /// <summary> <c>PHOTO</c>: Image(s) or photograph(s) of the individual associated
     /// with the vCard. <c>(2,3,4)</c></summary>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public DataBuilder Photos => new DataBuilder(this, Prop.Photos);
 
     /// <summary> <c>PRODID</c>: The identifier for the product that created the vCard
@@ -394,6 +420,9 @@ public sealed class VCardBuilder
 
     /// <summary> <c>RELATED</c>: Other entities that the person or organization is 
     /// related to. <c>(4)</c></summary>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public RelationBuilder Relations => new RelationBuilder(this, Prop.Relations);
 
     /// <summary> <c>ROLE</c>: The role, occupation, or business category of the vCard
@@ -428,6 +457,9 @@ public sealed class VCardBuilder
     /// <summary> <c>TITLE</c>: Specifies the job title, functional position or function
     /// of the individual, associated with the vCard object, within an organization.
     /// <c>(2,3,4)</c></summary>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public TextBuilder Titles => new TextBuilder(this, Prop.Titles);
 
     /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in

@@ -43,6 +43,11 @@ public static partial class Vcf
     /// </para>
     /// </remarks>
     /// <seealso cref="ITimeZoneIDConverter" />
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> or <paramref
     /// name="vCards" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
@@ -247,6 +252,10 @@ public static partial class Vcf
     /// </para>
     /// </remarks>
     /// <seealso cref="ITimeZoneIDConverter" />
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\NoPidExample.cs"/>
+    /// </example>
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">

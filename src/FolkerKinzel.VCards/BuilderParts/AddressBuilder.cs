@@ -17,6 +17,9 @@ namespace FolkerKinzel.VCards.BuilderParts;
 /// Only use this structure in conjunction with <see cref="VCardBuilder"/>!
 /// </note>
 /// </remarks>
+/// <example>
+/// <code language="cs" source="..\Examples\VCardExample.cs"/>
+/// </example>
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
     Justification = "Overriding does not change the default behavior.")]
 public readonly struct AddressBuilder
@@ -69,6 +72,11 @@ public readonly struct AddressBuilder
     /// is called with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="AddressBuilder"/> to be able to chain calls.</returns>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance 
     /// that had been initialized using the default constructor.</exception>
     public VCardBuilder Add(string? street,

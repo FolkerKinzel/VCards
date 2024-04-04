@@ -20,6 +20,9 @@ namespace FolkerKinzel.VCards.BuilderParts;
 /// Only use this structure in conjunction with <see cref="VCardBuilder"/>!
 /// </note>
 /// </remarks>
+/// <example>
+/// <code language="cs" source="..\Examples\VCardExample.cs"/>
+/// </example>
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
     Justification = "Overriding does not change the default behavior.")]
 public readonly struct DataBuilder
@@ -75,6 +78,11 @@ public readonly struct DataBuilder
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> to 
     /// be able to chain calls.</returns>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
+    /// 
     /// <exception cref="ArgumentNullException"><paramref name="filePath"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="filePath"/> is not a valid file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>

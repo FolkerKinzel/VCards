@@ -8,6 +8,9 @@ namespace FolkerKinzel.VCards;
 /// Allows iterating through the contents of large VCF files without having to keep all 
 /// the parsed content in memory.
 /// </summary>
+/// <example>
+/// <code language="cs" source="..\Examples\VcfReaderExample.cs"/>
+/// </example>
 public sealed class VcfReader : IDisposable
 {
     private const int DESERIALIZER_QUEUE_INITIAL_CAPACITY = 64;
@@ -18,6 +21,11 @@ public sealed class VcfReader : IDisposable
     /// Initializes a new instance of the <see cref="VcfReader"/> class.
     /// </summary>
     /// <param name="reader">The <see cref="TextReader"/> to use for parsing the VCF data.</param>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\VcfReaderExample.cs"/>
+    /// </example>
+    /// 
     /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
     public VcfReader(TextReader reader)
         => this._textReader = reader ?? throw new ArgumentNullException(nameof(reader));
@@ -39,6 +47,10 @@ public sealed class VcfReader : IDisposable
     /// memory. The utility of the <see cref="VcfReader"/> class is to read huge files.
     /// </para>
     /// </remarks>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\VcfReaderExample.cs"/>
+    /// </example>
     /// 
     /// <exception cref="IOException">Could not read from the source.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

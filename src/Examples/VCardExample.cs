@@ -64,6 +64,7 @@ public static class VCardExample
                                prefixes: ["Prof.", "Dr."],
                                displayName: static (builder, prop) => builder.Add(prop.ToDisplayName())
                                )
+                .GenderViews.Add(Sex.Female)
                 .Organizations.Add("Millers Company", ["C#", "Webdesign"])
                 .Titles.Add("CEO")
                 .Photos.AddFile(photoFilePath)
@@ -150,12 +151,13 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2023-11-13T20:53:33Z
-UID:1c1b8586-e8d0-4307-83d1-fc3f65197e85
+REV:2024-04-04T21:37:18Z
+UID:9505bae8-5553-45cf-bd99-fa13b31ef9a8
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
  Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
 e;Alexandra Caroline;Prof. Dr.;
+X-GENDER:Female
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
 BDAY:1984-03-28
@@ -173,8 +175,8 @@ EMAIL;INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- t3yYbWftGZMcD29OH/DlMXvDvZTUk2QuO1ZTpOhEzQVgqTmaiu9uWP/m8+0iVsn
- TTfKbTdz9ku35nxoe
+ YWCuF/0304boUP4bqlNbhz4UmJXoJA5Bfu/f1pp6uNWVPCWWveyhZ1O1tXzuzRi
+ wMbxp3rIebhV3xDoK
 
 END:VCARD
 
@@ -183,10 +185,11 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2023-11-13T20:53:33Z
-UID:1c1b8586-e8d0-4307-83d1-fc3f65197e85
+REV:2024-04-04T21:37:18Z
+UID:9505bae8-5553-45cf-bd99-fa13b31ef9a8
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
+X-GENDER:Female
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
 BDAY;VALUE=DATE:1984-03-28
@@ -202,8 +205,8 @@ TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 EMAIL;TYPE=INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:t3yYbWftGZMcD29OH/DlMXvDvZTUk2QuO1ZTpOhEzQVgqTma
- iu9uWP/m8+0iVsnTTfKbTdz9ku35nxoe
+PHOTO;ENCODING=b;TYPE=JPEG:YWCuF/0304boUP4bqlNbhz4UmJXoJA5Bfu/f1pp6uNWVPCWW
+ veyhZ1O1tXzuzRiwMbxp3rIebhV3xDoK
 END:VCARD
 
 
@@ -211,10 +214,11 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20231113T205333Z
-UID:urn:uuid:1c1b8586-e8d0-4307-83d1-fc3f65197e85
+REV:20240404T213718Z
+UID:urn:uuid:9505bae8-5553-45cf-bd99-fa13b31ef9a8
 FN;PID=1.1:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
+GENDER:F
 TITLE;PID=1.1:CEO
 ORG;PID=1.1:Millers Company;C#;Webdesign
 BDAY;VALUE=DATE:19840328
@@ -228,8 +232,8 @@ EMAIL;TYPE=WORK;PREF=1;PID=1.1:kaethe_mueller@internet.com
 EMAIL;TYPE=HOME;PREF=2;VALUE=URI;PID=2.1:mailto:kaethe_at_home@internet.com
 RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT;PID=1.1:Paul Müller-R
  isinowsky
-PHOTO;PID=1.1:data:image/jpeg;base64,t3yYbWftGZMcD29OH/DlMXvDvZTUk2QuO1ZTpO
- hEzQVgqTmaiu9uWP/m8+0iVsnTTfKbTdz9ku35nxoe
+PHOTO;PID=1.1:data:image/jpeg;base64,YWCuF/0304boUP4bqlNbhz4UmJXoJA5Bfu/f1p
+ p6uNWVPCWWveyhZ1O1tXzuzRiwMbxp3rIebhV3xDoK
 CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
 END:VCARD
 
@@ -239,17 +243,19 @@ Read VCard:
 Version: 3.0
 
 [DataType: TimeStamp]
-TimeStamp: 11/13/2023 20:53:33 +00:00
+TimeStamp: 04/04/2024 21:37:18 +00:00
 
-UniqueIdentifier: 1c1b8586-e8d0-4307-83d1-fc3f65197e85
+ID: 9505bae8-5553-45cf-bd99-fa13b31ef9a8
 
 DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 
 NameViews:
-    LastName:   Müller-Risinowsky
-    FirstName:  Käthe
-    MiddleName: Alexandra Caroline
-    Prefix:     Prof. Dr.
+    FamilyNames:     Müller-Risinowsky
+    GivenNames:      Käthe
+    AdditionalNames: Alexandra Caroline
+    Prefixes:        Prof. Dr.
+
+GenderViews: Female
 
 Titles: CEO
 
