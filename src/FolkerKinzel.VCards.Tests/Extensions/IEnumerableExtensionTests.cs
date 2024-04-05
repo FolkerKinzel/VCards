@@ -440,6 +440,19 @@ public class IEnumerableExtensionTests
     }
 
     [TestMethod]
+    public void GroupByVCardGroupTest2()
+    {
+        TextProperty[] props = [new TextProperty("1"), 
+                                new TextProperty("2"), 
+                                new TextProperty("3", "g"),
+                                new TextProperty("4", "g")];
+        IEnumerable<IGrouping<string?, TextProperty>> result = props.GroupByVCardGroup();
+        Assert.IsNotNull(result);
+        Assert.AreEqual(2, result.Count());
+        Assert.IsTrue(result.All(static x => x.Count() == 2));
+    }
+
+    [TestMethod]
     public void GroupByAltIDTest1()
     {
         TextProperty[]? props = null;
@@ -657,6 +670,16 @@ public class IEnumerableExtensionTests
         Assert.IsNotNull(result);
         Assert.AreEqual(1, result.Count());
         Assert.IsNotNull(result.First());
+    }
+
+    [TestMethod]
+    public void RemoveTest1c()
+    {
+        var prop = new TextProperty("Hi");
+        IEnumerable<TextProperty?>? numerable = prop.ConcatWith(null).ConcatWith(null);
+        IEnumerable<TextProperty?> result = numerable.Remove(prop);
+        Assert.IsNotNull(result);
+        Assert.IsFalse(result.Any());
     }
 
     [TestMethod]

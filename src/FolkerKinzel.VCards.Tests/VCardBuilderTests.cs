@@ -106,7 +106,6 @@ public class VCardBuilderTests
     public void AddAddressTest1()
     {
         VCard.SyncTestReset();
-        VCard.RegisterApp(null);
 
         VCard vc = VCardBuilder
             .Create()
@@ -192,12 +191,9 @@ public class VCardBuilderTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void RemoveAddressTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         _ = VCardBuilder.Create()
-                               .Addresses.Remove((Func<AddressProperty?, bool>)null!)
-                               .VCard;
+                        .Addresses.Remove((Func<AddressProperty?, bool>)null!)
+                        .VCard;
     }
 
     [TestMethod()]

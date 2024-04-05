@@ -11,10 +11,10 @@ Some of the benefits of version 7:
 - `GeoCoordinate` now is able to preserve the `Uncertainty` parameter of "geo" URIs and to compare instances for geographic equality.
 - New extension methods:
 ```
-IEnumerable<TSource?>? Remove<TSource>(this IEnumerable<TSource?>?, TSource?) 
+IEnumerable<TSource> Remove<TSource>(this IEnumerable<TSource?>?, TSource?) 
         where TSource : VCardProperty;
 
- IEnumerable<TSource?>? Remove<TSource>(this IEnumerable<TSource?>?, Func<TSource?, bool>) 
+ IEnumerable<TSource> Remove<TSource>(this IEnumerable<TSource?>?, Func<TSource, bool>) 
         where TSource : VCardProperty;
 ```
 .

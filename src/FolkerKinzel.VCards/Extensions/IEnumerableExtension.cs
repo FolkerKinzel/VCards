@@ -631,11 +631,11 @@ public static class IEnumerableExtension
     /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
     /// objects to edit. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
     /// references.</param>
-    /// <param name="value">The <see cref="VCardProperty"/> to remove or <c>null</c> to remove
-    /// <c>null</c> references.</param>
-    /// <returns><paramref name="values"/> without occurrences of <paramref name="value"/>.
+    /// <param name="value">The <see cref="VCardProperty"/> to remove or <c>null</c>.</param>
+    /// <returns><paramref name="values"/> without occurrences of <paramref name="value"/> and
+    /// without <c>null</c> references.
     /// If <paramref name="values"/> is <c>null</c>, an empty collection is returned.</returns>
-    public static IEnumerable<TSource?> Remove<TSource>(
+    public static IEnumerable<TSource> Remove<TSource>(
         this IEnumerable<TSource?>? values, TSource? value) where TSource : VCardProperty
     {
         if (values is null)
@@ -645,7 +645,7 @@ public static class IEnumerableExtension
 
         foreach (var item in values) 
         { 
-            if (item == value)
+            if (item is null || item == value)
             {
                 continue; 
             } 
@@ -665,26 +665,30 @@ public static class IEnumerableExtension
     /// <param name="predicate">A <see cref="Func{T, TResult}"/> that returns <c>true</c> for
     /// items that are to remove.</param>
     /// <returns><paramref name="values"/> without the items that matches the <paramref name="predicate"/>.
-    /// If <paramref name="values"/> is <c>null</c>, <c>null</c> is returned.</returns>
+    /// If <paramref name="values"/> is <c>null</c>, an empty collection is returned.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="predicate"/> is <c>null</c>.</exception>
-    public static IEnumerable<TSource?> Remove<TSource>(
+    public static IEnumerable<TSource> Remove<TSource>(
         this IEnumerable<TSource?>? values, Func<TSource, bool> predicate) where TSource : VCardProperty
     {
-        _ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+        return DoRemove(values, predicate ?? throw new ArgumentNullException(nameof(predicate)));
 
-        if(values is null) 
+        static IEnumerable<T> DoRemove<T>(IEnumerable<T?>? values,
+                                                      Func<T, bool> predicate) where T : VCardProperty
         {
-            yield break;
-        }
-
-        foreach (var item in values)
-        {
-            if (values is null || predicate(item))
+            if (values is null)
             {
-                continue;
+                yield break;
             }
 
-            yield return item;
+            foreach (var item in values)
+            {
+                if (item is null || predicate(item))
+                {
+                    continue;
+                }
+
+                yield return item;
+            }
         }
     }
 
