@@ -644,14 +644,28 @@ public class IEnumerableExtensionTests
     public void RemoveTest1()
     {
         IEnumerable<TextProperty?>? numerable = null;
-        Assert.IsNull(numerable.Remove(new TextProperty("Hi")));
+        IEnumerable<TextProperty?> result = numerable.Remove(new TextProperty("Hi"));
+        Assert.IsNotNull(result);
+        Assert.IsFalse(result.Any());
+    }
+
+    [TestMethod]
+    public void RemoveTest1b()
+    {
+        IEnumerable<TextProperty?>? numerable = new TextProperty("Hi").ConcatWith(null).ConcatWith(null);
+        IEnumerable<TextProperty?> result = numerable.Remove((TextProperty?)null);
+        Assert.IsNotNull(result);
+        Assert.AreEqual(1, result.Count());
+        Assert.IsNotNull(result.First());
     }
 
     [TestMethod]
     public void RemoveTest2()
     {
         IEnumerable<TextProperty?>? numerable = null;
-        Assert.IsNull(numerable.Remove(x => x?.Value == "Hi"));
+        IEnumerable<TextProperty?> result = numerable.Remove(x => x.Value == "Hi");
+        Assert.IsNotNull(result);
+        Assert.IsFalse(result.Any());
     }
 
     [TestMethod]

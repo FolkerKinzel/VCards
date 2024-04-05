@@ -1,4 +1,5 @@
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -26,6 +27,7 @@ public static class IEnumerableExtension
     /// <see cref="VCard.ID" /> property, the method automatically assigns them 
     /// a new one.)
     /// </returns>
+    /// 
     /// <remarks>
     /// <note type="caution">
     /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
@@ -43,6 +45,9 @@ public static class IEnumerableExtension
     /// as it endangers referential integrity.)
     /// </para>
     /// </remarks>
+    /// 
+    /// <see cref="VCard.Reference(IEnumerable{VCard?})"/>
+    /// 
     /// <example>
     /// <para>
     /// The example demonstrates how a <see cref="VCard" /> object can be saved as a
@@ -56,6 +61,7 @@ public static class IEnumerableExtension
     /// </note>
     /// <code language="cs" source="..\Examples\VCard40Example.cs" />
     /// </example>
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IEnumerable<VCard> Reference(this IEnumerable<VCard?> vCards)
@@ -86,6 +92,9 @@ public static class IEnumerableExtension
     /// in order to make their data searchable.
     /// </para>
     /// </remarks>
+    /// 
+    /// <seealso cref="VCard.Dereference(IEnumerable{VCard?})"/>
+    /// 
     /// <example>
     /// <para>
     /// The example shows the deserialization and analysis of a VCF file whose content
@@ -97,6 +106,7 @@ public static class IEnumerableExtension
     /// </note>
     /// <code language="cs" source="..\Examples\VCard40Example.cs" />
     /// </example>
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IList<VCard> Dereference(this IEnumerable<VCard?> vCards)
@@ -125,7 +135,10 @@ public static class IEnumerableExtension
     /// <see cref="VCard.Relations" /> properties.
     /// </para>
     /// </remarks>
+    /// 
+    /// <seealso cref="Vcf.Save(IEnumerable{VCard?}, string, VCdVersion, ITimeZoneIDConverter?, Opts)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> or <paramref
     /// name="vCards" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
@@ -168,7 +181,10 @@ public static class IEnumerableExtension
     /// <see cref="VCard.Relations" /> properties.
     /// </para>
     /// </remarks>
+    /// 
+    /// <seealso cref="Vcf.Serialize(IEnumerable{VCard?}, Stream, VCdVersion, ITimeZoneIDConverter?, Opts, bool)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="stream" /> or <paramref
     /// name="vCards" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="stream" /> does not support
@@ -199,6 +215,7 @@ public static class IEnumerableExtension
     /// <param name="options">Options for serializing VCF. The flags can be combined.</param>
     /// <returns> <paramref name="vCards" />, serialized as a <see cref="string" />,
     /// which represents the content of a VCF file.</returns>
+    /// 
     /// <remarks>
     /// <note type="caution">
     /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
@@ -212,7 +229,10 @@ public static class IEnumerableExtension
     /// <see cref="VCard.Relations" /> properties.
     /// </para>
     /// </remarks>
+    /// 
+    /// <seealso cref="Vcf.ToString(IEnumerable{VCard?}, VCdVersion, ITimeZoneIDConverter?, Opts)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
+    /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
     /// <paramref name="version" /> is not a defined value of the <see cref="Opts"/> 
@@ -614,10 +634,25 @@ public static class IEnumerableExtension
     /// <param name="value">The <see cref="VCardProperty"/> to remove or <c>null</c> to remove
     /// <c>null</c> references.</param>
     /// <returns><paramref name="values"/> without occurrences of <paramref name="value"/>.
-    /// If <paramref name="values"/> is <c>null</c>, <c>null</c> is returned.</returns>
-    public static IEnumerable<TSource?>? Remove<TSource>(
+    /// If <paramref name="values"/> is <c>null</c>, an empty collection is returned.</returns>
+    public static IEnumerable<TSource?> Remove<TSource>(
         this IEnumerable<TSource?>? values, TSource? value) where TSource : VCardProperty
-        => values?.Where(x => x != value);
+    {
+        if (values is null)
+        { 
+            yield break; 
+        }
+
+        foreach (var item in values) 
+        { 
+            if (item == value)
+            {
+                continue; 
+            } 
+
+            yield return item; 
+        }
+    }
 
     /// <summary>
     /// Removes each item that matches the specified <paramref name="predicate"/> from 
@@ -632,10 +667,26 @@ public static class IEnumerableExtension
     /// <returns><paramref name="values"/> without the items that matches the <paramref name="predicate"/>.
     /// If <paramref name="values"/> is <c>null</c>, <c>null</c> is returned.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="predicate"/> is <c>null</c>.</exception>
-    public static IEnumerable<TSource?>? Remove<TSource>(
+    public static IEnumerable<TSource?> Remove<TSource>(
         this IEnumerable<TSource?>? values, Func<TSource, bool> predicate) where TSource : VCardProperty
-        => predicate is null ? throw new ArgumentNullException(nameof(predicate))
-                             : (values?.Where(x => x is null || !predicate(x)));
+    {
+        _ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+
+        if(values is null) 
+        {
+            yield break;
+        }
+
+        foreach (var item in values)
+        {
+            if (values is null || predicate(item))
+            {
+                continue;
+            }
+
+            yield return item;
+        }
+    }
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Preference"/> properties of 

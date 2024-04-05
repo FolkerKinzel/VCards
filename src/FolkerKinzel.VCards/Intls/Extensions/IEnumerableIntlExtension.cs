@@ -2,7 +2,7 @@
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
 
-internal static class IEnumerableExtension
+internal static class IEnumerableIntlExtension
 {
 #if NET461
     internal static IEnumerable<TSource> Append<TSource>(this IEnumerable<TSource> sources, TSource value)
