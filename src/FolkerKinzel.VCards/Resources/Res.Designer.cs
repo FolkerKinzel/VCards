@@ -169,7 +169,7 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Unrecognized data type..
         /// </summary>
         internal static string UnrecognizedDataType {
             get {
