@@ -131,7 +131,6 @@ public sealed class SyncOperation
     {
         if (!VCard.IsAppRegistered)
         {
-            //throw new InvalidOperationException(Res.AppNotRegistered);
             VCard.RegisterApp(null);
         }
 

@@ -8,6 +8,7 @@ using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using System.Globalization;
 using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards;
 
@@ -73,9 +74,16 @@ public sealed partial class VCard
                 IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(cloner).Cast<TimeZoneProperty?>().ToArray(),
 
                 ICloneable cloneable => cloneable.Clone(), // AccessProperty, KindProperty, TimeStampProperty, UuidProperty
+
+#if DEBUG
+                _ => throw new NotImplementedException(Res.UnrecognizedDataType)
+#else
                 _ => kvp.Value
+#endif
             });
         }//foreach
+
+        Debug.Assert(VCard.IsAppRegistered);
 
         // Must be the last in ctor
         Sync = new SyncOperation(this);

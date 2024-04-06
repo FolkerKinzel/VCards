@@ -153,4 +153,7 @@
   <data name="StreamNotWritable" xml:space="preserve">
     <value>The Stream is not writable.</value>
   </data>
+  <data name="UnrecognizedDataType" xml:space="preserve">
+    <value>Unrecognized data type.</value>
+  </data>
 </root>
