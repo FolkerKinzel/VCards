@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.BuilderParts;
 /// </summary>
 /// <remarks>
 /// <note type="important">
-/// Only use this structure in conjunction with <see cref="VCardBuilder"/>!
+/// Only use this struct in conjunction with <see cref="VCardBuilder"/>!
 /// </note>
 /// </remarks>
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
