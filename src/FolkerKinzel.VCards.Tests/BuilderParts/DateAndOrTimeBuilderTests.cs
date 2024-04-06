@@ -5,7 +5,7 @@ public class DateAndOrTimeBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new DateAndOrTimeBuilder().Edit(p => { });
+    public void EditTest1() => new DateAndOrTimeBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

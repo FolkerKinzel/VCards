@@ -5,7 +5,7 @@ public class TextSingletonBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new TextSingletonBuilder().Edit(p => { });
+    public void EditTest1() => new TextSingletonBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

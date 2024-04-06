@@ -5,7 +5,7 @@ public class AddressBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new AddressBuilder().Edit(p => { });
+    public void EditTest1() => new AddressBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

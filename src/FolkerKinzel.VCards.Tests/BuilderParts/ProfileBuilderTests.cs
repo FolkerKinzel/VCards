@@ -5,7 +5,7 @@ public class ProfileBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new ProfileBuilder().Edit(p => { });
+    public void EditTest1() => new ProfileBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

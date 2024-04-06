@@ -34,18 +34,22 @@ public readonly struct GenderBuilder
     /// <summary>
     /// Allows to edit the items of the <see cref="VCard.GenderViews"/> property with a specified delegate.
     /// </summary>
-    /// <param name="action">An <see cref="Action{T}"/> delegate that's invoked with the items of the 
-    /// <see cref="VCard.GenderViews"/> property that are not <c>null</c>.</param>
+    /// <param name="func">
+    /// A function called with a collection of the non-<c>null</c> items of the <see cref="VCard.GenderViews"/>
+    /// property as argument.
+    /// Its return value will be the 
+    /// new content of the <see cref="VCard.GenderViews"/> property.
+    /// </param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GenderBuilder"/>
     /// to be able to chain calls.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="action"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit(Action<IEnumerable<GenderProperty>> action)
+    public VCardBuilder Edit(Func<IEnumerable<GenderProperty>, IEnumerable<GenderProperty?>?> func)
     {
         var props = Builder.VCard.GenderViews?.WhereNotNull() ?? [];
-        _ArgumentNullException.ThrowIfNull(action, nameof(action));
-        action.Invoke(props);
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.GenderViews = func.Invoke(props);
         return _builder;
     }
 

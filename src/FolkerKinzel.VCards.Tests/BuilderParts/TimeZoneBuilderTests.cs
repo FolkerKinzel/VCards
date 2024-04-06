@@ -5,7 +5,7 @@ public class TimeZoneBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new TimeZoneBuilder().Edit(p => { });
+    public void EditTest1() => new TimeZoneBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

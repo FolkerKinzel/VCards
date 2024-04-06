@@ -5,7 +5,7 @@ public class TextBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new TextBuilder().Edit(p => { });
+    public void EditTest1() => new TextBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

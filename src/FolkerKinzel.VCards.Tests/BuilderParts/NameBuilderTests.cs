@@ -5,7 +5,7 @@ public class NameBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new NameBuilder().Edit(p => { });
+    public void EditTest1() => new NameBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

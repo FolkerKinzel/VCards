@@ -5,7 +5,7 @@ public class IDBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new IDBuilder().Edit(p => { });
+    public void EditTest1() => new IDBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

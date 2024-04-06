@@ -5,7 +5,7 @@ public class GeoBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new GeoBuilder().Edit(p => { });
+    public void EditTest1() => new GeoBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

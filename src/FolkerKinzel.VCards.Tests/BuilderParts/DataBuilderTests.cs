@@ -5,7 +5,7 @@ public class DataBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new DataBuilder().Edit(p => { });
+    public void EditTest1() => new DataBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

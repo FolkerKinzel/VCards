@@ -5,7 +5,7 @@ public class TimeStampBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new TimeStampBuilder().Edit(p => { });
+    public void EditTest1() => new TimeStampBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

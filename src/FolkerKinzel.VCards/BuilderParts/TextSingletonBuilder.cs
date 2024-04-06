@@ -35,18 +35,22 @@ public readonly struct TextSingletonBuilder
     /// <summary>
     /// Allows to edit the content of the specified property with a delegate.
     /// </summary>
-    /// <param name="action">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <param name="func">
+    /// A function called with the content of the 
+    /// specified property as argument. Its return value will be the new content of the 
+    /// specified property.
+    /// An <see cref="Action{T}"/> delegate that's invoked with the 
     /// content of the specified property as argument.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="TextSingletonBuilder"/> to be able to chain calls.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="action"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit(Action<TextProperty?> action)
+    public VCardBuilder Edit(Func<TextProperty?, TextProperty?> func)
     {
         var prop = Builder.VCard.Get<TextProperty?>(_prop);
-        _ArgumentNullException.ThrowIfNull(action, nameof(action));
-        action.Invoke(prop);
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.Set(_prop, func.Invoke(prop));
         return _builder;
     }
 

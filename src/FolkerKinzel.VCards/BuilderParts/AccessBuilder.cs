@@ -30,18 +30,19 @@ public readonly struct AccessBuilder
     /// <summary>
     /// Allows to edit the content of the <see cref="VCard.Access"/> property with a specified delegate.
     /// </summary>
-    /// <param name="action">An <see cref="Action{T}"/> delegate that's invoked with the content of the 
-    /// <see cref="VCard.Access"/> property as argument.</param>
+    /// <param name="func">A function called with the content of the 
+    /// <see cref="VCard.Access"/> property as argument. Its return value will be the new content of the 
+    /// <see cref="VCard.Access"/> property.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AccessBuilder"/>
     /// to be able to chain calls.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="action"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit(Action<AccessProperty?> action)
+    public VCardBuilder Edit(Func<AccessProperty?, AccessProperty?> func)
     {
         var prop = Builder.VCard.Access;
-        _ArgumentNullException.ThrowIfNull(action, nameof(action));
-        action.Invoke(prop);
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.Access = func.Invoke(prop);
         return _builder;
     }
 

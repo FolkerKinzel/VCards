@@ -8,7 +8,7 @@ public class AccessBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new AccessBuilder().Edit(p => { });
+    public void EditTest1() => new AccessBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

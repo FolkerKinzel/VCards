@@ -5,7 +5,7 @@ public class StringCollectionBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new StringCollectionBuilder().Edit(p => { });
+    public void EditTest1() => new StringCollectionBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

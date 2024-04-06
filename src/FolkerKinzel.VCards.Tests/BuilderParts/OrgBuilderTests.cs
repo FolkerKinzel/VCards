@@ -5,7 +5,7 @@ public class OrgBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new OrgBuilder().Edit(p => { });
+    public void EditTest1() => new OrgBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

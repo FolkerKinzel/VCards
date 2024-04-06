@@ -95,10 +95,10 @@ public class VCardBuilderTests
 
         var builder = VCardBuilder.Create();
         var prop = new AccessProperty(Access.Public);
-        builder.Access.Edit(p => prop = p);
+        builder.Access.Edit(p => { prop = p; return p; });
         Assert.IsNull(prop);
-        builder.Access.Set(Access.Private)
-               .Access.Edit(p => prop = p);
+        builder.Access.Edit(p => new AccessProperty(Access.Private))
+               .Access.Edit(p => { prop = p; return p; });
         Assert.IsNotNull(prop);
     }
 
@@ -174,8 +174,6 @@ public class VCardBuilderTests
     [TestMethod]
     public void EditAddressesTest1()
     {
-        VCard.SyncTestReset();
-
         var builder = VCardBuilder.Create();
         IEnumerable<AddressProperty?>? prop = null;
         builder.Addresses.Edit(p => prop = p);

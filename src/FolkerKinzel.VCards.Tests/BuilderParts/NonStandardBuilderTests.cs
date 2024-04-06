@@ -5,7 +5,7 @@ public class NonStandardBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new NonStandardBuilder().Edit(p => { });
+    public void EditTest1() => new NonStandardBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

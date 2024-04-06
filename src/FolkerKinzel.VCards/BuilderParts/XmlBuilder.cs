@@ -32,18 +32,22 @@ public readonly struct XmlBuilder
     /// <summary>
     /// Allows to edit the items of the <see cref="VCard.Xmls"/> property with a specified delegate.
     /// </summary>
-    /// <param name="action">An <see cref="Action{T}"/> delegate that's invoked with the items of 
-    /// the <see cref="VCard.Xmls"/> property that are not <c>null</c>.</param>
+    /// <param name="func">
+    /// A function called with a collection of the non-<c>null</c> items of the <see cref="VCard.Xmls"/>
+    /// property as argument.
+    /// Its return value will be the 
+    /// new content of the <see cref="VCard.Xmls"/> property.
+    /// </param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="XmlBuilder"/>
     /// to be able to chain calls.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="action"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit(Action<IEnumerable<XmlProperty>> action)
+    public VCardBuilder Edit(Func<IEnumerable<XmlProperty>, IEnumerable<XmlProperty?>?> func)
     {
         var props = Builder.VCard.Xmls?.WhereNotNull() ?? [];
-        _ArgumentNullException.ThrowIfNull(action, nameof(action));
-        action.Invoke(props);
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.Xmls = func.Invoke(props);
         return _builder;
     }
 

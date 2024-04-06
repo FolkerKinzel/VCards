@@ -5,7 +5,7 @@ public class XmlBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new XmlBuilder().Edit(p => { });
+    public void EditTest1() => new XmlBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
