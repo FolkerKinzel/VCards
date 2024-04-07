@@ -273,10 +273,7 @@ public class V4Tests
         fburl2.Parameters.DataType = Data.Text;
         fburl2.Parameters.MediaType = plain;
 
-        var vc = new VCard
-        {
-            FreeOrBusyUrls = new TextProperty[] { fburl1, fburl2 }
-        };
+        var vc = new VCard { FreeOrBusyUrls = [fburl1, fburl2] };
 
         string s = vc.ToVcfString(VCdVersion.V4_0);
 
@@ -342,10 +339,7 @@ public class V4Tests
 
         whatsAppImpp.Parameters.InstantMessengerType = messengerTypes;
 
-        var vcard = new VCard
-        {
-            Messengers = new TextProperty?[] { null, whatsAppImpp }
-        };
+        var vcard = new VCard { Messengers = [null, whatsAppImpp] };
 
         string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: Opts.Default);
         vcard = Vcf.Parse(vcfString)[0];

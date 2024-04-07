@@ -17,6 +17,10 @@ public class TimeZoneBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void AddTest2() => new TimeZoneBuilder().Add("Europe/Berlin");
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void ClearTest1() => new TimeZoneBuilder().Clear();
 
     [TestMethod]

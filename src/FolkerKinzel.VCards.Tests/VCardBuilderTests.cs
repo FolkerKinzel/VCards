@@ -1463,6 +1463,31 @@ public class VCardBuilderTests
         Assert.AreEqual("g1", vc.TimeZones.First()!.Group);
     }
 
+    [TestMethod()]
+    public void AddTimeZoneTest3()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .TimeZones.Add("Europe/Berlin")
+            .VCard;
+
+        Assert.IsNotNull(vc.TimeZones);
+        Assert.AreEqual(1, vc.TimeZones.Count());
+    }
+
+    [TestMethod()]
+    public void AddTimeZoneTest4()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .TimeZones.Add("Europe/Berlin", group: v => "g1")
+            .VCard;
+
+        Assert.IsNotNull(vc.TimeZones);
+        Assert.AreEqual(1, vc.TimeZones.Count());
+        Assert.AreEqual("g1", vc.TimeZones.First()!.Group);
+    }
+
     [TestMethod]
     public void EditTimeZoneTest1()
     {

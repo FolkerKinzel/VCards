@@ -103,7 +103,7 @@ public readonly struct TimeZoneBuilder
     /// 
     /// <remarks>
     /// This method initializes a new <see cref="TimeZoneID"/> instance. Use the overload
-    /// <see cref="TimeZoneBuilder(TimeZoneID?, bool, Action<ParameterSection>?, Func<VCard, string?>?)"/>
+    /// <see cref="TimeZoneBuilder.Add(TimeZoneID?, bool, Action{ParameterSection}?, Func{VCard, string?}?)"/>
     /// to reuse an existing one.
     /// </remarks>
     /// 

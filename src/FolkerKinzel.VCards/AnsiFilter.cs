@@ -122,7 +122,7 @@ public sealed class AnsiFilter
         return Vcf.Load(fileName, enc);
     }
 
-    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", 
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
         Justification = "Performance: The collection expression creates a new List<VCard> instead of Array.Empty<VCard>().")]
     internal IList<VCard> Deserialize(Func<Stream?> factory)
     {
@@ -164,12 +164,12 @@ public sealed class AnsiFilter
         {
             using var stream2 = factory();
 
-            return stream2 is null ? vCards 
+            return stream2 is null ? vCards
                                    : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }
     }
 
-    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", 
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
         Justification = "Performance: The collection expression creates a new List<VCard> instead of Array.Empty<VCard>().")]
     internal async Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
                                                        CancellationToken token)
@@ -212,7 +212,7 @@ public sealed class AnsiFilter
         {
             using Stream? stream2 = await factory(token).ConfigureAwait(false);
 
-            return stream2 is null ? vCards 
+            return stream2 is null ? vCards
                                    : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }
     }
