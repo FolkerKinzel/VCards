@@ -30,9 +30,6 @@ public class RelationVCardPropertyTests
     [TestMethod]
     public void ToStringTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const string phone = "12345";
         var vc = new VCard
         {
@@ -53,9 +50,6 @@ public class RelationVCardPropertyTests
     [TestMethod]
     public void CircularReferenceTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vc = new VCard() { DisplayNames = new TextProperty("Donald Duck") };
 
         vc.Relations = RelationProperty.FromVCard(vc);
@@ -66,9 +60,6 @@ public class RelationVCardPropertyTests
     [TestMethod]
     public void CircularReferenceTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var donald = new VCard() { DisplayNames = new TextProperty("Donald Duck") };
         var dagobert = new VCard
         {

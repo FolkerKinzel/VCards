@@ -27,7 +27,8 @@ public class ReferencedDataPropertyTests
 
 
     [TestMethod]
-    public void GetFileTypeExtensionTest1() => Assert.AreEqual(".bin", DataProperty.FromUri(null).GetFileTypeExtension(), false);
+    public void GetFileTypeExtensionTest1() 
+        => Assert.AreEqual(".bin", DataProperty.FromUri(null).GetFileTypeExtension(), false);
 
 
     [TestMethod]
@@ -40,7 +41,6 @@ public class ReferencedDataPropertyTests
 
         prop = DataProperty.FromUri(uri);
         Assert.AreEqual(".txt", prop.GetFileTypeExtension());
-
     }
 
     [TestMethod]

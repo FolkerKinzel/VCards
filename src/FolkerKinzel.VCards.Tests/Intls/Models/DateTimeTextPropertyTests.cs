@@ -13,9 +13,6 @@ public class DateTimeTextPropertyTests
     [TestMethod()]
     public void DateTimeTextPropertyTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         string now = "Früh morgens";
 
         var prop = DateAndOrTimeProperty.FromText(now, GROUP);
@@ -51,6 +48,7 @@ public class DateTimeTextPropertyTests
         var prop = DateAndOrTimeProperty.FromText("   ");
         Assert.IsNull(prop.Value);
     }
+
     [TestMethod]
     public void IsEmptyTest1()
     {

@@ -18,7 +18,8 @@ public class RelationUriPropertyTests
         const Rel relation = Rel.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
+        var prop = new RelationUriProperty(
+            new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         Assert.AreEqual(uri, prop.Value);
         Assert.AreEqual(GROUP, prop.Group);
@@ -31,9 +32,6 @@ public class RelationUriPropertyTests
     [TestMethod]
     public void RelationUriPropertyTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const Rel relation = Rel.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
@@ -69,9 +67,6 @@ public class RelationUriPropertyTests
     [TestMethod]
     public void RelationUriPropertyTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const Rel relation = Rel.Agent;
         var uri = new Uri("http://test.ääh.com/", UriKind.Absolute);
 
@@ -106,9 +101,6 @@ public class RelationUriPropertyTests
     [TestMethod]
     public void RelationUriPropertyTest4()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const Rel relation = Rel.Agent;
         var uri = new Uri("cid:test.com/", UriKind.Absolute);
 
@@ -140,9 +132,6 @@ public class RelationUriPropertyTests
         Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
-
-
-
     [TestMethod]
     public void PrepareForVcfSerializationTest1()
     {
@@ -165,7 +154,6 @@ public class RelationUriPropertyTests
 
         Assert.AreSame(prop1.Value!.Uri, prop2.Value!.Uri);
         Assert.AreNotSame(prop1, prop2);
-
     }
 
 }
