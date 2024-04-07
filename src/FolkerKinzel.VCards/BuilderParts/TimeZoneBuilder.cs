@@ -52,7 +52,8 @@ public readonly struct TimeZoneBuilder
 
     /// <summary>
     /// Adds a <see cref="TimeZoneProperty"/> instance, which is newly 
-    /// initialized using the specified arguments, to the <see cref="VCard.TimeZones"/> property.
+    /// initialized using the specified <see cref="TimeZoneID"/> instance, to the 
+    /// <see cref="VCard.TimeZones"/> property.
     /// </summary>
     /// <param name="value">A <see cref="TimeZoneID" /> object or <c>null</c>.</param>
     /// <param name="pref">Pass <c>true</c> to give the newly created <see cref="VCardProperty"/> 
@@ -68,6 +69,55 @@ public readonly struct TimeZoneBuilder
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(TimeZoneID? value,
+                            bool pref = false,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
+    {
+        Builder.VCard.Set(Prop.TimeZones,
+                          VCardBuilder.Add(new TimeZoneProperty(value, group?.Invoke(_builder.VCard)),
+                                           _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones),
+                                           parameters,
+                                           pref)
+                          );
+        return _builder;
+    }
+
+    /// <summary>
+    /// Adds a <see cref="TimeZoneProperty"/> instance, which is newly 
+    /// initialized using the specified <see cref="string"/>, which represents an identifier
+    /// from the "IANA Time Zone Database", to the <see cref="VCard.TimeZones"/> property.
+    /// (See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)
+    /// </summary>
+    /// <param name="value">A <see cref="string"/> that represents an identifier
+    /// from the "IANA Time Zone Database".</param>
+    /// <param name="pref">Pass <c>true</c> to give the newly created <see cref="VCardProperty"/> 
+    /// the highest preference <c>(1)</c> and to downgrade the other instances in the collection.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
+    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that the 
+    /// <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
+    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeZoneBuilder"/> to 
+    /// be able to chain calls.</returns>
+    /// 
+    /// <remarks>
+    /// This method initializes a new <see cref="TimeZoneID"/> instance. Use the overload
+    /// <see cref="TimeZoneBuilder(TimeZoneID?, bool, Action<ParameterSection>?, Func<VCard, string?>?)"/>
+    /// to reuse an existing one.
+    /// </remarks>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
+    /// 
+    /// <exception cref="ArgumentNullException"> <paramref name="value" /> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="ArgumentException"> <paramref name="value" /> is an empty
+    /// <see cref="string" /> or consists only of white space characters.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    public VCardBuilder Add(string value,
                             bool pref = false,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)

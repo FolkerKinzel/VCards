@@ -29,8 +29,9 @@ internal class Program
 
         //await WebExample.AsyncExample();
 
+        ExtensionMethodExample.Example();
 
-        NoPidExample.RemovePropertyIdentification();
+        //NoPidExample.RemovePropertyIdentification();
 
         //EmbeddedVCardExample.FromVCardExample();
 
