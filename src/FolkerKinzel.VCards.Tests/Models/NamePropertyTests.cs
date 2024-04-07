@@ -34,11 +34,11 @@ public class NamePropertyTests
     public void NamePropertyTest2()
     {
         var adr = new NameProperty(
-            new string[] { LAST_NAME },
-            new string[] { FIRST_NAME },
-            new string[] { MIDDLE_NAME },
-            new string[] { PREFIX },
-            new string[] { SUFFIX },
+            [LAST_NAME],
+            [FIRST_NAME],
+            [MIDDLE_NAME],
+            [PREFIX],
+            [SUFFIX],
 
             group: GROUP);
 

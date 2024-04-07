@@ -109,9 +109,6 @@ public class DataPropertyTests
     [TestMethod]
     public void ParseTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         string textUri = DataUrl.FromText("The password");
         string vcf = $"""
         BEGIN:VCARD
@@ -136,9 +133,6 @@ public class DataPropertyTests
     [TestMethod]
     public void ParseTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const string vcf = """
         BEGIN:VCARD
         VERSION:4.0
@@ -159,9 +153,6 @@ public class DataPropertyTests
     [TestMethod]
     public void ParseTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const string vcf = """
         BEGIN:VCARD
         VERSION:2.1
@@ -182,9 +173,6 @@ public class DataPropertyTests
     [TestMethod]
     public void ParseTest4()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const string vcf = """
         BEGIN:VCARD
         VERSION:2.1

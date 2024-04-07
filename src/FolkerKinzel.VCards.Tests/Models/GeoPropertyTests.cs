@@ -23,9 +23,6 @@ public class GeoPropertyTests
     [TestMethod()]
     public void GeoPropertyTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var geo = new GeoCoordinate(17.44, 8.33);
 
         var prop = new GeoProperty(geo, GROUP);

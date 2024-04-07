@@ -40,9 +40,6 @@ public class DateAndOrTimePropertyTests
     [TestMethod]
     public void ParseTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const string vcf = """
         BEGIN:VCARD
         VERSION:4.0
@@ -60,9 +57,6 @@ public class DateAndOrTimePropertyTests
     [TestMethod]
     public void ParseTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const string vcf = """
         BEGIN:VCARD
         VERSION:4.0
@@ -80,9 +74,6 @@ public class DateAndOrTimePropertyTests
     [TestMethod]
     public void ParseTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const string vcf = """
         BEGIN:VCARD
         VERSION:4.0

@@ -10,7 +10,6 @@ public class ProfilePropertyTests
     [TestMethod()]
     public void ProfilePropertyTest1()
     {
-
         var prop = new ProfileProperty();
 
         Assert.IsNotNull(prop);
@@ -30,9 +29,6 @@ public class ProfilePropertyTests
     [TestMethod()]
     public void ProfilePropertyTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var prop = new ProfileProperty();
 
         var vcard = new VCard

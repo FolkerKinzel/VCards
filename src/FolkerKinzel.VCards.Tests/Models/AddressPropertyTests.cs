@@ -73,7 +73,6 @@ public class AddressPropertyTests
 
         Assert.IsNotNull(s);
         Assert.AreNotEqual(0, s.Length);
-
     }
 
     [TestMethod]
@@ -85,13 +84,9 @@ public class AddressPropertyTests
         Assert.IsNotNull(prop.Value);
     }
 
-
     [TestMethod]
     public void IsEmptyTest_v2_1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const VCdVersion version = VCdVersion.V2_1;
         const string labelText = "Nice Label";
 
@@ -134,9 +129,6 @@ public class AddressPropertyTests
     [TestMethod]
     public void IsEmptyTest_v3_0()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const VCdVersion version = VCdVersion.V3_0;
         const string labelText = "Nice Label";
 
@@ -179,9 +171,6 @@ public class AddressPropertyTests
     [TestMethod]
     public void IsEmptyTest_v4_0()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const VCdVersion version = VCdVersion.V4_0;
         const string labelText = "Nice Label";
 

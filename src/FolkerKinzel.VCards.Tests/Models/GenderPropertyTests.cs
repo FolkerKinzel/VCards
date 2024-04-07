@@ -64,9 +64,6 @@ public class GenderPropertyTests
     [TestMethod]
     public void GenderPropertyTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var prop = new GenderProperty(Sex.Female, IDENTITY, GROUP);
 
         var vcard = new VCard

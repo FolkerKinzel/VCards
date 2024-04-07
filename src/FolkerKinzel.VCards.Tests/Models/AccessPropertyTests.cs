@@ -40,9 +40,6 @@ public class AccessPropertyTests
     [TestMethod()]
     public void AppendValueTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vcard = new VCard
         {
             Access = new AccessProperty(VCards.Enums.Access.Private)
@@ -69,7 +66,6 @@ public class AccessPropertyTests
 
         Assert.AreEqual(prop1.Value, prop2.Value);
         Assert.AreNotSame(prop1, prop2);
-
     }
 
 }

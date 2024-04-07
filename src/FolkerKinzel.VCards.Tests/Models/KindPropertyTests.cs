@@ -22,9 +22,6 @@ public class KindPropertyTests
     [TestMethod()]
     public void KindPropertyTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         const VCards.Enums.Kind kind = VCards.Enums.Kind.Application;
 
         var prop = new KindProperty(kind);
