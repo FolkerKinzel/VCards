@@ -15,11 +15,11 @@ public class ExtensionMethodExample
         Console.WriteLine(vc);
         Console.WriteLine("\n=====================================\n");
 
-        // (Note that the extension methods undertake all the necerssary
+        // (The extension methods will undertake all the necerssary
         // null checking.)
 
-        // Group properties by their group name. (Note that group names
-        // are case insensitive.)
+        // Group properties by their group name. (Group names are
+        // case insensitive.)
         Console.WriteLine("\nProperty values with the group name g1:");
 
         IGrouping<string?, KeyValuePair<Prop, VCardProperty>> groupQuery =
