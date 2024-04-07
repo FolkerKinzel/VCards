@@ -13,9 +13,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void CreateTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var builder = VCardBuilder.Create();
         Assert.IsNotNull(builder);
         Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
@@ -28,9 +25,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void CreateTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var builder = VCardBuilder.Create(setID: false);
         Assert.IsNotNull(builder);
         Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
@@ -43,9 +37,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void CreateTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vc = new VCard();
         var builder = VCardBuilder.Create(vc);
         Assert.IsNotNull(builder);
@@ -60,9 +51,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetAccessTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder.Create()
                                .Access.Set(Access.Private)
                                .VCard;
@@ -73,9 +61,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetAccessTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder.Create()
                                .Access.Set(Access.Private, vc => "group")
                                .VCard;
@@ -144,9 +129,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddAddressTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Addresses.Add(Enumerable.Repeat("Elm Street", 1), null, null, null,
@@ -199,9 +181,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddAnniversaryViewTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .AnniversaryViews.Add(2023, 12, 6)
@@ -215,9 +194,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddBirthDayViewTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .BirthDayViews.Add(2023, 12, 6)
@@ -230,9 +206,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddBirthDayViewTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .BirthDayViews.Add(2023, 12, 6, p => p.Index = 1, v => "g")
@@ -259,9 +232,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddBirthDayViewTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .BirthDayViews.Add(12, 6, p => p.Index = 1, v => "g")
@@ -297,8 +267,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddBirthPlaceViewTest()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .BirthPlaceViews.Add("1")
@@ -338,9 +306,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddCalendarAddressTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .CalendarAddresses.Add("1")
@@ -368,9 +333,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddCalendarUserAddressTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .CalendarUserAddresses.Add("1")
@@ -383,8 +345,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddCategoryTest1()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .Categories.Add("qwertz")
@@ -412,8 +372,6 @@ public class VCardBuilderTests
     [TestMethod]
     public void AddCategoryTest2()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .Categories.Add(["qwertz", "bla"])
@@ -428,9 +386,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddDeathDateViewTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .DeathDateViews.Add(2023, 12, 6)
@@ -443,9 +398,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddDeathPlaceViewTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .DeathPlaceViews.Add("1")
@@ -458,9 +410,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetDirectoryNameTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder.Create()
                                .DirectoryName.Set("1")
                                .VCard;
@@ -471,9 +420,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetDirectoryNameTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder.Create()
                                .DirectoryName.Set("1", p => p.Context = "VCARD", vc => "group")
                                .VCard;
@@ -505,9 +451,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddDisplayNameTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .DisplayNames.Add("1")
@@ -520,9 +463,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddEMailTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .EMails.Add("1")
@@ -535,9 +475,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddExpertiseTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Expertises.Add("1")
@@ -550,9 +487,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddFreeOrBusyUrlTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .FreeOrBusyUrls.Add("1")
@@ -565,9 +499,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddGenderViewTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .GenderViews.Add(Sex.NonOrNotApplicable)
@@ -653,9 +584,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddGeoCoordinateTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .GeoCoordinates.Add(null, group: v => "g1")
@@ -669,9 +597,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddGeoCoordinateTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .GeoCoordinates.Add(25, 25, group: v => "g1")
@@ -685,9 +610,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddGeoCoordinateTest4()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .GeoCoordinates.Add(25, 25)
@@ -701,9 +623,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddHobbyTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Hobbies.Add("1")
@@ -716,8 +635,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetIDTest1()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .ID.Set(Guid.NewGuid())
@@ -735,8 +652,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetIDTest2()
     {
-        VCard.SyncTestReset();
-
         const string key = "X-Test";
         const string val = "bla";
 
@@ -758,8 +673,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetIDTest3()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .ID.Set()
@@ -777,8 +690,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetIDTest4()
     {
-        VCard.SyncTestReset();
-
         const string key = "X-Test";
         const string val = "bla";
 
@@ -816,9 +727,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddMessengerTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Messengers.Add("1")
@@ -831,9 +739,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddInterestTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Interests.Add("1")
@@ -846,9 +751,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddKeyTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Keys.AddText("qwertz")
@@ -904,12 +806,11 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetKindTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
-        VCard vc = VCardBuilder.Create()
-                               .Kind.Set(Kind.Group, p => p.NonStandard = [ new KeyValuePair<string, string>("X-PARA", "bla")], vc => "group")
-                               .VCard;
+        VCard vc = VCardBuilder
+            .Create()
+            .Kind.Set(Kind.Group, 
+                      p => p.NonStandard = [ new KeyValuePair<string, string>("X-PARA", "bla")], vc => "group")
+            .VCard;
         Assert.IsNotNull(vc.Kind);
         Assert.IsNotNull(vc.Kind.Parameters.NonStandard);
         Assert.AreEqual(Kind.Group, vc.Kind.Value);
@@ -938,9 +839,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddLanguageTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Languages.Add("1")
@@ -953,9 +851,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddLogoTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Logos.AddFile(TestFiles.EmptyVcf)
@@ -970,9 +865,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddLogoTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Logos.AddUri(new Uri("https://api.nuget.org/v3-flatcontainer/folkerkinzel.vcards/6.1.0/icon"))
@@ -987,9 +879,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetMailerTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder.Create()
                                .Mailer.Set("1")
                                .VCard;
@@ -999,17 +888,11 @@ public class VCardBuilderTests
 
     [TestMethod()]
     public void AddMemberTest()
-    {
-        VCard.SyncTestReset();
-        Assert.IsInstanceOfType(VCardBuilder.Create().Members, typeof(RelationBuilder));
-    }
+        => Assert.IsInstanceOfType(VCardBuilder.Create().Members, typeof(RelationBuilder));
 
     [TestMethod()]
     public void AddNameViewTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .NameViews.Add(["Miller"], ["John"], null, null,
@@ -1045,9 +928,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddNameViewTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .NameViews.Add("Miller", "John", null, null,
@@ -1076,8 +956,6 @@ public class VCardBuilderTests
     [TestMethod]
     public void EditNameViewTest1()
     {
-        VCard.SyncTestReset();
-
         var builder = VCardBuilder.Create();
         IEnumerable<NameProperty?>? prop = null;
         builder.NameViews.Edit(p => prop = p);
@@ -1096,9 +974,6 @@ public class VCardBuilderTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void RemoveNameViewTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         _ = VCardBuilder
             .Create()
             .NameViews.Remove((Func<NameProperty?, bool>)null!)
@@ -1108,16 +983,11 @@ public class VCardBuilderTests
 
     [TestMethod()]
     public void AddNickNameTest()
-    {
-        VCard.SyncTestReset();
-        Assert.IsInstanceOfType(VCardBuilder.Create().NickNames, typeof(StringCollectionBuilder));
-    }
+        => Assert.IsInstanceOfType(VCardBuilder.Create().NickNames, typeof(StringCollectionBuilder));
 
     [TestMethod]
     public void EditNickNameTest1()
     {
-        VCard.SyncTestReset();
-
         var builder = VCardBuilder.Create();
         IEnumerable<StringCollectionProperty?>? prop = null;
         builder.NickNames.Edit(p => prop = p);
@@ -1135,8 +1005,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddNonStandardTest()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .NonStandards.Add("X-TEST", "first")
@@ -1163,8 +1031,6 @@ public class VCardBuilderTests
     [TestMethod]
     public void EditNonStandardTest1()
     {
-        VCard.SyncTestReset();
-
         var builder = VCardBuilder.Create();
         IEnumerable<NonStandardProperty?>? prop = null;
         builder.NonStandards.Edit(p => prop = p);
@@ -1182,9 +1048,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddNoteTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Notes.Add("1")
@@ -1197,8 +1060,6 @@ public class VCardBuilderTests
     [TestMethod]
     public void EditNoteTest1()
     {
-        VCard.SyncTestReset();
-
         var builder = VCardBuilder.Create();
         IEnumerable<TextProperty?>? prop = null;
         builder.Notes.Edit(p => prop = p);
@@ -1216,8 +1077,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddOrganizationTest()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .Organizations.Add("Org1")
@@ -1244,8 +1103,6 @@ public class VCardBuilderTests
     [TestMethod]
     public void EditOrganizationTest1()
     {
-        VCard.SyncTestReset();
-
         var builder = VCardBuilder.Create();
         IEnumerable<OrgProperty?>? prop = null;
         builder.Organizations.Edit(p => prop = p);
@@ -1263,9 +1120,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddOrgDirectoryTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .OrgDirectories.Add("1")
@@ -1278,9 +1132,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddPhoneTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Phones.Add("1")
@@ -1293,9 +1144,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddPhotoTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Photos.AddBytes([1,2,3,4])
@@ -1310,9 +1158,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetProductIDTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder.Create()
                                .ProductID.Set("1")
                                .VCard;
@@ -1323,8 +1168,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetProfileTest()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder.Create()
                                .Profile.Set(vc => "group")
                                .VCard;
@@ -1344,8 +1187,6 @@ public class VCardBuilderTests
     [TestMethod]
     public void EditProfileTest1()
     {
-        VCard.SyncTestReset();
-
         var builder = VCardBuilder.Create();
         var prop = new ProfileProperty();
         builder.Profile.Edit(p => prop = p);
@@ -1361,8 +1202,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddRelationTest1()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .Relations.Add(Guid.NewGuid())
@@ -1390,8 +1229,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddRelationTest2()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .Relations.Add("Susi", Rel.Friend)
@@ -1406,8 +1243,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddRelationTest3()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .Relations.Add(new Uri("http://www.Susi.de"), Rel.Friend)
@@ -1422,8 +1257,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddRelationTest4()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .Relations.Add(VCardBuilder.Create().DisplayNames.Add("Susi").VCard, Rel.Friend)
@@ -1438,8 +1271,6 @@ public class VCardBuilderTests
     [TestMethod]
     public void EditRelationTest1()
     {
-        VCard.SyncTestReset();
-
         var builder = VCardBuilder.Create();
         IEnumerable<RelationProperty?>? prop = null;
         builder.Relations.Edit(p => prop = p);
@@ -1457,9 +1288,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddRoleTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Roles.Add("1")
@@ -1472,9 +1300,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddSoundTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Sounds.AddBytes([1, 2, 3, 4])
@@ -1489,9 +1314,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddSourceTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Sources.Add("1")
@@ -1504,8 +1326,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetTimeStampTest1()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .TimeStamp.Set(DateTimeOffset.UtcNow)
@@ -1523,8 +1343,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetTimeStampTest2()
     {
-        VCard.SyncTestReset();
-
         const string key = "X-Test";
         const string val = "bla";
 
@@ -1552,8 +1370,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetTimeStampTest3()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .TimeStamp.Set()
@@ -1571,8 +1387,6 @@ public class VCardBuilderTests
     [TestMethod]
     public void EditTimeStampTest1()
     {
-        VCard.SyncTestReset();
-
         var builder = VCardBuilder.Create();
         var prop = new TimeStampProperty();
         builder.TimeStamp.Edit(p => prop = p);
@@ -1588,8 +1402,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void SetTimeStampTest4()
     {
-        VCard.SyncTestReset();
-
         const string key = "X-Test";
         const string val = "bla";
 
@@ -1616,9 +1428,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddTimeZoneTest1()
     {
-        VCard.SyncTestReset();
-  
-
         VCard vc = VCardBuilder
             .Create()
             .TimeZones.Add(null)
@@ -1644,8 +1453,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddTimeZoneTest2()
     {
-        VCard.SyncTestReset();
-
         VCard vc = VCardBuilder
             .Create()
             .TimeZones.Add(null, group: v => "g1")
@@ -1659,8 +1466,6 @@ public class VCardBuilderTests
     [TestMethod]
     public void EditTimeZoneTest1()
     {
-        VCard.SyncTestReset();
-
         var builder = VCardBuilder.Create();
         IEnumerable<TimeZoneProperty?>? prop = null;
         builder.TimeZones.Edit(p => prop = p);
@@ -1678,9 +1483,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddTitleTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Titles.Add("1")
@@ -1693,9 +1495,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddUrlTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = VCardBuilder
             .Create()
             .Urls.Add("1")
@@ -1708,8 +1507,6 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddXmlTest()
     {
-        VCard.SyncTestReset();
-
         XNamespace ns = "http://www.contoso.com";
 
         VCard vc = VCardBuilder
@@ -1739,8 +1536,6 @@ public class VCardBuilderTests
     [TestMethod]
     public void EditXmlsTest1()
     {
-        VCard.SyncTestReset();
-
         var builder = VCardBuilder.Create();
         IEnumerable<XmlProperty?>? prop = null;
         builder.Xmls.Edit(p => prop = p);
