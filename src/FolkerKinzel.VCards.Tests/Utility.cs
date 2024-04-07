@@ -7,7 +7,7 @@ namespace FolkerKinzel.VCards.Tests;
 
 internal static class Utility
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>")]
+    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>")]
     internal static VCard CreateVCard()
     {
         VCard.SyncTestReset();
@@ -44,7 +44,7 @@ internal static class Utility
         adr1.Parameters.Language = "de";
         adr1.Parameters.SortAs = sortAs;
         var pidMap = new AppID(7, "http://www.contoso.com/");
-        adr1.Parameters.PropertyIDs = new PropertyID[] { new(3, pidMap), new(2, null) };
+        adr1.Parameters.PropertyIDs = [new(3, pidMap), new(2, null)];
         adr1.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Parcel | Adr.Postal;
 
         var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
@@ -66,10 +66,10 @@ internal static class Utility
         email1.Parameters.EMailType = EMail.SMTP;
 
         var name1 = new NameProperty("Künzel", "Folker");
-        name1.Parameters.SortAs = new string[] { "Kinzel", "Folker" };
+        name1.Parameters.SortAs = ["Kinzel", "Folker"];
 
         var name2 = new NameProperty("Кинцэл", "Фолкер");
-        name2.Parameters.SortAs = new string[] { "Kinzel", "Folker" };
+        name2.Parameters.SortAs = ["Kinzel", "Folker"];
         name2.Parameters.Language = "ru-RU";
         name2.Parameters.AltID = "  ";
 
@@ -103,7 +103,7 @@ internal static class Utility
 
         var nonStandard1 = new NonStandardProperty("X-NON-STANDARD", "The value");
         nonStandard1.Parameters.NonStandard
-            = new KeyValuePair<string, string>[] { new("X-NONSTD", "para-value") };
+            = [new("X-NONSTD", "para-value")];
 
         var nonStandard2 = new NonStandardProperty("X-WAKEUP", "07:00:00");
         nonStandard2.Parameters.DataType = Data.Time;
@@ -134,7 +134,7 @@ internal static class Utility
             Logos = logo1,
             Photos = photo1,
             Sounds = sound1,
-            Keys = new DataProperty[] { key1, key2 },
+            Keys = [key1, key2],
             DeathDateViews = DateAndOrTimeProperty.FromText("Later"),
             DeathPlaceViews = new TextProperty("Somewhere"),
             BirthPlaceViews = new TextProperty("Dessau"),
@@ -148,7 +148,7 @@ internal static class Utility
             DisplayNames = new TextProperty("Folker"),
             OrgDirectories = new TextProperty("OrgDirectory"),
             Profile = new ProfileProperty(),
-            Categories = new StringCollectionProperty(new string[] { "Person", "Data" }),
+            Categories = new StringCollectionProperty(["Person", "Data" ]),
             TimeStamp = new TimeStampProperty(),
             EMails = email1,
             Roles = new TextProperty("Rechte Hand"),
@@ -159,19 +159,19 @@ internal static class Utility
             Access = new AccessProperty(Access.Confidential),
             GenderViews = new GenderProperty(Sex.NonOrNotApplicable),
             GeoCoordinates = new GeoProperty(new GeoCoordinate(23.456, 49.654)),
-            NickNames = new StringCollectionProperty(new string[] { "Genius", "The Brain" }),
+            NickNames = new StringCollectionProperty(["Genius", "The Brain" ]),
             Kind = new KindProperty(Kind.Organization),
             Mailer = new TextProperty("The Mailer"),
             Languages = new TextProperty("de"),
             Notes = new TextProperty("Kommentar"),
 
-            Messengers = new TextProperty[]
-            {
+            Messengers =
+            [
                     impp1, impp2, impp3, impp4, impp5, impp6, impp7, impp8, impp9, impp10, impp11, impp12
-            },
+            ],
 
-            Relations = new RelationProperty[] { rel1, rel2 },
-            Organizations = new OrgProperty("The ÄÖÜ Organization", new string[] { "Department", "Office" }),
+            Relations = [rel1, rel2],
+            Organizations = new OrgProperty("The ÄÖÜ Organization", ["Department", "Office"]),
             NonStandards = nonStandard,
             Xmls = xml1,
         };

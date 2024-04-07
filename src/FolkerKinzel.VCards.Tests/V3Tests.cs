@@ -94,10 +94,10 @@ public class V3Tests
 
         byte[] bytes = CreateBytes();
 
-        vcard.Notes = new TextProperty[]
-        {
+        vcard.Notes =
+        [
                 new(UNITEXT)
-        };
+        ];
 
         vcard.Keys = DataProperty.FromText(ASCIITEXT);
 
@@ -145,20 +145,20 @@ public class V3Tests
             "damit das Line-Wrappping getestet werden kann. " + Environment.NewLine +
             "Um noch eine Zeile einzufügen, folgt hier noch ein Satz. ";
 
-        vcard.NameViews = new NameProperty[]
-        {
+        vcard.NameViews =
+        [
                 new("Test", "Paul", null, null, null)
-        };
+        ];
 
-        vcard.DisplayNames = new TextProperty[]
-        {
+        vcard.DisplayNames =
+        [
                 new("Paul Test")
-        };
+        ];
 
-        vcard.Notes = new TextProperty[]
-        {
+        vcard.Notes =
+        [
                 new(UNITEXT)
-        };
+        ];
 
         vcard.SaveVcf(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Paul Test.vcf"));
     }
@@ -240,10 +240,10 @@ END:VCARD";
 
         const string whatsAppNumber = "+1-234-567-89";
         var xiamoiMobilePhone = new TextProperty(whatsAppNumber);
-        xiamoiMobilePhone.Parameters.NonStandard = new KeyValuePair<string, string>[]
-        {
+        xiamoiMobilePhone.Parameters.NonStandard =
+        [
                 new("TYPE", "WhatsApp")
-        };
+        ];
 
         var vcard = new VCard
         {
@@ -449,7 +449,7 @@ END:VCARD";
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        var vCard = new VCard { NameViews = new NameProperty?[] { null } };
+        var vCard = new VCard { NameViews = [null] };
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0);
 

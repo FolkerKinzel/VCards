@@ -25,7 +25,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
         if (VCardToSerialize.DisplayNames is null)
         {
-            VCardToSerialize.DisplayNames = Array.Empty<TextProperty?>();
+            VCardToSerialize.DisplayNames = [];
         }
     }
 

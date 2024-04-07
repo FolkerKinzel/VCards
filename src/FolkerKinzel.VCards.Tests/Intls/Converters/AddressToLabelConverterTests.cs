@@ -103,7 +103,7 @@ public class AddressToLabelConverterTests
         const string state = "DISTRITO CAPITAL";
         const string zip = "1060";
         const string country = "Venezuela";
-        var address = new AddressProperty(new string[] { street, sector }, new string[] { city }, new string[] { state }, new string[] { zip }, new string[] { country });
+        var address = new AddressProperty([street, sector], [city], [state], [zip], [country]);
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{city} {zip} {state}");

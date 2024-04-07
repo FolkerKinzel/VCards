@@ -29,6 +29,9 @@ public sealed partial class VCard
     /// Call <see cref="VCard.RegisterApp(Uri?)"/> once before using any
     /// of the methods the <see cref="SyncOperation"/> object provides.
     /// </remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\NoPidExample.cs"/>
+    /// </example>
     public SyncOperation Sync { get; }
 
     /// <summary>
@@ -65,6 +68,9 @@ public sealed partial class VCard
     /// different <see cref="Uri"/>s</para>
     /// <para> - or - </para>
     /// <para>the <see cref="VCard"/> class had been used before this method has been called.</para></exception>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     public static void RegisterApp(Uri? globalID)
     {
         if (IsAppRegistered)

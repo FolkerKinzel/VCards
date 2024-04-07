@@ -22,12 +22,12 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         if (VCardToSerialize.NameViews is null)
         {
-            VCardToSerialize.NameViews = Array.Empty<NameProperty?>();
+            VCardToSerialize.NameViews = [];
         }
 
         if (VCardToSerialize.DisplayNames is null)
         {
-            VCardToSerialize.DisplayNames = Array.Empty<TextProperty?>();
+            VCardToSerialize.DisplayNames = [];
         }
     }
 

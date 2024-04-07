@@ -23,7 +23,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         if (VCardToSerialize.NameViews is null)
         {
-            VCardToSerialize.NameViews = Array.Empty<NameProperty>();
+            VCardToSerialize.NameViews = [];
         }
     }
 

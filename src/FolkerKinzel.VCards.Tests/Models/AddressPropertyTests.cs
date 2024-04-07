@@ -42,13 +42,13 @@ public class AddressPropertyTests
     public void AddressPropertyTest1()
     {
         var adr = new AddressProperty(
-            new string[] { STREET },
-            new string[] { LOCALITY },
-            new string[] { REGION },
-            new string[] { POSTAL_CODE },
-            new string[] { COUNTRY },
-            new string[] { PO_BOX },
-            new string[] { EXTENDED_ADDRESS },
+            [STREET],
+            [LOCALITY],
+            [REGION],
+            [POSTAL_CODE],
+            [COUNTRY],
+            [PO_BOX],
+            [EXTENDED_ADDRESS],
 
             group: GROUP);
 

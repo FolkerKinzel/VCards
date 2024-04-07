@@ -17,8 +17,8 @@ namespace FolkerKinzel.VCards.BuilderParts;
 /// Only use this struct in conjunction with <see cref="VCardBuilder"/>!
 /// </note>
 /// </remarks>
-[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
-    Justification = "Overriding does not change the default behavior.")]
+//[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
+//    Justification = "Overriding does not change the default behavior.")]
 public readonly struct TimeZoneBuilder
 {
     private readonly VCardBuilder? _builder;

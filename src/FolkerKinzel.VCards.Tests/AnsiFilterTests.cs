@@ -1,12 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FolkerKinzel.VCards;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FolkerKinzel.VCards.Tests;
+﻿namespace FolkerKinzel.VCards.Tests;
 
 [TestClass()]
 public class AnsiFilterTests
@@ -43,9 +35,6 @@ public class AnsiFilterTests
     [TestMethod()]
     public void LoadVcfTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var filter = new AnsiFilter();
         Assert.IsNotNull(filter);
         Assert.AreEqual("windows-1252", filter.FallbackEncoding.WebName, true);
@@ -79,9 +68,6 @@ public class AnsiFilterTests
     [TestMethod]
     public void LoadVcfTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var filter = new AnsiFilter();
         Assert.IsNotNull(filter);
         Assert.AreEqual("windows-1252", filter.FallbackEncoding.WebName, true);
@@ -110,9 +96,6 @@ public class AnsiFilterTests
     [TestMethod]
     public void LoadVcfTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var filter = new AnsiFilter();
         Assert.IsNotNull(filter);
         Assert.AreEqual("windows-1252", filter.FallbackEncoding.WebName, true);
@@ -120,7 +103,6 @@ public class AnsiFilterTests
         Assert.IsNotNull(vCards);
         Assert.AreEqual(2, vCards.Count);
         Assert.AreEqual("windows-1252", filter.UsedEncoding?.WebName, true);
-
     }
 
     [TestMethod]
@@ -138,9 +120,6 @@ public class AnsiFilterTests
     [TestMethod]
     public void AnsiFilterTest6()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var filter = new AnsiFilter();
         _ = filter.Load(TestFiles.MultiAnsiFilterTests_v3Utf16Bom);
         Assert.AreEqual("utf-8", filter.UsedEncoding?.WebName, false);
@@ -149,9 +128,6 @@ public class AnsiFilterTests
     [TestMethod]
     public void DeserializeTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var filter = new AnsiFilter();
 
         VCard vc = filter.Deserialize(() => File.OpenRead(TestFiles.AnsiIssueNoEncodingVcf)).First();
@@ -162,9 +138,6 @@ public class AnsiFilterTests
     [TestMethod]
     public void DeserializeTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var filter = new AnsiFilter();
 
         VCard vc = filter.Deserialize(() => File.OpenRead(TestFiles.AnsiIssueInvalidEncodingVcf)).First();
@@ -175,8 +148,6 @@ public class AnsiFilterTests
     [TestMethod]
     public void DeserializeTest3()
     {
-        VCard.SyncTestReset();
-
         var filter = new AnsiFilter();
 
         var cnt = new Counter();
@@ -189,12 +160,9 @@ public class AnsiFilterTests
     [TestMethod]
     public async Task DeserializeAsyncTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var filter = new AnsiFilter();
 
-        VCard vc = (await filter.DeserializeAsync(t => Task.FromResult<Stream>( File.OpenRead(TestFiles.AnsiIssueNoEncodingVcf)), default)).First();
+        VCard vc = (await filter.DeserializeAsync(t => Task.FromResult<Stream>(File.OpenRead(TestFiles.AnsiIssueNoEncodingVcf)), default)).First();
 
         Assert.AreEqual("Lämmerweg 12", vc.Addresses!.First()!.Value.Street[0]);
     }
@@ -202,9 +170,6 @@ public class AnsiFilterTests
     [TestMethod]
     public async Task DeserializeAsyncTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var filter = new AnsiFilter();
 
         VCard vc = (await filter.DeserializeAsync(t => Task.FromResult<Stream>(File.OpenRead(TestFiles.AnsiIssueInvalidEncodingVcf)), default)).First();
@@ -215,13 +180,11 @@ public class AnsiFilterTests
     [TestMethod]
     public async Task DeserializeAsyncTest3()
     {
-        VCard.SyncTestReset();
-
         var filter = new AnsiFilter();
 
         var cnt = new Counter();
 
-        VCard vc = (await filter.DeserializeAsync(t => Task.FromResult<Stream>( cnt.Count == 0 ? new StreamDummy(File.OpenRead(TestFiles.AnsiIssueInvalidEncodingVcf), canSeek: false) : null!), default)).First();
+        VCard vc = (await filter.DeserializeAsync(t => Task.FromResult<Stream>(cnt.Count == 0 ? new StreamDummy(File.OpenRead(TestFiles.AnsiIssueInvalidEncodingVcf), canSeek: false) : null!), default)).First();
 
         Assert.AreNotEqual("Lämmerweg 12", vc.Addresses!.First()!.Value.Street[0]);
     }
@@ -229,8 +192,6 @@ public class AnsiFilterTests
     [TestMethod]
     public async Task DeserializeAsyncTest4()
     {
-        VCard.SyncTestReset();
-
         var filter = new AnsiFilter();
 
         var cnt = new Counter();
