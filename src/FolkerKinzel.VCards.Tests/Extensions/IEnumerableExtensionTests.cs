@@ -40,9 +40,6 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void ReferenceVCardsTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         List<VCard?>? list = GenerateVCardList();
 
         list = list.Reference().ToList()!;
@@ -74,9 +71,6 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void DereferenceVCardsTest()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         List<VCard?>? list = GenerateVCardList();
 
         list = list.Reference().ToList()!;
@@ -97,9 +91,6 @@ public class IEnumerableExtensionTests
     [ExpectedException(typeof(ArgumentException))]
     public void SaveVcfTest_InvalidFilename(VCdVersion version)
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var list = new List<VCard?>() { new() };
 
         string path = "   ";
@@ -145,9 +136,6 @@ public class IEnumerableExtensionTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void SaveVcfTest_fileNameNull(VCdVersion version)
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var list = new List<VCard?>() { new() };
 
         list.SaveVcf(null!, version);
@@ -156,9 +144,6 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void SaveVcfTest_vCard2_1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         List<VCard?> list = GenerateVCardList();
 
         string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_v2.1.vcf");
@@ -174,9 +159,6 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void SaveVcfTest_vCard3_0()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         List<VCard?> list = GenerateVCardList();
 
         string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_v3.0.vcf");
@@ -193,9 +175,6 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void SaveVcfTest_vCard4_0()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         List<VCard?> list = GenerateVCardList();
 
         string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_v4.0.vcf");
@@ -218,9 +197,6 @@ public class IEnumerableExtensionTests
     [DataRow(VCdVersion.V4_0)]
     public void SerializeVcfTest2(VCdVersion version)
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         List<VCard?> list = GenerateVCardList();
 
         using var ms = new MemoryStream();
@@ -241,9 +217,6 @@ public class IEnumerableExtensionTests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void SerializeVcfTest3(VCdVersion version)
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         List<VCard?> list = GenerateVCardList();
 
         using var ms = new MemoryStream();
@@ -260,9 +233,6 @@ public class IEnumerableExtensionTests
     [DataRow(VCdVersion.V4_0)]
     public void ToVcfStringTest(VCdVersion version)
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         List<VCard?> list = GenerateVCardList();
 
         string s = list.ToVcfString(version);
@@ -529,9 +499,6 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void ConcatenateTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vc = new VCard();
 
         vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
@@ -561,9 +528,6 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void ConcatenateTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vc = new VCard();
 
         vc.Relations = vc.Relations.ConcatWith(null);

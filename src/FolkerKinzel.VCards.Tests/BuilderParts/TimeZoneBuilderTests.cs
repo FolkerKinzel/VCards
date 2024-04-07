@@ -13,7 +13,7 @@ public class TimeZoneBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new TimeZoneBuilder().Add(null);
+    public void AddTest1() => new TimeZoneBuilder().Add((TimeZoneID?)null);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

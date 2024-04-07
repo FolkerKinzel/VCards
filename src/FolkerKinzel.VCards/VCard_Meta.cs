@@ -2,29 +2,12 @@
 using FolkerKinzel.VCards.Syncs;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
+using System.Collections.Generic;
 
 namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard
 {
-    public IEnumerable<VCardProperty> Flatten()
-    {
-        foreach (var item in _propDic.Select(static x => x.Value))
-        {
-            if (item is VCardProperty p)
-            {
-                yield return p;
-            }
-            else
-            {
-                foreach (var prop in ((IEnumerable<VCardProperty?>)item).WhereNotNull())
-                {
-                    yield return prop;
-                }
-            }
-        }
-    }
-
     /// <summary>Indicates whether the <see cref="VCard" /> object doesn't contain
     /// any usable data.</summary>
     /// <returns> <c>true</c> if the <see cref="VCard" /> object doesn't contain

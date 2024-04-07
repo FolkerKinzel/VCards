@@ -53,9 +53,6 @@ public class VCardTests
     [DataRow(VCdVersion.V4_0)]
     public void SaveTest1(VCdVersion version)
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker")
@@ -81,9 +78,6 @@ public class VCardTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void SaveTest_fileNameNull()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker") 
@@ -97,9 +91,6 @@ public class VCardTests
     [ExpectedException(typeof(ArgumentException))]
     public void SaveTest_InvalidFileName()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker")
@@ -116,9 +107,6 @@ public class VCardTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void SerializeTest_StreamNull(VCdVersion version)
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker")
@@ -158,9 +146,6 @@ public class VCardTests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void SerializeTest_CloseStream(VCdVersion version)
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker")
@@ -181,8 +166,6 @@ public class VCardTests
     [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
     public void SerializeTest_StreamClosed(VCdVersion version)
     {
-        VCard.SyncTestReset();
-
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker")
@@ -201,8 +184,6 @@ public class VCardTests
     [DataRow(VCdVersion.V4_0)]
     public void DeserializeTest1(VCdVersion version)
     {
-        VCard.SyncTestReset();
-
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker")
@@ -268,8 +249,6 @@ public class VCardTests
     [TestMethod]
     public void ToStringTest1()
     {
-        VCard.SyncTestReset();
-
         var textProp = new TextProperty("Test");
 
         var pidMap1 = new AppID(5, "http://folkerkinzel.de/file1.htm");

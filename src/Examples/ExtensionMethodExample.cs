@@ -24,6 +24,7 @@ public class ExtensionMethodExample
 
         IGrouping<string?, VCardProperty> groupQuery =
             vc.Flatten()
+              .Select(x => x.Value)
               .GroupByVCardGroup()
               .First(x => x.Key == "g1");
 

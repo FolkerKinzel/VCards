@@ -1430,7 +1430,7 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .TimeZones.Add(null)
+            .TimeZones.Add((TimeZoneID?)null)
             .VCard;
 
         Assert.IsNotNull(vc.TimeZones);
@@ -1455,7 +1455,7 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .TimeZones.Add(null, group: v => "g1")
+            .TimeZones.Add((TimeZoneID?)null, group: v => "g1")
             .VCard;
 
         Assert.IsNotNull(vc.TimeZones);

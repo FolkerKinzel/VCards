@@ -205,7 +205,7 @@ internal abstract class VcfSerializer : IDisposable
     private void AppendProperties()
     {
         foreach (KeyValuePair<Prop, object> kvp in
-            ((IEnumerable<KeyValuePair<Prop, object>>)VCardToSerialize).OrderBy(static x => x.Key))
+            VCardToSerialize.AsProperties().OrderBy(static x => x.Key))
         {
             switch (kvp.Key)
             {

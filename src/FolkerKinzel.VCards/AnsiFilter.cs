@@ -221,13 +221,13 @@ public sealed class AnsiFilter
     {
         foreach (var vCard in vCards.Where(x => x.Version == VCdVersion.V2_1))
         {
-            IEnumerable<KeyValuePair<Prop, object>> keyValuePairs = vCard;
+            //IEnumerable<KeyValuePair<Prop, VCardProperty>> keyValuePairs = vCard;
 
-            string? charSet = keyValuePairs
-                .Where(x => x.Value is IEnumerable<AddressProperty> or IEnumerable<NameProperty> or IEnumerable<TextProperty>)
-                .Select(x => x.Value as IEnumerable<VCardProperty>)
-                .SelectMany(x => x!)
-                .FirstOrDefault(x => x.Parameters.CharSet is not null)?.Parameters.CharSet;
+            string? charSet = vCard
+                .Flatten()
+                .Where(x => x.Value is AddressProperty or NameProperty or TextProperty)
+                .Select(x => x.Value.Parameters.CharSet)
+                .FirstOrDefault(x => x is not null);
 
             if (charSet is not null) { return charSet; }
         }

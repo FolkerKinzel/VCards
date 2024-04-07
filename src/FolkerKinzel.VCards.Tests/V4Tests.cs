@@ -54,10 +54,7 @@ public class V4Tests
 
         byte[] bytes = CreateBytes();
 
-        vcard.Notes = new TextProperty[]
-        {
-                new(UNITEXT)
-        };
+        vcard.Notes = [ new(UNITEXT) ];
 
         vcard.Keys = DataProperty.FromText(ASCIITEXT);
 
