@@ -230,6 +230,10 @@ public static class IEnumerableExtension
     /// </para>
     /// </remarks>
     /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
+    /// 
     /// <seealso cref="Vcf.ToString(IEnumerable{VCard?}, VCdVersion, ITimeZoneIDConverter?, Opts)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
     /// 
@@ -274,6 +278,9 @@ public static class IEnumerableExtension
     /// <see cref="FirstOrNull{TSource}(IEnumerable{TSource}?, bool)"/>
     /// because the <see cref="ParameterSection.Preference"/> has no meaning in such properties.
     /// </remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TSource? PrefOrNull<TSource>(this IEnumerable<TSource?>? values,
                                                bool ignoreEmptyItems = true)
@@ -351,6 +358,9 @@ public static class IEnumerableExtension
     /// is assumed.
     /// </para>
     /// </returns>
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TSource? FirstOrNull<TSource>(
         this IEnumerable<TSource?>? values, bool ignoreEmptyItems = true) where TSource : VCardProperty
@@ -419,6 +429,9 @@ public static class IEnumerableExtension
     /// <see cref="OrderByIndex{TSource}(IEnumerable{TSource}, bool)"/> because the 
     /// <see cref="ParameterSection.Preference"/> has no meaning in such properties.
     /// </remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IEnumerable<TSource> OrderByPref<TSource>(this IEnumerable<TSource?>? values,
                                                             bool discardEmptyItems = true)
@@ -451,6 +464,9 @@ public static class IEnumerableExtension
     /// an empty collection will be returned. 
     /// </para>
     /// </returns>
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IEnumerable<TSource> OrderByIndex<TSource>(this IEnumerable<TSource?>? values,
                                                              bool discardEmptyItems = true)
@@ -483,6 +499,9 @@ public static class IEnumerableExtension
     /// The comparison of <see cref="VCardProperty.Group"/> identifiers is case-insensitive 
     /// (see RFC 6350, 3.3).
     /// </remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
     public static IEnumerable<IGrouping<string?, TSource>> GroupByVCardGroup<TSource>(
         this IEnumerable<TSource?>? values) where TSource : VCardProperty
         => values?.WhereNotNull()
@@ -513,6 +532,9 @@ public static class IEnumerableExtension
     /// <remarks>
     /// The method performs an ordinal character comparison of the <see cref="ParameterSection.AltID"/>s.
     /// </remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
     public static IEnumerable<IGrouping<string?, TSource>> GroupByAltID<TSource>(
         this IEnumerable<TSource?>? values) where TSource : VCardProperty, IEnumerable<TSource>
         => values?.WhereNotNull()
@@ -616,19 +638,15 @@ public static class IEnumerableExtension
     /// but differs in that it can be called on <c>null</c> references and in that it accepts <c>null</c> references as
     /// argument.
     /// </remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
     public static IEnumerable<TSource?> ConcatWith<TSource>(
         this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
     {
         second ??= Enumerable.Repeat<TSource?>(null, 1);
         return first is null ? second : first.Concat(second);
     }
-
-    //public static IEnumerable<TSource?> Concat<TSource>(
-    //   this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
-    //{
-    //    second ??= Enumerable.Repeat<TSource?>(null, 1);
-    //    return first is null ? second : first.Concat(second);
-    //}
 
     /// <summary>
     /// Removes each occurrence of <paramref name="value"/> from <paramref name="values"/>.

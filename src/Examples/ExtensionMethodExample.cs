@@ -101,8 +101,8 @@ public class ExtensionMethodExample
             // null references within these collections. Extension methods undertake
             // the necessary null checking when reading these properties:
             .DisplayNames.Edit(
-                dplayNames => Enumerable.Repeat<TextProperty?>(null, 1)
-                                        .Concat(dplayNames)
+                dplayNames => dplayNames.ConcatWith(null)
+                                        .ConcatWith(dplayNames)
                                         .ConcatWith(null))
             .Phones.Add("1234",
                         // The ParameterSection.PropertyClass property is of Type
