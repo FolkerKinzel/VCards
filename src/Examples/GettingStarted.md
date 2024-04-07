@@ -84,58 +84,62 @@ object that the VCardBuilder created or manipulated.
 
 See an example how `VCardBuilder` can be used:
 ```csharp
-VCard vCard = 
-    VCardBuilder
+VCard vCard = VCardBuilder
     .Create()
     .NameViews.Add(familyNames: ["Müller-Risinowsky"],
                    givenNames: ["Käthe"],
                    additionalNames: ["Alexandra", "Caroline"],
                    prefixes: ["Prof.", "Dr."],
-                   displayName: static (builder, prop) => builder.Add(prop.ToDisplayName())
-                   )
+                   displayName: (builder, prop) => builder.Add(prop.ToDisplayName())
+                  )
     .GenderViews.Add(Sex.Female)
     .Organizations.Add("Millers Company", ["C#", "Webdesign"])
     .Titles.Add("CEO")
     .Photos.AddFile(photoFilePath)
     .Phones.Add("tel:+49-123-9876543",
-                    parameters: static p =>
-                    {
-                        p.DataType = Data.Uri;
-                        p.PropertyClass = PCl.Home;
-                        p.PhoneType = Tel.Voice | Tel.BBS;
-                    }
-                )
+                 parameters: p =>
+                 {
+                     p.DataType = Data.Uri;
+                     p.PropertyClass = PCl.Home;
+                     p.PhoneType = Tel.Voice | Tel.BBS;
+                 }
+               )
     .Phones.Add("tel:+49-321-1234567",
-                    parameters: static p =>
-                    {
-                        p.DataType = Data.Uri;
-                        p.PropertyClass = PCl.Work;
-                        p.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
-                    }
+                 parameters: p =>
+                 {
+                     p.DataType = Data.Uri;
+                     p.PropertyClass = PCl.Work;
+                     p.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
+                 }
                )
     // Unless specified, an address label is automatically applied to the AddressProperty object.
     // Specifying the country helps to format this label correctly.
     // Applying a group name to the AddressProperty helps to automatically preserve its Label,
     // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
     .Addresses.Add("Friedrichstraße 22", "Berlin", null, "10117", "Germany",
-                    parameters: static p =>
+                    parameters: p =>
                     {
                         p.PropertyClass = PCl.Work;
                         p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel;
                         p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
                         p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
                     },
-                    group: static vc => vc.NewGroup())
+                    group: vc => vc.NewGroup()
+                  )
     .EMails.Add("mailto:kaethe_at_home@internet.com",
-                 parameters: static p =>
+                 parameters: p =>
                  {
                      p.DataType = Data.Uri;
                      p.PropertyClass = PCl.Home;
-                 })
+                 }
+               )
     .EMails.Add("kaethe_mueller@internet.com", pref: true,
-                 parameters: static p => p.PropertyClass = PCl.Work)
+                 parameters: p => p.PropertyClass = PCl.Work
+               )
     .BirthDayViews.Add(1984, 3, 28)
-    .Relations.Add("Paul Müller-Risinowsky", Rel.Spouse | Rel.CoResident | Rel.Colleague)
+    .Relations.Add("Paul Müller-Risinowsky", 
+                   Rel.Spouse | Rel.CoResident | Rel.Colleague
+                  )
     .AnniversaryViews.Add(2006, 7, 14)
     .VCard;
 ```
