@@ -13,7 +13,7 @@ public sealed partial class VCard : IEnumerable<VCard>
     /// <example>
     /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
     /// </example>
-    public IEnumerable<KeyValuePair<Prop, VCardProperty>> Flatten()
+    public IEnumerable<KeyValuePair<Prop, VCardProperty>> AsEnumerable()
     {
         foreach (var item in _propDic)
         {
@@ -25,7 +25,7 @@ public sealed partial class VCard : IEnumerable<VCard>
             {
                 var coll = (IEnumerable<VCardProperty?>)item.Value;
 
-                foreach(var p in coll)
+                foreach(VCardProperty? p in coll)
                 {
                     if(p is not null)
                     {

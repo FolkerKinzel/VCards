@@ -224,7 +224,7 @@ public sealed class AnsiFilter
             //IEnumerable<KeyValuePair<Prop, VCardProperty>> keyValuePairs = vCard;
 
             string? charSet = vCard
-                .Flatten()
+                .AsEnumerable()
                 .Where(x => x.Value is AddressProperty or NameProperty or TextProperty)
                 .Select(x => x.Value.Parameters.CharSet)
                 .FirstOrDefault(x => x is not null);

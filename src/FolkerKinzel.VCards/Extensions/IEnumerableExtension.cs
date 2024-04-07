@@ -517,6 +517,11 @@ public static class IEnumerableExtension
                   .GroupBy(static x => x.Group, StringComparer.OrdinalIgnoreCase)
            ?? [];
 
+    public static IEnumerable<IGrouping<string?, KeyValuePair<Prop, VCardProperty>>> 
+        GroupByVCardGroup(this IEnumerable<KeyValuePair<Prop, VCardProperty>>? values)
+        => values?.GroupBy(static x => x.Value.Group, StringComparer.OrdinalIgnoreCase)
+           ?? [];
+
     /// <summary>
     /// Groups the <see cref="VCardProperty"/> objects in <paramref name="values"/>
     /// by their <see cref="ParameterSection.AltID"/>s.

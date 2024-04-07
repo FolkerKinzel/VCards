@@ -20,23 +20,22 @@ public class ExtensionMethodExample
 
         // Group properties by their group name. (Note that group names
         // are case insensitive.)
-        Console.WriteLine("\nProperties with the group name g1:");
+        Console.WriteLine("\nProperty values with the group name g1:");
 
-        IGrouping<string?, VCardProperty> groupQuery =
-            vc.Flatten()
-              .Select(x => x.Value)
+        IGrouping<string?, KeyValuePair<Prop, VCardProperty>> groupQuery =
+            vc.AsEnumerable()
               .GroupByVCardGroup()
               .First(x => x.Key == "g1");
 
-        foreach (VCardProperty vCardProperty in groupQuery)
+        foreach (KeyValuePair<Prop, VCardProperty> kvp in groupQuery)
         {
-            Console.WriteLine(vCardProperty);
+            Console.WriteLine("  {0}: {1}", kvp.Key, kvp.Value);
         };
 
         Console.WriteLine("\nDisplayNames ordered by Preference:");
         foreach (TextProperty dn in vc.DisplayNames.OrderByPref())
         {
-            Console.WriteLine("  " + dn);
+            Console.WriteLine("  {0}", dn);
         }
 
         Console.WriteLine("\nThe most preferred DisplayName is: {0}", vc.DisplayNames.PrefOrNull());
@@ -44,7 +43,7 @@ public class ExtensionMethodExample
         Console.WriteLine("\nDisplayNames ordered by Index:");
         foreach (TextProperty dn in vc.DisplayNames.OrderByIndex())
         {
-            Console.WriteLine("  " + dn);
+            Console.WriteLine("  {0}", dn);
         }
 
         Console.WriteLine("\nThe DisplayName with the lowest Index is: {0}", vc.DisplayNames.FirstOrNull());
@@ -58,7 +57,7 @@ public class ExtensionMethodExample
 
         foreach (TextProperty prop in altIDQuery)
         {
-            Console.WriteLine("  " + prop);
+            Console.WriteLine("  {0}", prop);
         }
 
         // Serialize the VCard as VCF. (Most of the methods of the Vcf class are also
@@ -90,20 +89,12 @@ public class ExtensionMethodExample
                                }
                              )
             .DisplayNames.Add("Something else",
-                               parameters:
-                               p =>
-                               {
-                                   p.Language = "de";
-                                   p.Index = 1;
-                               }
+                               parameters: p => p.Index = 1
                              )
             // The properties of the VCard class that contain collections allow
             // null references within these collections. Extension methods undertake
             // the necessary null checking when reading these properties:
-            .DisplayNames.Edit(
-                dplayNames => dplayNames.ConcatWith(null)
-                                        .ConcatWith(dplayNames)
-                                        .ConcatWith(null))
+            .DisplayNames.Edit(dplayNames => dplayNames.ConcatWith(null))
             .Phones.Add("1234",
                         // The ParameterSection.PropertyClass property is of Type
                         // Nullable<PCl>. Use extension methods to edit such properties

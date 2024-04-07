@@ -18,20 +18,21 @@ public sealed partial class VCard
             .Append(Environment.NewLine);
 
         foreach (
-            KeyValuePair<Prop, VCardProperty> kvp in this._propDic
-            .OrderBy(static x => x.Key)
-            .Select(
-                  static x => x.Value is IEnumerable<VCardProperty?> prop
-                                ? prop.WhereNotNull()
-                                      .Select<VCardProperty, KeyValuePair<Prop, VCardProperty>>
-                                      (
-                                        v => new KeyValuePair<Prop, VCardProperty>(x.Key, v)
-                                      )
-                                : Enumerable.Repeat(new KeyValuePair<Prop, VCardProperty>(x.Key, (VCardProperty)x.Value), 1))
-            .SelectMany(static x => x.OrderBy(static z => z.Value.Parameters.Preference))
-            .GroupBy(static x => x.Value.Group, StringComparer.OrdinalIgnoreCase)
-            .OrderBy(static x => x.Key)
-            .SelectMany(static x => x)
+            KeyValuePair<Prop, VCardProperty> kvp in AsEnumerable()
+            //._propDic
+            //.OrderBy(static x => x.Key)
+            //.Select(
+            //      static x => x.Value is IEnumerable<VCardProperty?> prop
+            //                    ? prop.WhereNotNull()
+            //                          .Select<VCardProperty, KeyValuePair<Prop, VCardProperty>>
+            //                          (
+            //                            v => new KeyValuePair<Prop, VCardProperty>(x.Key, v)
+            //                          )
+            //                    : Enumerable.Repeat(new KeyValuePair<Prop, VCardProperty>(x.Key, (VCardProperty)x.Value), 1))
+            //.SelectMany(static x => x.OrderBy(static z => z.Value.Parameters.Preference))
+            //.GroupBy(static x => x.Value.Group, StringComparer.OrdinalIgnoreCase)
+            //.OrderBy(static x => x.Key)
+            //.SelectMany(static x => x)
             )
         {
             AppendProperty(kvp.Key, kvp.Value);
