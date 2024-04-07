@@ -336,7 +336,8 @@ public static class IEnumerableExtension
 
     /// <summary>
     /// Gets the first <see cref="VCardProperty"/> from a collection of <see cref="VCardProperty"/> 
-    /// objects and allows to specify whether or not to ignore empty items.
+    /// objects. The method takes the <see cref="ParameterSection.Index"/> property into account
+    /// and allows to specify whether or not to ignore empty items.
     /// </summary>
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
@@ -356,6 +357,10 @@ public static class IEnumerableExtension
     /// "First" is defined as the item with the lowest <see cref="ParameterSection.Index"/>
     /// value. If <see cref="ParameterSection.Index"/> is <c>null</c>, <see cref="int.MaxValue"/>
     /// is assumed.
+    /// </para>
+    /// <para>
+    /// If no <see cref="ParameterSection.Index"/> is specified, the first <see cref="VCardProperty"/> found 
+    /// in the collection is returned.
     /// </para>
     /// </returns>
     /// <example>
@@ -398,6 +403,10 @@ public static class IEnumerableExtension
     /// "First" is defined as the item with the lowest <see cref="ParameterSection.Index"/>
     /// value. If <see cref="ParameterSection.Index"/> is <c>null</c>, <see cref="int.MaxValue"/>
     /// is assumed.
+    /// </para>
+    /// <para>
+    /// If no <see cref="ParameterSection.Index"/> is specified, the first <see cref="VCardProperty"/> that
+    /// passes the <paramref name="filter"/> is returned.
     /// </para>
     /// </returns>
     public static TSource? FirstOrNull<TSource>(
