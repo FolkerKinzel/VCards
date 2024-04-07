@@ -623,6 +623,13 @@ public static class IEnumerableExtension
         return first is null ? second : first.Concat(second);
     }
 
+    //public static IEnumerable<TSource?> Concat<TSource>(
+    //   this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
+    //{
+    //    second ??= Enumerable.Repeat<TSource?>(null, 1);
+    //    return first is null ? second : first.Concat(second);
+    //}
+
     /// <summary>
     /// Removes each occurrence of <paramref name="value"/> from <paramref name="values"/>.
     /// </summary>
