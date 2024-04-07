@@ -10,9 +10,10 @@ public sealed partial class VCard
     /// any usable data.</summary>
     /// <returns> <c>true</c> if the <see cref="VCard" /> object doesn't contain
     /// any usable data, otherwise <c>false</c>.</returns>
-    public bool IsEmpty() =>
-        !_propDic
-            .Where(static x => x.Key is not (Prop.TimeStamp or Prop.AppIDs or Prop.ID))
+    public bool IsEmpty()
+    {
+        return !_propDic
+            .Where(static x => !IsNonContentProperty(x.Key))
             .Select(static x => x.Value)
             .Any(static x => x switch
             {
@@ -20,6 +21,23 @@ public sealed partial class VCard
                 IEnumerable<VCardProperty?> numerable => numerable.Any(x => !(x?.IsEmpty ?? true)),
                 _ => false
             });
+
+        static bool IsNonContentProperty(Prop prop)
+        {
+            switch (prop)
+            {
+                case Prop.TimeStamp:
+                case Prop.AppIDs:
+                case Prop.ID:
+                case Prop.Kind:
+                case Prop.Access:
+                case Prop.Mailer:
+                case Prop.ProductID:
+                case Prop.Profile: return true;
+                default: return false;
+            }
+        }
+    }
 
     /// <summary>
     /// Gets an <see cref="IEnumerable{T}"/> of <see cref="string"/>s that can be used
