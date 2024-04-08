@@ -169,10 +169,9 @@ internal abstract class VcfSerializer : IDisposable
 
     protected virtual void SetIndexes()
     {
-        foreach (IEnumerable<VCardProperty?> coll in VCardToSerialize.AsProperties()
+        foreach (IEnumerable<VCardProperty?> coll in VCardToSerialize.Properties
                                                      .Where(static x => (x.Value is IEnumerable<VCardProperty?>) && (x.Key != Prop.AppIDs))
-                                                     .Select(static x => x.Value)
-                                                     .Cast<IEnumerable<VCardProperty?>>())
+                                                     .Select(static x => (IEnumerable<VCardProperty?>)x.Value))
         {
             if (coll.IsSingle(IgnoreEmptyItems))
             {
@@ -205,7 +204,7 @@ internal abstract class VcfSerializer : IDisposable
     private void AppendProperties()
     {
         foreach (KeyValuePair<Prop, object> kvp in
-            VCardToSerialize.AsProperties().OrderBy(static x => x.Key))
+            VCardToSerialize.Properties.OrderBy(static x => x.Key))
         {
             switch (kvp.Key)
             {

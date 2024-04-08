@@ -1,9 +1,15 @@
-﻿using FolkerKinzel.VCards.Models;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static class IEnumerableIntlExtension
 {
+    public static IEnumerable<IGrouping<string?, VCardProperty>> GroupByVCardGroup(
+        this IEnumerable<VCardProperty?> values)
+        => values.WhereNotNull()
+                 .GroupBy(static x => x.Group, StringComparer.OrdinalIgnoreCase);
+
 #if NET461
     internal static IEnumerable<TSource> Append<TSource>(this IEnumerable<TSource> sources, TSource value)
         => sources.Concat(Enumerable.Repeat(value, 1));

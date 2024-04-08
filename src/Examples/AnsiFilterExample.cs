@@ -38,7 +38,7 @@ public static class AnsiFilterExample
 
         ShowInTextEditorAndDelete(outFileName);
     }
-           
+
     private static void WriteToTextFile(string vcfFileName,
                                         IList<VCard> vCards,
                                         string? encodingWebName,

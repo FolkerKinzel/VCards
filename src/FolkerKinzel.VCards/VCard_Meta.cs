@@ -8,6 +8,12 @@ namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard
 {
+    /// <summary> <c>VERSION</c>: Version of the vCard standard. <c>(2,3,4)</c></summary>
+    public VCdVersion Version
+    {
+        get; internal set;
+    }
+
     /// <summary>Indicates whether the <see cref="VCard" /> object doesn't contain
     /// any usable data.</summary>
     /// <returns> <c>true</c> if the <see cref="VCard" /> object doesn't contain
@@ -59,7 +65,7 @@ public sealed partial class VCard
     /// </para>
     /// </remarks>
     public IEnumerable<string> GroupIDs
-        => EnumerateGroups().Distinct(StringComparer.OrdinalIgnoreCase);
+        => EnumerateGroupIDs().Distinct(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
     /// Gets a new <see cref="VCardProperty.Group"/> identifier that doesn't
@@ -82,7 +88,7 @@ public sealed partial class VCard
         return (++i).ToString();
     }
 
-    private IEnumerable<string> EnumerateGroups()
+    private IEnumerable<string> EnumerateGroupIDs()
     {
         foreach (var kvp in _propDic)
         {

@@ -46,10 +46,62 @@ public sealed partial class VCard
         }
     }
 
-    /// <summary> <c>VERSION</c>: Version of the vCard standard. <c>(2,3,4)</c></summary>
-    public VCdVersion Version
+    
+
+    /// <summary>
+    /// Gets this instance as <see cref="IEnumerable{T}"/> that allows to iterate over the stored
+    /// properties.
+    /// </summary>
+    /// <returns>An <see cref="IEnumerable{T}"/> that allows to iterate over the stored
+    /// properties.</returns>
+    /// <remarks>
+    /// <note type="tip">
+    /// Each <see cref="KeyValuePair{TKey, TValue}.Value"/> is either a <see cref="VCardProperty"/>
+    /// or an <see cref="IEnumerable{T}">IEnumerable&lt;VCardProperty?&gt;</see>.
+    /// </note>
+    /// </remarks>
+    internal IEnumerable<KeyValuePair<Prop, object>> Properties => this._propDic;
+
+    /// <summary>
+    /// Gets all the <see cref="Entities"/> stored in the <see cref="VCard" /> 
+    /// instance grouped by the values of their <see cref="VCardProperty.Group"/>
+    /// properties.
+    /// </summary>
+    /// <remarks>
+    /// Group names are case-insenitive. Ungrouped entities are in the group with
+    /// the <see cref="IGrouping{TKey, TElement}.Key"/>&#160;<c>null</c>.
+    /// </remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
+    public IEnumerable<Group> Groups => Entities.GroupBy(static x => x.Value.Group, StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>Gets all the data stored in the <see cref="VCard" /> 
+    /// instance merged into a single <see cref="IEnumerable{T}"/>.</summary>
+    public IEnumerable<Entity> Entities
     {
-        get; internal set;
+        get
+        {
+            foreach (var item in _propDic)
+            {
+                if (item.Value is VCardProperty prop)
+                {
+                    yield return new KeyValuePair<Prop, VCardProperty>(item.Key, prop);
+                }
+                else
+                {
+                    var coll = (IEnumerable<VCardProperty?>)item.Value;
+
+                    foreach (VCardProperty? p in coll)
+                    {
+                        if (p is not null)
+                        {
+                            yield return new KeyValuePair<Prop, VCardProperty>(item.Key, p);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the

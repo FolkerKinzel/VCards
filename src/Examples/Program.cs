@@ -27,9 +27,9 @@ internal class Program
 
         //WebExample.SynchronousExample();
 
-        //await WebExample.AsyncExample();
+        await WebExample.AsyncExample();
 
-        ExtensionMethodExample.Example();
+        //ExtensionMethodExample.Example();
 
         //NoPidExample.RemovePropertyIdentification();
 

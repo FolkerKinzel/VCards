@@ -221,10 +221,8 @@ public sealed class AnsiFilter
     {
         foreach (var vCard in vCards.Where(x => x.Version == VCdVersion.V2_1))
         {
-            //IEnumerable<KeyValuePair<Prop, VCardProperty>> keyValuePairs = vCard;
-
             string? charSet = vCard
-                .AsEnumerable()
+                .Entities
                 .Where(x => x.Value is AddressProperty or NameProperty or TextProperty)
                 .Select(x => x.Value.Parameters.CharSet)
                 .FirstOrDefault(x => x is not null);

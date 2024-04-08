@@ -485,45 +485,6 @@ public static class IEnumerableExtension
 
     /// <summary>
     /// Groups the <see cref="VCardProperty"/> objects in <paramref name="values"/>
-    /// by their <see cref="VCardProperty.Group"/> identifier.
-    /// </summary>
-    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
-    /// derived from <see cref="VCardProperty"/>.</typeparam>
-    /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
-    /// objects to group. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
-    /// values.</param>
-    /// <returns>
-    /// <para>
-    /// A collection of <see cref="IGrouping{TKey, TElement}"/> instances whose 
-    /// <see cref="IGrouping{TKey, TElement}.Key"/>s are the <see cref="VCardProperty.Group"/> 
-    /// identifiers. The Key <c>null</c> groups the <see cref="VCardProperty"/> instances that 
-    /// don't belong to any group.
-    /// </para>
-    /// <para>
-    /// The Values of the groups are guaranteed to be not <c>null</c>. If the method parameter 
-    /// <paramref name="values"/> is <c>null</c>, an empty collection is returned.
-    /// </para>
-    /// </returns>
-    /// <remarks>
-    /// The comparison of <see cref="VCardProperty.Group"/> identifiers is case-insensitive 
-    /// (see RFC 6350, 3.3).
-    /// </remarks>
-    /// <example>
-    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
-    /// </example>
-    public static IEnumerable<IGrouping<string?, TSource>> GroupByVCardGroup<TSource>(
-        this IEnumerable<TSource?>? values) where TSource : VCardProperty
-        => values?.WhereNotNull()
-                  .GroupBy(static x => x.Group, StringComparer.OrdinalIgnoreCase)
-           ?? [];
-
-    public static IEnumerable<IGrouping<string?, KeyValuePair<Prop, VCardProperty>>> 
-        GroupByVCardGroup(this IEnumerable<KeyValuePair<Prop, VCardProperty>>? values)
-        => values?.GroupBy(static x => x.Value.Group, StringComparer.OrdinalIgnoreCase)
-           ?? [];
-
-    /// <summary>
-    /// Groups the <see cref="VCardProperty"/> objects in <paramref name="values"/>
     /// by their <see cref="ParameterSection.AltID"/>s.
     /// </summary>
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 

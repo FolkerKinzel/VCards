@@ -14,6 +14,9 @@ public static class OptsExtension
     /// of several <see cref="Opts" /> values.</param>
     /// <returns>A value, which has all flags set that are set in <paramref name="value"
     /// /> and <paramref name="flags" />.</returns>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Opts Set(this Opts value, Opts flags) => value | flags;
 
@@ -44,6 +47,9 @@ public static class OptsExtension
     /// A value from which all the flags set in <paramref name="flags" /> are removed. 
     /// If <paramref name="flags" /> is <see cref="Opts.All" />, 
     /// <see cref="Opts.None" /> is returned.</returns>
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Opts Unset(this Opts value, Opts flags) => value & ~flags;
 }

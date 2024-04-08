@@ -22,12 +22,10 @@ public class ExtensionMethodExample
         // case insensitive.)
         Console.WriteLine("\nProperty values with the group name g1:");
 
-        IGrouping<string?, KeyValuePair<Prop, VCardProperty>> groupQuery =
-            vc.AsEnumerable()
-              .GroupByVCardGroup()
-              .First(x => x.Key == "g1");
+        IGrouping<string?, KeyValuePair<Prop, VCardProperty>> g1Group =
+            vc.Groups.First(x => x.Key == "g1");
 
-        foreach (KeyValuePair<Prop, VCardProperty> kvp in groupQuery)
+        foreach (KeyValuePair<Prop, VCardProperty> kvp in g1Group)
         {
             Console.WriteLine("  {0}: {1}", kvp.Key, kvp.Value);
         };
@@ -63,13 +61,13 @@ public class ExtensionMethodExample
         // Serialize the VCard as VCF. (Most of the methods of the Vcf class are also
         // available as extension methods.)
         Console.WriteLine("\nvc as vCard 3.0:\n");
-        Console.WriteLine(vc.ToVcfString());
+        Console.WriteLine(vc.ToVcfString(options: Opts.Default.Unset(Opts.UpdateTimeStamp)));
     }
 
     private static VCard InitializeTestVCard()
     {
         return VCardBuilder
-            .Create()
+            .Create(setID: false)
             .DisplayNames.Add("vCard zum Testen",
                                parameters:
                                p =>
@@ -106,3 +104,67 @@ public class ExtensionMethodExample
             .VCard;
     }
 }
+
+/*
+Console Output:
+
+The content of vc is:
+
+Version: 2.1
+
+[Preference: 1]
+[Language: en]
+[AltID: @1]
+DisplayNames: vCard for testing
+
+[Preference: 2]
+[Language: de]
+[AltID: @1]
+[Index: 2]
+DisplayNames: vCard zum Testen
+
+[Index: 1]
+DisplayNames: Something else
+
+[Group: G1]
+TimeZones: Europe/Berlin
+
+[PropertyClass: Home]
+[Group: g1]
+Phones: 1234
+
+=====================================
+
+
+Property values with the group name g1:
+  Phones: 1234
+  TimeZones: Europe/Berlin
+
+DisplayNames ordered by Preference:
+  vCard for testing
+  vCard zum Testen
+  Something else
+
+The most preferred DisplayName is: vCard for testing
+
+DisplayNames ordered by Index:
+  Something else
+  vCard zum Testen
+  vCard for testing
+
+The DisplayName with the lowest Index is: Something else
+
+The following display names mean the same in different languages:
+  vCard for testing
+  vCard zum Testen
+
+vc as vCard 3.0:
+
+BEGIN:VCARD
+VERSION:3.0
+G1.TZ:+01:00
+FN;LANGUAGE=en:vCard for testing
+N:?;;;;
+g1.TEL;TYPE=HOME:1234
+END:VCARD
+ */

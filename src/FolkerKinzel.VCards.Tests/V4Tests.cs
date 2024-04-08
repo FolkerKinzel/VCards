@@ -107,6 +107,8 @@ public class V4Tests
 
         VCard vcard = list[0];
 
+        //string theString = vcard.ToString();
+
         Assert.AreEqual(VCdVersion.V4_0, vcard.Version);
 
         Assert.IsNull(vcard.DirectoryName);

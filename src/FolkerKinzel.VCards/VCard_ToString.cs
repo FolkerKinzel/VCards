@@ -15,27 +15,14 @@ public sealed partial class VCard
         var sb = new StringBuilder();
 
         _ = sb.Append("Version: ").Append(GetVersionString(this.Version))
-            .Append(Environment.NewLine);
+              .Append(Environment.NewLine);
 
-        foreach (
-            KeyValuePair<Prop, VCardProperty> kvp in AsEnumerable()
-            //._propDic
-            //.OrderBy(static x => x.Key)
-            //.Select(
-            //      static x => x.Value is IEnumerable<VCardProperty?> prop
-            //                    ? prop.WhereNotNull()
-            //                          .Select<VCardProperty, KeyValuePair<Prop, VCardProperty>>
-            //                          (
-            //                            v => new KeyValuePair<Prop, VCardProperty>(x.Key, v)
-            //                          )
-            //                    : Enumerable.Repeat(new KeyValuePair<Prop, VCardProperty>(x.Key, (VCardProperty)x.Value), 1))
-            //.SelectMany(static x => x.OrderBy(static z => z.Value.Parameters.Preference))
-            //.GroupBy(static x => x.Value.Group, StringComparer.OrdinalIgnoreCase)
-            //.OrderBy(static x => x.Key)
-            //.SelectMany(static x => x)
-            )
+        foreach (Group group in Groups)
         {
-            AppendProperty(kvp.Key, kvp.Value);
+            foreach (var entity in group.OrderBy(x => x.Key))
+            {
+                AppendEntity(entity);
+            }
         }
 
         sb.Length -= Environment.NewLine.Length;
@@ -57,9 +44,13 @@ public sealed partial class VCard
 
         // ////////////////////////////////
 
-        void AppendProperty(Prop key, VCardProperty vcdProp)
+        void AppendEntity(Entity entity)
         {
             const string INDENT = "    ";
+
+            var key = entity.Key;
+            var vcdProp = entity.Value;
+
             string s = vcdProp.Parameters.ToString();
 
             _ = sb.AppendLine(); //Leerzeile

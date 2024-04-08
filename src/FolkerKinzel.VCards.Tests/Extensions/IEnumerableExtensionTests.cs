@@ -402,21 +402,24 @@ public class IEnumerableExtensionTests
         Assert.IsTrue(props.OrderByIndex(false).Any());
     }
 
-    [TestMethod]
-    public void GroupByVCardGroupTest1()
-    {
-        TextProperty[]? props = null;
-        Assert.IsNotNull(props.GroupByVCardGroup());
-    }
+    //[TestMethod]
+    //public void GroupByVCardGroupTest1()
+    //{
+    //    TextProperty[]? props = null;
+    //    Assert.IsNotNull(props.GroupByVCardGroup());
+    //}
 
     [TestMethod]
-    public void GroupByVCardGroupTest2()
+    public void GroupsTest1()
     {
-        TextProperty[] props = [new TextProperty("1"), 
-                                new TextProperty("2"), 
+        var vc = new VCard(setID: false)
+        {
+            DisplayNames = [new TextProperty("1"),
+                                new TextProperty("2"),
                                 new TextProperty("3", "g"),
-                                new TextProperty("4", "g")];
-        IEnumerable<IGrouping<string?, TextProperty>> result = props.GroupByVCardGroup();
+                                new TextProperty("4", "g")]
+        };
+        IEnumerable<IGrouping<string?, KeyValuePair<Prop, VCardProperty>>> result = vc.Groups;
         Assert.IsNotNull(result);
         Assert.AreEqual(2, result.Count());
         Assert.IsTrue(result.All(static x => x.Count() == 2));

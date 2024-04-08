@@ -68,10 +68,9 @@ public sealed class SyncOperation
     {
         bool any = false;
 
-        foreach (IEnumerable<VCardProperty?> coll in _vCard.AsProperties()
-            .Where(x => x.Key != Prop.AppIDs && x.Value is IEnumerable<VCardProperty?>)
-            .Select(x => x.Value)
-            .Cast<IEnumerable<VCardProperty?>>())
+        foreach (IEnumerable<VCardProperty?> coll in _vCard.Properties
+            .Where(x => x.Value is IEnumerable<VCardProperty?> && x.Key != Prop.AppIDs)
+            .Select(x => (IEnumerable<VCardProperty?>)x.Value))
         {
             foreach (VCardProperty? prop in coll)
             {
@@ -110,18 +109,9 @@ public sealed class SyncOperation
         _vCard.AppIDs = null;
         RegisterAppInVCardInstance();
 
-        foreach (IEnumerable<VCardProperty?> coll in _vCard.AsProperties()
-            .Where(x => x.Value is IEnumerable<VCardProperty?>)
-            .Select(x => x.Value)
-            .Cast<IEnumerable<VCardProperty?>>())
+        foreach (Entity kvp in _vCard.Entities)
         {
-            foreach (VCardProperty? prop in coll)
-            {
-                if (prop is not null)
-                {
-                    prop.Parameters.PropertyIDs = null;
-                }
-            }
+            kvp.Value.Parameters.PropertyIDs = null;
         }
     }
 

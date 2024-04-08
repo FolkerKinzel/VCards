@@ -503,9 +503,9 @@ public sealed partial class VCard
             return;
         }
 
-        var groups = labels.Cast<VCardProperty>()
-                           .Concat(Addresses! ?? Enumerable.Empty<VCardProperty>())
-                           .GroupByVCardGroup();
+        var groups = (Addresses ?? Enumerable.Empty<VCardProperty?>())
+                     .Concat(labels)
+                     .GroupByVCardGroup();
 
         foreach (var group in groups)
         {
@@ -578,8 +578,7 @@ public sealed partial class VCard
             return;
         }
 
-        var groups = Addresses.Cast<VCardProperty>()
-                              .Concat(TimeZones)
+        var groups = Addresses.Concat<VCardProperty?>(TimeZones)
                               .GroupByVCardGroup();
 
         foreach (var group in groups)
@@ -620,8 +619,7 @@ public sealed partial class VCard
             return;
         }
 
-        var groups = Addresses.Cast<VCardProperty>()
-                              .Concat(GeoCoordinates)
+        var groups = Addresses.Concat<VCardProperty?>(GeoCoordinates)
                               .GroupByVCardGroup();
 
         foreach (var group in groups)

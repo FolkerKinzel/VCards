@@ -15,6 +15,9 @@ public static class PClExtension
     /// <returns>A value, which has all flags set that are set in <paramref name="value"
     /// /> and <paramref name="flags" />. If <paramref name="value" /> is <c>null</c>,
     /// <paramref name="flags" /> is returned.</returns>
+    /// <example>
+    /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
+    /// </example>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [return: NotNull]
     public static PCl? Set(
