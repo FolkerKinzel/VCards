@@ -1,4 +1,5 @@
 using System.Collections;
+using FolkerKinzel.VCards.Intls;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -12,10 +13,7 @@ public sealed partial class ParameterSection
     /// <exception cref="ArgumentNullException"> <paramref name="other" /> is <c>null</c>.</exception>
     public void Assign(ParameterSection other)
     {
-        if (other is null)
-        {
-            throw new ArgumentNullException(nameof(other));
-        }
+        _ArgumentNullException.ThrowIfNull(other, nameof(other));
 
         if (object.ReferenceEquals(this, other))
         {

@@ -169,7 +169,6 @@ public class IEnumerableExtensionTests
 
         Assert.AreNotEqual(list.Count, list2.Count);
         Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
-
     }
 
     [TestMethod]
@@ -185,6 +184,130 @@ public class IEnumerableExtensionTests
 
         Assert.AreEqual(2, list2.Count);
         Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+    }
+
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    public void SaveTest1(VCdVersion version)
+    {
+        var vcard = new VCard
+        {
+            DisplayNames = new TextProperty("Folker")
+        };
+
+        string path = Path.Combine(TestContext.TestRunResultsDirectory!, $"SaveTest_{version}.vcf");
+
+        vcard.SaveVcf(path, version);
+
+        IList<VCard> list = Vcf.Load(path);
+
+        Assert.AreEqual(1, list.Count);
+        Assert.IsNotNull(list[0].DisplayNames);
+
+        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
+        Assert.IsNotNull(dispNameProp);
+        Assert.AreEqual("Folker", dispNameProp?.Value);
+        Assert.AreEqual(version, list[0].Version);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void SaveTest_fileNameNull()
+    {
+        var vcard = new VCard
+        {
+            DisplayNames = new TextProperty("Folker")
+        };
+
+        vcard.SaveVcf(null!);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void SaveTest_InvalidFileName()
+    {
+        var vcard = new VCard
+        {
+            DisplayNames = new TextProperty("Folker")
+        };
+
+        vcard.SaveVcf("   ");
+    }
+
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void SerializeTest_StreamNull(VCdVersion version)
+    {
+        var vcard = new VCard
+        {
+            DisplayNames = new TextProperty("Folker")
+        };
+
+        vcard.SerializeVcf(null!, version);
+    }
+
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    public void SerializeTest1(VCdVersion version)
+    {
+        var vcard = new VCard
+        {
+            DisplayNames = new TextProperty("Folker")
+        };
+
+        using var ms = new MemoryStream();
+
+        vcard.SerializeVcf(ms, version, leaveStreamOpen: true);
+
+        Assert.AreNotEqual(0, ms.Length);
+
+        ms.Position = 0;
+
+        Assert.AreNotEqual(-1, ms.ReadByte());
+    }
+
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    [ExpectedException(typeof(ObjectDisposedException))]
+    public void SerializeTest_CloseStream(VCdVersion version)
+    {
+        var vcard = new VCard
+        {
+            DisplayNames = new TextProperty("Folker")
+        };
+
+        using var ms = new MemoryStream();
+
+        vcard.SerializeVcf(ms, version, leaveStreamOpen: false);
+
+        _ = ms.Length;
+    }
+
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+    public void SerializeTest_StreamClosed(VCdVersion version)
+    {
+        var vcard = new VCard
+        {
+            DisplayNames = new TextProperty("Folker")
+        };
+
+        using var ms = new MemoryStream();
+        ms.Close();
+
+        vcard.SerializeVcf(ms, version);
     }
 
     [TestMethod]
@@ -242,6 +365,32 @@ public class IEnumerableExtensionTests
         Assert.AreNotEqual(0, list2.Count);
         Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
         Assert.AreEqual(version, list2[0].Version);
+    }
+
+    [DataTestMethod]
+    [DataRow(VCdVersion.V2_1)]
+    [DataRow(VCdVersion.V3_0)]
+    [DataRow(VCdVersion.V4_0)]
+    public void ToVcfStringTest1(VCdVersion version)
+    {
+        VCard.SyncTestReset();
+
+        var vcard = new VCard
+        {
+            DisplayNames = new TextProperty("Folker")
+        };
+
+        string s = vcard.ToVcfString(version);
+
+        IList<VCard> list = Vcf.Parse(s);
+
+        Assert.AreEqual(1, list.Count);
+        Assert.IsNotNull(list[0].DisplayNames);
+
+        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
+        Assert.IsNotNull(dispNameProp);
+        Assert.AreEqual("Folker", dispNameProp?.Value);
+        Assert.AreEqual(version, list[0].Version);
     }
 
     [TestMethod]
@@ -328,7 +477,6 @@ public class IEnumerableExtensionTests
         Assert.IsNull(props.FirstOrNull());
     }
 
-
     [TestMethod]
     public void FirstOrNullTest3()
     {
@@ -402,29 +550,6 @@ public class IEnumerableExtensionTests
         Assert.IsTrue(props.OrderByIndex(false).Any());
     }
 
-    //[TestMethod]
-    //public void GroupByVCardGroupTest1()
-    //{
-    //    TextProperty[]? props = null;
-    //    Assert.IsNotNull(props.GroupByVCardGroup());
-    //}
-
-    [TestMethod]
-    public void GroupsTest1()
-    {
-        var vc = new VCard(setID: false)
-        {
-            DisplayNames = [new TextProperty("1"),
-                                new TextProperty("2"),
-                                new TextProperty("3", "g"),
-                                new TextProperty("4", "g")]
-        };
-        IEnumerable<IGrouping<string?, KeyValuePair<Prop, VCardProperty>>> result = vc.Groups;
-        Assert.IsNotNull(result);
-        Assert.AreEqual(2, result.Count());
-        Assert.IsTrue(result.All(static x => x.Count() == 2));
-    }
-
     [TestMethod]
     public void GroupByAltIDTest1()
     {
@@ -482,22 +607,6 @@ public class IEnumerableExtensionTests
         Assert.IsTrue(prop.ContainsGroup("GR", ignoreEmptyItems: false));
         Assert.IsFalse(prop.ContainsGroup("42", ignoreEmptyItems: false));
     }
-
-    //[TestMethod]
-    //public void ConcatenateTest1()
-    //{
-    //    var vc = new VCard();
-
-    //    vc.DisplayNames = vc.DisplayNames.Concatenate(null);
-
-    //    vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
-    //    vc.DisplayNames = vc.DisplayNames.Concatenate(null);
-    //    vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
-    //    vc.DisplayNames = vc.DisplayNames.Concatenate(null);
-    //    vc.DisplayNames = new TextProperty("Hi");
-    //    vc.DisplayNames = vc.DisplayNames.Concatenate(new TextProperty("Hi"));
-
-    //}
 
     [TestMethod]
     public void ConcatenateTest2()
@@ -572,7 +681,6 @@ public class IEnumerableExtensionTests
         Assert.AreEqual(100, arr[2]!.Parameters.Preference);
         Assert.AreEqual(2, arr[3]!.Parameters.Preference);
     }
-
 
     [TestMethod]
     public void SetIndexesTest1()

@@ -13,171 +13,6 @@ public class VCardTests
     [NotNull]
     public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
 
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void LoadTest_fileNameNull() => _ = Vcf.Load(null!);
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void LoadTest_invalidFileName() => _ = Vcf.Load("  ");
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ParseTest_contentNull() => _ = Vcf.Parse(null!);
-
-    [TestMethod]
-    public void ParseTest_contentEmpty()
-    {
-        IList<VCard> list = Vcf.Parse("");
-        Assert.AreEqual(0, list.Count);
-    }
-
-    [TestMethod]
-    public void ParseTest1()
-    {
-        IList<VCard> list = Vcf.Parse("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
-        Assert.AreEqual(1, list.Count);
-
-        Assert.IsNotNull(list[0].DisplayNames);
-
-        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
-        Assert.IsNotNull(dispNameProp);
-        Assert.AreEqual("Folker", dispNameProp?.Value);
-    }
-
-
-    [DataTestMethod]
-    [DataRow(VCdVersion.V2_1)]
-    [DataRow(VCdVersion.V3_0)]
-    [DataRow(VCdVersion.V4_0)]
-    public void SaveTest1(VCdVersion version)
-    {
-        var vcard = new VCard
-        {
-            DisplayNames = new TextProperty("Folker")
-        };
-
-        string path = Path.Combine(TestContext.TestRunResultsDirectory!, $"SaveTest_{version}.vcf");
-
-        vcard.SaveVcf(path, version);
-
-        IList<VCard> list = Vcf.Load(path);
-
-        Assert.AreEqual(1, list.Count);
-        Assert.IsNotNull(list[0].DisplayNames);
-
-        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
-        Assert.IsNotNull(dispNameProp);
-        Assert.AreEqual("Folker", dispNameProp?.Value);
-        Assert.AreEqual(version, list[0].Version);
-    }
-
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void SaveTest_fileNameNull()
-    {
-        var vcard = new VCard
-        {
-            DisplayNames = new TextProperty("Folker") 
-        };
-
-        vcard.SaveVcf(null!);
-    }
-
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void SaveTest_InvalidFileName()
-    {
-        var vcard = new VCard
-        {
-            DisplayNames = new TextProperty("Folker")
-        };
-
-        vcard.SaveVcf("   ");
-    }
-
-
-    [DataTestMethod]
-    [DataRow(VCdVersion.V2_1)]
-    [DataRow(VCdVersion.V3_0)]
-    [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void SerializeTest_StreamNull(VCdVersion version)
-    {
-        var vcard = new VCard
-        {
-            DisplayNames = new TextProperty("Folker")
-        };
-
-        vcard.SerializeVcf(null!, version);
-    }
-
-
-    [DataTestMethod]
-    [DataRow(VCdVersion.V2_1)]
-    [DataRow(VCdVersion.V3_0)]
-    [DataRow(VCdVersion.V4_0)]
-    public void SerializeTest1(VCdVersion version)
-    {
-        var vcard = new VCard
-        {
-            DisplayNames = new TextProperty("Folker")
-        };
-
-        using var ms = new MemoryStream();
-
-        vcard.SerializeVcf(ms, version, leaveStreamOpen: true);
-
-        Assert.AreNotEqual(0, ms.Length);
-
-        ms.Position = 0;
-
-        Assert.AreNotEqual(-1, ms.ReadByte());
-    }
-
-
-    [DataTestMethod]
-    [DataRow(VCdVersion.V2_1)]
-    [DataRow(VCdVersion.V3_0)]
-    [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(ObjectDisposedException))]
-    public void SerializeTest_CloseStream(VCdVersion version)
-    {
-        var vcard = new VCard
-        {
-            DisplayNames = new TextProperty("Folker")
-        };
-
-        using var ms = new MemoryStream();
-
-        vcard.SerializeVcf(ms, version, leaveStreamOpen: false);
-
-        _ = ms.Length;
-    }
-
-
-    [DataTestMethod]
-    [DataRow(VCdVersion.V2_1)]
-    [DataRow(VCdVersion.V3_0)]
-    [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
-    public void SerializeTest_StreamClosed(VCdVersion version)
-    {
-        var vcard = new VCard
-        {
-            DisplayNames = new TextProperty("Folker")
-        };
-
-        using var ms = new MemoryStream();
-        ms.Close();
-
-        vcard.SerializeVcf(ms, version);
-    }
-
-
     [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
@@ -204,47 +39,6 @@ public class VCardTests
         Assert.AreEqual("Folker", dispNameProp?.Value);
         Assert.AreEqual(version, list[0].Version);
     }
-
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void DeserializeTest_readerNull() => _ = Vcf.Deserialize(null!);
-
-
-    [DataTestMethod]
-    [DataRow(VCdVersion.V2_1)]
-    [DataRow(VCdVersion.V3_0)]
-    [DataRow(VCdVersion.V4_0)]
-    public void ToVcfStringTest1(VCdVersion version)
-    {
-        VCard.SyncTestReset();
-
-        var vcard = new VCard
-        {
-            DisplayNames = new TextProperty("Folker")
-        };
-
-        string s = vcard.ToVcfString(version);
-
-        IList<VCard> list = Vcf.Parse(s);
-
-        Assert.AreEqual(1, list.Count);
-        Assert.IsNotNull(list[0].DisplayNames);
-
-        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
-        Assert.IsNotNull(dispNameProp);
-        Assert.AreEqual("Folker", dispNameProp?.Value);
-        Assert.AreEqual(version, list[0].Version);
-    }
-
-
-    [DataTestMethod]
-    [DataRow(VCdVersion.V2_1)]
-    [DataRow(VCdVersion.V3_0)]
-    [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ToVcfStringTest_vcardListNull1(VCdVersion version) => _ = Vcf.ToString(null!, version);
-
 
     [TestMethod]
     public void ToStringTest1()
@@ -323,7 +117,6 @@ public class VCardTests
         StringAssert.Contains(s, "4.0");
     }
 
-
     [TestMethod]
     public void GetEnumeratorTest1()
     {
@@ -341,7 +134,6 @@ public class VCardTests
 
         Assert.Fail();
     }
-
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -404,7 +196,6 @@ public class VCardTests
         text.Parameters.Label = "Label";
         Assert.IsTrue(vc.IsEmpty());
 
-
         names[0] = new TextProperty("Name");
         Assert.IsFalse(vc.IsEmpty());
     }
@@ -440,6 +231,21 @@ public class VCardTests
         Assert.AreEqual("42", vc.NewGroup());
     }
 
+    [TestMethod]
+    public void GroupsTest2()
+    {
+        var vc = new VCard(setID: false)
+        {
+            DisplayNames = [new TextProperty("1"),
+                                new TextProperty("2"),
+                                new TextProperty("3", "g"),
+                                new TextProperty("4", "g")]
+        };
+        IEnumerable<IGrouping<string?, KeyValuePair<Prop, VCardProperty>>> result = vc.Groups;
+        Assert.IsNotNull(result);
+        Assert.AreEqual(2, result.Count());
+        Assert.IsTrue(result.All(static x => x.Count() == 2));
+    }
 
     [TestMethod]
     public void RegisterAppTest1()
@@ -506,6 +312,7 @@ public class VCardTests
     [TestMethod]
     public void VCardTest1()
     {
+        VCard.SyncTestReset();
         _ = new VCard();
         Assert.IsNull(VCard.App);
     }
@@ -517,65 +324,4 @@ public class VCardTests
         var vc2 = (VCard)vc1.Clone();
         Assert.AreNotSame(vc1, vc2);
     }
-
-    //[TestMethod]
-    //public void RegisterAppTest3()
-    //{
-    //    var vc = new VCard();
-    //    const string folker = "http://folker.de/id";
-    //    const string contoso = "urn:uuid:42bcd5a7-1699-4514-87b4-056edf68e9cc";
-
-    //    var uri1 = new Uri(folker, UriKind.Absolute);
-    //    var uri2 = new Uri(contoso, UriKind.Absolute);
-
-    //    Assert.IsNull(vc.AppIDs);
-
-    //    vc.RegisterAppInInstance(uri1);
-    //    Assert.IsNotNull(vc.AppIDs);
-    //    Assert.AreEqual(folker, vc.AppIDs.First()!.Value.GlobalID);
-    //    Assert.AreEqual(folker, vc.Sync.CurrentAppID?.GlobalID);
-
-    //    vc.AppIDs = vc.AppIDs.ConcatWith(null);
-
-    //    vc.RegisterAppInInstance(uri2);
-    //    Assert.AreEqual(contoso, vc.Sync.CurrentAppID?.GlobalID);
-    //    Assert.AreEqual(3, vc.AppIDs.Count());
-
-
-    //    vc.RegisterAppInInstance(uri1);
-    //    Assert.AreEqual(folker, vc.AppIDs.First()!.Value.GlobalID);
-    //    Assert.AreEqual(folker, vc.Sync.CurrentAppID?.GlobalID);
-    //    Assert.AreEqual(3, vc.AppIDs.Count());
-    //}
-
-    //[TestMethod]
-    //public void EqualsTest1()
-    //{
-    //    object vc1 = new VCard();
-    //    object vc2 = new VCard();
-
-    //    Assert.IsFalse(vc1.Equals(vc2));
-    //    Assert.AreNotEqual(vc1.GetHashCode(), vc2.GetHashCode());
-    //}
-
-    //[TestMethod]
-    //public void EqualsTest2()
-    //{
-    //    var timestamp = DateTimeOffset.UtcNow;
-    //    var uuid = Guid.NewGuid();
-    //    VCard vc1 = new VCard();
-    //    VCard vc2 = new VCard();
-
-    //    vc1.TimeStamp = new TimeStampProperty(timestamp);
-    //    vc1.UniqueIdentifier = new UuidProperty(uuid);
-
-    //    vc2.TimeStamp = new TimeStampProperty(timestamp);
-    //    vc2.UniqueIdentifier = new UuidProperty(uuid);
-
-    //    object o1 = vc1;
-    //    object o2 = vc2;
-
-    //    Assert.IsTrue(o1.Equals(o2));
-    //    Assert.AreEqual(o1.GetHashCode(), o2.GetHashCode());
-    //}
 }

@@ -10,7 +10,7 @@ public class InterestConverterTests
     {
         foreach (Interest kind in (Interest[])Enum.GetValues(typeof(Interest)))
         {
-            Interest? kind2 = InterestConverter.Parse(kind.ToString().ToLowerInvariant());
+            Interest? kind2 = InterestConverter.Parse(kind.ToString().AsSpan());
             Assert.AreEqual(kind, kind2);
             object kind3 = Enum.Parse(typeof(Interest), ((Interest?)kind).ToVCardString() ?? "", true);
             Assert.AreEqual(kind, kind3);
@@ -24,5 +24,5 @@ public class InterestConverterTests
     }
 
     [TestMethod]
-    public void ParseTest() => Assert.IsNull(InterestConverter.Parse("nichtvorhanden"));
+    public void ParseTest() => Assert.IsNull(InterestConverter.Parse("nichtvorhanden".AsSpan()));
 }

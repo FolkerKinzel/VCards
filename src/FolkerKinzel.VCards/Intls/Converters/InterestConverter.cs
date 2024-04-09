@@ -11,19 +11,14 @@ internal static class InterestConverter
         internal const string LOW = "low";
     }
 
-    internal static Interest? Parse(string val)
-    {
-        Debug.Assert(val is not null);
-        Debug.Assert(StringComparer.Ordinal.Equals(val, val.ToLowerInvariant()));
-
-        return val switch
-        {
-            Values.HIGH => Interest.High,
-            Values.MEDIUM => Interest.Medium,
-            Values.LOW => Interest.Low,
-            _ => null
-        };
-    }
+    internal static Interest? Parse(ReadOnlySpan<char> val) =>
+         val.Equals(Values.HIGH, StringComparison.OrdinalIgnoreCase)
+            ? Interest.High
+            : val.Equals(Values.MEDIUM, StringComparison.OrdinalIgnoreCase)
+              ? Interest.Medium
+              : val.Equals(Values.LOW, StringComparison.OrdinalIgnoreCase) 
+                ? Interest.Low 
+                : null;
 
     internal static string? ToVCardString(this Interest? interest)
     {

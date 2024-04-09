@@ -83,8 +83,8 @@ public sealed partial class ParameterSection
                 case ParameterKey.TYPE:
                     {
                         ValueSplitter commaSplitter = info.CommaSplitter;
-
                         commaSplitter.ValueString = parameter.Value;
+
                         foreach (var s in commaSplitter)
                         {
                             string typeValue = CleanParameterValue(s, builder);
@@ -168,7 +168,7 @@ public sealed partial class ParameterSection
                 case ParameterKey.LEVEL:
                     if (propertyKey == VCard.PropKeys.NonStandard.EXPERTISE)
                     {
-                        Expertise? expertise = ExpertiseConverter.Parse(CleanLevelValue(parameter.Value, builder));
+                        Expertise? expertise = ExpertiseConverter.Parse(CleanLevelValue(parameter.Value));
 
                         if (expertise.HasValue)
                         {
@@ -181,7 +181,7 @@ public sealed partial class ParameterSection
                     }
                     else // HOBBY oder INTEREST
                     {
-                        Interest? interest = InterestConverter.Parse(CleanLevelValue(parameter.Value, builder));
+                        Interest? interest = InterestConverter.Parse(CleanLevelValue(parameter.Value));
 
                         if (interest.HasValue)
                         {
@@ -207,6 +207,7 @@ public sealed partial class ParameterSection
     }//ctor
 
     [Conditional("DEBUG")]
+    [ExcludeFromCodeCoverage]
     private static void Asserts(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters)
     {
         Debug.Assert(propertyKey is not null);
@@ -268,43 +269,10 @@ public sealed partial class ParameterSection
     }
 
 
-    private static string CleanLevelValue(string parameterValue, StringBuilder builder)
-    {
-        bool clean = false;
-
-        for (int i = 0; i < parameterValue.Length; i++)
-        {
-            char c = parameterValue[i];
-
-            if (char.IsUpper(c) || char.IsWhiteSpace(c) || c == '\'' || c == '\"')
-            {
-                clean = true;
-                break;
-            }
-        }
-
-        if (!clean)
-        {
-            return parameterValue;
-        }
-
-        _ = builder.Clear();
-
-        for (int i = 0; i < parameterValue.Length; i++)
-        {
-            char c = parameterValue[i];
-
-            if (char.IsWhiteSpace(c) || c == '\'' || c == '\"')
-            {
-                continue;
-            }
-
-            _ = builder.Append(char.ToLowerInvariant(c));
-        }
-
-        return builder.ToString();
-    }
-
+    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters",
+        Justification = "Not language-dependend")]
+    private static ReadOnlySpan<char> CleanLevelValue(string parameterValue) =>
+        parameterValue.AsSpan().Trim("\"\' ".AsSpan());
 
     private bool ParseTypeParameter(string typeValue, string propertyKey)
     {

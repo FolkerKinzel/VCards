@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 
@@ -60,5 +61,21 @@ public class ParameterSectionTests
 
         sec.Index = null;
         Assert.IsNull(sec.Index);
+    }
+
+    [TestMethod]
+    public void ToStringTest1()
+    {
+        var sec = new ParameterSection
+        {
+            Label = $"""
+            First line
+            Second line
+            """
+        };
+
+        string s = sec.ToString();
+
+        Assert.IsTrue(s.GetLinesCount() > 1);
     }
 }
