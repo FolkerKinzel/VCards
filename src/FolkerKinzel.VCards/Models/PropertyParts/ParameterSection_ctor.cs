@@ -31,7 +31,6 @@ public sealed partial class ParameterSection
         }
     }
 
-
     internal ParameterSection(string propertyKey,
                               IEnumerable<KeyValuePair<string, string>> propertyParameters,
                               VcfDeserializationInfo info)
@@ -219,7 +218,6 @@ public sealed partial class ParameterSection
         Debug.Assert(propertyParameters.All(x => StringComparer.Ordinal.Equals(x.Key, x.Key.ToUpperInvariant())));
     }
 
-
     private void AddNonStandardParameter(KeyValuePair<string, string> parameter)
     {
         List<KeyValuePair<string, string>> userAttributes
@@ -229,7 +227,6 @@ public sealed partial class ParameterSection
         this.NonStandard = userAttributes;
         userAttributes.Add(parameter);
     }
-
 
     private static string CleanParameterValue(string parameterValue, StringBuilder builder)
     {
