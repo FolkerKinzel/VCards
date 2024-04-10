@@ -1,4 +1,5 @@
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -13,13 +14,13 @@ internal static class ExpertiseConverter
 
     internal static Expertise? Parse(string? value)
     {
-        var span = value.AsSpan();
+        var span = value.AsSpan().TrimStart(VcfDeserializationInfo.TRIM_CHARS);
 
-        return span.Contains(Values.BEGINNER, StringComparison.OrdinalIgnoreCase)
+        return span.StartsWith(Values.BEGINNER, StringComparison.OrdinalIgnoreCase)
             ? Expertise.Beginner
-            : span.Contains(Values.AVERAGE, StringComparison.OrdinalIgnoreCase)
+            : span.StartsWith(Values.AVERAGE, StringComparison.OrdinalIgnoreCase)
               ? Expertise.Average
-              : span.Contains(Values.EXPERT, StringComparison.OrdinalIgnoreCase)
+              : span.StartsWith(Values.EXPERT, StringComparison.OrdinalIgnoreCase)
                     ? Expertise.Expert
                     : null;
     }

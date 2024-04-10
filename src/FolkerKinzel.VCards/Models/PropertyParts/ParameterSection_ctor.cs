@@ -45,7 +45,7 @@ public sealed partial class ParameterSection
             switch (parameter.Key)
             {
                 case ParameterKey.LANGUAGE:
-                    this.Language = parameter.Value;
+                    this.Language = parameter.Value.Trim();
                     break;
                 case ParameterKey.VALUE:
                     {
@@ -68,7 +68,7 @@ public sealed partial class ParameterSection
                     }
                 case ParameterKey.PREF:
                     {
-                        if (int.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out int intVal))
+                        if (TryParseInt(parameter.Value, info, out int intVal))
                         {
                             this.Preference = intVal;
                         }
@@ -101,14 +101,14 @@ public sealed partial class ParameterSection
                         break;
                     }
                 case ParameterKey.GEO:
-                    if (GeoCoordinate.TryParse(parameter.Value.AsSpan().Trim().Trim(info.AllQuotes),
+                    if (GeoCoordinate.TryParse(parameter.Value.AsSpan().Trim(VcfDeserializationInfo.TRIM_CHARS),
                                                out GeoCoordinate? geo))
                     {
                         this.GeoPosition = geo;
                     }
                     break;
                 case ParameterKey.TZ:
-                    if (TimeZoneID.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out TimeZoneID? tzID))
+                    if (TimeZoneID.TryParse(parameter.Value.Trim(info.TrimCharArray), out TimeZoneID? tzID))
                     {
                         this.TimeZone = tzID;
                     }
@@ -130,19 +130,19 @@ public sealed partial class ParameterSection
                         break;
                     }
                 case ParameterKey.CALSCALE:
-                    this.Calendar = parameter.Value.Trim().Trim(info.AllQuotes);
+                    this.Calendar = parameter.Value.Trim(info.TrimCharArray);
                     break;
                 case ParameterKey.ENCODING:
                     this.Encoding = EncConverter.Parse(parameter.Value);
                     break;
                 case ParameterKey.CHARSET:
-                    this.CharSet = parameter.Value.Trim().Trim(info.AllQuotes);
+                    this.CharSet = parameter.Value.Trim(info.TrimCharArray);
                     break;
                 case ParameterKey.ALTID:
-                    this.AltID = parameter.Value.Trim().Trim(info.AllQuotes);
+                    this.AltID = parameter.Value.Trim(info.TrimCharArray);
                     break;
                 case ParameterKey.MEDIATYPE:
-                    this.MediaType = parameter.Value.Trim().Trim(info.AllQuotes);
+                    this.MediaType = parameter.Value.Trim(info.TrimCharArray);
                     break;
                 case ParameterKey.LABEL:
                     this.Label = builder
@@ -154,11 +154,11 @@ public sealed partial class ParameterSection
                         .ToString();
                     break;
                 case ParameterKey.CONTEXT:
-                    this.Context = parameter.Value.Trim().Trim(info.AllQuotes);
+                    this.Context = parameter.Value.Trim(info.TrimCharArray);
                     break;
                 case ParameterKey.INDEX:
                     {
-                        if (int.TryParse(parameter.Value.Trim().Trim(info.AllQuotes), out int result))
+                        if (TryParseInt(parameter.Value, info, out int result))
                         {
                             this.Index = result;
                         }
@@ -204,6 +204,14 @@ public sealed partial class ParameterSection
         }//foreach
 
     }//ctor
+
+    private static bool TryParseInt(string value, VcfDeserializationInfo info, out int result) =>
+#if NET461 || NETSTANDARD2_0
+        int.TryParse(value.Trim(info.TrimCharArray), out result);
+#else
+        int.TryParse(value.AsSpan().Trim(VcfDeserializationInfo.TRIM_CHARS), out result);
+#endif
+
 
     [Conditional("DEBUG")]
     [ExcludeFromCodeCoverage]

@@ -1,4 +1,5 @@
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -13,13 +14,13 @@ internal static class InterestConverter
 
     internal static Interest? Parse(string? value)
     {
-        var val = value.AsSpan();
+        var span = value.AsSpan().TrimStart(VcfDeserializationInfo.TRIM_CHARS);
 
-        return val.Contains(Values.HIGH, StringComparison.OrdinalIgnoreCase)
+        return span.StartsWith(Values.HIGH, StringComparison.OrdinalIgnoreCase)
             ? Interest.High
-            : val.Contains(Values.MEDIUM, StringComparison.OrdinalIgnoreCase)
+            : span.StartsWith(Values.MEDIUM, StringComparison.OrdinalIgnoreCase)
               ? Interest.Medium
-              : val.Contains(Values.LOW, StringComparison.OrdinalIgnoreCase)
+              : span.StartsWith(Values.LOW, StringComparison.OrdinalIgnoreCase)
                 ? Interest.Low
                 : null;
     }
