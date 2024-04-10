@@ -167,7 +167,7 @@ public sealed partial class ParameterSection
                 case ParameterKey.LEVEL:
                     if (propertyKey == VCard.PropKeys.NonStandard.EXPERTISE)
                     {
-                        Expertise? expertise = ExpertiseConverter.Parse(CleanLevelValue(parameter.Value));
+                        Expertise? expertise = ExpertiseConverter.Parse(parameter.Value);
 
                         if (expertise.HasValue)
                         {
@@ -180,7 +180,7 @@ public sealed partial class ParameterSection
                     }
                     else // HOBBY oder INTEREST
                     {
-                        Interest? interest = InterestConverter.Parse(CleanLevelValue(parameter.Value));
+                        Interest? interest = InterestConverter.Parse(parameter.Value);
 
                         if (interest.HasValue)
                         {
@@ -264,12 +264,6 @@ public sealed partial class ParameterSection
 
         return builder.ToString();
     }
-
-
-    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters",
-        Justification = "Not language-dependend")]
-    private static ReadOnlySpan<char> CleanLevelValue(string parameterValue) =>
-        parameterValue.AsSpan().Trim("\"\' ".AsSpan());
 
     private bool ParseTypeParameter(string typeValue, string propertyKey)
     {

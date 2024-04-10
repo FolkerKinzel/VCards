@@ -11,14 +11,18 @@ internal static class InterestConverter
         internal const string LOW = "low";
     }
 
-    internal static Interest? Parse(ReadOnlySpan<char> val) =>
-         val.Equals(Values.HIGH, StringComparison.OrdinalIgnoreCase)
+    internal static Interest? Parse(string? value)
+    {
+        var val = value.AsSpan();
+
+        return val.Contains(Values.HIGH, StringComparison.OrdinalIgnoreCase)
             ? Interest.High
-            : val.Equals(Values.MEDIUM, StringComparison.OrdinalIgnoreCase)
+            : val.Contains(Values.MEDIUM, StringComparison.OrdinalIgnoreCase)
               ? Interest.Medium
-              : val.Equals(Values.LOW, StringComparison.OrdinalIgnoreCase) 
-                ? Interest.Low 
+              : val.Contains(Values.LOW, StringComparison.OrdinalIgnoreCase)
+                ? Interest.Low
                 : null;
+    }
 
     internal static string? ToVCardString(this Interest? interest)
     {

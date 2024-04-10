@@ -11,15 +11,18 @@ internal static class ExpertiseConverter
         internal const string EXPERT = "expert";
     }
 
-    internal static Expertise? Parse(ReadOnlySpan<char> val) =>
-         val.Equals(Values.BEGINNER, StringComparison.OrdinalIgnoreCase)
+    internal static Expertise? Parse(string? value)
+    {
+        var span = value.AsSpan();
+
+        return span.Contains(Values.BEGINNER, StringComparison.OrdinalIgnoreCase)
             ? Expertise.Beginner
-            : val.Equals(Values.AVERAGE, StringComparison.OrdinalIgnoreCase)
+            : span.Contains(Values.AVERAGE, StringComparison.OrdinalIgnoreCase)
               ? Expertise.Average
-              : val.Equals(Values.EXPERT, StringComparison.OrdinalIgnoreCase)
-                    ? Expertise.Expert 
+              : span.Contains(Values.EXPERT, StringComparison.OrdinalIgnoreCase)
+                    ? Expertise.Expert
                     : null;
-    
+    }
 
     internal static string? ToVcfString(this Expertise? expertise)
     {
