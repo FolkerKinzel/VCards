@@ -10,7 +10,7 @@ public class ExpertiseConverterTests
     {
         foreach (Expertise kind in (Expertise[])Enum.GetValues(typeof(Expertise)))
         {
-            Expertise? kind2 = ExpertiseConverter.Parse(kind.ToString().AsSpan());
+            Expertise? kind2 = ExpertiseConverter.Parse(kind.ToString());
             Assert.AreEqual(kind, kind2);
             object kind3 = Enum.Parse(typeof(Expertise), ((Expertise?)kind).ToVcfString() ?? "", true);
             Assert.AreEqual(kind, kind3);
@@ -24,6 +24,6 @@ public class ExpertiseConverterTests
     }
 
     [TestMethod]
-    public void ParseTest() => Assert.IsNull(ExpertiseConverter.Parse("nichtvorhanden".AsSpan()));
+    public void ParseTest() => Assert.IsNull(ExpertiseConverter.Parse("nichtvorhanden"));
 
 }
