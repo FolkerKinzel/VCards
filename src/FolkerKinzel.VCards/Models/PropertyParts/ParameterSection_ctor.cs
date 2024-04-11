@@ -141,7 +141,7 @@ public sealed partial class ParameterSection
                     this.Label = builder
                         .Clear()
                         .Append(parameter.Value)
-                        .Trim().RemoveQuotes()
+                        .Trim(info.TrimCharArray)
                         .Replace(@"\n", Environment.NewLine)
                         .Replace(@"\N", Environment.NewLine)
                         .ToString();
@@ -229,47 +229,9 @@ public sealed partial class ParameterSection
         userAttributes.Add(parameter);
     }
 
-    //private static string CleanParameterValue(string parameterValue, StringBuilder builder)
-    //{
-    //    bool clean = false;
-
-    //    for (int i = 0; i < parameterValue.Length; i++)
-    //    {
-    //        char c = parameterValue[i];
-
-    //        if (char.IsLower(c) || char.IsWhiteSpace(c) || c == '\'' || c == '\"')
-    //        {
-    //            clean = true;
-    //            break;
-    //        }
-    //    }
-
-    //    if (!clean)
-    //    {
-    //        return parameterValue;
-    //    }
-
-    //    _ = builder.Clear();
-
-    //    for (int i = 0; i < parameterValue.Length; i++)
-    //    {
-    //        char c = parameterValue[i];
-
-    //        if (char.IsWhiteSpace(c) || c == '\'' || c == '\"')
-    //        {
-    //            continue;
-    //        }
-
-    //        _ = builder.Append(char.ToUpperInvariant(c));
-    //    }
-
-    //    return builder.ToString();
-    //}
-
     private bool ParseTypeParameter(string typeValue, string propertyKey, VcfDeserializationInfo info)
     {
         typeValue = typeValue.Trim(info.TrimCharArray).ToUpperInvariant();
-
         Debug.Assert(typeValue.Length != 0);
 
         switch (typeValue)
