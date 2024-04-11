@@ -86,16 +86,9 @@ public sealed partial class ParameterSection
 
                         foreach (var s in commaSplitter)
                         {
-                            string typeValue = CleanParameterValue(s, builder);
-
-                            Debug.Assert(typeValue.Length != 0);
-                            if (!ParseTypeParameter(typeValue, propertyKey))
+                            if (!ParseTypeParameter(s, propertyKey, info))
                             {
-                                List<KeyValuePair<string, string>> nonStandardList =
-                                    (List<KeyValuePair<string, string>>?)this.NonStandard ?? [];
-                                this.NonStandard = nonStandardList;
-
-                                nonStandardList.Add(new KeyValuePair<string, string>(parameter.Key, s));
+                                AddNonStandardParameter(new KeyValuePair<string, string>(parameter.Key, s));
                             }
                         }
                         break;
@@ -213,8 +206,8 @@ public sealed partial class ParameterSection
 #endif
 
 
-    [Conditional("DEBUG")]
     [ExcludeFromCodeCoverage]
+    [Conditional("DEBUG")]
     private static void Asserts(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters)
     {
         Debug.Assert(propertyKey is not null);
@@ -236,45 +229,49 @@ public sealed partial class ParameterSection
         userAttributes.Add(parameter);
     }
 
-    private static string CleanParameterValue(string parameterValue, StringBuilder builder)
+    //private static string CleanParameterValue(string parameterValue, StringBuilder builder)
+    //{
+    //    bool clean = false;
+
+    //    for (int i = 0; i < parameterValue.Length; i++)
+    //    {
+    //        char c = parameterValue[i];
+
+    //        if (char.IsLower(c) || char.IsWhiteSpace(c) || c == '\'' || c == '\"')
+    //        {
+    //            clean = true;
+    //            break;
+    //        }
+    //    }
+
+    //    if (!clean)
+    //    {
+    //        return parameterValue;
+    //    }
+
+    //    _ = builder.Clear();
+
+    //    for (int i = 0; i < parameterValue.Length; i++)
+    //    {
+    //        char c = parameterValue[i];
+
+    //        if (char.IsWhiteSpace(c) || c == '\'' || c == '\"')
+    //        {
+    //            continue;
+    //        }
+
+    //        _ = builder.Append(char.ToUpperInvariant(c));
+    //    }
+
+    //    return builder.ToString();
+    //}
+
+    private bool ParseTypeParameter(string typeValue, string propertyKey, VcfDeserializationInfo info)
     {
-        bool clean = false;
+        typeValue = typeValue.Trim(info.TrimCharArray).ToUpperInvariant();
 
-        for (int i = 0; i < parameterValue.Length; i++)
-        {
-            char c = parameterValue[i];
+        Debug.Assert(typeValue.Length != 0);
 
-            if (char.IsLower(c) || char.IsWhiteSpace(c) || c == '\'' || c == '\"')
-            {
-                clean = true;
-                break;
-            }
-        }
-
-        if (!clean)
-        {
-            return parameterValue;
-        }
-
-        _ = builder.Clear();
-
-        for (int i = 0; i < parameterValue.Length; i++)
-        {
-            char c = parameterValue[i];
-
-            if (char.IsWhiteSpace(c) || c == '\'' || c == '\"')
-            {
-                continue;
-            }
-
-            _ = builder.Append(char.ToUpperInvariant(c));
-        }
-
-        return builder.ToString();
-    }
-
-    private bool ParseTypeParameter(string typeValue, string propertyKey)
-    {
         switch (typeValue)
         {
             case TypeValue.PREF:
