@@ -217,7 +217,11 @@ public sealed partial class VCard
                         {
                             if (NameViews is not null)
                             {
-                                NameViews.First()!.Parameters.SortAs = [textProp.Value];
+                                NameViews.FirstOrNullIntl(ignoreEmptyItems: false)!.Parameters.SortAs = [textProp.Value];
+                            }
+                            else if (Organizations is not null)
+                            {
+                                Organizations.PrefOrNullIntl(ignoreEmptyItems: false)!.Parameters.SortAs = [textProp.Value];
                             }
                             else
                             {

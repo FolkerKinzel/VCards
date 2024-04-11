@@ -49,7 +49,7 @@ public sealed partial class ParameterSection
                     break;
                 case ParameterKey.VALUE:
                     {
-                        string valValue = CleanParameterValue(parameter.Value, builder);
+                        string valValue = parameter.Value.Trim(info.TrimCharArray).ToUpperInvariant();
                         Data? dataType = DataConverter.Parse(valValue);
                         this.DataType = dataType;
 
@@ -344,7 +344,7 @@ public sealed partial class ParameterSection
                     return false;
                 }
             case VCard.PropKeys.EMAIL:
-                this.EMailType = propertyKey;
+                this.EMailType = typeValue;
                 break;
             case VCard.PropKeys.KEY:
                 this.MediaType = MimeTypeConverter.MimeTypeFromKeyType(typeValue);

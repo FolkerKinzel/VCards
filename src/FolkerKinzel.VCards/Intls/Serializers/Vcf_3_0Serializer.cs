@@ -1,3 +1,4 @@
+using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -198,7 +199,33 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
         => BuildPrefProperty(VCard.PropKeys.NOTE, value);
 
     protected override void AppendOrganizations(IEnumerable<OrgProperty?> value)
-        => BuildPrefProperty(VCard.PropKeys.ORG, value);
+    {
+        var pref = value.PrefOrNullIntl(IgnoreEmptyItems);
+
+        if (pref is null) { return; }
+
+        BuildProperty(VCard.PropKeys.ORG, pref);
+
+        string? sortString = pref.Parameters.SortAs?
+                                            .FirstOrDefault(static x => !string.IsNullOrWhiteSpace(x))?
+                                                                               .Trim();
+
+        if (sortString is not null)
+        {
+            Debug.Assert(VCardToSerialize.NameViews is not null);
+
+            if(VCardToSerialize.NameViews!
+                               .FirstOrNullIntl(IgnoreEmptyItems)?
+                               .Parameters
+                               .SortAs?
+                               .Any(static x => !string.IsNullOrWhiteSpace(x)) ?? false)
+             { return; }
+
+            var sortStringProp = new TextProperty(sortString, pref.Group);
+            sortStringProp.Parameters.Language = pref.Parameters.Language;
+            BuildProperty(VCard.PropKeys.SORT_STRING, sortStringProp);
+        }
+    }
 
     protected override void AppendPhones(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.TEL, value);
