@@ -12,15 +12,15 @@ internal static class ExpertiseConverter
         internal const string EXPERT = "expert";
     }
 
-    internal static Expertise? Parse(string? value)
+    internal static Expertise? Parse(ReadOnlySpan<char> span)
     {
-        var span = value.AsSpan().TrimStart(VcfDeserializationInfo.TRIM_CHARS);
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        return span.StartsWith(Values.BEGINNER, StringComparison.OrdinalIgnoreCase)
+        return span.StartsWith(Values.BEGINNER, comp)
             ? Expertise.Beginner
-            : span.StartsWith(Values.AVERAGE, StringComparison.OrdinalIgnoreCase)
+            : span.StartsWith(Values.AVERAGE, comp)
               ? Expertise.Average
-              : span.StartsWith(Values.EXPERT, StringComparison.OrdinalIgnoreCase)
+              : span.StartsWith(Values.EXPERT, comp)
                     ? Expertise.Expert
                     : null;
     }

@@ -14,7 +14,6 @@ internal sealed class VcfDeserializationInfo
 
     internal StringBuilder Builder { get; } = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY);
 
-    internal const string TRIM_CHARS = " \"\'";
 
     internal char[] TrimCharArray { get; } = [' ', '\"', '\''];
 

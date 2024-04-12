@@ -5,6 +5,9 @@ public sealed partial class ParameterSection
     internal const int PREF_MIN_VALUE = 1;
     internal const int PREF_MAX_VALUE = 100;
 
+    private const string TRIM_CHARS = " \"\'";
+
+
     internal static class ParameterKey
     {
         // CAUTION: If the class is expanded,

@@ -98,7 +98,7 @@ public sealed partial class ParameterSection
                         break;
                     }
                 case ParameterKey.GEO:
-                    if (GeoCoordinate.TryParse(parameter.Value.AsSpan().Trim(VcfDeserializationInfo.TRIM_CHARS),
+                    if (GeoCoordinate.TryParse(parameter.Value.AsSpan().Trim(TRIM_CHARS),
                                                out GeoCoordinate? geo))
                     {
                         this.GeoPosition = geo;
@@ -164,7 +164,8 @@ public sealed partial class ParameterSection
                 case ParameterKey.LEVEL:
                     if (propertyKey == VCard.PropKeys.NonStandard.EXPERTISE)
                     {
-                        Expertise? expertise = ExpertiseConverter.Parse(parameter.Value);
+                        Expertise? expertise =
+                            ExpertiseConverter.Parse(parameter.Value.AsSpan().TrimStart(TRIM_CHARS));
 
                         if (expertise.HasValue)
                         {
@@ -177,7 +178,8 @@ public sealed partial class ParameterSection
                     }
                     else // HOBBY oder INTEREST
                     {
-                        Interest? interest = InterestConverter.Parse(parameter.Value);
+                        Interest? interest = 
+                            InterestConverter.Parse(parameter.Value.AsSpan().TrimStart(TRIM_CHARS));
 
                         if (interest.HasValue)
                         {
@@ -305,7 +307,7 @@ public sealed partial class ParameterSection
 #if NET461 || NETSTANDARD2_0
         int.TryParse(value.Trim(info.TrimCharArray), out result);
 #else
-        int.TryParse(value.AsSpan().Trim(VcfDeserializationInfo.TRIM_CHARS), out result);
+        int.TryParse(value.AsSpan().Trim(TRIM_CHARS), out result);
 #endif
 
     [ExcludeFromCodeCoverage]
@@ -318,7 +320,6 @@ public sealed partial class ParameterSection
             x => string.IsNullOrWhiteSpace(x.Key) || string.IsNullOrWhiteSpace(x.Value)
             ));
         Debug.Assert(StringComparer.Ordinal.Equals(propertyKey, propertyKey.ToUpperInvariant()));
-        Debug.Assert(propertyParameters.All(x => StringComparer.Ordinal.Equals(x.Key, x.Key.ToUpperInvariant())));
     }
 
     private void AddNonStandardParameter(KeyValuePair<string, string> parameter)

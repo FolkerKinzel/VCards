@@ -12,15 +12,15 @@ internal static class InterestConverter
         internal const string LOW = "low";
     }
 
-    internal static Interest? Parse(string? value)
+    internal static Interest? Parse(ReadOnlySpan<char> span)
     {
-        var span = value.AsSpan().TrimStart(VcfDeserializationInfo.TRIM_CHARS);
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        return span.StartsWith(Values.HIGH, StringComparison.OrdinalIgnoreCase)
+        return span.StartsWith(Values.HIGH, comp)
             ? Interest.High
-            : span.StartsWith(Values.MEDIUM, StringComparison.OrdinalIgnoreCase)
+            : span.StartsWith(Values.MEDIUM, comp)
               ? Interest.Medium
-              : span.StartsWith(Values.LOW, StringComparison.OrdinalIgnoreCase)
+              : span.StartsWith(Values.LOW, comp)
                 ? Interest.Low
                 : null;
     }
