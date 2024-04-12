@@ -294,8 +294,8 @@ public sealed partial class ParameterSection
                 {
                     parameterTuples.Add(
                             new KeyValuePair<string, string>(
-                                parameter.Slice(0, splitIndex).ToString().ToUpperInvariant(),
-                                parameter.Slice(valueStart, valueLength).ToString()));
+                               ParameterKeyConverter.ParseParameterKey(parameter.Slice(0, splitIndex)),
+                               parameter.Slice(valueStart, valueLength).ToString()));
                 }
             }
         }
