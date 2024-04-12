@@ -17,9 +17,9 @@ public class ParameterSectionTests
     public void CleanParameterValueTest(string value)
     {
         var info = new VcfDeserializationInfo();
-        var para = new ParameterSection("BDAY", new Dictionary<string, string>() { { "VALUE", value } }, info);
+        var para = new ParameterSection("BDAY", $"VALUE={value}".AsSpan(), info);
 
-        Assert.AreEqual(para.DataType, Data.Date);
+        Assert.AreEqual(Data.Date, para.DataType);
     }
 
     [TestMethod]

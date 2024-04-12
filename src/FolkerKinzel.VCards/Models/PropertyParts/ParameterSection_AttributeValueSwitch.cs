@@ -4,9 +4,9 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards.Intls.Deserializers;
+namespace FolkerKinzel.VCards.Models.PropertyParts;
 
-internal sealed partial class VcfRow
+public sealed partial class ParameterSection
 {
     private static string ParseAttributeKeyFromValue(string value)
     {
