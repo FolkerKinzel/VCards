@@ -14,10 +14,10 @@ internal static class ParameterKeyConverter
         const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
         return key.StartsWith(
-        ParameterSection.ParameterKey.TYPE, comp)
+            ParameterSection.ParameterKey.TYPE, comp)
             ? ParameterSection.ParameterKey.TYPE
             : key.StartsWith(
-        ParameterSection.ParameterKey.VALUE, comp)
+                ParameterSection.ParameterKey.VALUE, comp)
             ? ParameterSection.ParameterKey.VALUE
             : key.StartsWith(
         ParameterSection.ParameterKey.PREF, comp)
@@ -55,15 +55,15 @@ internal static class ParameterKeyConverter
             : key.StartsWith(
         ParameterSection.ParameterKey.INDEX, comp)
             ? ParameterSection.ParameterKey.INDEX
-            : key.StartsWith(
-        ParameterSection.ParameterKey.LEVEL, comp)
-            ? ParameterSection.ParameterKey.LEVEL
-            : key.StartsWith(
-        ParameterSection.ParameterKey.CALSCALE, comp)
-            ? ParameterSection.ParameterKey.CALSCALE
-            : key.StartsWith(
-        ParameterSection.ParameterKey.CONTEXT, comp)
-            ? ParameterSection.ParameterKey.CONTEXT
+        //    : key.StartsWith(
+        //ParameterSection.ParameterKey.LEVEL, comp)
+        //    ? ParameterSection.ParameterKey.LEVEL
+        //    : key.StartsWith(
+        //ParameterSection.ParameterKey.CALSCALE, comp)
+        //    ? ParameterSection.ParameterKey.CALSCALE
+        //    : key.StartsWith(
+        //ParameterSection.ParameterKey.CONTEXT, comp)
+        //    ? ParameterSection.ParameterKey.CONTEXT
             : key.ToString();
     }
 

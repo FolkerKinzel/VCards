@@ -1,3 +1,4 @@
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
@@ -35,8 +36,8 @@ internal sealed partial class VcfRow
         int startOfKey = groupSeparatorIndex + 1;
 
         this.Key = startOfKey > 0
-            ? keyPartSpan.Slice(startOfKey).ToString().ToUpperInvariant()
-            : keyPartSpan.ToString().ToUpperInvariant();
+            ? PropertyKeyConverter.Parse(keyPartSpan.Slice(startOfKey))
+            : PropertyKeyConverter.Parse(keyPartSpan);
 
         if (groupSeparatorIndex > 0)
         {

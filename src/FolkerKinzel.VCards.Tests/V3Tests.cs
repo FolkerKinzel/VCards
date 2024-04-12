@@ -167,9 +167,6 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0, options: Opts.All);
 
         Assert.IsNotNull(s);
