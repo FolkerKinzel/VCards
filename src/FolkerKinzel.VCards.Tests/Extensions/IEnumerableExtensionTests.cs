@@ -611,20 +611,25 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void ConcatenateTest2()
     {
-        var vc = new VCard();
-
-        vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
+        var vc = new VCard
+        {
+            DisplayNames = [null]
+        };
 
         vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
         vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
         vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
         vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
-        Assert.AreEqual(3, vc.DisplayNames.Where(x => x is null).Count());
+        CollectionAssert.AllItemsAreNotNull(vc.DisplayNames.ToArray());
+        Assert.AreEqual(2, vc.DisplayNames.Count());
+
         vc.DisplayNames = new TextProperty("Hi");
         vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
+        Assert.AreEqual(2, vc.DisplayNames.Count());
 
         var props = new TextProperty?[] { new("1"), null, new("2") };
         vc.DisplayNames = vc.DisplayNames.ConcatWith(props);
+        Assert.AreEqual(4, vc.DisplayNames.Count());
 
         var nested = new List<TextProperty?[]>
         {
@@ -647,8 +652,13 @@ public class IEnumerableExtensionTests
         vc.Relations = vc.Relations.ConcatWith(null);
         vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
         vc.Relations = vc.Relations.ConcatWith(null);
+        CollectionAssert.AllItemsAreNotNull(vc.Relations.ToArray());
+        Assert.AreEqual(2, vc.Relations.Count());
+
         vc.Relations = RelationProperty.FromText("Hi");
         vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
+        Assert.AreEqual(2, vc.Relations.Count());
+
     }
 
     [TestMethod]
@@ -658,6 +668,7 @@ public class IEnumerableExtensionTests
 
         arr.SetPreferences();
         arr.UnsetPreferences();
+        
 
         arr = [new("1"), null, new(null), new("2")];
 
@@ -740,7 +751,7 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void RemoveTest1b()
     {
-        IEnumerable<TextProperty?>? numerable = new TextProperty("Hi").ConcatWith(null).ConcatWith(null);
+        IEnumerable<TextProperty?>? numerable = new TextProperty("Hi").Append(null).Append(null);
         IEnumerable<TextProperty?> result = numerable.Remove((TextProperty?)null);
         Assert.IsNotNull(result);
         Assert.AreEqual(1, result.Count());
@@ -751,7 +762,7 @@ public class IEnumerableExtensionTests
     public void RemoveTest1c()
     {
         var prop = new TextProperty("Hi");
-        IEnumerable<TextProperty?>? numerable = prop.ConcatWith(null).ConcatWith(null);
+        IEnumerable<TextProperty?>? numerable = prop.Append(null).Append(null);
         IEnumerable<TextProperty?> result = numerable.Remove(prop);
         Assert.IsNotNull(result);
         Assert.IsFalse(result.Any());

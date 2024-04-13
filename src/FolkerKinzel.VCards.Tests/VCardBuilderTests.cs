@@ -98,13 +98,15 @@ public class VCardBuilderTests
                             parameters: p => p.AddressType = Adr.Intl,
                             group: vc => "gr1"
                             )
-            .Addresses.Add("Schlossallee", null, null, null,
-                         pref: true, parameters: p => p.AddressType = Adr.Dom)
             .Addresses.Add("3", null, null, null)
             .Addresses.Add("4", null, null, null)
+            .Addresses.Add("Schlossallee", null, null, null,
+                         pref: true,
+                         parameters: p => p.AddressType = Adr.Dom)
             .VCard;
 
-        vc.Addresses = vc.Addresses.ConcatWith(null);
+        Assert.IsNotNull(vc.Addresses);
+        vc.Addresses = vc.Addresses.Append(null);
 
         AddressProperty prop1 = vc.Addresses!.First()!;
         AddressProperty prop2 = vc.Addresses!.ElementAt(1)!;
@@ -113,11 +115,13 @@ public class VCardBuilderTests
         Assert.AreEqual(1, prop1.Parameters.Preference);
         Assert.AreEqual(Adr.Dom, prop1.Parameters.AddressType);
         Assert.IsNotNull(prop1.Parameters.Label);
+
         Assert.AreEqual("Elm Street", prop2.Value.Street[0]);
         Assert.AreEqual(2, prop2.Parameters.Preference);
         Assert.AreEqual(Adr.Intl, prop2.Parameters.AddressType);
         Assert.IsNull(prop2.Parameters.Label);
         Assert.AreEqual("gr1", prop2.Group);
+
         Assert.IsTrue(vc.Addresses!.Any(x => x?.Value.Street[0] == "3"));
         VCardBuilder.Create(vc).Addresses.Remove(x => x.Value.Street[0] == "3");
         Assert.IsFalse(vc.Addresses!.Any(x => x?.Value.Street[0] == "3"));
@@ -160,7 +164,7 @@ public class VCardBuilderTests
         builder.Addresses.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.Addresses = new AddressProperty("Elmstreet", null, null, null).ConcatWith(null);
+        builder.VCard.Addresses = new AddressProperty("Elmstreet", null, null, null).Append(null);
         builder.Addresses.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -255,7 +259,7 @@ public class VCardBuilderTests
         builder.BirthDayViews.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.BirthDayViews = DateAndOrTimeProperty.FromDate(12, 24).ConcatWith(null);
+        builder.VCard.BirthDayViews = DateAndOrTimeProperty.FromDate(12, 24).Append(null);
         builder.BirthDayViews.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -294,7 +298,7 @@ public class VCardBuilderTests
         builder.BirthPlaceViews.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.BirthPlaceViews = new TextProperty("Allentown").ConcatWith(null);
+        builder.VCard.BirthPlaceViews = new TextProperty("Allentown").Append(null);
         builder.BirthPlaceViews.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -347,8 +351,8 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
+            .Categories.Add("1234", group: vc => "g", pref: true)
             .Categories.Add("qwertz")
-            .Categories.Add("1234", pref: true, group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.Categories);
@@ -530,7 +534,7 @@ public class VCardBuilderTests
         builder.GenderViews.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.GenderViews = new GenderProperty(Sex.Female).ConcatWith(null);
+        builder.VCard.GenderViews = new GenderProperty(Sex.Female).Append(null);
         builder.GenderViews.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -572,7 +576,7 @@ public class VCardBuilderTests
         builder.GeoCoordinates.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.GeoCoordinates = new GeoProperty(42,42).ConcatWith(null);
+        builder.VCard.GeoCoordinates = new GeoProperty(42,42).Append(null);
         builder.GeoCoordinates.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -753,8 +757,8 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
+            .Keys.AddText("1234", group: vc => "g", pref: true)
             .Keys.AddText("qwertz")
-            .Keys.AddText("1234", pref: true, group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.Keys);
@@ -783,7 +787,7 @@ public class VCardBuilderTests
         builder.Keys.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.Keys = DataProperty.FromText("Password").ConcatWith(null);
+        builder.VCard.Keys = DataProperty.FromText("Password").Append(null);
         builder.Keys.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -904,7 +908,7 @@ public class VCardBuilderTests
                          parameters: p => p.Language = "de")
             .VCard;
 
-        vc.NameViews = vc.NameViews.ConcatWith(null);
+        vc.NameViews = vc.NameViews.Append(null);
 
         NameProperty prop1 = vc.NameViews!.First()!;
         NameProperty prop2 = vc.NameViews!.ElementAt(1)!;
@@ -939,7 +943,8 @@ public class VCardBuilderTests
                          parameters: p => p.Language = "de")
             .VCard;
 
-        vc.NameViews = vc.NameViews.ConcatWith(null);
+        Assert.IsNotNull(vc.NameViews);
+        vc.NameViews = vc.NameViews.Append(null);
 
         NameProperty prop1 = vc.NameViews!.First()!;
         NameProperty prop2 = vc.NameViews!.ElementAt(1)!;
@@ -961,7 +966,7 @@ public class VCardBuilderTests
         builder.NameViews.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.NameViews = new NameProperty(null, "Heinz").ConcatWith(null);
+        builder.VCard.NameViews = new NameProperty(null, "Heinz").Append(null);
         builder.NameViews.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -993,7 +998,7 @@ public class VCardBuilderTests
         builder.NickNames.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.NickNames = new StringCollectionProperty(["Duffy", "Dumpfbacke"]).ConcatWith(null);
+        builder.VCard.NickNames = new StringCollectionProperty(["Duffy", "Dumpfbacke"]).Append(null);
         builder.NickNames.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -1036,7 +1041,7 @@ public class VCardBuilderTests
         builder.NonStandards.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.NonStandards = new NonStandardProperty("X-TEST", "Heinz").ConcatWith(null);
+        builder.VCard.NonStandards = new NonStandardProperty("X-TEST", "Heinz").Append(null);
         builder.NonStandards.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -1065,7 +1070,7 @@ public class VCardBuilderTests
         builder.Notes.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.Notes = new TextProperty("First note.").ConcatWith(null);
+        builder.VCard.Notes = new TextProperty("First note.").Append(null);
         builder.Notes.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -1108,7 +1113,7 @@ public class VCardBuilderTests
         builder.Organizations.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.Organizations = new OrgProperty("Contoso").ConcatWith(null);
+        builder.VCard.Organizations = new OrgProperty("Contoso").Append(null);
         builder.Organizations.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -1276,7 +1281,7 @@ public class VCardBuilderTests
         builder.Relations.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.Relations = RelationProperty.FromText("Susi", Rel.Friend).ConcatWith(null);
+        builder.VCard.Relations = RelationProperty.FromText("Susi", Rel.Friend).Append(null);
         builder.Relations.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -1496,7 +1501,7 @@ public class VCardBuilderTests
         builder.TimeZones.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.TimeZones = new TimeZoneProperty(TimeZoneID.Parse("Europe/Berlin")).ConcatWith(null);
+        builder.VCard.TimeZones = new TimeZoneProperty(TimeZoneID.Parse("Europe/Berlin")).Append(null);
         builder.TimeZones.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -1566,7 +1571,7 @@ public class VCardBuilderTests
         builder.Xmls.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.Xmls = ((IEnumerable<XmlProperty>)new XmlProperty((XElement?)null)).ConcatWith(null);
+        builder.VCard.Xmls = ((IEnumerable<XmlProperty>)new XmlProperty((XElement?)null)).Append(null);
         builder.Xmls.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());

@@ -90,7 +90,7 @@ VCard vCard = VCardBuilder
                    givenNames: ["Käthe"],
                    additionalNames: ["Alexandra", "Caroline"],
                    prefixes: ["Prof.", "Dr."],
-                   displayName: (builder, prop) => builder.Add(prop.ToDisplayName())
+                   displayName: (displayNames, name) => displayNames.Add(name.ToDisplayName())
                   )
     .GenderViews.Add(Sex.Female)
     .Organizations.Add("Millers Company", ["C#", "Webdesign"])

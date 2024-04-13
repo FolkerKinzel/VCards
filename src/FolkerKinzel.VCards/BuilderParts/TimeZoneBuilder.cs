@@ -28,6 +28,21 @@ public readonly struct TimeZoneBuilder
 
     internal TimeZoneBuilder(VCardBuilder builder) => _builder = builder;
 
+    public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
+        Edit(props =>
+        {
+            props.SetPreferences(skipEmptyItems);
+            return props;
+        });
+
+    public VCardBuilder UnsetPreferences() =>
+        Edit(props =>
+        {
+            props.UnsetPreferences();
+            return props;
+        });
+
+
     /// <summary>
     /// Allows to edit the items of the <see cref="VCard.TimeZones"/> property with a specified delegate.
     /// </summary>

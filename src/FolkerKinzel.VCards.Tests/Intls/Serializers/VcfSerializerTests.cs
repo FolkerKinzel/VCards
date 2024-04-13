@@ -63,7 +63,7 @@ public class VcfSerializerTests
 
         TextProperty prodID = new("product");
 
-        vc.DisplayNames = tProp1.ConcatWith(null).Concat(tProp2).Concat(tProp3);
+        vc.DisplayNames = tProp1.Append(null).Concat(tProp2).Concat(tProp3);
         vc.ProductID = prodID;
 
         tProp1.Parameters.Index = 3;
@@ -84,7 +84,7 @@ public class VcfSerializerTests
         prodID = vc.ProductID!;
         prodID.Parameters.Index = 42;
 
-        vc.DisplayNames = Enumerable.Empty<TextProperty?>().ConcatWith(null).Concat(vc.DisplayNames!);
+        vc.DisplayNames = Enumerable.Empty<TextProperty?>().Append(null).Concat(vc.DisplayNames!);
 
         const Opts options = Opts.Default | Opts.SetIndexes;
 

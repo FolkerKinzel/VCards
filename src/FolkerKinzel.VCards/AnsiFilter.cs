@@ -91,7 +91,7 @@ public sealed class AnsiFilter
     /// <summary>
     /// The <see cref="Encoding"/> used to read the VCF file.
     /// </summary>
-    public Encoding? UsedEncoding { get; private set; }
+    public Encoding UsedEncoding { get; private set; } = Encoding.UTF8;
 
     /// <summary>  Loads a VCF file and automatically selects the appropriate 
     /// <see cref="Encoding" />. </summary>
@@ -126,8 +126,6 @@ public sealed class AnsiFilter
         Justification = "Performance: The collection expression creates a new List<VCard> instead of Array.Empty<VCard>().")]
     internal IList<VCard> Deserialize(Func<Stream?> factory)
     {
-        UsedEncoding = null;
-
         _ArgumentNullException.ThrowIfNull(factory, nameof(factory));
 
         Reset();
@@ -174,8 +172,6 @@ public sealed class AnsiFilter
     internal async Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
                                                        CancellationToken token)
     {
-        UsedEncoding = null;
-
         _ArgumentNullException.ThrowIfNull(factory, nameof(factory));
 
         Reset();

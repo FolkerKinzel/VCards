@@ -32,7 +32,7 @@ public static class AnsiFilterExample
                 .Where(x => StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(x), ".vcf")))
             {
                 IList<VCard> vCards = Vcf.Load(vcfFileName, ansiFilter);
-                WriteToTextFile(vcfFileName, vCards, ansiFilter.UsedEncoding?.WebName, writer);
+                WriteToTextFile(vcfFileName, vCards, ansiFilter.UsedEncoding.WebName, writer);
             }
         }
 

@@ -605,9 +605,9 @@ public static class IEnumerableExtension
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
     /// <param name="first">The first sequence (or <see cref="VCardProperty"/> object) to concatenate or <c>null</c>.</param>
-    /// <param name="second">The second sequence (or <see cref="VCardProperty"/> object) to concatenate or <c>null</c>.
-    /// If <paramref name="second"/> is <c>null</c>, a <c>null</c> reference is appended to <paramref name="first"/>.</param>
-    /// <returns>An <see cref="IEnumerable{T}"/> that contains the concatenated elements of the two input sequences.</returns>
+    /// <param name="second">The second sequence (or <see cref="VCardProperty"/> object) to concatenate or <c>null</c>.</param>
+    /// <returns>An <see cref="IEnumerable{T}"/> that contains the concatenated elements of the two input sequences that
+    /// are not null, or an empty collection if no such elements could be found.</returns>
     /// <remarks>
     /// The method works similar to <see cref="Enumerable.Concat{TSource}(IEnumerable{TSource}, IEnumerable{TSource})"/>
     /// but differs in that it can be called on <c>null</c> references and in that it accepts <c>null</c> references as
@@ -616,11 +616,11 @@ public static class IEnumerableExtension
     /// <example>
     /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
     /// </example>
-    public static IEnumerable<TSource?> ConcatWith<TSource>(
+    public static IEnumerable<TSource> ConcatWith<TSource>(
         this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
     {
-        second ??= Enumerable.Repeat<TSource?>(null, 1);
-        return first is null ? second : first.Concat(second);
+        second ??= [];
+        return first is null ? second.WhereNotNull() : first.Concat(second).WhereNotNull();
     }
 
     /// <summary>
@@ -772,7 +772,14 @@ public static class IEnumerableExtension
     public static void SetIndexes<TSource>(this IEnumerable<TSource?>? values,
                                            bool skipEmptyItems = true)
         where TSource : VCardProperty, IEnumerable<TSource>
-        => values?.SetIndexesIntl(skipEmptyItems);
+    {
+        if (values is null)
+        {
+            return;
+        }
+
+        values.SetIndexesIntl(skipEmptyItems);
+    }
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
@@ -786,7 +793,14 @@ public static class IEnumerableExtension
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void UnsetIndexes<TSource>(this IEnumerable<TSource?>? values)
         where TSource : VCardProperty, IEnumerable<TSource>
-        => values?.UnsetIndexesIntl();
+    {
+        if (values is null)
+        {
+            return;
+        }
+
+        values.UnsetIndexesIntl();
+    }
 
 
     /// <summary>

@@ -92,7 +92,7 @@ public class ExtensionMethodExample
             // The properties of the VCard class that contain collections allow
             // null references within these collections. Extension methods undertake
             // the necessary null checking when reading these properties:
-            .DisplayNames.Edit(dplayNames => dplayNames.ConcatWith(null))
+            .DisplayNames.Edit(dplayNames => dplayNames.Append(null))
             .Phones.Add("1234",
                         // The ParameterSection.PropertyClass property is of Type
                         // Nullable<PCl>. Use extension methods to edit such properties

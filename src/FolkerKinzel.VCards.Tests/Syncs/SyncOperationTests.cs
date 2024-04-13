@@ -33,7 +33,7 @@ public class SyncOperationTests
 
         var vc = new VCard();
         var tProp = new TextProperty("Donald");
-        vc.DisplayNames = tProp.ConcatWith(null);
+        vc.DisplayNames = tProp.Append(null);
 
         Assert.IsNull(tProp.Parameters.PropertyIDs);
         Assert.IsNull(vc.AppIDs);
@@ -83,7 +83,7 @@ public class SyncOperationTests
         VCard.RegisterApp(uri);
         var vc = new VCard();
         var tProp = new TextProperty("Donald");
-        vc.DisplayNames = tProp.ConcatWith(null);
+        vc.DisplayNames = tProp.Append(null);
 
         vc.Sync.SetPropertyIDs();
         Assert.AreEqual(uri.AbsoluteUri, vc.Sync.CurrentAppID?.GlobalID);

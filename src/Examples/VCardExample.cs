@@ -62,7 +62,7 @@ public static class VCardExample
                                givenNames: ["Käthe"],
                                additionalNames: ["Alexandra", "Caroline"],
                                prefixes: ["Prof.", "Dr."],
-                               displayName: (builder, prop) => builder.Add(prop.ToDisplayName())
+                               displayName: (displayNames, name) => displayNames.Add(name.ToDisplayName())
                               )
                 .GenderViews.Add(Sex.Female)
                 .Organizations.Add("Millers Company", ["C#", "Webdesign"])
@@ -156,8 +156,8 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2024-04-08T22:44:48Z
-UID:e1b2d40e-eb30-4562-b73d-c1a28167f4aa
+REV:2024-04-13T09:43:43Z
+UID:f52660a5-a684-4d13-8297-dcad9fa6c03b
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
  Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
@@ -180,8 +180,8 @@ EMAIL;INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- YYsBi915YQJB7BII+dlLP2rP7rI1t95njjBRIyEZg7d+XNPAqNVzc8zCMp2LfQx
- IL2c/Zsd+2LqpLdSy
+ eLh5nqrx2YsvdJSpSZA8HCMDXuCv6W1t0v/io6nStRQ0JOlJ6LFLW1PMsnROvjC
+ YaVwh1HBWaqM/uOTf
 
 END:VCARD
 
@@ -190,8 +190,8 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-04-08T22:44:57Z
-UID:e1b2d40e-eb30-4562-b73d-c1a28167f4aa
+REV:2024-04-13T09:43:43Z
+UID:f52660a5-a684-4d13-8297-dcad9fa6c03b
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 X-GENDER:Female
@@ -210,8 +210,8 @@ TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 EMAIL;TYPE=INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:YYsBi915YQJB7BII+dlLP2rP7rI1t95njjBRIyEZg7d+XNPA
- qNVzc8zCMp2LfQxIL2c/Zsd+2LqpLdSy
+PHOTO;ENCODING=b;TYPE=JPEG:eLh5nqrx2YsvdJSpSZA8HCMDXuCv6W1t0v/io6nStRQ0JOlJ
+ 6LFLW1PMsnROvjCYaVwh1HBWaqM/uOTf
 END:VCARD
 
 
@@ -219,8 +219,8 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20240408T224457Z
-UID:urn:uuid:e1b2d40e-eb30-4562-b73d-c1a28167f4aa
+REV:20240413T094343Z
+UID:urn:uuid:f52660a5-a684-4d13-8297-dcad9fa6c03b
 FN;PID=1.1:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
 GENDER:F
@@ -237,8 +237,8 @@ EMAIL;TYPE=WORK;PREF=1;PID=1.1:kaethe_mueller@internet.com
 EMAIL;TYPE=HOME;PREF=2;VALUE=URI;PID=2.1:mailto:kaethe_at_home@internet.com
 RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT;PID=1.1:Paul Müller-R
  isinowsky
-PHOTO;PID=1.1:data:image/jpeg;base64,YYsBi915YQJB7BII+dlLP2rP7rI1t95njjBRIy
- EZg7d+XNPAqNVzc8zCMp2LfQxIL2c/Zsd+2LqpLdSy
+PHOTO;PID=1.1:data:image/jpeg;base64,eLh5nqrx2YsvdJSpSZA8HCMDXuCv6W1t0v/io6
+ nStRQ0JOlJ6LFLW1PMsnROvjCYaVwh1HBWaqM/uOTf
 CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
 END:VCARD
 
@@ -248,9 +248,9 @@ Read VCard:
 Version: 3.0
 
 [DataType: TimeStamp]
-TimeStamp: 04/08/2024 22:44:57 +00:00
+TimeStamp: 04/13/2024 09:43:43 +00:00
 
-ID: e1b2d40e-eb30-4562-b73d-c1a28167f4aa
+ID: f52660a5-a684-4d13-8297-dcad9fa6c03b
 
 DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 
@@ -281,11 +281,11 @@ Phones: tel:+49-123-9876543
 [PhoneType: Voice, Msg, Cell, BBS]
 Phones: tel:+49-321-1234567
 
-[EMailType: EMAIL]
+[EMailType: INTERNET]
 [Preference: 1]
 EMails: kaethe_mueller@internet.com
 
-[EMailType: EMAIL]
+[EMailType: INTERNET]
 EMails: mailto:kaethe_at_home@internet.com
 
 [RelationType: Spouse]

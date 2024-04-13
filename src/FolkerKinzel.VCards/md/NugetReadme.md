@@ -7,6 +7,6 @@ It allows
 * serializing VCF files to and from streams,
 * and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.
 
-[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v6.1.0)
+[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v7.0.0-beta.1)
 
 [See code examples on GitHub](https://github.com/FolkerKinzel/VCards)

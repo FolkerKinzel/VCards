@@ -38,6 +38,21 @@ public readonly struct RelationBuilder
         _prop = prop;
     }
 
+    public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
+        Edit(props =>
+        {
+            props.SetPreferences(skipEmptyItems);
+            return props;
+        });
+
+    public VCardBuilder UnsetPreferences() =>
+        Edit(props =>
+        {
+            props.UnsetPreferences();
+            return props;
+        });
+
+
     /// <summary>
     /// Allows to edit the items of the specified property with a delegate.
     /// </summary>

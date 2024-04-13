@@ -61,6 +61,7 @@ public sealed class VCardBuilder
         coll = coll is null ? prop
                             : pref ? prop.Concat(coll.OrderByPref(false))
                                    : coll.Concat(prop);
+
         if (pref)
         {
             coll.SetPreferences(false);
