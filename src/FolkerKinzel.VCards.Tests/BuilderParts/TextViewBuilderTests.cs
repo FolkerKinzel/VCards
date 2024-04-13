@@ -3,6 +3,16 @@
 [TestClass]
 public class TextViewBuilderTests
 {
+    
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void SetIndexesTest1() => new TextViewBuilder().SetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetIndexesTest1() => new TextViewBuilder().UnsetIndexes();
+
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void EditTest1() => new TextViewBuilder().Edit(p => p);

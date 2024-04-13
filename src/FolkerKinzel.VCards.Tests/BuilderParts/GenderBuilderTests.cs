@@ -5,6 +5,14 @@ public class GenderBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void SetIndexesTest1() => new GenderBuilder().SetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetIndexesTest1() => new GenderBuilder().UnsetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void EditTest1() => new GenderBuilder().Edit(p => p);
 
     [TestMethod]

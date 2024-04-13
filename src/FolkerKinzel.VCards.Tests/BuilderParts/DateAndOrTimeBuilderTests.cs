@@ -5,6 +5,14 @@ public class DateAndOrTimeBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void SetIndexesTest1() => new DateAndOrTimeBuilder().SetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetIndexesTest1() => new DateAndOrTimeBuilder().UnsetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void EditTest1() => new DateAndOrTimeBuilder().Edit(p => p);
 
     [TestMethod]

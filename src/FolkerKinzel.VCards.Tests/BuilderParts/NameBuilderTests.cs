@@ -5,6 +5,14 @@ public class NameBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void SetIndexesTest1() => new NameBuilder().SetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetIndexesTest1() => new NameBuilder().UnsetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void EditTest1() => new NameBuilder().Edit(p => p);
 
     [TestMethod]

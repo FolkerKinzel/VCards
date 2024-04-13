@@ -5,6 +5,22 @@ public class RelationBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void SetPreferencesTest1() => new RelationBuilder().SetPreferences();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetPreferencesTest1() => new RelationBuilder().UnsetPreferences();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void SetIndexesTest1() => new RelationBuilder().SetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetIndexesTest1() => new RelationBuilder().UnsetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void EditTest1() => new RelationBuilder().Edit(p => p);
 
     [TestMethod]

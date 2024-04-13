@@ -5,6 +5,22 @@ public class StringCollectionBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void SetPreferencesTest1() => new StringCollectionBuilder().SetPreferences();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetPreferencesTest1() => new StringCollectionBuilder().UnsetPreferences();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void SetIndexesTest1() => new StringCollectionBuilder().SetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetIndexesTest1() => new StringCollectionBuilder().UnsetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void EditTest1() => new StringCollectionBuilder().Edit(p => p);
 
     [TestMethod]

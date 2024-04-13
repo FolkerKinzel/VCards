@@ -5,6 +5,22 @@ public class OrgBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void SetPreferencesTest1() => new OrgBuilder().SetPreferences();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetPreferencesTest1() => new OrgBuilder().UnsetPreferences();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void SetIndexesTest1() => new OrgBuilder().SetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetIndexesTest1() => new OrgBuilder().UnsetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void EditTest1() => new OrgBuilder().Edit(p => p);
 
     [TestMethod]

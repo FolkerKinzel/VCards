@@ -5,6 +5,22 @@ public class AddressBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void SetPreferencesTest1() => new AddressBuilder().SetPreferences();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetPreferencesTest1() => new AddressBuilder().UnsetPreferences();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void SetIndexesTest1() => new AddressBuilder().SetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetIndexesTest1() => new AddressBuilder().UnsetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void EditTest1() => new AddressBuilder().Edit(p => p);
 
     [TestMethod]

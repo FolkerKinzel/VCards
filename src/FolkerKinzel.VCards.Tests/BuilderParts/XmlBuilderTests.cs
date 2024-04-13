@@ -5,6 +5,23 @@ public class XmlBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void SetPreferencesTest1() => new XmlBuilder().SetPreferences();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetPreferencesTest1() => new XmlBuilder().UnsetPreferences();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void SetIndexesTest1() => new XmlBuilder().SetIndexes();
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void UnsetIndexesTest1() => new XmlBuilder().UnsetIndexes();
+
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void EditTest1() => new XmlBuilder().Edit(p => p);
 
     [TestMethod]
