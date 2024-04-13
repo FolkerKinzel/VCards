@@ -78,7 +78,6 @@ public class ExtensionMethodExample
                                }
                              )
             .DisplayNames.Add("vCard for testing",
-                               pref: true,
                                parameters:
                                p =>
                                {

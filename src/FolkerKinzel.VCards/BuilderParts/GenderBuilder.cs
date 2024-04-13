@@ -81,8 +81,7 @@ public readonly struct GenderBuilder
         Builder.VCard.Set(Prop.GenderViews, 
                           VCardBuilder.Add(new GenderProperty(sex, identity, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<GenderProperty?>?>(Prop.GenderViews),
-                                           parameters,
-                                           false)
+                                           parameters)
                           );
         return _builder;
     }

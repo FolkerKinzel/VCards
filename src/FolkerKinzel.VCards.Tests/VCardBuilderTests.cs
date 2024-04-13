@@ -101,7 +101,6 @@ public class VCardBuilderTests
             .Addresses.Add("3", null, null, null)
             .Addresses.Add("4", null, null, null)
             .Addresses.Add("Schlossallee", null, null, null,
-                         pref: true,
                          parameters: p => p.AddressType = Adr.Dom)
             .VCard;
 
@@ -140,7 +139,7 @@ public class VCardBuilderTests
                            parameters: p => p.AddressType = Adr.Intl,
                            group: vc => "gr1"
                          )
-            .Addresses.Add(["2"], null, null, null, pref: true)
+            .Addresses.Add(["2"], null, null, null)
             .VCard;
 
         AddressProperty prop1 = vc.Addresses!.ElementAt(1)!;
@@ -313,7 +312,7 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .CalendarAddresses.Add("1")
-            .CalendarAddresses.Add("2", pref: true, p => p.Index = 1, v => "g")
+            .CalendarAddresses.Add("2", p => p.Index = 1, v => "g")
             .VCard;
 
         Assert.IsNotNull(vc.CalendarAddresses);
@@ -351,7 +350,7 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Categories.Add("1234", group: vc => "g", pref: true)
+            .Categories.Add("1234", group: vc => "g")
             .Categories.Add("qwertz")
             .VCard;
 
@@ -757,7 +756,7 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Keys.AddText("1234", group: vc => "g", pref: true)
+            .Keys.AddText("1234", group: vc => "g")
             .Keys.AddText("qwertz")
             .VCard;
 
@@ -858,7 +857,7 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .Logos.AddFile(TestFiles.EmptyVcf)
-            .Logos.AddFile(TestFiles.EmptyVcf, pref: true, group: vc => "g")
+            .Logos.AddFile(TestFiles.EmptyVcf, group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.Logos);
@@ -872,7 +871,7 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .Logos.AddUri(new Uri("https://api.nuget.org/v3-flatcontainer/folkerkinzel.vcards/6.1.0/icon"))
-            .Logos.AddUri(new Uri("https://www.nuget.org/Content/gallery/img/logo-header.svg"), pref: true, group: vc => "g")
+            .Logos.AddUri(new Uri("https://www.nuget.org/Content/gallery/img/logo-header.svg"), group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.Logos);
@@ -1151,8 +1150,8 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Photos.AddBytes([1,2,3,4])
-            .Photos.AddBytes([17,4], pref: true, group: vc => "g")
+            .Photos.AddBytes([1, 2, 3, 4])
+            .Photos.AddBytes([17, 4], group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.Photos);
@@ -1210,7 +1209,7 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .Relations.Add(Guid.NewGuid())
-            .Relations.Add(Guid.NewGuid(), pref: true, group: vc => "g")
+            .Relations.Add(Guid.NewGuid(), group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.Relations);
@@ -1237,7 +1236,7 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .Relations.Add("Susi", Rel.Friend)
-            .Relations.Add("Horst", Rel.Neighbor, pref: true, group: vc => "g")
+            .Relations.Add("Horst", Rel.Neighbor, group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.Relations);
@@ -1251,7 +1250,7 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .Relations.Add(new Uri("http://www.Susi.de"), Rel.Friend)
-            .Relations.Add(new Uri("http://www.Horst.com"), Rel.Neighbor, pref: true, group: vc => "g")
+            .Relations.Add(new Uri("http://www.Horst.com"), Rel.Neighbor, group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.Relations);
@@ -1265,7 +1264,7 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .Relations.Add(VCardBuilder.Create().DisplayNames.Add("Susi").VCard, Rel.Friend)
-            .Relations.Add(VCardBuilder.Create().DisplayNames.Add("Horst").VCard, Rel.Neighbor, pref: true, group: vc => "g")
+            .Relations.Add(VCardBuilder.Create().DisplayNames.Add("Horst").VCard, Rel.Neighbor, group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.Relations);
@@ -1308,7 +1307,7 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .Sounds.AddBytes([1, 2, 3, 4])
-            .Sounds.AddBytes([17, 4], pref: true, group: vc => "g")
+            .Sounds.AddBytes([17, 4], group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.Sounds);
@@ -1542,7 +1541,7 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .Xmls.Add(new XElement(ns + "Key1", "First"))
-            .Xmls.Add(new XElement(ns + "Key2", "Second"), pref: true, group: vc => "g")
+            .Xmls.Add(new XElement(ns + "Key2", "Second"), group: vc => "g")
             .VCard;
 
         Assert.IsNotNull(vc.Xmls);

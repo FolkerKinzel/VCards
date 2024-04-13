@@ -84,14 +84,13 @@ public readonly struct DataBuilder
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the file content
     /// or <c>null</c> to get the <paramref name="mimeType"/> automatically from the
     /// file type extension.</param>
-    /// <param name="pref">Pass <c>true</c> to give the newly created <see cref="VCardProperty"/> 
-    /// the highest preference <c>(1)</c> and to downgrade the other instances in the collection.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
@@ -106,15 +105,13 @@ public readonly struct DataBuilder
     /// initialized using the default constructor.</exception>
     public VCardBuilder AddFile(string filePath,
                                 string? mimeType = null,
-                                bool pref = false,
                                 Action<ParameterSection>? parameters = null,
                                 Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(_prop, 
                           VCardBuilder.Add(DataProperty.FromFile(filePath, mimeType, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop),
-                                           parameters,
-                                           pref)
+                                           parameters)
                           );
         return _builder;
     }
@@ -127,21 +124,19 @@ public readonly struct DataBuilder
     /// <param name="bytes">The <see cref="byte"/>s to embed or <c>null</c>.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="bytes"/>
     /// or <c>null</c> for <c>application/octet-stream</c>.</param>
-    /// <param name="pref">Pass <c>true</c> to give the newly created <see cref="VCardProperty"/> 
-    /// the highest preference <c>(1)</c> and to downgrade the other instances in the collection.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is called 
     /// with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> to be 
     /// able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been 
     /// initialized using the default constructor.</exception>
     public VCardBuilder AddBytes(byte[]? bytes,
                                  string? mimeType = MimeString.OctetStream,
-                                 bool pref = false,
                                  Action<ParameterSection>? parameters = null,
                                  Func<VCard, string?>? group = null)
     {
@@ -150,8 +145,7 @@ public readonly struct DataBuilder
                                                                   mimeType,
                                                                   group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop),
-                                           parameters,
-                                           pref)
+                                           parameters)
                           );
         return _builder;
     }
@@ -163,14 +157,13 @@ public readonly struct DataBuilder
     /// <param name="passWord">The text to embed or <c>null</c>.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="passWord"/>
     /// or <c>null</c>.</param>
-    /// <param name="pref">Pass <c>true</c> to give the newly created <see cref="VCardProperty"/> the 
-    /// highest preference <c>(1)</c> and to downgrade the other instances in the collection.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> 
     /// to be able to chain calls.</returns>
     /// <remarks>
@@ -182,7 +175,6 @@ public readonly struct DataBuilder
     /// initialized using the default constructor.</exception>
     public VCardBuilder AddText(string? passWord,
                                 string? mimeType = null,
-                                bool pref = false,
                                 Action<ParameterSection>? parameters = null,
                                 Func<VCard, string?>? group = null)
     {
@@ -191,8 +183,7 @@ public readonly struct DataBuilder
                                                                  mimeType,
                                                                  group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop),
-                                           parameters,
-                                           pref)
+                                           parameters)
                           );
         return _builder;
     }
@@ -205,14 +196,13 @@ public readonly struct DataBuilder
     /// <param name="uri">An absolute <see cref="Uri"/> or <c>null</c>.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the 
     /// data the <paramref name="uri"/> points to, or <c>null</c>.</param>
-    /// <param name="pref">Pass <c>true</c> to give the newly created <see cref="VCardProperty"/> the 
-    /// highest preference <c>(1)</c> and to downgrade the other instances in the collection.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is called
     /// with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> 
     /// to be able to chain calls.</returns>
     /// <exception cref="ArgumentException"><paramref name="uri"/> is neither <c>null</c> nor an absolute 
@@ -221,8 +211,7 @@ public readonly struct DataBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder AddUri(Uri? uri,
                                string? mimeType = null,
-                               bool pref = false, 
-                               Action<ParameterSection>? parameters = null, 
+                               Action<ParameterSection>? parameters = null,
                                Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(_prop, 
@@ -230,8 +219,7 @@ public readonly struct DataBuilder
                                                                 mimeType,
                                                                 group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop),
-                                           parameters,
-                                           pref)
+                                           parameters)
                           );
         return _builder;
     }

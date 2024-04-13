@@ -105,11 +105,10 @@ public static class VCardExample
                                  p.PropertyClass = PCl.Home;
                              }
                            )
-                .EMails.Add("kaethe_mueller@internet.com", pref: true,
-                             parameters: p => p.PropertyClass = PCl.Work
+                .EMails.Add("kaethe_mueller@internet.com", parameters: p => p.PropertyClass = PCl.Work
                            )
                 .BirthDayViews.Add(1984, 3, 28)
-                .Relations.Add("Paul Müller-Risinowsky", 
+                .Relations.Add("Paul Müller-Risinowsky",
                                Rel.Spouse | Rel.CoResident | Rel.Colleague
                               )
                 .AnniversaryViews.Add(2006, 7, 14)

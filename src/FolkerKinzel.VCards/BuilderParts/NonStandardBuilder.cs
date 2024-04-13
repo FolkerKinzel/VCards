@@ -79,8 +79,7 @@ public readonly struct NonStandardBuilder
         Builder.VCard.Set(Prop.NonStandards,
                           VCardBuilder.Add(new NonStandardProperty(xName, value, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards),
-                                           parameters,
-                                           false)
+                                           parameters)
                           );
         return _builder;
     }

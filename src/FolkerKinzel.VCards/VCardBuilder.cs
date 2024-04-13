@@ -52,21 +52,13 @@ public sealed class VCardBuilder
 
     internal static IEnumerable<TSource?> Add<TSource>(TSource prop,
                                                        IEnumerable<TSource?>? coll,
-                                                       Action<ParameterSection>? parameters,
-                                                       bool pref)
+                                                       Action<ParameterSection>? parameters)
         where TSource : VCardProperty, IEnumerable<TSource>
     {
         parameters?.Invoke(prop.Parameters);
 
         coll = coll is null ? prop
-                            : pref ? prop.Concat(coll.OrderByPref(false))
-                                   : coll.Concat(prop);
-
-        if (pref)
-        {
-            coll.SetPreferences(false);
-        }
-
+                            : coll.Concat(prop);
         return coll;
     }
 

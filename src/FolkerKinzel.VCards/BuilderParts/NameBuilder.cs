@@ -99,8 +99,7 @@ public readonly struct NameBuilder
         vc.Set(Prop.NameViews,
                VCardBuilder.Add(prop,
                vc.Get<IEnumerable<NameProperty?>?>(Prop.NameViews),
-               parameters,
-               false));
+               parameters));
 
         displayName?.Invoke(Builder.DisplayNames, prop);
 
@@ -148,8 +147,7 @@ public readonly struct NameBuilder
         vc.Set(Prop.NameViews,
                VCardBuilder.Add(prop,
                                 vc.Get<IEnumerable<NameProperty?>?>(Prop.NameViews),
-                                parameters,
-                                false));
+                                parameters));
 
         displayName?.Invoke(Builder.DisplayNames, prop);
 

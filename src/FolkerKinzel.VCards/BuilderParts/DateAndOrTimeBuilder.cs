@@ -103,8 +103,7 @@ public readonly struct DateAndOrTimeBuilder
                                                                           day,
                                                                           group?.Invoke(_builder.VCard)),
                                            Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
-                                           parameters,
-                                           false)
+                                           parameters)
                           );
         return _builder;
     }
@@ -147,8 +146,7 @@ public readonly struct DateAndOrTimeBuilder
                                                                           day,
                                                                           group?.Invoke(_builder.VCard)),
                                            Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
-                                           parameters,
-                                           false)
+                                           parameters)
                           );
         return _builder;
     }
@@ -176,8 +174,7 @@ public readonly struct DateAndOrTimeBuilder
         Builder.VCard.Set(_prop,
                           VCardBuilder.Add(DateAndOrTimeProperty.FromDate(date, group?.Invoke(_builder.VCard)),
                                            Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
-                                           parameters,
-                                           false)
+                                           parameters)
                           );
         return _builder;
     }
@@ -205,8 +202,7 @@ public readonly struct DateAndOrTimeBuilder
         Builder.VCard.Set(_prop, 
                           VCardBuilder.Add(DateAndOrTimeProperty.FromDateTime(dateTime, group?.Invoke(_builder.VCard)),
                                            Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
-                                           parameters,
-                                           false));
+                                           parameters));
         return _builder;
     }
 
@@ -232,8 +228,7 @@ public readonly struct DateAndOrTimeBuilder
         Builder.VCard.Set(_prop, 
                           VCardBuilder.Add(DateAndOrTimeProperty.FromTime(time, group?.Invoke(_builder.VCard)),
                                            Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
-                                           parameters,
-                                           false)
+                                           parameters)
                           );
         return _builder;
     }
@@ -265,8 +260,7 @@ public readonly struct DateAndOrTimeBuilder
         Builder.VCard.Set(_prop,
                           VCardBuilder.Add(DateAndOrTimeProperty.FromText(text, group?.Invoke(_builder.VCard)),
                                            Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
-                                           parameters,
-                                           false)
+                                           parameters)
                           );
         return _builder;
     }

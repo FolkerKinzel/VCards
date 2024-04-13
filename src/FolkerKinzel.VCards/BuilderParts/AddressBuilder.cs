@@ -79,8 +79,6 @@ public readonly struct AddressBuilder
     /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
     /// automatically added to the <see cref="ParameterSection.Label" /> parameter of the newly 
     /// created <see cref="AddressProperty"/>.</param>
-    /// <param name="pref">Pass <c>true</c> to give the newly created <see cref="VCardProperty"/> 
-    /// the highest preference <c>(1)</c> and to downgrade the other instances in the collection.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of 
@@ -88,6 +86,7 @@ public readonly struct AddressBuilder
     /// to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function 
     /// is called with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="AddressBuilder"/> to be able to chain calls.</returns>
     /// 
@@ -103,7 +102,6 @@ public readonly struct AddressBuilder
                             string? postalCode,
                             string? country = null,
                             bool autoLabel = true,
-                            bool pref = false,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
@@ -116,8 +114,7 @@ public readonly struct AddressBuilder
                                                                autoLabel,
                                                                group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
-                                           parameters,
-                                           pref)
+                                           parameters)
                           );
         return _builder;
     }
@@ -135,14 +132,13 @@ public readonly struct AddressBuilder
     /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
     /// automatically added to the <see cref="ParameterSection.Label" /> parameter of the newly 
     /// created <see cref="VCardProperty"/>.</param>
-    /// <param name="pref">Pass <c>true</c> to give the newly created <see cref="VCardProperty"/> 
-    /// the highest preference <c>(1)</c> and to downgrade the other instances in the collection.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of 
     /// <see cref="VCardProperty" /> objects, which the <see cref="VCardProperty" /> should belong to,
     /// or <c>null</c> to indicate that the <see cref="VCardProperty" /> does not belong to any group. The 
     /// function is called with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> 
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
@@ -153,7 +149,6 @@ public readonly struct AddressBuilder
                             IEnumerable<string?>? postalCode,
                             IEnumerable<string?>? country = null,
                             bool autoLabel = true,
-                            bool pref = false,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
@@ -166,8 +161,7 @@ public readonly struct AddressBuilder
                                                                autoLabel,
                                                                group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
-                                           parameters,
-                                           pref)
+                                           parameters)
                            );
         return _builder;
     }

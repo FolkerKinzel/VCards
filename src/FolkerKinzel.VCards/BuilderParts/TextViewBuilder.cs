@@ -79,8 +79,7 @@ public readonly struct TextViewBuilder
         Builder.VCard.Set(_prop, 
                           VCardBuilder.Add(new TextProperty(value, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<TextProperty?>?>(_prop),
-                                           parameters,
-                                           false)
+                                           parameters)
                           );
         return _builder;
     }

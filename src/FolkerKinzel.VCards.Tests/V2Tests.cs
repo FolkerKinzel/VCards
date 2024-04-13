@@ -346,7 +346,7 @@ public class V2Tests
         const string pgpMime = "application/pgp-keys";
         VCard vc = VCardBuilder
             .Create()
-            .Keys.AddBytes([1,2,3], pgpMime)
+            .Keys.AddBytes([1, 2, 3], pgpMime)
             .EMails.Add("goofy@contoso.com", parameters: p => p.EMailType = null)
             .VCard;
 
