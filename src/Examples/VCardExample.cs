@@ -68,14 +68,6 @@ public static class VCardExample
                 .Organizations.Add("Millers Company", ["C#", "Webdesign"])
                 .Titles.Add("CEO")
                 .Photos.AddFile(photoFilePath)
-                .Phones.Add("tel:+49-123-9876543",
-                             parameters: p =>
-                             {
-                                 p.DataType = Data.Uri;
-                                 p.PropertyClass = PCl.Home;
-                                 p.PhoneType = Tel.Voice | Tel.BBS;
-                             }
-                           )
                 .Phones.Add("tel:+49-321-1234567",
                              parameters: p =>
                              {
@@ -84,6 +76,15 @@ public static class VCardExample
                                  p.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
                              }
                            )
+                .Phones.Add("tel:+49-123-9876543",
+                             parameters: p =>
+                             {
+                                 p.DataType = Data.Uri;
+                                 p.PropertyClass = PCl.Home;
+                                 p.PhoneType = Tel.Voice | Tel.BBS;
+                             }
+                           )
+                .Phones.SetIndexes()
                 // Unless specified, an address label is automatically applied to the AddressProperty object.
                 // Specifying the country helps to format this label correctly.
                 // Applying a group name to the AddressProperty helps to automatically preserve its Label,
@@ -98,6 +99,7 @@ public static class VCardExample
                                 },
                                 group: vc => vc.NewGroup()
                               )
+                .EMails.Add("kaethe_mueller@internet.com", parameters: p => p.PropertyClass = PCl.Work)
                 .EMails.Add("mailto:kaethe_at_home@internet.com",
                              parameters: p =>
                              {
@@ -105,8 +107,7 @@ public static class VCardExample
                                  p.PropertyClass = PCl.Home;
                              }
                            )
-                .EMails.Add("kaethe_mueller@internet.com", parameters: p => p.PropertyClass = PCl.Work
-                           )
+                .EMails.SetPreferences()
                 .BirthDayViews.Add(1984, 3, 28)
                 .Relations.Add("Paul Müller-Risinowsky",
                                Rel.Spouse | Rel.CoResident | Rel.Colleague
@@ -155,8 +156,8 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2024-04-13T09:43:43Z
-UID:f52660a5-a684-4d13-8297-dcad9fa6c03b
+REV:2024-04-13T16:19:45Z
+UID:8f12bf8d-d336-43b6-b024-1b316ebe2793
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra=
  Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
@@ -172,15 +173,15 @@ riedrichstra=C3=9Fe 22;Berlin;;10117;Germany
 edrichstra=C3=9Fe 22=0D=0A10117 Berlin=0D=0AGERMANY
 0.GEO:52.511821;13.389581
 0.TZ:+01:00
-TEL;HOME;VOICE;BBS:tel:+49-123-9876543
 TEL;WORK;VOICE;MSG;CELL;BBS:tel:+49-321-1234567
+TEL;HOME;VOICE;BBS:tel:+49-123-9876543
 EMAIL;PREF;INTERNET:kaethe_mueller@internet.com
 EMAIL;INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- eLh5nqrx2YsvdJSpSZA8HCMDXuCv6W1t0v/io6nStRQ0JOlJ6LFLW1PMsnROvjC
- YaVwh1HBWaqM/uOTf
+ T3/2GAPiyHnw9c3tVlrHTyy9cJ/2W59UgtXKwSnhk7lDjj/0n3PMPMbl4NwTVb2
+ wfHfQzGnt3vcdTvGi
 
 END:VCARD
 
@@ -189,8 +190,8 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-04-13T09:43:43Z
-UID:f52660a5-a684-4d13-8297-dcad9fa6c03b
+REV:2024-04-13T16:19:45Z
+UID:8f12bf8d-d336-43b6-b024-1b316ebe2793
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 X-GENDER:Female
@@ -204,13 +205,13 @@ X-ANNIVERSARY:2006-07-14
  nGERMANY
 0.GEO:52.511821;13.389581
 0.TZ:+01:00
-TEL;TYPE=HOME,VOICE,BBS:tel:+49-123-9876543
 TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
+TEL;TYPE=HOME,VOICE,BBS:tel:+49-123-9876543
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 EMAIL;TYPE=INTERNET:mailto:kaethe_at_home@internet.com
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:eLh5nqrx2YsvdJSpSZA8HCMDXuCv6W1t0v/io6nStRQ0JOlJ
- 6LFLW1PMsnROvjCYaVwh1HBWaqM/uOTf
+PHOTO;ENCODING=b;TYPE=JPEG:T3/2GAPiyHnw9c3tVlrHTyy9cJ/2W59UgtXKwSnhk7lDjj/0
+ n3PMPMbl4NwTVb2wfHfQzGnt3vcdTvGi
 END:VCARD
 
 
@@ -218,8 +219,8 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20240413T094343Z
-UID:urn:uuid:f52660a5-a684-4d13-8297-dcad9fa6c03b
+REV:20240413T161945Z
+UID:urn:uuid:8f12bf8d-d336-43b6-b024-1b316ebe2793
 FN;PID=1.1:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
 GENDER:F
@@ -230,14 +231,14 @@ ANNIVERSARY;VALUE=DATE:20060714
 0.ADR;TYPE=WORK;LABEL=Friedrichstraße 22\n10117 Berlin\nGERMANY;GEO="geo:5
  2.511821,13.389581";TZ=Europe/Berlin;PID=1.1:;;Friedrichstraße 22;Berlin;
  ;10117;Germany
-TEL;TYPE=HOME,VOICE;VALUE=URI;PID=1.1:tel:+49-123-9876543
-TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=2.1:tel:+49-321-1234567
+TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=1.1;INDEX=1:tel:+49-321-1234567
+TEL;TYPE=HOME,VOICE;VALUE=URI;PID=2.1;INDEX=2:tel:+49-123-9876543
 EMAIL;TYPE=WORK;PREF=1;PID=1.1:kaethe_mueller@internet.com
 EMAIL;TYPE=HOME;PREF=2;VALUE=URI;PID=2.1:mailto:kaethe_at_home@internet.com
 RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT;PID=1.1:Paul Müller-R
  isinowsky
-PHOTO;PID=1.1:data:image/jpeg;base64,eLh5nqrx2YsvdJSpSZA8HCMDXuCv6W1t0v/io6
- nStRQ0JOlJ6LFLW1PMsnROvjCYaVwh1HBWaqM/uOTf
+PHOTO;PID=1.1:data:image/jpeg;base64,T3/2GAPiyHnw9c3tVlrHTyy9cJ/2W59UgtXKwS
+ nhk7lDjj/0n3PMPMbl4NwTVb2wfHfQzGnt3vcdTvGi
 CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
 END:VCARD
 
@@ -247,9 +248,9 @@ Read VCard:
 Version: 3.0
 
 [DataType: TimeStamp]
-TimeStamp: 04/13/2024 09:43:43 +00:00
+TimeStamp: 04/13/2024 16:19:45 +00:00
 
-ID: f52660a5-a684-4d13-8297-dcad9fa6c03b
+ID: 8f12bf8d-d336-43b6-b024-1b316ebe2793
 
 DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 
@@ -272,13 +273,13 @@ BirthDayViews: System.DateOnly: 03/28/1984
 
 AnniversaryViews: System.DateOnly: 07/14/2006
 
-[PropertyClass: Home]
-[PhoneType: Voice, BBS]
-Phones: tel:+49-123-9876543
-
 [PropertyClass: Work]
 [PhoneType: Voice, Msg, Cell, BBS]
 Phones: tel:+49-321-1234567
+
+[PropertyClass: Home]
+[PhoneType: Voice, BBS]
+Phones: tel:+49-123-9876543
 
 [EMailType: INTERNET]
 [Preference: 1]

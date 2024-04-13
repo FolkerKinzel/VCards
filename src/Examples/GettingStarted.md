@@ -96,14 +96,6 @@ VCard vCard = VCardBuilder
     .Organizations.Add("Millers Company", ["C#", "Webdesign"])
     .Titles.Add("CEO")
     .Photos.AddFile(photoFilePath)
-    .Phones.Add("tel:+49-123-9876543",
-                 parameters: p =>
-                 {
-                     p.DataType = Data.Uri;
-                     p.PropertyClass = PCl.Home;
-                     p.PhoneType = Tel.Voice | Tel.BBS;
-                 }
-               )
     .Phones.Add("tel:+49-321-1234567",
                  parameters: p =>
                  {
@@ -112,6 +104,15 @@ VCard vCard = VCardBuilder
                      p.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
                  }
                )
+    .Phones.Add("tel:+49-123-9876543",
+                 parameters: p =>
+                 {
+                     p.DataType = Data.Uri;
+                     p.PropertyClass = PCl.Home;
+                     p.PhoneType = Tel.Voice | Tel.BBS;
+                 }
+               )
+    .Phones.SetIndexes()
     // Unless specified, an address label is automatically applied to the AddressProperty object.
     // Specifying the country helps to format this label correctly.
     // Applying a group name to the AddressProperty helps to automatically preserve its Label,
@@ -126,6 +127,7 @@ VCard vCard = VCardBuilder
                     },
                     group: vc => vc.NewGroup()
                   )
+    .EMails.Add("kaethe_mueller@internet.com", parameters: p => p.PropertyClass = PCl.Work)
     .EMails.Add("mailto:kaethe_at_home@internet.com",
                  parameters: p =>
                  {
@@ -133,11 +135,9 @@ VCard vCard = VCardBuilder
                      p.PropertyClass = PCl.Home;
                  }
                )
-    .EMails.Add("kaethe_mueller@internet.com", pref: true,
-                 parameters: p => p.PropertyClass = PCl.Work
-               )
+    .EMails.SetPreferences()
     .BirthDayViews.Add(1984, 3, 28)
-    .Relations.Add("Paul Müller-Risinowsky", 
+    .Relations.Add("Paul Müller-Risinowsky",
                    Rel.Spouse | Rel.CoResident | Rel.Colleague
                   )
     .AnniversaryViews.Add(2006, 7, 14)
