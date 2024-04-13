@@ -13,6 +13,14 @@ public class TextViewBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void EditTest3() => new TextViewBuilder().Edit((p, d) => p, true);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void EditTest4() => VCardBuilder.Create().BirthPlaceViews.Edit(null!, true);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new TextViewBuilder().Add(null);
 
     [TestMethod]

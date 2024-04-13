@@ -13,6 +13,14 @@ public class RelationBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void EditTest3() => new RelationBuilder().Edit((p, d) => p, true);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void EditTest4() => VCardBuilder.Create().Relations.Edit(null!, true);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new RelationBuilder().Add(Guid.Empty);
 
     [TestMethod]

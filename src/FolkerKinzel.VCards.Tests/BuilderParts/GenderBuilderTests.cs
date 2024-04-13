@@ -13,6 +13,14 @@ public class GenderBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void EditTest3() => new GenderBuilder().Edit((p, d) => p, true);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void EditTest4() => VCardBuilder.Create().GenderViews.Edit(null!, true);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new GenderBuilder().Add(null);
 
     [TestMethod]

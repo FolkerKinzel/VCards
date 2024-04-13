@@ -13,6 +13,14 @@ public class TextBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void EditTest3() => new TextBuilder().Edit((p, d) => p, true);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void EditTest4() => VCardBuilder.Create().Notes.Edit(null!, true);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new TextBuilder().Add(null);
 
     [TestMethod]

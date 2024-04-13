@@ -13,6 +13,14 @@ public class StringCollectionBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void EditTest3() => new StringCollectionBuilder().Edit((p, d) => p, true);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void EditTest4() => VCardBuilder.Create().NickNames.Edit(null!, true);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new StringCollectionBuilder().Add((string?)null);
 
     [TestMethod]
