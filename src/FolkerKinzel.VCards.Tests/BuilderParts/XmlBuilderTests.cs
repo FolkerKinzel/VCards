@@ -1,4 +1,7 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using System.Xml.Linq;
+using System.Xml.Schema;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class XmlBuilderTests
@@ -6,6 +9,32 @@ public class XmlBuilderTests
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetPreferencesTest1() => new XmlBuilder().SetPreferences();
+
+    [TestMethod]
+    public void SetPreferencesTest2()
+    {
+        XNamespace ns = "http://www.contoso.com";
+
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .Xmls.Add(null)
+            .Xmls.Add(new XElement(ns + "Key1", "First"))
+            .Xmls.SetPreferences();
+
+        VCard vc = builder.VCard;
+
+        Assert.IsNotNull(vc.Xmls);
+        Assert.AreEqual(2, vc.Xmls.Count());
+        Assert.AreEqual(100, vc.Xmls.First()!.Parameters.Preference);
+        Assert.AreEqual(1, vc.Xmls.ElementAt(1)!.Parameters.Preference);
+
+        builder.Xmls.SetPreferences(skipEmptyItems: false);
+        Assert.AreEqual(1, vc.Xmls.First()!.Parameters.Preference);
+        Assert.AreEqual(2, vc.Xmls.ElementAt(1)!.Parameters.Preference);
+
+        builder.Xmls.UnsetPreferences();
+        Assert.IsTrue(vc.Xmls.All(x => x!.Parameters.Preference == 100));
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
