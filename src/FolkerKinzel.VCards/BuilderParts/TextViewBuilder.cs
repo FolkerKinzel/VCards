@@ -34,6 +34,20 @@ public readonly struct TextViewBuilder
         _prop = prop;
     }
 
+    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
+        Edit(props =>
+        {
+            props.SetIndexes(skipEmptyItems);
+            return props;
+        });
+
+    public VCardBuilder UnsetIndexes() =>
+        Edit(props =>
+        {
+            props.UnsetIndexes();
+            return props;
+        });
+
     public VCardBuilder Edit<TData>(Func<IEnumerable<TextProperty>, TData, IEnumerable<TextProperty?>?> func, TData data)
     {
         var props = GetProperty();

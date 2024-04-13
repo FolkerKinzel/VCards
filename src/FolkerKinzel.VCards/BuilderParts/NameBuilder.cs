@@ -32,6 +32,20 @@ public readonly struct NameBuilder
 
     internal NameBuilder(VCardBuilder builder) => _builder = builder;
 
+    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
+        Edit(props =>
+        {
+            props.SetIndexes(skipEmptyItems);
+            return props;
+        });
+
+    public VCardBuilder UnsetIndexes() =>
+        Edit(props =>
+        {
+            props.UnsetIndexes();
+            return props;
+        });
+
     public VCardBuilder Edit<TData>(Func<IEnumerable<NameProperty>, TData, IEnumerable<NameProperty?>?> func, TData data)
     {
         var props = GetProperty();

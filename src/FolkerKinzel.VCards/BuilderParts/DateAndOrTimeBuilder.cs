@@ -37,6 +37,20 @@ public readonly struct DateAndOrTimeBuilder
         _prop = prop;
     }
 
+    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
+        Edit(props =>
+        {
+            props.SetIndexes(skipEmptyItems);
+            return props;
+        });
+
+    public VCardBuilder UnsetIndexes() =>
+        Edit(props =>
+        {
+            props.UnsetIndexes();
+            return props;
+        });
+
     public VCardBuilder Edit<TData>(Func<IEnumerable<DateAndOrTimeProperty>, TData, IEnumerable<DateAndOrTimeProperty?>?> func, TData data)
     {
         var props = GetProperty();

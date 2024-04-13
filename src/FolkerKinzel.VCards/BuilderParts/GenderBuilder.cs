@@ -31,6 +31,20 @@ public readonly struct GenderBuilder
 
     internal GenderBuilder(VCardBuilder builder) => _builder = builder;
 
+    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
+        Edit(props =>
+        {
+            props.SetIndexes(skipEmptyItems);
+            return props;
+        });
+
+    public VCardBuilder UnsetIndexes() =>
+        Edit(props =>
+        {
+            props.UnsetIndexes();
+            return props;
+        });
+
     public VCardBuilder Edit<TData>(Func<IEnumerable<GenderProperty>, TData, IEnumerable<GenderProperty?>?> func, TData data)
     {
         var props = GetProperty();

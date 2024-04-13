@@ -46,6 +46,20 @@ public readonly struct OrgBuilder
             return props;
         });
 
+    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
+        Edit(props =>
+        {
+            props.SetIndexes(skipEmptyItems);
+            return props;
+        });
+
+    public VCardBuilder UnsetIndexes() =>
+        Edit(props =>
+        {
+            props.UnsetIndexes();
+            return props;
+        });
+
     public VCardBuilder Edit<TData>(Func<IEnumerable<OrgProperty>, TData, IEnumerable<OrgProperty?>?> func, TData data)
     {
         var props = GetProperty();

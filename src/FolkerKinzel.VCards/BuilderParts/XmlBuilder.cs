@@ -43,6 +43,20 @@ public readonly struct XmlBuilder
             return props;
         });
 
+    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
+        Edit(props =>
+        {
+            props.SetIndexes(skipEmptyItems);
+            return props;
+        });
+
+    public VCardBuilder UnsetIndexes() =>
+        Edit(props =>
+        {
+            props.UnsetIndexes();
+            return props;
+        });
+
     public VCardBuilder Edit<TData>(Func<IEnumerable<XmlProperty>, TData, IEnumerable<XmlProperty?>?> func, TData data)
     {
         var props = GetProperty();
