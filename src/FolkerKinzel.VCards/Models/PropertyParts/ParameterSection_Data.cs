@@ -365,9 +365,9 @@ public sealed partial class ParameterSection
     /// <remarks>When serializing a file as vCard&#160;3.0, a separate <c>SORT-STRING</c>-property,
     /// which contains the first <see cref="string" />, is automatically inserted into
     /// the vCard.</remarks>
-    public IEnumerable<string?>? SortAs
+    public IEnumerable<string>? SortAs
     {
-        get => Get<IEnumerable<string?>?>(VCdParam.SortAs);
+        get => Get<IEnumerable<string>?>(VCdParam.SortAs)?.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim());
         set => Set(VCdParam.SortAs, value);
     }
 

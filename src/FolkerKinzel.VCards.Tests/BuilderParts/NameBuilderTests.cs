@@ -8,6 +8,32 @@ public class NameBuilderTests
     public void SetIndexesTest1() => new NameBuilder().SetIndexes();
 
     [TestMethod]
+    public void SetIndexesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .NameViews.Add("")
+            .NameViews.Add("Miller")
+            .NameViews.SetIndexes();
+
+        VCard vc = builder.VCard;
+
+        var property = vc.NameViews;
+
+        Assert.IsNotNull(property);
+        Assert.AreEqual(2, property.Count());
+        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
+
+        builder.NameViews.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, property.First()!.Parameters.Index);
+        Assert.AreEqual(2, property.ElementAt(1)!.Parameters.Index);
+
+        builder.NameViews.UnsetIndexes();
+        Assert.IsTrue(property.All(x => x!.Parameters.Index == null));
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void UnsetIndexesTest1() => new NameBuilder().UnsetIndexes();
 

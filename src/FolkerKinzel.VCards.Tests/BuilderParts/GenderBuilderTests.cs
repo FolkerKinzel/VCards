@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Enums;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class GenderBuilderTests
@@ -6,6 +8,32 @@ public class GenderBuilderTests
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetIndexesTest1() => new GenderBuilder().SetIndexes();
+
+    [TestMethod]
+    public void SetIndexesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .GenderViews.Add(null)
+            .GenderViews.Add(Sex.Female)
+            .GenderViews.SetIndexes();
+
+        VCard vc = builder.VCard;
+
+        var property = vc.GenderViews;
+
+        Assert.IsNotNull(property);
+        Assert.AreEqual(2, property.Count());
+        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
+
+        builder.GenderViews.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, property.First()!.Parameters.Index);
+        Assert.AreEqual(2, property.ElementAt(1)!.Parameters.Index);
+
+        builder.GenderViews.UnsetIndexes();
+        Assert.IsTrue(property.All(x => x!.Parameters.Index == null));
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

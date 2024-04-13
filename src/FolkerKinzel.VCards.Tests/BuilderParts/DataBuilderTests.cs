@@ -8,12 +8,62 @@ public class DataBuilderTests
     public void SetPreferencesTest1() => new DataBuilder().SetPreferences();
 
     [TestMethod]
+    public void SetPreferencesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .Photos.AddBytes(null)
+            .Photos.AddBytes([1,2,3])
+            .Photos.SetPreferences();
+
+        VCard vc = builder.VCard;
+
+        Assert.IsNotNull(vc.Photos);
+        Assert.AreEqual(2, vc.Photos.Count());
+        Assert.AreEqual(100, vc.Photos.First()!.Parameters.Preference);
+        Assert.AreEqual(1, vc.Photos.ElementAt(1)!.Parameters.Preference);
+
+        builder.Photos.SetPreferences(skipEmptyItems: false);
+        Assert.AreEqual(1, vc.Photos.First()!.Parameters.Preference);
+        Assert.AreEqual(2, vc.Photos.ElementAt(1)!.Parameters.Preference);
+
+        builder.Photos.UnsetPreferences();
+        Assert.IsTrue(vc.Photos.All(x => x!.Parameters.Preference == 100));
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void UnsetPreferencesTest1() => new DataBuilder().UnsetPreferences();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetIndexesTest1() => new DataBuilder().SetIndexes();
+
+    [TestMethod]
+    public void SetIndexesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .Photos.AddBytes(null)
+            .Photos.AddBytes([1, 2, 3])
+            .Photos.SetIndexes();
+
+        VCard vc = builder.VCard;
+
+        var property = vc.Photos;
+
+        Assert.IsNotNull(property);
+        Assert.AreEqual(2, property.Count());
+        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
+
+        builder.Photos.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, property.First()!.Parameters.Index);
+        Assert.AreEqual(2, property.ElementAt(1)!.Parameters.Index);
+
+        builder.Photos.UnsetIndexes();
+        Assert.IsTrue(property.All(x => x!.Parameters.Index == null));
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

@@ -20,6 +20,17 @@ public class IDBuilderTests
     public void EditTest4() => VCardBuilder.Create().ID.Edit(null!, true);
 
     [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create(setID: false)
+            .ID.Edit((p, d) => new Models.IDProperty(d), Guid.NewGuid())
+            .VCard;
+
+        Assert.IsNotNull(vc.ID);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetTest1() => new IDBuilder().Set(null);
 

@@ -20,6 +20,17 @@ public class NonStandardBuilderTests
     public void EditTest4() => VCardBuilder.Create().NonStandards.Edit(null!, true);
 
     [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create(setID: false)
+            .NonStandards.Edit((p, d) => d, new Models.NonStandardProperty("X-TEST", "The value"))
+            .VCard;
+
+        Assert.IsNotNull(vc.NonStandards);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new NonStandardBuilder().Add("X-TEST", null);
 

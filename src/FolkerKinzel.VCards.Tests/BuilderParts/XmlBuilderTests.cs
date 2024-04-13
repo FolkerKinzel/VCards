@@ -45,6 +45,32 @@ public class XmlBuilderTests
     public void SetIndexesTest1() => new XmlBuilder().SetIndexes();
 
     [TestMethod]
+    public void SetIndexesTest2()
+    {
+        XNamespace ns = "http://www.contoso.com";
+
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .Xmls.Add(null)
+            .Xmls.Add(new XElement(ns + "Key1", "First"))
+            .Xmls.SetIndexes();
+
+        VCard vc = builder.VCard;
+
+        Assert.IsNotNull(vc.Xmls);
+        Assert.AreEqual(2, vc.Xmls.Count());
+        Assert.AreEqual(null, vc.Xmls.First()!.Parameters.Index);
+        Assert.AreEqual(1, vc.Xmls.ElementAt(1)!.Parameters.Index);
+
+        builder.Xmls.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, vc.Xmls.First()!.Parameters.Index);
+        Assert.AreEqual(2, vc.Xmls.ElementAt(1)!.Parameters.Index);
+
+        builder.Xmls.UnsetIndexes();
+        Assert.IsTrue(vc.Xmls.All(x => x!.Parameters.Index == null));
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void UnsetIndexesTest1() => new XmlBuilder().UnsetIndexes();
 

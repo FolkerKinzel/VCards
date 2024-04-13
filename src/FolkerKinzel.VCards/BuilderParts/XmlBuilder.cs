@@ -30,28 +30,28 @@ public readonly struct XmlBuilder
     internal XmlBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
-        Edit(props =>
+        Edit(static (props, skip) =>
         {
-            props.SetPreferences(skipEmptyItems);
+            props.SetPreferences(skip);
             return props;
-        });
+        }, skipEmptyItems);
 
     public VCardBuilder UnsetPreferences() =>
-        Edit(props =>
+        Edit(static props =>
         {
             props.UnsetPreferences();
             return props;
         });
 
     public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
-        Edit(props =>
+        Edit(static (props, skip) =>
         {
-            props.SetIndexes(skipEmptyItems);
+            props.SetIndexes(skip);
             return props;
-        });
+        }, skipEmptyItems);
 
     public VCardBuilder UnsetIndexes() =>
-        Edit(props =>
+        Edit(static props =>
         {
             props.UnsetIndexes();
             return props;

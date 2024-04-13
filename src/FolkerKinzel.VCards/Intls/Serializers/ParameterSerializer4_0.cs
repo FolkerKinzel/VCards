@@ -680,6 +680,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
     private void AppendCalScale()
     {
         string? calScale = ParaSection.Calendar;
+
         if (calScale is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.ALTID, EscapeAndQuote(calScale));
@@ -793,7 +794,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendPid()
     {
-        IEnumerable<PropertyID?>? pids = ParaSection.PropertyIDs;
+        IEnumerable<PropertyID>? pids = ParaSection.PropertyIDs;
 
         if (pids is null)
         {
@@ -802,12 +803,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         _ = _worker.Clear();
 
-        foreach (PropertyID? pid in pids)
+        foreach (PropertyID pid in pids)
         {
-            if (pid is null)
-            {
-                continue;
-            }
+            Debug.Assert(pid != null);
+            
             pid.AppendTo(_worker);
             _ = _worker.Append(',');
         }
@@ -831,7 +830,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendSortAs()
     {
-        IEnumerable<string?>? sortAs = ParaSection.SortAs;
+        IEnumerable<string>? sortAs = ParaSection.SortAs;
 
         if (sortAs is null)
         {
@@ -840,12 +839,9 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         _ = _worker.Clear();
 
-        foreach (string? item in sortAs)
+        foreach (string item in sortAs)
         {
-            if (string.IsNullOrWhiteSpace(item))
-            {
-                continue;
-            }
+            Debug.Assert(!string.IsNullOrWhiteSpace(item));
 
             _ = _worker.Append(EscapeAndQuote(item));
             _ = _worker.Append(',');

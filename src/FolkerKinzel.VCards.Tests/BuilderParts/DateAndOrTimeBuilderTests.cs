@@ -8,6 +8,32 @@ public class DateAndOrTimeBuilderTests
     public void SetIndexesTest1() => new DateAndOrTimeBuilder().SetIndexes();
 
     [TestMethod]
+    public void SetIndexesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .BirthDayViews.Add(null)
+            .BirthDayViews.Add(2, 20)
+            .BirthDayViews.SetIndexes();
+
+        VCard vc = builder.VCard;
+
+        var property = vc.BirthDayViews;
+
+        Assert.IsNotNull(property);
+        Assert.AreEqual(2, property.Count());
+        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
+
+        builder.BirthDayViews.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, property.First()!.Parameters.Index);
+        Assert.AreEqual(2, property.ElementAt(1)!.Parameters.Index);
+
+        builder.BirthDayViews.UnsetIndexes();
+        Assert.IsTrue(property.All(x => x!.Parameters.Index == null));
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void UnsetIndexesTest1() => new DateAndOrTimeBuilder().UnsetIndexes();
 

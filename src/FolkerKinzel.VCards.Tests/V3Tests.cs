@@ -187,9 +187,6 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         IList<VCard> vc = Vcf.Load(TestFiles.PhotoV3vcf).ToList();
         vc.Add(vc[0]);
 
@@ -198,6 +195,32 @@ public class V3Tests
         vc = Vcf.Parse(s);
 
         Assert.AreEqual(2, vc.Count);
+    }
+
+    [TestMethod]
+    public void SerializeVCardTest3()
+    {
+        const string octetStream = "application/octet-stream";
+        string base64 = Convert.ToBase64String([1, 2, 3]);
+
+        VCard vc = VCardBuilder
+            .Create()
+            .Relations.Add(new Uri("http://the_agent.com"), Rel.Agent)
+            .Logos.AddBytes([4,5,6])
+            .Keys.AddBytes([7,8])
+            .Sounds.AddBytes([8,9])
+            .NonStandards.Add("X-DATA", base64, parameters: p => { p.Encoding = Enc.Base64; p.MediaType = octetStream; })
+            .VCard;
+
+        string vcf = Vcf.ToString(vc, VCdVersion.V3_0, options: Opts.Default.Set(Opts.WriteNonStandardProperties));
+        vc = Vcf.Parse(vcf)[0];
+
+        Assert.AreEqual(Data.Uri, vc.Relations!.First()!.Parameters.DataType);
+        Assert.AreEqual(Enc.Base64, vc.Logos!.First()!.Parameters.Encoding);
+        Assert.AreEqual(Enc.Base64, vc.Keys!.First()!.Parameters.Encoding);
+        Assert.AreEqual(Enc.Base64, vc.Sounds!.First()!.Parameters.Encoding);
+        Assert.AreEqual(Enc.Base64, vc.NonStandards!.First()!.Parameters.Encoding);
+        Assert.AreEqual(octetStream, vc.NonStandards!.First()!.Parameters.NonStandard!.First().Value);
     }
 
 

@@ -8,12 +8,62 @@ public class AddressBuilderTests
     public void SetPreferencesTest1() => new AddressBuilder().SetPreferences();
 
     [TestMethod]
+    public void SetPreferencesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .Addresses.Add("", null, null, null)
+            .Addresses.Add(null, "New York", null, null)
+            .Addresses.SetPreferences();
+
+        VCard vc = builder.VCard;
+
+        Assert.IsNotNull(vc.Addresses);
+        Assert.AreEqual(2, vc.Addresses.Count());
+        Assert.AreEqual(100, vc.Addresses.First()!.Parameters.Preference);
+        Assert.AreEqual(1, vc.Addresses.ElementAt(1)!.Parameters.Preference);
+
+        builder.Addresses.SetPreferences(skipEmptyItems: false);
+        Assert.AreEqual(1, vc.Addresses.First()!.Parameters.Preference);
+        Assert.AreEqual(2, vc.Addresses.ElementAt(1)!.Parameters.Preference);
+
+        builder.Addresses.UnsetPreferences();
+        Assert.IsTrue(vc.Addresses.All(x => x!.Parameters.Preference == 100));
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void UnsetPreferencesTest1() => new AddressBuilder().UnsetPreferences();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetIndexesTest1() => new AddressBuilder().SetIndexes();
+
+    [TestMethod]
+    public void SetIndexesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .Addresses.Add("", null, null, null)
+            .Addresses.Add(null, "New York", null, null)
+            .Addresses.SetIndexes();
+
+        VCard vc = builder.VCard;
+
+        var property = vc.Addresses;
+
+        Assert.IsNotNull(property);
+        Assert.AreEqual(2, property.Count());
+        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
+
+        builder.Addresses.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, property.First()!.Parameters.Index);
+        Assert.AreEqual(2, property.ElementAt(1)!.Parameters.Index);
+
+        builder.Addresses.UnsetIndexes();
+        Assert.IsTrue(property.All(x => x!.Parameters.Index == null));
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using System.Xml.Linq;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class TimeZoneBuilderTests
@@ -8,12 +10,60 @@ public class TimeZoneBuilderTests
     public void SetPreferencesTest1() => new TimeZoneBuilder().SetPreferences();
 
     [TestMethod]
+    public void SetPreferencesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .TimeZones.Add((TimeZoneID?)null)
+            .TimeZones.Add("Europe/Berlin")
+            .TimeZones.SetPreferences();
+
+        VCard vc = builder.VCard;
+
+        Assert.IsNotNull(vc.TimeZones);
+        Assert.AreEqual(2, vc.TimeZones.Count());
+        Assert.AreEqual(100, vc.TimeZones.First()!.Parameters.Preference);
+        Assert.AreEqual(1, vc.TimeZones.ElementAt(1)!.Parameters.Preference);
+
+        builder.TimeZones.SetPreferences(skipEmptyItems: false);
+        Assert.AreEqual(1, vc.TimeZones.First()!.Parameters.Preference);
+        Assert.AreEqual(2, vc.TimeZones.ElementAt(1)!.Parameters.Preference);
+
+        builder.TimeZones.UnsetPreferences();
+        Assert.IsTrue(vc.TimeZones.All(x => x!.Parameters.Preference == 100));
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void UnsetPreferencesTest1() => new TimeZoneBuilder().UnsetPreferences();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetIndexesTest1() => new TimeZoneBuilder().SetIndexes();
+
+    [TestMethod]
+    public void SetIndexesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .TimeZones.Add((TimeZoneID?)null)
+            .TimeZones.Add("Europe/Berlin")
+            .TimeZones.SetIndexes();
+
+        VCard vc = builder.VCard;
+
+        Assert.IsNotNull(vc.TimeZones);
+        Assert.AreEqual(2, vc.TimeZones.Count());
+        Assert.AreEqual(null, vc.TimeZones.First()!.Parameters.Index);
+        Assert.AreEqual(1, vc.TimeZones.ElementAt(1)!.Parameters.Index);
+
+        builder.TimeZones.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, vc.TimeZones.First()!.Parameters.Index);
+        Assert.AreEqual(2, vc.TimeZones.ElementAt(1)!.Parameters.Index);
+
+        builder.TimeZones.UnsetIndexes();
+        Assert.IsTrue(vc.TimeZones.All(x => x!.Parameters.Index == null));
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

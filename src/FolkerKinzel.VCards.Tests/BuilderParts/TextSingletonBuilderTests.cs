@@ -20,6 +20,17 @@ public class TextSingletonBuilderTests
     public void EditTest4() => VCardBuilder.Create().DirectoryName.Edit(null!, true);
 
     [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create(setID: false)
+            .DirectoryName.Edit((p, d) => new Models.TextProperty(d), "The directory")
+            .VCard;
+
+        Assert.IsNotNull(vc.DirectoryName);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetTest1() => new TextSingletonBuilder().Set(null);
 

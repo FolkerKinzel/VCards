@@ -10,6 +10,30 @@ public class TextViewBuilderTests
     public void SetIndexesTest1() => new TextViewBuilder().SetIndexes();
 
     [TestMethod]
+    public void SetIndexesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .BirthPlaceViews.Add(null)
+            .BirthPlaceViews.Add("Berlin")
+            .BirthPlaceViews.SetIndexes();
+
+        VCard vc = builder.VCard;
+
+        Assert.IsNotNull(vc.BirthPlaceViews);
+        Assert.AreEqual(2, vc.BirthPlaceViews.Count());
+        Assert.AreEqual(null, vc.BirthPlaceViews.First()!.Parameters.Index);
+        Assert.AreEqual(1, vc.BirthPlaceViews.ElementAt(1)!.Parameters.Index);
+
+        builder.BirthPlaceViews.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, vc.BirthPlaceViews.First()!.Parameters.Index);
+        Assert.AreEqual(2, vc.BirthPlaceViews.ElementAt(1)!.Parameters.Index);
+
+        builder.BirthPlaceViews.UnsetIndexes();
+        Assert.IsTrue(vc.BirthPlaceViews.All(x => x!.Parameters.Index == null));
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void UnsetIndexesTest1() => new TextViewBuilder().UnsetIndexes();
 

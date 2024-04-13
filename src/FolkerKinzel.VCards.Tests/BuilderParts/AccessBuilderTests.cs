@@ -19,6 +19,17 @@ public class AccessBuilderTests
     public void EditTest3() => new AccessBuilder().Edit((p, d) => p, true);
 
     [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Access.Edit((p, d) => new Models.AccessProperty(Access.Confidential), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.Access);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void EditTest4() => VCardBuilder.Create().Access.Edit(null!, true);
 

@@ -20,6 +20,17 @@ public class KindBuilderTests
     public void EditTest4() => VCardBuilder.Create().Kind.Edit(null!, true);
 
     [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Kind.Edit((p, d) => new Models.KindProperty(d), Enums.Kind.Individual)
+            .VCard;
+
+        Assert.IsNotNull(vc.Kind);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetTest1() => new KindBuilder().Set(Enums.Kind.Individual);
 

@@ -8,12 +8,60 @@ public class TextBuilderTests
     public void SetPreferencesTest1() => new TextBuilder().SetPreferences();
 
     [TestMethod]
+    public void SetPreferencesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .Notes.Add(null)
+            .Notes.Add("One note")
+            .Notes.SetPreferences();
+
+        VCard vc = builder.VCard;
+
+        Assert.IsNotNull(vc.Notes);
+        Assert.AreEqual(2, vc.Notes.Count());
+        Assert.AreEqual(100, vc.Notes.First()!.Parameters.Preference);
+        Assert.AreEqual(1, vc.Notes.ElementAt(1)!.Parameters.Preference);
+
+        builder.Notes.SetPreferences(skipEmptyItems: false);
+        Assert.AreEqual(1, vc.Notes.First()!.Parameters.Preference);
+        Assert.AreEqual(2, vc.Notes.ElementAt(1)!.Parameters.Preference);
+
+        builder.Notes.UnsetPreferences();
+        Assert.IsTrue(vc.Notes.All(x => x!.Parameters.Preference == 100));
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void UnsetPreferencesTest1() => new TextBuilder().UnsetPreferences();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetIndexesTest1() => new TextBuilder().SetIndexes();
+
+    [TestMethod]
+    public void SetIndexesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .Notes.Add(null)
+            .Notes.Add("One note")
+            .Notes.SetIndexes();
+
+        VCard vc = builder.VCard;
+
+        Assert.IsNotNull(vc.Notes);
+        Assert.AreEqual(2, vc.Notes.Count());
+        Assert.AreEqual(null, vc.Notes.First()!.Parameters.Index);
+        Assert.AreEqual(1, vc.Notes.ElementAt(1)!.Parameters.Index);
+
+        builder.Notes.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, vc.Notes.First()!.Parameters.Index);
+        Assert.AreEqual(2, vc.Notes.ElementAt(1)!.Parameters.Index);
+
+        builder.Notes.UnsetIndexes();
+        Assert.IsTrue(vc.Notes.All(x => x!.Parameters.Index == null));
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

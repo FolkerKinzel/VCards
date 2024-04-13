@@ -20,6 +20,17 @@ public class TimeStampBuilderTests
     public void EditTest4() => VCardBuilder.Create().TimeStamp.Edit(null!, true);
 
     [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .TimeStamp.Edit((p, d) => new Models.TimeStampProperty(d), DateTimeOffset.UtcNow)
+            .VCard;
+
+        Assert.IsNotNull(vc.TimeStamp);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetTest1() => new TimeStampBuilder().Set(DateTimeOffset.UtcNow);
 

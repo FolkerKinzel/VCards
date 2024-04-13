@@ -8,12 +8,62 @@ public class OrgBuilderTests
     public void SetPreferencesTest1() => new OrgBuilder().SetPreferences();
 
     [TestMethod]
+    public void SetPreferencesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .Organizations.Add(null)
+            .Organizations.Add("Contoso")
+            .Organizations.SetPreferences();
+
+        VCard vc = builder.VCard;
+
+        Assert.IsNotNull(vc.Organizations);
+        Assert.AreEqual(2, vc.Organizations.Count());
+        Assert.AreEqual(100, vc.Organizations.First()!.Parameters.Preference);
+        Assert.AreEqual(1, vc.Organizations.ElementAt(1)!.Parameters.Preference);
+
+        builder.Organizations.SetPreferences(skipEmptyItems: false);
+        Assert.AreEqual(1, vc.Organizations.First()!.Parameters.Preference);
+        Assert.AreEqual(2, vc.Organizations.ElementAt(1)!.Parameters.Preference);
+
+        builder.Organizations.UnsetPreferences();
+        Assert.IsTrue(vc.Organizations.All(x => x!.Parameters.Preference == 100));
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void UnsetPreferencesTest1() => new OrgBuilder().UnsetPreferences();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetIndexesTest1() => new OrgBuilder().SetIndexes();
+
+    [TestMethod]
+    public void SetIndexesTest2()
+    {
+        VCardBuilder builder = VCardBuilder
+            .Create()
+            .Organizations.Add(null)
+            .Organizations.Add("Contoso")
+            .Organizations.SetIndexes();
+
+        VCard vc = builder.VCard;
+
+        var property = vc.Organizations;
+
+        Assert.IsNotNull(property);
+        Assert.AreEqual(2, property.Count());
+        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
+
+        builder.Organizations.SetIndexes(skipEmptyItems: false);
+        Assert.AreEqual(1, property.First()!.Parameters.Index);
+        Assert.AreEqual(2, property.ElementAt(1)!.Parameters.Index);
+
+        builder.Organizations.UnsetIndexes();
+        Assert.IsTrue(property.All(x => x!.Parameters.Index == null));
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

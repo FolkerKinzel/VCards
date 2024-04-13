@@ -33,14 +33,14 @@ public readonly struct NameBuilder
     internal NameBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
-        Edit(props =>
+        Edit(static (props, skip) =>
         {
-            props.SetIndexes(skipEmptyItems);
+            props.SetIndexes(skip);
             return props;
-        });
+        }, skipEmptyItems);
 
     public VCardBuilder UnsetIndexes() =>
-        Edit(props =>
+        Edit(static props =>
         {
             props.UnsetIndexes();
             return props;
