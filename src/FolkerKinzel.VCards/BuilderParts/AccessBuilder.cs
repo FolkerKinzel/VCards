@@ -26,6 +26,13 @@ public readonly struct AccessBuilder
 
     internal AccessBuilder(VCardBuilder builder) => _builder = builder;
 
+    public VCardBuilder Edit<TData>(Func<AccessProperty?, TData, AccessProperty?> func, TData data)
+    {
+        var prop = Builder.VCard.Access;
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.Access = func.Invoke(prop, data);
+        return _builder;
+    }
 
     /// <summary>
     /// Allows to edit the content of the <see cref="VCard.Access"/> property with a specified delegate.

@@ -38,19 +38,26 @@ public readonly struct TextBuilder
     }
 
     public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
-        Edit(props =>
+        Edit(static (props, skip) =>
         {
-            props.SetPreferences(skipEmptyItems);
+            props.SetPreferences(skip);
             return props;
-        });
+        }, skipEmptyItems);
 
     public VCardBuilder UnsetPreferences() =>
-        Edit(props =>
+        Edit(static props =>
         {
             props.UnsetPreferences();
             return props;
         });
 
+    public VCardBuilder Edit<TData>(Func<IEnumerable<TextProperty>, TData, IEnumerable<TextProperty?>?> func, TData data)
+    {
+        var props = GetProperty();
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        SetProperty(func.Invoke(props, data));
+        return _builder;
+    }
 
     /// <summary>
     /// Allows to edit the items of the specified property with a delegate.
@@ -67,12 +74,21 @@ public readonly struct TextBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<TextProperty>, IEnumerable<TextProperty?>?> func)
     {
-        var props = Builder.VCard.Get<IEnumerable<TextProperty?>?>(_prop)?
-                                 .WhereNotNull() 
-                    ?? [];
+        var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Set(_prop, func.Invoke(props));
+        SetProperty(func.Invoke(props));
         return _builder;
+    }
+
+    [MemberNotNull(nameof(_builder))]
+    private IEnumerable<TextProperty> GetProperty() =>
+        Builder.VCard.Get<IEnumerable<TextProperty?>?>(_prop)?
+                                 .WhereNotNull() ?? [];
+
+    private void SetProperty(IEnumerable<TextProperty?>? value)
+    {
+        Debug.Assert(_builder != null);
+        _builder.VCard.Set(_prop, value);
     }
 
     /// <summary>

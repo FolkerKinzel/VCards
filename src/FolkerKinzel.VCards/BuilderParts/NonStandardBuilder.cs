@@ -29,6 +29,14 @@ public readonly struct NonStandardBuilder
 
     internal NonStandardBuilder(VCardBuilder builder) => _builder = builder;
 
+    public VCardBuilder Edit<TData>(Func<IEnumerable<NonStandardProperty>, TData, IEnumerable<NonStandardProperty?>?> func, TData data)
+    {
+        var props = GetProperty();
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.NonStandards = func.Invoke(props, data);
+        return _builder;
+    }
+
     /// <summary>
     /// Allows to edit the items of the <see cref="VCard.NonStandards"/> property with a specified delegate.
     /// </summary>
@@ -45,11 +53,15 @@ public readonly struct NonStandardBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<NonStandardProperty>, IEnumerable<NonStandardProperty?>?> func)
     {
-        var props = Builder.VCard.NonStandards?.WhereNotNull() ?? [];
+        var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.NonStandards = func.Invoke(props);
         return _builder;
     }
+
+    [MemberNotNull(nameof(_builder))]
+    private IEnumerable<NonStandardProperty> GetProperty() =>
+        Builder.VCard.NonStandards?.WhereNotNull() ?? [];
 
     /// <summary>
     /// Adds a <see cref="NonStandardProperty"/> instance, which is newly initialized using the 

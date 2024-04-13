@@ -26,6 +26,14 @@ public readonly struct IDBuilder
 
     internal IDBuilder(VCardBuilder builder) => _builder = builder;
 
+    public VCardBuilder Edit<TData>(Func<IDProperty?, TData, IDProperty?> func, TData data)
+    {
+        var prop = Builder.VCard.ID;
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.ID = func.Invoke(prop, data);
+        return _builder;
+    }
+
     /// <summary>
     /// Allows to edit the content of the <see cref="VCard.ID"/> property with a specified delegate.
     /// </summary>

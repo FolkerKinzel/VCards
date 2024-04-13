@@ -29,19 +29,28 @@ public readonly struct GeoBuilder
     internal GeoBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
-        Edit(props =>
+        Edit(static (props, skip) =>
         {
-            props.SetPreferences(skipEmptyItems);
+            props.SetPreferences(skip);
             return props;
-        });
+        }, skipEmptyItems);
 
     public VCardBuilder UnsetPreferences() =>
-        Edit(props =>
+        Edit(static props =>
         {
             props.UnsetPreferences();
             return props;
         });
 
+    
+
+    public VCardBuilder Edit<TData>(Func<IEnumerable<GeoProperty>, TData, IEnumerable<GeoProperty?>?> func, TData data)
+    {
+        var props = GetProperty();
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.GeoCoordinates = func.Invoke(props, data);
+        return _builder;
+    }
 
     /// <summary>
     /// Allows to edit the items of the <see cref="VCard.GeoCoordinates"/> property with a specified delegate.
@@ -59,11 +68,15 @@ public readonly struct GeoBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<GeoProperty>, IEnumerable<GeoProperty?>?> func)
     {
-        var props = Builder.VCard.GeoCoordinates?.WhereNotNull() ?? [];
+        var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.GeoCoordinates = func.Invoke(props);
         return _builder;
     }
+
+    [MemberNotNull(nameof(_builder))]
+    private IEnumerable<GeoProperty> GetProperty() 
+        => Builder.VCard.GeoCoordinates?.WhereNotNull() ?? [];
 
     /// <summary>
     /// Adds a <see cref="GeoProperty"/> instance, which is newly initialized using the specified 

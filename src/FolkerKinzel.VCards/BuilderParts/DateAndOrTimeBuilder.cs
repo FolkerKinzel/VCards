@@ -37,6 +37,14 @@ public readonly struct DateAndOrTimeBuilder
         _prop = prop;
     }
 
+    public VCardBuilder Edit<TData>(Func<IEnumerable<DateAndOrTimeProperty>, TData, IEnumerable<DateAndOrTimeProperty?>?> func, TData data)
+    {
+        var props = GetProperty();
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        SetProperty(func.Invoke(props, data));
+        return _builder;
+    }
+
     /// <summary>
     /// Allows to edit the items of the specified property with a delegate.
     /// </summary>
@@ -53,11 +61,20 @@ public readonly struct DateAndOrTimeBuilder
     public VCardBuilder Edit(
         Func<IEnumerable<DateAndOrTimeProperty>, IEnumerable<DateAndOrTimeProperty?>?> func)
     {
-        var props = 
-            Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop)?.WhereNotNull() ?? [];
+        var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Set(_prop, func.Invoke(props));
+        SetProperty(func.Invoke(props));
         return _builder;
+    }
+
+    [MemberNotNull(nameof(_builder))]
+    private IEnumerable<DateAndOrTimeProperty> GetProperty() =>
+        Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop)?.WhereNotNull() ?? [];
+
+    private void SetProperty(IEnumerable<DateAndOrTimeProperty?>? value)
+    {
+        Debug.Assert(_builder != null);
+        _builder.VCard.Set(_prop, value);
     }
 
     /// <summary>

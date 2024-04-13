@@ -32,6 +32,14 @@ public readonly struct NameBuilder
 
     internal NameBuilder(VCardBuilder builder) => _builder = builder;
 
+    public VCardBuilder Edit<TData>(Func<IEnumerable<NameProperty>, TData, IEnumerable<NameProperty?>?> func, TData data)
+    {
+        var props = GetProperty();
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.NameViews = func.Invoke(props, data);
+        return _builder;
+    }
+
     /// <summary>
     /// Allows to edit the items of the <see cref="VCard.NameViews"/> property with a specified delegate.
     /// </summary>
@@ -48,11 +56,15 @@ public readonly struct NameBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<NameProperty>, IEnumerable<NameProperty?>?> func)
     {
-        var props = Builder.VCard.NameViews?.WhereNotNull() ?? [];
+        var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.NameViews = func.Invoke(props);
         return _builder;
     }
+
+    [MemberNotNull(nameof(_builder))]
+    private IEnumerable<NameProperty> GetProperty() =>
+        Builder.VCard.NameViews?.WhereNotNull() ?? [];
 
     /// <summary>
     /// Adds a <see cref="NameProperty"/> instance, which is newly 

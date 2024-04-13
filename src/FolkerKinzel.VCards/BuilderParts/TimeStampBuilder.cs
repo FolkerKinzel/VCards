@@ -26,6 +26,14 @@ public readonly struct TimeStampBuilder
 
     internal TimeStampBuilder(VCardBuilder builder) => _builder = builder;
 
+    public VCardBuilder Edit<TData>(Func<TimeStampProperty?, TData, TimeStampProperty?> func, TData data)
+    {
+        var prop = Builder.VCard.TimeStamp;
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.TimeStamp = func.Invoke(prop, data);
+        return _builder;
+    }
+
     /// <summary>
     /// Allows to edit the content of the <see cref="VCard.TimeStamp"/> property with a specified delegate.
     /// </summary>

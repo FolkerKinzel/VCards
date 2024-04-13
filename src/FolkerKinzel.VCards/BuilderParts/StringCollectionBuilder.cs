@@ -35,19 +35,26 @@ public readonly struct StringCollectionBuilder
     }
 
     public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
-        Edit(props =>
+        Edit(static (props, skip) =>
         {
-            props.SetPreferences(skipEmptyItems);
+            props.SetPreferences(skip);
             return props;
-        });
+        }, skipEmptyItems);
 
     public VCardBuilder UnsetPreferences() =>
-        Edit(props =>
+        Edit(static props =>
         {
             props.UnsetPreferences();
             return props;
         });
 
+    public VCardBuilder Edit<TData>(Func<IEnumerable<StringCollectionProperty>, TData, IEnumerable<StringCollectionProperty?>?> func, TData data)
+    {
+        var props = GetProperty();
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        SetProperty(func.Invoke(props, data));
+        return _builder;
+    }
 
     /// <summary>
     /// Allows to edit the items of the specified property with a delegate.
@@ -65,12 +72,22 @@ public readonly struct StringCollectionBuilder
     public VCardBuilder Edit(
         Func<IEnumerable<StringCollectionProperty>, IEnumerable<StringCollectionProperty?>?> func)
     {
-        var props = Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(_prop)?
+        var props = GetProperty();
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        SetProperty(func.Invoke(props));
+        return _builder;
+    }
+
+    [MemberNotNull(nameof(_builder))]
+    private IEnumerable<StringCollectionProperty> GetProperty() =>
+        Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(_prop)?
                                  .WhereNotNull()
                     ?? [];
-        _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Set(_prop, func.Invoke(props));
-        return _builder;
+
+    private void SetProperty(IEnumerable<StringCollectionProperty?>? value)
+    {
+        Debug.Assert(_builder != null);
+        _builder.VCard.Set(_prop, value);
     }
 
     /// <summary>

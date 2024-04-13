@@ -26,6 +26,14 @@ public readonly struct KindBuilder
 
     internal KindBuilder(VCardBuilder builder) => _builder = builder;
 
+    public VCardBuilder Edit<TData>(Func<KindProperty?, TData, KindProperty?> func, TData data)
+    {
+        var prop = Builder.VCard.Kind;
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.Kind = func.Invoke(prop, data);
+        return _builder;
+    }
+
     /// <summary>
     /// Allows to edit the content of the <see cref="VCard.Kind"/> property with a specified delegate.
     /// </summary>

@@ -29,7 +29,7 @@ public readonly struct RelationBuilder
     private readonly VCardBuilder? _builder;
     private readonly Prop _prop;
 
-    [MemberNotNull(nameof(_builder))] 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
     internal RelationBuilder(VCardBuilder builder, Prop prop)
@@ -39,19 +39,26 @@ public readonly struct RelationBuilder
     }
 
     public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
-        Edit(props =>
+        Edit(static (props, skip) =>
         {
-            props.SetPreferences(skipEmptyItems);
+            props.SetPreferences(skip);
             return props;
-        });
+        }, skipEmptyItems);
 
     public VCardBuilder UnsetPreferences() =>
-        Edit(props =>
+        Edit(static props =>
         {
             props.UnsetPreferences();
             return props;
         });
 
+    public VCardBuilder Edit<TData>(Func<IEnumerable<RelationProperty>, TData, IEnumerable<RelationProperty?>?> func, TData data)
+    {
+        var props = GetProperty();
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        SetProperty(func.Invoke(props, data));
+        return _builder;
+    }
 
     /// <summary>
     /// Allows to edit the items of the specified property with a delegate.
@@ -68,10 +75,20 @@ public readonly struct RelationBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<RelationProperty>, IEnumerable<RelationProperty?>?> func)
     {
-        var props = Builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop)?.WhereNotNull() ?? [];
+        var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Set(_prop, func.Invoke(props));
+        SetProperty(func.Invoke(props));
         return _builder;
+    }
+
+    [MemberNotNull(nameof(_builder))]
+    private IEnumerable<RelationProperty> GetProperty() =>
+        Builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop)?.WhereNotNull() ?? [];
+
+    private void SetProperty(IEnumerable<RelationProperty?>? value)
+    {
+        Debug.Assert(_builder != null);
+        _builder.VCard.Set(_prop, value);
     }
 
     /// <summary>
@@ -102,7 +119,7 @@ public readonly struct RelationBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(RelationProperty.FromGuid(uuid,
                                                                      relationType,
                                                                      group?.Invoke(_builder.VCard)),
@@ -142,7 +159,7 @@ public readonly struct RelationBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(RelationProperty.FromText(text, relationType, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop),
                                            parameters)
@@ -177,7 +194,7 @@ public readonly struct RelationBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(RelationProperty.FromVCard(vCard, relationType, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop),
                                            parameters)
@@ -211,7 +228,7 @@ public readonly struct RelationBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(RelationProperty.FromUri(uri, relationType, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop),
                                            parameters)
@@ -244,7 +261,7 @@ public readonly struct RelationBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<RelationProperty, bool> predicate)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop)
                                         .Remove(predicate)
                          );

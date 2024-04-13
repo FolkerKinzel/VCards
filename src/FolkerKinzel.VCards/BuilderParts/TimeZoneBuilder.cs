@@ -17,8 +17,8 @@ namespace FolkerKinzel.VCards.BuilderParts;
 /// Only use this struct in conjunction with <see cref="VCardBuilder"/>!
 /// </note>
 /// </remarks>
-//[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
-//    Justification = "Overriding does not change the default behavior.")]
+[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
+    Justification = "Overriding does not change the default behavior.")]
 public readonly struct TimeZoneBuilder
 {
     private readonly VCardBuilder? _builder;
@@ -29,19 +29,26 @@ public readonly struct TimeZoneBuilder
     internal TimeZoneBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
-        Edit(props =>
+        Edit(static (props, skip) =>
         {
-            props.SetPreferences(skipEmptyItems);
+            props.SetPreferences(skip);
             return props;
-        });
+        }, skipEmptyItems);
 
     public VCardBuilder UnsetPreferences() =>
-        Edit(props =>
+        Edit(static props =>
         {
             props.UnsetPreferences();
             return props;
         });
 
+    public VCardBuilder Edit<TData>(Func<IEnumerable<TimeZoneProperty>, TData, IEnumerable<TimeZoneProperty?>?> func, TData data)
+    {
+        var props = GetProperty();
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.TimeZones = func.Invoke(props, data);
+        return _builder;
+    }
 
     /// <summary>
     /// Allows to edit the items of the <see cref="VCard.TimeZones"/> property with a specified delegate.
@@ -59,11 +66,15 @@ public readonly struct TimeZoneBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<TimeZoneProperty>, IEnumerable<TimeZoneProperty?>?> func)
     {
-        var props = Builder.VCard.TimeZones?.WhereNotNull() ?? [];
+        var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.TimeZones = func.Invoke(props);
         return _builder;
     }
+
+    [MemberNotNull(nameof(_builder))]
+    private IEnumerable<TimeZoneProperty> GetProperty() =>
+        Builder.VCard.TimeZones?.WhereNotNull() ?? [];
 
     /// <summary>
     /// Adds a <see cref="TimeZoneProperty"/> instance, which is newly 

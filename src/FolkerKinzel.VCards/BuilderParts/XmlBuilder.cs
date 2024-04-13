@@ -43,6 +43,13 @@ public readonly struct XmlBuilder
             return props;
         });
 
+    public VCardBuilder Edit<TData>(Func<IEnumerable<XmlProperty>, TData, IEnumerable<XmlProperty?>?> func, TData data)
+    {
+        var props = GetProperty();
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.Xmls = func.Invoke(props, data);
+        return _builder;
+    }
 
     /// <summary>
     /// Allows to edit the items of the <see cref="VCard.Xmls"/> property with a specified delegate.
@@ -60,11 +67,15 @@ public readonly struct XmlBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<XmlProperty>, IEnumerable<XmlProperty?>?> func)
     {
-        var props = Builder.VCard.Xmls?.WhereNotNull() ?? [];
+        var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Xmls = func.Invoke(props);
         return _builder;
     }
+
+    [MemberNotNull(nameof(_builder))]
+    private IEnumerable<XmlProperty> GetProperty() =>
+        Builder.VCard.Xmls?.WhereNotNull() ?? [];
 
     /// <summary>
     /// Adds an <see cref="XmlProperty"/> instance, which is newly initialized using the 

@@ -32,19 +32,26 @@ public readonly struct AddressBuilder
     internal AddressBuilder(VCardBuilder builder) => _builder = builder;
 
     public VCardBuilder SetPreferences(bool skipEmptyItems = true) => 
-        Edit(props => 
+        Edit(static (props, skip) => 
         { 
-            props.SetPreferences(skipEmptyItems); 
+            props.SetPreferences(skip); 
             return props;
-        });
+        }, skipEmptyItems);
 
     public VCardBuilder UnsetPreferences() =>
-        Edit(props =>
+        Edit(static props =>
         {
             props.UnsetPreferences();
             return props;
         });
 
+    public VCardBuilder Edit<TData>(Func<IEnumerable<AddressProperty>, TData, IEnumerable<AddressProperty?>?> func, TData data)
+    {
+        var props = GetProperty();
+        _ArgumentNullException.ThrowIfNull(func, nameof(func));
+        _builder.VCard.Addresses = func.Invoke(props, data);
+        return _builder;
+    }
 
     /// <summary>
     /// Allows to edit the items of the <see cref="VCard.Addresses"/> property with a specified delegate.
@@ -61,11 +68,15 @@ public readonly struct AddressBuilder
     /// initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<AddressProperty>, IEnumerable<AddressProperty?>?> func)
     {
-        var props = Builder.VCard.Addresses?.WhereNotNull() ?? [];
+        var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Addresses = func.Invoke(props);
         return _builder;
     }
+
+    [MemberNotNull(nameof(_builder))]
+    private IEnumerable<AddressProperty> GetProperty() =>
+        Builder.VCard.Addresses?.WhereNotNull() ?? [];
 
     /// <summary>
     /// Adds an <see cref="AddressProperty"/> instance, which is newly 
