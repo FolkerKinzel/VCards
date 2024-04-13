@@ -26,7 +26,7 @@ public readonly struct ProfileBuilder
     internal ProfileBuilder(VCardBuilder builder) => _builder = builder;
 
     /// <summary>
-    /// Allows to edit the content of the <see cref="VCard.Profile"/> property with a specified delegate.
+    /// Edits the content of the <see cref="VCard.Profile"/> property with a delegate.
     /// </summary>
     /// <param name="func">
     /// A function called with the content of the 

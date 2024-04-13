@@ -59,7 +59,25 @@ public readonly struct AddressBuilder
             return props;
         });
 
-    public VCardBuilder Edit<TData>(Func<IEnumerable<AddressProperty>, TData, IEnumerable<AddressProperty?>?> func, TData data)
+    /// <summary>
+    /// Edits the content of the <see cref="VCard.Addresses"/> property with a delegate and 
+    /// allows to pass <paramref name="data"/> to this delegate.
+    /// </summary>
+    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <param name="func">A function called with the content of the 
+    /// <see cref="VCard.Addresses"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// will be the new content of the <see cref="VCard.Addresses"/> property.</param>
+    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <remarks>
+    /// This overload allows to pass external data to the delegate without having to use closures.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    public VCardBuilder Edit<TData>(Func<IEnumerable<AddressProperty>, TData, IEnumerable<AddressProperty?>?> func,
+                                    TData data)
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
@@ -68,7 +86,7 @@ public readonly struct AddressBuilder
     }
 
     /// <summary>
-    /// Allows to edit the items of the <see cref="VCard.Addresses"/> property with a specified delegate.
+    /// Edits the content of the <see cref="VCard.Addresses"/> property with a delegate.
     /// </summary>
     /// <param name="func">
     /// A function called with a collection of the non-<c>null</c> items of the <see cref="VCard.Addresses"/>

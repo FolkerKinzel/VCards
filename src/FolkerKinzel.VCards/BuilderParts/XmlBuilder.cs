@@ -57,7 +57,25 @@ public readonly struct XmlBuilder
             return props;
         });
 
-    public VCardBuilder Edit<TData>(Func<IEnumerable<XmlProperty>, TData, IEnumerable<XmlProperty?>?> func, TData data)
+    /// <summary>
+    /// Edits the content of the <see cref="VCard.Xmls"/> property with a delegate and 
+    /// allows to pass <paramref name="data"/> to this delegate.
+    /// </summary>
+    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <param name="func">A function called with the content of the 
+    /// <see cref="VCard.Xmls"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// will be the new content of the <see cref="VCard.Xmls"/> property.</param>
+    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="XmlBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <remarks>
+    /// This overload allows to pass external data to the delegate without having to use closures.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    public VCardBuilder Edit<TData>(
+        Func<IEnumerable<XmlProperty>, TData, IEnumerable<XmlProperty?>?> func, TData data)
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
@@ -66,13 +84,12 @@ public readonly struct XmlBuilder
     }
 
     /// <summary>
-    /// Allows to edit the items of the <see cref="VCard.Xmls"/> property with a specified delegate.
+    /// Edits the content of the <see cref="VCard.Xmls"/> property with a delegate.
     /// </summary>
     /// <param name="func">
     /// A function called with a collection of the non-<c>null</c> items of the <see cref="VCard.Xmls"/>
-    /// property as argument.
-    /// Its return value will be the 
-    /// new content of the <see cref="VCard.Xmls"/> property.
+    /// property as argument. Its return value will be the  new content of the <see cref="VCard.Xmls"/> 
+    /// property.
     /// </param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="XmlBuilder"/>
     /// to be able to chain calls.</returns>

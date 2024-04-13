@@ -26,6 +26,23 @@ public readonly struct KindBuilder
 
     internal KindBuilder(VCardBuilder builder) => _builder = builder;
 
+    /// <summary>
+    /// Edits the content of the <see cref="VCard.Kind"/> property with a delegate and 
+    /// allows to pass <paramref name="data"/> to this delegate.
+    /// </summary>
+    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <param name="func">A function called with the content of the 
+    /// <see cref="VCard.Kind"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// will be the new content of the <see cref="VCard.Kind"/> property.</param>
+    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="KindBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <remarks>
+    /// This overload allows to pass external data to the delegate without having to use closures.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TData>(Func<KindProperty?, TData, KindProperty?> func, TData data)
     {
         var prop = Builder.VCard.Kind;
@@ -35,7 +52,7 @@ public readonly struct KindBuilder
     }
 
     /// <summary>
-    /// Allows to edit the content of the <see cref="VCard.Kind"/> property with a specified delegate.
+    /// Edits the content of the <see cref="VCard.Kind"/> property with a delegate.
     /// </summary>
     /// <param name="func">
     /// A function called with the content of the 
