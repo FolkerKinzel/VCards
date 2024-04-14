@@ -144,6 +144,9 @@ csharp_style_conditional_delegate_call = true:suggestion
 csharp_using_directive_placement = outside_namespace:silent
 csharp_style_var_for_built_in_types = false:silent
 
+# IDE0290: Use primary constructor
+dotnet_diagnostic.IDE0290.severity = none
+
 [*.vb]
 #### Benennungsstile ####
 

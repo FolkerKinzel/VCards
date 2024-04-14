@@ -1,8 +1,8 @@
 using FolkerKinzel.MimeTypes;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
@@ -34,7 +34,7 @@ internal sealed class EmbeddedTextProperty : DataProperty
     {
         Debug.Assert(ReferenceEquals(Parameters, _textProp.Parameters));
         _textProp.PrepareForVcfSerialization(serializer);
-        Parameters.DataType = VCdDataType.Text;
+        Parameters.DataType = Data.Text;
     }
 
     internal override void AppendValue(VcfSerializer serializer)

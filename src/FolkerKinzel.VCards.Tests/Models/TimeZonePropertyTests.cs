@@ -1,4 +1,6 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Tests;
 
@@ -33,7 +35,7 @@ public class TimeZonePropertyTests
 
         string s = vcard.ToVcfString();
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -59,7 +61,7 @@ public class TimeZonePropertyTests
         Assert.IsTrue(prop.IsEmpty);
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_3_0Serializer(writer, VcfOptions.Default, null);
+        var serializer = new Vcf_3_0Serializer(writer, Opts.Default, null);
 
         prop.AppendValue(serializer);
         Assert.AreEqual(0, serializer.Builder.Length);
@@ -70,5 +72,15 @@ public class TimeZonePropertyTests
     {
         var prop = new TimeZoneProperty(TimeZoneID.Parse("+01"));
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+    }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new TimeZoneProperty(TimeZoneID.Parse("Europe/Berlin"));
+        var prop2 = (TimeZoneProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value, prop2.Value);
+        Assert.AreNotSame(prop1, prop2);
     }
 }

@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
@@ -22,7 +23,7 @@ public class NameTests
         var name = new Name(input, new VcfDeserializationInfo(), VCdVersion.V4_0);
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
+        var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
         name.AppendVCardString(serializer);
 
         Assert.AreEqual(input, serializer.Builder.ToString());
@@ -34,6 +35,7 @@ public class NameTests
     [DataRow(";;ä;;")]
     [DataRow(";;;ä;")]
     [DataRow(";;;;ä")]
+    [DataRow("ä;ä;ä;ä;ä")]
     public void NeedsToBeQPEncodedTest1(string input)
         => Assert.IsTrue(new Name(input, new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
 

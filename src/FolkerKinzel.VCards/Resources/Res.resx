@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IdentifierTooLong" xml:space="preserve">
-    <value>The length of the identifier is more than one digit.</value>
+  <data name="AlreadyRegistered" xml:space="preserve">
+    <value>Registering of the application has to be done before any other operation using the VCard class. Register the application only once within its lifetime!</value>
   </data>
-  <data name="MissingMappingID" xml:space="preserve">
-    <value>The ID of the property mapping is missing.</value>
+  <data name="AppNotRegistered" xml:space="preserve">
+    <value>The executing application is not yet registered with the VCard class. Call the static VCard.RegisterApp method when the program starts!</value>
   </data>
-  <data name="MissingUri" xml:space="preserve">
-    <value>No URI is specified.</value>
+  <data name="DefaultCtor" xml:space="preserve">
+    <value>Don't instantiate the struct yourself. Use VCardBuilder instead.</value>
   </data>
   <data name="NoAnsiEncoding" xml:space="preserve">
     <value>The value references not an ANSI encoding.</value>
@@ -135,11 +135,14 @@
   <data name="NoNameSpace" xml:space="preserve">
     <value>The XML element did not explicitly specify an own namespace.</value>
   </data>
+  <data name="NotAUri" xml:space="preserve">
+    <value>The value is not a valid URI.</value>
+  </data>
   <data name="NoXName" xml:space="preserve">
     <value>The argument is not a valid X-Name.</value>
   </data>
   <data name="PidValue" xml:space="preserve">
-    <value>The value must be between 1 and 9.</value>
+    <value>The value must be a positive integer. (Zero is not allowed.)</value>
   </data>
   <data name="RelativeUri" xml:space="preserve">
     <value>{0} is not an absolute URI.</value>
@@ -149,5 +152,8 @@
   </data>
   <data name="StreamNotWritable" xml:space="preserve">
     <value>The Stream is not writable.</value>
+  </data>
+  <data name="UnrecognizedDataType" xml:space="preserve">
+    <value>Unrecognized data type.</value>
   </data>
 </root>

@@ -1,5 +1,5 @@
-﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -22,7 +22,7 @@ public class EmbeddedTextPropertyTests
 
         Assert.AreEqual(group, prop.Group);
         Assert.AreEqual(mimeString, prop.Parameters.MediaType);
-        Assert.AreEqual(VCdDataType.Text, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Text, prop.Parameters.DataType);
 
         string? ext = prop.GetFileTypeExtension();
         Assert.AreEqual(".htm", ext);

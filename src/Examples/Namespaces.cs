@@ -1,24 +1,16 @@
-﻿// Publish this namespace - it contains the VCard class:
+﻿// Publish this namespace - it contains the VCard class
+// and the VCardBuilder class:
 using FolkerKinzel.VCards;
 
 // It's recommended to publish also this namespace -
 // it contains useful extension methods:
 using FolkerKinzel.VCards.Extensions;
 
-// These two namespaces may be published, but it's not
-// recommended because they contain a lot of classes and enums:
+// This namespace contains often used enums. Decide
+// yourself whether to publish this namespace or to use
+// a namespace alias.
+using FolkerKinzel.VCards.Enums;
+
+// Since VCardBuilder exists, the model classes normally
+// don't need to be instantiated in own code:
 // using FolkerKinzel.VCards.Models;
-// using FolkerKinzel.VCards.Models.Enums;
-
-// Instead of publishing the two namespaces above
-// better use a namespace alias:
-using VC = FolkerKinzel.VCards.Models;
-
-namespace NameSpaceAliasDemos;
-
-public static class NameSpaceAliasDemo
-{
-    public static void HowToUseTheNameSpaceAlias() =>
-        _ = VC::RelationProperty.FromText("Folker", VC::Enums.RelationTypes.Contact);
-}
-

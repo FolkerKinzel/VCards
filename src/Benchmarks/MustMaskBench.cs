@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using FolkerKinzel.Strings;
-using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Enums;
 
 namespace Benchmarks;
 
@@ -51,7 +51,7 @@ public class MustMaskBench
 
     private static bool MustMask1(string? value, VCdVersion version)
     {
-        return value != null &&
+        return value is not null &&
               (
                 value.Contains(';') ||
                 (version >= VCdVersion.V3_0 && value.Contains(',')) ||
@@ -61,9 +61,9 @@ public class MustMaskBench
 
     private static bool MustMask2(string? value, VCdVersion version)
     {
-        return value != null &&
+        return value is not null &&
               (
-                (version == VCdVersion.V2_1 && value.Contains(';') )||
+                (version == VCdVersion.V2_1 && value.Contains(';')) ||
                 (version == VCdVersion.V3_0 && value.ContainsAny(";,")) ||
                 (version >= VCdVersion.V4_0 && value.ContainsAny(";,\\"))
                );

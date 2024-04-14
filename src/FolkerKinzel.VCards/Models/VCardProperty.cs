@@ -1,6 +1,6 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
@@ -77,7 +77,7 @@ public abstract class VCardProperty : ICloneable
 
         PrepareForVcfSerialization(serializer);
 
-        if (serializer.Options.IsSet(VcfOptions.WriteGroups) && Group != null)
+        if (serializer.Options.IsSet(Opts.WriteGroups) && Group is not null)
         {
             _ = builder.Append(Group);
             _ = builder.Append('.');
@@ -95,14 +95,14 @@ public abstract class VCardProperty : ICloneable
         // QuotedPrintable oder Base64 gemacht worden ist:
         return !(serializer.Version == VCdVersion.V2_1 &&
             (Parameters.Encoding ==
-                ValueEncoding.QuotedPrintable || Parameters.Encoding == ValueEncoding.Base64));
+                Enc.QuotedPrintable || Parameters.Encoding == Enc.Base64));
     }
 
     internal virtual void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
-        if (this.Parameters.Encoding != ValueEncoding.Base64)
+        if (this.Parameters.Encoding != Enc.Base64)
         {
             this.Parameters.Encoding = null;
         }
@@ -115,9 +115,9 @@ public abstract class VCardProperty : ICloneable
     [Conditional("DEBUG")]
     private void Asserts(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
-        Debug.Assert(serializer.PropertyKey != null);
-        Debug.Assert(!this.IsEmpty || serializer.Options.IsSet(VcfOptions.WriteEmptyProperties));
-        Debug.Assert(serializer.Builder != null);
+        Debug.Assert(serializer is not null);
+        Debug.Assert(serializer.PropertyKey is not null);
+        Debug.Assert(!this.IsEmpty || serializer.Options.IsSet(Opts.WriteEmptyProperties));
+        Debug.Assert(serializer.Builder is not null);
     }
 }

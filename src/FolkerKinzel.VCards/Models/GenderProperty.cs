@@ -1,4 +1,5 @@
 using System.Collections;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -11,7 +12,6 @@ namespace FolkerKinzel.VCards.Models;
 /// which stores information to specify the components of gender and gender identity
 /// of the object the <see cref="VCard"/> represents.
 /// </summary>
-/// <remarks>See <see cref="VCard.GenderViews"/>.</remarks>
 /// <seealso cref="GenderInfo"/>
 /// <seealso cref="VCard.GenderViews"/>
 public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
@@ -23,21 +23,22 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
         => Value = prop.Value;
 
     /// <summary> Initializes a new <see cref="GenderProperty" /> object. </summary>
-    /// <param name="gender">Standardized information about the gender of a person.</param>
+    /// <param name="sex">Standardized information about the sex of the object the 
+    /// <see cref="VCard"/> represents.</param>
     /// <param name="identity">Free text describing the gender identity.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public GenderProperty(Enums.Gender? gender,
+    public GenderProperty(Sex? sex,
                           string? identity = null,
                           string? group = null) : base(new ParameterSection(), group) 
-        => Value = new GenderInfo(gender, identity);
+        => Value = new GenderInfo(sex, identity);
 
 
     internal GenderProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        Enums.Gender? sex = null;
+        Sex? sex = null;
         string? genderIdentity = null;
         ValueSplitter semicolonSplitter = vcfRow.Info.SemiColonSplitter;
 
@@ -53,7 +54,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
             }
             else
             {
-                sex = GenderConverter.Parse(s);
+                sex = SexConverter.Parse(s);
                 initGenderIdentity = true;
             }
         }

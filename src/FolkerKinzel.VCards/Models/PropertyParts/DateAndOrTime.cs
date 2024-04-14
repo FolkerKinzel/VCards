@@ -1,11 +1,7 @@
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Globalization;
-using OneOf;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Models.Enums;
-
+using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -20,7 +16,7 @@ public sealed partial class DateAndOrTime
 {
     private readonly OneOf<DateOnly, DateTimeOffset, TimeOnly, string> _oneOf;
 
-    internal DateAndOrTime(OneOf<DateOnly, DateTimeOffset, TimeOnly, string> oneOf) 
+    internal DateAndOrTime(OneOf<DateOnly, DateTimeOffset, TimeOnly, string> oneOf)
         => _oneOf = oneOf;
 
     /// <summary>
@@ -28,7 +24,7 @@ public sealed partial class DateAndOrTime
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <remarks>
-    /// If the <see cref="DateOnly.Year"/> is less than 5 it should be treated a
+    /// If the <see cref="DateOnly.Year"/> is less than 5, it should be treated a
     /// irrelevant. Use the extension method <see cref="DateOnlyExtension.HasYear"/>
     /// to check this.
     /// </remarks>
@@ -40,8 +36,8 @@ public sealed partial class DateAndOrTime
     /// </summary>
     /// <remarks>
     /// <para>A <see cref="System.DateTimeOffset"/> value may contain either a 
-    /// <see cref="VCdDataType.DateTime"/> or a <see cref="VCdDataType.Time"/> with a 
-    /// <see cref="VCdDataType.UtcOffset"/>.
+    /// <see cref="Data.DateTime"/> or a <see cref="Data.Time"/> with a 
+    /// <see cref="Data.UtcOffset"/>.
     /// </para>
     /// <para>
     /// Parts of the contained data may be irrelevant. Use the extension methods
@@ -94,11 +90,11 @@ public sealed partial class DateAndOrTime
         var result = _oneOf.Match<(DateOnly Value, bool Result)>
          (
           dateOnly => (dateOnly, true),
-          dtOffset => dtOffset.HasDate() 
+          dtOffset => dtOffset.HasDate()
                         ? (new DateOnly(dtOffset.Year, dtOffset.Month, dtOffset.Day), true)
                         : (default, false),
           timeOnly => (default, false),
-          str => System.DateOnly.TryParse(str, 
+          str => System.DateOnly.TryParse(str,
                                           CultureInfo.CurrentCulture,
                                           DateTimeStyles.AllowWhiteSpaces,
                                           out DateOnly dOnly) ? (dOnly, true)
@@ -189,9 +185,9 @@ public sealed partial class DateAndOrTime
     public TResult Convert<TResult>(Func<DateOnly, TResult> dateFunc,
                                     Func<DateTimeOffset, TResult> dtoFunc,
                                     Func<TimeOnly, TResult> timeFunc,
-                                    Func<string, TResult> stringFunc) 
+                                    Func<string, TResult> stringFunc)
         => _oneOf.Match(dateFunc, dtoFunc, timeFunc, stringFunc);
-    
+
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => _oneOf.ToString();

@@ -1,6 +1,7 @@
 ﻿using System;
+using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -23,7 +24,7 @@ public class DateTimeTextPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -38,7 +39,7 @@ public class DateTimeTextPropertyTests
         Assert.AreEqual(now, prop2!.Value);
         Assert.AreEqual(GROUP, prop2.Group);
         Assert.IsFalse(prop2.IsEmpty);
-        Assert.AreEqual(VCdDataType.Text, prop2.Parameters.DataType);
+        Assert.AreEqual(Data.Text, prop2.Parameters.DataType);
     }
 
     [TestMethod]
@@ -47,6 +48,7 @@ public class DateTimeTextPropertyTests
         var prop = DateAndOrTimeProperty.FromText("   ");
         Assert.IsNull(prop.Value);
     }
+
     [TestMethod]
     public void IsEmptyTest1()
     {
@@ -72,6 +74,17 @@ public class DateTimeTextPropertyTests
         string s = prop.ToString();
         Assert.IsNotNull(s);
         Assert.IsTrue(s.Length > 0);
+    }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = DateAndOrTimeProperty.FromText("text");
+
+        var prop2 = (DateAndOrTimeProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value!.String, prop2.Value!.String);
+        Assert.AreNotSame(prop1, prop2);
     }
 }
 

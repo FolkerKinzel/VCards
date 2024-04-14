@@ -1,5 +1,4 @@
-﻿// Compile for .NET 7.0 or above and FolkerKinzel.VCards 6.0.0-beta.1 or above
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using FolkerKinzel.VCards;
 
 namespace Examples;
@@ -17,28 +16,33 @@ public static class AnsiFilterExample
     /// </remarks>
     public static void LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
     {
-        // If you have to read VCF files which might have ANSI encodings, use the AnsiFilter
+        // If you have to read VCF files that might have ANSI encodings, use the AnsiFilter
         // to read them automatically with the right encoding.
-        // Give the constructor the ANSI code page as an argument which is most likely. This
+        // Give the constructor as an argument the ANSI code page that is most likely. This
         // will be the fallback code page if a VCF file couldn't be loaded as UTF-8 and didn't 
         // contain a CHARSET parameter. In our example we choose windows-1255 (Hebrew).
         var ansiFilter = new AnsiFilter(1255);
 
         var outFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
+
         using (StreamWriter writer = File.AppendText(outFileName))
         {
             foreach (string vcfFileName in Directory
                 .EnumerateFiles(directoryPath)
                 .Where(x => StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(x), ".vcf")))
             {
-                IList<VCard> vCards = ansiFilter.LoadVcf(vcfFileName, out string encodingWebName);
-                WriteToTextFile(vcfFileName, vCards, encodingWebName, writer);
+                IList<VCard> vCards = Vcf.Load(vcfFileName, ansiFilter);
+                WriteToTextFile(vcfFileName, vCards, ansiFilter.UsedEncoding.WebName, writer);
             }
         }
+
         ShowInTextEditorAndDelete(outFileName);
     }
-           
-    private static void WriteToTextFile(string vcfFileName, IList<VCard> vCards, string encodingWebName, TextWriter writer)
+
+    private static void WriteToTextFile(string vcfFileName,
+                                        IList<VCard> vCards,
+                                        string? encodingWebName,
+                                        TextWriter writer)
     {
         const string indent = "    ";
         writer.Write(Path.GetFileName(vcfFileName));

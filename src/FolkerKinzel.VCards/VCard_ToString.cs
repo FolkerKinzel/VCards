@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Linq;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards;
 
@@ -15,26 +15,14 @@ public sealed partial class VCard
         var sb = new StringBuilder();
 
         _ = sb.Append("Version: ").Append(GetVersionString(this.Version))
-            .Append(Environment.NewLine);
+              .Append(Environment.NewLine);
 
-        foreach (
-            KeyValuePair<VCdProp, VCardProperty> kvp in this._propDic
-            .OrderBy(static x => x.Key)
-            .Select(
-                  static x => x.Value is IEnumerable<VCardProperty?> prop 
-                                ? prop.WhereNotNull()
-                                      .Select<VCardProperty, KeyValuePair<VCdProp, VCardProperty>>
-                                      (
-                                        v => new KeyValuePair<VCdProp, VCardProperty>(x.Key, v)
-                                      )
-                                : Enumerable.Repeat(new KeyValuePair<VCdProp, VCardProperty>(x.Key, (VCardProperty)x.Value), 1))
-            .SelectMany(static x => x.OrderBy(static z => z.Value.Parameters.Preference))
-            .GroupBy(static x => x.Value.Group, StringComparer.OrdinalIgnoreCase)
-            .OrderBy(static x => x.Key)
-            .SelectMany(static x => x)
-            )
+        foreach (Group group in Groups)
         {
-            AppendProperty(kvp.Key, kvp.Value);
+            foreach (var entity in group.OrderBy(x => x.Key))
+            {
+                AppendEntity(entity);
+            }
         }
 
         sb.Length -= Environment.NewLine.Length;
@@ -56,9 +44,13 @@ public sealed partial class VCard
 
         // ////////////////////////////////
 
-        void AppendProperty(VCdProp key, VCardProperty vcdProp)
+        void AppendEntity(Entity entity)
         {
             const string INDENT = "    ";
+
+            var key = entity.Key;
+            var vcdProp = entity.Value;
+
             string s = vcdProp.Parameters.ToString();
 
             _ = sb.AppendLine(); //Leerzeile
@@ -68,14 +60,14 @@ public sealed partial class VCard
                 _ = sb.AppendLine(s);
             }
 
-            if (vcdProp.Group != null)
+            if (vcdProp.Group is not null)
             {
                 _ = sb.Append('[').Append("Group: ").Append(vcdProp.Group).AppendLine("]");
             }
 
             string propStr = vcdProp.IsEmpty ? "<EMPTY>" : vcdProp.ToString();
 
-            if (propStr != null &&
+            if (propStr is not null &&
                 propStr.Contains(Environment.NewLine, StringComparison.Ordinal))
             {
                 string?[] arr = propStr.Split(Environment.NewLine, StringSplitOptions.None);

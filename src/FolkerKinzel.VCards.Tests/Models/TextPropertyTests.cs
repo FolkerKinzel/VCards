@@ -29,7 +29,6 @@ public class TextPropertyTests
 
     }
 
-
     [TestMethod]
     public void ToStringTest1() => Assert.IsNotNull(new TextProperty(null).ToString());
 }

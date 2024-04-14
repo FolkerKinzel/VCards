@@ -1,35 +1,36 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer3_0 : ParameterSerializer
+internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer(options)
 {
-    private readonly List<string> _stringCollectionList = new();
+    private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer3_0>> _actionList = new(2);
 
     private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes = static serializer
-        => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass, 
+        => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
                                       serializer._stringCollectionList);
 
     private readonly Action<ParameterSerializer3_0> _collectPhoneTypes = static serializer
-        => {
-               const PhoneTypes DEFINED_PHONE_TYPES = PhoneTypes.Voice | PhoneTypes.Fax | PhoneTypes.Msg |
-               PhoneTypes.Cell | PhoneTypes.Pager | PhoneTypes.BBS | PhoneTypes.Modem | PhoneTypes.Car |
-               PhoneTypes.ISDN | PhoneTypes.Video | PhoneTypes.PCS;
-         
-               EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
-                                          serializer._stringCollectionList);
-           };
+        =>
+    {
+        const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Fax | Tel.Msg |
+        Tel.Cell | Tel.Pager | Tel.BBS | Tel.Modem | Tel.Car |
+        Tel.ISDN | Tel.Video | Tel.PCS;
 
-    private readonly Action<ParameterSerializer3_0> _collectAddressTypes = static serializer 
+        EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
+                                   serializer._stringCollectionList);
+    };
+
+    private readonly Action<ParameterSerializer3_0> _collectAddressTypes = static serializer
         => EnumValueCollector.Collect(serializer.ParaSection.AddressType,
                                       serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer3_0> _collectImppTypes = static serializer 
+    private readonly Action<ParameterSerializer3_0> _collectImppTypes = static serializer
         => EnumValueCollector.Collect(serializer.ParaSection.InstantMessengerType,
                                       serializer._stringCollectionList);
 
@@ -38,8 +39,6 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     private readonly Action<ParameterSerializer3_0> _collectEmailType = static serializer => serializer.DoCollectEmailType();
     private readonly Action<ParameterSerializer3_0> _collectSoundType = static serializer => serializer.DoCollectSoundType();
     private readonly Action<ParameterSerializer3_0> _collectMediaType = static serializer => serializer.DoCollectMediaType();
-
-    public ParameterSerializer3_0(VcfOptions options) : base(options) { }
 
     #region Build
 
@@ -57,15 +56,15 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     protected override void BuildAgentPara()
     {
-        if (ParaSection.DataType == VCdDataType.Uri)
+        if (ParaSection.DataType == Data.Uri)
         {
-            AppendValue(VCdDataType.Uri);
+            AppendValue(Data.Uri);
         }
     }
 
     protected override void BuildBdayPara()
     {
-        Debug.Assert(ParaSection.DataType != VCdDataType.Text);
+        Debug.Assert(ParaSection.DataType != Data.Text);
 
         AppendValue(ParaSection.DataType);
     }
@@ -119,12 +118,12 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Clear();
         _actionList.Add(this._collectKeyType);
 
-        if (ParaSection.DataType == VCdDataType.Text)
+        if (ParaSection.DataType == Data.Text)
         {
-            AppendValue(VCdDataType.Text);
+            AppendValue(Data.Text);
         }
 
-        if (ParaSection.Encoding == ValueEncoding.Base64)
+        if (ParaSection.Encoding == Enc.Base64)
         {
             AppendBase64Encoding();
         }
@@ -149,12 +148,12 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Clear();
         _actionList.Add(_collectImageType);
 
-        if (ParaSection.DataType == VCdDataType.Uri)
+        if (ParaSection.DataType == Data.Uri)
         {
-            AppendValue(VCdDataType.Uri);
+            AppendValue(Data.Uri);
         }
 
-        if (ParaSection.Encoding == ValueEncoding.Base64)
+        if (ParaSection.Encoding == Enc.Base64)
         {
             AppendBase64Encoding();
         }
@@ -208,12 +207,12 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Add(_collectImageType);
 
 
-        if (ParaSection.DataType == VCdDataType.Uri)
+        if (ParaSection.DataType == Data.Uri)
         {
-            AppendValue(VCdDataType.Uri);
+            AppendValue(Data.Uri);
         }
 
-        if (ParaSection.Encoding == ValueEncoding.Base64)
+        if (ParaSection.Encoding == Enc.Base64)
         {
             AppendBase64Encoding();
         }
@@ -257,12 +256,12 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
         _actionList.Add(_collectSoundType);
 
 
-        if (ParaSection.DataType == VCdDataType.Uri)
+        if (ParaSection.DataType == Data.Uri)
         {
-            AppendValue(VCdDataType.Uri);
+            AppendValue(Data.Uri);
         }
-        
-        if(ParaSection.Encoding == ValueEncoding.Base64)
+
+        if (ParaSection.Encoding == Enc.Base64)
         {
             AppendBase64Encoding();
         }
@@ -325,7 +324,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
         AppendValue(ParaSection.DataType);
 
-        if (ParaSection.Encoding == ValueEncoding.Base64)
+        if (ParaSection.Encoding == Enc.Base64)
         {
             AppendBase64Encoding();
         }
@@ -396,16 +395,16 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
 
     #region Append
 
-    private void AppendValue(VCdDataType? dataType)
+    private void AppendValue(Data? dataType)
     {
-        const VCdDataType DEFINED_DATA_TYPES =
-            VCdDataType.Uri | VCdDataType.Text | VCdDataType.Date | VCdDataType.Time | VCdDataType.DateTime |
-            VCdDataType.Integer | VCdDataType.Boolean | VCdDataType.Float | VCdDataType.Binary |
-            VCdDataType.PhoneNumber | VCdDataType.VCard | VCdDataType.UtcOffset;
+        const Data DEFINED_DATA_TYPES =
+            Data.Uri | Data.Text | Data.Date | Data.Time | Data.DateTime |
+            Data.Integer | Data.Boolean | Data.Float | Data.Binary |
+            Data.PhoneNumber | Data.VCard | Data.UtcOffset;
 
         string? s = (dataType & DEFINED_DATA_TYPES).ToVcfString();
 
-        if (s != null)
+        if (s is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.VALUE, s);
         }
@@ -415,20 +414,20 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     {
         string? s = ParaSection.Context;
 
-        if (s != null)
+        if (s is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.CONTEXT, s);
         }
     }
 
-    private void AppendBase64Encoding() 
+    private void AppendBase64Encoding()
         => AppendParameter(ParameterSection.ParameterKey.ENCODING, "b");
 
     private void AppendLanguage()
     {
         string? lang = ParaSection.Language;
 
-        if (lang != null)
+        if (lang is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LANGUAGE, Mask(lang));
         }
@@ -448,12 +447,12 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
             _stringCollectionList.Add(ParameterSection.TypeValue.PREF);
         }
 
-        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) 
-            && ParaSection.NonStandard != null)
+        if (Options.HasFlag(Opts.WriteNonStandardParameters)
+            && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE) 
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE)
                     && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
                     _stringCollectionList.Add(kvp.Value);
@@ -492,7 +491,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     {
         string? s = MimeTypeConverter.KeyTypeFromMimeType(ParaSection.MediaType);
 
-        if (s != null)
+        if (s is not null)
         {
             _stringCollectionList.Add(Mask(s));
         }
@@ -502,7 +501,7 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     {
         string? s = MimeTypeConverter.ImageTypeFromMimeType(ParaSection.MediaType);
 
-        if (s != null)
+        if (s is not null)
         {
             _stringCollectionList.Add(Mask(s));
         }
@@ -513,21 +512,21 @@ internal sealed class ParameterSerializer3_0 : ParameterSerializer
     {
         string? s = MimeTypeConverter.SoundTypeFromMimeType(ParaSection.MediaType);
 
-        if (s != null)
+        if (s is not null)
         {
             _stringCollectionList.Add(Mask(s));
         }
 
     }
 
-    private void DoCollectEmailType() 
-        => _stringCollectionList.Add(ParaSection.EMailType ?? EMailType.SMTP);
+    private void DoCollectEmailType()
+        => _stringCollectionList.Add(ParaSection.EMailType ?? EMail.SMTP);
 
     private void DoCollectMediaType()
     {
         string? m = ParaSection.MediaType;
 
-        if (m != null)
+        if (m is not null)
         {
             _stringCollectionList.Add(Mask(m));
         }

@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Models.Enums;
+﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
@@ -11,12 +11,12 @@ public class XMessengerParameterConverterTests
     {
         var para = new ParameterSection
         {
-            PropertyClass = PropertyClassTypes.Home | PropertyClassTypes.Work,
-            PhoneType = PhoneTypes.PCS
+            PropertyClass = PCl.Home | PCl.Work,
+            PhoneType = Tel.PCS
         };
         XMessengerParameterConverter.ConvertToInstantMessengerType(para);
 
-        Assert.AreEqual(ImppTypes.Business | ImppTypes.Personal | ImppTypes.Mobile, para.InstantMessengerType);
+        Assert.AreEqual(Impp.Business | Impp.Personal | Impp.Mobile, para.InstantMessengerType);
     }
 
     [TestMethod]
@@ -24,13 +24,13 @@ public class XMessengerParameterConverterTests
     {
         var para = new ParameterSection
         {
-            InstantMessengerType = ImppTypes.Business | ImppTypes.Personal | ImppTypes.Mobile
+            InstantMessengerType = Impp.Business | Impp.Personal | Impp.Mobile
         };
 
         XMessengerParameterConverter.ConvertFromInstantMessengerType(para);
 
-        Assert.AreEqual(PropertyClassTypes.Home | PropertyClassTypes.Work, para.PropertyClass);
-        Assert.AreEqual(PhoneTypes.PCS, para.PhoneType);
+        Assert.AreEqual(PCl.Home | PCl.Work, para.PropertyClass);
+        Assert.AreEqual(Tel.PCS, para.PhoneType);
     }
 }
 

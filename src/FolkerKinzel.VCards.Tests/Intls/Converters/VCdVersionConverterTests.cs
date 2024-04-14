@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Intls.Converters.Tests;
+﻿using FolkerKinzel.VCards.Enums;
+
+namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 [TestClass()]
 public class VCdVersionConverterTests

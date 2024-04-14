@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -92,7 +93,7 @@ public class StringCollectionPropertyTests
         Assert.IsTrue(prop.IsEmpty);
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_3_0Serializer(writer, VcfOptions.Default, null);
+        var serializer = new Vcf_3_0Serializer(writer, Opts.Default, null);
 
         prop.AppendValue(serializer);
         Assert.AreEqual(0, serializer.Builder.Length);
@@ -103,5 +104,16 @@ public class StringCollectionPropertyTests
     {
         var prop = new StringCollectionProperty("");
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+    }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new StringCollectionProperty("text");
+
+        var prop2 = (StringCollectionProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value, prop2.Value);
+        Assert.AreNotSame(prop1, prop2);
     }
 }

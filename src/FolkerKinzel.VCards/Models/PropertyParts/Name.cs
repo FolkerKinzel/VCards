@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -14,41 +15,38 @@ public sealed class Name
 {
     private const int MAX_COUNT = 5;
 
-    private const int LAST_NAME = 0;
-    private const int FIRST_NAME = 1;
-    private const int MIDDLE_NAME = 2;
-    private const int PREFIX = 3;
-    private const int SUFFIX = 4;
+    private const int FAMILY_NAMES = 0;
+    private const int GIVEN_NAMES = 1;
+    private const int ADDITIONAL_NAMES = 2;
+    private const int PREFIXES = 3;
+    private const int SUFFIXES = 4;
 
-    
     internal Name(
-        ReadOnlyCollection<string> lastName,
-        ReadOnlyCollection<string> firstName,
-        ReadOnlyCollection<string> middleName,
-        ReadOnlyCollection<string> prefix,
-        ReadOnlyCollection<string> suffix)
+        ReadOnlyCollection<string> familyNames,
+        ReadOnlyCollection<string> givenNames,
+        ReadOnlyCollection<string> additionalNames,
+        ReadOnlyCollection<string> prefixes,
+        ReadOnlyCollection<string> suffixes)
     {
-        LastName = lastName;
-        FirstName = firstName;
-        MiddleName = middleName;
-        Prefix = prefix;
-        Suffix = suffix;
+        FamilyNames = familyNames;
+        GivenNames = givenNames;
+        AdditionalNames = additionalNames;
+        Prefixes = prefixes;
+        Suffixes = suffixes;
     }
-
 
     internal Name()
     {
-        LastName =
-        FirstName =
-        MiddleName =
-        Prefix =
-        Suffix = ReadOnlyStringCollection.Empty;
+        FamilyNames =
+        GivenNames =
+        AdditionalNames =
+        Prefixes =
+        Suffixes = ReadOnlyStringCollection.Empty;
     }
-
 
     internal Name(string vCardValue, VcfDeserializationInfo info, VCdVersion version)
     {
-        Debug.Assert(vCardValue != null);
+        Debug.Assert(vCardValue is not null);
 
         StringBuilder builder = info.Builder;
         ValueSplitter semicolonSplitter = info.SemiColonSplitter;
@@ -60,11 +58,11 @@ public sealed class Name
         {
             switch (index++)
             {
-                case LAST_NAME:
+                case FAMILY_NAMES:
                     {
                         if (s.Length == 0)
                         {
-                            LastName = ReadOnlyStringCollection.Empty;
+                            FamilyNames = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -76,16 +74,16 @@ public sealed class Name
                                 list.Add(item.UnMask(builder, version));
                             }
 
-                            LastName = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
+                            FamilyNames = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
                         }
 
                         break;
                     }
-                case FIRST_NAME:
+                case GIVEN_NAMES:
                     {
                         if (s.Length == 0)
                         {
-                            FirstName = ReadOnlyStringCollection.Empty;
+                            GivenNames = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -97,16 +95,16 @@ public sealed class Name
                                 list.Add(item.UnMask(builder, version));
                             }
 
-                            FirstName = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
+                            GivenNames = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
                         }
 
                         break;
                     }
-                case MIDDLE_NAME:
+                case ADDITIONAL_NAMES:
                     {
                         if (s.Length == 0)
                         {
-                            MiddleName = ReadOnlyStringCollection.Empty;
+                            AdditionalNames = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -118,16 +116,16 @@ public sealed class Name
                                 list.Add(item.UnMask(builder, version));
                             }
 
-                            MiddleName = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
+                            AdditionalNames = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
                         }
 
                         break;
                     }
-                case PREFIX:
+                case PREFIXES:
                     {
                         if (s.Length == 0)
                         {
-                            Prefix = ReadOnlyStringCollection.Empty;
+                            Prefixes = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -139,16 +137,16 @@ public sealed class Name
                                 list.Add(item.UnMask(builder, version));
                             }
 
-                            Prefix = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
+                            Prefixes = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
                         }
 
                         break;
                     }
-                case SUFFIX:
+                case SUFFIXES:
                     {
                         if (s.Length == 0)
                         {
-                            Suffix = ReadOnlyStringCollection.Empty;
+                            Suffixes = ReadOnlyStringCollection.Empty;
                         }
                         else
                         {
@@ -160,7 +158,7 @@ public sealed class Name
                                 list.Add(item.UnMask(builder, version));
                             }
 
-                            Suffix = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
+                            Suffixes = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
                         }
 
                         break;
@@ -172,36 +170,36 @@ public sealed class Name
 
         // If the VCF file is invalid, properties could be null:
         // (LastName can never be null)
-        Debug.Assert(LastName != null);
-        //LastName ??= ReadOnlyCollectionString.Empty;
-        FirstName ??= ReadOnlyStringCollection.Empty;
-        MiddleName ??= ReadOnlyStringCollection.Empty;
-        Prefix ??= ReadOnlyStringCollection.Empty;
-        Suffix ??= ReadOnlyStringCollection.Empty;
+        Debug.Assert(FamilyNames is not null);
+        //FamilyNames ??= ReadOnlyCollectionString.Empty;
+        GivenNames ??= ReadOnlyStringCollection.Empty;
+        AdditionalNames ??= ReadOnlyStringCollection.Empty;
+        Prefixes ??= ReadOnlyStringCollection.Empty;
+        Suffixes ??= ReadOnlyStringCollection.Empty;
     }
 
     /// <summary>Family Name(s) (also known as surname(s)).</summary>
-    public ReadOnlyCollection<string> LastName { get; }
+    public ReadOnlyCollection<string> FamilyNames { get; }
 
-    /// <summary>Given Name(s) (First Name(s)).</summary>
-    public ReadOnlyCollection<string> FirstName { get; }
+    /// <summary>Given Name(s) (first name(s)).</summary>
+    public ReadOnlyCollection<string> GivenNames { get; }
 
-    /// <summary>Additional Name(s).</summary>
-    public ReadOnlyCollection<string> MiddleName { get; }
+    /// <summary>Additional Name(s) (middle name(s)).</summary>
+    public ReadOnlyCollection<string> AdditionalNames { get; }
 
     /// <summary>Honorific Prefix(es).</summary>
-    public ReadOnlyCollection<string> Prefix { get; }
+    public ReadOnlyCollection<string> Prefixes { get; }
 
     /// <summary>Honorific Suffix(es).</summary>
-    public ReadOnlyCollection<string> Suffix { get; }
+    public ReadOnlyCollection<string> Suffixes { get; }
 
     /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain
     /// any usable data, otherwise <c>false</c>.</summary>
-    public bool IsEmpty => LastName.Count == 0 &&
-                           FirstName.Count == 0 &&
-                           MiddleName.Count == 0 &&
-                           Prefix.Count == 0 &&
-                           Suffix.Count == 0;
+    public bool IsEmpty => FamilyNames.Count == 0 &&
+                           GivenNames.Count == 0 &&
+                           AdditionalNames.Count == 0 &&
+                           Prefixes.Count == 0 &&
+                           Suffixes.Count == 0;
 
     /// <inheritdoc/>
     public override string ToString()
@@ -213,64 +211,64 @@ public sealed class Name
         {
             switch (i)
             {
-                case LAST_NAME:
+                case FAMILY_NAMES:
                     {
-                        string? s = BuildProperty(LastName);
+                        string? s = BuildProperty(FamilyNames);
 
                         if (s is null)
                         {
                             continue;
                         }
 
-                        dic.Add(new Tuple<string, string>(nameof(LastName), s));
+                        dic.Add(new Tuple<string, string>(nameof(FamilyNames), s));
                         break;
                     }
-                case FIRST_NAME:
+                case GIVEN_NAMES:
                     {
-                        string? s = BuildProperty(FirstName);
+                        string? s = BuildProperty(GivenNames);
 
                         if (s is null)
                         {
                             continue;
                         }
 
-                        dic.Add(new Tuple<string, string>(nameof(FirstName), s));
+                        dic.Add(new Tuple<string, string>(nameof(GivenNames), s));
                         break;
                     }
-                case MIDDLE_NAME:
+                case ADDITIONAL_NAMES:
                     {
-                        string? s = BuildProperty(MiddleName);
+                        string? s = BuildProperty(AdditionalNames);
 
                         if (s is null)
                         {
                             continue;
                         }
 
-                        dic.Add(new Tuple<string, string>(nameof(MiddleName), s));
+                        dic.Add(new Tuple<string, string>(nameof(AdditionalNames), s));
                         break;
                     }
-                case PREFIX:
+                case PREFIXES:
                     {
-                        string? s = BuildProperty(Prefix);
+                        string? s = BuildProperty(Prefixes);
 
                         if (s is null)
                         {
                             continue;
                         }
 
-                        dic.Add(new Tuple<string, string>(nameof(Prefix), s));
+                        dic.Add(new Tuple<string, string>(nameof(Prefixes), s));
                         break;
                     }
-                case SUFFIX:
+                case SUFFIXES:
                     {
-                        string? s = BuildProperty(Suffix);
+                        string? s = BuildProperty(Suffixes);
 
                         if (s is null)
                         {
                             continue;
                         }
 
-                        dic.Add(new Tuple<string, string>(nameof(Suffix), s));
+                        dic.Add(new Tuple<string, string>(nameof(Suffixes), s));
                         break;
                     }
             }
@@ -328,11 +326,11 @@ public sealed class Name
         return IsEmpty
             ? null
             : new StringBuilder(stringBuilderInitialCapacity)
-            .AppendReadableProperty(Prefix)
-            .AppendReadableProperty(FirstName)
-            .AppendReadableProperty(MiddleName)
-            .AppendReadableProperty(LastName)
-            .AppendReadableProperty(Suffix)
+            .AppendReadableProperty(Prefixes)
+            .AppendReadableProperty(GivenNames)
+            .AppendReadableProperty(AdditionalNames)
+            .AppendReadableProperty(FamilyNames)
+            .AppendReadableProperty(Suffixes)
             .ToString();
     }
 
@@ -344,19 +342,19 @@ public sealed class Name
 
         char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
 
-        AppendProperty(LastName);
+        AppendProperty(FamilyNames);
         _ = builder.Append(';');
 
-        AppendProperty(FirstName);
+        AppendProperty(GivenNames);
         _ = builder.Append(';');
 
-        AppendProperty(MiddleName);
+        AppendProperty(AdditionalNames);
         _ = builder.Append(';');
 
-        AppendProperty(Prefix);
+        AppendProperty(Prefixes);
         _ = builder.Append(';');
 
-        AppendProperty(Suffix);
+        AppendProperty(Suffixes);
 
         ///////////////////////////////////
 
@@ -378,13 +376,12 @@ public sealed class Name
         }
     }
 
-
     internal bool NeedsToBeQpEncoded()
-        => LastName.Any(StringExtension.NeedsToBeQpEncoded) ||
-           FirstName.Any(StringExtension.NeedsToBeQpEncoded) ||
-           MiddleName.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Prefix.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Suffix.Any(StringExtension.NeedsToBeQpEncoded);
+        => FamilyNames.Any(StringExtension.NeedsToBeQpEncoded) ||
+           GivenNames.Any(StringExtension.NeedsToBeQpEncoded) ||
+           AdditionalNames.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Prefixes.Any(StringExtension.NeedsToBeQpEncoded) ||
+           Suffixes.Any(StringExtension.NeedsToBeQpEncoded);
 }
 
 

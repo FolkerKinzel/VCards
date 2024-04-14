@@ -1,7 +1,7 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Models;
 /// <summary>Represents the <c>KIND</c> property, introduced in vCard&#160;4.0, which
 /// describes the type of object represented by the vCard.</summary>
 /// <seealso cref="VCard.Kind"/>
-/// <seealso cref="VCdKind"/>
+/// <seealso cref="Kind"/>
 public sealed class KindProperty : VCardProperty
 {
     /// <summary>Copy ctor.</summary>
@@ -18,16 +18,19 @@ public sealed class KindProperty : VCardProperty
         => Value = prop.Value;
 
     /// <summary>  Initializes a new <see cref="KindProperty" /> object. </summary>
-    /// <param name="value">A member of the <see cref="VCdKind" /> enum.</param>
-    public KindProperty(VCdKind value)
-        : base(new ParameterSection(), null) => Value = value;
+    /// <param name="value">A member of the <see cref="Kind" /> enum.</param>
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    public KindProperty(Kind value, string? group = null)
+        : base(new ParameterSection(), group) => Value = value;
 
     internal KindProperty(VcfRow vcfRow)
-        : base(vcfRow.Parameters, vcfRow.Group) => Value = VCdKindConverter.Parse(vcfRow.Value);
+        : base(vcfRow.Parameters, vcfRow.Group) => Value = KindConverter.Parse(vcfRow.Value);
 
     /// <summary> The data provided by the <see cref="KindProperty" />.
     /// </summary>
-    public new VCdKind Value
+    public new Kind Value
     {
         get;
     }
@@ -44,7 +47,7 @@ public sealed class KindProperty : VCardProperty
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         _ = serializer.Builder.Append(Value.ToVcfString());
     }

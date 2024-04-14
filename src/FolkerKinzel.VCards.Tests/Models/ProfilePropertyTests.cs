@@ -1,4 +1,6 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -8,7 +10,6 @@ public class ProfilePropertyTests
     [TestMethod()]
     public void ProfilePropertyTest1()
     {
-
         var prop = new ProfileProperty();
 
         Assert.IsNotNull(prop);
@@ -28,7 +29,6 @@ public class ProfilePropertyTests
     [TestMethod()]
     public void ProfilePropertyTest2()
     {
-
         var prop = new ProfileProperty();
 
         var vcard = new VCard
@@ -38,7 +38,7 @@ public class ProfilePropertyTests
 
         string s = vcard.ToVcfString();
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -62,4 +62,14 @@ public class ProfilePropertyTests
         Assert.AreEqual("VCARD", prop.Value);
     }
 
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new ProfileProperty();
+
+        var prop2 = (ProfileProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value, prop2.Value);
+        Assert.AreNotSame(prop1, prop2);
+    }
 }

@@ -1,8 +1,8 @@
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
@@ -24,7 +24,7 @@ internal sealed class DateOnlyProperty : DateAndOrTimeProperty
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         base.PrepareForVcfSerialization(serializer);
-        Parameters.DataType = VCdDataType.Date;
+        Parameters.DataType = Data.Date;
     }
 
     internal override void AppendValue(VcfSerializer serializer)

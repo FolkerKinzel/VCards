@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.DataUrls;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 using OneOf;
@@ -85,8 +85,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
        => mimeType is null
             ? new EmbeddedBytesProperty(LoadFile(filePath),
                                         group,
-                                        new ParameterSection() 
-                                        { 
+                                        new ParameterSection()
+                                        {
                                             MediaType = MimeString.FromFileName(filePath)
                                         })
             : MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
@@ -124,28 +124,28 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <summary>
     /// Creates a new <see cref="DataProperty"/> instance that embeds text in a vCard.
     /// </summary>
-    /// <param name="text">The text to embed or <c>null</c>.</param>
-    /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="text"/>
+    /// <param name="passWord">The text to embed or <c>null</c>.</param>
+    /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="passWord"/>
     /// or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
     /// <remarks>
-    /// The vCard standard allows to write a password as plain text to the <c>KEY</c> property.
+    /// The vCard standard only allows to write a password as plain text to the <c>KEY</c> property.
     /// <see cref="VCard.Keys">(See VCard.Keys.)</see>
     /// </remarks>
     /// <seealso cref="VCard.Keys"/>
-    public static DataProperty FromText(string? text,
+    public static DataProperty FromText(string? passWord,
                                         string? mimeType = null,
                                         string? group = null)
     {
-        var textProp = new TextProperty(text, group);
+        var textProp = new TextProperty(passWord, group);
         textProp.Parameters.MediaType =
             MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
                            ? mimeInfo.ToString()
                            : null;
-        textProp.Parameters.DataType = VCdDataType.Text;
+        textProp.Parameters.DataType = Data.Text;
         return new EmbeddedTextProperty(textProp);
     }
 
@@ -175,8 +175,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                              new ParameterSection()
                              {
                                  MediaType = MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
-                                                                  ? mimeInfo.ToString() 
-                                                                  : null 
+                                                                  ? mimeInfo.ToString()
+                                                                  : null
                              },
                              group)
            );
@@ -216,7 +216,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                     : FromText(vcfRow.Value, info.MimeType.ToString(), vcfRow.Group);
         }
 
-        if (vcfRow.Parameters.Encoding == ValueEncoding.Base64)
+        if (vcfRow.Parameters.Encoding == Enc.Base64)
         {
             return new EmbeddedBytesProperty
                        (
@@ -226,15 +226,15 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                         );
         }
 
-        if (vcfRow.Parameters.DataType == VCdDataType.Uri ||
-            vcfRow.Parameters.DataType == VCdDataType.Text)
+        if (vcfRow.Parameters.DataType == Data.Uri ||
+            vcfRow.Parameters.DataType == Data.Text)
         {
             return TryAsUri(vcfRow, version);
         }
 
         // Quoted-Printable encoded binary data:
-        if (vcfRow.Parameters.Encoding == ValueEncoding.QuotedPrintable &&
-            vcfRow.Parameters.MediaType != null)
+        if (vcfRow.Parameters.Encoding == Enc.QuotedPrintable &&
+            vcfRow.Parameters.MediaType is not null)
         {
             return new EmbeddedBytesProperty
                    (

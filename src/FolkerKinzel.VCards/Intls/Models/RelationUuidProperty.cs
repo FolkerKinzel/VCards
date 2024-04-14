@@ -1,7 +1,7 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
@@ -14,22 +14,22 @@ internal sealed class RelationUuidProperty : RelationProperty
     /// </summary>
     /// <param name="uuid">UUID of a person to whom a relationship exists. This can, for 
     /// example, be the value of the vCard property <c>UID</c> 
-    /// (<see cref="VCard.UniqueIdentifier">VCard.UniqueIdentifier</see>) of this 
+    /// (<see cref="VCard.ID">VCard.UniqueIdentifier</see>) of this 
     /// person's vCard.</param>
-    /// <param name="relation">A single <see cref="RelationTypes" /> value or a combination
-    /// of several <see cref="RelationTypes" /> values or <c>null</c>.</param>
+    /// <param name="relation">A single <see cref="Rel" /> value or a combination
+    /// of several <see cref="Rel" /> values or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     internal RelationUuidProperty(Guid uuid,
-                                  RelationTypes? relation = null,
+                                  Rel? relation = null,
                                   string? group = null)
         : base(relation, group)
     {
-        Parameters.DataType = VCdDataType.Uri;
+        Parameters.DataType = Data.Uri;
         Value = uuid;
     }
-    
+
     public new Guid Value
     {
         get;
@@ -45,17 +45,17 @@ internal sealed class RelationUuidProperty : RelationProperty
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         base.PrepareForVcfSerialization(serializer);
 
-        Parameters.DataType = VCdDataType.Uri;
-        Parameters.ContentLocation = ContentLocation.ContentID;
+        Parameters.DataType = Data.Uri;
+        Parameters.ContentLocation = Loc.Cid;
     }
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         _ = serializer.Builder.AppendUuid(Value, serializer.Version);
     }

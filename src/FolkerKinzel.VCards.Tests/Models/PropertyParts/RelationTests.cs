@@ -31,6 +31,9 @@ public class RelationTests
     [TestMethod]
     public void ValueTest3()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var rel = new Relation(new VCard());
         Assert.IsNotNull(rel.Value);
         Assert.IsNull(rel.String);
@@ -92,7 +95,13 @@ public class RelationTests
     public void TryAsStringTest1() => Assert.IsFalse(RelationProperty.FromGuid(Guid.NewGuid()).Value!.TryAsString(out _));
 
     [TestMethod]
-    public void TryAsStringTest2() => Assert.IsFalse(RelationProperty.FromVCard(new VCard()).Value!.TryAsString(out _));
+    public void TryAsStringTest2()
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        Assert.IsFalse(RelationProperty.FromVCard(new VCard()).Value!.TryAsString(out _));
+    }
 
     [TestMethod]
     public void TryAsStringTest3() => Assert.IsTrue(RelationProperty.FromText("Hi").Value!.TryAsString(out _));
@@ -102,23 +111,41 @@ public class RelationTests
 
     [TestMethod]
     public void TryAsStringTest5()
-        => Assert.IsTrue(RelationProperty.FromVCard(new VCard() { Organizations = new OrganizationProperty("Org") }).Value!.TryAsString(out _));
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        Assert.IsTrue(RelationProperty.FromVCard(new VCard() { Organizations = new OrgProperty("Org") }).Value!.TryAsString(out _));
+    }
 
     [TestMethod]
     public void TryAsStringTest6()
-        => Assert.IsTrue(RelationProperty.FromVCard(new VCard() { NameViews = new NameProperty("Folker") }).Value!.TryAsString(out _));
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        Assert.IsTrue(RelationProperty.FromVCard(new VCard() { NameViews = new NameProperty("Folker") }).Value!.TryAsString(out _));
+    }
 
     [TestMethod]
     public void TryAsStringTest7()
-        => Assert.IsTrue(RelationProperty.FromVCard(new VCard() { DisplayNames = new TextProperty("Folker") }).Value!.TryAsString(out _));
+    {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        Assert.IsTrue(RelationProperty.FromVCard(new VCard() { DisplayNames = new TextProperty("Folker") }).Value!.TryAsString(out _));
+    }
 
     [TestMethod]
     public void TryAsStringTest8()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         Assert.IsTrue(RelationProperty.FromVCard(
             new VCard()
             {
-                Organizations = new OrganizationProperty("Org"),
+                Organizations = new OrgProperty("Org"),
                 DisplayNames = Array.Empty<TextProperty>(),
                 NameViews = Array.Empty<NameProperty>()
             }).Value!.TryAsString(out _));
@@ -127,10 +154,13 @@ public class RelationTests
     [TestMethod]
     public void TryAsStringTest9()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         Assert.IsFalse(RelationProperty.FromVCard(
             new VCard()
             {
-                Organizations = Array.Empty<OrganizationProperty>(),
+                Organizations = Array.Empty<OrgProperty>(),
                 DisplayNames = Array.Empty<TextProperty>(),
                 NameViews = Array.Empty<NameProperty>()
             }).Value!.TryAsString(out _));

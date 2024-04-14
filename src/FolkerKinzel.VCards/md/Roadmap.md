@@ -1,35 +1,19 @@
 ﻿# FolkerKinzel.VCards
 ## Roadmap
 
-### 7.0.0
-- Mark the usage of `VCard.InstantMessengerHandles` as Obsolete error
-- Mark the usage of `VCdProp.InstantMessengerHandles` as Obsolete error
-
-
-- [ ] Add DateOnlyProperty. (Use nuget package Portable.System.DateTimeOnly.)
-- [ ] Remove the `DataUrl` class and the `MimeType` classes and replace it with something new and better like
-`FolkerKinzel.Uris.DataUrl` and `FolkerKinzel.MimeTypes.MimeType`.
-- [ ] Replace `FolkerKinzel.VCards.Intls.Converters.TextEncodingConverter` with `FolkerKinzel.Strings.TextEncodingConverter`
-- [ ] Review `DataProperty` completely:
-     - [ ] `DataProperty` should be the abstract base class of `EmbeddedBytesProperty`, `EmbeddedTextProperty` and `ReferencedContentProperty`
-        - [ ] The value of `EmbeddedBytesProperty` should be `ReadOnlyCollection<byte>`.
-        - [ ] The value of `EmbeddedTextProperty` should be `string`.
-        - [ ] The value of `ReferencedContentProperty` should be `System.Uri`.
-     - [ ] The `VCard` parse and serialize methods should have an optional parameter `embeddedContentSize` which defaults to the enum value `VCdSizeRestriction.UriLength` to enable the users to set or remove the size restriction for embedded content themselves.
-     - [ ] Add methods
-       -  [ ] `static EmbeddedBytesProperty.FromFile(string fileName)`
-       -  [ ] `EmbeddedBytesProperty.SaveFile(string fileName)`
-       -  [ ] `static EmbeddedTextProperty.FromFile(string fileName, Encoding? textEncoding = null)`
-       -  [ ] `EmbeddedTextProperty.SaveFile(string fileName, Encoding? textEncoding = null)`
-     - [ ] `DataProperty` should provide an error message (shown in the debugger) if its `Value` could not be parsed.
+### 7.1.0
+- [ ] Add generic overloads to the VCardBuilder-Parts Edit and Add methods to pass data without having to use closures.
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
+### 7.0.0
+- [x] Implement a fluent API.
+
 ### 6.0.1
-- Cleanup: Remove identifiers that are marked as obsolete errors.
+- [x] Cleanup: Remove identifiers that are marked as obsolete errors.
 
 ### 6.0.0
-- [ ] Higher code coverage of the unit tests.
+- [x] Higher code coverage of the unit tests.
 
 ### 6.0.0-beta.1
 - [x] Dependency update.

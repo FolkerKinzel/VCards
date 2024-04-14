@@ -1,3 +1,5 @@
+using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -13,7 +15,7 @@ namespace FolkerKinzel.VCards.Models;
 /// <note type="important">
 /// <para>
 /// To write <see cref="NonStandardProperty" /> objects into a vCard, the flag 
-/// <see cref="VcfOptions.WriteNonStandardProperties" /> must be set. 
+/// <see cref="Opts.WriteNonStandardProperties" /> must be set. 
 /// </para>
 /// <para>
 /// Please note that when using the class, yourself is responsible for the 
@@ -21,7 +23,7 @@ namespace FolkerKinzel.VCards.Models;
 /// </para>
 /// </note>
 /// </remarks>
-/// <seealso cref="VCard.NonStandard"/>
+/// <seealso cref="VCard.NonStandards"/>
 public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandardProperty>
 {
     /// <summary>Copy ctor.</summary>
@@ -47,10 +49,7 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     public NonStandardProperty(string xName, string? value, string? group = null)
         : base(new ParameterSection(), group)
     {
-        if (xName == null)
-        {
-            throw new ArgumentNullException(nameof(xName));
-        }
+        _ArgumentNullException.ThrowIfNull(xName, nameof(xName));
 
         if (xName.Length < 3 ||
             !xName.StartsWith("X-", StringComparison.OrdinalIgnoreCase) ||
@@ -116,7 +115,7 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         _ = serializer.Builder.Append(Value);
     }

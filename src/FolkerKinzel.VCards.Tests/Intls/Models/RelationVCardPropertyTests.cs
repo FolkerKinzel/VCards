@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Serializers;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,7 +21,7 @@ public class RelationVCardPropertyTests
         Assert.AreNotSame(prop, prop2);
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
+        var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
         prop2.AppendValue(serializer);
 
         Assert.AreEqual(0, serializer.Builder.Length);
@@ -60,9 +61,11 @@ public class RelationVCardPropertyTests
     public void CircularReferenceTest2()
     {
         var donald = new VCard() { DisplayNames = new TextProperty("Donald Duck") };
-        var dagobert = new VCard() { DisplayNames = new TextProperty("Dagobert Duck") };
-
-        dagobert.Relations = RelationProperty.FromVCard(donald);
+        var dagobert = new VCard
+        {
+            DisplayNames = new TextProperty("Dagobert Duck"),
+            Relations = RelationProperty.FromVCard(donald)
+        };
         donald.Relations = RelationProperty.FromVCard(dagobert);
 
         string s = donald.ToString();

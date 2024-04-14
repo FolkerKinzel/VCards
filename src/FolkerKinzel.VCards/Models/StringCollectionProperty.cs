@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -24,7 +25,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public StringCollectionProperty(IEnumerable<string?>? value, string? group = null) 
+    public StringCollectionProperty(IEnumerable<string?>? value, string? group = null)
         : base(new ParameterSection(), group)
     {
         this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
@@ -127,7 +128,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         if (Value is null)
         {

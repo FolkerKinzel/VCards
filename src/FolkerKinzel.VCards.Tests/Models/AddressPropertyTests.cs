@@ -1,4 +1,6 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Tests;
@@ -40,13 +42,13 @@ public class AddressPropertyTests
     public void AddressPropertyTest1()
     {
         var adr = new AddressProperty(
-            new string[] { STREET },
-            new string[] { LOCALITY },
-            new string[] { REGION },
-            new string[] { POSTAL_CODE },
-            new string[] { COUNTRY },
-            new string[] { PO_BOX },
-            new string[] { EXTENDED_ADDRESS },
+            [STREET],
+            [LOCALITY],
+            [REGION],
+            [POSTAL_CODE],
+            [COUNTRY],
+            [PO_BOX],
+            [EXTENDED_ADDRESS],
 
             group: GROUP);
 
@@ -71,7 +73,6 @@ public class AddressPropertyTests
 
         Assert.IsNotNull(s);
         Assert.AreNotEqual(0, s.Length);
-
     }
 
     [TestMethod]
@@ -82,7 +83,6 @@ public class AddressPropertyTests
 
         Assert.IsNotNull(prop.Value);
     }
-
 
     [TestMethod]
     public void IsEmptyTest_v2_1()
@@ -101,7 +101,7 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = VCard.ParseVcf(vcf);
+        IList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
         vc = cards[0];
@@ -113,7 +113,7 @@ public class AddressPropertyTests
         vc.Addresses = adr;
 
         vcf = vc.ToVcfString(version);
-        cards = VCard.ParseVcf(vcf);
+        cards = Vcf.Parse(vcf);
 
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
@@ -143,7 +143,7 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = VCard.ParseVcf(vcf);
+        IList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
         vc = cards[0];
@@ -155,7 +155,7 @@ public class AddressPropertyTests
         vc.Addresses = adr;
 
         vcf = vc.ToVcfString(version);
-        cards = VCard.ParseVcf(vcf);
+        cards = Vcf.Parse(vcf);
 
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
@@ -185,7 +185,7 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = VCard.ParseVcf(vcf);
+        IList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
         vc = cards[0];
@@ -197,7 +197,7 @@ public class AddressPropertyTests
         vc.Addresses = adr;
 
         vcf = vc.ToVcfString(version);
-        cards = VCard.ParseVcf(vcf);
+        cards = Vcf.Parse(vcf);
 
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
@@ -215,5 +215,16 @@ public class AddressPropertyTests
     {
         var prop = new AddressProperty("Elm Street", null, null, null);
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+    }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new AddressProperty("street", null, null, null);
+
+        var prop2 = (AddressProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value, prop2.Value);
+        Assert.AreNotSame(prop1, prop2);
     }
 }

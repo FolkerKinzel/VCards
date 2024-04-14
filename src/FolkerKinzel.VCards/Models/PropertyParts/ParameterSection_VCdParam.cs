@@ -1,3 +1,5 @@
+using FolkerKinzel.VCards.Syncs;
+
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 public sealed partial class ParameterSection
@@ -13,7 +15,7 @@ public sealed partial class ParameterSection
 
         /// <summary> <c>TYPE</c>: Specifies the type of relationship with 
         /// a person. <c>(4)</c></summary>
-        Relation,
+        RelationType,
 
         /// <summary> <c>TYPE</c>: Specifies the type of a postal delivery address. 
         /// <c>(2,3)</c></summary>

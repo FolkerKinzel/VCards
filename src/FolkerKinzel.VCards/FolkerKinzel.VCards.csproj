@@ -1,19 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net7.0;net6.0;net5.0;netstandard2.1;netstandard2.0;net461</TargetFrameworks>
-    <LangVersion>11.0</LangVersion>
+    <TargetFrameworks>net8.0;netstandard2.1;netstandard2.0;net461</TargetFrameworks>
+    <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <NeutralLanguage>en</NeutralLanguage>
     <ImplicitUsings>enable</ImplicitUsings>
     <!-- .nuget-Package: -->
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
-    <Version>6.2.1</Version>
-    <FileVersion>6.2.1.2</FileVersion>
-    <AssemblyVersion>6.0.0.0</AssemblyVersion>
-    <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v6.2.1</PackageReleaseNotes>
+    <Version>7.0.0-beta.1</Version>
+    <FileVersion>7.0.0.14</FileVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v7.0.0-beta.1</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
-    <Description>.NET library that allows to read, write, and convert VCF files that match the vCard standards 2.1, 3.0, and 4.0</Description>
+    <Description>.NET library for reading, writing, and converting VCF files that comply with vCard standards 2.1, 3.0 and 4.0</Description>
     <Authors>Folker Kinzel</Authors>
     <Copyright>Copyright © 2020 Folker Kinzel</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -75,10 +75,47 @@
     <Compile Remove="Models\DateTimeOffsetProperty_OBSOLETE.cs" />
     <Compile Remove="Models\DateTimeProperty_OBSOLETE.cs" />
     <Compile Remove="Models\DateTimeTextProperty_OBSOLETE.cs" />
-    <Compile Remove="Models\Enums\DataEncoding.cs" />
-    <Compile Remove="Models\Enums\SizeRestriction.cs" />
+    <Compile Remove="Enums\DataEncoding.cs" />
+    <Compile Remove="Enums\SizeRestriction.cs" />
     <Compile Remove="Models\PropertyParts\MimeType.cs" />
     <Compile Remove="MultiAnsiFilter.cs" />
+    <Compile Remove="TextEncoding.cs" />
+    <Compile Remove="VCardBuilder_Access.cs" />
+    <Compile Remove="VCardBuilder_Addresses.cs" />
+    <Compile Remove="VCardBuilder_AnniversaryViews.cs" />
+    <Compile Remove="VCardBuilder_BirthDayViews.cs" />
+    <Compile Remove="VCardBuilder_BirthPlaceViews.cs" />
+    <Compile Remove="VCardBuilder_CalendarAddresses.cs" />
+    <Compile Remove="VCardBuilder_CalendarUserAddresses.cs" />
+    <Compile Remove="VCardBuilder_Categories.cs" />
+    <Compile Remove="VCardBuilder_DeathDateViews.cs" />
+    <Compile Remove="VCardBuilder_DeathPlaceViews.cs" />
+    <Compile Remove="VCardBuilder_DirectoryName.cs" />
+    <Compile Remove="VCardBuilder_DisplayNames.cs" />
+    <Compile Remove="VCardBuilder_EMails.cs" />
+    <Compile Remove="VCardBuilder_Expertises.cs" />
+    <Compile Remove="VCardBuilder_FreeOrBusyUrls.cs" />
+    <Compile Remove="VCardBuilder_GenderViews.cs" />
+    <Compile Remove="VCardBuilder_GeoCoordinates.cs" />
+    <Compile Remove="VCardBuilder_Hobbies.cs" />
+    <Compile Remove="VCardBuilder_ID.cs" />
+    <Compile Remove="VCardBuilder_Interests.cs" />
+    <Compile Remove="VCardBuilder_Kind.cs" />
+    <Compile Remove="VCardBuilder_Languages.cs" />
+    <Compile Remove="VCardBuilder_Mailer.cs" />
+    <Compile Remove="VCardBuilder_Messengers.cs" />
+    <Compile Remove="VCardBuilder_NickNames.cs" />
+    <Compile Remove="VCardBuilder_Notes.cs" />
+    <Compile Remove="VCardBuilder_OrgDirectories.cs" />
+    <Compile Remove="VCardBuilder_Phones.cs" />
+    <Compile Remove="VCardBuilder_ProductID.cs" />
+    <Compile Remove="VCardBuilder_Profile.cs" />
+    <Compile Remove="VCardBuilder_Roles.cs" />
+    <Compile Remove="VCardBuilder_Sources.cs" />
+    <Compile Remove="VCardBuilder_TimeStamp.cs" />
+    <Compile Remove="VCardBuilder_TimeZones.cs" />
+    <Compile Remove="VCardBuilder_Titles.cs" />
+    <Compile Remove="VCardBuilder_Urls.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Reverser.log" />

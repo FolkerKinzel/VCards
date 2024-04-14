@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FolkerKinzel.VCards;
-
-using VC = FolkerKinzel.VCards.Models;
+﻿using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using Mod = FolkerKinzel.VCards.Models;
 
 namespace Examples;
 
@@ -11,39 +9,27 @@ internal static class WhatsAppDemo2
 {
     public static void UsingTheWhatsAppType()
     {
-        var xiamoiMobilePhone = new VC::TextProperty("+1-234-567-89");
-        xiamoiMobilePhone.Parameters.NonStandard = new KeyValuePair<string, string>[]
-        {
-                new KeyValuePair<string, string>("TYPE", "WhatsApp")
-        };
+        var xiamoiMobilePhone = new Mod::TextProperty("+1-234-567-89");
+
+        xiamoiMobilePhone.Parameters.NonStandard = [ new KeyValuePair<string, string>("TYPE", "WhatsApp") ];
 
         // Initialize the VCard:
         var vcard = new VCard
         {
-            NameViews = new VC::NameProperty[]
-            {
-                    new VC::NameProperty(lastName: null, firstName: "zzMad Perla 45")
-            },
-
-            DisplayNames = new VC::TextProperty[]
-            {
-                    new VC::TextProperty("zzMad Perla 45")
-            },
-
-            Phones = new VC::TextProperty[]
-            {
-                    xiamoiMobilePhone
-            }
+            NameViews = [new(familyName: null, givenName: "zzMad Perla 45")],
+            DisplayNames = [new("zzMad Perla 45")],
+            Phones = xiamoiMobilePhone
         };
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
-        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
+        string vcfString = Vcf.ToString(vcard,
+                                        options: Opts.Default | Opts.WriteNonStandardParameters);
 
         Console.WriteLine(vcfString);
 
         // Parse the VCF string:
-        vcard = VCard.ParseVcf(vcfString)[0];
+        vcard = Vcf.Parse(vcfString)[0];
 
         // Find the WhatsApp number:
         string? whatsAppNumber = vcard.Phones?

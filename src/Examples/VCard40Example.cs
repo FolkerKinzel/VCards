@@ -1,10 +1,6 @@
-﻿// Compile for .NET 7.0 or higher and FolkerKinzel.VCards 6.0.0-beta.1 or higher
-using FolkerKinzel.VCards;
+﻿using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-
-// It's recommended to use a namespace-alias for better readability of
-// your code and better usability of Visual Studio IntelliSense:
-using VC = FolkerKinzel.VCards.Models;
 
 namespace Examples;
 
@@ -28,29 +24,24 @@ public static class VCard40Example
         }
 
         // Initialize a group vCard with composers names and live dates:
-        var members = new VC::RelationProperty[]
-        {
-                VC::RelationProperty.FromVCard(InitializeComposerVCard(
-                    "Sergei Rachmaninoff", new DateOnly(1873,4,1), new DateOnly(1943,3,28))),
-                VC::RelationProperty.FromVCard(InitializeComposerVCard(
-                    "Ludwig van Beethoven", new DateOnly(1770,12,17), new DateOnly(1827,3,26))),
-                VC :: RelationProperty.FromVCard(InitializeComposerVCard(
-                    "Frédéric Chopin", new DateOnly(1810,3,1), new DateOnly(1849,10,17)))
-        };
-
-        var composersVCard = new VCard
-        {
-            DisplayNames = new VC::TextProperty("Composers"),
-            Kind = new VC::KindProperty(VC::Enums.VCdKind.Group),
-            Members = members
-        };
+        VCard? composersVCard = VCardBuilder
+            .Create()
+            .DisplayNames.Add("Composers")
+            .Kind.Set(Kind.Group)
+            .Members.Add(InitializeComposerVCard(
+                    "Sergei Rachmaninoff", new DateOnly(1873, 4, 1), new DateOnly(1943, 3, 28)))
+            .Members.Add(InitializeComposerVCard(
+                    "Ludwig van Beethoven", new DateOnly(1770, 12, 17), new DateOnly(1827, 3, 26)))
+            .Members.Add(InitializeComposerVCard(
+                    "Frédéric Chopin", new DateOnly(1810, 3, 1), new DateOnly(1849, 10, 17)))
+            .VCard;
 
         // Replace the embedded VCards in composersVCard.Members with Guid
         // references in order to save them as separate vCard 4.0 .VCF files.
-        // IMPORTANT: Never call ReferenceVCards() if you intend to serialize
+        // IMPORTANT: Never call Reference() if you intend to serialize
         // a vCard 2.1 or vCard 3.0 !
 
-        IEnumerable<VCard> referenced = composersVCard.ReferenceVCards();
+        IEnumerable<VCard> referenced = composersVCard.Reference();
         // (The extension method can be called on a single VCard because
         // VCard implements IEnumerable<VCard>.)
 
@@ -70,26 +61,21 @@ public static class VCard40Example
         // Make sure to save ALL VCard objects in `referenced` - otherwise
         // the information originally stored in `composersVCard` will be
         // irrevocably lost.
-        foreach (VCard vcard in referenced)
+        foreach (VCard vCard in referenced)
         {
             string fileName = Path.Combine(
                 directoryPath,
-                $"{vcard.DisplayNames!.First()!.Value}{vcfExtension}");
+                $"{vCard.DisplayNames!.First()!.Value}{vcfExtension}");
 
-            vcard.SaveVcf(fileName, VCdVersion.V4_0);
+            vCard.SaveVcf(fileName, VCdVersion.V4_0);
         }
 
         // Reload the .VCF files:
-        var vCardList = new List<VCard>();
-
-        foreach (string fileName in 
-            Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"))
-        {
-            vCardList.AddRange(VCard.LoadVcf(fileName));
-        }
+        IEnumerable<VCard> vCards =
+            Vcf.LoadMany(Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"));
 
         // Make the reloaded VCard objects searchable:
-        IEnumerable<VCard> dereferenced = vCardList.DereferenceVCards();
+        IEnumerable<VCard> dereferenced = vCards.Dereference();
 
         // Find the parsed result from "Composers.vcf":
         composersVCard = dereferenced
@@ -108,37 +94,31 @@ public static class VCard40Example
             Console.Write("What year was Beethoven born?: ");
             Console.WriteLine(
                 TryFindBeethovensBirthday(composersVCard, out DateOnly birthDay)
-                   ? birthDay.Year 
+                   ? birthDay.Year
                    : "Don't know.");
         }
     }
 
-
     private static VCard InitializeComposerVCard(
         string composersName, DateOnly birthDate, DateOnly deathDate)
-    {
-        var vCard = new VCard
-        {
-            DisplayNames = new VC::TextProperty(composersName),
-            BirthDayViews = VC::DateAndOrTimeProperty.FromDate(birthDate),
-            DeathDateViews = VC::DateAndOrTimeProperty.FromDate(deathDate)
-        };
-
-        return vCard;
-    }
+        => VCardBuilder.Create()
+                       .DisplayNames.Add(composersName)
+                       .BirthDayViews.Add(birthDate)
+                       .DeathDateViews.Add(deathDate)
+                       .VCard;
 
     private static bool TryFindBeethovensBirthday(VCard composersVCard, out DateOnly birthDay)
     {
         DateOnly date = default;
         bool found = composersVCard.Members
                 .OrderByPref()
-                .Where(x =>  x.Value!.VCard is not null)
+                .Where(x => x.Value!.VCard is not null)
                 .Select(x => x.Value!.VCard)
                     .FirstOrDefault(x => x!.DisplayNames?
                                            .Any(x => x?.Value == "Ludwig van Beethoven") ?? false)?
                     .BirthDayViews?
                     .FirstOrNull(x => x.Value?.TryAsDateOnly(out date) ?? false)
-                    != null;
+                     is not null;
 
         birthDay = date;
         return found;
@@ -155,12 +135,13 @@ composersVCard:
 BEGIN:VCARD
 VERSION:4.0
 KIND:group
+REV:20240215T212254Z
+UID:urn:uuid:51784d87-7ad3-4c47-a199-995544b3c769
 FN:Composers
-MEMBER;VALUE=URI:urn:uuid:f3f879b0-b1fb-481d-8a6b-44b8989b1a58
-MEMBER;VALUE=URI:urn:uuid:dca80599-cece-4cac-ae9f-a18f08fe6e1b
-MEMBER;VALUE=URI:urn:uuid:6ce8b30e-2750-45a1-9e61-4041505400fa
+MEMBER;VALUE=URI:urn:uuid:1b5097d0-5e4b-457a-99b0-d0c988e45eb9
+MEMBER;VALUE=URI:urn:uuid:733732f0-75c0-44bb-8199-0ce56ce3c4d0
+MEMBER;VALUE=URI:urn:uuid:80971089-e932-4e73-a241-6b79415d00d2
 END:VCARD
 
 What year was Beethoven born?: 1770
-.
 */

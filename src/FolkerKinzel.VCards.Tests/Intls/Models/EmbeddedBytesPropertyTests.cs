@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,7 +13,7 @@ public class EmbeddedBytesPropertyTests
     [TestMethod]
     public void EmbeddedBytesPropertyTest1()
     {
-        var prop = DataProperty.FromBytes(Array.Empty<byte>(), "image/png");
+        var prop = DataProperty.FromBytes([], "image/png");
 
         Assert.IsInstanceOfType(prop, typeof(EmbeddedBytesProperty));
         Assert.IsNull(prop.Value);
@@ -21,8 +23,8 @@ public class EmbeddedBytesPropertyTests
         Assert.AreEqual(".png", prop.GetFileTypeExtension());
 
         var vc = new VCard() { Photos = prop };
-        string vcf = vc.ToVcfString(VCdVersion.V4_0, options: VcfOptions.Default | VcfOptions.WriteEmptyProperties);
-        Assert.IsNotNull(VCard.ParseVcf(vcf)[0].Photos);
+        string vcf = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default | Opts.WriteEmptyProperties);
+        Assert.IsNotNull(Vcf.Parse(vcf)[0].Photos);
     }
 
     [DataTestMethod]
@@ -35,7 +37,7 @@ public class EmbeddedBytesPropertyTests
     [TestMethod]
     public void EmbeddedBytesPropertyTest3()
     {
-        var prop = new EmbeddedBytesProperty(new byte[] {1,2,3}, null, new ParameterSection());
+        var prop = new EmbeddedBytesProperty([1,2,3], null, new ParameterSection());
         Assert.IsFalse(prop.IsEmpty);
 
         byte[] ? val1 = prop.Value;
@@ -48,7 +50,7 @@ public class EmbeddedBytesPropertyTests
     [TestMethod]
     public void CloneTest1()
     {
-        var prop1 = DataProperty.FromBytes(new byte[] { 1, 2, 3 });
+        var prop1 = DataProperty.FromBytes([1, 2, 3]);
         var prop2 = (DataProperty)prop1.Clone();
 
         Assert.IsNotNull(prop2);

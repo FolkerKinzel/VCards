@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.DataUrls;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -70,7 +71,7 @@ public class DataPropertyTests
     [TestMethod]
     public void ValueTest4()
     {
-        VCardProperty prop = DataProperty.FromBytes(new byte[] {1,2,3});
+        VCardProperty prop = DataProperty.FromBytes([1,2,3]);
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(DataPropertyValue));
     }
@@ -117,7 +118,7 @@ public class DataPropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Keys);
@@ -139,7 +140,7 @@ public class DataPropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Photos);
@@ -159,7 +160,7 @@ public class DataPropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Photos);
@@ -179,7 +180,7 @@ public class DataPropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Photos);

@@ -1,7 +1,7 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Models;
@@ -17,7 +17,7 @@ internal sealed class UriProperty : VCardProperty
         Debug.Assert(value.IsAbsoluteUri);
 
         Value = value;
-        Parameters.DataType = VCdDataType.Uri;
+        Parameters.DataType = Data.Uri;
     }
 
     public new Uri Value { get; }
@@ -31,7 +31,7 @@ internal sealed class UriProperty : VCardProperty
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         base.PrepareForVcfSerialization(serializer);
 
@@ -39,22 +39,22 @@ internal sealed class UriProperty : VCardProperty
         {
             if (UriConverter.IsContentId(Value))
             {
-                Parameters.ContentLocation = ContentLocation.ContentID;
+                Parameters.ContentLocation = Loc.Cid;
             }
-            else if (Parameters.ContentLocation != ContentLocation.ContentID)
+            else if (Parameters.ContentLocation != Loc.Cid)
             {
-                Parameters.ContentLocation = ContentLocation.Url;
+                Parameters.ContentLocation = Loc.Url;
             }
         }
         else
         {
-            Parameters.DataType = VCdDataType.Uri;
+            Parameters.DataType = Data.Uri;
         }
     }
-    
+
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
         _ = serializer.Builder.Append(Value.AbsoluteUri);
     }
 }

@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -39,7 +40,7 @@ public class AddressTests
         var adr = new Address(input, new VcfDeserializationInfo(), VCdVersion.V4_0);
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
+        var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
         adr.AppendVCardString(serializer);
 
         Assert.AreEqual(input, serializer.Builder.ToString());

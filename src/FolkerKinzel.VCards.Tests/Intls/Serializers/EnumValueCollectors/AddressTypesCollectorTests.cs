@@ -1,5 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Models.Enums;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Converters;
 
 namespace FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests;
 
@@ -9,14 +9,14 @@ public class AddressTypesCollectorTests
     [TestMethod()]
     public void CollectValueStringsTest()
     {
-        AddressTypes? adr = AddressTypes.Dom | AddressTypes.Parcel;
+        Adr? adr = Adr.Dom | Adr.Parcel;
 
         var list = new List<string>();
 
         EnumValueCollector.Collect(adr, list);
 
         Assert.AreEqual(2, list.Count);
-        Assert.IsTrue(list.Contains(AddressTypesConverter.AddressTypesValue.PARCEL));
+        Assert.IsTrue(list.Contains(AdrConverter.AddressTypesValue.PARCEL));
 
         // collector darf die Liste nicht löschen!:
         EnumValueCollector.Collect(adr, list);
@@ -34,10 +34,10 @@ public class AddressTypesCollectorTests
     [TestMethod()]
     public void DetectAllEnumValues()
     {
-        var arr = (AddressTypes[])Enum.GetValues(typeof(AddressTypes));
+        var arr = (Adr[])Enum.GetValues(typeof(Adr));
         var list = new List<string>(1);
 
-        foreach (AddressTypes item in arr)
+        foreach (Adr item in arr)
         {
             list.Clear();
             EnumValueCollector.Collect(item, list);
@@ -51,10 +51,10 @@ public class AddressTypesCollectorTests
     [TestMethod()]
     public void RoundTrip()
     {
-        var arr = (AddressTypes[])Enum.GetValues(typeof(AddressTypes));
+        var arr = (Adr[])Enum.GetValues(typeof(Adr));
         var list = new List<string>(1);
 
-        foreach (AddressTypes item in arr)
+        foreach (Adr item in arr)
         {
             list.Clear();
             EnumValueCollector.Collect(item, list);
@@ -62,13 +62,13 @@ public class AddressTypesCollectorTests
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
 
-            AddressTypes? comp = AddressTypesConverter.Parse(list[0]);
+            Adr? comp = AdrConverter.Parse(list[0]);
 
             Assert.IsTrue(comp.HasValue);
             Assert.AreEqual(comp!.Value, item);
 
-            var comp2 = (AddressTypes)Enum.Parse(
-                typeof(AddressTypes), list[0], true);
+            var comp2 = (Adr)Enum.Parse(
+                typeof(Adr), list[0], true);
 
             Assert.AreEqual(comp, comp2);
         }

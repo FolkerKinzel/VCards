@@ -1,7 +1,8 @@
 ﻿using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -13,7 +14,7 @@ public class RelationTextPropertyTests
     [TestMethod]
     public void RelationTextPropertyTest1()
     {
-        const RelationTypes relation = RelationTypes.Acquaintance;
+        const Rel relation = Rel.Acquaintance;
         string text = "Bruno Hübchen";
 
         var prop = RelationProperty.FromText(text, relation, GROUP);
@@ -22,15 +23,15 @@ public class RelationTextPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
 
-        Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Text, prop.Parameters.DataType);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Text, prop.Parameters.DataType);
     }
 
 
     [TestMethod]
     public void RelationTextPropertyTest2()
     {
-        const RelationTypes relation = RelationTypes.Acquaintance;
+        const Rel relation = Rel.Acquaintance;
         string text = "Bruno Hübchen";
 
         var prop = RelationProperty.FromText(text, relation, GROUP);
@@ -42,7 +43,7 @@ public class RelationTextPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -58,15 +59,15 @@ public class RelationTextPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
 
-        Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Text, prop.Parameters.DataType);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Text, prop.Parameters.DataType);
     }
 
 
     [TestMethod]
     public void RelationTextPropertyTest3()
     {
-        const RelationTypes relation = RelationTypes.Agent;
+        const Rel relation = Rel.Agent;
         string text = "Bruno Hübchen";
 
         var prop = RelationProperty.FromText(text, relation, GROUP);
@@ -78,7 +79,7 @@ public class RelationTextPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -94,8 +95,8 @@ public class RelationTextPropertyTests
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
 
-        Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Text, prop.Parameters.DataType);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Text, prop.Parameters.DataType);
     }
 
     [TestMethod]

@@ -1,16 +1,16 @@
 using System.Globalization;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer4_0 : ParameterSerializer
+internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer(options)
 {
-    private readonly List<string> _stringCollectionList = new();
+    private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer4_0>> _actionList = new(2);
 
     private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes = static serializer
@@ -18,20 +18,19 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
                                       serializer._stringCollectionList);
 
     private readonly Action<ParameterSerializer4_0> _collectPhoneTypes = static serializer
-        => {
-                const PhoneTypes DEFINED_PHONE_TYPES = PhoneTypes.Voice | PhoneTypes.Text | PhoneTypes.Fax | 
-                                                    PhoneTypes.Cell | PhoneTypes.Video | PhoneTypes.Pager |
-                                                    PhoneTypes.TextPhone;
-         
-                EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
-                                           serializer._stringCollectionList);
-            };
+        =>
+    {
+        const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Text | Tel.Fax |
+                                            Tel.Cell | Tel.Video | Tel.Pager |
+                                            Tel.TextPhone;
+
+        EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
+                                   serializer._stringCollectionList);
+    };
 
     private readonly Action<ParameterSerializer4_0> _collectRelationTypes = static serializer
-        => EnumValueCollector.Collect(serializer.ParaSection.Relation,
+        => EnumValueCollector.Collect(serializer.ParaSection.RelationType,
                                       serializer._stringCollectionList);
-
-    public ParameterSerializer4_0(VcfOptions options) : base(options) { }
 
     #region Build
 
@@ -55,12 +54,12 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     protected override void BuildAnniversaryPara()
     {
-        VCdDataType? dataType = this.ParaSection.DataType;
+        Data? dataType = this.ParaSection.DataType;
 
         AppendValue(dataType);
         AppendCalScale();
 
-        if (dataType == VCdDataType.Text)
+        if (dataType == Data.Text)
         {
             // Hinweis: LANGUAGE ist eigentlich nur bei BDAY erlaubt!
             // (Fehler im RFC?)
@@ -73,11 +72,11 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     protected override void BuildBdayPara()
     {
-        VCdDataType? dataType = this.ParaSection.DataType;
+        Data? dataType = this.ParaSection.DataType;
         AppendValue(dataType);
         AppendCalScale();
 
-        if (dataType == VCdDataType.Text)
+        if (dataType == Data.Text)
         {
             AppendLanguage();
         }
@@ -223,12 +222,12 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendType();
         AppendPref();
 
-        if (this.ParaSection.DataType == VCdDataType.Text)
+        if (this.ParaSection.DataType == Data.Text)
         {
-            AppendValue(VCdDataType.Text);
+            AppendValue(Data.Text);
         }
 
-        if (ParaSection.DataType == VCdDataType.Uri)
+        if (ParaSection.DataType == Data.Uri)
         {
             AppendMediatype();
         }
@@ -267,7 +266,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendType();
         AppendPref();
 
-        if (this.ParaSection.DataType == VCdDataType.Uri)
+        if (this.ParaSection.DataType == Data.Uri)
         {
             //AppendValue(VCdDataType.Uri);
             AppendMediatype();
@@ -352,7 +351,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
         AppendType();
 
-        if (this.ParaSection.DataType == VCdDataType.Uri)
+        if (this.ParaSection.DataType == Data.Uri)
         {
             //AppendValue(VCdDataType.Uri);
             AppendMediatype();
@@ -377,14 +376,14 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         _actionList.Add(_collectPropertyClassTypes);
         _actionList.Add(_collectRelationTypes);
 
-        VCdDataType? dataType = this.ParaSection.DataType;
+        Data? dataType = this.ParaSection.DataType;
 
         AppendType();
         AppendPref();
-        AppendValue(dataType == VCdDataType.VCard ? VCdDataType.Uri : dataType);
+        AppendValue(dataType == Data.VCard ? Data.Uri : dataType);
 
 
-        if (ParaSection.DataType == VCdDataType.Text)
+        if (ParaSection.DataType == Data.Text)
         {
             AppendLanguage();
         }
@@ -428,7 +427,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
         AppendType();
 
-        if (this.ParaSection.DataType == VCdDataType.Uri)
+        if (this.ParaSection.DataType == Data.Uri)
         {
             //AppendValue(VCdDataType.Uri);
             AppendMediatype();
@@ -462,7 +461,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendPref();
         AppendValue(this.ParaSection.DataType);
 
-        if (this.ParaSection.DataType == VCdDataType.Uri)
+        if (this.ParaSection.DataType == Data.Uri)
         {
             AppendMediatype();
         }
@@ -543,11 +542,11 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     {
         AppendValue(this.ParaSection.DataType);
 
-        if (ParaSection.DataType == VCdDataType.Text)
+        if (ParaSection.DataType == Data.Text)
         {
             AppendLanguage();
         }
-        else if (ParaSection.DataType == VCdDataType.DateAndOrTime)
+        else if (ParaSection.DataType == Data.DateAndOrTime)
         {
             AppendCalScale();
         }
@@ -672,7 +671,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     private void AppendAltId()
     {
         string? altId = ParaSection.AltID;
-        if (altId != null)
+        if (altId is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.ALTID, EscapeAndQuote(altId));
         }
@@ -681,7 +680,8 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     private void AppendCalScale()
     {
         string? calScale = ParaSection.Calendar;
-        if (calScale != null)
+
+        if (calScale is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.ALTID, EscapeAndQuote(calScale));
         }
@@ -691,16 +691,16 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     {
         string? exp = ParaSection.Expertise.ToVcfString();
 
-        if (exp != null)
+        if (exp is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, exp);
         }
-        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) 
-                 && ParaSection.NonStandard != null)
+        else if (Options.HasFlag(Opts.WriteNonStandardParameters)
+                 && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL) 
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL)
                     && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
                     AppendParameter(ParameterSection.ParameterKey.LEVEL, kvp.Value);
@@ -712,7 +712,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     private void AppendGeo()
     {
-        FolkerKinzel.VCards.Models.GeoCoordinate? geo = ParaSection.GeoPosition;
+        VCards.GeoCoordinate? geo = ParaSection.GeoPosition;
 
         if (geo is null)
         {
@@ -745,11 +745,11 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     {
         string? interest = ParaSection.Interest.ToVCardString();
 
-        if (interest != null)
+        if (interest is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, interest);
         }
-        else if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        else if (Options.HasFlag(Opts.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
@@ -766,7 +766,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     {
         string? label = ParaSection.Label;
 
-        if (label != null)
+        if (label is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LABEL, EscapeAndQuote(label));
         }
@@ -776,7 +776,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     {
         string? lang = ParaSection.Language;
 
-        if (lang != null)
+        if (lang is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LANGUAGE, EscapeAndQuote(lang));
         }
@@ -786,7 +786,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
     {
         string? mediaType = ParaSection.MediaType;
 
-        if (mediaType != null)
+        if (mediaType is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.MEDIATYPE, EscapeAndQuote(mediaType));
         }
@@ -794,7 +794,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     private void AppendPid()
     {
-        IEnumerable<PropertyID?>? pids = ParaSection.PropertyIDs;
+        IEnumerable<PropertyID>? pids = ParaSection.PropertyIDs;
 
         if (pids is null)
         {
@@ -803,12 +803,10 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
         _ = _worker.Clear();
 
-        foreach (PropertyID? pid in pids)
+        foreach (PropertyID pid in pids)
         {
-            if (pid is null)
-            {
-                continue;
-            }
+            Debug.Assert(pid != null);
+            
             pid.AppendTo(_worker);
             _ = _worker.Append(',');
         }
@@ -832,7 +830,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
     private void AppendSortAs()
     {
-        IEnumerable<string?>? sortAs = ParaSection.SortAs;
+        IEnumerable<string>? sortAs = ParaSection.SortAs;
 
         if (sortAs is null)
         {
@@ -841,12 +839,9 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
 
         _ = _worker.Clear();
 
-        foreach (string? item in sortAs)
+        foreach (string item in sortAs)
         {
-            if (string.IsNullOrWhiteSpace(item))
-            {
-                continue;
-            }
+            Debug.Assert(!string.IsNullOrWhiteSpace(item));
 
             _ = _worker.Append(EscapeAndQuote(item));
             _ = _worker.Append(',');
@@ -868,7 +863,7 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
             _actionList[i](this);
         }
 
-        if (Options.HasFlag(VcfOptions.WriteNonStandardParameters) && ParaSection.NonStandard != null)
+        if (Options.HasFlag(Opts.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
@@ -918,16 +913,16 @@ internal sealed class ParameterSerializer4_0 : ParameterSerializer
         AppendParameter(ParameterSection.ParameterKey.TZ, EscapeAndQuote(_worker.ToString()));
     }
 
-    private void AppendValue(VCdDataType? dataType)
+    private void AppendValue(Data? dataType)
     {
-        const VCdDataType DEFINED_DATA_TYPES =
-            VCdDataType.Boolean | VCdDataType.Date | VCdDataType.DateAndOrTime |
-            VCdDataType.DateTime | VCdDataType.Float | VCdDataType.Integer | VCdDataType.LanguageTag |
-            VCdDataType.Text | VCdDataType.Time | VCdDataType.TimeStamp | VCdDataType.Uri | VCdDataType.UtcOffset;
+        const Data DEFINED_DATA_TYPES =
+            Data.Boolean | Data.Date | Data.DateAndOrTime |
+            Data.DateTime | Data.Float | Data.Integer | Data.LanguageTag |
+            Data.Text | Data.Time | Data.TimeStamp | Data.Uri | Data.UtcOffset;
 
         string? s = (dataType & DEFINED_DATA_TYPES).ToVcfString();
 
-        if (s != null)
+        if (s is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.VALUE, s);
         }

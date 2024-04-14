@@ -1,8 +1,8 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using OneOf;
 
@@ -20,22 +20,28 @@ public sealed class TimeStampProperty : VCardProperty
 
     /// <summary> Initializes a new <see cref="TimeStampProperty" /> object that 
     /// encapsulates the time of its constructor call as a UTC time stamp.</summary>
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <remarks>The constructor sets the <see cref="ParameterSection.DataType" /> parameter 
-    /// to the value <see cref="VCdDataType.TimeStamp" />.</remarks>
-    public TimeStampProperty()
-        : this(DateTimeOffset.UtcNow) { }
+    /// to the value <see cref="Data.TimeStamp" />.</remarks>
+    internal TimeStampProperty(string? group = null)
+        : this(DateTimeOffset.UtcNow, group) { }
 
 
     /// <summary>  Initializes a new <see cref="TimeStampProperty" /> object with
     /// the specified time stamp. </summary>
     /// <param name="value">The <see cref="DateTimeOffset" /> value to embed.</param>
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <remarks> The constructor sets the <see cref="ParameterSection.DataType" /> parameter 
-    /// to the value <see cref="VCdDataType.TimeStamp" />. </remarks>
-    public TimeStampProperty(DateTimeOffset value)
-        : base(new ParameterSection(), null)
+    /// to the value <see cref="Data.TimeStamp" />. </remarks>
+    public TimeStampProperty(DateTimeOffset value, string? group = null)
+        : base(new ParameterSection(), group)
     {
         Value = value;
-        Parameters.DataType = VCdDataType.TimeStamp;
+        Parameters.DataType = Data.TimeStamp;
     }
 
     internal TimeStampProperty(VcfRow vcfRow)
@@ -48,7 +54,7 @@ public sealed class TimeStampProperty : VCardProperty
             Value = value.Match<DateTimeOffset>(
                 dateOnly => new DateTimeOffset(dateOnly.ToDateTime(TimeOnly.MinValue, DateTimeKind.Local)),
                 dateTimeOffset => dateTimeOffset);
-            Parameters.DataType = VCdDataType.TimeStamp;
+            Parameters.DataType = Data.TimeStamp;
         }
     }
 
@@ -71,7 +77,7 @@ public sealed class TimeStampProperty : VCardProperty
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         StringBuilder worker = serializer.Worker;
         _ = worker.Clear();

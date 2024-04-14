@@ -1,12 +1,12 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
-    /// <summary> Spezialisierung der <see cref="RelationProperty" />-Klasse, um den
-    /// Namen einer Person, zu der eine Beziehung besteht, anzugeben. </summary>
+/// <summary> Spezialisierung der <see cref="RelationProperty" />-Klasse, um den
+/// Namen einer Person, zu der eine Beziehung besteht, anzugeben. </summary>
 internal sealed class RelationTextProperty : RelationProperty
 {
     private readonly TextProperty _textProp;
@@ -20,7 +20,7 @@ internal sealed class RelationTextProperty : RelationProperty
                vcfRow.Group) => _textProp = new TextProperty(vcfRow, version);
 
     public new string? Value => _textProp.Value;
-    
+
     /// <inheritdoc />
     [MemberNotNullWhen(false, nameof(Value))]
     public override bool IsEmpty => _textProp.IsEmpty;
@@ -31,9 +31,9 @@ internal sealed class RelationTextProperty : RelationProperty
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
         _textProp.PrepareForVcfSerialization(serializer);
-        Parameters.DataType = VCdDataType.Text;
+        Parameters.DataType = Data.Text;
     }
 
     internal override void AppendValue(VcfSerializer serializer)

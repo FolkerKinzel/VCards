@@ -1,6 +1,6 @@
-﻿using FolkerKinzel.VCards.Intls.Serializers;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -27,7 +27,8 @@ public class ReferencedDataPropertyTests
 
 
     [TestMethod]
-    public void GetFileTypeExtensionTest1() => Assert.AreEqual(".bin", DataProperty.FromUri(null).GetFileTypeExtension(), false);
+    public void GetFileTypeExtensionTest1() 
+        => Assert.AreEqual(".bin", DataProperty.FromUri(null).GetFileTypeExtension(), false);
 
 
     [TestMethod]
@@ -40,7 +41,6 @@ public class ReferencedDataPropertyTests
 
         prop = DataProperty.FromUri(uri);
         Assert.AreEqual(".txt", prop.GetFileTypeExtension());
-
     }
 
     [TestMethod]
@@ -51,7 +51,7 @@ public class ReferencedDataPropertyTests
     public void AppendToTest1()
     {
         using var writer = new StringWriter();
-        var serializer = new Vcf_3_0Serializer(writer, VcfOptions.Default, null);
+        var serializer = new Vcf_3_0Serializer(writer, Opts.Default, null);
         DataProperty.FromUri(null).AppendValue(serializer);
         Assert.AreEqual(0, serializer.Builder.Length);
     }
@@ -61,14 +61,14 @@ public class ReferencedDataPropertyTests
     public void PrepareForVcfSerializationTest1()
     {
         using var writer = new StringWriter();
-        var serializer = new Vcf_2_1Serializer(writer, VcfOptions.Default, null);
+        var serializer = new Vcf_2_1Serializer(writer, Opts.Default, null);
 
         var prop = DataProperty.FromUri(null);
-        prop.Parameters.ContentLocation = ContentLocation.Url;
-        prop.Parameters.DataType = VCdDataType.Uri;
+        prop.Parameters.ContentLocation = Loc.Url;
+        prop.Parameters.DataType = Data.Uri;
 
         prop.PrepareForVcfSerialization(serializer);
-        Assert.AreEqual(ContentLocation.Inline, prop.Parameters.ContentLocation);
+        Assert.AreEqual(Loc.Inline, prop.Parameters.ContentLocation);
     }
 
 
@@ -76,14 +76,14 @@ public class ReferencedDataPropertyTests
     public void PrepareForVcfSerializationTest2()
     {
         using var writer = new StringWriter();
-        var serializer = new Vcf_2_1Serializer(writer, VcfOptions.Default, null);
+        var serializer = new Vcf_2_1Serializer(writer, Opts.Default, null);
 
         Assert.IsTrue(Uri.TryCreate("cid:something", UriKind.Absolute, out Uri? uri));
         var prop = DataProperty.FromUri(uri);
 
         prop.PrepareForVcfSerialization(serializer);
-        Assert.AreEqual(ContentLocation.ContentID, prop.Parameters.ContentLocation);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(Loc.Cid, prop.Parameters.ContentLocation);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 }
 

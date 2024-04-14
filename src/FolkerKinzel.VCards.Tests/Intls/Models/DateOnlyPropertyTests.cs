@@ -16,5 +16,17 @@ public class DateOnlyPropertyTests
         Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(dateOnly, prop.Value!.DateOnly);
     }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = DateAndOrTimeProperty.FromDate(3, 15);
+
+        var prop2 = (DateAndOrTimeProperty)prop1.Clone();
+
+        Assert.AreEqual(prop1.Value!.DateOnly, prop2.Value!.DateOnly);
+        Assert.AreNotSame(prop1, prop2);
+
+    }
 }
 

@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Tests;
+﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -33,7 +34,7 @@ public class GeoPropertyTests
 
         string s = vcard.ToVcfString();
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -57,5 +58,16 @@ public class GeoPropertyTests
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
         Assert.AreEqual(GROUP, prop.Group, true);
 
+    }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new GeoProperty(15.7, 14.8);
+
+        var prop2 = (GeoProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value, prop2.Value);
+        Assert.AreNotSame(prop1, prop2);
     }
 }

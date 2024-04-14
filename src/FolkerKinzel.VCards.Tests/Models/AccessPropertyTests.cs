@@ -1,4 +1,6 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -10,10 +12,10 @@ public class AccessPropertyTests
     [TestMethod()]
     public void AccessPropertyTest1()
     {
-        var prop = new AccessProperty(Enums.Access.Confidential);
+        var prop = new AccessProperty(VCards.Enums.Access.Confidential);
 
-        Assert.AreEqual(Enums.Access.Confidential, prop.Value);
-        Assert.AreEqual(Enums.Access.Confidential, ((VCardProperty)prop).Value);
+        Assert.AreEqual(VCards.Enums.Access.Confidential, prop.Value);
+        Assert.AreEqual(VCards.Enums.Access.Confidential, ((VCardProperty)prop).Value);
 
         Assert.IsFalse(prop.IsEmpty);
     }
@@ -28,9 +30,9 @@ public class AccessPropertyTests
         var prop = new AccessProperty(row!);
 
         Assert.AreEqual(GROUP, prop.Group);
-        Assert.AreEqual(Enums.Access.Private, prop.Value);
-        Assert.AreEqual(Enums.Access.Private, ((VCardProperty)prop).Value);
 
+        Assert.AreEqual(VCards.Enums.Access.Private, prop.Value);
+        Assert.AreEqual(VCards.Enums.Access.Private, ((VCardProperty)prop).Value);
 
         Assert.IsFalse(prop.IsEmpty);
     }
@@ -40,19 +42,30 @@ public class AccessPropertyTests
     {
         var vcard = new VCard
         {
-            Access = new AccessProperty(Enums.Access.Private)
+            Access = new AccessProperty(VCards.Enums.Access.Private)
         };
 
         string serialized = vcard.ToVcfString();
 
-        IList<VCard> list = VCard.ParseVcf(serialized);
+        IList<VCard> list = Vcf.Parse(serialized);
 
         Assert.AreEqual(1, list.Count);
 
         vcard = list[0];
         Assert.IsNotNull(vcard.Access);
-        Assert.AreEqual(Enums.Access.Private, vcard.Access.Value);
+
+        Assert.AreEqual(VCards.Enums.Access.Private, vcard.Access.Value);
     }
 
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new AccessProperty(Access.Private);
+
+        var prop2 = (AccessProperty)prop1.Clone();
+
+        Assert.AreEqual(prop1.Value, prop2.Value);
+        Assert.AreNotSame(prop1, prop2);
+    }
 
 }

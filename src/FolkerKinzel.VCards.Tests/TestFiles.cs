@@ -29,6 +29,10 @@ internal static class TestFiles
     internal static string WhatsAppIssueVcf => Path.Combine(_testFileDirectory, "WhatsAppIssue.vcf");
 
     internal static string AnsiIssueVcf => Path.Combine(_testFileDirectory, "AnsiIssue.vcf");
+    internal static string AnsiIssueNoEncodingVcf => Path.Combine(_testFileDirectory, "AnsiIssueNoEncoding.vcf");
+    internal static string AnsiIssueInvalidEncodingVcf => Path.Combine(_testFileDirectory, "AnsiIssueInvalidEncoding.vcf");
+
+
     internal static string LabelIssueVcf => Path.Combine(_testFileDirectory, "LabelIssue.vcf");
     internal static string LabelTest1Vcf => Path.Combine(_testFileDirectory, "LabelTest1.vcf");
     internal static string LabelTest2Vcf => Path.Combine(_testFileDirectory, "LabelTest2.vcf");
@@ -48,7 +52,9 @@ internal static class TestFiles
 
     internal static string NextCloudPhotoIssueTxt => Path.Combine(_testFileDirectory, "NextCloudPhotoIssue.txt");
 
+    internal static string LargeFileVcf => Path.Combine(_testFileDirectory, "LargeFile.vcf");
 
+    internal static string EmptyVcf => Path.Combine(_testFileDirectory, "Empty.vcf");
 
 
 

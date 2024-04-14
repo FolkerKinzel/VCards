@@ -1,0 +1,6 @@
+BEGIN:VCARD
+VERSION:2.1
+N;LANGUAGE=de:Rastral;Ralf
+FN:Ralf Rastral
+ADR;HOME;PREF;:;;Lämmerweg 12;Kleindorf;;98765;Deutschland
+END:VCARD

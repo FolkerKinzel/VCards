@@ -1,8 +1,8 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
@@ -15,8 +15,8 @@ internal sealed class RelationVCardProperty : RelationProperty
     /// </summary>
     /// <param name="vcard">The <see cref="VCard" /> of a person, with whom there is
     /// a relationship, or <c>null</c>.</param>
-    /// <param name="relation">A single <see cref="RelationTypes" /> value or a combination
-    /// of several <see cref="RelationTypes" /> values or <c>null</c>.</param>
+    /// <param name="relation">A single <see cref="Rel" /> value or a combination
+    /// of several <see cref="Rel" /> values or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
@@ -28,13 +28,13 @@ internal sealed class RelationVCardProperty : RelationProperty
     /// </note>
     /// </remarks>
     internal RelationVCardProperty(
-        VCard vcard, RelationTypes? relation = null, string? group = null)
+        VCard vcard, Rel? relation = null, string? group = null)
         : base(relation, group)
     {
-        Debug.Assert(vcard != null);
+        Debug.Assert(vcard is not null);
 
         Value = vcard;
-        Parameters.DataType = VCdDataType.VCard;
+        Parameters.DataType = Data.VCard;
     }
 
     public new VCard Value
@@ -49,24 +49,24 @@ internal sealed class RelationVCardProperty : RelationProperty
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         base.PrepareForVcfSerialization(serializer);
 
-        Parameters.DataType = VCdDataType.VCard;
+        Parameters.DataType = Data.VCard;
     }
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
-        Debug.Assert(Value != null);
+        Debug.Assert(serializer is not null);
+        Debug.Assert(Value is not null);
         Debug.Assert(serializer.Version < VCdVersion.V4_0);
 
         StringBuilder builder = serializer.Builder;
         StringBuilder worker = serializer.Worker;
 
-        string vc = Value.ToVcfString(serializer.Version, 
-                                      options: serializer.Options.Unset(VcfOptions.AppendAgentAsSeparateVCard));
+        string vc = Value.ToVcfString(serializer.Version,
+                                      options: serializer.Options.Unset(Opts.AppendAgentAsSeparateVCard));
 
         if (serializer.Version == VCdVersion.V3_0)
         {

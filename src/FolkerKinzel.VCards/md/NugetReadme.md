@@ -1,12 +1,12 @@
 [![GitHub](https://img.shields.io/github/license/FolkerKinzel/VCards)](https://github.com/FolkerKinzel/VCards/blob/master/LICENSE)
 
-## .NET library to read, write, and convert VCF files that match the vCard standards 2.1, 3.0, and 4.0
+## .NET library for reading, writing, and converting VCF files that comply with vCard standards 2.1, 3.0 and 4.0
 
 It allows
-* to load VCF files from the file system and to save them there,
-* to serialize VCF files from and to Streams and
-* to convert VCF files that match the vCard versions 2.1, 3.0, and 4.0 to each other.
+* loading VCF files from the file system and storing them there,
+* serializing VCF files to and from streams,
+* and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.
 
-[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v6.2.1)
+[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v7.0.0-beta.1)
 
 [See code examples on GitHub](https://github.com/FolkerKinzel/VCards)

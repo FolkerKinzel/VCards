@@ -5,6 +5,8 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 internal static class ReadOnlyCollectionConverter
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [SuppressMessage("Style", "IDE0300:Simplify collection initialization",
+        Justification = "Performance: Initializer initializes a new List.")]
     internal static ReadOnlyCollection<string> ToReadOnlyCollection(string? s)
         => string.IsNullOrWhiteSpace(s) ? ReadOnlyStringCollection.Empty : new ReadOnlyCollection<string>(new string[] { s });
 

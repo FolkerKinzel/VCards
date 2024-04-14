@@ -1,4 +1,8 @@
-﻿namespace FolkerKinzel.VCards.Models.Tests;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass()]
 public class KindPropertyTests
@@ -6,7 +10,7 @@ public class KindPropertyTests
     [TestMethod()]
     public void KindPropertyTest1()
     {
-        const Enums.VCdKind kind = Enums.VCdKind.Application;
+        const VCards.Enums.Kind kind = VCards.Enums.Kind.Application;
 
         var prop = new KindProperty(kind);
 
@@ -18,7 +22,7 @@ public class KindPropertyTests
     [TestMethod()]
     public void KindPropertyTest2()
     {
-        const Enums.VCdKind kind = Enums.VCdKind.Application;
+        const VCards.Enums.Kind kind = VCards.Enums.Kind.Application;
 
         var prop = new KindProperty(kind);
 
@@ -29,7 +33,7 @@ public class KindPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -42,5 +46,12 @@ public class KindPropertyTests
 
         Assert.AreEqual(kind, prop!.Value);
         Assert.IsFalse(prop.IsEmpty);
+    }
+
+    [TestMethod]
+    public void GetVCardPropertyValueTest1()
+    {
+        VCardProperty prop = new KindProperty(Kind.Group);
+        Assert.AreEqual(Kind.Group, prop.Value);
     }
 }

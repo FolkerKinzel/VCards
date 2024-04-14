@@ -1,12 +1,12 @@
 using System.Globalization;
 using System.IO;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
@@ -30,14 +30,14 @@ internal abstract class VcfSerializer : IDisposable
     private readonly TextWriter _writer;
 
     protected VcfSerializer(TextWriter writer,
-                            VcfOptions options,
+                            Opts options,
                             ParameterSerializer parameterSerializer,
                             ITimeZoneIDConverter? tzConverter)
     {
         this.Options = options;
 
         // Store this for performance:
-        this.IgnoreEmptyItems = !options.IsSet(VcfOptions.WriteEmptyProperties);
+        this.IgnoreEmptyItems = !options.IsSet(Opts.WriteEmptyProperties);
 
         this.ParameterSerializer = parameterSerializer;
         this._writer = writer;
@@ -53,7 +53,7 @@ internal abstract class VcfSerializer : IDisposable
 
     internal abstract VCdVersion Version { get; }
 
-    internal VcfOptions Options { get; }
+    internal Opts Options { get; }
 
     internal bool IgnoreEmptyItems { get; }
 
@@ -75,12 +75,12 @@ internal abstract class VcfSerializer : IDisposable
                                        IEnumerable<T?> serializables,
                                        Func<T, bool>? filter = null) where T : VCardProperty
     {
-        Debug.Assert(serializables != null);
+        Debug.Assert(serializables is not null);
 
         VCardProperty? pref = filter is null ? serializables.PrefOrNullIntl(IgnoreEmptyItems)
                                              : serializables.PrefOrNullIntl(filter, IgnoreEmptyItems);
 
-        if (pref != null)
+        if (pref is not null)
         {
             BuildProperty(propertyKey, pref);
         }
@@ -90,12 +90,12 @@ internal abstract class VcfSerializer : IDisposable
                                          IEnumerable<T?> serializables,
                                          Func<T, bool>? filter = null) where T : VCardProperty
     {
-        Debug.Assert(serializables != null);
+        Debug.Assert(serializables is not null);
 
         VCardProperty? first = filter is null ? serializables.FirstOrNullIntl(IgnoreEmptyItems)
                                               : serializables.FirstOrNullIntl(filter, IgnoreEmptyItems);
 
-        if (first != null)
+        if (first is not null)
         {
             BuildProperty(propertyKey, first);
         }
@@ -103,7 +103,7 @@ internal abstract class VcfSerializer : IDisposable
 
     protected virtual void BuildPropertyCollection(string propertyKey, IEnumerable<VCardProperty?> serializables)
     {
-        Debug.Assert(serializables != null);
+        Debug.Assert(serializables is not null);
 
         bool first = true;
 
@@ -117,7 +117,7 @@ internal abstract class VcfSerializer : IDisposable
     internal static VcfSerializer GetSerializer(Stream stream,
                                                 bool leaveStreamOpen,
                                                 VCdVersion version,
-                                                VcfOptions options,
+                                                Opts options,
                                                 ITimeZoneIDConverter? tzConverter)
     {
         // UTF-8 must be written without BOM, otherwise it cannot be read
@@ -139,10 +139,20 @@ internal abstract class VcfSerializer : IDisposable
 
     internal void Serialize(VCard vCard)
     {
-        Debug.Assert(vCard != null);
+        Debug.Assert(vCard is not null);
 
         VCardToSerialize = vCard;
         ReplenishRequiredProperties();
+
+        if (Options.HasFlag(Opts.SetPropertyIDs))
+        {
+            SetPropertyIDs();
+        }
+
+        if (Options.HasFlag(Opts.SetIndexes))
+        {
+            SetIndexes();
+        }
 
         ResetBuilders();
         _writer.WriteLine("BEGIN:VCARD");
@@ -153,6 +163,25 @@ internal abstract class VcfSerializer : IDisposable
         AppendProperties();
 
         _writer.WriteLine("END:VCARD");
+    }
+
+    protected virtual void SetPropertyIDs() => VCardToSerialize.Sync.SetPropertyIDs();
+
+    protected virtual void SetIndexes()
+    {
+        foreach (IEnumerable<VCardProperty?> coll in VCardToSerialize.Properties
+                                                     .Where(static x => (x.Value is IEnumerable<VCardProperty?>) && (x.Key != Prop.AppIDs))
+                                                     .Select(static x => (IEnumerable<VCardProperty?>)x.Value))
+        {
+            if (coll.IsSingle(IgnoreEmptyItems))
+            {
+                coll.UnsetIndexesIntl();
+            }
+            else
+            {
+                coll.SetIndexesIntl(IgnoreEmptyItems);
+            }
+        }
     }
 
     protected abstract void ReplenishRequiredProperties();
@@ -174,150 +203,150 @@ internal abstract class VcfSerializer : IDisposable
 
     private void AppendProperties()
     {
-        foreach (KeyValuePair<VCdProp, object> kvp in 
-            ((IEnumerable<KeyValuePair<VCdProp, object>>)VCardToSerialize).OrderBy(x => x.Key))
+        foreach (KeyValuePair<Prop, object> kvp in
+            VCardToSerialize.Properties.OrderBy(static x => x.Key))
         {
             switch (kvp.Key)
             {
-                case VCdProp.Profile:
+                case Prop.Profile:
                     AppendProfile((ProfileProperty)kvp.Value);
                     break;
-                case VCdProp.Kind:
+                case Prop.Kind:
                     AppendKind((KindProperty)kvp.Value);
                     break;
-                case VCdProp.Mailer:
+                case Prop.Mailer:
                     AppendMailer((TextProperty)kvp.Value);
                     break;
-                case VCdProp.ProdID:
+                case Prop.ProductID:
                     AppendProdID((TextProperty)kvp.Value);
                     break;
-                case VCdProp.TimeStamp:
+                case Prop.TimeStamp:
                     AppendLastRevision((TimeStampProperty)kvp.Value);
                     break;
-                case VCdProp.UniqueIdentifier:
-                    AppendUniqueIdentifier((UuidProperty)kvp.Value);
+                case Prop.ID:
+                    AppendUniqueIdentifier((IDProperty)kvp.Value);
                     break;
-                case VCdProp.Categories:
+                case Prop.Categories:
                     AppendCategories((IEnumerable<StringCollectionProperty?>)kvp.Value);
                     break;
-                case VCdProp.TimeZones:
+                case Prop.TimeZones:
                     AppendTimeZones((IEnumerable<TimeZoneProperty?>)kvp.Value);
                     break;
-                case VCdProp.GeoCoordinates:
+                case Prop.GeoCoordinates:
                     AppendGeoCoordinates((IEnumerable<GeoProperty?>)kvp.Value);
                     break;
-                case VCdProp.Access:
+                case Prop.Access:
                     AppendAccess((AccessProperty)kvp.Value);
                     break;
-                case VCdProp.Sources:
+                case Prop.Sources:
                     AppendSources((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.DirectoryName:
+                case Prop.DirectoryName:
                     AppendDirectoryName((TextProperty)kvp.Value);
                     break;
-                case VCdProp.DisplayNames:
+                case Prop.DisplayNames:
                     AppendDisplayNames((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.NameViews:
+                case Prop.NameViews:
                     AppendNameViews((IEnumerable<NameProperty?>)kvp.Value);
                     break;
-                case VCdProp.GenderViews:
+                case Prop.GenderViews:
                     AppendGenderViews((IEnumerable<GenderProperty?>)kvp.Value);
                     break;
-                case VCdProp.NickNames:
+                case Prop.NickNames:
                     AppendNickNames((IEnumerable<StringCollectionProperty?>)kvp.Value);
                     break;
-                case VCdProp.Titles:
+                case Prop.Titles:
                     AppendTitles((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Roles:
+                case Prop.Roles:
                     AppendRoles((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Organizations:
-                    AppendOrganizations((IEnumerable<OrganizationProperty?>)kvp.Value);
+                case Prop.Organizations:
+                    AppendOrganizations((IEnumerable<OrgProperty?>)kvp.Value);
                     break;
-                case VCdProp.BirthDayViews:
+                case Prop.BirthDayViews:
                     AppendBirthDayViews((IEnumerable<DateAndOrTimeProperty?>)kvp.Value);
                     break;
-                case VCdProp.BirthPlaceViews:
+                case Prop.BirthPlaceViews:
                     AppendBirthPlaceViews((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.AnniversaryViews:
+                case Prop.AnniversaryViews:
                     AppendAnniversaryViews((IEnumerable<DateAndOrTimeProperty?>)kvp.Value);
                     break;
-                case VCdProp.DeathDateViews:
+                case Prop.DeathDateViews:
                     AppendDeathDateViews((IEnumerable<DateAndOrTimeProperty?>)kvp.Value);
                     break;
-                case VCdProp.DeathPlaceViews:
+                case Prop.DeathPlaceViews:
                     AppendDeathPlaceViews((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Addresses:
+                case Prop.Addresses:
                     AppendAddresses((IEnumerable<AddressProperty?>)kvp.Value);
                     break;
-                case VCdProp.Phones:
+                case Prop.Phones:
                     AppendPhones((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.EMails:
+                case Prop.EMails:
                     AppendEMails((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.URLs:
+                case Prop.Urls:
                     AppendURLs((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.InstantMessengers:
+                case Prop.Messengers:
                     AppendInstantMessengerHandles((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Keys:
+                case Prop.Keys:
                     AppendKeys((IEnumerable<DataProperty?>)kvp.Value);
                     break;
-                case VCdProp.CalendarAddresses:
+                case Prop.CalendarAddresses:
                     AppendCalendarAddresses((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.CalendarUserAddresses:
+                case Prop.CalendarUserAddresses:
                     AppendCalendarUserAddresses((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.FreeOrBusyUrls:
+                case Prop.FreeOrBusyUrls:
                     AppendFreeBusyUrls((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Relations:
+                case Prop.Relations:
                     AppendRelations((IEnumerable<RelationProperty?>)kvp.Value);
                     break;
-                case VCdProp.Members:
+                case Prop.Members:
                     AppendMembers((IEnumerable<RelationProperty?>)kvp.Value);
                     break;
-                case VCdProp.OrgDirectories:
+                case Prop.OrgDirectories:
                     AppendOrgDirectories((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Expertises:
+                case Prop.Expertises:
                     AppendExpertises((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Interests:
+                case Prop.Interests:
                     AppendInterests((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Hobbies:
+                case Prop.Hobbies:
                     AppendHobbies((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Languages:
+                case Prop.Languages:
                     AppendLanguages((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.Notes:
+                case Prop.Notes:
                     AppendNotes((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case VCdProp.XmlProperties:
+                case Prop.Xmls:
                     AppendXmlProperties((IEnumerable<XmlProperty?>)kvp.Value);
                     break;
-                case VCdProp.Logos:
+                case Prop.Logos:
                     AppendLogos((IEnumerable<DataProperty?>)kvp.Value);
                     break;
-                case VCdProp.Photos:
+                case Prop.Photos:
                     AppendPhotos((IEnumerable<DataProperty?>)kvp.Value);
                     break;
-                case VCdProp.Sounds:
+                case Prop.Sounds:
                     AppendSounds((IEnumerable<DataProperty?>)kvp.Value);
                     break;
-                case VCdProp.PropertyIDMappings:
-                    AppendPropertyIDMappings((IEnumerable<PropertyIDMappingProperty?>)kvp.Value);
+                case Prop.AppIDs:
+                    AppendVCardClients((IEnumerable<AppIDProperty?>)kvp.Value);
                     break;
-                case VCdProp.NonStandard:
+                case Prop.NonStandards:
                     AppendNonStandardProperties((IEnumerable<NonStandardProperty?>)kvp.Value);
                     break;
                 default:
@@ -334,7 +363,7 @@ internal abstract class VcfSerializer : IDisposable
         }
 
         PropertyKey = propertyKey;
-        
+
         IsPref = isPref;
 
         if (prop.BuildProperty(this))
@@ -347,9 +376,9 @@ internal abstract class VcfSerializer : IDisposable
 
     protected void BuildXImpps(IEnumerable<TextProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
-        if (Options.HasFlag(VcfOptions.WriteXExtensions))
+        if (Options.HasFlag(Opts.WriteXExtensions))
         {
             bool first = true;
 
@@ -357,7 +386,7 @@ internal abstract class VcfSerializer : IDisposable
             {
                 bool isPref = first && prop.Parameters.Preference < 100;
                 first = false;
-               
+
                 XMessengerParameterConverter.ConvertFromInstantMessengerType(prop.Parameters);
 
                 string val = prop.Value!;
@@ -409,17 +438,17 @@ internal abstract class VcfSerializer : IDisposable
             }
         }
 
-        if (Options.HasFlag(VcfOptions.WriteKAddressbookExtensions))
+        if (Options.HasFlag(Opts.WriteKAddressbookExtensions))
         {
             TextProperty? prop = value.PrefOrNullIntl(IgnoreEmptyItems);
-                                 
-            if (prop != null)
+
+            if (prop is not null)
             {
                 BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_IMAddress, prop, prop.Parameters.Preference < 100);
             }
         }
     }
-   
+
     protected virtual void AppendLineFolding()
     {
         int counter = 0;
@@ -435,7 +464,7 @@ internal abstract class VcfSerializer : IDisposable
             {
                 continue;
             }
-            
+
             if (counter > VCard.MAX_BYTES_PER_LINE)
             {
                 i--; // one char back
@@ -464,27 +493,27 @@ internal abstract class VcfSerializer : IDisposable
 
     protected virtual void AppendAnniversaryViews(IEnumerable<DateAndOrTimeProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
         if (value.WhereNotEmpty()
                  .FirstOrDefault(static x => x is DateOnlyProperty) is DateOnlyProperty pref)
         {
-            if (Options.HasFlag(VcfOptions.WriteXExtensions))
+            if (Options.HasFlag(Opts.WriteXExtensions))
             {
                 BuildAnniversary(VCard.PropKeys.NonStandard.X_ANNIVERSARY, pref.Group);
             }
 
-            if (Options.HasFlag(VcfOptions.WriteEvolutionExtensions))
+            if (Options.HasFlag(Opts.WriteEvolutionExtensions))
             {
                 BuildAnniversary(VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY, pref.Group);
             }
 
-            if (Options.HasFlag(VcfOptions.WriteKAddressbookExtensions))
+            if (Options.HasFlag(Opts.WriteKAddressbookExtensions))
             {
                 BuildAnniversary(VcfSerializer.X_KADDRESSBOOK_X_Anniversary, pref.Group);
             }
 
-            if (Options.HasFlag(VcfOptions.WriteWabExtensions))
+            if (Options.HasFlag(Opts.WriteWabExtensions))
             {
                 BuildAnniversary(VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY, pref.Group);
             }
@@ -542,35 +571,35 @@ internal abstract class VcfSerializer : IDisposable
 
     protected virtual void AppendGenderViews(IEnumerable<GenderProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
-        if (value.FirstOrDefault(x => x?.Value?.Gender != null) is GenderProperty pref)
+        if (value.FirstOrDefault(x => x?.Value?.Sex is not null) is GenderProperty pref)
         {
-            Gender sex = pref.Value.Gender!.Value;
+            Sex sex = pref.Value.Sex!.Value;
 
-            if (sex != Gender.Male && sex != Gender.Female)
+            if (sex != Sex.Male && sex != Sex.Female)
             {
                 return;
             }
 
-            if (Options.HasFlag(VcfOptions.WriteXExtensions))
+            if (Options.HasFlag(Opts.WriteXExtensions))
             {
                 string propKey = VCard.PropKeys.NonStandard.X_GENDER;
 
                 var xGender = new NonStandardProperty(
                     propKey,
-                    sex == Gender.Male ? "Male" : "Female", pref.Group);
+                    sex == Sex.Male ? "Male" : "Female", pref.Group);
 
                 BuildProperty(propKey, xGender);
             }
 
-            if (Options.HasFlag(VcfOptions.WriteWabExtensions))
+            if (Options.HasFlag(Opts.WriteWabExtensions))
             {
                 string propKey = VCard.PropKeys.NonStandard.X_WAB_GENDER;
 
                 var xGender = new NonStandardProperty(
                     propKey,
-                    sex == Gender.Male ? "2" : "1", pref.Group);
+                    sex == Sex.Male ? "2" : "1", pref.Group);
 
                 BuildProperty(propKey, xGender);
             }
@@ -615,9 +644,9 @@ internal abstract class VcfSerializer : IDisposable
 
     protected void AppendNonStandardProperties(IEnumerable<NonStandardProperty?> value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
-        if (!this.Options.HasFlag(VcfOptions.WriteNonStandardProperties))
+        if (!this.Options.HasFlag(Opts.WriteNonStandardProperties))
         {
             return;
         }
@@ -642,7 +671,7 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendNickNames(IEnumerable<StringCollectionProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendOrganizations(IEnumerable<OrganizationProperty?> value) { }
+    protected virtual void AppendOrganizations(IEnumerable<OrgProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendOrgDirectories(IEnumerable<TextProperty?> value) { }
@@ -660,22 +689,22 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendProfile(ProfileProperty value) { }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendPropertyIDMappings(IEnumerable<PropertyIDMappingProperty?> value) { }
+    protected virtual void AppendVCardClients(IEnumerable<AppIDProperty?> value) { }
 
     protected virtual void AppendRelations(IEnumerable<RelationProperty?> value)
     {
-        RelationProperty? agent = value.PrefOrNullIntl(static x => x.Parameters.Relation.IsSet(RelationTypes.Agent),
+        RelationProperty? agent = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Agent),
                                                        IgnoreEmptyItems);
 
-        if (agent != null)
+        if (agent is not null)
         {
             BuildProperty(VCard.PropKeys.AGENT, agent);
         }
 
-        RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.Relation.IsSet(RelationTypes.Spouse), 
+        RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Spouse),
                                                         IgnoreEmptyItems);
-                   
-        if (spouse != null)
+
+        if (spouse is not null)
         {
             if (spouse is RelationVCardProperty vCardProp)
             {
@@ -684,22 +713,22 @@ internal abstract class VcfSerializer : IDisposable
 
             if (spouse is RelationTextProperty)
             {
-                if (Options.HasFlag(VcfOptions.WriteXExtensions))
+                if (Options.HasFlag(Opts.WriteXExtensions))
                 {
                     BuildProperty(VCard.PropKeys.NonStandard.X_SPOUSE, spouse);
                 }
 
-                if (Options.HasFlag(VcfOptions.WriteKAddressbookExtensions))
+                if (Options.HasFlag(Opts.WriteKAddressbookExtensions))
                 {
                     BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_SpouseName, spouse);
                 }
 
-                if (Options.HasFlag(VcfOptions.WriteEvolutionExtensions))
+                if (Options.HasFlag(Opts.WriteEvolutionExtensions))
                 {
                     BuildProperty(VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE, spouse);
                 }
 
-                if (Options.HasFlag(VcfOptions.WriteWabExtensions))
+                if (Options.HasFlag(Opts.WriteWabExtensions))
                 {
                     BuildProperty(VCard.PropKeys.NonStandard.X_WAB_SPOUSE_NAME, spouse);
                 }
@@ -714,7 +743,7 @@ internal abstract class VcfSerializer : IDisposable
             {
                 NameProperty? vcdName = vcardProp.Value?.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true);
 
-                if (vcdName != null)
+                if (vcdName is not null)
                 {
                     name = vcdName.ToDisplayName();
                 }
@@ -724,9 +753,9 @@ internal abstract class VcfSerializer : IDisposable
                 }
             }
 
-            Debug.Assert(name != null);
-            return RelationProperty.FromText(name, 
-                                             vcardProp.Parameters.Relation ?? RelationTypes.Spouse,
+            Debug.Assert(name is not null);
+            return RelationProperty.FromText(name,
+                                             vcardProp.Parameters.RelationType ?? Rel.Spouse,
                                              vcardProp.Group);
         }
     }
@@ -747,7 +776,7 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendTitles(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendUniqueIdentifier(UuidProperty value) { }
+    protected virtual void AppendUniqueIdentifier(IDProperty value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendURLs(IEnumerable<TextProperty?> value) { }

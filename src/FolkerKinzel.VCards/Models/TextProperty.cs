@@ -1,9 +1,9 @@
 using System.Collections;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
@@ -25,7 +25,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
         : base(new ParameterSection(), group)
         => Value = string.IsNullOrWhiteSpace(value) ? null : value;
 
-    internal TextProperty(VcfRow vcfRow, VCdVersion version) 
+    internal TextProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
         vcfRow.UnMask(version);
@@ -60,27 +60,27 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         base.PrepareForVcfSerialization(serializer);
 
         if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
-            this.Parameters.Encoding = ValueEncoding.QuotedPrintable;
+            this.Parameters.Encoding = Enc.QuotedPrintable;
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
     }
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         StringBuilder builder = serializer.Builder;
 
 
         if (serializer.Version == VCdVersion.V2_1)
         {
-            _ = this.Parameters.Encoding == ValueEncoding.QuotedPrintable
+            _ = this.Parameters.Encoding == Enc.QuotedPrintable
                 ? builder.Append(QuotedPrintable.Encode(Value, builder.Length))
                 : builder.Append(Value);
         }

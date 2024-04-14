@@ -1,7 +1,7 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
@@ -18,8 +18,11 @@ public sealed class AccessProperty : VCardProperty
 
     /// <summary> Initializes a new <see cref="AccessProperty" /> object. </summary>
     /// <param name="value">A member of the <see cref="Access" /> enum.</param>
-    public AccessProperty(Access value)
-        : base(new ParameterSection(), null) => Value = value;
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    public AccessProperty(Access value, string? group = null)
+        : base(new ParameterSection(), group) => Value = value;
 
 
     internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
@@ -43,7 +46,7 @@ public sealed class AccessProperty : VCardProperty
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
         _ = serializer.Builder.Append(Value.ToVCardString());
     }
 }

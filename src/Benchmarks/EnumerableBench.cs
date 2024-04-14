@@ -12,9 +12,9 @@ namespace Benchmarks;
 [MemoryDiagnoser]
 public class EnumerableBench
 {
-    private readonly string?[] _arr = new[] { "1", null, "2", null, "3", "4", null, "5", "6" };
+    private readonly string?[] _arr = ["1", null, "2", null, "3", "4", null, "5", "6"];
 
-    private readonly TextProperty?[] _props = new[] {new TextProperty(null), null, new TextProperty("Hi"), null, new TextProperty("Bye bye"), null};
+    private readonly TextProperty?[] _props = [new TextProperty(null), null, new TextProperty("Hi"), null, new TextProperty("Bye bye"), null];
 
     //[Benchmark]
     //public int NotNullLibrary()
@@ -56,7 +56,7 @@ public class EnumerableBench
     {
         foreach (var item in _arr)
         {
-            if (item != null)
+            if (item is not null)
             {
                 yield return item;
             }
@@ -65,9 +65,9 @@ public class EnumerableBench
 
     private IEnumerable<TextProperty> NotEmpty()
     {
-        foreach (var item in _props)
+        foreach (TextProperty? item in _props)
         {
-            if (item != null && !item.IsEmpty)
+            if (item is not null && !item.IsEmpty)
             {
                 yield return item;
             }
@@ -76,9 +76,9 @@ public class EnumerableBench
 
     private IEnumerable<TextProperty> NotNullAnd(Func<TextProperty, bool> func)
     {
-        foreach (var item in _props)
+        foreach (TextProperty? item in _props)
         {
-            if (item != null && func(item))
+            if (item is not null && func(item))
             {
                 yield return item;
             }

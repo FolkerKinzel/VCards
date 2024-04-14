@@ -1,9 +1,9 @@
 using System.Collections;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
@@ -20,15 +20,15 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
     /// <summary> Initializes a new <see cref="AddressProperty" /> object.</summary>
     /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g. city).</param>
-    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="locality">The locality (e.g., city).</param>
+    /// <param name="region">The region (e.g., state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
+    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <seealso cref="AttachLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressProperty(IEnumerable<string?>? street,
@@ -36,8 +36,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                            IEnumerable<string?>? region,
                            IEnumerable<string?>? postalCode,
                            IEnumerable<string?>? country = null,
-                           string? group = null,
-                           bool autoLabel = true)
+                           bool autoLabel = true,
+                           string? group = null)
 #pragma warning disable CS0618 // Type or member is obsolete
         : this(street: street,
                locality: locality,
@@ -46,8 +46,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                country: country,
                postOfficeBox: null,
                extendedAddress: null,
-               group: group,
-               autoLabel: autoLabel)
+               autoLabel: autoLabel,
+               group: group)
     { }
 #pragma warning restore CS0618 // Type or member is obsolete
 
@@ -58,13 +58,13 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
     /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
-    /// <param name="extendedAddress">The extended address (e.g. apartment or suite
+    /// <param name="extendedAddress">The extended address (e.g., apartment or suite
     /// number). (Don't use this parameter!)</param>
+    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <seealso cref="AttachLabel" />
     [Obsolete("Don't use this constructor.", false)]
     public AddressProperty(IEnumerable<string?>? street,
@@ -74,8 +74,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                            IEnumerable<string?>? country,
                            IEnumerable<string?>? postOfficeBox,
                            IEnumerable<string?>? extendedAddress,
-                           string? group = null,
-                           bool autoLabel = true) : base(new ParameterSection(), group)
+                           bool autoLabel = true,
+                           string? group = null) : base(new ParameterSection(), group)
     {
         Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
                             locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
@@ -93,15 +93,15 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
     /// <summary>Initializes a new <see cref="AddressProperty" /> object. </summary>
     /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g. city).</param>
-    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="locality">The locality (e.g., city).</param>
+    /// <param name="region">The region (e.g., state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
+    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <seealso cref="AttachLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressProperty(
@@ -110,8 +110,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         string? region,
         string? postalCode,
         string? country = null,
-        string? group = null,
-        bool autoLabel = true)
+        bool autoLabel = true,
+        string? group = null)
 #pragma warning disable CS0618 // Type or member is obsolete
         : this(street: street,
               locality: locality,
@@ -120,25 +120,25 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
               country: country,
               postOfficeBox: null,
               extendedAddress: null,
-              group: group,
-              autoLabel: autoLabel)
+              autoLabel: autoLabel,
+              group: group)
     { }
 #pragma warning restore CS0618 // Type or member is obsolete
 
     /// <summary> Initializes a new <see cref="AddressProperty" /> object. </summary>
     /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g. city).</param>
-    /// <param name="region">The region (e.g. state or province).</param>
+    /// <param name="locality">The locality (e.g., city).</param>
+    /// <param name="region">The region (e.g., state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
     /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
-    /// <param name="extendedAddress">The extended address (e.g. apartment or suite
+    /// <param name="extendedAddress">The extended address (e.g., apartment or suite
     /// number). (Don't use this parameter!)</param>
+    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
     /// <seealso cref="AttachLabel" />
     [Obsolete("Don't use this constructor.", false)]
     public AddressProperty(
@@ -149,8 +149,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         string? country,
         string? postOfficeBox,
         string? extendedAddress,
-        string? group = null,
-        bool autoLabel = true)
+        bool autoLabel = true,
+        string? group = null)
         : base(new ParameterSection(), group)
     {
         Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
@@ -234,20 +234,20 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     {
         base.PrepareForVcfSerialization(serializer);
 
-        Debug.Assert(serializer != null);
-        Debug.Assert(Value != null); // value ist nie null
+        Debug.Assert(serializer is not null);
+        Debug.Assert(Value is not null); // value ist nie null
 
         if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
-            this.Parameters.Encoding = ValueEncoding.QuotedPrintable;
+            this.Parameters.Encoding = Enc.QuotedPrintable;
             this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
         }
     }
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
-        Debug.Assert(Value != null); // value ist nie null
+        Debug.Assert(serializer is not null);
+        Debug.Assert(Value is not null); // value ist nie null
 
 
         StringBuilder builder = serializer.Builder;
@@ -255,7 +255,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
         Value.AppendVCardString(serializer);
 
-        if (Parameters.Encoding == ValueEncoding.QuotedPrintable)
+        if (Parameters.Encoding == Enc.QuotedPrintable)
         {
             string toEncode = builder.ToString(startIndex, builder.Length - startIndex);
             builder.Length = startIndex;

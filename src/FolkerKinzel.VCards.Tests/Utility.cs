@@ -1,46 +1,51 @@
 ﻿using System.Xml.Linq;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Tests;
 
 internal static class Utility
 {
+    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>")]
     internal static VCard CreateVCard()
     {
-        string[] sortAs = new string[] { "Entenhausen", "Elmstreet" };
+        VCard.SyncTestReset();
+        VCard.RegisterApp(new Uri("http://folkerkinzel.de"));
+
+        string[] sortAs = ["Entenhausen", "Elmstreet"];
 
         var tel1 = new TextProperty("123");
-        tel1.Parameters.PhoneType = default(PhoneTypes);
-        tel1.Parameters.PhoneType = PhoneTypes.Voice | PhoneTypes.Cell | PhoneTypes.Text | PhoneTypes.Msg;
+        tel1.Parameters.PhoneType = default(Tel);
+        tel1.Parameters.PhoneType = Tel.Voice | Tel.Cell | Tel.Text | Tel.Msg;
 
         tel1.Parameters.Preference = -50;
         tel1.Parameters.Preference = 500;
         tel1.Parameters.Preference = 1;
-        tel1.Parameters.PropertyClass = default(PropertyClassTypes);
-        tel1.Parameters.PropertyClass = PropertyClassTypes.Home | PropertyClassTypes.Work;
+        tel1.Parameters.PropertyClass = default(PCl);
+        tel1.Parameters.PropertyClass = PCl.Home | PCl.Work;
 
 
         var hobby1 = new TextProperty("Swimming");
-        hobby1.Parameters.Interest = InterestLevel.Medium;
+        hobby1.Parameters.Interest = Interest.Medium;
 
         var expertise1 = new TextProperty("C#");
-        expertise1.Parameters.Expertise = ExpertiseLevel.Average;
+        expertise1.Parameters.Expertise = Expertise.Average;
 
         var adr1 = new AddressProperty("Elmstraße 13", "Entenhausen", null, postalCode: "01234");
         adr1.Parameters.Label = "  ";
         adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
-        adr1.Parameters.GeoPosition = new Models.GeoCoordinate(12.98, 7.86);
-        adr1.Parameters.TimeZone = Models.TimeZoneID.Parse(TimeZoneInfo.Local.Id);
+        adr1.Parameters.GeoPosition = new GeoCoordinate(12.98, 7.86);
+        adr1.Parameters.TimeZone = TimeZoneID.Parse(TimeZoneInfo.Local.Id);
         adr1.Parameters.AltID = "Address";
         adr1.Parameters.Calendar = "GREGORIAN";
-        adr1.Parameters.ContentLocation = ContentLocation.Inline;
+        adr1.Parameters.ContentLocation = Loc.Inline;
         adr1.Parameters.Index = 0;
         adr1.Parameters.Language = "de";
         adr1.Parameters.SortAs = sortAs;
-        var pidMap = new PropertyIDMapping(5, new Uri("http://folkerkinzel.de"));
-        adr1.Parameters.PropertyIDs = new PropertyID[] { new PropertyID(3, pidMap), new PropertyID(2) };
-        adr1.Parameters.AddressType = AddressTypes.Dom | AddressTypes.Intl | AddressTypes.Parcel | AddressTypes.Postal;
+        var pidMap = new AppID(7, "http://www.contoso.com/");
+        adr1.Parameters.PropertyIDs = [new(3, pidMap), new(2, null)];
+        adr1.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Parcel | Adr.Postal;
 
         var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
         //logo1.Parameters.MediaType = "image/jpeg";
@@ -58,13 +63,13 @@ internal static class Utility
 
         var email1 = new TextProperty("email@folker.com");
         email1.Parameters.EMailType = "  ";
-        email1.Parameters.EMailType = EMailType.SMTP;
+        email1.Parameters.EMailType = EMail.SMTP;
 
         var name1 = new NameProperty("Künzel", "Folker");
-        name1.Parameters.SortAs = new string[] { "Kinzel", "Folker" };
+        name1.Parameters.SortAs = ["Kinzel", "Folker"];
 
         var name2 = new NameProperty("Кинцэл", "Фолкер");
-        name2.Parameters.SortAs = new string[] { "Kinzel", "Folker" };
+        name2.Parameters.SortAs = ["Kinzel", "Folker"];
         name2.Parameters.Language = "ru-RU";
         name2.Parameters.AltID = "  ";
 
@@ -72,13 +77,13 @@ internal static class Utility
 
 
         var impp1 = new TextProperty("aim:uri.com");
-        impp1.Parameters.InstantMessengerType = ImppTypes.Personal;
+        impp1.Parameters.InstantMessengerType = Impp.Personal;
 
         var impp2 = new TextProperty("gg:uri.com");
-        impp1.Parameters.InstantMessengerType = ImppTypes.Business;
+        impp1.Parameters.InstantMessengerType = Impp.Business;
 
         var impp3 = new TextProperty("gtalk:uri.com");
-        impp1.Parameters.InstantMessengerType = ImppTypes.Mobile;
+        impp1.Parameters.InstantMessengerType = Impp.Mobile;
 
         var impp4 = new TextProperty("com.google.hangouts:uri.com");
         var impp5 = new TextProperty("icq:uri.com");
@@ -90,18 +95,18 @@ internal static class Utility
         var impp11 = new TextProperty("twitter:uri.com");
         var impp12 = new TextProperty("ymsgr:uri.com");
 
-        var rel1 = RelationProperty.FromText("Agent", RelationTypes.Agent);
+        var rel1 = RelationProperty.FromText("Agent", Rel.Agent);
         var rel2 = RelationProperty.FromText("Spouse");
-        rel2.Parameters.Relation = default(RelationTypes);
-        rel2.Parameters.Relation = RelationTypes.Spouse | RelationTypes.CoResident;
+        rel2.Parameters.RelationType = default(Rel);
+        rel2.Parameters.RelationType = Rel.Spouse | Rel.CoResident;
 
 
         var nonStandard1 = new NonStandardProperty("X-NON-STANDARD", "The value");
         nonStandard1.Parameters.NonStandard
-            = new KeyValuePair<string, string>[] { new KeyValuePair<string, string>("X-NONSTD", "para-value") };
+            = [new("X-NONSTD", "para-value")];
 
         var nonStandard2 = new NonStandardProperty("X-WAKEUP", "07:00:00");
-        nonStandard2.Parameters.DataType = VCdDataType.Time;
+        nonStandard2.Parameters.DataType = Data.Time;
 
         var nonStandard = new NonStandardProperty[] { nonStandard1, nonStandard2 };
 
@@ -116,9 +121,9 @@ internal static class Utility
         source.Parameters.Context = " ";
         source.Parameters.Context = "VCARD";
 
-#pragma warning disable CS0618 // Type or member is obsolete
-        return new VCard
+        var vc = new VCard
         {
+            AppIDs = new AppIDProperty(pidMap),
             NameViews = names,
             Phones = tel1,
             Hobbies = hobby1,
@@ -129,11 +134,11 @@ internal static class Utility
             Logos = logo1,
             Photos = photo1,
             Sounds = sound1,
-            Keys = new DataProperty[] { key1, key2 },
+            Keys = [key1, key2],
             DeathDateViews = DateAndOrTimeProperty.FromText("Later"),
             DeathPlaceViews = new TextProperty("Somewhere"),
             BirthPlaceViews = new TextProperty("Dessau"),
-            ProdID = new TextProperty("Testcode"),
+            ProductID = new TextProperty("Testcode"),
             Addresses = adr1,
             CalendarAddresses = new TextProperty("Calender address"),
             CalendarUserAddresses = new TextProperty("Calendar user address"),
@@ -143,35 +148,35 @@ internal static class Utility
             DisplayNames = new TextProperty("Folker"),
             OrgDirectories = new TextProperty("OrgDirectory"),
             Profile = new ProfileProperty(),
-            Categories = new StringCollectionProperty(new string[] { "Person", "Data" }),
+            Categories = new StringCollectionProperty(["Person", "Data" ]),
             TimeStamp = new TimeStampProperty(),
             EMails = email1,
             Roles = new TextProperty("Rechte Hand"),
             Titles = new TextProperty("Sündenbock"),
-            UniqueIdentifier = new UuidProperty(),
-            URLs = new TextProperty("www.folker.com"),
+            ID = new IDProperty(),
+            Urls = new TextProperty("www.folker.com"),
             DirectoryName = new TextProperty("Webseite"),
             Access = new AccessProperty(Access.Confidential),
-            GenderViews = new GenderProperty(Gender.NonOrNotApplicable),
-            GeoCoordinates = new GeoProperty(new Models.GeoCoordinate(23.456, 49.654)),
-            NickNames = new StringCollectionProperty(new string[] { "Genius", "The Brain" }),
-            Kind = new KindProperty(VCdKind.Organization),
+            GenderViews = new GenderProperty(Sex.NonOrNotApplicable),
+            GeoCoordinates = new GeoProperty(new GeoCoordinate(23.456, 49.654)),
+            NickNames = new StringCollectionProperty(["Genius", "The Brain" ]),
+            Kind = new KindProperty(Kind.Organization),
             Mailer = new TextProperty("The Mailer"),
             Languages = new TextProperty("de"),
             Notes = new TextProperty("Kommentar"),
-            PropertyIDMappings = new PropertyIDMappingProperty(new PropertyIDMapping(7, new Uri("http://folkerkinzel.de"))),
 
-            InstantMessengerHandles = new TextProperty[]
-            {
+            Messengers =
+            [
                     impp1, impp2, impp3, impp4, impp5, impp6, impp7, impp8, impp9, impp10, impp11, impp12
-            },
+            ],
 
-            Relations = new RelationProperty[] { rel1, rel2 },
-            Organizations = new OrganizationProperty("The ÄÖÜ Organization", new string[] { "Department", "Office" }),
-            NonStandard = nonStandard,
-            XmlProperties = xml1,
+            Relations = [rel1, rel2],
+            Organizations = new OrgProperty("The ÄÖÜ Organization", ["Department", "Office"]),
+            NonStandards = nonStandard,
+            Xmls = xml1,
         };
-#pragma warning restore CS0618 // Type or member is obsolete
+
+        return vc;
     }
 }
 

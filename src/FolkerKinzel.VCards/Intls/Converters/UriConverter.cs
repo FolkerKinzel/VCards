@@ -9,19 +9,19 @@ internal static class UriConverter
     {
         uri = null;
 
-        if(string.IsNullOrWhiteSpace(value))
+        if (string.IsNullOrWhiteSpace(value))
         {
             return false;
         }
 
         value = value.Trim();
 
-        if(Uri.TryCreate(value, UriKind.Absolute, out uri))
+        if (Uri.TryCreate(value, UriKind.Absolute, out uri))
         {
             return true;
         }
 
-        if(value.StartsWith("http"))
+        if (value.StartsWith("http"))
         {
             return false;
         }
@@ -31,7 +31,7 @@ internal static class UriConverter
 
     internal static bool IsContentId(this Uri value)
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
         Debug.Assert(value.IsAbsoluteUri);
 
         return value.Scheme.StartsWith("cid", StringComparison.OrdinalIgnoreCase);
@@ -39,12 +39,12 @@ internal static class UriConverter
 
     internal static string GetFileTypeExtensionFromUri(Uri? uri)
     {
-        if (uri == null)
+        if (uri is null)
         {
             return MimeCache.DefaultFileTypeExtension;
         }
-        
-        if(!uri.IsAbsoluteUri)
+
+        if (!uri.IsAbsoluteUri)
         {
             return Uri.TryCreate(new Uri("http://a"), uri, out uri) ? GetFileTypeExtensionFromUri(uri)
                                                                     : MimeCache.DefaultFileTypeExtension;
@@ -55,7 +55,7 @@ internal static class UriConverter
         Debug.Assert(segments.Length > 0);
         string segment = segments[segments.Length - 1];
 
-        if(segment == "/")
+        if (segment == "/")
         {
             return ".htm";
         }

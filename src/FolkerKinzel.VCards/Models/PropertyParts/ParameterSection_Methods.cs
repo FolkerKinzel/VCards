@@ -1,4 +1,5 @@
 using System.Collections;
+using FolkerKinzel.VCards.Intls;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -12,10 +13,7 @@ public sealed partial class ParameterSection
     /// <exception cref="ArgumentNullException"> <paramref name="other" /> is <c>null</c>.</exception>
     public void Assign(ParameterSection other)
     {
-        if (other is null)
-        {
-            throw new ArgumentNullException(nameof(other));
-        }
+        _ArgumentNullException.ThrowIfNull(other, nameof(other));
 
         if (object.ReferenceEquals(this, other))
         {
@@ -55,7 +53,10 @@ public sealed partial class ParameterSection
             }
         }
 
-        sb.Length -= Environment.NewLine.Length;
+        if (sb.Length >= Environment.NewLine.Length)
+        {
+            sb.Length -= Environment.NewLine.Length;
+        }
 
         return sb.ToString();
     }
@@ -63,14 +64,16 @@ public sealed partial class ParameterSection
 
     private static void AppendValue(StringBuilder sb, KeyValuePair<VCdParam, object> para)
     {
+        Debug.Assert(para.Value is not null);
+        Debug.Assert(para.Value.ToString() is not null);
+
         const string INDENT = "    ";
 
         _ = sb.Append('[').Append(para.Key).Append(": ");
 
-        string? valStr = para.Value?.ToString();
+        string valStr = para.Value.ToString()!;
 
-        if (valStr != null &&
-            valStr.Contains(Environment.NewLine, StringComparison.Ordinal))
+        if (valStr.Contains(Environment.NewLine, StringComparison.Ordinal))
         {
             string[] arr = valStr.Split(Environment.NewLine, StringSplitOptions.None);
 

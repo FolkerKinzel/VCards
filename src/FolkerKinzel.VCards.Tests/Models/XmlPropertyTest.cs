@@ -49,4 +49,20 @@ public class XmlPropertyTests
         Assert.AreEqual(prop.Group, GROUP);
         Assert.AreEqual(prop.Value, XML_TEXT1);
     }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        const string XML_TEXT1 =
+            "<Folker xmlns=\"https://www.folker-kinzel.de\">Kinzel</Folker>";
+
+        const string GROUP = "group1";
+
+        var xelement = XElement.Parse(XML_TEXT1);
+        var prop1 = new XmlProperty(xelement, GROUP);
+        var prop2 = (XmlProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value, prop2.Value);
+        Assert.AreNotSame(prop1, prop2);
+    }
 }

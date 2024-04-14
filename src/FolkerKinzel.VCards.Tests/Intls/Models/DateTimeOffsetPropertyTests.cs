@@ -1,9 +1,10 @@
 ﻿using System;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -15,8 +16,7 @@ public class DateTimeOffsetPropertyTests
     [TestMethod]
     public void DateTimeOffsetPropertyTest1()
     {
-
-        DateAndOrTimeProperty prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.UtcNow, GROUP);
+        var prop = DateAndOrTimeProperty.FromDateTime(DateTimeOffset.UtcNow, GROUP);
 
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.IsEmpty);
@@ -43,7 +43,7 @@ public class DateTimeOffsetPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -59,7 +59,7 @@ public class DateTimeOffsetPropertyTests
         Assert.AreEqual(GROUP, prop2.Group);
         Assert.IsFalse(prop2.IsEmpty);
 
-        Assert.AreEqual(VCdDataType.DateAndOrTime, prop2.Parameters.DataType);
+        Assert.AreEqual(Data.DateAndOrTime, prop2.Parameters.DataType);
     }
 
     [TestMethod]
@@ -107,13 +107,13 @@ public class DateTimeOffsetPropertyTests
         Assert.IsInstanceOfType(prop, typeof(DateTimeOffsetProperty));
         Assert.AreEqual(group, prop.Group);
         Assert.AreEqual(dto, prop.Value?.DateTimeOffset);
-        Assert.AreEqual(VCdDataType.DateAndOrTime, prop.Parameters.DataType);
+        Assert.AreEqual(Data.DateAndOrTime, prop.Parameters.DataType);
 
         var clone = (DateAndOrTimeProperty)prop.Clone();
         Assert.IsInstanceOfType(prop, typeof(DateTimeOffsetProperty));
         Assert.AreEqual(group, prop.Group);
         Assert.AreEqual(dto, prop.Value?.DateTimeOffset);
-        Assert.AreEqual(VCdDataType.DateAndOrTime, prop.Parameters.DataType);
+        Assert.AreEqual(Data.DateAndOrTime, prop.Parameters.DataType);
 
         Assert.AreNotSame(clone, prop);
     }

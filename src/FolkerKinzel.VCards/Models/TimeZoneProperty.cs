@@ -1,4 +1,5 @@
 using System.Collections;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -17,13 +18,37 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
     private TimeZoneProperty(TimeZoneProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary>  Initializes a new <see cref="TimeZoneProperty" /> object. </summary>
-    /// <param name="value">A <see cref="TimeZoneInfo" /> object or <c>null</c>.</param>
+    /// <summary>  Initializes a new <see cref="TimeZoneProperty" /> object from
+    /// a specified <see cref="TimeZoneID"/>. </summary>
+    /// <param name="value">A <see cref="TimeZoneID" /> object or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <seealso cref="TimeZoneID"/>
     public TimeZoneProperty(TimeZoneID? value, string? group = null)
         : base(new ParameterSection(), group) => Value = value;
+
+    /// <summary>  Initializes a new <see cref="TimeZoneProperty" /> object from
+    /// a specified <see cref="string"/>, which represents an identifier
+    /// from the "IANA Time Zone Database".
+    /// (See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .) </summary>
+    /// <param name="value">A <see cref="string"/> that represents an identifier
+    /// from the "IANA Time Zone Database".</param>
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// 
+    /// <remarks>
+    /// This constructor initializes a new <see cref="TimeZoneID"/> instance. Use the overload
+    /// <see cref="TimeZoneProperty(TimeZoneID?, string?)"/> to reuse an existing one.
+    /// </remarks>
+    /// 
+    /// <exception cref="ArgumentNullException"> <paramref name="value" /> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="ArgumentException"> <paramref name="value" /> is an empty
+    /// <see cref="string" /> or consists only of white space characters.</exception>
+    public TimeZoneProperty(string value, string? group = null)
+        : base(new ParameterSection(), group) => Value = TimeZoneID.Parse(value);
 
 
     internal TimeZoneProperty(VcfRow vcfRow, VCdVersion version)
@@ -61,7 +86,7 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         Value?.AppendTo(serializer.Builder, serializer.Version, serializer.TimeZoneConverter);
     }

@@ -1,5 +1,6 @@
-﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -10,7 +11,7 @@ public class V4Tests
     [TestMethod]
     public void Parse()
     {
-        IList<VCard>? vcard = VCard.LoadVcf(TestFiles.V4vcf);
+        IList<VCard>? vcard = Vcf.Load(TestFiles.V4vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -23,7 +24,7 @@ public class V4Tests
         var vcard = new VCard();
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-        IList<VCard>? cards = VCard.ParseVcf(s);
+        IList<VCard>? cards = Vcf.Parse(s);
 
         Assert.AreEqual(cards.Count, 1);
 
@@ -53,10 +54,7 @@ public class V4Tests
 
         byte[] bytes = CreateBytes();
 
-        vcard.Notes = new TextProperty[]
-        {
-                new TextProperty(UNITEXT)
-        };
+        vcard.Notes = [ new(UNITEXT) ];
 
         vcard.Keys = DataProperty.FromText(ASCIITEXT);
 
@@ -68,9 +66,9 @@ public class V4Tests
         Assert.IsNotNull(s);
 
         Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
-            .All(x => x != null && x.Length <= VCard.MAX_BYTES_PER_LINE));
+            .All(x => x is not null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
-        _ = VCard.ParseVcf(s);
+        _ = Vcf.Parse(s);
 
         Assert.AreEqual(vcard.Keys?.First()?.Value?.String, ASCIITEXT);
         Assert.AreEqual("image/jpeg", vcard.Photos?.First()?.Parameters.MediaType);
@@ -92,31 +90,33 @@ public class V4Tests
         }
     }
 
-    
+
 
 
     [TestMethod]
     public void SerializeVCard()
     {
-        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V4_0, options: VcfOptions.All);
+        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V4_0, options: Opts.All);
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
 
         VCard vcard = list[0];
 
+        //string theString = vcard.ToString();
+
         Assert.AreEqual(VCdVersion.V4_0, vcard.Version);
 
         Assert.IsNull(vcard.DirectoryName);
         Assert.IsNotNull(vcard.TimeStamp);
         Assert.IsNull(vcard.Mailer);
-        Assert.IsNotNull(vcard.ProdID);
-        vcard.ProdID = null;
-        Assert.IsNull(vcard.ProdID);
+        Assert.IsNotNull(vcard.ProductID);
+        vcard.ProductID = null;
+        Assert.IsNull(vcard.ProductID);
     }
 
     [TestMethod]
@@ -128,7 +128,7 @@ public class V4Tests
         Assert.IsNotNull(vc.DeathPlaceViews);
         Assert.IsNotNull(vc.DeathDateViews);
 
-        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOptions.WriteRfc6474Extensions));
+        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: Opts.WriteRfc6474Extensions));
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -139,7 +139,7 @@ public class V4Tests
         Assert.IsNotNull(vc.DeathDateViews);
 
 
-        list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOptions.None));
+        list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: Opts.None));
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -156,12 +156,12 @@ public class V4Tests
         var vc = new VCard
         {
             Members = RelationProperty.FromText("http://folkers-website.de"),
-            Kind = new KindProperty(VCdKind.Group)
+            Kind = new KindProperty(Kind.Group)
         };
 
         Assert.IsNotNull(vc.Members);
 
-        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -175,20 +175,83 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromText("http://folkers-website.de"),
+            Members = RelationProperty.FromText("Important Member"),
         };
 
         Assert.IsNotNull(vc.Members);
 
-        IList<VCard> list = VCard.ParseVcf(vc.ToVcfString(version: VCdVersion.V4_0));
+        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.AreEqual(2, list.Count);
         vc = list[0];
 
         Assert.IsNotNull(vc.Members);
         Assert.IsNotNull(vc.Kind);
-        Assert.AreEqual(VCdKind.Group, vc.Kind.Value);
+        Assert.AreEqual(Kind.Group, vc.Kind.Value);
+    }
+
+    [TestMethod]
+    public void MembersTest3()
+    {
+        var vc = new VCard
+        {
+            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false)
+                                                              .DisplayNames.Add("Important Member")
+                                                              .ID.Set(Guid.Empty)
+                                                              .VCard),
+        };
+
+        Assert.IsNotNull(vc.Members);
+
+        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
+
+        Assert.AreEqual(2, list.Count);
+        vc = list[1];
+
+        Assert.AreNotEqual(Guid.Empty, vc.ID?.Value);
+    }
+
+    [TestMethod]
+    public void MembersTest4()
+    {
+        var vc = new VCard
+        {
+            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false).DisplayNames.Add("Important Member").VCard),
+        };
+
+        Assert.IsNotNull(vc.Members);
+        Assert.IsNull(vc.Members!.First()?.Value?.VCard?.ID);
+
+        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
+
+        Assert.AreEqual(2, list.Count);
+        vc = list[1];
+
+        Assert.IsNotNull(vc.ID);
+    }
+
+    [TestMethod]
+    public void MembersTest5()
+    {
+        var guid = Guid.NewGuid();
+        var vc = new VCard
+        {
+            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false)
+                                                              .DisplayNames.Add("Important Member")
+                                                              .ID.Set(guid)
+                                                              .VCard)
+                      .Concat(RelationProperty.FromGuid(guid)),
+        };
+
+        Assert.IsNotNull(vc.Members);
+
+        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
+
+        Assert.AreEqual(2, list.Count);
+
+        list = Vcf.Parse(list.ToVcfString(VCdVersion.V4_0));
+        Assert.AreEqual(2, list.Count);
     }
 
     [TestMethod]
@@ -201,27 +264,24 @@ public class V4Tests
         const string plain = "text/plain";
 
         var fburl1 = new TextProperty(workUrl);
-        fburl1.Parameters.PropertyClass = PropertyClassTypes.Work;
+        fburl1.Parameters.PropertyClass = PCl.Work;
         fburl1.Parameters.Preference = 1;
-        fburl1.Parameters.DataType = VCdDataType.Uri;
+        fburl1.Parameters.DataType = Data.Uri;
         fburl1.Parameters.MediaType = calendar;
 
         var fburl2 = new TextProperty(homeUrl);
-        fburl2.Parameters.PropertyClass = PropertyClassTypes.Home;
+        fburl2.Parameters.PropertyClass = PCl.Home;
         fburl2.Parameters.Preference = 2;
-        fburl2.Parameters.DataType = VCdDataType.Text;
+        fburl2.Parameters.DataType = Data.Text;
         fburl2.Parameters.MediaType = plain;
 
-        var vc = new VCard
-        {
-            FreeOrBusyUrls = new TextProperty[] { fburl1, fburl2 }
-        };
+        var vc = new VCard { FreeOrBusyUrls = [fburl1, fburl2] };
 
         string s = vc.ToVcfString(VCdVersion.V4_0);
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -235,21 +295,21 @@ public class V4Tests
         Assert.IsNotNull(fburls);
         Assert.AreEqual(2, fburls!.Count());
 
-        TextProperty fb1 = fburls!.FirstOrDefault(x => x != null && x.Parameters.Preference == 1)!;
+        TextProperty fb1 = fburls!.FirstOrDefault(x => x is not null && x.Parameters.Preference == 1)!;
 
         Assert.IsNotNull(fb1);
         Assert.AreEqual(workUrl, fb1.Value);
-        Assert.AreEqual(PropertyClassTypes.Work, fb1.Parameters.PropertyClass);
+        Assert.AreEqual(PCl.Work, fb1.Parameters.PropertyClass);
         Assert.AreEqual(calendar, fb1.Parameters.MediaType);
-        Assert.AreEqual(VCdDataType.Uri, fb1.Parameters.DataType);
+        Assert.AreEqual(Data.Uri, fb1.Parameters.DataType);
 
-        TextProperty fb2 = fburls!.FirstOrDefault(x => x != null && x.Parameters.Preference == 2)!;
+        TextProperty fb2 = fburls!.FirstOrDefault(x => x is not null && x.Parameters.Preference == 2)!;
 
         Assert.IsNotNull(fb2);
         Assert.AreEqual(homeUrl, fb2.Value);
-        Assert.AreEqual(PropertyClassTypes.Home, fb2.Parameters.PropertyClass);
+        Assert.AreEqual(PCl.Home, fb2.Parameters.PropertyClass);
         Assert.AreEqual(plain, fb2.Parameters.MediaType);
-        Assert.AreEqual(VCdDataType.Text, fb2.Parameters.DataType);
+        Assert.AreEqual(Data.Text, fb2.Parameters.DataType);
     }
 
 
@@ -262,7 +322,7 @@ public class V4Tests
 
         string vcf = vCard.ToVcfString(VCdVersion.V4_0);
 
-        vCard = VCard.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.DisplayNames);
         TextProperty tProp = vCard.DisplayNames.First()!;
@@ -275,24 +335,21 @@ public class V4Tests
         const string mobilePhoneNumber = "tel:+1-234-567-89";
         var whatsAppImpp = new TextProperty(mobilePhoneNumber);
 
-        const ImppTypes messengerTypes = ImppTypes.Personal
-                                | ImppTypes.Business
-                                | ImppTypes.Mobile;
+        const Impp messengerTypes = Impp.Personal
+                                | Impp.Business
+                                | Impp.Mobile;
 
         whatsAppImpp.Parameters.InstantMessengerType = messengerTypes;
 
-        var vcard = new VCard
-        {
-            InstantMessengers = new TextProperty?[] { null, whatsAppImpp }
-        };
+        var vcard = new VCard { Messengers = [null, whatsAppImpp] };
 
-        string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: VcfOptions.Default);
-        vcard = VCard.ParseVcf(vcfString)[0];
+        string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: Opts.Default);
+        vcard = Vcf.Parse(vcfString)[0];
 
-        whatsAppImpp = vcard.InstantMessengers?.First();
+        whatsAppImpp = vcard.Messengers?.First();
 
         Assert.AreEqual(mobilePhoneNumber, whatsAppImpp?.Value);
-        Assert.AreEqual(PropertyClassTypes.Home | PropertyClassTypes.Work, whatsAppImpp?.Parameters.PropertyClass);
+        Assert.AreEqual(PCl.Home | PCl.Work, whatsAppImpp?.Parameters.PropertyClass);
     }
 }
 

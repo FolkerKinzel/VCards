@@ -1,6 +1,5 @@
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
-
+using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards;
 
@@ -13,7 +12,6 @@ public sealed partial class VCard
     internal const string DEFAULT_CHARSET = "UTF-8";
     internal const VCdVersion DEFAULT_VERSION = VCdVersion.V3_0;
 
-    private const int DESERIALIZER_QUEUE_INITIAL_CAPACITY = 64;
 
     internal static class PropKeys
     {
@@ -100,7 +98,7 @@ public sealed partial class VCard
 
         /// <summary> <c>MEMBER</c>:
         /// Defines a member that is part of the group that this <see cref="VCard"/> represents.
-        /// The <see cref="VCard.Kind" /> property must be set to <see cref="VCdKind.Group" />
+        /// The <see cref="VCard.Kind" /> property must be set to <see cref="Kind.Group" />
         /// in order to use this property. <c>(4)</c>
         /// </summary>
         internal const string MEMBER = "MEMBER";

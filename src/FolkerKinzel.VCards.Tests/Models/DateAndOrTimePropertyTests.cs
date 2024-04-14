@@ -47,7 +47,7 @@ public class DateAndOrTimePropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = Vcf.Parse(vcf)[0];
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
         DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
@@ -64,7 +64,7 @@ public class DateAndOrTimePropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = Vcf.Parse(vcf)[0];
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
         DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
@@ -81,7 +81,7 @@ public class DateAndOrTimePropertyTests
         END:VCARD
         """;
 
-        VCard vcard = VCard.ParseVcf(vcf)[0];
+        VCard vcard = Vcf.Parse(vcf)[0];
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
         DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
@@ -141,4 +141,10 @@ public class DateAndOrTimePropertyTests
         Assert.AreEqual(29, prop.Value.DateOnly.Value.Day);
     }
 
+    [TestMethod]
+    public void ToStringTest1()
+    {
+        var prop = DateAndOrTimeProperty.FromDate(2, 29);
+        Assert.IsNotNull(prop.ToString());
+    }
 }

@@ -1,7 +1,7 @@
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Models;
@@ -29,7 +29,7 @@ internal sealed class DateTimeOffsetProperty : DateAndOrTimeProperty
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         base.PrepareForVcfSerialization(serializer);
-        Parameters.DataType = VCdDataType.DateAndOrTime;
+        Parameters.DataType = Data.DateAndOrTime;
     }
 
     internal override void AppendValue(VcfSerializer serializer) 

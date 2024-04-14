@@ -1,8 +1,9 @@
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
-
+using FolkerKinzel.VCards.Enums;
+using System.Text;
+using FolkerKinzel.VCards.Intls;
 
 namespace FolkerKinzel.VCards;
 
@@ -19,8 +20,8 @@ namespace FolkerKinzel.VCards;
 /// been mandatory since vCard&#160;4.0. 
 /// </para>
 /// <para>
-/// This class is a wrapper around the <see cref="VCard" />.<see cref="VCard.LoadVcf(string, Encoding?)" /> 
-/// method, which initially loads the file as UTF-8. If a decoding error occurs, the method 
+/// This class is a wrapper around the <see cref="Vcf.Load(string, Encoding?)" /> 
+/// method that initially loads the file as UTF-8. If a decoding error occurs, the method 
 /// examines the <see cref="VCard"/> objects for any <see cref="ParameterSection.CharSet"/> 
 /// (<c>CHARSET</c>) parameters, which provide an indication of the <see cref="Encoding"/> 
 /// to be used. If a hint is found, the file is reloaded with the determined <see cref="Encoding"/>,
@@ -38,48 +39,10 @@ namespace FolkerKinzel.VCards;
 /// </note>
 /// <code language="cs" source="..\Examples\AnsiFilterExample.cs" />
 /// </example>
-public class AnsiFilter
+public sealed class AnsiFilter
 {
-    private class EncodingCache
-    {
-        private readonly Dictionary<string, Encoding?> _cache = new(StringComparer.OrdinalIgnoreCase);
-
-        public EncodingCache(Encoding fallbackEncoding, string utf8WebName)
-        {
-            _cache[fallbackEncoding.WebName] = fallbackEncoding;
-            _cache[utf8WebName] = null;
-        }
-
-        internal Encoding? GetEncoding(string charSetName)
-        {
-            if (_cache.TryGetValue(charSetName, out Encoding? enc))
-            {
-                return enc;
-            }
-
-            enc = TextEncodingConverter.GetEncoding(charSetName);
-
-            if (IsUtf8(enc))
-            {
-                _cache[charSetName] = null;
-                return null;
-            }
-
-            enc = _cache.FirstOrDefault(x => x.Value?.CodePage == enc.CodePage).Value ?? enc;
-            
-            _cache[charSetName] = enc;
-            _cache[enc.WebName] = enc;
-            return enc;
-        }
-    }
-
-    /// ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private readonly EncodingCache _encodingCache;
-
     private readonly DecoderValidationFallback _decoderFallback = new DecoderValidationFallback();
     private readonly Encoding _utf8;
-    private readonly Encoding _ansi;
 
     private const int UTF8_CODEPAGE = 65001;
 
@@ -93,11 +56,10 @@ public class AnsiFilter
     /// <paramref name="fallbackCodePage" /> could not be mapped to an ANSI code page.</exception>
     public AnsiFilter(int fallbackCodePage = 1252)
     {
-        _ansi = TextEncodingConverter.GetEncoding(fallbackCodePage);
+        FallbackEncoding = TextEncodingConverter.GetEncoding(fallbackCodePage);
         ThrowArgumentExceptionIfUtf8(nameof(fallbackCodePage));
 
         _utf8 = InitUtf8Encoding();
-        _encodingCache = InitEncodingCache();
     }
 
     /// <summary>
@@ -115,106 +77,162 @@ public class AnsiFilter
     /// /> could not be mapped to an ANSI code page.</exception>
     public AnsiFilter(string fallbackEncodingWebName)
     {
-        _ansi = TextEncodingConverter.GetEncoding(
+        FallbackEncoding = TextEncodingConverter.GetEncoding(
             fallbackEncodingWebName ?? throw new ArgumentNullException(nameof(fallbackEncodingWebName)));
         ThrowArgumentExceptionIfUtf8(nameof(fallbackEncodingWebName));
 
         _utf8 = InitUtf8Encoding();
-        _encodingCache = InitEncodingCache();
     }
 
+    /// <summary>
+    /// The <see cref="Encoding" /> object to use as fallback. </summary>
+    public Encoding FallbackEncoding { get; }
 
-    /// <summary> <see cref="Encoding.WebName" /> property
-    /// of the <see cref="Encoding" /> object to use as a fallback. </summary>
-    public string FallbackEncodingWebName => _ansi.WebName;
-
-    /// <summary> Loads a VCF file and automatically selects the appropriate 
-    /// <see cref="Encoding" />.</summary>
-    /// <param name="fileName">Absolute or relative path to a VCF file.</param>
-    /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
-    /// the content of the VCF file.</returns>
-    /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
-    /// file path.</exception>
-    /// <exception cref="IOException">The file could not be loaded.</exception>
-    public virtual IList<VCard> LoadVcf(string fileName) => LoadVcf(fileName, out _);
+    /// <summary>
+    /// The <see cref="Encoding"/> used to read the VCF file.
+    /// </summary>
+    public Encoding UsedEncoding { get; private set; } = Encoding.UTF8;
 
     /// <summary>  Loads a VCF file and automatically selects the appropriate 
     /// <see cref="Encoding" />. </summary>
     /// <param name="fileName">Absolute or relative path to a VCF file.</param>
-    /// <param name="encodingWebName"> After the method has finished the parameter
-    /// contains the <see cref="Encoding.WebName" /> of the
-    /// <see cref="Encoding" /> object, which had been used to load the VCF file. The
-    /// parameter is passed uninitialized.</param>
+    /// 
     /// <returns>A collection of parsed <see cref="VCard" /> objects.</returns>
     /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    public virtual IList<VCard> LoadVcf(string fileName, out string encodingWebName)
+    internal IList<VCard> Load(string fileName)
     {
         Reset();
-        encodingWebName = _utf8.WebName;
 
-        IList<VCard> vCards = VCard.LoadVcf(fileName, _utf8);
+        IList<VCard> vCards = Vcf.Load(fileName, _utf8);
 
-        if(!HasError)
+        if (!HasError)
         {
-            return vCards; 
+            return vCards;
         }
 
         string? charSet = GetCharsetFromVCards(vCards);
 
-        if (charSet is null) // No CHARSET parameter
+        Encoding? enc = charSet is null ? FallbackEncoding : TextEncodingConverter.GetEncoding(charSet);
+        enc = IsUtf8(enc) ? FallbackEncoding : enc;
+        UsedEncoding = enc;
+
+        return Vcf.Load(fileName, enc);
+    }
+
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
+        Justification = "Performance: The collection expression creates a new List<VCard> instead of Array.Empty<VCard>().")]
+    internal IList<VCard> Deserialize(Func<Stream?> factory)
+    {
+        _ArgumentNullException.ThrowIfNull(factory, nameof(factory));
+
+        Reset();
+
+        using Stream? stream = factory();
+
+        if (stream is null)
         {
-            return ReadWithFallbackEncoding(fileName, out encodingWebName);
+            return Array.Empty<VCard>();
         }
 
-        Encoding? enc = _encodingCache.GetEncoding(charSet);
+        long initialPosition = stream.CanSeek ? stream.Position : 0;
 
-        if (enc is null)
+        IList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
+
+        if (!HasError)
         {
-            // It's not valid UTF-8, because the first reading produced an error. It
-            // has a CHARSET parameter, but it's not readable. We decide to read the
-            // file with the FallbackEncoding because ANSI decoded text can be
-            // converted to another ANSI encoding after reading too.
-            return ReadWithFallbackEncoding(fileName, out encodingWebName);
+            return vCards;
         }
 
-        encodingWebName = enc.WebName;
-        return VCard.LoadVcf(fileName, enc);
+        string? charSet = GetCharsetFromVCards(vCards);
 
-        //////////////////////////////////////////////////////////
+        Encoding? enc = charSet is null ? FallbackEncoding
+                                        : TextEncodingConverter.GetEncoding(charSet);
+        enc = IsUtf8(enc) ? FallbackEncoding : enc;
+        UsedEncoding = enc;
 
-        static string? GetCharsetFromVCards(IList<VCard> vCards)
+        if (stream.CanSeek)
         {
-            foreach (var vCard in vCards.Where(x => x.Version == VCdVersion.V2_1))
-            {
-                IEnumerable<KeyValuePair<VCdProp, object>> keyValuePairs = vCard;
+            stream.Position = initialPosition;
+            return Vcf.Deserialize(stream, enc, leaveStreamOpen: false);
+        }
+        else
+        {
+            using var stream2 = factory();
 
-                string? charSet = keyValuePairs
-                    .Where(x => x.Value is IEnumerable<AddressProperty> or IEnumerable<NameProperty> or IEnumerable<TextProperty>)
-                    .Select(x => x.Value as IEnumerable<VCardProperty>)
-                    .SelectMany(x => x!)
-                    .FirstOrDefault(x => x.Parameters.CharSet != null)?.Parameters.CharSet;
-
-                if (charSet != null) { return charSet; }
-            }
-            return null;
+            return stream2 is null ? vCards
+                                   : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
         }
     }
 
-    private IList<VCard> ReadWithFallbackEncoding(string fileName, out string encodingWebName) 
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
+        Justification = "Performance: The collection expression creates a new List<VCard> instead of Array.Empty<VCard>().")]
+    internal async Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
+                                                       CancellationToken token)
     {
-        encodingWebName = FallbackEncodingWebName;
-        return VCard.LoadVcf(fileName, _ansi);
+        _ArgumentNullException.ThrowIfNull(factory, nameof(factory));
+
+        Reset();
+
+        using Stream? stream = await factory(token).ConfigureAwait(false);
+
+        if (stream is null)
+        {
+            return Array.Empty<VCard>();
+        }
+
+        long initialPosition = stream.CanSeek ? stream.Position : 0;
+
+        IList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
+
+        if (!HasError)
+        {
+            return vCards;
+        }
+
+        string? charSet = GetCharsetFromVCards(vCards);
+
+        Encoding? enc = charSet is null ? FallbackEncoding
+                                        : TextEncodingConverter.GetEncoding(charSet);
+        enc = IsUtf8(enc) ? FallbackEncoding : enc;
+        UsedEncoding = enc;
+
+        if (stream.CanSeek)
+        {
+            stream.Position = initialPosition;
+            return Vcf.Deserialize(stream, enc, leaveStreamOpen: false);
+        }
+        else
+        {
+            using Stream? stream2 = await factory(token).ConfigureAwait(false);
+
+            return stream2 is null ? vCards
+                                   : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
+        }
+    }
+
+    private static string? GetCharsetFromVCards(IList<VCard> vCards)
+    {
+        foreach (var vCard in vCards.Where(x => x.Version == VCdVersion.V2_1))
+        {
+            string? charSet = vCard
+                .Entities
+                .Where(x => x.Value is AddressProperty or NameProperty or TextProperty)
+                .Select(x => x.Value.Parameters.CharSet)
+                .FirstOrDefault(x => x is not null);
+
+            if (charSet is not null) { return charSet; }
+        }
+        return null;
     }
 
     private static bool IsUtf8(Encoding encoding) => encoding.CodePage == AnsiFilter.UTF8_CODEPAGE;
 
     private void ThrowArgumentExceptionIfUtf8(string parameterName)
     {
-        if (IsUtf8(_ansi))
+        if (IsUtf8(FallbackEncoding))
         {
             throw new ArgumentException(Res.NoAnsiEncoding, parameterName);
         }
@@ -222,15 +240,15 @@ public class AnsiFilter
 
     private bool HasError => _decoderFallback.HasError;
 
-    private void Reset() => _decoderFallback.Reset();
+    private void Reset()
+    {
+        // Don't provide _utf.8  because _decoderFallback MUST remain
+        // unaccessible from outside
+        UsedEncoding = Encoding.UTF8;
+
+        _decoderFallback.Reset();
+    }
 
     private Encoding InitUtf8Encoding() =>
         Encoding.GetEncoding(UTF8_CODEPAGE, EncoderFallback.ReplacementFallback, _decoderFallback);
-
-    private EncodingCache InitEncodingCache()
-    {
-        Debug.Assert(_ansi != null);
-        Debug.Assert(_utf8 != null);
-        return new EncodingCache(_ansi, _utf8.WebName);
-    }
 }

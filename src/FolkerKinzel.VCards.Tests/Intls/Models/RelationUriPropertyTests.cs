@@ -1,7 +1,9 @@
-﻿using FolkerKinzel.VCards.Intls.Serializers;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -13,26 +15,27 @@ public class RelationUriPropertyTests
     [TestMethod]
     public void RelationUriPropertyTest1()
     {
-        const RelationTypes relation = RelationTypes.Acquaintance;
+        const Rel relation = Rel.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
+        var prop = new RelationUriProperty(
+            new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         Assert.AreEqual(uri, prop.Value);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
 
     [TestMethod]
     public void RelationUriPropertyTest2()
     {
-        const RelationTypes relation = RelationTypes.Acquaintance;
+        const Rel relation = Rel.Acquaintance;
         var uri = new Uri("http://test.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
+        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         var vcard = new VCard
         {
@@ -41,7 +44,7 @@ public class RelationUriPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -56,18 +59,18 @@ public class RelationUriPropertyTests
         Assert.AreEqual(uri, prop!.Value);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
 
     [TestMethod]
     public void RelationUriPropertyTest3()
     {
-        const RelationTypes relation = RelationTypes.Agent;
+        const Rel relation = Rel.Agent;
         var uri = new Uri("http://test.ääh.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
+        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         var vcard = new VCard
         {
@@ -76,7 +79,7 @@ public class RelationUriPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -91,17 +94,17 @@ public class RelationUriPropertyTests
         Assert.AreEqual(uri, prop!.Value);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
 
     [TestMethod]
     public void RelationUriPropertyTest4()
     {
-        const RelationTypes relation = RelationTypes.Agent;
+        const Rel relation = Rel.Agent;
         var uri = new Uri("cid:test.com/", UriKind.Absolute);
 
-        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { Relation = relation }, GROUP));
+        var prop = new RelationUriProperty(new UriProperty(uri, new ParameterSection() { RelationType = relation }, GROUP));
 
         var vcard = new VCard
         {
@@ -110,7 +113,7 @@ public class RelationUriPropertyTests
 
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -125,12 +128,9 @@ public class RelationUriPropertyTests
         Assert.AreEqual(uri, prop!.Value);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.AreEqual(relation, prop.Parameters.Relation);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
-
-
-
 
     [TestMethod]
     public void PrepareForVcfSerializationTest1()
@@ -139,10 +139,21 @@ public class RelationUriPropertyTests
         prop.Parameters.Clear();
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_4_0Serializer(writer, VcfOptions.Default);
+        var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
 
         prop.PrepareForVcfSerialization(serializer);
-        Assert.AreEqual(VCdDataType.Uri, prop.Parameters.DataType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
+    }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = RelationProperty.FromUri(new Uri("http://folker.de/", UriKind.Absolute));
+
+        var prop2 = (RelationProperty)prop1.Clone();
+
+        Assert.AreSame(prop1.Value!.Uri, prop2.Value!.Uri);
+        Assert.AreNotSame(prop1, prop2);
     }
 
 }

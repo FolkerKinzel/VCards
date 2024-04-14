@@ -61,29 +61,29 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of the identifier is more than one digit..
+        ///   Looks up a localized string similar to Registering of the application has to be done before any other operation using the VCard class. Register the application only once within its lifetime!.
         /// </summary>
-        internal static string IdentifierTooLong {
+        internal static string AlreadyRegistered {
             get {
-                return ResourceManager.GetString("IdentifierTooLong", resourceCulture);
+                return ResourceManager.GetString("AlreadyRegistered", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The ID of the property mapping is missing..
+        ///   Looks up a localized string similar to The executing application is not yet registered with the VCard class. Call the static VCard.RegisterApp method when the program starts!.
         /// </summary>
-        internal static string MissingMappingID {
+        internal static string AppNotRegistered {
             get {
-                return ResourceManager.GetString("MissingMappingID", resourceCulture);
+                return ResourceManager.GetString("AppNotRegistered", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No URI is specified..
+        ///   Looks up a localized string similar to Don&apos;t instantiate the struct yourself. Use VCardBuilder instead..
         /// </summary>
-        internal static string MissingUri {
+        internal static string DefaultCtor {
             get {
-                return ResourceManager.GetString("MissingUri", resourceCulture);
+                return ResourceManager.GetString("DefaultCtor", resourceCulture);
             }
         }
         
@@ -115,6 +115,15 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The value is not a valid URI..
+        /// </summary>
+        internal static string NotAUri {
+            get {
+                return ResourceManager.GetString("NotAUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The argument is not a valid X-Name..
         /// </summary>
         internal static string NoXName {
@@ -124,7 +133,7 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The value must be between 1 and 9..
+        ///   Looks up a localized string similar to The value must be a positive integer. (Zero is not allowed.).
         /// </summary>
         internal static string PidValue {
             get {
@@ -156,6 +165,15 @@ namespace FolkerKinzel.VCards.Resources {
         internal static string StreamNotWritable {
             get {
                 return ResourceManager.GetString("StreamNotWritable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unrecognized data type..
+        /// </summary>
+        internal static string UnrecognizedDataType {
+            get {
+                return ResourceManager.GetString("UnrecognizedDataType", resourceCulture);
             }
         }
     }

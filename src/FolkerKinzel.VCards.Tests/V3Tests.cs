@@ -1,7 +1,7 @@
-﻿using FolkerKinzel.VCards.Extensions;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -12,7 +12,10 @@ public class V3Tests
     [TestMethod]
     public void ParseTest()
     {
-        IList<VCard>? vcard = VCard.LoadVcf(TestFiles.V3vcf);
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        IList<VCard>? vcard = Vcf.Load(TestFiles.V3vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreEqual(2, vcard.Count);
@@ -22,7 +25,10 @@ public class V3Tests
     [TestMethod]
     public void ParseTest2()
     {
-        IList<VCard>? vcard = VCard.LoadVcf(@"C:\Users\fkinz\OneDrive\Kontakte\Thunderbird\21-01-13.vcf");
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        IList<VCard>? vcard = Vcf.Load(@"C:\Users\fkinz\OneDrive\Kontakte\Thunderbird\21-01-13.vcf");
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -31,7 +37,10 @@ public class V3Tests
     [TestMethod]
     public void ParseTest3()
     {
-        IList<VCard>? vcard = VCard.LoadVcf(TestFiles.PhotoV3vcf);
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        IList<VCard>? vcard = Vcf.Load(TestFiles.PhotoV3vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -41,11 +50,14 @@ public class V3Tests
     [TestMethod]
     public void WriteEmptyVCardTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard();
 
         string s = vcard.ToVcfString(VCdVersion.V3_0);
 
-        IList<VCard>? cards = VCard.ParseVcf(s);
+        IList<VCard>? cards = Vcf.Parse(s);
 
         Assert.AreEqual(cards.Count, 1);
 
@@ -65,6 +77,9 @@ public class V3Tests
     [TestMethod]
     public void LineWrappingTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard();
 
         string UNITEXT = "Dies ist ein wirklich sehr sehr sehr langer Text mit ü, Ö, und ä " + "" +
@@ -79,10 +94,10 @@ public class V3Tests
 
         byte[] bytes = CreateBytes();
 
-        vcard.Notes = new TextProperty[]
-        {
-                new TextProperty(UNITEXT)
-        };
+        vcard.Notes =
+        [
+                new(UNITEXT)
+        ];
 
         vcard.Keys = DataProperty.FromText(ASCIITEXT);
 
@@ -94,9 +109,9 @@ public class V3Tests
         Assert.IsNotNull(s);
 
         Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
-            .All(x => x != null && x.Length <= VCard.MAX_BYTES_PER_LINE));
+            .All(x => x is not null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
-        _ = VCard.ParseVcf(s);
+        _ = Vcf.Parse(s);
 
         Assert.AreEqual(vcard.Keys?.First()?.Value?.String, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
@@ -116,32 +131,34 @@ public class V3Tests
 
             return arr;
         }
-
     }
 
     [TestMethod]
     public void SaveTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vcard = new VCard();
 
         string UNITEXT = "Dies ist ein wirklich sehr sehr sehr langer Text mit ü, Ö, und ä " + "" +
             "damit das Line-Wrappping getestet werden kann. " + Environment.NewLine +
             "Um noch eine Zeile einzufügen, folgt hier noch ein Satz. ";
 
-        vcard.NameViews = new NameProperty[]
-        {
-                new NameProperty("Test", "Paul", null, null, null)
-        };
+        vcard.NameViews =
+        [
+                new("Test", "Paul", null, null, null)
+        ];
 
-        vcard.DisplayNames = new TextProperty[]
-        {
-                new TextProperty("Paul Test")
-        };
+        vcard.DisplayNames =
+        [
+                new("Paul Test")
+        ];
 
-        vcard.Notes = new TextProperty[]
-        {
-                new TextProperty(UNITEXT)
-        };
+        vcard.Notes =
+        [
+                new(UNITEXT)
+        ];
 
         vcard.SaveVcf(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Paul Test.vcf"));
     }
@@ -150,11 +167,11 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest1()
     {
-        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0, options: VcfOptions.All);
+        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0, options: Opts.All);
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = VCard.ParseVcf(s);
+        IList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
 
@@ -170,26 +187,55 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest2()
     {
-        IList<VCard> vc = VCard.LoadVcf(TestFiles.PhotoV3vcf);
+        IList<VCard> vc = Vcf.Load(TestFiles.PhotoV3vcf).ToList();
         vc.Add(vc[0]);
 
         string s = vc.ToVcfString();
 
-        vc = VCard.ParseVcf(s);
+        vc = Vcf.Parse(s);
 
         Assert.AreEqual(2, vc.Count);
+    }
+
+    [TestMethod]
+    public void SerializeVCardTest3()
+    {
+        const string octetStream = "application/octet-stream";
+        string base64 = Convert.ToBase64String([1, 2, 3]);
+
+        VCard vc = VCardBuilder
+            .Create()
+            .Relations.Add(new Uri("http://the_agent.com"), Rel.Agent)
+            .Logos.AddBytes([4,5,6])
+            .Keys.AddBytes([7,8])
+            .Sounds.AddBytes([8,9])
+            .NonStandards.Add("X-DATA", base64, parameters: p => { p.Encoding = Enc.Base64; p.MediaType = octetStream; })
+            .VCard;
+
+        string vcf = Vcf.ToString(vc, VCdVersion.V3_0, options: Opts.Default.Set(Opts.WriteNonStandardProperties));
+        vc = Vcf.Parse(vcf)[0];
+
+        Assert.AreEqual(Data.Uri, vc.Relations!.First()!.Parameters.DataType);
+        Assert.AreEqual(Enc.Base64, vc.Logos!.First()!.Parameters.Encoding);
+        Assert.AreEqual(Enc.Base64, vc.Keys!.First()!.Parameters.Encoding);
+        Assert.AreEqual(Enc.Base64, vc.Sounds!.First()!.Parameters.Encoding);
+        Assert.AreEqual(Enc.Base64, vc.NonStandards!.First()!.Parameters.Encoding);
+        Assert.AreEqual(octetStream, vc.NonStandards!.First()!.Parameters.NonStandard!.First().Value);
     }
 
 
     [TestMethod]
     public void TimeDataTypeTest()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string vcardString = @"BEGIN:VCARD
 VERSION:3.0
 BDAY;Value=Time:05:30:00
 END:VCARD";
 
-        VCard vcard = VCard.ParseVcf(vcardString)[0];
+        VCard vcard = Vcf.Parse(vcardString)[0];
 
         Assert.IsNotNull(vcard.BirthDayViews);
 
@@ -209,12 +255,15 @@ END:VCARD";
     [TestMethod]
     public void NonStandardParameterTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string whatsAppNumber = "+1-234-567-89";
         var xiamoiMobilePhone = new TextProperty(whatsAppNumber);
-        xiamoiMobilePhone.Parameters.NonStandard = new KeyValuePair<string, string>[]
-        {
-                new KeyValuePair<string, string>("TYPE", "WhatsApp")
-        };
+        xiamoiMobilePhone.Parameters.NonStandard =
+        [
+                new("TYPE", "WhatsApp")
+        ];
 
         var vcard = new VCard
         {
@@ -223,8 +272,8 @@ END:VCARD";
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
-        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteNonStandardParameters);
-        vcard = VCard.ParseVcf(vcfString)[0];
+        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteNonStandardParameters);
+        vcard = Vcf.Parse(vcfString)[0];
 
         // Find the WhatsApp number:
         string? readWhatsAppNumber = vcard.Phones?
@@ -237,25 +286,28 @@ END:VCARD";
     [TestMethod]
     public void ImppTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string mobilePhoneNumber = "tel:+1-234-567-89";
         var whatsAppImpp = new TextProperty(mobilePhoneNumber);
 
-        const ImppTypes messengerTypes = ImppTypes.Personal
-                                | ImppTypes.Business
-                                | ImppTypes.Mobile;
-        whatsAppImpp.Parameters.InstantMessengerType = ImppTypes.Personal
-                                                     | ImppTypes.Business
-                                                     | ImppTypes.Mobile;
+        const Impp messengerTypes = Impp.Personal
+                                | Impp.Business
+                                | Impp.Mobile;
+        whatsAppImpp.Parameters.InstantMessengerType = Impp.Personal
+                                                     | Impp.Business
+                                                     | Impp.Mobile;
 
         var vcard = new VCard
         {
-            InstantMessengers = whatsAppImpp
+            Messengers = whatsAppImpp
         };
 
-        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteXExtensions);
-        vcard = VCard.ParseVcf(vcfString)[0];
+        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteXExtensions);
+        vcard = Vcf.Parse(vcfString)[0];
 
-        whatsAppImpp = vcard.InstantMessengers?.First();
+        whatsAppImpp = vcard.Messengers?.First();
 
         Assert.AreEqual(mobilePhoneNumber, whatsAppImpp?.Value);
         Assert.AreEqual(messengerTypes, whatsAppImpp?.Parameters.InstantMessengerType);
@@ -264,25 +316,28 @@ END:VCARD";
     [TestMethod]
     public void ImppTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string mobilePhoneNumber = "tel:+1-234-567-89";
         var whatsAppImpp = new TextProperty(mobilePhoneNumber);
 
-        const ImppTypes messengerTypes = ImppTypes.Personal
-                                | ImppTypes.Business
-                                | ImppTypes.Mobile;
+        const Impp messengerTypes = Impp.Personal
+                                | Impp.Business
+                                | Impp.Mobile;
 
-        whatsAppImpp.Parameters.InstantMessengerType = ImppTypes.Mobile;
-        whatsAppImpp.Parameters.PropertyClass = PropertyClassTypes.Home | PropertyClassTypes.Work;
+        whatsAppImpp.Parameters.InstantMessengerType = Impp.Mobile;
+        whatsAppImpp.Parameters.PropertyClass = PCl.Home | PCl.Work;
 
         var vcard = new VCard
         {
-            InstantMessengers = whatsAppImpp
+            Messengers = whatsAppImpp
         };
 
-        string vcfString = vcard.ToVcfString(options: VcfOptions.Default);
-        vcard = VCard.ParseVcf(vcfString)[0];
+        string vcfString = vcard.ToVcfString(options: Opts.Default);
+        vcard = Vcf.Parse(vcfString)[0];
 
-        whatsAppImpp = vcard.InstantMessengers?.First();
+        whatsAppImpp = vcard.Messengers?.First();
 
         Assert.AreEqual(mobilePhoneNumber, whatsAppImpp?.Value);
         Assert.AreEqual(messengerTypes, whatsAppImpp?.Parameters.InstantMessengerType);
@@ -291,24 +346,27 @@ END:VCARD";
     [TestMethod]
     public void XMessengerTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string mobilePhoneNumber = "skype:+1-234-567-89";
         var prop = new TextProperty(mobilePhoneNumber);
-        const ImppTypes imppTypes = ImppTypes.Mobile | ImppTypes.Personal;
+        const Impp imppTypes = Impp.Mobile | Impp.Personal;
 
         prop.Parameters.InstantMessengerType = imppTypes;
 
         var vcard = new VCard
         {
-            InstantMessengers = prop
+            Messengers = prop
         };
 
-        string vcfString = vcard.ToVcfString(options: (VcfOptions.Default | VcfOptions.WriteXExtensions).Unset(VcfOptions.WriteImppExtension));
-        vcard = VCard.ParseVcf(vcfString)[0];
+        string vcfString = vcard.ToVcfString(options: (Opts.Default | Opts.WriteXExtensions).Unset(Opts.WriteImppExtension));
+        vcard = Vcf.Parse(vcfString)[0];
 
-        Assert.AreEqual(1, vcard.InstantMessengers!.Count());
-        prop = vcard.InstantMessengers?.First();
+        Assert.AreEqual(1, vcard.Messengers!.Count());
+        prop = vcard.Messengers?.First();
         Assert.AreEqual(mobilePhoneNumber, prop?.Value);
-        Assert.AreEqual(PropertyClassTypes.Home, prop?.Parameters.PropertyClass);
+        Assert.AreEqual(PCl.Home, prop?.Parameters.PropertyClass);
         Assert.AreEqual(imppTypes, prop?.Parameters.InstantMessengerType);
 
     }
@@ -316,20 +374,23 @@ END:VCARD";
     [TestMethod]
     public void XMessengerTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         const string mobilePhoneNumber = "skype:+1-234-567-89";
         var prop = new TextProperty(mobilePhoneNumber);
-        const ImppTypes imppTypes = ImppTypes.Mobile | ImppTypes.Personal;
+        const Impp imppTypes = Impp.Mobile | Impp.Personal;
         prop.Parameters.InstantMessengerType = imppTypes;
 
         var vcard = new VCard
         {
-            InstantMessengers = prop
+            Messengers = prop
         };
 
-        string vcfString = vcard.ToVcfString(options: VcfOptions.Default | VcfOptions.WriteXExtensions);
-        vcard = VCard.ParseVcf(vcfString)[0];
-        Assert.AreEqual(1, vcard.InstantMessengers!.Count());
-        prop = vcard.InstantMessengers!.First();
+        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteXExtensions);
+        vcard = Vcf.Parse(vcfString)[0];
+        Assert.AreEqual(1, vcard.Messengers!.Count());
+        prop = vcard.Messengers!.First();
         Assert.AreEqual(mobilePhoneNumber, prop?.Value);
         Assert.AreEqual(imppTypes, prop?.Parameters.InstantMessengerType);
     }
@@ -337,6 +398,9 @@ END:VCARD";
     [TestMethod]
     public void PreserveTimeZoneAndGeoTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var adr = new AddressProperty("1", "", "", "", "");
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
@@ -346,7 +410,7 @@ END:VCARD";
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0);
 
-        vCard = VCard.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.Addresses);
         adr = vCard.Addresses.First();
@@ -358,6 +422,9 @@ END:VCARD";
     [TestMethod]
     public void PreserveTimeZoneAndGeoTest2()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var adr = new AddressProperty("1", "", "", "", "");
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
@@ -368,7 +435,7 @@ END:VCARD";
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0);
 
-        vCard = VCard.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.Addresses);
         adr = vCard.Addresses.First();
@@ -380,13 +447,16 @@ END:VCARD";
     [TestMethod]
     public void DisplayNameTest1()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var nm = new NameProperty("Kinzel", "Folker");
 
         var vCard = new VCard { NameViews = nm };
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0);
 
-        vCard = VCard.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.DisplayNames);
         TextProperty tProp = vCard.DisplayNames.First()!;
@@ -396,11 +466,14 @@ END:VCARD";
     [TestMethod]
     public void DisplayNameTest2()
     {
-        var vCard = new VCard { NameViews = new NameProperty?[] { null } };
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
+        var vCard = new VCard { NameViews = [null] };
 
         string vcf = vCard.ToVcfString(VCdVersion.V3_0);
 
-        vCard = VCard.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.DisplayNames);
         TextProperty tProp = vCard.DisplayNames.First()!;
@@ -410,11 +483,14 @@ END:VCARD";
     [TestMethod]
     public void DisplayNameTest3()
     {
+        VCard.SyncTestReset();
+        VCard.RegisterApp(null);
+
         var vCard = new VCard();
 
-        string vcf = vCard.ToVcfString(VCdVersion.V3_0, options: VcfOptions.Default.Set(VcfOptions.WriteEmptyProperties));
+        string vcf = vCard.ToVcfString(VCdVersion.V3_0, options: Opts.Default.Set(Opts.WriteEmptyProperties));
 
-        vCard = VCard.ParseVcf(vcf)[0];
+        vCard = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vCard.DisplayNames);
         TextProperty tProp = vCard.DisplayNames.First()!;

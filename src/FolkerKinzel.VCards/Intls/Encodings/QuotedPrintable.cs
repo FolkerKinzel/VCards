@@ -197,7 +197,7 @@ internal static class QuotedPrintable
     {
         if (string.IsNullOrEmpty(qpEncoded))
         {
-            return Array.Empty<byte>();
+            return [];
         }
 
         //Ausbessern illegaler Soft - Line - Breaks, die auf Unix - Systemen entstanden sein könnten.

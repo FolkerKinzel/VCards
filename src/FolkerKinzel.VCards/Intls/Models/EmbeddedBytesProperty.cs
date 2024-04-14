@@ -1,9 +1,9 @@
 using System.Collections.ObjectModel;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.DataUrls;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Enums;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Models;
@@ -20,7 +20,7 @@ internal sealed class EmbeddedBytesProperty : DataProperty
                                    ParameterSection parameters)
         : base(parameters, group)
     {
-        if (arr != null && arr.Length != 0)
+        if (arr is not null && arr.Length != 0)
         {
             Value = arr;
         }
@@ -42,18 +42,18 @@ internal sealed class EmbeddedBytesProperty : DataProperty
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         base.PrepareForVcfSerialization(serializer);
 
-        Parameters.ContentLocation = ContentLocation.Inline;
-        Parameters.DataType = VCdDataType.Binary;
-        Parameters.Encoding = ValueEncoding.Base64;
+        Parameters.ContentLocation = Loc.Inline;
+        Parameters.DataType = Data.Binary;
+        Parameters.Encoding = Enc.Base64;
     }
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        Debug.Assert(serializer != null);
+        Debug.Assert(serializer is not null);
 
         if (serializer.Version < VCdVersion.V4_0)
         {
