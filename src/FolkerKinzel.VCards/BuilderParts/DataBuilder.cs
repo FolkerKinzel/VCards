@@ -76,6 +76,20 @@ public readonly struct DataBuilder
             return props;
         });
 
+    /// <summary>
+    /// Sets the <see cref="ParameterSection.Index"/> properties of 
+    /// the items in in the specified property ascending depending on their 
+    /// position in that collection and allows to specify whether to skip empty items in that 
+    /// process.
+    /// </summary>
+    /// <param name="skipEmptyItems"><c>true</c> to reset the <see cref="ParameterSection.Index"/> 
+    /// of empty <see cref="VCardProperty"/> objects to <c>null</c>, or <c>false</c> to treat 
+    /// empty <see cref="VCardProperty"/> objects like any other. (<c>null</c> references are 
+    /// always skipped.)</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
         Edit(static (props, skip) =>
         {
