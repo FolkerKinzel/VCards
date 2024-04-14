@@ -95,6 +95,14 @@ public readonly struct RelationBuilder
             return props;
         }, skipEmptyItems);
 
+    /// <summary>
+    /// Resets the <see cref="ParameterSection.Index"/> properties of 
+    /// the items in in the specified property to <c>null</c>.
+    /// </summary>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RelationBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder UnsetIndexes() =>
         Edit(static props =>
         {
