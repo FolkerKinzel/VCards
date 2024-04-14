@@ -102,28 +102,6 @@ internal static class StringBuilderExtension
         return builder;
     }
 
-    ///// <summary>Removes a pair of single or double quotes at the start and 
-    ///// end of builder.</summary>
-    ///// <param name="builder">The <see cref="StringBuilder"/> whose content
-    ///// is modified.</param>
-    ///// <returns>A reference to <paramref name="builder"/>.</returns>
-    //internal static StringBuilder RemoveQuotes(this StringBuilder builder)
-    //{
-    //    Debug.Assert(builder is not null);
-
-    //    if (builder.Length >= 1 && (builder[0] == '\"' || builder[0] == '\''))
-    //    {
-    //        _ = builder.Remove(0, 1);
-    //    }
-
-    //    if (builder.Length >= 1 && (builder[builder.Length - 1] == '\"' || builder[builder.Length - 1] == '\''))
-    //    {
-    //        _ = builder.Remove(builder.Length - 1, 1);
-    //    }
-
-    //    return builder;
-    //}
-
     internal static StringBuilder AppendReadableProperty(this StringBuilder sb, ReadOnlyCollection<string> strings, int? maxLen = null)
     {
         Debug.Assert(sb is not null);
