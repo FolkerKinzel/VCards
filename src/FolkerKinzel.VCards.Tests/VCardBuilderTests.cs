@@ -96,10 +96,10 @@ public class VCardBuilderTests
             .Addresses.Add("Schlossallee", null, null, null,
                          parameters: p => p.AddressType = Adr.Dom)
             .Addresses.Add("Elm Street", null, null, null,
-                            autoLabel: false,
                             parameters: p => p.AddressType = Adr.Intl,
                             group: vc => "gr1"
-                            )
+,
+                            autoLabel: false)
             .Addresses.Add("3", null, null, null)
             .Addresses.Add("4", null, null, null)
             .Addresses.SetPreferences()
@@ -137,10 +137,10 @@ public class VCardBuilderTests
             .Create()
             .Addresses.Add(["2"], null, null, null)
             .Addresses.Add(Enumerable.Repeat("Elm Street", 1), null, null, null,
-                           autoLabel: false,
                            parameters: p => p.AddressType = Adr.Intl,
                            group: vc => "gr1"
-                         )
+,
+                           autoLabel: false)
             .Addresses.SetPreferences()
             .VCard;
 

@@ -31,6 +31,20 @@ public readonly struct AddressBuilder
 
     internal AddressBuilder(VCardBuilder builder) => _builder = builder;
 
+    /// <summary>
+    /// Sets the <see cref="ParameterSection.Preference"/> properties of 
+    /// the items in the <see cref="VCard.Adresses"/> property depending on their position
+    /// in that collection and allows to specify whether to skip empty items in that process.
+    /// (The first item gets the highest preference <c>1</c>.)
+    /// </summary>
+    /// <param name="skipEmptyItems"><c>true</c> to give empty <see cref="VCardProperty"/> 
+    /// objects always the lowest <see cref="ParameterSection.Preference"/> (100), independently
+    /// of their position in the collection, or <c>false</c> to treat empty <see cref="VCardProperty"/> 
+    /// objects like any other. (<c>null</c> references are always skipped.)</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder SetPreferences(bool skipEmptyItems = true) => 
         Edit(static (props, skip) => 
         { 
@@ -38,6 +52,14 @@ public readonly struct AddressBuilder
             return props;
         }, skipEmptyItems);
 
+    /// <summary>
+    /// Resets the <see cref="ParameterSection.Preference"/> properties of 
+    /// the items in in the <see cref="VCard.Addresses"/> property to the lowest value (100).
+    /// </summary>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder UnsetPreferences() =>
         Edit(static props =>
         {
@@ -107,8 +129,8 @@ public readonly struct AddressBuilder
     }
 
     [MemberNotNull(nameof(_builder))]
-    private IEnumerable<AddressProperty> GetProperty() =>
-        Builder.VCard.Addresses?.WhereNotNull() ?? [];
+    private IEnumerable<AddressProperty> GetProperty()
+        => Builder.VCard.Addresses?.WhereNotNull() ?? [];
 
     /// <summary>
     /// Adds an <see cref="AddressProperty"/> instance, which is newly 
@@ -119,9 +141,6 @@ public readonly struct AddressBuilder
     /// <param name="region">The region (e.g., state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter of the newly 
-    /// created <see cref="AddressProperty"/>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of 
@@ -129,6 +148,9 @@ public readonly struct AddressBuilder
     /// to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function 
     /// is called with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter of the newly 
+    /// created <see cref="AddressProperty"/>.</param>
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="AddressBuilder"/> to be able to chain calls.</returns>
@@ -144,9 +166,9 @@ public readonly struct AddressBuilder
                             string? region,
                             string? postalCode,
                             string? country = null,
-                            bool autoLabel = true,
                             Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null)
+                            Func<VCard, string?>? group = null,
+                            bool autoLabel = true)
     {
         Builder.VCard.Set(Prop.Addresses,
                           VCardBuilder.Add(new AddressProperty(street,
@@ -172,15 +194,15 @@ public readonly struct AddressBuilder
     /// <param name="region">The region (e.g., state or province).</param>
     /// <param name="postalCode">The postal code.</param>
     /// <param name="country">The country name (full name).</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter of the newly 
-    /// created <see cref="VCardProperty"/>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of 
     /// <see cref="VCardProperty" /> objects, which the <see cref="VCardProperty" /> should belong to,
     /// or <c>null</c> to indicate that the <see cref="VCardProperty" /> does not belong to any group. The 
     /// function is called with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
+    /// automatically added to the <see cref="ParameterSection.Label" /> parameter of the newly 
+    /// created <see cref="VCardProperty"/>.</param>
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> 
     /// to be able to chain calls.</returns>
@@ -191,9 +213,9 @@ public readonly struct AddressBuilder
                             IEnumerable<string?>? region,
                             IEnumerable<string?>? postalCode,
                             IEnumerable<string?>? country = null,
-                            bool autoLabel = true,
                             Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null)
+                            Func<VCard, string?>? group = null,
+                            bool autoLabel = true)
     {
         Builder.VCard.Set(Prop.Addresses,
                           VCardBuilder.Add(new AddressProperty(street,

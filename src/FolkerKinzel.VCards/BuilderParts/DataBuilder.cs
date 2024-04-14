@@ -40,6 +40,20 @@ public readonly struct DataBuilder
         _prop = prop;
     }
 
+    /// <summary>
+    /// Sets the <see cref="ParameterSection.Preference"/> properties of 
+    /// the items in the specified property depending on their position
+    /// in that collection and allows to specify whether to skip empty items in that process.
+    /// (The first item gets the highest preference <c>1</c>.)
+    /// </summary>
+    /// <param name="skipEmptyItems"><c>true</c> to give empty <see cref="VCardProperty"/> 
+    /// objects always the lowest <see cref="ParameterSection.Preference"/> (100), independently
+    /// of their position in the collection, or <c>false</c> to treat empty <see cref="VCardProperty"/> 
+    /// objects like any other. (<c>null</c> references are always skipped.)</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
         Edit(static (props, skip) =>
         {
@@ -47,6 +61,14 @@ public readonly struct DataBuilder
             return props;
         }, skipEmptyItems);
 
+    /// <summary>
+    /// Resets the <see cref="ParameterSection.Preference"/> properties of 
+    /// the items in in the specified property to the lowest value (100).
+    /// </summary>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
     public VCardBuilder UnsetPreferences() =>
         Edit(static props =>
         {

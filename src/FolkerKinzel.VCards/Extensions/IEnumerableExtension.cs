@@ -696,7 +696,7 @@ public static class IEnumerableExtension
     /// Sets the <see cref="ParameterSection.Preference"/> properties of 
     /// the items in a <see cref="VCardProperty"/> collection depending on their position
     /// in that collection and allows to specify whether to skip empty items in that process.
-    /// (The first item gets the highest preference <c>1</c>).)
+    /// (The first item gets the highest preference <c>1</c>.)
     /// </summary>
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
