@@ -47,10 +47,9 @@ public class StringExtensionTests
 
     [DataTestMethod]
     [DataRow("", VCdVersion.V3_0, "")]
-    [DataRow(null, VCdVersion.V3_0, null)]
     [DataRow("a\\bc", VCdVersion.V2_1, "a\\bc")]
     [DataRow("a\\nb", VCdVersion.V3_0, "a\r\nb")]
-    public void UnMaskTest6(string? input, VCdVersion version, string? expected)
+    public void UnMaskTest6(string input, VCdVersion version, string? expected)
         => Assert.AreEqual(expected, input.UnMask(new StringBuilder(), version), false);
 
 

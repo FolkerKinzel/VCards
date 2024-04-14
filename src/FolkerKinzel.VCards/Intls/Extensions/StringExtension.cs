@@ -28,12 +28,12 @@ internal static partial class StringExtension
         }
     }
 
-    [return: NotNullIfNotNull(nameof(value))]
-    internal static string? UnMask(this string? value, StringBuilder sb, VCdVersion version)
+    internal static string UnMask(this string value, StringBuilder sb, VCdVersion version)
     {
+        Debug.Assert(value != null);
         Debug.Assert(sb is not null);
 
-        if (value is null || !value.Contains('\\'))
+        if (!value.Contains('\\'))
         {
             return value;
         }
