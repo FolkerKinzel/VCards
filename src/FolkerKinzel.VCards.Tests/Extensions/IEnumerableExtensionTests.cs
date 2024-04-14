@@ -631,13 +631,14 @@ public class IEnumerableExtensionTests
         vc.DisplayNames = vc.DisplayNames.ConcatWith(props);
         Assert.AreEqual(4, vc.DisplayNames.Count());
 
-        var nested = new List<TextProperty?[]>
-        {
-            props
-        };
-        IEnumerable<IEnumerable<TextProperty?>> nested2 = nested;
-
         // This MUST not compile:
+
+        //var nested = new List<TextProperty?[]>
+        //{
+        //    props
+        //};
+        //IEnumerable<IEnumerable<TextProperty?>> nested2 = nested;
+
         //vc.DisplayNames = vc.DisplayNames.ConcatWith(nested2);
 
     }

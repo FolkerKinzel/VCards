@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Enums;
+﻿using System.ComponentModel;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
@@ -170,4 +171,19 @@ public sealed class SyncOperation
         var propID = new PropertyID(id, CurrentAppID);
         parameters.PropertyIDs = propIDs.Concat(propID);
     }
+
+
+    // Overriding Equals, GetHashCode and ToString to hide these methods in IntelliSense:
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override bool Equals([NotNullWhen(true)] object? obj) => base.Equals(obj);
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override int GetHashCode() => base.GetHashCode();
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string ToString() => base.ToString()!;
 }

@@ -50,7 +50,7 @@ public class AddressBuilderTests
 
         VCard vc = builder.VCard;
 
-        var property = vc.Addresses;
+        IEnumerable<Models.AddressProperty?>? property = vc.Addresses;
 
         Assert.IsNotNull(property);
         Assert.AreEqual(2, property.Count());

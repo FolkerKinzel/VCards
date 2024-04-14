@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Syncs.Tests;
@@ -95,4 +96,17 @@ public class SyncOperationTests
         Assert.IsNull(tProp.Parameters.PropertyIDs);
         Assert.IsNull(vc.AppIDs);
     }
+
+    [TestMethod]
+    public void EqualsTest1()
+    {
+        var vc = new VCard();
+        SyncOperation sync = vc.Sync;
+        Assert.IsFalse( sync.Equals((SyncOperation?)null));
+
+        Assert.AreEqual(sync.GetHashCode(), ((object)sync).GetHashCode());
+    }
+
+    [TestMethod]
+    public void ToStringTest1() => Assert.IsNotNull(new VCard().Sync.ToString());
 }

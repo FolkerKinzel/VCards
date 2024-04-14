@@ -1,5 +1,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -27,13 +28,10 @@ public abstract class VCardProperty : ICloneable
     /// <exception cref="ArgumentNullException"> <paramref name="parameters" /> is <c>null</c>.</exception>
     protected VCardProperty(ParameterSection parameters, string? group)
     {
-        if (parameters is null)
-        {
-            throw new ArgumentNullException(nameof(parameters));
-        }
+        _ArgumentNullException.ThrowIfNull(parameters, nameof(parameters));
+
         Parameters = parameters;
         Group = group;
-
     }
 
     /// <summary>The data provided by the <see cref="VCardProperty" />.</summary>
