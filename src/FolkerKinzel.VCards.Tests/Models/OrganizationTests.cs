@@ -1,5 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+﻿using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+namespace FolkerKinzel.VCards.Tests.Models;
 
 [TestClass]
 public class OrganizationTests
@@ -25,8 +26,16 @@ public class OrganizationTests
     [DataRow("org", "unit", false)]
     public void NeedsToBeQpEncodedTest1(string org, string units, bool expected)
     {
-        var list = new List<string>() { org, units};
+        var list = new List<string>() { org, units };
         var organization = new Organization(list);
         Assert.AreEqual(expected, organization.NeedsToBeQpEncoded());
+    }
+
+    [TestMethod]
+    public void CtorTest()
+    {
+        var org = new Organization([]);
+        Assert.IsNotNull(org);
+        Assert.IsTrue(org.IsEmpty);
     }
 }

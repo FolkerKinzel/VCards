@@ -1,4 +1,7 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class OrgBuilderTests
@@ -12,7 +15,7 @@ public class OrgBuilderTests
     {
         VCardBuilder builder = VCardBuilder
             .Create()
-            .Organizations.Add(null)
+            .Organizations.Add((string?)null)
             .Organizations.Add("Contoso")
             .Organizations.SetPreferences();
 
@@ -44,13 +47,13 @@ public class OrgBuilderTests
     {
         VCardBuilder builder = VCardBuilder
             .Create()
-            .Organizations.Add(null)
+            .Organizations.Add((string?)null)
             .Organizations.Add("Contoso")
             .Organizations.SetIndexes();
 
         VCard vc = builder.VCard;
 
-        var property = vc.Organizations;
+        IEnumerable<OrgProperty?>? property = vc.Organizations;
 
         Assert.IsNotNull(property);
         Assert.AreEqual(2, property.Count());
@@ -87,7 +90,18 @@ public class OrgBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new OrgBuilder().Add(null);
+    public void AddTest1() => new OrgBuilder().Add("Contoso");
+
+    [TestMethod]
+    public void AddTest2()
+    {
+        VCard vc = VCardBuilder.Create().Organizations.Add(new Organization("Contoso")).VCard;
+
+        Assert.IsNotNull(vc.Organizations);
+        var org = vc.Organizations.FirstOrDefault();
+        Assert.IsNotNull(org);
+        Assert.IsFalse(org.IsEmpty);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

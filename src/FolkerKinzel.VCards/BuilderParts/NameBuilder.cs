@@ -107,15 +107,15 @@ public readonly struct NameBuilder
     /// <param name="additionalNames">Additional Names (middle names)</param>
     /// <param name="prefixes">Honorific Prefixes</param>
     /// <param name="suffixes">Honorific Suffixes</param>
-    /// <param name="displayName">An <see cref="Action{T1, T2}"/> delegate that's invoked with the 
-    /// <see cref="TextBuilder"/> the <see cref="VCardBuilder.DisplayNames"/> property returns and 
-    /// the newly created <see cref="NameProperty"/> instance as arguments.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that the 
     /// <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <param name="displayName">An <see cref="Action{T1, T2}"/> delegate that's invoked with the 
+    /// <see cref="TextBuilder"/> the <see cref="VCardBuilder.DisplayNames"/> property returns and 
+    /// the newly created <see cref="NameProperty"/> instance as arguments.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> 
     /// to be able to chain calls.</returns>
     /// 
@@ -130,9 +130,9 @@ public readonly struct NameBuilder
                             IEnumerable<string?>? additionalNames = null,
                             IEnumerable<string?>? prefixes = null,
                             IEnumerable<string?>? suffixes = null,
-                            Action<TextBuilder, NameProperty>? displayName = null,
                             Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null)
+                            Func<VCard, string?>? group = null,
+                            Action<TextBuilder, NameProperty>? displayName = null)
     {
         var vc = Builder.VCard;
         var prop = new NameProperty(familyNames,
@@ -177,9 +177,9 @@ public readonly struct NameBuilder
                             string? additionalName = null,
                             string? prefix = null,
                             string? suffix = null,
-                            Action<TextBuilder, NameProperty>? displayName = null,
+                            Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null,
-                            Action<ParameterSection>? parameters = null)
+                            Action<TextBuilder, NameProperty>? displayName = null)
     {
         var vc = Builder.VCard;
         var prop = new NameProperty(familyName,

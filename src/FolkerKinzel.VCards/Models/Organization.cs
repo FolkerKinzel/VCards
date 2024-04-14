@@ -4,28 +4,56 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+// Organization is a PropertyPart, but it could be useful to reuse a single
+// Organization object for more than one VCard (e.g., the vCards of a team).
+// That's why Organization has a public constructor and why it is in the Models
+// namespace rather than in the PropertyParts namespace.
+
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates information about the organization (or company) of the
 /// object the <see cref="VCard"/> represents.</summary>
 public sealed class Organization
 {
     /// <summary>Initializes a new <see cref="Organization" /> object.</summary>
-    /// <param name="orgList">Organization name, optional followed by the name(s) 
-    /// of the organizational units.</param>
+    /// <param name="orgName">Organization name or <c>null</c>.</param>
+    /// <param name="orgUnits">Organization unit(s) or <c>null</c>.</param>
+    public Organization(string? orgName, IEnumerable<string?>? orgUnits = null)
+    {
+        (string? orgNameParsed, ReadOnlyCollection<string>? orgUnitsParsed) = ParseProperties(orgName, orgUnits);
+
+        OrganizationName = orgNameParsed;
+        OrganizationalUnits = orgUnitsParsed;
+    }
+
     internal Organization(List<string> orgList)
     {
-        Debug.Assert(orgList.Count != 0);
-        string organizationName = orgList[0];
+        if(orgList.Count == 0)
+        {
+            return;
+        }
+
+        string orgName = orgList[0];
         orgList.RemoveAt(0);
 
-        this.OrganizationName = string.IsNullOrWhiteSpace(organizationName) ? null : organizationName;
-        this.OrganizationalUnits = ReadOnlyCollectionConverter.ToReadOnlyCollection(orgList);
+        (string? orgNameParsed, ReadOnlyCollection<string>? orgUnitsParsed) = ParseProperties(orgName, orgList);
 
-        if (OrganizationalUnits.Count == 0)
+        OrganizationName = orgNameParsed;
+        OrganizationalUnits = orgUnitsParsed;
+    }
+
+    private static (string?, ReadOnlyCollection<string>?) ParseProperties(string? orgName,
+                                                                          IEnumerable<string?>? orgUnits)
+    {
+        orgName = string.IsNullOrWhiteSpace(orgName) ? null : orgName;
+        var orgUnitsColl = ReadOnlyCollectionConverter.ToReadOnlyCollection(orgUnits);
+
+        if (orgUnitsColl.Count == 0)
         {
-            OrganizationalUnits = null;
+            orgUnitsColl = null;
         }
+
+        return (orgName, orgUnitsColl);
     }
 
     /// <summary>Organization name.</summary>

@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Tests;
+﻿using FolkerKinzel.VCards.Models;
+
+namespace FolkerKinzel.VCards.Tests;
 
 [TestClass]
 public class WhatsAppIssueTests
@@ -12,10 +14,10 @@ public class WhatsAppIssueTests
         IList<VCard> list = Vcf.Load(TestFiles.WhatsAppIssueVcf);
         Assert.AreNotEqual(0, list.Count);
 
-        IEnumerable<Models.TextProperty?>? phoneNumbers = list[0].Phones;
+        IEnumerable<TextProperty?>? phoneNumbers = list[0].Phones;
         Assert.IsNotNull(phoneNumbers);
 
-        Models.TextProperty? whatsAppNumber = phoneNumbers!.ElementAtOrDefault(1);
+        TextProperty? whatsAppNumber = phoneNumbers!.ElementAtOrDefault(1);
         Assert.IsNotNull(whatsAppNumber);
 
         KeyValuePair<string, string>? parameter = whatsAppNumber!.Parameters.NonStandard?.FirstOrDefault();

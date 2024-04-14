@@ -133,13 +133,57 @@ public readonly struct OrgBuilder
     public VCardBuilder Add(string? orgName,
                             IEnumerable<string?>? orgUnits = null,
                             Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null)
+                            Func<VCard, string?>? group = null,
+                            Action<TextBuilder, OrgProperty>? displayName = null)
     {
+        var vc = Builder.VCard;
+        var prop = new OrgProperty(orgName, orgUnits, group?.Invoke(_builder.VCard));
+
         Builder.VCard.Set(Prop.Organizations,
-                          VCardBuilder.Add(new OrgProperty(orgName, orgUnits, group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(prop,
                                            _builder.VCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations),
                                            parameters)
                           );
+
+        displayName?.Invoke(Builder.DisplayNames, prop);
+        return _builder;
+    }
+
+    /// <summary>
+    /// Adds an <see cref="OrgProperty"/> instance, which is newly 
+    /// initialized using the specified arguments, to the <see cref="VCard.Organizations"/> property.
+    /// </summary>
+    /// <param name="org">An <see cref="Organization"/> object.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
+    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
+    /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
+    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="OrgBuilder"/> to
+    /// be able to chain calls.</returns>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
+    /// <exception cref="ArgumentNullException"><paramref name="org"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    public VCardBuilder Add(Organization org,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null,
+                            Action<TextBuilder, OrgProperty>? displayName = null)
+    {
+        var vc = Builder.VCard;
+        var prop = new OrgProperty(org, group?.Invoke(_builder.VCard));
+
+        Builder.VCard.Set(Prop.Organizations,
+                          VCardBuilder.Add(prop,
+                                           _builder.VCard.Get<IEnumerable<OrgProperty?>?>(Prop.Organizations),
+                                           parameters)
+                          );
+
+        displayName?.Invoke(Builder.DisplayNames, prop);
         return _builder;
     }
 

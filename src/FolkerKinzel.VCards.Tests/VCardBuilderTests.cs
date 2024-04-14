@@ -907,14 +907,15 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .NameViews.Add(["Miller"], ["John"], null, null,
-                            displayName: (b, p) => b.Add("John Miller")
-,
                             parameters: p => p.Language = "en",
-                            group: vc => "gr1")
+                            group: vc => "gr1",
+                            displayName: (b, p) => b.Add("John Miller")
+)
             .NameViews.Add(["Müller"], ["Johann"], null, null,
                          parameters: p => p.Language = "de")
             .VCard;
 
+        Assert.IsNotNull(vc.NameViews);
         vc.NameViews = vc.NameViews.Append(null);
 
         NameProperty prop1 = vc.NameViews!.First()!;

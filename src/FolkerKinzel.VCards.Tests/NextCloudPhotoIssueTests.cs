@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -19,7 +20,7 @@ public class NextCloudPhotoIssueTests
         VCard? convertedItem = Vcf.Parse(contentsVCFFile).FirstOrDefault();
         Assert.IsNotNull(convertedItem);
         Assert.IsNotNull(convertedItem!.Photos);
-        Models.DataProperty? photo = convertedItem!.Photos!.FirstOrDefault();
+        DataProperty? photo = convertedItem!.Photos!.FirstOrDefault();
         Assert.IsFalse(photo!.IsEmpty);
     }
 }
