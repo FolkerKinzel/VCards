@@ -15,8 +15,10 @@ namespace FolkerKinzel.VCards.BuilderParts;
 /// Only use this struct in conjunction with <see cref="VCardBuilder"/>!
 /// </note>
 /// </remarks>
+#if !(NET461 || NETSTANDARD2_0 || NETSTANDARD2_1)
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
     Justification = "Overriding does not change the default behavior.")]
+#endif
 public readonly struct IDBuilder
 {
     private readonly VCardBuilder? _builder;

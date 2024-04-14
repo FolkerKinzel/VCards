@@ -22,8 +22,10 @@ namespace FolkerKinzel.VCards.BuilderParts;
 /// <example>
 /// <code language="cs" source="..\Examples\VCardExample.cs"/>
 /// </example>
+#if !(NET461 || NETSTANDARD2_0 || NETSTANDARD2_1)
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
     Justification = "Overriding does not change the default behavior.")]
+#endif
 public readonly struct RelationBuilder
 {
     private readonly VCardBuilder? _builder;

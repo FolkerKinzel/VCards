@@ -21,8 +21,10 @@ namespace FolkerKinzel.VCards.BuilderParts;
 /// <example>
 /// <code language="cs" source="..\Examples\VCardExample.cs"/>
 /// </example>
+#if !(NET461 || NETSTANDARD2_0 || NETSTANDARD2_1)
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
     Justification = "Overriding does not change the default behavior.")]
+#endif
 public readonly struct TextBuilder
 {
     private readonly VCardBuilder? _builder;
@@ -49,6 +51,11 @@ public readonly struct TextBuilder
     /// objects like any other. (<c>null</c> references are always skipped.)</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TextBuilder"/>
     /// to be able to chain calls.</returns>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>

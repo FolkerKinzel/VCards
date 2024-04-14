@@ -381,7 +381,7 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Categories.Add(["1234"], pref: true, group: vc => "g")
+            .Categories.Add(["1234"], group: vc => "g")
             .Categories.Add(["qwertz", "bla"])
             .Categories.SetPreferences()
             .VCard;

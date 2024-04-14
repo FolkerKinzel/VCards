@@ -20,8 +20,10 @@ namespace FolkerKinzel.VCards.BuilderParts;
 /// <example>
 /// <code language="cs" source="..\Examples\VCardExample.cs"/>
 /// </example>
+#if !(NET461 || NETSTANDARD2_0 || NETSTANDARD2_1)
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
     Justification = "Overriding does not change the default behavior.")]
+#endif
 public readonly struct AddressBuilder
 {
     private readonly VCardBuilder? _builder;
@@ -33,7 +35,7 @@ public readonly struct AddressBuilder
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Preference"/> properties of 
-    /// the items in the <see cref="VCard.Adresses"/> property depending on their position
+    /// the items in the <see cref="VCard.Addresses"/> property depending on their position
     /// in that collection and allows to specify whether to skip empty items in that process.
     /// (The first item gets the highest preference <c>1</c>.)
     /// </summary>

@@ -21,8 +21,10 @@ namespace FolkerKinzel.VCards.BuilderParts;
 /// <example>
 /// <code language="cs" source="..\Examples\VCardExample.cs"/>
 /// </example>
+#if !(NET461 || NETSTANDARD2_0 || NETSTANDARD2_1)
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
     Justification = "Overriding does not change the default behavior.")]
+#endif
 public readonly struct OrgBuilder
 {
     private readonly VCardBuilder? _builder;
@@ -166,9 +168,13 @@ public readonly struct OrgBuilder
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <param name="displayName">An <see cref="Action{T1, T2}"/> delegate that's invoked with the 
+    /// <see cref="TextBuilder"/> the <see cref="VCardBuilder.DisplayNames"/> property returns and 
+    /// the newly created <see cref="OrgProperty"/> instance as arguments.</param>
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="OrgBuilder"/> to
     /// be able to chain calls.</returns>
+    /// 
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
@@ -204,6 +210,9 @@ public readonly struct OrgBuilder
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <param name="displayName">An <see cref="Action{T1, T2}"/> delegate that's invoked with the 
+    /// <see cref="TextBuilder"/> the <see cref="VCardBuilder.DisplayNames"/> property returns and 
+    /// the newly created <see cref="OrgProperty"/> instance as arguments.</param>
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="OrgBuilder"/> to
     /// be able to chain calls.</returns>
