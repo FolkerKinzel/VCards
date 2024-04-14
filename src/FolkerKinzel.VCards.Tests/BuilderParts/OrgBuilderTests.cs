@@ -104,6 +104,27 @@ public class OrgBuilderTests
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddTest3()
+    => VCardBuilder.Create().Organizations.Add((Organization?)null!);
+
+    [TestMethod]
+    public void AddTest4()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Organizations.Add(new Organization("Contoso"),
+                               group: vc => vc.NewGroup(),
+                               displayName: (dn, org) => dn.Add(org.Value.OrganizationName))
+            .Organizations.Add("The Bad Ones",
+                                displayName: (dn, org) => dn.Add(org.Value.OrganizationName))
+            .VCard;
+
+        Assert.IsNotNull(vc.DisplayNames);
+        Assert.AreEqual(2, vc.DisplayNames.Count());
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void ClearTest1() => new OrgBuilder().Clear();
 

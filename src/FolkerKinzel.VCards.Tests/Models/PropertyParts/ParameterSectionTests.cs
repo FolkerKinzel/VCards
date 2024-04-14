@@ -78,4 +78,13 @@ public class ParameterSectionTests
 
         Assert.IsTrue(s.GetLinesCount() > 1);
     }
+
+    [TestMethod]
+    public void SortAsTest()
+    {
+        List<string?> list = ["", "  ", " Contoso ", null, "IT"];
+
+        var prop = new OrgProperty("Contoso", ["Computer", "Internet"]);
+        prop.Parameters.SortAs = list!;
+    }
 }
