@@ -13,7 +13,7 @@ public class DataBuilderTests
         VCardBuilder builder = VCardBuilder
             .Create()
             .Photos.AddBytes(null)
-            .Photos.AddBytes([1,2,3])
+            .Photos.AddBytes([1, 2, 3])
             .Photos.SetPreferences();
 
         VCard vc = builder.VCard;

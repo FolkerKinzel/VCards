@@ -53,7 +53,7 @@ public sealed partial class ParameterSection
                     break;
                 case ParameterKey.VALUE:
                     {
-                        string valValue = parameter.Value.Trim(info.TrimCharArray).ToUpperInvariant();
+                        string valValue = parameter.Value.Trim(TRIM_CHARS).ToUpperInvariant();
                         Data? dataType = DataConverter.Parse(valValue);
                         this.DataType = dataType;
 
@@ -105,7 +105,7 @@ public sealed partial class ParameterSection
                     }
                     break;
                 case ParameterKey.TZ:
-                    if (TimeZoneID.TryParse(parameter.Value.Trim(info.TrimCharArray), out TimeZoneID? tzID))
+                    if (TimeZoneID.TryParse(parameter.Value.Trim(TRIM_CHARS), out TimeZoneID? tzID))
                     {
                         this.TimeZone = tzID;
                     }
@@ -127,31 +127,31 @@ public sealed partial class ParameterSection
                         break;
                     }
                 case ParameterKey.CALSCALE:
-                    this.Calendar = parameter.Value.Trim(info.TrimCharArray);
+                    this.Calendar = parameter.Value.Trim(TRIM_CHARS);
                     break;
                 case ParameterKey.ENCODING:
                     this.Encoding = EncConverter.Parse(parameter.Value);
                     break;
                 case ParameterKey.CHARSET:
-                    this.CharSet = parameter.Value.Trim(info.TrimCharArray);
+                    this.CharSet = parameter.Value.Trim(TRIM_CHARS);
                     break;
                 case ParameterKey.ALTID:
-                    this.AltID = parameter.Value.Trim(info.TrimCharArray);
+                    this.AltID = parameter.Value.Trim(TRIM_CHARS);
                     break;
                 case ParameterKey.MEDIATYPE:
-                    this.MediaType = parameter.Value.Trim(info.TrimCharArray);
+                    this.MediaType = parameter.Value.Trim(TRIM_CHARS);
                     break;
                 case ParameterKey.LABEL:
                     this.Label = builder
                         .Clear()
                         .Append(parameter.Value)
-                        .Trim(info.TrimCharArray)
+                        .Trim(TRIM_CHARS.AsSpan())
                         .Replace(@"\n", Environment.NewLine)
                         .Replace(@"\N", Environment.NewLine)
                         .ToString();
                     break;
                 case ParameterKey.CONTEXT:
-                    this.Context = parameter.Value.Trim(info.TrimCharArray);
+                    this.Context = parameter.Value.Trim(TRIM_CHARS);
                     break;
                 case ParameterKey.INDEX:
                     {
@@ -178,7 +178,7 @@ public sealed partial class ParameterSection
                     }
                     else // HOBBY oder INTEREST
                     {
-                        Interest? interest = 
+                        Interest? interest =
                             InterestConverter.Parse(parameter.Value.AsSpan().TrimStart(TRIM_CHARS));
 
                         if (interest.HasValue)
@@ -305,7 +305,7 @@ public sealed partial class ParameterSection
 
     private static bool TryParseInt(string value, VcfDeserializationInfo info, out int result) =>
 #if NET461 || NETSTANDARD2_0
-        int.TryParse(value.Trim(info.TrimCharArray), out result);
+        int.TryParse(value.Trim(TRIM_CHARS), out result);
 #else
         int.TryParse(value.AsSpan().Trim(TRIM_CHARS), out result);
 #endif
@@ -334,7 +334,7 @@ public sealed partial class ParameterSection
 
     private bool ParseTypeParameter(string typeValue, string propertyKey, VcfDeserializationInfo info)
     {
-        typeValue = typeValue.Trim(info.TrimCharArray).ToUpperInvariant();
+        typeValue = typeValue.Trim(TRIM_CHARS).ToUpperInvariant();
         Debug.Assert(typeValue.Length != 0);
 
         switch (typeValue)

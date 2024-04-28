@@ -1,4 +1,3 @@
-using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -25,7 +24,7 @@ internal sealed class DateTimeTextProperty : DateAndOrTimeProperty
 
     /// <inheritdoc />
     public override object Clone() => new DateTimeTextProperty((TextProperty)_textProp.Clone());
-    
+
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
         Debug.Assert(ReferenceEquals(Parameters, _textProp.Parameters));

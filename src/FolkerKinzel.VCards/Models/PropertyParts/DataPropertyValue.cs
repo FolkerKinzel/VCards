@@ -1,7 +1,3 @@
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using FolkerKinzel.DataUrls;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;

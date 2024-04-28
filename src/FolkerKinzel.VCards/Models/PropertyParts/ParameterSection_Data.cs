@@ -1,5 +1,4 @@
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
@@ -13,7 +12,7 @@ public sealed partial class ParameterSection
     [return: MaybeNull]
     private T Get<T>(VCdParam prop)
         => this._propDic.TryGetValue(prop, out object? value)
-               ? (T)value 
+               ? (T)value
                : default;
 
     private void Set<T>(VCdParam prop, T value)
@@ -248,8 +247,8 @@ public sealed partial class ParameterSection
     public string? Language
     {
         get => Get<string?>(VCdParam.Language);
-        set => Set<string?>(VCdParam.Language, 
-                            string.IsNullOrWhiteSpace(value) ? null 
+        set => Set<string?>(VCdParam.Language,
+                            string.IsNullOrWhiteSpace(value) ? null
                                                              : value.Trim());
     }
 

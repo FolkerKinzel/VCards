@@ -90,7 +90,7 @@ public readonly struct KindBuilder
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Set(Kind value,
-                            Action<ParameterSection>? parameters = null, 
+                            Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         var vc = Builder.VCard;

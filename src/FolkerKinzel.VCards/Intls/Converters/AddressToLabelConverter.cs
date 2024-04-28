@@ -1,6 +1,6 @@
+using System.Globalization;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using System.Globalization;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -36,12 +36,12 @@ internal static class AddressToLabelConverter
 
     private static StringBuilder AppendExtendedAddress(this StringBuilder builder, Address address)
     {
-        return address.ExtendedAddress.Count != 0 
+        return address.ExtendedAddress.Count != 0
             ? builder.AppendNewLineIfNeeded().AppendReadableProperty(address.ExtendedAddress, MAX_LINE_LENGTH)
             : builder;
     }
 
-    private static StringBuilder AppendLocality(this StringBuilder builder, Address address,  StringBuilder worker)
+    private static StringBuilder AppendLocality(this StringBuilder builder, Address address, StringBuilder worker)
     {
         AddressOrder addressOrder = address.GetAddressOrder() ?? _defaultAddressOrder;
 
@@ -76,7 +76,7 @@ internal static class AddressToLabelConverter
 
     private static StringBuilder AppendNewLineIfNeeded(this StringBuilder builder)
     {
-        if(builder.Length != 0) { builder.Append(Environment.NewLine); }    
+        if (builder.Length != 0) { builder.Append(Environment.NewLine); }
         return builder;
     }
 }

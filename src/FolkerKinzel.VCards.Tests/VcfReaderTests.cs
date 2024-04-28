@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace FolkerKinzel.VCards.Tests;
+﻿namespace FolkerKinzel.VCards.Tests;
 
 [TestClass]
 public class VcfReaderTests

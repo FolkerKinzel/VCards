@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FolkerKinzel.VCards.Intls.Converters;
+﻿namespace FolkerKinzel.VCards.Intls.Converters;
 internal static class PropertyKeyConverter
 {
     internal static string Parse(ReadOnlySpan<char> span)

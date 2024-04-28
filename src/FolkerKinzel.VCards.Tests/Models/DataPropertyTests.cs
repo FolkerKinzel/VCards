@@ -5,7 +5,6 @@ using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -15,7 +14,7 @@ internal class DataPropertyDerived : DataProperty
     {
     }
 
-    public DataPropertyDerived(ParameterSection parameters, string? group) 
+    public DataPropertyDerived(ParameterSection parameters, string? group)
         : base(parameters, group)
     {
     }
@@ -71,7 +70,7 @@ public class DataPropertyTests
     [TestMethod]
     public void ValueTest4()
     {
-        VCardProperty prop = DataProperty.FromBytes([1,2,3]);
+        VCardProperty prop = DataProperty.FromBytes([1, 2, 3]);
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(DataPropertyValue));
     }

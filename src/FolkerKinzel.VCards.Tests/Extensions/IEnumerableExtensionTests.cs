@@ -2,7 +2,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Extensions.Tests;
 
@@ -669,7 +668,7 @@ public class IEnumerableExtensionTests
 
         arr.SetPreferences();
         arr.UnsetPreferences();
-        
+
 
         arr = [new("1"), null, new(null), new("2")];
 

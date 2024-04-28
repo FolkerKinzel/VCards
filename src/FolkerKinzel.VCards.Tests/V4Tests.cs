@@ -1,7 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -54,7 +53,7 @@ public class V4Tests
 
         byte[] bytes = CreateBytes();
 
-        vcard.Notes = [ new(UNITEXT) ];
+        vcard.Notes = [new(UNITEXT)];
 
         vcard.Keys = DataProperty.FromText(ASCIITEXT);
 

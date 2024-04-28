@@ -1,8 +1,5 @@
-﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Syncs;
-using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls.Extensions;
-using System.Collections.Generic;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards;
 

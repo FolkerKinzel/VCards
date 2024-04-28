@@ -1,8 +1,6 @@
-using System;
 using System.Globalization;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Extensions;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
@@ -59,9 +57,9 @@ internal sealed class DateTimeConverter
             //"T--sszzz"
     ];
 
-    #if NET5_0_OR_GREATER
+#if NET5_0_OR_GREATER
     [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
-    #endif
+#endif
     internal bool TryParse(ReadOnlySpan<char> roSpan, out OneOf<DateOnly, DateTimeOffset> oneOf)
     {
         Debug.Assert(!roSpan.StartsWith('T'));
@@ -231,7 +229,7 @@ internal sealed class DateTimeConverter
                                                "{0:0000}-{1:00}-{2:00}",
                                                 dt.Year, dt.Month, dt.Day)
                         : builder.AppendFormat(CultureInfo.InvariantCulture,
-                                               "--{0:00}-{1:00}", 
+                                               "--{0:00}-{1:00}",
                                                dt.Month, dt.Day);
                     break;
                 }
@@ -239,7 +237,7 @@ internal sealed class DateTimeConverter
                 {
                     _ = dt.HasYear()
                         ? builder.AppendFormat(CultureInfo.InvariantCulture,
-                                               "{0:0000}{1:00}{2:00}", 
+                                               "{0:0000}{1:00}{2:00}",
                                                dt.Year, dt.Month, dt.Day)
                         : builder.AppendFormat(CultureInfo.InvariantCulture,
                                                "--{0:00}{1:00}",

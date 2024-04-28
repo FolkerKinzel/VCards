@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.ObjectModel;
-using FolkerKinzel.MimeTypes;
 using FolkerKinzel.DataUrls;
+using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;

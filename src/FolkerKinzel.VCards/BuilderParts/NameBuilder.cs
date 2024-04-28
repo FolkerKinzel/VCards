@@ -2,8 +2,8 @@
 using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -248,7 +248,7 @@ public readonly struct NameBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<NameProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop.NameViews, 
+        Builder.VCard.Set(Prop.NameViews,
                           _builder.VCard.Get<IEnumerable<NameProperty?>?>(Prop.NameViews)
                                         .Remove(predicate)
                           );

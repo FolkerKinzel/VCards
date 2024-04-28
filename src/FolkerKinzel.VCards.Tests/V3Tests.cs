@@ -2,7 +2,6 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -206,9 +205,9 @@ public class V3Tests
         VCard vc = VCardBuilder
             .Create()
             .Relations.Add(new Uri("http://the_agent.com"), Rel.Agent)
-            .Logos.AddBytes([4,5,6])
-            .Keys.AddBytes([7,8])
-            .Sounds.AddBytes([8,9])
+            .Logos.AddBytes([4, 5, 6])
+            .Keys.AddBytes([7, 8])
+            .Sounds.AddBytes([8, 9])
             .NonStandards.Add("X-DATA", base64, parameters: p => { p.Encoding = Enc.Base64; p.MediaType = octetStream; })
             .VCard;
 

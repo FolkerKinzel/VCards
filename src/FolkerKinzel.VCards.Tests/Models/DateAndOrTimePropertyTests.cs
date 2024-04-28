@@ -1,9 +1,8 @@
-﻿using FolkerKinzel.VCards.Intls.Serializers;
+﻿using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Tests;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -13,7 +12,7 @@ internal class DateAndOrTimePropertyDerived : DateAndOrTimeProperty
     {
     }
 
-    public DateAndOrTimePropertyDerived(ParameterSection parameters, string? group) 
+    public DateAndOrTimePropertyDerived(ParameterSection parameters, string? group)
         : base(parameters, group)
     {
     }

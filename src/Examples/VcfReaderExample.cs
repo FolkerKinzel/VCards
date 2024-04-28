@@ -13,8 +13,8 @@ public static class VcfReaderExample
 
         IEnumerable<VCard> result = reader.ReadToEnd();
 
-        Console.WriteLine("The file \"{0}\" contains {1} vCards.", 
-                          Path.GetFileName(filePath), 
+        Console.WriteLine("The file \"{0}\" contains {1} vCards.",
+                          Path.GetFileName(filePath),
                           result.Count());
     }
 }

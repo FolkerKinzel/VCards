@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using FolkerKinzel.Strings;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 

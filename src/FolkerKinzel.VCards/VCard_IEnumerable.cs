@@ -1,6 +1,4 @@
 using System.Collections;
-using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards;
 

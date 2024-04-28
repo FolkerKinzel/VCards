@@ -1,5 +1,4 @@
 using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
@@ -13,9 +12,6 @@ internal sealed class VcfDeserializationInfo
     private TimeConverter? _timeConverter;
 
     internal StringBuilder Builder { get; } = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY);
-
-
-    internal char[] TrimCharArray { get; } = [' ', '\"', '\''];
 
     internal List<KeyValuePair<string, string>> ParameterList { get; } = [];
 

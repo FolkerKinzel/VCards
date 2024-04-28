@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -151,7 +151,7 @@ public readonly struct GeoBuilder
     }
 
     [MemberNotNull(nameof(_builder))]
-    private IEnumerable<GeoProperty> GetProperty() 
+    private IEnumerable<GeoProperty> GetProperty()
         => Builder.VCard.GeoCoordinates?.WhereNotNull() ?? [];
 
     /// <summary>
@@ -178,7 +178,7 @@ public readonly struct GeoBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop.GeoCoordinates, 
+        Builder.VCard.Set(Prop.GeoCoordinates,
                           VCardBuilder.Add(new GeoProperty(latitude, longitude, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
                                            parameters)
@@ -239,7 +239,7 @@ public readonly struct GeoBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<GeoProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop.GeoCoordinates, 
+        Builder.VCard.Set(Prop.GeoCoordinates,
                           _builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates)
                                         .Remove(predicate)
                           );

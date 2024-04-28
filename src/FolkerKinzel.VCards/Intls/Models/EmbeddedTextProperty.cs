@@ -1,6 +1,5 @@
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 
@@ -10,7 +9,7 @@ internal sealed class EmbeddedTextProperty : DataProperty
 {
     private readonly TextProperty _textProp;
 
-    internal EmbeddedTextProperty(TextProperty textProp) 
+    internal EmbeddedTextProperty(TextProperty textProp)
        : base(textProp.Parameters,
               textProp.Group) => _textProp = textProp;
 

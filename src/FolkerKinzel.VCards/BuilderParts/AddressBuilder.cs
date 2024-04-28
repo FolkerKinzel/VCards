@@ -47,10 +47,10 @@ public readonly struct AddressBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetPreferences(bool skipEmptyItems = true) => 
-        Edit(static (props, skip) => 
-        { 
-            props.SetPreferences(skip); 
+    public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
+        Edit(static (props, skip) =>
+        {
+            props.SetPreferences(skip);
             return props;
         }, skipEmptyItems);
 
@@ -208,7 +208,7 @@ public readonly struct AddressBuilder
                           );
         return _builder;
     }
-    
+
 
     /// <summary>
     /// Adds an <see cref="AddressProperty"/> instance, which is newly 

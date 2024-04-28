@@ -16,7 +16,7 @@ internal class StreamDummy : Stream
 
     public override bool CanSeek { get; }
 
-    public override bool CanWrite {  get; }
+    public override bool CanWrite { get; }
 
     public override long Length => _stream.Length;
 
@@ -35,7 +35,7 @@ internal class StreamDummy : Stream
         => !CanSeek ? throw new NotSupportedException()
                     : _stream.Seek(offset, origin);
 
-    public override void SetLength(long value) =>  _stream.SetLength(value);
+    public override void SetLength(long value) => _stream.SetLength(value);
 
     public override void Write(byte[] buffer, int offset, int count) { }
 }

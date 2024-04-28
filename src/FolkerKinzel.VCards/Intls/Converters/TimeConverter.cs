@@ -1,6 +1,5 @@
 using System.Globalization;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls.Extensions;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
@@ -94,7 +93,7 @@ internal sealed class TimeConverter
 
         return false;
 
-        static bool ContainsUtcOffset(ReadOnlySpan<char> span) 
+        static bool ContainsUtcOffset(ReadOnlySpan<char> span)
             => span.TrimStart('-').ContainsAny("+-");
     }
 

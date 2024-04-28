@@ -1,10 +1,9 @@
-﻿using System;
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Enums;
+﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
+
+using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 

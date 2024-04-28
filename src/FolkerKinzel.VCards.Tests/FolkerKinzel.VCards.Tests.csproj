@@ -51,12 +51,8 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
-		
+		<PackageReference Include="System.Linq.Async" Version="6.0.1" />	
 	</ItemGroup>
-
-	
-
 	<ItemGroup>
 		<ProjectReference Include="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
 	</ItemGroup>
@@ -79,6 +75,7 @@
 	<ItemGroup>
 		<Using Remove="System.Net.Http" />
 		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <Using Include="FolkerKinzel.Strings"/>
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net7.0'">

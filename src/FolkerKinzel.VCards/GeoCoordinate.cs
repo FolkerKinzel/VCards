@@ -1,9 +1,8 @@
 using System.Globalization;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.Strings.Polyfills;
-using FolkerKinzel.VCards.Intls;
 
 namespace FolkerKinzel.VCards;
 

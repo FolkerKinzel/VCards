@@ -1,8 +1,5 @@
-﻿using System.Xml.Linq;
-using FolkerKinzel.MimeTypes;
-using FolkerKinzel.VCards.BuilderParts;
+﻿using FolkerKinzel.VCards.BuilderParts;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 

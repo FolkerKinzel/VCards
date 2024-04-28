@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -30,7 +30,7 @@ public readonly struct TextBuilder
     private readonly VCardBuilder? _builder;
     private readonly Prop _prop;
 
-    [MemberNotNull(nameof(_builder))] 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
     internal TextBuilder(VCardBuilder builder, Prop prop)
@@ -197,7 +197,7 @@ public readonly struct TextBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(new TextProperty(value, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<TextProperty?>?>(_prop),
                                            parameters)
@@ -230,7 +230,7 @@ public readonly struct TextBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<TextProperty, bool> predicate)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           _builder.VCard.Get<IEnumerable<TextProperty?>?>(_prop)
                                         .Remove(predicate)
                          );

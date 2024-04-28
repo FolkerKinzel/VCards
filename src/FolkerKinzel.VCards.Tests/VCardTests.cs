@@ -1,9 +1,9 @@
-﻿using FolkerKinzel.VCards.Enums;
+﻿
+using System.Diagnostics.CodeAnalysis;
+using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Syncs;
-using FolkerKinzel.VCards.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
 
 namespace FolkerKinzel.VCards.Tests;
 

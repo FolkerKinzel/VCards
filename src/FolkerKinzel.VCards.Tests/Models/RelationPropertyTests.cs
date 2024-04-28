@@ -1,10 +1,10 @@
-﻿using FolkerKinzel.VCards.Intls.Deserializers;
+﻿
+using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
-using FolkerKinzel.VCards.Intls.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 

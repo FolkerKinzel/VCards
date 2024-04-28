@@ -40,8 +40,8 @@ public enum Opts
     /// | <see cref="WriteRfc6474Extensions" /> | <see cref="WriteRfc6715Extensions" /> 
     /// | <see cref="WriteImppExtension" /> | <see cref="WriteXExtensions" /> 
     /// | <see cref="AllowMultipleAdrAndLabelInVCard21" /> | <see cref="UpdateTimeStamp"/>) </summary>
-    Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions 
-            | WriteImppExtension | WriteXExtensions | AllowMultipleAdrAndLabelInVCard21 
+    Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions
+            | WriteImppExtension | WriteXExtensions | AllowMultipleAdrAndLabelInVCard21
             | UpdateTimeStamp,
 
     /// <summary>Set the flag to write property group identifiers.</summary>

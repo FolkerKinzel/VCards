@@ -1,5 +1,4 @@
-﻿using System;
-using FolkerKinzel.VCards.Enums;
+﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards;

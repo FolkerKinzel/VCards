@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FolkerKinzel.VCards.Tests;
+﻿namespace FolkerKinzel.VCards.Tests;
 
 internal class FailStream(Exception exception, Stream? innerStream = null, long throwPosition = 0) : Stream
 {
@@ -23,7 +17,7 @@ internal class FailStream(Exception exception, Stream? innerStream = null, long 
     public override long Position
     {
         get => _innerStream is null ? 0 : _innerStream.Position;
-        
+
         set
         {
             if (_innerStream is not null)
@@ -36,7 +30,7 @@ internal class FailStream(Exception exception, Stream? innerStream = null, long 
     public override void Flush() => _innerStream?.Flush();
     public override int Read(byte[] buffer, int offset, int count)
     {
-        if( _innerStream is null) { throw _exception; }
+        if (_innerStream is null) { throw _exception; }
 
         int bytesRead = _innerStream.Read(buffer, offset, count);
         return Position >= _throwPosition ? throw _exception : bytesRead;
@@ -52,8 +46,8 @@ internal class FailStream(Exception exception, Stream? innerStream = null, long 
         }
         Write(buffer, offset, count);
         if (Position >= _throwPosition)
-        { 
-            throw _exception; 
+        {
+            throw _exception;
         }
     }
 }

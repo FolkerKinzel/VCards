@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
+﻿namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
 
 [TestClass]
 public class VcfDeserializerTests

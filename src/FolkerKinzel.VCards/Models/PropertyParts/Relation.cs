@@ -1,4 +1,3 @@
-using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
 using OneOf;
 

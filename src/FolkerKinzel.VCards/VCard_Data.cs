@@ -1,7 +1,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Syncs;
@@ -30,7 +29,7 @@ public sealed partial class VCard
     [return: MaybeNull]
     internal T Get<T>(Prop prop) where T : class?
         => this._propDic.TryGetValue(prop, out object? value)
-                    ? (T)value 
+                    ? (T)value
                     : default;
 
 
@@ -46,7 +45,7 @@ public sealed partial class VCard
         }
     }
 
-    
+
 
     /// <summary>
     /// Gets this instance as <see cref="IEnumerable{T}"/> that allows to iterate over the stored

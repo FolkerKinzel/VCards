@@ -3,12 +3,11 @@ using System.Xml.Linq;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
-using System;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -202,7 +201,7 @@ public readonly struct DataBuilder
                                 Action<ParameterSection>? parameters = null,
                                 Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(DataProperty.FromFile(filePath, mimeType, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop),
                                            parameters)
@@ -234,7 +233,7 @@ public readonly struct DataBuilder
                                  Action<ParameterSection>? parameters = null,
                                  Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(DataProperty.FromBytes(bytes,
                                                                   mimeType,
                                                                   group?.Invoke(_builder.VCard)),
@@ -272,7 +271,7 @@ public readonly struct DataBuilder
                                 Action<ParameterSection>? parameters = null,
                                 Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(DataProperty.FromText(passWord,
                                                                  mimeType,
                                                                  group?.Invoke(_builder.VCard)),
@@ -308,7 +307,7 @@ public readonly struct DataBuilder
                                Action<ParameterSection>? parameters = null,
                                Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(DataProperty.FromUri(uri,
                                                                 mimeType,
                                                                 group?.Invoke(_builder.VCard)),
@@ -343,7 +342,7 @@ public readonly struct DataBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<DataProperty, bool> predicate)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop)
                                         .Remove(predicate));
         return _builder;

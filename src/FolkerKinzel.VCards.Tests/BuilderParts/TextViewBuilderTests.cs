@@ -3,7 +3,7 @@
 [TestClass]
 public class TextViewBuilderTests
 {
-    
+
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

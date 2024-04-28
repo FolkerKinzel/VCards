@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Intls.Encodings.Tests;
 
 [TestClass]

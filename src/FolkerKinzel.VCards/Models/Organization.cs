@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -28,7 +27,7 @@ public sealed class Organization
 
     internal Organization(List<string> orgList)
     {
-        if(orgList.Count == 0)
+        if (orgList.Count == 0)
         {
             return;
         }

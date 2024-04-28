@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -145,7 +145,7 @@ public readonly struct GenderBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop.GenderViews, 
+        Builder.VCard.Set(Prop.GenderViews,
                           VCardBuilder.Add(new GenderProperty(sex, identity, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<GenderProperty?>?>(Prop.GenderViews),
                                            parameters)
@@ -178,7 +178,7 @@ public readonly struct GenderBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<GenderProperty, bool> predicate)
     {
-        Builder.VCard.Set(Prop.GenderViews, 
+        Builder.VCard.Set(Prop.GenderViews,
                           _builder.VCard.Get<IEnumerable<GenderProperty?>?>(Prop.GenderViews)
                                         .Remove(predicate)
                           );

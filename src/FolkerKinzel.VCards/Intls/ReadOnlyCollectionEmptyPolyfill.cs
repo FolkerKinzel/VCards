@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Globalization;
 
 namespace FolkerKinzel.VCards.Intls;
 
@@ -7,7 +6,7 @@ internal static class ReadOnlyStringCollection
 {
 #if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1
 
-    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", 
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
         Justification = "Performance: Collection initializer initializes a new List<string>")]
     private static readonly ReadOnlyCollection<string> _singleton = new(Array.Empty<string>());
 

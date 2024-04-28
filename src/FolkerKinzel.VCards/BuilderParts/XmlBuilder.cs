@@ -2,8 +2,8 @@
 using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -19,14 +19,14 @@ namespace FolkerKinzel.VCards.BuilderParts;
 /// </note>
 /// </remarks>
 #if !(NET461 || NETSTANDARD2_0 || NETSTANDARD2_1)
-[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals", 
+[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
     Justification = "Overriding does not change the default behavior.")]
 #endif
 public readonly struct XmlBuilder
 {
     private readonly VCardBuilder? _builder;
 
-    [MemberNotNull(nameof(_builder))] 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
     internal XmlBuilder(VCardBuilder builder) => _builder = builder;

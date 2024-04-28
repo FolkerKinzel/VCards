@@ -1,9 +1,9 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
-using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Resources;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards;
 

@@ -1,5 +1,4 @@
-﻿using System;
-using FolkerKinzel.VCards.Enums;
+﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 
@@ -68,7 +67,7 @@ public class DateTimeTextPropertyTests
     }
 
     [TestMethod]
-    public void ToStringTest1() 
+    public void ToStringTest1()
     {
         var prop = DateAndOrTimeProperty.FromText(null);
         string s = prop.ToString();

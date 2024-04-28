@@ -1,8 +1,4 @@
-﻿#if !NETCOREAPP3_1
-using FolkerKinzel.Strings.Polyfills;
-#endif
-
-namespace FolkerKinzel.VCards.Syncs.Tests;
+﻿namespace FolkerKinzel.VCards.Syncs.Tests;
 
 [TestClass]
 public class PropertyIDTests

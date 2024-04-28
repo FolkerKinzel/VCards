@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Extensions;
 using Mod = FolkerKinzel.VCards.Models;
 
 namespace Examples;

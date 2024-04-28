@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Linq;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards;
 

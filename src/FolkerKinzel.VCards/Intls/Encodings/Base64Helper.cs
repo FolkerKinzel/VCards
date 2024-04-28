@@ -6,7 +6,7 @@ internal static class Base64Helper
     {
         try
         {
-            return Base64.GetBytes(base64, 
+            return Base64.GetBytes(base64,
                                    Base64ParserOptions.AcceptMissingPadding);
         }
         catch

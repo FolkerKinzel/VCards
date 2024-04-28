@@ -1,8 +1,4 @@
-﻿using System;
-using BenchmarkDotNet.Running;
-using FolkerKinzel.VCards;
-
-namespace Benchmarks;
+﻿namespace Benchmarks;
 
 
 internal class Program

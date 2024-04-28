@@ -23,7 +23,7 @@ public readonly struct TimeStampBuilder
 {
     private readonly VCardBuilder? _builder;
 
-    [MemberNotNull(nameof(_builder))] 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
     internal TimeStampBuilder(VCardBuilder builder) => _builder = builder;

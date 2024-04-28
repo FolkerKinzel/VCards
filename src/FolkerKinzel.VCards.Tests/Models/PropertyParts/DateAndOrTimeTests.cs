@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using FolkerKinzel.VCards.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 
@@ -99,7 +98,7 @@ public class DateAndOrTimeTests
     }
 
     [TestMethod]
-    public void TryAsDateTest1() 
+    public void TryAsDateTest1()
         => Assert.IsFalse(new DateAndOrTime(new DateTimeOffset(2, 1, 1, 17, 24, 32, TimeSpan.FromHours(1))).TryAsDateOnly(out _));
 
     [TestMethod]

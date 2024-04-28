@@ -36,7 +36,7 @@ public static class PClExtension
     /// are also set in <paramref name="value" />. If <paramref name="value" /> is <c>null</c>,
     /// <c>false</c> is returned.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsSet(this PCl? value, PCl flags) 
+    public static bool IsSet(this PCl? value, PCl flags)
         => (value & flags) == flags;
 
     /// <summary>Unsets all flags set in <paramref name="flags" /> in <paramref name="value"

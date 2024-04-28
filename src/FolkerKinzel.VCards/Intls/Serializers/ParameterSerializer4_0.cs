@@ -806,7 +806,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         foreach (PropertyID pid in pids)
         {
             Debug.Assert(pid != null);
-            
+
             pid.AppendTo(_worker);
             _ = _worker.Append(',');
         }

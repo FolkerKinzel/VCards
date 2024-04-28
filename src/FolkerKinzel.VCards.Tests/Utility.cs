@@ -73,7 +73,7 @@ internal static class Utility
         name2.Parameters.Language = "ru-RU";
         name2.Parameters.AltID = "  ";
 
-        var names = new NameProperty[] {name1, name2}; 
+        var names = new NameProperty[] { name1, name2 };
 
 
         var impp1 = new TextProperty("aim:uri.com");
@@ -148,7 +148,7 @@ internal static class Utility
             DisplayNames = new TextProperty("Folker"),
             OrgDirectories = new TextProperty("OrgDirectory"),
             Profile = new ProfileProperty(),
-            Categories = new StringCollectionProperty(["Person", "Data" ]),
+            Categories = new StringCollectionProperty(["Person", "Data"]),
             TimeStamp = new TimeStampProperty(),
             EMails = email1,
             Roles = new TextProperty("Rechte Hand"),
@@ -159,7 +159,7 @@ internal static class Utility
             Access = new AccessProperty(Access.Confidential),
             GenderViews = new GenderProperty(Sex.NonOrNotApplicable),
             GeoCoordinates = new GeoProperty(new GeoCoordinate(23.456, 49.654)),
-            NickNames = new StringCollectionProperty(["Genius", "The Brain" ]),
+            NickNames = new StringCollectionProperty(["Genius", "The Brain"]),
             Kind = new KindProperty(Kind.Organization),
             Mailer = new TextProperty("The Mailer"),
             Languages = new TextProperty("de"),

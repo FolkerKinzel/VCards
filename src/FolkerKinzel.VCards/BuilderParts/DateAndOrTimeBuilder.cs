@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -171,7 +171,7 @@ public readonly struct DateAndOrTimeBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(DateAndOrTimeProperty.FromDate(year,
                                                                           month,
                                                                           day,
@@ -273,7 +273,7 @@ public readonly struct DateAndOrTimeBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(DateAndOrTimeProperty.FromDateTime(dateTime, group?.Invoke(_builder.VCard)),
                                            Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
                                            parameters));
@@ -299,7 +299,7 @@ public readonly struct DateAndOrTimeBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(DateAndOrTimeProperty.FromTime(time, group?.Invoke(_builder.VCard)),
                                            Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
                                            parameters)
@@ -364,7 +364,7 @@ public readonly struct DateAndOrTimeBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Remove(Func<DateAndOrTimeProperty, bool> predicate)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop)
                                        .Remove(predicate));
         return _builder;

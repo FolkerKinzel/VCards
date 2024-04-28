@@ -2,8 +2,8 @@
 using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -26,7 +26,7 @@ public readonly struct NonStandardBuilder
 {
     private readonly VCardBuilder? _builder;
 
-    [MemberNotNull(nameof(_builder))] 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
     internal NonStandardBuilder(VCardBuilder builder) => _builder = builder;
@@ -49,7 +49,7 @@ public readonly struct NonStandardBuilder
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TData>(
-        Func<IEnumerable<NonStandardProperty>, TData, IEnumerable<NonStandardProperty?>?> func, 
+        Func<IEnumerable<NonStandardProperty>, TData, IEnumerable<NonStandardProperty?>?> func,
         TData data)
     {
         var props = GetProperty();

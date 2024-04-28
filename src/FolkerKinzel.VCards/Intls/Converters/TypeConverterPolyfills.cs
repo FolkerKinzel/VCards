@@ -44,16 +44,16 @@ internal static class _Float
 }
 
 
-    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
+[SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
 internal static class _Double
 {
-//    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-//    internal static double Parse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider)
-//#if NET461 || NETSTANDARD2_0
-//        => double.Parse(s.ToString(), style, provider);
-//#else
-//        => double.Parse(s, style, provider);
-//#endif
+    //    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //    internal static double Parse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider)
+    //#if NET461 || NETSTANDARD2_0
+    //        => double.Parse(s.ToString(), style, provider);
+    //#else
+    //        => double.Parse(s, style, provider);
+    //#endif
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out double result)

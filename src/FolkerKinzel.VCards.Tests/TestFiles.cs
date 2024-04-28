@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace FolkerKinzel.VCards.Tests;
+﻿namespace FolkerKinzel.VCards.Tests;
 
 internal static class TestFiles
 {

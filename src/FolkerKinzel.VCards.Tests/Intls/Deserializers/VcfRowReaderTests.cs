@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Text;
+﻿using System.Text;
 using FolkerKinzel.VCards.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
 

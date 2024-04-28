@@ -4,7 +4,7 @@ namespace FolkerKinzel.VCards.Extensions;
 
 /// <summary>Extension methods for the <see cref="DateTimeOffset"
 /// /> struct.</summary>
-public static class DateTimeOffsetExtension 
+public static class DateTimeOffsetExtension
 {
     /// <summary>
     /// Indicates whether <paramref name="value"/> contains relevant

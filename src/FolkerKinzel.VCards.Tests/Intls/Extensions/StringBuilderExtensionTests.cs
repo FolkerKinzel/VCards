@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace FolkerKinzel.VCards.Intls.Extensions.Tests;
+﻿namespace FolkerKinzel.VCards.Intls.Extensions.Tests;
 
 [TestClass]
 public class StringBuilderExtensionTests

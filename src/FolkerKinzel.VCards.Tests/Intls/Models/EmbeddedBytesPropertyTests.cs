@@ -1,9 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using FolkerKinzel.VCards.Enums;
+﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
 
@@ -37,10 +35,10 @@ public class EmbeddedBytesPropertyTests
     [TestMethod]
     public void EmbeddedBytesPropertyTest3()
     {
-        var prop = new EmbeddedBytesProperty([1,2,3], null, new ParameterSection());
+        var prop = new EmbeddedBytesProperty([1, 2, 3], null, new ParameterSection());
         Assert.IsFalse(prop.IsEmpty);
 
-        byte[] ? val1 = prop.Value;
+        byte[]? val1 = prop.Value;
         Assert.IsNotNull(val1);
         byte[]? val2 = prop.Value;
         Assert.AreSame(val1, val2);

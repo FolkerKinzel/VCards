@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Intls.Deserializers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]

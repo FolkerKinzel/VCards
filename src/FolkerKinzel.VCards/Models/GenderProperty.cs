@@ -31,7 +31,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public GenderProperty(Sex? sex,
                           string? identity = null,
-                          string? group = null) : base(new ParameterSection(), group) 
+                          string? group = null) : base(new ParameterSection(), group)
         => Value = new GenderInfo(sex, identity);
 
 

@@ -1,7 +1,5 @@
 ﻿using System.Text;
-using System.Runtime.CompilerServices;
 using FolkerKinzel.VCards.Enums;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 

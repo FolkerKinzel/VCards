@@ -1,5 +1,4 @@
 ﻿using System.Xml.Linq;
-using System.Xml.Schema;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
@@ -109,7 +108,7 @@ public class XmlBuilderTests
         Assert.IsFalse(new XmlBuilder().Equals((XmlBuilder?)null));
 
         var builder = new XmlBuilder();
-        Assert.AreEqual(builder.GetHashCode(),((object) builder).GetHashCode());
+        Assert.AreEqual(builder.GetHashCode(), ((object)builder).GetHashCode());
     }
 
     [TestMethod]

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -27,7 +27,7 @@ public readonly struct StringCollectionBuilder
     private readonly VCardBuilder? _builder;
     private readonly Prop _prop;
 
-    [MemberNotNull(nameof(_builder))] 
+    [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
     internal StringCollectionBuilder(VCardBuilder builder, Prop prop)
@@ -189,7 +189,7 @@ public readonly struct StringCollectionBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(new StringCollectionProperty(value, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(_prop),
                                            parameters)
@@ -218,7 +218,7 @@ public readonly struct StringCollectionBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop, 
+        Builder.VCard.Set(_prop,
                           VCardBuilder.Add(new StringCollectionProperty(value, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(_prop),
                                            parameters)

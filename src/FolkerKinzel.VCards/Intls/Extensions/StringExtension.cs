@@ -1,8 +1,5 @@
 using System.Text.RegularExpressions;
-using FolkerKinzel.Strings;
-using FolkerKinzel.Strings.Polyfills;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
 
@@ -96,7 +93,7 @@ internal static partial class StringExtension
         {
             return IetfLanguageTagRegex().IsMatch(value);
         }
-        catch(RegexMatchTimeoutException)
+        catch (RegexMatchTimeoutException)
         {
             return false;
         }

@@ -1,9 +1,5 @@
-using System.IO;
-using System.Text;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards;
 
@@ -294,7 +290,7 @@ public static partial class Vcf
     /// closed stream.
     /// </exception>
     /// <exception cref="IOException"> The method could not read from one of the <see cref="Stream"/>s.</exception>
-    [SuppressMessage("Style", "IDE0301:Simplify collection initialization", 
+    [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
         Justification = "Performance: The collection initializer creates a new List<VCard> instead of Array.Empty<VCard>().")]
     public static IEnumerable<VCard> DeserializeMany(IEnumerable<Func<Stream?>?> factories, AnsiFilter? filter = null)
     {

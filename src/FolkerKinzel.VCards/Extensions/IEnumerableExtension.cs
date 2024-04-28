@@ -1,5 +1,4 @@
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -639,18 +638,18 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? values, TSource? value) where TSource : VCardProperty
     {
         if (values is null)
-        { 
-            yield break; 
+        {
+            yield break;
         }
 
-        foreach (var item in values) 
-        { 
+        foreach (var item in values)
+        {
             if (item is null || item == value)
             {
-                continue; 
-            } 
+                continue;
+            }
 
-            yield return item; 
+            yield return item;
         }
     }
 

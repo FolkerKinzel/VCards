@@ -13,7 +13,7 @@ public class GeoBuilderTests
         VCardBuilder builder = VCardBuilder
             .Create()
             .GeoCoordinates.Add(null)
-            .GeoCoordinates.Add(42,42)
+            .GeoCoordinates.Add(42, 42)
             .GeoCoordinates.SetPreferences();
 
         VCard vc = builder.VCard;

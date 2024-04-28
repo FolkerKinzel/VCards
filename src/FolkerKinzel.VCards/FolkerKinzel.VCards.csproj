@@ -8,10 +8,10 @@
     <!-- .nuget-Package: -->
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
-    <Version>7.0.0-beta.1</Version>
-    <FileVersion>7.0.0.16</FileVersion>
+    <Version>7.0.0-beta.2</Version>
+    <FileVersion>7.0.0.23</FileVersion>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
-    <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v7.0.0-beta.1</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v7.0.0-beta.2</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
     <Description>.NET library for reading, writing, and converting VCF files that comply with vCard standards 2.1, 3.0 and 4.0</Description>
     <Authors>Folker Kinzel</Authors>
@@ -60,6 +60,14 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'net40' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net461'">
     <NoWarn>$(NoWarn);8600;8601;8602;8603;8604;8618</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <Using Remove="System.Net.Http" />
+    <Using Include="System.Diagnostics" />
+    <Using Include="System.Diagnostics.CodeAnalysis" />
+    <Using Include="System.Runtime.CompilerServices" />
+    <Using Include="FolkerKinzel.Strings" />
+    <Using Include="System.Text" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Remove="AnsiFilter_old.cs" />
     <Compile Remove="Intls\Converters\MimeTypeConverter_OBSOLETE.cs" />
@@ -123,16 +131,7 @@
     <None Remove="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Using Remove="System.Net.Http" />
-    <Using Include="System.Diagnostics" />
-    <Using Include="System.Diagnostics.CodeAnalysis" />
-    <Using Include="System.Runtime.CompilerServices" />
-    <Using Include="FolkerKinzel.Strings" />
-    <Using Include="FolkerKinzel.Strings.Polyfills" />
-    <Using Include="System.Text" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FolkerKinzel.DataUrls" Version="1.0.1" />
+    <PackageReference Include="FolkerKinzel.DataUrls" Version="1.1.0-beta.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

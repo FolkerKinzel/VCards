@@ -1,9 +1,7 @@
 ﻿using System.Xml.Linq;
 using FolkerKinzel.VCards.BuilderParts;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -54,7 +52,7 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder.Create()
                                .Access.Set(Access.Private)
                                .VCard;
-        Assert.IsNotNull (vc.Access);
+        Assert.IsNotNull(vc.Access);
         Assert.AreEqual(Access.Private, vc.Access.Value);
     }
 
@@ -214,10 +212,10 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .BirthDayViews.Add(2023, 12, 6, p => p.Index = 1, v => "g")
-            .BirthDayViews.Add(12,6)
+            .BirthDayViews.Add(12, 6)
             .BirthDayViews.Add(new DateTimeOffset(2023, 12, 6, 10, 0, 0, TimeSpan.Zero))
             .BirthDayViews.Add(new DateOnly(2023, 12, 6))
-            .BirthDayViews.Add(new TimeOnly(10,0))
+            .BirthDayViews.Add(new TimeOnly(10, 0))
             .BirthDayViews.Add("Nicholas")
             .BirthDayViews.Add("Nikolaus", p => p.Language = "de-DE", v => "g")
             .VCard;
@@ -580,7 +578,7 @@ public class VCardBuilderTests
         builder.GeoCoordinates.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.GeoCoordinates = new GeoProperty(42,42).Append(null);
+        builder.VCard.GeoCoordinates = new GeoProperty(42, 42).Append(null);
         builder.GeoCoordinates.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
@@ -801,7 +799,7 @@ public class VCardBuilderTests
         Assert.IsNull(builder.VCard.Keys);
     }
 
-    
+
     [TestMethod()]
     public void SetKindTest1()
     {
@@ -817,8 +815,8 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Kind.Set(Kind.Group, 
-                      p => p.NonStandard = [ new KeyValuePair<string, string>("X-PARA", "bla")], vc => "group")
+            .Kind.Set(Kind.Group,
+                      p => p.NonStandard = [new KeyValuePair<string, string>("X-PARA", "bla")], vc => "group")
             .VCard;
         Assert.IsNotNull(vc.Kind);
         Assert.IsNotNull(vc.Kind.Parameters.NonStandard);
@@ -928,7 +926,7 @@ public class VCardBuilderTests
         Assert.AreEqual("gr1", prop1.Group);
 
         Assert.AreEqual("de", prop2.Parameters.Language);
-        
+
         vc = VCardBuilder.Create(vc).NameViews.Remove(x => x.Parameters.Language == "de").VCard;
         Assert.IsFalse(vc.NameViews!.Any(x => x?.Parameters.Language == "de"));
         vc = VCardBuilder.Create(vc)

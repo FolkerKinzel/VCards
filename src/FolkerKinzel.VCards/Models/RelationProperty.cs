@@ -197,7 +197,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     }
 
     /// <inheritdoc />
-    IEnumerator IEnumerable.GetEnumerator() 
+    IEnumerator IEnumerable.GetEnumerator()
         => ((IEnumerable<RelationProperty>)this).GetEnumerator();
 
     /// <inheritdoc />
@@ -238,7 +238,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
             return new RelationTextProperty(vcfRow, version);
         }
     }
-    
+
 
     private void InitializeValue()
     {

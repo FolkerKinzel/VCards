@@ -6,9 +6,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using System.Globalization;
 using FolkerKinzel.VCards.Syncs;
-using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards;
 

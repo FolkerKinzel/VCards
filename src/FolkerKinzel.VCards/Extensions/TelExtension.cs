@@ -17,7 +17,7 @@ public static class TelExtension
     /// <paramref name="flags" /> is returned.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [return: NotNull]
-    public static Tel? Set(this Tel? value, Tel flags) 
+    public static Tel? Set(this Tel? value, Tel flags)
         => value.HasValue ? (value.Value | flags) : flags;
 
     /// <summary>Checks whether all flags set in <paramref name="flags" /> are also
@@ -30,7 +30,7 @@ public static class TelExtension
     /// are also set in <paramref name="value" />. If <paramref name="value" /> is 
     /// <c>null</c>, <c>false</c> is returned.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsSet(this Tel? value, Tel flags) 
+    public static bool IsSet(this Tel? value, Tel flags)
         => (value & flags) == flags;
 
     /// <summary>Unsets all flags set in <paramref name="flags" /> in <paramref name="value"

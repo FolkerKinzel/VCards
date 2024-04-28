@@ -2,7 +2,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
@@ -88,7 +87,7 @@ public readonly struct AccessBuilder
     public VCardBuilder Set(Access value,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop.Access, 
+        Builder.VCard.Set(Prop.Access,
                           new AccessProperty(value, group?.Invoke(_builder.VCard)));
         return _builder;
     }

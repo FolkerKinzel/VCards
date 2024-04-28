@@ -130,7 +130,7 @@ internal static class QuotedPrintable
 
         foreach (byte bt in data)
         {
-            _ = HasToBeQuoted(bt) ? sb.Append('=').Append(bt.ToString("X02", CultureInfo.InvariantCulture)) 
+            _ = HasToBeQuoted(bt) ? sb.Append('=').Append(bt.ToString("X02", CultureInfo.InvariantCulture))
                                   : sb.Append((char)bt);
         }
         return sb;

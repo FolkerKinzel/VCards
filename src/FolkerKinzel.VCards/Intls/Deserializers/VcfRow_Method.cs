@@ -22,7 +22,7 @@ internal sealed partial class VcfRow
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
         int valueSeparatorIndex = GetValueSeparatorIndex(vcfRow);
 
-        return valueSeparatorIndex > 0 ? new VcfRow(vcfRow, valueSeparatorIndex, info) 
+        return valueSeparatorIndex > 0 ? new VcfRow(vcfRow, valueSeparatorIndex, info)
                                        : null;
     }
 
