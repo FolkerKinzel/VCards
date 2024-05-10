@@ -9,6 +9,7 @@ Read here:
 - [Extension methods](#extension-methods)
 - [Parsing and serializing VCF files using the Vcf class](#parsing-and-serializing-vcf-files-using-the-vcf-class)
 - [The vCard 4.0 data synchronization mechanism](#the-vcard-4.0-data-synchronization-mechanism)
+- [Handling of incompliant data](#handling-of-incompliant-data)
 - [Reading the project reference](#reading-the-project-reference)
 - [Documents of the vCard standard](#documents-of-the-vcard-standard)
 
@@ -168,6 +169,13 @@ properties has been introduced. For this to work fully automatically, only two l
 required.
 
 [Learn more](DataSynchronization.md)
+
+## Handling of incompliant data
+Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from such files.
+
+When converting from a higher vCard standard to a lower one, not all data is compliant. To minimize 
+data loss, the library tries to preserve incompliant data using well-known x-name properties. 
+The usage of such x-name properties can be controlled with the `Opts` enum.
 
 ## Reading the project reference
 At the [GitHub Releases page](https://github.com/FolkerKinzel/VCards/releases) there is a detailed project reference to each version of the Nuget package as CHM file in the Assets. On some systems the content of this CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox - if it is present - in the lower right corner of the General tab in the Properties dialog.

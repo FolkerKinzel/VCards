@@ -6,14 +6,19 @@
 
 FolkerKinzel.VCards is a full-featured .NET library for working with vCard files (*.vcf).
 
+It has a fluent API for 
+creating and editing vCards and supports [RFC 6350](https://tools.ietf.org/html/rfc6350) (vCard 4.0), 
+[RFC 2426](https://tools.ietf.org/html/rfc2426) (vCard 3.0), 
+[vCard 2.1](https://web.archive.org/web/20120501162958/http://www.imc.org/pdi/vcard-21.doc), the extensions [RFC 6474](https://tools.ietf.org/html/rfc6474),
+[RFC 6715](https://tools.ietf.org/html/rfc6715]), 
+[RFC 6473](https://tools.ietf.org/html/rfc6473), 
+[RFC 4770](https://tools.ietf.org/html/rfc4770),
+[RFC 2739](https://tools.ietf.org/html/rfc2739), as well as several popular non-standard vCard properties.
+
 It allows
 - loading VCF files from the file system and storing them there,
 - serializing VCF files to and from streams,
 - and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.
-
-Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from such files.
-
-The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards are not completely compliant, incompliant data is silently ignored when converting from one vCard standard to another. To minimize this kind of data loss, the library tries to preserve incompliant data using well-known x-name properties. The usage of such x-name properties can be controlled.
 
 [Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v7.0.0)
 
