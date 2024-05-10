@@ -1,4 +1,4 @@
-﻿# The vCard 4.0 data synchronization
+﻿# Setting up vCard 4.0 data synchronization
 With the vCard 4.0 standard a data synchronization mechanism using PID parameters and CLIENTPIDMAP
 properties has been introduced. This is very helpful when merging or updating vCards.
 

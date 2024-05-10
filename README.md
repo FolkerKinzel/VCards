@@ -15,21 +15,20 @@ creating and editing vCards and supports [RFC 6350](https://tools.ietf.org/html/
 [RFC 4770](https://tools.ietf.org/html/rfc4770),
 [RFC 2739](https://tools.ietf.org/html/rfc2739), as well as several popular non-standard vCard properties.
 
-It allows
+The library allows:
 - loading VCF files from the file system and storing them there,
 - serializing VCF files to and from streams,
 - and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.
 
 [Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v7.0.0)
 
-Read the ["Getting Started" tutorial](https://github.com/FolkerKinzel/VCards/blob/master/src/Examples/GettingStarted.md) if you are new to this library!
+Read the ["Getting Started"](https://github.com/FolkerKinzel/VCards/wiki) wiki if you are new to this library!
 
 ### Code Examples
-- [Getting started](src/Examples/GettingStarted.md)
-- [Reading and writing of VCF files](src/Examples/VCardExample.cs)
+- [Reading and writing of VCF files (advanced features)](src/Examples/VCardExample.cs)
 - [Example implementation of ITimeZoneIDConverter](src/Examples/TimeZoneIDConverter.cs)
 - [Automatic detection of VCF files written with ANSI encodings](src/Examples/AnsiFilterExample.cs)
-- [The vCard 4.0 data synchronization](src/Examples/DataSynchronization.md)
+- [Setting up vCard 4.0 data synchronization](https://github.com/FolkerKinzel/VCards/wiki/Setting-up-vCard-4.0-data-synchronization)
 - [Loading a VCF file from the internet](src/Examples/WebExample.cs)
 - [Reading and writing group vCards](src/Examples/VCard40Example.cs)
 - [Connecting vCards](src/Examples/EmbeddedVCardExample.cs)
