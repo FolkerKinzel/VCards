@@ -5,9 +5,9 @@ Read here:
   - [The VCard class](#the-vcard-class)
   - [The VCardProperty class](#the-vcardproperty-class)
   - [Naming conventions](#naming-conventions)
-- [Efficient building and editing of VCard objects using VCardBuilder](#efficient-building-and-editing-of-vcard-objects-using-vcardbuilder)
-- [Extension methods](#extension-methods)
+- [Efficient building and editing of VCard instances using VCardBuilder](#efficient-building-and-editing-of-vcard-instances-using-vcardbuilder)
 - [Parsing and serializing VCF files using the Vcf class](#parsing-and-serializing-vcf-files-using-the-vcf-class)
+- [Extension methods](#extension-methods)
 - [The vCard 4.0 data synchronization mechanism](#the-vcard-40-data-synchronization-mechanism)
 - [Handling of incompliant data](#handling-of-incompliant-data)
 - [Reading the project reference](#reading-the-project-reference)
@@ -72,78 +72,18 @@ A special feature are properties whose name ends with "Views": These are propert
             
 Most classes derived from `VCardProperty` implement `IEnumerable<T>` in order to be assignable to collection properties without having to be wrapped in an Array or List.
 
-## Efficient building and editing of VCard objects using VCardBuilder
-The `VCardBuilder` class provides a fluent API for building and editing VCard objects.
+Use Linq and the built-in [extension methods](#extension-methods) when querying the data.
 
-The properties of the VCardBuilder class have the same names as those of the VCard class. Each of these 
-properties gets a struct that provides methods to edit the corresponding VCard property. 
-Each of these methods return the VCardBuilder instance so that the calls can be chained.
+## Efficient building and editing of VCard instances using VCardBuilder
+The VCard data model consists of numerous classes. Fortunately, you only 
+need one to create and edit VCard instances: VCardBuilder provides a 
+fluent API that handles all the complicated operations in the background.
 
-The `VCardBuilder.Create` method overloads initialize a VCardBuilder, which creates a new 
-VCard instance or edits an existing one. The `VCardBuilder.VCard` property gets the VCard 
-object that the VCardBuilder created or manipulated.
+[Learn more](https://github.com/FolkerKinzel/VCards/wiki/The-VCardBuilder-class) about this important class.
 
-See an example how `VCardBuilder` can be used:
-```csharp
-VCard vCard = VCardBuilder
-    .Create()
-    .NameViews.Add(familyNames: ["Müller-Risinowsky"],
-                   givenNames: ["Käthe"],
-                   additionalNames: ["Alexandra", "Caroline"],
-                   prefixes: ["Prof.", "Dr."],
-                   displayName: (displayNames, name) => displayNames.Add(name.ToDisplayName())
-                  )
-    .GenderViews.Add(Sex.Female)
-    .Organizations.Add("Millers Company", ["C#", "Webdesign"])
-    .Titles.Add("CEO")
-    .Photos.AddFile(photoFilePath)
-    .Phones.Add("tel:+49-321-1234567",
-                 parameters: p =>
-                 {
-                     p.DataType = Data.Uri;
-                     p.PropertyClass = PCl.Work;
-                     p.PhoneType = Tel.Cell | Tel.Text | Tel.Msg | Tel.BBS | Tel.Voice;
-                 }
-               )
-    .Phones.Add("tel:+49-123-9876543",
-                 parameters: p =>
-                 {
-                     p.DataType = Data.Uri;
-                     p.PropertyClass = PCl.Home;
-                     p.PhoneType = Tel.Voice | Tel.BBS;
-                 }
-               )
-    .Phones.SetIndexes()
-    // Unless specified, an address label is automatically applied to the AddressProperty object.
-    // Specifying the country helps to format this label correctly.
-    // Applying a group name to the AddressProperty helps to automatically preserve its Label,
-    // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
-    .Addresses.Add("Friedrichstraße 22", "Berlin", null, "10117", "Germany",
-                    parameters: p =>
-                    {
-                        p.PropertyClass = PCl.Work;
-                        p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel;
-                        p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
-                        p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
-                    },
-                    group: vc => vc.NewGroup()
-                  )
-    .EMails.Add("kaethe_mueller@internet.com", parameters: p => p.PropertyClass = PCl.Work)
-    .EMails.Add("mailto:kaethe_at_home@internet.com",
-                 parameters: p =>
-                 {
-                     p.DataType = Data.Uri;
-                     p.PropertyClass = PCl.Home;
-                 }
-               )
-    .EMails.SetPreferences()
-    .BirthDayViews.Add(1984, 3, 28)
-    .Relations.Add("Paul Müller-Risinowsky",
-                   Rel.Spouse | Rel.CoResident | Rel.Colleague
-                  )
-    .AnniversaryViews.Add(2006, 7, 14)
-    .VCard;
-```
+## Parsing and serializing VCF files using the Vcf class
+The `Vcf` class is a static class that contains a lot of methods for serializing and parsing `VCard` objects to or from VCF files.
+
 ## Extension methods
 The namespace `FolkerKinzel.VCards.Extensions` contains several extension methods that makes working with VCard objects 
 more efficient and less error prone. It's recommended to publish this namespace when working with this
@@ -159,9 +99,6 @@ encapsulate most of the necessary null checking and Linq operations that are nee
 properties, or to store something there.
 - Some operations work with collections of VCard objects (e.g., saving several VCard objects together in a common VCF file). 
 Extension methods allow these operations to be performed directly on these collections.
-
-## Parsing and serializing VCF files using the Vcf class
-The `Vcf` class is a static class that contains a lot of methods for serializing and parsing `VCard` objects to or from VCF files.
 
 ## The vCard 4.0 data synchronization mechanism
 With the vCard 4.0 standard a data synchronization mechanism using PID parameters and CLIENTPIDMAP
