@@ -25,6 +25,7 @@ The library allows:
 Read the ["Getting Started"](https://github.com/FolkerKinzel/VCards/wiki) wiki if you are new to this library!
 
 ### Code Examples
+- [Reading and writing of VCF files (simple example)](https://github.com/FolkerKinzel/VCards/wiki#simple-example)
 - [Reading and writing of VCF files (advanced features)](src/Examples/VCardExample.cs)
 - [Example implementation of ITimeZoneIDConverter](src/Examples/TimeZoneIDConverter.cs)
 - [Automatic detection of VCF files written with ANSI encodings](src/Examples/AnsiFilterExample.cs)

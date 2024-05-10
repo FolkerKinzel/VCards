@@ -12,7 +12,7 @@ public static class VCardExample
     private const string underLine = "----------";
     private const string photoFileName = "Example.jpg";
 
-    public static void ReadingAndWritingVCard(string directoryPath)
+    public static void WritingAndReadingVCard(string directoryPath)
     {
         // Registering the executing application with the VCard class is a technical requirement
         // when using the data synchronization mechanism introduced with vCard 4.0 (PID and
