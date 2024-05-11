@@ -8,7 +8,7 @@ Read here:
 - [Efficient building and editing of VCard instances using VCardBuilder](#efficient-building-and-editing-of-vcard-instances-using-vcardbuilder)
 - [Parsing and serializing VCF files using the Vcf class](#parsing-and-serializing-vcf-files-using-the-vcf-class)
 - [Extension methods](#extension-methods)
-- [The vCard 4.0 data synchronization mechanism](#the-vcard-40-data-synchronization-mechanism)
+- [The vCard 4.0 data synchronization mechanism](#the-vcard-40-data-synchronization)
 - [Handling of incompliant data](#handling-of-incompliant-data)
 - [Reading the project reference](#reading-the-project-reference)
 - [Documents of the vCard standard](#documents-of-the-vcard-standard)
@@ -18,32 +18,19 @@ Read here:
 public static void WritingAndReadingVCard(string filePath)
 {
     VCard vCard = VCardBuilder
-            .Create()
-            .NameViews.Add(familyName: "Sonntag",
-                           givenName: "Susi",
-                           displayName: 
-                           (displayNames, name) => displayNames.Add(name.ToDisplayName())
-                          )
-            .GenderViews.Add(Sex.Female)
-            .Phones.Add("+49-321-1234567",
-                         parameters: p =>
-                         {
-                             p.PropertyClass = PCl.Work;
-                             p.PhoneType = Tel.Cell;
-                         }
-                       )
-            .Phones.Add("+49-123-9876543",
-                         parameters: p =>
-                         {
-                             p.PropertyClass = PCl.Home;
-                             p.PhoneType = Tel.Voice | Tel.BBS;
-                         }
-                       )
-            .EMails.Add("susi@contoso.com")
-            .EMails.Add("susi@home.de")
-            .EMails.SetPreferences()
-            .BirthDayViews.Add(1984, 3, 28)
-            .VCard;
+      .Create()
+      .NameViews.Add(familyName: "Sonntag",
+                     givenName: "Susi"
+                    )
+      .GenderViews.Add(Sex.Female)
+      .Phones.Add("+49-321-1234567",
+                   parameters: p =>  p.PhoneType = Tel.Cell
+                 )
+      .EMails.Add("susi@contoso.com")
+      .EMails.Add("susi@home.de")
+      .EMails.SetPreferences()
+      .BirthDayViews.Add(1984, 3, 28)
+      .VCard;
 
     // Save vCard as vCard 3.0:
     // (You don't need to specify the version: Version 3.0 is the default.)
@@ -62,14 +49,13 @@ The VCF file the method creates is:
 ```
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-05-10T22:48:52Z
-UID:0c2df896-375c-4ddf-9b3a-feb65b83019a
+REV:2024-05-11T09:18:56Z
+UID:207ad3f4-6607-4b19-9411-f0bccbab471c
 FN:Susi Sonntag
 N:Sonntag;Susi;;;
 X-GENDER:Female
 BDAY;VALUE=DATE:1984-03-28
-TEL;TYPE=WORK,CELL:+49-321-1234567
-TEL;TYPE=HOME,VOICE,BBS:+49-123-9876543
+TEL;TYPE=CELL:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:susi@contoso.com
 EMAIL;TYPE=INTERNET:susi@home.de
 END:VCARD
@@ -161,7 +147,7 @@ properties, or to store something there.
 - Some operations work with collections of VCard objects (e.g., saving several VCard objects together in a common VCF file). 
 Extension methods allow these operations to be performed directly on these collections.
 
-## The vCard 4.0 data synchronization mechanism
+## The vCard 4.0 data synchronization
 With the vCard 4.0 standard a data synchronization mechanism using PID parameters and CLIENTPIDMAP
 properties has been introduced. For this to work fully automatically, only two lines of code are 
 required.

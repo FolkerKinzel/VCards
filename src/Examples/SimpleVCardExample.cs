@@ -11,24 +11,11 @@ public static class SimpleVCardExample
         VCard vCard = VCardBuilder
                 .Create()
                 .NameViews.Add(familyName: "Sonntag",
-                               givenName: "Susi",
-                               displayName: 
-                               (displayNames, name) => displayNames.Add(name.ToDisplayName())
+                               givenName: "Susi"
                               )
                 .GenderViews.Add(Sex.Female)
                 .Phones.Add("+49-321-1234567",
-                             parameters: p =>
-                             {
-                                 p.PropertyClass = PCl.Work;
-                                 p.PhoneType = Tel.Cell;
-                             }
-                           )
-                .Phones.Add("+49-123-9876543",
-                             parameters: p =>
-                             {
-                                 p.PropertyClass = PCl.Home;
-                                 p.PhoneType = Tel.Voice | Tel.BBS;
-                             }
+                             parameters: p =>  p.PhoneType = Tel.Cell
                            )
                 .EMails.Add("susi@contoso.com")
                 .EMails.Add("susi@home.de")
@@ -63,14 +50,13 @@ vCard:
 
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-05-10T22:48:52Z
-UID:0c2df896-375c-4ddf-9b3a-feb65b83019a
+REV:2024-05-11T09:18:56Z
+UID:207ad3f4-6607-4b19-9411-f0bccbab471c
 FN:Susi Sonntag
 N:Sonntag;Susi;;;
 X-GENDER:Female
 BDAY;VALUE=DATE:1984-03-28
-TEL;TYPE=WORK,CELL:+49-321-1234567
-TEL;TYPE=HOME,VOICE,BBS:+49-123-9876543
+TEL;TYPE=CELL:+49-321-1234567
 EMAIL;TYPE=INTERNET,PREF:susi@contoso.com
 EMAIL;TYPE=INTERNET:susi@home.de
 END:VCARD
