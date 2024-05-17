@@ -9,7 +9,7 @@ internal static class IEnumerableIntlExtension
         => values.WhereNotNull()
                  .GroupBy(static x => x.Group, StringComparer.OrdinalIgnoreCase);
 
-#if NET461
+#if NET462
     internal static IEnumerable<TSource> Append<TSource>(this IEnumerable<TSource> sources, TSource value)
         => sources.Concat(Enumerable.Repeat(value, 1));
 #endif

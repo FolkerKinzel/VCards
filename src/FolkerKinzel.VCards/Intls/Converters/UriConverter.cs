@@ -59,7 +59,7 @@ internal static class UriConverter
             return ".htm";
         }
 
-#if NETSTANDARD2_0 || NET461
+#if NETSTANDARD2_0 || NET462
         // On Windows this is never true but NETSTANDARD2_0 can
         // be used on several platforms
         if (segment.ContainsAny(Path.GetInvalidPathChars()))

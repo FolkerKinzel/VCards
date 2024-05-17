@@ -76,7 +76,7 @@ internal static partial class StringExtension
 
     [ExcludeFromCodeCoverage]
     internal static bool IsIetfLanguageTag(this string value)
-#if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1 || NET5_0 || NET6_0
+#if NET462 || NETSTANDARD2_0 || NETSTANDARD2_1 || NET5_0 || NET6_0
     {
         try
         {

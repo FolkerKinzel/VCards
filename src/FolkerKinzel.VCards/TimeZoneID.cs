@@ -194,7 +194,7 @@ public sealed partial class TimeZoneID
     [ExcludeFromCodeCoverage]
     private bool IsUtcOffset()
     {
-#if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1 || NET5_0 || NET6_0
+#if NET462 || NETSTANDARD2_0 || NETSTANDARD2_1 || NET5_0 || NET6_0
         try
         {
             return Regex.IsMatch(Value,

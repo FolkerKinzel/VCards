@@ -53,7 +53,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
                 throw new ArgumentOutOfRangeException(nameof(uncertainty));
             }
 
-#if NET461 || NETSTANDARD2_0
+#if NET462 || NETSTANDARD2_0
             Uncertainty = (float)Math.Round(val, 1, MidpointRounding.ToEven);
 #else
             Uncertainty = MathF.Round(val, 1, MidpointRounding.ToEven);

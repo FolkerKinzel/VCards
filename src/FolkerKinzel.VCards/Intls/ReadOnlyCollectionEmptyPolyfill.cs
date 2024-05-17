@@ -4,7 +4,7 @@ namespace FolkerKinzel.VCards.Intls;
 
 internal static class ReadOnlyStringCollection
 {
-#if NET461 || NETSTANDARD2_0 || NETSTANDARD2_1
+#if NET462 || NETSTANDARD2_0 || NETSTANDARD2_1
 
     [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
         Justification = "Performance: Collection initializer initializes a new List<string>")]

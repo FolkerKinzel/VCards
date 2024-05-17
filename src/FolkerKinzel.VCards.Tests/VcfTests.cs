@@ -156,7 +156,7 @@ public class VcfTests
         Assert.IsNull(Vcf.DeserializeMany([() => File.OpenRead(TestFiles.EmptyVcf)]).FirstOrDefault());
     }
 
-#if !NET48
+
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public async Task DeserializeManyAsyncTest1() => _ = await Vcf.DeserializeManyAsync(null!).CountAsync();
@@ -225,7 +225,6 @@ public class VcfTests
 
         Assert.IsNull(await Vcf.DeserializeManyAsync([t => Task.FromResult<Stream>(File.OpenRead(TestFiles.EmptyVcf))]).FirstOrDefaultAsync());
     }
-#endif
 
     [TestMethod]
     public void LoadTest1()

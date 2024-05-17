@@ -272,7 +272,7 @@ internal static class QuotedPrintable
         {
             try
             {
-#if NETSTANDARD2_0 || NET461
+#if NETSTANDARD2_0 || NET462
                 return (byte)(Uri.FromHex(charr[1]) + Uri.FromHex(charr[0]) * 16);
 #else
                 return byte.Parse(charr, NumberStyles.AllowHexSpecifier);

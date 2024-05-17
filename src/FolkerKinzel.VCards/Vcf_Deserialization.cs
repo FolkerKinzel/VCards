@@ -324,8 +324,6 @@ public static partial class Vcf
         }
     }
 
-#if !(NET461 || NETSTANDARD2_0)
-
     /// <summary>
     /// Deserializes a collection of <see cref="Stream"/>s of VCF data in an asynchronous operation and allows to specify an 
     /// <see cref="AnsiFilter"/> to select the right <see cref="Encoding"/> automatically.
@@ -339,9 +337,6 @@ public static partial class Vcf
     /// <returns>A collection that provides asynchronous iteration over <see cref="VCard"/> values.</returns>
     /// 
     /// <remarks>
-    /// <note type="important">
-    /// This method is not available for .NET Framework and .NET Standard 2.0.
-    /// </note>
     /// <para>
     /// <see cref="AnsiFilter"/> only recognizes one <see cref="Encoding"/> per <see cref="Stream"/>.
     /// This means that if a <see cref="Stream"/> contains VCF data with different <see cref="Encoding"/>s, 
@@ -392,7 +387,6 @@ public static partial class Vcf
             }
         }
     }
-#endif
 
     internal static IList<VCard> DoDeserialize(TextReader reader,
                                               VCdVersion versionHint = VCdVersion.V2_1)

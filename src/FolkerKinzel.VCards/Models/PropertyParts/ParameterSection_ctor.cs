@@ -32,7 +32,10 @@ public sealed partial class ParameterSection
     }
 
 
-
+#if NET8_0_OR_GREATER
+    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters",
+        Justification = "TRIM_CHARS are not localizable")]
+#endif
     internal ParameterSection(string propertyKey,
                               ReadOnlySpan<char> parameterSection,
                               VcfDeserializationInfo info)
@@ -304,7 +307,7 @@ public sealed partial class ParameterSection
     }
 
     private static bool TryParseInt(string value, VcfDeserializationInfo info, out int result) =>
-#if NET461 || NETSTANDARD2_0
+#if NET462 || NETSTANDARD2_0
         int.TryParse(value.Trim(TRIM_CHARS), out result);
 #else
         int.TryParse(value.AsSpan().Trim(TRIM_CHARS), out result);
