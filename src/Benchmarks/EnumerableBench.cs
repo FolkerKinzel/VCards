@@ -27,16 +27,10 @@ public class EnumerableBench
     //}
 
     [Benchmark]
-    public int NotEmptyLibrary()
-    {
-        return _props.WhereNotEmpty().Count();
-    }
+    public int NotEmptyLibrary() => _props.WhereNotEmpty().Count();
 
     [Benchmark]
-    public int NotEmptyGenerator()
-    {
-        return NotEmpty().Count();
-    }
+    public int NotEmptyGenerator() => NotEmpty().Count();
 
     //[Benchmark]
     //public int NotNullAndLibrary()

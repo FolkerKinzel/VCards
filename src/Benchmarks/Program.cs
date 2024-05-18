@@ -1,10 +1,19 @@
-﻿namespace Benchmarks;
+﻿using System;
+using BenchmarkDotNet.Running;
+using FolkerKinzel.VCards;
+
+namespace Benchmarks;
 
 
 internal class Program
 {
     private static void Main()
     {
+        VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+
+        //var bench = new ParseBench();
+        _ = BenchmarkRunner.Run<ParseBench>();
+
         //_ = BenchmarkRunner.Run<EnumerableBench>();
         //_ = BenchmarkRunner.Run<HasFlagBench>();
 
