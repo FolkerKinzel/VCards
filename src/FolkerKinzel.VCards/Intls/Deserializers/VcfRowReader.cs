@@ -133,7 +133,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
                 if (!isVcard_2_1)
                 {
-                    //automatisch eingefügtes Leerzeichen wieder entfernen
+                    // remove inserted SPACE character
                     _ = _info.Builder.Remove(insertPosition, 1);
                 }
                 continue;
@@ -310,7 +310,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
     {
         Debug.Assert(s is not null);
 
-        while (s.Length != 0) // Leerzeile beendet Base64
+        while (s.Length != 0) // an empty line closes Base64
         {
             _ = _info.Builder.Append(s);
 
@@ -349,9 +349,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
         }
         while (!s.StartsWith(END_VCARD, StringComparison.OrdinalIgnoreCase));
 
-        // wenn die eingebettete vCard eine weitere eingebettete vCard enthält,
-        // scheitert das Parsen
-
+        // if the embedded vCard embeds another vCard parsing fails
         return true;
     }
 
