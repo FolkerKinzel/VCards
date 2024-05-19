@@ -4,8 +4,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers;
 
 internal sealed class VcfDeserializationInfo
 {
-    private const int INITIAL_STRINGBUILDER_CAPACITY = 4096;
-    private const int MAX_STRINGBUILDER_CAPACITY = 4096 * 4;
+    private const int INITIAL_STRINGBUILDER_CAPACITY = 64;
     internal const int INITIAL_PARAMETERLIST_CAPACITY = 8;
 
     private DateTimeConverter? _dateAndOrTimeConverter;
@@ -37,13 +36,13 @@ internal sealed class VcfDeserializationInfo
 
     internal ValueSplitter CommaSplitter { get; } = new ValueSplitter(',', StringSplitOptions.RemoveEmptyEntries);
 
-    internal void Reset()
-    {
-        Builder.Clear();
+    //internal void Reset()
+    //{
+    //    Builder.Clear();
 
-        if (Builder.Capacity > MAX_STRINGBUILDER_CAPACITY)
-        {
-            Builder.Capacity = INITIAL_STRINGBUILDER_CAPACITY;
-        }
-    }
+    //    if (Builder.Capacity > MAX_STRINGBUILDER_CAPACITY)
+    //    {
+    //        Builder.Capacity = INITIAL_STRINGBUILDER_CAPACITY;
+    //    }
+    //}
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices;
 using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
@@ -19,6 +20,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
     private readonly TextReader _reader;
     private readonly VcfDeserializationInfo _info;
     private readonly VCdVersion _versionHint;
+    private readonly List<string> _list = [];
 
 
     internal VcfRowReader(TextReader reader, VcfDeserializationInfo info, VCdVersion versionHint = VCdVersion.V2_1)
@@ -102,7 +104,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
         }
 
         // needed if the VCF file contains more than one vCard
-        _info.Reset();
+        _list.Clear();
 
         bool isFirstLine = true;
         bool isVcard_2_1 = _versionHint == VCdVersion.V2_1;
@@ -128,23 +130,25 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 //vCard-Wrapping (This can't be "BEGIN:VCARD" or "END:VCARD".)
                 Debug.WriteLine("  == vCard Line-Wrapping detected ==");
 
-                int insertPosition = _info.Builder.Length;
-                _ = _info.Builder.Append(s);
-
-                if (!isVcard_2_1)
+                if(isVcard_2_1)
+                {
+                    _list.Add(s);
+                }
+                else
                 {
                     // remove inserted SPACE character
-                    _ = _info.Builder.Remove(insertPosition, 1);
+                    _list.Add(s.Substring(1));
                 }
+
                 continue;
             }
-            else if (isVcard_2_1 && _info.Builder.Length != 0)
+            else if (isVcard_2_1 && _list.Count != 0)
             {
                 VcfRow? tmpRow = CreateVcfRow(out string tmp);
 
                 if (tmpRow is null)
                 {
-                    _ = _info.Builder.Append(s);
+                    _list.Add(s);
                     continue;
                 }
 
@@ -153,7 +157,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                     // QuotedPrintable soft-linebreak (This can't be "BEGIN:VCARD" or "END:VCARD".)
                     Debug.WriteLine("  == QuotedPrintable soft-linebreak detected ==");
 
-                    _ = _info.Builder.Append(tmp);
+                    _list.Add(tmp);
 
                     if (ConcatQuotedPrintableSoftLineBreak(s))
                     {
@@ -176,15 +180,15 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 {
                     Debug.WriteLine("  == vCard 2.1 Base64 detected ==");
 
-                    if (s.Length == 0) // einzeiliges Base64
+                    if (s.Length == 0) // one-line Base64
                     {
                         yield return tmpRow;
                         continue;
                     }
                     else
                     {
-                        _ = _info.Builder.Append(tmp);
-
+                        _list.Add(tmp);
+                    
                         if (ConcatVcard2_1Base64(s))
                         {
                             VcfRow? vcfRow = CreateVcfRow(out _);
@@ -203,11 +207,11 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                         }
                     }
                 }
-                else if (s.StartsWith(BEGIN_VCARD, StringComparison.OrdinalIgnoreCase)) //eingebettete VCard 2.1. AGENT-vCard:
+                else if (s.StartsWith(BEGIN_VCARD, StringComparison.OrdinalIgnoreCase)) // embedded VCard 2.1. AGENT-vCard:
                 {
                     Debug.WriteLine("  == Embedded VCARD 2.1 vCard detected ==");
 
-                    // Achtung: Version 2.1. supports such embedded vCards in the AGENT property:
+                    // Caution: Version 2.1. supports such embedded vCards in the AGENT property:
                     //
                     // AGENT:
                     // BEGIN:VCARD
@@ -217,7 +221,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                     // TEL;WORK;FAX:+1-213-555-5678
                     // END:VCARD
 
-                    _ = _info.Builder.Append(tmp);
+                    _list.Add(tmp);
 
                     if (ConcatNested_2_1Vcard(s))
                     {
@@ -241,24 +245,25 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                     yield return tmpRow;
                 }
 
-                _ = _info.Builder.Append(s);
+                _list.Add(s);
             }
             else
             {
-                if (_info.Builder.Length != 0)
+                if (_list.Count != 0)
                 {
-                    // s stellt den Beginn einer neuen VcfRow dar. Deshalb enthält
-                    // builder bereits eine vollständige VcfRow, die erzeugt werden muss,
-                    // bevor s in builder geladen werden kann:
-
+                    // s represents the start of a new VcfRow. Therefore _list already contains
+                    // a complete VcfRow-String. This must be parsed before s can be added to _list.
                     VcfRow? vcfRow = CreateVcfRow(out _);
 
                     if (vcfRow is not null)
                     {
                         yield return vcfRow;
                     }
+
                 } //if
-                _ = _info.Builder.Append(s);
+
+                _list.Add(s);
+
             }//else
 
         } while (!s.StartsWith(END_VCARD, StringComparison.OrdinalIgnoreCase));
@@ -283,7 +288,8 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
         // QuotedPrintableConverter works platform-independent with 
         // Environment.NewLine
-        _ = _info.Builder.AppendLine().Append(s);
+        _list.Add(Environment.NewLine);
+        _list.Add(s);
 
         while (s.Length == 0 || s[s.Length - 1] == '=')
         {
@@ -299,12 +305,12 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 continue;
             }
 
-            _ = _info.Builder.AppendLine().Append(s);
+            _list.Add(Environment.NewLine);
+            _list.Add(s);
         }
 
         return true;
     }
-
 
     private bool ConcatVcard2_1Base64(string? s)
     {
@@ -312,7 +318,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
         while (s.Length != 0) // an empty line closes Base64
         {
-            _ = _info.Builder.Append(s);
+            _list.Add(s);
 
             if (!ReadNextLine(out s))
             {
@@ -329,7 +335,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
     {
         Debug.Assert(s is not null);
 
-        _ = _info.Builder.Append(s);
+        _list.Add(s);
 
         do
         {
@@ -345,7 +351,8 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 continue;
             }
 
-            _ = _info.Builder.Append(VCard.NewLine).Append(s);
+            _list.Add(Environment.NewLine);
+            _list.Add(s);
         }
         while (!s.StartsWith(END_VCARD, StringComparison.OrdinalIgnoreCase));
 
@@ -355,9 +362,9 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
     private VcfRow? CreateVcfRow(out string toParse)
     {
-        toParse = _info.Builder.ToString();
+        toParse = _list.Count == 1 ? _list[0] :  string.Concat(_list);
         var vcfRow = VcfRow.Parse(toParse, _info);
-        _ = _info.Builder.Clear();
+        _list.Clear();
 
         return vcfRow;
     }
