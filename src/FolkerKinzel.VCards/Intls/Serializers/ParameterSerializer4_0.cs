@@ -671,6 +671,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
     private void AppendAltId()
     {
         string? altId = ParaSection.AltID;
+
         if (altId is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.ALTID, EscapeAndQuote(altId));
