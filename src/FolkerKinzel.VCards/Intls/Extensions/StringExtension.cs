@@ -58,14 +58,16 @@ internal static partial class StringExtension
             return false;
         }
 
-        if (s.ContainsNewLine())
+        var span = s.AsSpan();
+
+        if (span.ContainsNewLine())
         {
             return true;
         }
 
-        for (int i = 0; i < s.Length; i++)
+        for (int i = 0; i < span.Length; i++)
         {
-            if (s[i] > 126)
+            if (span[i] > 126)
             {
                 return true;
             }
