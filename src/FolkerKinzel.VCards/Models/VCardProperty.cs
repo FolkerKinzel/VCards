@@ -89,8 +89,8 @@ public abstract class VCardProperty : ICloneable
         _ = builder.Append(':');
         AppendValue(serializer);
 
-        // vermeidet, dass das Line-Wrapping in vCard 2.1 durchgeführt wird, wenn es schon wegen
-        // QuotedPrintable oder Base64 gemacht worden ist:
+        // Avoids line-wrapping in vCard 2.1 if it has already been done with
+        // QuotedPrintable or Base64:
         return !(serializer.Version == VCdVersion.V2_1 &&
             (Parameters.Encoding ==
                 Enc.QuotedPrintable || Parameters.Encoding == Enc.Base64));

@@ -90,9 +90,9 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
                     }
 
                     // at least 1 char per line:
-                    for (int j = 0; j < counter - 1; j++) // suche das letzte vorhergehende 
-                    {                                     // Leerzeichen und füge
-                        int current = i - j;              // davor einen Linebreak ein
+                    for (int j = 0; j < counter - 1; j++) // find the last white-space character
+                    {                                     // and in insert a line break before it
+                        int current = i - j;              
                         c = Builder[current];
 
                         if (c == ' ' || c == '\t')
