@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 using FolkerKinzel.VCards;
@@ -10,11 +9,11 @@ namespace Benchmarks;
 
 
 [MemoryDiagnoser]
-[SimpleJob(RuntimeMoniker.Net80, launchCount: 1, warmupCount: 2, iterationCount: 2, invocationCount: 2)]
+[SimpleJob(RuntimeMoniker.Net80, launchCount: Const.LAUNCH_COUNT, warmupCount: Const.WARMUP_COUNT, iterationCount: Const.ITERATION_COUNT, invocationCount: Const.INVOCATION_COUNT)]
+//[SimpleJob(RuntimeMoniker.Net60, launchCount: Const.LAUNCH_COUNT, warmupCount: Const.WARMUP_COUNT, iterationCount: Const.ITERATION_COUNT, invocationCount: Const.INVOCATION_COUNT)]
+[SimpleJob(RuntimeMoniker.Net48, launchCount: Const.LAUNCH_COUNT, warmupCount: Const.WARMUP_COUNT, iterationCount: Const.ITERATION_COUNT, invocationCount: Const.INVOCATION_COUNT)]
 public class ParseBench
 {
-    private readonly VCard _vCard;
-    private readonly VCard _vCardPhoto;
     private readonly string _vCardString21;
     private readonly string _vCardString30;
     private readonly string _vCardString40;
@@ -24,26 +23,8 @@ public class ParseBench
 
     public ParseBench()
     {
-        _vCard = VCardBuilder
-            .Create()
-            .NameViews.Add("Mustermann", "Jürgen", displayName: (dn, n) => dn.Add(n.ToDisplayName()))
-
-            .EMails.Add("juergen@home.de", parameters: p => p.PropertyClass = PCl.Home)
-            .EMails.Add("juergen@work.com", parameters: p => p.PropertyClass = PCl.Work)
-            .EMails.SetPreferences()
-
-            .Phones.Add("01234-56789876", parameters: p =>  p.PhoneType = Tel.Cell)
-            .Phones.Add("09876-54321234", parameters: p => { p.PropertyClass = PCl.Home; p.PhoneType = Tel.Voice | Tel.Fax; })
-            .Phones.SetPreferences()
-
-            .Addresses.Add("Blümchenweg 14a", "Göppingen", null, "73035")
-            .BirthDayViews.Add(1985, 5, 7)
-            .VCard;
-
-        _vCardPhoto = VCardBuilder
-            .Create((VCard)_vCard.Clone())
-            .Photos.AddFile(@"..\..\..\..\..\..\..\TestFiles\Folker.png")
-            .VCard;
+        VCard _vCard = VCardProvider.CreateVCard();
+        VCard _vCardPhoto = VCardProvider.CreatePhotoVCard();
 
         _vCardString21 = _vCard.ToVcfString(VCdVersion.V2_1);
         _vCardString30 = _vCard.ToVcfString();
@@ -55,4 +36,19 @@ public class ParseBench
 
     [Benchmark]
     public IList<VCard> Parse21() => Vcf.Parse(_vCardString21);
+
+    [Benchmark]
+    public IList<VCard> Parse21Photo() => Vcf.Parse(_vCardStringPhoto21);
+
+    [Benchmark]
+    public IList<VCard> Parse30() => Vcf.Parse(_vCardString30);
+
+    [Benchmark]
+    public IList<VCard> Parse30Photo() => Vcf.Parse(_vCardStringPhoto30);
+
+    [Benchmark]
+    public IList<VCard> Parse40() => Vcf.Parse(_vCardString40);
+
+    [Benchmark]
+    public IList<VCard> Parse40Photo() => Vcf.Parse(_vCardStringPhoto40);
 }

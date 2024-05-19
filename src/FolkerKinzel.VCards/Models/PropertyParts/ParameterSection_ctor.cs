@@ -208,7 +208,7 @@ public sealed partial class ParameterSection
     }//ctor
 
     private static List<KeyValuePair<string, string>> GetParameters(ReadOnlySpan<char> parameterSection,
-                                                                List<KeyValuePair<string, string>> parameterTuples)
+                                                                    List<KeyValuePair<string, string>> parameterTuples)
     {
         int splitIndex;
         ReadOnlySpan<char> parameter;
