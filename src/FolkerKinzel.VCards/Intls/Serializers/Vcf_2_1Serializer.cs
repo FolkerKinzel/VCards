@@ -54,7 +54,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         {
             _ = Builder.Insert(i, ' ');
 
-            i = Math.Min(i + 64, Builder.Length);
+            i = Math.Min(i + VCard.MAX_BYTES_PER_LINE, Builder.Length);
 
             _ = Builder.Insert(i, VCard.NewLine);
 
@@ -62,13 +62,20 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         }
     }
 
-    protected override void AppendLineFolding()
+    protected override void WriteLineFolded()
     {
-        int counter = 0;
+        Debug.Assert(Builder.Length > 0);
 
-        for (int i = 0; i < Builder.Length - 1; i++)
+        using var shared = ArrayPoolHelper.Rent<char>(Builder.Length);
+        Builder.CopyTo(0, shared.Array, 0, Builder.Length);
+        ReadOnlySpan<char> span = shared.Array.AsSpan(0, Builder.Length);
+
+        int counter = 0;
+        int chunkStart = 0;
+
+        for (int i = 0; i < span.Length - 1; i++)
         {
-            char c = Builder[i];
+            char c = span[i];
 
             if (c == '\r') //Quoted-Printable soft line break in an embedded AGENT vCard
             {
@@ -82,7 +89,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
                 if (counter == VCard.MAX_BYTES_PER_LINE)
                 {
-                    if (Builder[i + 1] == '\r') //Quoted-Printable soft line break in an embedded AGENT vCard
+                    if (span[i + 1] == '\r') //Quoted-Printable soft line break in an embedded AGENT vCard
                     {
                         i += QuotedPrintable.NEW_LINE.Length;
                         counter = 0;
@@ -90,15 +97,17 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
                     }
 
                     // at least 1 char per line:
-                    for (int j = 0; j < counter - 1; j++) // find the last white-space character
+                    for (int j = i; j > chunkStart; j--) // find the last white-space character
                     {                                     // and in insert a line break before it
-                        int current = i - j;              
-                        c = Builder[current];
+
+                        c = span[j];
 
                         if (c == ' ' || c == '\t')
                         {
-                            _ = Builder.Insert(current, VCard.NewLine);
-                            i = current += VCard.NewLine.Length + 1; // SPACE or TAB char
+                            _writer.WriteLine(shared.Array, chunkStart, j - chunkStart);
+
+                            chunkStart = j;
+                            i = j;
                             counter = 1; // offset of the SPACE or TAB char
 
                             break; // inner for-loop
@@ -109,13 +118,15 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
                 {                                            // has been found before
                     if (c == ' ' || c == '\t')
                     {
-                        _ = Builder.Insert(i, VCard.NewLine);
-                        i += VCard.NewLine.Length + 1; // SPACE or TAB char
+                        _writer.WriteLine(shared.Array, chunkStart, i - chunkStart);
+                        chunkStart = i;
                         counter = 1; // offset of the SPACE or TAB char
                     }
                 }
-            }
-        }
+            }//else
+        }// for
+
+        _writer.WriteLine(shared.Array, chunkStart, span.Length - chunkStart);
     }
 
     protected override void AppendAddresses(IEnumerable<AddressProperty?> value)

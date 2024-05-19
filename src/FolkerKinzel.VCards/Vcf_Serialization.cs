@@ -131,7 +131,7 @@ public static partial class Vcf
                                  bool leaveStreamOpen = false)
     {
         DebugWriter.WriteMethodHeader(
-            $"{nameof(VCard)}.{nameof(Serialize)}({nameof(Stream)}, IEnumerable<{nameof(VCard)}?>");
+            $"{nameof(Vcf)}.{nameof(Serialize)}(IEnumerable<{nameof(VCard)}?>, {nameof(Stream)})");
 
         ValidateArguments(stream, vCards, leaveStreamOpen);
         using VcfSerializer serializer = VcfSerializer.GetSerializer(stream,

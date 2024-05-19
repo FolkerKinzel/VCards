@@ -37,10 +37,10 @@ internal class Program
 
         //WhatsAppDemo1.IntegrateWhatsAppNumberUsingIMPP();
         //WhatsAppDemo2.UsingTheWhatsAppType();
-        //VCardExample.WritingAndReadingVCard(directoryPath);
+        VCardExample.WritingAndReadingVCard(directoryPath);
         //VCard40Example.SaveSingleVCardAsVcf(directoryPath);
 
-        SimpleVCardExample.WritingAndReadingVCard("test.vcf");
+        //SimpleVCardExample.WritingAndReadingVCard("test.vcf");
 
         //StartAnsiFilterExample();
 

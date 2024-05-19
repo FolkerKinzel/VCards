@@ -76,9 +76,9 @@ internal static class QuotedPrintable
         //firstLineOffset %= MAX_ROWLENGTH;
         //int charsBeforeSoftlineBreak = MAX_ROWLENGTH - 1;
 
-        int firstLineLength = Math.Max(MAX_ROWLENGTH - firstLineOffset, MIN_ROWLENGTH);
-
-        for (int lineLength = firstLineLength;
+        for (int lineLength = firstLineOffset >= MAX_ROWLENGTH - MIN_ROWLENGTH
+                ? InsertSoftlineBreak(sb, 0) + MAX_ROWLENGTH
+                : Math.Max(MAX_ROWLENGTH - firstLineOffset, MIN_ROWLENGTH);
             lineLength < sb.Length; // mindestens 1 Zeichen nach dem letzten Soft-Linebreak
             lineLength += MAX_ROWLENGTH)
         {

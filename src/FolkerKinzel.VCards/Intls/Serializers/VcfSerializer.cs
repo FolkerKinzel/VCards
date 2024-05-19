@@ -24,7 +24,7 @@ internal abstract class VcfSerializer : IDisposable
     internal const string X_KADDRESSBOOK_X_IMAddress = "X-KADDRESSBOOK-X-IMAddress";
 
     private readonly char[] _byteCounterArr = new char[1];
-    private readonly TextWriter _writer;
+    protected readonly TextWriter _writer;
 
     protected VcfSerializer(TextWriter writer,
                             Opts options,
@@ -365,10 +365,18 @@ internal abstract class VcfSerializer : IDisposable
 
         if (prop.BuildProperty(this))
         {
-            AppendLineFolding();
+            WriteLineFolded();
         }
-
-        _writer.WriteLine(Builder);
+        else
+        {
+#if NET8_0_OR_GREATER
+            _writer.WriteLine(Builder);
+#else
+            using var shared = ArrayPoolHelper.Rent<char>(Builder.Length);
+            Builder.CopyTo(0, shared.Array, 0, Builder.Length);
+            _writer.WriteLine(shared.Array, 0, Builder.Length);
+#endif
+        }
     }
 
     protected void BuildXImpps(IEnumerable<TextProperty?> value)
@@ -446,14 +454,21 @@ internal abstract class VcfSerializer : IDisposable
         }
     }
 
-    protected virtual void AppendLineFolding()
+    protected virtual void WriteLineFolded()
     {
+        Debug.Assert(Builder.Length > 0);
+
+        using var shared = ArrayPoolHelper.Rent<char>(Builder.Length);
+        Builder.CopyTo(0, shared.Array, 0, Builder.Length);
+        ReadOnlySpan<char> span = shared.Array.AsSpan(0, Builder.Length);
+
         int counter = 0;
+        int chunkStart = 0;
 
         // After a soft linebreak at least 1 char must remain:
-        for (int i = 0; i < Builder.Length - 1; i++)
+        for (int i = 0; i < span.Length - 1; i++)
         {
-            char c = Builder[i];
+            char c = span[i];
 
             counter += GetByteCount(c);
 
@@ -467,11 +482,14 @@ internal abstract class VcfSerializer : IDisposable
                 i--; // one char back
             }
 
-            _ = Builder.Insert(++i, VCard.NewLine);
-            i += VCard.NewLine.Length;
-            _ = Builder.Insert(i, ' ');
+            _writer.WriteLine(shared.Array, chunkStart, i + 1 - chunkStart);
+            _writer.Write(' ');
+            
             counter = 1; // line start + ' '
+            chunkStart = i + 1;
         }
+
+        _writer.WriteLine(shared.Array, chunkStart, Builder.Length - chunkStart);
     }
 
     private int GetByteCount(char c)
