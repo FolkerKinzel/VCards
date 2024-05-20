@@ -35,7 +35,7 @@ internal sealed partial class VcfRow
     {
         if (!_unMasked)
         {
-            this.Value = this.Value.UnMask(Info.Builder, version);
+            this.Value = this.Value.UnMask(version);
         }
 
         _unMasked = true; // not twice!

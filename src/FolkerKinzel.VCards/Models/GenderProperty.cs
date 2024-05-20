@@ -49,7 +49,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
         {
             if (initGenderIdentity)
             {
-                genderIdentity = s.UnMask(vcfRow.Info.Builder, version);
+                genderIdentity = s.UnMask(version);
                 break;
             }
             else

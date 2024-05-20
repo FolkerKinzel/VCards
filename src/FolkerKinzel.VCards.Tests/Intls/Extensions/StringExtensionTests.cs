@@ -9,14 +9,14 @@ public class StringExtensionTests
     public void UnMaskTest1()
     {
         const string s = @"a\nb";
-        Assert.AreEqual("a" + Environment.NewLine + "b", s.UnMask(new StringBuilder(), VCdVersion.V4_0));
+        Assert.AreEqual("a" + Environment.NewLine + "b", s.UnMask(VCdVersion.V4_0));
     }
 
     [TestMethod]
     public void UnMaskTest2()
     {
         const string s = @"a\nb";
-        string unMasked = s.UnMask(new StringBuilder(), VCdVersion.V3_0);
+        string unMasked = s.UnMask(VCdVersion.V3_0);
         Assert.AreEqual("a" + Environment.NewLine + "b", unMasked);
     }
 
@@ -24,7 +24,7 @@ public class StringExtensionTests
     public void UnMaskTest4()
     {
         const string s = @"\\\\\n";
-        string unMasked = s.UnMask(new StringBuilder(), VCdVersion.V4_0);
+        string unMasked = s.UnMask(VCdVersion.V4_0);
         Assert.AreEqual(@"\\" + Environment.NewLine, unMasked);
     }
 
@@ -32,7 +32,7 @@ public class StringExtensionTests
     public void UnMaskTest4b()
     {
         const string s = @"\\\\\N";
-        string unMasked = s.UnMask(new StringBuilder(), VCdVersion.V4_0);
+        string unMasked = s.UnMask(VCdVersion.V4_0);
         Assert.AreEqual(@"\\" + Environment.NewLine, unMasked);
     }
 
@@ -40,16 +40,27 @@ public class StringExtensionTests
     public void UnMaskTest5()
     {
         const string s = @"\\\\\\N";
-        string unMasked = s.UnMask(new StringBuilder(), VCdVersion.V4_0);
+        string unMasked = s.UnMask(VCdVersion.V4_0);
         Assert.AreEqual(@"\\\N", unMasked);
     }
 
     [DataTestMethod]
     [DataRow("", VCdVersion.V3_0, "")]
     [DataRow("a\\bc", VCdVersion.V2_1, "a\\bc")]
+    [DataRow("a\\;bc", VCdVersion.V2_1, "a;bc")]
     [DataRow("a\\nb", VCdVersion.V3_0, "a\r\nb")]
+    [DataRow("a\\nb", VCdVersion.V2_1, "a\\nb")]
+    [DataRow("a\\b", VCdVersion.V3_0, "a\\b")]
+    [DataRow("a\\n", VCdVersion.V3_0, "a\r\n")]
+    [DataRow("ab\\", VCdVersion.V4_0, "ab\\")]
+    [DataRow("a\\b", VCdVersion.V4_0, "a\\b")]
+    [DataRow("a\\\\", VCdVersion.V4_0, "a\\")]
+    [DataRow("a\\\\b", VCdVersion.V4_0, "a\\b")]
+    [DataRow("a\\nb", VCdVersion.V4_0, "a\r\nb")]
+    [DataRow("a\\Nb", VCdVersion.V4_0, "a\r\nb")]
+    [DataRow("a\\;\\,b", VCdVersion.V4_0, "a;,b")]
     public void UnMaskTest6(string input, VCdVersion version, string? expected)
-        => Assert.AreEqual(expected, input.UnMask(new StringBuilder(), version), false);
+        => Assert.AreEqual(expected, input.UnMask(version), false);
 
 
     //[DataTestMethod]

@@ -45,8 +45,6 @@ public sealed partial class ParameterSection
 
         Asserts(propertyKey, propertyParameters);
 
-        StringBuilder builder = info.Builder;
-
         foreach (KeyValuePair<string, string> parameter in propertyParameters)
         {
             switch (parameter.Key)
@@ -123,7 +121,7 @@ public sealed partial class ParameterSection
                         commaSplitter.ValueString = parameter.Value;
                         foreach (var s in commaSplitter)
                         {
-                            string sortString = s.UnMask(builder, VCdVersion.V4_0);
+                            string sortString = s.UnMask(VCdVersion.V4_0);
                             list.Add(sortString);
                         }
 
@@ -145,7 +143,7 @@ public sealed partial class ParameterSection
                     this.MediaType = parameter.Value.Trim(TRIM_CHARS);
                     break;
                 case ParameterKey.LABEL:
-                    this.Label = builder
+                    this.Label = info.Builder
                         .Clear()
                         .Append(parameter.Value)
                         .Trim(TRIM_CHARS.AsSpan())

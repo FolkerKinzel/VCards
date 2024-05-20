@@ -451,7 +451,7 @@ internal abstract class VcfSerializer : IDisposable
         {
             char c = span[i];
 
-            counter += GetByteCount(c);
+            counter += c < 128 ? 1 : GetByteCount(c);
 
             if (counter < VCard.MAX_BYTES_PER_LINE)
             {

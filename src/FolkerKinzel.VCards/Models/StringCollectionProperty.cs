@@ -70,7 +70,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
         foreach (string s in commaSplitter)
         {
-            list.Add(s.UnMask(vcfRow.Info.Builder, version));
+            list.Add(s.UnMask(version));
         }
 
         if (list.Count != 0)

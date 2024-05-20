@@ -48,7 +48,6 @@ public sealed class Name
     {
         Debug.Assert(vCardValue is not null);
 
-        StringBuilder builder = info.Builder;
         ValueSplitter semicolonSplitter = info.SemiColonSplitter;
         ValueSplitter commaSplitter = info.CommaSplitter;
 
@@ -71,7 +70,7 @@ public sealed class Name
                             commaSplitter.ValueString = s;
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             FamilyNames = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
@@ -92,7 +91,7 @@ public sealed class Name
                             commaSplitter.ValueString = s;
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             GivenNames = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
@@ -113,7 +112,7 @@ public sealed class Name
                             commaSplitter.ValueString = s;
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             AdditionalNames = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
@@ -134,7 +133,7 @@ public sealed class Name
                             commaSplitter.ValueString = s;
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             Prefixes = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
@@ -155,7 +154,7 @@ public sealed class Name
                             commaSplitter.ValueString = s;
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             Suffixes = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);

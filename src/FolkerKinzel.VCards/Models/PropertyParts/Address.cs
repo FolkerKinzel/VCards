@@ -65,7 +65,6 @@ public sealed class Address
     {
         Debug.Assert(vCardValue is not null);
 
-        StringBuilder builder = info.Builder;
         ValueSplitter semicolonSplitter = info.SemiColonSplitter;
         ValueSplitter commaSplitter = info.CommaSplitter;
 
@@ -89,7 +88,7 @@ public sealed class Address
 
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             PostOfficeBox = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
@@ -110,7 +109,7 @@ public sealed class Address
 
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             ExtendedAddress = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
@@ -131,7 +130,7 @@ public sealed class Address
 
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             Street = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
@@ -152,7 +151,7 @@ public sealed class Address
 
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             Locality = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
@@ -173,7 +172,7 @@ public sealed class Address
 
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             Region = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
@@ -194,7 +193,7 @@ public sealed class Address
 
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             PostalCode = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
@@ -215,7 +214,7 @@ public sealed class Address
 
                             foreach (var item in commaSplitter)
                             {
-                                list.Add(item.UnMask(builder, version));
+                                list.Add(item.UnMask(version));
                             }
 
                             Country = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);

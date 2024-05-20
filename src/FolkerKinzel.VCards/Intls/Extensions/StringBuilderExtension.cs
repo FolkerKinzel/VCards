@@ -9,68 +9,68 @@ internal static class StringBuilderExtension
 {
     internal const string NEWLINE_REPLACEMENT = @"\n";
 
-    internal static StringBuilder UnMask(this StringBuilder builder, VCdVersion version)
-    {
-        Debug.Assert(builder is not null);
+    //internal static StringBuilder UnMask(this StringBuilder builder, VCdVersion version)
+    //{
+    //    Debug.Assert(builder is not null);
 
-        return version switch
-        {
-            VCdVersion.V2_1 => builder.UnMaskV2(),
-            VCdVersion.V3_0 => builder.UnMaskV3(),
-            _ => builder.UnMaskV4()
-        };
-    }
+    //    return version switch
+    //    {
+    //        VCdVersion.V2_1 => builder.UnMaskV2(),
+    //        VCdVersion.V3_0 => builder.UnMaskV3(),
+    //        _ => builder.UnMaskV4()
+    //    };
+    //}
 
-    private static StringBuilder UnMaskV2(this StringBuilder builder) => builder.Replace(@"\;", ";");
+    //private static StringBuilder UnMaskV2(this StringBuilder builder) => builder.Replace(@"\;", ";");
 
-    private static StringBuilder UnMaskV3(this StringBuilder builder)
-    {
-        return builder
-            .Replace(@"\n", Environment.NewLine)
-            .Replace(@"\N", Environment.NewLine)
-            .Replace(@"\,", ",")
-            .Replace(@"\;", ";");
-    }
+    //private static StringBuilder UnMaskV3(this StringBuilder builder)
+    //{
+    //    return builder
+    //        .Replace(@"\n", Environment.NewLine)
+    //        .Replace(@"\N", Environment.NewLine)
+    //        .Replace(@"\,", ",")
+    //        .Replace(@"\;", ";");
+    //}
 
-    private static StringBuilder UnMaskV4(this StringBuilder builder)
-    {
-        bool masked = false;
+    //private static StringBuilder UnMaskV4(this StringBuilder builder)
+    //{
+    //    bool masked = false;
 
-        for (int i = 0; i < builder.Length; i++)
-        {
-            if (builder[i] == '\\')
-            {
-                if (!masked)
-                {
-                    builder.Remove(i, 1);
-                    masked = true;
-                    --i;
-                    continue;
-                }
+    //    for (int i = 0; i < builder.Length; i++)
+    //    {
+    //        if (builder[i] == '\\')
+    //        {
+    //            if (!masked)
+    //            {
+    //                builder.Remove(i, 1);
+    //                masked = true;
+    //                --i;
+    //                continue;
+    //            }
 
-                masked = false;
-                continue;
-            }
+    //            masked = false;
+    //            continue;
+    //        }
 
-            if (masked)
-            {
-                masked = false;
-                switch (builder[i])
-                {
-                    case 'n':
-                    case 'N':
-                        builder.Remove(i, 1);
-                        builder.Insert(i, Environment.NewLine);
-                        i += Environment.NewLine.Length - 1;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+    //        if (masked)
+    //        {
+    //            masked = false;
+    //            switch (builder[i])
+    //            {
+    //                case 'n':
+    //                case 'N':
+    //                    builder.Remove(i, 1);
+    //                    builder.Insert(i, Environment.NewLine);
+    //                    i += Environment.NewLine.Length - 1;
+    //                    break;
+    //                default:
+    //                    break;
+    //            }
+    //        }
+    //    }
 
-        return builder;
-    }
+    //    return builder;
+    //}
 
     internal static StringBuilder AppendMasked(this StringBuilder sb, string? s, VCdVersion version)
         => version switch
@@ -84,34 +84,10 @@ internal static class StringBuilderExtension
     {
         var span = s.AsSpan();
 
-        bool rFound = false;
-
         for (int i = 0; i < span.Length; i++)
         {
             char c = span[i];
-
-            switch (c)
-            {
-                case '\r':
-                    rFound = true;
-                    sb.Append(NEWLINE_REPLACEMENT);
-                    break;
-                case '\n':
-                    if (rFound)
-                    {
-                        rFound = false;
-                        continue;
-                    }
-                    sb.Append(NEWLINE_REPLACEMENT);
-                    break;
-                case ';':
-                    sb.Append("\\;");
-                    break;
-                default:
-                    sb.Append(c);
-                    break;
-            }//switch
-
+            _ = c == ';' ? sb.Append("\\;") : sb.Append(c);
         }//for
 
         return sb;

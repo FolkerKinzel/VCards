@@ -8,23 +8,150 @@ internal static partial class StringExtension
     // The regex isn't perfect but finds most IETF language tags:
     private const string IETF_LANGUAGE_TAG_PATTERN = @"^[a-z]{2,3}-[A-Z]{2,3}$";
 
-    internal static string UnMask(this string value, StringBuilder sb, VCdVersion version)
+    internal static string UnMask(this string value, VCdVersion version)
     {
         Debug.Assert(value != null);
-        Debug.Assert(sb is not null);
 
         if (!value.Contains('\\'))
         {
             return value;
         }
 
-        _ = sb.Clear().Append(value).UnMask(version);
+        var sourceSpan = value.AsSpan();
 
-        return sb.Length != value.Length
-                 ? sb.ToString()
-                 : version == VCdVersion.V2_1
-                       ? value
-                       : sb.ToString();
+        if (sourceSpan.Length > Const.STACKALLOC_CHAR_THRESHOLD)
+        {
+            using var buf = ArrayPoolHelper.Rent<char>(sourceSpan.Length);
+            var bufSpan = buf.Array.AsSpan();
+            return CreateUnMaskedString(version, sourceSpan, bufSpan);
+        }
+        else
+        {
+            Span<char> bufSpan = stackalloc char[sourceSpan.Length];
+            return CreateUnMaskedString(version, sourceSpan, bufSpan);
+        }
+
+        static string CreateUnMaskedString(VCdVersion version, ReadOnlySpan<char> sourceSpan, Span<char> bufSpan)
+        {
+            int resultLength = version switch
+            {
+                VCdVersion.V2_1 => UnMask21(sourceSpan, bufSpan),
+                VCdVersion.V3_0 => UnMask30(sourceSpan, bufSpan),
+                _ => UnMask40(sourceSpan, bufSpan)
+            };
+
+            return bufSpan.Slice(0, resultLength).ToString();
+        }
+    }
+
+    private static int UnMask21(ReadOnlySpan<char> source, Span<char> destination)
+    {
+        int lastSourceIdx = source.Length - 1;
+        int length = 0;
+
+        for (int i = 0; i < lastSourceIdx; i++)
+        {
+            char c = source[i];
+
+            if (c == '\\' && source[i + 1] == ';')
+            {
+                continue;
+            }
+
+            destination[length++] = c;
+        }
+
+        destination[length++] = source[lastSourceIdx];
+        return length;
+    }
+
+    private static int UnMask30(ReadOnlySpan<char> source, Span<char> destination)
+    {
+        int lastSourceIdx = source.Length - 1;
+        int length = 0;
+
+        var newLineSpan = Environment.NewLine.AsSpan();
+
+        for (int i = 0; i < lastSourceIdx; i++)
+        {
+            char c = source[i];
+
+            if (c == '\\')
+            {
+                switch (source[i + 1])
+                {
+                    case 'n':
+                    case 'N':
+                        newLineSpan.TryCopyTo(destination.Slice(length));
+                        length += newLineSpan.Length;
+                        i++;
+                        if (i == lastSourceIdx)
+                        {
+                            return length;
+                        }
+                        continue;
+                    case ',':
+                    case ';':
+                        continue;
+                    default:
+                        break;
+                }
+            }
+
+            destination[length++] = c;
+        }
+
+        destination[length++] = source[lastSourceIdx];
+        return length;
+    }
+
+    private static int UnMask40(ReadOnlySpan<char> source, Span<char> destination)
+    {
+        int lastSourceIdx = source.Length - 1;
+        int length = 0;
+
+        var newLineSpan = Environment.NewLine.AsSpan();
+
+        for (int i = 0; i < lastSourceIdx; i++)
+        {
+            char c = source[i];
+
+            if (c == '\\')
+            {
+                switch (source[i + 1])
+                {
+                    case 'n':
+                    case 'N':
+                        newLineSpan.TryCopyTo(destination.Slice(length));
+                        length += newLineSpan.Length;
+                        i++;
+                        if(i == lastSourceIdx)
+                        {
+                            return length;
+                        }
+                        continue;
+                    case ',':
+                    case ';':
+                        continue;
+                    case '\\':
+                        destination[length++] = c;
+                        i++;
+                        if (i == lastSourceIdx)
+                        {
+                            return length;
+                        }
+                        continue;
+                    default:
+                        break;
+                }
+            }
+
+            destination[length++] = c;
+        }
+
+        destination[length++] = source[lastSourceIdx];
+
+        return length;
     }
 
 

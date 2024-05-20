@@ -102,12 +102,9 @@ public sealed partial class VCard
     internal VCard(Queue<VcfRow> queue, VcfDeserializationInfo info, VCdVersion versionHint)
     {
         Debug.Assert(queue is not null);
-        Debug.Assert(info.Builder is not null);
         Debug.Assert(queue.All(x => x is not null));
 
         this.Version = versionHint;
-
-        StringBuilder builder = info.Builder;
 
         int vcfRowsToParse = queue.Count;
         int vcfRowsParsed = 0;
@@ -479,7 +476,7 @@ public sealed partial class VCard
             // Version 2.1 is not masked:
             content = versionHint == VCdVersion.V2_1
                 ? content
-                : content.UnMask(info.Builder, versionHint);
+                : content.UnMask(versionHint);
 
             using var reader = new StringReader(content);
 

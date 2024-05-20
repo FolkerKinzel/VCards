@@ -43,7 +43,7 @@ internal class ValueSplitter : IEnumerable<string>
             {
                 int length = splitIndex - i;
 
-                if (!removeEmptyEntries || ContainsData(i, length, valueString))
+                if (!removeEmptyEntries || !valueString.AsSpan(i, length).IsWhiteSpace())
                 {
                     yield return length == valueStringLength
                                     ? valueString
@@ -59,7 +59,7 @@ internal class ValueSplitter : IEnumerable<string>
 
     private int GetNextSplitIndex(int startIndex)
     {
-        string s = ValueString!;
+        ReadOnlySpan<char> s = ValueString.AsSpan();
         char splitChar = SplitChar;
         bool masked = false;
 
@@ -88,18 +88,18 @@ internal class ValueSplitter : IEnumerable<string>
         return s.Length;
     }
 
-    private static bool ContainsData(int startIndex, int length, string s)
-    {
-        for (int i = 0; i < length; i++)
-        {
-            if (char.IsWhiteSpace(s[i + startIndex]))
-            {
-                continue;
-            }
+    //private static bool ContainsData(int startIndex, int length, string s)
+    //{
+    //    for (int i = 0; i < length; i++)
+    //    {
+    //        if (char.IsWhiteSpace(s[i + startIndex]))
+    //        {
+    //            continue;
+    //        }
 
-            return true;
-        }
+    //        return true;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 }
