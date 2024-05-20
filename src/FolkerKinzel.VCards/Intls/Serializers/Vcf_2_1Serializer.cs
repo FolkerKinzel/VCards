@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
+using Base64Bcl = System.Buffers.Text.Base64;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
@@ -42,25 +43,38 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         // needs it to detect the end of the Base64
         _ = Builder.Append(VCard.NewLine);
 
-        if (data is null)
+        if (data is null || data.Length == 0)
         {
             return;
         }
 
-        int i = Builder.Length;
-        _ = Builder.AppendBase64(data);
+        int base64CharsCount = Base64Bcl.GetMaxEncodedToUtf8Length(data.Length);
 
-        while (i < Builder.Length)
+        using ArrayPoolHelper.SharedArray<byte> byteBuf = ArrayPoolHelper.Rent<byte>(base64CharsCount);
+        _ = Base64Bcl.EncodeToUtf8(data, byteBuf.Array.AsSpan(), out _, out _);
+
+        using ArrayPoolHelper.SharedArray<char> charBuf = ArrayPoolHelper.Rent<char>(base64CharsCount);
+        int charsWritten = Encoding.UTF8.GetChars(byteBuf.Array, 0, base64CharsCount, charBuf.Array, 0);
+
+        Builder.EnsureCapacity(
+            Builder.Length + base64CharsCount + (base64CharsCount / VCard.MAX_BYTES_PER_LINE + 1) * 3);
+
+        const int chunkLength = VCard.MAX_BYTES_PER_LINE - 1;
+        int end = base64CharsCount - chunkLength;
+        int i = 0;
+
+        for (; i < end; i += chunkLength)
         {
-            _ = Builder.Insert(i, ' ');
-
-            i = Math.Min(i + VCard.MAX_BYTES_PER_LINE, Builder.Length);
-
-            _ = Builder.Insert(i, VCard.NewLine);
-
-            i += VCard.NewLine.Length;
+            _ = Builder.Append(' ')
+                       .Append(charBuf.Array, i, chunkLength)
+                       .Append(VCard.NewLine);
         }
+
+        _ = Builder.Append(' ')
+                   .Append(charBuf.Array, i, base64CharsCount - i)
+                   .Append(VCard.NewLine);
     }
+
 
     protected override void WriteLineFolded()
     {
