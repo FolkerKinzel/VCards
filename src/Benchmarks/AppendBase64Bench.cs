@@ -46,40 +46,40 @@ public class AppendBase64Bench
         // needs it to detect the end of the Base64
         _ = Builder.Append(VCARD_NEWLINE);
 
-        if (data is null)
+        if (data is null || data.Length == 0)
         {
             return;
         }
 
-        int capacity = Base64Bcl.GetMaxEncodedToUtf8Length(data.Length);
+        int base64CharsCount = Base64Bcl.GetMaxEncodedToUtf8Length(data.Length);
 
-        using ArrayPoolHelper.SharedArray<byte> byteBuf = ArrayPoolHelper.Rent<byte>(capacity);
+        using ArrayPoolHelper.SharedArray<byte> byteBuf = ArrayPoolHelper.Rent<byte>(base64CharsCount);
         Span<byte> byteSpan = byteBuf.Array.AsSpan();
-        var status = Base64Bcl.EncodeToUtf8(data, byteSpan, out _, out _);
+        System.Buffers.OperationStatus status = Base64Bcl.EncodeToUtf8(data, byteSpan, out int bytesConsumed, out int bytesWritten);
 
-        using ArrayPoolHelper.SharedArray<char> charBuf = ArrayPoolHelper.Rent<char>(capacity);
-        int charsWritten = Encoding.UTF8.GetChars(byteBuf.Array, 0, capacity, charBuf.Array, 0);
+        using ArrayPoolHelper.SharedArray<char> charBuf = ArrayPoolHelper.Rent<char>(base64CharsCount);
+        int charsWritten = Encoding.UTF8.GetChars(byteBuf.Array, 0, base64CharsCount, charBuf.Array, 0);
 
-        Builder.EnsureCapacity(capacity + (capacity / VCARD_MAX_BYTES_PER_LINE + 1) * 3);
+        int builderCapacity = Builder.Length + base64CharsCount + (base64CharsCount / VCARD_MAX_BYTES_PER_LINE + 1) * 3;
+        Builder.EnsureCapacity(builderCapacity);
 
-        const int lineLength = VCARD_MAX_BYTES_PER_LINE - 1;
+        const int chunkLength = VCARD_MAX_BYTES_PER_LINE - 1;
 
-        ReadOnlySpan<char> charSpan = charBuf.Array.AsSpan(0, capacity);
-
-        int end = capacity - lineLength;
+        int end = base64CharsCount - chunkLength;
         int i = 0;
 
-        for (; i < end; i+=lineLength )
+        for (; i < end; i += chunkLength)
         {
             _ = Builder.Append(' ')
-                       .Append(charBuf.Array, i, lineLength)
+                       .Append(charBuf.Array, i, chunkLength)
                        .Append(VCARD_NEWLINE);
         }
 
         _ = Builder.Append(' ')
-                       .Append(charBuf.Array, i, capacity - i)
-                       .Append(VCARD_NEWLINE);
+                   .Append(charBuf.Array, i, base64CharsCount - i)
+                   .Append(VCARD_NEWLINE);
 
+        //string s = Builder.ToString() + "XXXXXXXXXXXXXXXXXXXXXXXXXXX";
     }
 
 
