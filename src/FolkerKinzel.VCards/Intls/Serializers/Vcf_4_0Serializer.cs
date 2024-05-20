@@ -1,3 +1,5 @@
+using FolkerKinzel.DataUrls;
+using System.Security.Cryptography;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -298,9 +300,10 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     protected override void AppendXmlProperties(IEnumerable<XmlProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.XML, value);
 
+
+
     #endregion
 
-    [ExcludeFromCodeCoverage]
     internal override void AppendBase64EncodedData(byte[]? data)
-        => throw new NotImplementedException();
+        => Builder.Append(DataUrl.FromBytes(data, this.ParameterSerializer.ParaSection.MediaType));
 }

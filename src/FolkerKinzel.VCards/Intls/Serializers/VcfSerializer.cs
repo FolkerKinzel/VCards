@@ -375,7 +375,7 @@ internal abstract class VcfSerializer : IDisposable
 
                 XMessengerParameterConverter.ConvertFromInstantMessengerType(prop.Parameters);
 
-                string val = prop.Value!;
+                var val = prop.Value.AsSpan();
 
                 if (val.StartsWith("aim:", StringComparison.OrdinalIgnoreCase))
                 {

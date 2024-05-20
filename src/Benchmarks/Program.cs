@@ -11,8 +11,9 @@ internal class Program
     {
         VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
 
+        new AppendBase64Bench().AppendBase64Current();
         //_ = new ParseBench().Parse40();
-        _ = new WriteBench().Write40();
+        //_ = new WriteBench().Write40();
         //_ = BenchmarkRunner.Run<ParseBench>();
         //_ = BenchmarkRunner.Run<WriteBench>();
 

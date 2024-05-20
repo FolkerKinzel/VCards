@@ -53,14 +53,6 @@ internal sealed class EmbeddedBytesProperty : DataProperty
     internal override void AppendValue(VcfSerializer serializer)
     {
         Debug.Assert(serializer is not null);
-
-        if (serializer.Version < VCdVersion.V4_0)
-        {
-            serializer.AppendBase64EncodedData(Value);
-        }
-        else
-        {
-            serializer.Builder.Append(DataUrl.FromBytes(Value, Parameters.MediaType));
-        }
+        serializer.AppendBase64EncodedData(Value);
     }
 }

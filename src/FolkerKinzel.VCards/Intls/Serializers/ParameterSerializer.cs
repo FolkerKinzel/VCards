@@ -13,7 +13,7 @@ internal abstract class ParameterSerializer
     protected StringBuilder? Builder { get; private set; }
 
     [NotNull]
-    protected ParameterSection? ParaSection { get; private set; }
+    internal ParameterSection? ParaSection { get; private set; }
 
     protected Opts Options { get; }
 

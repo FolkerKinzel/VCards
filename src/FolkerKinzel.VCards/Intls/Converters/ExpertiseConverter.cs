@@ -15,11 +15,11 @@ internal static class ExpertiseConverter
     {
         const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        return span.StartsWith(Values.BEGINNER, comp)
+        return span.Equals(Values.BEGINNER, comp)
             ? Expertise.Beginner
-            : span.StartsWith(Values.AVERAGE, comp)
+            : span.Equals(Values.AVERAGE, comp)
               ? Expertise.Average
-              : span.StartsWith(Values.EXPERT, comp)
+              : span.Equals(Values.EXPERT, comp)
                     ? Expertise.Expert
                     : null;
     }

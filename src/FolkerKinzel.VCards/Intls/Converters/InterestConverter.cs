@@ -15,11 +15,11 @@ internal static class InterestConverter
     {
         const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        return span.StartsWith(Values.HIGH, comp)
+        return span.Equals(Values.HIGH, comp)
             ? Interest.High
-            : span.StartsWith(Values.MEDIUM, comp)
+            : span.Equals(Values.MEDIUM, comp)
               ? Interest.Medium
-              : span.StartsWith(Values.LOW, comp)
+              : span.Equals(Values.LOW, comp)
                 ? Interest.Low
                 : null;
     }
