@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>7.1.0-beta.1</Version>
-    <FileVersion>7.0.0.92</FileVersion>
+    <FileVersion>7.0.0.94</FileVersion>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v7.1.0-beta.1</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
@@ -131,7 +131,7 @@
     <None Remove="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FolkerKinzel.DataUrls" Version="1.1.1-beta.1" />
+    <PackageReference Include="FolkerKinzel.DataUrls" Version="1.1.1-beta.2" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
