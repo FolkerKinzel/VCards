@@ -54,7 +54,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         _ = Base64Bcl.EncodeToUtf8(data, byteBuf.Array.AsSpan(), out _, out _);
 
         using ArrayPoolHelper.SharedArray<char> charBuf = ArrayPoolHelper.Rent<char>(base64CharsCount);
-        int charsWritten = Encoding.UTF8.GetChars(byteBuf.Array, 0, base64CharsCount, charBuf.Array, 0);
+        _ = Encoding.UTF8.GetChars(byteBuf.Array, 0, base64CharsCount, charBuf.Array, 0);
 
         Builder.EnsureCapacity(
             Builder.Length + base64CharsCount + (base64CharsCount / VCard.MAX_BYTES_PER_LINE + 1) * 3);
