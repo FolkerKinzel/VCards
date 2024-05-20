@@ -63,7 +63,6 @@ internal sealed class RelationVCardProperty : RelationProperty
         Debug.Assert(serializer.Version < VCdVersion.V4_0);
 
         StringBuilder builder = serializer.Builder;
-        StringBuilder worker = serializer.Worker;
 
         string vc = Value.ToVcfString(serializer.Version,
                                       options: serializer.Options.Unset(Opts.AppendAgentAsSeparateVCard));
@@ -72,8 +71,7 @@ internal sealed class RelationVCardProperty : RelationProperty
         {
             Debug.Assert(serializer.PropertyKey == VCard.PropKeys.AGENT);
 
-            _ = worker.Clear().Append(vc).Mask(serializer.Version);
-            _ = builder.Append(worker);
+            _ = builder.AppendMasked(vc, serializer.Version);
         }
         else //vCard 2.1
         {

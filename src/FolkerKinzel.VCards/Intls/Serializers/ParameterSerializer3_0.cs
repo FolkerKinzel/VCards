@@ -429,7 +429,8 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
         if (lang is not null)
         {
-            AppendParameter(ParameterSection.ParameterKey.LANGUAGE, Mask(lang));
+            AppendParameter(ParameterSection.ParameterKey.LANGUAGE, "");
+            Builder.AppendMasked(lang, VCdVersion.V3_0);
         }
     }
 
@@ -447,9 +448,24 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
             _stringCollectionList.Add(ParameterSection.TypeValue.PREF);
         }
 
+        bool typeWritten = false;
+
+        if (this._stringCollectionList.Count != 0)
+        {
+            AppendParameter(ParameterSection.ParameterKey.TYPE, "");
+            typeWritten = true;
+
+            for (int i = 0; i < _stringCollectionList.Count; i++)
+            {
+                Builder.AppendMasked(_stringCollectionList[i], VCdVersion.V3_0).Append(',');
+            }
+        }
+
         if (Options.HasFlag(Opts.WriteNonStandardParameters)
             && ParaSection.NonStandard is not null)
         {
+            _stringCollectionList.Clear();
+
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
                 if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE)
@@ -458,27 +474,25 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
                     _stringCollectionList.Add(kvp.Value);
                 }
             }
-        }
 
-        if (this._stringCollectionList.Count != 0)
-        {
-            AppendParameter(ParameterSection.ParameterKey.TYPE, ConcatValues());
-        }
-
-        string ConcatValues()
-        {
-            _ = this._worker.Clear();
-            int count = this._stringCollectionList.Count;
-
-            Debug.Assert(count != 0);
-
-            for (int i = 0; i < count - 1; i++)
+            if (this._stringCollectionList.Count != 0)
             {
-                _ = _worker.Append(_stringCollectionList[i]).Append(',');
-            }
+                if (!typeWritten)
+                {
+                    AppendParameter(ParameterSection.ParameterKey.TYPE, "");
+                    typeWritten = true;
+                }
 
-            _ = _worker.Append(_stringCollectionList[count - 1]);
-            return _worker.ToString();
+                for (int i = 0; i < _stringCollectionList.Count; i++)
+                {
+                    Builder.Append(_stringCollectionList[i]).Append(',');
+                }
+            }
+        }
+
+        if (typeWritten)
+        {
+            --Builder.Length;
         }
     }
 
@@ -493,7 +507,7 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
         if (s is not null)
         {
-            _stringCollectionList.Add(Mask(s));
+            _stringCollectionList.Add(s);
         }
     }
 
@@ -503,7 +517,7 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
         if (s is not null)
         {
-            _stringCollectionList.Add(Mask(s));
+            _stringCollectionList.Add(s);
         }
 
     }
@@ -514,7 +528,7 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
         if (s is not null)
         {
-            _stringCollectionList.Add(Mask(s));
+            _stringCollectionList.Add(s);
         }
 
     }
@@ -528,11 +542,9 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
         if (m is not null)
         {
-            _stringCollectionList.Add(Mask(m));
+            _stringCollectionList.Add(m);
         }
     }
 
     #endregion
-
-    private string Mask(string s) => s.Mask(_worker, VCdVersion.V3_0);
 }

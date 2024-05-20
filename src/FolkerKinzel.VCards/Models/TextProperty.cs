@@ -77,19 +77,10 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
         StringBuilder builder = serializer.Builder;
 
-
-        if (serializer.Version == VCdVersion.V2_1)
-        {
-            _ = this.Parameters.Encoding == Enc.QuotedPrintable
+        _ = serializer.Version == VCdVersion.V2_1
+            ? this.Parameters.Encoding == Enc.QuotedPrintable
                 ? builder.Append(QuotedPrintable.Encode(Value, builder.Length))
-                : builder.Append(Value);
-        }
-        else
-        {
-            StringBuilder worker = serializer.Worker;
-
-            _ = worker.Clear().Append(Value).Mask(serializer.Version);
-            _ = builder.Append(worker);
-        }
+                : builder.Append(Value)
+            : builder.AppendMasked(Value, serializer.Version);
     }
 }

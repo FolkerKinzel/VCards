@@ -674,7 +674,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         if (altId is not null)
         {
-            AppendParameter(ParameterSection.ParameterKey.ALTID, EscapeAndQuote(altId));
+            AppendParameter(ParameterSection.ParameterKey.ALTID, altId, escapedAndQuoted: true);
         }
     }
 
@@ -684,7 +684,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         if (calScale is not null)
         {
-            AppendParameter(ParameterSection.ParameterKey.ALTID, EscapeAndQuote(calScale));
+            AppendParameter(ParameterSection.ParameterKey.ALTID, calScale, escapedAndQuoted: true);
         }
     }
 
@@ -720,11 +720,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             return;
         }
 
-        _ = _worker.Clear().Append('"');
-        GeoCoordinateConverter.AppendTo(_worker, geo, VCdVersion.V4_0);
-        _ = _worker.Append('"');
-
-        AppendParameter(ParameterSection.ParameterKey.GEO, _worker.ToString());
+        AppendParameter(ParameterSection.ParameterKey.GEO, "");
+        Builder.Append('"');
+        GeoCoordinateConverter.AppendTo(Builder, geo, VCdVersion.V4_0);
+        Builder.Append('"');
     }
 
     private void AppendIndex()
@@ -769,7 +768,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         if (label is not null)
         {
-            AppendParameter(ParameterSection.ParameterKey.LABEL, EscapeAndQuote(label));
+            AppendParameter(ParameterSection.ParameterKey.LABEL, label, escapedAndQuoted: true);
         }
     }
 
@@ -779,7 +778,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         if (lang is not null)
         {
-            AppendParameter(ParameterSection.ParameterKey.LANGUAGE, EscapeAndQuote(lang));
+            AppendParameter(ParameterSection.ParameterKey.LANGUAGE, lang, escapedAndQuoted: true);
         }
     }
 
@@ -789,7 +788,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         if (mediaType is not null)
         {
-            AppendParameter(ParameterSection.ParameterKey.MEDIATYPE, EscapeAndQuote(mediaType));
+            AppendParameter(ParameterSection.ParameterKey.MEDIATYPE, mediaType, escapedAndQuoted: true);
         }
     }
 
@@ -802,20 +801,26 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             return;
         }
 
-        _ = _worker.Clear();
+        int startIdx = Builder.Length;
+        bool rollBack = true;
+
+        AppendParameter(ParameterSection.ParameterKey.PID, "");
 
         foreach (PropertyID pid in pids)
         {
             Debug.Assert(pid != null);
-
-            pid.AppendTo(_worker);
-            _ = _worker.Append(',');
+            rollBack = false;
+            pid.AppendTo(Builder);
+            _ = Builder.Append(',');
         }
 
-        if (_worker.Length != 0)
+        if (rollBack)
         {
-            --_worker.Length;
-            AppendParameter(ParameterSection.ParameterKey.PID, _worker.ToString());
+            Builder.Length = startIdx;
+        }
+        else
+        {
+            --Builder.Length;
         }
     }
 
@@ -838,20 +843,26 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             return;
         }
 
-        _ = _worker.Clear();
+        int startIdx = Builder.Length;
+        bool rollBack = true;
 
+        AppendParameter(ParameterSection.ParameterKey.SORT_AS, "");
+    
         foreach (string item in sortAs)
         {
             Debug.Assert(!string.IsNullOrWhiteSpace(item));
 
-            _ = _worker.Append(EscapeAndQuote(item));
-            _ = _worker.Append(',');
+            rollBack = false;
+            _ = Builder.AppendEscapedAndQuoted(item).Append(',');
         }
 
-        if (_worker.Length != 0)
+        if (rollBack)
         {
-            --_worker.Length;
-            AppendParameter(ParameterSection.ParameterKey.SORT_AS, _worker.ToString());
+            Builder.Length = startIdx;
+        }
+        else
+        {
+            --Builder.Length;
         }
     }
 
@@ -878,23 +889,14 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         if (this._stringCollectionList.Count != 0)
         {
-            AppendParameter(ParameterSection.ParameterKey.TYPE, ConcatValues());
-        }
+            AppendParameter(ParameterSection.ParameterKey.TYPE, "");
 
-        string ConcatValues()
-        {
-            _ = this._worker.Clear();
-            int count = this._stringCollectionList.Count;
-
-            Debug.Assert(count != 0);
-
-            for (int i = 0; i < count - 1; i++)
+            for (int i = 0; i < _stringCollectionList.Count; i++)
             {
-                _ = _worker.Append(_stringCollectionList[i]).Append(',');
+                Builder.Append(_stringCollectionList[i]).Append(',');
             }
 
-            _ = _worker.Append(_stringCollectionList[count - 1]);
-            return _worker.ToString();
+            --Builder.Length;
         }
     }
 
@@ -907,11 +909,8 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             return;
         }
 
-        _ = _worker.Clear();
-
-        tz.AppendTo(_worker, VCdVersion.V4_0, null);
-
-        AppendParameter(ParameterSection.ParameterKey.TZ, EscapeAndQuote(_worker.ToString()));
+        AppendParameter(ParameterSection.ParameterKey.TZ, "");
+        tz.AppendTo(Builder, VCdVersion.V4_0, null, escapedAndQuoted: true);
     }
 
     private void AppendValue(Data? dataType)
@@ -930,38 +929,4 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
     }
 
     #endregion
-
-    private string EscapeAndQuote(string s)
-    {
-        _ = _worker.Clear().Append(s).MaskNewLine();
-
-        if (MustBeQuoted())
-        {
-            _ = _worker.Insert(0, '\"');
-            _ = _worker.Append('\"');
-        }
-
-        return _worker.ToString();
-
-        bool MustBeQuoted()
-        {
-            bool mustBeQuoted = false;
-
-            for (int i = _worker.Length - 1; i >= 0; i--)
-            {
-                char c = _worker[i];
-
-                if (c is ',' or ';' or ':')
-                {
-                    mustBeQuoted = true;
-                }
-                else if (c == '\"')
-                {
-                    _ = _worker.Remove(i, 1);
-                }
-            }
-
-            return mustBeQuoted;
-        }
-    }
 }

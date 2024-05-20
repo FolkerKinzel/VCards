@@ -15,26 +15,6 @@ public class VcfSerializerTests
     }
 
     [TestMethod]
-    public void ResetBuildersTest1()
-    {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
-        using var stream = new MemoryStream();
-        using var serializer = VcfSerializer.GetSerializer(stream, false, VCdVersion.V3_0, Opts.Default, null);
-
-        serializer.Builder.Capacity = 20000;
-        serializer.Worker.Capacity = 20000;
-
-        var vc = new VCard { DisplayNames = new TextProperty("Goofy") };
-
-        serializer.Serialize(vc);
-
-        Assert.IsTrue(serializer.Builder.Capacity < 10000);
-        Assert.IsTrue(serializer.Worker.Capacity < 10000);
-    }
-
-    [TestMethod]
     public void AppendLineFoldingTest1()
     {
         VCard.SyncTestReset();

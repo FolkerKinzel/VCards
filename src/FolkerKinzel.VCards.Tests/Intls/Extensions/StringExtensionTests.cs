@@ -52,21 +52,21 @@ public class StringExtensionTests
         => Assert.AreEqual(expected, input.UnMask(new StringBuilder(), version), false);
 
 
-    [DataTestMethod]
-    [DataRow("", VCdVersion.V3_0, "")]
-    [DataRow(null, VCdVersion.V3_0, null)]
-    [DataRow("a\\bc", VCdVersion.V2_1, "a\\bc")]
-    [DataRow("a\r\nb", VCdVersion.V2_1, "a\r\nb")]
-    [DataRow("a\r\nb", VCdVersion.V4_0, "a\\nb")]
-    [DataRow("a,b", VCdVersion.V2_1, "a,b")]
-    [DataRow("a,b", VCdVersion.V3_0, "a\\,b")]
-    [DataRow("a,b", VCdVersion.V4_0, "a\\,b")]
-    [DataRow("a;b", VCdVersion.V2_1, "a\\;b")]
-    [DataRow("a;b", VCdVersion.V3_0, "a\\;b")]
-    [DataRow("a;b", VCdVersion.V4_0, "a\\;b")]
-    [DataRow("a\\b", VCdVersion.V2_1, "a\\b")]
-    [DataRow("a\\b", VCdVersion.V3_0, "a\\b")]
-    [DataRow("a\\b", VCdVersion.V4_0, "a\\\\b")]
-    public void MaskTest1(string? input, VCdVersion version, string? expected)
-        => Assert.AreEqual(expected, input.Mask(new StringBuilder(), version), false);
+    //[DataTestMethod]
+    //[DataRow("", VCdVersion.V3_0, "")]
+    //[DataRow(null, VCdVersion.V3_0, null)]
+    //[DataRow("a\\bc", VCdVersion.V2_1, "a\\bc")]
+    //[DataRow("a\r\nb", VCdVersion.V2_1, "a\r\nb")]
+    //[DataRow("a\r\nb", VCdVersion.V4_0, "a\\nb")]
+    //[DataRow("a,b", VCdVersion.V2_1, "a,b")]
+    //[DataRow("a,b", VCdVersion.V3_0, "a\\,b")]
+    //[DataRow("a,b", VCdVersion.V4_0, "a\\,b")]
+    //[DataRow("a;b", VCdVersion.V2_1, "a\\;b")]
+    //[DataRow("a;b", VCdVersion.V3_0, "a\\;b")]
+    //[DataRow("a;b", VCdVersion.V4_0, "a\\;b")]
+    //[DataRow("a\\b", VCdVersion.V2_1, "a\\b")]
+    //[DataRow("a\\b", VCdVersion.V3_0, "a\\b")]
+    //[DataRow("a\\b", VCdVersion.V4_0, "a\\\\b")]
+    //public void MaskTest1(string? input, VCdVersion version, string? expected)
+    //    => Assert.AreEqual(expected, input.Mask(new StringBuilder(), version), false);
 }

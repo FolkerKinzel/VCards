@@ -69,71 +69,139 @@ internal static class StringBuilderExtension
         return builder;
     }
 
-    internal static StringBuilder Mask(this StringBuilder builder, VCdVersion version)
+    internal static StringBuilder AppendMasked(this StringBuilder sb, string? s, VCdVersion version)
     {
-        Debug.Assert(builder is not null);
+        var span = s.AsSpan();
 
-        if (version == VCdVersion.V2_1)
+        bool rFound = false;
+
+        for (int i = 0; i < span.Length; i++)
         {
-            _ = builder.Replace(";", @"\;");
-            return builder;
-        }
+            char c = span[i];
 
-        if (version >= VCdVersion.V4_0)
-        {
-            _ = builder
-                .Replace(@"\", @"\\");
-        }
-
-        _ = builder
-            .Replace(Environment.NewLine, NEWLINE_REPLACEMENT)
-            .Replace(",", @"\,")
-            .Replace(";", @"\;");
-
-        return builder;
-    }
-
-    internal static StringBuilder MaskNewLine(this StringBuilder builder)
-    {
-        _ = builder
-                .Replace(@"\", @"\\")
-                .Replace(Environment.NewLine, NEWLINE_REPLACEMENT);
-
-        return builder;
-    }
-
-    internal static StringBuilder AppendReadableProperty(this StringBuilder sb, ReadOnlyCollection<string> strings, int? maxLen = null)
-    {
-        Debug.Assert(sb is not null);
-        Debug.Assert(strings is not null);
-        Debug.Assert(strings.All(x => !string.IsNullOrEmpty(x)));
-
-        // Wenn strings leer ist, wird die Schleife nicht gestartet:
-        for (int i = 0; i < strings.Count; i++)
-        {
-            AppendEntry(sb, strings[i], maxLen);
-        }
-        return sb;
-
-        static void AppendEntry(StringBuilder sb, string entry, int? maxLen)
-        {
-            if (maxLen.HasValue)
+            switch (c)
             {
-                int lineStartIndex = sb.LastIndexOf(Environment.NewLine[0]);
-                lineStartIndex = lineStartIndex < 0 ? 0 : lineStartIndex + Environment.NewLine.Length;
+                case '\r':
+                    rFound = true;
+                    sb.Append(NEWLINE_REPLACEMENT);
+                    break;
+                case '\n':
+                    if (rFound)
+                    {
+                        rFound = false;
+                        continue;
+                    }
 
-                if (sb.Length != 0 && lineStartIndex != sb.Length)
+                    sb.Append(NEWLINE_REPLACEMENT);
+                    break;
+                case ';':
+                    sb.Append("\\;");
+                    break;
+                case ',':
+                    if (version > VCdVersion.V2_1)
+                    {
+                        sb.Append('\\');
+                    }
+
+                    sb.Append(c);
+                    break;
+                case '\\':
+                    if (version >= VCdVersion.V4_0)
+                    {
+                        sb.Append('\\');
+                    }
+                    sb.Append(c);
+                    break;
+                default:
+                    sb.Append(c);
+                    break;
+            }//switch
+
+        }//for
+
+        return sb;
+    }
+
+
+    internal static StringBuilder AppendEscapedAndQuoted(this StringBuilder sb, string s)
+        {
+            var span = s.AsSpan();
+            int startIdx = sb.Length;
+            sb.Append('\"');
+            bool mustBeQuoted = false;
+            bool rFound = false;
+
+            for (int i = 0; i < span.Length; i++)
+            {
+                char c = span[i];
+
+                switch (c)
                 {
-                    _ = sb.Length - lineStartIndex + entry.Length + 1 > maxLen.Value
-                        ? sb.AppendLine()
-                        : sb.Append(' ');
+                    case '\r':
+                        rFound = true;
+                        sb.Append(NEWLINE_REPLACEMENT);
+                        break;
+                    case '\n':
+                        if (rFound)
+                        {
+                            rFound = false;
+                            continue;
+                        }
+                        sb.Append(NEWLINE_REPLACEMENT);
+                        break;
+                    case '\"':
+                        break;
+                    case ',':
+                    case ';':
+                    case ':':
+                        mustBeQuoted = true;
+                        sb.Append(c);
+                        break;
+                    case '\\':
+                        sb.Append("\\\\");
+                        break;
+                    default:
+                        sb.Append(c);
+                        break;
                 }
             }
-            else if (sb.Length != 0)
+
+            return mustBeQuoted ? sb.Append('"')
+                                : sb.Remove(startIdx, 1);
+        }
+
+        internal static StringBuilder AppendReadableProperty(this StringBuilder sb, ReadOnlyCollection<string> strings, int? maxLen = null)
+        {
+            Debug.Assert(sb is not null);
+            Debug.Assert(strings is not null);
+            Debug.Assert(strings.All(x => !string.IsNullOrEmpty(x)));
+
+            // Wenn strings leer ist, wird die Schleife nicht gestartet:
+            for (int i = 0; i < strings.Count; i++)
             {
-                _ = sb.Append(' ');
+                AppendEntry(sb, strings[i], maxLen);
             }
-            _ = sb.Append(entry);
+            return sb;
+
+            static void AppendEntry(StringBuilder sb, string entry, int? maxLen)
+            {
+                if (maxLen.HasValue)
+                {
+                    int lineStartIndex = sb.LastIndexOf(Environment.NewLine[0]);
+                    lineStartIndex = lineStartIndex < 0 ? 0 : lineStartIndex + Environment.NewLine.Length;
+
+                    if (sb.Length != 0 && lineStartIndex != sb.Length)
+                    {
+                        _ = sb.Length - lineStartIndex + entry.Length + 1 > maxLen.Value
+                            ? sb.AppendLine()
+                            : sb.Append(' ');
+                    }
+                }
+                else if (sb.Length != 0)
+                {
+                    _ = sb.Append(' ');
+                }
+                _ = sb.Append(entry);
+            }
         }
     }
-}

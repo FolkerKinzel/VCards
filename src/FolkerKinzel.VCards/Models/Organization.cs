@@ -107,19 +107,14 @@ public sealed class Organization
     internal void AppendVCardStringTo(VcfSerializer serializer)
     {
         StringBuilder builder = serializer.Builder;
-        StringBuilder worker = serializer.Worker;
 
-        _ = worker.Clear().Append(OrganizationName).Mask(serializer.Version);
-        _ = builder.Append(worker);
+        _ = builder.AppendMasked(OrganizationName, serializer.Version);
 
         if (OrganizationalUnits is not null)
         {
             for (int i = 0; i < OrganizationalUnits.Count; i++)
             {
-                _ = worker.Clear().Append(OrganizationalUnits[i]).Mask(serializer.Version);
-
-                _ = builder.Append(';');
-                _ = builder.Append(worker);
+                _ = builder.Append(';').AppendMasked(OrganizationalUnits[i], serializer.Version);
             }
         }
     }

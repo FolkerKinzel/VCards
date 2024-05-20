@@ -137,25 +137,15 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
         Debug.Assert(Value.Count != 0);
 
-        StringBuilder worker = serializer.Worker;
         StringBuilder builder = serializer.Builder;
-        string s;
-
-        for (int i = 0; i < Value.Count - 1; i++)
+       
+        for (int i = 0; i < Value.Count; i++)
         {
-            s = Value[i];
+            Debug.Assert(!string.IsNullOrEmpty(Value[i]));
 
-            Debug.Assert(!string.IsNullOrEmpty(s));
-
-            _ = worker.Clear().Append(s).Mask(serializer.Version);
-            _ = builder.Append(worker).Append(',');
+            _ = builder.AppendMasked(Value[i], serializer.Version).Append(',');
         }
 
-        s = Value[Value.Count - 1];
-
-        Debug.Assert(!string.IsNullOrEmpty(s));
-
-        _ = worker.Clear().Append(s).Mask(serializer.Version);
-        _ = builder.Append(worker);
+        --builder.Length;
     }
 }

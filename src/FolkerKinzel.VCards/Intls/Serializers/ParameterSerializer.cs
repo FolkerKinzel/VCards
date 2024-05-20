@@ -1,28 +1,29 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal abstract class ParameterSerializer
 {
-    private readonly StringBuilder _builder = new();
-    protected readonly StringBuilder _worker = new();
-
     protected ParameterSerializer(Opts options) => this.Options = options;
+
+    [NotNull]
+    protected StringBuilder? Builder { get; private set; }
 
     [NotNull]
     protected ParameterSection? ParaSection { get; private set; }
 
     protected Opts Options { get; }
 
-    internal StringBuilder Serialize(ParameterSection vCardPropertyParameter,
-                                     string propertyKey,
-                                     bool isPref)
+    internal void AppendTo(StringBuilder builder,
+                           ParameterSection vCardPropertyParameter,
+                           string propertyKey,
+                           bool isPref)
     {
+        Builder = builder;
         ParaSection = vCardPropertyParameter;
-
-        _ = _builder.Clear();
 
         switch (propertyKey)
         {
@@ -222,8 +223,6 @@ internal abstract class ParameterSerializer
                 BuildNonStandardPropertyPara(isPref);
                 break;
         }
-
-        return _builder;
     }
 
     #region BuildPara
@@ -334,9 +333,21 @@ internal abstract class ParameterSerializer
 
     #endregion
 
-    protected void AppendParameter(string key, string value) => _builder.Append(';').Append(key).Append('=').Append(value);
+    protected void AppendParameter(string key, string value, bool escapedAndQuoted = false)
+    {
+        Builder.Append(';').Append(key).Append('=');
 
-    protected void AppendV2_1Type(string value) => _builder.Append(';').Append(value);
+        if (escapedAndQuoted)
+        {
+            Builder.AppendEscapedAndQuoted(value);
+        }
+        else
+        {
+            Builder.Append(value);
+        }
+    }
+
+    protected void AppendV2_1Type(string value) => Builder.Append(';').Append(value);
 
     protected void AppendNonStandardParameters()
     {

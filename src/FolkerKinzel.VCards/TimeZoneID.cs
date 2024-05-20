@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 
@@ -155,7 +156,7 @@ public sealed partial class TimeZoneID
 
 
     internal void AppendTo(
-        StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter)
+        StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter, bool escapedAndQuoted = false)
     {
         Debug.Assert(builder is not null);
 
@@ -184,7 +185,8 @@ public sealed partial class TimeZoneID
                     }
                     else
                     {
-                        _ = builder.Append(Value);
+                        _ = escapedAndQuoted ? builder.AppendEscapedAndQuoted(Value)
+                                             : builder.Append(Value);
                     }
                     break;
                 }

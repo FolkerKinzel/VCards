@@ -79,10 +79,6 @@ public sealed class TimeStampProperty : VCardProperty
     {
         Debug.Assert(serializer is not null);
 
-        StringBuilder worker = serializer.Worker;
-        _ = worker.Clear();
-        DateTimeConverter.AppendTimeStampTo(worker, this.Value, serializer.Version);
-        _ = worker.Mask(serializer.Version);
-        _ = serializer.Builder.Append(worker);
+        DateTimeConverter.AppendTimeStampTo(serializer.Builder, this.Value, serializer.Version);
     }
 }

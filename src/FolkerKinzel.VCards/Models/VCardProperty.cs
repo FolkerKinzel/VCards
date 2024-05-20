@@ -82,9 +82,8 @@ public abstract class VCardProperty : ICloneable
         }
         _ = builder.Append(serializer.PropertyKey);
 
-        _ = builder.Append(
-            serializer.ParameterSerializer
-            .Serialize(Parameters, serializer.PropertyKey, serializer.IsPref));
+        serializer.ParameterSerializer
+                  .AppendTo(builder, Parameters, serializer.PropertyKey, serializer.IsPref);
 
         _ = builder.Append(':');
         AppendValue(serializer);

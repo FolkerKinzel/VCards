@@ -61,13 +61,9 @@ public sealed class GenderInfo
             _ = builder.Append(Sex.ToVcfString());
         }
 
-
         if (Identity is not null)
-        {
-            StringBuilder worker = serializer.Worker;
-            _ = worker.Clear().Append(Identity).Mask(serializer.Version);
-
-            _ = builder.Append(';').Append(worker);
+        { 
+            _ = builder.Append(';').AppendMasked(Identity, serializer.Version);
         }
     }
 }

@@ -425,7 +425,6 @@ public sealed class Address
     internal void AppendVCardString(VcfSerializer serializer)
     {
         StringBuilder builder = serializer.Builder;
-        StringBuilder worker = serializer.Worker;
 
         char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
 
@@ -457,14 +456,12 @@ public sealed class Address
                 return;
             }
 
-            for (int i = 0; i < strings.Count - 1; i++)
+            for (int i = 0; i < strings.Count; i++)
             {
-                _ = worker.Clear().Append(strings[i]).Mask(serializer.Version);
-                _ = builder.Append(worker).Append(joinChar);
+                _ = builder.AppendMasked(strings[i], serializer.Version).Append(joinChar);
             }
 
-            _ = worker.Clear().Append(strings[strings.Count - 1]).Mask(serializer.Version);
-            _ = builder.Append(worker);
+            --builder.Length;
         }
     }
 
