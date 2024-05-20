@@ -19,7 +19,7 @@ public class AppendBase64Bench
 {
     private const string VCARD_NEWLINE = "\r\n";
     private const int VCARD_MAX_BYTES_PER_LINE = 75;
-    private readonly byte[] _bytes = new byte[78];
+    private readonly byte[] _bytes = new byte[50000];
 
     public AppendBase64Bench() => new Random().NextBytes(_bytes);
 
