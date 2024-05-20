@@ -87,19 +87,4 @@ internal class ValueSplitter : IEnumerable<string>
 
         return s.Length;
     }
-
-    //private static bool ContainsData(int startIndex, int length, string s)
-    //{
-    //    for (int i = 0; i < length; i++)
-    //    {
-    //        if (char.IsWhiteSpace(s[i + startIndex]))
-    //        {
-    //            continue;
-    //        }
-
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
 }
