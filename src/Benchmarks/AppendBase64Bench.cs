@@ -82,7 +82,6 @@ public class AppendBase64Bench
         //string s = Builder.ToString() + "XXXXXXXXXXXXXXXXXXXXXXXXXXX";
     }
 
-
     private static void AppendBase64EncodedData(StringBuilder Builder, byte[]? data)
     {
         // Append the NewLine in any case: The parser
@@ -108,6 +107,4 @@ public class AppendBase64Bench
             i += VCARD_NEWLINE.Length;
         }
     }
-
-
 }
