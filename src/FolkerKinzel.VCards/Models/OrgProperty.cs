@@ -56,7 +56,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
         ValueSplitter semicolonSplitter = vcfRow.Info.SemiColonSplitter;
   
         semicolonSplitter.ValueString = vcfRow.Value;
-        List<string> list = semicolonSplitter.Select(x => x.UnMask(version)).ToList();
+        var list = semicolonSplitter.Select(x => x.UnMask(version)).ToList();
         Value = new Organization(list);
     }
 

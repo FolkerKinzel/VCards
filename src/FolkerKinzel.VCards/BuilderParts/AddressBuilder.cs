@@ -126,7 +126,7 @@ public readonly struct AddressBuilder
     public VCardBuilder Edit<TData>(Func<IEnumerable<AddressProperty>, TData, IEnumerable<AddressProperty?>?> func,
                                     TData data)
     {
-        var props = GetProperty();
+        IEnumerable<AddressProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Addresses = func.Invoke(props, data);
         return _builder;
@@ -147,7 +147,7 @@ public readonly struct AddressBuilder
     /// initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<AddressProperty>, IEnumerable<AddressProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<AddressProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Addresses = func.Invoke(props);
         return _builder;

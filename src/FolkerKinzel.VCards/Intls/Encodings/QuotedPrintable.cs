@@ -29,6 +29,7 @@ internal static class QuotedPrintable
     /// <returns>A reference to <paramref name="builder"/>.</returns>
     /// <remarks>If <see cref="Environment.NewLine"/> is not "\r\n" on the executing 
     /// platform, the <see cref="string"/> will be adjusted automatically.</remarks>
+    [SuppressMessage("Style", "IDE0078:Use pattern matching", Justification = "Performance")]
     internal static StringBuilder AppendQuotedPrintable(this StringBuilder builder,
                                                         string? value,
                                                         int firstLineOffset)
@@ -65,8 +66,8 @@ internal static class QuotedPrintable
             ReadOnlySpan<byte> source = value.AsSpan();
 
             // The last index in bufSpan is reserved for the last Byte in source.
-            using var buf = ArrayPoolHelper.Rent<char>(MAX_ROWLENGTH);
-            var bufSpan = buf.Array.AsSpan(0, MAX_ROWLENGTH);
+            using ArrayPoolHelper.SharedArray<char> buf = ArrayPoolHelper.Rent<char>(MAX_ROWLENGTH);
+            Span<char> bufSpan = buf.Array.AsSpan(0, MAX_ROWLENGTH);
 
             // Only the last row can use bufSpan completely. All others have to leave
             // one index for the '=' of the soft-linebreak.
@@ -178,7 +179,7 @@ Repeat:
 
             static char GetNibble(int nibble) => nibble > 9 ? (char)(55 + nibble) : (char)(48 + nibble);
 
-            static bool HasToBeQuoted(int bt) => bt != '\t' && (bt > 126 || bt == '=' || bt < 32 || bt == '\r' || bt == '\n');
+            static bool HasToBeQuoted(int bt) => bt != '\t' && (bt > 126 || bt == '=' || bt < 32);
         }
     }
 
@@ -402,7 +403,7 @@ Repeat:
         //letzten Hard-Line-Break wieder entfernen
         sb.TrimEnd();
 
-        var bytes = new byte[qpEncoded.Length];
+        byte[] bytes = new byte[qpEncoded.Length];
 
         Span<char> charr = stackalloc char[2];
 

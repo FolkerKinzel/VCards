@@ -70,8 +70,8 @@ dotnet_style_readonly_field = true:suggestion
 #### C#-Codierungskonventionen ####
 
 # Var-Einstellungen
-csharp_style_var_elsewhere = false:silent
-csharp_style_var_for_built_in_types = false:silent
+csharp_style_var_elsewhere = false:suggestion
+csharp_style_var_for_built_in_types = false:suggestion
 csharp_style_var_when_type_is_apparent = true:suggestion
 
 # Ausdruckskörpermember
@@ -304,3 +304,4 @@ dotnet_style_qualification_for_field = true:silent
 dotnet_style_qualification_for_property = false:silent
 dotnet_style_qualification_for_method = false:suggestion
 dotnet_style_qualification_for_event = false:suggestion
+end_of_line = crlf

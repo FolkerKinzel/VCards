@@ -46,7 +46,7 @@ public readonly struct AccessBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TData>(Func<AccessProperty?, TData, AccessProperty?> func, TData data)
     {
-        var prop = Builder.VCard.Access;
+        AccessProperty? prop = Builder.VCard.Access;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Access = func.Invoke(prop, data);
         return _builder;
@@ -65,7 +65,7 @@ public readonly struct AccessBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<AccessProperty?, AccessProperty?> func)
     {
-        var prop = Builder.VCard.Access;
+        AccessProperty? prop = Builder.VCard.Access;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Access = func.Invoke(prop);
         return _builder;

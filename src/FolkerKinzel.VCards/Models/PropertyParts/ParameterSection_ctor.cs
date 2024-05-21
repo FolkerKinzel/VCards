@@ -18,7 +18,7 @@ public sealed partial class ParameterSection
     /// <param name="paraSec">The <see cref="ParameterSection"/> instance to clone.</param>
     private ParameterSection(ParameterSection paraSec)
     {
-        foreach (var kvp in paraSec._propDic)
+        foreach (KeyValuePair<VCdParam, object> kvp in paraSec._propDic)
         {
             _propDic.Add(kvp.Key, kvp.Value switch
             {
@@ -89,9 +89,9 @@ public sealed partial class ParameterSection
                         ValueSplitter commaSplitter = info.CommaSplitter;
                         commaSplitter.ValueString = parameter.Value;
 
-                        foreach (var s in commaSplitter)
+                        foreach (string s in commaSplitter)
                         {
-                            if (!ParseTypeParameter(s, propertyKey, info))
+                            if (!ParseTypeParameter(s, propertyKey))
                             {
                                 AddNonStandardParameter(new KeyValuePair<string, string>(parameter.Key, s));
                             }
@@ -119,7 +119,7 @@ public sealed partial class ParameterSection
                         ValueSplitter commaSplitter = info.CommaSplitter;
 
                         commaSplitter.ValueString = parameter.Value;
-                        foreach (var s in commaSplitter)
+                        foreach (string s in commaSplitter)
                         {
                             string sortString = s.UnMask(VCdVersion.V4_0);
                             list.Add(sortString);
@@ -333,7 +333,7 @@ public sealed partial class ParameterSection
         userAttributes.Add(parameter);
     }
 
-    private bool ParseTypeParameter(string typeValue, string propertyKey, VcfDeserializationInfo info)
+    private bool ParseTypeParameter(string typeValue, string propertyKey)
     {
         typeValue = typeValue.Trim(TRIM_CHARS).ToUpperInvariant();
         Debug.Assert(typeValue.Length != 0);

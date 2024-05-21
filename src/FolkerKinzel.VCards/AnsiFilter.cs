@@ -40,7 +40,7 @@ namespace FolkerKinzel.VCards;
 /// </example>
 public sealed class AnsiFilter
 {
-    private readonly DecoderValidationFallback _decoderFallback = new DecoderValidationFallback();
+    private readonly DecoderValidationFallback _decoderFallback = new();
     private readonly Encoding _utf8;
 
     private const int UTF8_CODEPAGE = 65001;
@@ -159,7 +159,7 @@ public sealed class AnsiFilter
         }
         else
         {
-            using var stream2 = factory();
+            using Stream? stream2 = factory();
 
             return stream2 is null ? vCards
                                    : Vcf.Deserialize(stream2, enc, leaveStreamOpen: false);
@@ -214,7 +214,7 @@ public sealed class AnsiFilter
 
     private static string? GetCharsetFromVCards(IList<VCard> vCards)
     {
-        foreach (var vCard in vCards.Where(x => x.Version == VCdVersion.V2_1))
+        foreach (VCard vCard in vCards.Where(x => x.Version == VCdVersion.V2_1))
         {
             string? charSet = vCard
                 .Entities
