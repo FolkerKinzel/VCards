@@ -25,7 +25,7 @@ internal static class QuotedPrintable
     /// returned.</returns>
     /// <remarks>If <see cref="Environment.NewLine"/> is not "\r\n" on the executing 
     /// platform, the <see cref="string"/> will be adjusted automatically.</remarks>
-    public static string Encode(
+    internal static string Encode(
         string? value,
         int firstLineOffset)
     {
@@ -39,10 +39,9 @@ internal static class QuotedPrintable
 
         value = NormalizeLineBreaksOnUnixSystems(value);
 
-        //unerlaubte Zeichen codieren
         StringBuilder sb = ProcessCoding(Encoding.UTF8.GetBytes(value));
 
-        EncodeLastCharInLineIfItIsWhiteSpace(sb);
+        EncodeLastCharIfItIsWhiteSpace(sb);
         MakeSoftLineBreaks(firstLineOffset, sb);
         return sb.ToString();
 
@@ -55,31 +54,29 @@ internal static class QuotedPrintable
             {
                 value = value.Replace(Environment.NewLine, NEW_LINE, StringComparison.Ordinal);
             }
+
             return value;
         }
 
-        static void EncodeLastCharInLineIfItIsWhiteSpace(StringBuilder sb)
+        static void EncodeLastCharIfItIsWhiteSpace(StringBuilder sb)
         {
-            // wenn das letzte Zeichen einer Zeile Whitespace ist, dann codieren
             int sbLast = sb.Length - 1;
             char c = sb[sbLast];
 
             if (char.IsWhiteSpace(c))
             {
-                _ = sb.Remove(sbLast, 1).Append('=').Append(((byte)c).ToString("X02", CultureInfo.InvariantCulture));
+                sb.Length = sbLast;
+                _ = sb.Append('=').Append(((byte)c).ToString("X02", CultureInfo.InvariantCulture));
             }
         }
     }
 
     private static void MakeSoftLineBreaks(int firstLineOffset, StringBuilder sb)
     {
-        //firstLineOffset %= MAX_ROWLENGTH;
-        //int charsBeforeSoftlineBreak = MAX_ROWLENGTH - 1;
-
         for (int lineLength = firstLineOffset >= MAX_ROWLENGTH - MIN_ROWLENGTH
                 ? InsertSoftlineBreak(sb, 0) + MAX_ROWLENGTH
                 : Math.Max(MAX_ROWLENGTH - firstLineOffset, MIN_ROWLENGTH);
-            lineLength < sb.Length; // mindestens 1 Zeichen nach dem letzten Soft-Linebreak
+            lineLength < sb.Length; // at least 1 Char after the last soft-linebreak
             lineLength += MAX_ROWLENGTH)
         {
             int lastCharIndex = lineLength - 2;
@@ -95,8 +92,8 @@ internal static class QuotedPrintable
                 }
                 else if (backwardCounter == ENCODED_CHAR_LENGTH)
                 {
-                    // in diesem Fall kann es sich nur um TAB und SPACE handeln
-                    lastCharIndex = EncodeLastChar(sb, lastChar, lastCharIndex);
+                    // TAB or SPACE
+                    lastCharIndex = EncodeLastCharInLine(sb, lastChar, lastCharIndex);
                     lineLength = InsertSoftlineBreak(sb, lastCharIndex + 1);
                 }
                 else
@@ -108,7 +105,7 @@ internal static class QuotedPrintable
 
         /////////////////////////////////////////////////////////////////////////////////////
 
-        static int EncodeLastChar(StringBuilder sb, char lastChar, int lastCharIndex)
+        static int EncodeLastCharInLine(StringBuilder sb, char lastChar, int lastCharIndex)
         {
             _ = sb.Remove(lastCharIndex, 1)
                   .Insert(lastCharIndex, '=')
@@ -124,11 +121,13 @@ internal static class QuotedPrintable
         }
     }
 
-    private static StringBuilder ProcessCoding(IEnumerable<byte> data)
+    private static StringBuilder ProcessCoding(byte[] data)
     {
         var sb = new StringBuilder();
 
-        foreach (byte bt in data)
+        var span = data.AsSpan();
+
+        foreach (byte bt in span)
         {
             _ = HasToBeQuoted(bt) ? sb.Append('=').Append(bt.ToString("X02", CultureInfo.InvariantCulture))
                                   : sb.Append((char)bt);

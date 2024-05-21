@@ -12,35 +12,43 @@ internal static partial class StringExtension
     {
         Debug.Assert(value != null);
 
-        if (!value.Contains('\\'))
+        var sourceSpan = value.AsSpan();
+        int idxOfBackSlash = sourceSpan.IndexOf('\\');
+
+        if (idxOfBackSlash == -1)
         {
             return value;
         }
 
-        var sourceSpan = value.AsSpan();
+        int processedLength = sourceSpan.Length - idxOfBackSlash;
 
-        if (sourceSpan.Length > Const.STACKALLOC_CHAR_THRESHOLD)
+        if (processedLength > Const.STACKALLOC_CHAR_THRESHOLD)
         {
-            using var buf = ArrayPoolHelper.Rent<char>(sourceSpan.Length);
+            using var buf = ArrayPoolHelper.Rent<char>(processedLength);
             var bufSpan = buf.Array.AsSpan();
-            return CreateUnMaskedString(version, sourceSpan, bufSpan);
+            return CreateUnMaskedString(version, sourceSpan, idxOfBackSlash, bufSpan);
         }
         else
         {
-            Span<char> bufSpan = stackalloc char[sourceSpan.Length];
-            return CreateUnMaskedString(version, sourceSpan, bufSpan);
+            Span<char> bufSpan = stackalloc char[processedLength];
+            return CreateUnMaskedString(version, sourceSpan, idxOfBackSlash, bufSpan);
         }
 
-        static string CreateUnMaskedString(VCdVersion version, ReadOnlySpan<char> sourceSpan, Span<char> bufSpan)
+        static string CreateUnMaskedString(VCdVersion version, ReadOnlySpan<char> sourceSpan, int idxOfBackSlash, Span<char> bufSpan)
         {
-            int resultLength = version switch
+            var processedSpan = sourceSpan.Slice(idxOfBackSlash);
+
+            int outputLength = version switch
             {
-                VCdVersion.V2_1 => UnMask21(sourceSpan, bufSpan),
-                VCdVersion.V3_0 => UnMask30(sourceSpan, bufSpan),
-                _ => UnMask40(sourceSpan, bufSpan)
+                VCdVersion.V2_1 => UnMask21(processedSpan, bufSpan),
+                VCdVersion.V3_0 => UnMask30(processedSpan, bufSpan),
+                _ => UnMask40(processedSpan, bufSpan)
             };
 
-            return bufSpan.Slice(0, resultLength).ToString();
+            bufSpan = bufSpan.Slice(0, outputLength);
+
+            return idxOfBackSlash == 0 ? bufSpan.ToString()
+                                       : StaticStringMethod.Concat(sourceSpan.Slice(0, idxOfBackSlash), bufSpan);
         }
     }
 

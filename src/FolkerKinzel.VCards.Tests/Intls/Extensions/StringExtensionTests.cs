@@ -62,6 +62,14 @@ public class StringExtensionTests
     public void UnMaskTest6(string input, VCdVersion version, string? expected)
         => Assert.AreEqual(expected, input.UnMask(version), false);
 
+    [TestMethod]
+    public void UnmaskTest7()
+    {
+        string input = "\\n" + new string('a', 500);
+        Assert.AreEqual(input, input.UnMask(VCdVersion.V2_1));
+        Assert.AreNotEqual(input, input.UnMask(VCdVersion.V3_0));
+    }
+
 
     //[DataTestMethod]
     //[DataRow("", VCdVersion.V3_0, "")]
