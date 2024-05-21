@@ -112,7 +112,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
             string toEncode = builder.ToString(valueStartIndex, builder.Length - valueStartIndex);
             builder.Length = valueStartIndex;
 
-            _ = builder.Append(QuotedPrintable.Encode(toEncode, valueStartIndex));
+            _ = builder.AppendQuotedPrintable(toEncode, valueStartIndex);
         }
     }
 }

@@ -148,7 +148,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
             string toEncode = builder.ToString(valueStartIndex, builder.Length - valueStartIndex);
             builder.Length = valueStartIndex;
 
-            _ = builder.Append(QuotedPrintable.Encode(toEncode, valueStartIndex));
+            _ = builder.AppendQuotedPrintable(toEncode, valueStartIndex);
         }
     }
 }

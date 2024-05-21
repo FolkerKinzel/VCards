@@ -18,7 +18,20 @@ internal static class QuotedPrintable
 
     #region Encode
 
-    internal static StringBuilder AppendQuotedPrintable(this StringBuilder builder, string? value, int firstLineOffset)
+    /// <summary>
+    /// Appends a <see cref="string"/> Quoted-Printable encoded to the end of a 
+    /// <see cref="StringBuilder"/>.
+    /// </summary>
+    /// <param name="builder">The <see cref="StringBuilder"/> to which the encoded content is added.</param>
+    /// <param name="value">The <see cref="string"/> to encode or <c>null</c>.</param>
+    /// <param name="firstLineOffset">Length of the current line in the text before
+    /// <paramref name="value"/> starts. (Used to compute the correct line wrapping.)</param>
+    /// <returns>A reference to <paramref name="builder"/>.</returns>
+    /// <remarks>If <see cref="Environment.NewLine"/> is not "\r\n" on the executing 
+    /// platform, the <see cref="string"/> will be adjusted automatically.</remarks>
+    internal static StringBuilder AppendQuotedPrintable(this StringBuilder builder,
+                                                        string? value,
+                                                        int firstLineOffset)
     {
         Debug.Assert(firstLineOffset >= 0);
         Debug.Assert(MAX_ROWLENGTH >= MIN_ROWLENGTH);
@@ -60,258 +73,240 @@ internal static class QuotedPrintable
             const int usableBufLength = MAX_ROWLENGTH - 1;
             int sourceIdx = 0;
 
-            if (firstLineOffset + ENCODED_CHAR_LENGTH > usableBufLength)
+            int usableLength = usableBufLength - firstLineOffset;
+
+            if (usableLength <= 0)
             {
                 builder.Append(SOFT_LINEBREAK);
-                firstLineOffset = 0;
+                usableLength = usableBufLength;
             }
 
-Repeat:
             int bufIdx = 0;
-
-            while (bufIdx < usableBufLength - ENCODED_CHAR_LENGTH - firstLineOffset && sourceIdx < source.Length - 1)
+Repeat:
+            while (bufIdx < usableLength && sourceIdx < source.Length - 1)
             {
                 byte bt = source[sourceIdx++];
 
                 if (HasToBeQuoted(bt))
                 {
                     bufSpan[bufIdx++] = '=';
-                    bufSpan[bufIdx++] = GetNibble(bt >> 4);
-                    bufSpan[bufIdx++] = GetNibble(bt & 0xF);
-                }
-                else
-                {
-                    bufSpan[bufIdx++] = (char)bt;
-                }
-            }
 
-            if (sourceIdx < source.Length - 1)
-            {
-                int bt = source[sourceIdx++];
-
-                if (HasToBeQuoted(bt) || bt == ' ' || bt == '\t')
-                {
-                    bufSpan[bufIdx++] = '=';
-                    bufSpan[bufIdx++] = GetNibble(bt >> 4);
-                    bufSpan[bufIdx++] = GetNibble(bt & 0xF);
-
-                    builder.Append(buf.Array, 0, bufIdx);
-                    builder.Append(SOFT_LINEBREAK);
-
-                    firstLineOffset = 0;
-                    goto Repeat;
-                }
-                else
-                {
-                    bufSpan[bufIdx++] = (char)bt;
-                }
-            }
-            else
-            {
-                goto AppendLastByte;
-            }
-
-            const int remainingLineLength = 2;
-
-            for (int i = 0; i < remainingLineLength; i++)
-            {
-                if (sourceIdx < source.Length - 1)
-                {
-                    int bt = source[sourceIdx++];
-
-                    if (HasToBeQuoted(bt) || bt == ' ' || bt == '\t')
+                    if (bufIdx < usableLength)
                     {
-                        sourceIdx--;
-                        builder.Append(buf.Array, 0, bufIdx);
-                        builder.Append(SOFT_LINEBREAK);
-                        firstLineOffset = 0;
-                        goto Repeat;
+                        bufSpan[bufIdx++] = GetNibble(bt >> 4);
                     }
                     else
                     {
-                        bufSpan[bufIdx++] = (char)bt;
+                        builder.Append(buf.Array, 0, bufIdx);
+                        builder.Append(SOFT_LINEBREAK);
+
+                        bufIdx = 0;
+                        bufSpan[bufIdx++] = GetNibble(bt >> 4);
+                        bufSpan[bufIdx++] = GetNibble(bt & 0xF);
+
+                        usableLength = usableBufLength;
+                        continue;
+                    }
+
+                    if (bufIdx < usableLength)
+                    {
+                        bufSpan[bufIdx++] = GetNibble(bt & 0xF);
+                    }
+                    else
+                    {
+                        builder.Append(buf.Array, 0, bufIdx);
+                        builder.Append(SOFT_LINEBREAK);
+
+                        bufIdx = 0;
+                        bufSpan[bufIdx++] = GetNibble(bt & 0xF);
+
+                        usableLength = usableBufLength;
                     }
                 }
                 else
                 {
-                    goto AppendLastByte;
+                    bufSpan[bufIdx++] = (char)bt;
                 }
+            }//while
+
+            if (sourceIdx < source.Length - 1)
+            {
+                builder.Append(buf.Array, 0, bufIdx);
+                builder.Append(SOFT_LINEBREAK);
+                bufIdx = 0;
+                usableLength = usableBufLength;
+                goto Repeat;
             }
-
-            builder.Append(buf.Array, 0, bufIdx);
-            builder.Append(SOFT_LINEBREAK);
-            firstLineOffset = 0;
-            goto Repeat;
-
-AppendLastByte:
-            Debug.Assert(bufIdx < usableBufLength);
 
             int lastByte = source[source.Length - 1];
 
             if (HasToBeQuoted(lastByte) || lastByte == ' ' || lastByte == '\t')
             {
-                if (bufIdx > MAX_ROWLENGTH - ENCODED_CHAR_LENGTH - firstLineOffset)
+                if(bufIdx == usableLength)
                 {
                     builder.Append(buf.Array, 0, bufIdx);
                     builder.Append(SOFT_LINEBREAK);
-                    bufSpan[0] = '=';
-                    bufSpan[1] = GetNibble(lastByte >> 4);
-                    bufSpan[2] = GetNibble(lastByte & 0xF);
-                    builder.Append(buf.Array, 0, 3);
+                    bufIdx = 0;
+                    usableLength = usableBufLength;
+                }
+
+                bufSpan[bufIdx++] = '=';
+
+                if (bufIdx < usableLength)
+                {
+                    bufSpan[bufIdx++] = GetNibble(lastByte >> 4);
                 }
                 else
                 {
-                    bufSpan[bufIdx++] = '=';
-                    bufSpan[bufIdx++] = GetNibble(lastByte >> 4);
-                    bufSpan[bufIdx++] = GetNibble(lastByte & 0xF);
                     builder.Append(buf.Array, 0, bufIdx);
+                    builder.Append(SOFT_LINEBREAK);
+
+                    bufIdx = 0;
+                    bufSpan[bufIdx++] = GetNibble(lastByte >> 4);
                 }
+
+                bufSpan[bufIdx++] = GetNibble(lastByte & 0xF);
+                builder.Append(buf.Array, 0, bufIdx);
             }
             else
             {
-                builder.Append(buf.Array, 0, bufIdx)
-                       .Append((char)lastByte);
+                bufSpan[bufIdx++] = (char)lastByte;
+                builder.Append(buf.Array, 0, bufIdx);
             }
 
             ///////////////////////////////////
 
             static char GetNibble(int nibble) => nibble > 9 ? (char)(55 + nibble) : (char)(48 + nibble);
 
-            static bool HasToBeQuoted(int bt)
-            {
-                return bt != '\t' && (bt > 126 || bt == '=' || bt < 32 || bt == '\r' || bt == '\n');
-            }
-
-            
+            static bool HasToBeQuoted(int bt) => bt != '\t' && (bt > 126 || bt == '=' || bt < 32 || bt == '\r' || bt == '\n');
         }
     }
 
+    ///// <summary>Encodes a <see cref="string"/> into Quoted-Printable. </summary>
+    ///// <param name="value">The <see cref="string"/> to encode or <c>null</c>.</param>
+    ///// <param name="firstLineOffset">Length of the current line in the text before
+    ///// <paramref name="value"/> starts. (Used to compute the correct line wrapping.)</param>
+    ///// <returns><paramref name="value"/> Quoted-Printable encoded. If 
+    ///// <paramref name="value"/> is <c>null</c>, <see cref="string.Empty"/> is 
+    ///// returned.</returns>
+    ///// <remarks>If <see cref="Environment.NewLine"/> is not "\r\n" on the executing 
+    ///// platform, the <see cref="string"/> will be adjusted automatically.</remarks>
+    //internal static string Encode(
+    //    string? value,
+    //    int firstLineOffset)
+    //{
+    //    Debug.Assert(firstLineOffset >= 0);
+    //    Debug.Assert(MAX_ROWLENGTH >= MIN_ROWLENGTH);
 
-    /// <summary>Encodes a <see cref="string"/> into Quoted-Printable. </summary>
-    /// <param name="value">The <see cref="string"/> to encode or <c>null</c>.</param>
-    /// <param name="firstLineOffset">Length of the current line in the text before
-    /// <paramref name="value"/> starts. (Used to compute the correct line wrapping.)</param>
-    /// <returns><paramref name="value"/> Quoted-Printable encoded. If 
-    /// <paramref name="value"/> is <c>null</c>, <see cref="string.Empty"/> is 
-    /// returned.</returns>
-    /// <remarks>If <see cref="Environment.NewLine"/> is not "\r\n" on the executing 
-    /// platform, the <see cref="string"/> will be adjusted automatically.</remarks>
-    internal static string Encode(
-        string? value,
-        int firstLineOffset)
-    {
-        Debug.Assert(firstLineOffset >= 0);
-        Debug.Assert(MAX_ROWLENGTH >= MIN_ROWLENGTH);
+    //    if (string.IsNullOrEmpty(value))
+    //    {
+    //        return string.Empty;
+    //    }
 
-        if (string.IsNullOrEmpty(value))
-        {
-            return string.Empty;
-        }
+    //    value = NormalizeLineBreaksOnUnixSystems(value);
 
-        value = NormalizeLineBreaksOnUnixSystems(value);
+    //    StringBuilder sb = ProcessCoding(Encoding.UTF8.GetBytes(value));
 
-        StringBuilder sb = ProcessCoding(Encoding.UTF8.GetBytes(value));
+    //    EncodeLastCharIfItIsWhiteSpace(sb);
+    //    MakeSoftLineBreaks(firstLineOffset, sb);
+    //    return sb.ToString();
 
-        EncodeLastCharIfItIsWhiteSpace(sb);
-        MakeSoftLineBreaks(firstLineOffset, sb);
-        return sb.ToString();
+    //    ////////////////////////////////////////
 
-        ////////////////////////////////////////
+    //    [ExcludeFromCodeCoverage]
+    //    static string NormalizeLineBreaksOnUnixSystems(string value)
+    //    {
+    //        if (!StringComparer.Ordinal.Equals(Environment.NewLine, NEW_LINE))
+    //        {
+    //            value = value.Replace(Environment.NewLine, NEW_LINE, StringComparison.Ordinal);
+    //        }
 
-        [ExcludeFromCodeCoverage]
-        static string NormalizeLineBreaksOnUnixSystems(string value)
-        {
-            if (!StringComparer.Ordinal.Equals(Environment.NewLine, NEW_LINE))
-            {
-                value = value.Replace(Environment.NewLine, NEW_LINE, StringComparison.Ordinal);
-            }
+    //        return value;
+    //    }
 
-            return value;
-        }
+    //    static void EncodeLastCharIfItIsWhiteSpace(StringBuilder sb)
+    //    {
+    //        int sbLast = sb.Length - 1;
+    //        char c = sb[sbLast];
 
-        static void EncodeLastCharIfItIsWhiteSpace(StringBuilder sb)
-        {
-            int sbLast = sb.Length - 1;
-            char c = sb[sbLast];
+    //        if (char.IsWhiteSpace(c))
+    //        {
+    //            sb.Length = sbLast;
+    //            _ = sb.Append('=').Append(((byte)c).ToString("X02", CultureInfo.InvariantCulture));
+    //        }
+    //    }
+    //}
 
-            if (char.IsWhiteSpace(c))
-            {
-                sb.Length = sbLast;
-                _ = sb.Append('=').Append(((byte)c).ToString("X02", CultureInfo.InvariantCulture));
-            }
-        }
-    }
+    //private static void MakeSoftLineBreaks(int firstLineOffset, StringBuilder sb)
+    //{
+    //    for (int idx = firstLineOffset >= MAX_ROWLENGTH - MIN_ROWLENGTH
+    //            ? InsertSoftlineBreak(sb, 0) + MAX_ROWLENGTH
+    //            : Math.Max(MAX_ROWLENGTH - firstLineOffset, MIN_ROWLENGTH);
+    //        idx < sb.Length; // at least 1 Char after the last soft-linebreak
+    //        idx += MAX_ROWLENGTH)
+    //    {
+    //        int lastCharIndex = idx - 2;
 
-    private static void MakeSoftLineBreaks(int firstLineOffset, StringBuilder sb)
-    {
-        for (int idx = firstLineOffset >= MAX_ROWLENGTH - MIN_ROWLENGTH
-                ? InsertSoftlineBreak(sb, 0) + MAX_ROWLENGTH
-                : Math.Max(MAX_ROWLENGTH - firstLineOffset, MIN_ROWLENGTH);
-            idx < sb.Length; // at least 1 Char after the last soft-linebreak
-            idx += MAX_ROWLENGTH)
-        {
-            int lastCharIndex = idx - 2;
+    //        for (int backwardCounter = 1; backwardCounter <= ENCODED_CHAR_LENGTH; backwardCounter++)
+    //        {
+    //            char lastChar = sb[lastCharIndex];
 
-            for (int backwardCounter = 1; backwardCounter <= ENCODED_CHAR_LENGTH; backwardCounter++)
-            {
-                char lastChar = sb[lastCharIndex];
+    //            if (!char.IsWhiteSpace(lastChar) && lastChar != '=')
+    //            {
+    //                idx = InsertSoftlineBreak(sb, lastCharIndex + 1);
+    //                break;
+    //            }
+    //            else if (backwardCounter == ENCODED_CHAR_LENGTH)
+    //            {
+    //                // TAB or SPACE
+    //                lastCharIndex = EncodeLastCharInLine(sb, lastChar, lastCharIndex);
+    //                idx = InsertSoftlineBreak(sb, lastCharIndex + 1);
+    //            }
+    //            else
+    //            {
+    //                --lastCharIndex;
+    //            }
+    //        }//for
+    //    }//for (sb)
 
-                if (!char.IsWhiteSpace(lastChar) && lastChar != '=')
-                {
-                    idx = InsertSoftlineBreak(sb, lastCharIndex + 1);
-                    break;
-                }
-                else if (backwardCounter == ENCODED_CHAR_LENGTH)
-                {
-                    // TAB or SPACE
-                    lastCharIndex = EncodeLastCharInLine(sb, lastChar, lastCharIndex);
-                    idx = InsertSoftlineBreak(sb, lastCharIndex + 1);
-                }
-                else
-                {
-                    --lastCharIndex;
-                }
-            }//for
-        }//for (sb)
+    //    /////////////////////////////////////////////////////////////////////////////////////
 
-        /////////////////////////////////////////////////////////////////////////////////////
+    //    static int EncodeLastCharInLine(StringBuilder sb, char lastChar, int lastCharIndex)
+    //    {
+    //        _ = sb.Remove(lastCharIndex, 1)
+    //              .Insert(lastCharIndex, '=')
+    //              .Insert(lastCharIndex + 1, ((byte)lastChar).ToString("X02", CultureInfo.InvariantCulture));
 
-        static int EncodeLastCharInLine(StringBuilder sb, char lastChar, int lastCharIndex)
-        {
-            _ = sb.Remove(lastCharIndex, 1)
-                  .Insert(lastCharIndex, '=')
-                  .Insert(lastCharIndex + 1, ((byte)lastChar).ToString("X02", CultureInfo.InvariantCulture));
+    //        return lastCharIndex - 1 + ENCODED_CHAR_LENGTH;
+    //    }
 
-            return lastCharIndex - 1 + ENCODED_CHAR_LENGTH;
-        }
+    //    static int InsertSoftlineBreak(StringBuilder sb, int softlineBreakIndex)
+    //    {
+    //        _ = sb.Insert(softlineBreakIndex, SOFT_LINEBREAK);
+    //        return softlineBreakIndex + SOFT_LINEBREAK_LENGTH;
+    //    }
+    //}
 
-        static int InsertSoftlineBreak(StringBuilder sb, int softlineBreakIndex)
-        {
-            _ = sb.Insert(softlineBreakIndex, SOFT_LINEBREAK);
-            return softlineBreakIndex + SOFT_LINEBREAK_LENGTH;
-        }
-    }
+    //private static StringBuilder ProcessCoding(byte[] data)
+    //{
+    //    var sb = new StringBuilder();
 
-    private static StringBuilder ProcessCoding(byte[] data)
-    {
-        var sb = new StringBuilder();
+    //    var span = data.AsSpan();
 
-        var span = data.AsSpan();
+    //    foreach (byte bt in span)
+    //    {
+    //        _ = HasToBeQuoted(bt) ? sb.Append('=').Append(bt.ToString("X02", CultureInfo.InvariantCulture))
+    //                              : sb.Append((char)bt);
+    //    }
+    //    return sb;
 
-        foreach (byte bt in span)
-        {
-            _ = HasToBeQuoted(bt) ? sb.Append('=').Append(bt.ToString("X02", CultureInfo.InvariantCulture))
-                                  : sb.Append((char)bt);
-        }
-        return sb;
+    //    ///////////////////////////////////
 
-        ///////////////////////////////////
-
-        static bool HasToBeQuoted(byte bt)
-        {
-            return bt != (byte)'\t' && (bt > 126 || bt == (byte)'=' || bt < 32 || bt == (byte)'\r' || bt == (byte)'\n');
-        }
-    }
+    //    static bool HasToBeQuoted(byte bt)
+    //    {
+    //        return bt != (byte)'\t' && (bt > 126 || bt == (byte)'=' || bt < 32 || bt == (byte)'\r' || bt == (byte)'\n');
+    //    }
+    //}
 
     #endregion
 
@@ -346,8 +341,8 @@ AppendLastByte:
         [ExcludeFromCodeCoverage]
         static string NormalizeLineBreaksOnUnixSystems(string s)
         {
-            //Anpassen des NewLine-Zeichens für Unix-Systeme
-            if (Environment.NewLine != NEW_LINE) // notwendig, wenn Hard-Linebreaks codiert waren
+            // Adjust encoded hard-linebreaks for Unix systems
+            if (Environment.NewLine != NEW_LINE)
             {
                 s = s.Replace(NEW_LINE, Environment.NewLine, StringComparison.Ordinal);
             }

@@ -260,7 +260,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
             string toEncode = builder.ToString(startIndex, builder.Length - startIndex);
             builder.Length = startIndex;
 
-            _ = builder.Append(QuotedPrintable.Encode(toEncode, startIndex));
+            _ = builder.AppendQuotedPrintable(toEncode, startIndex);
         }
     }
 }
