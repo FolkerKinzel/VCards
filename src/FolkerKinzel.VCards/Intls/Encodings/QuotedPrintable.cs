@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 
 namespace FolkerKinzel.VCards.Intls.Encodings;
@@ -16,6 +17,176 @@ internal static class QuotedPrintable
     private const int MIN_ROWLENGTH = ENCODED_CHAR_LENGTH + 1;
 
     #region Encode
+
+    internal static StringBuilder AppendQuotedPrintable(this StringBuilder builder, string? value, int firstLineOffset)
+    {
+        Debug.Assert(firstLineOffset >= 0);
+        Debug.Assert(MAX_ROWLENGTH >= MIN_ROWLENGTH);
+
+        if (string.IsNullOrEmpty(value))
+        {
+            return builder;
+        }
+
+        value = NormalizeLineBreaksOnUnixSystems(value);
+
+        AppendEncodedTo(builder, Encoding.UTF8.GetBytes(value), firstLineOffset);
+
+        return builder;
+
+        /////////////////////////////////////////////////////////
+
+        [ExcludeFromCodeCoverage]
+        static string NormalizeLineBreaksOnUnixSystems(string value)
+        {
+            if (!StringComparer.Ordinal.Equals(Environment.NewLine, NEW_LINE))
+            {
+                value = value.Replace(Environment.NewLine, NEW_LINE, StringComparison.Ordinal);
+            }
+
+            return value;
+        }
+
+        static void AppendEncodedTo(StringBuilder builder, byte[] value, int firstLineOffset)
+        {
+            ReadOnlySpan<byte> source = value.AsSpan();
+
+            // The last index in bufSpan is reserved for the last Byte in source.
+            using var buf = ArrayPoolHelper.Rent<char>(MAX_ROWLENGTH);
+            var bufSpan = buf.Array.AsSpan(0, MAX_ROWLENGTH);
+
+            // Only the last row can use bufSpan completely. All others have to leave
+            // one index for the '=' of the soft-linebreak.
+            const int usableBufLength = MAX_ROWLENGTH - 1;
+            int sourceIdx = 0;
+
+            if (firstLineOffset + ENCODED_CHAR_LENGTH > usableBufLength)
+            {
+                builder.Append(SOFT_LINEBREAK);
+                firstLineOffset = 0;
+            }
+
+Repeat:
+            int bufIdx = 0;
+
+            while (bufIdx < usableBufLength - ENCODED_CHAR_LENGTH - firstLineOffset && sourceIdx < source.Length - 1)
+            {
+                byte bt = source[sourceIdx++];
+
+                if (HasToBeQuoted(bt))
+                {
+                    bufSpan[bufIdx++] = '=';
+                    bufSpan[bufIdx++] = GetNibble(bt >> 4);
+                    bufSpan[bufIdx++] = GetNibble(bt & 0xF);
+                }
+                else
+                {
+                    bufSpan[bufIdx++] = (char)bt;
+                }
+            }
+
+            if (sourceIdx < source.Length - 1)
+            {
+                int bt = source[sourceIdx++];
+
+                if (HasToBeQuoted(bt) || bt == ' ' || bt == '\t')
+                {
+                    bufSpan[bufIdx++] = '=';
+                    bufSpan[bufIdx++] = GetNibble(bt >> 4);
+                    bufSpan[bufIdx++] = GetNibble(bt & 0xF);
+
+                    builder.Append(buf.Array, 0, bufIdx);
+                    builder.Append(SOFT_LINEBREAK);
+
+                    firstLineOffset = 0;
+                    goto Repeat;
+                }
+                else
+                {
+                    bufSpan[bufIdx++] = (char)bt;
+                }
+            }
+            else
+            {
+                goto AppendLastByte;
+            }
+
+            const int remainingLineLength = 2;
+
+            for (int i = 0; i < remainingLineLength; i++)
+            {
+                if (sourceIdx < source.Length - 1)
+                {
+                    int bt = source[sourceIdx++];
+
+                    if (HasToBeQuoted(bt) || bt == ' ' || bt == '\t')
+                    {
+                        sourceIdx--;
+                        builder.Append(buf.Array, 0, bufIdx);
+                        builder.Append(SOFT_LINEBREAK);
+                        firstLineOffset = 0;
+                        goto Repeat;
+                    }
+                    else
+                    {
+                        bufSpan[bufIdx++] = (char)bt;
+                    }
+                }
+                else
+                {
+                    goto AppendLastByte;
+                }
+            }
+
+            builder.Append(buf.Array, 0, bufIdx);
+            builder.Append(SOFT_LINEBREAK);
+            firstLineOffset = 0;
+            goto Repeat;
+
+AppendLastByte:
+            Debug.Assert(bufIdx < usableBufLength);
+
+            int lastByte = source[source.Length - 1];
+
+            if (HasToBeQuoted(lastByte) || lastByte == ' ' || lastByte == '\t')
+            {
+                if (bufIdx > MAX_ROWLENGTH - ENCODED_CHAR_LENGTH - firstLineOffset)
+                {
+                    builder.Append(buf.Array, 0, bufIdx);
+                    builder.Append(SOFT_LINEBREAK);
+                    bufSpan[0] = '=';
+                    bufSpan[1] = GetNibble(lastByte >> 4);
+                    bufSpan[2] = GetNibble(lastByte & 0xF);
+                    builder.Append(buf.Array, 0, 3);
+                }
+                else
+                {
+                    bufSpan[bufIdx++] = '=';
+                    bufSpan[bufIdx++] = GetNibble(lastByte >> 4);
+                    bufSpan[bufIdx++] = GetNibble(lastByte & 0xF);
+                    builder.Append(buf.Array, 0, bufIdx);
+                }
+            }
+            else
+            {
+                builder.Append(buf.Array, 0, bufIdx)
+                       .Append((char)lastByte);
+            }
+
+            ///////////////////////////////////
+
+            static char GetNibble(int nibble) => nibble > 9 ? (char)(55 + nibble) : (char)(48 + nibble);
+
+            static bool HasToBeQuoted(int bt)
+            {
+                return bt != '\t' && (bt > 126 || bt == '=' || bt < 32 || bt == '\r' || bt == '\n');
+            }
+
+            
+        }
+    }
+
+
     /// <summary>Encodes a <see cref="string"/> into Quoted-Printable. </summary>
     /// <param name="value">The <see cref="string"/> to encode or <c>null</c>.</param>
     /// <param name="firstLineOffset">Length of the current line in the text before
@@ -73,13 +244,13 @@ internal static class QuotedPrintable
 
     private static void MakeSoftLineBreaks(int firstLineOffset, StringBuilder sb)
     {
-        for (int lineLength = firstLineOffset >= MAX_ROWLENGTH - MIN_ROWLENGTH
+        for (int idx = firstLineOffset >= MAX_ROWLENGTH - MIN_ROWLENGTH
                 ? InsertSoftlineBreak(sb, 0) + MAX_ROWLENGTH
                 : Math.Max(MAX_ROWLENGTH - firstLineOffset, MIN_ROWLENGTH);
-            lineLength < sb.Length; // at least 1 Char after the last soft-linebreak
-            lineLength += MAX_ROWLENGTH)
+            idx < sb.Length; // at least 1 Char after the last soft-linebreak
+            idx += MAX_ROWLENGTH)
         {
-            int lastCharIndex = lineLength - 2;
+            int lastCharIndex = idx - 2;
 
             for (int backwardCounter = 1; backwardCounter <= ENCODED_CHAR_LENGTH; backwardCounter++)
             {
@@ -87,14 +258,14 @@ internal static class QuotedPrintable
 
                 if (!char.IsWhiteSpace(lastChar) && lastChar != '=')
                 {
-                    lineLength = InsertSoftlineBreak(sb, lastCharIndex + 1);
+                    idx = InsertSoftlineBreak(sb, lastCharIndex + 1);
                     break;
                 }
                 else if (backwardCounter == ENCODED_CHAR_LENGTH)
                 {
                     // TAB or SPACE
                     lastCharIndex = EncodeLastCharInLine(sb, lastChar, lastCharIndex);
-                    lineLength = InsertSoftlineBreak(sb, lastCharIndex + 1);
+                    idx = InsertSoftlineBreak(sb, lastCharIndex + 1);
                 }
                 else
                 {
