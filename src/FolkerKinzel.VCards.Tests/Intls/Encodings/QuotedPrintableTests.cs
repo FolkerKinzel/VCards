@@ -87,6 +87,10 @@ public class QuotedPrintableTests
     [DataRow("abc==\r\nc3=a4", "abcä")]
     [DataRow("abc=c=\r\n3=a4", "abcä")]
     [DataRow("abc=c3=\r\n=a4", "abcä")]
-    public void SoftLineBreaks(string input, string expected) => Assert.AreEqual(expected, QuotedPrintable.Decode(input.AsSpan(), null));
+    public void SoftLineBreaksTest1(string input, string expected) => Assert.AreEqual(expected, QuotedPrintable.Decode(input.AsSpan(), null));
+
+    [TestMethod]
+    public void ErrorTest1()
+        => Assert.AreEqual("abc?123", QuotedPrintable.Decode("abc=XY123".AsSpan(), null));
 
 }

@@ -149,7 +149,7 @@ Repeat:
 
             if (HasToBeQuoted(lastByte) || lastByte == ' ' || lastByte == '\t')
             {
-                if(bufIdx == usableLength)
+                if (bufIdx == usableLength)
                 {
                     builder.Append(buf.Array, 0, bufIdx);
                     builder.Append(SOFT_LINEBREAK);
@@ -243,7 +243,7 @@ Repeat:
     ///  empty, an empty <see cref="byte"/> array is returned.</returns>
     public static byte[] DecodeData(ReadOnlySpan<char> data)
     {
-        if(data.IsEmpty)
+        if (data.IsEmpty)
         {
             return [];
         }
@@ -264,20 +264,20 @@ Repeat:
         bool skipWS = false;
         int byteLengthToParse = 0;
 
-        for (int i = 0; i < chars.Length - 1; i++) 
+        for (int i = 0; i < chars.Length - 1; i++)
         {
             char c = chars[i];
 
-            if(skipWS)
+            if (skipWS)
             {
-                if(c == '\n')
+                if (c == '\n')
                 {
                     skipWS = false;
                 }
                 continue;
             }
 
-            if(c == '=')
+            if (c == '=')
             {
                 char next = chars[i + 1];
 
@@ -290,7 +290,7 @@ Repeat:
 
                 byteLengthToParse = 2;
 
-                if(next == '=') // ==\r\n0A
+                if (next == '=') // ==\r\n0A
                 {
                     i++;
                     skipWS = true;
@@ -299,14 +299,14 @@ Repeat:
                 continue;
             }
 
-            if(byteLengthToParse == 2) 
+            if (byteLengthToParse == 2)
             {
                 byteLengthToParse--;
                 charr[0] = c;
                 continue;
             }
 
-            if(byteLengthToParse == 1)
+            if (byteLengthToParse == 1)
             {
                 byteLengthToParse--;
                 charr[1] = c;
@@ -317,7 +317,7 @@ Repeat:
             bytes[byteIdx++] = (byte)c;
         }
 
-        if(skipWS)
+        if (skipWS)
         {
             return byteIdx;
         }
@@ -338,18 +338,20 @@ Repeat:
 
         static byte HexToByte(ReadOnlySpan<char> charr)
         {
+#if NETSTANDARD2_0 || NET462
             try
             {
-#if NETSTANDARD2_0 || NET462
                 return (byte)(Uri.FromHex(charr[1]) + (Uri.FromHex(charr[0]) << 4));
-#else
-                return byte.Parse(charr, NumberStyles.AllowHexSpecifier);
-#endif
             }
             catch
             {
                 return (byte)'?';
             }
+#else
+            return byte.TryParse(charr, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out byte result)
+                ? result 
+                : (byte)'?';
+#endif
         }
     }
 
