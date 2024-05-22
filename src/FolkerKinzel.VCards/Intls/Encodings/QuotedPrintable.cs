@@ -376,7 +376,7 @@ Repeat:
         string? zeile;
         while (null != (zeile = reader.ReadLine()))
         {
-            int last = zeile.Length - 1;
+            int last;
 
             //if (last == -1)
             //{
