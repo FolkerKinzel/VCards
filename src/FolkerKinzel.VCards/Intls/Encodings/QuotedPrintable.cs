@@ -29,7 +29,6 @@ internal static class QuotedPrintable
     /// <returns>A reference to <paramref name="builder"/>.</returns>
     /// <remarks>If <see cref="Environment.NewLine"/> is not "\r\n" on the executing 
     /// platform, the <see cref="string"/> will be adjusted automatically.</remarks>
-    [SuppressMessage("Style", "IDE0078:Use pattern matching", Justification = "Performance")]
     internal static StringBuilder AppendQuotedPrintable(this StringBuilder builder,
                                                         ReadOnlySpan<char> value,
                                                         int firstLineOffset)
@@ -186,33 +185,34 @@ Repeat:
 
             static char GetNibble(int nibble) => nibble > 9 ? (char)(55 + nibble) : (char)(48 + nibble);
 
-            static bool HasToBeQuoted(int bt) => bt != '\t' && (bt > 126 || bt == '=' || bt < 32);
+            static bool HasToBeQuoted(int bt) => bt is not '\t' and (> 126 or '=' or < 32);
         }
     }
 
-#endregion
+    #endregion
 
     #region Decode
 
-    /// <summary>Decodes a Quoted-Printable encoded <see cref="string"/>.</summary>
-    /// <param name="qpEncoded"> The Quoted-Printable encoded <see cref="string"/>.</param>
+    /// <summary>Decodes a Quoted-Printable encoded read-only character span.</summary>
+    /// <param name="data"> The Quoted-Printable encoded read-only character span.</param>
     /// <param name="textEncoding">The <see cref="Encoding"/> that had been used to encode 
-    /// <paramref name="qpEncoded"/>, or <c>null</c> to choose <see cref="Encoding.UTF8"/>.</param>
-    /// <returns><paramref name="qpEncoded"/> decoded. If <paramref name="qpEncoded"/> is <c>null</c>,
+    /// <paramref name="data"/>, or <c>null</c> to choose <see cref="Encoding.UTF8"/>.</param>
+    /// <returns><paramref name="data"/> decoded. If <paramref name="data"/> is empty,
     /// <see cref="string.Empty" /> is returned.</returns>
-    public static string Decode(
-        string? qpEncoded,
-        Encoding? textEncoding)
+    public static string Decode(ReadOnlySpan<char> data, Encoding? textEncoding)
     {
-        if (string.IsNullOrEmpty(qpEncoded))
+        if (data.IsEmpty)
         {
             return "";
         }
 
-        byte[] bytes = DecodeData(qpEncoded);
+        using ArrayPoolHelper.SharedArray<byte> buf = ArrayPoolHelper.Rent<byte>(data.Length);
+        Span<byte> bufSpan = buf.Array.AsSpan();
+
+        int decodedLength = DecodeData(data, bufSpan);
 
         textEncoding ??= Encoding.UTF8;
-        string s = textEncoding.GetString(bytes);
+        string s = textEncoding.GetString(buf.Array, 0, decodedLength);
 
         s = NormalizeLineBreaksOnUnixSystems(s);
 
@@ -233,99 +233,120 @@ Repeat:
         }
     }
 
-    /// <summary>Decodes any data that are Quoted-Printable encoded.</summary>
-    /// <param name="qpEncoded">A <see cref="string"/> that represents 
-    /// Quoted-Printable encoded data, or <c>null</c>.</param>
-    /// <returns>A <see cref="byte"/> array that contains the data
-    /// from <paramref name="qpEncoded"/>. If <paramref name="qpEncoded"/> is
-    /// <c>null</c>, an empty <see cref="byte"/> array is returned.</returns>
-    public static byte[] DecodeData(
-        string? qpEncoded)
+    /// <summary>
+    /// Decodes any data that are Quoted-Printable encoded.
+    /// </summary>
+    /// <param name="data">A read-only character span that represents 
+    ///  Quoted-Printable encoded data.</param>
+    /// <returns>A <see cref="byte"/> array that contains the decoded data
+    ///  from <paramref name="data"/>. If <paramref name="data"/> is
+    ///  empty, an empty <see cref="byte"/> array is returned.</returns>
+    public static byte[] DecodeData(ReadOnlySpan<char> data)
     {
-        if (string.IsNullOrEmpty(qpEncoded))
+        if(data.IsEmpty)
         {
             return [];
         }
+        using ArrayPoolHelper.SharedArray<byte> buf = ArrayPoolHelper.Rent<byte>(data.Length);
+        Span<byte> bufSpan = buf.Array.AsSpan();
 
-        //Ausbessern illegaler Soft - Line - Breaks, die auf Unix - Systemen entstanden sein könnten.
-        //qpCoded = qpCoded.Replace("=\n", "=\r\n");
+        return bufSpan.Slice(0, DecodeData(data, bufSpan)).ToArray();
+    }
 
-        using var reader = new StringReader(qpEncoded);
+    private static int DecodeData(ReadOnlySpan<char> chars, Span<byte> bytes)
+    {
+        Debug.Assert(chars.Length > 0);
 
-        var sb = new StringBuilder(qpEncoded.Length);
-
-        string? zeile;
-        while (null != (zeile = reader.ReadLine()))
-        {
-            int last;
-
-            //if (last == -1)
-            //{
-            //    continue; // unerlaubte Leerzeile
-            //}
-
-            sb.Append(zeile);
-            last = sb.Length - 1;
-
-            //Soft-Line-Break entfernen
-            if (sb[last] == '=')
-            {
-                _ = sb.Remove(last, 1).TrimEnd();
-            }
-            else
-            {
-                _ = sb.TrimEnd();
-
-                //Hard-Line-Break wiederherstellen
-                sb.AppendLine();
-            }
-        }
-
-        //letzten Hard-Line-Break wieder entfernen
-        sb.TrimEnd();
-
-        byte[] bytes = new byte[qpEncoded.Length];
+        int byteIdx = 0;
 
         Span<char> charr = stackalloc char[2];
 
-        int j = 0;
+        bool skipWS = false;
+        int byteLengthToParse = 0;
 
-        for (int i = 0; i < sb.Length; i++)
+        for (int i = 0; i < chars.Length - 1; i++) 
         {
-            if (sb[i] == '=')
+            char c = chars[i];
+
+            if(skipWS)
             {
-                if (i > sb.Length - 3)
+                if(c == '\n')
                 {
-                    break; // abgeschnittener String
+                    skipWS = false;
                 }
-                else
-                {
-                    charr[0] = sb[++i];
-                    charr[1] = sb[++i];
-                    bytes[j++] = HexToByte(charr);
-                }
+                continue;
             }
-            else
+
+            if(c == '=')
             {
-                bytes[j++] = (byte)sb[i];
+                char next = chars[i + 1];
+
+                if (next.IsWhiteSpace()) //  =\r\n
+                {
+                    i++;
+                    skipWS = true;
+                    continue;
+                }
+
+                byteLengthToParse = 2;
+
+                if(next == '=') // ==\r\n0A
+                {
+                    i++;
+                    skipWS = true;
+                }
+
+                continue;
             }
+
+            if(byteLengthToParse == 2) 
+            {
+                byteLengthToParse--;
+                charr[0] = c;
+                continue;
+            }
+
+            if(byteLengthToParse == 1)
+            {
+                byteLengthToParse--;
+                charr[1] = c;
+                bytes[byteIdx++] = HexToByte(charr);
+                continue;
+            }
+
+            bytes[byteIdx++] = (byte)c;
         }
 
-        Array.Resize(ref bytes, j);
-        return bytes;
+        if(skipWS)
+        {
+            return byteIdx;
+        }
 
+        char lastChar = chars[chars.Length - 1];
+
+        if (byteLengthToParse == 1)
+        {
+            charr[1] = lastChar;
+            bytes[byteIdx++] = HexToByte(charr);
+        }
+        else
+        {
+            bytes[byteIdx++] = (byte)lastChar;
+        }
+
+        return byteIdx;
 
         static byte HexToByte(ReadOnlySpan<char> charr)
         {
             try
             {
 #if NETSTANDARD2_0 || NET462
-                return (byte)(Uri.FromHex(charr[1]) + Uri.FromHex(charr[0]) * 16);
+                return (byte)(Uri.FromHex(charr[1]) + (Uri.FromHex(charr[0]) << 4));
 #else
                 return byte.Parse(charr, NumberStyles.AllowHexSpecifier);
 #endif
             }
-            catch (Exception)
+            catch
             {
                 return (byte)'?';
             }

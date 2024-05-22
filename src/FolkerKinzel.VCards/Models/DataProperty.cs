@@ -225,8 +225,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                         );
         }
 
-        if (vcfRow.Parameters.DataType == Data.Uri ||
-            vcfRow.Parameters.DataType == Data.Text)
+        if (vcfRow.Parameters.DataType is Data.Uri or Data.Text)
         {
             return TryAsUri(vcfRow, version);
         }
@@ -239,7 +238,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                    (
                      string.IsNullOrWhiteSpace(vcfRow.Value)
                             ? null
-                            : QuotedPrintable.DecodeData(vcfRow.Value),
+                            : QuotedPrintable.DecodeData(vcfRow.Value.AsSpan()),
                      vcfRow.Group,
                      vcfRow.Parameters
                      );

@@ -33,9 +33,9 @@ public class QuotedPrintableTests
     [TestMethod]
     public void DecodeStringTest1()
     {
-        string quoted = $"1=0D=0AFirmenstra=C3=9Fe=0D=0AOrt Firma, Bundesland Firma PLZFirma=0D=0ALand={Environment.NewLine} Firma";
+        string quoted = $"1=0D=0AFirmenstra=C3=9Fe=0D=0AOrt Firma, Bundesland Firma PLZFirma=0D=0ALand=\r\n Firma";
 
-        string? s = QuotedPrintable.Decode(quoted, null);
+        string? s = QuotedPrintable.Decode(quoted.AsSpan(), null);
 
         Assert.IsNotNull(s);
         StringAssert.Contains(s, "Firmenstraße");
@@ -46,7 +46,7 @@ public class QuotedPrintableTests
     [DataRow(null)]
     [DataRow("")]
     public void DecodeStringTest2(string? quoted)
-        => Assert.AreEqual(0, QuotedPrintable.Decode(quoted, null).Length);
+        => Assert.AreEqual(0, QuotedPrintable.Decode(quoted.AsSpan(), null).Length);
 
 
     [DataTestMethod]
@@ -54,7 +54,7 @@ public class QuotedPrintableTests
     [DataRow("")]
     public void DecodeDataTest1(string? quoted)
     {
-        byte[] data = QuotedPrintable.DecodeData(quoted);
+        byte[] data = QuotedPrintable.DecodeData(quoted.AsSpan());
         Assert.IsNotNull(data);
         Assert.AreEqual(0, data.Length);
     }
@@ -78,5 +78,15 @@ public class QuotedPrintableTests
     }
 
     [TestMethod]
-    public void TruncatedTextTest1() => Assert.AreEqual("abc", QuotedPrintable.Decode("abc=C", null));
+    public void TruncatedTextTest1() => Assert.AreEqual("abcC", QuotedPrintable.Decode("abc=C".AsSpan(), null));
+
+    [DataTestMethod]
+    [DataRow("abc==\r\nC3=A4","abcä")]
+    [DataRow("abc=C=\r\n3=A4", "abcä")]
+    [DataRow("abc=C3=\r\n=A4", "abcä")]
+    [DataRow("abc==\r\nc3=a4", "abcä")]
+    [DataRow("abc=c=\r\n3=a4", "abcä")]
+    [DataRow("abc=c3=\r\n=a4", "abcä")]
+    public void SoftLineBreaks(string input, string expected) => Assert.AreEqual(expected, QuotedPrintable.Decode(input.AsSpan(), null));
+
 }

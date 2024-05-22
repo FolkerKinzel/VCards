@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Runtime.InteropServices;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Encodings;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
@@ -285,10 +286,8 @@ internal class VcfRowReader : IEnumerable<VcfRow>
     private bool ConcatQuotedPrintableSoftLineBreak(string? s)
     {
         Debug.Assert(s is not null);
-
-        // QuotedPrintableConverter works platform-independent with 
-        // Environment.NewLine
-        _list.Add(Environment.NewLine);
+        
+        _list.Add(QuotedPrintable.NEW_LINE);
         _list.Add(s);
 
         while (s.Length == 0 || s[s.Length - 1] == '=')
@@ -305,7 +304,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 continue;
             }
 
-            _list.Add(Environment.NewLine);
+            _list.Add(QuotedPrintable.NEW_LINE);
             _list.Add(s);
         }
 
