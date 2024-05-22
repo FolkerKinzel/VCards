@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
@@ -337,6 +338,7 @@ public sealed class Name
     internal void AppendVCardString(VcfSerializer serializer)
     {
         StringBuilder builder = serializer.Builder;
+        int startIdx = builder.Length;
 
         char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
 
@@ -353,6 +355,15 @@ public sealed class Name
         _ = builder.Append(';');
 
         AppendProperty(Suffixes);
+
+        if (serializer.ParameterSerializer.ParaSection.Encoding == Enc.QuotedPrintable)
+        {
+            int count = builder.Length - startIdx;
+            using ArrayPoolHelper.SharedArray<char> tmp = ArrayPoolHelper.Rent<char>(count);
+            builder.CopyTo(startIdx, tmp.Array, 0, count);
+            builder.Length = startIdx;
+            builder.AppendQuotedPrintable(tmp.Array.AsSpan(0, count), startIdx);
+        }
 
         ///////////////////////////////////
 

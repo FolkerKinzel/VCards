@@ -244,23 +244,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal override void AppendValue(VcfSerializer serializer)
-    {
-        Debug.Assert(serializer is not null);
-        Debug.Assert(Value is not null); // value ist nie null
-
-
-        StringBuilder builder = serializer.Builder;
-        int startIndex = builder.Length;
-
-        Value.AppendVCardString(serializer);
-
-        if (Parameters.Encoding == Enc.QuotedPrintable)
-        {
-            string toEncode = builder.ToString(startIndex, builder.Length - startIndex);
-            builder.Length = startIndex;
-
-            _ = builder.AppendQuotedPrintable(toEncode, startIndex);
-        }
-    }
+        => Value.AppendVCardString(serializer);
 }

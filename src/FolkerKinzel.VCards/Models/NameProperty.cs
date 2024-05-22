@@ -133,22 +133,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal override void AppendValue(VcfSerializer serializer)
-    {
-        Debug.Assert(serializer is not null);
-        Debug.Assert(Value is not null); // value ist nie null
-
-        StringBuilder builder = serializer.Builder;
-        int valueStartIndex = builder.Length;
-
-        Value.AppendVCardString(serializer);
-
-        if (Parameters.Encoding == Enc.QuotedPrintable)
-        {
-            string toEncode = builder.ToString(valueStartIndex, builder.Length - valueStartIndex);
-            builder.Length = valueStartIndex;
-
-            _ = builder.AppendQuotedPrintable(toEncode, valueStartIndex);
-        }
-    }
+        => Value.AppendVCardString(serializer);
 }

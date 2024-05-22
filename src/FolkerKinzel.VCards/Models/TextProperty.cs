@@ -79,7 +79,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
         _ = serializer.Version == VCdVersion.V2_1
             ? this.Parameters.Encoding == Enc.QuotedPrintable
-                ? builder.AppendQuotedPrintable(Value, builder.Length)
+                ? builder.AppendQuotedPrintable(Value.AsSpan(), builder.Length)
                 : builder.Append(Value)
             : builder.AppendMasked(Value, serializer.Version);
     }

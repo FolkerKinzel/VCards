@@ -19,7 +19,7 @@ internal static class StringBuilderExtension
 
     private static StringBuilder AppendMaskedV2(StringBuilder sb, string? s)
     {
-        var span = s.AsSpan();
+        ReadOnlySpan<char> span = s.AsSpan();
 
         for (int i = 0; i < span.Length; i++)
         {
@@ -32,7 +32,7 @@ internal static class StringBuilderExtension
 
     private static StringBuilder AppendMaskedV3(StringBuilder sb, string? s)
     {
-        var span = s.AsSpan();
+        ReadOnlySpan<char> span = s.AsSpan();
 
         bool rFound = false;
 
@@ -72,7 +72,7 @@ internal static class StringBuilderExtension
 
     private static StringBuilder AppendMaskedV4(StringBuilder sb, string? s)
     {
-        var span = s.AsSpan();
+        ReadOnlySpan<char> span = s.AsSpan();
 
         bool rFound = false;
 
@@ -115,7 +115,7 @@ internal static class StringBuilderExtension
 
     internal static StringBuilder AppendEscapedAndQuoted(this StringBuilder sb, string s)
     {
-        var span = s.AsSpan();
+        ReadOnlySpan<char> span = s.AsSpan();
         int startIdx = sb.Length;
         bool mustBeQuoted = false;
         bool rFound = false;

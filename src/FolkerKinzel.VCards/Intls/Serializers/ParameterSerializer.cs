@@ -12,8 +12,7 @@ internal abstract class ParameterSerializer
     [NotNull]
     protected StringBuilder? Builder { get; private set; }
 
-    [NotNull]
-    internal ParameterSection? ParaSection { get; private set; }
+    internal ParameterSection ParaSection { get; private set; } = ParameterSection.Empty;
 
     protected Opts Options { get; }
 

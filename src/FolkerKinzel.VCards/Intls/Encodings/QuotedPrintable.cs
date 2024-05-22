@@ -19,11 +19,11 @@ internal static class QuotedPrintable
     #region Encode
 
     /// <summary>
-    /// Appends a <see cref="string"/> Quoted-Printable encoded to the end of a 
+    /// Appends a read-only character span Quoted-Printable encoded to the end of a 
     /// <see cref="StringBuilder"/>.
     /// </summary>
     /// <param name="builder">The <see cref="StringBuilder"/> to which the encoded content is added.</param>
-    /// <param name="value">The <see cref="string"/> to encode or <c>null</c>.</param>
+    /// <param name="value">The read-only character span to encode.</param>
     /// <param name="firstLineOffset">Length of the current line in the text before
     /// <paramref name="value"/> starts. (Used to compute the correct line wrapping.)</param>
     /// <returns>A reference to <paramref name="builder"/>.</returns>
@@ -31,40 +31,47 @@ internal static class QuotedPrintable
     /// platform, the <see cref="string"/> will be adjusted automatically.</remarks>
     [SuppressMessage("Style", "IDE0078:Use pattern matching", Justification = "Performance")]
     internal static StringBuilder AppendQuotedPrintable(this StringBuilder builder,
-                                                        string? value,
+                                                        ReadOnlySpan<char> value,
                                                         int firstLineOffset)
     {
         Debug.Assert(firstLineOffset >= 0);
         Debug.Assert(MAX_ROWLENGTH >= MIN_ROWLENGTH);
 
-        if (string.IsNullOrEmpty(value))
+        if (value.IsEmpty)
         {
             return builder;
         }
 
         value = NormalizeLineBreaksOnUnixSystems(value);
 
-        AppendEncodedTo(builder, Encoding.UTF8.GetBytes(value), firstLineOffset);
-
+        using ArrayPoolHelper.SharedArray<byte> byteBuf = ArrayPoolHelper.Rent<byte>(Encoding.UTF8.GetMaxByteCount(value.Length));
+        Span<byte> byteSpan = byteBuf.Array.AsSpan();
+#if NETSTANDARD2_0 || NET462
+        using ArrayPoolHelper.SharedArray<char> charBuf = ArrayPoolHelper.Rent<char>(value.Length);
+        Span<char> charSpan = charBuf.Array.AsSpan();
+        _ = value.TryCopyTo(charSpan);
+        byteSpan = byteSpan.Slice(0, Encoding.UTF8.GetBytes(charBuf.Array, 0, value.Length, byteBuf.Array, 0));
+#else
+        byteSpan = byteSpan.Slice(0, Encoding.UTF8.GetBytes(value, byteSpan));
+#endif
+        AppendEncodedTo(builder, byteSpan, firstLineOffset);
         return builder;
 
         /////////////////////////////////////////////////////////
 
         [ExcludeFromCodeCoverage]
-        static string NormalizeLineBreaksOnUnixSystems(string value)
+        static ReadOnlySpan<char> NormalizeLineBreaksOnUnixSystems(ReadOnlySpan<char> value)
         {
-            if (!StringComparer.Ordinal.Equals(Environment.NewLine, NEW_LINE))
+            if (!StringComparer.Ordinal.Equals(Environment.NewLine, NEW_LINE) && value.Contains(Environment.NewLine[0]))
             {
-                value = value.Replace(Environment.NewLine, NEW_LINE, StringComparison.Ordinal);
+                value = value.ToString().Replace(Environment.NewLine, NEW_LINE, StringComparison.Ordinal).AsSpan();
             }
 
             return value;
         }
 
-        static void AppendEncodedTo(StringBuilder builder, byte[] value, int firstLineOffset)
+        static void AppendEncodedTo(StringBuilder builder, ReadOnlySpan<byte> source, int firstLineOffset)
         {
-            ReadOnlySpan<byte> source = value.AsSpan();
-
             // The last index in bufSpan is reserved for the last Byte in source.
             using ArrayPoolHelper.SharedArray<char> buf = ArrayPoolHelper.Rent<char>(MAX_ROWLENGTH);
             Span<char> bufSpan = buf.Array.AsSpan(0, MAX_ROWLENGTH);
@@ -183,133 +190,7 @@ Repeat:
         }
     }
 
-    ///// <summary>Encodes a <see cref="string"/> into Quoted-Printable. </summary>
-    ///// <param name="value">The <see cref="string"/> to encode or <c>null</c>.</param>
-    ///// <param name="firstLineOffset">Length of the current line in the text before
-    ///// <paramref name="value"/> starts. (Used to compute the correct line wrapping.)</param>
-    ///// <returns><paramref name="value"/> Quoted-Printable encoded. If 
-    ///// <paramref name="value"/> is <c>null</c>, <see cref="string.Empty"/> is 
-    ///// returned.</returns>
-    ///// <remarks>If <see cref="Environment.NewLine"/> is not "\r\n" on the executing 
-    ///// platform, the <see cref="string"/> will be adjusted automatically.</remarks>
-    //internal static string Encode(
-    //    string? value,
-    //    int firstLineOffset)
-    //{
-    //    Debug.Assert(firstLineOffset >= 0);
-    //    Debug.Assert(MAX_ROWLENGTH >= MIN_ROWLENGTH);
-
-    //    if (string.IsNullOrEmpty(value))
-    //    {
-    //        return string.Empty;
-    //    }
-
-    //    value = NormalizeLineBreaksOnUnixSystems(value);
-
-    //    StringBuilder sb = ProcessCoding(Encoding.UTF8.GetBytes(value));
-
-    //    EncodeLastCharIfItIsWhiteSpace(sb);
-    //    MakeSoftLineBreaks(firstLineOffset, sb);
-    //    return sb.ToString();
-
-    //    ////////////////////////////////////////
-
-    //    [ExcludeFromCodeCoverage]
-    //    static string NormalizeLineBreaksOnUnixSystems(string value)
-    //    {
-    //        if (!StringComparer.Ordinal.Equals(Environment.NewLine, NEW_LINE))
-    //        {
-    //            value = value.Replace(Environment.NewLine, NEW_LINE, StringComparison.Ordinal);
-    //        }
-
-    //        return value;
-    //    }
-
-    //    static void EncodeLastCharIfItIsWhiteSpace(StringBuilder sb)
-    //    {
-    //        int sbLast = sb.Length - 1;
-    //        char c = sb[sbLast];
-
-    //        if (char.IsWhiteSpace(c))
-    //        {
-    //            sb.Length = sbLast;
-    //            _ = sb.Append('=').Append(((byte)c).ToString("X02", CultureInfo.InvariantCulture));
-    //        }
-    //    }
-    //}
-
-    //private static void MakeSoftLineBreaks(int firstLineOffset, StringBuilder sb)
-    //{
-    //    for (int idx = firstLineOffset >= MAX_ROWLENGTH - MIN_ROWLENGTH
-    //            ? InsertSoftlineBreak(sb, 0) + MAX_ROWLENGTH
-    //            : Math.Max(MAX_ROWLENGTH - firstLineOffset, MIN_ROWLENGTH);
-    //        idx < sb.Length; // at least 1 Char after the last soft-linebreak
-    //        idx += MAX_ROWLENGTH)
-    //    {
-    //        int lastCharIndex = idx - 2;
-
-    //        for (int backwardCounter = 1; backwardCounter <= ENCODED_CHAR_LENGTH; backwardCounter++)
-    //        {
-    //            char lastChar = sb[lastCharIndex];
-
-    //            if (!char.IsWhiteSpace(lastChar) && lastChar != '=')
-    //            {
-    //                idx = InsertSoftlineBreak(sb, lastCharIndex + 1);
-    //                break;
-    //            }
-    //            else if (backwardCounter == ENCODED_CHAR_LENGTH)
-    //            {
-    //                // TAB or SPACE
-    //                lastCharIndex = EncodeLastCharInLine(sb, lastChar, lastCharIndex);
-    //                idx = InsertSoftlineBreak(sb, lastCharIndex + 1);
-    //            }
-    //            else
-    //            {
-    //                --lastCharIndex;
-    //            }
-    //        }//for
-    //    }//for (sb)
-
-    //    /////////////////////////////////////////////////////////////////////////////////////
-
-    //    static int EncodeLastCharInLine(StringBuilder sb, char lastChar, int lastCharIndex)
-    //    {
-    //        _ = sb.Remove(lastCharIndex, 1)
-    //              .Insert(lastCharIndex, '=')
-    //              .Insert(lastCharIndex + 1, ((byte)lastChar).ToString("X02", CultureInfo.InvariantCulture));
-
-    //        return lastCharIndex - 1 + ENCODED_CHAR_LENGTH;
-    //    }
-
-    //    static int InsertSoftlineBreak(StringBuilder sb, int softlineBreakIndex)
-    //    {
-    //        _ = sb.Insert(softlineBreakIndex, SOFT_LINEBREAK);
-    //        return softlineBreakIndex + SOFT_LINEBREAK_LENGTH;
-    //    }
-    //}
-
-    //private static StringBuilder ProcessCoding(byte[] data)
-    //{
-    //    var sb = new StringBuilder();
-
-    //    var span = data.AsSpan();
-
-    //    foreach (byte bt in span)
-    //    {
-    //        _ = HasToBeQuoted(bt) ? sb.Append('=').Append(bt.ToString("X02", CultureInfo.InvariantCulture))
-    //                              : sb.Append((char)bt);
-    //    }
-    //    return sb;
-
-    //    ///////////////////////////////////
-
-    //    static bool HasToBeQuoted(byte bt)
-    //    {
-    //        return bt != (byte)'\t' && (bt > 126 || bt == (byte)'=' || bt < 32 || bt == (byte)'\r' || bt == (byte)'\n');
-    //    }
-    //}
-
-    #endregion
+#endregion
 
     #region Decode
 

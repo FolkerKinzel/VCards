@@ -25,7 +25,7 @@ public class QuotedPrintableTests
     [DataRow("aa\t", "aa=09", 70)]
     public void AppendQuotedPrintableTest1(string? input, string expected, int firstLineOffset)
     {
-        string output = new StringBuilder().AppendQuotedPrintable(input, firstLineOffset).ToString();
+        string output = new StringBuilder().AppendQuotedPrintable(input.AsSpan(), firstLineOffset).ToString();
         Assert.AreEqual(expected, output);
     }
 
@@ -70,8 +70,8 @@ public class QuotedPrintableTests
     [TestMethod]
     public void EncodeDataTest1()
     {
-        var s = new string(' ', 100);
-        string quoted = new StringBuilder().AppendQuotedPrintable(s, 0).ToString();
+        string s = new(' ', 100);
+        string quoted = new StringBuilder().AppendQuotedPrintable(s.AsSpan(), 0).ToString();
         Assert.IsNotNull(quoted);
         Assert.AreNotEqual(quoted[quoted.Length - 1], ' ');
         Assert.AreEqual(2, quoted.GetLinesCount());

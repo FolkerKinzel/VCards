@@ -1,5 +1,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Intls.Serializers;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -7,6 +8,13 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 /// <threadsafety static="true" instance="false" />
 public sealed partial class ParameterSection
 {
+    /// <summary>
+    /// Singleton that is only used to ensure that the property 
+    /// <see cref="ParameterSerializer.ParaSection"/> is never <c>null</c>
+    /// - even in unit tests.
+    /// </summary>
+    internal static readonly ParameterSection Empty = new();
+
     private readonly Dictionary<VCdParam, object> _propDic = [];
 
     [return: MaybeNull]

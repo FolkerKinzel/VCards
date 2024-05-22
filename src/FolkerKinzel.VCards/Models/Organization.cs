@@ -1,5 +1,8 @@
 using System.Collections.ObjectModel;
+using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 
@@ -107,6 +110,7 @@ public sealed class Organization
     internal void AppendVCardStringTo(VcfSerializer serializer)
     {
         StringBuilder builder = serializer.Builder;
+        int startIdx = builder.Length;
 
         _ = builder.AppendMasked(OrganizationName, serializer.Version);
 
@@ -116,6 +120,15 @@ public sealed class Organization
             {
                 _ = builder.Append(';').AppendMasked(OrganizationalUnits[i], serializer.Version);
             }
+        }
+
+        if (serializer.ParameterSerializer.ParaSection.Encoding == Enc.QuotedPrintable)
+        {
+            int count = builder.Length - startIdx;
+            using ArrayPoolHelper.SharedArray<char> tmp = ArrayPoolHelper.Rent<char>(count);
+            builder.CopyTo(startIdx, tmp.Array, 0, count);
+            builder.Length = startIdx;
+            builder.AppendQuotedPrintable(tmp.Array.AsSpan(0, count), startIdx);
         }
     }
 }

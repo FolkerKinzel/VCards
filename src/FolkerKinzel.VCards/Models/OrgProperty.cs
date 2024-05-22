@@ -98,21 +98,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal override void AppendValue(VcfSerializer serializer)
-    {
-        Debug.Assert(serializer is not null);
-
-        StringBuilder builder = serializer.Builder;
-        int valueStartIndex = builder.Length;
-
-        Value.AppendVCardStringTo(serializer);
-
-        if (Parameters.Encoding == Enc.QuotedPrintable)
-        {
-            string toEncode = builder.ToString(valueStartIndex, builder.Length - valueStartIndex);
-            builder.Length = valueStartIndex;
-
-            _ = builder.AppendQuotedPrintable(toEncode, valueStartIndex);
-        }
-    }
+        => Value.AppendVCardStringTo(serializer);
 }
