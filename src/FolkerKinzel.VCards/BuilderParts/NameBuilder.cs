@@ -91,7 +91,7 @@ public readonly struct NameBuilder
     public VCardBuilder Edit<TData>(Func<IEnumerable<NameProperty>, TData, IEnumerable<NameProperty?>?> func,
                                     TData data)
     {
-        var props = GetProperty();
+        IEnumerable<NameProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.NameViews = func.Invoke(props, data);
         return _builder;
@@ -113,7 +113,7 @@ public readonly struct NameBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<NameProperty>, IEnumerable<NameProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<NameProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.NameViews = func.Invoke(props);
         return _builder;
@@ -159,7 +159,7 @@ public readonly struct NameBuilder
                             Func<VCard, string?>? group = null,
                             Action<TextBuilder, NameProperty>? displayName = null)
     {
-        var vc = Builder.VCard;
+        VCard vc = Builder.VCard;
         var prop = new NameProperty(familyNames,
                                     givenNames,
                                     additionalNames,
