@@ -153,7 +153,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                     continue;
                 }
 
-                if (tmpRow.Parameters.Encoding == Enc.QuotedPrintable && tmp.AsSpan().TrimEnd().EndsWith('='))
+                if (tmpRow.Parameters.Encoding == Enc.QuotedPrintable && HasQuotedPrintableSoftLineBreak(tmp)) 
                 {
                     // QuotedPrintable soft-linebreak (This can't be "BEGIN:VCARD" or "END:VCARD".)
                     Debug.WriteLine("  == QuotedPrintable soft-linebreak detected ==");
@@ -189,7 +189,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                     else
                     {
                         _list.Add(tmp);
-                    
+
                         if (ConcatVcard2_1Base64(s))
                         {
                             VcfRow? vcfRow = CreateVcfRow(out _);
@@ -272,6 +272,9 @@ internal class VcfRowReader : IEnumerable<VcfRow>
         yield break;
     }
 
+    private static bool HasQuotedPrintableSoftLineBreak(string tmp) 
+        => tmp.AsSpan().TrimEnd().EndsWith('='); // QP soft line breaks may be padded with white space
+
     private static bool GetIsVcard_2_1(string s)
     {
         if (s.StartsWith("VERSION", StringComparison.OrdinalIgnoreCase) && !s.Contains("2.1", StringComparison.Ordinal))
@@ -290,7 +293,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
         _list.Add(QuotedPrintable.NEW_LINE);
         _list.Add(s);
 
-        while (s.Length == 0 || s[s.Length - 1] == '=')
+        while (s.Length == 0 || HasQuotedPrintableSoftLineBreak(s))
         {
             if (!ReadNextLine(out s))
             {
