@@ -9,9 +9,9 @@ namespace Benchmarks;
 
 
 [MemoryDiagnoser]
-[SimpleJob(RuntimeMoniker.Net80, launchCount: Const.LAUNCH_COUNT, warmupCount: Const.WARMUP_COUNT, iterationCount: Const.ITERATION_COUNT, invocationCount: Const.INVOCATION_COUNT)]
-//[SimpleJob(RuntimeMoniker.Net60, launchCount: Const.LAUNCH_COUNT, warmupCount: Const.WARMUP_COUNT, iterationCount: Const.ITERATION_COUNT, invocationCount: Const.INVOCATION_COUNT)]
-[SimpleJob(RuntimeMoniker.Net48, launchCount: Const.LAUNCH_COUNT, warmupCount: Const.WARMUP_COUNT, iterationCount: Const.ITERATION_COUNT, invocationCount: Const.INVOCATION_COUNT)]
+[SimpleJob(RuntimeMoniker.Net80)]
+//[SimpleJob(RuntimeMoniker.Net60)]
+[SimpleJob(RuntimeMoniker.Net48)]
 public class ParseBench
 {
     private readonly string _vCardString21;

@@ -15,9 +15,9 @@ internal class Program
         //_ = new ParseBench().Parse40();
         //_ = new WriteBench().Write40();
         //_ = BenchmarkRunner.Run<ParseBench>();
-        //_ = BenchmarkRunner.Run<WriteBench>();
+        _ = BenchmarkRunner.Run<WriteBench>();
         //_ = BenchmarkRunner.Run<AppendBase64Bench>();
-        _ = BenchmarkRunner.Run<PatternMatchingBench>();
+        //_ = BenchmarkRunner.Run<PatternMatchingBench>();
 
         //_ = BenchmarkRunner.Run<EnumerableBench>();
         //_ = BenchmarkRunner.Run<HasFlagBench>();
