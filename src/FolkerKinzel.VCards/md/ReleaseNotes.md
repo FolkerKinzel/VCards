@@ -1,7 +1,11 @@
 - The minimum supported framework is .NET Framework 4.6.2 now.
-- The method `IAsyncEnumerable<VCard> DeserializeManyAsync(IEnumerable<Func<CancellationToken, Task<Stream>>?>,
-                                                                     AnsiFilter?,
-                                                                     [EnumeratorCancellation] CancellationToken)` is available now for all frameworks the package supports.
+- The method
+```csharp
+IAsyncEnumerable<VCard> DeserializeManyAsync(IEnumerable<Func<CancellationToken, Task<Stream>>?>,
+                                             AnsiFilter?,
+                                             [EnumeratorCancellation] CancellationToken)
+```
+is available now for all frameworks the package supports.
 - **Performance:** The speed of read and write operations has been increased and memory consumption has been reduced.
 - Dependency updates
 &nbsp;
