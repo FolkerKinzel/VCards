@@ -153,7 +153,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                     continue;
                 }
 
-                if (tmpRow.Parameters.Encoding == Enc.QuotedPrintable && tmp[tmp.Length - 1] == '=')
+                if (tmpRow.Parameters.Encoding == Enc.QuotedPrintable && tmp.AsSpan().TrimEnd().EndsWith('='))
                 {
                     // QuotedPrintable soft-linebreak (This can't be "BEGIN:VCARD" or "END:VCARD".)
                     Debug.WriteLine("  == QuotedPrintable soft-linebreak detected ==");
