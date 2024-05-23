@@ -174,6 +174,10 @@ public sealed partial class VCard
     /// /> objects, while this method is being executed!
     /// </note>
     /// <para>
+    /// IMPORTANT: The method doesn't change anything in the argument <paramref name="vCards"/>. 
+    /// Don't forget to assign the return value!
+    /// </para>
+    /// <para>
     /// The method is automatically called by the deserialization methods of the <see
     /// cref="VCard" /> class. Using it in your own code can be useful, e.g., if <see
     /// cref="VCard" /> objects from different sources are combined in a common list

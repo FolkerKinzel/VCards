@@ -4,6 +4,13 @@ using FolkerKinzel.VCards.Extensions;
 
 namespace Examples;
 
+/// <summary>
+/// This example will save a vCard 4.0 Group-vCard and its members in separate
+/// VCF files and will reload all these files and then read data from the group VCard.
+/// Although the example shows that this is possible, it is generally recommended 
+/// to save group VCards and their members in a common VCF file: In this case, the 
+/// Reference and Dereference methods would not have to be called in own code.
+/// </summary>
 public static class VCard40Example
 {
     public static void SaveSingleVCardAsVcf(string directoryPath)
@@ -35,6 +42,9 @@ public static class VCard40Example
             .Members.Add(InitializeComposerVCard(
                     "Frédéric Chopin", new DateOnly(1810, 3, 1), new DateOnly(1849, 10, 17)))
             .VCard;
+
+        // (The easiest way would be to save everything in a common VCF file:)
+        // composersVCard.SaveVcf("CommonFilePath.vcf", VCdVersion.V4_0);
 
         // Replace the embedded VCards in composersVCard.Members with Guid
         // references in order to save them as separate vCard 4.0 .VCF files.
@@ -74,7 +84,8 @@ public static class VCard40Example
         IEnumerable<VCard> vCards =
             Vcf.LoadMany(Directory.EnumerateFiles(directoryPath, $"*{vcfExtension}"));
 
-        // Make the reloaded VCard objects searchable:
+        // Make the reloaded VCard objects searchable. (The Dereference method doesn't
+        // change anything in vCards. Don't forget to assign the return value!):
         IEnumerable<VCard> dereferenced = vCards.Dereference();
 
         // Find the parsed result from "Composers.vcf":
