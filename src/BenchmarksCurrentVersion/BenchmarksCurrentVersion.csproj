@@ -6,6 +6,7 @@
     <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <NeutralLanguage>en</NeutralLanguage>
+    <RootNamespace>Benchmarks</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
