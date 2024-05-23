@@ -201,6 +201,8 @@ Repeat:
     /// <see cref="string.Empty" /> is returned.</returns>
     public static string Decode(ReadOnlySpan<char> data, Encoding? textEncoding)
     {
+        data = data.TrimEnd(); // remove padding white space at the end
+
         if (data.IsEmpty)
         {
             return "";
