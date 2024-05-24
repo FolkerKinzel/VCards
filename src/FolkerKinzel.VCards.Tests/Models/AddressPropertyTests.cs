@@ -78,7 +78,7 @@ public class AddressPropertyTests
     [TestMethod]
     public void AddressPropertyTest3()
     {
-        VcfRow row = VcfRow.Parse("ADR:", new VcfDeserializationInfo())!;
+        VcfRow row = VcfRow.Parse("ADR:".AsMemory(), new VcfDeserializationInfo())!;
         var prop = new AddressProperty(row, VCdVersion.V3_0);
 
         Assert.IsNotNull(prop.Value);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Data.Common;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -62,16 +63,12 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
             return;
         }
 
-        var list = new List<string>();
-
-        ValueSplitter? commaSplitter = vcfRow.Info.CommaSplitter;
-
-        commaSplitter.ValueString = vcfRow.Value;
-
-        foreach (string s in commaSplitter)
-        {
-            list.Add(s.UnMask(version));
-        }
+        var list = 
+            new List<string>
+            (
+            ValueSplitter2.Split(
+                vcfRow.Value.AsMemory(), ',', StringSplitOptions.RemoveEmptyEntries, unMask: true, version)
+            );
 
         if (list.Count != 0)
         {

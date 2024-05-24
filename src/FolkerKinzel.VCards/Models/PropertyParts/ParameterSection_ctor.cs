@@ -37,24 +37,25 @@ public sealed partial class ParameterSection
         Justification = "TRIM_CHARS are not localizable")]
 #endif
     internal ParameterSection(string propertyKey,
-                              ReadOnlySpan<char> parameterSection,
+                              in ReadOnlyMemory<char> parameterSection,
                               VcfDeserializationInfo info)
     {
 
-        IEnumerable<KeyValuePair<string, string>> propertyParameters = GetParameters(parameterSection, info.ParameterList);
+        List<KeyValuePair<string, ReadOnlyMemory<char>>> propertyParameters = info.ParameterList;
+        GetParameters(in parameterSection, propertyParameters);
 
         Asserts(propertyKey, propertyParameters);
 
-        foreach (KeyValuePair<string, string> parameter in propertyParameters)
+        foreach (KeyValuePair<string, ReadOnlyMemory<char>> parameter in propertyParameters)
         {
             switch (parameter.Key)
             {
                 case ParameterKey.LANGUAGE:
-                    this.Language = parameter.Value.Trim();
+                    this.Language = parameter.Value.Span.Trim().ToString();
                     break;
                 case ParameterKey.VALUE:
                     {
-                        string valValue = parameter.Value.Trim(TRIM_CHARS).ToUpperInvariant();
+                        string valValue = parameter.Value.Span.Trim(TRIM_CHARS).ToString().ToUpperInvariant();
                         Data? dataType = DataConverter.Parse(valValue);
                         this.DataType = dataType;
 
@@ -73,7 +74,7 @@ public sealed partial class ParameterSection
                     }
                 case ParameterKey.PREF:
                     {
-                        if (TryParseInt(parameter.Value, info, out int intVal))
+                        if (_Int.TryParse(parameter.Value.Span.Trim(TRIM_CHARS), out int intVal))
                         {
                             this.Preference = intVal;
                         }
@@ -81,82 +82,73 @@ public sealed partial class ParameterSection
                     }
                 case ParameterKey.PID:
                     {
-                        this.PropertyIDs = PropertyID.Parse(parameter.Value);
+                        this.PropertyIDs = PropertyID.Parse(parameter.Value.ToString());
                         break;
                     }
                 case ParameterKey.TYPE:
                     {
-                        ValueSplitter commaSplitter = info.CommaSplitter;
-                        commaSplitter.ValueString = parameter.Value;
-
-                        foreach (string s in commaSplitter)
+                        foreach (string s in ValueSplitter2.Split(
+                            parameter.Value, ',', StringSplitOptions.RemoveEmptyEntries, unMask: false, VCdVersion.V3_0))
                         {
                             if (!ParseTypeParameter(s, propertyKey))
                             {
-                                AddNonStandardParameter(new KeyValuePair<string, string>(parameter.Key, s));
+                                List<KeyValuePair<string, string>> userAttributes
+                                        = (List<KeyValuePair<string, string>>?)this.NonStandard
+                                          ?? [];
+
+                                this.NonStandard = userAttributes;
+                                userAttributes.Add(new KeyValuePair<string, string>(parameter.Key, s));
                             }
                         }
                         break;
                     }
                 case ParameterKey.GEO:
-                    if (GeoCoordinate.TryParse(parameter.Value.AsSpan().Trim(TRIM_CHARS),
+                    if (GeoCoordinate.TryParse(parameter.Value.Span.Trim(TRIM_CHARS),
                                                out GeoCoordinate? geo))
                     {
                         this.GeoPosition = geo;
                     }
                     break;
                 case ParameterKey.TZ:
-                    if (TimeZoneID.TryParse(parameter.Value.Trim(TRIM_CHARS), out TimeZoneID? tzID))
+                    if (TimeZoneID.TryParse(parameter.Value.Span.Trim(TRIM_CHARS).ToString(), out TimeZoneID? tzID))
                     {
                         this.TimeZone = tzID;
                     }
                     break;
                 case ParameterKey.SORT_AS:
                     {
-                        List<string> list = (List<string>?)this.SortAs ?? [];
-                        this.SortAs = list;
-
-                        ValueSplitter commaSplitter = info.CommaSplitter;
-
-                        commaSplitter.ValueString = parameter.Value;
-                        foreach (string s in commaSplitter)
-                        {
-                            string sortString = s.UnMask(VCdVersion.V4_0);
-                            list.Add(sortString);
-                        }
+                        this.SortAs = new List<string>
+                            (
+                            ValueSplitter2.Split(
+                            parameter.Value, ',', StringSplitOptions.RemoveEmptyEntries, unMask: true, VCdVersion.V4_0)
+                            );
 
                         break;
                     }
                 case ParameterKey.CALSCALE:
-                    this.Calendar = parameter.Value.Trim(TRIM_CHARS);
+                    this.Calendar = parameter.Value.Span.Trim(TRIM_CHARS).ToString();
                     break;
                 case ParameterKey.ENCODING:
-                    this.Encoding = EncConverter.Parse(parameter.Value);
+                    this.Encoding = EncConverter.Parse(parameter.Value.ToString());
                     break;
                 case ParameterKey.CHARSET:
-                    this.CharSet = parameter.Value.Trim(TRIM_CHARS);
+                    this.CharSet = parameter.Value.Span.Trim(TRIM_CHARS).ToString();
                     break;
                 case ParameterKey.ALTID:
-                    this.AltID = parameter.Value.Trim(TRIM_CHARS);
+                    this.AltID = parameter.Value.Span.Trim(TRIM_CHARS).ToString();
                     break;
                 case ParameterKey.MEDIATYPE:
-                    this.MediaType = parameter.Value.Trim(TRIM_CHARS);
+                    this.MediaType = parameter.Value.Span.Trim(TRIM_CHARS).ToString();
                     break;
                 case ParameterKey.LABEL:
-                    this.Label = info.Builder
-                        .Clear()
-                        .Append(parameter.Value)
-                        .Trim(TRIM_CHARS.AsSpan())
-                        .Replace(@"\n", Environment.NewLine)
-                        .Replace(@"\N", Environment.NewLine)
-                        .ToString();
+                    this.Label = parameter.Value.Span.Trim(TRIM_CHARS).UnMask(VCdVersion.V4_0);
                     break;
                 case ParameterKey.CONTEXT:
-                    this.Context = parameter.Value.Trim(TRIM_CHARS);
+                    this.Context = parameter.Value.Span.Trim(TRIM_CHARS).ToString();
                     break;
                 case ParameterKey.INDEX:
                     {
-                        if (TryParseInt(parameter.Value, info, out int result))
+                        if (_Int.TryParse(parameter.Value.Span.Trim(TRIM_CHARS), out int result))
                         {
                             this.Index = result;
                         }
@@ -166,7 +158,7 @@ public sealed partial class ParameterSection
                     if (propertyKey == VCard.PropKeys.NonStandard.EXPERTISE)
                     {
                         Expertise? expertise =
-                            ExpertiseConverter.Parse(parameter.Value.AsSpan().TrimStart(TRIM_CHARS));
+                            ExpertiseConverter.Parse(parameter.Value.Span.Trim(TRIM_CHARS));
 
                         if (expertise.HasValue)
                         {
@@ -174,13 +166,13 @@ public sealed partial class ParameterSection
                         }
                         else
                         {
-                            AddNonStandardParameter(parameter);
+                            AddNonStandardParameter(in parameter);
                         }
                     }
                     else // HOBBY oder INTEREST
                     {
                         Interest? interest =
-                            InterestConverter.Parse(parameter.Value.AsSpan().TrimStart(TRIM_CHARS));
+                            InterestConverter.Parse(parameter.Value.Span.Trim(TRIM_CHARS));
 
                         if (interest.HasValue)
                         {
@@ -188,14 +180,14 @@ public sealed partial class ParameterSection
                         }
                         else
                         {
-                            AddNonStandardParameter(parameter);
+                            AddNonStandardParameter(in parameter);
                         }
                     }//else
                     break;
 
                 default:
                     {
-                        AddNonStandardParameter(parameter);
+                        AddNonStandardParameter(in parameter);
                         break;
                     }
 
@@ -205,18 +197,19 @@ public sealed partial class ParameterSection
 
     }//ctor
 
-    private static List<KeyValuePair<string, string>> GetParameters(ReadOnlySpan<char> parameterSection,
-                                                                    List<KeyValuePair<string, string>> parameterTuples)
+    private static void GetParameters(in ReadOnlyMemory<char> parameterSection,
+                                      List<KeyValuePair<string, ReadOnlyMemory<char>>> parameterTuples)
     {
         int splitIndex;
-        ReadOnlySpan<char> parameter;
+        ReadOnlyMemory<char> parameter;
         int parameterStartIndex = 0;
 
         parameterTuples.Clear();
+        ReadOnlySpan<char> parameterSectionSpan = parameterSection.Span;
 
         // key=value;key="value,value,va;lue";key="val;ue" wird zu
         // key=value | key="value,value,va;lue" | key="val;ue"
-        while (-1 != (splitIndex = GetNextParameterSplitIndex(parameterStartIndex, parameterSection)))
+        while (-1 != (splitIndex = GetNextParameterSplitIndex(parameterStartIndex, parameterSectionSpan)))
         {
             int paramLength = splitIndex - parameterStartIndex;
 
@@ -225,7 +218,7 @@ public sealed partial class ParameterSection
                 parameter = parameterSection.Slice(parameterStartIndex, paramLength);
                 parameterStartIndex = splitIndex + 1;
 
-                if (parameter.IsWhiteSpace())
+                if (parameter.Span.IsWhiteSpace())
                 {
                     continue;
                 }
@@ -244,13 +237,13 @@ public sealed partial class ParameterSection
         {
             parameter = parameterSection.Slice(parameterStartIndex, parameterSection.Length - parameterStartIndex);
 
-            if (!parameter.IsWhiteSpace())
+            if (!parameter.Span.IsWhiteSpace())
             {
-                SplitParameterKeyAndValue(parameterTuples, parameter);
+                SplitParameterKeyAndValue(parameterTuples, in parameter);
             }
         }
 
-        return parameterTuples;
+        //return parameterTuples;
 
         ////////////////////////////////////////////////////////////////////
 
@@ -277,16 +270,17 @@ public sealed partial class ParameterSection
             return -1;
         }
 
-        static void SplitParameterKeyAndValue(List<KeyValuePair<string, string>> parameterTuples, ReadOnlySpan<char> parameter)
+        static void SplitParameterKeyAndValue(List<KeyValuePair<string, ReadOnlyMemory<char>>> parameterTuples, in ReadOnlyMemory<char> parameter)
         {
-            int splitIndex = parameter.IndexOf('=');
+            ReadOnlySpan<char> parameterSpan = parameter.Span;
+
+            int splitIndex = parameterSpan.IndexOf('=');
 
             if (splitIndex == -1)
             {
-                // in vCard 2.1. kann direkt das Value angegeben werden, z.B. Note;Quoted-Printable;UTF-8:Text des Kommentars
-                string parameterString = parameter.ToString();
+                // in vCard 2.1. the Value can be specified directly, e.g., Note;Quoted-Printable;UTF-8:some text
                 parameterTuples.Add(
-                    new KeyValuePair<string, string>(ParseAttributeKeyFromValue(parameterString), parameterString));
+                    new KeyValuePair<string, ReadOnlyMemory<char>>(ParseAttributeKeyFromValue(parameterSpan), parameter));
             }
             else
             {
@@ -296,41 +290,32 @@ public sealed partial class ParameterSection
                 if (valueLength != 0)
                 {
                     parameterTuples.Add(
-                            new KeyValuePair<string, string>(
-                               ParameterKeyConverter.ParseParameterKey(parameter.Slice(0, splitIndex)),
-                               parameter.Slice(valueStart, valueLength).ToString()));
+                            new KeyValuePair<string, ReadOnlyMemory<char>>(
+                               ParameterKeyConverter.ParseParameterKey(parameterSpan.Slice(0, splitIndex)),
+                               parameter.Slice(valueStart, valueLength)));
                 }
             }
         }
     }
 
-    private static bool TryParseInt(string value, VcfDeserializationInfo info, out int result) =>
-#if NET462 || NETSTANDARD2_0
-        int.TryParse(value.Trim(TRIM_CHARS), out result);
-#else
-        int.TryParse(value.AsSpan().Trim(TRIM_CHARS), out result);
-#endif
-
     [ExcludeFromCodeCoverage]
     [Conditional("DEBUG")]
-    private static void Asserts(string propertyKey, IEnumerable<KeyValuePair<string, string>> propertyParameters)
+    private static void Asserts(string propertyKey, IEnumerable<KeyValuePair<string, ReadOnlyMemory<char>>> propertyParameters)
     {
         Debug.Assert(propertyKey is not null);
         Debug.Assert(propertyParameters is not null);
-        Debug.Assert(!propertyParameters.Any(
-            x => string.IsNullOrWhiteSpace(x.Key) || string.IsNullOrWhiteSpace(x.Value)
-            ));
+        Debug.Assert(!propertyParameters.Any(x => string.IsNullOrWhiteSpace(x.Key)));
         Debug.Assert(StringComparer.Ordinal.Equals(propertyKey, propertyKey.ToUpperInvariant()));
     }
 
-    private void AddNonStandardParameter(KeyValuePair<string, string> parameter)
+    private void AddNonStandardParameter(in KeyValuePair<string, ReadOnlyMemory<char>> parameter)
     {
         List<KeyValuePair<string, string>> userAttributes
                                         = (List<KeyValuePair<string, string>>?)this.NonStandard
                                           ?? [];
 
         this.NonStandard = userAttributes;
-        userAttributes.Add(parameter);
+        userAttributes.Add(new KeyValuePair<string, string>(parameter.Key, parameter.Value.ToString()));
     }
 
     private bool ParseTypeParameter(string typeValue, string propertyKey)

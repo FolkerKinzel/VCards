@@ -10,9 +10,7 @@ internal sealed class VcfDeserializationInfo
     private DateTimeConverter? _dateAndOrTimeConverter;
     private TimeConverter? _timeConverter;
 
-    internal StringBuilder Builder { get; } = new StringBuilder(INITIAL_STRINGBUILDER_CAPACITY);
-
-    internal List<KeyValuePair<string, string>> ParameterList { get; } = [];
+    internal List<KeyValuePair<string, ReadOnlyMemory<char>>> ParameterList { get; } = [];
 
     internal DateTimeConverter DateAndOrTimeConverter
     {
@@ -31,18 +29,4 @@ internal sealed class VcfDeserializationInfo
             return this._timeConverter;
         }
     }
-
-    internal ValueSplitter SemiColonSplitter { get; } = new ValueSplitter(';', StringSplitOptions.None);
-
-    internal ValueSplitter CommaSplitter { get; } = new ValueSplitter(',', StringSplitOptions.RemoveEmptyEntries);
-
-    //internal void Reset()
-    //{
-    //    Builder.Clear();
-
-    //    if (Builder.Capacity > MAX_STRINGBUILDER_CAPACITY)
-    //    {
-    //        Builder.Capacity = INITIAL_STRINGBUILDER_CAPACITY;
-    //    }
-    //}
 }

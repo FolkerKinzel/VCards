@@ -55,7 +55,7 @@ public class NamePropertyTests
     [TestMethod]
     public void NamePropertyTest3()
     {
-        VcfRow row = VcfRow.Parse("FN:", new VcfDeserializationInfo())!;
+        VcfRow row = VcfRow.Parse("FN:".AsMemory(), new VcfDeserializationInfo())!;
         var prop = new NameProperty(row, VCdVersion.V3_0);
 
         Assert.IsNotNull(prop.Value);

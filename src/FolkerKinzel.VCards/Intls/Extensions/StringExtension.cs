@@ -8,35 +8,34 @@ internal static partial class StringExtension
     // The regex isn't perfect but finds most IETF language tags:
     private const string IETF_LANGUAGE_TAG_PATTERN = @"^[a-z]{2,3}-[A-Z]{2,3}$";
 
-    internal static string UnMask(this string value, VCdVersion version)
+    internal static string UnMask(this ReadOnlySpan<char> value, VCdVersion version)
     {
         Debug.Assert(value != null);
 
-        var sourceSpan = value.AsSpan();
-        int idxOfBackSlash = sourceSpan.IndexOf('\\');
+        int idxOfBackSlash = value.IndexOf('\\');
 
         if (idxOfBackSlash == -1)
         {
-            return value;
+            return value.ToString();
         }
 
-        int processedLength = sourceSpan.Length - idxOfBackSlash;
+        int processedLength = value.Length - idxOfBackSlash;
 
         if (processedLength > Const.STACKALLOC_CHAR_THRESHOLD)
         {
-            using var buf = ArrayPoolHelper.Rent<char>(processedLength);
-            var bufSpan = buf.Array.AsSpan();
-            return CreateUnMaskedString(version, sourceSpan, idxOfBackSlash, bufSpan);
+            using ArrayPoolHelper.SharedArray<char> buf = ArrayPoolHelper.Rent<char>(processedLength);
+            Span<char> bufSpan = buf.Array.AsSpan();
+            return CreateUnMaskedString(version, value, idxOfBackSlash, bufSpan);
         }
         else
         {
             Span<char> bufSpan = stackalloc char[processedLength];
-            return CreateUnMaskedString(version, sourceSpan, idxOfBackSlash, bufSpan);
+            return CreateUnMaskedString(version, value, idxOfBackSlash, bufSpan);
         }
 
         static string CreateUnMaskedString(VCdVersion version, ReadOnlySpan<char> sourceSpan, int idxOfBackSlash, Span<char> bufSpan)
         {
-            var processedSpan = sourceSpan.Slice(idxOfBackSlash);
+            ReadOnlySpan<char> processedSpan = sourceSpan.Slice(idxOfBackSlash);
 
             int outputLength = version switch
             {

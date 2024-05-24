@@ -13,17 +13,40 @@ internal sealed partial class VcfRow
     /// <returns>A <see cref="VcfRow"/> object that represents the parsed
     /// <paramref name="vcfRow"/> or <c>null</c> if <paramref name="vcfRow"/>
     /// is invalid.</returns>
-    internal static VcfRow? Parse(string vcfRow, VcfDeserializationInfo info)
+    internal static VcfRow? Parse(in ReadOnlyMemory<char> vcfRow, VcfDeserializationInfo info)
     {
         // vcfRow:
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part
 
         // vcfRow parts:
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
-        int valueSeparatorIndex = GetValueSeparatorIndex(vcfRow);
+        int valueSeparatorIndex = GetValueSeparatorIndex(vcfRow.Span);
 
-        return valueSeparatorIndex > 0 ? new VcfRow(vcfRow, valueSeparatorIndex, info)
+        return valueSeparatorIndex > 0 ? new VcfRow(in vcfRow, valueSeparatorIndex, info)
                                        : null;
+
+        // Attribute-values may contain :;, in vCard 4.0 if they are
+        // enclosed in double quotes!
+        static int GetValueSeparatorIndex(ReadOnlySpan<char> vCardRow)
+        {
+            bool isInDoubleQuotes = false;
+
+            for (int i = 0; i < vCardRow.Length; i++)
+            {
+                char c = vCardRow[i];
+
+                if (c == '"')
+                {
+                    isInDoubleQuotes = !isInDoubleQuotes;
+                }
+                else if (c == ':' && !isInDoubleQuotes)
+                {
+                    return i;
+                }
+            }//for
+
+            return -1;
+        }
     }
 
     /// <summary> Unmasks masked text contained in <see cref="Value" /> according to the
@@ -35,7 +58,7 @@ internal sealed partial class VcfRow
     {
         if (!_unMasked)
         {
-            this.Value = this.Value.UnMask(version);
+            this.Value = this.Value.AsSpan().UnMask(version);
         }
 
         _unMasked = true; // not twice!

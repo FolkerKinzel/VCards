@@ -46,7 +46,7 @@ public class OrgPropertyTests
     public void OrganizationPropertyTest2(
         string s, string? expectedGroup, string? expectedOrganizationName, string[] expectedOrganizationalUnits)
     {
-        var vcfRow = VcfRow.Parse(s, new VcfDeserializationInfo());
+        var vcfRow = VcfRow.Parse(s.AsMemory(), new VcfDeserializationInfo());
         Assert.IsNotNull(vcfRow);
 
         var orgProp = new OrgProperty(vcfRow!, VCdVersion.V4_0);
@@ -61,7 +61,7 @@ public class OrgPropertyTests
     [TestMethod]
     public void OrganizationPropertyTest3()
     {
-        VcfRow row = VcfRow.Parse("ORG:", new VcfDeserializationInfo())!;
+        VcfRow row = VcfRow.Parse("ORG:".AsMemory(), new VcfDeserializationInfo())!;
 
         var prop = new OrgProperty(row, VCdVersion.V3_0);
 

@@ -31,7 +31,7 @@ public class DataPropertyTests
     [TestMethod]
     public void DataPropertyTest3()
     {
-        VcfRow row = VcfRow.Parse("PHOTO:", new VcfDeserializationInfo())!;
+        VcfRow row = VcfRow.Parse("PHOTO:".AsMemory(), new VcfDeserializationInfo())!;
         var prop = DataProperty.Parse(row, VCdVersion.V3_0);
 
         Assert.IsNull(prop.Value);

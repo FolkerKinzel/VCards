@@ -24,7 +24,7 @@ public class AccessPropertyTests
     [TestMethod()]
     public void AccessPropertyTest2()
     {
-        var row = VcfRow.Parse($"{GROUP}.{VCard.PropKeys.CLASS}:private", new VcfDeserializationInfo());
+        var row = VcfRow.Parse($"{GROUP}.{VCard.PropKeys.CLASS}:private".AsMemory(), new VcfDeserializationInfo());
         Assert.IsNotNull(row);
 
         var prop = new AccessProperty(row!);

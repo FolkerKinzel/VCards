@@ -9,7 +9,7 @@ internal sealed partial class VcfRow
     /// <param name="vCardRow" />
     /// <param name="valueSeparatorIndex" />
     /// <param name="info" />
-    private VcfRow(string vCardRow, int valueSeparatorIndex, VcfDeserializationInfo info)
+    private VcfRow(in ReadOnlyMemory<char> vCardRow, int valueSeparatorIndex, VcfDeserializationInfo info)
     {
         // vCardRow:
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part
@@ -21,14 +21,16 @@ internal sealed partial class VcfRow
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
         int valueStart = valueSeparatorIndex + 1;
 
-        this.Value = valueStart < vCardRow.Length ? vCardRow.Substring(valueStart) : "";
+        this.Value = valueStart < vCardRow.Length ? vCardRow.Slice(valueStart).ToString() : "";
 
         // keySection:
         // group.KEY | ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue
-        ReadOnlySpan<char> keySection = vCardRow.AsSpan(0, valueSeparatorIndex);
-        int parameterSeparatorIndex = keySection.IndexOf(';');
+        ReadOnlyMemory<char> keySection = vCardRow.Slice(0, valueSeparatorIndex);
+        ReadOnlySpan<char> keySectionSpan = keySection.Span;
+
+        int parameterSeparatorIndex = keySectionSpan.IndexOf(';');
         int keyPartLength = parameterSeparatorIndex == -1 ? keySection.Length : parameterSeparatorIndex;
-        ReadOnlySpan<char> keyPartSpan = keySection.Slice(0, keyPartLength);
+        ReadOnlySpan<char> keyPartSpan = keySectionSpan.Slice(0, keyPartLength);
         int groupSeparatorIndex = keyPartSpan.IndexOf('.');
 
         // keyParts:
@@ -41,13 +43,13 @@ internal sealed partial class VcfRow
 
         if (groupSeparatorIndex > 0)
         {
-            this.Group = keySection.Slice(0, groupSeparatorIndex).ToString();
+            this.Group = keyPartSpan.Slice(0, groupSeparatorIndex).ToString();
         }
 
         if (parameterSeparatorIndex != -1 && parameterSeparatorIndex < keySection.Length - 1)
         {
-            ReadOnlySpan<char> parameterSection = keySection.Slice(parameterSeparatorIndex + 1);
-            this.Parameters = new ParameterSection(this.Key, parameterSection, info);
+            ReadOnlyMemory<char> parameterSection = keySection.Slice(parameterSeparatorIndex + 1);
+            this.Parameters = new ParameterSection(this.Key, in parameterSection, info);
         }
         else
         {
@@ -55,26 +57,4 @@ internal sealed partial class VcfRow
         }
     }
 
-    // Attribute-values may contain :;, in vCard 4.0 if they are
-    // enclosed in double quotes!
-    private static int GetValueSeparatorIndex(string vCardRow)
-    {
-        bool isInDoubleQuotes = false;
-
-        for (int i = 0; i < vCardRow.Length; i++)
-        {
-            char c = vCardRow[i];
-
-            if (c == '"')
-            {
-                isInDoubleQuotes = !isInDoubleQuotes;
-            }
-            else if (c == ':' && !isInDoubleQuotes)
-            {
-                return i;
-            }
-        }//for
-
-        return -1;
-    }
 }

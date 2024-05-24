@@ -6,7 +6,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 public sealed partial class ParameterSection
 {
-    private static string ParseAttributeKeyFromValue(string value)
+    private static string ParseAttributeKeyFromValue(ReadOnlySpan<char> value)
     {
         const string ENCODING_PROPERTY = ParameterSection.ParameterKey.ENCODING;
         //const string CONTEXT_PROPERTY = ParameterSection.ParameterKey.CONTEXT;
@@ -15,17 +15,19 @@ public sealed partial class ParameterSection
         const string LANGUAGE_PROPERTY = ParameterSection.ParameterKey.LANGUAGE;
         const string VALUE_PROPERTY = ParameterSection.ParameterKey.VALUE;
 
-        if (value.StartsWith("QUOTED", true, CultureInfo.InvariantCulture))
+        if (value.StartsWith("QUOTED".AsSpan(), StringComparison.OrdinalIgnoreCase))
         {
             return ENCODING_PROPERTY; // "QUOTED-PRINTABLE"
         }
 
-        if (value.StartsWith("UTF", true, CultureInfo.InvariantCulture) || value.StartsWith("ISO", true, CultureInfo.InvariantCulture))
+        if (value.StartsWith("UTF".AsSpan(), StringComparison.OrdinalIgnoreCase) || value.StartsWith("ISO".AsSpan(), StringComparison.OrdinalIgnoreCase))
         {
             return CHARSET_PROPERTY;
         }
 
-        switch (value.ToUpperInvariant())
+        string valString = value.ToString();
+
+        switch (valString.ToUpperInvariant())
         {
             case "BASE64":
             case "B":
@@ -130,6 +132,6 @@ public sealed partial class ParameterSection
                 break;
         }
 
-        return value.IsIetfLanguageTag() ? LANGUAGE_PROPERTY : TYPE_PROPERTY;
+        return valString.IsIetfLanguageTag() ? LANGUAGE_PROPERTY : TYPE_PROPERTY;
     }
 }

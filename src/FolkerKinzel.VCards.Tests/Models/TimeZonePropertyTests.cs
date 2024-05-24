@@ -55,7 +55,7 @@ public class TimeZonePropertyTests
     [TestMethod]
     public void TimeZonePropertyTest3()
     {
-        VcfRow row = VcfRow.Parse("TZ:    ", new VcfDeserializationInfo())!;
+        VcfRow row = VcfRow.Parse("TZ:    ".AsMemory(), new VcfDeserializationInfo())!;
         var prop = new TimeZoneProperty(row, VCdVersion.V3_0);
 
         Assert.IsTrue(prop.IsEmpty);

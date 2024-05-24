@@ -45,7 +45,7 @@ public class AppIDPropertyTests
     [TestMethod]
     public void TryParseTest2()
     {
-        var row = VcfRow.Parse("CLIENTPIDMAP:", new VcfDeserializationInfo());
+        var row = VcfRow.Parse("CLIENTPIDMAP:".AsMemory(), new VcfDeserializationInfo());
         Assert.IsFalse(AppIDProperty.TryParse(row!, out _));
 
     }

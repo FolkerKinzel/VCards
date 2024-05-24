@@ -62,164 +62,67 @@ public sealed class Address
         Country = ReadOnlyStringCollection.Empty;
     }
 
-    internal Address(string vCardValue, VcfDeserializationInfo info, VCdVersion version)
+    internal Address(ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
-        Debug.Assert(vCardValue is not null);
-
-        ValueSplitter semicolonSplitter = info.SemiColonSplitter;
-        ValueSplitter commaSplitter = info.CommaSplitter;
-
         int index = 0;
-        semicolonSplitter.ValueString = vCardValue;
-
-        foreach (var s in semicolonSplitter)
+     
+        foreach (ReadOnlyMemory<char> mem in ValueSplitter2.Split(vCardValue, ';'))
         {
             switch (index++)
             {
                 case POST_OFFICE_BOX:
                     {
-                        if (s.Length == 0)
-                        {
-                            PostOfficeBox = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-                            commaSplitter.ValueString = s;
-
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            PostOfficeBox = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        PostOfficeBox = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
                 case EXTENDED_ADDRESS:
                     {
-                        if (s.Length == 0)
-                        {
-                            ExtendedAddress = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-                            commaSplitter.ValueString = s;
-
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            ExtendedAddress = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        ExtendedAddress = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
                 case STREET:
                     {
-                        if (s.Length == 0)
-                        {
-                            Street = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-                            commaSplitter.ValueString = s;
-
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            Street = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        Street = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
                 case LOCALITY:
                     {
-                        if (s.Length == 0)
-                        {
-                            Locality = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-                            commaSplitter.ValueString = s;
-
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            Locality = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        Locality = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
                 case REGION:
                     {
-                        if (s.Length == 0)
-                        {
-                            Region = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-                            commaSplitter.ValueString = s;
-
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            Region = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        Region = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
                 case POSTAL_CODE:
                     {
-                        if (s.Length == 0)
-                        {
-                            PostalCode = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-                            commaSplitter.ValueString = s;
-
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            PostalCode = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        PostalCode = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
                 case COUNTRY:
                     {
-                        if (s.Length == 0)
-                        {
-                            Country = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-                            commaSplitter.ValueString = s;
-
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            Country = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        Country = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
@@ -238,6 +141,14 @@ public sealed class Address
         Region ??= ReadOnlyStringCollection.Empty;
         PostalCode ??= ReadOnlyStringCollection.Empty;
         Country ??= ReadOnlyStringCollection.Empty;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static string[] ToArray(ReadOnlyMemory<char> mem, VCdVersion version)
+            => ValueSplitter2.Split(mem, 
+                                    ',', 
+                                    StringSplitOptions.RemoveEmptyEntries,            
+                                    unMask: true,
+                                    version).ToArray();
     }
 
     /// <summary>The post office box. (Don't use this property!)</summary>

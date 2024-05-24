@@ -55,7 +55,7 @@ public class StringCollectionPropertyTests
     [DataRow(@"NICKNAME:Dumbo, ", null, new string[] { "Dumbo" })]
     public void StringCollectionPropertyTest3(string s, string? expectedGroup, string[]? expectedNickNames)
     {
-        var vcfRow = VcfRow.Parse(s, new VcfDeserializationInfo());
+        var vcfRow = VcfRow.Parse(s.AsMemory(), new VcfDeserializationInfo());
         Assert.IsNotNull(vcfRow);
 
         var nickNameProp = new StringCollectionProperty(vcfRow!, VCdVersion.V4_0);

@@ -84,7 +84,7 @@ public class RelationPropertyTests
     [DataRow("../bla.txt")]
     public void ParseTest1(string input)
     {
-        var row = VcfRow.Parse("RELATED:" + input, new VcfDeserializationInfo());
+        var row = VcfRow.Parse(("RELATED:" + input).AsMemory(), new VcfDeserializationInfo());
         Assert.IsNotNull(row);
 
         var prop = RelationProperty.Parse(row!, VCdVersion.V4_0);

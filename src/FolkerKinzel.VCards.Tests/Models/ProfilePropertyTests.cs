@@ -56,7 +56,7 @@ public class ProfilePropertyTests
     [TestMethod]
     public void GetValueTest()
     {
-        VcfRow row = VcfRow.Parse("Profile:", new VcfDeserializationInfo())!;
+        VcfRow row = VcfRow.Parse("Profile:".AsMemory(), new VcfDeserializationInfo())!;
         var prop = new ProfileProperty(row, VCdVersion.V3_0);
 
         Assert.AreEqual("VCARD", prop.Value);

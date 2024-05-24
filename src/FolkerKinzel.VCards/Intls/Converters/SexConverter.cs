@@ -13,19 +13,17 @@ internal static class SexConverter
         internal const string UNKNOWN = "U";
     }
 
-    internal static Sex? Parse(string? value)
+    internal static Sex? Parse(char value)
     {
-        return value is null
-            ? null
-            : (value.ToUpperInvariant() switch
+        return value.ToUpperInvariant() switch
             {
-                Values.MALE => Sex.Male,
-                Values.FEMALE => Sex.Female,
-                Values.OTHER => Sex.Other,
-                Values.NON_OR_NOT_APPLICABLE => Sex.NonOrNotApplicable,
-                Values.UNKNOWN => Sex.Unknown,
+                'M' => Sex.Male,
+                'F' => Sex.Female,
+                'O' => Sex.Other,
+                'N' => Sex.NonOrNotApplicable,
+                'U' => Sex.Unknown,
                 _ => (Sex?)null
-            });
+            };
     }
 
     internal static string? ToVcfString(this Sex? sex)

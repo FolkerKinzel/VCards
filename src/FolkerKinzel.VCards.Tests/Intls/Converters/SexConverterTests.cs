@@ -10,14 +10,11 @@ public class SexConverterTests
     {
         foreach (Sex sex in (Sex[])Enum.GetValues(typeof(Sex)))
         {
-            Sex? sex2 = SexConverter.Parse(sex.ToString().Substring(0, 1));
+            Sex? sex2 = SexConverter.Parse(sex.ToString()[0]);
             Assert.AreEqual(sex, sex2);
-            Sex? sex3 = SexConverter.Parse(SexConverter.ToVcfString(sex));
+            Sex? sex3 = SexConverter.Parse(SexConverter.ToVcfString(sex)![0]);
             Assert.AreEqual(sex, sex3);
         }
-
-        // Test auf null
-        Assert.AreEqual(null, SexConverter.Parse(null));
 
         // Test auf nicht definiert
         Assert.AreEqual(null, ((Sex?)4711).ToVcfString());

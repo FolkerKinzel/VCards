@@ -47,7 +47,7 @@ public class GenderPropertyTests
     [DataRow(GROUP + ".GENDER:F;", GROUP, Sex.Female, null)]
     public void GenderPropertyTest2(string s, string? expectedGroup, Sex? expectedSex, string? expectedGenderIdentity)
     {
-        var vcfRow = VcfRow.Parse(s, new VcfDeserializationInfo());
+        var vcfRow = VcfRow.Parse(s.AsMemory(), new VcfDeserializationInfo());
 
         Assert.IsNotNull(vcfRow);
 

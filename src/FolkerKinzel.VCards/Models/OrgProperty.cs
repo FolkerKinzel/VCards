@@ -53,11 +53,8 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
 
         vcfRow.DecodeQuotedPrintable();
 
-        ValueSplitter semicolonSplitter = vcfRow.Info.SemiColonSplitter;
-  
-        semicolonSplitter.ValueString = vcfRow.Value;
-        var list = semicolonSplitter.Select(x => x.UnMask(version)).ToList();
-        Value = new Organization(list);
+        Value = new Organization(new List<string>(
+            ValueSplitter2.Split(vcfRow.Value.AsMemory(), ';', StringSplitOptions.None, unMask: true, version)));
     }
 
     /// <summary> The data provided by the  <see cref="OrgProperty" />. </summary>

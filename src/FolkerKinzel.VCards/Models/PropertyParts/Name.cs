@@ -45,121 +45,51 @@ public sealed class Name
         Suffixes = ReadOnlyStringCollection.Empty;
     }
 
-    internal Name(string vCardValue, VcfDeserializationInfo info, VCdVersion version)
+    internal Name(ReadOnlyMemory<char> vCardValue, VcfDeserializationInfo info, VCdVersion version)
     {
-        Debug.Assert(vCardValue is not null);
-
-        ValueSplitter semicolonSplitter = info.SemiColonSplitter;
-        ValueSplitter commaSplitter = info.CommaSplitter;
-
-        semicolonSplitter.ValueString = vCardValue;
         int index = 0;
-        foreach (var s in semicolonSplitter)
+
+        foreach (ReadOnlyMemory<char> mem in ValueSplitter2.Split(vCardValue, ';'))
         {
             switch (index++)
             {
                 case FAMILY_NAMES:
                     {
-                        if (s.Length == 0)
-                        {
-                            FamilyNames = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-
-                            commaSplitter.ValueString = s;
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            FamilyNames = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        FamilyNames = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
                 case GIVEN_NAMES:
                     {
-                        if (s.Length == 0)
-                        {
-                            GivenNames = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-
-                            commaSplitter.ValueString = s;
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            GivenNames = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        GivenNames = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
                 case ADDITIONAL_NAMES:
                     {
-                        if (s.Length == 0)
-                        {
-                            AdditionalNames = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-
-                            commaSplitter.ValueString = s;
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            AdditionalNames = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        AdditionalNames = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
                 case PREFIXES:
                     {
-                        if (s.Length == 0)
-                        {
-                            Prefixes = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-
-                            commaSplitter.ValueString = s;
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            Prefixes = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        Prefixes = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
                 case SUFFIXES:
                     {
-                        if (s.Length == 0)
-                        {
-                            Suffixes = ReadOnlyStringCollection.Empty;
-                        }
-                        else
-                        {
-                            var list = new List<string>();
-
-                            commaSplitter.ValueString = s;
-                            foreach (var item in commaSplitter)
-                            {
-                                list.Add(item.UnMask(version));
-                            }
-
-                            Suffixes = ReadOnlyCollectionConverter.ToReadOnlyCollection(list);
-                        }
+                        Suffixes = mem.Length == 0
+                            ? ReadOnlyStringCollection.Empty
+                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
 
                         break;
                     }
@@ -176,6 +106,14 @@ public sealed class Name
         AdditionalNames ??= ReadOnlyStringCollection.Empty;
         Prefixes ??= ReadOnlyStringCollection.Empty;
         Suffixes ??= ReadOnlyStringCollection.Empty;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static string[] ToArray(ReadOnlyMemory<char> mem, VCdVersion version)
+            => ValueSplitter2.Split(mem,
+                                    ',',
+                                    StringSplitOptions.RemoveEmptyEntries,
+                                    unMask: true,
+                                    version).ToArray();
     }
 
     /// <summary>Family Name(s) (also known as surname(s)).</summary>

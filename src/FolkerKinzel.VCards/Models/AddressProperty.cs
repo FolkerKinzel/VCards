@@ -173,7 +173,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         vcfRow.DecodeQuotedPrintable();
 
         Value = string.IsNullOrWhiteSpace(vcfRow.Value) ? new Address()
-                                                        : new Address(vcfRow.Value, vcfRow.Info, version);
+                                                        : new Address(vcfRow.Value.AsMemory(), version);
     }
 
     /// <summary> The data provided by the <see cref="AddressProperty" />.</summary>

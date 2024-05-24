@@ -40,25 +40,19 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     {
         Sex? sex = null;
         string? genderIdentity = null;
-        ValueSplitter semicolonSplitter = vcfRow.Info.SemiColonSplitter;
 
-        bool initGenderIdentity = false;
-        semicolonSplitter.ValueString = vcfRow.Value;
+        ReadOnlySpan<char> span = vcfRow.Value.AsSpan();
 
-        foreach (var s in semicolonSplitter)
+        if (!span.IsEmpty)
         {
-            if (initGenderIdentity)
+            sex = SexConverter.Parse(span[0]);
+
+            if (span.Length > 2)
             {
-                genderIdentity = s.UnMask(version);
-                break;
-            }
-            else
-            {
-                sex = SexConverter.Parse(s);
-                initGenderIdentity = true;
+                genderIdentity = span.Slice(2).UnMask(version);
             }
         }
-
+        
         Value = new GenderInfo(sex, genderIdentity);
     }
 

@@ -476,7 +476,7 @@ public sealed partial class VCard
             // Version 2.1 is not masked:
             content = versionHint == VCdVersion.V2_1
                 ? content
-                : content.UnMask(versionHint);
+                : content.AsSpan().UnMask(versionHint);
 
             using var reader = new StringReader(content);
 

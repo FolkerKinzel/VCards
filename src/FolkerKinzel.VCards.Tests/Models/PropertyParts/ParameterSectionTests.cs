@@ -16,7 +16,7 @@ public class ParameterSectionTests
     public void CleanParameterValueTest(string value)
     {
         var info = new VcfDeserializationInfo();
-        var para = new ParameterSection("BDAY", $"VALUE={value}".AsSpan(), info);
+        var para = new ParameterSection("BDAY", $"VALUE={value}".AsMemory(), info);
 
         Assert.AreEqual(Data.Date, para.DataType);
     }

@@ -13,8 +13,7 @@ public class VcfRowTests
     public void ParseTest(string input, bool rowIsNull, string key, string? group, int parametersCount)
     {
         var info = new VcfDeserializationInfo();
-        _ = info.Builder.Append(input);
-        var row = VcfRow.Parse(info.Builder.ToString(), info);
+        var row = VcfRow.Parse(input.AsMemory(), info);
 
         if (rowIsNull)
         {

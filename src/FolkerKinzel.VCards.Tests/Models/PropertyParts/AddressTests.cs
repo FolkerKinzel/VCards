@@ -10,14 +10,14 @@ public class AddressTests
     [TestMethod]
     public void AddressTest1()
     {
-        var adr = new Address(";;;;;;;bla", new VcfDeserializationInfo(), VCdVersion.V4_0);
+        var adr = new Address(";;;;;;;bla".AsMemory(), VCdVersion.V4_0);
         Assert.IsNotNull(adr);
     }
 
     [TestMethod]
     public void AddressTest2()
     {
-        var adr = new Address("", new VcfDeserializationInfo(), VCdVersion.V4_0);
+        var adr = new Address("".AsMemory(), VCdVersion.V4_0);
         Assert.IsNotNull(adr);
     }
 
@@ -30,13 +30,13 @@ public class AddressTests
     [DataRow(";;;;;a;")]
     [DataRow(";;;;;;a")]
     public void IsEmptyTest1(string input)
-        => Assert.IsFalse(new Address(input, new VcfDeserializationInfo(), VCdVersion.V4_0).IsEmpty);
+        => Assert.IsFalse(new Address(input.AsMemory(), VCdVersion.V4_0).IsEmpty);
 
     [TestMethod]
     public void AppendVCardStringTest1()
     {
         const string input = ";;Parkstr.,7a;;;;";
-        var adr = new Address(input, new VcfDeserializationInfo(), VCdVersion.V4_0);
+        var adr = new Address(input.AsMemory(), VCdVersion.V4_0);
 
         using var writer = new StringWriter();
         var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
@@ -49,7 +49,7 @@ public class AddressTests
     public void ToStringTest1()
     {
         const string input = ";;Parkstr.,7a;;;;";
-        var adr = new Address(input, new VcfDeserializationInfo(), VCdVersion.V4_0);
+        var adr = new Address(input.AsMemory(), VCdVersion.V4_0);
 
         string s = adr.ToString();
         StringAssert.Contains(s, "7a");
@@ -64,7 +64,7 @@ public class AddressTests
     [DataRow(";;;;;ä;")]
     [DataRow(";;;;;;ä")]
     public void NeedsToBeQPEncodedTest1(string input)
-        => Assert.IsTrue(new Address(input, new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
+        => Assert.IsTrue(new Address(input.AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
 
     [DataTestMethod]
     [DataRow("a;;;;;;")]
@@ -75,9 +75,9 @@ public class AddressTests
     [DataRow(";;;;;a;")]
     [DataRow(";;;;;;a")]
     public void NeedsToBeQPEncodedTest2(string input)
-        => Assert.IsFalse(new Address(input, new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
+        => Assert.IsFalse(new Address(input.AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
 
     [TestMethod]
     public void NeedsToBeQPEncodedTest3()
-        => Assert.IsFalse(new Address(";;;;;;", new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
+        => Assert.IsFalse(new Address(";;;;;;".AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
 }

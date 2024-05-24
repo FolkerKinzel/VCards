@@ -2,6 +2,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Encodings;
+using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
@@ -21,7 +22,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
     private readonly TextReader _reader;
     private readonly VcfDeserializationInfo _info;
     private readonly VCdVersion _versionHint;
-    private readonly List<string> _list = [];
+    private readonly List<ReadOnlyMemory<char>> _list = [];
 
 
     internal VcfRowReader(TextReader reader, VcfDeserializationInfo info, VCdVersion versionHint = VCdVersion.V2_1)
@@ -133,27 +134,27 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
                 if(isVcard_2_1)
                 {
-                    _list.Add(s);
+                    _list.Add(s.AsMemory());
                 }
                 else
                 {
                     // remove inserted SPACE character
-                    _list.Add(s.Substring(1));
+                    _list.Add(s.AsMemory(1));
                 }
 
                 continue;
             }
             else if (isVcard_2_1 && _list.Count != 0)
             {
-                VcfRow? tmpRow = CreateVcfRow(out string tmp);
+                VcfRow? tmpRow = CreateVcfRowAndClearList(out ReadOnlyMemory<char> tmp);
 
                 if (tmpRow is null)
                 {
-                    _list.Add(s);
+                    _list.Add(s.AsMemory());
                     continue;
                 }
 
-                if (tmpRow.Parameters.Encoding == Enc.QuotedPrintable && HasQuotedPrintableSoftLineBreak(tmp)) 
+                if (tmpRow.Parameters.Encoding == Enc.QuotedPrintable && HasQuotedPrintableSoftLineBreak(tmp.Span)) 
                 {
                     // QuotedPrintable soft-linebreak (This can't be "BEGIN:VCARD" or "END:VCARD".)
                     Debug.WriteLine("  == QuotedPrintable soft-linebreak detected ==");
@@ -162,7 +163,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
                     if (ConcatQuotedPrintableSoftLineBreak(s))
                     {
-                        VcfRow? vcfRow = CreateVcfRow(out _);
+                        VcfRow? vcfRow = CreateVcfRowAndClearList(out _);
 
                         if (vcfRow is not null)
                         {
@@ -192,7 +193,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
                         if (ConcatVcard2_1Base64(s))
                         {
-                            VcfRow? vcfRow = CreateVcfRow(out _);
+                            VcfRow? vcfRow = CreateVcfRowAndClearList(out _);
 
                             if (vcfRow is not null)
                             {
@@ -226,7 +227,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
                     if (ConcatNested_2_1Vcard(s))
                     {
-                        VcfRow? vcfRow = CreateVcfRow(out _);
+                        VcfRow? vcfRow = CreateVcfRowAndClearList(out _);
 
                         if (vcfRow is not null)
                         {
@@ -246,7 +247,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                     yield return tmpRow;
                 }
 
-                _list.Add(s);
+                _list.Add(s.AsMemory());
             }
             else
             {
@@ -254,7 +255,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 {
                     // s represents the start of a new VcfRow. Therefore _list already contains
                     // a complete VcfRow-String. This must be parsed before s can be added to _list.
-                    VcfRow? vcfRow = CreateVcfRow(out _);
+                    VcfRow? vcfRow = CreateVcfRowAndClearList(out _);
 
                     if (vcfRow is not null)
                     {
@@ -263,7 +264,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
                 } //if
 
-                _list.Add(s);
+                _list.Add(s.AsMemory());
 
             }//else
 
@@ -272,8 +273,8 @@ internal class VcfRowReader : IEnumerable<VcfRow>
         yield break;
     }
 
-    private static bool HasQuotedPrintableSoftLineBreak(string tmp) 
-        => tmp.AsSpan().TrimEnd().EndsWith('='); // QP soft line breaks may be padded with white space
+    private static bool HasQuotedPrintableSoftLineBreak(ReadOnlySpan<char> span) 
+        => span.TrimEnd().EndsWith('='); // QP soft line breaks may be padded with white space
 
     private static bool GetIsVcard_2_1(string s)
     {
@@ -289,11 +290,13 @@ internal class VcfRowReader : IEnumerable<VcfRow>
     private bool ConcatQuotedPrintableSoftLineBreak(string? s)
     {
         Debug.Assert(s is not null);
-        
-        _list.Add(QuotedPrintable.NEW_LINE);
-        _list.Add(s);
 
-        while (s.Length == 0 || HasQuotedPrintableSoftLineBreak(s))
+        ReadOnlyMemory<char> newLine = QuotedPrintable.NEW_LINE.AsMemory();
+
+        _list.Add(newLine);
+        _list.Add(s.AsMemory());
+
+        while (s.Length == 0 || HasQuotedPrintableSoftLineBreak(s.AsSpan()))
         {
             if (!ReadNextLine(out s))
             {
@@ -307,8 +310,8 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 continue;
             }
 
-            _list.Add(QuotedPrintable.NEW_LINE);
-            _list.Add(s);
+            _list.Add(newLine);
+            _list.Add(s.AsMemory());
         }
 
         return true;
@@ -320,7 +323,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
         while (s.Length != 0) // an empty line closes Base64
         {
-            _list.Add(s);
+            _list.Add(s.AsMemory());
 
             if (!ReadNextLine(out s))
             {
@@ -337,7 +340,9 @@ internal class VcfRowReader : IEnumerable<VcfRow>
     {
         Debug.Assert(s is not null);
 
-        _list.Add(s);
+        ReadOnlyMemory<char> newLine = VCard.NewLine.AsMemory();
+
+        _list.Add(s.AsMemory());
 
         do
         {
@@ -353,8 +358,8 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 continue;
             }
 
-            _list.Add(Environment.NewLine);
-            _list.Add(s);
+            _list.Add(newLine);
+            _list.Add(s.AsMemory());
         }
         while (!s.StartsWith(END_VCARD, StringComparison.OrdinalIgnoreCase));
 
@@ -362,10 +367,16 @@ internal class VcfRowReader : IEnumerable<VcfRow>
         return true;
     }
 
-    private VcfRow? CreateVcfRow(out string toParse)
+    /// <summary>
+    /// Creates a new VCF row and clears List <see cref="_list"/>.
+    /// </summary>
+    /// <param name="parsed">Contains the parsed memory after the method returns.</param>
+    /// <returns>The parsed <see cref="VcfRow"/>, or <c>null</c> if the content of
+    /// <see cref="_list"/> could not be parsed.</returns>
+    private VcfRow? CreateVcfRowAndClearList(out ReadOnlyMemory<char> parsed)
     {
-        toParse = _list.Count == 1 ? _list[0] :  string.Concat(_list);
-        var vcfRow = VcfRow.Parse(toParse, _info);
+        parsed = _list.Concat();
+        var vcfRow = VcfRow.Parse(in parsed, _info);
         _list.Clear();
 
         return vcfRow;
