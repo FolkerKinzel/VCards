@@ -15,9 +15,9 @@ internal sealed class RelationTextProperty : RelationProperty
        : base(textProp.Parameters,
               textProp.Group) => _textProp = textProp;
 
-    internal RelationTextProperty(VcfRow vcfRow, VCdVersion version)
-        : base(vcfRow.Parameters,
-               vcfRow.Group) => _textProp = new TextProperty(vcfRow, version);
+    //internal RelationTextProperty(TextProperty textProp)
+    //    : base(textProp.Parameters,
+    //           textProp.Group) => _textProp = textProp;
 
     public new string? Value => _textProp.Value;
 

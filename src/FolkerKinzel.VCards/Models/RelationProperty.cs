@@ -210,7 +210,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     {
         if (string.IsNullOrWhiteSpace(vcfRow.Value) || vcfRow.Parameters.DataType == Data.Text)
         {
-            return new RelationTextProperty(vcfRow, version);
+            return new RelationTextProperty(new TextProperty(vcfRow, version));
         }
 
         string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
@@ -238,7 +238,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
         }
         else
         {
-            return new RelationTextProperty(vcfRow, version);
+            return new RelationTextProperty(new TextProperty(vcfRow, version));
         }
     }
 
