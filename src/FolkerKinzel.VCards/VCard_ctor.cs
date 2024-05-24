@@ -136,7 +136,7 @@ public sealed partial class VCard
                     DisplayNames = Concat(DisplayNames, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.BDAY:
-                    BirthDayViews = Concat(BirthDayViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version));
+                    BirthDayViews = Concat(BirthDayViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version, info));
                     break;
                 case PropKeys.ADR: // PostOfficeBox, ExtendedAddress, Street, Locality, Region, PostalCode, Country
                     Addresses = Concat(Addresses, new AddressProperty(vcfRow, this.Version));
@@ -146,7 +146,7 @@ public sealed partial class VCard
                     labels.Add(new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.REV:
-                    TimeStamp = new TimeStampProperty(vcfRow);
+                    TimeStamp = new TimeStampProperty(vcfRow, info);
                     break;
                 case PropKeys.CALURI:
                     CalendarAddresses = Concat(CalendarAddresses, new TextProperty(vcfRow, this.Version));
@@ -232,7 +232,7 @@ public sealed partial class VCard
                     Sources = Concat(Sources, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.ANNIVERSARY:
-                    this.AnniversaryViews = Concat(AnniversaryViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version));
+                    this.AnniversaryViews = Concat(AnniversaryViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version, info));
                     break;
                 case PropKeys.NonStandard.X_ANNIVERSARY:
                 case PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY:
@@ -244,7 +244,7 @@ public sealed partial class VCard
                     }
                     else if (AnniversaryViews is null)
                     {
-                        this.AnniversaryViews = DateAndOrTimeProperty.Parse(vcfRow, this.Version);
+                        this.AnniversaryViews = DateAndOrTimeProperty.Parse(vcfRow, this.Version, info);
                     }
 
                     break;
@@ -423,7 +423,7 @@ public sealed partial class VCard
                 // Extensions to the vCard standard:
                 case PropKeys.NonStandard.DEATHDATE:
                     this.DeathDateViews =
-                        Concat(DeathDateViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version));
+                        Concat(DeathDateViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version, info));
                     break;
                 case PropKeys.NonStandard.BIRTHPLACE:
                     this.BirthPlaceViews =

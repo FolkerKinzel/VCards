@@ -8,21 +8,21 @@ namespace FolkerKinzel.VCards.Intls.Deserializers;
 internal sealed partial class VcfRow
 {
     /// <summary>Parses a data row of the VCF file.</summary>
-    /// <param name="vcfRow">The data row of the VCF file</param>
+    /// <param name="vCardRow">The data row of the VCF file</param>
     /// <param name="info">Additional data used for parsing.</param>
     /// <returns>A <see cref="VcfRow"/> object that represents the parsed
-    /// <paramref name="vcfRow"/> or <c>null</c> if <paramref name="vcfRow"/>
+    /// <paramref name="vCardRow"/> or <c>null</c> if <paramref name="vCardRow"/>
     /// is invalid.</returns>
-    internal static VcfRow? Parse(in ReadOnlyMemory<char> vcfRow, VcfDeserializationInfo info)
+    internal static VcfRow? Parse(in ReadOnlyMemory<char> vCardRow, VcfDeserializationInfo info)
     {
         // vcfRow:
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part
 
         // vcfRow parts:
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
-        int valueSeparatorIndex = GetValueSeparatorIndex(vcfRow.Span);
+        int valueSeparatorIndex = GetValueSeparatorIndex(vCardRow.Span);
 
-        return valueSeparatorIndex > 0 ? new VcfRow(in vcfRow, valueSeparatorIndex, info)
+        return valueSeparatorIndex > 0 ? new VcfRow(in vCardRow, valueSeparatorIndex, info)
                                        : null;
 
         // Attribute-values may contain :;, in vCard 4.0 if they are

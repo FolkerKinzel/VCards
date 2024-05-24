@@ -198,7 +198,7 @@ public abstract class DateAndOrTimeProperty
     protected override object? GetVCardPropertyValue() => Value;
 
 
-    internal static DateAndOrTimeProperty Parse(VcfRow vcfRow, VCdVersion version)
+    internal static DateAndOrTimeProperty Parse(VcfRow vcfRow, VCdVersion version, VcfDeserializationInfo info)
     {
         Debug.Assert(vcfRow is not null);
 
@@ -212,14 +212,14 @@ public abstract class DateAndOrTimeProperty
         ReadOnlySpan<char> valueSpan = vcfRow.Value.AsSpan().Trim();
 
         return dataType == Data.Time || valueSpan.StartsWith('T')
-            ? vcfRow.Info.TimeConverter.TryParse(valueSpan, out OneOf<TimeOnly, DateTimeOffset> oneOf1)
+            ? info.TimeConverter.TryParse(valueSpan, out OneOf<TimeOnly, DateTimeOffset> oneOf1)
                 ? oneOf1.Match<DateAndOrTimeProperty>
                     (
                     timeOnly => new TimeOnlyProperty(timeOnly, vcfRow.Parameters, vcfRow.Group),
                     dateTimeOffset => new DateTimeOffsetProperty(dateTimeOffset, vcfRow.Parameters, vcfRow.Group)
                     )
                 : new DateTimeTextProperty(new TextProperty(vcfRow, version))
-            : vcfRow.Info.DateAndOrTimeConverter.TryParse(valueSpan, out OneOf<DateOnly, DateTimeOffset> oneOf2)
+            : info.DateAndOrTimeConverter.TryParse(valueSpan, out OneOf<DateOnly, DateTimeOffset> oneOf2)
                 ? oneOf2.Match<DateAndOrTimeProperty>
                    (
                     dateOnly => new DateOnlyProperty(dateOnly, vcfRow.Parameters, vcfRow.Group),

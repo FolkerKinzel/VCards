@@ -44,12 +44,12 @@ public sealed class TimeStampProperty : VCardProperty
         Parameters.DataType = Data.TimeStamp;
     }
 
-    internal TimeStampProperty(VcfRow vcfRow)
+    internal TimeStampProperty(VcfRow vcfRow, VcfDeserializationInfo info)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
         // A static DateAndOrTimeConverter can't be used because it would
         // destroy the thread safety:
-        if (vcfRow.Info.DateAndOrTimeConverter.TryParse(vcfRow.Value.AsSpan().Trim(), out OneOf<DateOnly, DateTimeOffset> value))
+        if (info.DateAndOrTimeConverter.TryParse(vcfRow.Value.AsSpan().Trim(), out OneOf<DateOnly, DateTimeOffset> value))
         {
             Value = value.Match<DateTimeOffset>(
                 dateOnly => new DateTimeOffset(dateOnly.ToDateTime(TimeOnly.MinValue, DateTimeKind.Local)),

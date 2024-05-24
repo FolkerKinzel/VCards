@@ -15,8 +15,6 @@ internal sealed partial class VcfRow
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue:Value-Part
         Debug.Assert(valueSeparatorIndex > 0);
 
-        this.Info = info;
-
         // vCardRowParts:
         // group.KEY;ATTRIBUTE1=AttributeValue;ATTRIBUTE2=AttributeValue | Value-Part
         int valueStart = valueSeparatorIndex + 1;

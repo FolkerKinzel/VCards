@@ -43,9 +43,10 @@ public class TimeStampPropertyTests
     [TestMethod]
     public void TimeStampPropertyTest4()
     {
-        VcfRow row = VcfRow.Parse("REV:2023-04-04".AsMemory(), new VcfDeserializationInfo())!;
+        var info = new VcfDeserializationInfo();
+        VcfRow row = VcfRow.Parse("REV:2023-04-04".AsMemory(), info)!;
 
-        var prop = new TimeStampProperty(row);
+        var prop = new TimeStampProperty(row, info);
 
         Assert.IsFalse(prop.IsEmpty);
     }

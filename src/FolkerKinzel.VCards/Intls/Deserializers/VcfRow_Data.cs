@@ -18,5 +18,5 @@ internal sealed partial class VcfRow
     // Value: ;;Waldstr. 54;Kleinknuffelsdorf;Sachsen-Anhalt;06789;Germany
     public readonly string Value;
 
-    public readonly VcfDeserializationInfo Info;
+    //public readonly VcfDeserializationInfo Info;
 }
