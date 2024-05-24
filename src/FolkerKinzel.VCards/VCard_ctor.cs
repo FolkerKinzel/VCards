@@ -306,8 +306,7 @@ public sealed partial class VCard
                         {
                             Messengers = Concat(Messengers, textProp);
 
-                            var para = textProp.Parameters;
-                            XMessengerParameterConverter.ConvertToInstantMessengerType(para);
+                            XMessengerParameterConverter.ConvertToInstantMessengerType(textProp.Parameters);
 
                             if (vcfRow.Key is PropKeys.NonStandard.InstantMessenger.X_SKYPE or
                                PropKeys.NonStandard.InstantMessenger.X_SKYPE_USERNAME)
@@ -315,7 +314,8 @@ public sealed partial class VCard
                                 textProp.Parameters.PhoneType =
                                     textProp.Parameters.PhoneType.Set(Tel.Voice | Tel.Video);
                             }
-                            AddCopyToPhoneNumbers(textProp, para);
+
+                            AddCopyToPhoneNumbers(textProp, textProp.Parameters);
                         }
                     }
 
@@ -503,11 +503,11 @@ public sealed partial class VCard
             return;
         }
 
-        var groups = (Addresses ?? Enumerable.Empty<VCardProperty?>())
+        IEnumerable<IGrouping<string?, VCardProperty>> groups = (Addresses ?? Enumerable.Empty<VCardProperty?>())
                      .Concat(labels)
                      .GroupByVCardGroup();
 
-        foreach (var group in groups)
+        foreach (IGrouping<string?, VCardProperty> group in groups)
         {
             if (group.Key is not null)
             {
@@ -578,17 +578,18 @@ public sealed partial class VCard
             return;
         }
 
-        var groups = Addresses.Concat<VCardProperty?>(TimeZones)
-                              .GroupByVCardGroup();
+        IEnumerable<IGrouping<string?, VCardProperty>> groups = 
+            Addresses.Concat<VCardProperty?>(TimeZones)
+                     .GroupByVCardGroup();
 
-        foreach (var group in groups)
+        foreach (IGrouping<string?, VCardProperty> group in groups)
         {
             if (group.Key is not null)
             {
                 if (group.FirstOrDefault(static x => x is TimeZoneProperty)
                     is TimeZoneProperty tzProp)
                 {
-                    foreach (var prop in group)
+                    foreach (VCardProperty prop in group)
                     {
                         if (prop is AddressProperty adrProp)
                         {
@@ -619,17 +620,18 @@ public sealed partial class VCard
             return;
         }
 
-        var groups = Addresses.Concat<VCardProperty?>(GeoCoordinates)
-                              .GroupByVCardGroup();
+        IEnumerable<IGrouping<string?, VCardProperty>> groups = 
+            Addresses.Concat<VCardProperty?>(GeoCoordinates)
+                     .GroupByVCardGroup();
 
-        foreach (var group in groups)
+        foreach (IGrouping<string?, VCardProperty> group in groups)
         {
             if (group.Key is not null)
             {
                 if (group.FirstOrDefault(static x => x is GeoProperty)
                     is GeoProperty geoProp)
                 {
-                    foreach (var prop in group)
+                    foreach (VCardProperty prop in group)
                     {
                         if (prop is AddressProperty adrProp)
                         {

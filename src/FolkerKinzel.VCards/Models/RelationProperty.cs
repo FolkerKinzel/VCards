@@ -2,6 +2,7 @@ using System.Collections;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -212,11 +213,13 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
             return new RelationTextProperty(vcfRow, version);
         }
 
-        vcfRow.UnMask(version);
+        string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
+                ? vcfRow.Value.AsSpan().UnMaskAndDecode(vcfRow.Parameters.CharSet)
+                : vcfRow.Value.AsSpan().UnMask(version);
 
-        if (vcfRow.Value.IsUuidUri())
+        if (val.IsUuidUri())
         {
-            var relation = new RelationUuidProperty(UuidConverter.ToGuid(vcfRow.Value),
+            var relation = new RelationUuidProperty(UuidConverter.ToGuid(val),
                                                     vcfRow.Parameters.RelationType,
                                                     group: vcfRow.Group);
 
@@ -224,7 +227,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
 
             return relation;
         }
-        else if (Uri.TryCreate(vcfRow.Value.Trim(), UriKind.Absolute, out Uri? uri))
+        else if (Uri.TryCreate(val.Trim(), UriKind.Absolute, out Uri? uri))
         {
             var relation = new RelationUriProperty
                 (

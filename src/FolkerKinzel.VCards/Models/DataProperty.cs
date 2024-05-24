@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
@@ -251,8 +252,11 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
         static DataProperty TryAsUri(VcfRow vcfRow, VCdVersion version)
         {
-            vcfRow.UnMask(version);
-            return UriConverter.TryConvertToAbsoluteUri(vcfRow.Value, out Uri? uri)
+            string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
+                ? vcfRow.Value.AsSpan().UnMaskAndDecode(vcfRow.Parameters.CharSet)
+                : vcfRow.Value.AsSpan().UnMask(version);
+
+            return UriConverter.TryConvertToAbsoluteUri(val, out Uri? uri)
                        ? new ReferencedDataProperty
                               (
                                new UriProperty(uri, vcfRow.Parameters, vcfRow.Group)

@@ -1,6 +1,7 @@
 using System.Collections;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -53,9 +54,11 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
     internal TimeZoneProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        vcfRow.UnMask(version);
+        string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
+                ? vcfRow.Value.AsSpan().UnMaskAndDecode(vcfRow.Parameters.CharSet)
+                : vcfRow.Value.AsSpan().UnMask(version);
 
-        if (TimeZoneID.TryParse(vcfRow.Value, out TimeZoneID? tzID))
+        if (TimeZoneID.TryParse(val, out TimeZoneID? tzID))
         {
             Value = tzID;
         }

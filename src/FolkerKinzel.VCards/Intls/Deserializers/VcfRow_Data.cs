@@ -5,9 +5,6 @@ namespace FolkerKinzel.VCards.Intls.Deserializers;
 /// <summary>Represents a data row in the VCF file.</summary>
 internal sealed partial class VcfRow
 {
-    private bool _unMasked;
-    private bool _quotedPrintableDecoded;
-
     // Bsp. Vcf-Datenzeile:
     // item1.ADR;TYPE=HOME,WORK;PREF=1:;;Waldstr. 54;Kleinknuffelsdorf;Sachsen-Anhalt;06789;Germany
 
@@ -19,7 +16,7 @@ internal sealed partial class VcfRow
     public readonly ParameterSection Parameters;
 
     // Value: ;;Waldstr. 54;Kleinknuffelsdorf;Sachsen-Anhalt;06789;Germany
-    public string Value { get; private set; }
+    public readonly string Value;
 
     public readonly VcfDeserializationInfo Info;
 }

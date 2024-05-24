@@ -28,8 +28,11 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
     internal TextProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        vcfRow.UnMask(version);
-        Value = vcfRow.Value.Length == 0 ? null : vcfRow.Value;
+        string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
+                ? vcfRow.Value.AsSpan().UnMaskAndDecode(vcfRow.Parameters.CharSet)
+                : vcfRow.Value.AsSpan().UnMask(version);
+
+        Value = val.Length == 0 ? null : val;
     }
 
     /// <summary>The data provided by the <see cref="TextProperty" />.</summary>

@@ -14,13 +14,13 @@ public class NameTests
     [DataRow(";;;a;")]
     [DataRow(";;;;a")]
     public void IsEmptyTest1(string input)
-        => Assert.IsFalse(new Name(input.AsMemory(), new VcfDeserializationInfo(), VCdVersion.V4_0).IsEmpty);
+        => Assert.IsFalse(new Name(input.AsMemory(), VCdVersion.V4_0).IsEmpty);
 
     [TestMethod]
     public void AppendVCardStringTest1()
     {
         const string input = ";;Heinrich,August;;";
-        var name = new Name(input.AsMemory(), new VcfDeserializationInfo(), VCdVersion.V4_0);
+        var name = new Name(input.AsMemory(), VCdVersion.V4_0);
 
         using var writer = new StringWriter();
         var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
@@ -37,7 +37,7 @@ public class NameTests
     [DataRow(";;;;ä")]
     [DataRow("ä;ä;ä;ä;ä")]
     public void NeedsToBeQPEncodedTest1(string input)
-        => Assert.IsTrue(new Name(input.AsMemory(), new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
+        => Assert.IsTrue(new Name(input.AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
 
     [DataTestMethod]
     [DataRow("a,ä;;;;")]
@@ -46,19 +46,19 @@ public class NameTests
     [DataRow(";;;a,ä;")]
     [DataRow(";;;;a,ä")]
     public void NeedsToBeQPEncodedTest1b(string input)
-        => Assert.IsTrue(new Name(input.AsMemory(), new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
+        => Assert.IsTrue(new Name(input.AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
 
     [DataTestMethod]
     [DataRow("a,a;a;a;a;a")]
     [DataRow(";;;;")]
     public void NeedsToBeQPEncodedTest2(string input)
-        => Assert.IsFalse(new Name(input.AsMemory(), new VcfDeserializationInfo(), VCdVersion.V2_1).NeedsToBeQpEncoded());
+        => Assert.IsFalse(new Name(input.AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
 
     [TestMethod]
     public void ToStringTest1()
     {
         const string input = ";;Heinrich,August;;;;";
-        var name = new Name(input.AsMemory(), new VcfDeserializationInfo(), VCdVersion.V4_0);
+        var name = new Name(input.AsMemory(), VCdVersion.V4_0);
 
         string s = name.ToString();
         StringAssert.Contains(s, "August");

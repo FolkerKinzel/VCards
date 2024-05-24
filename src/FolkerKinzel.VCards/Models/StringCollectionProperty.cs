@@ -4,6 +4,7 @@ using System.Data.Common;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -56,23 +57,26 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        vcfRow.DecodeQuotedPrintable();
+        ReadOnlyMemory<char> val = vcfRow.Value.AsMemory();
 
-        if (vcfRow.Value.Length == 0)
+        if (this.Parameters.Encoding == Enc.QuotedPrintable)
+        {
+            val = QuotedPrintable.Decode(
+                    val.Span,
+                    TextEncodingConverter.GetEncoding(this.Parameters.CharSet)).AsMemory(); // null-check not needed
+        }
+
+        if (val.Length == 0)
         {
             return;
         }
 
-        var list = 
-            new List<string>
-            (
-            ValueSplitter.Split(
-                vcfRow.Value.AsMemory(), ',', StringSplitOptions.RemoveEmptyEntries, unMask: true, version)
-            );
+        string[] arr = ValueSplitter.Split(
+                val, ',', StringSplitOptions.RemoveEmptyEntries, unMask: true, version).ToArray();
 
-        if (list.Count != 0)
+        if (arr.Length != 0)
         {
-            this.Value = new ReadOnlyCollection<string>(list);
+            this.Value = new ReadOnlyCollection<string>(arr);
         }
     }
 

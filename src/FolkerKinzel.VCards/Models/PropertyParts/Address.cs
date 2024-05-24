@@ -62,7 +62,7 @@ public sealed class Address
         Country = ReadOnlyStringCollection.Empty;
     }
 
-    internal Address(ReadOnlyMemory<char> vCardValue, VCdVersion version)
+    internal Address(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
         int index = 0;
      

@@ -45,7 +45,7 @@ public sealed class Name
         Suffixes = ReadOnlyStringCollection.Empty;
     }
 
-    internal Name(ReadOnlyMemory<char> vCardValue, VcfDeserializationInfo info, VCdVersion version)
+    internal Name(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
         int index = 0;
 

@@ -170,10 +170,18 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     internal AddressProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        vcfRow.DecodeQuotedPrintable();
+        ReadOnlyMemory<char> val = vcfRow.Value.AsMemory();
+        ReadOnlySpan<char> valSpan = val.Span;
 
-        Value = string.IsNullOrWhiteSpace(vcfRow.Value) ? new Address()
-                                                        : new Address(vcfRow.Value.AsMemory(), version);
+        if (this.Parameters.Encoding == Enc.QuotedPrintable)
+        {
+            val = QuotedPrintable.Decode(
+                    valSpan,
+                    TextEncodingConverter.GetEncoding(this.Parameters.CharSet)).AsMemory(); // null-check not needed
+        }
+
+        Value = valSpan.IsWhiteSpace() ? new Address()
+                                       : new Address(in val, version);
     }
 
     /// <summary> The data provided by the <see cref="AddressProperty" />.</summary>

@@ -4,7 +4,6 @@ namespace FolkerKinzel.VCards.Intls.Deserializers;
 
 internal sealed class VcfDeserializationInfo
 {
-    private const int INITIAL_STRINGBUILDER_CAPACITY = 64;
     internal const int INITIAL_PARAMETERLIST_CAPACITY = 8;
 
     private DateTimeConverter? _dateAndOrTimeConverter;

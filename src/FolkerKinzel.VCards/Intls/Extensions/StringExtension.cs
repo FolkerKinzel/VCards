@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Encodings;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
 
@@ -7,6 +8,51 @@ internal static partial class StringExtension
 {
     // The regex isn't perfect but finds most IETF language tags:
     private const string IETF_LANGUAGE_TAG_PATTERN = @"^[a-z]{2,3}-[A-Z]{2,3}$";
+
+    /// <summary> Unmasks masked text contained in <see cref="Value" /> according to
+    /// vCard 2.1, and decodes its Quoted-Printable encoding.</summary>
+    /// <param name="value">The span to unmask and decode.</param>
+    /// <param name="charSet">The Charset to use for Quoted-Printable decoding.</param>
+    internal static string UnMaskAndDecode(this ReadOnlySpan<char> value, string? charSet)
+    {
+        if (value.Length > Const.STACKALLOC_CHAR_THRESHOLD)
+        {
+            using ArrayPoolHelper.SharedArray<char> buf = ArrayPoolHelper.Rent<char>(value.Length);
+            return DoUnMasking(value, buf.Array.AsSpan(), charSet);
+        }
+        else
+        {
+            Span<char> bufSpan = stackalloc char[value.Length];
+            return DoUnMasking(value, bufSpan, charSet);
+        }
+
+        static string DoUnMasking(ReadOnlySpan<char> valueSpan, Span<char> bufSpan, string? charSet)
+        {
+            valueSpan = valueSpan.Slice(0, UnMask(valueSpan, bufSpan, VCdVersion.V2_1));
+            return QuotedPrintable.Decode(
+                valueSpan, TextEncodingConverter.GetEncoding(charSet)); // null-check not needed
+
+            static int UnMask(ReadOnlySpan<char> value, Span<char> outBuf, VCdVersion version)
+            {
+                int idxOfBackSlash = value.IndexOf('\\');
+
+                if (idxOfBackSlash == -1)
+                {
+                    value.CopyTo(outBuf);
+                    return value.Length;
+                }
+
+                value.Slice(0, idxOfBackSlash).CopyTo(outBuf);
+
+                return version switch
+                {
+                    VCdVersion.V2_1 => idxOfBackSlash + UnMask21(value, outBuf),
+                    VCdVersion.V3_0 => idxOfBackSlash + UnMask30(value, outBuf),
+                    _ => idxOfBackSlash + UnMask40(value, outBuf)
+                };
+            }
+        }
+    }
 
     internal static string UnMask(this ReadOnlySpan<char> value, VCdVersion version)
     {
@@ -77,7 +123,7 @@ internal static partial class StringExtension
         int lastSourceIdx = source.Length - 1;
         int length = 0;
 
-        var newLineSpan = Environment.NewLine.AsSpan();
+        ReadOnlySpan<char> newLineSpan = Environment.NewLine.AsSpan();
 
         for (int i = 0; i < lastSourceIdx; i++)
         {
@@ -117,7 +163,7 @@ internal static partial class StringExtension
         int lastSourceIdx = source.Length - 1;
         int length = 0;
 
-        var newLineSpan = Environment.NewLine.AsSpan();
+        ReadOnlySpan<char> newLineSpan = Environment.NewLine.AsSpan();
 
         for (int i = 0; i < lastSourceIdx; i++)
         {
@@ -175,7 +221,7 @@ internal static partial class StringExtension
             return false;
         }
 
-        var span = s.AsSpan();
+        ReadOnlySpan<char> span = s.AsSpan();
 
         if (span.ContainsNewLine())
         {

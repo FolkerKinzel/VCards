@@ -80,9 +80,19 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     internal NameProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        vcfRow.DecodeQuotedPrintable();
+        ReadOnlyMemory<char> val = vcfRow.Value.AsMemory();
+        ReadOnlySpan<char> valSpan = val.Span;
 
-        Value = string.IsNullOrWhiteSpace(vcfRow.Value) ? new Name() : new Name(vcfRow.Value.AsMemory(), vcfRow.Info, version);
+        if (this.Parameters.Encoding == Enc.QuotedPrintable)
+        {
+            val = QuotedPrintable.Decode(
+                    valSpan,
+                    TextEncodingConverter.GetEncoding(this.Parameters.CharSet)).AsMemory(); // null-check not needed
+        }
+
+        Value = string.IsNullOrWhiteSpace(vcfRow.Value) 
+            ? new Name() 
+            : new Name(in val, version);
     }
 
     /// <summary> The data provided by the <see cref="NameProperty" />.

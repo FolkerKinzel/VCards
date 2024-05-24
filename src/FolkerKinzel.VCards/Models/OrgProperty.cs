@@ -49,12 +49,17 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
     internal OrgProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        Debug.Assert(vcfRow is not null);
+        ReadOnlyMemory<char> val = vcfRow.Value.AsMemory();
 
-        vcfRow.DecodeQuotedPrintable();
+        if (this.Parameters.Encoding == Enc.QuotedPrintable)
+        {
+            val = QuotedPrintable.Decode(
+                    val.Span,
+                    TextEncodingConverter.GetEncoding(this.Parameters.CharSet)).AsMemory(); // null-check not needed
+        }
 
         Value = new Organization(new List<string>(
-            ValueSplitter.Split(vcfRow.Value.AsMemory(), ';', StringSplitOptions.None, unMask: true, version)));
+            ValueSplitter.Split(val, ';', StringSplitOptions.None, unMask: true, version)));
     }
 
     /// <summary> The data provided by the  <see cref="OrgProperty" />. </summary>
