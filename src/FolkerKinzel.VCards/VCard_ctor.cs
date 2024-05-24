@@ -380,7 +380,7 @@ public sealed partial class VCard
                     {
                         if (vcfRow.Value.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                         {
-                            var nested = ParseNestedVcard(vcfRow.Value, info, this.Version);
+                            VCard? nested = ParseNestedVcard(vcfRow.Value, info, this.Version);
                             Relations = Concat(Relations,
                                                nested is null
                                                ? RelationProperty.FromText(vcfRow.Value,
