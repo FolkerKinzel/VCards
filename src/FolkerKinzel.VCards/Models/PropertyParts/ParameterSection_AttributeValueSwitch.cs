@@ -1,4 +1,3 @@
-using System.Globalization;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 
@@ -6,6 +5,10 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 public sealed partial class ParameterSection
 {
+#if NET8_0_OR_GREATER
+    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters",
+        Justification = "Not localizable")]
+#endif
     private static string ParseAttributeKeyFromValue(ReadOnlySpan<char> value)
     {
         const string ENCODING_PROPERTY = ParameterSection.ParameterKey.ENCODING;

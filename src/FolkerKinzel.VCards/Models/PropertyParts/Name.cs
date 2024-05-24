@@ -99,9 +99,7 @@ public sealed class Name
         }//foreach
 
         // If the VCF file is invalid, properties could be null:
-        // (LastName can never be null)
-        Debug.Assert(FamilyNames is not null);
-        //FamilyNames ??= ReadOnlyCollectionString.Empty;
+        FamilyNames ??= ReadOnlyStringCollection.Empty;
         GivenNames ??= ReadOnlyStringCollection.Empty;
         AdditionalNames ??= ReadOnlyStringCollection.Empty;
         Prefixes ??= ReadOnlyStringCollection.Empty;

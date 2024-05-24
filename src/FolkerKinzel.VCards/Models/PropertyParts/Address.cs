@@ -132,9 +132,7 @@ public sealed class Address
         }//foreach
 
         // If the VCF file is invalid, properties could be null:
-        // (PostOfficeBox can never be null)
-        Debug.Assert(PostOfficeBox is not null);
-        //PostOfficeBox ??= ReadOnlyCollectionString.Empty;
+        PostOfficeBox ??= ReadOnlyStringCollection.Empty;
         ExtendedAddress ??= ReadOnlyStringCollection.Empty;
         Street ??= ReadOnlyStringCollection.Empty;
         Locality ??= ReadOnlyStringCollection.Empty;

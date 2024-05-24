@@ -34,11 +34,11 @@ internal static class ValueSplitter2
                 yield return unMask
                              ? nextChunk.Span.UnMask(version)
                              : nextChunk.ToString();
+            }
 
-                if (splitIndex == mem.Length)
-                {
-                    yield break;
-                }
+            if (splitIndex == mem.Length)
+            {
+                yield break;
             }
 
             mem = mem.Slice(splitIndex + 1);
