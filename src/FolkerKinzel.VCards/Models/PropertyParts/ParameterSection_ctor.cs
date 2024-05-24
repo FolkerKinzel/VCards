@@ -87,7 +87,7 @@ public sealed partial class ParameterSection
                     }
                 case ParameterKey.TYPE:
                     {
-                        foreach (string s in ValueSplitter2.Split(
+                        foreach (string s in ValueSplitter.Split(
                             parameter.Value, ',', StringSplitOptions.RemoveEmptyEntries, unMask: false, VCdVersion.V3_0))
                         {
                             if (!ParseTypeParameter(s, propertyKey))
@@ -119,7 +119,7 @@ public sealed partial class ParameterSection
                     {
                         this.SortAs = new List<string>
                             (
-                            ValueSplitter2.Split(
+                            ValueSplitter.Split(
                             parameter.Value, ',', StringSplitOptions.RemoveEmptyEntries, unMask: true, VCdVersion.V4_0)
                             );
 

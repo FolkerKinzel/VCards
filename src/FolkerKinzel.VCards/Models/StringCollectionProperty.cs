@@ -66,7 +66,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         var list = 
             new List<string>
             (
-            ValueSplitter2.Split(
+            ValueSplitter.Split(
                 vcfRow.Value.AsMemory(), ',', StringSplitOptions.RemoveEmptyEntries, unMask: true, version)
             );
 

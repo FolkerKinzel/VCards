@@ -54,7 +54,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
         vcfRow.DecodeQuotedPrintable();
 
         Value = new Organization(new List<string>(
-            ValueSplitter2.Split(vcfRow.Value.AsMemory(), ';', StringSplitOptions.None, unMask: true, version)));
+            ValueSplitter.Split(vcfRow.Value.AsMemory(), ';', StringSplitOptions.None, unMask: true, version)));
     }
 
     /// <summary> The data provided by the  <see cref="OrgProperty" />. </summary>
