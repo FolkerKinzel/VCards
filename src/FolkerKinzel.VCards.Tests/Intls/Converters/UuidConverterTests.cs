@@ -69,10 +69,10 @@ public class UuidConverterTest
     public void ToGuidTest1()
     {
         string guidString = "550e8400e29b11d4a716446655440000";
-        var guid = UuidConverter.ToGuid(guidString);
+        var guid = UuidConverter.ToGuid(guidString.AsSpan());
         Assert.AreNotEqual(guid, Guid.Empty);
         guidString = "urn:uuid:" + guidString;
-        var guid2 = UuidConverter.ToGuid(guidString);
+        var guid2 = UuidConverter.ToGuid(guidString.AsSpan());
         Assert.AreEqual(guid, guid2);
     }
 
@@ -80,10 +80,10 @@ public class UuidConverterTest
     public void ToGuidTest6()
     {
         string guidString = "550e8400e29b11d4a716446655440000";
-        var guid = UuidConverter.ToGuid(guidString);
+        var guid = UuidConverter.ToGuid(guidString.AsSpan());
         Assert.AreNotEqual(guid, Guid.Empty);
         guidString = "    urn:uuid:" + guidString;
-        var guid2 = UuidConverter.ToGuid(guidString);
+        var guid2 = UuidConverter.ToGuid(guidString.AsSpan());
         Assert.AreEqual(guid, guid2);
     }
 
@@ -92,11 +92,11 @@ public class UuidConverterTest
     public void ToGuidTest2()
     {
         string guidString = "550e8400-e29b-11d4-a716-446655440000";
-        var guid = UuidConverter.ToGuid(guidString);
+        var guid = UuidConverter.ToGuid(guidString.AsSpan());
         Assert.AreNotEqual(guid, Guid.Empty);
         Assert.AreEqual(guidString, guid.ToString());
         guidString = "urn:uuid:" + guidString;
-        var guid2 = UuidConverter.ToGuid(guidString);
+        var guid2 = UuidConverter.ToGuid(guidString.AsSpan());
         Assert.AreEqual(guid, guid2);
         var sb = new StringBuilder();
         _ = sb.AppendUuid(guid2);
@@ -107,14 +107,14 @@ public class UuidConverterTest
     [TestMethod]
     public void ToGuidTest3()
     {
-        var guid3 = UuidConverter.ToGuid((string?)null);
+        var guid3 = UuidConverter.ToGuid("".AsSpan());
         Assert.AreEqual(Guid.Empty, guid3);
     }
 
     [TestMethod]
     public void ToGuidTest4()
     {
-        var guid4 = UuidConverter.ToGuid(string.Empty);
+        var guid4 = UuidConverter.ToGuid(string.Empty.AsSpan());
         Assert.AreEqual(Guid.Empty, guid4);
     }
 
@@ -122,7 +122,7 @@ public class UuidConverterTest
     [TestMethod]
     public void ToGuidTest5()
     {
-        var guid4 = UuidConverter.ToGuid("               ");
+        var guid4 = UuidConverter.ToGuid("               ".AsSpan());
         Assert.AreEqual(Guid.Empty, guid4);
     }
 

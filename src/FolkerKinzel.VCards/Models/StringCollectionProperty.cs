@@ -57,7 +57,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        ReadOnlyMemory<char> val = vcfRow.Value.AsMemory();
+        ReadOnlyMemory<char> val = vcfRow.Value;
 
         if (this.Parameters.Encoding == Enc.QuotedPrintable)
         {

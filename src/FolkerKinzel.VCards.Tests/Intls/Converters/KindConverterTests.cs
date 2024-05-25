@@ -10,7 +10,7 @@ public class KindConverterTests
     {
         foreach (Kind kind in (Kind[])Enum.GetValues(typeof(Kind)))
         {
-            Kind kind2 = KindConverter.Parse(kind.ToString());
+            Kind kind2 = KindConverter.Parse(kind.ToString().AsSpan());
             Assert.AreEqual(kind, kind2);
 
             object kind3 = Enum.Parse(typeof(Kind), kind.ToVcfString(), true);

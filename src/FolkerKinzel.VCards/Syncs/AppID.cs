@@ -46,16 +46,14 @@ public sealed class AppID
     }
 
     /// <summary>Parses a <see cref="string" /> that represents a vCard&#160;4.0 Property-ID Mapping. </summary>
-    /// <param name="s">The <see cref="string"/> to parse.</param>
+    /// <param name="span">The <see cref="string"/> to parse.</param>
     /// <param name="client">The parsed <see cref="AppID"/> if the method returns <c>true</c>,
     /// otherwise <c>null</c>.</param>
-    /// <returns><c>true</c> if <paramref name="s"/> could be parsed, otherwise <c>false</c>.</returns>
-    internal static bool TryParse(string s, [NotNullWhen(true)] out AppID? client)
+    /// <returns><c>true</c> if <paramref name="span"/> could be parsed, otherwise <c>false</c>.</returns>
+    internal static bool TryParse(ReadOnlySpan<char> span, [NotNullWhen(true)] out AppID? client)
     {
-        Debug.Assert(s is not null);
         client = null;
 
-        var span = s.AsSpan();
         int separatorIdx = span.IndexOf(';');
 
         if (separatorIdx < 1)

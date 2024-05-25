@@ -5,5 +5,5 @@ public class Base64HelperTests
 {
     [TestMethod]
     public void GetBytesOrNullTest1()
-        => Assert.IsNull(Base64Helper.GetBytesOrNull("ä"));
+        => Assert.IsNull(Base64Helper.GetBytesOrNull("ä".AsSpan()));
 }

@@ -202,14 +202,14 @@ public abstract class DateAndOrTimeProperty
     {
         Debug.Assert(vcfRow is not null);
 
-        var dataType = vcfRow.Parameters.DataType;
+        Data? dataType = vcfRow.Parameters.DataType;
 
         if (dataType == Data.Text)
         {
-            return new DateTimeTextProperty(vcfRow, version);
+            return new DateTimeTextProperty(new TextProperty(vcfRow, version));
         }
 
-        ReadOnlySpan<char> valueSpan = vcfRow.Value.AsSpan().Trim();
+        ReadOnlySpan<char> valueSpan = vcfRow.Value.Span.Trim();
 
         return dataType == Data.Time || valueSpan.StartsWith('T')
             ? info.TimeConverter.TryParse(valueSpan, out OneOf<TimeOnly, DateTimeOffset> oneOf1)

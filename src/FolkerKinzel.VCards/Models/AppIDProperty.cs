@@ -37,7 +37,7 @@ public sealed class AppIDProperty : VCardProperty, IEnumerable<AppIDProperty>
     {
         prop = null;
 
-        if (AppID.TryParse(vcfRow.Value, out AppID? client))
+        if (AppID.TryParse(vcfRow.Value.Span, out AppID? client))
         {
             prop = new AppIDProperty(client, vcfRow.Parameters, vcfRow.Group);
             return true;

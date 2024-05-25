@@ -49,7 +49,7 @@ public sealed class TimeStampProperty : VCardProperty
     {
         // A static DateAndOrTimeConverter can't be used because it would
         // destroy the thread safety:
-        if (info.DateAndOrTimeConverter.TryParse(vcfRow.Value.AsSpan().Trim(), out OneOf<DateOnly, DateTimeOffset> value))
+        if (info.DateAndOrTimeConverter.TryParse(vcfRow.Value.Span.Trim(), out OneOf<DateOnly, DateTimeOffset> value))
         {
             Value = value.Match<DateTimeOffset>(
                 dateOnly => new DateTimeOffset(dateOnly.ToDateTime(TimeOnly.MinValue, DateTimeKind.Local)),

@@ -213,14 +213,14 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                         s => new EmbeddedTextProperty(new TextProperty(vcfRow, version)),
                         b => new EmbeddedBytesProperty(b, vcfRow.Group, vcfRow.Parameters)
                         )
-                    : FromText(vcfRow.Value, info.MimeType.ToString(), vcfRow.Group);
+                    : FromText(vcfRow.Value.ToString(), info.MimeType.ToString(), vcfRow.Group);
         }
 
         if (vcfRow.Parameters.Encoding == Enc.Base64)
         {
             return new EmbeddedBytesProperty
                        (
-                        Base64Helper.GetBytesOrNull(vcfRow.Value),
+                        Base64Helper.GetBytesOrNull(vcfRow.Value.Span),
                         vcfRow.Group,
                         vcfRow.Parameters
                         );
@@ -235,11 +235,13 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         if (vcfRow.Parameters.Encoding == Enc.QuotedPrintable &&
             vcfRow.Parameters.MediaType is not null)
         {
+            ReadOnlySpan<char> valueSpan = vcfRow.Value.Span;
+
             return new EmbeddedBytesProperty
                    (
-                     string.IsNullOrWhiteSpace(vcfRow.Value)
+                     valueSpan.IsWhiteSpace()
                             ? null
-                            : QuotedPrintable.DecodeData(vcfRow.Value.AsSpan()),
+                            : QuotedPrintable.DecodeData(valueSpan),
                      vcfRow.Group,
                      vcfRow.Parameters
                      );
@@ -253,8 +255,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         static DataProperty TryAsUri(VcfRow vcfRow, VCdVersion version)
         {
             string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
-                ? vcfRow.Value.AsSpan().UnMaskAndDecode(vcfRow.Parameters.CharSet)
-                : vcfRow.Value.AsSpan().UnMask(version);
+                ? vcfRow.Value.Span.UnMaskAndDecode(vcfRow.Parameters.CharSet)
+                : vcfRow.Value.Span.UnMask(version);
 
             return UriConverter.TryConvertToAbsoluteUri(val, out Uri? uri)
                        ? new ReferencedDataProperty

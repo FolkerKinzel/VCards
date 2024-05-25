@@ -2,7 +2,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings;
 
 internal static class Base64Helper
 {
-    internal static byte[]? GetBytesOrNull(string? base64)
+    internal static byte[]? GetBytesOrNull(ReadOnlySpan<char> base64)
     {
         try
         {

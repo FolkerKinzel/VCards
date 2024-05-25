@@ -34,7 +34,7 @@ public sealed class IDProperty : VCardProperty, IEquatable<IDProperty>
         : base(new ParameterSection(), group) => Value = value;
 
     internal IDProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
-            => Value = UuidConverter.ToGuid(vcfRow.Value);
+            => Value = UuidConverter.ToGuid(vcfRow.Value.Span);
 
     /// <summary> The <see cref="Guid"/> provided by the <see cref="IDProperty" />.
     /// </summary>

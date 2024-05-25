@@ -66,7 +66,7 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
         : base(vcfRow.Parameters, vcfRow.Group)
     {
         XName = vcfRow.Key;
-        Value = string.IsNullOrEmpty(vcfRow.Value) ? null : vcfRow.Value;
+        Value = vcfRow.Value.Span.IsEmpty ? null : vcfRow.Value.ToString();
     }
 
     /// <summary>The key ("name") of the vCard property.</summary>

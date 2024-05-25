@@ -82,8 +82,8 @@ public class VcfRowReaderTests
 
         Assert.AreEqual(3, list.Count);
         Assert.AreEqual("AGENT", list[1].Key);
-        StringAssert.Contains(list[1].Value, "Friday;Fred");
-        StringAssert.EndsWith(list[1].Value, "END:VCARD");
+        StringAssert.Contains(list[1].Value.ToString(), "Friday;Fred");
+        StringAssert.EndsWith(list[1].Value.ToString(), "END:VCARD");
 
         Assert.IsFalse(vcReader.EOF);
     }
@@ -114,7 +114,7 @@ public class VcfRowReaderTests
 
         Assert.AreEqual(3, list.Count);
         Assert.AreEqual("PHOTO", list[1].Key);
-        StringAssert.EndsWith(list[1].Value, "ICAgM");
+        StringAssert.EndsWith(list[1].Value.ToString(), "ICAgM");
 
         Assert.IsFalse(vcReader.EOF);
     }
@@ -144,7 +144,7 @@ public class VcfRowReaderTests
 
         Assert.AreEqual(3, list.Count);
         Assert.AreEqual("PHOTO", list[1].Key);
-        StringAssert.EndsWith(list[1].Value, "LastLine==");
+        StringAssert.EndsWith(list[1].Value.ToString(), "LastLine==");
     }
 
     [TestMethod]
@@ -172,8 +172,8 @@ public class VcfRowReaderTests
 
         Assert.AreEqual(3, list.Count);
         Assert.AreEqual("PHOTO", list[1].Key);
-        StringAssert.Contains(list[1].Value, "SecondLine");
-        StringAssert.EndsWith(list[1].Value, "LastLine==");
+        StringAssert.Contains(list[1].Value.ToString(), "SecondLine");
+        StringAssert.EndsWith(list[1].Value.ToString(), "LastLine==");
 
         Assert.IsFalse(vcReader.EOF);
     }
@@ -205,8 +205,8 @@ public class VcfRowReaderTests
 
         Assert.AreEqual(3, list.Count);
         Assert.AreEqual("PHOTO", list[1].Key);
-        StringAssert.Contains(list[1].Value, "SecondLine");
-        StringAssert.EndsWith(list[1].Value, "LastLine==");
+        StringAssert.Contains(list[1].Value.ToString(), "SecondLine");
+        StringAssert.EndsWith(list[1].Value.ToString(), "LastLine==");
 
         Assert.IsFalse(vcReader.EOF);
     }
@@ -266,7 +266,7 @@ public class VcfRowReaderTests
 
         Assert.AreEqual(3, list.Count);
         Assert.AreEqual("LABEL", list[1].Key);
-        Assert.IsTrue(list[1].Value?.EndsWith(" Firma") ?? false);
+        Assert.IsTrue(list[1].Value.ToString().EndsWith(" Firma"));
 
         Assert.IsFalse(vcReader.EOF);
     }
@@ -295,8 +295,8 @@ public class VcfRowReaderTests
 
         Assert.AreEqual(3, list.Count);
         Assert.AreEqual("LABEL", list[1].Key);
-        StringAssert.EndsWith(list[1].Value, " Firma");
-        StringAssert.Contains(list[1].Value, "Line 2");
+        StringAssert.EndsWith(list[1].Value.ToString(), " Firma");
+        StringAssert.Contains(list[1].Value.ToString(), "Line 2");
 
         Assert.IsFalse(vcReader.EOF);
     }
@@ -326,8 +326,8 @@ public class VcfRowReaderTests
 
         Assert.AreEqual(3, list.Count);
         Assert.AreEqual("LABEL", list[1].Key);
-        StringAssert.EndsWith(list[1].Value, "Firma");
-        StringAssert.Contains(list[1].Value, " Line 2");
+        StringAssert.EndsWith(list[1].Value.ToString(), "Firma");
+        StringAssert.Contains(list[1].Value.ToString(), " Line 2");
 
         Assert.IsFalse(vcReader.EOF);
     }
@@ -358,7 +358,7 @@ public class VcfRowReaderTests
         }
 
         Assert.AreEqual(2, list.Count);
-        Assert.AreEqual("12345678", list[1].Value);
+        Assert.AreEqual("12345678", list[1].Value.ToString());
 
         Assert.IsFalse(vcReader.EOF);
     }
@@ -385,7 +385,7 @@ public class VcfRowReaderTests
         }
 
         Assert.AreEqual(2, list.Count);
-        Assert.AreEqual("12345678", list[1].Value);
+        Assert.AreEqual("12345678", list[1].Value.ToString());
 
         Assert.IsFalse(vcReader.EOF);
     }
@@ -412,7 +412,7 @@ public class VcfRowReaderTests
         }
 
         Assert.AreEqual(2, list.Count);
-        Assert.AreEqual("1234 5678", list[1].Value);
+        Assert.AreEqual("1234 5678", list[1].Value.ToString());
 
         Assert.IsFalse(vcReader.EOF);
     }

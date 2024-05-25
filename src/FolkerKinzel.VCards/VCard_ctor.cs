@@ -118,7 +118,7 @@ public sealed partial class VCard
             switch (vcfRow.Key)
             {
                 case PropKeys.VERSION:
-                    this.Version = VCdVersionConverter.Parse(vcfRow.Value);
+                    this.Version = VCdVersionConverter.Parse(vcfRow.Value.Span);
                     break;
                 case PropKeys.KIND:
                     Kind = new KindProperty(vcfRow);
@@ -170,11 +170,7 @@ public sealed partial class VCard
                     Urls = Concat(Urls, new TextProperty(vcfRow, Version));
                     break;
                 case PropKeys.UID:
-                    try
-                    {
-                        ID = new IDProperty(vcfRow);
-                    }
-                    catch { }
+                    ID = new IDProperty(vcfRow);
                     break;
                 case PropKeys.ORG:
                     Organizations = Concat(Organizations, new OrgProperty(vcfRow, this.Version));
@@ -256,9 +252,10 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (GenderViews is null && vcfRow.Value is not null)
+                    else if (GenderViews is null && !vcfRow.Value.IsEmpty)
                     {
-                        GenderViews = vcfRow.Value.StartsWith('F') || vcfRow.Value.StartsWith('f')
+                        ReadOnlySpan<char> valSpan = vcfRow.Value.Span.TrimStart();
+                        GenderViews = !valSpan.IsEmpty && char.ToUpperInvariant(valSpan[0]) == 'F'
                             ? new GenderProperty(Enums.Sex.Female)
                             : new GenderProperty(Enums.Sex.Male);
                     }
@@ -270,7 +267,7 @@ public sealed partial class VCard
                     }
                     else
                     {
-                        GenderViews ??= vcfRow.Value.Contains('1', StringComparison.Ordinal)
+                        GenderViews ??= vcfRow.Value.Span.Contains('1')
                                             ? new GenderProperty(Enums.Sex.Female)
                                             : new GenderProperty(Enums.Sex.Male);
                     }
@@ -372,35 +369,36 @@ public sealed partial class VCard
 
                     break;
                 case PropKeys.AGENT:
-                    if (string.IsNullOrWhiteSpace(vcfRow.Value))
                     {
-                        Relations = Concat(Relations, RelationProperty.FromText(null, Rel.Agent, vcfRow.Group));
-                    }
-                    else
-                    {
-                        if (vcfRow.Value.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
+                        vcfRow.Parameters.RelationType = Rel.Agent;
+                        ReadOnlySpan<char> valSpan = vcfRow.Value.Span;
+
+                        if (valSpan.IsWhiteSpace())
                         {
-                            VCard? nested = ParseNestedVcard(vcfRow.Value, info, this.Version);
-                            Relations = Concat(Relations,
-                                               nested is null
-                                               ? RelationProperty.FromText(vcfRow.Value,
-                                                                           Rel.Agent,
-                                                                           vcfRow.Group)
-                                               // use the ctor directly because nested can't be a circular
-                                               // reference and therefore don't neeed to be cloned:
-                                               : new RelationVCardProperty(nested,
-                                                                           Rel.Agent,
-                                                                           vcfRow.Group));
+                            Relations = Concat(Relations, RelationProperty.FromText(null, Rel.Agent, vcfRow.Group));
                         }
                         else
                         {
-                            vcfRow.Parameters.DataType ??= Data.Text;
-                            vcfRow.Parameters.RelationType = Rel.Agent;
+                            if (valSpan.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
+                            {
+                                VCard? nested = ParseNestedVcard(vcfRow.Value.ToString(), info, this.Version);
 
-                            Relations = Concat(Relations, RelationProperty.Parse(vcfRow, this.Version));
+                                Relations = 
+                                    Concat(Relations,  nested is null 
+                                                       ? new RelationTextProperty(new TextProperty(vcfRow, Version))
+
+                                                       // use the ctor directly because nested can't be a circular
+                                                       // reference and therefore don't neeed to be cloned:
+                                                       : new RelationVCardProperty(nested, Rel.Agent, vcfRow.Group));
+                            }
+                            else
+                            {
+                                vcfRow.Parameters.DataType ??= Data.Text;
+                                Relations = Concat(Relations, RelationProperty.Parse(vcfRow, this.Version));
+                            }
                         }
+                        break;
                     }
-                    break;
                 case PropKeys.PROFILE:
                     this.Profile = new ProfileProperty(vcfRow, this.Version);
                     break;

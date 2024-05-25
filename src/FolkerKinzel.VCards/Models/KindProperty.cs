@@ -26,7 +26,7 @@ public sealed class KindProperty : VCardProperty
         : base(new ParameterSection(), group) => Value = value;
 
     internal KindProperty(VcfRow vcfRow)
-        : base(vcfRow.Parameters, vcfRow.Group) => Value = KindConverter.Parse(vcfRow.Value);
+        : base(vcfRow.Parameters, vcfRow.Group) => Value = KindConverter.Parse(vcfRow.Value.Span);
 
     /// <summary> The data provided by the <see cref="KindProperty" />.
     /// </summary>

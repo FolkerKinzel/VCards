@@ -37,26 +37,17 @@ internal static class UuidConverter
         return false;
     }
 
-    internal static Guid ToGuid(string? uuid)
+    internal static Guid ToGuid(ReadOnlySpan<char> uuid)
     {
-        if (string.IsNullOrWhiteSpace(uuid) || uuid.Length < GUID_MIN_LENGTH)
-
+        if (uuid.IsWhiteSpace() || uuid.Length < GUID_MIN_LENGTH)
         {
             return Guid.Empty;
         }
 
-        int startOfGuid = 0;
-
-        for (int i = uuid.Length - GUID_MIN_LENGTH - 1; i >= 0; i--)
-        {
-            if (uuid[i].Equals(':'))
-            {
-                startOfGuid = i + 1;
-                break;
-            }
-        }
-
-        _ = _Guid.TryParse(uuid.AsSpan().Slice(startOfGuid), out Guid guid);
+        // e.g., urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
+        uuid = uuid.Slice(uuid.LastIndexOf(':') + 1);
+        
+        _ = _Guid.TryParse(uuid, out Guid guid);
         return guid;
     }
 

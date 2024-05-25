@@ -12,10 +12,6 @@ internal sealed class DateTimeTextProperty : DateAndOrTimeProperty
     internal DateTimeTextProperty(TextProperty textProp) :
         base(textProp.Parameters, textProp.Group) => _textProp = textProp;
 
-    internal DateTimeTextProperty(VcfRow vcfRow, VCdVersion version)
-        : base(vcfRow.Parameters,
-               vcfRow.Group) => _textProp = new TextProperty(vcfRow, version);
-
     public new string? Value => _textProp.Value;
 
     /// <inheritdoc />

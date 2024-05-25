@@ -55,8 +55,8 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
         : base(vcfRow.Parameters, vcfRow.Group)
     {
         string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
-                ? vcfRow.Value.AsSpan().UnMaskAndDecode(vcfRow.Parameters.CharSet)
-                : vcfRow.Value.AsSpan().UnMask(version);
+                ? vcfRow.Value.Span.UnMaskAndDecode(vcfRow.Parameters.CharSet)
+                : vcfRow.Value.Span.UnMask(version);
 
         if (TimeZoneID.TryParse(val, out TimeZoneID? tzID))
         {

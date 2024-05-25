@@ -13,5 +13,5 @@ public class VCdVersionConverterTests
     [DataRow("3.0", VCdVersion.V3_0)]
     [DataRow("4.0", VCdVersion.V4_0)]
     public void ParseTest(string? input, VCdVersion expected)
-        => Assert.AreEqual(expected, VCdVersionConverter.Parse(input));
+        => Assert.AreEqual(expected, VCdVersionConverter.Parse(input.AsSpan()));
 }

@@ -26,7 +26,7 @@ public sealed class AccessProperty : VCardProperty
 
 
     internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
-        => Value = AccessConverter.Parse(vcfRow.Value);
+        => Value = AccessConverter.Parse(vcfRow.Value.Span);
 
     /// <inheritdoc />
     public override bool IsEmpty => false;

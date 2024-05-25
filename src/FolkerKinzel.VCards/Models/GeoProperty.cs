@@ -43,7 +43,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 
     internal GeoProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
     {
-        if (GeoCoordinate.TryParse(vcfRow.Value.AsSpan(), out GeoCoordinate? geo))
+        if (GeoCoordinate.TryParse(vcfRow.Value.Span, out GeoCoordinate? geo))
         {
             this.Value = geo;
         }

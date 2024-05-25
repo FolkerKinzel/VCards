@@ -10,7 +10,7 @@ public class AccessConverterTests
     {
         foreach (Access kind in (Access[])Enum.GetValues(typeof(Access)))
         {
-            Access kind2 = AccessConverter.Parse(kind.ToString());
+            Access kind2 = AccessConverter.Parse(kind.ToString().AsSpan());
             Assert.AreEqual(kind, kind2);
             object kind3 = Enum.Parse(typeof(Access), kind.ToVCardString(), true);
             Assert.AreEqual(kind, kind3);

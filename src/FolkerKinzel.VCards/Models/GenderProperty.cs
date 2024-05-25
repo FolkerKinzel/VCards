@@ -41,7 +41,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
         Sex? sex = null;
         string? genderIdentity = null;
 
-        ReadOnlySpan<char> span = vcfRow.Value.AsSpan();
+        ReadOnlySpan<char> span = vcfRow.Value.Span;
 
         if (!span.IsEmpty)
         {

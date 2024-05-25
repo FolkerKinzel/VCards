@@ -91,7 +91,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
             : !uri.IsAbsoluteUri
                 ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)), nameof(uri))
                 : UuidConverter.IsUuidUri(uri.OriginalString)
-                        ? new RelationUuidProperty(UuidConverter.ToGuid(uri.OriginalString))
+                        ? new RelationUuidProperty(UuidConverter.ToGuid(uri.OriginalString.AsSpan()))
                         : new RelationUriProperty
                           (
                             new UriProperty(uri,
@@ -208,18 +208,20 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
 
     internal static RelationProperty Parse(VcfRow vcfRow, VCdVersion version)
     {
-        if (string.IsNullOrWhiteSpace(vcfRow.Value) || vcfRow.Parameters.DataType == Data.Text)
+        ReadOnlySpan<char> valSpan = vcfRow.Value.Span.Trim();
+
+        if (valSpan.IsEmpty || vcfRow.Parameters.DataType == Data.Text)
         {
             return new RelationTextProperty(new TextProperty(vcfRow, version));
         }
 
         string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
-                ? vcfRow.Value.AsSpan().UnMaskAndDecode(vcfRow.Parameters.CharSet)
-                : vcfRow.Value.AsSpan().UnMask(version);
+                ? valSpan.UnMaskAndDecode(vcfRow.Parameters.CharSet)
+                : valSpan.UnMask(version);
 
         if (val.IsUuidUri())
         {
-            var relation = new RelationUuidProperty(UuidConverter.ToGuid(val),
+            var relation = new RelationUuidProperty(UuidConverter.ToGuid(valSpan),
                                                     vcfRow.Parameters.RelationType,
                                                     group: vcfRow.Group);
 
@@ -227,7 +229,7 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
 
             return relation;
         }
-        else if (Uri.TryCreate(val.Trim(), UriKind.Absolute, out Uri? uri))
+        else if (Uri.TryCreate(val, UriKind.Absolute, out Uri? uri))
         {
             var relation = new RelationUriProperty
                 (

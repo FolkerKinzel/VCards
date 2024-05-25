@@ -4,9 +4,9 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class VCdVersionConverter
 {
-    internal static VCdVersion Parse(string? value)
+    internal static VCdVersion Parse(ReadOnlySpan<char> value)
     {
-        return string.IsNullOrEmpty(value)
+        return value.IsEmpty
             ? VCdVersion.V2_1
             : value[0] switch
             {

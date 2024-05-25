@@ -13,17 +13,16 @@ internal static class KindConverter
         internal const string APPLICATION = "application";
     }
 
-    internal static Kind Parse(string? value)
+    internal static Kind Parse(ReadOnlySpan<char> value)
     {
-        return (value?.ToLowerInvariant()) switch
-        {
-            VCdKindValues.INDIVIDUAL => Kind.Individual,
-            VCdKindValues.GROUP => Kind.Group,
-            VCdKindValues.ORGANIZATION => Kind.Organization,
-            VCdKindValues.LOCATION => Kind.Location,
-            VCdKindValues.APPLICATION => Kind.Application,
-            _ => Kind.Individual,
-        };
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
+
+        return value.Equals(VCdKindValues.INDIVIDUAL, comp) ? Kind.Individual
+             : value.Equals(VCdKindValues.GROUP, comp) ? Kind.Group
+             : value.Equals(VCdKindValues.ORGANIZATION, comp) ? Kind.Organization
+             : value.Equals(VCdKindValues.LOCATION, comp) ? Kind.Location
+             : value.Equals(VCdKindValues.APPLICATION, comp) ? Kind.Application
+             : Kind.Individual;
     }
 
     internal static string ToVcfString(this Kind kind)
