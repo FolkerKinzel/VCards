@@ -26,6 +26,8 @@ internal static class MimeTypeConverter
             internal const string PICT = "image/x-pict";
             internal const string PS = "application/postscript";
             internal const string QTIME = "image/mov";
+            internal const string MPEG = "image/mpeg";
+
         }
     }
 
@@ -40,16 +42,19 @@ internal static class MimeTypeConverter
             _ => TypeValueFromMimeType(mimeType)
         };
 
-    internal static string? MimeTypeFromImageType(string typeValue)
-        => typeValue switch
-        {
-            Const.ImageTypeValue.MPEG2 => MimeTypeFromImageType(Const.ImageTypeValue.MPEG),
-            Const.ImageTypeValue.PICT => MimeTypeString.Image.PICT,
-            Const.ImageTypeValue.PS => MimeTypeString.Image.PS,
-            Const.ImageTypeValue.QTIME => MimeTypeString.Image.QTIME,
-            "JPG" => MimeTypeString.Image.JPEG,
-            _ => CreateMimeType("image", typeValue),
-        };
+    internal static string? MimeTypeFromImageType(ReadOnlySpan<char> typeValue)
+    {
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
+
+        return typeValue.Equals("JPEG", comp) ? MimeTypeString.Image.JPEG
+             : typeValue.Equals("JPG", comp) ? MimeTypeString.Image.JPEG
+             : typeValue.Equals(Const.ImageTypeValue.MPEG, comp) ? MimeTypeString.Image.MPEG
+             : typeValue.Equals(Const.ImageTypeValue.MPEG2, comp) ? MimeTypeString.Image.MPEG
+             : typeValue.Equals(Const.ImageTypeValue.PICT, comp) ? MimeTypeString.Image.PICT
+             : typeValue.Equals(Const.ImageTypeValue.PS, comp) ? MimeTypeString.Image.PS
+             : typeValue.Equals(Const.ImageTypeValue.QTIME, comp) ? MimeTypeString.Image.QTIME
+             : CreateMimeType("image", typeValue.ToString());
+    }
 
     internal static string? KeyTypeFromMimeType(string? mimeType)
         => mimeType switch
@@ -60,13 +65,14 @@ internal static class MimeTypeConverter
             _ => TypeValueFromMimeType(mimeType)
         };
 
-    internal static string? MimeTypeFromKeyType(string typeValue)
-        => typeValue switch
-        {
-            Const.KeyTypeValue.X509 => MimeTypeString.EncryptionKey.X509,
-            Const.KeyTypeValue.PGP => MimeTypeString.EncryptionKey.PGP,
-            _ => CreateMimeType("application", typeValue)
-        };
+    internal static string? MimeTypeFromKeyType(ReadOnlySpan<char> typeValue)
+    {
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
+
+        return typeValue.Equals(Const.KeyTypeValue.PGP, comp) ? MimeTypeString.EncryptionKey.PGP
+             : typeValue.Equals(Const.KeyTypeValue.X509, comp) ? MimeTypeString.EncryptionKey.X509
+             : CreateMimeType("application", typeValue.ToString());
+    }
 
 
     internal static string? SoundTypeFromMimeType(string? mimeType)
@@ -77,15 +83,16 @@ internal static class MimeTypeConverter
             _ => TypeValueFromMimeType(mimeType)
         };
 
-    internal static string? MimeTypeFromSoundType(string typeValue)
-        => typeValue switch
-        {
-            Const.SoundTypeValue.PCM => MimeTypeString.Audio.PCM,
-            Const.SoundTypeValue.WAVE => MimeTypeString.Audio.WAVE,
-            "MP3" => MimeTypeString.Audio.MPEG,
-            Const.SoundTypeValue.NonStandard.VORBIS => MimeTypeString.Audio.VORBIS,
-            _ => CreateMimeType("audio", typeValue)
-        };
+    internal static string? MimeTypeFromSoundType(ReadOnlySpan<char> typeValue)
+    {
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
+
+        return typeValue.Equals(Const.SoundTypeValue.PCM, comp) ? MimeTypeString.Audio.PCM
+             : typeValue.Equals(Const.SoundTypeValue.WAVE, comp) ? MimeTypeString.Audio.WAVE
+             : typeValue.Equals("MP3", comp) ? MimeTypeString.Audio.MPEG
+             : typeValue.Equals(Const.SoundTypeValue.NonStandard.VORBIS, comp) ? MimeTypeString.Audio.VORBIS
+             : CreateMimeType("audio", typeValue.ToString());
+    }
 
     private static string? CreateMimeType(string mediaType, string subType)
     {

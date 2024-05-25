@@ -118,14 +118,12 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
 
     #endregion
 
-    internal static IEnumerable<PropertyID> Parse(string pids)
+    internal static IEnumerable<PropertyID> Parse(ReadOnlySpan<char> span)
     {
-        var span = pids.AsSpan();
-
         int sepIdx;
         PropertyID? propID;
 
-        var coll = Enumerable.Empty<PropertyID>();
+        IEnumerable<PropertyID> coll = [];
 
         while ((sepIdx = span.IndexOf(',')) != -1)
         {

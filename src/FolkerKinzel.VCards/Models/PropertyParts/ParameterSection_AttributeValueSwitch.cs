@@ -11,6 +11,8 @@ public sealed partial class ParameterSection
 #endif
     private static string ParseAttributeKeyFromValue(ReadOnlySpan<char> value)
     {
+        Debug.Assert(!value.IsWhiteSpace());
+
         const string ENCODING_PROPERTY = ParameterSection.ParameterKey.ENCODING;
         //const string CONTEXT_PROPERTY = ParameterSection.ParameterKey.CONTEXT;
         const string CHARSET_PROPERTY = ParameterSection.ParameterKey.CHARSET;

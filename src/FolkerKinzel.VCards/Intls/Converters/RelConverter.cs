@@ -52,34 +52,31 @@ internal static class RelConverter
     internal const int RELATION_TYPES_MIN_BIT = 0;
     internal const int RELATION_TYPES_MAX_BIT = 19;
 
-    internal static Rel? Parse(string? typeValue)
+    internal static Rel? Parse(ReadOnlySpan<char> typeValue)
     {
-        Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        return typeValue switch
-        {
-            RelationTypeValue.CONTACT => Rel.Contact,
-            RelationTypeValue.ACQUAINTANCE => Rel.Acquaintance,
-            RelationTypeValue.FRIEND => Rel.Friend,
-            RelationTypeValue.MET => Rel.Met,
-            RelationTypeValue.CO_WORKER => Rel.CoWorker,
-            RelationTypeValue.COLLEAGUE => Rel.Colleague,
-            RelationTypeValue.CO_RESIDENT => Rel.CoResident,
-            RelationTypeValue.NEIGHBOR => Rel.Neighbor,
-            RelationTypeValue.CHILD => Rel.Child,
-            RelationTypeValue.PARENT => Rel.Parent,
-            RelationTypeValue.SIBLING => Rel.Sibling,
-            RelationTypeValue.SPOUSE => Rel.Spouse,
-            RelationTypeValue.KIN => Rel.Kin,
-            RelationTypeValue.MUSE => Rel.Muse,
-            RelationTypeValue.CRUSH => Rel.Crush,
-            RelationTypeValue.DATE => Rel.Date,
-            RelationTypeValue.SWEETHEART => Rel.Sweetheart,
-            RelationTypeValue.ME => Rel.Me,
-            RelationTypeValue.AGENT => Rel.Agent,
-            RelationTypeValue.EMERGENCY => Rel.Emergency,
-            _ => null
-        };
+        return typeValue.Equals(RelationTypeValue.SPOUSE, comp) ? Rel.Spouse
+            : typeValue.Equals(RelationTypeValue.SWEETHEART, comp) ? Rel.Sweetheart
+            : typeValue.Equals(RelationTypeValue.AGENT, comp) ? Rel.Agent
+            : typeValue.Equals(RelationTypeValue.CHILD, comp) ? Rel.Child
+            : typeValue.Equals(RelationTypeValue.PARENT, comp) ? Rel.Parent
+            : typeValue.Equals(RelationTypeValue.NEIGHBOR, comp) ? Rel.Neighbor
+            : typeValue.Equals(RelationTypeValue.SIBLING, comp) ? Rel.Sibling
+            : typeValue.Equals(RelationTypeValue.FRIEND, comp) ? Rel.Friend
+            : typeValue.Equals(RelationTypeValue.CO_WORKER, comp) ? Rel.CoWorker
+            : typeValue.Equals(RelationTypeValue.COLLEAGUE, comp) ? Rel.Colleague
+            : typeValue.Equals(RelationTypeValue.CO_RESIDENT, comp) ? Rel.CoResident
+            : typeValue.Equals(RelationTypeValue.ME, comp) ? Rel.Me
+            : typeValue.Equals(RelationTypeValue.EMERGENCY, comp) ? Rel.Emergency
+            : typeValue.Equals(RelationTypeValue.DATE, comp) ? Rel.Date
+            : typeValue.Equals(RelationTypeValue.CONTACT, comp) ? Rel.Contact
+            : typeValue.Equals(RelationTypeValue.ACQUAINTANCE, comp) ? Rel.Acquaintance
+            : typeValue.Equals(RelationTypeValue.MET, comp) ? Rel.Met
+            : typeValue.Equals(RelationTypeValue.KIN, comp) ? Rel.Kin
+            : typeValue.Equals(RelationTypeValue.MUSE, comp) ? Rel.Muse
+            : typeValue.Equals(RelationTypeValue.CRUSH, comp) ? Rel.Crush
+            : null;
     }
 
     internal static string ToVcfString(this Rel value)

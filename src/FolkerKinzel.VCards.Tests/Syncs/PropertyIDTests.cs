@@ -19,13 +19,13 @@ public class PropertyIDTests
 
 
     [TestMethod]
-    public void ParseTest1() => Assert.AreEqual(0, PropertyID.Parse("").Count());
+    public void ParseTest1() => Assert.AreEqual(0, PropertyID.Parse("".AsSpan()).Count());
 
 
     [TestMethod]
     public void ParseTest2()
     {
-        IEnumerable<PropertyID> list = PropertyID.Parse("4");
+        IEnumerable<PropertyID> list = PropertyID.Parse("4".AsSpan());
         Assert.AreEqual(1, list.Count());
         Assert.AreEqual(new PropertyID(4, null), list.First());
     }
@@ -34,7 +34,7 @@ public class PropertyIDTests
     [TestMethod]
     public void ParseTest3()
     {
-        IEnumerable<PropertyID> list = PropertyID.Parse("4.9");
+        IEnumerable<PropertyID> list = PropertyID.Parse("4.9".AsSpan());
 
         Assert.AreEqual(1, list.Count());
         var pidMap = new AppID(9, "http://folkerkinzel.de/");
@@ -46,7 +46,7 @@ public class PropertyIDTests
     [TestMethod]
     public void ParseTest4()
     {
-        IEnumerable<PropertyID> list = PropertyID.Parse("4.9,7.5");
+        IEnumerable<PropertyID> list = PropertyID.Parse("4.9,7.5".AsSpan());
 
         Assert.AreEqual(2, list.Count());
         string uri = "http://folker.de/";
@@ -58,7 +58,7 @@ public class PropertyIDTests
     [TestMethod]
     public void ParseTest5()
     {
-        IEnumerable<PropertyID> list = PropertyID.Parse(" 4 . 9 , 7 . 5 ");
+        IEnumerable<PropertyID> list = PropertyID.Parse(" 4 . 9 , 7 . 5 ".AsSpan());
 
         Assert.AreEqual(2, list.Count());
         string uri = "http://folker.de/";
@@ -70,7 +70,7 @@ public class PropertyIDTests
     [TestMethod]
     public void ParseTest6()
     {
-        IEnumerable<PropertyID> list = PropertyID.Parse("4.9,6.0,7.5");
+        IEnumerable<PropertyID> list = PropertyID.Parse("4.9,6.0,7.5".AsSpan());
 
         Assert.AreEqual(2, list.Count());
         string uri = "http://folker.de/";
@@ -81,7 +81,7 @@ public class PropertyIDTests
     [TestMethod]
     public void ParseTest7()
     {
-        IEnumerable<PropertyID> list = PropertyID.Parse("9,22.15,7,2.0");
+        IEnumerable<PropertyID> list = PropertyID.Parse("9,22.15,7,2.0".AsSpan());
 
         Assert.AreEqual(3, list.Count());
         Assert.AreEqual(new PropertyID(9, null), list.First());
@@ -92,7 +92,7 @@ public class PropertyIDTests
     [TestMethod]
     public void ParseTest8()
     {
-        IEnumerable<PropertyID> list = PropertyID.Parse("-7,22.-15,-2.8,xyz,xy.7,7.xy");
+        IEnumerable<PropertyID> list = PropertyID.Parse("-7,22.-15,-2.8,xyz,xy.7,7.xy".AsSpan());
 
         Assert.AreEqual(0, list.Count());
     }

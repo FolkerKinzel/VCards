@@ -10,11 +10,11 @@ public class RelationTypesConverterTests
     {
         foreach (Rel rel in (Rel[])Enum.GetValues(typeof(Rel)))
         {
-            Rel? rel2 = RelConverter.Parse(RelConverter.ToVcfString(rel)!.ToUpperInvariant());
+            Rel? rel2 = RelConverter.Parse(RelConverter.ToVcfString(rel)!.AsSpan());
             Assert.AreEqual(rel, rel2);
         }
 
-        Assert.IsNull(RelConverter.Parse("NICHT_VORHANDEN"));
+        Assert.IsNull(RelConverter.Parse("NICHT_VORHANDEN".AsSpan()));
     }
 
     [TestMethod]

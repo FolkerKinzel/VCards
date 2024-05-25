@@ -62,7 +62,7 @@ public class RelationTypesCollectorTests
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
 
-            Rel? comp = RelConverter.Parse(list[0]);
+            Rel? comp = RelConverter.Parse(list[0].AsSpan());
 
             Assert.IsTrue(comp.HasValue);
             Assert.AreEqual(comp!.Value, item);

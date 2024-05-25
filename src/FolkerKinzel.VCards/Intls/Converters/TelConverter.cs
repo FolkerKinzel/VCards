@@ -38,27 +38,24 @@ internal static class TelConverter
     internal const int PHONE_TYPES_MIN_BIT = 0;
     internal const int PHONE_TYPES_MAX_BIT = 12;
 
-    internal static Tel? Parse(string? typeValue)
+    internal static Tel? Parse(ReadOnlySpan<char> typeValue)
     {
-        Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        return typeValue switch
-        {
-            PhoneTypesValue.VOICE => Tel.Voice,
-            PhoneTypesValue.FAX => Tel.Fax,
-            PhoneTypesValue.MSG => Tel.Msg,
-            PhoneTypesValue.CELL => Tel.Cell,
-            PhoneTypesValue.PAGER => Tel.Pager,
-            PhoneTypesValue.BBS => Tel.BBS,
-            PhoneTypesValue.MODEM => Tel.Modem,
-            PhoneTypesValue.CAR => Tel.Car,
-            PhoneTypesValue.ISDN => Tel.ISDN,
-            PhoneTypesValue.VIDEO => Tel.Video,
-            PhoneTypesValue.PCS => Tel.PCS,
-            PhoneTypesValue.TEXTPHONE => Tel.TextPhone,
-            PhoneTypesValue.TEXT => Tel.Text,
-            _ => null
-        };
+        return typeValue.Equals(PhoneTypesValue.CELL, comp) ? Tel.Cell
+            : typeValue.Equals(PhoneTypesValue.VOICE, comp) ? Tel.Voice
+            : typeValue.Equals(PhoneTypesValue.TEXT, comp) ? Tel.Text
+            : typeValue.Equals(PhoneTypesValue.FAX, comp) ? Tel.Fax
+            : typeValue.Equals(PhoneTypesValue.VIDEO, comp) ? Tel.Video
+            : typeValue.Equals(PhoneTypesValue.TEXTPHONE, comp) ? Tel.TextPhone
+            : typeValue.Equals(PhoneTypesValue.MSG, comp) ? Tel.Msg
+            : typeValue.Equals(PhoneTypesValue.PAGER, comp) ? Tel.Pager
+            : typeValue.Equals(PhoneTypesValue.BBS, comp) ? Tel.BBS
+            : typeValue.Equals(PhoneTypesValue.MODEM, comp) ? Tel.Modem
+            : typeValue.Equals(PhoneTypesValue.CAR, comp) ? Tel.Car
+            : typeValue.Equals(PhoneTypesValue.ISDN, comp) ? Tel.ISDN
+            : typeValue.Equals(PhoneTypesValue.PCS, comp) ? Tel.PCS
+            : null;
     }
 
     internal static string ToVcfString(this Tel value)

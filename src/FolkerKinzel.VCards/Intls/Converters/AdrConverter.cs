@@ -20,18 +20,15 @@ internal static class AdrConverter
     internal const int ADDRESS_TYPES_MIN_BIT = 0;
     internal const int ADDRESS_TYPES_MAX_BIT = 3;
 
-    internal static Adr? Parse(string? typeValue)
+    internal static Adr? Parse(ReadOnlySpan<char> typeValue)
     {
-        Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        return typeValue switch
-        {
-            AddressTypesValue.DOM => Adr.Dom,
-            AddressTypesValue.INTL => Adr.Intl,
-            AddressTypesValue.POSTAL => Adr.Postal,
-            AddressTypesValue.PARCEL => Adr.Parcel,
-            _ => null
-        };
+        return typeValue.Equals(AddressTypesValue.INTL, comp) ? Adr.Intl
+             : typeValue.Equals(AddressTypesValue.DOM, comp) ? Adr.Dom
+             : typeValue.Equals(AddressTypesValue.POSTAL, comp) ? Adr.Postal
+             : typeValue.Equals(AddressTypesValue.PARCEL, comp) ? Adr.Parcel
+             : null;  
     }
 
     internal static string ToVcfString(this Adr value)

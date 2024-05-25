@@ -71,7 +71,7 @@ public class TelTypesCollectorTests
             //Assert.AreEqual(comp.Value, item);
 
 
-            Tel? comp = TelConverter.Parse(list[0]);
+            Tel? comp = TelConverter.Parse(list[0].AsSpan());
 
             Assert.IsTrue(comp.HasValue);
             Assert.AreEqual(comp!.Value, item);

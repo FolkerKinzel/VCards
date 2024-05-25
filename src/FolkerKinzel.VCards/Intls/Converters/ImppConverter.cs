@@ -17,17 +17,14 @@ internal static class ImppConverter
     internal const int IMPP_TYPES_MIN_BIT = 0;
     internal const int IMPP_TYPES_MAX_BIT = 2;
 
-    internal static Impp? Parse(string? typeValue)
+    internal static Impp? Parse(ReadOnlySpan<char> typeValue)
     {
-        Debug.Assert(typeValue?.ToUpperInvariant() == typeValue);
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        return typeValue switch
-        {
-            TypeValue.PERSONAL => Impp.Personal,
-            TypeValue.BUSINESS => Impp.Business,
-            TypeValue.MOBILE => Impp.Mobile,
-            _ => null
-        };
+        return typeValue.Equals(TypeValue.PERSONAL, comp) ? Impp.Personal
+             : typeValue.Equals(TypeValue.BUSINESS, comp) ? Impp.Business
+             : typeValue.Equals(TypeValue.MOBILE, comp) ? Impp.Mobile
+             : null;
     }
 
     internal static string ToVcfString(this Impp value)

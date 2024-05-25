@@ -48,16 +48,18 @@ public sealed partial class ParameterSection
 
 #if NET462 || NETSTANDARD2_0 || NETSTANDARD2_1
         List<KeyValuePair<string, ReadOnlyMemory<char>>> propertyParameters = info.ParameterList;
+        for (int i = 0; i < propertyParameters.Count; i++)
 #else
         ReadOnlySpan<KeyValuePair<string, ReadOnlyMemory<char>>> propertyParameters = CollectionsMarshal.AsSpan(info.ParameterList);
+        for (int i = 0; i < propertyParameters.Length; i++)
 #endif
-
-        foreach (KeyValuePair<string, ReadOnlyMemory<char>> parameter in propertyParameters)
         {
+            KeyValuePair<string, ReadOnlyMemory<char>> parameter = propertyParameters[i];
+
             switch (parameter.Key)
             {
                 case ParameterKey.LANGUAGE:
-                    this.Language = LanguageConverter.ToString(parameter.Value.Span.Trim());
+                    this.Language = LanguageConverter.ToString(parameter.Value.Span.Trim(' '));
                     break;
                 case ParameterKey.VALUE:
                     {
@@ -88,22 +90,21 @@ public sealed partial class ParameterSection
                     }
                 case ParameterKey.PID:
                     {
-                        this.PropertyIDs = PropertyID.Parse(parameter.Value.ToString());
+                        this.PropertyIDs = PropertyID.Parse(parameter.Value.Span);
                         break;
                     }
                 case ParameterKey.TYPE:
                     {
-                        foreach (string s in ValueSplitter.Split(
-                            parameter.Value, ',', StringSplitOptions.RemoveEmptyEntries, unMask: false, VCdVersion.V3_0))
+                        foreach (ReadOnlyMemory<char> mem in ValueSplitter.Split(parameter.Value, ','))
                         {
-                            if (!ParseTypeParameter(s, propertyKey))
+                            if (!ParseTypeParameter(mem.Span, propertyKey))
                             {
                                 List<KeyValuePair<string, string>> userAttributes
                                         = (List<KeyValuePair<string, string>>?)this.NonStandard
                                           ?? [];
 
                                 this.NonStandard = userAttributes;
-                                userAttributes.Add(new KeyValuePair<string, string>(parameter.Key, s));
+                                userAttributes.Add(new KeyValuePair<string, string>(parameter.Key, mem.ToString()));
                             }
                         }
                         break;
@@ -280,6 +281,8 @@ public sealed partial class ParameterSection
         {
             ReadOnlySpan<char> parameterSpan = parameter.Span;
 
+            Debug.Assert(!parameterSpan.IsWhiteSpace());
+
             int splitIndex = parameterSpan.IndexOf('=');
 
             if (splitIndex == -1)
@@ -324,24 +327,33 @@ public sealed partial class ParameterSection
         userAttributes.Add(new KeyValuePair<string, string>(parameter.Key, parameter.Value.ToString()));
     }
 
-    private bool ParseTypeParameter(string typeValue, string propertyKey)
+    private bool ParseTypeParameter(ReadOnlySpan<char> typeValue, string propertyKey)
     {
-        typeValue = typeValue.Trim(TRIM_CHARS).ToUpperInvariant();
-        Debug.Assert(typeValue.Length != 0);
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        switch (typeValue)
+        typeValue = typeValue.Trim(TRIM_CHARS);
+
+        if (typeValue.IsEmpty)
         {
-            case TypeValue.PREF:
-                this.Preference = 1;
-                return true;
-            case TypeValue.HOME:
-                this.PropertyClass = this.PropertyClass.Set(VCards.Enums.PCl.Home);
-                return true;
-            case TypeValue.WORK:
-                this.PropertyClass = this.PropertyClass.Set(VCards.Enums.PCl.Work);
-                return true;
-            default:
-                break;
+            return true;
+        }
+
+        if (typeValue.Equals(TypeValue.PREF, comp))
+        {
+            this.Preference = 1;
+            return true;
+        }
+
+        if (typeValue.Equals(ParameterSection.TypeValue.HOME, comp))
+        {
+            this.PropertyClass = this.PropertyClass.Set(PCl.Home);
+            return true;
+        }
+
+        if (typeValue.Equals(ParameterSection.TypeValue.WORK, comp))
+        {
+            this.PropertyClass = this.PropertyClass.Set(PCl.Work);
+            return true;
         }
 
         switch (propertyKey)
@@ -398,7 +410,7 @@ public sealed partial class ParameterSection
                     return false;
                 }
             case VCard.PropKeys.EMAIL:
-                this.EMailType = typeValue;
+                this.EMailType = EMailConverter.ToString(typeValue);
                 break;
             case VCard.PropKeys.KEY:
                 this.MediaType = MimeTypeConverter.MimeTypeFromKeyType(typeValue);

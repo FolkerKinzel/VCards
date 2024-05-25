@@ -62,7 +62,7 @@ public class AddressTypesCollectorTests
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
 
-            Adr? comp = AdrConverter.Parse(list[0]);
+            Adr? comp = AdrConverter.Parse(list[0].AsSpan());
 
             Assert.IsTrue(comp.HasValue);
             Assert.AreEqual(comp!.Value, item);
