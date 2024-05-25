@@ -1,3 +1,5 @@
+using System;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 
@@ -13,6 +15,8 @@ public sealed partial class ParameterSection
     {
         Debug.Assert(!value.IsWhiteSpace());
 
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
+
         const string ENCODING_PROPERTY = ParameterSection.ParameterKey.ENCODING;
         //const string CONTEXT_PROPERTY = ParameterSection.ParameterKey.CONTEXT;
         const string CHARSET_PROPERTY = ParameterSection.ParameterKey.CHARSET;
@@ -20,123 +24,156 @@ public sealed partial class ParameterSection
         const string LANGUAGE_PROPERTY = ParameterSection.ParameterKey.LANGUAGE;
         const string VALUE_PROPERTY = ParameterSection.ParameterKey.VALUE;
 
-        if (value.StartsWith("QUOTED".AsSpan(), StringComparison.OrdinalIgnoreCase))
+        if (value.Equals(TypeValue.PREF, comp)
+         || value.Equals(TypeValue.HOME, comp) 
+         || value.Equals(TypeValue.WORK, comp)
+         || value.Equals(EMail.SMTP, comp)
+         || value.Equals(TelConverter.PhoneTypesValue.CELL, comp)
+         || value.Equals(TelConverter.PhoneTypesValue.VOICE, comp)
+         || value.Equals(TelConverter.PhoneTypesValue.FAX, comp))
         {
-            return ENCODING_PROPERTY; // "QUOTED-PRINTABLE"
+            return TYPE_PROPERTY;
         }
 
-        if (value.StartsWith("UTF".AsSpan(), StringComparison.OrdinalIgnoreCase) || value.StartsWith("ISO".AsSpan(), StringComparison.OrdinalIgnoreCase))
+        if (value.StartsWith("QUOTED".AsSpan(), comp) || value.Equals("BASE64", comp))
+        {
+            return ENCODING_PROPERTY;
+        }
+
+        if (value.StartsWith("UTF".AsSpan(), comp) || value.StartsWith("ISO".AsSpan(), comp))
         {
             return CHARSET_PROPERTY;
         }
 
-        string valString = value.ToString();
-
-        switch (valString.ToUpperInvariant())
+        if (value.Equals(LocConverter.Values.URL, comp)
+         || value.Equals(LocConverter.Values.CID, comp)
+         || value.Equals(LocConverter.Values.CONTENT_ID, comp)
+         || value.Equals(LocConverter.Values.INLINE, comp))
         {
-            case "BASE64":
-            case "B":
-            case "Q":
-            case "8BIT":
-            case "7BIT":
-                return ENCODING_PROPERTY;
-
-            //case "VCARD":
-            //    return CONTEXT_PROPERTY;
-
-            //Phone
-            case ParameterSection.TypeValue.PREF:
-            case ParameterSection.TypeValue.WORK:
-            case ParameterSection.TypeValue.HOME:
-            case TelConverter.PhoneTypesValue.VOICE:
-            case TelConverter.PhoneTypesValue.FAX:
-            case TelConverter.PhoneTypesValue.MSG:
-            case TelConverter.PhoneTypesValue.CELL:
-            case TelConverter.PhoneTypesValue.PAGER:
-            case TelConverter.PhoneTypesValue.BBS:
-            case TelConverter.PhoneTypesValue.MODEM:
-            case TelConverter.PhoneTypesValue.CAR:
-            case TelConverter.PhoneTypesValue.ISDN:
-            case TelConverter.PhoneTypesValue.VIDEO:
-
-            //Postal
-            case AdrConverter.AddressTypesValue.DOM:
-            case AdrConverter.AddressTypesValue.INTL:
-            case AdrConverter.AddressTypesValue.POSTAL:
-            case AdrConverter.AddressTypesValue.PARCEL:
-
-            //E-Mail
-            case "INTERNET":
-            case "AOL":
-            case "APPLELINK":
-            case "ATTMAIL":
-            case "CIS":
-            case "EWORLD":
-            case "IBMMAIL":
-            case "MCIMAIL":
-            case "POWERSHARE":
-            case "PRODIGY":
-            case "TLX":
-            case "X400":
-
-            //Images
-            case Const.ImageTypeValue.NonStandard.PNG:
-            case Const.ImageTypeValue.JPEG:
-            case Const.ImageTypeValue.NonStandard.JPG:
-            case Const.ImageTypeValue.NonStandard.JPE:
-            case Const.ImageTypeValue.GIF:
-            case Const.ImageTypeValue.NonStandard.ICO:
-            case Const.ImageTypeValue.TIFF:
-            case Const.ImageTypeValue.NonStandard.TIF:
-            case Const.ImageTypeValue.BMP:
-            case Const.ImageTypeValue.CGM:
-            case Const.ImageTypeValue.WMF:
-            case Const.ImageTypeValue.MET:
-            case Const.ImageTypeValue.PMB:
-            case Const.ImageTypeValue.DIB:
-            case Const.ImageTypeValue.PICT:
-            case Const.ImageTypeValue.NonStandard.PIC:
-            case Const.ImageTypeValue.NonStandard.XBM:
-            case Const.ImageTypeValue.NonStandard.SVG:
-
-            case Const.ImageTypeValue.PS:
-            case Const.ImageTypeValue.PDF:
-
-            case Const.ImageTypeValue.MPEG:
-            case Const.ImageTypeValue.MPEG2:
-            case Const.ImageTypeValue.AVI:
-            case Const.ImageTypeValue.QTIME:
-            case Const.ImageTypeValue.NonStandard.MOV:
-            case Const.ImageTypeValue.NonStandard.QT:
-
-            //Sound
-            case Const.SoundTypeValue.WAVE:
-            case Const.SoundTypeValue.NonStandard.WAV:
-            case Const.SoundTypeValue.PCM:
-            case Const.SoundTypeValue.AIFF:
-            case Const.SoundTypeValue.NonStandard.AIF:
-            case Const.SoundTypeValue.NonStandard.MP3:
-            case Const.SoundTypeValue.NonStandard.MP4:
-            case Const.SoundTypeValue.NonStandard.OGG:
-            case Const.SoundTypeValue.NonStandard.VORBIS:
-            case Const.SoundTypeValue.NonStandard.BASIC:
-            case Const.SoundTypeValue.NonStandard.AAC:
-            case Const.SoundTypeValue.NonStandard.AC3:
-
-            // Public Key
-            case Const.KeyTypeValue.X509:
-            case Const.KeyTypeValue.PGP:
-                return TYPE_PROPERTY;
-
-            case LocConverter.Values.INLINE:
-            case LocConverter.Values.CID:
-            case LocConverter.Values.CONTENT_ID:
-            case LocConverter.Values.URL:
-                return VALUE_PROPERTY;
-            default:
-                break;
+            return VALUE_PROPERTY;
         }
 
-        return valString.IsIetfLanguageTag() ? LANGUAGE_PROPERTY : TYPE_PROPERTY;
+        // Don't change the order: "UTF-8" contains '-' as well as "en-US" as well as "CONTENT-ID"
+        if (value.Contains('-'))
+        {
+            return LANGUAGE_PROPERTY;
+        }
+
+        if (value.Equals("8BIT", comp))
+        {
+            return ENCODING_PROPERTY;
+        }
+
+        return TYPE_PROPERTY;
+
+    //    string valString = value.ToString();
+
+    //    //switch (valString.ToUpperInvariant())
+    //    //{
+    //    //    case "BASE64":
+    //    //    case "B":
+    //    //    case "Q":
+    //    //    case "8BIT":
+    //    //    case "7BIT":
+    //    //        return ENCODING_PROPERTY;
+
+    //    //case "VCARD":
+    //    //    return CONTEXT_PROPERTY;
+
+    //    //Phone
+    //        case ParameterSection.TypeValue.PREF:
+    //    case ParameterSection.TypeValue.WORK:
+    //    case ParameterSection.TypeValue.HOME:
+    //    case TelConverter.PhoneTypesValue.VOICE:
+    //    case TelConverter.PhoneTypesValue.FAX:
+    //    case TelConverter.PhoneTypesValue.MSG:
+    //    case TelConverter.PhoneTypesValue.CELL:
+    //    case TelConverter.PhoneTypesValue.PAGER:
+    //    case TelConverter.PhoneTypesValue.BBS:
+    //    case TelConverter.PhoneTypesValue.MODEM:
+    //    case TelConverter.PhoneTypesValue.CAR:
+    //    case TelConverter.PhoneTypesValue.ISDN:
+    //    case TelConverter.PhoneTypesValue.VIDEO:
+
+    //    //Postal
+    //    case AdrConverter.AddressTypesValue.DOM:
+    //    case AdrConverter.AddressTypesValue.INTL:
+    //    case AdrConverter.AddressTypesValue.POSTAL:
+    //    case AdrConverter.AddressTypesValue.PARCEL:
+
+    //    //E-Mail
+    //    case "INTERNET":
+    //    case "AOL":
+    //    case "APPLELINK":
+    //    case "ATTMAIL":
+    //    case "CIS":
+    //    case "EWORLD":
+    //    case "IBMMAIL":
+    //    case "MCIMAIL":
+    //    case "POWERSHARE":
+    //    case "PRODIGY":
+    //    case "TLX":
+    //    case "X400":
+
+    //    //Images
+    //    case Const.ImageTypeValue.NonStandard.PNG:
+    //    case Const.ImageTypeValue.JPEG:
+    //    case Const.ImageTypeValue.NonStandard.JPG:
+    //    case Const.ImageTypeValue.NonStandard.JPE:
+    //    case Const.ImageTypeValue.GIF:
+    //    case Const.ImageTypeValue.NonStandard.ICO:
+    //    case Const.ImageTypeValue.TIFF:
+    //    case Const.ImageTypeValue.NonStandard.TIF:
+    //    case Const.ImageTypeValue.BMP:
+    //    case Const.ImageTypeValue.CGM:
+    //    case Const.ImageTypeValue.WMF:
+    //    case Const.ImageTypeValue.MET:
+    //    case Const.ImageTypeValue.PMB:
+    //    case Const.ImageTypeValue.DIB:
+    //    case Const.ImageTypeValue.PICT:
+    //    case Const.ImageTypeValue.NonStandard.PIC:
+    //    case Const.ImageTypeValue.NonStandard.XBM:
+    //    case Const.ImageTypeValue.NonStandard.SVG:
+
+    //    case Const.ImageTypeValue.PS:
+    //    case Const.ImageTypeValue.PDF:
+
+    //    case Const.ImageTypeValue.MPEG:
+    //    case Const.ImageTypeValue.MPEG2:
+    //    case Const.ImageTypeValue.AVI:
+    //    case Const.ImageTypeValue.QTIME:
+    //    case Const.ImageTypeValue.NonStandard.MOV:
+    //    case Const.ImageTypeValue.NonStandard.QT:
+
+    //    //Sound
+    //    case Const.SoundTypeValue.WAVE:
+    //    case Const.SoundTypeValue.NonStandard.WAV:
+    //    case Const.SoundTypeValue.PCM:
+    //    case Const.SoundTypeValue.AIFF:
+    //    case Const.SoundTypeValue.NonStandard.AIF:
+    //    case Const.SoundTypeValue.NonStandard.MP3:
+    //    case Const.SoundTypeValue.NonStandard.MP4:
+    //    case Const.SoundTypeValue.NonStandard.OGG:
+    //    case Const.SoundTypeValue.NonStandard.VORBIS:
+    //    case Const.SoundTypeValue.NonStandard.BASIC:
+    //    case Const.SoundTypeValue.NonStandard.AAC:
+    //    case Const.SoundTypeValue.NonStandard.AC3:
+
+    //    // Public Key
+    //    case Const.KeyTypeValue.X509:
+    //    case Const.KeyTypeValue.PGP:
+    //        return TYPE_PROPERTY;
+
+    //    //case LocConverter.Values.INLINE:
+    //    //case LocConverter.Values.CID:
+    //    //case LocConverter.Values.CONTENT_ID:
+    //    //case LocConverter.Values.URL:
+    //    //    return VALUE_PROPERTY;
+    //    default:
+    //        break;
+    //    }
+
+    //    return valString.IsIetfLanguageTag() ? LANGUAGE_PROPERTY : TYPE_PROPERTY;
+
     }
 }

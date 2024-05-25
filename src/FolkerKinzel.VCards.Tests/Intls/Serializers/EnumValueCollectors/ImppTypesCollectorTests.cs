@@ -62,7 +62,7 @@ public class ImppTypesCollectorTests
             Assert.AreEqual(1, list.Count);
             Assert.IsNotNull(list[0]);
 
-            Impp? comp = ImppConverter.Parse(list[0]);
+            Impp? comp = ImppConverter.Parse(list[0].AsSpan());
 
 
             Assert.IsTrue(comp.HasValue);

@@ -10,11 +10,11 @@ public class ImppConverterTest
     {
         foreach (Impp kind in (Impp[])Enum.GetValues(typeof(Impp)))
         {
-            Impp? kind2 = ImppConverter.Parse(kind.ToString().ToUpperInvariant());
+            Impp? kind2 = ImppConverter.Parse(kind.ToString().AsSpan());
             Assert.AreEqual(kind, kind2);
         }
 
-        Assert.IsNull(ImppConverter.Parse("NICHT_VORHANDEN"));
+        Assert.IsNull(ImppConverter.Parse("NICHT_VORHANDEN".AsSpan()));
         Assert.IsNull(ImppConverter.Parse(null));
     }
 

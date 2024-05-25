@@ -72,10 +72,10 @@ public sealed partial class ParameterSection
                             Loc contentLocation = LocConverter.Parse(valValue);
                             this.ContentLocation = contentLocation;
 
-                            if (contentLocation == Loc.Url)
-                            {
-                                this.DataType = Data.Uri;
-                            }
+                            //if (contentLocation == Loc.Url)
+                            //{
+                            //    this.DataType = Data.Uri;
+                            //}
                         }
 
                         break;
