@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static class ReadOnlySpanExtension
 {
-    /// <summary> Unmasks masked text contained in <see cref="Value" /> according to
+    /// <summary> Unmasks masked text contained in <paramref name="value"/> according to
     /// vCard 2.1, and decodes its Quoted-Printable encoding.</summary>
     /// <param name="value">The span to unmask and decode.</param>
     /// <param name="charSet">The Charset to use for Quoted-Printable decoding.</param>

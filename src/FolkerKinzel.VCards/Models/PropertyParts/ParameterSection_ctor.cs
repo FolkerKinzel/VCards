@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
@@ -41,21 +42,26 @@ public sealed partial class ParameterSection
                               VcfDeserializationInfo info)
     {
 
-        List<KeyValuePair<string, ReadOnlyMemory<char>>> propertyParameters = info.ParameterList;
-        GetParameters(in parameterSection, propertyParameters);
+        GetParameters(in parameterSection, info.ParameterList);
 
-        Asserts(propertyKey, propertyParameters);
+        Asserts(propertyKey, info.ParameterList);
+
+#if NET462 || NETSTANDARD2_0 || NETSTANDARD2_1
+        List<KeyValuePair<string, ReadOnlyMemory<char>>> propertyParameters = info.ParameterList;
+#else
+        ReadOnlySpan<KeyValuePair<string, ReadOnlyMemory<char>>> propertyParameters = CollectionsMarshal.AsSpan(info.ParameterList);
+#endif
 
         foreach (KeyValuePair<string, ReadOnlyMemory<char>> parameter in propertyParameters)
         {
             switch (parameter.Key)
             {
                 case ParameterKey.LANGUAGE:
-                    this.Language = parameter.Value.Span.Trim().ToString();
+                    this.Language = LanguageConverter.ToString(parameter.Value.Span.Trim());
                     break;
                 case ParameterKey.VALUE:
                     {
-                        string valValue = parameter.Value.Span.Trim(TRIM_CHARS).ToString().ToUpperInvariant();
+                        ReadOnlySpan<char> valValue = parameter.Value.Span.Trim(TRIM_CHARS);
                         Data? dataType = DataConverter.Parse(valValue);
                         this.DataType = dataType;
 

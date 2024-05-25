@@ -11,7 +11,7 @@ public class LocConverterTests
         foreach (Loc kind in (Loc[])Enum.GetValues(typeof(Loc)))
         {
             string cIdString = kind.ToVcfString();
-            Loc kind2 = LocConverter.Parse(cIdString);
+            Loc kind2 = LocConverter.Parse(cIdString.AsSpan());
             Assert.AreEqual(kind, kind2);
 
             cIdString = kind.ToVcfString();
@@ -32,7 +32,7 @@ public class LocConverterTests
     public void Roundtrip2()
     {
         string cIdString = "CONTENT-ID";
-        Loc kind = LocConverter.Parse(cIdString);
+        Loc kind = LocConverter.Parse(cIdString.AsSpan());
         Assert.AreEqual(Loc.Cid, kind);
     }
 }

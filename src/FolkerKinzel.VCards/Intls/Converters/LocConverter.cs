@@ -2,6 +2,16 @@ using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
+internal static class LanguageConverter
+{
+    private const string EN = "en";
+
+    internal static string ToString(ReadOnlySpan<char> language)
+    {
+        return language.Equals(EN, StringComparison.Ordinal) ? EN : language.ToString();
+    }
+}
+
 internal static class LocConverter
 {
     internal static class Values
@@ -12,17 +22,14 @@ internal static class LocConverter
         internal const string URL = "URL";
     }
 
-    internal static Loc Parse(string? value)
+    internal static Loc Parse(ReadOnlySpan<char> value)
     {
-        Debug.Assert(value?.ToUpperInvariant() == value);
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        return value switch
-        {
-            Values.CID => Loc.Cid,
-            Values.CONTENT_ID => Loc.Cid,
-            Values.URL => Loc.Url,
-            _ => Loc.Inline
-        };
+        return value.Equals(Values.CID, comp) ? Loc.Cid
+             : value.Equals(Values.CONTENT_ID, comp) ? Loc.Cid
+             : value.Equals(Values.URL, comp) ? Loc.Url
+             : Loc.Inline;
     }
 
     internal static string ToVcfString(this Loc contentLocation)

@@ -11,7 +11,7 @@ public class DataConverterTests
         foreach (Data kind in (Data[])Enum.GetValues(typeof(Data)))
         {
             string? s = DataConverter.ToVcfString(kind);
-            Data? kind2 = DataConverter.Parse(s);
+            Data? kind2 = DataConverter.Parse(s.AsSpan());
             Assert.AreEqual(kind, kind2);
         }
 

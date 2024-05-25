@@ -27,29 +27,26 @@ internal static class DataConverter
         }
     }
 
-    internal static Data? Parse(string? s)
+    internal static Data? Parse(ReadOnlySpan<char> span)
     {
-        Debug.Assert(s?.ToUpperInvariant() == s);
-
-        return s switch
-        {
-            PropValue.BOOLEAN => Data.Boolean,
-            PropValue.DATE => Data.Date,
-            PropValue.DATE_AND_OR_TIME => Data.DateAndOrTime,
-            PropValue.DATE_TIME => Data.DateTime,
-            PropValue.FLOAT => Data.Float,
-            PropValue.INTEGER => Data.Integer,
-            PropValue.LANGUAGE_TAG => Data.LanguageTag,
-            PropValue.TEXT => Data.Text,
-            PropValue.TIME => Data.Time,
-            PropValue.TIMESTAMP => Data.TimeStamp,
-            PropValue.URI => Data.Uri,
-            PropValue.UTC_OFFSET => Data.UtcOffset,
-            PropValue.V3_Specific.BINARY => Data.Binary,
-            PropValue.V3_Specific.PHONE_NUMBER => Data.PhoneNumber,
-            PropValue.V3_Specific.VCARD => Data.VCard,
-            _ => (Data?)null
-        };
+        const StringComparison comp = StringComparison.OrdinalIgnoreCase;
+        return span.Equals(PropValue.URI, comp) ? Data.Uri
+            : span.Equals(PropValue.TEXT, comp) ? Data.Text
+            : span.Equals(PropValue.DATE, comp) ? Data.Date
+            : span.Equals(PropValue.TIMESTAMP, comp) ? Data.TimeStamp
+            : span.Equals(PropValue.DATE_TIME, comp) ? Data.DateTime
+            : span.Equals(PropValue.UTC_OFFSET, comp) ? Data.UtcOffset
+            : span.Equals(PropValue.V3_Specific.BINARY, comp) ? Data.Binary
+            : span.Equals(PropValue.V3_Specific.VCARD, comp) ? Data.VCard
+            : span.Equals(PropValue.LANGUAGE_TAG, comp) ? Data.LanguageTag
+            : span.Equals(PropValue.DATE_AND_OR_TIME, comp) ? Data.DateAndOrTime
+            : span.Equals(PropValue.TIME, comp) ? Data.Time
+            : span.Equals(PropValue.V3_Specific.PHONE_NUMBER, comp) ? Data.PhoneNumber
+            : span.Equals(PropValue.INTEGER, comp) ? Data.Integer
+            : span.Equals(PropValue.FLOAT, comp) ? Data.Float
+            : span.Equals(PropValue.BOOLEAN, comp) ? Data.Boolean
+            : null;
+            
     }
 
     internal static string? ToVcfString(this Data? s)
