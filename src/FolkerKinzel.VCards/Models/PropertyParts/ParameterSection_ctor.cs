@@ -124,12 +124,12 @@ public sealed partial class ParameterSection
                     break;
                 case ParameterKey.SORT_AS:
                     {
-                        this.SortAs = new List<string>
-                            (
-                            ValueSplitter.Split(
-                            parameter.Value, ',', StringSplitOptions.RemoveEmptyEntries, unMask: true, VCdVersion.V4_0)
-                            );
-
+                        this.SortAs = ValueSplitter.Split( parameter.Value,
+                                                           ',', 
+                                                           StringSplitOptions.RemoveEmptyEntries,
+                                                           unMask: true, 
+                                                           VCdVersion.V4_0)
+                                                   .ToArray();
                         break;
                     }
                 case ParameterKey.CALSCALE:
