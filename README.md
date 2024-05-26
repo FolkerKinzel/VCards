@@ -6,8 +6,9 @@
 
 FolkerKinzel.VCards is a full-featured .NET library for working with vCard files (*.vcf).
 
-It has a fluent API for 
-creating and editing vCards and supports [RFC 6350](https://tools.ietf.org/html/rfc6350) (vCard 4.0), 
+It's performance optimized for high throughput and has a fluent API for efficient creation and editing of vCards.
+
+The library supports [RFC 6350](https://tools.ietf.org/html/rfc6350) (vCard 4.0), 
 [RFC 2426](https://tools.ietf.org/html/rfc2426) (vCard 3.0), 
 [vCard 2.1](https://web.archive.org/web/20120501162958/http://www.imc.org/pdi/vcard-21.doc), the extensions [RFC 6474](https://tools.ietf.org/html/rfc6474),
 [RFC 6715](https://tools.ietf.org/html/rfc6715]), 
@@ -16,11 +17,11 @@ creating and editing vCards and supports [RFC 6350](https://tools.ietf.org/html/
 [RFC 2739](https://tools.ietf.org/html/rfc2739), as well as several popular non-standard vCard properties.
 
 The library allows:
-- loading VCF files from the file system and storing them there,
+- loading VCF files from the file system and saving them there,
 - serializing and deserializing VCF files to and from streams,
 - and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.
 
-[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v7.1.0-beta.1)
+[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v7.1.0-beta.2)
 
 Read the ["Getting Started"](https://github.com/FolkerKinzel/VCards/wiki) wiki if you are new to this library!
 
