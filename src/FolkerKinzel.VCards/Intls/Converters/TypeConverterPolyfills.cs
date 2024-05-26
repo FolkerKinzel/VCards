@@ -67,9 +67,28 @@ internal static class _Double
 [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
 internal static class _Int
 {
+#if !(NET462 || NETSTANDARD2)
+[MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     public static bool TryParse(ReadOnlySpan<char> value, out int result)
 #if NET462 || NETSTANDARD2_0
-            => int.TryParse(value.ToString(), NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
+    {
+        if(value.Length != 1)
+        {
+            return int.TryParse(value.ToString(), NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
+        }
+
+        // Simple parser to parse PID parameters more efficient:
+
+        result = (int)value[0] - '0';
+
+        if((uint)result > 9) { 
+            result = 0;  
+            return false; 
+        }
+
+        return true;
+    }
 #else
             => int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
 #endif

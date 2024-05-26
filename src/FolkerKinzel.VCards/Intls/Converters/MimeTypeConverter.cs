@@ -120,10 +120,10 @@ internal static class MimeTypeConverter
 
         if (MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo info))
         {
-            var subType = info.SubType;
+            ReadOnlySpan<char> subType = info.SubType;
             subType = subType.StartsWith("x-", StringComparison.OrdinalIgnoreCase) ? subType.Slice(2) : subType;
 
-            var span = subType.Length > SHORT_STRING ? new char[subType.Length].AsSpan() : stackalloc char[subType.Length];
+            Span<char> span = subType.Length > SHORT_STRING ? new char[subType.Length].AsSpan() : stackalloc char[subType.Length];
             _ = subType.ToUpperInvariant(span);
             return span.ToString();
         }

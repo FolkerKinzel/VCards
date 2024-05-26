@@ -6,9 +6,6 @@ namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static partial class StringExtension
 {
-    // The regex isn't perfect but finds most IETF language tags:
-    //private const string IETF_LANGUAGE_TAG_PATTERN = @"^[a-z]{2,3}-[A-Z]{2,3}$";
-
     /// <summary> Indicates whether <paramref name="s" /> needs 
     /// Quoted-Printable encoding.</summary>
     /// <param name="s">The <see cref="string" /> to check, or <c>null</c>.</param>
@@ -39,34 +36,4 @@ internal static partial class StringExtension
 
         return false;
     }
-
-//    [ExcludeFromCodeCoverage]
-//    internal static bool IsIetfLanguageTag(this string value)
-//#if NET462 || NETSTANDARD2_0 || NETSTANDARD2_1 || NET5_0 || NET6_0
-//    {
-//        try
-//        {
-//            return Regex.IsMatch(value, IETF_LANGUAGE_TAG_PATTERN, RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(50));
-//        }
-//        catch (RegexMatchTimeoutException)
-//        {
-//            return false;
-//        }
-//    }
-//#else
-//    {
-//        try
-//        {
-//            return IetfLanguageTagRegex().IsMatch(value);
-//        }
-//        catch (RegexMatchTimeoutException)
-//        {
-//            return false;
-//        }
-//    }
-
-//    [GeneratedRegex(IETF_LANGUAGE_TAG_PATTERN, RegexOptions.CultureInvariant, 50)]
-//    private static partial Regex IetfLanguageTagRegex();
-//#endif
-
 }

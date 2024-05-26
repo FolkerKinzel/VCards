@@ -51,9 +51,7 @@ internal static class ReadOnlySpanExtension
     }
 
     internal static string UnMask(this ReadOnlySpan<char> value, VCdVersion version)
-    {
-        Debug.Assert(value != null);
-
+    { 
         int idxOfBackSlash = value.IndexOf('\\');
 
         if (idxOfBackSlash == -1)
