@@ -1,12 +1,12 @@
 ﻿# FolkerKinzel.VCards
 ## Roadmap
 
-### 7.1.0
-- [ ] Add generic overloads to the VCardBuilder-Parts Edit and Add methods to pass data without having to use closures.
+### 7.2.0
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
 ### 7.0.0
+- [x] Add generic overloads to the VCardBuilder-Parts Edit methods to pass data without having to use closures.
 - [x] Implement a fluent API.
 
 ### 6.0.1
