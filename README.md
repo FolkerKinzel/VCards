@@ -16,7 +16,7 @@ The library supports [RFC 6350](https://tools.ietf.org/html/rfc6350) (vCard 4.0)
 [RFC 4770](https://tools.ietf.org/html/rfc4770),
 [RFC 2739](https://tools.ietf.org/html/rfc2739), as well as several popular non-standard vCard properties.
 
-The library allows:
+It allows:
 - loading VCF files from the file system and saving them there,
 - serializing and deserializing VCF files to and from streams,
 - and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.
