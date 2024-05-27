@@ -2,16 +2,6 @@ using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-internal static class LanguageConverter
-{
-    private const string EN = "en";
-
-    internal static string ToString(ReadOnlySpan<char> language)
-    {
-        return language.Equals(EN, StringComparison.Ordinal) ? EN : language.ToString();
-    }
-}
-
 internal static class LocConverter
 {
     internal static class Values

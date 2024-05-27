@@ -321,7 +321,141 @@ public class VCardTests
     public void CloneTest1()
     {
         VCard vc1 = Utility.CreateVCard();
+
+        Assert.AreEqual(1, vc1.Xmls?.Count());
+        Assert.AreEqual(1, vc1.BirthDayViews?.Count());
+        Assert.AreEqual(1, vc1.Addresses?.Count());
+        Assert.AreEqual(1, vc1.NickNames?.Count());
+        Assert.AreEqual(1, vc1.GenderViews?.Count());
+        Assert.AreEqual(1, vc1.GeoCoordinates?.Count());
+        Assert.AreEqual(2, vc1.NonStandards?.Count());
+        Assert.AreEqual(1, vc1.AppIDs?.Count());
+        Assert.AreEqual(1, vc1.TimeZones?.Count());
+
         var vc2 = (VCard)vc1.Clone();
+        Assert.AreEqual(1, vc2.Xmls?.Count());
+        Assert.AreNotSame(vc1.Xmls!.First(), vc2.Xmls!.First());
+        Assert.AreEqual(1, vc2.BirthDayViews?.Count());
+        Assert.AreNotSame(vc1.BirthDayViews!.First(), vc2.BirthDayViews!.First());
+        Assert.AreEqual(1, vc2.Addresses?.Count());
+        Assert.AreNotSame(vc1.Addresses!.First(), vc2.Addresses!.First());
+        Assert.AreEqual(1, vc2.NickNames?.Count());
+        Assert.AreNotSame(vc1.NickNames!.First(), vc2.NickNames!.First());
+        Assert.AreEqual(1, vc2.GenderViews?.Count());
+        Assert.AreNotSame(vc1.GenderViews!.First(), vc2.GenderViews!.First());
+        Assert.AreEqual(1, vc2.GeoCoordinates?.Count());
+        Assert.AreNotSame(vc1.GeoCoordinates!.First(), vc2.GeoCoordinates!.First());
+        Assert.AreEqual(2, vc2.NonStandards?.Count());
+        Assert.AreNotSame(vc1.NonStandards!.First(), vc2.NonStandards!.First());
+        Assert.AreNotSame(vc1.NonStandards!.ElementAt(1), vc2.NonStandards!.ElementAt(1));
+        Assert.AreEqual(1, vc2.AppIDs?.Count());
+        Assert.AreNotSame(vc1.AppIDs!.First(), vc2.AppIDs!.First());
+        Assert.AreEqual(1, vc2.TimeZones?.Count());
+        Assert.AreNotSame(vc1.TimeZones!.First(), vc2.TimeZones!.First());
+
         Assert.AreNotSame(vc1, vc2);
+    }
+
+    [TestMethod]
+    public void CloneTest2()
+    {
+        VCard vc1 = Utility.CreateVCard();
+
+        VCard.SyncTestReset();
+        VCard.RegisterApp(new Uri("http://123.com"));
+        vc1.Sync.SetPropertyIDs();
+
+        vc1.Xmls = vc1.Xmls.ConcatWith((XmlProperty)vc1.Xmls!.First()!.Clone());
+        Assert.AreEqual(2, vc1.Xmls?.Count());
+
+        vc1.BirthDayViews =vc1.BirthDayViews.ConcatWith((DateAndOrTimeProperty)vc1.BirthDayViews!.First()!.Clone());
+        Assert.AreEqual(2, vc1.BirthDayViews?.Count());
+
+        vc1.Addresses = vc1.Addresses.ConcatWith((AddressProperty)vc1.Addresses!.First()!.Clone());
+        Assert.AreEqual(2, vc1.Addresses?.Count());
+
+        vc1.NickNames = vc1.NickNames.ConcatWith((StringCollectionProperty)vc1.NickNames!.First()!.Clone());
+        Assert.AreEqual(2, vc1.NickNames?.Count());
+
+        vc1.GenderViews = vc1.GenderViews.ConcatWith((GenderProperty)vc1.GenderViews!.First()!.Clone());
+        Assert.AreEqual(2, vc1.GenderViews?.Count());
+
+        vc1.GeoCoordinates = vc1.GeoCoordinates.ConcatWith((GeoProperty)vc1.GeoCoordinates!.First()!.Clone());
+        Assert.AreEqual(2, vc1.GeoCoordinates?.Count());
+
+        vc1.NonStandards = vc1.NonStandards!.First();
+        Assert.AreEqual(1, vc1.NonStandards?.Count());
+        
+        Assert.AreEqual(2, vc1.AppIDs?.Count());
+
+        vc1.TimeZones = vc1.TimeZones.ConcatWith((TimeZoneProperty)vc1.TimeZones!.First()!.Clone());
+        Assert.AreEqual(2, vc1.TimeZones?.Count());
+
+        var vc2 = (VCard)vc1.Clone();
+        Assert.AreEqual(2, vc2.Xmls?.Count());
+        Assert.AreNotSame(vc1.Xmls!.First(), vc2.Xmls!.First());
+        Assert.AreEqual(2, vc2.BirthDayViews?.Count());
+        Assert.AreNotSame(vc1.BirthDayViews!.First(), vc2.BirthDayViews!.First());
+        Assert.AreEqual(2, vc2.Addresses?.Count());
+        Assert.AreNotSame(vc1.Addresses!.First(), vc2.Addresses!.First());
+        Assert.AreEqual(2, vc2.NickNames?.Count());
+        Assert.AreNotSame(vc1.NickNames!.First(), vc2.NickNames!.First());
+        Assert.AreEqual(2, vc2.GenderViews?.Count());
+        Assert.AreNotSame(vc1.GenderViews!.First(), vc2.GenderViews!.First());
+        Assert.AreEqual(2, vc2.GeoCoordinates?.Count());
+        Assert.AreNotSame(vc1.GeoCoordinates!.First(), vc2.GeoCoordinates!.First());
+        Assert.AreEqual(1, vc2.NonStandards?.Count());
+        Assert.AreNotSame(vc1.NonStandards!.First(), vc2.NonStandards!.First());
+        Assert.AreEqual(2, vc2.AppIDs?.Count());
+        Assert.AreNotSame(vc1.AppIDs!.First(), vc2.AppIDs!.First());
+        Assert.AreEqual(2, vc2.TimeZones?.Count());
+        Assert.AreNotSame(vc1.TimeZones!.First(), vc2.TimeZones!.First());
+
+        Assert.AreNotSame(vc1, vc2);
+    }
+
+    [TestMethod]
+    public void XAssistantTest1()
+    {
+        const string vCardString = """
+            BEGIN:VCARD
+            VERSION:3.0
+            X-ASSISTANT:John Doe
+            END:VCARD
+            """;
+
+        VCard vCard = Vcf.Parse(vCardString)[0];
+
+        Assert.AreEqual(1, vCard.Relations?.Count());
+    }
+
+    [TestMethod]
+    public void XEvolutionAssistantTest1()
+    {
+        const string vCardString = """
+            BEGIN:VCARD
+            VERSION:3.0
+            X-EVOLUTION-ASSISTANT:John Doe
+            END:VCARD
+            """;
+
+        VCard vCard = Vcf.Parse(vCardString)[0];
+
+        Assert.AreEqual(1, vCard.Relations?.Count());
+    }
+
+    [TestMethod]
+    public void XKAdressbookXAssistentsnameTest1()
+    {
+        const string vCardString = """
+            BEGIN:VCARD
+            VERSION:3.0
+            X-KADDRESSBOOK-X-ASSISTANTSNAME:John Doe
+            END:VCARD
+            """;
+
+        VCard vCard = Vcf.Parse(vCardString)[0];
+
+        Assert.AreEqual(1, vCard.Relations?.Count());
     }
 }

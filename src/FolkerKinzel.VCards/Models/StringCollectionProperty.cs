@@ -59,12 +59,14 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     {
         ReadOnlyMemory<char> val = vcfRow.Value;
 
-        if (this.Parameters.Encoding == Enc.QuotedPrintable)
-        {
-            val = QuotedPrintable.Decode(
-                    val.Span,
-                    TextEncodingConverter.GetEncoding(this.Parameters.CharSet)).AsMemory(); // null-check not needed
-        }
+        // StringCollectionProperty is used for NickNames and categories. Neither NickNames nor
+        // Categories are known in VCard 2.1. That's why Quoted-Printable encoding can't occur.
+        //if (this.Parameters.Encoding == Enc.QuotedPrintable)
+        //{
+        //    val = QuotedPrintable.Decode(
+        //            val.Span,
+        //            TextEncodingConverter.GetEncoding(this.Parameters.CharSet)).AsMemory(); // null-check not needed
+        //}
 
         if (val.Length == 0)
         {

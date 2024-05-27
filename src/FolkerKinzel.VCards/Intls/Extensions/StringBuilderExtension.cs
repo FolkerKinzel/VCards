@@ -1,6 +1,4 @@
 using System.Collections.ObjectModel;
-using FolkerKinzel.DataUrls;
-using System.Security.Cryptography;
 using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;

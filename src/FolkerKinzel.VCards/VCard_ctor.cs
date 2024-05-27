@@ -364,7 +364,7 @@ public sealed partial class VCard
                         vcfRow.Parameters.DataType ??= Data.Text;
                         vcfRow.Parameters.RelationType = Rel.Agent;
 
-                        Relations = Concat(Relations, RelationProperty.Parse(vcfRow, this.Version));
+                        Relations = Concat(Relations, new RelationTextProperty(new TextProperty(vcfRow, this.Version)));
                     }
 
                     break;
@@ -381,10 +381,10 @@ public sealed partial class VCard
                         {
                             if (valSpan.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                             {
-                                VCard? nested = ParseNestedVcard(vcfRow.Value.ToString(), info, this.Version);
+                                VCard? nested = ParseNestedVcard(vcfRow.Value.Span, info, this.Version);
 
-                                Relations = 
-                                    Concat(Relations,  nested is null 
+                                Relations =
+                                    Concat(Relations, nested is null
                                                        ? new RelationTextProperty(new TextProperty(vcfRow, Version))
 
                                                        // use the ctor directly because nested can't be a circular
@@ -467,16 +467,16 @@ public sealed partial class VCard
         Sync = new SyncOperation(this);
 
 
-        static VCard? ParseNestedVcard(string content,
+        static VCard? ParseNestedVcard(ReadOnlySpan<char> content,
                                        VcfDeserializationInfo info,
                                        VCdVersion versionHint)
         {
             // Version 2.1 is not masked:
-            content = versionHint == VCdVersion.V2_1
-                ? content
-                : content.AsSpan().UnMask(versionHint);
+            string s = versionHint == VCdVersion.V2_1
+                ? content.ToString()
+                : content.UnMask(versionHint);
 
-            using var reader = new StringReader(content);
+            using var reader = new StringReader(s);
 
             IList<VCard> list = Vcf.DoDeserialize(reader, versionHint);
 
@@ -576,7 +576,7 @@ public sealed partial class VCard
             return;
         }
 
-        IEnumerable<IGrouping<string?, VCardProperty>> groups = 
+        IEnumerable<IGrouping<string?, VCardProperty>> groups =
             Addresses.Concat<VCardProperty?>(TimeZones)
                      .GroupByVCardGroup();
 
@@ -618,7 +618,7 @@ public sealed partial class VCard
             return;
         }
 
-        IEnumerable<IGrouping<string?, VCardProperty>> groups = 
+        IEnumerable<IGrouping<string?, VCardProperty>> groups =
             Addresses.Concat<VCardProperty?>(GeoCoordinates)
                      .GroupByVCardGroup();
 
