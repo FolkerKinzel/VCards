@@ -680,11 +680,11 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendCalScale()
     {
-        string? calScale = ParaSection.Calendar;
+        string calScale = ParaSection.Calendar;
 
-        if (calScale is not null)
+        if (!object.ReferenceEquals(calScale, ParameterSection.DEFAULT_CALENDAR))
         {
-            AppendParameter(ParameterSection.ParameterKey.ALTID, calScale, escapedAndQuoted: true);
+            AppendParameter(ParameterSection.ParameterKey.CALSCALE, calScale, escapedAndQuoted: true);
         }
     }
 

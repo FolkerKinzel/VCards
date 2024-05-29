@@ -394,7 +394,7 @@ public static partial class Vcf
         Debug.Assert(reader is not null);
         DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoDeserialize) + "(TextReader)");
 
-        var vCardList = VcfReader.EnumerateVCards(reader, versionHint).ToArray();
+        VCard[] vCardList = VcfReader.EnumerateVCards(reader, versionHint).ToArray();
         VCard.DereferenceIntl(vCardList);
 
         return vCardList;

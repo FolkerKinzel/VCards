@@ -197,7 +197,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
     protected override void AppendOrganizations(IEnumerable<OrgProperty?> value)
     {
-        var pref = value.PrefOrNullIntl(IgnoreEmptyItems);
+        OrgProperty? pref = value.PrefOrNullIntl(IgnoreEmptyItems);
 
         if (pref is null) { return; }
 

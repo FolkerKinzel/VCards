@@ -113,7 +113,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 //vCard-Wrapping (This can't be "BEGIN:VCARD" or "END:VCARD".)
                 Debug.WriteLine("  == vCard Line-Wrapping detected ==");
 
-                if(isVcard_2_1)
+                if (isVcard_2_1)
                 {
                     _list.Add(s.AsMemory());
                 }
@@ -135,7 +135,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                     continue;
                 }
 
-                if (tmpRow.Parameters.Encoding == Enc.QuotedPrintable && HasQuotedPrintableSoftLineBreak(tmp.Span)) 
+                if (tmpRow.Parameters.Encoding == Enc.QuotedPrintable && HasQuotedPrintableSoftLineBreak(tmp.Span))
                 {
                     // QuotedPrintable soft-linebreak (This can't be "BEGIN:VCARD" or "END:VCARD".)
                     Debug.WriteLine("  == QuotedPrintable soft-linebreak detected ==");
@@ -168,27 +168,36 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                         yield return tmpRow;
                         continue;
                     }
+
+                    // Hack: RFC 2425 shows a vCard 2.1 example that uses Base64 like vCard 3.0 without
+                    // an empty line after the Base64.
+                    // If s contains ':' it's probably the next vCard row.
+                    if(s.Contains(':'))
+                    {
+                        _list.Add(s.AsMemory());
+                        yield return tmpRow;
+                        continue;
+                    }
+
+                    _list.Add(tmp);
+
+                    if (ConcatVcard2_1Base64(s))
+                    {
+                        VcfRow? vcfRow = CreateVcfRowAndClearList(out _);
+
+                        if (vcfRow is not null)
+                        {
+                            yield return vcfRow;
+                        }
+
+                        s = "";
+                        continue;
+                    }
                     else
                     {
-                        _list.Add(tmp);
-
-                        if (ConcatVcard2_1Base64(s))
-                        {
-                            VcfRow? vcfRow = CreateVcfRowAndClearList(out _);
-
-                            if (vcfRow is not null)
-                            {
-                                yield return vcfRow;
-                            }
-
-                            s = "";
-                            continue;
-                        }
-                        else
-                        {
-                            yield break;
-                        }
+                        yield break;
                     }
+
                 }
                 else if (s.StartsWith(BEGIN_VCARD, StringComparison.OrdinalIgnoreCase)) // embedded VCard 2.1. AGENT-vCard:
                 {
@@ -254,7 +263,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
         yield break;
     }
 
-    private static bool HasQuotedPrintableSoftLineBreak(ReadOnlySpan<char> span) 
+    private static bool HasQuotedPrintableSoftLineBreak(ReadOnlySpan<char> span)
         => span.TrimEnd().EndsWith('='); // QP soft line breaks may be padded with white space
 
     private static bool GetIsVcard_2_1(string s)

@@ -499,4 +499,78 @@ END:VCARD";
         NameProperty nProp = vCard.NameViews.First()!;
         Assert.IsTrue(nProp.IsEmpty);
     }
+
+    [TestMethod]
+    public void SortAsTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .NameViews.Add("Name", parameters: p => p.SortAs = ["abc", "123"])
+            .VCard;
+
+        string serialized = vc.ToVcfString();
+
+        vc = Vcf.Parse(serialized)[0];
+
+        IEnumerable<string>? sortAs = vc.NameViews!.First()!.Parameters.SortAs;
+        Assert.IsNotNull(sortAs);
+        Assert.AreEqual(1, sortAs.Count());
+        Assert.AreEqual("abc", sortAs.First());
+    }
+
+    [TestMethod]
+    public void SortAsTest2()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .NameViews.Add("Name")
+            .Organizations.Add("Org", parameters: p => p.SortAs = ["abc", "123"])
+            .VCard;
+
+        string serialized = vc.ToVcfString();
+
+        vc = Vcf.Parse(serialized)[0];
+
+        IEnumerable<string>? sortAs = vc.NameViews!.First()!.Parameters.SortAs;
+        Assert.IsNotNull(sortAs);
+        Assert.AreEqual(1, sortAs.Count());
+        Assert.AreEqual("abc", sortAs.First());
+    }
+
+    [TestMethod]
+    public void SortAsTest3()
+    {
+        const string serialized = """
+            BEGIN:VCARD
+            VERSION:3.0
+            ORG:Org
+            SORT-STRING:abc
+            END:VCARD
+            """;
+
+        VCard vc = Vcf.Parse(serialized)[0];
+
+        IEnumerable<string>? sortAs = vc.Organizations!.First()!.Parameters.SortAs;
+        Assert.IsNotNull(sortAs);
+        Assert.AreEqual(1, sortAs.Count());
+        Assert.AreEqual("abc", sortAs.First());
+    }
+
+    [TestMethod]
+    public void SortAsTest4()
+    {
+        const string serialized = """
+            BEGIN:VCARD
+            VERSION:3.0
+            SORT-STRING:abc
+            END:VCARD
+            """;
+
+        VCard vc = Vcf.Parse(serialized)[0];
+
+        IEnumerable<string>? sortAs = vc.NameViews!.First()!.Parameters.SortAs;
+        Assert.IsNotNull(sortAs);
+        Assert.AreEqual(1, sortAs.Count());
+        Assert.AreEqual("abc", sortAs.First());
+    }
 }

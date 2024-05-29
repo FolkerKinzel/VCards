@@ -7,6 +7,8 @@ public sealed partial class ParameterSection
 
     private const string TRIM_CHARS = " \"\'";
 
+    internal const string DEFAULT_CALENDAR = "gregorian";
+
 
     internal static class ParameterKey
     {

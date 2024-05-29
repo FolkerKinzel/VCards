@@ -133,8 +133,16 @@ public sealed partial class ParameterSection
                         break;
                     }
                 case ParameterKey.CALSCALE:
-                    this.Calendar = parameter.Value.Span.Trim(TRIM_CHARS).ToString();
-                    break;
+                    {
+                        ReadOnlySpan<char> span = parameter.Value.Span;
+                        Set<string?>(VCdParam.Calendar,
+                            span.IsWhiteSpace()
+                             ? null
+                             : span.Contains(DEFAULT_CALENDAR, StringComparison.OrdinalIgnoreCase)
+                                ? null
+                                : span.Trim(TRIM_CHARS).ToString());
+                        break;
+                    }
                 case ParameterKey.ENCODING:
                     this.Encoding = EncConverter.Parse(parameter.Value.ToString());
                     break;

@@ -211,6 +211,7 @@ public sealed partial class VCard
                             {
                                 NameViews.FirstOrNullIntl(ignoreEmptyItems: false)!.Parameters.SortAs = [textProp.Value];
                             }
+                            // this is not legal: N property is required in VCard 3.0
                             else if (Organizations is not null)
                             {
                                 Organizations.PrefOrNullIntl(ignoreEmptyItems: false)!.Parameters.SortAs = [textProp.Value];

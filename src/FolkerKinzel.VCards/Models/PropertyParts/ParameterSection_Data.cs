@@ -64,12 +64,19 @@ public sealed partial class ParameterSection
 
     /// <summary><c>CALSCALE</c>: It is used to define the calendar system in which a date or 
     /// date-time value is expressed. <c>(4)</c></summary>
-    /// <value>The only value specified is <c>GREGORIAN</c>, which stands for the Gregorian
+    /// <value>The only value specified is <c>gregorian</c>, which stands for the Gregorian
     /// system.</value>
-    public string? Calendar
+    [AllowNull]
+    public string Calendar
     {
-        get => Get<string?>(VCdParam.Calendar);
-        set => Set<string?>(VCdParam.Calendar, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
+        get => Get<string?>(VCdParam.Calendar) ?? DEFAULT_CALENDAR;
+
+        set => Set<string?>(VCdParam.Calendar, 
+                            string.IsNullOrWhiteSpace(value) 
+                             ? null 
+                             : value.Contains(DEFAULT_CALENDAR, StringComparison.OrdinalIgnoreCase)
+                                ? null 
+                                : value.Trim());
     }
 
     /// <summary> <c>CHARSET</c>: Indicates the character set that was used for the
