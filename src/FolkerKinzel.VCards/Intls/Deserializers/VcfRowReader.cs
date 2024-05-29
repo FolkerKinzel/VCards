@@ -24,20 +24,16 @@ internal class VcfRowReader : IEnumerable<VcfRow>
     private readonly VCdVersion _versionHint;
     private readonly List<ReadOnlyMemory<char>> _list = [];
 
+    internal bool EOF { get; private set; }
 
     internal VcfRowReader(TextReader reader, VcfDeserializationInfo info, VCdVersion versionHint = VCdVersion.V2_1)
     {
         this._reader = reader;
         this._info = info;
-        this.EOF = false;
         this._versionHint = versionHint;
     }
 
-    public bool EOF { get; private set; }
-
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-    
 
     private bool ReadNextLine([NotNullWhen(true)] out string? s)
     {
@@ -53,14 +49,12 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                 throw;
             }
 
-            EOF = true;
             s = null;
-            return false;
         }
 
-        if (s is null)
+        if (s == null)
         {
-            EOF = true;
+            this.EOF = true;
             return false;
         }
 
@@ -94,11 +88,6 @@ internal class VcfRowReader : IEnumerable<VcfRow>
     public IEnumerator<VcfRow> GetEnumerator()
     {
         Debug.WriteLine("");
-
-        if (EOF)
-        {
-            yield break;
-        }
 
         if (!FindBeginVcard())
         {
