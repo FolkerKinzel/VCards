@@ -61,8 +61,8 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         if (dataType == Data.Text)
         {
-            // Hinweis: LANGUAGE ist eigentlich nur bei BDAY erlaubt!
-            // (Fehler im RFC?)
+            // Note: LANGUAGE is permitted only in BDAY
+            // (Error in the RFC?)
             AppendLanguage();
         }
 
@@ -81,6 +81,14 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             AppendLanguage();
         }
 
+        AppendAltId();
+        AppendNonStandardParameters();
+    }
+
+    protected override void BuildBirthPlacePara()
+    {
+        AppendValue(this.ParaSection.DataType);
+        AppendLanguage();
         AppendAltId();
         AppendNonStandardParameters();
     }
@@ -132,6 +140,30 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
     protected override void BuildClientpidmapPara()
     {
         AppendIndex();
+        AppendNonStandardParameters();
+    }
+
+    
+
+    protected override void BuildDeathDatePara()
+    {
+        AppendValue(this.ParaSection.DataType);
+        AppendCalScale();
+
+        if (ParaSection.DataType == Data.Text)
+        {
+            AppendLanguage();
+        }
+
+        AppendAltId();
+        AppendNonStandardParameters();
+    }
+
+    protected override void BuildDeathPlacePara()
+    {
+        AppendValue(this.ParaSection.DataType);
+        AppendLanguage();
+        AppendAltId();
         AppendNonStandardParameters();
     }
 
@@ -530,37 +562,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendIndex();
     }
 
-    protected override void BuildBirthPlacePara()
-    {
-        AppendValue(this.ParaSection.DataType);
-        AppendLanguage();
-        AppendAltId();
-        AppendNonStandardParameters();
-    }
-
-    protected override void BuildDeathDatePara()
-    {
-        AppendValue(this.ParaSection.DataType);
-
-        if (ParaSection.DataType == Data.Text)
-        {
-            AppendLanguage();
-        }
-        else if (ParaSection.DataType == Data.DateAndOrTime)
-        {
-            AppendCalScale();
-        }
-        AppendAltId();
-        AppendNonStandardParameters();
-    }
-
-    protected override void BuildDeathPlacePara()
-    {
-        AppendValue(this.ParaSection.DataType);
-        AppendLanguage();
-        AppendAltId();
-        AppendNonStandardParameters();
-    }
+    
 
     protected override void BuildExpertisePara()
     {

@@ -573,4 +573,23 @@ END:VCARD";
         Assert.AreEqual(1, sortAs.Count());
         Assert.AreEqual("abc", sortAs.First());
     }
+
+    [TestMethod]
+    public void SortAsTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .NameViews.Add("Name", parameters: p => p.SortAs = ["abc", "123"])
+            .Organizations.Add("Org", parameters: p => p.SortAs = ["xyz"])
+            .VCard;
+
+        string serialized = vc.ToVcfString();
+
+        vc = Vcf.Parse(serialized)[0];
+
+        IEnumerable<string>? sortAs = vc.NameViews!.First()!.Parameters.SortAs;
+        Assert.IsNotNull(sortAs);
+        Assert.AreEqual(1, sortAs.Count());
+        Assert.AreEqual("abc", sortAs.First());
+    }
 }

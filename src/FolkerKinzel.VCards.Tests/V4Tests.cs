@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -349,6 +350,38 @@ public class V4Tests
 
         Assert.AreEqual(mobilePhoneNumber, whatsAppImpp?.Value);
         Assert.AreEqual(PCl.Home | PCl.Work, whatsAppImpp?.Parameters.PropertyClass);
+    }
+
+    [TestMethod]
+    public void CalendarTest1()
+    {
+        var prop = DateAndOrTimeProperty.FromDate(5, 5);
+        Assert.AreEqual("gregorian", prop.Parameters.Calendar);
+        prop.Parameters.Calendar = "GREGORIAN";
+        Assert.AreEqual("gregorian", prop.Parameters.Calendar);
+        prop.Parameters.Calendar = "X-JULIAN";
+        Assert.AreEqual("X-JULIAN", prop.Parameters.Calendar);
+        prop.Parameters.Calendar = null;
+        Assert.AreEqual("gregorian", prop.Parameters.Calendar);
+    }
+
+    [TestMethod]
+    public void CalendarTest2()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .BirthDayViews.Add(1900, 2,3, parameters: p => p.Calendar = "\"  \"")
+            .AnniversaryViews.Add(1924, 7, 24, parameters: p => p.Calendar = "GREGORIAN")
+            .DeathDateViews.Add(1998, 2,4, parameters: p => p.Calendar = "X-JULIAN")
+            .VCard;
+
+        string serialized = vc.ToVcfString(VCdVersion.V4_0);
+
+        vc = Vcf.Parse(serialized)[0];
+
+        Assert.AreEqual("gregorian", vc.BirthDayViews!.First()!.Parameters.Calendar);
+        Assert.AreEqual("gregorian", vc.AnniversaryViews!.First()!.Parameters.Calendar);
+        Assert.AreEqual("X-JULIAN", vc.DeathDateViews!.First()!.Parameters.Calendar);
     }
 }
 

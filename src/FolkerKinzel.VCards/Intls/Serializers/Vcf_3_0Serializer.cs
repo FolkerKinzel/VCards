@@ -214,7 +214,9 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
                                .Parameters
                                .SortAs?
                                .Any(static x => !string.IsNullOrWhiteSpace(x)) ?? false)
-            { return; }
+            { 
+                return; 
+            }
 
             var sortStringProp = new TextProperty(sortString, pref.Group);
             sortStringProp.Parameters.Language = pref.Parameters.Language;
