@@ -24,11 +24,12 @@ internal static class ReadOnlySpanExtension
 
         static string DoUnMasking(ReadOnlySpan<char> valueSpan, Span<char> bufSpan, string? charSet)
         {
-            valueSpan = valueSpan.Slice(0, UnMask(valueSpan, bufSpan, VCdVersion.V2_1));
-            return QuotedPrintable.Decode(
-                valueSpan, TextEncodingConverter.GetEncoding(charSet)); // null-check not needed
+            return QuotedPrintable.Decode(bufSpan.Slice(0, UnMask(valueSpan, bufSpan)),
+                                          TextEncodingConverter.GetEncoding(charSet)); // null-check not needed
 
-            static int UnMask(ReadOnlySpan<char> value, Span<char> outBuf, VCdVersion version)
+            ///////////////////////////////////////////////////////////
+            
+            static int UnMask(ReadOnlySpan<char> value, Span<char> outBuf)
             {
                 int idxOfBackSlash = value.IndexOf('\\');
 
@@ -40,12 +41,7 @@ internal static class ReadOnlySpanExtension
 
                 value.Slice(0, idxOfBackSlash).CopyTo(outBuf);
 
-                return version switch
-                {
-                    VCdVersion.V2_1 => idxOfBackSlash + UnMask21(value, outBuf),
-                    VCdVersion.V3_0 => idxOfBackSlash + UnMask30(value, outBuf),
-                    _ => idxOfBackSlash + UnMask40(value, outBuf)
-                };
+                return idxOfBackSlash + UnMask21(value.Slice(idxOfBackSlash), outBuf.Slice(idxOfBackSlash));
             }
         }
     }
@@ -96,13 +92,32 @@ internal static class ReadOnlySpanExtension
         int lastSourceIdx = source.Length - 1;
         int length = 0;
 
+        ReadOnlySpan<char> newLineSpan = Environment.NewLine.AsSpan();
+
         for (int i = 0; i < lastSourceIdx; i++)
         {
             char c = source[i];
 
-            if (c == '\\' && source[i + 1] == ';')
+            if (c == '\\')
             {
-                continue;
+                switch (source[i + 1])
+                {
+                    // @"\n" see RFC 2425, 8.3
+                    case 'n':
+                    case 'N':
+                        newLineSpan.TryCopyTo(destination.Slice(length));
+                        length += newLineSpan.Length;
+                        i++;
+                        if (i == lastSourceIdx)
+                        {
+                            return length;
+                        }
+                        continue;
+                    case ';':
+                        continue;
+                    default:
+                        break;
+                }
             }
 
             destination[length++] = c;

@@ -262,7 +262,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                        ? new ReferencedDataProperty
                               (
                                new UriProperty(uri, vcfRow.Parameters, vcfRow.Group)
-                               )
+                              )
                        : new EmbeddedTextProperty(new TextProperty(vcfRow, version));
         }
     }

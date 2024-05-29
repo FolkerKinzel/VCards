@@ -44,6 +44,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
             this.EOF = true;
             return true;
         }
+
         return false;
     }
 
@@ -60,6 +61,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
             {
                 throw;
             }
+
             EOF = true;
             s = null;
             return false;

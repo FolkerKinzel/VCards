@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -355,5 +356,40 @@ public class V2Tests
         Assert.IsNotNull(key);
         Assert.AreEqual(pgpMime, key.Parameters.MediaType);
 
+    }
+
+
+    [TestMethod]
+    public void ParseCroppedEmbeddedVCardTest1()
+    {
+        const string cropped = """
+            BEGIN:VCARD
+            VERSION:2.1
+            AGENT:
+            BEGIN:VCARD
+            VERSION:2.1
+            N:Friday;Fred
+            TEL; WORK;VOICE:+1-213-555-1234
+            TEL;WORK;FAX:+1-213-555-5678
+            """;
+
+        var vcs = Vcf.Parse(cropped);
+
+        Assert.IsNotNull(vcs);
+        Assert.AreEqual(1, vcs.Count);
+        Assert.IsFalse(vcs[0].Entities.Any());
+    }
+
+    [TestMethod]
+    public void ParseCroppedVCardTest1()
+    {
+        const string cropped = """
+            BEGIN:VCARD
+            """;
+
+        var vcs = Vcf.Parse(cropped);
+
+        Assert.IsNotNull(vcs);
+        Assert.AreEqual(0, vcs.Count);
     }
 }

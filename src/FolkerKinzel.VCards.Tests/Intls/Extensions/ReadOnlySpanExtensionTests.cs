@@ -1,9 +1,10 @@
 ﻿using System.Text;
 using FolkerKinzel.VCards.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Intls.Extensions.Tests;
 
 [TestClass]
-public class StringExtensionTests
+public class ReadOnlySpanExtensionTests
 {
     [TestMethod]
     public void UnMaskTest1()
@@ -49,9 +50,11 @@ public class StringExtensionTests
     [DataRow("a\\bc", VCdVersion.V2_1, "a\\bc")]
     [DataRow("a\\;bc", VCdVersion.V2_1, "a;bc")]
     [DataRow("a\\nb", VCdVersion.V3_0, "a\r\nb")]
-    [DataRow("a\\nb", VCdVersion.V2_1, "a\\nb")]
+    [DataRow("a\\nb", VCdVersion.V2_1, "a\r\nb")]
     [DataRow("a\\b", VCdVersion.V3_0, "a\\b")]
+    [DataRow("a\\n", VCdVersion.V4_0, "a\r\n")]
     [DataRow("a\\n", VCdVersion.V3_0, "a\r\n")]
+    [DataRow("a\\n", VCdVersion.V2_1, "a\r\n")]
     [DataRow("ab\\", VCdVersion.V4_0, "ab\\")]
     [DataRow("a\\b", VCdVersion.V4_0, "a\\b")]
     [DataRow("a\\\\", VCdVersion.V4_0, "a\\")]
@@ -59,33 +62,24 @@ public class StringExtensionTests
     [DataRow("a\\nb", VCdVersion.V4_0, "a\r\nb")]
     [DataRow("a\\Nb", VCdVersion.V4_0, "a\r\nb")]
     [DataRow("a\\;\\,b", VCdVersion.V4_0, "a;,b")]
-    public void UnMaskTest6(string input, VCdVersion version, string? expected)
-        => Assert.AreEqual(expected, input.AsSpan().UnMask(version), false);
+    public void UnMaskTest6(string input, VCdVersion version, string expected)
+        => Assert.AreEqual(expected.Replace("\r\n", Environment.NewLine), input.AsSpan().UnMask(version), false);
 
     [TestMethod]
     public void UnmaskTest7()
     {
         string input = "\\n" + new string('a', 500);
-        Assert.AreEqual(input, input.AsSpan().UnMask(VCdVersion.V2_1));
+        Assert.AreNotEqual(input, input.AsSpan().UnMask(VCdVersion.V2_1));
         Assert.AreNotEqual(input, input.AsSpan().UnMask(VCdVersion.V3_0));
     }
 
+    [TestMethod]
+    public void UnMaskAndDecodeTest1()
+    {
+        const string input = "abc\\,\\;\\n\\\\=\r\n=C3=A4";
 
-    //[DataTestMethod]
-    //[DataRow("", VCdVersion.V3_0, "")]
-    //[DataRow(null, VCdVersion.V3_0, null)]
-    //[DataRow("a\\bc", VCdVersion.V2_1, "a\\bc")]
-    //[DataRow("a\r\nb", VCdVersion.V2_1, "a\r\nb")]
-    //[DataRow("a\r\nb", VCdVersion.V4_0, "a\\nb")]
-    //[DataRow("a,b", VCdVersion.V2_1, "a,b")]
-    //[DataRow("a,b", VCdVersion.V3_0, "a\\,b")]
-    //[DataRow("a,b", VCdVersion.V4_0, "a\\,b")]
-    //[DataRow("a;b", VCdVersion.V2_1, "a\\;b")]
-    //[DataRow("a;b", VCdVersion.V3_0, "a\\;b")]
-    //[DataRow("a;b", VCdVersion.V4_0, "a\\;b")]
-    //[DataRow("a\\b", VCdVersion.V2_1, "a\\b")]
-    //[DataRow("a\\b", VCdVersion.V3_0, "a\\b")]
-    //[DataRow("a\\b", VCdVersion.V4_0, "a\\\\b")]
-    //public void MaskTest1(string? input, VCdVersion version, string? expected)
-    //    => Assert.AreEqual(expected, input.Mask(new StringBuilder(), version), false);
+        string decoded = input.AsSpan().UnMaskAndDecode("UTF-8");
+        Assert.AreEqual("abc\\,;\r\n\\\\ä".Replace("\r\n", Environment.NewLine), decoded);
+    }
+    
 }
