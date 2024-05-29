@@ -37,16 +37,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    private bool HandleException(Exception e)
-    {
-        if (e is ArgumentOutOfRangeException or OutOfMemoryException)
-        {
-            this.EOF = true;
-            return true;
-        }
-
-        return false;
-    }
+    
 
     private bool ReadNextLine([NotNullWhen(true)] out string? s)
     {
@@ -72,7 +63,14 @@ internal class VcfRowReader : IEnumerable<VcfRow>
             EOF = true;
             return false;
         }
+
         return true;
+
+        //////////////////////////////////////////////////
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool HandleException(Exception e)
+            => e is ArgumentOutOfRangeException or OutOfMemoryException;
     }
 
     private bool FindBeginVcard()
