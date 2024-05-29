@@ -11,14 +11,6 @@ internal class VcfRowReader : IEnumerable<VcfRow>
     private const string BEGIN_VCARD = "BEGIN:VCARD";
     private const string END_VCARD = "END:VCARD";
 
-    //private static readonly Regex _vCardBegin =
-    //    new Regex(@"\ABEGIN[ \t]*:[ \t]*VCARD[ \t]*\z",
-    //        RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-
-    //private static readonly Regex _vCardEnd =
-    //    new Regex(@"\AEND[ \t]*:[ \t]*VCARD[ \t]*\z",
-    //        RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-
     private readonly TextReader _reader;
     private readonly VcfDeserializationInfo _info;
     private readonly VCdVersion _versionHint;
