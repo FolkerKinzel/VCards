@@ -573,7 +573,7 @@ internal abstract class VcfSerializer : IDisposable
         {
             Sex sex = pref.Value.Sex!.Value;
 
-            if (sex != Sex.Male && sex != Sex.Female)
+            if (sex is not Sex.Male and not Sex.Female)
             {
                 return;
             }

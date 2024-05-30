@@ -7,7 +7,11 @@ public sealed partial class ParameterSection
 
     private const string TRIM_CHARS = " \"\'";
 
-    internal const string DEFAULT_CALENDAR = "gregorian";
+    /// <summary>
+    /// Defines the default value for the <see cref="Calendar"/> property,
+    /// which stands for the Gregorian calendar system.
+    /// </summary>
+    public const string DefaultCalendar = "gregorian";
 
 
     internal static class ParameterKey

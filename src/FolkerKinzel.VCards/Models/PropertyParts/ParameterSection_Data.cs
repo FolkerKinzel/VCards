@@ -62,22 +62,33 @@ public sealed partial class ParameterSection
         set => Set(VCdParam.AltID, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
-    /// <summary><c>CALSCALE</c>: It is used to define the calendar system in which a date or 
+
+
+    /// <summary><c>CALSCALE</c>: The calendar system in which a date or 
     /// date-time value is expressed. <c>(4)</c></summary>
-    /// <value>The only value specified is <c>gregorian</c>, which stands for the Gregorian
-    /// system.</value>
+    /// <value>
+    /// <para>
+    /// A <see cref="string"/> that specifies the calendar system. If none
+    /// is specified, returns <see cref="DefaultCalendar"/>.
+    /// </para>
+    /// <para>If you want to specify a <c>CALSCALE</c> parameter in the VCF file, pass a 
+    /// <see cref="string"/> to this property, otherwise assign
+    /// <c>null</c> to ensure that no <c>CALSCALE</c> parameter will be written.
+    /// </para>
+    /// </value>
     [AllowNull]
     public string Calendar
     {
-        get => Get<string?>(VCdParam.Calendar) ?? DEFAULT_CALENDAR;
+        get => Get<string?>(VCdParam.Calendar) ?? DefaultCalendar;
 
         set => Set<string?>(VCdParam.Calendar, 
                             string.IsNullOrWhiteSpace(value) 
                              ? null 
-                             : value.Contains(DEFAULT_CALENDAR, StringComparison.OrdinalIgnoreCase)
-                                ? null 
-                                : value.Trim());
+                             : value.Trim());
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal string? GetCalendar() => Get<string?>(VCdParam.Calendar);
 
     /// <summary> <c>CHARSET</c>: Indicates the character set that was used for the
     /// property. <c>(2)</c></summary>

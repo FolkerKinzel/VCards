@@ -358,7 +358,7 @@ public class V4Tests
         var prop = DateAndOrTimeProperty.FromDate(5, 5);
         Assert.AreEqual("gregorian", prop.Parameters.Calendar);
         prop.Parameters.Calendar = "GREGORIAN";
-        Assert.AreEqual("gregorian", prop.Parameters.Calendar);
+        Assert.AreEqual("GREGORIAN", prop.Parameters.Calendar);
         prop.Parameters.Calendar = "X-JULIAN";
         Assert.AreEqual("X-JULIAN", prop.Parameters.Calendar);
         prop.Parameters.Calendar = null;
@@ -382,6 +382,30 @@ public class V4Tests
         Assert.AreEqual("gregorian", vc.BirthDayViews!.First()!.Parameters.Calendar);
         Assert.AreEqual("gregorian", vc.AnniversaryViews!.First()!.Parameters.Calendar);
         Assert.AreEqual("X-JULIAN", vc.DeathDateViews!.First()!.Parameters.Calendar);
+    }
+
+
+    [TestMethod]
+    public void LevelTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Expertises.Add("C#", parameters: p => p.NonStandard = [new KeyValuePair<string, string>("LEVEL", "SuperExpert"), new KeyValuePair<string, string>("TYPE", "NERD")])
+            .Interests.Add("Linq", parameters: p => p.NonStandard = [new KeyValuePair<string, string>("LEVEL", "VeryInterested")])
+            .VCard;
+
+        string serialized = vc.ToVcfString( VCdVersion.V4_0, options: Opts.Default.Set(Opts.WriteNonStandardParameters));
+
+        vc = Vcf.Parse(serialized)[0];
+        TextProperty expertise = vc.Expertises!.First()!;
+        TextProperty interest = vc.Interests!.First()!;
+
+        Assert.IsTrue(expertise.Parameters.NonStandard!.Any(kvp => kvp.Key == "LEVEL" && kvp.Value == "SuperExpert"));
+        Assert.IsTrue(expertise.Parameters.NonStandard!.Any(kvp => kvp.Key == "TYPE" && kvp.Value == "NERD"));
+
+
+        Assert.IsTrue(interest.Parameters.NonStandard!.Any(kvp => kvp.Key == "LEVEL" && kvp.Value == "VeryInterested"));
+
     }
 }
 

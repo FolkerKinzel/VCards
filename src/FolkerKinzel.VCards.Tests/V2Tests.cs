@@ -458,4 +458,26 @@ public class V2Tests
 
         //string parsed = vcs[0].ToString();
     }
+
+    [TestMethod]
+    public void GenderTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .GenderViews.Add(Sex.Female)
+            .VCard;
+
+        string serialized = vc.ToVcfString(VCdVersion.V2_1, options: Opts.All);
+
+        StringAssert.Contains(serialized, "X-GENDER:Female");
+        StringAssert.Contains(serialized, "X-WAB-GENDER:1");
+
+        vc = Vcf.Parse(serialized)[0];
+
+        Assert.IsNotNull(vc);
+        Assert.IsNotNull(vc.GenderViews);
+        Assert.AreEqual(1, vc.GenderViews.Count());
+        Assert.AreEqual(Sex.Female, vc.GenderViews.First()!.Value.Sex);
+
+    }
 }

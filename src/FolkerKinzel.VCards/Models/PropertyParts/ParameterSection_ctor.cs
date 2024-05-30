@@ -138,8 +138,8 @@ public sealed partial class ParameterSection
                         Set<string?>(VCdParam.Calendar,
                             span.IsEmpty
                              ? null
-                             : span.Equals(DEFAULT_CALENDAR, StringComparison.OrdinalIgnoreCase)
-                                ? null
+                             : span.Equals(DefaultCalendar, StringComparison.OrdinalIgnoreCase)
+                                ? DefaultCalendar
                                 : span.ToString());
                         break;
                     }
