@@ -10,8 +10,10 @@ It's performance optimized for high throughput and has a fluent API for efficien
 
 The library supports [RFC 6350](https://tools.ietf.org/html/rfc6350) (vCard 4.0), 
 [RFC 2426](https://tools.ietf.org/html/rfc2426) (vCard 3.0), 
-[vCard 2.1](https://web.archive.org/web/20120501162958/http://www.imc.org/pdi/vcard-21.doc), the extensions [RFC 6474](https://tools.ietf.org/html/rfc6474),
+[vCard 2.1](https://web.archive.org/web/20120501162958/http://www.imc.org/pdi/vcard-21.doc), 
+the extensions
 [RFC 6715](https://tools.ietf.org/html/rfc6715]), 
+[RFC 6474](https://tools.ietf.org/html/rfc6474),
 [RFC 6473](https://tools.ietf.org/html/rfc6473), 
 [RFC 4770](https://tools.ietf.org/html/rfc4770),
 [RFC 2739](https://tools.ietf.org/html/rfc2739), as well as several popular non-standard vCard properties.
