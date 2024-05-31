@@ -167,7 +167,7 @@ public sealed partial class VCard
         set => Set(Prop.BirthPlaceViews, value);
     }
 
-    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4)</c></summary>
+    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
     public IEnumerable<TextProperty?>? CalendarAddresses
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.CalendarAddresses);
@@ -175,7 +175,7 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
-    /// the person's calendar. <c>(4)</c></summary>
+    /// the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
     public IEnumerable<TextProperty?>? CalendarUserAddresses
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.CalendarUserAddresses);
@@ -259,7 +259,7 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
-    /// "busy" on their calendar. <c>(4)</c></summary>
+    /// "busy" on their calendar. <c>(4, 3 - RFC 2739)</c></summary>
     /// <remarks>
     /// If several <see cref="TextProperty" /> objects are assigned, the standard 
     /// property is determined by the value of <see cref="ParameterSection.Preference" />. 

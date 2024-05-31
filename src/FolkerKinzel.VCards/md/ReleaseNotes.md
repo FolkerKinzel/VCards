@@ -7,6 +7,7 @@ IAsyncEnumerable<VCard> DeserializeManyAsync(IEnumerable<Func<CancellationToken,
                                              [EnumeratorCancellation] CancellationToken)
 ```
 is available now for all frameworks the package supports.
+- The new option `Opts. WriteRfc2739Extensions` is set as default and allows to write the properties `FBURL`, `CALURI`, and `CALADRURI` in vCard 3.0.
 - Dependency updates
 - High code coverage
 &nbsp;

@@ -16,7 +16,7 @@ the extensions
 [RFC 6474](https://tools.ietf.org/html/rfc6474),
 [RFC 6473](https://tools.ietf.org/html/rfc6473), 
 [RFC 4770](https://tools.ietf.org/html/rfc4770),
-[RFC 2739](https://tools.ietf.org/html/rfc2739), as well as several popular non-standard vCard properties.
+[RFC 2739 (partially)](https://tools.ietf.org/html/rfc2739), as well as several popular non-standard vCard properties.
 
 It allows:
 - loading VCF files from the file system and saving them there,

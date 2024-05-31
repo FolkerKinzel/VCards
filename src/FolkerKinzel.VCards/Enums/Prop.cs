@@ -118,15 +118,15 @@ public enum Prop
     /// <c>(2,3,4)</c></summary>
     Keys,
 
-    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4)</c></summary>
+    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
     CalendarAddresses,
 
     /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
-    /// the person's calendar. <c>(4)</c></summary>
+    /// the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
     CalendarUserAddresses,
 
     /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
-    /// "busy" on their calendar. <c>(4)</c></summary>
+    /// "busy" on their calendar. <c>(4, 3 - RFC 2739)</c></summary>
     FreeOrBusyUrls,
 
     /// <summary> <c>RELATED</c>: Other entities that the person is related to. <c>(4)</c></summary>

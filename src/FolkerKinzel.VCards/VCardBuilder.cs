@@ -107,11 +107,11 @@ public sealed class VCardBuilder
     /// e.g., be useful if the property is displayed in different languages.</remarks>
     public TextViewBuilder BirthPlaceViews => new(this, Prop.BirthPlaceViews);
 
-    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4)</c></summary>
+    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
     public TextBuilder CalendarAddresses => new(this, Prop.CalendarAddresses);
 
     /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
-    /// the person's calendar. <c>(4)</c></summary>
+    /// the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
     public TextBuilder CalendarUserAddresses => new(this, Prop.CalendarUserAddresses);
 
     /// <summary> <c>CATEGORIES</c>: Lists of "tags" that can be used to describe the
@@ -166,7 +166,7 @@ public sealed class VCardBuilder
     public TextBuilder Expertises => new(this, Prop.Expertises);
 
     /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
-    /// "busy" on their calendar. <c>(4)</c></summary>
+    /// "busy" on their calendar. <c>(4, 3 - RFC 2739)</c></summary>
     /// <remarks>
     /// If several <see cref="TextProperty" /> objects are assigned, the standard 
     /// property is determined by the value of <see cref="ParameterSection.Preference" />. 
