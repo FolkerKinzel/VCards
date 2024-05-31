@@ -171,7 +171,7 @@ public sealed partial class VCard
     /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
     public IEnumerable<TextProperty?>? CalendarAccessUris
     {
-        get => Get<TextProperty?>(Prop.CalendarAccessUris);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.CalendarAccessUris);
         set => Set(Prop.CalendarAccessUris, value);
     }
 

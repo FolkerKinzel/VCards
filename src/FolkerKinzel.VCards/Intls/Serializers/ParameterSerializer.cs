@@ -1,5 +1,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -39,13 +40,13 @@ internal abstract class ParameterSerializer
                 BuildBdayPara();
                 break;
             case VCard.PropKeys.CAPURI:
-                BuildCapuriPara();
+                BuildCapuriPara(isPref);
                 break;
             case VCard.PropKeys.CALADRURI:
-                BuildCaladruriPara();
+                BuildCaladruriPara(isPref);
                 break;
             case VCard.PropKeys.CALURI:
-                BuildCaluriPara();
+                BuildCaluriPara(isPref);
                 break;
             case VCard.PropKeys.CATEGORIES:
                 BuildCategoriesPara();
@@ -60,7 +61,7 @@ internal abstract class ParameterSerializer
                 BuildEmailPara(isPref);
                 break;
             case VCard.PropKeys.FBURL:
-                BuildFburlPara();
+                BuildFburlPara(isPref);
                 break;
             case VCard.PropKeys.FN:
                 BuildFnPara();

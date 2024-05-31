@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -591,5 +592,75 @@ END:VCARD";
         Assert.IsNotNull(sortAs);
         Assert.AreEqual(1, sortAs.Count());
         Assert.AreEqual("abc", sortAs.First());
+    }
+
+
+    [TestMethod]
+    public void Rfc2739Test1()
+    {
+        VCard vc = VCardBuilder
+           .Create(false)
+           .CalendarAccessUris.Add("CalendarAccessUriPref")
+           .CalendarAccessUris.Add("CalendarAccessUriOther")
+           .CalendarAddresses.Add("CalendarAddressPref")
+           .CalendarAddresses.Add("CalenderAddressOther")
+           .CalendarUserAddresses.Add("CalenderUserAddressPref")
+           .CalendarUserAddresses.Add("CalenderUserAddressOther")
+           .FreeOrBusyUrls.Add("FbUrlPref")
+           .FreeOrBusyUrls.Add("FbUrlOther")
+           .CalendarAccessUris.SetPreferences()
+           .CalendarAddresses.SetPreferences()
+           .CalendarUserAddresses.SetPreferences()
+           .FreeOrBusyUrls.SetPreferences()
+           .VCard;
+
+        string serialized = vc.ToVcfString();
+
+        vc = Vcf.Parse(serialized)[0];
+
+        Assert.IsNotNull(vc.CalendarAccessUris);
+        Assert.AreEqual(2, vc.CalendarAccessUris.Count());
+        Assert.AreEqual("CalendarAccessUriPref", vc.CalendarAccessUris.PrefOrNull()!.Value);
+
+        Assert.IsNotNull(vc.CalendarAddresses);
+        Assert.AreEqual(2, vc.CalendarAddresses.Count());
+        Assert.AreEqual("CalendarAddressPref", vc.CalendarAddresses.PrefOrNull()!.Value);
+
+        Assert.IsNotNull(vc.CalendarUserAddresses);
+        Assert.AreEqual(2, vc.CalendarUserAddresses.Count());
+        Assert.AreEqual("CalenderUserAddressPref", vc.CalendarUserAddresses.PrefOrNull()!.Value);
+
+        Assert.IsNotNull(vc.FreeOrBusyUrls);
+        Assert.AreEqual(2, vc.FreeOrBusyUrls.Count());
+        Assert.AreEqual("FbUrlPref", vc.FreeOrBusyUrls.PrefOrNull()!.Value);
+    }
+
+    [TestMethod]
+    public void Rfc2739Test2()
+    {
+        VCard vc = VCardBuilder
+           .Create(false)
+           .CalendarAccessUris.Add("CalendarAccessUriPref")
+           .CalendarAccessUris.Add("CalendarAccessUriOther")
+           .CalendarAddresses.Add("CalendarAddressPref")
+           .CalendarAddresses.Add("CalenderAddressOther")
+           .CalendarUserAddresses.Add("CalenderUserAddressPref")
+           .CalendarUserAddresses.Add("CalenderUserAddressOther")
+           .FreeOrBusyUrls.Add("FbUrlPref")
+           .FreeOrBusyUrls.Add("FbUrlOther")
+           .CalendarAccessUris.SetPreferences()
+           .CalendarAddresses.SetPreferences()
+           .CalendarUserAddresses.SetPreferences()
+           .FreeOrBusyUrls.SetPreferences()
+           .VCard;
+
+        string serialized = vc.ToVcfString(options: Opts.Default.Unset(Opts.WriteRfc2739Extensions));
+
+        vc = Vcf.Parse(serialized)[0];
+
+        Assert.IsNull(vc.CalendarAccessUris);
+        Assert.IsNull(vc.CalendarAddresses);
+        Assert.IsNull(vc.CalendarUserAddresses);
+        Assert.IsNull(vc.FreeOrBusyUrls);
     }
 }

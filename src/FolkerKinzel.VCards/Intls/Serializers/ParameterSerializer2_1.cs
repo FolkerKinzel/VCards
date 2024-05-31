@@ -291,7 +291,7 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
     protected override void BuildGenderPara() { }
 
     [ExcludeFromCodeCoverage]
-    protected override void BuildFburlPara() { }
+    protected override void BuildFburlPara(bool isPref) { }
 
     [ExcludeFromCodeCoverage]
     protected override void BuildClientpidmapPara() { }
@@ -303,13 +303,13 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
     protected override void BuildCategoriesPara() { }
 
     [ExcludeFromCodeCoverage]
-    protected override void BuildCapuriPara() { }
+    protected override void BuildCapuriPara(bool isPref) { }
 
     [ExcludeFromCodeCoverage]
-    protected override void BuildCaluriPara() { }
+    protected override void BuildCaluriPara(bool isPref) { }
 
     [ExcludeFromCodeCoverage]
-    protected override void BuildCaladruriPara() { }
+    protected override void BuildCaladruriPara(bool isPref) { }
 
     [ExcludeFromCodeCoverage]
     protected override void BuildAnniversaryPara() { }
