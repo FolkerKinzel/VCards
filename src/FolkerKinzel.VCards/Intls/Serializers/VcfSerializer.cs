@@ -285,6 +285,9 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.FreeOrBusyUrls:
                     AppendFreeBusyUrls((IEnumerable<TextProperty?>)kvp.Value);
                     break;
+                case Prop.CalendarAccessUris:
+                    AppendCalendarAccessUri((IEnumerable<TextProperty?>)kvp.Value);
+                    break;
                 case Prop.Relations:
                     AppendRelations((IEnumerable<RelationProperty?>)kvp.Value);
                     break;
@@ -333,6 +336,7 @@ internal abstract class VcfSerializer : IDisposable
         }//foreach
     }
 
+
     protected void BuildProperty(string propertyKey, VCardProperty prop, bool isPref = false)
     {
         if (prop.IsEmpty && IgnoreEmptyItems)
@@ -353,7 +357,7 @@ internal abstract class VcfSerializer : IDisposable
 #if NET8_0_OR_GREATER
             _writer.WriteLine(Builder);
 #else
-            using var shared = ArrayPoolHelper.Rent<char>(Builder.Length);
+            using ArrayPoolHelper.SharedArray<char> shared = ArrayPoolHelper.Rent<char>(Builder.Length);
             Builder.CopyTo(0, shared.Array, 0, Builder.Length);
             _writer.WriteLine(shared.Array, 0, Builder.Length);
 #endif
@@ -465,7 +469,7 @@ internal abstract class VcfSerializer : IDisposable
 
             _writer.WriteLine(shared.Array, chunkStart, i + 1 - chunkStart);
             _writer.Write(' ');
-            
+
             counter = 1; // line start + ' '
             chunkStart = i + 1;
         }
@@ -564,6 +568,9 @@ internal abstract class VcfSerializer : IDisposable
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendFreeBusyUrls(IEnumerable<TextProperty?> value) { }
+
+    [ExcludeFromCodeCoverage]
+    protected virtual void AppendCalendarAccessUri(IEnumerable<TextProperty?> value) { }
 
     protected virtual void AppendGenderViews(IEnumerable<GenderProperty?> value)
     {

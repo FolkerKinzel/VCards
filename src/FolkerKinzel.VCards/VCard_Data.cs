@@ -167,6 +167,14 @@ public sealed partial class VCard
         set => Set(Prop.BirthPlaceViews, value);
     }
 
+    /// <summary> <c>CAPURI</c>: A protocol independent location from which a calendaring and 
+    /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
+    public IEnumerable<TextProperty?>? CalendarAccessUris
+    {
+        get => Get<TextProperty?>(Prop.CalendarAccessUris);
+        set => Set(Prop.CalendarAccessUris, value);
+    }
+
     /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
     public IEnumerable<TextProperty?>? CalendarAddresses
     {

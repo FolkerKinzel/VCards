@@ -129,6 +129,10 @@ public enum Prop
     /// "busy" on their calendar. <c>(4, 3 - RFC 2739)</c></summary>
     FreeOrBusyUrls,
 
+    /// <summary> <c>CAPURI</c>: A protocol independent location from which a calendaring and 
+    /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
+    CalendarAccessUris,
+
     /// <summary> <c>RELATED</c>: Other entities that the person is related to. <c>(4)</c></summary>
     Relations,
 

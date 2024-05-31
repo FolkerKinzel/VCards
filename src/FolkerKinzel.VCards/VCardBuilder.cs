@@ -107,6 +107,10 @@ public sealed class VCardBuilder
     /// e.g., be useful if the property is displayed in different languages.</remarks>
     public TextViewBuilder BirthPlaceViews => new(this, Prop.BirthPlaceViews);
 
+    /// <summary> <c>CAPURI</c>: A protocol independent location from which a calendaring and 
+    /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
+    public TextBuilder CalendarAccessUris => new(this, Prop.CalendarAccessUris);
+
     /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
     public TextBuilder CalendarAddresses => new(this, Prop.CalendarAddresses);
 

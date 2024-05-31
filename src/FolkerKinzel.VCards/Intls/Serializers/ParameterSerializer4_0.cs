@@ -93,7 +93,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-    protected override void BuildCaladruriPara()
+    protected override void BuildCaladruriPara(bool isPref)
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
@@ -108,7 +108,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-    protected override void BuildCaluriPara()
+    protected override void BuildCaluriPara(bool isPref)
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
@@ -142,8 +142,6 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendIndex();
         AppendNonStandardParameters();
     }
-
-    
 
     protected override void BuildDeathDatePara()
     {
@@ -181,7 +179,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-    protected override void BuildFburlPara()
+    protected override void BuildFburlPara(bool isPref)
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
@@ -665,6 +663,9 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     [ExcludeFromCodeCoverage]
     protected override void BuildAgentPara() { }
+
+    [ExcludeFromCodeCoverage]
+    protected override void BuildCapuriPara(bool isPref) { }
 
     #endregion
 

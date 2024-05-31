@@ -303,6 +303,9 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
     protected override void BuildCategoriesPara() { }
 
     [ExcludeFromCodeCoverage]
+    protected override void BuildCapuriPara() { }
+
+    [ExcludeFromCodeCoverage]
     protected override void BuildCaluriPara() { }
 
     [ExcludeFromCodeCoverage]

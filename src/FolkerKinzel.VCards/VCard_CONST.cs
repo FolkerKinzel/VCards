@@ -32,11 +32,15 @@ public sealed partial class VCard
         /// <c>(2,3,4)</c></summary>
         internal const string BDAY = "BDAY";
 
+        /// <summary> <c>CAPURI</c>: A protocol independent location from which a calendaring and 
+        /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
+        internal const string CAPURI = "CAPURI";
+
         /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
-        /// the person's calendar. <c>(4)</c></summary>
+        /// the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
         internal const string CALADRURI = "CALADRURI";
 
-        /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4)</c></summary>
+        /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
         internal const string CALURI = "CALURI";
 
         /// <summary> <c>CATEGORIES</c>: Lists of "tags" that can be used to describe the
@@ -56,7 +60,7 @@ public sealed partial class VCard
         internal const string EMAIL = "EMAIL";
 
         /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
-        /// "busy" on their calendar. <c>(4)</c></summary>
+        /// "busy" on their calendar. <c>(4, 3 - RFC 2739)</c></summary>
         internal const string FBURL = "FBURL";
 
         /// <summary> <c>FN</c>: The formatted name string associated with the vCard object.

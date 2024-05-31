@@ -81,6 +81,38 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
                               value,
                               static x => x is DateOnlyProperty or DateTimeOffsetProperty);
 
+    protected override void AppendCalendarAccessUri(IEnumerable<TextProperty?> value)
+    {
+        if(Options.HasFlag(Opts.WriteRfc2739Extensions))
+        {
+            BuildPropertyCollection(VCard.PropKeys.CAPURI, value);
+        }
+    }
+
+    protected override void AppendCalendarAddresses(IEnumerable<TextProperty?> value)
+    {
+        if (Options.HasFlag(Opts.WriteRfc2739Extensions))
+        {
+            BuildPropertyCollection(VCard.PropKeys.CALURI, value);
+        }
+    }
+
+    protected override void AppendCalendarUserAddresses(IEnumerable<TextProperty?> value)
+    {
+        if (Options.HasFlag(Opts.WriteRfc2739Extensions))
+        {
+            BuildPropertyCollection(VCard.PropKeys.CALADRURI, value);
+        }
+    }
+
+    protected override void AppendFreeBusyUrls(IEnumerable<TextProperty?> value)
+    {
+        if (Options.HasFlag(Opts.WriteRfc2739Extensions))
+        {
+            BuildPropertyCollection(VCard.PropKeys.FBURL, value);
+        }
+    }
+
     protected override void AppendCategories(IEnumerable<StringCollectionProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.CATEGORIES, value);
 

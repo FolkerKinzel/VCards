@@ -38,6 +38,9 @@ internal abstract class ParameterSerializer
             case VCard.PropKeys.BDAY:
                 BuildBdayPara();
                 break;
+            case VCard.PropKeys.CAPURI:
+                BuildCapuriPara();
+                break;
             case VCard.PropKeys.CALADRURI:
                 BuildCaladruriPara();
                 break;
@@ -224,6 +227,7 @@ internal abstract class ParameterSerializer
         }
     }
 
+
     #region BuildPara
 
     protected abstract void BuildXSpousePara();
@@ -308,7 +312,7 @@ internal abstract class ParameterSerializer
 
     protected abstract void BuildFnPara();
 
-    protected abstract void BuildFburlPara();
+    protected abstract void BuildFburlPara(bool isPref);
 
     protected abstract void BuildEmailPara(bool isPref);
 
@@ -318,9 +322,11 @@ internal abstract class ParameterSerializer
 
     protected abstract void BuildCategoriesPara();
 
-    protected abstract void BuildCaluriPara();
+    protected abstract void BuildCapuriPara(bool isPref);
 
-    protected abstract void BuildCaladruriPara();
+    protected abstract void BuildCaluriPara(bool isPref);
+
+    protected abstract void BuildCaladruriPara(bool isPref);
 
     protected abstract void BuildBdayPara();
 

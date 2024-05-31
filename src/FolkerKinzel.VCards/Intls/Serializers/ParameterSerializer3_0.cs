@@ -69,6 +69,38 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         AppendValue(ParaSection.DataType);
     }
 
+    protected override void BuildCapuriPara(bool isPref)
+    {
+        if(isPref) 
+        { 
+            AppendRfc2739Pref(); 
+        }
+    }
+
+    protected override void BuildCaluriPara(bool isPref)
+    {
+        if (isPref)
+        {
+            AppendRfc2739Pref();
+        }
+    }
+
+    protected override void BuildCaladruriPara(bool isPref)
+    {
+        if (isPref)
+        {
+            AppendRfc2739Pref();
+        }
+    }
+
+    protected override void BuildFburlPara(bool isPref) 
+    {
+        if (isPref)
+        {
+            AppendRfc2739Pref();
+        }
+    }
+
     protected override void BuildCategoriesPara()
     {
         AppendValue(ParaSection.DataType);
@@ -377,16 +409,7 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
     protected override void BuildGenderPara() { }
 
     [ExcludeFromCodeCoverage]
-    protected override void BuildFburlPara() { }
-
-    [ExcludeFromCodeCoverage]
     protected override void BuildClientpidmapPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildCaluriPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildCaladruriPara() { }
 
     [ExcludeFromCodeCoverage]
     protected override void BuildAnniversaryPara() { }
@@ -547,4 +570,8 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
     }
 
     #endregion
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void AppendRfc2739Pref() => Builder.Append(";PREF");
 }
