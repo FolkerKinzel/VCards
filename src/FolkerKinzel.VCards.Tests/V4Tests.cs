@@ -370,7 +370,7 @@ public class V4Tests
     {
         VCard vc = VCardBuilder
             .Create()
-            .BirthDayViews.Add(1900, 2,3, parameters: p => p.Calendar = "\"  \"")
+            .BirthDayViews.Add(1900, 2,3, parameters: p => p.Calendar = "   ")
             .AnniversaryViews.Add(1924, 7, 24, parameters: p => p.Calendar = "GREGORIAN")
             .DeathDateViews.Add(1998, 2,4, parameters: p => p.Calendar = "X-JULIAN")
             .VCard;

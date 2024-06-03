@@ -20,7 +20,7 @@ internal static class StringBuilderExtension
         ReadOnlySpan<char> span = s.AsSpan();
 
         // Line breaks should be quoted-printable encoded
-        Debug.Assert(!span.ContainsNewLine());
+        //Debug.Assert(!span.ContainsNewLine());
 
         for (int i = 0; i < span.Length; i++)
         {

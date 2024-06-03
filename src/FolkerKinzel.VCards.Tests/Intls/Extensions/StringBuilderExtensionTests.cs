@@ -22,5 +22,6 @@ public class StringBuilderExtensionTests
 
     [TestMethod]
     public void AppendEscapedAndQuotedTest1()
-        => Assert.AreEqual("\",;\\n\\n\\\\\"", new StringBuilder().AppendEscapedAndQuoted(",;\"\"\r\n\n\\").ToString());
+        => Assert.AreEqual("\",;^\'^\'\\n\\n\\\"", 
+            new StringBuilder().AppendParameterValueEscapedAndQuoted(",;\"\"\r\n\n\\", VCdVersion.V4_0, isLabel: true).ToString());
 }

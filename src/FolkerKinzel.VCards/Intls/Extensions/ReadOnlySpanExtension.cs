@@ -302,7 +302,6 @@ internal static class ReadOnlySpanExtension
                 switch (source[i + 1])
                 {
                     case 'n':
-                    case 'N':
                         newLineSpan.TryCopyTo(destination.Slice(length));
                         length += newLineSpan.Length;
                         i++;
