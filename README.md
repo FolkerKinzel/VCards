@@ -12,6 +12,7 @@ The library supports [RFC 6350](https://tools.ietf.org/html/rfc6350) (vCard 4.0)
 [RFC 2426](https://tools.ietf.org/html/rfc2426) (vCard 3.0), 
 [vCard 2.1](https://web.archive.org/web/20120501162958/http://www.imc.org/pdi/vcard-21.doc), 
 the extensions
+[RFC 6868](https://datatracker.ietf.org/doc/html/rfc6868),
 [RFC 6715](https://tools.ietf.org/html/rfc6715), 
 [RFC 6474](https://tools.ietf.org/html/rfc6474),
 [RFC 6473](https://tools.ietf.org/html/rfc6473), 

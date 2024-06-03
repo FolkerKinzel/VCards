@@ -16,7 +16,7 @@ public class StringBuilderExtensionTests
     [DataRow(",;\r\n\n\\", VCdVersion.V4_0, "\\,\\;\\n\\n\\\\")]
     public void AppendMaskedTest1(string input, VCdVersion version, string expected)
     {
-        string s = new StringBuilder().AppendMasked(input, version).ToString();
+        string s = new StringBuilder().AppendValueMasked(input, version).ToString();
         Assert.AreEqual(expected, s);
     }
 

@@ -6,16 +6,16 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal abstract class ParameterSerializer
+internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 {
-    protected ParameterSerializer(Opts options) => this.Options = options;
+    private readonly VCdVersion _version = version;
 
     [NotNull]
     protected StringBuilder? Builder { get; private set; }
 
     internal ParameterSection ParaSection { get; private set; } = ParameterSection.Empty;
 
-    protected Opts Options { get; }
+    protected Opts Options { get; } = options;
 
     internal void AppendTo(StringBuilder builder,
                            ParameterSection vCardPropertyParameter,
@@ -339,13 +339,13 @@ internal abstract class ParameterSerializer
 
     #endregion
 
-    protected void AppendParameter(string key, string value, bool escapedAndQuoted = false)
+    protected void AppendParameter(string key, string value, bool escapedAndQuoted = false, bool isLabel = false)
     {
         Builder.Append(';').Append(key).Append('=');
 
         if (escapedAndQuoted)
         {
-            Builder.AppendEscapedAndQuoted(value);
+            Builder.AppendParameterValueEscapedAndQuoted(value, _version, isLabel);
         }
         else
         {

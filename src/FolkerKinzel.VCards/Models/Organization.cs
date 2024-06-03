@@ -112,13 +112,13 @@ public sealed class Organization
         StringBuilder builder = serializer.Builder;
         int startIdx = builder.Length;
 
-        _ = builder.AppendMasked(OrganizationName, serializer.Version);
+        _ = builder.AppendValueMasked(OrganizationName, serializer.Version);
 
         if (OrganizationalUnits is not null)
         {
             for (int i = 0; i < OrganizationalUnits.Count; i++)
             {
-                _ = builder.Append(';').AppendMasked(OrganizationalUnits[i], serializer.Version);
+                _ = builder.Append(';').AppendValueMasked(OrganizationalUnits[i], serializer.Version);
             }
         }
 

@@ -185,7 +185,7 @@ public sealed partial class TimeZoneID
                     }
                     else
                     {
-                        _ = escapedAndQuoted ? builder.AppendEscapedAndQuoted(Value)
+                        _ = escapedAndQuoted ? builder.AppendParameterValueEscapedAndQuoted(Value, version)
                                              : builder.Append(Value);
                     }
                     break;

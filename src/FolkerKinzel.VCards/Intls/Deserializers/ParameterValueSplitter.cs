@@ -5,17 +5,16 @@ using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
-internal static class ValueSplitter
+internal static class ParameterValueSplitter
 {
     public static IEnumerable<string> Split(ReadOnlyMemory<char> mem,
                                             char splitChar,
                                             StringSplitOptions options,
-                                            bool unMask,
-                                            VCdVersion version)
+                                            bool unMask)
     {
         if (mem.IsEmpty)
         {
-            if(!options.HasFlag(StringSplitOptions.RemoveEmptyEntries))
+            if (!options.HasFlag(StringSplitOptions.RemoveEmptyEntries))
             {
                 yield return string.Empty;
             }
@@ -32,7 +31,7 @@ internal static class ValueSplitter
             if (!options.HasFlag(StringSplitOptions.RemoveEmptyEntries) || !nextChunk.Span.IsWhiteSpace())
             {
                 yield return unMask
-                             ? nextChunk.Span.UnMaskValue(version)
+                             ? nextChunk.Span.UnMaskParameterValue(isLabel: false)
                              : nextChunk.ToString();
             }
 
@@ -48,9 +47,9 @@ internal static class ValueSplitter
     public static IEnumerable<ReadOnlyMemory<char>> Split(ReadOnlyMemory<char> mem,
                                                           char splitChar)
     {
-        if(mem.IsEmpty)
+        if (mem.IsEmpty)
         {
-            yield break ;
+            yield break;
         }
 
         while (true)
@@ -75,22 +74,22 @@ internal static class ValueSplitter
 
         for (int i = 0; i < span.Length; i++)
         {
-            if (masked)
+            char c = span[i];
+
+            if (c == '\"')
             {
-                masked = false;
+                masked = !masked;
                 continue;
             }
 
-            char c = span[i];
+            if (masked)
+            {
+                continue;
+            }
 
             if (c == splitChar)
             {
                 return i;
-            }
-
-            if (c == '\\')
-            {
-                masked = true;
             }
 
         }//for

@@ -146,7 +146,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         {
             Debug.Assert(!string.IsNullOrEmpty(Value[i]));
 
-            _ = builder.AppendMasked(Value[i], serializer.Version).Append(',');
+            _ = builder.AppendValueMasked(Value[i], serializer.Version).Append(',');
         }
 
         --builder.Length;

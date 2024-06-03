@@ -216,8 +216,8 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
         }
 
         string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
-                ? valSpan.UnMaskAndDecode(vcfRow.Parameters.CharSet)
-                : valSpan.UnMask(version);
+                ? valSpan.UnMaskAndDecodeValue(vcfRow.Parameters.CharSet)
+                : valSpan.UnMaskValue(version);
 
         if (val.IsUuidUri())
         {

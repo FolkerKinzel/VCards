@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer(options)
+internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer(VCdVersion.V3_0, options)
 {
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer3_0>> _actionList = new(2);
@@ -118,9 +118,9 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         _actionList.Clear();
         _actionList.Add(_collectEmailType);
 
-        // EmailType ist eine string-Property.
-        // Deshalb können X-Values dort direkt eingegeben werden.
-        // Auch ist die Kombination mehrerer Values nicht erlaubt.
+        // The ParameterSection.EMailType property is of Type string.
+        // The property maybe set to an x-value. The combination of several
+        // type values is not allowed.
         AppendType(isPref);
     }
 
@@ -439,7 +439,7 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
         if (s is not null)
         {
-            AppendParameter(ParameterSection.ParameterKey.CONTEXT, s);
+            AppendParameter(ParameterSection.ParameterKey.CONTEXT, s, escapedAndQuoted: true);
         }
     }
 
@@ -452,8 +452,7 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
         if (lang is not null)
         {
-            AppendParameter(ParameterSection.ParameterKey.LANGUAGE, "");
-            Builder.AppendMasked(lang, VCdVersion.V3_0);
+            AppendParameter(ParameterSection.ParameterKey.LANGUAGE, lang, escapedAndQuoted: true);
         }
     }
 
@@ -480,7 +479,7 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
             for (int i = 0; i < _stringCollectionList.Count; i++)
             {
-                Builder.AppendMasked(_stringCollectionList[i], VCdVersion.V3_0).Append(',');
+                Builder.AppendParameterValueEscapedAndQuoted(_stringCollectionList[i], VCdVersion.V3_0).Append(',');
             }
         }
 
@@ -573,5 +572,5 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void AppendRfc2739Pref() => Builder.Append(";PREF");
+    private void AppendRfc2739Pref() => Builder.Append(";TYPE=PREF");
 }

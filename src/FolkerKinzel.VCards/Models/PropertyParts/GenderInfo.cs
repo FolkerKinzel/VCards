@@ -63,7 +63,7 @@ public sealed class GenderInfo
 
         if (Identity is not null)
         { 
-            _ = builder.Append(';').AppendMasked(Identity, serializer.Version);
+            _ = builder.Append(';').AppendValueMasked(Identity, serializer.Version);
         }
     }
 }

@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer(options)
+internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer(VCdVersion.V2_1, options)
 {
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer2_1>> _actionList = new(2);

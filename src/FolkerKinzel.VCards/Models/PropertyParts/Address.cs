@@ -378,7 +378,7 @@ public sealed class Address
 
             for (int i = 0; i < strings.Count; i++)
             {
-                _ = builder.AppendMasked(strings[i], serializer.Version).Append(joinChar);
+                _ = builder.AppendValueMasked(strings[i], serializer.Version).Append(joinChar);
             }
 
             --builder.Length;

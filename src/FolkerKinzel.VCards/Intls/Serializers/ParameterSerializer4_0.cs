@@ -8,7 +8,7 @@ using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer(options)
+internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer(VCdVersion.V4_0, options)
 {
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer4_0>> _actionList = new(2);
@@ -771,7 +771,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         if (label is not null)
         {
-            AppendParameter(ParameterSection.ParameterKey.LABEL, label, escapedAndQuoted: true);
+            AppendParameter(ParameterSection.ParameterKey.LABEL, label, escapedAndQuoted: true, isLabel: true);
         }
     }
 
@@ -856,7 +856,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             Debug.Assert(!string.IsNullOrWhiteSpace(item));
 
             rollBack = false;
-            _ = Builder.AppendEscapedAndQuoted(item).Append(',');
+            _ = Builder.AppendParameterValueEscapedAndQuoted(item, VCdVersion.V4_0).Append(',');
         }
 
         if (rollBack)

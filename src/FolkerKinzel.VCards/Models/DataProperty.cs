@@ -255,8 +255,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         static DataProperty TryAsUri(VcfRow vcfRow, VCdVersion version)
         {
             string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
-                ? vcfRow.Value.Span.UnMaskAndDecode(vcfRow.Parameters.CharSet)
-                : vcfRow.Value.Span.UnMask(version);
+                ? vcfRow.Value.Span.UnMaskAndDecodeValue(vcfRow.Parameters.CharSet)
+                : vcfRow.Value.Span.UnMaskValue(version);
 
             return UriConverter.TryConvertToAbsoluteUri(val, out Uri? uri)
                        ? new ReferencedDataProperty

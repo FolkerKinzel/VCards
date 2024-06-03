@@ -29,8 +29,8 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
         : base(vcfRow.Parameters, vcfRow.Group)
     {
         string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
-                ? vcfRow.Value.Span.UnMaskAndDecode(vcfRow.Parameters.CharSet)
-                : vcfRow.Value.Span.UnMask(version);
+                ? vcfRow.Value.Span.UnMaskAndDecodeValue(vcfRow.Parameters.CharSet)
+                : vcfRow.Value.Span.UnMaskValue(version);
 
         Value = val.Length == 0 ? null : val;
     }
@@ -84,6 +84,6 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
             ? this.Parameters.Encoding == Enc.QuotedPrintable
                 ? builder.AppendQuotedPrintable(Value.AsSpan(), builder.Length)
                 : builder.Append(Value)
-            : builder.AppendMasked(Value, serializer.Version);
+            : builder.AppendValueMasked(Value, serializer.Version);
     }
 }

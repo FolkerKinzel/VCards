@@ -71,11 +71,6 @@ public sealed partial class ParameterSection
                         {
                             Loc contentLocation = LocConverter.Parse(valValue);
                             this.ContentLocation = contentLocation;
-
-                            //if (contentLocation == Loc.Url)
-                            //{
-                            //    this.DataType = Data.Uri;
-                            //}
                         }
 
                         break;
@@ -86,6 +81,7 @@ public sealed partial class ParameterSection
                         {
                             this.Preference = intVal;
                         }
+
                         break;
                     }
                 case ParameterKey.PID:
@@ -95,7 +91,7 @@ public sealed partial class ParameterSection
                     }
                 case ParameterKey.TYPE:
                     {
-                        foreach (ReadOnlyMemory<char> mem in ValueSplitter.Split(parameter.Value, ','))
+                        foreach (ReadOnlyMemory<char> mem in ParameterValueSplitter.Split(parameter.Value, ','))
                         {
                             if (!ParseTypeParameter(mem.Span, propertyKey))
                             {
@@ -107,6 +103,7 @@ public sealed partial class ParameterSection
                                 userAttributes.Add(new KeyValuePair<string, string>(parameter.Key, mem.ToString()));
                             }
                         }
+
                         break;
                     }
                 case ParameterKey.GEO:
@@ -124,12 +121,11 @@ public sealed partial class ParameterSection
                     break;
                 case ParameterKey.SORT_AS:
                     {
-                        this.SortAs = ValueSplitter.Split( parameter.Value,
-                                                           ',', 
-                                                           StringSplitOptions.RemoveEmptyEntries,
-                                                           unMask: true, 
-                                                           VCdVersion.V4_0)
-                                                   .ToArray();
+                        this.SortAs = ParameterValueSplitter.Split(parameter.Value,
+                                                                   ',', 
+                                                                   StringSplitOptions.RemoveEmptyEntries,
+                                                                   unMask: true)
+                                                            .ToArray();
                         break;
                     }
                 case ParameterKey.CALSCALE:
@@ -156,7 +152,7 @@ public sealed partial class ParameterSection
                     this.MediaType = parameter.Value.Span.Trim(TRIM_CHARS).ToString();
                     break;
                 case ParameterKey.LABEL:
-                    this.Label = parameter.Value.Span.Trim(TRIM_CHARS).UnMask(VCdVersion.V4_0);
+                    this.Label = parameter.Value.Span.Trim(TRIM_CHARS).UnMaskParameterValue(isLabel: true);
                     break;
                 case ParameterKey.CONTEXT:
                     this.Context = parameter.Value.Span.Trim(TRIM_CHARS).ToString();

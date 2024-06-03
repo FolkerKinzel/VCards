@@ -71,7 +71,7 @@ internal sealed class RelationVCardProperty : RelationProperty
         {
             Debug.Assert(serializer.PropertyKey == VCard.PropKeys.AGENT);
 
-            _ = builder.AppendMasked(vc, serializer.Version);
+            _ = builder.AppendValueMasked(vc, serializer.Version);
         }
         else //vCard 2.1
         {

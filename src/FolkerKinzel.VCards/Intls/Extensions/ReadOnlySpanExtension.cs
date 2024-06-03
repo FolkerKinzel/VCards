@@ -1,15 +1,16 @@
-﻿using FolkerKinzel.VCards.Enums;
+﻿using System;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Encodings;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static class ReadOnlySpanExtension
 {
-    /// <summary> Unmasks masked text contained in <paramref name="value"/> according to
+    /// <summary> Unmasks a masked text value contained in <paramref name="value"/> according to
     /// vCard 2.1, and decodes its Quoted-Printable encoding.</summary>
     /// <param name="value">The span to unmask and decode.</param>
     /// <param name="charSet">The Charset to use for Quoted-Printable decoding.</param>
-    internal static string UnMaskAndDecode(this ReadOnlySpan<char> value, string? charSet)
+    internal static string UnMaskAndDecodeValue(this ReadOnlySpan<char> value, string? charSet)
     {
         if (value.Length > Const.STACKALLOC_CHAR_THRESHOLD)
         {
@@ -28,7 +29,7 @@ internal static class ReadOnlySpanExtension
                                           TextEncodingConverter.GetEncoding(charSet)); // null-check not needed
 
             ///////////////////////////////////////////////////////////
-            
+
             static int UnMask(ReadOnlySpan<char> value, Span<char> outBuf)
             {
                 int idxOfBackSlash = value.IndexOf('\\');
@@ -46,8 +47,8 @@ internal static class ReadOnlySpanExtension
         }
     }
 
-    internal static string UnMask(this ReadOnlySpan<char> value, VCdVersion version)
-    { 
+    internal static string UnMaskValue(this ReadOnlySpan<char> value, VCdVersion version)
+    {
         int idxOfBackSlash = value.IndexOf('\\');
 
         if (idxOfBackSlash == -1)
@@ -154,6 +155,7 @@ internal static class ReadOnlySpanExtension
                         continue;
                     case ',':
                     case ';':
+                    case ':':
                         continue;
                     default:
                         break;
@@ -196,6 +198,128 @@ internal static class ReadOnlySpanExtension
                     case ';':
                         continue;
                     case '\\':
+                        destination[length++] = c;
+                        i++;
+                        if (i == lastSourceIdx)
+                        {
+                            return length;
+                        }
+                        continue;
+                    default:
+                        break;
+                }
+            }
+
+            destination[length++] = c;
+        }
+
+        destination[length++] = source[lastSourceIdx];
+
+        return length;
+    }
+
+    internal static string UnMaskParameterValue(this ReadOnlySpan<char> value, bool isLabel)
+    {
+        int idxOfEscapeChar = value.IndexOf('^');
+
+        if (isLabel)
+        {
+            int idxOfBackSlash = value.IndexOf('\\');
+
+            if (idxOfBackSlash != -1)
+            {
+                idxOfEscapeChar = idxOfEscapeChar == -1 
+                                    ? idxOfBackSlash 
+                                    : Math.Min(idxOfBackSlash, idxOfEscapeChar);
+            }
+        }
+
+        if (idxOfEscapeChar == -1)
+        {
+            return value.ToString();
+        }
+
+        int processedLength = value.Length - idxOfEscapeChar;
+
+        if (processedLength > Const.STACKALLOC_CHAR_THRESHOLD)
+        {
+            using ArrayPoolHelper.SharedArray<char> buf = ArrayPoolHelper.Rent<char>(processedLength);
+            Span<char> bufSpan = buf.Array.AsSpan();
+            return CreateUnMaskedString(value, idxOfEscapeChar, bufSpan, isLabel);
+        }
+        else
+        {
+            Span<char> bufSpan = stackalloc char[processedLength];
+            return CreateUnMaskedString(value, idxOfEscapeChar, bufSpan, isLabel);
+        }
+
+        static string CreateUnMaskedString(ReadOnlySpan<char> sourceSpan,
+                                           int idxOfEscapeChar,
+                                           Span<char> bufSpan,
+                                           bool isLabel)
+        {
+            ReadOnlySpan<char> processedSpan = sourceSpan.Slice(idxOfEscapeChar);
+
+            bufSpan = bufSpan.Slice(0, UnMaskParameterValue40(processedSpan, bufSpan, isLabel));
+
+            return idxOfEscapeChar == 0 ? bufSpan.ToString()
+                                        : StaticStringMethod.Concat(sourceSpan.Slice(0, idxOfEscapeChar), bufSpan);
+        }
+    }
+
+    private static int UnMaskParameterValue40(ReadOnlySpan<char> source, Span<char> destination, bool isLabel)
+    {
+        int lastSourceIdx = source.Length - 1;
+        int length = 0;
+
+        ReadOnlySpan<char> newLineSpan = Environment.NewLine.AsSpan();
+
+        for (int i = 0; i < lastSourceIdx; i++)
+        {
+            char c = source[i];
+
+            if (isLabel && c == '\\')
+            {
+                switch (source[i + 1])
+                {
+                    case 'n':
+                    case 'N':
+                        newLineSpan.TryCopyTo(destination.Slice(length));
+                        length += newLineSpan.Length;
+                        i++;
+                        if (i == lastSourceIdx)
+                        {
+                            return length;
+                        }
+                        continue;
+                    default:
+                        break;
+                }
+            }
+
+            if (c == '^')
+            {
+                switch (source[i + 1])
+                {
+                    case 'n':
+                    case 'N':
+                        newLineSpan.TryCopyTo(destination.Slice(length));
+                        length += newLineSpan.Length;
+                        i++;
+                        if (i == lastSourceIdx)
+                        {
+                            return length;
+                        }
+                        continue;
+                    case '\'':
+                        destination[length++] = '\"';
+                        i++;
+                        if (i == lastSourceIdx)
+                        {
+                            return length;
+                        }
+                        continue;
+                    case '^':
                         destination[length++] = c;
                         i++;
                         if (i == lastSourceIdx)

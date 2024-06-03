@@ -1,15 +1,5 @@
-- **Performance:** The speed of read and write operations has been increased and memory consumption has been reduced.
-- The minimum supported framework is .NET Framework 4.6.2 now.
-- The method
-```csharp
-IAsyncEnumerable<VCard> DeserializeManyAsync(IEnumerable<Func<CancellationToken, Task<Stream>>?>,
-                                             AnsiFilter?,
-                                             [EnumeratorCancellation] CancellationToken)
-```
-is available now for all frameworks the package supports.
-- The new option `Opts. WriteRfc2739Extensions` is set as default and allows to write the properties `FBURL`, `CALURI`, `CAPURI`, and `CALADRURI` in vCard 3.0.
-- The VCard class and the VCardBuilder class got a new `CalendarAccessUris` property, which supports the RFC 2739 `CAPURI` extension in vCard 3.0.
-- Dependency updates
-- High code coverage
+- Supports RFC 6868 parameter value encoding in vCard 4.0
+- Fixes an issue that the properties `FBURL`, `CALURI`, `CAPURI`, and `CALADRURI` in vCard 3.0 might have a 
+PREF parameter whose TYPE parameter name is missing. (This was caused by an [error in RFC 2739](https://www.rfc-editor.org/errata/eid7914)).
 &nbsp;
 >**Project reference:** On some systems the content of the CHM file in the Assets is blocked. Before opening the file right click on the file icon, select Properties, and **check the "Allow" checkbox** - if it is present - in the lower right corner of the General tab in the Properties dialog.

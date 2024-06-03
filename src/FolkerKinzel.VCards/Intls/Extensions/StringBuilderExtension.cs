@@ -7,17 +7,20 @@ internal static class StringBuilderExtension
 {
     internal const string NEWLINE_REPLACEMENT = @"\n";
 
-    internal static StringBuilder AppendMasked(this StringBuilder sb, string? s, VCdVersion version)
+    internal static StringBuilder AppendValueMasked(this StringBuilder sb, string? s, VCdVersion version)
         => version switch
         {
-            VCdVersion.V2_1 => AppendMaskedV2(sb, s),
-            VCdVersion.V3_0 => AppendMaskedV3(sb, s),
-            _ => AppendMaskedV4(sb, s)
+            VCdVersion.V2_1 => AppendValueMaskedV2(sb, s),
+            VCdVersion.V3_0 => AppendValueMaskedV3(sb, s),
+            _ => AppendValueMaskedV4(sb, s)
         };
 
-    private static StringBuilder AppendMaskedV2(StringBuilder sb, string? s)
+    private static StringBuilder AppendValueMaskedV2(StringBuilder sb, string? s)
     {
         ReadOnlySpan<char> span = s.AsSpan();
+
+        // Line breaks should be quoted-printable encoded
+        Debug.Assert(!span.ContainsNewLine());
 
         for (int i = 0; i < span.Length; i++)
         {
@@ -28,7 +31,7 @@ internal static class StringBuilderExtension
         return sb;
     }
 
-    private static StringBuilder AppendMaskedV3(StringBuilder sb, string? s)
+    private static StringBuilder AppendValueMaskedV3(StringBuilder sb, string? s)
     {
         ReadOnlySpan<char> span = s.AsSpan();
 
@@ -58,6 +61,12 @@ internal static class StringBuilderExtension
                 case ',':
                     sb.Append("\\,");
                     break;
+                    // RFC 2426 2.4.2 says that the COLON (ASCII decimal 58)
+                    // MUST be escaped with a BACKSLASH, but the associated
+                    // example doesn't
+                //case ':':
+                //    sb.Append("\\:");
+                //    break;
                 default:
                     sb.Append(c);
                     break;
@@ -68,7 +77,7 @@ internal static class StringBuilderExtension
         return sb;
     }
 
-    private static StringBuilder AppendMaskedV4(StringBuilder sb, string? s)
+    private static StringBuilder AppendValueMaskedV4(StringBuilder sb, string? s)
     {
         ReadOnlySpan<char> span = s.AsSpan();
 
@@ -111,10 +120,47 @@ internal static class StringBuilderExtension
         return sb;
     }
 
-    internal static StringBuilder AppendEscapedAndQuoted(this StringBuilder sb, string s)
+    internal static StringBuilder AppendParameterValueEscapedAndQuoted(this StringBuilder sb,
+                                                         string s,
+                                                         VCdVersion version,
+                                                         bool isLabel = false)
+    {
+        int startIdx = sb.Length;
+        return (version == VCdVersion.V3_0 ? AppendParameterValueEscapedV30(sb, s) : AppendParameterValueEscapedV40(sb, s, isLabel))
+                ? sb.Insert(startIdx, '\"').Append('\"') // this allocation is very rarely
+                : sb;
+    }
+
+    private static bool AppendParameterValueEscapedV30(StringBuilder sb, string s)
     {
         ReadOnlySpan<char> span = s.AsSpan();
-        int startIdx = sb.Length;
+
+        bool mustBeQuoted = false;
+
+        for (int i = 0; i < span.Length; i++)
+        {
+            char c = span[i];
+
+            if (c == '\"' || char.IsControl(c))
+            {
+                continue;
+            }
+
+            if(c is ';' or ',' or ':')
+            {
+                mustBeQuoted = true;
+            }
+
+            sb.Append(c);
+        }
+
+        return mustBeQuoted;
+    }
+
+    private static bool AppendParameterValueEscapedV40(StringBuilder sb, string s, bool isLabel)
+    {
+        ReadOnlySpan<char> span = s.AsSpan();
+        
         bool mustBeQuoted = false;
         bool rFound = false;
 
@@ -126,7 +172,7 @@ internal static class StringBuilderExtension
             {
                 case '\r':
                     rFound = true;
-                    sb.Append(NEWLINE_REPLACEMENT);
+                    sb.Append(isLabel ? NEWLINE_REPLACEMENT : "^n");
                     break;
                 case '\n':
                     if (rFound)
@@ -134,9 +180,10 @@ internal static class StringBuilderExtension
                         rFound = false;
                         continue;
                     }
-                    sb.Append(NEWLINE_REPLACEMENT);
+                    sb.Append(isLabel ? NEWLINE_REPLACEMENT : "^n");
                     break;
                 case '\"':
+                    sb.Append("^'");
                     break;
                 case ',':
                 case ';':
@@ -144,8 +191,8 @@ internal static class StringBuilderExtension
                     mustBeQuoted = true;
                     sb.Append(c);
                     break;
-                case '\\':
-                    sb.Append("\\\\");
+                case '^':
+                    sb.Append("^^");
                     break;
                 default:
                     sb.Append(c);
@@ -153,8 +200,7 @@ internal static class StringBuilderExtension
             }
         }
 
-        return mustBeQuoted ? sb.Insert(startIdx, '\"').Append('\"') // this allocation is very rarely
-                            : sb;
+        return mustBeQuoted;
     }
 
     internal static StringBuilder AppendReadableProperty(this StringBuilder sb, ReadOnlyCollection<string> strings, int? maxLen = null)
