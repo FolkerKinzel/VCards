@@ -91,7 +91,7 @@ public sealed partial class ParameterSection
                     }
                 case ParameterKey.TYPE:
                     {
-                        foreach (ReadOnlyMemory<char> mem in ParameterValueSplitter.Split(parameter.Value, ','))
+                        foreach (ReadOnlyMemory<char> mem in ParameterValueSplitter.SplitIntoMemories(parameter.Value))
                         {
                             if (!ParseTypeParameter(mem.Span, propertyKey))
                             {
@@ -121,10 +121,7 @@ public sealed partial class ParameterSection
                     break;
                 case ParameterKey.SORT_AS:
                     {
-                        this.SortAs = ParameterValueSplitter.Split(parameter.Value,
-                                                                   ',', 
-                                                                   StringSplitOptions.RemoveEmptyEntries,
-                                                                   unMask: true)
+                        this.SortAs = ParameterValueSplitter.Split(parameter.Value)
                                                             .ToArray();
                         break;
                     }

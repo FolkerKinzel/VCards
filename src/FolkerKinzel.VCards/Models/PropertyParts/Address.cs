@@ -66,7 +66,7 @@ public sealed class Address
     {
         int index = 0;
      
-        foreach (ReadOnlyMemory<char> mem in ValueSplitter.Split(vCardValue, ';'))
+        foreach (ReadOnlyMemory<char> mem in ValueSplitter.SplitIntoMemories(vCardValue, ';'))
         {
             switch (index++)
             {

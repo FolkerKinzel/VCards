@@ -7,12 +7,19 @@ internal static class StringBuilderExtension
 {
     internal const string NEWLINE_REPLACEMENT = @"\n";
 
-    internal static StringBuilder AppendValueMasked(this StringBuilder sb, string? s, VCdVersion version)
+    /// <summary>
+    /// Appends a vCard-property value masked to a <see cref="StringBuilder"/>.
+    /// </summary>
+    /// <param name="builder">The <see cref="StringBuilder"/>.</param>
+    /// <param name="propVal">The vCard-property value.</param>
+    /// <param name="version">The vCard version to use for masking.</param>
+    /// <returns>A reference to <paramref name="builder"/>.</returns>
+    internal static StringBuilder AppendValueMasked(this StringBuilder builder, string? propVal, VCdVersion version)
         => version switch
         {
-            VCdVersion.V2_1 => AppendValueMaskedV2(sb, s),
-            VCdVersion.V3_0 => AppendValueMaskedV3(sb, s),
-            _ => AppendValueMaskedV4(sb, s)
+            VCdVersion.V2_1 => AppendValueMaskedV2(builder, propVal),
+            VCdVersion.V3_0 => AppendValueMaskedV3(builder, propVal),
+            _ => AppendValueMaskedV4(builder, propVal)
         };
 
     private static StringBuilder AppendValueMaskedV2(StringBuilder sb, string? s)
@@ -120,15 +127,26 @@ internal static class StringBuilderExtension
         return sb;
     }
 
-    internal static StringBuilder AppendParameterValueEscapedAndQuoted(this StringBuilder sb,
-                                                         string s,
-                                                         VCdVersion version,
-                                                         bool isLabel = false)
+
+    /// <summary>
+    /// Appends a vCard parameter value to a <see cref="StringBuilder"/> an quotes and masks it
+    /// if necessary.
+    /// </summary>
+    /// <param name="builder">The <see cref="StringBuilder"/>.</param>
+    /// <param name="paramVal">The vCard parameter value to append.</param>
+    /// <param name="version">The vCard version to use for masking.</param>
+    /// <param name="isLabel">Pass <c>true</c> if <paramref name="paramVal"/> is the value of a <c>LABEL</c>
+    /// parameter.</param>
+    /// <returns>A reference to <paramref name="builder"/>.</returns>
+    internal static StringBuilder AppendParameterValueEscapedAndQuoted(this StringBuilder builder,
+                                                                       string paramVal,
+                                                                       VCdVersion version,
+                                                                       bool isLabel = false)
     {
-        int startIdx = sb.Length;
-        return (version == VCdVersion.V3_0 ? AppendParameterValueEscapedV30(sb, s) : AppendParameterValueEscapedV40(sb, s, isLabel))
-                ? sb.Insert(startIdx, '\"').Append('\"') // this allocation is very rarely
-                : sb;
+        int startIdx = builder.Length;
+        return (version == VCdVersion.V3_0 ? AppendParameterValueEscapedV30(builder, paramVal) : AppendParameterValueEscapedV40(builder, paramVal, isLabel))
+                ? builder.Insert(startIdx, '\"').Append('\"') // this allocation is very rarely
+                : builder;
     }
 
     private static bool AppendParameterValueEscapedV30(StringBuilder sb, string s)
@@ -157,9 +175,36 @@ internal static class StringBuilderExtension
         return mustBeQuoted;
     }
 
-    private static bool AppendParameterValueEscapedV40(StringBuilder sb, string s, bool isLabel)
+    /// <summary>
+    /// Appends <paramref name="paramVal"/> masked and quoted according to RFC 6868
+    /// and makes a special treatment for line breaks in <c>LABEL</c> parameters.
+    /// </summary>
+    /// <param name="builder">The <see cref="StringBuilder"/>.</param>
+    /// <param name="paramVal">The parameter value to append.</param>
+    /// <param name="isLabel"><c>true</c> if <paramref name="paramVal"/> is the value
+    /// of a <c>LABEL</c> parameter.</param>
+    /// <returns>A reference to <paramref name="builder"/>.</returns>
+    /// <remarks>
+    /// <para>
+    /// RFC 6350 6.3.1 states that newlines in LABEL parameters "are encoded
+    /// as \n, as they are for property values". 
+    /// </para>
+    /// <para>
+    /// According to the suggestion in the StackOverflow question 
+    /// </para>
+    /// <para>
+    /// https://stackoverflow.com/questions/20508633/how-to-encode-newlines-in-vcard-4-0-parameter-values-n-or-n
+    /// </para>
+    /// <para>
+    /// there is made a special treatment for newlines in <c>LABEL</c> parameters.
+    /// Ev'rything else is encoded according to RFC 6868.
+    /// </para>
+    /// </remarks>
+    private static bool AppendParameterValueEscapedV40(StringBuilder builder,
+                                                       string paramVal,
+                                                       bool isLabel)
     {
-        ReadOnlySpan<char> span = s.AsSpan();
+        ReadOnlySpan<char> span = paramVal.AsSpan();
         
         bool mustBeQuoted = false;
         bool rFound = false;
@@ -172,7 +217,7 @@ internal static class StringBuilderExtension
             {
                 case '\r':
                     rFound = true;
-                    sb.Append(isLabel ? NEWLINE_REPLACEMENT : "^n");
+                    builder.Append(isLabel ? NEWLINE_REPLACEMENT : "^n");
                     break;
                 case '\n':
                     if (rFound)
@@ -180,22 +225,22 @@ internal static class StringBuilderExtension
                         rFound = false;
                         continue;
                     }
-                    sb.Append(isLabel ? NEWLINE_REPLACEMENT : "^n");
+                    builder.Append(isLabel ? NEWLINE_REPLACEMENT : "^n");
                     break;
                 case '\"':
-                    sb.Append("^'");
+                    builder.Append("^'");
                     break;
                 case ',':
                 case ';':
                 case ':':
                     mustBeQuoted = true;
-                    sb.Append(c);
+                    builder.Append(c);
                     break;
                 case '^':
-                    sb.Append("^^");
+                    builder.Append("^^");
                     break;
                 default:
-                    sb.Append(c);
+                    builder.Append(c);
                     break;
             }
         }

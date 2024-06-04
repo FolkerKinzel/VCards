@@ -5,34 +5,34 @@ using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
+/// <summary>
+/// Provides methods for splitting parameter values at ','.
+/// </summary>
 internal static class ParameterValueSplitter
 {
-    public static IEnumerable<string> Split(ReadOnlyMemory<char> mem,
-                                            char splitChar,
-                                            StringSplitOptions options,
-                                            bool unMask)
+    /// <summary>
+    /// Splits a compound parameter value at ',' and unmasks its
+    /// parts according to RFC 6868.
+    /// </summary>
+    /// <param name="mem">The read-only memory region containing the compound
+    /// parameter value to split.</param>
+    /// <returns>An IEnumerable of strings.</returns>
+    public static IEnumerable<string> Split(ReadOnlyMemory<char> mem)
     {
         if (mem.IsEmpty)
         {
-            if (!options.HasFlag(StringSplitOptions.RemoveEmptyEntries))
-            {
-                yield return string.Empty;
-            }
-
             yield break;
         }
 
         while (true)
         {
-            int splitIndex = GetNextSplitIndex(mem.Span, splitChar);
+            int splitIndex = GetNextSplitIndex(mem.Span);
 
             ReadOnlyMemory<char> nextChunk = mem.Slice(0, splitIndex);
 
-            if (!options.HasFlag(StringSplitOptions.RemoveEmptyEntries) || !nextChunk.Span.IsWhiteSpace())
+            if (!nextChunk.Span.IsWhiteSpace())
             {
-                yield return unMask
-                             ? nextChunk.Span.UnMaskParameterValue(isLabel: false)
-                             : nextChunk.ToString();
+                yield return nextChunk.Span.UnMaskParameterValue(isLabel: false);
             }
 
             if (splitIndex == mem.Length)
@@ -44,8 +44,13 @@ internal static class ParameterValueSplitter
         }
     }
 
-    public static IEnumerable<ReadOnlyMemory<char>> Split(ReadOnlyMemory<char> mem,
-                                                          char splitChar)
+    /// <summary>
+    /// Splits a compound parameter value at ','.
+    /// </summary>
+    /// <param name="mem">The read-only memory region containing the compound
+    /// parameter value to split.</param>
+    /// <returns>An IEnumerable of read-only character memory regions.</returns>
+    public static IEnumerable<ReadOnlyMemory<char>> SplitIntoMemories(ReadOnlyMemory<char> mem)
     {
         if (mem.IsEmpty)
         {
@@ -54,7 +59,7 @@ internal static class ParameterValueSplitter
 
         while (true)
         {
-            int splitIndex = GetNextSplitIndex(mem.Span, splitChar);
+            int splitIndex = GetNextSplitIndex(mem.Span);
             ReadOnlyMemory<char> nextChunk = mem.Slice(0, splitIndex);
 
             yield return nextChunk;
@@ -68,7 +73,7 @@ internal static class ParameterValueSplitter
         }
     }
 
-    private static int GetNextSplitIndex(ReadOnlySpan<char> span, char splitChar)
+    private static int GetNextSplitIndex(ReadOnlySpan<char> span)
     {
         bool masked = false;
 
@@ -87,7 +92,7 @@ internal static class ParameterValueSplitter
                 continue;
             }
 
-            if (c == splitChar)
+            if (c == ',')
             {
                 return i;
             }

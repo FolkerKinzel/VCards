@@ -218,13 +218,21 @@ internal static class ReadOnlySpanExtension
         return length;
     }
 
-    internal static string UnMaskParameterValue(this ReadOnlySpan<char> value, bool isLabel)
+    /// <summary>
+    /// Unmasks a parameter value and makes a special treatment if <paramref name="paramVal"/>
+    /// is the value of a <c>LABEL</c> parameter.
+    /// </summary>
+    /// <param name="paramVal">The parameter value to unmask.</param>
+    /// <param name="isLabel"><c>true</c> if <paramref name="paramVal"/> is the value of a <c>LABEL</c>
+    /// parameter.</param>
+    /// <returns>The unmasked content of <paramref name="paramVal"/>. [Double-]quotes will not be removed.</returns>
+    internal static string UnMaskParameterValue(this ReadOnlySpan<char> paramVal, bool isLabel)
     {
-        int idxOfEscapeChar = value.IndexOf('^');
+        int idxOfEscapeChar = paramVal.IndexOf('^');
 
         if (isLabel)
         {
-            int idxOfBackSlash = value.IndexOf('\\');
+            int idxOfBackSlash = paramVal.IndexOf('\\');
 
             if (idxOfBackSlash != -1)
             {
@@ -236,21 +244,21 @@ internal static class ReadOnlySpanExtension
 
         if (idxOfEscapeChar == -1)
         {
-            return value.ToString();
+            return paramVal.ToString();
         }
 
-        int processedLength = value.Length - idxOfEscapeChar;
+        int processedLength = paramVal.Length - idxOfEscapeChar;
 
         if (processedLength > Const.STACKALLOC_CHAR_THRESHOLD)
         {
             using ArrayPoolHelper.SharedArray<char> buf = ArrayPoolHelper.Rent<char>(processedLength);
             Span<char> bufSpan = buf.Array.AsSpan();
-            return CreateUnMaskedString(value, idxOfEscapeChar, bufSpan, isLabel);
+            return CreateUnMaskedString(paramVal, idxOfEscapeChar, bufSpan, isLabel);
         }
         else
         {
             Span<char> bufSpan = stackalloc char[processedLength];
-            return CreateUnMaskedString(value, idxOfEscapeChar, bufSpan, isLabel);
+            return CreateUnMaskedString(paramVal, idxOfEscapeChar, bufSpan, isLabel);
         }
 
         static string CreateUnMaskedString(ReadOnlySpan<char> sourceSpan,
@@ -267,20 +275,34 @@ internal static class ReadOnlySpanExtension
         }
     }
 
-    private static int UnMaskParameterValue40(ReadOnlySpan<char> source, Span<char> destination, bool isLabel)
+    /// <summary>
+    /// Unmasks a parameter value according to RFC 6868 and makes a special treatment if <paramref name="paramVal"/>
+    /// is the value of a <c>LABEL</c> parameter.
+    /// </summary>
+    /// <param name="paramVal">The parameter value to unmask.</param>
+    /// <param name="destination">The buffer to write the result.</param>
+    /// <param name="isLabel"><c>true</c> if <paramref name="paramVal"/> is the value of a <c>LABEL</c>
+    /// parameter.</param>
+    /// <returns>The length of the content in <paramref name="destination"/>.</returns>
+    /// <remarks>
+    /// RFC 6350 6.3.1 states that newlines in LABEL parameters "are encoded
+    /// as \n, as they are for property values". For compatibility reasons this is accepted in
+    /// <c>LABEL</c> parameters.
+    /// </remarks>
+    private static int UnMaskParameterValue40(ReadOnlySpan<char> paramVal, Span<char> destination, bool isLabel)
     {
-        int lastSourceIdx = source.Length - 1;
+        int lastSourceIdx = paramVal.Length - 1;
         int length = 0;
 
         ReadOnlySpan<char> newLineSpan = Environment.NewLine.AsSpan();
 
         for (int i = 0; i < lastSourceIdx; i++)
         {
-            char c = source[i];
+            char c = paramVal[i];
 
             if (isLabel && c == '\\')
             {
-                switch (source[i + 1])
+                switch (paramVal[i + 1])
                 {
                     case 'n':
                     case 'N':
@@ -299,7 +321,7 @@ internal static class ReadOnlySpanExtension
 
             if (c == '^')
             {
-                switch (source[i + 1])
+                switch (paramVal[i + 1])
                 {
                     case 'n':
                         newLineSpan.TryCopyTo(destination.Slice(length));
@@ -334,7 +356,7 @@ internal static class ReadOnlySpanExtension
             destination[length++] = c;
         }
 
-        destination[length++] = source[lastSourceIdx];
+        destination[length++] = paramVal[lastSourceIdx];
 
         return length;
     }

@@ -45,8 +45,8 @@ internal static class ValueSplitter
         }
     }
 
-    public static IEnumerable<ReadOnlyMemory<char>> Split(ReadOnlyMemory<char> mem,
-                                                          char splitChar)
+    public static IEnumerable<ReadOnlyMemory<char>> SplitIntoMemories(ReadOnlyMemory<char> mem,
+                                                                      char splitChar)
     {
         if(mem.IsEmpty)
         {
