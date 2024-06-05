@@ -158,7 +158,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
         {
             bool first = true;
 
-            foreach (var prop in value.OrderByPrefIntl(IgnoreEmptyItems))
+            foreach (TextProperty prop in value.OrderByPrefIntl(IgnoreEmptyItems))
             {
                 ParameterSection parameters = prop.Parameters;
 

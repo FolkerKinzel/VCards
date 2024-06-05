@@ -20,8 +20,21 @@ public class StringBuilderExtensionTests
         Assert.AreEqual(expected, s);
     }
 
-    [TestMethod]
-    public void AppendEscapedAndQuotedTest1()
-        => Assert.AreEqual("\",;^\'^\'\\n\\n\\\"", 
-            new StringBuilder().AppendParameterValueEscapedAndQuoted(",;\"\"\r\n\n\\", VCdVersion.V4_0, isLabel: true).ToString());
+    [DataTestMethod]
+    [DataRow(",;\"\"\r\n\n\\", true, VCdVersion.V4_0, "\",;^\'^\'\\n\\n\\\"")]
+    [DataRow(",;\"\"\r\n\n\\", false, VCdVersion.V4_0, "\",;^\'^\'^n^n\\\"")]
+    [DataRow("a\r\n\"b", true, VCdVersion.V3_0, "ab")]
+    [DataRow("a\r\n\"b", true, VCdVersion.V4_0, "a\\n^'b")]
+    [DataRow("a\r\n\"b", false, VCdVersion.V4_0, "a^n^'b")]
+    [DataRow("a,b", false, VCdVersion.V4_0, "\"a,b\"")]
+    [DataRow("a,b", false, VCdVersion.V3_0, "\"a,b\"")]
+    [DataRow("a;b", false, VCdVersion.V4_0, "\"a;b\"")]
+    [DataRow("a;b", false, VCdVersion.V3_0, "\"a;b\"")]
+    [DataRow("a:b", false, VCdVersion.V4_0, "\"a:b\"")]
+    [DataRow("a:b", false, VCdVersion.V3_0, "\"a:b\"")]
+    [DataRow("a^b", false, VCdVersion.V4_0, "a^^b")]
+    [DataRow("a^b", false, VCdVersion.V3_0, "a^b")]
+    public void AppendParameterValueEscapedAndQuotedTest1(string input, bool isLabel, VCdVersion version, string expected)
+        => Assert.AreEqual(expected, 
+            new StringBuilder().AppendParameterValueEscapedAndQuoted(input, version, isLabel: isLabel).ToString());
 }

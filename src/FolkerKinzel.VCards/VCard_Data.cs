@@ -81,7 +81,7 @@ public sealed partial class VCard
     {
         get
         {
-            foreach (var item in _propDic)
+            foreach (KeyValuePair<Prop, object> item in _propDic)
             {
                 if (item.Value is VCardProperty prop)
                 {

@@ -143,6 +143,8 @@ internal static class StringBuilderExtension
                                                                        VCdVersion version,
                                                                        bool isLabel = false)
     {
+        Debug.Assert(version != VCdVersion.V2_1);
+
         int startIdx = builder.Length;
         return (version == VCdVersion.V3_0 ? AppendParameterValueEscapedV30(builder, paramVal) : AppendParameterValueEscapedV40(builder, paramVal, isLabel))
                 ? builder.Insert(startIdx, '\"').Append('\"') // this allocation is very rarely
