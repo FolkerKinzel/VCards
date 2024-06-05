@@ -29,11 +29,18 @@ internal static class GeoCoordinateConverter
                 _ = builder.Append(latitude).Append(';').Append(longitude);
                 break;
             default:
+                // "geo" URI contains a comma and sometimes a semicolon and should be masked.
+                // In RFC 6350 the example is unmasked. (This is a verified error.)
+                // The "Verifier notes" to https://www.rfc-editor.org/errata/eid3845
+                // note that "the ABNF does not support escaping for URIs."
+                // That's why the "geo" URI will remain unmasked.
                 _ = builder.Append("geo:").Append(latitude).Append(',').Append(longitude);
+
                 if (coordinate.Uncertainty.HasValue)
                 {
                     _ = builder.Append(U_PARAMETER).Append(coordinate.Uncertainty.Value.ToString("0.", culture));
                 }
+
                 break;
         }//switch
     }

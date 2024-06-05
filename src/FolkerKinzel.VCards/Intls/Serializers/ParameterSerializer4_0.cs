@@ -61,8 +61,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         if (dataType == Data.Text)
         {
-            // Note: LANGUAGE is permitted only in BDAY
-            // (Error in the RFC?)
+            // Is allowed. See https://www.rfc-editor.org/errata/eid3086
             AppendLanguage();
         }
 
@@ -913,7 +912,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
 
         AppendParameter(ParameterSection.ParameterKey.TZ, "");
-        tz.AppendTo(Builder, VCdVersion.V4_0, null, escapedAndQuoted: true);
+        tz.AppendTo(Builder, VCdVersion.V4_0, null, asParameter: true);
     }
 
     private void AppendValue(Data? dataType)

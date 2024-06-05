@@ -331,7 +331,8 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
     protected override void BuildUidPara()
     {
-        // none parameters
+        // TODO: TYPE parameter should be allowed
+        // See https://www.rfc-editor.org/errata/eid870
     }
 
     protected override void BuildUrlPara()

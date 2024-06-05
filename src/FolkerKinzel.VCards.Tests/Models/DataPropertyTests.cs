@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -189,6 +190,70 @@ public class DataPropertyTests
         Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
         Assert.AreEqual("image/gif", photo.Parameters.MediaType);
     }
+
+    [TestMethod]
+    public void ParseTest5()
+    {
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        PHOTO:data:image/png\;base64\,{Convert.ToBase64String([1,2,3])}
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+        Assert.IsNotNull(vcard.Photos);
+
+        DataProperty photo = vcard.Photos!.First()!;
+        Assert.IsFalse(photo.IsEmpty);
+        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.AreEqual("image/png", photo.Parameters.MediaType);
+    }
+
+    [TestMethod]
+    public void ParseTest6()
+    {
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        PHOTO:data:image/png;base64\,{Convert.ToBase64String([1, 2, 3])}
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+        Assert.IsNotNull(vcard.Photos);
+
+        DataProperty photo = vcard.Photos!.First()!;
+        Assert.IsFalse(photo.IsEmpty);
+        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.AreEqual("image/png", photo.Parameters.MediaType);
+    }
+
+    [TestMethod]
+    public void ParseTest7()
+    {
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        PHOTO:data:image/png\;parameter=value\;base64\,{Convert.ToBase64String([1, 2, 3])}
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+        Assert.IsNotNull(vcard.Photos);
+
+        DataProperty photo = vcard.Photos!.First()!;
+        Assert.IsFalse(photo.IsEmpty);
+        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.AreEqual("image/png; parameter=value", photo.Parameters.MediaType);
+    }
+
 
     [TestMethod]
     public void IsEmptyTest1()

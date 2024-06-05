@@ -67,6 +67,11 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
         base.PrepareForVcfSerialization(serializer);
 
+        if(Parameters.DataType == Data.Uri)
+        {
+            return;
+        }
+
         if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
         {
             this.Parameters.Encoding = Enc.QuotedPrintable;
@@ -84,6 +89,8 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
             ? this.Parameters.Encoding == Enc.QuotedPrintable
                 ? builder.AppendQuotedPrintable(Value.AsSpan(), builder.Length)
                 : builder.Append(Value)
-            : builder.AppendValueMasked(Value, serializer.Version);
+            : Parameters.DataType == Data.Uri
+                ? builder.Append(Value)
+                : builder.AppendValueMasked(Value, serializer.Version);
     }
 }

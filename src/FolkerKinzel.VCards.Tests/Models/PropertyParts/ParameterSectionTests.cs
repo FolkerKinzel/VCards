@@ -12,7 +12,6 @@ public class ParameterSectionTests
     [DataRow("Date")]
     [DataRow("DATE")]
     [DataRow("\"Date\"")]
-    [DataRow("\'Date\'")]
     public void CleanParameterValueTest(string value)
     {
         var info = new VcfDeserializationInfo();

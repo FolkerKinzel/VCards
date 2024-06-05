@@ -305,7 +305,7 @@ internal static class ReadOnlySpanExtension
                 switch (paramVal[i + 1])
                 {
                     case 'n':
-                    case 'N':
+                    case 'N': // allowed in property values RFC 6350 3.4
                         newLineSpan.TryCopyTo(destination.Slice(length));
                         length += newLineSpan.Length;
                         i++;

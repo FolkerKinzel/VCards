@@ -2,6 +2,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
@@ -16,7 +17,7 @@ internal static class ParameterValueSplitter
     /// </summary>
     /// <param name="mem">The read-only memory region containing the compound
     /// parameter value to split.</param>
-    /// <returns>An IEnumerable of strings.</returns>
+    /// <returns>An IEnumerable of strings. Empty values are removed.</returns>
     public static IEnumerable<string> Split(ReadOnlyMemory<char> mem)
     {
         if (mem.IsEmpty)
@@ -26,13 +27,15 @@ internal static class ParameterValueSplitter
 
         while (true)
         {
-            int splitIndex = GetNextSplitIndex(mem.Span);
+            ReadOnlySpan<char> span = mem.Span;
 
-            ReadOnlyMemory<char> nextChunk = mem.Slice(0, splitIndex);
+            int splitIndex = GetNextSplitIndex(span);
 
-            if (!nextChunk.Span.IsWhiteSpace())
+            ReadOnlySpan<char> nextSpan = span.Slice(0, splitIndex).Trim(ParameterSection.TRIM_CHARS);
+
+            if (!nextSpan.IsWhiteSpace())
             {
-                yield return nextChunk.Span.UnMaskParameterValue(isLabel: false);
+                yield return nextSpan.UnMaskParameterValue(isLabel: false);
             }
 
             if (splitIndex == mem.Length)
@@ -49,7 +52,8 @@ internal static class ParameterValueSplitter
     /// </summary>
     /// <param name="mem">The read-only memory region containing the compound
     /// parameter value to split.</param>
-    /// <returns>An IEnumerable of read-only character memory regions.</returns>
+    /// <returns>An IEnumerable of read-only character memory regions. The IEnumerable
+    /// can contain empty memories.</returns>
     public static IEnumerable<ReadOnlyMemory<char>> SplitIntoMemories(ReadOnlyMemory<char> mem)
     {
         if (mem.IsEmpty)

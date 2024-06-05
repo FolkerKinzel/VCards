@@ -5,7 +5,7 @@ public sealed partial class ParameterSection
     internal const int PREF_MIN_VALUE = 1;
     internal const int PREF_MAX_VALUE = 100;
 
-    private const string TRIM_CHARS = " \"\'";
+    internal const string TRIM_CHARS = " \"";
 
     /// <summary>
     /// Defines the default value for the <see cref="Calendar"/> property,

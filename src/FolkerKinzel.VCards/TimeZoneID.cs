@@ -156,7 +156,7 @@ public sealed partial class TimeZoneID
 
 
     internal void AppendTo(
-        StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter, bool escapedAndQuoted = false)
+        StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter, bool asParameter = false)
     {
         Debug.Assert(builder is not null);
 
@@ -185,8 +185,8 @@ public sealed partial class TimeZoneID
                     }
                     else
                     {
-                        _ = escapedAndQuoted ? builder.AppendParameterValueEscapedAndQuoted(Value, version)
-                                             : builder.Append(Value);
+                        _ = asParameter ? builder.AppendParameterValueEscapedAndQuoted(Value, version)
+                                        : builder.Append(Value);
                     }
                     break;
                 }

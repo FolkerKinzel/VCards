@@ -306,4 +306,8 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     internal override void AppendBase64EncodedData(byte[]? data)
         => Builder.Append(DataUrl.FromBytes(data, this.ParameterSerializer.ParaSection.MediaType));
+    // A "data" URL contains a comma and a semicolon and should be masked.
+    // But the "Verifier notes" to https://www.rfc-editor.org/errata/eid3845
+    // note that "the ABNF does not support escaping for URIs."
+    // That's why the "data" URL will remain unmasked.
 }
