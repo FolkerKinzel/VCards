@@ -49,7 +49,7 @@ public sealed class Name
     {
         int index = 0;
 
-        foreach (ReadOnlyMemory<char> mem in ValueSplitter.SplitIntoMemories(vCardValue, ';'))
+        foreach (ReadOnlyMemory<char> mem in PropertyValueSplitter.SplitIntoMemories(vCardValue, ';'))
         {
             switch (index++)
             {
@@ -107,7 +107,7 @@ public sealed class Name
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static string[] ToArray(ReadOnlyMemory<char> mem, VCdVersion version)
-            => ValueSplitter.Split(mem,
+            => PropertyValueSplitter.Split(mem,
                                     ',',
                                     StringSplitOptions.RemoveEmptyEntries,
                                     unMask: true,

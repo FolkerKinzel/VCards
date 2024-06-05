@@ -32,11 +32,6 @@ public sealed partial class ParameterSection
         }
     }
 
-
-#if NET8_0_OR_GREATER
-    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters",
-        Justification = "TRIM_CHARS are not localizable")]
-#endif
     internal ParameterSection(string propertyKey,
                               in ReadOnlyMemory<char> parameterSection,
                               VcfDeserializationInfo info)
@@ -98,8 +93,8 @@ public sealed partial class ParameterSection
                                 List<KeyValuePair<string, string>> userAttributes
                                         = (List<KeyValuePair<string, string>>?)this.NonStandard
                                           ?? [];
-
                                 this.NonStandard = userAttributes;
+
                                 userAttributes.Add(new KeyValuePair<string, string>(parameter.Key, mem.ToString()));
                             }
                         }

@@ -59,7 +59,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
         }
 
         Value = new Organization(new List<string>(
-            ValueSplitter.Split(val, ';', StringSplitOptions.None, unMask: true, version)));
+            PropertyValueSplitter.Split(val, ';', StringSplitOptions.None, unMask: true, version)));
     }
 
     /// <summary> The data provided by the  <see cref="OrgProperty" />. </summary>

@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
-internal static class ValueSplitter
+internal static class PropertyValueSplitter
 {
     public static IEnumerable<string> Split(ReadOnlyMemory<char> mem,
                                             char splitChar,

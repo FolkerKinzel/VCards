@@ -73,7 +73,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
             return;
         }
 
-        string[] arr = ValueSplitter.Split(
+        string[] arr = PropertyValueSplitter.Split(
                 val, ',', StringSplitOptions.RemoveEmptyEntries, unMask: true, version).ToArray();
 
         if (arr.Length != 0)
