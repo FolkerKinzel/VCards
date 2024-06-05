@@ -69,6 +69,8 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
         if(Parameters.DataType == Data.Uri)
         {
+            // Valid URIs consist of ASCII characters and don't include
+            // line breaks.
             return;
         }
 
@@ -89,6 +91,9 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
             ? this.Parameters.Encoding == Enc.QuotedPrintable
                 ? builder.AppendQuotedPrintable(Value.AsSpan(), builder.Length)
                 : builder.Append(Value)
+            // URIs are not masked according to the "Verifier notes" in
+            // https://www.rfc-editor.org/errata/eid3845
+            // It says that "the ABNF does not support escaping for URIs."
             : Parameters.DataType == Data.Uri
                 ? builder.Append(Value)
                 : builder.AppendValueMasked(Value, serializer.Version);
