@@ -755,7 +755,8 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         {
             foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL) && !string.IsNullOrWhiteSpace(kvp.Value))
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL)
+                    && !string.IsNullOrWhiteSpace(kvp.Value))
                 {
                     AppendParameter(ParameterSection.ParameterKey.LEVEL, kvp.Value);
                     return;

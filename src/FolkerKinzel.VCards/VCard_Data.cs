@@ -665,8 +665,6 @@ public sealed partial class VCard
         set => Set(Prop.Xmls, value);
     }
 
-
-
     internal void NormalizeMembers(bool ignoreEmptyItems)
     {
         if (Members is null)
@@ -676,10 +674,11 @@ public sealed partial class VCard
 
         RelationProperty[] members = Members.WhereNotNull().ToArray();
         Members = members;
+        Span<RelationProperty> span = members.AsSpan();
 
-        for (int i = 0; i < members.Length; i++)
+        for (int i = 0; i < span.Length; i++)
         {
-            RelationProperty prop = members[i];
+            RelationProperty prop = span[i];
 
             if (prop is RelationTextProperty textProp)
             {
@@ -688,7 +687,7 @@ public sealed partial class VCard
                     continue;
                 }
 
-                members[i] = Uri.TryCreate(textProp.Value?.Trim(), UriKind.Absolute, out Uri? uri)
+                span[i] = Uri.TryCreate(textProp.Value?.Trim(), UriKind.Absolute, out Uri? uri)
                     ? RelationProperty.FromUri(uri, prop.Parameters.RelationType, prop.Group)
                     : RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(textProp.Value) });
             }

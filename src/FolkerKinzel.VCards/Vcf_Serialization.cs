@@ -134,11 +134,11 @@ public static partial class Vcf
             $"{nameof(Vcf)}.{nameof(Serialize)}(IEnumerable<{nameof(VCard)}?>, {nameof(Stream)})");
 
         ValidateArguments(stream, vCards, leaveStreamOpen);
-        using VcfSerializer serializer = VcfSerializer.GetSerializer(stream,
-                                                                     leaveStreamOpen,
-                                                                     version,
-                                                                     options,
-                                                                     tzConverter);
+        using var serializer = VcfSerializer.GetSerializer(stream,
+                                                           leaveStreamOpen,
+                                                           version,
+                                                           options,
+                                                           tzConverter);
 
         var list = vCards.WhereNotNull().ToList();
 
@@ -151,7 +151,7 @@ public static partial class Vcf
         }
         else
         {
-            foreach (var vCard in list)
+            foreach (VCard vCard in list)
             {
                 vCard.NormalizeMembers(serializer.IgnoreEmptyItems);
             }

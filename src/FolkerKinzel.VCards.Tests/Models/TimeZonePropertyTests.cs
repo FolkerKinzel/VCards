@@ -68,6 +68,19 @@ public class TimeZonePropertyTests
     }
 
     [TestMethod]
+    public void TimeZonePropertyTest4()
+    {
+        var row = VcfRow.Parse("TZ;QUOTED_PRINTABLE:-0500".AsMemory(), new VcfDeserializationInfo());
+
+        Assert.IsNotNull(row);
+        Assert.AreEqual(Enc.QuotedPrintable, row.Parameters.Encoding);
+        var prop = new TimeZoneProperty(row, VCdVersion.V2_1);
+
+        Assert.IsNotNull(prop.Value);
+        Assert.IsTrue(prop.Value.TryGetUtcOffset(out _));
+    }
+
+    [TestMethod]
     public void IEnumerableTest1()
     {
         var prop = new TimeZoneProperty(TimeZoneID.Parse("+01"));

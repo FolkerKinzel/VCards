@@ -663,4 +663,20 @@ END:VCARD";
         Assert.IsNull(vc.CalendarUserAddresses);
         Assert.IsNull(vc.FreeOrBusyUrls);
     }
+
+    [TestMethod]
+    public void EmptyParameterTest1()
+    {
+        string vcString = """
+            BEGIN:VCARD
+            VERSION:3.0
+            ADR;TYPE=dom,,postal,parcel:;;123 Main
+              Street;Any Town;CA;91921-1234
+            END:VCARD
+            """;
+
+        VCard vc = Vcf.Parse(vcString)[0];
+        Assert.AreEqual(Adr.Dom | Adr.Postal | Adr.Parcel,
+                        vc.Addresses!.First()!.Parameters.AddressType);
+    }
 }

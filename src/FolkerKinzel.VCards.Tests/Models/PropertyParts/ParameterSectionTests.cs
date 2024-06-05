@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Syncs;
 using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
@@ -100,5 +101,18 @@ public class ParameterSectionTests
         Assert.IsTrue(!result.Any(x => x is null));
         Assert.AreEqual(3, result.Count());
         Assert.IsTrue(result.All(x => StringComparer.Ordinal.Equals(x, x.Trim())));
+    }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var sec = new ParameterSection
+        {
+            PropertyIDs = new PropertyID(1, null)
+        };
+
+        var sec2 = (ParameterSection)sec.Clone();
+        Assert.AreNotSame(sec, sec2);
+        Assert.AreSame(sec.PropertyIDs.First(), sec2.PropertyIDs!.First());
     }
 }

@@ -370,9 +370,9 @@ public class V4Tests
     {
         VCard vc = VCardBuilder
             .Create()
-            .BirthDayViews.Add(1900, 2,3, parameters: p => p.Calendar = "   ")
+            .BirthDayViews.Add(1900, 2, 3, parameters: p => p.Calendar = "   ")
             .AnniversaryViews.Add(1924, 7, 24, parameters: p => p.Calendar = "GREGORIAN")
-            .DeathDateViews.Add(1998, 2,4, parameters: p => p.Calendar = "X-JULIAN")
+            .DeathDateViews.Add(1998, 2, 4, parameters: p => p.Calendar = "X-JULIAN")
             .VCard;
 
         string serialized = vc.ToVcfString(VCdVersion.V4_0);
@@ -394,7 +394,7 @@ public class V4Tests
             .Interests.Add("Linq", parameters: p => p.NonStandard = [new KeyValuePair<string, string>("LEVEL", "VeryInterested")])
             .VCard;
 
-        string serialized = vc.ToVcfString( VCdVersion.V4_0, options: Opts.Default.Set(Opts.WriteNonStandardParameters));
+        string serialized = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Set(Opts.WriteNonStandardParameters));
 
         vc = Vcf.Parse(serialized)[0];
         TextProperty expertise = vc.Expertises!.First()!;
@@ -403,9 +403,61 @@ public class V4Tests
         Assert.IsTrue(expertise.Parameters.NonStandard!.Any(kvp => kvp.Key == "LEVEL" && kvp.Value == "SuperExpert"));
         Assert.IsTrue(expertise.Parameters.NonStandard!.Any(kvp => kvp.Key == "TYPE" && kvp.Value == "NERD"));
 
-
         Assert.IsTrue(interest.Parameters.NonStandard!.Any(kvp => kvp.Key == "LEVEL" && kvp.Value == "VeryInterested"));
+    }
 
+
+    [TestMethod]
+    public void ParameterTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .NameViews.Add(null, "Folker", parameters: p => p.SortAs = [])
+            .AnniversaryViews.Add("In summer", parameters: p => p.Language = "en")
+            .Phones.Add("tel:123",
+                        parameters: p =>
+                        {
+                            p.DataType = Data.Uri;
+                            p.MediaType = "application/octet-stream";
+                            p.PropertyIDs = [];
+                        })
+            .Expertises.Add("C#", parameters: p => p.NonStandard = [new KeyValuePair<string, string>("LEVEL", "  ")])
+            .Interests.Add("Linq", parameters: p => p.NonStandard = [new KeyValuePair<string, string>("LEVEL", "")])
+            .NonStandards.Edit(props => [null])
+            .VCard;
+
+        string serialized = vc.ToVcfString(VCdVersion.V4_0, 
+            options: Opts.Default.Set(Opts.WriteNonStandardParameters)
+                                 .Set(Opts.WriteNonStandardProperties)
+                                 .Unset(Opts.SetPropertyIDs));
+
+        vc = Vcf.Parse(serialized)[0];
+
+        Assert.IsNotNull(vc.AnniversaryViews);
+        Assert.AreEqual("en", vc.AnniversaryViews.First()!.Parameters.Language);
+
+        Assert.IsNotNull(vc.Phones);
+        Assert.AreEqual("application/octet-stream", vc.Phones.First()!.Parameters.MediaType);
+
+        Assert.IsNotNull(vc.Expertises);
+        Assert.IsNull(vc.Expertises.First()!.Parameters.NonStandard);
+
+        Assert.IsNotNull(vc.Interests);
+        Assert.IsNull(vc.Interests.First()!.Parameters.NonStandard);
+    }
+
+    [TestMethod]
+    public void NormalizeMembersTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Members.Add((string?)null)
+            .VCard;
+
+        string serialized = vc.ToVcfString(VCdVersion.V4_0);
+
+        vc = Vcf.Parse(serialized)[0];
+        Assert.IsNull(vc.Members);
     }
 }
 

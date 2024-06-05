@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -89,6 +90,17 @@ public class RelationPropertyTests
 
         var prop = RelationProperty.Parse(row!, VCdVersion.V4_0);
         Assert.IsInstanceOfType(prop, typeof(RelationTextProperty));
+    }
+
+    [TestMethod]
+    public void ParseTest2()
+    {
+        var row = VcfRow.Parse("X-ASSISTANT;QUOTED-PRINTABLE;UTF-8:M=C3=BCller".AsMemory(), new VcfDeserializationInfo());
+        Assert.IsNotNull(row);
+        Assert.AreEqual(Enc.QuotedPrintable, row.Parameters.Encoding);
+
+        var prop = RelationProperty.Parse(row, VCdVersion.V2_1);
+        Assert.AreEqual("Müller", prop.Value!.String);
     }
 
     [TestMethod]
