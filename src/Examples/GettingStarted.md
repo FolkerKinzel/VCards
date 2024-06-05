@@ -179,7 +179,7 @@ The vCard standard is defined in the following documents:
 
 Extensions of the standard describe, e.g., the following documents:
 - [RFC 6474: vCard Format Extensions: Place of Birth, Place and Date of Death](https://tools.ietf.org/html/rfc6474)
-- [RFC 6715: vCard Format Extensions: Representing vCard Extensions Defined by the Open Mobile Alliance (OMA) Converged Address Book (CAB) Group](https://tools.ietf.org/html/rfc6715])
+- [RFC 6715: vCard Format Extensions: Representing vCard Extensions Defined by the Open Mobile Alliance (OMA) Converged Address Book (CAB) Group](https://tools.ietf.org/html/rfc6715)
 - [RFC 6473: vCard KIND: application](https://tools.ietf.org/html/rfc6473)
 - [RFC 4770: vCard Extensions for Instant Messaging (IM)](https://tools.ietf.org/html/rfc4770)
 - [RFC 2739: Calendar Attributes for vCard and LDAP](https://tools.ietf.org/html/rfc2739)
