@@ -67,7 +67,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
         base.PrepareForVcfSerialization(serializer);
 
-        if(Parameters.DataType == Data.Uri)
+        if(IsEmpty || Parameters.DataType == Data.Uri)
         {
             // Valid URIs consist of ASCII characters and don't include
             // line breaks.

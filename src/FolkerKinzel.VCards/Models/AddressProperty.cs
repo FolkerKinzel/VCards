@@ -195,16 +195,15 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// </summary>
     /// <remarks>
     /// <note type="important">
-    /// <para>
-    /// The behavior of the property has changed since version 5.0.0-beta.2:
-    /// </para>
-    /// <para>
-    /// If only the <see cref="ParameterSection.Label" /> parameter is not equal
-    /// to <c>null</c>, the property returns <c>false</c>.
-    /// </para>
+    /// If only the <see cref="ParameterSection.Label" /> parameter or the <see cref="ParameterSection.GeoPosition"/> or
+    /// the <see cref="ParameterSection.TimeZone"/> is not equal
+    /// to <c>null</c>, <see cref="IsEmpty"/> returns <c>false</c>.
     /// </note>
     /// </remarks>
-    public override bool IsEmpty => Value.IsEmpty && Parameters.Label is null;
+    public override bool IsEmpty => Value.IsEmpty 
+                                 && Parameters.Label is null 
+                                 && Parameters.GeoPosition is null 
+                                 && Parameters.TimeZone is null;
 
     /// <summary>Converts the data encapsulated in the instance to formatted text
     /// for a mailing label.</summary>

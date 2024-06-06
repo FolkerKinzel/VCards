@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>7.1.1</Version>
-    <FileVersion>7.1.1.2</FileVersion>
+    <FileVersion>7.1.1.5</FileVersion>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v7.1.1</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>

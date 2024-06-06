@@ -80,7 +80,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         Debug.Assert(Builder.Length > 0);
 
-        using var shared = ArrayPoolHelper.Rent<char>(Builder.Length);
+        using ArrayPoolHelper.SharedArray<char> shared = ArrayPoolHelper.Rent<char>(Builder.Length);
         Builder.CopyTo(0, shared.Array, 0, Builder.Length);
         ReadOnlySpan<char> span = shared.Array.AsSpan(0, Builder.Length);
 
@@ -155,7 +155,9 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
             bool isPref = first && multiple && prop.Parameters.Preference < 100;
 
             // AddressProperty.IsEmpty returns false if only
-            // AddressProperty.Parameters.Label  is not null:
+            // AddressProperty.Parameters.Label or
+            // AddressProperty.Parameters.GeoPosition or
+            // AddressProperty.Parameters.TimeZone is not null:
             if (!prop!.Value.IsEmpty || !IgnoreEmptyItems)
             {
                 BuildProperty(VCard.PropKeys.ADR, prop, isPref);
@@ -170,7 +172,6 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
             }
 
             first = false;
-
 
             if (!multiple) { break; }
         }

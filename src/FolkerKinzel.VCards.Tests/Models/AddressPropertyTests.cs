@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -208,6 +209,34 @@ public class AddressPropertyTests
         Assert.IsTrue(adr.Value.IsEmpty);
         Assert.IsFalse(adr.IsEmpty);
         Assert.AreEqual(labelText, adr.Parameters.Label);
+    }
+
+    [TestMethod]
+    public void IsEmptyTest1()
+    {
+        AddressProperty adr = new("", null, null, null, autoLabel: false);
+        Assert.IsTrue(adr.IsEmpty);
+
+        adr.Parameters.Label = "Nice label";
+        Assert.IsFalse(adr.IsEmpty);
+
+        adr.Parameters.Label = null;
+        Assert.IsTrue(adr.IsEmpty);
+
+        adr.Parameters.GeoPosition = new GeoCoordinate(42, 42);
+        Assert.IsFalse(adr.IsEmpty);
+
+        adr.Parameters.GeoPosition = null;
+        Assert.IsTrue(adr.IsEmpty);
+
+        adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
+        Assert.IsFalse(adr.IsEmpty);
+
+        adr.Parameters.TimeZone = null;
+        Assert.IsTrue(adr.IsEmpty);
+
+        adr.Parameters.AddressType = Adr.Postal;
+        Assert.IsTrue(adr.IsEmpty);
     }
 
     [TestMethod]

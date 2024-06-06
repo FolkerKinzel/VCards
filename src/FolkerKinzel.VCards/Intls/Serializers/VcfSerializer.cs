@@ -443,7 +443,7 @@ internal abstract class VcfSerializer : IDisposable
     {
         Debug.Assert(Builder.Length > 0);
 
-        using var shared = ArrayPoolHelper.Rent<char>(Builder.Length);
+        using ArrayPoolHelper.SharedArray<char> shared = ArrayPoolHelper.Rent<char>(Builder.Length);
         Builder.CopyTo(0, shared.Array, 0, Builder.Length);
         ReadOnlySpan<char> span = shared.Array.AsSpan(0, Builder.Length);
 

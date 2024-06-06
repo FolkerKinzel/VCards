@@ -66,6 +66,14 @@ public abstract class VCardProperty : ICloneable
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => Value?.ToString() ?? "<null>";
 
+
+    /// <summary>
+    /// Fills <see cref="VcfSerializer.Builder"/> with the serialized <see cref="VCardProperty"/>.
+    /// </summary>
+    /// <param name="serializer">The <see cref="VcfSerializer"/>.</param>
+    /// <returns><c>true</c> if line wrapping should be applied to the content of
+    /// <see cref="VcfSerializer.Builder"/>, <c>false</c> if the content in builder 
+    /// is already wrapped.</returns>
     internal bool BuildProperty(VcfSerializer serializer)
     {
         Asserts(serializer);

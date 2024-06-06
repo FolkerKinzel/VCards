@@ -55,7 +55,9 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
             bool isPref = first && prop.Parameters.Preference < 100;
 
             // AddressProperty.IsEmpty returns false if only
-            // AddressProperty.Parameters.Label  is not null:
+            // AddressProperty.Parameters.Label or
+            // AddressProperty.Parameters.GeoPosition or
+            // AddressProperty.Parameters.TimeZone is not null:
             if (!prop!.Value.IsEmpty || !IgnoreEmptyItems)
             {
                 BuildProperty(VCard.PropKeys.ADR, prop, isPref);

@@ -70,7 +70,7 @@ public sealed class Organization
 
     internal bool NeedsToBeQpEncoded()
         => OrganizationName.NeedsToBeQpEncoded() ||
-           (OrganizationalUnits is not null && OrganizationalUnits.Any(s => s.NeedsToBeQpEncoded()));
+           (OrganizationalUnits?.Any(s => s.NeedsToBeQpEncoded()) ?? false);
 
     /// <inheritdoc/>
     public override string ToString()
