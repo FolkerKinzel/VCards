@@ -216,6 +216,50 @@ public class V2Tests
     }
 
     [TestMethod]
+    public void SpouseTest2()
+    {
+        var vc = new VCard
+        {
+            Relations = RelationProperty.FromVCard(new VCard(), Rel.Spouse)
+        };
+
+        string vcf = vc.ToVcfString(VCdVersion.V2_1);
+        vc = Vcf.Parse(vcf)[0];
+
+        Assert.IsNull(vc.Relations);
+    }
+
+    [TestMethod]
+    public void SpouseTest3()
+    {
+        var vc = new VCard
+        {
+            Relations = RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty("Mausi") }, Rel.Spouse)
+        };
+
+        string vcf = vc.ToVcfString(VCdVersion.V2_1);
+        vc = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vc.Relations);
+        Assert.AreEqual(Rel.Spouse, vc.Relations?.First()?.Parameters.RelationType);
+
+    }
+
+    [TestMethod]
+    public void SpouseTest4()
+    {
+        var vc = new VCard
+        {
+            Relations = RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(null) }, Rel.Spouse)
+        };
+
+        string vcf = vc.ToVcfString(VCdVersion.V2_1);
+        vc = Vcf.Parse(vcf)[0];
+
+        Assert.IsNull(vc.Relations);
+    }
+
+    [TestMethod]
     public void PreserveTimeZoneAndGeoTest1()
     {
         var adr = new AddressProperty("1", "", "", "", "");
@@ -480,4 +524,6 @@ public class V2Tests
         Assert.AreEqual(Sex.Female, vc.GenderViews.First()!.Value.Sex);
 
     }
+
+    
 }

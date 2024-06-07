@@ -14,8 +14,6 @@ internal static partial class StringExtension
     /// If <paramref name="s"/> is <c>null</c>, the method returns <c>false</c>.</returns>
     public static bool NeedsToBeQpEncoded(this string? s)
     {
-        Debug.Assert(s != null);
-
         ReadOnlySpan<char> span = s.AsSpan();
 
         for (int i = 0; i < span.Length; i++)

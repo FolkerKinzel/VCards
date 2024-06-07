@@ -12,14 +12,15 @@ internal static class LocConverter
         internal const string URL = "URL";
     }
 
-    internal static Loc Parse(ReadOnlySpan<char> value)
+    internal static Loc? Parse(ReadOnlySpan<char> value)
     {
         const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
         return value.Equals(Values.CID, comp) ? Loc.Cid
              : value.Equals(Values.CONTENT_ID, comp) ? Loc.Cid
              : value.Equals(Values.URL, comp) ? Loc.Url
-             : Loc.Inline;
+             : value.Equals(Values.INLINE, comp) ? Loc.Inline
+             : null;
     }
 
     internal static string ToVcfString(this Loc contentLocation)

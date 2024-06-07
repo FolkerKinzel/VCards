@@ -709,9 +709,9 @@ internal abstract class VcfSerializer : IDisposable
 
         if (spouse is not null)
         {
-            if (spouse is RelationVCardProperty vCardProp)
+            if (spouse is RelationVCardProperty vCardProp && !vCardProp.IsEmpty)
             {
-                spouse = ConvertToRelationTextProperty(vCardProp);
+                spouse = ConvertSpouseVCardToRelationTextProperty(vCardProp.Value, vCardProp.Group);
             }
 
             if (spouse is RelationTextProperty)
@@ -738,13 +738,13 @@ internal abstract class VcfSerializer : IDisposable
             }
         }
 
-        static RelationProperty? ConvertToRelationTextProperty(RelationVCardProperty vcardProp)
+        static RelationProperty? ConvertSpouseVCardToRelationTextProperty(VCard spousesVCard, string? group)
         {
-            string? name = vcardProp.Value?.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value;
+            string? name = spousesVCard.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value;
 
             if (name is null)
             {
-                NameProperty? vcdName = vcardProp.Value?.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true);
+                NameProperty? vcdName = spousesVCard.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true);
 
                 if (vcdName is not null)
                 {
@@ -756,10 +756,9 @@ internal abstract class VcfSerializer : IDisposable
                 }
             }
 
-            Debug.Assert(name is not null);
             return RelationProperty.FromText(name,
-                                             vcardProp.Parameters.RelationType ?? Rel.Spouse,
-                                             vcardProp.Group);
+                                             Rel.Spouse,
+                                             group);
         }
     }
 

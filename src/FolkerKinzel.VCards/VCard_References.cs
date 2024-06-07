@@ -202,7 +202,7 @@ public sealed partial class VCard
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IList<VCard> Dereference(IEnumerable<VCard?> vCards)
     {
-        var arr = vCards?
+        VCard[] arr = vCards?
                   .WhereNotNull()
                   .Select(vcard => (vcard.Relations is not null || vcard.Members is not null)
                                      ? (VCard)vcard.Clone()

@@ -64,8 +64,20 @@ public sealed partial class ParameterSection
 
                         if (!dataType.HasValue)
                         {
-                            Loc contentLocation = LocConverter.Parse(valValue);
-                            this.ContentLocation = contentLocation;
+                            Loc? contentLocation = LocConverter.Parse(valValue);
+                            if (contentLocation.HasValue)
+                            {
+                                this.ContentLocation = contentLocation.Value;
+                            }
+                            else
+                            {
+                                List<KeyValuePair<string, string>> userAttributes
+                                        = (List<KeyValuePair<string, string>>?)this.NonStandard
+                                          ?? [];
+                                this.NonStandard = userAttributes;
+
+                                userAttributes.Add(new KeyValuePair<string, string>(parameter.Key, parameter.Value.ToString()));
+                            }
                         }
 
                         break;
@@ -427,6 +439,7 @@ public sealed partial class ParameterSection
                         this.InstantMessengerType = this.InstantMessengerType.Set(imppType.Value);
                         return true;
                     }
+
                     return false;
                 }
             default:

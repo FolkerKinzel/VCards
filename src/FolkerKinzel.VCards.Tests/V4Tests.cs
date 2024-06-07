@@ -459,5 +459,64 @@ public class V4Tests
         vc = Vcf.Parse(serialized)[0];
         Assert.IsNull(vc.Members);
     }
+
+    [TestMethod]
+    public void DereferenceTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .DisplayNames.Add("Test")
+            .VCard;
+
+        VCardBuilder
+            .Create(vc)
+            .Relations.Add(vc.ID!.Value)
+            .Relations.Add(vc);
+
+        var result = vc.Dereference();
+
+        Assert.AreEqual(1, result.Count);
+        Assert.AreEqual(2, result[0].Relations!.Count());
+    }
+
+    [TestMethod]
+    public void NonStandardParameterTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Relations.Add("Mausi", parameters: p => p.NonStandard = [new("TYPE", "X-NIX")])
+            .Phones.Add("123", parameters: p => p.NonStandard = [])
+            .DisplayNames.Add("Test", parameters:
+            p => p.NonStandard =
+            [
+                new("ALTID", "Test"),
+                new("CALSCALE", "Test"),
+                new("CHARSET", "Test"),
+                new("CONTEXT", "Test"),
+                new("ENCODING", "Test"),
+                new("GEO", "Test"),
+                new("INDEX", "Test"),
+                new("LABEL", "Test"),
+                new("LANGUAGE", "Test"),
+                new("LEVEL", "Test"),
+                new("MEDIATYPE", "Test"),
+                new("PID", "Test"),
+                new("PREF", "Test"),
+                new("SORT-AS", "Test"),
+                new("TYPE", "Test"),
+                new("TZ", "Test"),
+                new("VALUE", "  "),
+                new("VALUE", "Test")
+            ])
+            .VCard;
+
+        string serialized = Vcf.ToString(vc, VCdVersion.V4_0, options: Opts.Default.Set(Opts.WriteNonStandardParameters));
+
+        vc = Vcf.Parse(serialized)[0];
+
+        Assert.AreEqual(2, vc.DisplayNames!.First()!.Parameters.NonStandard!.Count());
+        Assert.AreEqual(1, vc.Relations!.First()!.Parameters.NonStandard!.Count());
+
+    }
 }
 

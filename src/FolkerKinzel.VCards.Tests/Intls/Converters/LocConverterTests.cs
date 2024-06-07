@@ -11,7 +11,7 @@ public class LocConverterTests
         foreach (Loc kind in (Loc[])Enum.GetValues(typeof(Loc)))
         {
             string cIdString = kind.ToVcfString();
-            Loc kind2 = LocConverter.Parse(cIdString.AsSpan());
+            Loc? kind2 = LocConverter.Parse(cIdString.AsSpan());
             Assert.AreEqual(kind, kind2);
 
             cIdString = kind.ToVcfString();
@@ -22,7 +22,7 @@ public class LocConverterTests
         }
 
         // Test auf null
-        Assert.AreEqual(Loc.Inline, LocConverter.Parse(null));
+        Assert.IsNull(LocConverter.Parse(null));
 
         // Test auf nicht definiert
         Assert.AreEqual(Loc.Inline.ToVcfString(), ((Loc)4711).ToVcfString());
@@ -32,7 +32,7 @@ public class LocConverterTests
     public void Roundtrip2()
     {
         string cIdString = "CONTENT-ID";
-        Loc kind = LocConverter.Parse(cIdString.AsSpan());
+        Loc? kind = LocConverter.Parse(cIdString.AsSpan());
         Assert.AreEqual(Loc.Cid, kind);
     }
 }

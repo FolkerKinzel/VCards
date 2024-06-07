@@ -928,6 +928,20 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         if (s is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.VALUE, s);
+            return;
+        }
+
+        if (Options.HasFlag(Opts.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
+        {
+            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
+            {
+                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.VALUE)
+                    && !string.IsNullOrWhiteSpace(kvp.Value))
+                {
+                    AppendParameter(ParameterSection.ParameterKey.VALUE, kvp.Value);
+                    return;
+                }
+            }
         }
     }
 
