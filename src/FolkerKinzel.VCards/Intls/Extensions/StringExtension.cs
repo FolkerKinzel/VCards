@@ -12,7 +12,7 @@ internal static partial class StringExtension
     /// <returns><c>true</c>, if <paramref name="s"/> contains NON-ASCII
     /// characters or control characters, otherwise <c>false</c>.
     /// If <paramref name="s"/> is <c>null</c>, the method returns <c>false</c>.</returns>
-    public static bool NeedsToBeQpEncoded(this string? s)
+    internal static bool NeedsToBeQpEncoded(this string? s)
     {
         ReadOnlySpan<char> span = s.AsSpan();
 

@@ -320,11 +320,15 @@ public sealed class Name
     }
 
     internal bool NeedsToBeQpEncoded()
-        => FamilyNames.Any(StringExtension.NeedsToBeQpEncoded) ||
-           GivenNames.Any(StringExtension.NeedsToBeQpEncoded) ||
-           AdditionalNames.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Prefixes.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Suffixes.Any(StringExtension.NeedsToBeQpEncoded);
+    {
+        return FamilyNames.Any(NeedsToBeQpEncoded) ||
+               GivenNames.Any(NeedsToBeQpEncoded) ||
+               AdditionalNames.Any(NeedsToBeQpEncoded) ||
+               Prefixes.Any(NeedsToBeQpEncoded) ||
+               Suffixes.Any(NeedsToBeQpEncoded);
+
+        static bool NeedsToBeQpEncoded(string str) => StringExtension.NeedsToBeQpEncoded(str);
+    }
 }
 
 

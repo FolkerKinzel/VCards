@@ -387,13 +387,33 @@ public sealed class Address
 
 
     internal bool NeedsToBeQpEncoded()
-        => Locality.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Street.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Country.Any(StringExtension.NeedsToBeQpEncoded) ||
-           Region.Any(StringExtension.NeedsToBeQpEncoded) ||
-           PostalCode.Any(StringExtension.NeedsToBeQpEncoded) ||
-           PostOfficeBox.Any(StringExtension.NeedsToBeQpEncoded) ||
-           ExtendedAddress.Any(StringExtension.NeedsToBeQpEncoded);
+    {
+        return Locality.Any(NeedsToBeQpEncoded) ||
+               Street.Any(NeedsToBeQpEncoded) ||
+               Country.Any(NeedsToBeQpEncoded) ||
+               Region.Any(NeedsToBeQpEncoded) ||
+               PostalCode.Any(NeedsToBeQpEncoded) ||
+               PostOfficeBox.Any(NeedsToBeQpEncoded) ||
+               ExtendedAddress.Any(NeedsToBeQpEncoded);
+
+        static bool NeedsToBeQpEncoded(string str) => StringExtension.NeedsToBeQpEncoded(str);
+    }
+
+    //internal bool CoverageTest()
+    //{
+    //    return
+    //        Locality.Any(NeedsToBeQpEncoded)
+    //        ||
+    //        Street.Any(NeedsToBeQpEncoded)
+    //        //||   Country.Any(NeedsToBeQpEncoded) 
+    //        //||   Region.Any(NeedsToBeQpEncoded) 
+    //        //||   PostalCode.Any(NeedsToBeQpEncoded) 
+    //        //||   PostOfficeBox.Any(NeedsToBeQpEncoded) 
+    //        //||   ExtendedAddress.Any(NeedsToBeQpEncoded)
+    //        ;
+
+    //    static bool NeedsToBeQpEncoded(string str) => StringExtension.NeedsToBeQpEncoded(str);
+    //}
 }
 
 #pragma warning restore CS0618 // Type or member is deprecated
