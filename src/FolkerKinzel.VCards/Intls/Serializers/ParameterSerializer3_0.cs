@@ -333,6 +333,8 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
     {
         // TODO: TYPE parameter should be allowed
         // See https://www.rfc-editor.org/errata/eid870
+        // but is not supported here because the library
+        // supports only UIDs as identifiers.
     }
 
     protected override void BuildUrlPara()

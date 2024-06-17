@@ -642,6 +642,4 @@ END:VCARD";
         Assert.AreEqual(Adr.Dom | Adr.Postal | Adr.Parcel,
                         vc.Addresses!.First()!.Parameters.AddressType);
     }
-
-    
 }
