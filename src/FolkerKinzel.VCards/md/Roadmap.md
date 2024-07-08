@@ -39,7 +39,6 @@
         - [ ] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
         - [ ] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
         - [ ] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
-        - [ ] Add property: `TimeStampProperty Created {get; set;}`
 
 ### 7.0.0
 - [x] Add generic overloads to the VCardBuilder-Parts Edit methods to pass data without having to use closures.
