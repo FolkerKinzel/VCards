@@ -1,9 +1,45 @@
 ﻿# FolkerKinzel.VCards
 ## Roadmap
+### 8.0.0
+- [ ] Fix the issue that with `UID` only Guid values are supported
+    - [ ]  Inplement an `Id` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
+    - [ ] Let the 'IDProperty' have an instance of the `Id` class as value.
+    - [ ] Change the `Relation` class to hold an `Id` instance rather than a `Guid` value.
+
+### 7.3.0
+- [ ] Implement `AddressBuilderClass`
+- [ ] Implement `NameBuilderClass`
 
 ### 7.2.0
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
+- [ ] Implement RFC 9554:
+    - [ ] Make new enum value `Opts.WriteRfc9554Extensions`
+    - [ ] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
+    - [ ] Implement the `GramProperty` class that has a `Gram` value as value
+    - [ ] Change the `Address` class
+        - [ ] Add read-only property: `ReadOnlyCollection<string> Room`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> Apartment`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> StreetNumber`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> StreetName`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> Building`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> Block`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> SubDistrict`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> District`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> Landmark`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> Direction`
+    - [ ] Change the `Name` class
+        - [ ] Add read-only property: `ReadOnlyCollection<string> Surname2`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> Generation`
+    - [ ] Change the `VCard` class
+        - [ ] Add property: `TimeStampProperty Created {get; set;}`
+        - Make a new default parameter `setCreated` that defaults to `true` to the `VCard` ctor and to `VCardBuilder.Create`
+        - [ ] Add property: `IEnumerable<GramProperty?>? GramGenders {get; set;}`
+        - [ ] Add property: `TextProperty Language {get; set;}`
+        - [ ] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
+        - [ ] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
+        - [ ] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
+        - [ ] Add property: `TimeStampProperty Created {get; set;}`
 
 ### 7.0.0
 - [x] Add generic overloads to the VCardBuilder-Parts Edit methods to pass data without having to use closures.
