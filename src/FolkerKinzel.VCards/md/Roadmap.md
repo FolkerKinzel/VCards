@@ -2,9 +2,9 @@
 ## Roadmap
 ### 8.0.0
 - [ ] Fix the issue that with `UID` only Guid values are supported
-    - [ ]  Inplement an `Id` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
-    - [ ] Let the 'IDProperty' have an instance of the `Id` class as value.
-    - [ ] Change the `Relation` class to hold an `Id` instance rather than a `Guid` value.
+    - [ ]  Inplement an `ContactID` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
+    - [ ] Let the 'IDProperty' have an instance of the `ContactID` class as value.
+    - [ ] Change the `Relation` class to hold an `ContactID` instance rather than a `Guid` value.
 
 ### 7.3.0
 - [ ] Implement `VCard.Clean()`.
@@ -12,7 +12,9 @@
 
 ### 7.2.0
 - [ ] Implement the internal `AdrProp` enum that addresses the properties of the `Address` class.
+- [ ] Let the `Address` class have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
 - [ ] Implement the internal `NameProp` enum that addresses the properties of the `Name` class.
+- Let the `Name` class have a data struct `Dictionary<NameProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
 - [ ] Implement `AddressBuilder` class
     - Let it have a data struct `Dictionary<AdrProp, List<string>>`
     - Make it reusable implementing a `Clear` method
@@ -20,17 +22,16 @@
     - Let it have a data struct `Dictionary<NameProp, List<string>>`
     - Make it reusable implementing a `Clear` method
 - [ ] Implement RFC 9554:
-    - [ ] Implement `readonly struct GramBuilder`
     - [ ] Make new enum value `Opts.WriteRfc9554Extensions`
     - [ ] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
     - [ ] Implement `GramConverter`
+    - [ ] Implement the `GramProperty` class that has a `Gram` value as `Value`
+    - [ ] Implement `readonly struct GramBuilder`
     - [ ] Implement the `Phonetic` enum ("ipa", "jyut", "piny", "script")
     - [ ] Implement `PhoneticConverter`
     - [ ] Add the values `billing` and `delivery` to the `Adr` enum
     - [ ] Update `AdrConverter`
-    - [ ] Implement the `GramProperty` class that has a `Gram` value as value
     - [ ] Change the `Address` class
-        - Let it have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Consider to use `FrozenDictionary`.)
         - [ ] Add read-only property: `ReadOnlyCollection<string> Room`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Apartment`
         - [ ] Add read-only property: `ReadOnlyCollection<string> StreetNumber`
@@ -41,17 +42,16 @@
         - [ ] Add read-only property: `ReadOnlyCollection<string> District`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Landmark`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Direction`
+        - [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
     - [ ] Add a new ctor to `AddressProperty` that takes an `AddressBuilder`
-    - [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
     - [ ] Change the `Name` class
-        - Let it have a data struct `Dictionary<NameProp, ReadOnlyCollection<string>>` (Consider to use `FrozenDictionary`.)
         - [ ] Add read-only property: `ReadOnlyCollection<string> Surname2`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Generation`
     - [ ] Add a new ctor to `NameProperty` that takes an `NameBuilder`
     - [ ] Add an internal ctor to `Name` that takes an `NameBuilder`
     - [ ] Change the `VCard` class
-        - [ ] Add property: `TimeStampProperty Created {get; set;}`
         - Make a new default parameter `setCreated` that defaults to `true` to the `VCard` ctor and to `VCardBuilder.Create`
+        - [ ] Add property: `TimeStampProperty Created {get; set;}`
         - [ ] Add property: `IEnumerable<GramProperty?>? GramGenders {get; set;}`
         - [ ] Add property: `TextProperty Language {get; set;}`
         - [ ] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
@@ -59,6 +59,13 @@
         - [ ] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
         - [ ] Write `X-SOCIALPROFILE` in vCard 4.0 when `Opts.WriteRfc9554Extensions` is not set.
         Use the `X-SERVICE-TYPE` parameter to preserve the `ParameterSection.ServiceType` property.
+        - [ ] Add `X-SOCIALPROFILE` to the documentation of the `VCard.NonStandards` property
+    - [ ] Change the `VCardBuilder` class
+        - [ ] Add property: `TimeStampBuilder Created {get;}`
+        - [ ] Add property: `GramBuilder GramGenders {get;}`
+        - [ ] Add property: `TextSingletonBuilder Language {get;}`
+        - [ ] Add property: `TextBuilder Pronouns {get;}`
+        - [ ] Add property: `TextBuilder SocialMediaProfiles {get;}`
     - [ ] Change the ParameterSection class
         - [ ] Add property `Uri? Author` that takes an absolute Uri
         - [ ] Add property `string? AuthorName`
