@@ -7,17 +7,30 @@
     - [ ] Change the `Relation` class to hold an `Id` instance rather than a `Guid` value.
 
 ### 7.3.0
-- [ ] Implement `AddressBuilderClass`
-- [ ] Implement `NameBuilderClass`
-
-### 7.2.0
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
+
+### 7.2.0
+- [ ] Implement the internal `AdrProp` enum that addresses the properties of the `Address` class.
+- [ ] Implement the internal `NameProp` enum that addresses the properties of the `Name` class.
+- [ ] Implement `AddressBuilder` class
+    - Let it have a data struct `Dictionary<AdrProp, List<string>>`
+    - Make it reusable implementing a `Clear` method
+- [ ] Implement `NameBuilder` class
+    - Let it have a data struct `Dictionary<NameProp, List<string>>`
+    - Make it reusable implementing a `Clear` method
 - [ ] Implement RFC 9554:
+    - [ ] Implement `readonly struct GramBuilder`
     - [ ] Make new enum value `Opts.WriteRfc9554Extensions`
     - [ ] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
+    - [ ] Implement `GramConverter`
+    - [ ] Implement the `Phonetic` enum ("ipa", "jyut", "piny", "script")
+    - [ ] Implement `PhoneticConverter`
+    - [ ] Add the values `billing` and `delivery` to the `Adr` enum
+    - [ ] Update `AdrConverter`
     - [ ] Implement the `GramProperty` class that has a `Gram` value as value
     - [ ] Change the `Address` class
+        - Let it have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Consider to use `FrozenDictionary`.)
         - [ ] Add read-only property: `ReadOnlyCollection<string> Room`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Apartment`
         - [ ] Add read-only property: `ReadOnlyCollection<string> StreetNumber`
@@ -28,9 +41,14 @@
         - [ ] Add read-only property: `ReadOnlyCollection<string> District`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Landmark`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Direction`
+    - [ ] Add a new ctor to `AddressProperty` that takes an `AddressBuilder`
+    - [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
     - [ ] Change the `Name` class
+        - Let it have a data struct `Dictionary<NameProp, ReadOnlyCollection<string>>` (Consider to use `FrozenDictionary`.)
         - [ ] Add read-only property: `ReadOnlyCollection<string> Surname2`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Generation`
+    - [ ] Add a new ctor to `NameProperty` that takes an `NameBuilder`
+    - [ ] Add an internal ctor to `Name` that takes an `NameBuilder`
     - [ ] Change the `VCard` class
         - [ ] Add property: `TimeStampProperty Created {get; set;}`
         - Make a new default parameter `setCreated` that defaults to `true` to the `VCard` ctor and to `VCardBuilder.Create`
@@ -39,6 +57,22 @@
         - [ ] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
         - [ ] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
         - [ ] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
+        - [ ] Write `X-SOCIALPROFILE` in vCard 4.0 when `Opts.WriteRfc9554Extensions` is not set.
+        Use the `X-SERVICE-TYPE` parameter to preserve the `ParameterSection.ServiceType` property.
+    - [ ] Change the ParameterSection class
+        - [ ] Add property `Uri? Author` that takes an absolute Uri
+        - [ ] Add property `string? AuthorName`
+        - [ ] Add property `DateTimeOffset? Created`
+        - [ ] Add property `bool Derived`
+        - [ ] Add property `Phonetic? Phonetic`
+        - [ ] Add property `string? PropID`
+        - [ ] Add property `string? Script`
+        - [ ] Add property `string? ServiceType`
+        - [ ] Add property `string? UserName`
+        - [ ] Redirect `X-SERVICE-TYPE` to the `ServiceType` property. Use the `X-SERVICE-TYPE` parameter 
+        to preserve the value of `ParameterSection.ServiceType` with `VCard.Messengers` when writing vCard 4.0 and the
+        `Opts.WriteRfc9554Extensions` flag is not set.
+
 
 ### 7.0.0
 - [x] Add generic overloads to the VCardBuilder-Parts Edit methods to pass data without having to use closures.
