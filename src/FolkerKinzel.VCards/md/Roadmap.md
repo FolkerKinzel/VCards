@@ -6,11 +6,11 @@
     - [ ] Let the 'IDProperty' have an instance of the `ContactID` class as value.
     - [ ] Change the `Relation` class to hold an `ContactID` instance rather than a `Guid` value.
 
-### 7.3.0
+### 7.4.0
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
-### 7.2.0
+### 7.3.0
 - [ ] Implement the internal `AdrProp` enum that addresses the properties of the `Address` class.
 - [ ] Let the `Address` class have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
 - [ ] Implement the internal `NameProp` enum that addresses the properties of the `Name` class.
@@ -67,7 +67,7 @@
         - [ ] Add property: `TextBuilder Pronouns {get;}`
         - [ ] Add property: `TextBuilder SocialMediaProfiles {get;}`
     - [ ] Change the ParameterSection class
-        - [ ] Add property `Uri? Author` that takes an absolute Uri
+        - [ ] Add property `string? Author` that takes an absolute Uri
         - [ ] Add property `string? AuthorName`
         - [ ] Add property `DateTimeOffset? Created`
         - [ ] Add property `bool Derived`
@@ -80,6 +80,15 @@
         to preserve the value of `ParameterSection.ServiceType` with `VCard.Messengers` when writing vCard 4.0 and the
         `Opts.WriteRfc9554Extensions` flag is not set.
 
+### 7.2.0
+- [ ] Implement RFC 8605:
+    - [ ] Make new enum value `Opts.WriteRfc8605Extensions`
+    - [ ] Change the `VCard` class
+        - [ ] Add property: `TextProperty ContactUri {get; set;}`
+    - [ ] Change the `VCardBuilder` class
+        - [ ] Add property: `TextSingletonBuilder ContactUri {get;}`
+    - [ ] Change the ParameterSection class
+        - [ ] Add property `string? CountryCode` that takes an ISO 3166 two-character country code
 
 ### 7.0.0
 - [x] Add generic overloads to the VCardBuilder-Parts Edit methods to pass data without having to use closures.
