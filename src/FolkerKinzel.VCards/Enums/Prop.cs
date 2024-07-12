@@ -185,5 +185,10 @@ public enum Prop
     AppIDs,
 
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
-    NonStandards
+    NonStandards,
+
+    /// <summary>
+    /// URIs representing an email address or a location for a web form.<c>(4 [RFC 8605])</c>
+    /// </summary>
+    ContactUris
 }

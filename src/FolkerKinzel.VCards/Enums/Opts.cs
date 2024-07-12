@@ -122,4 +122,10 @@ public enum Opts
     /// <summary>Set the flag to write the extensions from RFC 2739 (<c>FBURL</c>,
     /// <c>CALURI</c>, <c>CALADRURI</c>) in vCard&#160;3.0.</summary>
     WriteRfc2739Extensions = 1 << 16,
+
+    /// <summary>Set the flag to write the extensions from RFC 8605 (<c>FBURL</c>,
+    /// <c>CONTACT-URI</c> property, <c>CC</c> parameter) in vCard&#160;4.0.</summary>
+    WriteRfc8605Extensions = 1 << 17,
+
+
 }

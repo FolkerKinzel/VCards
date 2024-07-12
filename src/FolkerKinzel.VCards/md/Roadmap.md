@@ -82,11 +82,11 @@
 
 ### 7.2.0
 - [ ] Implement RFC 8605:
-    - [ ] Make new enum value `Opts.WriteRfc8605Extensions`
+    - [x] Make new enum value `Opts.WriteRfc8605Extensions`
     - [ ] Change the `VCard` class
-        - [ ] Add property: `TextProperty ContactUri {get; set;}`
+        - [ ] Add property: `IEnumerable<TextProperty?>? ContactUris {get; set;}`
     - [ ] Change the `VCardBuilder` class
-        - [ ] Add property: `TextSingletonBuilder ContactUri {get;}`
+        - [ ] Add property: `TextBuilder ContactUris {get;}`
     - [ ] Change the ParameterSection class
         - [ ] Add property `string? CountryCode` that takes an ISO 3166 two-character country code
 
