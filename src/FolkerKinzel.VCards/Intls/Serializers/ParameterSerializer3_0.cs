@@ -444,12 +444,18 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
             }
         }
 
-        if (Options.HasFlag(Opts.WriteNonStandardParameters)
-            && ParaSection.NonStandard is not null)
+        if (Options.HasFlag(Opts.WriteNonStandardParameters))
         {
+            IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
+
+            if (nonStandard is null)
+            {
+                return;
+            }
+
             _stringCollectionList.Clear();
 
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
+            foreach (KeyValuePair<string, string> kvp in nonStandard)
             {
                 if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE)
                     && !string.IsNullOrWhiteSpace(kvp.Value))

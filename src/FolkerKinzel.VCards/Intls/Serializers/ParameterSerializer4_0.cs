@@ -416,10 +416,11 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         AppendType();
         AppendPref();
-        AppendValue(dataType == Data.VCard ? Data.Uri : dataType);
+        Debug.Assert(dataType != Data.VCard);
+        AppendValue(dataType);
 
 
-        if (ParaSection.DataType == Data.Text)
+        if (dataType == Data.Text)
         {
             AppendLanguage();
         }
@@ -687,20 +688,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         if (exp is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, exp);
+            return;
         }
-        else if (Options.HasFlag(Opts.WriteNonStandardParameters)
-                 && ParaSection.NonStandard is not null)
-        {
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
-            {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL)
-                    && !string.IsNullOrWhiteSpace(kvp.Value))
-                {
-                    AppendParameter(ParameterSection.ParameterKey.LEVEL, kvp.Value);
-                    return;
-                }
-            }
-        }
+
+        AppendNonStandardWithKey(ParameterSection.ParameterKey.LEVEL);
     }
 
     private void AppendGeo()
@@ -740,19 +731,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         if (interest is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.LEVEL, interest);
+            return;
         }
-        else if (Options.HasFlag(Opts.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
-        {
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
-            {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.LEVEL)
-                    && !string.IsNullOrWhiteSpace(kvp.Value))
-                {
-                    AppendParameter(ParameterSection.ParameterKey.LEVEL, kvp.Value);
-                    return;
-                }
-            }
-        }
+
+        AppendNonStandardWithKey(ParameterSection.ParameterKey.LEVEL);
     }
 
     private void AppendLabel()
@@ -868,9 +850,16 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             _actionList[i](this);
         }
 
-        if (Options.HasFlag(Opts.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
+        if (Options.HasFlag(Opts.WriteNonStandardParameters))
         {
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
+            IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
+
+            if (nonStandard is null) 
+            {
+                return; 
+            }
+
+            foreach (KeyValuePair<string, string> kvp in nonStandard)
             {
                 if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE)
                     && !string.IsNullOrWhiteSpace(kvp.Value))
@@ -921,16 +910,30 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             return;
         }
 
-        if (Options.HasFlag(Opts.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
+        AppendNonStandardWithKey(ParameterSection.ParameterKey.VALUE);
+    }
+
+    private void AppendNonStandardWithKey(string key)
+    {
+        if (!Options.HasFlag(Opts.WriteNonStandardParameters))
         {
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
+            return;
+        }
+
+        IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
+
+        if (nonStandard is null)
+        {
+            return;
+        }
+
+        foreach (KeyValuePair<string, string> kvp in nonStandard)
+        {
+            if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, key)
+                && !string.IsNullOrWhiteSpace(kvp.Value))
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.VALUE)
-                    && !string.IsNullOrWhiteSpace(kvp.Value))
-                {
-                    AppendParameter(ParameterSection.ParameterKey.VALUE, kvp.Value);
-                    return;
-                }
+                AppendParameter(ParameterSection.ParameterKey.LEVEL, kvp.Value);
+                return;
             }
         }
     }

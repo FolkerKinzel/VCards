@@ -282,9 +282,16 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
             AppendV2_1Type(ParameterSection.TypeValue.PREF);
         }
 
-        if (Options.HasFlag(Opts.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
+        if (Options.HasFlag(Opts.WriteNonStandardParameters))
         {
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
+            IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
+
+            if (nonStandard is null)
+            {
+                return;
+            }
+
+            foreach (KeyValuePair<string, string> kvp in nonStandard)
             {
                 if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key,
                                                             ParameterSection.ParameterKey.TYPE)

@@ -13,12 +13,6 @@ namespace FolkerKinzel.VCards.Enums;
 /// <see cref="OptsExtension" /> class.
 /// </note>
 /// <para>
-/// Die Flags <see cref="WriteWabExtensions" />, <see cref="WriteXExtensions" />,
-/// <see cref="WriteEvolutionExtensions" /> und <see cref="WriteKAddressbookExtensions"
-/// /> steuern die automatische Verwendung von Non-Standard-Properties. Auch wenn
-/// diese Flags gesetzt sind, werden die Non-Standard-Properties nur dann automatisch
-/// erzeugt, wenn der gewählte vCard-Standard kein standardisiertes Äquivalent ermöglicht.
-/// 
 /// The flags <see cref="WriteWabExtensions" />, <see cref="WriteXExtensions" />,  
 /// <see cref="WriteEvolutionExtensions" />, and <see cref="WriteKAddressbookExtensions" /> 
 /// control the automatic generation of <see cref="NonStandardProperty"/> objects. 
@@ -40,10 +34,10 @@ public enum Opts
     /// | <see cref="WriteRfc6474Extensions" /> | <see cref="WriteRfc6715Extensions" /> 
     /// | <see cref="WriteImppExtension" /> | <see cref="WriteXExtensions" /> 
     /// | <see cref="AllowMultipleAdrAndLabelInVCard21" /> | <see cref="UpdateTimeStamp"/>
-    /// | <see cref="WriteRfc2739Extensions"/>) </summary>
+    /// | <see cref="WriteRfc2739Extensions"/> | <see cref="WriteRfc8605Extensions"/>) </summary>
     Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions
             | WriteImppExtension | WriteXExtensions | AllowMultipleAdrAndLabelInVCard21
-            | UpdateTimeStamp | WriteRfc2739Extensions,
+            | UpdateTimeStamp | WriteRfc2739Extensions | WriteRfc8605Extensions,
 
     /// <summary>Set the flag to write property group identifiers.</summary>
     WriteGroups = 1,
