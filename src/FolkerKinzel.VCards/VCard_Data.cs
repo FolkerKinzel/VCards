@@ -157,7 +157,7 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
-    /// RFC 6474)</c></summary>
+    /// RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
@@ -168,14 +168,14 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>CAPURI</c>: A protocol independent location from which a calendaring and 
-    /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
+    /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC&#160;2739)</c></summary>
     public IEnumerable<TextProperty?>? CalendarAccessUris
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.CalendarAccessUris);
         set => Set(Prop.CalendarAccessUris, value);
     }
 
-    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
+    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC&#160;2739)</c></summary>
     public IEnumerable<TextProperty?>? CalendarAddresses
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.CalendarAddresses);
@@ -183,7 +183,7 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
-    /// the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
+    /// the person's calendar. <c>(4, 3 - RFC&#160;2739)</c></summary>
     public IEnumerable<TextProperty?>? CalendarUserAddresses
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.CalendarUserAddresses);
@@ -199,7 +199,7 @@ public sealed partial class VCard
     }
 
     /// <summary>
-    /// <c>CONTACT-URI</c> URIs representing an email address or a location for a web form.<c>(4 [RFC 8605])</c>
+    /// <c>CONTACT-URI</c>: URIs representing an email address or a location for a web form. <c>(4 - RFC&#160;8605)</c>
     /// </summary>
     /// <remarks>
     /// If the property contains more than one <see cref="TextProperty"/> instance, the
@@ -211,7 +211,7 @@ public sealed partial class VCard
         set => Set(Prop.ContactUris, value);
     }
 
-    /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
+    /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
@@ -222,7 +222,7 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
-    /// RFC 6474)</c></summary>
+    /// RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
@@ -280,7 +280,7 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
-    /// "busy" on their calendar. <c>(4, 3 - RFC 2739)</c></summary>
+    /// "busy" on their calendar. <c>(4, 3 - RFC&#160;2739)</c></summary>
     /// <remarks>
     /// If several <see cref="TextProperty" /> objects are assigned, the standard 
     /// property is determined by the value of <see cref="ParameterSection.Preference" />. 
@@ -320,7 +320,7 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
-    /// in. <c>(4 - RFC 6715)</c></summary>
+    /// in. <c>(4 - RFC&#160;6715)</c></summary>
     /// <remarks> Define the level of interest with the parameter 
     /// <see cref="ParameterSection.Interest" />.</remarks>
     public IEnumerable<TextProperty?>? Hobbies
@@ -341,7 +341,7 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
-    /// in, but does not necessarily take part in. <c>(4 - RFC 6715)</c></summary>
+    /// in, but does not necessarily take part in. <c>(4 - RFC&#160;6715)</c></summary>
     /// <remarks> Define the level of interest in the parameter 
     /// <see cref="ParameterSection.Interest" />!</remarks>
     public IEnumerable<TextProperty?>? Interests
@@ -555,8 +555,8 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>ORG-DIRECTORY</c>: A URI representing the person's work place,
-    /// which can be used to look up information on the person's co-workers. <c>(RFC
-    /// 6715)</c></summary>
+    /// which can be used to look up information on the person's co-workers. 
+    /// <c>(RFC&#160;6715)</c></summary>
     public IEnumerable<TextProperty?>? OrgDirectories
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.OrgDirectories);

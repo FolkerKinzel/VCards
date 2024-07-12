@@ -81,14 +81,14 @@
         `Opts.WriteRfc9554Extensions` flag is not set.
 
 ### 7.2.0
-- [ ] Implement RFC 8605:
+- [x] Implement RFC 8605:
     - [x] Make new enum value `Opts.WriteRfc8605Extensions`
     - [x] Change the `VCard` class
         - [ ] Add property: `IEnumerable<TextProperty?>? ContactUris {get; set;}`
     - [x] Change the `VCardBuilder` class
         - [x] Add property: `TextBuilder ContactUris {get;}`
-    - [ ] Change the ParameterSection class
-        - [ ] Add property `string? CountryCode` that takes an ISO 3166 two-character country code
+    - [x] Change the ParameterSection class
+        - [x] Add property `string? CountryCode` that takes an ISO 3166 two-character country code
 
 ### 7.0.0
 - [x] Add generic overloads to the VCardBuilder-Parts Edit methods to pass data without having to use closures.

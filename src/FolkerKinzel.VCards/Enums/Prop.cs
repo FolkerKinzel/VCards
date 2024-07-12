@@ -88,11 +88,11 @@ public enum Prop
     /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
     AnniversaryViews,
 
-    /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
+    /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC&#160;6474)</c></summary>
     DeathDateViews,
 
     /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
-    /// RFC 6474)</c></summary>
+    /// RFC&#160;6474)</c></summary>
     DeathPlaceViews,
 
     /// <summary> <c>ADR</c>: A structured representation of the physical delivery address
@@ -108,7 +108,7 @@ public enum Prop
     EMails,
 
     /// <summary>
-    /// <c>CONTACT-URI</c> URIs representing an email address or a location for a web form.<c>(4 [RFC 8605])</c>
+    /// <c>CONTACT-URI</c>: URIs representing an email address or a location for a web form. <c>(4 - RFC&#160;8605)</c>
     /// </summary>
     ContactUris,
 
@@ -123,7 +123,7 @@ public enum Prop
     /// <c>(2,3,4)</c></summary>
     Keys,
 
-    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
+    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC&#160;2739)</c></summary>
     CalendarAddresses,
 
     /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
@@ -135,7 +135,7 @@ public enum Prop
     FreeOrBusyUrls,
 
     /// <summary> <c>CAPURI</c>: A protocol independent location from which a calendaring and 
-    /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
+    /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC&#160;2739)</c></summary>
     CalendarAccessUris,
 
     /// <summary> <c>RELATED</c>: Other entities that the person is related to. <c>(4)</c></summary>
@@ -147,20 +147,20 @@ public enum Prop
     Members,
 
     /// <summary> <c>ORG-DIRECTORY</c>: A URI representing the person's work place,
-    /// which can be used to look up information on the person's co-workers. <c>(RFC
-    /// 6715)</c></summary>
+    /// which can be used to look up information on the person's co-workers. 
+    /// <c>(RFC&#160;6715)</c></summary>
     OrgDirectories,
 
     /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has
-    /// knowledge of. <c>(RFC 6715)</c></summary>
+    /// knowledge of. <c>(RFC&#160;6715)</c></summary>
     Expertises,
 
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
-    /// in, but does not necessarily take part in. <c>(4 - RFC 6715)</c></summary>
+    /// in, but does not necessarily take part in. <c>(4 - RFC&#160;6715)</c></summary>
     Interests,
 
     /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
-    /// in. <c>(4 - RFC 6715)</c></summary>
+    /// in. <c>(4 - RFC&#160;6715)</c></summary>
     Hobbies,
 
     /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>

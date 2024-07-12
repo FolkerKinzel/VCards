@@ -36,6 +36,7 @@ public sealed partial class ParameterSection
         internal const string CONTEXT = "CONTEXT";
         internal const string INDEX = "INDEX";
         internal const string LEVEL = "LEVEL";
+        internal const string CC = "CC";
     }
 
     internal static class TypeValue

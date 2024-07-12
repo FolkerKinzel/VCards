@@ -127,6 +127,15 @@ public sealed partial class ParameterSection
         set => Set<string?>(VCdParam.Context, string.IsNullOrWhiteSpace(value) ? null : value.Trim().ToUpperInvariant());
     }
 
+    /// <summary>
+    /// <c>CC</c>: ISO&#160;3166 two-character country code. <c>(4 - RFC&#160;8605)</c>
+    /// </summary>
+    public string? CountryCode
+    {
+        get => Get<string?>(VCdParam.CountryCode);
+        set => Set<string?>(VCdParam.CountryCode, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
+    }
+
     /// <summary><c>VALUE</c>: Indicates which of the data types predefined by the vCard
     /// standard the content of the vCard property corresponds to. <c>(3,4)</c></summary>
     public Data? DataType

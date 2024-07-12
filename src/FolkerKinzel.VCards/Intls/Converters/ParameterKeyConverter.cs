@@ -25,8 +25,7 @@ internal static class ParameterKeyConverter
             : key.Equals(ParameterSection.ParameterKey.LEVEL, comp) ? ParameterSection.ParameterKey.LEVEL
             : key.Equals(ParameterSection.ParameterKey.CALSCALE, comp) ? ParameterSection.ParameterKey.CALSCALE
             : key.Equals(ParameterSection.ParameterKey.CONTEXT, comp) ? ParameterSection.ParameterKey.CONTEXT
+            : key.Equals(ParameterSection.ParameterKey.CC, comp) ? ParameterSection.ParameterKey.CC
             : key.ToString();
     }
-
-
 }
