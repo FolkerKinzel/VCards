@@ -12,6 +12,7 @@ The library supports [RFC 6350](https://tools.ietf.org/html/rfc6350) (vCard 4.0)
 [RFC 2426](https://tools.ietf.org/html/rfc2426) (vCard 3.0), 
 [vCard 2.1](https://web.archive.org/web/20120501162958/http://www.imc.org/pdi/vcard-21.doc), 
 the extensions
+[RFC 8605](https://datatracker.ietf.org/doc/html/rfc8605),
 [RFC 6868](https://datatracker.ietf.org/doc/html/rfc6868),
 [RFC 6715](https://tools.ietf.org/html/rfc6715), 
 [RFC 6474](https://tools.ietf.org/html/rfc6474),
@@ -24,7 +25,7 @@ It allows:
 - serializing and deserializing VCF files to and from streams,
 - and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.
 
-[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v7.1.2)
+[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v7.2.0-beta.1)
 
 Read the ["Getting Started"](https://github.com/FolkerKinzel/VCards/wiki) wiki if you are new to this library!
 
