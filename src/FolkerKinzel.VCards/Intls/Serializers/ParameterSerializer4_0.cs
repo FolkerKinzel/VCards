@@ -49,6 +49,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendAltId();
         AppendPid();
         AppendIndex();
+        AppendCC();
         AppendNonStandardParameters();
     }
 
@@ -661,6 +662,21 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         if (calScale is not null)
         {
             AppendParameter(ParameterSection.ParameterKey.CALSCALE, calScale, escapedAndQuoted: true);
+        }
+    }
+
+    private void AppendCC()
+    {
+        if (!Options.HasFlag(Opts.WriteRfc8605Extensions))
+        {
+            return;
+        }
+
+        string? countryCode = ParaSection.CountryCode;
+
+        if (countryCode is not null)
+        {
+            AppendParameter(ParameterSection.ParameterKey.CC, countryCode, escapedAndQuoted: true);
         }
     }
 
