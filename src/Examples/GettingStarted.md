@@ -178,6 +178,8 @@ The vCard standard is defined in the following documents:
 - [vCard.The Electronic Business Card.Version 2.1 (vCard 2.1)](https://web.archive.org/web/20120501162958/http://www.imc.org/pdi/vcard-21.doc)
 
 Extensions of the standard describe, e.g., the following documents:
+- [RFC 9554: vCard Format Extensions for JSContact](https://datatracker.ietf.org/doc/html/rfc9554)
+- [RFC 8605: vCard Format Extensions: ICANN Extensions for the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc8605)
 - [RFC 6474: vCard Format Extensions: Place of Birth, Place and Date of Death](https://tools.ietf.org/html/rfc6474)
 - [RFC 6715: vCard Format Extensions: Representing vCard Extensions Defined by the Open Mobile Alliance (OMA) Converged Address Book (CAB) Group](https://tools.ietf.org/html/rfc6715)
 - [RFC 6473: vCard KIND: application](https://tools.ietf.org/html/rfc6473)

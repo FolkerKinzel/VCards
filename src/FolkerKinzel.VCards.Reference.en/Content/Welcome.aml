@@ -287,6 +287,41 @@
           <listItem>
             <para>
               <externalLink>
+                <linkText>RFC 9554: vCard Format Extensions for JSContact</linkText>
+                <linkUri>https://datatracker.ietf.org/doc/html/rfc9554</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 8605: vCard Format Extensions: ICANN Extensions for the Registration Data Access Protocol (RDAP)</linkText>
+                <linkUri>https://datatracker.ietf.org/doc/html/rfc8605</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>RFC 6868: vCard Format Extensions: ICANN Extensions for the Registration Data Access Protocol (RDAP)</linkText>
+                <linkUri>https://datatracker.ietf.org/doc/html/rfc6868</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>
+                  RFC 6715: vCard Format Extensions: Representing vCard Extensions Defined by the Open Mobile Alliance (OMA) Converged Address Book (CAB) Group
+                </linkText>
+                <linkUri>https://datatracker.ietf.org/doc/html/rfc6715</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+ 
+          <listItem>
+            <para>
+              <externalLink>
                 <linkText>RFC 6474: vCard Format Extensions: Place of Birth, Place and Date of Death</linkText>
                 <linkUri>https://tools.ietf.org/html/rfc6474</linkUri>
               </externalLink>
