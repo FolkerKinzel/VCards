@@ -417,13 +417,19 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     protected void AppendNonStandardParameters()
     {
-        if (this.ParaSection.NonStandard is null
-            || !Options.IsSet(Opts.WriteNonStandardParameters))
+        if (!Options.IsSet(Opts.WriteNonStandardParameters))
         {
             return;
         }
 
-        foreach (KeyValuePair<string, string> parameter in this.ParaSection.NonStandard)
+        IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
+
+        if (nonStandard is null)
+        {
+            return; 
+        }
+
+        foreach (KeyValuePair<string, string> parameter in nonStandard)
         {
             string key = parameter.Key;
 
