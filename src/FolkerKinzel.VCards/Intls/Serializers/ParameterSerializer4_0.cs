@@ -142,6 +142,12 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendNonStandardParameters();
     }
 
+    protected override void BuildContactUriPara() 
+    {
+        AppendPref();
+        AppendNonStandardParameters();
+    }
+
     protected override void BuildDeathDatePara()
     {
         AppendValue(this.ParaSection.DataType);

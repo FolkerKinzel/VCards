@@ -294,6 +294,9 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
     protected override void BuildFburlPara(bool isPref) { }
 
     [ExcludeFromCodeCoverage]
+    protected override void BuildContactUriPara() { }
+
+    [ExcludeFromCodeCoverage]
     protected override void BuildClientpidmapPara() { }
 
     [ExcludeFromCodeCoverage]
@@ -431,6 +434,7 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
             AppendParameter(ParameterSection.ParameterKey.VALUE, contentLocation.ToVcfString());
         }
     }
+
 
     #endregion
 }

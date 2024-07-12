@@ -107,7 +107,12 @@ public enum Prop
     /// the vCard object. <c>(2,3,4)</c></summary>
     EMails,
 
-    /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
+    /// <summary>
+    /// <c>CONTACT-URI</c> URIs representing an email address or a location for a web form.<c>(4 [RFC 8605])</c>
+    /// </summary>
+    ContactUris,
+
+    /// <summary> <c>URL</c>: URLs pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>
     Urls,
 
@@ -187,8 +192,5 @@ public enum Prop
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
     NonStandards,
 
-    /// <summary>
-    /// URIs representing an email address or a location for a web form.<c>(4 [RFC 8605])</c>
-    /// </summary>
-    ContactUris
+    
 }

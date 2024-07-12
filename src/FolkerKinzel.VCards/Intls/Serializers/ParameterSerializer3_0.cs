@@ -412,6 +412,9 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
     protected override void BuildGenderPara() { }
 
     [ExcludeFromCodeCoverage]
+    protected override void BuildContactUriPara() { }
+
+    [ExcludeFromCodeCoverage]
     protected override void BuildClientpidmapPara() { }
 
     [ExcludeFromCodeCoverage]

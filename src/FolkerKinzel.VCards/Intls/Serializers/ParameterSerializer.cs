@@ -214,19 +214,23 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
                 BuildXSpousePara();
                 break;
 
-            // ASSISTENT wird zwar gelesen und als AGENT interpretiert, aber
-            // nicht geschrieben, da AGENT ein Standard-Pendant ist.
+            // ASSISTENT will be parsed and interpreted as AGENT, but
+            // it will not be written because AGENT is the standard property
 
             //case VCard.PropKeys.NonStandard.KAddressbook.X_KADDRESSBOOK_X_ASSISTANTSNAME:
             ////case VcfSerializer.X_KADDRESSBOOK_X_AssistantsName:
             //case VCard.PropKeys.NonStandard.X_ASSISTANT:
             //case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ASSISTANT:
             //break;
+            case VCard.PropKeys.NonStandard.CONTACT_URI:
+                BuildContactUriPara();
+                break;
             default:
                 BuildNonStandardPropertyPara(isPref);
                 break;
         }
     }
+
 
 
     #region BuildPara
@@ -316,6 +320,8 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
     protected abstract void BuildFburlPara(bool isPref);
 
     protected abstract void BuildEmailPara(bool isPref);
+
+    protected abstract void BuildContactUriPara();
 
     protected abstract void BuildClientpidmapPara();
 

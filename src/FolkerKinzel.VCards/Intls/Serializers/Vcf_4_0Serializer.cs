@@ -104,6 +104,16 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     protected override void AppendCategories(IEnumerable<StringCollectionProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.CATEGORIES, value);
 
+    protected override void AppendContactUris(IEnumerable<TextProperty?> value)
+    {
+        if (!Options.IsSet(Opts.WriteRfc8605Extensions))
+        {
+            return;
+        }
+
+        BuildPropertyCollection(VCard.PropKeys.NonStandard.CONTACT_URI, value);
+    }
+
     protected override void AppendDeathDateViews(IEnumerable<DateAndOrTimeProperty?> value)
     {
         if (!Options.IsSet(Opts.WriteRfc6474Extensions))

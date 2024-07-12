@@ -21,6 +21,7 @@ internal static class PropertyKeyConverter
             : span.Equals(VCard.PropKeys.LABEL, comp) ? VCard.PropKeys.LABEL
             : span.Equals(VCard.PropKeys.RELATED, comp) ? VCard.PropKeys.RELATED
             : span.Equals(VCard.PropKeys.GENDER, comp) ? VCard.PropKeys.GENDER
+            : span.Equals(VCard.PropKeys.NonStandard.CONTACT_URI, comp) ? VCard.PropKeys.NonStandard.CONTACT_URI
             : span.ToString().ToUpperInvariant();
     }
 }

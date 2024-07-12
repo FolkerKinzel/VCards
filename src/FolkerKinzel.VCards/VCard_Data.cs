@@ -198,6 +198,19 @@ public sealed partial class VCard
         set => Set(Prop.Categories, value);
     }
 
+    /// <summary>
+    /// <c>CONTACT-URI</c> URIs representing an email address or a location for a web form.<c>(4 [RFC 8605])</c>
+    /// </summary>
+    /// <remarks>
+    /// If the property contains more than one <see cref="TextProperty"/> instance, the
+    /// <see cref="ParameterSection.Preference"/> property must be set.
+    /// </remarks>
+    public IEnumerable<TextProperty?>? ContactUris
+    {
+        get => Get<IEnumerable<TextProperty?>?>(Prop.ContactUris);
+        set => Set(Prop.ContactUris, value);
+    }
+
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
@@ -650,7 +663,7 @@ public sealed partial class VCard
         set => Set(Prop.Titles, value);
     }
 
-    /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
+    /// <summary> <c>URL</c>: URLs pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? Urls
     {

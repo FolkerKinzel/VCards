@@ -243,6 +243,11 @@ public sealed partial class VCard
             /// <summary>Assistant's name (instead of <see cref="AGENT"/>)</summary>
             internal const string X_ASSISTANT = "X-ASSISTANT";
 
+            /// <summary>
+            /// URIs representing an email address or a location for a web form.<c>(4 [RFC 8605])</c>
+            /// </summary>
+            internal const string CONTACT_URI = "CONTACT-URI";
+
 
             internal static class InstantMessenger
             {
