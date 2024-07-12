@@ -108,10 +108,10 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-    protected override void BuildClassPara()
-    {
-        // none parameters
-    }
+    //protected override void BuildClassPara()
+    //{
+    //    // none parameters
+    //}
 
     protected override void BuildEmailPara(bool isPref)
     {
@@ -131,10 +131,10 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-    protected override void BuildGeoPara()
-    {
-        // none parameters
-    }
+    //protected override void BuildGeoPara()
+    //{
+    //    // none parameters
+    //}
 
     protected override void BuildImppPara(bool isPref)
     {
@@ -207,10 +207,10 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-    protected override void BuildNamePara()
-    {
-        // keine Parameter
-    }
+    //protected override void BuildNamePara()
+    //{
+    //    // none parameters
+    //}
 
     protected override void BuildNicknamePara()
     {
@@ -252,15 +252,15 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         AppendType(false);
     }
 
-    protected override void BuildProdidPara()
-    {
-        // none parameters
-    }
+    //protected override void BuildProdidPara()
+    //{
+    //    // none parameters
+    //}
 
-    protected override void BuildProfilePara()
-    {
-        // none parameters
-    }
+    //protected override void BuildProfilePara()
+    //{
+    //    // none parameters
+    //}
 
     protected override void BuildRevPara()
     {
@@ -324,23 +324,23 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-    protected override void BuildTzPara()
-    {
-        // none parameters
-    }
+    //protected override void BuildTzPara()
+    //{
+    //    // none parameters
+    //}
 
-    protected override void BuildUidPara()
-    {
-        // TODO: TYPE parameter should be allowed
-        // See https://www.rfc-editor.org/errata/eid870
-        // but is not supported here because the library
-        // supports only UIDs as identifiers.
-    }
+    //protected override void BuildUidPara()
+    //{
+    //    // TODO: TYPE parameter should be allowed
+    //    // See https://www.rfc-editor.org/errata/eid870
+    //    // but is not supported here because the library
+    //    // supports only UIDs as identifiers.
+    //}
 
-    protected override void BuildUrlPara()
-    {
-        // none parameters
-    }
+    //protected override void BuildUrlPara()
+    //{
+    //    // none parameters
+    //}
 
     protected override void BuildXMessengerPara(bool isPref)
     {
@@ -370,55 +370,10 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-    protected override void BuildXSpousePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildOrgDirectoryPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildInterestPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildHobbyPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildExpertisePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildDeathPlacePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildDeathDatePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildBirthPlacePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildXmlPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildRelatedPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildMemberPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildLangPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildKindPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildGenderPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildContactUriPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildClientpidmapPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildAnniversaryPara() { }
+    //protected override void BuildXSpousePara() 
+    //{
+    //    // none parameters
+    //}
 
     #endregion
 

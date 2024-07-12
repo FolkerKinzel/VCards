@@ -565,8 +565,6 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendIndex();
     }
 
-    
-
     protected override void BuildExpertisePara()
     {
         _actionList.Clear();
@@ -641,36 +639,6 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendPid();
         AppendNonStandardParameters();
     }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildXSpousePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildXMessengerPara(bool isPref) { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildSortStringPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildProfilePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildNamePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildMailerPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildLabelPara(bool isPref) { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildClassPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildAgentPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildCapuriPara(bool isPref) { }
 
     #endregion
 

@@ -235,113 +235,167 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     #region BuildPara
 
-    protected abstract void BuildXSpousePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildXSpousePara() { }
 
-    protected abstract void BuildXMessengerPara(bool isPref);
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildXMessengerPara(bool isPref) { }
 
-    protected abstract void BuildNonStandardPropertyPara(bool isPref);
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildNonStandardPropertyPara(bool isPref) { }
 
-    protected abstract void BuildOrgDirectoryPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildOrgDirectoryPara() { }
 
-    protected abstract void BuildInterestPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildInterestPara() { }
 
-    protected abstract void BuildHobbyPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildHobbyPara() { }
 
-    protected abstract void BuildExpertisePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildExpertisePara() { }
 
-    protected abstract void BuildDeathPlacePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildDeathPlacePara() { }
 
-    protected abstract void BuildDeathDatePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildDeathDatePara() { }
 
-    protected abstract void BuildBirthPlacePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildBirthPlacePara() { }
 
-    protected abstract void BuildXmlPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildXmlPara() { }
 
-    protected abstract void BuildUrlPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildUrlPara() { }
 
-    protected abstract void BuildUidPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildUidPara() { }
 
-    protected abstract void BuildTzPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildTzPara() { }
 
-    protected abstract void BuildTitlePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildTitlePara() { }
 
-    protected abstract void BuildTelPara(bool isPref);
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildTelPara(bool isPref) { }
 
-    protected abstract void BuildSourcePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildSourcePara() { }
 
-    protected abstract void BuildSoundPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildSoundPara() { }
 
-    protected abstract void BuildSortStringPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildSortStringPara() { }
 
-    protected abstract void BuildRolePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildRolePara() { }
 
-    protected abstract void BuildRevPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildRevPara() { }
 
-    protected abstract void BuildRelatedPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildRelatedPara() { }
 
-    protected abstract void BuildProfilePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildProfilePara() { }
 
-    protected abstract void BuildProdidPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildProdidPara() { }
 
-    protected abstract void BuildPhotoPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildPhotoPara() { }
 
-    protected abstract void BuildOrgPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildOrgPara() { }
 
-    protected abstract void BuildNotePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildNotePara() { }
 
-    protected abstract void BuildNicknamePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildNicknamePara() { }
 
-    protected abstract void BuildNamePara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildNamePara() { }
 
-    protected abstract void BuildNPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildNPara() { }
 
-    protected abstract void BuildMemberPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildMemberPara() { }
 
-    protected abstract void BuildMailerPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildMailerPara() { }
 
-    protected abstract void BuildLogoPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildLogoPara() { }
 
-    protected abstract void BuildLangPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildLangPara() { }
 
-    protected abstract void BuildLabelPara(bool isPref);
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildLabelPara(bool isPref) { }
 
-    protected abstract void BuildKindPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildKindPara() { }
 
-    protected abstract void BuildKeyPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildKeyPara() { }
 
-    protected abstract void BuildImppPara(bool isPref);
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildImppPara(bool isPref) { }
 
-    protected abstract void BuildGeoPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildGeoPara() { }
 
-    protected abstract void BuildGenderPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildGenderPara() { }
 
-    protected abstract void BuildFnPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildFnPara() { }
 
-    protected abstract void BuildFburlPara(bool isPref);
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildFburlPara(bool isPref) { }
 
-    protected abstract void BuildEmailPara(bool isPref);
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildEmailPara(bool isPref) { }
 
-    protected abstract void BuildContactUriPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildContactUriPara() { }
 
-    protected abstract void BuildClientpidmapPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildClientpidmapPara() { }
 
-    protected abstract void BuildClassPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildClassPara() { }
 
-    protected abstract void BuildCategoriesPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildCategoriesPara() { }
 
-    protected abstract void BuildCapuriPara(bool isPref);
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildCapuriPara(bool isPref) { }
 
-    protected abstract void BuildCaluriPara(bool isPref);
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildCaluriPara(bool isPref) { }
 
-    protected abstract void BuildCaladruriPara(bool isPref);
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildCaladruriPara(bool isPref) { }
 
-    protected abstract void BuildBdayPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildBdayPara() { }
 
-    protected abstract void BuildAnniversaryPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildAnniversaryPara() { }
 
-    protected abstract void BuildAgentPara();
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildAgentPara() { }
 
-    protected abstract void BuildAdrPara(bool isPref);
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildAdrPara(bool isPref) { }
 
     #endregion
 
