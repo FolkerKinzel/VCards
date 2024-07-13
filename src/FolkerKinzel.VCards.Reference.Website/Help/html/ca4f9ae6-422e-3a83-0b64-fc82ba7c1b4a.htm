@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html ><html lang="en-US"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="shortcut icon" href="../icons/favicon.ico" /><link rel="stylesheet" href="../css/bulma.css" /><link rel="stylesheet" href="../css/font-awesome.min.css" /><link rel="stylesheet" href="../css/presentationStyle.css" /><link rel="stylesheet" href="../css/vs.min.css" /><script src="../scripts/jquery-3.5.1.min.js"></script><script src="../scripts/clipboard.min.js"></script><script src="../scripts/highlight.min.js"></script><script src="../scripts/presentationStyle.js"></script><title>AnsiFilter Class</title><meta name="Title" content="AnsiFilter" /><meta name="Help.Id" content="T:FolkerKinzel.VCards.AnsiFilter" /><meta name="Help.ContentType" content="Reference" /><meta name="container" content="FolkerKinzel.VCards" /><meta name="guid" content="ca4f9ae6-422e-3a83-0b64-fc82ba7c1b4a" /><meta name="Description" content="Helper class used to automatically detect and correctly load VCF files stored in a code page other than UTF-8." /><meta name="tocFile" content="../toc/IDAB.xml" /></head><body><div class="fixedLayout"><div id="Header" class="fixedHeader"><div class="pageHeader level mb-0 py-2 px-4"><div id="TitleContainer" class="level-left"><div class="level-item"><img src="../icons/Help.png" /></div><div id="DocumentationTitle" class="level-item">FolkerKinzel.VCards</div></div><div id="LangFilterSearchContainer" class="level-right"><div class="level-item"><div class="dropdown is-hoverable"><div class="dropdown-trigger"><button class="button" aria-haspopup="true" aria-controls="dropdown-menu"><span id="CurrentLanguage"></span><span class="icon is-small"><i class="fa fa-angle-down" aria-hidden="true"></i></span></button></div><div class="dropdown-menu" role="menu"><div id="LanguageSelections" class="dropdown-content"><a class="dropdown-item languageFilterItem" data-languageId="cs">C#</a><a class="dropdown-item languageFilterItem" data-languageId="vb">VB</a><a class="dropdown-item languageFilterItem" data-languageId="cpp">C++</a><a class="dropdown-item languageFilterItem" data-languageId="fs">F#</a></div></div></div></div><div class="level-item"><form id="SearchForm" action="#" onsubmit="TransferToSearchPage(); return false;"><div class="field"><div class="control has-icons-left"><input id="SearchTerms" class="input" type="text" maxlength="200" placeholder="Search" /><span class="icon is-small is-left"><i class="fa fa-search"></i></span><button id="SearchButton" type="submit" class="is-hidden"></button></div></div></form></div></div></div></div><div class="fixedContent"><nav class="breadcrumb my-1 px-2 border-bottom" role="navigation"><ul id="TopicBreadcrumbs" /></nav><div id="ContentContainer" class="columns pl-5 pr-5 fixedContent"><div id="ShowHideTOCColumn" class="column is-hidden-tablet"><a id="ShowHideTOC">Show/Hide TOC</a></div><div id="TOCColumn" class="column is-hidden-mobile"><nav class="toc"><ul id="TableOfContents" class="toc-menu" /></nav></div><div id="Resizer" class="is-hidden"></div><div id="TopicContent" class="column content is-7"><h1>Ansi<wbr />Filter Class</h1><div class="summary"> Helper class used to automatically detect and correctly load VCF files 
+            stored in a code page other than UTF-8.</div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Definition</h2><div id="IDBSection"><strong>Namespace:</strong> <a href="67dce261-ab8f-dd0a-4c0c-bc2633c1719e.htm">FolkerKinzel.VCards</a><br /><strong>Assembly:</strong> FolkerKinzel.VCards (in FolkerKinzel.VCards.dll) Version: 7.2.0-beta.1+92a9170dd6e89cb66392c26e0acddb6434e3fbc1<div class="codeSnippet" data-codeSnippetLanguage="cs"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="identifier">AnsiFilter</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="vb"><div class="codeHeader"><span class="codeHeaderTitle">VB</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-vb"><span class="keyword">Public</span> <span class="keyword">NotInheritable</span> <span class="keyword">Class</span> <span class="identifier">AnsiFilter</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="cpp"><div class="codeHeader"><span class="codeHeaderTitle">C++</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cpp"><span class="keyword">public</span> <span class="keyword">ref class</span> <span class="identifier">AnsiFilter</span> <span class="keyword">sealed</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="fs"><div class="codeHeader"><span class="codeHeaderTitle">F#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-fs">[&lt;<span class="identifier">SealedAttribute</span>&gt;]
+<span class="keyword">type</span> <span class="identifier">AnsiFilter</span> = <span class="keyword">class</span> <span class="keyword">end</span></code></pre></div></div><dl class="inheritanceHierarchy"><dt>Inheritance</dt><dd><a href="https://learn.microsoft.com/dotnet/api/system.object" target="_blank" rel="noopener noreferrer">Object</a>  <span class="icon is-small"><i class="fa fa-arrow-right"></i></span>  <span class="selflink">AnsiFilter</span></dd></dl></div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Remarks</h2><div id="IDCCSection"><p>
+            VCF files of the vCard 2.1 standard were previously saved by Outlook and Outlook 
+            Express in the ANSI encoding of the current Windows system, without always encoding
+            the extended characters with quoted printable encoding. In principle, VCF files of 
+            the vCard 3.0 standard can also be ANSI-encoded if, for example, they were transmitted
+            in an e-mail that specified the encoding in its content header. UTF-8 encoding has only
+            been mandatory since vCard 4.0. 
+            </p><p>
+            This class is a wrapper around the <a href="e4c668da-51c5-9ccc-1452-fd0f7556851c.htm">Load(String, Encoding)</a> 
+            method that initially loads the file as UTF-8. If a decoding error occurs, the method 
+            examines the <a href="23413828-9a4a-2851-b88b-84d0afcb0031.htm">VCard</a> objects for any <a href="3635e614-024c-d444-e5e0-566ed843db9a.htm">CharSet</a> 
+            (<span class="code">CHARSET</span>) parameters, which provide an indication of the <a href="https://learn.microsoft.com/dotnet/api/system.text.encoding" target="_blank" rel="noopener noreferrer">Encoding</a> 
+            to be used. If a hint is found, the file is reloaded with the determined <a href="https://learn.microsoft.com/dotnet/api/system.text.encoding" target="_blank" rel="noopener noreferrer">Encoding</a>,
+            otherwise with the <a href="https://learn.microsoft.com/dotnet/api/system.text.encoding" target="_blank" rel="noopener noreferrer">Encoding</a> specified in the 
+            <a href="46000fe8-fb3e-40c9-759a-96d3a40032c4.htm">constructor</a> as a fallback.
+            </p><p>
+            (The <span class="code">CHARSET</span> parameter exists only in the vCard 2.1 standard.)
+            </p></div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Example</h2><div id="IDDCSection"><article class="message is-info"><div class="message-header"><p><span class="icon"><i class="fa fa-info-circle"></i></span>  Note</p></div><div class="message-body">
+            To make the code more readable, exception handling has been omitted from the
+            examples.
+            </div></article><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs">using System.Diagnostics;
+using FolkerKinzel.VCards;
+
+namespace Examples;
+
+public static class AnsiFilterExample
+{
+    /// &lt;summary&gt;
+    /// The example loads several vCard 2.1 files which have different encodings and 
+    /// shows their content in the text editor. The encoding is selected automatically.
+    /// &lt;/summary&gt;
+    /// &lt;param name="directoryPath"&gt;Path to the directory containing the example files.&lt;/param&gt;
+    /// &lt;remarks&gt;
+    /// See the VCF files used in this example at
+    /// https://github.com/FolkerKinzel/VCards/tree/master/src/Examples/AnsiFilterExamples
+    /// &lt;/remarks&gt;
+    public static void LoadVcfFilesWhichHaveDifferentAnsiEncodings(string directoryPath)
+    {
+        // If you have to read VCF files that might have ANSI encodings, use the AnsiFilter
+        // to read them automatically with the right encoding.
+        // Give the constructor as an argument the ANSI code page that is most likely. This
+        // will be the fallback code page if a VCF file couldn't be loaded as UTF-8 and didn't 
+        // contain a CHARSET parameter. In our example we choose windows-1255 (Hebrew).
+        var ansiFilter = new AnsiFilter(1255);
+
+        var outFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
+
+        using (StreamWriter writer = File.AppendText(outFileName))
+        {
+            foreach (string vcfFileName in Directory
+                .EnumerateFiles(directoryPath)
+                .Where(x =&gt; StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(x), ".vcf")))
+            {
+                IList&lt;VCard&gt; vCards = Vcf.Load(vcfFileName, ansiFilter);
+                WriteToTextFile(vcfFileName, vCards, ansiFilter.UsedEncoding.WebName, writer);
+            }
+        }
+
+        ShowInTextEditorAndDelete(outFileName);
+    }
+
+    private static void WriteToTextFile(string vcfFileName,
+                                        IList&lt;VCard&gt; vCards,
+                                        string? encodingWebName,
+                                        TextWriter writer)
+    {
+        const string indent = "    ";
+        writer.Write(Path.GetFileName(vcfFileName));
+        writer.WriteLine(':');
+        writer.Write(indent);
+        writer.WriteLine(vCards.FirstOrDefault()?.DisplayNames?.FirstOrDefault()?.Value);
+        writer.Write(indent);
+        writer.Write("Encoding: ");
+        writer.WriteLine(encodingWebName);
+        writer.WriteLine();
+    }
+
+    private static void ShowInTextEditorAndDelete(string outFileName)
+    {
+        Process.Start(new ProcessStartInfo { FileName = outFileName, UseShellExecute = true })?
+               .WaitForExit();
+        File.Delete(outFileName);
+    }
+}
+
+/*
+Output:
+
+ German.vcf:
+    Sören Täve Nüßlebaum
+    Encoding: windows-1252
+
+Greek.vcf:
+    Βαγγέλης
+    Encoding: windows-1253
+
+Hebrew.vcf:
+    אפרים קישון
+    Encoding: windows-1255
+
+Ukrainian.vcf:
+    Віталій Володимирович Кличко
+    Encoding: windows-1251
+
+utf-8.vcf:
+    孔夫子
+    Encoding: utf-8
+
+Please note that Hebrew.vcf and utf-8.vcf have been read properly without
+any CHARSET parameter in the VCF files: UTF-8 is the default character set 
+and windows-1255 (Hebrew) had been set as the default fallback value in the 
+AnsiFilter constructor.
+ */</code></pre></div></div></div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Constructors</h2><div id="IDAAEASection"><table id="ConstructorList" class="table is-hoverable"><tr><td><a href="82f456e2-cfd9-cc91-f87c-54516db2f5ff.htm">AnsiFilter(Int32)</a></td><td>Initializes an instance of the <span class="selflink">AnsiFilter</span> class with
+            the number of the code page to use for the reading of VCF files that are not
+            UTF-8 and that do not contain a hint in their CHARSET parameters which suggests 
+            the use of a different <a href="https://learn.microsoft.com/dotnet/api/system.text.encoding" target="_blank" rel="noopener noreferrer">Encoding</a>.</td></tr><tr><td><a href="46000fe8-fb3e-40c9-759a-96d3a40032c4.htm">AnsiFilter(String)</a></td><td>
+            Initializes an instance of the <span class="selflink">AnsiFilter</span> class with
+            the <a href="https://learn.microsoft.com/dotnet/api/system.text.encoding.webname" target="_blank" rel="noopener noreferrer">WebName</a> property of the <a href="https://learn.microsoft.com/dotnet/api/system.text.encoding" target="_blank" rel="noopener noreferrer">Encoding</a>
+            object to use for reading VCF files that are not
+            UTF-8 and that do not contain a hint in their CHARSET parameters which suggests 
+            the use of a different <a href="https://learn.microsoft.com/dotnet/api/system.text.encoding" target="_blank" rel="noopener noreferrer">Encoding</a>.
+            </td></tr></table></div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Properties</h2><div id="IDFEASection"><table id="PropertyList" class="table is-hoverable"><tr><td><a href="c3ee99c7-756e-a6fe-4d50-fc0a95001912.htm">FallbackEncoding</a></td><td>
+            The <a href="https://learn.microsoft.com/dotnet/api/system.text.encoding" target="_blank" rel="noopener noreferrer">Encoding</a> object to use as fallback. </td></tr><tr><td><a href="c7ae4a5c-ff9b-1e2d-9de6-213198d954f2.htm">UsedEncoding</a></td><td>
+            The <a href="https://learn.microsoft.com/dotnet/api/system.text.encoding" target="_blank" rel="noopener noreferrer">Encoding</a> used to read the VCF file.
+            </td></tr></table></div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Methods</h2><div id="IDBEASection"><table id="MethodList" class="table is-hoverable"><tr><td><a href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)" target="_blank" rel="noopener noreferrer">Equals</a></td><td>Determines whether the specified object is equal to the current object.<br />(Inherited from <a href="https://learn.microsoft.com/dotnet/api/system.object" target="_blank" rel="noopener noreferrer">Object</a>)</td></tr><tr><td><a href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode" target="_blank" rel="noopener noreferrer">GetHashCode</a></td><td>Serves as the default hash function.<br />(Inherited from <a href="https://learn.microsoft.com/dotnet/api/system.object" target="_blank" rel="noopener noreferrer">Object</a>)</td></tr><tr><td><a href="https://learn.microsoft.com/dotnet/api/system.object.gettype" target="_blank" rel="noopener noreferrer">GetType</a></td><td>Gets the <a href="https://learn.microsoft.com/dotnet/api/system.type" target="_blank" rel="noopener noreferrer">Type</a> of the current instance.<br />(Inherited from <a href="https://learn.microsoft.com/dotnet/api/system.object" target="_blank" rel="noopener noreferrer">Object</a>)</td></tr><tr><td><a href="https://learn.microsoft.com/dotnet/api/system.object.tostring" target="_blank" rel="noopener noreferrer">ToString</a></td><td>Returns a string that represents the current object.<br />(Inherited from <a href="https://learn.microsoft.com/dotnet/api/system.object" target="_blank" rel="noopener noreferrer">Object</a>)</td></tr></table></div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Thread Safety</h2><div id="IDBCSection">Any public <span class="keyword">static</span> (<span class="keyword">Shared</span> in Visual Basic) members of this type are thread safe. Any instance members are not guaranteed to be thread safe.</div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>See Also</h2><div id="seeAlsoSection"><h4>Reference</h4><div><a href="67dce261-ab8f-dd0a-4c0c-bc2633c1719e.htm">FolkerKinzel.VCards Namespace</a></div></div></div><div id="InThisArticleColumn" class="column is-hidden-mobile"><nav class="menu sticky is-hidden"><p class="menu-label"><strong>In This Article</strong></p><ul id="InThisArticleMenu" class="menu-list"><li><a class="quickLink">Definition</a></li><li><a class="quickLink">Remarks</a></li><li><a class="quickLink">Example</a></li><li><a class="quickLink">Constructors</a></li><li><a class="quickLink">Properties</a></li><li><a class="quickLink">Methods</a></li><li><a class="quickLink">Thread Safety</a></li><li><a class="quickLink">See Also</a></li></ul></nav></div></div></div><footer id="PageFooter" class="footer border-top py-3 fixedFooter"><div class="columns"><div id="FooterContent" class="column"><p>Copyright © 2020 Folker Kinzel</p> 
+				</div></div></footer></div><script>$(function(){
+SetDefaultLanguage("cs");
+LoadTocFile(null, null);
+InitializeQuickLinks();
+
+$(".toggleSection" ).click(function () {
+    SectionExpandCollapse(this);
+});
+
+$(".toggleSection").keypress(function () {
+    SectionExpandCollapseCheckKey(this, event)
+});
+hljs.highlightAll();
+});</script></body></html>

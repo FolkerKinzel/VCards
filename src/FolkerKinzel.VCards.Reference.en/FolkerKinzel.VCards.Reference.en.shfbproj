@@ -38,9 +38,9 @@
     <DocumentationSources>
       <DocumentationSource sourceFile="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
     </DocumentationSources>
-    <HelpFileFormat>Markdown</HelpFileFormat>
+    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
     <SyntaxFilters>Standard</SyntaxFilters>
-    <PresentationStyle>Markdown</PresentationStyle>
+    <PresentationStyle>VS2013</PresentationStyle>
     <CleanIntermediates>True</CleanIntermediates>
     <KeepLogFile>True</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
