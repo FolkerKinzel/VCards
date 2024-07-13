@@ -68,7 +68,6 @@ Global
 		{F8EF72BB-8C77-4764-862E-0AA88CF34432}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8EF72BB-8C77-4764-862E-0AA88CF34432}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD1E32C0-4A48-4857-9070-63F20C8D442E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD1E32C0-4A48-4857-9070-63F20C8D442E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD1E32C0-4A48-4857-9070-63F20C8D442E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
