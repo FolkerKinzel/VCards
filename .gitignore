@@ -341,3 +341,11 @@ healthchecksdb
 
 # Reports directory
 reports/
+
+# Server side code in project reference website
+docs/reference/*.aspx
+docs/reference/*.php
+docs/reference/Web.Config
+docs/reference/GeneralError.html
+docs/reference/PageNotFound.html
+docs/reference/search.html
