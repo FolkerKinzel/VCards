@@ -284,8 +284,8 @@ public sealed partial class VCard
     /// <remarks>
     /// If several <see cref="TextProperty" /> objects are assigned, the standard 
     /// property is determined by the value of <see cref="ParameterSection.Preference" />. 
-    /// URLs of the type <c>FTP</c> [RFC1738] or <c>HTTP</c> [RFC2616] refer to an
-    /// iCalendar object [RFC5545], which represents a snapshot of the next weeks or 
+    /// URLs of the type <c>FTP</c> [RFC&#160;1738] or <c>HTTP</c> [RFC&#160;2616] refer to an
+    /// iCalendar object [RFC&#160;5545], which represents a snapshot of the next weeks or 
     /// months with data for the busy time of the subject the <see cref="VCard"/> 
     /// represents. If the iCalendar object is a file, its file extension should 
     /// be ".ifb".

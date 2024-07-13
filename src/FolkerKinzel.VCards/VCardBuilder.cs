@@ -101,21 +101,21 @@ public sealed class VCardBuilder
     public DateAndOrTimeBuilder BirthDayViews => new(this, Prop.BirthDayViews);
 
     /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
-    /// RFC 6474)</c></summary>
+    /// RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
     public TextViewBuilder BirthPlaceViews => new(this, Prop.BirthPlaceViews);
 
     /// <summary> <c>CAPURI</c>: A protocol independent location from which a calendaring and 
-    /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
+    /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC&#160;2739)</c></summary>
     public TextBuilder CalendarAccessUris => new(this, Prop.CalendarAccessUris);
 
-    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
+    /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC&#160;2739)</c></summary>
     public TextBuilder CalendarAddresses => new(this, Prop.CalendarAddresses);
 
     /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
-    /// the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
+    /// the person's calendar. <c>(4, 3 - RFC&#160;2739)</c></summary>
     public TextBuilder CalendarUserAddresses => new(this, Prop.CalendarUserAddresses);
 
     /// <summary> <c>CATEGORIES</c>: Lists of "tags" that can be used to describe the
@@ -123,22 +123,22 @@ public sealed class VCardBuilder
     public StringCollectionBuilder Categories => new(this, Prop.Categories);
 
     /// <summary>
-    /// <c>CONTACT-URI</c> URIs representing an email address or a location for a web form.<c>(4 [RFC 8605])</c>
+    /// <c>CONTACT-URI</c> URIs representing an email address or a location for a web form.<c>(4 - RFC&#160;8605)</c>
     /// </summary>
     /// <remarks>
     /// If the property contains more than one <see cref="TextProperty"/> instance, the
     /// <see cref="ParameterSection.Preference"/> property must be set.
     /// </remarks>
     public TextBuilder ContactUris => new(this, Prop.ContactUris);
-    
-    /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
+
+    /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
     public DateAndOrTimeBuilder DeathDateViews => new(this, Prop.DeathDateViews);
 
     /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
-    /// RFC 6474)</c></summary>
+    /// RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
     /// e.g., be useful if the property is displayed in different languages.</remarks>
@@ -173,18 +173,18 @@ public sealed class VCardBuilder
     public TextBuilder EMails => new(this, Prop.EMails);
 
     /// <summary> <c>EXPERTISE</c>: A professional subject area that the person has
-    /// knowledge of. <c>(RFC 6715)</c></summary>
+    /// knowledge of. <c>(RFC&#160;6715)</c></summary>
     /// <remarks>Define the level of expertise in the parameter 
     /// <see cref="ParameterSection.Expertise" />!</remarks>
     public TextBuilder Expertises => new(this, Prop.Expertises);
 
     /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
-    /// "busy" on their calendar. <c>(4, 3 - RFC 2739)</c></summary>
+    /// "busy" on their calendar. <c>(4, 3 - RFC&#160;2739)</c></summary>
     /// <remarks>
     /// If several <see cref="TextProperty" /> objects are assigned, the standard 
     /// property is determined by the value of <see cref="ParameterSection.Preference" />. 
-    /// URLs of the type <c>FTP</c> [RFC1738] or <c>HTTP</c> [RFC2616] refer to an
-    /// iCalendar object [RFC5545], which represents a snapshot of the next weeks or 
+    /// URLs of the type <c>FTP</c> [RFC&#160;1738] or <c>HTTP</c> [RFC&#160;2616] refer to an
+    /// iCalendar object [RFC&#160;5545], which represents a snapshot of the next weeks or 
     /// months with data for the busy time of the subject the <see cref="VCards.VCard"/> 
     /// represents. If the iCalendar object is a file, its file extension should 
     /// be ".ifb".
@@ -210,7 +210,7 @@ public sealed class VCardBuilder
     public GeoBuilder GeoCoordinates => new(this);
 
     /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
-    /// in. <c>(4 - RFC 6715)</c></summary>
+    /// in. <c>(4 - RFC&#160;6715)</c></summary>
     /// <remarks> Define the level of interest with the parameter 
     /// <see cref="ParameterSection.Interest" />.</remarks>
     public TextBuilder Hobbies => new(this, Prop.Hobbies);
@@ -225,7 +225,7 @@ public sealed class VCardBuilder
     public IDBuilder ID => new(this);
 
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
-    /// in, but does not necessarily take part in. <c>(4 - RFC 6715)</c></summary>
+    /// in, but does not necessarily take part in. <c>(4 - RFC&#160;6715)</c></summary>
     /// <remarks> Define the level of interest in the parameter 
     /// <see cref="ParameterSection.Interest" />!</remarks>
     public TextBuilder Interests => new(this, Prop.Interests);
