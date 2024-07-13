@@ -25,7 +25,7 @@ It allows:
 - serializing and deserializing VCF files to and from streams,
 - and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.
 
-Read the ["Getting Started" wiki](https://github.com/FolkerKinzel/VCards/wiki) if you are new to this library, otherwise read the [project reference](https://folkerkinzel.github.io/VCards/reference/index.html).
+Read the ["Getting Started" wiki](https://github.com/FolkerKinzel/VCards/wiki) if you are new to this library, otherwise read the [project reference](https://folkerkinzel.github.io/VCards/reference/index.html){:target="_blank"}.
 
 ### Code Examples
 - [Reading and writing of VCF files (simple example)](https://github.com/FolkerKinzel/VCards/wiki#simple-example)
