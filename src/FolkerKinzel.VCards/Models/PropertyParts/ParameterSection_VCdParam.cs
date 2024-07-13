@@ -98,6 +98,11 @@ public sealed partial class ParameterSection
         /// <summary><c>INDEX</c>: 1-based index of a property if several instances of the same 
         /// property are allowed. <c>(4 - RFC&#160;6715)</c>
         /// </summary>
-        Index
+        Index,
+
+        /// <summary>
+        /// <c>CC</c>: ISO&#160;3166 two-character country code. <c>(4 - RFC&#160;8605)</c>
+        /// </summary>
+        CountryCode
     }
 }

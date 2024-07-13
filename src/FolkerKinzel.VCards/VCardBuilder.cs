@@ -122,6 +122,15 @@ public sealed class VCardBuilder
     /// object represented by this vCard. <c>(3,4)</c></summary>
     public StringCollectionBuilder Categories => new(this, Prop.Categories);
 
+    /// <summary>
+    /// <c>CONTACT-URI</c> URIs representing an email address or a location for a web form.<c>(4 [RFC 8605])</c>
+    /// </summary>
+    /// <remarks>
+    /// If the property contains more than one <see cref="TextProperty"/> instance, the
+    /// <see cref="ParameterSection.Preference"/> property must be set.
+    /// </remarks>
+    public TextBuilder ContactUris => new(this, Prop.ContactUris);
+    
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,

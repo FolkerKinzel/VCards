@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html ><html lang="en-US"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="shortcut icon" href="../icons/favicon.ico" /><link rel="stylesheet" href="../css/bulma.css" /><link rel="stylesheet" href="../css/font-awesome.min.css" /><link rel="stylesheet" href="../css/presentationStyle.css" /><link rel="stylesheet" href="../css/vs.min.css" /><script src="../scripts/jquery-3.5.1.min.js"></script><script src="../scripts/clipboard.min.js"></script><script src="../scripts/highlight.min.js"></script><script src="../scripts/presentationStyle.js"></script><title>Overview</title><meta name="Title" content="Overview" /><meta name="Help.Id" content="397502cd-fe45-4dc2-a450-195693e7f902" /><meta name="Help.ContentType" content="Concepts" /><meta name="guid" content="397502cd-fe45-4dc2-a450-195693e7f902" /><meta name="Description" content="FolkerKinzel.VCards is a full-featured .NET library for working with vCard files (*.vcf)." /><meta name="tocFile" content="../toc/Root.xml" /></head><body><div class="fixedLayout"><div id="Header" class="fixedHeader"><div class="pageHeader level mb-0 py-2 px-4"><div id="TitleContainer" class="level-left"><div class="level-item"><img src="../icons/Help.png" /></div><div id="DocumentationTitle" class="level-item">FolkerKinzel.VCards</div></div><div id="LangFilterSearchContainer" class="level-right"><div class="level-item"><div class="dropdown is-hoverable"><div class="dropdown-trigger"><button class="button" aria-haspopup="true" aria-controls="dropdown-menu"><span id="CurrentLanguage"></span><span class="icon is-small"><i class="fa fa-angle-down" aria-hidden="true"></i></span></button></div><div class="dropdown-menu" role="menu"><div id="LanguageSelections" class="dropdown-content"><a class="dropdown-item languageFilterItem" data-languageId="cs">C#</a><a class="dropdown-item languageFilterItem" data-languageId="vb">VB</a><a class="dropdown-item languageFilterItem" data-languageId="cpp">C++</a><a class="dropdown-item languageFilterItem" data-languageId="fs">F#</a></div></div></div></div><div class="level-item"><form id="SearchForm" action="#" onsubmit="TransferToSearchPage(); return false;"><div class="field"><div class="control has-icons-left"><input id="SearchTerms" class="input" type="text" maxlength="200" placeholder="Search" /><span class="icon is-small is-left"><i class="fa fa-search"></i></span><button id="SearchButton" type="submit" class="is-hidden"></button></div></div></form></div></div></div></div><div class="fixedContent"><nav class="breadcrumb my-1 px-2 border-bottom" role="navigation"><ul id="TopicBreadcrumbs" /></nav><div id="ContentContainer" class="columns pl-5 pr-5 fixedContent"><div id="ShowHideTOCColumn" class="column is-hidden-tablet"><a id="ShowHideTOC">Show/Hide TOC</a></div><div id="TOCColumn" class="column is-hidden-mobile"><nav class="toc"><ul id="TableOfContents" class="toc-menu" /></nav></div><div id="Resizer" class="is-hidden"></div><div id="TopicContent" class="column content is-7"><h1>Overview</h1><div><p>FolkerKinzel.VCards is a full-featured .NET library for working with vCard files (*.vcf).</p><p>It allows</p><ul><li><p>loading VCF files from the file system and storing them there,</p></li><li><p>serializing VCF files to and from streams,</p></li><li><p>and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.</p></li></ul><p>
+        Parse errors, caused by not well-formed VCF files, are silently ignored by the library: It reads as much as it can from
+        such files.
+      </p><p>
+        The same is for errors caused by incompliant data when serializing the vCard: Because of the different vCard standards
+        are not completely compliant, incompliant data is silently ignored when converting from one
+        vCard standard to another. To minimize this kind of data loss, the library tries to preserve incompliant data
+        using well-known x-name properties. The usage of such x-name properties can be
+        controlled.
+      </p><p class="is-hidden-tablet">This topic contains the following sections:</p><ul class="is-hidden-tablet"><li><a href="#NameSpaces">The usage of the namespaces</a></li><li><a href="#DataModel">The data model</a></li><li><a href="#VCardBuilder">Efficient building and editing of VCard objects using VCardBuilder</a></li><li><a href="#ExtensionMethods">Extension methods</a></li><li><a href="#VcfClass">Parsing and serializing VCF files using the Vcf class</a></li><li><a href="#DataSynchronization">The vCard 4.0 data synchronization mechanism</a></li><li><a href="#ReadingTheDocumentation">Reading the Project Reference</a></li><li><a href="#VcardStandard">The vCard Standard</a></li></ul></div><h2 id="NameSpaces" class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>The usage of the namespaces</h2><div id="IDBABSection"><p>The following code example provides tips for using the namespaces of the library.</p><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">// Publish this namespace - it contains the VCard class
+// and the VCardBuilder class:
+using FolkerKinzel.VCards;
+
+// It's recommended to publish also this namespace -
+// it contains useful extension methods:
+using FolkerKinzel.VCards.Extensions;
+
+// This namespace contains often used enums. Decide
+// yourself whether to publish this namespace or to use
+// a namespace alias.
+using FolkerKinzel.VCards.Enums;
+
+// Since VCardBuilder exists, the model classes normally
+// don't need to be instantiated in own code:
+// using FolkerKinzel.VCards.Models;</code></pre></div></div></div><h2 id="DataModel" class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>The data model</h2><div id="IDCABSection"><p>This section contains the following subsections:</p><ul><li><a href="#VCard">The VCard Class</a></li><li><a href="#VCardProperty">The VCardProperty Class</a></li><li><a href="#NamingConventions">Naming Conventions</a></li></ul><p>
+          The data model used by this library is aligned to the vCard 4.0 standard (RFC6350). This means that every
+          vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are
+          converted back.
+        </p><h4 id="VCard" class="quickLinkHeader">The VCard Class</h4><p>
+              A VCF file consists of one or more vCards. The content of a vCard is represented by the 
+              <span class="code">VCard</span> class.
+            </p><h4 id="VCardProperty" class="quickLinkHeader">The VCardProperty Class</h4><p>
+              The data model of the <span class="code">VCard</span> class is built on classes that are derived from <span class="code">VCardProperty</span>.
+            </p><p><span class="code">VCardProperty</span> exposes the following members:
+            </p><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-c#">public abstract class VCardProperty
+{
+    public string? Group { get; set; }
+
+    public ParameterSection Parameters { get; }
+
+    public virtual object? Value { get; protected set; }
+}</code></pre></div></div><p>This reflects the structure of a data row in a VCF file:</p><p><span class="code">group1.TEL;TYPE=home,voice;VALUE=uri:tel:+49-123-4567</span></p><p>In this example corresponds</p><ul><li><p><span class="code">group1</span> to VCardProperty.Group,
+                </p></li><li><p><span class="code">TEL;TYPE=home,voice;VALUE=uri</span> to VCardProperty.Parameters and
+                </p></li><li><p><span class="code">tel:+49-123-4567</span> to VCardProperty.Value.
+                </p></li></ul><p>
+              (Classes that are derived from <span class="code">VCardProperty</span> hide the generic implementation of
+              <span class="code">VCardProperty.Value</span> in order to return
+              derived classes instead of <span class="code">System.Object?</span>.)
+            </p><h4 id="NamingConventions" class="quickLinkHeader">Naming Conventions</h4><p>
+              Most properties of the <span class="code">VCard</span> class are collections. It has to do with that many
+              properties are allowed to have more than one
+              instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.
+            </p><p>
+              A special feature are properties whose name ends with "Views": These are properties that actually is only
+              one instance allowed, but vCard 4.0 allows to have different versions of that single instance
+              (e.g., in different languages). The same `AltID` parameter has to be set on each instance.
+            </p><p>
+              Most classes derived from <span class="code">VCardProperty</span> implement <span class="code">IEnumerable&lt;T&gt;</span>
+              in order to be assignable to collection properties without having to be wrapped in an Array or List.
+            </p></div><h2 id="VCardBuilder" class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Efficient building and editing of VCard objects using VCardBuilder</h2><div id="IDDABSection"><p>The `VCardBuilder` class provides a fluent API for building and editing VCard objects.</p><p>
+          The properties of the VCardBuilder class have the same names as those of the VCard class. Each of these
+          properties gets a struct that provides methods to edit the corresponding VCard property.
+          Each of these methods return the VCardBuilder instance so that the calls can be chained.
+        </p><p>
+          The <span class="code">VCardBuilder.Create</span> method overloads initialize a VCardBuilder, 
+          which creates a new
+          VCard instance or edits an existing one. The <span class="code">VCardBuilder.VCard</span> property gets the VCard
+          object that the VCardBuilder created or manipulated.
+        </p></div><h2 id="ExtensionMethods" class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Extension methods</h2><div id="IDEABSection"><p>
+        The namespace <span class="code">FolkerKinzel.VCards.Extensions</span> contains several extension methods 
+        that makes working with VCard objects
+        more efficient and less error prone. It's recommended to publish this namespace when working with this
+        library.
+        </p><p>
+          The methods are helpful in the following cases:
+        </p><ul><li><p>
+            Most of the enums are Flags enums and most of the .NET properties with enum Types use the <span class="code">
+              Nullable&lt;T&gt;</span> variant of these
+          enums. Extension methods help to savely evaluate and manipulate these nullable enum values.
+        </p></li><li><p>
+              The .NET data types for date and time (such like DateOnly or DateTimeOffset) are not fully compliant with the date-time
+              information defined by the vCard standard. Extension methods for these data types help to overcome these issues.
+            </p></li><li><p>
+              Most of the properties of the VCard class are of a specialized Type of <span class="code">IEnumerable&lt;VCardProperty?&gt;?</span>.
+              Extension methods encapsulate most of the necessary null checking and Linq operations that are needed to retrieve the 
+              relevant data from these properties, or to store something there.
+            </p></li><li><p>
+              Some operations work with collections of VCard objects (e.g., saving several VCard objects together in a common VCF file).
+              Extension methods allow these operations to be performed directly on these collections.
+            </p></li></ul></div><h2 id="VcfClass" class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Parsing and serializing VCF files using the Vcf class</h2><div id="IDFABSection"><p>
+          The <span class="code">Vcf</span> class is a static class that contains a lot of methods for serializing and 
+          parsing <span class="code">VCard</span> objects to or from VCF files.
+        </p></div><h2 id="DataSynchronization" class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>The vCard 4.0 data synchronization mechanism</h2><div id="IDGABSection"><p>
+          With the vCard 4.0 standard a data synchronization mechanism using PID parameters and CLIENTPIDMAP
+          properties has been introduced. For this to work fully automatically, only two lines of code are
+          required:
+        </p><div class="codeSnippet"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs">// Registering the executing application with the VCard class is a technical requirement
+// when using the data synchronization mechanism introduced with vCard 4.0 (PID and
+// CLIENTPIDMAP). To do this, call the static method VCard.RegisterApp with an absolute
+// Uri once when the program starts. (UUID URNs are ideal for this.)
+VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+
+//Write a vCard 4.0 with the option VcfOptions.SetPropertyIDs:
+Vcf.Save(vCard,
+         filePath,
+         VCdVersion.V4_0,
+         options: Opts.Default.Set(Opts.SetPropertyIDs));</code></pre></div></div></div><h2 id="ReadingTheDocumentation" class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Reading the Project Reference</h2><div id="IDHABSection"><p>
+          Uppercase words, which are often found at the beginning of the documentation for a .NET property, are identifiers from the vCard standard.
+          Digits in brackets,
+          which can be found at the end of the documentation for a .NET property, e.g. <span class="literal">(2,3,4)</span>, describe which with vCard standard
+          the content of the .NET property is compatible.
+        </p><p>
+          The digits have the following meaning:
+        </p><ul><li><p><span class="code">2</span>: vCard 2.1,
+            </p></li><li><p><span class="code">3</span>: vCard 3.0
+            </p></li><li><p><span class="code">4</span>: vCard 4.0
+            </p></li></ul></div><h2 id="VcardStandard" class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>The vCard Standard</h2><div id="IDIABSection"><p>The vCard standard is defined in the following documents:</p><ul><li><p><a href="https://tools.ietf.org/html/rfc6350" target="_blank" rel="noopener noreferrer">RFC 6350 (vCard 4.0)</a></p></li><li><p><a href="https://tools.ietf.org/html/rfc2426" target="_blank" rel="noopener noreferrer">RFC 2426 (vCard 3.0)</a></p></li><li><p><a href="https://web.archive.org/web/20120501162958/http://www.imc.org/pdi/vcard-21.doc" target="_blank" rel="noopener noreferrer">vCard.The Electronic Business Card.Version 2.1 (vCard 2.1)</a></p></li></ul><p>Extensions of the standard describe e.g. the following documents:</p><ul><li><p><a href="https://datatracker.ietf.org/doc/html/rfc9554" target="_blank" rel="noopener noreferrer">RFC 9554: vCard Format Extensions for JSContact</a></p></li><li><p><a href="https://datatracker.ietf.org/doc/html/rfc8605" target="_blank" rel="noopener noreferrer">RFC 8605: vCard Format Extensions: ICANN Extensions for the Registration Data Access Protocol (RDAP)</a></p></li><li><p><a href="https://datatracker.ietf.org/doc/html/rfc6868" target="_blank" rel="noopener noreferrer">RFC 6868: vCard Format Extensions: ICANN Extensions for the Registration Data Access Protocol (RDAP)</a></p></li><li><p><a href="https://datatracker.ietf.org/doc/html/rfc6715" target="_blank" rel="noopener noreferrer">RFC 6715: vCard Format Extensions: Representing vCard Extensions Defined by the Open Mobile Alliance (OMA) Converged Address Book (CAB) Group</a></p></li><li><p><a href="https://tools.ietf.org/html/rfc6474" target="_blank" rel="noopener noreferrer">RFC 6474: vCard Format Extensions: Place of Birth, Place and Date of Death</a></p></li><li><p><a href="https://tools.ietf.org/html/rfc6715" target="_blank" rel="noopener noreferrer">RFC 6715: vCard Format Extensions: Representing vCard Extensions Defined by the Open Mobile Alliance (OMA) Converged Address Book (CAB) Group</a></p></li><li><p><a href="https://tools.ietf.org/html/rfc6473" target="_blank" rel="noopener noreferrer">RFC 6473: vCard KIND: application</a></p></li><li><p><a href="https://tools.ietf.org/html/rfc4770" target="_blank" rel="noopener noreferrer">RFC 4770: vCard Extensions for Instant Messaging (IM)</a></p></li><li><p><a href="https://tools.ietf.org/html/rfc2739" target="_blank" rel="noopener noreferrer">RFC 2739: Calendar Attributes for vCard and LDAP</a></p></li></ul></div></div><div id="InThisArticleColumn" class="column is-hidden-mobile"><nav class="menu sticky is-hidden"><p class="menu-label"><strong>In This Article</strong></p><ul id="InThisArticleMenu" class="menu-list"><li><a class="quickLink">The usage of the namespaces</a></li><li><a class="quickLink">The data model</a><ul class="menu"><li><a class="quickLink">The VCard Class</a></li><li><a class="quickLink">The VCardProperty Class</a></li><li><a class="quickLink">Naming Conventions</a></li></ul></li><li><a class="quickLink">Efficient building and editing of VCard objects using VCardBuilder</a></li><li><a class="quickLink">Extension methods</a></li><li><a class="quickLink">Parsing and serializing VCF files using the Vcf class</a></li><li><a class="quickLink">The vCard 4.0 data synchronization mechanism</a></li><li><a class="quickLink">Reading the Project Reference</a></li><li><a class="quickLink">The vCard Standard</a></li></ul></nav></div></div></div><footer id="PageFooter" class="footer border-top py-3 fixedFooter"><div class="columns"><div id="FooterContent" class="column"><p>Copyright © 2020 Folker Kinzel</p> 
+				</div></div></footer></div><script>$(function(){
+SetDefaultLanguage("cs");
+LoadTocFile(null, null);
+InitializeQuickLinks();
+
+$(".toggleSection" ).click(function () {
+    SectionExpandCollapse(this);
+});
+
+$(".toggleSection").keypress(function () {
+    SectionExpandCollapseCheckKey(this, event)
+});
+hljs.highlightAll();
+});</script></body></html>

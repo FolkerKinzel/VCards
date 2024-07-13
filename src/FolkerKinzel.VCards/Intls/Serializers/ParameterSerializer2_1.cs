@@ -74,10 +74,10 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
         //AppendNonStandardParameters();
     }
 
-    protected override void BuildGeoPara()
-    {
-        // none parameters
-    }
+    //protected override void BuildGeoPara()
+    //{
+    //    // none parameters
+    //}
 
     protected override void BuildKeyPara()
     {
@@ -146,10 +146,10 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
     //    // keine Parameter
     //}
 
-    protected override void BuildRevPara()
-    {
-        // none parameters
-    }
+    //protected override void BuildRevPara()
+    //{
+    //    // none parameters
+    //}
 
     protected override void BuildRolePara()
     {
@@ -195,10 +195,10 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
         AppendLanguage();
     }
 
-    protected override void BuildTzPara()
-    {
-        // keine Parameter
-    }
+    //protected override void BuildTzPara()
+    //{
+    //    // none parameters
+    //}
 
     protected override void BuildUidPara() => AppendValue(); // z.B. Inhalt: Url zu einem Webservice, der die neueste Version der vCard liefert
 
@@ -229,91 +229,6 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
         AppendValue();
         AppendNonStandardParameters();
     }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildOrgDirectoryPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildInterestPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildHobbyPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildExpertisePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildDeathPlacePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildDeathDatePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildBirthPlacePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildXmlPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildSourcePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildSortStringPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildRelatedPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildProfilePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildProdidPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildNicknamePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildNamePara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildMemberPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildLangPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildKindPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildImppPara(bool isPref) { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildGenderPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildFburlPara(bool isPref) { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildClientpidmapPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildClassPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildCategoriesPara() { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildCapuriPara(bool isPref) { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildCaluriPara(bool isPref) { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildCaladruriPara(bool isPref) { }
-
-    [ExcludeFromCodeCoverage]
-    protected override void BuildAnniversaryPara() { }
-
 
     #endregion
 
@@ -367,9 +282,16 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
             AppendV2_1Type(ParameterSection.TypeValue.PREF);
         }
 
-        if (Options.HasFlag(Opts.WriteNonStandardParameters) && ParaSection.NonStandard is not null)
+        if (Options.HasFlag(Opts.WriteNonStandardParameters))
         {
-            foreach (KeyValuePair<string, string> kvp in ParaSection.NonStandard)
+            IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
+
+            if (nonStandard is null)
+            {
+                return;
+            }
+
+            foreach (KeyValuePair<string, string> kvp in nonStandard)
             {
                 if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key,
                                                             ParameterSection.ParameterKey.TYPE)
@@ -431,6 +353,7 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
             AppendParameter(ParameterSection.ParameterKey.VALUE, contentLocation.ToVcfString());
         }
     }
+
 
     #endregion
 }

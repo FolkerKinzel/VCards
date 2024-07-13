@@ -330,12 +330,14 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.NonStandards:
                     AppendNonStandardProperties((IEnumerable<NonStandardProperty?>)kvp.Value);
                     break;
+                case Prop.ContactUris:
+                    AppendContactUris((IEnumerable<TextProperty?>)kvp.Value);
+                    break;
                 default:
                     break;
             }//switch
         }//foreach
     }
-
 
     protected void BuildProperty(string propertyKey, VCardProperty prop, bool isPref = false)
     {
@@ -547,6 +549,9 @@ internal abstract class VcfSerializer : IDisposable
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendCategories(IEnumerable<StringCollectionProperty?> value) { }
+
+    [ExcludeFromCodeCoverage]
+    protected virtual void AppendContactUris(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendDeathDateViews(IEnumerable<DateAndOrTimeProperty?> value) { }

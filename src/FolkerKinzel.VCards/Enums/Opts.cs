@@ -13,12 +13,6 @@ namespace FolkerKinzel.VCards.Enums;
 /// <see cref="OptsExtension" /> class.
 /// </note>
 /// <para>
-/// Die Flags <see cref="WriteWabExtensions" />, <see cref="WriteXExtensions" />,
-/// <see cref="WriteEvolutionExtensions" /> und <see cref="WriteKAddressbookExtensions"
-/// /> steuern die automatische Verwendung von Non-Standard-Properties. Auch wenn
-/// diese Flags gesetzt sind, werden die Non-Standard-Properties nur dann automatisch
-/// erzeugt, wenn der gewählte vCard-Standard kein standardisiertes Äquivalent ermöglicht.
-/// 
 /// The flags <see cref="WriteWabExtensions" />, <see cref="WriteXExtensions" />,  
 /// <see cref="WriteEvolutionExtensions" />, and <see cref="WriteKAddressbookExtensions" /> 
 /// control the automatic generation of <see cref="NonStandardProperty"/> objects. 
@@ -40,10 +34,10 @@ public enum Opts
     /// | <see cref="WriteRfc6474Extensions" /> | <see cref="WriteRfc6715Extensions" /> 
     /// | <see cref="WriteImppExtension" /> | <see cref="WriteXExtensions" /> 
     /// | <see cref="AllowMultipleAdrAndLabelInVCard21" /> | <see cref="UpdateTimeStamp"/>
-    /// | <see cref="WriteRfc2739Extensions"/>) </summary>
+    /// | <see cref="WriteRfc2739Extensions"/> | <see cref="WriteRfc8605Extensions"/>) </summary>
     Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions
             | WriteImppExtension | WriteXExtensions | AllowMultipleAdrAndLabelInVCard21
-            | UpdateTimeStamp | WriteRfc2739Extensions,
+            | UpdateTimeStamp | WriteRfc2739Extensions | WriteRfc8605Extensions,
 
     /// <summary>Set the flag to write property group identifiers.</summary>
     WriteGroups = 1,
@@ -122,4 +116,10 @@ public enum Opts
     /// <summary>Set the flag to write the extensions from RFC 2739 (<c>FBURL</c>,
     /// <c>CALURI</c>, <c>CALADRURI</c>) in vCard&#160;3.0.</summary>
     WriteRfc2739Extensions = 1 << 16,
+
+    /// <summary>Set the flag to write the extensions from RFC 8605 (<c>FBURL</c>,
+    /// <c>CONTACT-URI</c> property, <c>CC</c> parameter) in vCard&#160;4.0.</summary>
+    WriteRfc8605Extensions = 1 << 17,
+
+
 }

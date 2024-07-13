@@ -161,6 +161,9 @@ public sealed partial class ParameterSection
                 case ParameterKey.CONTEXT:
                     this.Context = parameter.Value.Span.Trim(TRIM_CHARS).ToString();
                     break;
+                case ParameterKey.CC:
+                    this.CountryCode = parameter.Value.Span.Trim(TRIM_CHARS).ToString();
+                    break;
                 case ParameterKey.INDEX:
                     {
                         if (_Int.TryParse(parameter.Value.Span.Trim(TRIM_CHARS), out int result))

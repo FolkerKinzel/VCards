@@ -2,9 +2,9 @@
 ## Roadmap
 ### 8.0.0
 - [ ] Fix the issue that with `UID` only Guid values are supported
-    - [ ]  Inplement an `ContactID` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
+    - [ ] Implement a `ContactID` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
     - [ ] Let the 'IDProperty' have an instance of the `ContactID` class as value.
-    - [ ] Change the `Relation` class to hold an `ContactID` instance rather than a `Guid` value.
+    - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
 
 ### 7.4.0
 - [ ] Implement `VCard.Clean()`.
@@ -81,14 +81,14 @@
         `Opts.WriteRfc9554Extensions` flag is not set.
 
 ### 7.2.0
-- [ ] Implement RFC 8605:
-    - [ ] Make new enum value `Opts.WriteRfc8605Extensions`
-    - [ ] Change the `VCard` class
-        - [ ] Add property: `TextProperty ContactUri {get; set;}`
-    - [ ] Change the `VCardBuilder` class
-        - [ ] Add property: `TextSingletonBuilder ContactUri {get;}`
-    - [ ] Change the ParameterSection class
-        - [ ] Add property `string? CountryCode` that takes an ISO 3166 two-character country code
+- [x] Implement RFC 8605:
+    - [x] Make new enum value `Opts.WriteRfc8605Extensions`
+    - [x] Change the `VCard` class
+        - [ ] Add property: `IEnumerable<TextProperty?>? ContactUris {get; set;}`
+    - [x] Change the `VCardBuilder` class
+        - [x] Add property: `TextBuilder ContactUris {get;}`
+    - [x] Change the ParameterSection class
+        - [x] Add property `string? CountryCode` that takes an ISO 3166 two-character country code
 
 ### 7.0.0
 - [x] Add generic overloads to the VCardBuilder-Parts Edit methods to pass data without having to use closures.

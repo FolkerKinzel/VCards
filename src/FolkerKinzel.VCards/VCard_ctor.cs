@@ -172,6 +172,9 @@ public sealed partial class VCard
                 case PropKeys.URL:
                     Urls = Concat(Urls, new TextProperty(vcfRow, Version));
                     break;
+                case PropKeys.NonStandard.CONTACT_URI:
+                    ContactUris = Concat(ContactUris, new TextProperty(vcfRow, Version));
+                    break;
                 case PropKeys.UID:
                     ID = new IDProperty(vcfRow);
                     break;
