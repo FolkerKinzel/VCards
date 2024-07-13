@@ -1,0 +1,46 @@
+# Clone Method
+
+
+Creates a new object that is a copy of the current instance.
+
+
+
+## Definition
+**Namespace:** <a href="10623553-9342-5b8f-9df4-6e7d1075f3df.md">FolkerKinzel.VCards.Models</a>  
+**Assembly:** FolkerKinzel.VCards (in FolkerKinzel.VCards.dll) Version: 7.2.0-beta.1+92a9170dd6e89cb66392c26e0acddb6434e3fbc1
+
+**C#**
+``` C#
+public override Object Clone()
+```
+**VB**
+``` VB
+Public Overrides Function Clone As Object
+```
+**C++**
+``` C++
+public:
+virtual Object^ Clone() override
+```
+**F#**
+``` F#
+abstract Clone : unit -> Object 
+override Clone : unit -> Object 
+```
+
+
+
+#### Return Value
+<a href="https://learn.microsoft.com/dotnet/api/system.object" target="_blank" rel="noopener noreferrer">Object</a>  
+A new object that is a copy of this instance.
+
+#### Implements
+<a href="https://learn.microsoft.com/dotnet/api/system.icloneable.clone" target="_blank" rel="noopener noreferrer">ICloneable.Clone()</a>  
+
+
+## See Also
+
+
+#### Reference
+<a href="52a044c9-1789-4d63-5ed0-8e3801dc435b.md">AppIDProperty Class</a>  
+<a href="10623553-9342-5b8f-9df4-6e7d1075f3df.md">FolkerKinzel.VCards.Models Namespace</a>  
