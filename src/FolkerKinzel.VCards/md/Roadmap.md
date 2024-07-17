@@ -6,6 +6,9 @@
     - [ ] Let the 'IDProperty' have an instance of the `ContactID` class as value.
     - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
 
+- [ ] Rename the `Opts` enum to `VcfOpts` (to separate it from JSContactOpts)
+- [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
+
 ### 7.4.0
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
