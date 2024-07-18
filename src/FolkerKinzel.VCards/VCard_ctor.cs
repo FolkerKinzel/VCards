@@ -40,6 +40,7 @@ public sealed partial class VCard
 
         foreach (KeyValuePair<Prop, object> kvp in vCard._propDic)
         {
+#pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
             Set(kvp.Key, kvp.Value switch
             {
                 XmlProperty xmlProp => xmlProp.Clone(),
@@ -73,13 +74,8 @@ public sealed partial class VCard
                 IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(cloner).Cast<TimeZoneProperty?>().ToArray(),
 
                 ICloneable cloneable => cloneable.Clone(), // AccessProperty, KindProperty, TimeStampProperty, UuidProperty
-
-#if DEBUG
-                _ => throw new NotImplementedException(Res.UnrecognizedDataType)
-#else
-                _ => kvp.Value
-#endif
             });
+#pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
         }//foreach
 
         Debug.Assert(VCard.IsAppRegistered);

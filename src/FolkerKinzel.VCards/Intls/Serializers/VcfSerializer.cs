@@ -12,13 +12,8 @@ internal abstract class VcfSerializer : IDisposable
 {
     private const int BUILDER_INITIAL_CAPACITY = 128;
 
-    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     internal const string X_KADDRESSBOOK_X_SpouseName = "X-KADDRESSBOOK-X-SpouseName";
-
-    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     internal const string X_KADDRESSBOOK_X_Anniversary = "X-KADDRESSBOOK-X-Anniversary";
-
-    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     internal const string X_KADDRESSBOOK_X_IMAddress = "X-KADDRESSBOOK-X-IMAddress";
 
     private readonly char[] _byteCounterArr = new char[1];
@@ -333,8 +328,6 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.ContactUris:
                     AppendContactUris((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                default:
-                    break;
             }//switch
         }//foreach
     }
@@ -381,7 +374,7 @@ internal abstract class VcfSerializer : IDisposable
 
                 XMessengerParameterConverter.ConvertFromInstantMessengerType(prop.Parameters);
 
-                var val = prop.Value.AsSpan();
+                ReadOnlySpan<char> val = prop.Value.AsSpan();
 
                 if (val.StartsWith("aim:", StringComparison.OrdinalIgnoreCase))
                 {

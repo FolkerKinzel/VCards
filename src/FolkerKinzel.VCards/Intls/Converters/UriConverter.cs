@@ -59,14 +59,11 @@ internal static class UriConverter
             return ".htm";
         }
 
-#if NETSTANDARD2_0 || NET462
-        // On Windows this is never true but NETSTANDARD2_0 can
-        // be used on several platforms
-        if (segment.ContainsAny(Path.GetInvalidPathChars()))
-        {
-            return MimeCache.DefaultFileTypeExtension;
-        }
-#endif
+        // Path.GetExtension can throw an ArgumentException in NETSTANDARD2_0 and NET462
+        // if segments would contain one of the characters defined in Path.GetInvalidPathChars().
+        // I think this can never happen here because segment comes from Uri.AbsoluteUri
+        // and has all non-URI characters URL-encoded.
+
         string ext = Path.GetExtension(segment);
         return ext.StartsWith('.') ? ext : MimeCache.DefaultFileTypeExtension;
     }

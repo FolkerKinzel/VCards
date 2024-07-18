@@ -89,7 +89,7 @@ public sealed partial class VCard
 
                 if (vcard.Members is not null)
                 {
-                    List<RelationProperty?> members = vcard.Members.ToList();
+                    var members = vcard.Members.ToList();
                     vcard.Members = members;
 
                     DoSetReferences(vCards, members);
@@ -97,7 +97,7 @@ public sealed partial class VCard
 
                 if (vcard.Relations is not null)
                 {
-                    List<RelationProperty?> relations = vcard.Relations.ToList();
+                    var relations = vcard.Relations.ToList();
                     vcard.Relations = relations;
 
                     DoSetReferences(vCards, relations);
@@ -224,14 +224,14 @@ public sealed partial class VCard
         {
             if (vc.Relations is not null)
             {
-                List<RelationProperty?> relations = vc.Relations.ToList();
+                var relations = vc.Relations.ToList();
                 vc.Relations = relations;
                 DoDereference(relations, vCards);
             }
 
             if (vc.Members is not null)
             {
-                List<RelationProperty?> members = vc.Members.ToList();
+                var members = vc.Members.ToList();
                 vc.Members = members;
                 DoDereference(members, vCards);
             }

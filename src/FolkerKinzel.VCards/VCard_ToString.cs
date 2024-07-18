@@ -1,4 +1,5 @@
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards;
 
@@ -14,7 +15,7 @@ public sealed partial class VCard
 
         foreach (Group group in Groups)
         {
-            foreach (var entity in group.OrderBy(x => x.Key))
+            foreach (Entity entity in group.OrderBy(x => x.Key))
             {
                 AppendEntity(entity);
             }
@@ -43,8 +44,8 @@ public sealed partial class VCard
         {
             const string INDENT = "    ";
 
-            var key = entity.Key;
-            var vcdProp = entity.Value;
+            Prop key = entity.Key;
+            VCardProperty vcdProp = entity.Value;
 
             string s = vcdProp.Parameters.ToString();
 

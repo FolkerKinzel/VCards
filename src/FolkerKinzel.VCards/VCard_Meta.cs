@@ -17,6 +17,7 @@ public sealed partial class VCard
     /// any usable data, otherwise <c>false</c>.</returns>
     public bool IsEmpty()
     {
+#pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
         return !_propDic
             .Where(static x => !IsNonContentProperty(x.Key))
             .Select(static x => x.Value)
@@ -24,8 +25,8 @@ public sealed partial class VCard
             {
                 VCardProperty prop => !prop.IsEmpty,
                 IEnumerable<VCardProperty?> numerable => numerable.Any(x => !(x?.IsEmpty ?? true)),
-                _ => false
             });
+#pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
 
         static bool IsNonContentProperty(Prop prop)
         {
@@ -74,7 +75,7 @@ public sealed partial class VCard
     {
         int i = -1;
 
-        foreach (var group in GroupIDs)
+        foreach (string group in GroupIDs)
         {
             if (int.TryParse(group, out int result) && result > i)
             {
@@ -87,7 +88,7 @@ public sealed partial class VCard
 
     private IEnumerable<string> EnumerateGroupIDs()
     {
-        foreach (var kvp in _propDic)
+        foreach (KeyValuePair<Prop, object> kvp in _propDic)
         {
             if (kvp.Value is VCardProperty prop && prop.Group is not null)
             {
