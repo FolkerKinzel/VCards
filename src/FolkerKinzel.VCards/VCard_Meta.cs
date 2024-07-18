@@ -30,18 +30,11 @@ public sealed partial class VCard
 
         static bool IsNonContentProperty(Prop prop)
         {
-            switch (prop)
+            return prop switch
             {
-                case Prop.TimeStamp:
-                case Prop.AppIDs:
-                case Prop.ID:
-                case Prop.Kind:
-                case Prop.Access:
-                case Prop.Mailer:
-                case Prop.ProductID:
-                case Prop.Profile: return true;
-                default: return false;
-            }
+                Prop.TimeStamp or Prop.AppIDs or Prop.ID or Prop.Kind or Prop.Access or Prop.Mailer or Prop.ProductID or Prop.Profile => true,
+                _ => false,
+            };
         }
     }
 
