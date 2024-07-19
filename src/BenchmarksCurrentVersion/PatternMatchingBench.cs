@@ -66,9 +66,9 @@ public class PatternMatchingBench
         return result;
     }
 
-    static bool HasToBeQuoted(int bt) => bt != '\t' && (bt > 126 || bt == '=' || bt < 32);
+    private static bool HasToBeQuoted(int bt) => bt != '\t' && (bt > 126 || bt == '=' || bt < 32);
 
-    static bool HasToBeQuotedPatternMatching(int bt) => bt is not '\t' and (> 126 or '=' or < 32);
+    private static bool HasToBeQuotedPatternMatching(int bt) => bt is not '\t' and (> 126 or '=' or < 32);
 
 
 }

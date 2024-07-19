@@ -74,6 +74,9 @@ public sealed partial class VCard
                 IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(cloner).Cast<TimeZoneProperty?>().ToArray(),
 
                 ICloneable cloneable => cloneable.Clone(), // AccessProperty, KindProperty, TimeStampProperty, UuidProperty
+#if DEBUG
+                _ => throw new NotImplementedException()
+#endif
             });
 #pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
         }//foreach

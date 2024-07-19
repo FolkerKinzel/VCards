@@ -167,14 +167,5 @@ namespace FolkerKinzel.VCards.Resources {
                 return ResourceManager.GetString("StreamNotWritable", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unrecognized data type..
-        /// </summary>
-        internal static string UnrecognizedDataType {
-            get {
-                return ResourceManager.GetString("UnrecognizedDataType", resourceCulture);
-            }
-        }
     }
 }

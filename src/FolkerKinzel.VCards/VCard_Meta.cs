@@ -25,6 +25,9 @@ public sealed partial class VCard
             {
                 VCardProperty prop => !prop.IsEmpty,
                 IEnumerable<VCardProperty?> numerable => numerable.Any(x => !(x?.IsEmpty ?? true)),
+#if DEBUG
+                _ => throw new NotImplementedException()
+#endif
             });
 #pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
 

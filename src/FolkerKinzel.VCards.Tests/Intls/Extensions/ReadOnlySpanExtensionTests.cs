@@ -107,7 +107,7 @@ public class ReadOnlySpanExtensionTests
     [TestMethod]
     public void UnMaskParameterValueTest2()
     {
-        string trailing = new string('a', 500);
+        string trailing = new('a', 500);
         string s = "^'" + trailing;
 
         Assert.AreEqual("\"" + trailing, s.AsSpan().UnMaskParameterValue(false));
