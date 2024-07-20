@@ -76,12 +76,12 @@ internal abstract class VcfSerializer : IDisposable
 
     protected void BuildFirstProperty<T>(string propertyKey,
                                          IEnumerable<T?> serializables,
-                                         Func<T, bool>? filter = null) where T : VCardProperty
+                                         Func<T, bool> filter) where T : VCardProperty
     {
         Debug.Assert(serializables is not null);
+        Debug.Assert(filter is not null);
 
-        VCardProperty? first = filter is null ? serializables.FirstOrNullIntl(IgnoreEmptyItems)
-                                              : serializables.FirstOrNullIntl(filter, IgnoreEmptyItems);
+        VCardProperty? first = serializables.FirstOrNullIntl(filter, IgnoreEmptyItems);
 
         if (first is not null)
         {
@@ -495,41 +495,41 @@ internal abstract class VcfSerializer : IDisposable
         Debug.Assert(value is not null);
 
         if (value.WhereNotEmpty()
-                 .FirstOrDefault(static x => x is DateOnlyProperty) is DateOnlyProperty pref)
+                 .FirstOrDefault(static x => x.Value!.TryAsDateOnly(out _)) is DateAndOrTimeProperty prop)
         {
+            _ = prop.Value!.TryAsDateOnly(out DateOnly dto);
+
             if (Options.HasFlag(Opts.WriteXExtensions))
             {
-                BuildAnniversary(VCard.PropKeys.NonStandard.X_ANNIVERSARY, pref.Group);
+                BuildAnniversary(dto, VCard.PropKeys.NonStandard.X_ANNIVERSARY, prop.Group);
             }
 
             if (Options.HasFlag(Opts.WriteEvolutionExtensions))
             {
-                BuildAnniversary(VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY, pref.Group);
+                BuildAnniversary(dto, VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY, prop.Group);
             }
 
             if (Options.HasFlag(Opts.WriteKAddressbookExtensions))
             {
-                BuildAnniversary(VcfSerializer.X_KADDRESSBOOK_X_Anniversary, pref.Group);
+                BuildAnniversary(dto, VcfSerializer.X_KADDRESSBOOK_X_Anniversary, prop.Group);
             }
 
             if (Options.HasFlag(Opts.WriteWabExtensions))
             {
-                BuildAnniversary(VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY, pref.Group);
-            }
-
-            void BuildAnniversary(string propKey, string? group)
-            {
-                DateOnly dto = pref.Value;
-
-                var xAnniversary = new NonStandardProperty(
-                    propKey,
-                    pref.IsEmpty ? null : string.Format(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}",
-                                  dto.Year, dto.Month, dto.Day),
-                    group);
-
-                BuildProperty(propKey, xAnniversary);
+                BuildAnniversary(dto, VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY, prop.Group);
             }
         }
+    }
+
+    private void BuildAnniversary(DateOnly dto, string propKey, string? group)
+    {
+        var xAnniversary = new NonStandardProperty(
+            propKey,
+            string.Format(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}",
+                          dto.Year, dto.Month, dto.Day),
+            group);
+
+        BuildProperty(propKey, xAnniversary);
     }
 
     [ExcludeFromCodeCoverage]
@@ -578,7 +578,7 @@ internal abstract class VcfSerializer : IDisposable
     {
         Debug.Assert(value is not null);
 
-        if (value.FirstOrDefault(x => x?.Value?.Sex is not null) is GenderProperty pref)
+        if (value.FirstOrDefault(x => x?.Value.Sex is not null) is GenderProperty pref)
         {
             Sex sex = pref.Value.Sex!.Value;
 

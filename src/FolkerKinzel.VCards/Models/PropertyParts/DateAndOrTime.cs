@@ -87,7 +87,7 @@ public sealed partial class DateAndOrTime
     /// 
     public bool TryAsDateOnly(out DateOnly value)
     {
-        var result = _oneOf.Match<(DateOnly Value, bool Result)>
+        (DateOnly Value, bool Result) result = _oneOf.Match<(DateOnly Value, bool Result)>
          (
           dateOnly => (dateOnly, true),
           dtOffset => dtOffset.HasDate()

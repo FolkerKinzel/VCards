@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Tests.Intls.Serializers;
 
 [TestClass]
@@ -99,5 +100,53 @@ public class VcfSerializerTests
         Assert.AreEqual(null, prodID.Parameters.Index);
         Assert.AreEqual(null, vc.AppIDs!.ElementAt(1).Parameters.Index);
 
+    }
+
+    [TestMethod]
+    public void AppendGenderViewsTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .GenderViews.Edit(props => [null])
+            .GenderViews.Add(null, "something other")
+            .GenderViews.Add(null, null)
+            .GenderViews.Add(Sex.Other)
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V3_0);
+
+        vc = Vcf.Parse(vcf)[0];
+
+        Assert.IsNull(vc.GenderViews);
+    }
+
+    [TestMethod]
+    public void AppendGenderViewsTest2()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .GenderViews.Add(Sex.Male)
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V3_0, options: Opts.Default.Set(Opts.WriteWabExtensions));
+
+        vc = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vc.GenderViews);
+    }
+
+    [TestMethod]
+    public void AppendGenderViewsTest3()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .GenderViews.Edit(props => [null])
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V3_0);
+
+        vc = Vcf.Parse(vcf)[0];
+
+        Assert.IsNull(vc.GenderViews);
     }
 }

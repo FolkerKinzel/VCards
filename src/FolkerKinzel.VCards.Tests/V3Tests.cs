@@ -642,4 +642,94 @@ END:VCARD";
         Assert.AreEqual(Adr.Dom | Adr.Postal | Adr.Parcel,
                         vc.Addresses!.First()!.Parameters.AddressType);
     }
+
+    [TestMethod]
+    public void BirthdayTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .BirthDayViews.Add(DateTimeOffset.Now)
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V3_0);
+
+        StringAssert.Contains(vcf, "BDAY", StringComparison.Ordinal);
+    }
+
+    [TestMethod]
+    public void BirthdayTest2()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .BirthDayViews.Add("After midnight")
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V3_0);
+
+        Assert.IsFalse(vcf.Contains("BDAY", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [TestMethod]
+    public void LogoPhotoSoundTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Logos.AddText("text")
+            .Photos.AddText("text")
+            .Sounds.AddText("text")
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V3_0);
+
+        Assert.IsFalse(vcf.Contains("LOGO", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(vcf.Contains("PHOTO", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(vcf.Contains("SOUND", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [TestMethod]
+    public void AddressTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Addresses.Add("street", null, null, null)
+            .Addresses.Add("street2", null, null, null)
+            .Addresses.SetPreferences()
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V3_0);
+
+        Assert.IsTrue(vcf.Contains("PREF", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [TestMethod]
+    public void OrgTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Organizations.Edit(props => [null])
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V3_0);
+
+        Assert.IsFalse(vcf.Contains("ORG", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [TestMethod]
+    public void SortStringTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Organizations.Add("Contoso", parameters: p => p.SortAs = ["Org"])
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V3_0);
+
+        vc = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vc.Organizations);
+        Assert.IsNull(vc.Organizations.First()!.Parameters.SortAs);
+        Assert.IsNotNull(vc.NameViews);
+        Assert.IsNotNull(vc.NameViews.First()!.Parameters.SortAs);
+        Assert.AreEqual("Org", vc.NameViews.First()!.Parameters.SortAs!.First());
+    }
 }

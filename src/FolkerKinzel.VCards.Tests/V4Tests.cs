@@ -518,5 +518,35 @@ public class V4Tests
         Assert.AreEqual(1, vc.Relations!.First()!.Parameters.NonStandard!.Count());
 
     }
+
+    [TestMethod]
+    public void LogoPhotoSoundTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Logos.AddText("text")
+            .Photos.AddText("text")
+            .Sounds.AddText("text")
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V4_0);
+
+        Assert.IsFalse(vcf.Contains("LOGO", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(vcf.Contains("PHOTO", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(vcf.Contains("SOUND", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [TestMethod]
+    public void AltIdTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .BirthDayViews.Edit(props => [null])
+            .BirthDayViews.Add("After midnight")
+            .BirthDayViews.Add(1980, 7, 2, parameters: p => p.AltID = "@007")
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V4_0);
+    }
 }
 

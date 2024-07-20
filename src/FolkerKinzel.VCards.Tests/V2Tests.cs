@@ -525,5 +525,62 @@ public class V2Tests
 
     }
 
-    
+    [TestMethod]
+    public void BirthdayTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .BirthDayViews.Add(DateTimeOffset.Now)
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V2_1);
+
+        StringAssert.Contains(vcf, "BDAY", StringComparison.Ordinal);
+    }
+
+
+    [TestMethod]
+    public void BirthdayTest2()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .BirthDayViews.Add("After midnight")
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V2_1);
+
+        Assert.IsFalse(vcf.Contains("BDAY", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [TestMethod]
+    public void LogoPhotoSoundTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Logos.AddText("text")
+            .Photos.AddText("text")
+            .Sounds.AddText("text")
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V2_1);
+
+        Assert.IsFalse(vcf.Contains("LOGO", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(vcf.Contains("PHOTO", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(vcf.Contains("SOUND", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [TestMethod]
+    public void QuotedPrintableEncodedUriTest1()
+    {
+        const string vcf = """
+            BEGIN:VCARD
+            PHOTO;URL;QUOTED-PRINTABLE;UTF-8:http://k=C3=A4se.com
+            END:VCARD
+            """;
+
+        VCard vc = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vc.Photos);
+        Assert.AreEqual("http://käse.com", vc.Photos.First()!.Value?.Uri?.OriginalString);
+    }
 }

@@ -233,7 +233,10 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         OrgProperty? pref = value.PrefOrNullIntl(IgnoreEmptyItems);
 
-        if (pref is null) { return; }
+        if (pref is null) 
+        { 
+            return; 
+        }
 
         BuildProperty(VCard.PropKeys.ORG, pref);
 
@@ -241,13 +244,12 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
         if (sortString is not null)
         {
+            // Required property
             Debug.Assert(VCardToSerialize.NameViews is not null);
 
             if (VCardToSerialize.NameViews!
-                               .FirstOrNullIntl(IgnoreEmptyItems)?
-                               .Parameters
-                               .SortAs?
-                               .Any(static x => !string.IsNullOrWhiteSpace(x)) ?? false)
+                                .FirstOrNullIntl(IgnoreEmptyItems)?
+                                .Parameters.SortAs?.Any() ?? false)
             { 
                 return; 
             }

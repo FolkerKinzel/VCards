@@ -61,6 +61,8 @@ public class UriConverterTests
         => Assert.AreEqual(".htm", UriConverter.GetFileTypeExtensionFromUri(
             new Uri(input, UriKind.RelativeOrAbsolute)));
 
-
+    [TestMethod]
+    public void GetFileTypeExtensionFromUriTest7()
+        => Assert.AreEqual(".bin", UriConverter.GetFileTypeExtensionFromUri(new Uri("https://www.contoso.com/picture/png", UriKind.Absolute)));
 }
 
