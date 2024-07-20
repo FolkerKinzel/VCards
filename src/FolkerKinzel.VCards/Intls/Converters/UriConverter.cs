@@ -4,6 +4,8 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class UriConverter
 {
+    private const string HTM = ".htm";
+
     internal static bool TryConvertToAbsoluteUri(string? value, [NotNullWhen(true)] out Uri? uri)
     {
         uri = null;
@@ -24,7 +26,7 @@ internal static class UriConverter
         {
             return false;
         }
-        //value = value.ReplaceWhiteSpaceWith(ReadOnlySpan<char>.Empty);
+
         return TryConvertToAbsoluteUri("http://" + value, out uri);
     }
 
@@ -37,18 +39,15 @@ internal static class UriConverter
     }
 
     internal static string GetFileTypeExtensionFromUri(Uri? uri)
+        => uri is null
+            ? MimeCache.DefaultFileTypeExtension
+            : uri.IsAbsoluteUri 
+                ? ParseFileTypeExtFromAbsoluteUri(uri)
+                : ParseFileTypeExtFromRelativeUri(uri);
+    
+
+    private static string ParseFileTypeExtFromAbsoluteUri(Uri uri)
     {
-        if (uri is null)
-        {
-            return MimeCache.DefaultFileTypeExtension;
-        }
-
-        if (!uri.IsAbsoluteUri)
-        {
-            return Uri.TryCreate(new Uri("http://a"), uri, out uri) ? GetFileTypeExtensionFromUri(uri)
-                                                                    : MimeCache.DefaultFileTypeExtension;
-        }
-
         Debug.Assert(uri.IsAbsoluteUri);
         string[] segments = uri.Segments;
         Debug.Assert(segments.Length > 0);
@@ -56,15 +55,37 @@ internal static class UriConverter
 
         if (segment == "/")
         {
-            return ".htm";
+            // Points to a directory
+            // We guess that the server will return *.htm
+            return HTM;
         }
 
         // Path.GetExtension can throw an ArgumentException in NETSTANDARD2_0 and NET462
         // if segments would contain one of the characters defined in Path.GetInvalidPathChars().
         // I think this can never happen here because segment comes from Uri.AbsoluteUri
         // and has all non-URI characters URL-encoded.
-
         string ext = Path.GetExtension(segment);
         return ext.StartsWith('.') ? ext : MimeCache.DefaultFileTypeExtension;
+    }
+
+    private static string ParseFileTypeExtFromRelativeUri(Uri uri)
+    {
+        string originalString = uri.OriginalString;
+
+        if (originalString.EndsWith('/') || !originalString.Contains('/'))
+        {
+            // Points to a directory
+            // We guess that the server will return *.htm
+            return HTM;
+        }
+
+        // Escape the OriginalString because
+        // Path.GetExtension can throw an ArgumentException in NETSTANDARD2_0 and NET462
+        // if segments would contain one of the characters defined in Path.GetInvalidPathChars().
+#if NETSTANDARD2_0 || NET462
+            originalString = Uri.EscapeDataString(originalString);
+#endif
+        string extRel = Path.GetExtension(originalString);
+        return extRel.StartsWith('.') ? extRel : MimeCache.DefaultFileTypeExtension;
     }
 }

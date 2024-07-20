@@ -19,7 +19,7 @@ internal sealed class ReferencedDataProperty : DataProperty
         string? mime = Parameters.MediaType;
 
         return mime is not null ? MimeString.ToFileTypeExtension(mime)
-                            : UriConverter.GetFileTypeExtensionFromUri(Value);
+                                : UriConverter.GetFileTypeExtensionFromUri(Value);
     }
 
     /// <inheritdoc />

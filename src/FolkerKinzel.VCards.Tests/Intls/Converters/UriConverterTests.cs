@@ -37,7 +37,7 @@ public class UriConverterTests
 
     [TestMethod]
     public void GetFileTypeExtensionFromUriTest2()
-        => Assert.AreEqual(".png", UriConverter.GetFileTypeExtensionFromUri(new Uri("picture.png", UriKind.Relative)));
+        => Assert.AreEqual(".png", UriConverter.GetFileTypeExtensionFromUri(new Uri("./picture.png", UriKind.Relative)));
 
     [TestMethod]
     public void GetFileTypeExtensionFromUriTest3()
@@ -47,6 +47,19 @@ public class UriConverterTests
     public void GetFileTypeExtensionFromUriTest4()
         => Assert.AreEqual(".htm", UriConverter.GetFileTypeExtensionFromUri(
             new Uri("http://contoso.com", UriKind.Absolute)));
+
+
+    [TestMethod]
+    public void GetFileTypeExtensionFromUriTest5()
+        => Assert.AreEqual(".pdf", UriConverter.GetFileTypeExtensionFromUri(
+            new Uri("../.../../contäso.pdf", UriKind.Relative)));
+
+    [DataTestMethod]
+    [DataRow("www.folker.de/")]
+    [DataRow("www.folker.de")]
+    public void GetFileTypeExtensionFromUriTest6(string input)
+        => Assert.AreEqual(".htm", UriConverter.GetFileTypeExtensionFromUri(
+            new Uri(input, UriKind.RelativeOrAbsolute)));
 
 
 }
