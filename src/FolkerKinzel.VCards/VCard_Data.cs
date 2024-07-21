@@ -678,6 +678,13 @@ public sealed partial class VCard
         set => Set(Prop.Xmls, value);
     }
 
+    /// <summary>
+    /// Replaces <see cref="RelationTextProperty"/> instances in <see cref="Members"/>
+    /// with <see cref="RelationUriProperty"/> instances if possible, if not, with
+    /// <see cref="RelationVCardProperty"/> instances.
+    /// </summary>
+    /// <param name="ignoreEmptyItems">Specifies whether empty <see cref="VCardProperty"/>
+    /// instances should be ignored when serializing VCF.</param>
     internal void NormalizeMembers(bool ignoreEmptyItems)
     {
         if (Members is null)
@@ -702,7 +709,9 @@ public sealed partial class VCard
 
                 span[i] = Uri.TryCreate(textProp.Value?.Trim(), UriKind.Absolute, out Uri? uri)
                     ? RelationProperty.FromUri(uri, prop.Parameters.RelationType, prop.Group)
-                    : RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(textProp.Value) });
+                    : RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(textProp.Value) },
+                                                 prop.Parameters.RelationType,
+                                                 prop.Group);
             }
         }
     }

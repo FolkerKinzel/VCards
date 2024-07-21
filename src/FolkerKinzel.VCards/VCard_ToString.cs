@@ -63,8 +63,7 @@ public sealed partial class VCard
 
             string propStr = vcdProp.IsEmpty ? "<EMPTY>" : vcdProp.ToString();
 
-            if (propStr is not null &&
-                propStr.Contains(Environment.NewLine, StringComparison.Ordinal))
+            if (propStr.Contains(Environment.NewLine, StringComparison.Ordinal))
             {
                 string?[] arr = propStr.Split(Environment.NewLine, StringSplitOptions.None);
 

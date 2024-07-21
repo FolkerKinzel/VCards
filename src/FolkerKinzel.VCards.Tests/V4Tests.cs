@@ -255,6 +255,25 @@ public class V4Tests
     }
 
     [TestMethod]
+    public void MembersTest6()
+    {
+        var vc = new VCard
+        {
+            Members = RelationProperty.FromText(null),
+        };
+
+        Assert.IsNotNull(vc.Members);
+
+        string vcf = vc.ToVcfString(version: VCdVersion.V4_0, options: Opts.Default.Set(Opts.WriteEmptyProperties));
+
+        IList<VCard> list = Vcf.Parse(vcf);
+
+        Assert.IsNotNull(list);
+        Assert.AreEqual(2, list.Count);
+    }
+
+
+    [TestMethod]
     public void FburlTest()
     {
         const string workUrl = "WorkUrl";
@@ -426,7 +445,7 @@ public class V4Tests
             .NonStandards.Edit(props => [null])
             .VCard;
 
-        string serialized = vc.ToVcfString(VCdVersion.V4_0, 
+        string serialized = vc.ToVcfString(VCdVersion.V4_0,
             options: Opts.Default.Set(Opts.WriteNonStandardParameters)
                                  .Set(Opts.WriteNonStandardProperties)
                                  .Unset(Opts.SetPropertyIDs));
