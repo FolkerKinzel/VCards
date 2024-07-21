@@ -583,4 +583,32 @@ public class V2Tests
         Assert.IsNotNull(vc.Photos);
         Assert.AreEqual("http://käse.com", vc.Photos.First()!.Value?.Uri?.OriginalString);
     }
+
+
+    [TestMethod]
+    public void EmptyImppTest1()
+    {
+        const string vcf = """
+            BEGIN:VCARD
+            X-SKYPE:
+            END:VCARD
+            """;
+
+        VCard vc = Vcf.Parse(vcf)[0];
+        Assert.IsNull(vc.Messengers);
+    }
+
+    [TestMethod]
+    public void XAssistantTest1()
+    {
+        const string vcf = """
+            BEGIN:VCARD
+            X-SPOUSE:Spouse
+            X-ASSISTANT:Assistant
+            END:VCARD
+            """;
+
+        VCard vc = Vcf.Parse(vcf)[0];
+        Assert.IsNotNull(vc.Relations);
+    }
 }

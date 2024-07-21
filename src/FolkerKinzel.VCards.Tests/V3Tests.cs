@@ -732,4 +732,24 @@ END:VCARD";
         Assert.IsNotNull(vc.NameViews.First()!.Parameters.SortAs);
         Assert.AreEqual("Org", vc.NameViews.First()!.Parameters.SortAs!.First());
     }
+
+    [TestMethod]
+    public void AgentTest1()
+    {
+        const string vcf = """
+            BEGIN:VCARD
+            VERSION:3.0
+            FN:Test
+            AGENT:BEGIN:VCARDThis is not a vCard.
+            END:VCARD
+            """;
+
+        VCard vc = Vcf.Parse(vcf)[0];
+        Assert.IsNotNull(vc.Relations);
+        RelationProperty? rel = vc.Relations.First();
+        Assert.IsNotNull(rel);
+        Assert.IsNotNull(rel.Value);
+        Assert.AreEqual("BEGIN:VCARDThis is not a vCard.", rel.Value.String);
+        Assert.AreEqual(Rel.Agent, rel.Parameters.RelationType);
+    }
 }
