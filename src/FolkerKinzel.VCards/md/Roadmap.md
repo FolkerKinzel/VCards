@@ -31,7 +31,7 @@
     - Let it have a data struct `Dictionary<AdrProp, List<string>>`
     - Make it reusable implementing a `Clear` method
 - [ ] Give `AddressProperty` a ctor that takes an "AddressPropertyBuilder".
-- [ ] Implement `FolkerKinzel.VCards.NamePropertyBuilder` class
+- [x] Implement `FolkerKinzel.VCards.NamePropertyBuilder` class
     - Let it have a data struct `Dictionary<NameProp, List<string>>`
     - Make it reusable implementing a `Clear` method
 - [ ] Give `NameProperty` a ctor that takes a "NamePropertyBuilder".

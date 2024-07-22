@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FolkerKinzel.VCards.Intls.Enums;
+﻿using FolkerKinzel.VCards.Intls.Enums;
 
 namespace FolkerKinzel.VCards;
 
@@ -16,81 +10,157 @@ public class NamePropertyBuilder
     private readonly Dictionary<NameProp, List<string>> _dic = [];
 
     /// <summary>Adds a family name (also known as surname). (2,3,4)</summary>
-    public void AddFamilyName(string? familyName) => throw new NotImplementedException();
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToFamilyNames(string? familyName) => Add(NameProp.FamilyNames, familyName);
+
+    /// <summary>Adds the content of a <paramref name="collection"/> of family names (also known as surnames). (2,3,4)</summary>
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToFamilyNames(IEnumerable<string?> collection) => AddRange(NameProp.FamilyNames, collection);
 
     /// <summary>Adds a given name (first name). (2,3,4)</summary>
-    public void AddGivenName(string? givenName) => throw new NotImplementedException();
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToGivenNames(string? givenName) => Add(NameProp.GivenNames, givenName);
+
+    /// <summary>Adds the content of a <paramref name="collection"/> of given names (first names). (2,3,4)</summary>
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToGivenNames(IEnumerable<string?> collection) => AddRange(NameProp.GivenNames, collection);
 
     /// <summary>Adds an additional name (middle name). (2,3,4)</summary>
-    public void AddAdditionalName(string? givenName2) => throw new NotImplementedException();
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToAdditionalNames(string? givenName2) => Add(NameProp.AdditionalNames, givenName2);
+
+    /// <summary>Adds the content of a <paramref name="collection"/> of additional names (middle names). (2,3,4)</summary>
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToAdditionalNames(IEnumerable<string?> collection) => AddRange(NameProp.AdditionalNames, collection);
 
     /// <summary>Adds a honorific prefix. (2,3,4)</summary>
-    public void AddPrefix(string? prefix) => throw new NotImplementedException();
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToPrefixes(string? prefix) => Add(NameProp.Prefixes, prefix);
+
+    /// <summary>Adds the content of a <paramref name="collection"/> of honorific prefixes. (2,3,4)</summary>
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToPrefixes(IEnumerable<string?> collection) => AddRange(NameProp.Prefixes, collection);
 
     /// <summary>Adds a honorific suffix. (2,3,4)</summary>
-    public void AddSuffix(string? suffix) => throw new NotImplementedException();
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToSuffixes(string? suffix) => Add(NameProp.Suffixes, suffix);
+
+    /// <summary>Adds the content of a <paramref name="collection"/> of honorific suffixes. (2,3,4)</summary>
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToSuffixes(IEnumerable<string?> collection) => AddRange(NameProp.Suffixes, collection);
 
     /// <summary>Adds a secondary surname (used in some cultures), also known as "maternal surname". (4 - RFC 9554)</summary>
     /// <remarks>
     /// <note type="tip">
-    /// For backwards compatibility use <see cref="AddFamilyName(string?)"/> to add a copy to 
+    /// For backwards compatibility use <see cref="AddToFamilyNames(string?)"/> to add a copy to 
     /// <see cref="Models.PropertyParts.Name.FamilyNames"/>.
     /// </note>
     /// </remarks>
-    public void AddSurname2(string? surname2) => throw new NotImplementedException();
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToSurname2(string? surname2) => Add(NameProp.Surname2, surname2);
 
-    /// <summary>A generation marker or qualifier, e.g., "Jr." or "III". (4 - RFC 9554)</summary>
+    /// <summary>Adds the content of a <paramref name="collection"/> of secondary surnames (used in some cultures), 
+    /// also known as "maternal surnames". (4 - RFC 9554)</summary>
+    /// <remarks>
     /// <note type="tip">
-    /// For backwards compatibility use <see cref="AddSuffix(string?)"/> to add a copy to 
+    /// For backwards compatibility use <see cref="AddToFamilyNames(IEnumerable{string?})"/> to add a copy to 
+    /// <see cref="Models.PropertyParts.Name.FamilyNames"/>.
+    /// </note>
+    /// </remarks>
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToSurname2(IEnumerable<string?> collection) => AddRange(NameProp.Surname2, collection);
+
+    /// <summary>Adds a generation marker or qualifier, e.g., "Jr." or "III". (4 - RFC 9554)</summary>
+    /// <note type="tip">
+    /// For backwards compatibility use <see cref="AddToSuffixes(string?)"/> to add a copy to 
     /// <see cref="Models.PropertyParts.Name.Suffixes"/>.
     /// </note>
-    public void AddGeneration(string? generation) => throw new NotImplementedException();
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToGeneration(string? generation) => Add(NameProp.Generation, generation);
 
+    /// <summary>Adds the content of a <paramref name="collection"/> of generation markers or qualifiers,
+    /// e.g., "Jr." or "III". (4 - RFC 9554)</summary>
+    /// <note type="tip">
+    /// For backwards compatibility use <see cref="AddToSuffixes(IEnumerable{string?})"/> to add a copy to 
+    /// <see cref="Models.PropertyParts.Name.Suffixes"/>.
+    /// </note>
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NamePropertyBuilder AddToGeneration(IEnumerable<string?> collection) => AddRange(NameProp.Generation, collection);
+
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
     internal IEnumerable<KeyValuePair<NameProp, List<string>>> Data => _dic;
 
     /// <summary>
     /// Clears every content of the <see cref="NamePropertyBuilder"/> instance but keeps the 
     /// allocated memory for reuse.
     /// </summary>
-    public void Clear()
+    /// <returns>The current <see cref="NamePropertyBuilder"/> instance to be able to chain calls.</returns>
+    public NamePropertyBuilder Clear()
     {
-        foreach (var pair in _dic)
+        foreach (KeyValuePair<NameProp, List<string>> pair in _dic)
         {
-            pair.Value.Clear(); 
+            pair.Value.Clear();
         }
+
+        return this;
     }
 
-    private void Add(NameProp prop, string? value)
+    private NamePropertyBuilder Add(NameProp prop, string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return;
+            return this;
         }
 
         if (_dic.TryGetValue(prop, out List<string>? list))
         {
             list.Add(value);
+            return this;
         }
 
         _dic[prop] = [value];
+        return this;
     }
 
-    private void AddRange(NameProp prop, IEnumerable<string> collection)
+    private NamePropertyBuilder AddRange(NameProp prop, IEnumerable<string?> collection)
     {
-        IEnumerable<string> valsToAdd = collection?.Where(static x => !string.IsNullOrWhiteSpace(x)) 
-            ?? throw new ArgumentOutOfRangeException(nameof(collection));
+        IEnumerable<string> valsToAdd = (collection?.Where(static x => !string.IsNullOrWhiteSpace(x))
+            ?? throw new ArgumentOutOfRangeException(nameof(collection)))!;
 
-        if(!valsToAdd.Any())
+        if (!valsToAdd.Any())
         {
-            return;
+            return this;
         }
 
         if (_dic.TryGetValue(prop, out List<string>? list))
         {
             list.AddRange(valsToAdd);
+            return this;
         }
 
         _dic[prop] = new List<string>(valsToAdd);
+        return this;
     }
 
 }
