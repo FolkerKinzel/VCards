@@ -6,8 +6,9 @@
     - [ ] Let the 'IDProperty' have an instance of the `ContactID` class as value.
     - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
 
-- [ ] VCard properties: Don't allow `null` values in collections anymore.
-- [ ] Make ParameterSection.SortAs non-nullable
+- [ ] `VCard` properties: Don't allow `null` values in collections anymore.
+- [ ] `NameProperty`: Allow ctors only that take a `NameBuilder` as argument.
+- [ ] `AddressProperty`: Allow ctors only that take an `AddressBuilder` as argument
 
 - [ ] Rename the `Opts` enum to `VcfOpts` (to separate it from JSContactOpts)
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
@@ -40,6 +41,7 @@
     - [ ] Change the `Address` class
         - [ ] Add read-only property: `ReadOnlyCollection<string> Room`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Apartment`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> Floor`
         - [ ] Add read-only property: `ReadOnlyCollection<string> StreetNumber`
         - [ ] Add read-only property: `ReadOnlyCollection<string> StreetName`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Building`
@@ -49,10 +51,11 @@
         - [ ] Add read-only property: `ReadOnlyCollection<string> Landmark`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Direction`
         - [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
-    - [ ] Add a new ctor to `AddressProperty` that takes an `AddressBuilder`
+    - [ ] Add a new ctor to `AddressProperty` that takes an `AddressBuilder`.
+    - [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
     - [ ] Change the `Name` class
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Surname2`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Generation`
+        - [ ] Add read-only property: `ReadOnlyCollection<string> Surname2` (let the name be singular)
+        - [ ] Add read-only property: `ReadOnlyCollection<string> Generation` (let the name be singular)
     - [ ] Add a new ctor to `NameProperty` that takes an `NameBuilder`
     - [ ] Add an internal ctor to `Name` that takes an `NameBuilder`
     - [ ] Change the `VCard` class
