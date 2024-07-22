@@ -114,20 +114,38 @@ public sealed class Name
                                     version).ToArray();
     }
 
-    /// <summary>Family Name(s) (also known as surname(s)).</summary>
+    /// <summary>Family Name(s) (also known as surname(s)). (2,3,4)</summary>
+    /// <remarks>
+    /// <note type="important">
+    /// Any value of this property should be ignored if an equal value is set to
+    /// <see cref="Surname2"/> accordingly.
+    /// </note>
+    /// </remarks>
     public ReadOnlyCollection<string> FamilyNames { get; }
 
-    /// <summary>Given Name(s) (first name(s)).</summary>
+    /// <summary>Given Name(s) (first name(s)). (2,3,4)</summary>
     public ReadOnlyCollection<string> GivenNames { get; }
 
-    /// <summary>Additional Name(s) (middle name(s)).</summary>
+    /// <summary>Additional Name(s) (middle name(s)). (2,3,4)</summary>
     public ReadOnlyCollection<string> AdditionalNames { get; }
 
-    /// <summary>Honorific Prefix(es).</summary>
+    /// <summary>Honorific Prefix(es). (2,3,4)</summary>
     public ReadOnlyCollection<string> Prefixes { get; }
 
-    /// <summary>Honorific Suffix(es).</summary>
+    /// <summary>Honorific Suffix(es). (2,3,4)</summary>
+    /// <remarks>
+    /// <note type="important">
+    /// Any value of this property should be ignored if an equal value is set to
+    /// <see cref="Generation"/> accordingly.
+    /// </note>
+    /// </remarks>
     public ReadOnlyCollection<string> Suffixes { get; }
+
+    /// <summary>A secondary surname (used in some cultures), also known as "maternal surname". (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> Surname2 => throw new NotImplementedException();
+
+    /// <summary>A generation marker or qualifier, e.g., "Jr." or "III". (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> Generation => throw new NotImplementedException();
 
     /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain
     /// any usable data, otherwise <c>false</c>.</summary>

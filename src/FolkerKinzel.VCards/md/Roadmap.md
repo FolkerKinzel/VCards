@@ -11,11 +11,9 @@
 - [ ] `VCard.Dereference` properties: Don't allow `null` values in collections anymore.
 - [ ] `Vcf` methods: Don't allow `null` values in collections anymore.
 - [ ] `IEnumerableExtension`: Don't allow `null` values in collections anymore.
-- [ ] `NameProperty`: Allow ctors only that take a `NameBuilder` as argument.
-- [ ] `AddressProperty`: Allow ctors only that take an `AddressBuilder` as argument
+- [ ] `NameProperty`: Allow ctors only that take a `NamePropertyBuilder` as argument.
+- [ ] `AddressProperty`: Allow ctors only that take an `AddressPropertyBuilder` as argument
 
-- [ ] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `FolkerKinzel.VCards.BuilderParts.NamePropertyBuilder`
-- [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `FolkerKinzel.VCards.BuilderParts.AddressPropertyBuilder`
 - [ ] Rename the `Opts` enum to `VcfOpts` (to separate it from JSContactOpts)
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
 
@@ -24,16 +22,19 @@
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
 ### 7.3.0
+- [ ] Refactor the `VCard` copy ctor to clone only `IEnumerable<VCardProperty?>` and `VCardProperty`
 - [ ] Implement the internal `AdrProp` enum that addresses the properties of the `Address` class.
 - [ ] Let the `Address` class have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
-- [ ] Implement the internal `NameProp` enum that addresses the properties of the `Name` class.
+- [x] Implement the internal `NameProp` enum that addresses the properties of the `Name` class.
 - Let the `Name` class have a data struct `Dictionary<NameProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
-- [ ] Implement `FolkerKinzel.VCards.AddressBuilder` class
+- [ ] Implement `FolkerKinzel.VCards.AddressPropertyBuilder` class
     - Let it have a data struct `Dictionary<AdrProp, List<string>>`
     - Make it reusable implementing a `Clear` method
-- [ ] Implement `FolkerKinzel.VCards.NameBuilder` class
+- [ ] Give `AddressProperty` a ctor that takes an "AddressPropertyBuilder".
+- [ ] Implement `FolkerKinzel.VCards.NamePropertyBuilder` class
     - Let it have a data struct `Dictionary<NameProp, List<string>>`
     - Make it reusable implementing a `Clear` method
+- [ ] Give `NameProperty` a ctor that takes a "NamePropertyBuilder".
 - [ ] Implement RFC 9554:
     - [ ] Make new enum value `Opts.WriteRfc9554Extensions`
     - [ ] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
