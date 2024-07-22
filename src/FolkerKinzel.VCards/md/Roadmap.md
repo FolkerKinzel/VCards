@@ -6,6 +6,9 @@
     - [ ] Let the 'IDProperty' have an instance of the `ContactID` class as value.
     - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
 
+- [ ] VCard properties: Don't allow `null` values in collections anymore.
+- [ ] Make ParameterSection.SortAs non-nullable
+
 - [ ] Rename the `Opts` enum to `VcfOpts` (to separate it from JSContactOpts)
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
 
