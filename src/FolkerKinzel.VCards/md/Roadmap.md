@@ -7,9 +7,15 @@
     - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
 
 - [ ] `VCard` properties: Don't allow `null` values in collections anymore.
+- [ ] `VCard.Reference` properties: Don't allow `null` values in collections anymore.
+- [ ] `VCard.Dereference` properties: Don't allow `null` values in collections anymore.
+- [ ] `Vcf` methods: Don't allow `null` values in collections anymore.
+- [ ] `IEnumerableExtension`: Don't allow `null` values in collections anymore.
 - [ ] `NameProperty`: Allow ctors only that take a `NameBuilder` as argument.
 - [ ] `AddressProperty`: Allow ctors only that take an `AddressBuilder` as argument
 
+- [ ] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `FolkerKinzel.VCards.BuilderParts.NamePropertyBuilder`
+- [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `FolkerKinzel.VCards.BuilderParts.AddressPropertyBuilder`
 - [ ] Rename the `Opts` enum to `VcfOpts` (to separate it from JSContactOpts)
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
 
@@ -22,10 +28,10 @@
 - [ ] Let the `Address` class have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
 - [ ] Implement the internal `NameProp` enum that addresses the properties of the `Name` class.
 - Let the `Name` class have a data struct `Dictionary<NameProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
-- [ ] Implement `AddressBuilder` class
+- [ ] Implement `FolkerKinzel.VCards.AddressBuilder` class
     - Let it have a data struct `Dictionary<AdrProp, List<string>>`
     - Make it reusable implementing a `Clear` method
-- [ ] Implement `NameBuilder` class
+- [ ] Implement `FolkerKinzel.VCards.NameBuilder` class
     - Let it have a data struct `Dictionary<NameProp, List<string>>`
     - Make it reusable implementing a `Clear` method
 - [ ] Implement RFC 9554:

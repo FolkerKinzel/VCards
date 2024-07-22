@@ -191,6 +191,7 @@ public static partial class Vcf
                 {
                     stream.Close();
                 }
+
                 throw new ArgumentNullException(nameof(vCards));
             }
         }
