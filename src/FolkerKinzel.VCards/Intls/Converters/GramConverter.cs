@@ -27,7 +27,7 @@ internal static class GramConverter
              : null;
     }
 
-    internal static string? ToVcfString(this Gram value)
+    internal static string? ToVcfString(this Gram? value)
         => value switch
         {
             Gram.Feminine => TypeValue.FEMININE,
