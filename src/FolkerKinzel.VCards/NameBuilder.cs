@@ -5,9 +5,18 @@ namespace FolkerKinzel.VCards;
 /// <summary>
 /// Collects the data used to initialize a <see cref="Models.NameProperty"></see> instance.
 /// </summary>
+/// <remarks>
+/// <threadsafety static="true" instance="false"/>
+/// </remarks>
 public class NameBuilder
 {
     private readonly Dictionary<NameProp, List<string>> _dic = [];
+
+    /// <summary>
+    /// Creates a new <see cref="NameBuilder"/> instance.
+    /// </summary>
+    /// <returns>The newly created <see cref="NameBuilder"/> instance.</returns>
+    public static NameBuilder Create() => new();
 
     /// <summary>Adds a family name (also known as surname). (2,3,4)</summary>
     /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>

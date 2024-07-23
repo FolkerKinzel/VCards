@@ -228,19 +228,27 @@ public sealed class Name
     /// form.</summary>
     /// <returns>The data encapsulated by the instance in human-readable form or
     /// <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
+    /// <remarks>
+    /// The method takes only the properties defined in RFC 6350 into account:
+    /// <list type="bullet">
+    /// <item><see cref="Prefixes"/></item>
+    /// <item><see cref="GivenNames"/></item>
+    /// <item><see cref="AdditionalNames"/></item>
+    /// <item><see cref="FamilyNames"/></item>
+    /// <item><see cref="Suffixes"/></item>
+    /// </list>
+    /// </remarks>
     public string? ToDisplayName()
     {
         const int stringBuilderInitialCapacity = 32;
         return IsEmpty
             ? null
             : new StringBuilder(stringBuilderInitialCapacity)
-            .AppendReadableProperty(Prefixes)
-            .AppendReadableProperty(GivenNames)
-            .AppendReadableProperty(AdditionalNames)
-            .AppendReadableProperty(FamilyNames.Except(Surname2))
-            .AppendReadableProperty(Surname2)
-            .AppendReadableProperty(Suffixes.Except(Generation))
-            .AppendReadableProperty(Generation)
+            .AppendReadableProperty(Get(NameProp.Prefixes))
+            .AppendReadableProperty(Get(NameProp.GivenNames))
+            .AppendReadableProperty(Get(NameProp.AdditionalNames))
+            .AppendReadableProperty(Get(NameProp.FamilyNames))
+            .AppendReadableProperty(Get(NameProp.Suffixes))
             .ToString();
     }
 

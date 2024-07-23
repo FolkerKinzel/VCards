@@ -142,6 +142,16 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// form.</summary>
     /// <returns>The data encapsulated by the instance in human-readable form
     /// or <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
+    /// <remarks>
+    /// The method takes only the properties defined in RFC 6350 into account:
+    /// <list type="bullet">
+    /// <item><see cref="Name.Prefixes"/></item>
+    /// <item><see cref="Name.GivenNames"/></item>
+    /// <item><see cref="Name.AdditionalNames"/></item>
+    /// <item><see cref="Name.FamilyNames"/></item>
+    /// <item><see cref="Name.Suffixes"/></item>
+    /// </list>
+    /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string? ToDisplayName() => Value.ToDisplayName();
 
