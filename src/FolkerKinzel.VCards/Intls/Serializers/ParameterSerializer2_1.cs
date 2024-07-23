@@ -10,28 +10,34 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer2_1>> _actionList = new(2);
 
-    private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes = static serializer
+    private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes = CollectPropertyClassTypes;
+    private readonly Action<ParameterSerializer2_1> _collectPhoneTypes = CollectPhoneTypes;
+    private readonly Action<ParameterSerializer2_1> _collectAddressTypes = CollectAddressTypes;
+
+    #region Collect
+
+    private static void CollectPropertyClassTypes(ParameterSerializer2_1 serializer)
         => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
                                       serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer2_1> _collectPhoneTypes = static serializer =>
+    private static void CollectPhoneTypes(ParameterSerializer2_1 serializer)
     {
         const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Fax | Tel.Msg | Tel.Cell |
         Tel.Pager | Tel.BBS | Tel.Modem | Tel.Car | Tel.ISDN | Tel.Video;
 
         EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
                                    serializer._stringCollectionList);
-    };
+    }
 
-
-    private readonly Action<ParameterSerializer2_1> _collectAddressTypes = static serializer =>
+    private static void CollectAddressTypes(ParameterSerializer2_1 serializer)
     {
-        const Adr DEFINED_ADDRES_TYPES = Adr.Intl | Adr.Parcel | Adr.Postal | Adr.Dom;
+        const Adr DEFINED_ADDRESS_TYPES = Adr.Intl | Adr.Parcel | Adr.Postal | Adr.Dom;
 
-        EnumValueCollector.Collect(serializer.ParaSection.AddressType & DEFINED_ADDRES_TYPES,
+        EnumValueCollector.Collect(serializer.ParaSection.AddressType & DEFINED_ADDRESS_TYPES,
                                           serializer._stringCollectionList);
-    };
+    }
 
+    #endregion
 
     #region Build
 
