@@ -73,12 +73,20 @@ public sealed class Name
         {
             index++;
 
+            if(index >= MAX_COUNT)
+            {
+                break;
+            }
+
             if (mem.IsEmpty)
             {
                 continue;
             }
 
-            var coll = ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
+            ReadOnlySpan<char> span = mem.Span;
+            ReadOnlyCollection<string> coll = span.Contains(',')
+                ? ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(in mem, version))
+                : ReadOnlyCollectionConverter.ToReadOnlyCollection(span.UnMaskValue(version));
 
             if (coll.Count == 0)
             {
@@ -122,13 +130,11 @@ public sealed class Name
                         _dic[NameProp.Generation] = coll;
                         break;
                     }
-                default:
-                    break;
             }//switch
         }//foreach
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static string[] ToArray(ReadOnlyMemory<char> mem, VCdVersion version)
+        static string[] ToArray(in ReadOnlyMemory<char> mem, VCdVersion version)
             => PropertyValueSplitter.Split(mem,
                                     ',',
                                     StringSplitOptions.RemoveEmptyEntries,
