@@ -17,8 +17,12 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
                                       serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer4_0> _collectPhoneTypes = static serializer
-        =>
+    private readonly Action<ParameterSerializer4_0> _collectPhoneTypes = CollectPhoneTypes;
+    private readonly Action<ParameterSerializer4_0> _collectAddressTypes = CollectAddressTypes;
+    private readonly Action<ParameterSerializer4_0> _collectRelationTypes = CollectRelationTypes;
+
+    #region Collect
+    private static void CollectPhoneTypes(ParameterSerializer4_0 serializer)
     {
         const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Text | Tel.Fax |
                                             Tel.Cell | Tel.Video | Tel.Pager |
@@ -26,11 +30,26 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
                                    serializer._stringCollectionList);
-    };
+    }
 
-    private readonly Action<ParameterSerializer4_0> _collectRelationTypes = static serializer
+    private static void CollectAddressTypes(ParameterSerializer4_0 serializer)
+    {
+        if (!serializer.Options.HasFlag(Opts.WriteRfc9554Extensions))
+        {
+            return;
+        }
+
+        const Adr DEFINED_ADDRES_TYPES = Adr.Billing | Adr.Delivery;
+
+        EnumValueCollector.Collect(serializer.ParaSection.AddressType & DEFINED_ADDRES_TYPES,
+                                   serializer._stringCollectionList);
+    }
+
+    private static void CollectRelationTypes(ParameterSerializer4_0 serializer)
         => EnumValueCollector.Collect(serializer.ParaSection.RelationType,
                                       serializer._stringCollectionList);
+    #endregion
+
 
     #region Build
 
@@ -38,6 +57,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
     {
         _actionList.Clear();
         _actionList.Add(_collectPropertyClassTypes);
+        _actionList.Add(_collectAddressTypes);
 
         AppendType();
         AppendPref();
@@ -143,7 +163,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendNonStandardParameters();
     }
 
-    protected override void BuildContactUriPara() 
+    protected override void BuildContactUriPara()
     {
         AppendPref();
         AppendNonStandardParameters();
@@ -822,7 +842,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         bool rollBack = true;
 
         AppendParameter(ParameterSection.ParameterKey.SORT_AS, "");
-    
+
         foreach (string item in sortAs)
         {
             Debug.Assert(!string.IsNullOrWhiteSpace(item));
@@ -854,9 +874,9 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         {
             IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
 
-            if (nonStandard is null) 
+            if (nonStandard is null)
             {
-                return; 
+                return;
             }
 
             foreach (KeyValuePair<string, string> kvp in nonStandard)
