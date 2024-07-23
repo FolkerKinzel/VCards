@@ -13,15 +13,17 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer4_0>> _actionList = new(2);
 
-    private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes = static serializer
-        => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
-                                      serializer._stringCollectionList);
-
+    private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes = CollectPropertyClassTypes;
     private readonly Action<ParameterSerializer4_0> _collectPhoneTypes = CollectPhoneTypes;
     private readonly Action<ParameterSerializer4_0> _collectAddressTypes = CollectAddressTypes;
     private readonly Action<ParameterSerializer4_0> _collectRelationTypes = CollectRelationTypes;
 
     #region Collect
+
+    private static void CollectPropertyClassTypes(ParameterSerializer4_0 serializer)
+        => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
+                                      serializer._stringCollectionList);
+
     private static void CollectPhoneTypes(ParameterSerializer4_0 serializer)
     {
         const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Text | Tel.Fax |
