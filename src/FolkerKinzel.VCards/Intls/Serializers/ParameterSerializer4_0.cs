@@ -41,9 +41,9 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             return;
         }
 
-        const Adr DEFINED_ADDRES_TYPES = Adr.Billing | Adr.Delivery;
+        const Adr DEFINED_ADDRESS_TYPES = Adr.Billing | Adr.Delivery;
 
-        EnumValueCollector.Collect(serializer.ParaSection.AddressType & DEFINED_ADDRES_TYPES,
+        EnumValueCollector.Collect(serializer.ParaSection.AddressType & DEFINED_ADDRESS_TYPES,
                                    serializer._stringCollectionList);
     }
 
