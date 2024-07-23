@@ -65,7 +65,7 @@
  &nbsp;
 - [ ] Implement RFC 9554:
     - [x] Make new enum value `Opts.WriteRfc9554Extensions`
-    - [ ] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
+    - [x] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
     - [ ] Implement `GramConverter`
     - [ ] Implement the `GramProperty` class that has a `Gram` value as `Value`
     - [ ] Implement `readonly struct GramBuilder`
