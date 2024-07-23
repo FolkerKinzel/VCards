@@ -4,7 +4,7 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class GramConverter
 {
-    internal static class TypeValue
+    private static class TypeValue
     {
         internal const string ANIMATE = "animate";
         internal const string COMMON = "common";

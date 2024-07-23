@@ -70,7 +70,7 @@
     - [ ] Implement the `GramProperty` class that has a `Gram` value as `Value`
     - [ ] Implement `readonly struct GramBuilder`
     - [x] Implement the `Phonetic` enum ("ipa", "jyut", "piny", "script")
-    - [ ] Implement `PhoneticConverter`
+    - [x] Implement `PhoneticConverter`
     - [x] Add the values `billing` and `delivery` to the `Adr` enum
     - [x] Update `AdrConverter`
     - [ ] Change the `Address` class
