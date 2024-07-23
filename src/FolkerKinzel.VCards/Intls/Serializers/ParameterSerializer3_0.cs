@@ -11,12 +11,23 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer3_0>> _actionList = new(2);
 
-    private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes = static serializer
+    private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes = CollectPropertyClassTypes;
+    private readonly Action<ParameterSerializer3_0> _collectPhoneTypes = CollectPhoneTypes;
+    private readonly Action<ParameterSerializer3_0> _collectAddressTypes = CollectAddressTypes;
+    private readonly Action<ParameterSerializer3_0> _collectImppTypes = CollectImppTypes;
+    private readonly Action<ParameterSerializer3_0> _collectKeyType = CollectKeyType;
+    private readonly Action<ParameterSerializer3_0> _collectImageType = CollectImageType;
+    private readonly Action<ParameterSerializer3_0> _collectEmailType = CollectEmailType;
+    private readonly Action<ParameterSerializer3_0> _collectSoundType = CollectSoundType;
+    private readonly Action<ParameterSerializer3_0> _collectMediaType = CollectMediaType;
+
+    #region Collect
+
+    private static void CollectPropertyClassTypes(ParameterSerializer3_0 serializer)
         => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
                                       serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer3_0> _collectPhoneTypes = static serializer
-        =>
+    private static void CollectPhoneTypes(ParameterSerializer3_0 serializer)
     {
         const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Fax | Tel.Msg |
         Tel.Cell | Tel.Pager | Tel.BBS | Tel.Modem | Tel.Car |
@@ -24,26 +35,67 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
         EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
                                    serializer._stringCollectionList);
-    };
+    }
 
-    private readonly Action<ParameterSerializer3_0> _collectAddressTypes = static serializer
-        =>
+    private static void CollectAddressTypes(ParameterSerializer3_0 serializer)
     {
         const Adr DEFINED_ADDRES_TYPES = Adr.Intl | Adr.Parcel | Adr.Postal | Adr.Dom;
 
         EnumValueCollector.Collect(serializer.ParaSection.AddressType & DEFINED_ADDRES_TYPES,
                                           serializer._stringCollectionList);
-    };
+    }
 
-    private readonly Action<ParameterSerializer3_0> _collectImppTypes = static serializer
-        => EnumValueCollector.Collect(serializer.ParaSection.InstantMessengerType,
+    private static void CollectImppTypes(ParameterSerializer3_0 serializer)
+         => EnumValueCollector.Collect(serializer.ParaSection.InstantMessengerType,
                                       serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer3_0> _collectKeyType = static serializer => serializer.DoCollectKeyType();
-    private readonly Action<ParameterSerializer3_0> _collectImageType = static serializer => serializer.DoCollectImageType();
-    private readonly Action<ParameterSerializer3_0> _collectEmailType = static serializer => serializer.DoCollectEmailType();
-    private readonly Action<ParameterSerializer3_0> _collectSoundType = static serializer => serializer.DoCollectSoundType();
-    private readonly Action<ParameterSerializer3_0> _collectMediaType = static serializer => serializer.DoCollectMediaType();
+    private static void CollectKeyType(ParameterSerializer3_0 serializer)
+    {
+        string? s = MimeTypeConverter.KeyTypeFromMimeType(serializer.ParaSection.MediaType);
+
+        if (s is not null)
+        {
+            serializer._stringCollectionList.Add(s);
+        }
+    }
+
+    private static void CollectImageType(ParameterSerializer3_0 serializer)
+    {
+        string? s = MimeTypeConverter.ImageTypeFromMimeType(serializer.ParaSection.MediaType);
+
+        if (s is not null)
+        {
+            serializer._stringCollectionList.Add(s);
+        }
+
+    }
+
+    private static void CollectSoundType(ParameterSerializer3_0 serializer)
+    {
+        string? s = MimeTypeConverter.SoundTypeFromMimeType(serializer.ParaSection.MediaType);
+
+        if (s is not null)
+        {
+            serializer._stringCollectionList.Add(s);
+        }
+
+    }
+
+    private static void CollectEmailType(ParameterSerializer3_0 serializer)
+        => serializer._stringCollectionList.Add(serializer.ParaSection.EMailType ?? EMail.SMTP);
+
+    private static void CollectMediaType(ParameterSerializer3_0 serializer)
+    {
+        string? m = serializer.ParaSection.MediaType;
+
+        if (m is not null)
+        {
+            serializer._stringCollectionList.Add(m);
+        }
+    }
+
+    #endregion
+    
 
     #region Build
 
@@ -487,56 +539,6 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         if (typeWritten)
         {
             --Builder.Length;
-        }
-    }
-
-    #endregion
-
-
-    #region Collect
-
-    private void DoCollectKeyType()
-    {
-        string? s = MimeTypeConverter.KeyTypeFromMimeType(ParaSection.MediaType);
-
-        if (s is not null)
-        {
-            _stringCollectionList.Add(s);
-        }
-    }
-
-    private void DoCollectImageType()
-    {
-        string? s = MimeTypeConverter.ImageTypeFromMimeType(ParaSection.MediaType);
-
-        if (s is not null)
-        {
-            _stringCollectionList.Add(s);
-        }
-
-    }
-
-    private void DoCollectSoundType()
-    {
-        string? s = MimeTypeConverter.SoundTypeFromMimeType(ParaSection.MediaType);
-
-        if (s is not null)
-        {
-            _stringCollectionList.Add(s);
-        }
-
-    }
-
-    private void DoCollectEmailType()
-        => _stringCollectionList.Add(ParaSection.EMailType ?? EMail.SMTP);
-
-    private void DoCollectMediaType()
-    {
-        string? m = ParaSection.MediaType;
-
-        if (m is not null)
-        {
-            _stringCollectionList.Add(m);
         }
     }
 
