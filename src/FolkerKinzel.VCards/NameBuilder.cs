@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Enums;
+﻿using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Enums;
 
 namespace FolkerKinzel.VCards;
 
@@ -155,8 +156,9 @@ public class NameBuilder
 
     private NameBuilder AddRange(NameProp prop, IEnumerable<string?> collection)
     {
-        IEnumerable<string> valsToAdd = (collection?.Where(static x => !string.IsNullOrWhiteSpace(x))
-            ?? throw new ArgumentOutOfRangeException(nameof(collection)))!;
+        _ArgumentNullException.ThrowIfNull(collection, nameof(collection));
+
+        IEnumerable<string> valsToAdd = collection.Where(static x => !string.IsNullOrWhiteSpace(x))!;
 
         if (!valsToAdd.Any())
         {

@@ -964,6 +964,35 @@ public class VCardBuilderTests
         Assert.AreEqual("de", prop2.Parameters.Language);
     }
 
+    [TestMethod()]
+    public void AddNameViewTest3()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .NameViews.Add(NameBuilder.Create().AddToFamilyNames("Miller").AddToGivenNames("John"),
+                            parameters: p => p.Language = "en",
+                            group: vc => "gr1",
+                            displayName: (b, p) => b.Add("John Miller")
+                            )
+            .NameViews.Add(NameBuilder.Create().AddToFamilyNames("Müller").AddToGivenNames("Johann"),
+                         parameters: p => p.Language = "de")
+            .VCard;
+
+        Assert.IsNotNull(vc.NameViews);
+        vc.NameViews = vc.NameViews.Append(null);
+
+        NameProperty prop1 = vc.NameViews!.First()!;
+        NameProperty prop2 = vc.NameViews!.ElementAt(1)!;
+
+        Assert.IsNotNull(vc.NameViews?.FirstOrDefault());
+
+        Assert.AreEqual("Miller", prop1.Value.FamilyNames[0]);
+        Assert.AreEqual("en", prop1.Parameters.Language);
+        Assert.AreEqual("gr1", prop1.Group);
+
+        Assert.AreEqual("de", prop2.Parameters.Language);
+    }
+
     [TestMethod]
     public void EditNameViewTest1()
     {

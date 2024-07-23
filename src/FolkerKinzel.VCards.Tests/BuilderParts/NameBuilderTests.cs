@@ -20,7 +20,7 @@ public class NameBuilderTests
 
         VCard vc = builder.VCard;
 
-        var property = vc.NameViews;
+        IEnumerable<Models.NameProperty?>? property = vc.NameViews;
 
         Assert.IsNotNull(property);
         Assert.AreEqual(2, property.Count());
@@ -61,7 +61,11 @@ public class NameBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest2() => new NameBuilder().Add(Enumerable.Empty<string>());
+    public void AddTest2() => new NameBuilder().Add([]);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void AddTest3() => new NameBuilder().Add(FolkerKinzel.VCards.NameBuilder.Create());
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
