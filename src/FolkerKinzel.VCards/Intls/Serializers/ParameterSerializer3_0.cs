@@ -39,9 +39,9 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
     private static void CollectAddressTypes(ParameterSerializer3_0 serializer)
     {
-        const Adr DEFINED_ADDRES_TYPES = Adr.Intl | Adr.Parcel | Adr.Postal | Adr.Dom;
+        const Adr DEFINED_ADDRESS_TYPES = Adr.Intl | Adr.Parcel | Adr.Postal | Adr.Dom;
 
-        EnumValueCollector.Collect(serializer.ParaSection.AddressType & DEFINED_ADDRES_TYPES,
+        EnumValueCollector.Collect(serializer.ParaSection.AddressType & DEFINED_ADDRESS_TYPES,
                                           serializer._stringCollectionList);
     }
 
