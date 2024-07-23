@@ -95,7 +95,7 @@ public class NamePropertyTests
     [TestMethod]
     public void ToDisplayNameTest3()
     {
-        var name = new NameProperty(null, FIRST_NAME);
+        var name = new NameProperty((string?) null, FIRST_NAME);
         string? s = name.ToDisplayName();
         Assert.IsNotNull(s);
         Assert.AreNotEqual(0, s.Length);

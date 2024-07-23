@@ -133,7 +133,7 @@ public readonly struct RelationBuilder
         Func<IEnumerable<RelationProperty>, TData, IEnumerable<RelationProperty?>?> func,
         TData data)
     {
-        var props = GetProperty();
+        IEnumerable<RelationProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func.Invoke(props, data));
         return _builder;
@@ -154,7 +154,7 @@ public readonly struct RelationBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<RelationProperty>, IEnumerable<RelationProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<RelationProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func.Invoke(props));
         return _builder;

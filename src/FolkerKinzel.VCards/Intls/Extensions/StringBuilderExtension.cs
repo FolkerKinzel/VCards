@@ -250,16 +250,16 @@ internal static class StringBuilderExtension
         return mustBeQuoted;
     }
 
-    internal static StringBuilder AppendReadableProperty(this StringBuilder sb, ReadOnlyCollection<string> strings, int? maxLen = null)
+    internal static StringBuilder AppendReadableProperty(this StringBuilder sb, IEnumerable<string> strings, int? maxLen = null)
     {
         Debug.Assert(sb is not null);
         Debug.Assert(strings is not null);
         Debug.Assert(strings.All(x => !string.IsNullOrEmpty(x)));
 
         // If strings is empty, the loop is not entered:
-        for (int i = 0; i < strings.Count; i++)
+        foreach (string s in strings) 
         {
-            AppendEntry(sb, strings[i], maxLen);
+            AppendEntry(sb, s, maxLen);
         }
 
         return sb;

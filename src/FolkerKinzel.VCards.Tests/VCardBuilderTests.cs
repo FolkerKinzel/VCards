@@ -972,7 +972,7 @@ public class VCardBuilderTests
         builder.NameViews.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.NameViews = new NameProperty(null, "Heinz").Append(null);
+        builder.VCard.NameViews = new NameProperty((string?)null, "Heinz").Append(null);
         builder.NameViews.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());

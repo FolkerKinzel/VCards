@@ -79,7 +79,7 @@ public sealed class VCardBuilder
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public AddressBuilder Addresses => new(this);
+    public BuilderParts.AddressBuilder Addresses => new(this);
 
     /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
@@ -280,7 +280,7 @@ public sealed class VCardBuilder
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public NamePropertyBuilder NameViews => new(this);
+    public BuilderParts.NameBuilder NameViews => new(this);
 
     /// <summary> <c>NICKNAME</c>: One or more descriptive/familiar names for the object
     /// represented by this vCard. <c>(3,4)</c></summary>

@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
+using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
@@ -14,13 +15,24 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 /// <see cref="VCard"/> represents.</summary>
 public sealed class Name
 {
-    private const int MAX_COUNT = 5;
+    private const int STANDARD_COUNT = 5;
+    private const int MAX_COUNT = 7;
+    private readonly Dictionary<NameProp, ReadOnlyCollection<string>> _dic = [];
 
-    private const int FAMILY_NAMES = 0;
-    private const int GIVEN_NAMES = 1;
-    private const int ADDITIONAL_NAMES = 2;
-    private const int PREFIXES = 3;
-    private const int SUFFIXES = 4;
+    private ReadOnlyCollection<string> Get(NameProp prop)
+        => _dic.TryGetValue(prop, out ReadOnlyCollection<string>? coll)
+            ? coll
+            : ReadOnlyStringCollection.Empty;
+
+    #region Remove this code with version 8.0.0
+
+    private void Add(NameProp prop, ReadOnlyCollection<string> coll)
+    {
+        if (coll.Count != 0)
+        {
+            _dic[prop] = coll;
+        }
+    }
 
     internal Name(
         ReadOnlyCollection<string> familyNames,
@@ -29,81 +41,91 @@ public sealed class Name
         ReadOnlyCollection<string> prefixes,
         ReadOnlyCollection<string> suffixes)
     {
-        FamilyNames = familyNames;
-        GivenNames = givenNames;
-        AdditionalNames = additionalNames;
-        Prefixes = prefixes;
-        Suffixes = suffixes;
+        Add(NameProp.FamilyNames, familyNames);
+        Add(NameProp.GivenNames, givenNames);
+        Add(NameProp.AdditionalNames, additionalNames);
+        Add(NameProp.Prefixes, prefixes);
+        Add(NameProp.Suffixes, suffixes);
     }
 
-    internal Name()
+    #endregion
+
+    [SuppressMessage("Style", "IDE0305:Simplify collection initialization", 
+        Justification = "Performance: Collection initializer initializes a new List.")]
+    internal Name(NameBuilder builder)
     {
-        FamilyNames =
-        GivenNames =
-        AdditionalNames =
-        Prefixes =
-        Suffixes = ReadOnlyStringCollection.Empty;
+        foreach (KeyValuePair<NameProp, List<string>> kvp in builder.Data)
+        {
+            if(kvp.Value.Count != 0)
+            {
+                _dic[kvp.Key] = new ReadOnlyCollection<string>(kvp.Value.ToArray());
+            }
+        }
     }
+
+    internal Name() { }
 
     internal Name(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
-        int index = 0;
+        int index = -1;
 
         foreach (ReadOnlyMemory<char> mem in PropertyValueSplitter.SplitIntoMemories(vCardValue, ';'))
         {
-            switch (index++)
+            index++;
+
+            if (mem.IsEmpty)
             {
-                case FAMILY_NAMES:
-                    {
-                        FamilyNames = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
+                continue;
+            }
 
+            var coll = ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
+
+            if (coll.Count == 0)
+            {
+                continue;
+            }
+
+            switch ((NameProp)index)
+            {
+                case NameProp.FamilyNames:
+                    {
+                        _dic[NameProp.FamilyNames] = coll;
                         break;
                     }
-                case GIVEN_NAMES:
+                case NameProp.GivenNames:
                     {
-                        GivenNames = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
-
+                        _dic[NameProp.GivenNames] = coll;
                         break;
                     }
-                case ADDITIONAL_NAMES:
+                case NameProp.AdditionalNames:
                     {
-                        AdditionalNames = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
-
+                        _dic[NameProp.AdditionalNames] = coll;
                         break;
                     }
-                case PREFIXES:
+                case NameProp.Prefixes:
                     {
-                        Prefixes = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
-
+                        _dic[NameProp.Prefixes] = coll;
                         break;
                     }
-                case SUFFIXES:
+                case NameProp.Suffixes:
                     {
-                        Suffixes = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
-
+                        _dic[NameProp.Suffixes] = coll;
+                        break;
+                    }
+                case NameProp.Surname2:
+                    {
+                        _dic[NameProp.Surname2] = coll;
+                        break;
+                    }
+                case NameProp.Generation:
+                    {
+                        _dic[NameProp.Generation] = coll;
                         break;
                     }
                 default:
                     break;
             }//switch
         }//foreach
-
-        // If the VCF file is invalid, properties could be null:
-        FamilyNames ??= ReadOnlyStringCollection.Empty;
-        GivenNames ??= ReadOnlyStringCollection.Empty;
-        AdditionalNames ??= ReadOnlyStringCollection.Empty;
-        Prefixes ??= ReadOnlyStringCollection.Empty;
-        Suffixes ??= ReadOnlyStringCollection.Empty;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static string[] ToArray(ReadOnlyMemory<char> mem, VCdVersion version)
@@ -121,16 +143,16 @@ public sealed class Name
     /// <see cref="Surname2"/> accordingly.
     /// </note>
     /// </remarks>
-    public ReadOnlyCollection<string> FamilyNames { get; }
+    public ReadOnlyCollection<string> FamilyNames => Get(NameProp.FamilyNames);
 
     /// <summary>Given Name(s) (first name(s)). (2,3,4)</summary>
-    public ReadOnlyCollection<string> GivenNames { get; }
+    public ReadOnlyCollection<string> GivenNames => Get(NameProp.GivenNames);
 
     /// <summary>Additional Name(s) (middle name(s)). (2,3,4)</summary>
-    public ReadOnlyCollection<string> AdditionalNames { get; }
+    public ReadOnlyCollection<string> AdditionalNames => Get(NameProp.AdditionalNames);
 
     /// <summary>Honorific Prefix(es). (2,3,4)</summary>
-    public ReadOnlyCollection<string> Prefixes { get; }
+    public ReadOnlyCollection<string> Prefixes => Get(NameProp.Prefixes);
 
     /// <summary>Honorific Suffix(es). (2,3,4)</summary>
     /// <remarks>
@@ -139,98 +161,33 @@ public sealed class Name
     /// <see cref="Generation"/> accordingly.
     /// </note>
     /// </remarks>
-    public ReadOnlyCollection<string> Suffixes { get; }
+    public ReadOnlyCollection<string> Suffixes => Get(NameProp.Suffixes);
 
     /// <summary>A secondary surname (used in some cultures), also known as "maternal surname". (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Surname2 => throw new NotImplementedException();
+    public ReadOnlyCollection<string> Surname2 => Get(NameProp.Surname2);
 
     /// <summary>A generation marker or qualifier, e.g., "Jr." or "III". (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Generation => throw new NotImplementedException();
+    public ReadOnlyCollection<string> Generation => Get(NameProp.Generation);
 
     /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain
     /// any usable data, otherwise <c>false</c>.</summary>
-    public bool IsEmpty => FamilyNames.Count == 0 &&
-                           GivenNames.Count == 0 &&
-                           AdditionalNames.Count == 0 &&
-                           Prefixes.Count == 0 &&
-                           Suffixes.Count == 0;
+    public bool IsEmpty => _dic.Count == 0;
 
     /// <inheritdoc/>
     public override string ToString()
     {
+        if (_dic.Count == 0)
+        {
+            return string.Empty;
+        }
+
         var worker = new StringBuilder();
         var dic = new List<Tuple<string, string>>();
 
-        for (int i = 0; i < MAX_COUNT; i++)
+        foreach (KeyValuePair<NameProp, ReadOnlyCollection<string>> pair in _dic.OrderBy(x => x.Key))
         {
-            switch (i)
-            {
-                case FAMILY_NAMES:
-                    {
-                        string? s = BuildProperty(FamilyNames);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(FamilyNames), s));
-                        break;
-                    }
-                case GIVEN_NAMES:
-                    {
-                        string? s = BuildProperty(GivenNames);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(GivenNames), s));
-                        break;
-                    }
-                case ADDITIONAL_NAMES:
-                    {
-                        string? s = BuildProperty(AdditionalNames);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(AdditionalNames), s));
-                        break;
-                    }
-                case PREFIXES:
-                    {
-                        string? s = BuildProperty(Prefixes);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(Prefixes), s));
-                        break;
-                    }
-                case SUFFIXES:
-                    {
-                        string? s = BuildProperty(Suffixes);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(Suffixes), s));
-                        break;
-                    }
-            }
-        }
-
-        if (dic.Count == 0)
-        {
-            return string.Empty;
+            string s = BuildProperty(pair.Value);
+            dic.Add(new Tuple<string, string>(pair.Key.ToString(), s));
         }
 
         int maxLength = dic.Select(x => x.Item1.Length).Max();
@@ -250,14 +207,11 @@ public sealed class Name
 
         //////////////////////////////////////////////////
 
-        string? BuildProperty(IList<string> strings)
+        string BuildProperty(IList<string> strings)
         {
             _ = worker.Clear();
 
-            if (strings.Count == 0)
-            {
-                return null;
-            }
+            Debug.Assert(strings.Count >= 1);
 
             for (int i = 0; i < strings.Count - 1; i++)
             {
@@ -283,8 +237,10 @@ public sealed class Name
             .AppendReadableProperty(Prefixes)
             .AppendReadableProperty(GivenNames)
             .AppendReadableProperty(AdditionalNames)
-            .AppendReadableProperty(FamilyNames)
-            .AppendReadableProperty(Suffixes)
+            .AppendReadableProperty(FamilyNames.Except(Surname2))
+            .AppendReadableProperty(Surname2)
+            .AppendReadableProperty(Suffixes.Except(Generation))
+            .AppendReadableProperty(Generation)
             .ToString();
     }
 
@@ -296,19 +252,22 @@ public sealed class Name
 
         char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
 
-        AppendProperty(FamilyNames);
-        _ = builder.Append(';');
+        for (int i = 0; i < STANDARD_COUNT; i++)
+        {
+            AppendProperty(Get((NameProp)i), joinChar, serializer);
+        }
 
-        AppendProperty(GivenNames);
-        _ = builder.Append(';');
+        if (serializer.Version >= VCdVersion.V4_0
+            && serializer.Options.HasFlag(Opts.WriteRfc9554Extensions)
+            && _dic.Any(x => x.Key >= NameProp.Surname2))
+        {
+            for (int i = STANDARD_COUNT; i < MAX_COUNT; i++)
+            {
+                AppendProperty(Get((NameProp)i), joinChar, serializer);
+            }
+        }
 
-        AppendProperty(AdditionalNames);
-        _ = builder.Append(';');
-
-        AppendProperty(Prefixes);
-        _ = builder.Append(';');
-
-        AppendProperty(Suffixes);
+        --builder.Length;
 
         if (serializer.ParameterSerializer.ParaSection.Encoding == Enc.QuotedPrintable)
         {
@@ -321,10 +280,13 @@ public sealed class Name
 
         ///////////////////////////////////
 
-        void AppendProperty(IList<string> strings)
+        static void AppendProperty(IList<string> strings, char joinChar, VcfSerializer serializer)
         {
+            StringBuilder builder = serializer.Builder;
+
             if (strings.Count == 0)
             {
+                builder.Append(';');
                 return;
             }
 
@@ -334,16 +296,22 @@ public sealed class Name
             }
 
             --builder.Length;
+            builder.Append(';');
         }
     }
 
     internal bool NeedsToBeQpEncoded()
     {
-        return FamilyNames.Any(NeedsToBeQpEncoded) ||
-               GivenNames.Any(NeedsToBeQpEncoded) ||
-               AdditionalNames.Any(NeedsToBeQpEncoded) ||
-               Prefixes.Any(NeedsToBeQpEncoded) ||
-               Suffixes.Any(NeedsToBeQpEncoded);
+        foreach (KeyValuePair<NameProp, ReadOnlyCollection<string>> kvp in _dic)
+        {
+            if (kvp.Key <= NameProp.Suffixes
+                && kvp.Value.Any(NeedsToBeQpEncoded))
+            {
+                return true;
+            }
+        }
+
+        return false;
 
         static bool NeedsToBeQpEncoded(string str) => StringExtension.NeedsToBeQpEncoded(str);
     }

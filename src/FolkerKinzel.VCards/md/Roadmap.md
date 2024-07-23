@@ -1,42 +1,73 @@
 ﻿# FolkerKinzel.VCards
 ## Roadmap
+### 8.1.0
+- [ ] Implement `VCard.Clean()`.
+- [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
+
 ### 8.0.0
 - [ ] Fix the issue that with `UID` only Guid values are supported
     - [ ] Implement a `ContactID` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
     - [ ] Let the 'IDProperty' have an instance of the `ContactID` class as value.
     - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
 
+&nbsp;
+- [ ] Change the properties of the `Name` class to return `IEnumerable<string>` rather than `ReadOnlyCollection<string>`
+- [ ] Let `Name.FamilyNames` return `FamilyNames.Except(Surname2)`
+- [ ] Let `Name.Suffixes` return `Suffixes.Except(Generation)`
+- [ ] Change `Name.ToDisplayName()` after that.
+- [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method
+
+&nbsp;
+- [ ] Change the properties of the `Address` class to return `IEnumerable<string>` rather than `ReadOnlyCollection<string>`
+- [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.AddressBuilder.Add` method
+
+
+
+&nbsp;
 - [ ] `VCard` properties: Don't allow `null` values in collections anymore.
 - [ ] `VCard.Reference` properties: Don't allow `null` values in collections anymore.
 - [ ] `VCard.Dereference` properties: Don't allow `null` values in collections anymore.
 - [ ] `Vcf` methods: Don't allow `null` values in collections anymore.
 - [ ] `IEnumerableExtension`: Don't allow `null` values in collections anymore.
-- [ ] `NameProperty`: Allow ctors only that take a `NamePropertyBuilder` as argument.
-- [ ] `AddressProperty`: Allow ctors only that take an `AddressPropertyBuilder` as argument
+- [ ] `NameProperty`: Allow only ctors that take a `NamePropertyBuilder` as argument.
+- [ ] `AddressProperty`: Allow only ctors that take an `AddressPropertyBuilder` as argument
 
-- [ ] Rename the `Opts` enum to `VcfOpts` (to separate it from JSContactOpts)
+&nbsp;
+- [ ] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `NameViewsBuilder`
+- [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
 
-### 7.4.0
-- [ ] Implement `VCard.Clean()`.
-- [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
+
 
 ### 7.3.0
 - [ ] Refactor the `VCard` copy ctor to clone only `IEnumerable<VCardProperty?>` and `VCardProperty`
+
+&nbsp;
 - [ ] Implement the internal `AdrProp` enum that addresses the properties of the `Address` class.
 - [ ] Let the `Address` class have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
-- [x] Implement the internal `NameProp` enum that addresses the properties of the `Name` class.
-- Let the `Name` class have a data struct `Dictionary<NameProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
-- [ ] Implement `FolkerKinzel.VCards.AddressPropertyBuilder` class
+- [ ] Implement `FolkerKinzel.VCards.AddressBuilder` class
     - Let it have a data struct `Dictionary<AdrProp, List<string>>`
     - Make it reusable implementing a `Clear` method
-- [ ] Give `AddressProperty` a ctor that takes an "AddressPropertyBuilder".
-- [x] Implement `FolkerKinzel.VCards.NamePropertyBuilder` class
+- [ ] Give `AddressProperty` a ctor that takes an "AddressBuilder".
+- [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
+- [ ] Change `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to have an overload for the `Add` method that takes a `FolkerKinzel.VCards.AddressBuilder`
+
+
+&nbsp;
+- [x] Implement the internal `NameProp` enum that addresses the properties of the `Name` class.
+- [x] Let the `Name` class have a data struct `Dictionary<NameProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
+- [x] Implement `FolkerKinzel.VCards.NameBuilder` class
     - Let it have a data struct `Dictionary<NameProp, List<string>>`
     - Make it reusable implementing a `Clear` method
-- [ ] Give `NameProperty` a ctor that takes a "NamePropertyBuilder".
+- [x] Give `NameProperty` a ctor that takes a "NameBuilder".
+- [x] Add an internal ctor to `Name` that takes an `NameBuilder`
+- [x] Change `FolkerKinzel.VCards.BuilderParts.NameBuilder` to have an overload for the `Add` method that takes a `FolkerKinzel.VCards.NameBuilder`
+
+ &nbsp;
 - [ ] Implement RFC 9554:
-    - [ ] Make new enum value `Opts.WriteRfc9554Extensions`
+    - [x] Make new enum value `Opts.WriteRfc9554Extensions`
     - [ ] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
     - [ ] Implement `GramConverter`
     - [ ] Implement the `GramProperty` class that has a `Gram` value as `Value`
@@ -58,13 +89,9 @@
         - [ ] Add read-only property: `ReadOnlyCollection<string> Landmark`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Direction`
         - [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
-    - [ ] Add a new ctor to `AddressProperty` that takes an `AddressBuilder`.
-    - [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
-    - [ ] Change the `Name` class
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Surname2` (let the name be singular)
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Generation` (let the name be singular)
-    - [ ] Add a new ctor to `NameProperty` that takes an `NameBuilder`
-    - [ ] Add an internal ctor to `Name` that takes an `NameBuilder`
+    - [x] Change the `Name` class
+        - [x] Add read-only property: `ReadOnlyCollection<string> Surname2` (let the name be singular)
+        - [x] Add read-only property: `ReadOnlyCollection<string> Generation` (let the name be singular)
     - [ ] Change the `VCard` class
         - Make a new default parameter `setCreated` that defaults to `true` to the `VCard` ctor and to `VCardBuilder.Create`
         - [ ] Add property: `TimeStampProperty Created {get; set;}`
