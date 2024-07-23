@@ -27,8 +27,13 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
     };
 
     private readonly Action<ParameterSerializer3_0> _collectAddressTypes = static serializer
-        => EnumValueCollector.Collect(serializer.ParaSection.AddressType,
-                                      serializer._stringCollectionList);
+        =>
+    {
+        const Adr DEFINED_ADDRES_TYPES = Adr.Intl | Adr.Parcel | Adr.Postal | Adr.Dom;
+
+        EnumValueCollector.Collect(serializer.ParaSection.AddressType & DEFINED_ADDRES_TYPES,
+                                          serializer._stringCollectionList);
+    };
 
     private readonly Action<ParameterSerializer3_0> _collectImppTypes = static serializer
         => EnumValueCollector.Collect(serializer.ParaSection.InstantMessengerType,

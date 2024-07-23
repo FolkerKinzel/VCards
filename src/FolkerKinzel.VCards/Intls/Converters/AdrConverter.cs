@@ -10,15 +10,19 @@ internal static class AdrConverter
         internal const string INTL = "INTL";
         internal const string POSTAL = "POSTAL";
         internal const string PARCEL = "PARCEL";
+        internal const string BILLING = "billing";
+        internal const string DELIVERY = "delivery";
     }
 
     internal const Adr DEFINED_ADDRESS_TYPES_VALUES = Adr.Dom
-                                                             | Adr.Intl
-                                                             | Adr.Postal
-                                                             | Adr.Parcel;
+                                                    | Adr.Intl
+                                                    | Adr.Postal
+                                                    | Adr.Parcel
+                                                    | Adr.Billing
+                                                    | Adr.Delivery;
 
     internal const int ADDRESS_TYPES_MIN_BIT = 0;
-    internal const int ADDRESS_TYPES_MAX_BIT = 3;
+    internal const int ADDRESS_TYPES_MAX_BIT = 5;
 
     internal static Adr? Parse(ReadOnlySpan<char> typeValue)
     {
@@ -28,6 +32,8 @@ internal static class AdrConverter
              : typeValue.Equals(AddressTypesValue.DOM, comp) ? Adr.Dom
              : typeValue.Equals(AddressTypesValue.POSTAL, comp) ? Adr.Postal
              : typeValue.Equals(AddressTypesValue.PARCEL, comp) ? Adr.Parcel
+             : typeValue.Equals(AddressTypesValue.BILLING, comp) ? Adr.Billing
+             : typeValue.Equals(AddressTypesValue.DELIVERY, comp) ? Adr.Delivery
              : null;  
     }
 
@@ -38,6 +44,8 @@ internal static class AdrConverter
             Adr.Intl => AddressTypesValue.INTL,
             Adr.Postal => AddressTypesValue.POSTAL,
             Adr.Parcel => AddressTypesValue.PARCEL,
+            Adr.Billing => AddressTypesValue.BILLING,
+            Adr.Delivery => AddressTypesValue.DELIVERY,
             _ => throw new ArgumentOutOfRangeException(nameof(value))
         };
 }

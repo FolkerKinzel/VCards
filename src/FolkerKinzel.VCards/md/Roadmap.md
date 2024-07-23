@@ -22,8 +22,6 @@
 - [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
 - [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.AddressBuilder.Add` method
 
-
-
 &nbsp;
 - [ ] `VCard` properties: Don't allow `null` values in collections anymore.
 - [ ] `VCard.Reference` properties: Don't allow `null` values in collections anymore.
@@ -73,8 +71,8 @@
     - [ ] Implement `readonly struct GramBuilder`
     - [ ] Implement the `Phonetic` enum ("ipa", "jyut", "piny", "script")
     - [ ] Implement `PhoneticConverter`
-    - [ ] Add the values `billing` and `delivery` to the `Adr` enum
-    - [ ] Update `AdrConverter`
+    - [x] Add the values `billing` and `delivery` to the `Adr` enum
+    - [x] Update `AdrConverter`
     - [ ] Change the `Address` class
         - [ ] Add read-only property: `ReadOnlyCollection<string> Room`
         - [ ] Add read-only property: `ReadOnlyCollection<string> Apartment`
