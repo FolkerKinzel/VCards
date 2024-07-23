@@ -16,6 +16,7 @@ public class NameBuilder
     /// Creates a new <see cref="NameBuilder"/> instance.
     /// </summary>
     /// <returns>The newly created <see cref="NameBuilder"/> instance.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static NameBuilder Create() => new();
 
     /// <summary>Adds a family name (also known as surname). (2,3,4)</summary>
