@@ -40,6 +40,7 @@
 
 ### 7.3.0
 - [ ] Refactor the `VCard` copy ctor to clone only `IEnumerable<VCardProperty?>` and `VCardProperty`
+- [x] Remove the `ObsoleteAttribute` from the properties `Address.PostOfficeBox` and `Address.ExtendedAddress`
 
 &nbsp;
 - [ ] Implement the internal `AdrProp` enum that addresses the properties of the `Address` class.

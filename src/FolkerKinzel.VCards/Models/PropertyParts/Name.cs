@@ -50,13 +50,13 @@ public sealed class Name
 
     #endregion
 
-    [SuppressMessage("Style", "IDE0305:Simplify collection initialization", 
+    [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
         Justification = "Performance: Collection initializer initializes a new List.")]
     internal Name(NameBuilder builder)
     {
         foreach (KeyValuePair<NameProp, List<string>> kvp in builder.Data)
         {
-            if(kvp.Value.Count != 0)
+            if (kvp.Value.Count != 0)
             {
                 _dic[kvp.Key] = new ReadOnlyCollection<string>(kvp.Value.ToArray());
             }
@@ -73,7 +73,7 @@ public sealed class Name
         {
             index++;
 
-            if(index >= MAX_COUNT)
+            if (index >= MAX_COUNT)
             {
                 break;
             }
@@ -93,44 +93,7 @@ public sealed class Name
                 continue;
             }
 
-            switch ((NameProp)index)
-            {
-                case NameProp.FamilyNames:
-                    {
-                        _dic[NameProp.FamilyNames] = coll;
-                        break;
-                    }
-                case NameProp.GivenNames:
-                    {
-                        _dic[NameProp.GivenNames] = coll;
-                        break;
-                    }
-                case NameProp.AdditionalNames:
-                    {
-                        _dic[NameProp.AdditionalNames] = coll;
-                        break;
-                    }
-                case NameProp.Prefixes:
-                    {
-                        _dic[NameProp.Prefixes] = coll;
-                        break;
-                    }
-                case NameProp.Suffixes:
-                    {
-                        _dic[NameProp.Suffixes] = coll;
-                        break;
-                    }
-                case NameProp.Surname2:
-                    {
-                        _dic[NameProp.Surname2] = coll;
-                        break;
-                    }
-                case NameProp.Generation:
-                    {
-                        _dic[NameProp.Generation] = coll;
-                        break;
-                    }
-            }//switch
+            _dic[(NameProp)index] = coll;
         }//foreach
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

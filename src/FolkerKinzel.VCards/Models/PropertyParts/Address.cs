@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
+using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
@@ -15,25 +16,26 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 /// <summary>Encapsulates information about a postal delivery address.</summary>
 public sealed class Address
 {
-    private const int MAX_COUNT = 7;
+    private const int STANDARD_COUNT = (int)AdrProp.Country + 1;
+    private const int MAX_COUNT = (int)AdrProp.Direction + 1;
+    private readonly Dictionary<AdrProp, ReadOnlyCollection<string>> _dic = [];
 
-    private const int POST_OFFICE_BOX = 0;
-    private const int EXTENDED_ADDRESS = 1;
-    private const int STREET = 2;
-    private const int LOCALITY = 3;
-    private const int REGION = 4;
-    private const int POSTAL_CODE = 5;
-    private const int COUNTRY = 6;
+    private ReadOnlyCollection<string> Get(AdrProp prop)
+        => _dic.TryGetValue(prop, out ReadOnlyCollection<string>? coll)
+            ? coll
+            : ReadOnlyStringCollection.Empty;
 
-    /// <summary />
-    /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g. city).</param>
-    /// <param name="region">The region (e.g. state or province).</param>
-    /// <param name="postalCode">The postal code.</param>
-    /// <param name="country">The country name (full name).</param>
-    /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
-    /// <param name="extendedAddress">The extended address (e.g. apartment or suite
-    /// number). (Don't use this parameter!)</param>
+
+    #region Remove this code with version 8.0.0
+
+    private void Add(AdrProp prop, ReadOnlyCollection<string> coll)
+    {
+        if (coll.Count != 0)
+        {
+            _dic[prop] = coll;
+        }
+    }
+
     internal Address(ReadOnlyCollection<string> street,
                      ReadOnlyCollection<string> locality,
                      ReadOnlyCollection<string> region,
@@ -42,255 +44,158 @@ public sealed class Address
                      ReadOnlyCollection<string> postOfficeBox,
                      ReadOnlyCollection<string> extendedAddress)
     {
-        PostOfficeBox = postOfficeBox;
-        ExtendedAddress = extendedAddress;
-        Street = street;
-        Locality = locality;
-        Region = region;
-        PostalCode = postalCode;
-        Country = country;
+        Add(AdrProp.PostOfficeBox, postOfficeBox);
+        Add(AdrProp.ExtendedAddress, extendedAddress);
+        Add(AdrProp.Street, street);
+        Add(AdrProp.Locality, locality);
+        Add(AdrProp.Region, region);
+        Add(AdrProp.PostalCode, postalCode);
+        Add(AdrProp.Country, country);
     }
 
-    internal Address()
+    #endregion
+
+    [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
+        Justification = "Performance: Collection initializer initializes a new List.")]
+    internal Address(AddressBuilder builder)
     {
-        PostOfficeBox =
-        ExtendedAddress =
-        Street =
-        Locality =
-        Region =
-        PostalCode =
-        Country = ReadOnlyStringCollection.Empty;
+        foreach (KeyValuePair<AdrProp, List<string>> kvp in builder.Data)
+        {
+            if (kvp.Value.Count != 0)
+            {
+                _dic[kvp.Key] = new ReadOnlyCollection<string>(kvp.Value.ToArray());
+            }
+        }
     }
+
+    internal Address() { }
+    
 
     internal Address(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
-        int index = 0;
-     
+        int index = -1;
+
         foreach (ReadOnlyMemory<char> mem in PropertyValueSplitter.SplitIntoMemories(vCardValue, ';'))
         {
-            switch (index++)
+            index++;
+
+            if (index >= MAX_COUNT)
             {
-                case POST_OFFICE_BOX:
-                    {
-                        PostOfficeBox = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
+                break;
+            }
 
-                        break;
-                    }
-                case EXTENDED_ADDRESS:
-                    {
-                        ExtendedAddress = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
+            if (mem.IsEmpty)
+            {
+                continue;
+            }
 
-                        break;
-                    }
-                case STREET:
-                    {
-                        Street = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
+            ReadOnlySpan<char> span = mem.Span;
+            ReadOnlyCollection<string> coll = span.Contains(',')
+                ? ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(in mem, version))
+                : ReadOnlyCollectionConverter.ToReadOnlyCollection(span.UnMaskValue(version));
 
-                        break;
-                    }
-                case LOCALITY:
-                    {
-                        Locality = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
+            if (coll.Count == 0)
+            {
+                continue;
+            }
 
-                        break;
-                    }
-                case REGION:
-                    {
-                        Region = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
-
-                        break;
-                    }
-                case POSTAL_CODE:
-                    {
-                        PostalCode = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
-
-                        break;
-                    }
-                case COUNTRY:
-                    {
-                        Country = mem.Length == 0
-                            ? ReadOnlyStringCollection.Empty
-                            : ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(mem, version));
-
-                        break;
-                    }
-                default:
-                    break;
-            }//switch
+            _dic[(AdrProp)index] = coll;
         }//foreach
 
-        // If the VCF file is invalid, properties could be null:
-        PostOfficeBox ??= ReadOnlyStringCollection.Empty;
-        ExtendedAddress ??= ReadOnlyStringCollection.Empty;
-        Street ??= ReadOnlyStringCollection.Empty;
-        Locality ??= ReadOnlyStringCollection.Empty;
-        Region ??= ReadOnlyStringCollection.Empty;
-        PostalCode ??= ReadOnlyStringCollection.Empty;
-        Country ??= ReadOnlyStringCollection.Empty;
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static string[] ToArray(ReadOnlyMemory<char> mem, VCdVersion version)
-            => PropertyValueSplitter.Split(mem, 
-                                    ',', 
-                                    StringSplitOptions.RemoveEmptyEntries,            
+            static string[] ToArray(in ReadOnlyMemory<char> mem, VCdVersion version)
+            => PropertyValueSplitter.Split(mem,
+                                    ',',
+                                    StringSplitOptions.RemoveEmptyEntries,
                                     unMask: true,
                                     version).ToArray();
     }
 
     /// <summary>The post office box. (Don't use this property!)</summary>
-    [Obsolete("Don't use this property.", false)]
-    public ReadOnlyCollection<string> PostOfficeBox { get; }
+    public ReadOnlyCollection<string> PostOfficeBox => Get(AdrProp.PostOfficeBox);
 
-    /// <summary>The extended address (e.g. apartment or suite number). (Don't use this
+    /// <summary>The extended address (e.g., apartment or suite number). (Don't use this
     /// property!)</summary>
-    [Obsolete("Don't use this property.", false)]
-    public ReadOnlyCollection<string> ExtendedAddress { get; }
+    public ReadOnlyCollection<string> ExtendedAddress => Get(AdrProp.ExtendedAddress);
 
     /// <summary>The street address.</summary>
-    public ReadOnlyCollection<string> Street { get; }
+    public ReadOnlyCollection<string> Street => Get(AdrProp.Street);
 
-    /// <summary>The locality (e.g. city).</summary>
-    public ReadOnlyCollection<string> Locality { get; }
+    /// <summary>The locality (e.g., city).</summary>
+    public ReadOnlyCollection<string> Locality => Get(AdrProp.Locality);
 
-    /// <summary>The region (e.g. state or province).</summary>
-    public ReadOnlyCollection<string> Region { get; }
+    /// <summary>The region (e.g., state or province).</summary>
+    public ReadOnlyCollection<string> Region => Get(AdrProp.Region);
 
     /// <summary>The postal code.</summary>
-    public ReadOnlyCollection<string> PostalCode { get; }
+    public ReadOnlyCollection<string> PostalCode => Get(AdrProp.PostalCode);
 
     /// <summary>The country name (full name).</summary>
-    public ReadOnlyCollection<string> Country { get; }
+    public ReadOnlyCollection<string> Country => Get(AdrProp.Country);
+
+    /// <summary> The room, suite number, or identifier. (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> Room => Get(AdrProp.Room);
+
+    /// <summary> The extension designation such as the apartment number, unit, or box number. (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> Apartment => Get(AdrProp.Apartment);
+
+    /// <summary> The floor or level the address is located on. (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> Floor => Get(AdrProp.Floor);
+
+    /// <summary> The street number, e.g., "123". This value is not restricted to numeric values and can include
+    /// any value such as number ranges ("112-10"), grid style ("39.2 RD"), alphanumerics ("N6W23001"), or 
+    /// fractionals ("123 1/2"). (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> StreetNumber => Get(AdrProp.StreetNumber);
+
+    /// <summary> The street name. (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> StreetName => Get(AdrProp.StreetName);
+
+    /// <summary> The building, tower, or condominium the address is located in. (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> Building => Get(AdrProp.Building);
+
+    /// <summary> The block name or number. (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> Block => Get(AdrProp.Block);
+
+    /// <summary> The subdistrict, ward, or other subunit of a district. (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> SubDistrict => Get(AdrProp.SubDistrict);
+
+    /// <summary> The district name. (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> District => Get(AdrProp.District);
+
+    /// <summary> The publicly known prominent feature that can substitute the street name and number,
+    /// e.g., "White House" or "Taj Mahal". (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> LandMark => Get(AdrProp.LandMark);
+
+    /// <summary> The cardinal direction or quadrant, e.g., "north". (4 - RFC 9554)</summary>
+    public ReadOnlyCollection<string> Direction => Get(AdrProp.Direction);
 
 
     /// <summary>Returns <c>true</c>, if the <see cref="Address" /> object does not
     /// contain any usable data.</summary>
-    public bool IsEmpty => Locality.Count == 0 &&
-                           Street.Count == 0 &&
-                           Country.Count == 0 &&
-                           Region.Count == 0 &&
-                           PostalCode.Count == 0 &&
-                           PostOfficeBox.Count == 0 &&
-                           ExtendedAddress.Count == 0;
+    public bool IsEmpty => _dic.Count == 0;
 
     /// <summary>Converts the data encapsulated in the instance into formatted text
     /// for a mailing label.</summary>
     /// <returns>The data encapsulated in the instance, converted to formatted text
     /// for a mailing label.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string ToLabel() => this.ConvertToLabel();
+    public string ToLabel() => AddressToLabelConverter.ConvertToLabel(this);
 
     /// <inheritdoc/>
     public override string ToString()
     {
+        if (_dic.Count == 0)
+        {
+            return string.Empty;
+        }
+
         var worker = new StringBuilder();
         var dic = new List<Tuple<string, string>>();
 
-        for (int i = 0; i < MAX_COUNT; i++)
+        foreach (KeyValuePair<AdrProp, ReadOnlyCollection<string>> pair in _dic.OrderBy(x => x.Key))
         {
-            switch (i)
-            {
-                case POST_OFFICE_BOX:
-                    {
-                        string? s = BuildProperty(PostOfficeBox);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(PostOfficeBox), s));
-                        break;
-                    }
-                case EXTENDED_ADDRESS:
-                    {
-                        string? s = BuildProperty(ExtendedAddress);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(ExtendedAddress), s));
-                        break;
-                    }
-                case STREET:
-                    {
-                        string? s = BuildProperty(Street);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(Street), s));
-                        break;
-                    }
-                case LOCALITY:
-                    {
-                        string? s = BuildProperty(Locality);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(Locality), s));
-                        break;
-                    }
-                case REGION:
-                    {
-                        string? s = BuildProperty(Region);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(Region), s));
-                        break;
-                    }
-                case POSTAL_CODE:
-                    {
-                        string? s = BuildProperty(PostalCode);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(PostalCode), s));
-                        break;
-                    }
-                case COUNTRY:
-                    {
-                        string? s = BuildProperty(Country);
-
-                        if (s is null)
-                        {
-                            continue;
-                        }
-
-                        dic.Add(new Tuple<string, string>(nameof(Country), s));
-                        break;
-                    }
-            }
-        }
-
-        if (dic.Count == 0)
-        {
-            return string.Empty;
+            string s = BuildProperty(pair.Value);
+            dic.Add(new Tuple<string, string>(pair.Key.ToString(), s));
         }
 
         int maxLength = dic.Select(x => x.Item1.Length).Max();
@@ -310,14 +215,11 @@ public sealed class Address
 
         ////////////////////////////////////////////
 
-        string? BuildProperty(IList<string> strings)
+        string BuildProperty(IList<string> strings)
         {
             _ = worker.Clear();
 
-            if (strings.Count == 0)
-            {
-                return null;
-            }
+            Debug.Assert(strings.Count >= 1);
 
             for (int i = 0; i < strings.Count - 1; i++)
             {
@@ -338,25 +240,22 @@ public sealed class Address
 
         char joinChar = serializer.Version < VCdVersion.V4_0 ? ' ' : ',';
 
-        AppendProperty(PostOfficeBox);
-        _ = builder.Append(';');
+        for (int i = 0; i < STANDARD_COUNT; i++)
+        {
+            AppendProperty(Get((AdrProp)i), joinChar, serializer);
+        }
 
-        AppendProperty(ExtendedAddress);
-        _ = builder.Append(';');
+        if (serializer.Version >= VCdVersion.V4_0
+            && serializer.Options.HasFlag(Opts.WriteRfc9554Extensions)
+            && _dic.Any(x => x.Key >= AdrProp.Room))
+        {
+            for (int i = STANDARD_COUNT; i < MAX_COUNT; i++)
+            {
+                AppendProperty(Get((AdrProp)i), joinChar, serializer);
+            }
+        }
 
-        AppendProperty(Street);
-        _ = builder.Append(';');
-
-        AppendProperty(Locality);
-        _ = builder.Append(';');
-
-        AppendProperty(Region);
-        _ = builder.Append(';');
-
-        AppendProperty(PostalCode);
-        _ = builder.Append(';');
-
-        AppendProperty(Country);
+        --builder.Length;
 
         if (serializer.ParameterSerializer.ParaSection.Encoding == Enc.QuotedPrintable)
         {
@@ -369,10 +268,13 @@ public sealed class Address
 
         //////////////////////////////////////////////////////////
 
-        void AppendProperty(IList<string> strings)
+        static void AppendProperty(IList<string> strings, char joinChar, VcfSerializer serializer)
         {
+            StringBuilder builder = serializer.Builder;
+
             if (strings.Count == 0)
             {
+                builder.Append(';');
                 return;
             }
 
@@ -382,38 +284,26 @@ public sealed class Address
             }
 
             --builder.Length;
+            builder.Append(';');
         }
     }
 
 
     internal bool NeedsToBeQpEncoded()
     {
-        return Locality.Any(NeedsToBeQpEncoded) ||
-               Street.Any(NeedsToBeQpEncoded) ||
-               Country.Any(NeedsToBeQpEncoded) ||
-               Region.Any(NeedsToBeQpEncoded) ||
-               PostalCode.Any(NeedsToBeQpEncoded) ||
-               PostOfficeBox.Any(NeedsToBeQpEncoded) ||
-               ExtendedAddress.Any(NeedsToBeQpEncoded);
+        foreach (KeyValuePair<AdrProp, ReadOnlyCollection<string>> kvp in _dic)
+        {
+            if (kvp.Key <= AdrProp.Country
+                && kvp.Value.Any(NeedsToBeQpEncoded))
+            {
+                return true;
+            }
+        }
+
+        return false;
 
         static bool NeedsToBeQpEncoded(string str) => StringExtension.NeedsToBeQpEncoded(str);
     }
-
-    //internal bool CoverageTest()
-    //{
-    //    return
-    //        Locality.Any(NeedsToBeQpEncoded)
-    //        ||
-    //        Street.Any(NeedsToBeQpEncoded)
-    //        //||   Country.Any(NeedsToBeQpEncoded) 
-    //        //||   Region.Any(NeedsToBeQpEncoded) 
-    //        //||   PostalCode.Any(NeedsToBeQpEncoded) 
-    //        //||   PostOfficeBox.Any(NeedsToBeQpEncoded) 
-    //        //||   ExtendedAddress.Any(NeedsToBeQpEncoded)
-    //        ;
-
-    //    static bool NeedsToBeQpEncoded(string str) => StringExtension.NeedsToBeQpEncoded(str);
-    //}
 }
 
 #pragma warning restore CS0618 // Type or member is deprecated

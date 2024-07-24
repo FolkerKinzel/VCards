@@ -15,7 +15,7 @@ internal static class AddressToLabelConverter
 
     static AddressToLabelConverter() => _defaultAddressOrder = CultureInfo.CurrentCulture.ToAddressOrder();
 
-    internal static string ConvertToLabel(this Address address)
+    internal static string ConvertToLabel(Address address)
     {
         StringBuilder worker = new StringBuilder(WORKER_CAPACITY);
 
