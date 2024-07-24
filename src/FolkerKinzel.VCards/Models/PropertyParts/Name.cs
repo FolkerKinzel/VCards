@@ -143,55 +143,55 @@ public sealed class Name
     public bool IsEmpty => _dic.Count == 0;
 
     /// <inheritdoc/>
-    public override string ToString()
-    {
-        if (_dic.Count == 0)
-        {
-            return string.Empty;
-        }
+    public override string ToString() => CompoundPropertyConverter.ToString(_dic);
+    //{
+    //    if (_dic.Count == 0)
+    //    {
+    //        return string.Empty;
+    //    }
 
-        var worker = new StringBuilder();
-        var dic = new List<Tuple<string, string>>();
+    //    var worker = new StringBuilder();
+    //    var dic = new List<Tuple<string, string>>();
 
-        foreach (KeyValuePair<NameProp, ReadOnlyCollection<string>> pair in _dic.OrderBy(x => x.Key))
-        {
-            string s = BuildProperty(pair.Value);
-            dic.Add(new Tuple<string, string>(pair.Key.ToString(), s));
-        }
+    //    foreach (KeyValuePair<NameProp, ReadOnlyCollection<string>> pair in _dic.OrderBy(x => x.Key))
+    //    {
+    //        string s = BuildProperty(pair.Value);
+    //        dic.Add(new Tuple<string, string>(pair.Key.ToString(), s));
+    //    }
 
-        int maxLength = dic.Select(x => x.Item1.Length).Max();
-        maxLength += 2;
+    //    int maxLength = dic.Select(x => x.Item1.Length).Max();
+    //    maxLength += 2;
 
-        _ = worker.Clear();
+    //    _ = worker.Clear();
 
-        for (int i = 0; i < dic.Count; i++)
-        {
-            Tuple<string, string>? tpl = dic[i];
-            string s = tpl.Item1 + ": ";
-            _ = worker.Append(s.PadRight(maxLength)).Append(tpl.Item2).Append(Environment.NewLine);
-        }
+    //    for (int i = 0; i < dic.Count; i++)
+    //    {
+    //        Tuple<string, string>? tpl = dic[i];
+    //        string s = tpl.Item1 + ": ";
+    //        _ = worker.Append(s.PadRight(maxLength)).Append(tpl.Item2).Append(Environment.NewLine);
+    //    }
 
-        worker.Length -= Environment.NewLine.Length;
-        return worker.ToString();
+    //    worker.Length -= Environment.NewLine.Length;
+    //    return worker.ToString();
 
-        //////////////////////////////////////////////////
+    //    //////////////////////////////////////////////////
 
-        string BuildProperty(IList<string> strings)
-        {
-            _ = worker.Clear();
+    //    string BuildProperty(IList<string> strings)
+    //    {
+    //        _ = worker.Clear();
 
-            Debug.Assert(strings.Count >= 1);
+    //        Debug.Assert(strings.Count >= 1);
 
-            for (int i = 0; i < strings.Count - 1; i++)
-            {
-                _ = worker.Append(strings[i]).Append(", ");
-            }
+    //        for (int i = 0; i < strings.Count - 1; i++)
+    //        {
+    //            _ = worker.Append(strings[i]).Append(", ");
+    //        }
 
-            _ = worker.Append(strings[strings.Count - 1]);
+    //        _ = worker.Append(strings[strings.Count - 1]);
 
-            return worker.ToString();
-        }
-    }
+    //        return worker.ToString();
+    //    }
+    //}
 
     /// <summary>Formats the data encapsulated by the instance into a human-readable
     /// form.</summary>
