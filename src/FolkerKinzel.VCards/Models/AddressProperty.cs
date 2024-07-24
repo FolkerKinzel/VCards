@@ -291,5 +291,5 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal override void AppendValue(VcfSerializer serializer)
-        => Value.AppendVCardString(serializer);
+        => Value.AppendVcfString(serializer);
 }

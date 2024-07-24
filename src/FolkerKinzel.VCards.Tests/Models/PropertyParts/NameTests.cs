@@ -26,7 +26,7 @@ public class NameTests
 
         using var writer = new StringWriter();
         var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
-        name.AppendVCardString(serializer);
+        name.AppendVcfString(serializer);
 
         Assert.AreEqual(input, serializer.Builder.ToString());
     }

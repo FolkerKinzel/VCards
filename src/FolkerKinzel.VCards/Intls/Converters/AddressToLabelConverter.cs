@@ -28,9 +28,20 @@ internal static class AddressToLabelConverter
 
     private static StringBuilder AppendStreet(this StringBuilder builder, Address address)
     {
-        return address.PostOfficeBox.Count != 0
-            ? builder.AppendReadableProperty(address.PostOfficeBox)
-            : builder.AppendReadableProperty(address.Street, MAX_LINE_LENGTH);
+        return address.PostOfficeBox.Count != 0 ? builder.AppendReadableProperty(address.PostOfficeBox, MAX_LINE_LENGTH)
+            : address.Street.Count != 0 ? builder.AppendReadableProperty(address.Street, MAX_LINE_LENGTH)
+            : builder.AppendReadableProperty(
+                address.StreetName
+                .Concat(address.StreetNumber)
+                .Concat(address.Block)
+                .Concat(address.Building)
+                .Concat(address.Floor)
+                .Concat(address.Apartment)
+                .Concat(address.Room)
+                .Concat(address.District)
+                .Concat(address.SubDistrict)
+                .Concat(address.LandMark)
+                .Concat(address.Direction), MAX_LINE_LENGTH);
     }
 
 

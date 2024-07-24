@@ -116,7 +116,29 @@ public sealed class Address
     public ReadOnlyCollection<string> ExtendedAddress => Get(AdrProp.ExtendedAddress);
 
     /// <summary>The street address.</summary>
-    public ReadOnlyCollection<string> Street => Get(AdrProp.Street);
+    /// <remarks>
+    /// <para>
+    /// This property returns an empty collection if any of these properties
+    /// contains data:
+    /// </para>
+    /// <list type="bullet">
+    /// <item><see cref="StreetName"/></item>
+    /// <item><see cref="StreetNumber"/></item>
+    /// <item><see cref="Block"/></item>
+    /// <item><see cref="Building"/></item>
+    /// <item><see cref="Floor"/></item>
+    /// <item><see cref="Apartment"/></item>
+    /// <item><see cref="Room"/></item>
+    /// <item><see cref="District"/></item>
+    /// <item><see cref="SubDistrict"/></item>
+    /// <item><see cref="LandMark"/></item>
+    /// <item><see cref="Direction"/></item>
+    /// </list>
+    /// </remarks>
+    public ReadOnlyCollection<string> Street 
+        => _dic.Any(x => x.Key > AdrProp.Country) 
+            ? ReadOnlyStringCollection.Empty 
+            : Get(AdrProp.Street);
 
     /// <summary>The locality (e.g., city).</summary>
     public ReadOnlyCollection<string> Locality => Get(AdrProp.Locality);
@@ -181,7 +203,7 @@ public sealed class Address
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => CompoundObjectConverter.ToString(_dic);
 
-    internal void AppendVCardString(VcfSerializer serializer)
+    internal void AppendVcfString(VcfSerializer serializer)
     {
         StringBuilder builder = serializer.Builder;
         int startIdx = builder.Length;

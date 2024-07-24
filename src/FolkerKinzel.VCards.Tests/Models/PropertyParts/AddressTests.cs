@@ -40,7 +40,7 @@ public class AddressTests
 
         using var writer = new StringWriter();
         var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
-        adr.AppendVCardString(serializer);
+        adr.AppendVcfString(serializer);
 
         Assert.AreEqual(input, serializer.Builder.ToString());
     }

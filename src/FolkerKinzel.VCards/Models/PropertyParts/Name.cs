@@ -173,7 +173,7 @@ public sealed class Name
             .ToString();
     }
 
-    internal void AppendVCardString(VcfSerializer serializer)
+    internal void AppendVcfString(VcfSerializer serializer)
     {
         StringBuilder builder = serializer.Builder;
         int startIdx = builder.Length;

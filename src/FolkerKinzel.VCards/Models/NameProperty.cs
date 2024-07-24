@@ -188,5 +188,5 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal override void AppendValue(VcfSerializer serializer)
-        => Value.AppendVCardString(serializer);
+        => Value.AppendVcfString(serializer);
 }
