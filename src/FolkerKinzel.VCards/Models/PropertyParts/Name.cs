@@ -282,15 +282,13 @@ public sealed class Name
         foreach (KeyValuePair<NameProp, ReadOnlyCollection<string>> kvp in _dic)
         {
             if (kvp.Key <= NameProp.Suffixes
-                && kvp.Value.Any(NeedsToBeQpEncoded))
+                && kvp.Value.Any(StringExtension.NeedsToBeQpEncoded))
             {
                 return true;
             }
         }
 
         return false;
-
-        static bool NeedsToBeQpEncoded(string str) => StringExtension.NeedsToBeQpEncoded(str);
     }
 }
 
