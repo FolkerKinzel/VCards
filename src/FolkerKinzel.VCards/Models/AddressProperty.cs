@@ -1,5 +1,6 @@
 using System.Collections;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
@@ -14,9 +15,7 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="VCard.Addresses"/>
 public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty>
 {
-    /// <summary>Copy ctor.</summary>
-    /// <param name="prop">The <see cref="AddressProperty" /> object to clone.</param>
-    private AddressProperty(AddressProperty prop) : base(prop) => Value = prop.Value;
+    #region Remove this code with Version 8.0.0
 
     /// <summary> Initializes a new <see cref="AddressProperty" /> object.</summary>
     /// <param name="street">The street address.</param>
@@ -29,6 +28,12 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <remarks>
+    /// <note type="tip">
+    /// It's recommended to use the constructor overload that takes an <see cref="AddressBuilder"/>
+    /// as argument.
+    /// </note>
+    /// </remarks>
     /// <seealso cref="AttachLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressProperty(IEnumerable<string?>? street,
@@ -38,7 +43,6 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                            IEnumerable<string?>? country = null,
                            bool autoLabel = true,
                            string? group = null)
-#pragma warning disable CS0618 // Type or member is obsolete
         : this(street: street,
                locality: locality,
                region: region,
@@ -47,9 +51,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                postOfficeBox: null,
                extendedAddress: null,
                autoLabel: autoLabel,
-               group: group)
-    { }
-#pragma warning restore CS0618 // Type or member is obsolete
+               group: group) { }
 
     /// <summary> Initializes a new <see cref="AddressProperty" /> object. </summary>
     /// <param name="street">The street address.</param>
@@ -65,8 +67,13 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <remarks>
+    /// <note type="tip">
+    /// It's recommended to use the constructor overload that takes an <see cref="AddressBuilder"/>
+    /// as argument.
+    /// </note>
+    /// </remarks>
     /// <seealso cref="AttachLabel" />
-    [Obsolete("Don't use this constructor.", false)]
     public AddressProperty(IEnumerable<string?>? street,
                            IEnumerable<string?>? locality,
                            IEnumerable<string?>? region,
@@ -102,6 +109,12 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <remarks>
+    /// <note type="tip">
+    /// It's recommended to use the constructor overload that takes an <see cref="AddressBuilder"/>
+    /// as argument.
+    /// </note>
+    /// </remarks>
     /// <seealso cref="AttachLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressProperty(
@@ -112,7 +125,6 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         string? country = null,
         bool autoLabel = true,
         string? group = null)
-#pragma warning disable CS0618 // Type or member is obsolete
         : this(street: street,
               locality: locality,
               region: region,
@@ -121,9 +133,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
               postOfficeBox: null,
               extendedAddress: null,
               autoLabel: autoLabel,
-              group: group)
-    { }
-#pragma warning restore CS0618 // Type or member is obsolete
+              group: group) { }
 
     /// <summary> Initializes a new <see cref="AddressProperty" /> object. </summary>
     /// <param name="street">The street address.</param>
@@ -139,8 +149,13 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <remarks>
+    /// <note type="tip">
+    /// It's recommended to use the constructor overload that takes an <see cref="AddressBuilder"/>
+    /// as argument.
+    /// </note>
+    /// </remarks>
     /// <seealso cref="AttachLabel" />
-    [Obsolete("Don't use this constructor.", false)]
     public AddressProperty(
         string? street,
         string? locality,
@@ -166,6 +181,29 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
             AttachLabel();
         }
     }
+
+    #endregion
+
+    /// <summary>
+    /// Initializes a new <see cref="AddressProperty"/> instance with the content of a 
+    /// specified <see cref="AddressBuilder"/>.
+    /// </summary>
+    /// <param name="builder">The <see cref="AddressBuilder"/> whose content is used.</param>
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <seealso cref="AttachLabel" />
+    /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
+    public AddressProperty(AddressBuilder builder, string? group = null)
+        : base(new ParameterSection(), group)
+    {
+        _ArgumentNullException.ThrowIfNull(builder, nameof(builder));
+        Value = new Address(builder);
+    }
+
+    /// <summary>Copy ctor.</summary>
+    /// <param name="prop">The <see cref="AddressProperty" /> object to clone.</param>
+    private AddressProperty(AddressProperty prop) : base(prop) => Value = prop.Value;
 
     internal AddressProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)

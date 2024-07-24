@@ -157,6 +157,8 @@ public readonly struct AddressBuilder
     private IEnumerable<AddressProperty> GetProperty()
         => Builder.VCard.Addresses?.WhereNotNull() ?? [];
 
+    #region Remove this code with version 8.0.0
+
     /// <summary>
     /// Adds an <see cref="AddressProperty"/> instance, which is newly 
     /// initialized using the specified arguments, to the <see cref="VCard.Addresses"/> property.
@@ -209,7 +211,6 @@ public readonly struct AddressBuilder
         return _builder;
     }
 
-
     /// <summary>
     /// Adds an <see cref="AddressProperty"/> instance, which is newly 
     /// initialized using the specified arguments, to the <see cref="VCard.Addresses"/> property.
@@ -255,6 +256,10 @@ public readonly struct AddressBuilder
                            );
         return _builder;
     }
+
+    #endregion
+
+
 
     /// <summary>
     /// Sets the <see cref="VCard.Addresses"/> property to <c>null</c>.

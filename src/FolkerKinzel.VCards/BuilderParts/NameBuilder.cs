@@ -34,7 +34,6 @@ public readonly struct NameBuilder
 
     internal NameBuilder(VCardBuilder builder) => _builder = builder;
 
-
     /// <summary>
     /// Sets the <see cref="ParameterSection.Index"/> properties of 
     /// the items in in the <see cref="VCard.NameViews"/> property ascending depending on their 

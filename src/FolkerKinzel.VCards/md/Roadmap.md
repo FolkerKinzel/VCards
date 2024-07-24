@@ -43,13 +43,13 @@
 - [x] Remove the `ObsoleteAttribute` from the properties `Address.PostOfficeBox` and `Address.ExtendedAddress`
 
 &nbsp;
-- [ ] Implement the internal `AdrProp` enum that addresses the properties of the `Address` class.
-- [ ] Let the `Address` class have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
+- [x] Implement the internal `AdrProp` enum that addresses the properties of the `Address` class.
+- [x] Let the `Address` class have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
 - [ ] Implement `FolkerKinzel.VCards.AddressBuilder` class
     - Let it have a data struct `Dictionary<AdrProp, List<string>>`
     - Make it reusable implementing a `Clear` method
-- [ ] Give `AddressProperty` a ctor that takes an "AddressBuilder".
-- [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
+- [x] Give `AddressProperty` a ctor that takes an "AddressBuilder".
+- [x] Add an internal ctor to `Address` that takes an `AddressBuilder`
 - [ ] Change `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to have an overload for the `Add` method that takes a `FolkerKinzel.VCards.AddressBuilder`
 
 
