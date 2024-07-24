@@ -44,7 +44,6 @@ internal static class AddressToLabelConverter
                 .Concat(address.Direction), MAX_LINE_LENGTH);
     }
 
-
     private static StringBuilder AppendExtendedAddress(this StringBuilder builder, Address address)
     {
         return address.ExtendedAddress.Count != 0
