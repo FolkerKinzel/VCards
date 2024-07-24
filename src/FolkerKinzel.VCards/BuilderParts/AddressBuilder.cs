@@ -181,6 +181,11 @@ public readonly struct AddressBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="AddressBuilder"/> to be able to chain calls.</returns>
+    /// <remarks>
+    /// <note type="tip">
+    /// Use the method overload that takes a <see cref="FolkerKinzel.VCards.AddressBuilder"/> as argument.
+    /// </note>
+    /// </remarks>
     /// 
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
@@ -232,6 +237,11 @@ public readonly struct AddressBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> 
     /// to be able to chain calls.</returns>
+    /// <remarks>
+    /// <note type="tip">
+    /// Use the method overload that takes a <see cref="FolkerKinzel.VCards.AddressBuilder"/> as argument.
+    /// </note>
+    /// </remarks>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(IEnumerable<string?>? street,
@@ -295,11 +305,13 @@ public readonly struct AddressBuilder
                                 vc.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
                                 parameters));
 
-        prop.Parameters.Label = label?.Invoke(prop);
+        if(label != null)
+        {
+            prop.Parameters.Label = label.Invoke(prop);
+        }
 
         return _builder;
     }
-
 
     /// <summary>
     /// Sets the <see cref="VCard.Addresses"/> property to <c>null</c>.

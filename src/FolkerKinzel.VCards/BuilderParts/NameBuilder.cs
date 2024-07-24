@@ -144,6 +144,11 @@ public readonly struct NameBuilder
     /// the newly created <see cref="NameProperty"/> instance as arguments.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> 
     /// to be able to chain calls.</returns>
+    /// <remarks>
+    /// <note type="tip">
+    /// Use the method overload that takes a <see cref="FolkerKinzel.VCards.NameBuilder"/> as argument.
+    /// </note>
+    /// </remarks>
     /// 
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
@@ -196,6 +201,11 @@ public readonly struct NameBuilder
     /// created <see cref="NameProperty"/> instance as arguments.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> to 
     /// be able to chain calls.</returns>
+    /// <remarks>
+    /// <note type="tip">
+    /// Use the method overload that takes a <see cref="FolkerKinzel.VCards.NameBuilder"/> as argument.
+    /// </note>
+    /// </remarks>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(string? familyName,
