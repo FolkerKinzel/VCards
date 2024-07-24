@@ -50,7 +50,7 @@
     - Make it reusable implementing a `Clear` method
 - [x] Give `AddressProperty` a ctor that takes an "AddressBuilder".
 - [x] Add an internal ctor to `Address` that takes an `AddressBuilder`
-- [ ] Change `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to have an overload for the `Add` method that takes a `FolkerKinzel.VCards.AddressBuilder`
+- [x] Change `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to have an overload for the `Add` method that takes a `FolkerKinzel.VCards.AddressBuilder`
 
 
 &nbsp;

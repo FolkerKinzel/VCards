@@ -17,6 +17,13 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 {
     #region Remove this code with Version 8.0.0
 
+    /// <summary> Assigns an automatical generated mailing label to the 
+    /// <see cref="ParameterSection.Label" /> property. Any previously stored data in the 
+    /// <see cref="ParameterSection.Label" /> property will be overwritten.</summary>
+    /// <seealso cref="ToLabel" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void AttachLabel() => Parameters.Label = ToLabel();
+
     /// <summary> Initializes a new <see cref="AddressProperty" /> object.</summary>
     /// <param name="street">The street address.</param>
     /// <param name="locality">The locality (e.g., city).</param>
@@ -192,7 +199,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <seealso cref="AttachLabel" />
+    /// <seealso cref="ToLabel" />
     /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
     public AddressProperty(AddressBuilder builder, string? group = null)
         : base(new ParameterSection(), group)
@@ -250,13 +257,6 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <seealso cref="AttachLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string ToLabel() => Value.ToLabel();
-
-    /// <summary> Assigns an automatical generated mailing label to the 
-    /// <see cref="ParameterSection.Label" /> property. Any previously stored data in the 
-    /// <see cref="ParameterSection.Label" /> property will be overwritten.</summary>
-    /// <seealso cref="ToLabel" />
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void AttachLabel() => Parameters.Label = ToLabel();
 
     /// <inheritdoc />
     public override object Clone() => new AddressProperty(this);

@@ -259,6 +259,46 @@ public readonly struct AddressBuilder
 
     #endregion
 
+    /// <summary>
+    /// Adds an <see cref="AddressProperty"/> instance, which is newly 
+    /// initialized using the content of a specified <see cref="FolkerKinzel.VCards.AddressBuilder"/>, to the <see cref="VCard.Addresses"/> property.
+    /// </summary>
+    /// <param name="builder">The <see cref="FolkerKinzel.VCards.AddressBuilder"/> whose content is used.</param>
+    /// <param name="displayName">An <see cref="Action{T1, T2}"/> delegate that's invoked with the 
+    /// <see cref="TextBuilder"/> the <see cref="VCardBuilder.DisplayNames"/> property returns and the newly
+    /// created <see cref="AddressProperty"/> instance as arguments.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
+    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
+    /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
+    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <param name="label">A function that returns a formatted address label or <c>null</c>. The function is 
+    /// called with the newly created <see cref="AddressProperty"/> instance as argument. The return value will be
+    /// set as the value of the <see cref="ParameterSection.Label"/> property of the newly created <see cref="AddressProperty"/> instance.
+    /// </param>
+    /// 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> to 
+    /// be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    public VCardBuilder Add(FolkerKinzel.VCards.AddressBuilder builder,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null,
+                            Func<AddressProperty, string?>? label = null)
+    {
+        VCard vc = Builder.VCard;
+        var prop = new AddressProperty(builder, group?.Invoke(vc));
+        vc.Set(Prop.Addresses,
+               VCardBuilder.Add(prop,
+                                vc.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
+                                parameters));
+
+        prop.Parameters.Label = label?.Invoke(prop);
+
+        return _builder;
+    }
 
 
     /// <summary>
