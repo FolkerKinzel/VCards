@@ -69,24 +69,24 @@
     - [x] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
     - [x] Implement `GramConverter`
     - [ ] Implement the `GramProperty` class that has a `Gram` value as `Value`
-    - [ ] Implement `readonly struct GramGenders`
+    - [ ] Implement `readonly struct GramGendersBuilder`
     - [x] Implement the `Phonetic` enum ("ipa", "jyut", "piny", "script")
     - [x] Implement `PhoneticConverter`
     - [x] Add the values `billing` and `delivery` to the `Adr` enum
     - [x] Update `AdrConverter`
-    - [ ] Change the `Address` class
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Room`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Apartment`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Floor`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> StreetNumber`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> StreetName`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Building`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Block`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> SubDistrict`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> District`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Landmark`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Direction`
-        - [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
+    - [x] Change the `Address` class
+        - [x] Add read-only property: `ReadOnlyCollection<string> Room`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Apartment`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Floor`
+        - [x] Add read-only property: `ReadOnlyCollection<string> StreetNumber`
+        - [x] Add read-only property: `ReadOnlyCollection<string> StreetName`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Building`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Block`
+        - [x] Add read-only property: `ReadOnlyCollection<string> SubDistrict`
+        - [x] Add read-only property: `ReadOnlyCollection<string> District`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Landmark`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Direction`
+        - [x] Add an internal ctor to `Address` that takes an `AddressBuilder`
     - [x] Change the `Name` class
         - [x] Add read-only property: `ReadOnlyCollection<string> Surname2` (let the name be singular)
         - [x] Add read-only property: `ReadOnlyCollection<string> Generation` (let the name be singular)
