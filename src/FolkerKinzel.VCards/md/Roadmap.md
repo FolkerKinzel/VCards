@@ -11,13 +11,13 @@
     - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
 
 &nbsp;
-- [ ] Change the properties of the `Name` class to return `IEnumerable<string>` rather than `ReadOnlyCollection<string>`
+- [ ] **Change the properties of the `Name` class to return `IEnumerable<string>` rather than `ReadOnlyCollection<string>`**
 - [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
 - [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method
 
 &nbsp;
-- [ ] Change the properties of the `Address` class to return `IEnumerable<string>` rather than `ReadOnlyCollection<string>`
-- [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [ ] **Change the properties of the `Address` class to return `IEnumerable<string>` rather than `ReadOnlyCollection<string>`**
+- [ ] Let `Address` internally store `string[]` rather than `ReadOnlyCollection<string>`
 - [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.AddressBuilder.Add` method
 
 &nbsp;

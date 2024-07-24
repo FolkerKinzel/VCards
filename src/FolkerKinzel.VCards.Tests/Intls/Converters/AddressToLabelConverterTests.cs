@@ -2,8 +2,6 @@
 using FolkerKinzel.VCards.Tests;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
-
 [TestClass]
 public class AddressToLabelConverterTests
 {
@@ -112,7 +110,4 @@ public class AddressToLabelConverterTests
         Assert.IsFalse(label.HasEmptyLine());
     }
 }
-
-#pragma warning restore CS0618 // Typ oder Element ist veraltet
-
 

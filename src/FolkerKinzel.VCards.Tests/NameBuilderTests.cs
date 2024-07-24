@@ -143,6 +143,7 @@ public class NameBuilderTests
         CollectionAssert.AreEqual(expected, prop.Value.Surname2);
     }
 
+    [TestMethod()]
     public void AddToSurname2Test2()
     {
         string[] expected = ["1", "2"];

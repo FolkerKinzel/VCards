@@ -6,9 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
-
-#pragma warning disable CS0618 // Typ oder Element ist veraltet
-
 [TestClass()]
 public class AddressPropertyTests
 {

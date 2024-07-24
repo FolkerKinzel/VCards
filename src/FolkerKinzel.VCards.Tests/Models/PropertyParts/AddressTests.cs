@@ -78,24 +78,4 @@ public class AddressTests
     public void NeedsToBeQPEncodedTest2(string input)
         => Assert.IsFalse(new Address(input.AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
 
-    
-
-    //[DataTestMethod]
-    //[DataRow(";;;;;;", false)]
-    ////[DataRow(";;;a;;;", false)]
-    //[DataRow(";;;ä;;;", true)]
-    //[DataRow(";;ä;;;;", true)]
-    //[DataRow(";;a;;;;", false)]
-    ////[DataRow(";;a;a;;;", false)]
-    ////[DataRow(";;ä;a;;;", true)]
-    ////[DataRow(";;ä;ä;;;", true)]
-
-    ////[DataRow(";;ä;a;;;", true)]
-    ////[DataRow(";;ä;;;;", true)]
-    ////[DataRow(";;a;a;;;", false)]
-    ////[DataRow(";;a;;;;", false)]
-    ////[DataRow(";;ä;ä;;;", true)]
-    ////[DataRow(";;a;ä;;;", true)]
-    //public void TestTest2(string input, bool expected)
-    //    => Assert.AreEqual(expected, new Address(input.AsMemory(), VCdVersion.V2_1).CoverageTest());
 }
