@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
@@ -11,22 +12,6 @@ using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
-public abstract class CompoundObject<T> where T : struct, Enum
-{
-    private readonly int STANDARD_COUNT;
-    private readonly int MAX_COUNT;
-    private readonly Dictionary<T, ReadOnlyCollection<string>> _dic = [];
-
-    protected CompoundObject(int standardCount, int maxCount)
-    {
-        STANDARD_COUNT = standardCount;
-        MAX_COUNT = maxCount;
-    }
-
-
-}
-
-
 /// <summary>Encapsulates information about a postal delivery address.</summary>
 public sealed class Address
 {
@@ -38,7 +23,6 @@ public sealed class Address
         => _dic.TryGetValue(prop, out ReadOnlyCollection<string>? coll)
             ? coll
             : ReadOnlyStringCollection.Empty;
-
 
     #region Remove this code with version 8.0.0
 
@@ -83,7 +67,6 @@ public sealed class Address
     }
 
     internal Address() { }
-    
 
     internal Address(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
@@ -183,7 +166,6 @@ public sealed class Address
     /// <summary> The cardinal direction or quadrant, e.g., "north". (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Direction => Get(AdrProp.Direction);
 
-
     /// <summary>Returns <c>true</c>, if the <see cref="Address" /> object does not
     /// contain any usable data.</summary>
     public bool IsEmpty => _dic.Count == 0;
@@ -197,56 +179,7 @@ public sealed class Address
 
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => CompoundPropertyConverter.ToString(_dic);
-    //{
-    //    if (_dic.Count == 0)
-    //    {
-    //        return string.Empty;
-    //    }
-
-    //    var worker = new StringBuilder();
-    //    var dic = new List<Tuple<string, string>>();
-
-    //    foreach (KeyValuePair<AdrProp, ReadOnlyCollection<string>> pair in _dic.OrderBy(x => x.Key))
-    //    {
-    //        string s = BuildProperty(pair.Value);
-    //        dic.Add(new Tuple<string, string>(pair.Key.ToString(), s));
-    //    }
-
-    //    int maxLength = dic.Select(x => x.Item1.Length).Max();
-    //    maxLength += 2;
-
-    //    _ = worker.Clear();
-
-    //    for (int i = 0; i < dic.Count; i++)
-    //    {
-    //        Tuple<string, string>? tpl = dic[i];
-    //        string s = tpl.Item1 + ": ";
-    //        _ = worker.Append(s.PadRight(maxLength)).Append(tpl.Item2).Append(Environment.NewLine);
-    //    }
-
-    //    worker.Length -= Environment.NewLine.Length;
-    //    return worker.ToString();
-
-    //    ////////////////////////////////////////////
-
-    //    string BuildProperty(IList<string> strings)
-    //    {
-    //        _ = worker.Clear();
-
-    //        Debug.Assert(strings.Count >= 1);
-
-    //        for (int i = 0; i < strings.Count - 1; i++)
-    //        {
-    //            _ = worker.Append(strings[i]).Append(", ");
-    //        }
-
-    //        _ = worker.Append(strings[strings.Count - 1]);
-
-    //        return worker.ToString();
-    //    }
-    //}
-
+    public override string ToString() => CompoundObjectConverter.ToString(_dic);
 
     internal void AppendVCardString(VcfSerializer serializer)
     {
@@ -257,7 +190,7 @@ public sealed class Address
 
         for (int i = 0; i < STANDARD_COUNT; i++)
         {
-            AppendProperty(Get((AdrProp)i), joinChar, serializer);
+            CompoundObjectConverter.SerializeProperty(Get((AdrProp)i), joinChar, serializer);
         }
 
         if (serializer.Version >= VCdVersion.V4_0
@@ -266,7 +199,7 @@ public sealed class Address
         {
             for (int i = STANDARD_COUNT; i < MAX_COUNT; i++)
             {
-                AppendProperty(Get((AdrProp)i), joinChar, serializer);
+                CompoundObjectConverter.SerializeProperty(Get((AdrProp)i), joinChar, serializer);
             }
         }
 
@@ -274,35 +207,9 @@ public sealed class Address
 
         if (serializer.ParameterSerializer.ParaSection.Encoding == Enc.QuotedPrintable)
         {
-            int count = builder.Length - startIdx;
-            using ArrayPoolHelper.SharedArray<char> tmp = ArrayPoolHelper.Rent<char>(count);
-            builder.CopyTo(startIdx, tmp.Array, 0, count);
-            builder.Length = startIdx;
-            builder.AppendQuotedPrintable(tmp.Array.AsSpan(0, count), startIdx);
-        }
-
-        //////////////////////////////////////////////////////////
-
-        static void AppendProperty(IList<string> strings, char joinChar, VcfSerializer serializer)
-        {
-            StringBuilder builder = serializer.Builder;
-
-            if (strings.Count == 0)
-            {
-                builder.Append(';');
-                return;
-            }
-
-            for (int i = 0; i < strings.Count; i++)
-            {
-                _ = builder.AppendValueMasked(strings[i], serializer.Version).Append(joinChar);
-            }
-
-            --builder.Length;
-            builder.Append(';');
+            CompoundObjectConverter.EncodeQuotedPrintable(builder, startIdx);
         }
     }
-
 
     internal bool NeedsToBeQpEncoded()
     {

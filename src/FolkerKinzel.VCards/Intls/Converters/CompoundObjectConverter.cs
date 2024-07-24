@@ -1,9 +1,12 @@
-﻿using FolkerKinzel.VCards.Intls.Enums;
+﻿using FolkerKinzel.VCards.Intls.Encodings;
+using FolkerKinzel.VCards.Intls.Enums;
+using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Intls.Serializers;
 using System.Collections.ObjectModel;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-internal static class CompoundPropertyConverter
+internal static class CompoundObjectConverter
 {
 
     public static string ToString<TKey>(IReadOnlyDictionary<TKey, ReadOnlyCollection<string>> sourceDic) where TKey : struct, Enum
@@ -56,4 +59,31 @@ internal static class CompoundPropertyConverter
         }
     }
 
+    internal static void SerializeProperty(IList<string> strings, char joinChar, VcfSerializer serializer)
+    {
+        StringBuilder builder = serializer.Builder;
+
+        if (strings.Count == 0)
+        {
+            builder.Append(';');
+            return;
+        }
+
+        for (int i = 0; i < strings.Count; i++)
+        {
+            _ = builder.AppendValueMasked(strings[i], serializer.Version).Append(joinChar);
+        }
+
+        --builder.Length;
+        builder.Append(';');
+    }
+
+    internal static void EncodeQuotedPrintable(StringBuilder builder, int startIdx)
+    {
+        int count = builder.Length - startIdx;
+        using ArrayPoolHelper.SharedArray<char> tmp = ArrayPoolHelper.Rent<char>(count);
+        builder.CopyTo(startIdx, tmp.Array, 0, count);
+        builder.Length = startIdx;
+        builder.AppendQuotedPrintable(tmp.Array.AsSpan(0, count), startIdx);
+    }
 }

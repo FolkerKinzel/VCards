@@ -86,6 +86,7 @@
     <Compile Remove="Models\DateTimeTextProperty_OBSOLETE.cs" />
     <Compile Remove="Enums\DataEncoding.cs" />
     <Compile Remove="Enums\SizeRestriction.cs" />
+    <Compile Remove="Models\PropertyParts\CompoundObject.cs" />
     <Compile Remove="Models\PropertyParts\MimeType.cs" />
     <Compile Remove="MultiAnsiFilter.cs" />
     <Compile Remove="TextEncoding.cs" />
