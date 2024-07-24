@@ -168,8 +168,8 @@ public sealed class Name
             .AppendReadableProperty(Get(NameProp.Prefixes))
             .AppendReadableProperty(Get(NameProp.GivenNames))
             .AppendReadableProperty(Get(NameProp.AdditionalNames))
-            .AppendReadableProperty(Get(NameProp.FamilyNames))
-            .AppendReadableProperty(Get(NameProp.Suffixes))
+            .AppendReadableProperty(Get(NameProp.FamilyNames).Concat(Get(NameProp.Surname2)).Distinct(StringComparer.Ordinal))
+            .AppendReadableProperty(Get(NameProp.Suffixes).Concat(Get(NameProp.Generation)).Distinct(StringComparer.Ordinal))
             .ToString();
     }
 
