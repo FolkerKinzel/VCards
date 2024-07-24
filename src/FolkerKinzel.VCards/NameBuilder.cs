@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls;
+﻿using System.ComponentModel;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Enums;
 
 namespace FolkerKinzel.VCards;
@@ -174,5 +175,19 @@ public class NameBuilder
         _dic[prop] = new List<string>(valsToAdd);
         return this;
     }
+
+    // Overriding Equals, GetHashCode and ToString to hide these methods in IntelliSense:
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override bool Equals([NotNullWhen(true)] object? obj) => base.Equals(obj);
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override int GetHashCode() => base.GetHashCode();
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string ToString() => base.ToString()!;
 
 }
