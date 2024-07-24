@@ -107,12 +107,13 @@ public sealed class Name
 
     /// <summary>Family Name(s) (also known as surname(s)). (2,3,4)</summary>
     /// <remarks>
-    /// <note type="important">
-    /// Any value of this property should be ignored if an equal value is set to
+    /// Returns a collection that omits any value if an equal value is set to
     /// <see cref="Surname2"/> accordingly.
-    /// </note>
     /// </remarks>
-    public ReadOnlyCollection<string> FamilyNames => Get(NameProp.FamilyNames);
+    public ReadOnlyCollection<string> FamilyNames
+        => _dic.ContainsKey(NameProp.Surname2)
+        ? Get(NameProp.FamilyNames).Except(Surname2).ToList().AsReadOnly()
+        : Get(NameProp.FamilyNames);
 
     /// <summary>Given Name(s) (first name(s)). (2,3,4)</summary>
     public ReadOnlyCollection<string> GivenNames => Get(NameProp.GivenNames);
@@ -124,13 +125,15 @@ public sealed class Name
     public ReadOnlyCollection<string> Prefixes => Get(NameProp.Prefixes);
 
     /// <summary>Honorific Suffix(es). (2,3,4)</summary>
+    /// 
     /// <remarks>
-    /// <note type="important">
-    /// Any value of this property should be ignored if an equal value is set to
+    /// Returns a collection that omits any value if an equal value is set to
     /// <see cref="Generation"/> accordingly.
-    /// </note>
     /// </remarks>
-    public ReadOnlyCollection<string> Suffixes => Get(NameProp.Suffixes);
+    public ReadOnlyCollection<string> Suffixes
+     => _dic.ContainsKey(NameProp.Generation)
+        ? Get(NameProp.Suffixes).Except(Generation).ToList().AsReadOnly()
+        : Get(NameProp.Suffixes);
 
     /// <summary>A secondary surname (used in some cultures), also known as "maternal surname". (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Surname2 => Get(NameProp.Surname2);

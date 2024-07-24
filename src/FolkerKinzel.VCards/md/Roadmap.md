@@ -12,8 +12,6 @@
 
 &nbsp;
 - [ ] Change the properties of the `Name` class to return `IEnumerable<string>` rather than `ReadOnlyCollection<string>`
-- [ ] Let `Name.FamilyNames` return `FamilyNames.Except(Surname2)`
-- [ ] Let `Name.Suffixes` return `Suffixes.Except(Generation)`
 - [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
 - [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method
 
