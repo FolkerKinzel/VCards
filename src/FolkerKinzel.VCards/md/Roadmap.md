@@ -68,7 +68,7 @@
     - [x] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
     - [x] Implement `GramConverter`
     - [ ] Implement the `GramProperty` class that has a `Gram` value as `Value`
-    - [ ] Implement `readonly struct GramBuilder`
+    - [ ] Implement `readonly struct GramGenders`
     - [x] Implement the `Phonetic` enum ("ipa", "jyut", "piny", "script")
     - [x] Implement `PhoneticConverter`
     - [x] Add the values `billing` and `delivery` to the `Adr` enum
