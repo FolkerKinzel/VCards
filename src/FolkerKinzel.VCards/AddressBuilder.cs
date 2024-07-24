@@ -9,6 +9,10 @@ namespace FolkerKinzel.VCards;
 /// Collects the data used to initialize a <see cref="Models.AddressProperty"></see> instance.
 /// </summary>
 /// <remarks>
+/// <para>
+/// An instance of this class can be reused but it's not safe to access its instance methods with
+/// multiple threads in parallel.
+/// </para>
 /// <threadsafety static="true" instance="false"/>
 /// </remarks>
 public class AddressBuilder
@@ -25,12 +29,15 @@ public class AddressBuilder
     /// <summary>Adds a <see cref="string"/> to <see cref="Address.PostOfficeBox"/>. (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.PostOfficeBox"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToPostOfficeBox(string? value) => Add(AdrProp.PostOfficeBox, value);
 
-    /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="strings"/> to <see cref="Address.PostOfficeBox"/>. (2,3,4)</summary>
+    /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="strings"/> to 
+    /// <see cref="Address.PostOfficeBox"/>. (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.PostOfficeBox"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToPostOfficeBox(IEnumerable<string?> collection) => AddRange(AdrProp.PostOfficeBox, collection);
@@ -38,12 +45,14 @@ public class AddressBuilder
     /// <summary>Adds a family name (also known as surname). (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.ExtendedAddress"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToExtendedAddress(string? value) => Add(AdrProp.ExtendedAddress, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of family names (also known as surnames). (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.ExtendedAddress"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToExtendedAddress(IEnumerable<string?> collection) => AddRange(AdrProp.ExtendedAddress, collection);
@@ -51,6 +60,7 @@ public class AddressBuilder
     /// <summary>Adds a <see cref="string"/> to <see cref="Address.Street"/>. (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToStreet(string? value) => Add(AdrProp.Street, value);
 
@@ -58,6 +68,7 @@ public class AddressBuilder
     /// <see cref="Address.Street"/>. (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToStreet(IEnumerable<string?> collection) => AddRange(AdrProp.Street, collection);
@@ -79,6 +90,7 @@ public class AddressBuilder
     /// <summary>Adds a <see cref="string"/> to <see cref="Address.Region"/>. (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.Region"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToRegion(string? value) => Add(AdrProp.Region, value);
 
@@ -86,6 +98,7 @@ public class AddressBuilder
     /// <see cref="Address.Region"/>. (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.Region"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToRegion(IEnumerable<string?> collection) => AddRange(AdrProp.Region, collection);
@@ -93,6 +106,7 @@ public class AddressBuilder
     /// <summary>Adds a <see cref="string"/> to <see cref="Address.PostalCode"/>. (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.PostalCode"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToPostalCode(string? value) => Add(AdrProp.PostalCode, value);
 
@@ -100,6 +114,7 @@ public class AddressBuilder
     /// <see cref="Address.PostalCode"/>. (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.PostalCode"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToPostalCode(IEnumerable<string?> collection) => AddRange(AdrProp.PostalCode, collection);
@@ -107,6 +122,7 @@ public class AddressBuilder
     /// <summary>Adds a <see cref="string"/> to <see cref="Address.Country"/>. (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.Country"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToCountry(string? value) => Add(AdrProp.Country, value);
 
@@ -114,6 +130,7 @@ public class AddressBuilder
     /// <see cref="Address.Country"/>. (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Address.Country"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToCountry(IEnumerable<string?> collection) => AddRange(AdrProp.Country, collection);
@@ -127,6 +144,8 @@ public class AddressBuilder
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Room"/>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToRoom(string? value) => Add(AdrProp.Room, value);
 
@@ -140,6 +159,8 @@ public class AddressBuilder
     /// in <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Room"/>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToRoom(IEnumerable<string?> collection) => AddRange(AdrProp.Room, collection);
@@ -153,6 +174,8 @@ public class AddressBuilder
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Apartment"/>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToApartment(string? value) => Add(AdrProp.Apartment, value);
 
@@ -166,6 +189,8 @@ public class AddressBuilder
     /// in <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Apartment"/>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToApartment(IEnumerable<string?> collection) => AddRange(AdrProp.Apartment, collection);
@@ -179,6 +204,8 @@ public class AddressBuilder
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Floor"/>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToFloor(string? value) => Add(AdrProp.Floor, value);
 
@@ -192,6 +219,8 @@ public class AddressBuilder
     /// in <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Floor"/>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToFloor(IEnumerable<string?> collection) => AddRange(AdrProp.Floor, collection);
@@ -205,6 +234,8 @@ public class AddressBuilder
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.StreetNumber"/>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToStreetNumber(string? value) => Add(AdrProp.StreetNumber, value);
 
@@ -218,6 +249,8 @@ public class AddressBuilder
     /// in <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.StreetNumber"/>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToStreetNumber(IEnumerable<string?> collection) => AddRange(AdrProp.StreetNumber, collection);
@@ -231,6 +264,8 @@ public class AddressBuilder
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.StreetName"/>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToStreetName(string? value) => Add(AdrProp.StreetName, value);
 
@@ -244,6 +279,8 @@ public class AddressBuilder
     /// in <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.StreetName"/>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToStreetName(IEnumerable<string?> collection) => AddRange(AdrProp.StreetName, collection);
@@ -257,6 +294,8 @@ public class AddressBuilder
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Building"/>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToBuilding(string? value) => Add(AdrProp.Building, value);
 
@@ -270,6 +309,8 @@ public class AddressBuilder
     /// in <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Building"/>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToBuilding(IEnumerable<string?> collection) => AddRange(AdrProp.Building, collection);
@@ -283,6 +324,8 @@ public class AddressBuilder
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Block"/>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToBlock(string? value) => Add(AdrProp.Block, value);
 
@@ -296,6 +339,8 @@ public class AddressBuilder
     /// in <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Block"/>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToBlock(IEnumerable<string?> collection) => AddRange(AdrProp.Block, collection);
@@ -309,6 +354,8 @@ public class AddressBuilder
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.SubDistrict"/>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToSubDistrict(string? value) => Add(AdrProp.SubDistrict, value);
 
@@ -322,6 +369,8 @@ public class AddressBuilder
     /// in <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.SubDistrict"/>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToSubDistrict(IEnumerable<string?> collection) => AddRange(AdrProp.SubDistrict, collection);
@@ -335,6 +384,8 @@ public class AddressBuilder
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.District"/>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToDistrict(string? value) => Add(AdrProp.District, value);
 
@@ -348,6 +399,8 @@ public class AddressBuilder
     /// in <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.District"/>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToDistrict(IEnumerable<string?> collection) => AddRange(AdrProp.District, collection);
@@ -361,6 +414,8 @@ public class AddressBuilder
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Landmark"/>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToLandmark(string? value) => Add(AdrProp.Landmark, value);
 
@@ -374,6 +429,8 @@ public class AddressBuilder
     /// in <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Landmark"/>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToLandmark(IEnumerable<string?> collection) => AddRange(AdrProp.Landmark, collection);
@@ -387,6 +444,8 @@ public class AddressBuilder
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Direction"/>
+    /// <seealso cref="Address.Street"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToDirection(string? value) => Add(AdrProp.Direction, value);
 
@@ -400,11 +459,11 @@ public class AddressBuilder
     /// in <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
+    /// <seealso cref="Address.Direction"/>
+    /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddToDirection(IEnumerable<string?> collection) => AddRange(AdrProp.Direction, collection);
-
-
 
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     internal IEnumerable<KeyValuePair<AdrProp, List<string>>> Data => _dic;
