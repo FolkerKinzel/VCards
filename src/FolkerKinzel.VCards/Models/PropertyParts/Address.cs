@@ -131,7 +131,7 @@ public sealed class Address
     /// <item><see cref="Room"/></item>
     /// <item><see cref="District"/></item>
     /// <item><see cref="SubDistrict"/></item>
-    /// <item><see cref="LandMark"/></item>
+    /// <item><see cref="Landmark"/></item>
     /// <item><see cref="Direction"/></item>
     /// </list>
     /// </remarks>
@@ -183,7 +183,7 @@ public sealed class Address
 
     /// <summary> The publicly known prominent feature that can substitute the street name and number,
     /// e.g., "White House" or "Taj Mahal". (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> LandMark => Get(AdrProp.LandMark);
+    public ReadOnlyCollection<string> Landmark => Get(AdrProp.Landmark);
 
     /// <summary> The cardinal direction or quadrant, e.g., "north". (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Direction => Get(AdrProp.Direction);

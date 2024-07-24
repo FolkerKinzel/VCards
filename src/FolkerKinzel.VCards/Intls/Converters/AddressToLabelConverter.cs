@@ -40,7 +40,7 @@ internal static class AddressToLabelConverter
                 .Concat(address.Room)
                 .Concat(address.District)
                 .Concat(address.SubDistrict)
-                .Concat(address.LandMark)
+                .Concat(address.Landmark)
                 .Concat(address.Direction), MAX_LINE_LENGTH);
     }
 

@@ -55,7 +55,7 @@ internal enum AdrProp
 
     /// <summary> The publicly known prominent feature that can substitute the street name and number,
     /// e.g., "White House" or "Taj Mahal". (4 - RFC 9554)</summary>
-    LandMark,
+    Landmark,
 
     /// <summary> The cardinal direction or quadrant, e.g., "north". (4 - RFC 9554)</summary>
     Direction

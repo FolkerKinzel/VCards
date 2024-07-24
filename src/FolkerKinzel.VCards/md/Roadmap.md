@@ -35,7 +35,6 @@
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
 
 
-
 ### 7.3.0
 - [ ] Refactor the `VCard` copy ctor to clone only `IEnumerable<VCardProperty?>` and `VCardProperty`
 - [x] Remove the `ObsoleteAttribute` from the properties `Address.PostOfficeBox` and `Address.ExtendedAddress`
@@ -43,7 +42,7 @@
 &nbsp;
 - [x] Implement the internal `AdrProp` enum that addresses the properties of the `Address` class.
 - [x] Let the `Address` class have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
-- [ ] Implement `FolkerKinzel.VCards.AddressBuilder` class
+- [x] Implement `FolkerKinzel.VCards.AddressBuilder` class
     - Let it have a data struct `Dictionary<AdrProp, List<string>>`
     - Make it reusable implementing a `Clear` method
 - [x] Give `AddressProperty` a ctor that takes an "AddressBuilder".
