@@ -41,7 +41,7 @@ public sealed class Name
     /// </list>
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string? ToDisplayName() => NameConverter.ToDisplayName(this);
+    public string? ToDisplayName() => NameFormatter.ToDisplayName(this);
 
     private void Add(NameProp prop, ReadOnlyCollection<string> coll)
     {

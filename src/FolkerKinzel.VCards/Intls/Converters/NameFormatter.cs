@@ -3,9 +3,8 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-internal static class NameConverter
+internal static class NameFormatter
 {
-
     internal static string? ToDisplayName(Name name)
     {
         Debug.Assert(name != null);

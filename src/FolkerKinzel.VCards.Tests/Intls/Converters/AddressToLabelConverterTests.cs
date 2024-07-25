@@ -113,6 +113,22 @@ public class AddressToLabelConverterTests
     }
 
     [TestMethod]
+    public void ToLabelTest5b()
+    {
+        const string street = "Elm Street";
+        const string city = "Springwood";
+        
+        var address = new AddressProperty(AddressBuilder.Create().AddToStreet(street).AddToLocality(city));
+#pragma warning disable CS0618 // Type or member is obsolete
+        string? label = address.Value.ToLabel();
+#pragma warning restore CS0618 // Type or member is obsolete
+        Assert.IsNotNull(label);
+        StringAssert.Contains(label, city);
+        StringAssert.Contains(label, street);
+        Assert.IsFalse(label.HasEmptyLine());
+    }
+
+    [TestMethod]
     public void ToLabelTest6()
     {
         const string street = "AV. FRANCISCO DE MIRANDA";
@@ -139,16 +155,16 @@ public class AddressToLabelConverterTests
         const string zip = "2008";
         const string country = "United States";
         const string extended = "";
-        var address = new AddressProperty(street, city, state, zip, country, postOfficeBox: null, extendedAddress: extended);
-        string? label = address.Parameters.Label;
+        var prop = new AddressProperty(street, city, state, zip, country, postOfficeBox: null, extendedAddress: extended);
+        string? label = prop.Parameters.Label;
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{city} {state} {zip}");
         StringAssert.Contains(label, country.ToUpperInvariant());
         StringAssert.Contains(label, state);
         Assert.IsFalse(label.HasEmptyLine());
 
-        address.Parameters.CountryCode = "DE";
-        label = address.ToLabel();
+        prop.Parameters.CountryCode = "DE";
+        label = prop.ToLabel();
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{zip} {city}");
         StringAssert.Contains(label, country.ToUpperInvariant());

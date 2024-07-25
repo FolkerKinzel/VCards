@@ -6,19 +6,20 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
-internal static class AddressToLabelConverter
+internal static class AddressLabelFormatter
 {
     private const int BUILDER_CAPACITY = 256;
     private const int WORKER_CAPACITY = 64;
     private static readonly AddressOrder _defaultAddressOrder;
     private const int MAX_LINE_LENGTH = 30;
 
-    static AddressToLabelConverter() => _defaultAddressOrder = AddressOrderConverter.ParseCultureInfo(CultureInfo.CurrentCulture);
+    static AddressLabelFormatter() => _defaultAddressOrder = AddressOrderConverter.ParseCultureInfo(CultureInfo.CurrentCulture);
 
-    internal static string ConvertToLabel(Address address)
+    [Obsolete()]
+    internal static string ToLabel(Address address)
         => DoConvertToLabel(address, AddressOrderConverter.ParseAddress(address) ?? _defaultAddressOrder);
 
-    internal static string ConvertToLabel(AddressProperty prop)
+    internal static string ToLabel(AddressProperty prop)
         => DoConvertToLabel(prop.Value, AddressOrderConverter.ParseAddressProperty(prop) ?? _defaultAddressOrder);
 
     private static string DoConvertToLabel(Address address, AddressOrder addressOrder)

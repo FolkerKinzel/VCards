@@ -34,7 +34,7 @@ public sealed class Address
     /// </remarks>
     [Obsolete("Use AddressProperty.ToLabel() instead.", false)]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string ToLabel() => AddressToLabelConverter.ConvertToLabel(this);
+    public string ToLabel() => AddressLabelFormatter.ToLabel(this);
 
     private void Add(AdrProp prop, ReadOnlyCollection<string> coll)
     {
