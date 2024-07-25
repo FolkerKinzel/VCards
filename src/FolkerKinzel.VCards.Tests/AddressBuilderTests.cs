@@ -409,4 +409,70 @@ public class AddressBuilderTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void AddToSubDistrictTest3() => AddressBuilder.Create().AddToSubDistrict((string[]?)null!);
 
+    [TestMethod()]
+    public void AddToDistrictTest1()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToDistrict("1").AddToDistrict("2"));
+
+        CollectionAssert.AreEqual(expected, prop.Value.District);
+    }
+
+    [TestMethod()]
+    public void AddToDistrictTest2()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToDistrict(expected));
+
+        CollectionAssert.AreEqual(expected, prop.Value.District);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddToDistrictTest3() => AddressBuilder.Create().AddToDistrict((string[]?)null!);
+
+    [TestMethod()]
+    public void AddToLandmarkTest1()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToLandmark("1").AddToLandmark("2"));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Landmark);
+    }
+
+    [TestMethod()]
+    public void AddToLandmarkTest2()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToLandmark(expected));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Landmark);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddToLandmarkTest3() => AddressBuilder.Create().AddToLandmark((string[]?)null!);
+
+    [TestMethod()]
+    public void AddToDirectionTest1()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToDirection("1").AddToDirection("2"));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Direction);
+    }
+
+    [TestMethod()]
+    public void AddToDirectionTest2()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToDirection(expected));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Direction);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddToDirectionTest3() => AddressBuilder.Create().AddToDirection((string[]?)null!);
+
 }
