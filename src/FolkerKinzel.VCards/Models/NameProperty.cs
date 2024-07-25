@@ -25,6 +25,23 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 {
     #region Remove this code with version 8.0.0
 
+    /// <summary>Formats the data encapsulated by the instance into a human-readable
+    /// form.</summary>
+    /// <returns>The data encapsulated by the instance in human-readable form
+    /// or <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
+    /// <remarks>
+    /// The method takes only the properties defined in RFC 6350 into account:
+    /// <list type="bullet">
+    /// <item><see cref="Name.Prefixes"/></item>
+    /// <item><see cref="Name.GivenNames"/></item>
+    /// <item><see cref="Name.AdditionalNames"/></item>
+    /// <item><see cref="Name.FamilyNames"/></item>
+    /// <item><see cref="Name.Suffixes"/></item>
+    /// </list>
+    /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public string? ToDisplayName() => Value.ToDisplayName();
+
     /// <summary>  Initializes a new <see cref="NameProperty" /> object. </summary>
     /// <param name="familyNames">Family Names (also known as surnames)</param>
     /// <param name="givenNames">Given Names (first names)</param>
@@ -137,23 +154,6 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
     /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;
-
-    /// <summary>Formats the data encapsulated by the instance into a human-readable
-    /// form.</summary>
-    /// <returns>The data encapsulated by the instance in human-readable form
-    /// or <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
-    /// <remarks>
-    /// The method takes only the properties defined in RFC 6350 into account:
-    /// <list type="bullet">
-    /// <item><see cref="Name.Prefixes"/></item>
-    /// <item><see cref="Name.GivenNames"/></item>
-    /// <item><see cref="Name.AdditionalNames"/></item>
-    /// <item><see cref="Name.FamilyNames"/></item>
-    /// <item><see cref="Name.Suffixes"/></item>
-    /// </list>
-    /// </remarks>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string? ToDisplayName() => Value.ToDisplayName();
 
     /// <inheritdoc />
     public override object Clone() => new NameProperty(this);

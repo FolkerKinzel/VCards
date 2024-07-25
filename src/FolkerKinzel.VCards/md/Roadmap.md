@@ -11,6 +11,16 @@
     - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
 
 &nbsp;
+- [ ] Make new package `FolkerKinzel.VCards.Formatters` that contains
+    - [ ] `string? AddressFormatter.ToLabel(this AddressProperty)` (and takes the `CountryCode` parameter into account)
+    - [ ] `string? NameFormatter.ToDisplayName(this NameProperty)` and `string? NameFormatter.ToDisplayName(this Name)`
+- [ ] **Remove Address.ToLabel()**
+- [ ] **Remove AddressProperty.AttachLabel()**
+- [ ] **Remove AddressProperty.ToLabel()**
+- [ ] **Remove Name.ToDisplayName()**
+- [ ] **Remove NameProperty.ToDisplayName()**
+
+&nbsp;
 - [ ] **Change the properties of the `Name` class to return `IEnumerable<string>` rather than `ReadOnlyCollection<string>`**
 - [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
 - [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method

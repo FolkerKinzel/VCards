@@ -26,6 +26,13 @@ public sealed class Address
 
     #region Remove this code with version 8.0.0
 
+    /// <summary>Converts the data encapsulated in the instance into formatted text
+    /// for a mailing label.</summary>
+    /// <returns>The data encapsulated in the instance, converted to formatted text
+    /// for a mailing label.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public string ToLabel() => AddressToLabelConverter.ConvertToLabel(this);
+
     private void Add(AdrProp prop, ReadOnlyCollection<string> coll)
     {
         if (coll.Count != 0)
@@ -191,13 +198,6 @@ public sealed class Address
     /// <summary>Returns <c>true</c>, if the <see cref="Address" /> object does not
     /// contain any usable data.</summary>
     public bool IsEmpty => _dic.Count == 0;
-
-    /// <summary>Converts the data encapsulated in the instance into formatted text
-    /// for a mailing label.</summary>
-    /// <returns>The data encapsulated in the instance, converted to formatted text
-    /// for a mailing label.</returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string ToLabel() => AddressToLabelConverter.ConvertToLabel(this);
 
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

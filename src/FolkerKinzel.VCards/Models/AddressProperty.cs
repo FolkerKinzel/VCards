@@ -24,6 +24,14 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AttachLabel() => Parameters.Label = ToLabel();
 
+    /// <summary>Converts the data encapsulated in the instance to formatted text
+    /// for a mailing label.</summary>
+    /// <returns>The data encapsulated in the instance, converted to formatted text
+    /// for a mailing label.</returns>
+    /// <seealso cref="AttachLabel" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public string ToLabel() => Value.ToLabel();
+
     /// <summary> Initializes a new <see cref="AddressProperty" /> object.</summary>
     /// <param name="street">The street address.</param>
     /// <param name="locality">The locality (e.g., city).</param>
@@ -250,13 +258,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                                  && Parameters.GeoPosition is null 
                                  && Parameters.TimeZone is null;
 
-    /// <summary>Converts the data encapsulated in the instance to formatted text
-    /// for a mailing label.</summary>
-    /// <returns>The data encapsulated in the instance, converted to formatted text
-    /// for a mailing label.</returns>
-    /// <seealso cref="AttachLabel" />
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string ToLabel() => Value.ToLabel();
+    
 
     /// <inheritdoc />
     public override object Clone() => new AddressProperty(this);

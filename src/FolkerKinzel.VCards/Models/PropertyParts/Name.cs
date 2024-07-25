@@ -26,6 +26,23 @@ public sealed class Name
 
     #region Remove this code with version 8.0.0
 
+    /// <summary>Formats the data encapsulated by the instance into a human-readable
+    /// form.</summary>
+    /// <returns>The data encapsulated by the instance in human-readable form or
+    /// <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
+    /// <remarks>
+    /// The method takes only the properties defined in RFC 6350 into account:
+    /// <list type="bullet">
+    /// <item><see cref="Prefixes"/></item>
+    /// <item><see cref="GivenNames"/></item>
+    /// <item><see cref="AdditionalNames"/></item>
+    /// <item><see cref="FamilyNames"/></item>
+    /// <item><see cref="Suffixes"/></item>
+    /// </list>
+    /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public string? ToDisplayName() => NameConverter.ToDisplayName(this);
+
     private void Add(NameProp prop, ReadOnlyCollection<string> coll)
     {
         if (coll.Count != 0)
@@ -148,33 +165,7 @@ public sealed class Name
     /// <inheritdoc/>
     public override string ToString() => CompoundObjectConverter.ToString(_dic);
 
-    /// <summary>Formats the data encapsulated by the instance into a human-readable
-    /// form.</summary>
-    /// <returns>The data encapsulated by the instance in human-readable form or
-    /// <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
-    /// <remarks>
-    /// The method takes only the properties defined in RFC 6350 into account:
-    /// <list type="bullet">
-    /// <item><see cref="Prefixes"/></item>
-    /// <item><see cref="GivenNames"/></item>
-    /// <item><see cref="AdditionalNames"/></item>
-    /// <item><see cref="FamilyNames"/></item>
-    /// <item><see cref="Suffixes"/></item>
-    /// </list>
-    /// </remarks>
-    public string? ToDisplayName()
-    {
-        const int stringBuilderInitialCapacity = 32;
-        return IsEmpty
-            ? null
-            : new StringBuilder(stringBuilderInitialCapacity)
-            .AppendReadableProperty(Get(NameProp.Prefixes))
-            .AppendReadableProperty(Get(NameProp.GivenNames))
-            .AppendReadableProperty(Get(NameProp.AdditionalNames))
-            .AppendReadableProperty(Get(NameProp.FamilyNames).Concat(Get(NameProp.Surname2)).Distinct(StringComparer.Ordinal))
-            .AppendReadableProperty(Get(NameProp.Suffixes).Concat(Get(NameProp.Generation)).Distinct(StringComparer.Ordinal))
-            .ToString();
-    }
+    
 
     internal void AppendVcfString(VcfSerializer serializer)
     {
