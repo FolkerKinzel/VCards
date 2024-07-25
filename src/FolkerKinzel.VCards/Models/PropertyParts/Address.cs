@@ -1,10 +1,8 @@
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -112,7 +110,7 @@ public sealed class Address
         }//foreach
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            static string[] ToArray(in ReadOnlyMemory<char> mem, VCdVersion version)
+        static string[] ToArray(in ReadOnlyMemory<char> mem, VCdVersion version)
             => PropertyValueSplitter.Split(mem,
                                     ',',
                                     StringSplitOptions.RemoveEmptyEntries,
@@ -147,9 +145,9 @@ public sealed class Address
     /// <item><see cref="Direction"/></item>
     /// </list>
     /// </remarks>
-    public ReadOnlyCollection<string> Street 
-        => _dic.Any(x => x.Key > AdrProp.Country) 
-            ? ReadOnlyStringCollection.Empty 
+    public ReadOnlyCollection<string> Street
+        => _dic.Any(x => x.Key > AdrProp.Country)
+            ? ReadOnlyStringCollection.Empty
             : Get(AdrProp.Street);
 
     /// <summary>The locality (e.g., city).</summary>

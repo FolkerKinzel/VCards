@@ -35,14 +35,14 @@ public class AddressTests
     [TestMethod]
     public void AppendVCardStringTest1()
     {
-        const string input = ";;Parkstr.,7a;;;;";
+        const string input = ";;Parkstr.,7a;   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;";
         var adr = new Address(input.AsMemory(), VCdVersion.V4_0);
 
         using var writer = new StringWriter();
         var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
         adr.AppendVcfString(serializer);
 
-        Assert.AreEqual(input, serializer.Builder.ToString());
+        Assert.AreEqual(";;Parkstr.,7a;;;;", serializer.Builder.ToString());
     }
 
     [TestMethod]

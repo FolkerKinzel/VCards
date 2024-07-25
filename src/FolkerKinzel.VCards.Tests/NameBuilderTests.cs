@@ -23,6 +23,18 @@ public class NameBuilderTests
         Assert.IsInstanceOfType(bldr2 , typeof(NameBuilder));
     }
 
+    [TestMethod]
+    public void EqualsTest1()
+    {
+        Assert.IsFalse(new NameBuilder().Equals((NameBuilder?)null));
+
+        var builder = new NameBuilder();
+        Assert.AreEqual(builder.GetHashCode(), ((object)builder).GetHashCode());
+    }
+
+    [TestMethod]
+    public void ToStringTest1() => Assert.IsNotNull(new NameBuilder().ToString());
+
     [TestMethod()]
     public void AddToFamilyNamesTest1()
     {
