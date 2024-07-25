@@ -40,8 +40,8 @@ internal static class AddressLabelFormatter
             : builder.AppendReadableProperty(
                 address.StreetName
                 .Concat(address.StreetNumber)
-                .Concat(address.Block)
                 .Concat(address.Building)
+                .Concat(address.Block)
                 .Concat(address.Floor)
                 .Concat(address.Apartment)
                 .Concat(address.Room)
