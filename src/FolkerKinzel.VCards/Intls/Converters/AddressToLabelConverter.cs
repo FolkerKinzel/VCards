@@ -64,18 +64,18 @@ internal static class AddressToLabelConverter
         switch (addressOrder)
         {
             case AddressOrder.Usa:
-                worker.AppendReadableProperty(address.Locality)
+                worker.AppendReadableProperty(address.Locality, null)
                       .AppendReadableProperty(address.Region, MAX_LINE_LENGTH)
                       .AppendReadableProperty(address.PostalCode, MAX_LINE_LENGTH);
                 break;
             case AddressOrder.Venezuela:
-                worker.AppendReadableProperty(address.Locality)
+                worker.AppendReadableProperty(address.Locality, null)
                       .AppendReadableProperty(address.PostalCode, MAX_LINE_LENGTH)
                       .AppendReadableProperty(address.Region, MAX_LINE_LENGTH);
                 break;
             default: // AddressOrder.Din
-                worker.AppendReadableProperty(address.PostalCode)
-                      .AppendReadableProperty(address.Locality)
+                worker.AppendReadableProperty(address.PostalCode, null)
+                      .AppendReadableProperty(address.Locality, null)
                       .AppendReadableProperty(address.Region, MAX_LINE_LENGTH);
                 break;
         }
@@ -85,7 +85,7 @@ internal static class AddressToLabelConverter
 
     private static string AppendCountry(this StringBuilder builder, Address address, StringBuilder worker)
     {
-        worker.Clear().AppendReadableProperty(address.Country).ToUpperInvariant();
+        worker.Clear().AppendReadableProperty(address.Country, null).ToUpperInvariant();
         return builder.AppendNewLineIfNeeded().Append(worker).ToString();
     }
 
@@ -94,5 +94,41 @@ internal static class AddressToLabelConverter
     {
         if (builder.Length != 0) { builder.Append(Environment.NewLine); }
         return builder;
+    }
+
+    private static StringBuilder AppendReadableProperty(this StringBuilder sb, IEnumerable<string> strings, int? maxLen)
+    {
+        Debug.Assert(sb is not null);
+        Debug.Assert(strings is not null);
+        Debug.Assert(strings.All(x => !string.IsNullOrEmpty(x)));
+
+        // If strings is empty, the loop is not entered:
+        foreach (string s in strings)
+        {
+            AppendEntry(sb, s, maxLen);
+        }
+
+        return sb;
+
+        static void AppendEntry(StringBuilder sb, string entry, int? maxLen)
+        {
+            if (maxLen.HasValue)
+            {
+                int lineStartIndex = sb.LastIndexOf(Environment.NewLine[0]);
+                lineStartIndex = lineStartIndex < 0 ? 0 : lineStartIndex + Environment.NewLine.Length;
+
+                if (sb.Length != 0 && lineStartIndex != sb.Length)
+                {
+                    _ = sb.Length - lineStartIndex + entry.Length + 1 > maxLen.Value
+                        ? sb.AppendLine()
+                        : sb.Append(' ');
+                }
+            }
+            else if (sb.Length != 0)
+            {
+                _ = sb.Append(' ');
+            }
+            _ = sb.Append(entry);
+        }
     }
 }

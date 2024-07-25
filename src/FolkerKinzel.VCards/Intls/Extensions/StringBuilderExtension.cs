@@ -250,39 +250,5 @@ internal static class StringBuilderExtension
         return mustBeQuoted;
     }
 
-    internal static StringBuilder AppendReadableProperty(this StringBuilder sb, IEnumerable<string> strings, int? maxLen = null)
-    {
-        Debug.Assert(sb is not null);
-        Debug.Assert(strings is not null);
-        Debug.Assert(strings.All(x => !string.IsNullOrEmpty(x)));
-
-        // If strings is empty, the loop is not entered:
-        foreach (string s in strings) 
-        {
-            AppendEntry(sb, s, maxLen);
-        }
-
-        return sb;
-
-        static void AppendEntry(StringBuilder sb, string entry, int? maxLen)
-        {
-            if (maxLen.HasValue)
-            {
-                int lineStartIndex = sb.LastIndexOf(Environment.NewLine[0]);
-                lineStartIndex = lineStartIndex < 0 ? 0 : lineStartIndex + Environment.NewLine.Length;
-
-                if (sb.Length != 0 && lineStartIndex != sb.Length)
-                {
-                    _ = sb.Length - lineStartIndex + entry.Length + 1 > maxLen.Value
-                        ? sb.AppendLine()
-                        : sb.Append(' ');
-                }
-            }
-            else if (sb.Length != 0)
-            {
-                _ = sb.Append(' ');
-            }
-            _ = sb.Append(entry);
-        }
-    }
+    
 }

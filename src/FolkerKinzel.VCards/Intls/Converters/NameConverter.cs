@@ -10,18 +10,19 @@ internal static class NameConverter
     {
         Debug.Assert(name != null);
 
-        const int stringBuilderInitialCapacity = 32;
-
         return name.IsEmpty
             ? null
-            : new StringBuilder(stringBuilderInitialCapacity)
-            .AppendReadableProperty(name.Prefixes)
-            .AppendReadableProperty(name.GivenNames)
-            .AppendReadableProperty(name.AdditionalNames)
-            .AppendReadableProperty(name.FamilyNames)
-            .AppendReadableProperty(name.Surname2)
-            .AppendReadableProperty(name.Suffixes)
-            .AppendReadableProperty(name.Generation)
-            .ToString();
+#if NETSTANDARD2_0 || NET462
+            : string.Join(" "
+#else
+            : string.Join(' '
+#endif
+        , name.Prefixes
+        .Concat(name.GivenNames)
+        .Concat(name.AdditionalNames)
+        .Concat(name.FamilyNames)
+        .Concat(name.Surname2)
+        .Concat(name.Suffixes)
+        .Concat(name.Generation));
     }
 }
