@@ -233,4 +233,180 @@ public class AddressBuilderTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void AddToCountryTest3() => AddressBuilder.Create().AddToCountry((string[]?)null!);
 
+    [TestMethod()]
+    public void AddToRoomTest1()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToRoom("1").AddToRoom("2"));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Room);
+    }
+
+    [TestMethod()]
+    public void AddToRoomTest2()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToRoom(expected));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Room);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddToRoomTest3() => AddressBuilder.Create().AddToRoom((string[]?)null!);
+
+    [TestMethod()]
+    public void AddToApartmentTest1()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToApartment("1").AddToApartment("2"));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Apartment);
+    }
+
+    [TestMethod()]
+    public void AddToApartmentTest2()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToApartment(expected));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Apartment);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddToApartmentTest3() => AddressBuilder.Create().AddToApartment((string[]?)null!);
+
+    [TestMethod()]
+    public void AddToFloorTest1()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToFloor("1").AddToFloor("2"));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Floor);
+    }
+
+    [TestMethod()]
+    public void AddToFloorTest2()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToFloor(expected));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Floor);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddToFloorTest3() => AddressBuilder.Create().AddToFloor((string[]?)null!);
+
+    [TestMethod()]
+    public void AddToStreetNumberTest1()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToStreetNumber("1").AddToStreetNumber("2"));
+
+        CollectionAssert.AreEqual(expected, prop.Value.StreetNumber);
+    }
+
+    [TestMethod()]
+    public void AddToStreetNumberTest2()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToStreetNumber(expected));
+
+        CollectionAssert.AreEqual(expected, prop.Value.StreetNumber);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddToStreetNumberTest3() => AddressBuilder.Create().AddToStreetNumber((string[]?)null!);
+
+    [TestMethod()]
+    public void AddToStreetNameTest1()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToStreetName("1").AddToStreetName("2"));
+
+        CollectionAssert.AreEqual(expected, prop.Value.StreetName);
+    }
+
+    [TestMethod()]
+    public void AddToStreetNameTest2()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToStreetName(expected));
+
+        CollectionAssert.AreEqual(expected, prop.Value.StreetName);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddToStreetNameTest3() => AddressBuilder.Create().AddToStreetName((string[]?)null!);
+
+    [TestMethod()]
+    public void AddToBuildingTest1()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToBuilding("1").AddToBuilding("2"));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Building);
+    }
+
+    [TestMethod()]
+    public void AddToBuildingTest2()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToBuilding(expected));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Building);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddToBuildingTest3() => AddressBuilder.Create().AddToBuilding((string[]?)null!);
+
+    [TestMethod()]
+    public void AddToBlockTest1()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToBlock("1").AddToBlock("2"));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Block);
+    }
+
+    [TestMethod()]
+    public void AddToBlockTest2()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToBlock(expected));
+
+        CollectionAssert.AreEqual(expected, prop.Value.Building);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddToBlockTest3() => AddressBuilder.Create().AddToBlock((string[]?)null!);
+
+    [TestMethod()]
+    public void AddToSubDistrictTest1()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToSubDistrict("1").AddToSubDistrict("2"));
+
+        CollectionAssert.AreEqual(expected, prop.Value.SubDistrict);
+    }
+
+    [TestMethod()]
+    public void AddToSubDistrictTest2()
+    {
+        string[] expected = ["1", "2"];
+        var prop = new AddressProperty(AddressBuilder.Create().AddToSubDistrict(expected));
+
+        CollectionAssert.AreEqual(expected, prop.Value.SubDistrict);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AddToSubDistrictTest3() => AddressBuilder.Create().AddToSubDistrict((string[]?)null!);
+
 }
