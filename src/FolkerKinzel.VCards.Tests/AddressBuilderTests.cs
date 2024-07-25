@@ -19,18 +19,29 @@ public class AddressBuilderTests
     [TestMethod()]
     public void ClearTest()
     {
-        NameBuilder bldr = NameBuilder
+        AddressBuilder bldr = AddressBuilder
             .Create()
-            .AddToGeneration("1")
-            .AddToAdditionalNames("2")
-            .AddToFamilyNames("3")
-            .AddToGivenNames("4")
-            .AddToPrefixes("5")
-            .AddToSuffixes("6")
-            .AddToSurname2("7")
+            .AddToApartment("a")
+            .AddToBlock("b")
+            .AddToBuilding("c")
+            .AddToCountry("d")
+            .AddToDirection("e")
+            .AddToDistrict("f")
+            .AddToExtendedAddress("g")
+            .AddToFloor("h")
+            .AddToLandmark("i")
+            .AddToLocality("k")
+            .AddToPostalCode("l")
+            .AddToPostOfficeBox("m")
+            .AddToRegion("n")
+            .AddToRoom("o")
+            .AddToStreet("p")
+            .AddToStreetName("q")
+            .AddToStreetNumber("r")
+            .AddToSubDistrict("s")
             .Clear();
 
-        Assert.IsInstanceOfType(bldr, typeof(NameBuilder));
+        Assert.IsInstanceOfType(bldr, typeof(AddressBuilder));
         Assert.IsTrue(bldr.Data.All(x => x.Value.Count == 0));
     }
 
