@@ -30,6 +30,11 @@ public sealed class Address
     /// for a mailing label.</summary>
     /// <returns>The data encapsulated in the instance, converted to formatted text
     /// for a mailing label.</returns>
+    /// <remarks>
+    /// Use <see cref="AddressProperty.ToLabel"/> method instead because this takes also the 
+    /// the <see cref="ParameterSection.CountryCode"/> parameter into account.
+    /// </remarks>
+    [Obsolete("Use AddressProperty.ToLabel() instead.", false)]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string ToLabel() => AddressToLabelConverter.ConvertToLabel(this);
 

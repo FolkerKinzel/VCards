@@ -19,7 +19,7 @@ public class AddressOrderConverterTests
     public void GetAddressOrderTest1(string? input, object? expected)
     {
         var addr = new AddressProperty(null, null, null, postalCode: null, country: input, autoLabel: false);
-        AddressOrder? order = addr.Value.GetAddressOrder();
+        AddressOrder? order = AddressOrderConverter.ParseAddress(addr.Value);
         Assert.AreEqual((AddressOrder?)expected, order);
     }
 
@@ -60,7 +60,7 @@ public class AddressOrderConverterTests
         try
         {
             var culture = CultureInfo.CreateSpecificCulture(input);
-            Assert.AreEqual(expected, culture.ToAddressOrder());
+            Assert.AreEqual(expected, AddressOrderConverter.ParseCultureInfo(culture));
         }
         catch (CultureNotFoundException) { }
     }
@@ -70,7 +70,7 @@ public class AddressOrderConverterTests
     {
         foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
         {
-            Assert.IsInstanceOfType(culture.ToAddressOrder(), typeof(AddressOrder));
+            Assert.IsInstanceOfType(AddressOrderConverter.ParseCultureInfo(culture), typeof(AddressOrder));
         }
     }
 }

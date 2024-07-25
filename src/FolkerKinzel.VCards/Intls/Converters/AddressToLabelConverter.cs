@@ -1,10 +1,9 @@
 using System.Globalization;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
-
-#pragma warning disable CS0618 // Type or member is obsolete
 
 internal static class AddressToLabelConverter
 {
@@ -13,16 +12,22 @@ internal static class AddressToLabelConverter
     private static readonly AddressOrder _defaultAddressOrder;
     private const int MAX_LINE_LENGTH = 30;
 
-    static AddressToLabelConverter() => _defaultAddressOrder = CultureInfo.CurrentCulture.ToAddressOrder();
+    static AddressToLabelConverter() => _defaultAddressOrder = AddressOrderConverter.ParseCultureInfo(CultureInfo.CurrentCulture);
 
     internal static string ConvertToLabel(Address address)
+        => DoConvertToLabel(address, AddressOrderConverter.ParseAddress(address) ?? _defaultAddressOrder);
+
+    internal static string ConvertToLabel(AddressProperty prop)
+        => DoConvertToLabel(prop.Value, AddressOrderConverter.ParseAddressProperty(prop) ?? _defaultAddressOrder);
+
+    private static string DoConvertToLabel(Address address, AddressOrder addressOrder)
     {
-        StringBuilder worker = new StringBuilder(WORKER_CAPACITY);
+        var worker = new StringBuilder(WORKER_CAPACITY);
 
         return new StringBuilder(BUILDER_CAPACITY)
             .AppendStreet(address)
             .AppendExtendedAddress(address)
-            .AppendLocality(address, worker)
+            .AppendLocality(address, worker, addressOrder)
             .AppendCountry(address, worker);
     }
 
@@ -51,10 +56,11 @@ internal static class AddressToLabelConverter
             : builder;
     }
 
-    private static StringBuilder AppendLocality(this StringBuilder builder, Address address, StringBuilder worker)
+    private static StringBuilder AppendLocality(this StringBuilder builder,
+                                                Address address,
+                                                StringBuilder worker,
+                                                AddressOrder addressOrder)
     {
-        AddressOrder addressOrder = address.GetAddressOrder() ?? _defaultAddressOrder;
-
         switch (addressOrder)
         {
             case AddressOrder.Usa:
@@ -67,7 +73,7 @@ internal static class AddressToLabelConverter
                       .AppendReadableProperty(address.PostalCode, MAX_LINE_LENGTH)
                       .AppendReadableProperty(address.Region, MAX_LINE_LENGTH);
                 break;
-            default:
+            default: // AddressOrder.Din
                 worker.AppendReadableProperty(address.PostalCode)
                       .AppendReadableProperty(address.Locality)
                       .AppendReadableProperty(address.Region, MAX_LINE_LENGTH);
@@ -90,4 +96,3 @@ internal static class AddressToLabelConverter
         return builder;
     }
 }
-#pragma warning restore CS0618 // Type or member is obsolete
