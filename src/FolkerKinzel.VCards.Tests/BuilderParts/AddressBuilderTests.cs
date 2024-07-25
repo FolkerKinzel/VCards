@@ -91,7 +91,11 @@ public class AddressBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest2() => new AddressBuilder().Add(Enumerable.Empty<string>(), null, null, null);
+    public void AddTest2() => new AddressBuilder().Add([], null, null, null);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void AddTest3() => new AddressBuilder().Add(FolkerKinzel.VCards.AddressBuilder.Create());
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
