@@ -380,7 +380,7 @@ public class AddressBuilderTests
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddToBlock(expected));
 
-        CollectionAssert.AreEqual(expected, prop.Value.Building);
+        CollectionAssert.AreEqual(expected, prop.Value.Block);
     }
 
     [TestMethod()]
