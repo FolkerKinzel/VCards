@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
@@ -18,6 +19,8 @@ public sealed class Name
     private const int STANDARD_COUNT = 5;
     private const int MAX_COUNT = 7;
     private readonly Dictionary<NameProp, ReadOnlyCollection<string>> _dic = [];
+    private readonly ReadOnlyCollection<string> _familyNamesView;
+    private readonly ReadOnlyCollection<string> _prefixesView;
 
     private ReadOnlyCollection<string> Get(NameProp prop)
         => _dic.TryGetValue(prop, out ReadOnlyCollection<string>? coll)
@@ -63,9 +66,15 @@ public sealed class Name
         Add(NameProp.AdditionalNames, additionalNames);
         Add(NameProp.Prefixes, prefixes);
         Add(NameProp.Suffixes, suffixes);
+
+        _familyNamesView = familyNames;
+        _prefixesView = prefixes;
     }
 
     #endregion
+
+    internal Name() => _familyNamesView = _prefixesView = ReadOnlyStringCollection.Empty;
+
 
     [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
         Justification = "Performance: Collection initializer initializes a new List.")]
@@ -80,7 +89,63 @@ public sealed class Name
         }
     }
 
-    internal Name() { }
+    private ReadOnlyCollection<string> GetFamilyNamesView()
+    {
+        if(!_dic.TryGetValue(NameProp.FamilyNames, out ReadOnlyCollection<string>? familyNames))
+        {
+            return ReadOnlyStringCollection.Empty;
+        }
+
+        if (!_dic.TryGetValue(NameProp.Surname2, out ReadOnlyCollection<string>? surname2))
+        {
+            return familyNames;
+        }
+
+        IEnumerable<string> diff = familyNames.Where(x => !surname2.Contains(x));
+
+        return diff.Any() ? new ReadOnlyCollection<string>(diff.ToArray())
+                          : ReadOnlyStringCollection.Empty;
+    }
+
+    private ReadOnlyCollection<string> GetPrefixesView()
+    {
+        if (!_dic.TryGetValue(NameProp.Prefixes, out ReadOnlyCollection<string>? prefixes))
+        {
+            return ReadOnlyStringCollection.Empty;
+        }
+
+        if (!_dic.TryGetValue(NameProp.Generation, out ReadOnlyCollection<string>? generation))
+        {
+            return prefixes;
+        }
+
+        List<string>? list = null;
+
+        for (int i = 0; i < prefixes.Count; i++)
+        {
+            string prefix = prefixes[i];
+
+            if (!generation.Contains(prefix))
+            {
+                list ??= new List<string>();
+                list.Add(prefix);
+            }
+        }
+
+        if(list is null)
+        {
+            return ReadOnlyStringCollection.Empty;
+        }
+
+        if(list.SequenceEqual(prefixes))
+        {
+            return prefixes;
+        }
+
+        return list.AsReadOnly();
+    }
+
+
 
     internal Name(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
