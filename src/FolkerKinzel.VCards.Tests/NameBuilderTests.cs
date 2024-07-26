@@ -1,11 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FolkerKinzel.VCards;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FolkerKinzel.VCards.Models;
+﻿using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -20,7 +13,7 @@ public class NameBuilderTests
 
         Assert.AreNotSame(bldr1, bldr2);
         Assert.IsInstanceOfType(bldr1, typeof(NameBuilder));
-        Assert.IsInstanceOfType(bldr2 , typeof(NameBuilder));
+        Assert.IsInstanceOfType(bldr2, typeof(NameBuilder));
     }
 
     [TestMethod]
@@ -36,7 +29,7 @@ public class NameBuilderTests
     public void ToStringTest1() => Assert.IsNotNull(new NameBuilder().ToString());
 
     [TestMethod()]
-    public void AddToFamilyNamesTest1()
+    public void AddFamilyNameTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddFamilyName("1").AddFamilyName("2"));
@@ -45,7 +38,7 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    public void AddToFamilyNamesTest2()
+    public void AddFamilyNameTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddFamilyName(expected));
@@ -55,11 +48,11 @@ public class NameBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToFamilyNamesTest3() => NameBuilder.Create().AddFamilyName((string[]?)null!);
-    
+    public void AddFamilyNameTest3() => NameBuilder.Create().AddFamilyName((string[]?)null!);
+
 
     [TestMethod()]
-    public void AddToGivenNamesTest1()
+    public void AddGivenNameTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddGivenName("1").AddGivenName("2"));
@@ -68,7 +61,7 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    public void AddToGivenNamesTest2()
+    public void AddGivenNameTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddGivenName(expected));
@@ -78,10 +71,10 @@ public class NameBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToGivenNamesTest3() => NameBuilder.Create().AddGivenName((string[]?)null!);
+    public void AddGivenNameTest3() => NameBuilder.Create().AddGivenName((string[]?)null!);
 
     [TestMethod()]
-    public void AddToAdditionalNamesTest1()
+    public void AddAdditionalNameTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddAdditionalName("1").AddAdditionalName("2"));
@@ -90,7 +83,7 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    public void AddToAdditionalNamesTest2()
+    public void AddAdditionalNameTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddAdditionalName(expected));
@@ -100,10 +93,10 @@ public class NameBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToAdditionalNamesTest3() => NameBuilder.Create().AddAdditionalName((string[]?)null!);
+    public void AddAdditionalNameTest3() => NameBuilder.Create().AddAdditionalName((string[]?)null!);
 
     [TestMethod()]
-    public void AddToPrefixesTest1()
+    public void AddPrefixTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddPrefix("1").AddPrefix("2"));
@@ -112,7 +105,7 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    public void AddToPrefixesTest2()
+    public void AddPrefixTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddPrefix(expected));
@@ -122,10 +115,10 @@ public class NameBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToPrefixesTest3() => NameBuilder.Create().AddPrefix((string[]?)null!);
+    public void AddPrefixTest3() => NameBuilder.Create().AddPrefix((string[]?)null!);
 
     [TestMethod()]
-    public void AddToSuffixesTest1()
+    public void AddSuffixTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddSuffix("1").AddSuffix("2"));
@@ -134,7 +127,7 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    public void AddToSuffixesTest2()
+    public void AddSuffixTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddSuffix(expected));
@@ -144,10 +137,10 @@ public class NameBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToSuffixesTest3() => NameBuilder.Create().AddSuffix((string[]?)null!);
+    public void AddSuffixTest3() => NameBuilder.Create().AddSuffix((string[]?)null!);
 
     [TestMethod()]
-    public void AddToSurname2Test1()
+    public void AddSurname2Test1()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddSurname2("1").AddSurname2("2"));
@@ -156,7 +149,7 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    public void AddToSurname2Test2()
+    public void AddSurname2Test2()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddSurname2(expected));
@@ -166,10 +159,10 @@ public class NameBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToSurname2Test3() => NameBuilder.Create().AddSurname2((string[]?)null!);
+    public void AddSurname2Test3() => NameBuilder.Create().AddSurname2((string[]?)null!);
 
     [TestMethod()]
-    public void AddToGenerationTest1()
+    public void AddGenerationTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddGeneration("1").AddGeneration("2"));
@@ -178,7 +171,7 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    public void AddToGenerationTest2()
+    public void AddGenerationTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddGeneration(expected));
@@ -188,7 +181,7 @@ public class NameBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToGenerationTest3() => NameBuilder.Create().AddGeneration((string[]?)null!);
+    public void AddGenerationTest3() => NameBuilder.Create().AddGeneration((string[]?)null!);
 
     [TestMethod()]
     public void ClearTest()
