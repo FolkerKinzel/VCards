@@ -16,6 +16,7 @@ public sealed class Address
     private const int STANDARD_COUNT = (int)AdrProp.Country + 1;
     private const int MAX_COUNT = (int)AdrProp.Direction + 1;
     private readonly Dictionary<AdrProp, ReadOnlyCollection<string>> _dic = [];
+    private readonly ReadOnlyCollection<string> _streetView;
 
     private ReadOnlyCollection<string> Get(AdrProp prop)
         => _dic.TryGetValue(prop, out ReadOnlyCollection<string>? coll)
@@ -59,6 +60,8 @@ public sealed class Address
         Add(AdrProp.Region, region);
         Add(AdrProp.PostalCode, postalCode);
         Add(AdrProp.Country, country);
+
+        _streetView = street;
     }
 
     #endregion
@@ -74,9 +77,11 @@ public sealed class Address
                 _dic[kvp.Key] = new ReadOnlyCollection<string>(kvp.Value.ToArray());
             }
         }
+        
+        _streetView = GetStreetView();
     }
 
-    internal Address() { }
+    internal Address() => _streetView = ReadOnlyStringCollection.Empty;
 
     internal Address(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
@@ -108,6 +113,10 @@ public sealed class Address
 
             _dic[(AdrProp)index] = coll;
         }//foreach
+
+        _streetView = GetStreetView();
+
+        ////////////////////////////////////////////////
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static string[] ToArray(in ReadOnlyMemory<char> mem, VCdVersion version)
@@ -145,11 +154,8 @@ public sealed class Address
     /// <item><see cref="Direction"/></item>
     /// </list>
     /// </remarks>
-    public ReadOnlyCollection<string> Street
-        => _dic.Any(x => x.Key > AdrProp.Country)
-            ? ReadOnlyStringCollection.Empty
-            : Get(AdrProp.Street);
-
+    public ReadOnlyCollection<string> Street => _streetView;
+        
     /// <summary>The locality (e.g., city).</summary>
     public ReadOnlyCollection<string> Locality => Get(AdrProp.Locality);
 
@@ -235,6 +241,11 @@ public sealed class Address
             CompoundObjectConverter.EncodeQuotedPrintable(builder, startIdx);
         }
     }
+
+    private ReadOnlyCollection<string> GetStreetView()
+        => _dic.Any(x => x.Key > AdrProp.Country)
+                ? ReadOnlyStringCollection.Empty
+                : Get(AdrProp.Street);
 
     internal bool NeedsToBeQpEncoded()
     {

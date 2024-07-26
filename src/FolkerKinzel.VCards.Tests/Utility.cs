@@ -32,7 +32,15 @@ internal static class Utility
         var expertise1 = new TextProperty("C#");
         expertise1.Parameters.Expertise = Expertise.Average;
 
-        var adr1 = new AddressProperty("Elmstraße 13", "Entenhausen", null, postalCode: "01234");
+        var adr1 = new AddressProperty(
+            AddressBuilder
+            .Create()
+            .AddToStreet("Elmstraße 13")
+            .AddToStreetName("Elmstraße")
+            .AddToStreetNumber("13")
+            .AddToLocality("Entenhausen")
+            .AddToPostalCode("01234")
+            .AddToCountry("Germany"));
         adr1.Parameters.Label = "  ";
         adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
         adr1.Parameters.GeoPosition = new GeoCoordinate(12.98, 7.86);
@@ -46,6 +54,16 @@ internal static class Utility
         var pidMap = new AppID(7, "http://www.contoso.com/");
         adr1.Parameters.PropertyIDs = [new(3, pidMap), new(2, null)];
         adr1.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Parcel | Adr.Postal;
+
+        var adr2 = new AddressProperty(
+            AddressBuilder
+            .Create()
+            .AddToStreet("Elm Street 13")
+            .AddToStreetName("Elm Street")
+            .AddToStreetNumber("13")
+            .AddToLocality("New York")
+            .AddToPostalCode("01234")
+            .AddToCountry("USA"));
 
         var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
         //logo1.Parameters.MediaType = "image/jpeg";
@@ -139,7 +157,7 @@ internal static class Utility
             DeathPlaceViews = new TextProperty("Somewhere"),
             BirthPlaceViews = new TextProperty("Dessau"),
             ProductID = new TextProperty("Testcode"),
-            Addresses = adr1,
+            Addresses = [adr1, adr2],
             CalendarAddresses = new TextProperty("Calender address"),
             CalendarUserAddresses = new TextProperty("Calendar user address"),
             FreeOrBusyUrls = new TextProperty("Free Busy"),

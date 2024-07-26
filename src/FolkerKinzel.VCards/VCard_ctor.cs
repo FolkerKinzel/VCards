@@ -38,48 +38,75 @@ public sealed partial class VCard
 
         Func<ICloneable?, object?> cloner = Cloned;
 
-        foreach (KeyValuePair<Prop, object> kvp in vCard._propDic)
+        foreach(KeyValuePair<Prop, object> kvp in vCard._propDic)
         {
 #pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
             Set(kvp.Key, kvp.Value switch
             {
-                XmlProperty xmlProp => xmlProp.Clone(),
+                VCardProperty prop => prop.Clone(),
                 IEnumerable<XmlProperty?> xmlPropEnumerable => xmlPropEnumerable.Select(cloner).Cast<XmlProperty?>().ToArray(),
-                ProfileProperty profProp => profProp.Clone(),
-                TextProperty txtProp => txtProp.Clone(),
                 IEnumerable<TextProperty?> txtPropEnumerable => txtPropEnumerable.Select(cloner).Cast<TextProperty?>().ToArray(),
-                DateAndOrTimeProperty dtTimeProp => dtTimeProp.Clone(),
                 IEnumerable<DateAndOrTimeProperty?> dtTimePropEnumerable => dtTimePropEnumerable.Select(cloner).Cast<DateAndOrTimeProperty?>().ToArray(),
-                AddressProperty adrProp => adrProp.Clone(),
                 IEnumerable<AddressProperty?> adrPropEnumerable => adrPropEnumerable.Select(cloner).Cast<AddressProperty?>().ToArray(),
-                NameProperty nameProp => nameProp.Clone(),
                 IEnumerable<NameProperty?> namePropEnumerable => namePropEnumerable.Select(cloner).Cast<NameProperty?>().ToArray(),
-                RelationProperty relProp => relProp.Clone(),
                 IEnumerable<RelationProperty?> relPropEnumerable => relPropEnumerable.Select(cloner).Cast<RelationProperty?>().ToArray(),
-                OrgProperty orgProp => orgProp.Clone(),
                 IEnumerable<OrgProperty?> orgPropEnumerable => orgPropEnumerable.Select(cloner).Cast<OrgProperty?>().ToArray(),
-                StringCollectionProperty strCollProp => strCollProp.Clone(),
                 IEnumerable<StringCollectionProperty?> strCollPropEnumerable => strCollPropEnumerable.Select(cloner).Cast<StringCollectionProperty?>().ToArray(),
-                GenderProperty sexProp => sexProp.Clone(),
                 IEnumerable<GenderProperty?> sexPropEnumerable => sexPropEnumerable.Select(cloner).Cast<GenderProperty?>().ToArray(),
-                GeoProperty geoProp => geoProp.Clone(),
                 IEnumerable<GeoProperty?> geoPropEnumerable => geoPropEnumerable.Select(cloner).Cast<GeoProperty?>().ToArray(),
-                DataProperty dataProp => dataProp.Clone(),
                 IEnumerable<DataProperty?> dataPropEnumerable => dataPropEnumerable.Select(cloner).Cast<DataProperty?>().ToArray(),
-                NonStandardProperty nStdProp => nStdProp.Clone(),
                 IEnumerable<NonStandardProperty?> nStdPropEnumerable => nStdPropEnumerable.Select(cloner).Cast<NonStandardProperty?>().ToArray(),
-                AppIDProperty pidMapProp => pidMapProp.Clone(),
                 IEnumerable<AppIDProperty?> pidMapPropEnumerable => pidMapPropEnumerable.Select(cloner).Cast<AppIDProperty?>().ToArray(),
-                TimeZoneProperty tzProp => tzProp.Clone(),
                 IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(cloner).Cast<TimeZoneProperty?>().ToArray(),
-
-                ICloneable cloneable => cloneable.Clone(), // AccessProperty, KindProperty, TimeStampProperty, UuidProperty
 #if DEBUG
                 _ => throw new NotImplementedException()
 #endif
-            });
 #pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
-        }//foreach
+            });
+        }
+
+//        foreach (KeyValuePair<Prop, object> kvp in vCard._propDic)
+//        {
+//#pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
+//            Set(kvp.Key, kvp.Value switch
+//            {
+//                XmlProperty xmlProp => xmlProp.Clone(),
+//                IEnumerable<XmlProperty?> xmlPropEnumerable => xmlPropEnumerable.Select(cloner).Cast<XmlProperty?>().ToArray(),
+//                ProfileProperty profProp => profProp.Clone(),
+//                TextProperty txtProp => txtProp.Clone(),
+//                IEnumerable<TextProperty?> txtPropEnumerable => txtPropEnumerable.Select(cloner).Cast<TextProperty?>().ToArray(),
+//                DateAndOrTimeProperty dtTimeProp => dtTimeProp.Clone(),
+//                IEnumerable<DateAndOrTimeProperty?> dtTimePropEnumerable => dtTimePropEnumerable.Select(cloner).Cast<DateAndOrTimeProperty?>().ToArray(),
+//                AddressProperty adrProp => adrProp.Clone(),
+//                IEnumerable<AddressProperty?> adrPropEnumerable => adrPropEnumerable.Select(cloner).Cast<AddressProperty?>().ToArray(),
+//                NameProperty nameProp => nameProp.Clone(),
+//                IEnumerable<NameProperty?> namePropEnumerable => namePropEnumerable.Select(cloner).Cast<NameProperty?>().ToArray(),
+//                RelationProperty relProp => relProp.Clone(),
+//                IEnumerable<RelationProperty?> relPropEnumerable => relPropEnumerable.Select(cloner).Cast<RelationProperty?>().ToArray(),
+//                OrgProperty orgProp => orgProp.Clone(),
+//                IEnumerable<OrgProperty?> orgPropEnumerable => orgPropEnumerable.Select(cloner).Cast<OrgProperty?>().ToArray(),
+//                StringCollectionProperty strCollProp => strCollProp.Clone(),
+//                IEnumerable<StringCollectionProperty?> strCollPropEnumerable => strCollPropEnumerable.Select(cloner).Cast<StringCollectionProperty?>().ToArray(),
+//                GenderProperty sexProp => sexProp.Clone(),
+//                IEnumerable<GenderProperty?> sexPropEnumerable => sexPropEnumerable.Select(cloner).Cast<GenderProperty?>().ToArray(),
+//                GeoProperty geoProp => geoProp.Clone(),
+//                IEnumerable<GeoProperty?> geoPropEnumerable => geoPropEnumerable.Select(cloner).Cast<GeoProperty?>().ToArray(),
+//                DataProperty dataProp => dataProp.Clone(),
+//                IEnumerable<DataProperty?> dataPropEnumerable => dataPropEnumerable.Select(cloner).Cast<DataProperty?>().ToArray(),
+//                NonStandardProperty nStdProp => nStdProp.Clone(),
+//                IEnumerable<NonStandardProperty?> nStdPropEnumerable => nStdPropEnumerable.Select(cloner).Cast<NonStandardProperty?>().ToArray(),
+//                AppIDProperty pidMapProp => pidMapProp.Clone(),
+//                IEnumerable<AppIDProperty?> pidMapPropEnumerable => pidMapPropEnumerable.Select(cloner).Cast<AppIDProperty?>().ToArray(),
+//                TimeZoneProperty tzProp => tzProp.Clone(),
+//                IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(cloner).Cast<TimeZoneProperty?>().ToArray(),
+
+//                ICloneable cloneable => cloneable.Clone(), // AccessProperty, KindProperty, TimeStampProperty, UuidProperty
+//#if DEBUG
+//                _ => throw new NotImplementedException()
+//#endif
+//            });
+//#pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
+//        }//foreach
 
         Debug.Assert(VCard.IsAppRegistered);
 
