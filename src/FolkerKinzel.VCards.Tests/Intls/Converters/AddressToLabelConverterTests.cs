@@ -118,7 +118,7 @@ public class AddressToLabelConverterTests
         const string street = "Elm Street";
         const string city = "Springwood";
         
-        var address = new AddressProperty(AddressBuilder.Create().AddToStreet(street).AddToLocality(city));
+        var address = new AddressProperty(AddressBuilder.Create().AddStreet(street).AddLocality(city));
 #pragma warning disable CS0618 // Type or member is obsolete
         string? label = address.Value.ToLabel();
 #pragma warning restore CS0618 // Type or member is obsolete

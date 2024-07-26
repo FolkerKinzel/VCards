@@ -21,24 +21,24 @@ public class AddressBuilderTests
     {
         AddressBuilder bldr = AddressBuilder
             .Create()
-            .AddToApartment("a")
-            .AddToBlock("b")
-            .AddToBuilding("c")
-            .AddToCountry("d")
-            .AddToDirection("e")
-            .AddToDistrict("f")
-            .AddToExtendedAddress("g")
-            .AddToFloor("h")
-            .AddToLandmark("i")
-            .AddToLocality("k")
-            .AddToPostalCode("l")
-            .AddToPostOfficeBox("m")
-            .AddToRegion("n")
-            .AddToRoom("o")
-            .AddToStreet("p")
-            .AddToStreetName("q")
-            .AddToStreetNumber("r")
-            .AddToSubDistrict("s")
+            .AddApartment("a")
+            .AddBlock("b")
+            .AddBuilding("c")
+            .AddCountry("d")
+            .AddDirection("e")
+            .AddDistrict("f")
+            .AddExtendedAddress("g")
+            .AddFloor("h")
+            .AddLandmark("i")
+            .AddLocality("k")
+            .AddPostalCode("l")
+            .AddPostOfficeBox("m")
+            .AddRegion("n")
+            .AddRoom("o")
+            .AddStreet("p")
+            .AddStreetName("q")
+            .AddStreetNumber("r")
+            .AddSubDistrict("s")
             .Clear();
 
         Assert.IsInstanceOfType(bldr, typeof(AddressBuilder));
@@ -50,9 +50,9 @@ public class AddressBuilderTests
     {
         AddressBuilder bldr = AddressBuilder
             .Create()
-            .AddToStreet("")
-            .AddToStreetName((string?)null)
-            .AddToStreet("   ");
+            .AddStreet("")
+            .AddStreetName((string?)null)
+            .AddStreet("   ");
 
         Assert.IsFalse(bldr.Data.Any());
     }
@@ -62,7 +62,7 @@ public class AddressBuilderTests
     {
         AddressBuilder bldr = AddressBuilder
             .Create()
-            .AddToLocality(["", "    "]);
+            .AddLocality(["", "    "]);
 
         Assert.IsFalse(bldr.Data.Any());
     }
@@ -72,8 +72,8 @@ public class AddressBuilderTests
     {
         var prop = new AddressProperty(AddressBuilder
             .Create()
-            .AddToPostalCode("1")
-            .AddToPostalCode(["2", "3"]));
+            .AddPostalCode("1")
+            .AddPostalCode(["2", "3"]));
 
         CollectionAssert.AreEqual(new string[] { "1", "2", "3" }, prop.Value.PostalCode);
     }
@@ -94,7 +94,7 @@ public class AddressBuilderTests
     public void AddToPostOfficeBoxTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToPostOfficeBox("1").AddToPostOfficeBox("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddPostOfficeBox("1").AddPostOfficeBox("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.PostOfficeBox);
     }
@@ -103,20 +103,20 @@ public class AddressBuilderTests
     public void AddToPostOfficeBoxTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToPostOfficeBox(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddPostOfficeBox(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.PostOfficeBox);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToPostOfficeBoxTest3() => AddressBuilder.Create().AddToPostOfficeBox((string[]?)null!);
+    public void AddToPostOfficeBoxTest3() => AddressBuilder.Create().AddPostOfficeBox((string[]?)null!);
 
     [TestMethod()]
     public void AddToExtendedAddressTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToExtendedAddress("1").AddToExtendedAddress("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddExtendedAddress("1").AddExtendedAddress("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.ExtendedAddress);
     }
@@ -125,20 +125,20 @@ public class AddressBuilderTests
     public void AddToExtendedAddressTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToExtendedAddress(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddExtendedAddress(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.ExtendedAddress);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToExtendedAddressTest3() => AddressBuilder.Create().AddToExtendedAddress((string[]?)null!);
+    public void AddToExtendedAddressTest3() => AddressBuilder.Create().AddExtendedAddress((string[]?)null!);
 
     [TestMethod()]
     public void AddToStreetTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToStreet("1").AddToStreet("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddStreet("1").AddStreet("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.Street);
     }
@@ -147,20 +147,20 @@ public class AddressBuilderTests
     public void AddToStreetTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToStreet(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddStreet(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.Street);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToStreetTest3() => AddressBuilder.Create().AddToStreet((string[]?)null!);
+    public void AddToStreetTest3() => AddressBuilder.Create().AddStreet((string[]?)null!);
 
     [TestMethod()]
     public void AddToLocalityTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToLocality("1").AddToLocality("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddLocality("1").AddLocality("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.Locality);
     }
@@ -169,20 +169,20 @@ public class AddressBuilderTests
     public void AddToLocalityTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToLocality(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddLocality(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.Locality);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToLocalityTest3() => AddressBuilder.Create().AddToLocality((string[]?)null!);
+    public void AddToLocalityTest3() => AddressBuilder.Create().AddLocality((string[]?)null!);
 
     [TestMethod()]
     public void AddToRegionTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToRegion("1").AddToRegion("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddRegion("1").AddRegion("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.Region);
     }
@@ -191,20 +191,20 @@ public class AddressBuilderTests
     public void AddToRegionTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToRegion(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddRegion(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.Region);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToRegionTest3() => AddressBuilder.Create().AddToRegion((string[]?)null!);
+    public void AddToRegionTest3() => AddressBuilder.Create().AddRegion((string[]?)null!);
 
     [TestMethod()]
     public void AddToPostalCodeTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToPostalCode("1").AddToPostalCode("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddPostalCode("1").AddPostalCode("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.PostalCode);
     }
@@ -213,20 +213,20 @@ public class AddressBuilderTests
     public void AddToPostalCodeTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToPostalCode(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddPostalCode(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.PostalCode);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToPostalCodeTest3() => AddressBuilder.Create().AddToPostalCode((string[]?)null!);
+    public void AddToPostalCodeTest3() => AddressBuilder.Create().AddPostalCode((string[]?)null!);
 
     [TestMethod()]
     public void AddToCountryTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToCountry("1").AddToCountry("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddCountry("1").AddCountry("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.Country);
     }
@@ -235,20 +235,20 @@ public class AddressBuilderTests
     public void AddToCountryTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToCountry(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddCountry(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.Country);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToCountryTest3() => AddressBuilder.Create().AddToCountry((string[]?)null!);
+    public void AddToCountryTest3() => AddressBuilder.Create().AddCountry((string[]?)null!);
 
     [TestMethod()]
     public void AddToRoomTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToRoom("1").AddToRoom("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddRoom("1").AddRoom("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.Room);
     }
@@ -257,20 +257,20 @@ public class AddressBuilderTests
     public void AddToRoomTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToRoom(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddRoom(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.Room);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToRoomTest3() => AddressBuilder.Create().AddToRoom((string[]?)null!);
+    public void AddToRoomTest3() => AddressBuilder.Create().AddRoom((string[]?)null!);
 
     [TestMethod()]
     public void AddToApartmentTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToApartment("1").AddToApartment("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddApartment("1").AddApartment("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.Apartment);
     }
@@ -279,20 +279,20 @@ public class AddressBuilderTests
     public void AddToApartmentTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToApartment(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddApartment(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.Apartment);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToApartmentTest3() => AddressBuilder.Create().AddToApartment((string[]?)null!);
+    public void AddToApartmentTest3() => AddressBuilder.Create().AddApartment((string[]?)null!);
 
     [TestMethod()]
     public void AddToFloorTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToFloor("1").AddToFloor("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddFloor("1").AddFloor("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.Floor);
     }
@@ -301,20 +301,20 @@ public class AddressBuilderTests
     public void AddToFloorTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToFloor(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddFloor(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.Floor);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToFloorTest3() => AddressBuilder.Create().AddToFloor((string[]?)null!);
+    public void AddToFloorTest3() => AddressBuilder.Create().AddFloor((string[]?)null!);
 
     [TestMethod()]
     public void AddToStreetNumberTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToStreetNumber("1").AddToStreetNumber("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddStreetNumber("1").AddStreetNumber("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.StreetNumber);
     }
@@ -323,20 +323,20 @@ public class AddressBuilderTests
     public void AddToStreetNumberTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToStreetNumber(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddStreetNumber(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.StreetNumber);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToStreetNumberTest3() => AddressBuilder.Create().AddToStreetNumber((string[]?)null!);
+    public void AddToStreetNumberTest3() => AddressBuilder.Create().AddStreetNumber((string[]?)null!);
 
     [TestMethod()]
     public void AddToStreetNameTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToStreetName("1").AddToStreetName("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddStreetName("1").AddStreetName("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.StreetName);
     }
@@ -345,20 +345,20 @@ public class AddressBuilderTests
     public void AddToStreetNameTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToStreetName(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddStreetName(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.StreetName);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToStreetNameTest3() => AddressBuilder.Create().AddToStreetName((string[]?)null!);
+    public void AddToStreetNameTest3() => AddressBuilder.Create().AddStreetName((string[]?)null!);
 
     [TestMethod()]
     public void AddToBuildingTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToBuilding("1").AddToBuilding("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddBuilding("1").AddBuilding("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.Building);
     }
@@ -367,20 +367,20 @@ public class AddressBuilderTests
     public void AddToBuildingTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToBuilding(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddBuilding(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.Building);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToBuildingTest3() => AddressBuilder.Create().AddToBuilding((string[]?)null!);
+    public void AddToBuildingTest3() => AddressBuilder.Create().AddBuilding((string[]?)null!);
 
     [TestMethod()]
     public void AddToBlockTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToBlock("1").AddToBlock("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddBlock("1").AddBlock("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.Block);
     }
@@ -389,20 +389,20 @@ public class AddressBuilderTests
     public void AddToBlockTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToBlock(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddBlock(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.Block);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToBlockTest3() => AddressBuilder.Create().AddToBlock((string[]?)null!);
+    public void AddToBlockTest3() => AddressBuilder.Create().AddBlock((string[]?)null!);
 
     [TestMethod()]
     public void AddToSubDistrictTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToSubDistrict("1").AddToSubDistrict("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddSubDistrict("1").AddSubDistrict("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.SubDistrict);
     }
@@ -411,20 +411,20 @@ public class AddressBuilderTests
     public void AddToSubDistrictTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToSubDistrict(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddSubDistrict(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.SubDistrict);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToSubDistrictTest3() => AddressBuilder.Create().AddToSubDistrict((string[]?)null!);
+    public void AddToSubDistrictTest3() => AddressBuilder.Create().AddSubDistrict((string[]?)null!);
 
     [TestMethod()]
     public void AddToDistrictTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToDistrict("1").AddToDistrict("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddDistrict("1").AddDistrict("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.District);
     }
@@ -433,20 +433,20 @@ public class AddressBuilderTests
     public void AddToDistrictTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToDistrict(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddDistrict(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.District);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToDistrictTest3() => AddressBuilder.Create().AddToDistrict((string[]?)null!);
+    public void AddToDistrictTest3() => AddressBuilder.Create().AddDistrict((string[]?)null!);
 
     [TestMethod()]
     public void AddToLandmarkTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToLandmark("1").AddToLandmark("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddLandmark("1").AddLandmark("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.Landmark);
     }
@@ -455,20 +455,20 @@ public class AddressBuilderTests
     public void AddToLandmarkTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToLandmark(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddLandmark(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.Landmark);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToLandmarkTest3() => AddressBuilder.Create().AddToLandmark((string[]?)null!);
+    public void AddToLandmarkTest3() => AddressBuilder.Create().AddLandmark((string[]?)null!);
 
     [TestMethod()]
     public void AddToDirectionTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToDirection("1").AddToDirection("2"));
+        var prop = new AddressProperty(AddressBuilder.Create().AddDirection("1").AddDirection("2"));
 
         CollectionAssert.AreEqual(expected, prop.Value.Direction);
     }
@@ -477,13 +477,13 @@ public class AddressBuilderTests
     public void AddToDirectionTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddToDirection(expected));
+        var prop = new AddressProperty(AddressBuilder.Create().AddDirection(expected));
 
         CollectionAssert.AreEqual(expected, prop.Value.Direction);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToDirectionTest3() => AddressBuilder.Create().AddToDirection((string[]?)null!);
+    public void AddToDirectionTest3() => AddressBuilder.Create().AddDirection((string[]?)null!);
 
 }

@@ -35,12 +35,12 @@ internal static class Utility
         var adr1 = new AddressProperty(
             AddressBuilder
             .Create()
-            .AddToStreet("Elmstraße 13")
-            .AddToStreetName("Elmstraße")
-            .AddToStreetNumber("13")
-            .AddToLocality("Entenhausen")
-            .AddToPostalCode("01234")
-            .AddToCountry("Germany"));
+            .AddStreet("Elmstraße 13")
+            .AddStreetName("Elmstraße")
+            .AddStreetNumber("13")
+            .AddLocality("Entenhausen")
+            .AddPostalCode("01234")
+            .AddCountry("Germany"));
         adr1.Parameters.Label = "  ";
         adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
         adr1.Parameters.GeoPosition = new GeoCoordinate(12.98, 7.86);
@@ -58,12 +58,12 @@ internal static class Utility
         var adr2 = new AddressProperty(
             AddressBuilder
             .Create()
-            .AddToStreet("Elm Street 13")
-            .AddToStreetName("Elm Street")
-            .AddToStreetNumber("13")
-            .AddToLocality("New York")
-            .AddToPostalCode("01234")
-            .AddToCountry("USA"));
+            .AddStreet("Elm Street 13")
+            .AddStreetName("Elm Street")
+            .AddStreetNumber("13")
+            .AddLocality("New York")
+            .AddPostalCode("01234")
+            .AddCountry("USA"));
 
         var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
         //logo1.Parameters.MediaType = "image/jpeg";

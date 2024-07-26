@@ -160,12 +160,12 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add(AddressBuilder.Create().AddToStreet("Elm Street").AddToLocality("Springwood"),
+            .Addresses.Add(AddressBuilder.Create().AddStreet("Elm Street").AddLocality("Springwood"),
                             parameters: p => p.CountryCode = "US",
                             group: vc => "gr1",
                             label: (p) => "label"
                             )
-            .Addresses.Add(AddressBuilder.Create().AddToStreet("Ulmenstaße").AddToLocality("Frühlingswald"),
+            .Addresses.Add(AddressBuilder.Create().AddStreet("Ulmenstaße").AddLocality("Frühlingswald"),
                            parameters: p => p.CountryCode = "DE")
             .VCard;
 
