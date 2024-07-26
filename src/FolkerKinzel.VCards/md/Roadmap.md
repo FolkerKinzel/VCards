@@ -31,6 +31,10 @@
 - [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.AddressBuilder.Add` method
 
 &nbsp;
+- [ ] **Change the `StringCollection.Value` property to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`**
+and let it store as string[]
+
+&nbsp;
 - [ ] `VCard` properties: Don't allow `null` values in collections anymore.
 - [ ] `VCard.Reference` properties: Don't allow `null` values in collections anymore.
 - [ ] `VCard.Dereference` properties: Don't allow `null` values in collections anymore.
