@@ -274,9 +274,6 @@ public readonly struct AddressBuilder
     /// initialized using the content of a specified <see cref="FolkerKinzel.VCards.AddressBuilder"/>, to the <see cref="VCard.Addresses"/> property.
     /// </summary>
     /// <param name="builder">The <see cref="FolkerKinzel.VCards.AddressBuilder"/> whose content is used.</param>
-    /// <param name="displayName">An <see cref="Action{T1, T2}"/> delegate that's invoked with the 
-    /// <see cref="TextBuilder"/> the <see cref="VCardBuilder.DisplayNames"/> property returns and the newly
-    /// created <see cref="AddressProperty"/> instance as arguments.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />

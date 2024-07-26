@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -20,7 +18,7 @@ public sealed class Name
     private const int MAX_COUNT = 7;
     private readonly Dictionary<NameProp, ReadOnlyCollection<string>> _dic = [];
     private readonly ReadOnlyCollection<string> _familyNamesView;
-    private readonly ReadOnlyCollection<string> _prefixesView;
+    private readonly ReadOnlyCollection<string> _suffixesView;
 
     private ReadOnlyCollection<string> Get(NameProp prop)
         => _dic.TryGetValue(prop, out ReadOnlyCollection<string>? coll)
@@ -68,13 +66,12 @@ public sealed class Name
         Add(NameProp.Suffixes, suffixes);
 
         _familyNamesView = familyNames;
-        _prefixesView = prefixes;
+        _suffixesView = suffixes;
     }
 
     #endregion
 
-    internal Name() => _familyNamesView = _prefixesView = ReadOnlyStringCollection.Empty;
-
+    internal Name() => _familyNamesView = _suffixesView = ReadOnlyStringCollection.Empty;
 
     [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
         Justification = "Performance: Collection initializer initializes a new List.")]
@@ -87,65 +84,10 @@ public sealed class Name
                 _dic[kvp.Key] = new ReadOnlyCollection<string>(kvp.Value.ToArray());
             }
         }
+
+        _familyNamesView = GetFamilyNamesView();
+        _suffixesView = GetSuffixesView();
     }
-
-    private ReadOnlyCollection<string> GetFamilyNamesView()
-    {
-        if(!_dic.TryGetValue(NameProp.FamilyNames, out ReadOnlyCollection<string>? familyNames))
-        {
-            return ReadOnlyStringCollection.Empty;
-        }
-
-        if (!_dic.TryGetValue(NameProp.Surname2, out ReadOnlyCollection<string>? surname2))
-        {
-            return familyNames;
-        }
-
-        IEnumerable<string> diff = familyNames.Where(x => !surname2.Contains(x));
-
-        return diff.Any() ? new ReadOnlyCollection<string>(diff.ToArray())
-                          : ReadOnlyStringCollection.Empty;
-    }
-
-    private ReadOnlyCollection<string> GetPrefixesView()
-    {
-        if (!_dic.TryGetValue(NameProp.Prefixes, out ReadOnlyCollection<string>? prefixes))
-        {
-            return ReadOnlyStringCollection.Empty;
-        }
-
-        if (!_dic.TryGetValue(NameProp.Generation, out ReadOnlyCollection<string>? generation))
-        {
-            return prefixes;
-        }
-
-        List<string>? list = null;
-
-        for (int i = 0; i < prefixes.Count; i++)
-        {
-            string prefix = prefixes[i];
-
-            if (!generation.Contains(prefix))
-            {
-                list ??= new List<string>();
-                list.Add(prefix);
-            }
-        }
-
-        if(list is null)
-        {
-            return ReadOnlyStringCollection.Empty;
-        }
-
-        if(list.SequenceEqual(prefixes))
-        {
-            return prefixes;
-        }
-
-        return list.AsReadOnly();
-    }
-
-
 
     internal Name(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
@@ -178,6 +120,11 @@ public sealed class Name
             _dic[(NameProp)index] = coll;
         }//foreach
 
+        _familyNamesView = GetFamilyNamesView();
+        _suffixesView = GetSuffixesView();
+
+        /////////////////////////////////////////
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static string[] ToArray(in ReadOnlyMemory<char> mem, VCdVersion version)
             => PropertyValueSplitter.Split(mem,
@@ -192,10 +139,7 @@ public sealed class Name
     /// Returns a collection that omits any value if an equal value is set to
     /// <see cref="Surname2"/> accordingly.
     /// </remarks>
-    public ReadOnlyCollection<string> FamilyNames
-        => _dic.ContainsKey(NameProp.Surname2)
-        ? Get(NameProp.FamilyNames).Except(Surname2).ToList().AsReadOnly()
-        : Get(NameProp.FamilyNames);
+    public ReadOnlyCollection<string> FamilyNames => _familyNamesView;
 
     /// <summary>Given Name(s) (first name(s)). (2,3,4)</summary>
     public ReadOnlyCollection<string> GivenNames => Get(NameProp.GivenNames);
@@ -212,10 +156,7 @@ public sealed class Name
     /// Returns a collection that omits any value if an equal value is set to
     /// <see cref="Generation"/> accordingly.
     /// </remarks>
-    public ReadOnlyCollection<string> Suffixes
-     => _dic.ContainsKey(NameProp.Generation)
-        ? Get(NameProp.Suffixes).Except(Generation).ToList().AsReadOnly()
-        : Get(NameProp.Suffixes);
+    public ReadOnlyCollection<string> Suffixes => _suffixesView;
 
     /// <summary>A secondary surname (used in some cultures), also known as "maternal surname". (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Surname2 => Get(NameProp.Surname2);
@@ -229,8 +170,6 @@ public sealed class Name
 
     /// <inheritdoc/>
     public override string ToString() => CompoundObjectConverter.ToString(_dic);
-
-    
 
     internal void AppendVcfString(VcfSerializer serializer)
     {
@@ -274,6 +213,43 @@ public sealed class Name
         }
 
         return false;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private ReadOnlyCollection<string> GetFamilyNamesView() => GetDiffView(NameProp.FamilyNames, NameProp.Surname2);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private ReadOnlyCollection<string> GetSuffixesView() => GetDiffView(NameProp.Suffixes, NameProp.Generation);
+
+    private ReadOnlyCollection<string> GetDiffView(NameProp oldIdx, NameProp newIdx)
+    {
+        if (!_dic.TryGetValue(oldIdx, out ReadOnlyCollection<string>? oldProps))
+        {
+            return ReadOnlyStringCollection.Empty;
+        }
+
+        if (!_dic.TryGetValue(newIdx, out ReadOnlyCollection<string>? newProps))
+        {
+            return oldProps;
+        }
+
+        List<string>? list = null;
+
+        for (int i = 0; i < oldProps.Count; i++)
+        {
+            string old = oldProps[i];
+
+            if (!newProps.Contains(old))
+            {
+                list ??= [];
+                list.Add(old);
+            }
+        }
+
+        return list is null ? ReadOnlyStringCollection.Empty
+                            : list.SequenceEqual(oldProps)
+                                 ? oldProps
+                                 : list.AsReadOnly();
     }
 }
 

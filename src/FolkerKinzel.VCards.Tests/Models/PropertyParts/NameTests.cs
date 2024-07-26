@@ -100,4 +100,42 @@ public class NameTests
         Assert.AreEqual("surname2", name.Surname2.First());
         Assert.AreEqual("generation", name.Generation.First());
     }
+
+    [TestMethod]
+    public void CtorTest1()
+    {
+        var prop = new NameProperty(
+            NameBuilder
+            .Create()
+            .AddFamilyName(["1", "2"])
+            .AddSurname2("2"));
+
+        CollectionAssert.AreEqual(new string[] { "1" }, prop.Value.FamilyNames);
+    }
+
+    [TestMethod]
+    public void CtorTest2()
+    {
+        var prop = new NameProperty(
+            NameBuilder
+            .Create()
+            .AddFamilyName(["1", "2"])
+            .AddSurname2("3"));
+
+        CollectionAssert.AreEqual(new string[] { "1", "2" }, prop.Value.FamilyNames);
+    }
+
+    [TestMethod]
+    public void CtorTest3()
+    {
+        string[] arr = ["1", "2"];
+
+        var prop = new NameProperty(
+            NameBuilder
+            .Create()
+            .AddFamilyName(arr)
+            .AddSurname2(arr));
+
+        Assert.AreEqual(0, prop.Value.FamilyNames.Count);
+    }
 }

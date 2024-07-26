@@ -241,12 +241,7 @@ public sealed class Address
             CompoundObjectConverter.EncodeQuotedPrintable(builder, startIdx);
         }
     }
-
-    private ReadOnlyCollection<string> GetStreetView()
-        => _dic.Any(x => x.Key > AdrProp.Country)
-                ? ReadOnlyStringCollection.Empty
-                : Get(AdrProp.Street);
-
+    
     internal bool NeedsToBeQpEncoded()
     {
         foreach (KeyValuePair<AdrProp, ReadOnlyCollection<string>> kvp in _dic)
@@ -260,4 +255,10 @@ public sealed class Address
 
         return false;
     }
+
+    private ReadOnlyCollection<string> GetStreetView()
+        => _dic.Any(x => x.Key > AdrProp.Country)
+                ? ReadOnlyStringCollection.Empty
+                : Get(AdrProp.Street);
+
 }

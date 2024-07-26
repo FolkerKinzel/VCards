@@ -33,7 +33,7 @@ public class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddPostOfficeBox(string? value) => Add(AdrProp.PostOfficeBox, value);
 
-    /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="strings"/> to 
+    /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
     /// <see cref="Address.PostOfficeBox"/>. (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
