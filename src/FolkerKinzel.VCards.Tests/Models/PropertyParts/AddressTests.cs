@@ -55,27 +55,4 @@ public class AddressTests
         StringAssert.Contains(s, "7a");
     }
 
-    //[DataTestMethod]
-    //[DataRow("ä;;;;;;")]
-    //[DataRow(";ä;;;;;")]
-    //[DataRow(";;ä;;;;")]
-    //[DataRow(";;;ä;;;")]
-    //[DataRow(";;;;ä;;")]
-    //[DataRow(";;;;;ä;")]
-    //[DataRow(";;;;;;ä")]
-    //public void NeedsToBeQPEncodedTest1(string input)
-    //    => Assert.IsTrue(new Address(input.AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
-
-    //[DataTestMethod]
-    //[DataRow(";;;;;;")]
-    //[DataRow("a;;;;;;")]
-    //[DataRow(";a;;;;;")]
-    //[DataRow(";;a;;;;")]
-    //[DataRow(";;;a;;;")]
-    //[DataRow(";;;;a;;")]
-    //[DataRow(";;;;;a;")]
-    //[DataRow(";;;;;;a")]
-    //public void NeedsToBeQPEncodedTest2(string input)
-    //    => Assert.IsFalse(new Address(input.AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
-
 }

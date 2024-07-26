@@ -31,31 +31,6 @@ public class NameTests
         Assert.AreEqual(input, serializer.Builder.ToString());
     }
 
-    //[DataTestMethod]
-    //[DataRow("ä;;;;")]
-    //[DataRow(";ä;;;")]
-    //[DataRow(";;ä;;")]
-    //[DataRow(";;;ä;")]
-    //[DataRow(";;;;ä")]
-    //[DataRow("ä;ä;ä;ä;ä")]
-    //public void NeedsToBeQPEncodedTest1(string input)
-    //    => Assert.IsTrue(new Name(input.AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
-
-    //[DataTestMethod]
-    //[DataRow("a,ä;;;;")]
-    //[DataRow(";a,ä;;;")]
-    //[DataRow(";;a,ä;;")]
-    //[DataRow(";;;a,ä;")]
-    //[DataRow(";;;;a,ä")]
-    //public void NeedsToBeQPEncodedTest1b(string input)
-    //    => Assert.IsTrue(new Name(input.AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
-
-    //[DataTestMethod]
-    //[DataRow("a,a;a;a;a;a")]
-    //[DataRow(";;;;")]
-    //public void NeedsToBeQPEncodedTest2(string input)
-    //    => Assert.IsFalse(new Name(input.AsMemory(), VCdVersion.V2_1).NeedsToBeQpEncoded());
-
     [TestMethod]
     public void ToStringTest1()
     {

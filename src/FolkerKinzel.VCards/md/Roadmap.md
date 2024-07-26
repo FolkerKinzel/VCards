@@ -47,10 +47,11 @@ and let it store as string[]
 - [ ] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `NameViewsBuilder`
 - [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
+- [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
 
 ### 7.3.0
-- [ ] Refactor the `VCard` copy ctor to clone only `IEnumerable<VCardProperty?>` and `VCardProperty`
+- [x] Refactor the `VCard` copy ctor to clone only `IEnumerable<VCardProperty?>` and `VCardProperty`
 - [x] Remove the `ObsoleteAttribute` from the properties `Address.PostOfficeBox` and `Address.ExtendedAddress`
 
 &nbsp;

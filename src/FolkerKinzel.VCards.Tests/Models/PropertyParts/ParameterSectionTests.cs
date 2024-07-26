@@ -168,4 +168,19 @@ public class ParameterSectionTests
         CollectionAssert.AllItemsAreNotNull(messengers);
         Assert.IsTrue(messengers.All(p => p!.Parameters.PhoneType.IsSet(Tel.Msg)));
     }
+
+    [TestMethod]
+    public void EmptyCalscaleTest()
+    {
+        const string vcf = """
+            BEGIN:VCARD
+            VERSION:4.0
+            BDAY;CALSCALE="":19840504
+            END:VCARD
+            """;
+
+        var vc = Vcf.Parse(vcf)[0];
+        Assert.IsNotNull(vc.BirthDayViews);
+        Assert.AreEqual(ParameterSection.DefaultCalendar, vc.BirthDayViews.First()!.Parameters.Calendar);
+    }
 }
