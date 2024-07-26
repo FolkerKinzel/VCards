@@ -155,6 +155,38 @@ public class VCardBuilderTests
         Assert.IsNotNull(prop2.Parameters.Label);
     }
 
+    [TestMethod()]
+    public void AddAddressTest3()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Addresses.Add(AddressBuilder.Create().AddToStreet("Elm Street").AddToLocality("Springwood"),
+                            parameters: p => p.CountryCode = "US",
+                            group: vc => "gr1",
+                            label: (p) => "label"
+                            )
+            .Addresses.Add(AddressBuilder.Create().AddToStreet("Ulmenstaße").AddToLocality("Frühlingswald"),
+                           parameters: p => p.CountryCode = "DE")
+            .VCard;
+
+        Assert.IsNotNull(vc.Addresses);
+        vc.Addresses = vc.Addresses.Append(null);
+
+        AddressProperty prop1 = vc.Addresses!.First()!;
+        AddressProperty prop2 = vc.Addresses!.ElementAt(1)!;
+
+        Assert.IsNotNull(vc.Addresses?.FirstOrDefault());
+
+        Assert.AreEqual("Elm Street", prop1.Value.Street[0]);
+        Assert.AreEqual("US", prop1.Parameters.CountryCode);
+        Assert.AreEqual("gr1", prop1.Group);
+        Assert.AreEqual("label", prop1.Parameters.Label);
+
+
+        Assert.AreEqual("DE", prop2.Parameters.CountryCode);
+        Assert.IsNull(prop2.Parameters.Label);
+    }
+
     [TestMethod]
     public void EditAddressesTest1()
     {
