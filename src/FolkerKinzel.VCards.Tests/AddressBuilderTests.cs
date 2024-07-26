@@ -91,7 +91,7 @@ public class AddressBuilderTests
     public void ToStringTest1() => Assert.IsNotNull(new AddressBuilder().ToString());
 
     [TestMethod()]
-    public void AddToPostOfficeBoxTest1()
+    public void AddPostOfficeBoxTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddPostOfficeBox("1").AddPostOfficeBox("2"));
@@ -100,7 +100,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToPostOfficeBoxTest2()
+    public void AddPostOfficeBoxTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddPostOfficeBox(expected));
@@ -110,10 +110,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToPostOfficeBoxTest3() => AddressBuilder.Create().AddPostOfficeBox((string[]?)null!);
+    public void AddPostOfficeBoxTest3() => AddressBuilder.Create().AddPostOfficeBox((string[]?)null!);
 
     [TestMethod()]
-    public void AddToExtendedAddressTest1()
+    public void AddExtendedAddressTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddExtendedAddress("1").AddExtendedAddress("2"));
@@ -122,7 +122,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToExtendedAddressTest2()
+    public void AddExtendedAddressTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddExtendedAddress(expected));
@@ -132,10 +132,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToExtendedAddressTest3() => AddressBuilder.Create().AddExtendedAddress((string[]?)null!);
+    public void AddExtendedAddressTest3() => AddressBuilder.Create().AddExtendedAddress((string[]?)null!);
 
     [TestMethod()]
-    public void AddToStreetTest1()
+    public void AddStreetTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddStreet("1").AddStreet("2"));
@@ -144,7 +144,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToStreetTest2()
+    public void AddStreetTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddStreet(expected));
@@ -154,10 +154,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToStreetTest3() => AddressBuilder.Create().AddStreet((string[]?)null!);
+    public void AddStreetTest3() => AddressBuilder.Create().AddStreet((string[]?)null!);
 
     [TestMethod()]
-    public void AddToLocalityTest1()
+    public void AddLocalityTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddLocality("1").AddLocality("2"));
@@ -166,7 +166,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToLocalityTest2()
+    public void AddLocalityTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddLocality(expected));
@@ -176,10 +176,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToLocalityTest3() => AddressBuilder.Create().AddLocality((string[]?)null!);
+    public void AddLocalityTest3() => AddressBuilder.Create().AddLocality((string[]?)null!);
 
     [TestMethod()]
-    public void AddToRegionTest1()
+    public void AddRegionTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddRegion("1").AddRegion("2"));
@@ -188,7 +188,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToRegionTest2()
+    public void AddRegionTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddRegion(expected));
@@ -198,10 +198,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToRegionTest3() => AddressBuilder.Create().AddRegion((string[]?)null!);
+    public void AddRegionTest3() => AddressBuilder.Create().AddRegion((string[]?)null!);
 
     [TestMethod()]
-    public void AddToPostalCodeTest1()
+    public void AddPostalCodeTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddPostalCode("1").AddPostalCode("2"));
@@ -210,7 +210,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToPostalCodeTest2()
+    public void AddPostalCodeTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddPostalCode(expected));
@@ -220,10 +220,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToPostalCodeTest3() => AddressBuilder.Create().AddPostalCode((string[]?)null!);
+    public void AddPostalCodeTest3() => AddressBuilder.Create().AddPostalCode((string[]?)null!);
 
     [TestMethod()]
-    public void AddToCountryTest1()
+    public void AddCountryTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddCountry("1").AddCountry("2"));
@@ -232,7 +232,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToCountryTest2()
+    public void AddCountryTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddCountry(expected));
@@ -242,10 +242,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToCountryTest3() => AddressBuilder.Create().AddCountry((string[]?)null!);
+    public void AddCountryTest3() => AddressBuilder.Create().AddCountry((string[]?)null!);
 
     [TestMethod()]
-    public void AddToRoomTest1()
+    public void AddRoomTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddRoom("1").AddRoom("2"));
@@ -254,7 +254,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToRoomTest2()
+    public void AddRoomTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddRoom(expected));
@@ -264,10 +264,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToRoomTest3() => AddressBuilder.Create().AddRoom((string[]?)null!);
+    public void AddRoomTest3() => AddressBuilder.Create().AddRoom((string[]?)null!);
 
     [TestMethod()]
-    public void AddToApartmentTest1()
+    public void AddApartmentTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddApartment("1").AddApartment("2"));
@@ -276,7 +276,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToApartmentTest2()
+    public void AddApartmentTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddApartment(expected));
@@ -286,10 +286,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToApartmentTest3() => AddressBuilder.Create().AddApartment((string[]?)null!);
+    public void AddApartmentTest3() => AddressBuilder.Create().AddApartment((string[]?)null!);
 
     [TestMethod()]
-    public void AddToFloorTest1()
+    public void AddFloorTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddFloor("1").AddFloor("2"));
@@ -298,7 +298,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToFloorTest2()
+    public void AddFloorTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddFloor(expected));
@@ -308,10 +308,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToFloorTest3() => AddressBuilder.Create().AddFloor((string[]?)null!);
+    public void AddFloorTest3() => AddressBuilder.Create().AddFloor((string[]?)null!);
 
     [TestMethod()]
-    public void AddToStreetNumberTest1()
+    public void AddStreetNumberTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddStreetNumber("1").AddStreetNumber("2"));
@@ -320,7 +320,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToStreetNumberTest2()
+    public void AddStreetNumberTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddStreetNumber(expected));
@@ -330,10 +330,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToStreetNumberTest3() => AddressBuilder.Create().AddStreetNumber((string[]?)null!);
+    public void AddStreetNumberTest3() => AddressBuilder.Create().AddStreetNumber((string[]?)null!);
 
     [TestMethod()]
-    public void AddToStreetNameTest1()
+    public void AddStreetNameTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddStreetName("1").AddStreetName("2"));
@@ -342,7 +342,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToStreetNameTest2()
+    public void AddStreetNameTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddStreetName(expected));
@@ -352,10 +352,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToStreetNameTest3() => AddressBuilder.Create().AddStreetName((string[]?)null!);
+    public void AddStreetNameTest3() => AddressBuilder.Create().AddStreetName((string[]?)null!);
 
     [TestMethod()]
-    public void AddToBuildingTest1()
+    public void AddBuildingTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddBuilding("1").AddBuilding("2"));
@@ -364,7 +364,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToBuildingTest2()
+    public void AddBuildingTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddBuilding(expected));
@@ -374,10 +374,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToBuildingTest3() => AddressBuilder.Create().AddBuilding((string[]?)null!);
+    public void AddBuildingTest3() => AddressBuilder.Create().AddBuilding((string[]?)null!);
 
     [TestMethod()]
-    public void AddToBlockTest1()
+    public void AddBlockTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddBlock("1").AddBlock("2"));
@@ -386,7 +386,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToBlockTest2()
+    public void AddBlockTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddBlock(expected));
@@ -396,10 +396,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToBlockTest3() => AddressBuilder.Create().AddBlock((string[]?)null!);
+    public void AddBlockTest3() => AddressBuilder.Create().AddBlock((string[]?)null!);
 
     [TestMethod()]
-    public void AddToSubDistrictTest1()
+    public void AddSubDistrictTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddSubDistrict("1").AddSubDistrict("2"));
@@ -408,7 +408,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToSubDistrictTest2()
+    public void AddSubDistrictTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddSubDistrict(expected));
@@ -418,10 +418,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToSubDistrictTest3() => AddressBuilder.Create().AddSubDistrict((string[]?)null!);
+    public void AddSubDistrictTest3() => AddressBuilder.Create().AddSubDistrict((string[]?)null!);
 
     [TestMethod()]
-    public void AddToDistrictTest1()
+    public void AddDistrictTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddDistrict("1").AddDistrict("2"));
@@ -430,7 +430,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToDistrictTest2()
+    public void AddDistrictTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddDistrict(expected));
@@ -440,10 +440,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToDistrictTest3() => AddressBuilder.Create().AddDistrict((string[]?)null!);
+    public void AddDistrictTest3() => AddressBuilder.Create().AddDistrict((string[]?)null!);
 
     [TestMethod()]
-    public void AddToLandmarkTest1()
+    public void AddLandmarkTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddLandmark("1").AddLandmark("2"));
@@ -452,7 +452,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToLandmarkTest2()
+    public void AddLandmarkTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddLandmark(expected));
@@ -462,10 +462,10 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToLandmarkTest3() => AddressBuilder.Create().AddLandmark((string[]?)null!);
+    public void AddLandmarkTest3() => AddressBuilder.Create().AddLandmark((string[]?)null!);
 
     [TestMethod()]
-    public void AddToDirectionTest1()
+    public void AddDirectionTest1()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddDirection("1").AddDirection("2"));
@@ -474,7 +474,7 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    public void AddToDirectionTest2()
+    public void AddDirectionTest2()
     {
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddDirection(expected));
@@ -484,6 +484,6 @@ public class AddressBuilderTests
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddToDirectionTest3() => AddressBuilder.Create().AddDirection((string[]?)null!);
+    public void AddDirectionTest3() => AddressBuilder.Create().AddDirection((string[]?)null!);
 
 }
