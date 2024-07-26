@@ -1001,12 +1001,12 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add(NameBuilder.Create().AddToFamilyNames("Miller").AddToGivenNames("John"),
+            .NameViews.Add(NameBuilder.Create().AddFamilyName("Miller").AddGivenName("John"),
                             parameters: p => p.Language = "en",
                             group: vc => "gr1",
                             displayName: (b, p) => b.Add("John Miller")
                             )
-            .NameViews.Add(NameBuilder.Create().AddToFamilyNames("Müller").AddToGivenNames("Johann"),
+            .NameViews.Add(NameBuilder.Create().AddFamilyName("Müller").AddGivenName("Johann"),
                          parameters: p => p.Language = "de")
             .VCard;
 

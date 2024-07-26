@@ -56,13 +56,13 @@ public class NameTests
             .Create()
             .NameViews.Add(NameBuilder
                 .Create()
-                .AddToFamilyNames("1")
-                .AddToGivenNames("2")
-                .AddToAdditionalNames("3")
-                .AddToPrefixes("4")
-                .AddToSuffixes("5")
-                .AddToSurname2("6")
-                .AddToGeneration("7"))
+                .AddFamilyName("1")
+                .AddGivenName("2")
+                .AddAdditionalName("3")
+                .AddPrefix("4")
+                .AddSuffix("5")
+                .AddSurname2("6")
+                .AddGeneration("7"))
             .VCard;
 
         string vcf2 = vc.ToVcfString(VCdVersion.V2_1);
@@ -86,8 +86,8 @@ public class NameTests
             .Create()
             .NameViews.Add(NameBuilder
                 .Create()
-                .AddToSurname2("surname2")
-                .AddToGeneration("generation"))
+                .AddSurname2("surname2")
+                .AddGeneration("generation"))
             .VCard;
 
         string vcfRfc9554 = vc.ToVcfString(VCdVersion.V4_0);
