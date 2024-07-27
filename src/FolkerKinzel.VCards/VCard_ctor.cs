@@ -36,28 +36,26 @@ public sealed partial class VCard
     {
         Version = vCard.Version;
 
-        Func<ICloneable?, object?> cloner = Cloned;
-
-        foreach(KeyValuePair<Prop, object> kvp in vCard._propDic)
+        foreach (KeyValuePair<Prop, object> kvp in vCard._propDic)
         {
 #pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
             Set(kvp.Key, kvp.Value switch
             {
                 VCardProperty prop => prop.Clone(),
-                IEnumerable<XmlProperty?> xmlPropEnumerable => xmlPropEnumerable.Select(cloner).Cast<XmlProperty?>().ToArray(),
-                IEnumerable<TextProperty?> txtPropEnumerable => txtPropEnumerable.Select(cloner).Cast<TextProperty?>().ToArray(),
-                IEnumerable<DateAndOrTimeProperty?> dtTimePropEnumerable => dtTimePropEnumerable.Select(cloner).Cast<DateAndOrTimeProperty?>().ToArray(),
-                IEnumerable<AddressProperty?> adrPropEnumerable => adrPropEnumerable.Select(cloner).Cast<AddressProperty?>().ToArray(),
-                IEnumerable<NameProperty?> namePropEnumerable => namePropEnumerable.Select(cloner).Cast<NameProperty?>().ToArray(),
-                IEnumerable<RelationProperty?> relPropEnumerable => relPropEnumerable.Select(cloner).Cast<RelationProperty?>().ToArray(),
-                IEnumerable<OrgProperty?> orgPropEnumerable => orgPropEnumerable.Select(cloner).Cast<OrgProperty?>().ToArray(),
-                IEnumerable<StringCollectionProperty?> strCollPropEnumerable => strCollPropEnumerable.Select(cloner).Cast<StringCollectionProperty?>().ToArray(),
-                IEnumerable<GenderProperty?> sexPropEnumerable => sexPropEnumerable.Select(cloner).Cast<GenderProperty?>().ToArray(),
-                IEnumerable<GeoProperty?> geoPropEnumerable => geoPropEnumerable.Select(cloner).Cast<GeoProperty?>().ToArray(),
-                IEnumerable<DataProperty?> dataPropEnumerable => dataPropEnumerable.Select(cloner).Cast<DataProperty?>().ToArray(),
-                IEnumerable<NonStandardProperty?> nStdPropEnumerable => nStdPropEnumerable.Select(cloner).Cast<NonStandardProperty?>().ToArray(),
-                IEnumerable<AppIDProperty?> pidMapPropEnumerable => pidMapPropEnumerable.Select(cloner).Cast<AppIDProperty?>().ToArray(),
-                IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(cloner).Cast<TimeZoneProperty?>().ToArray(),
+                IEnumerable<XmlProperty?> xmlPropEnumerable => xmlPropEnumerable.Select(Cloned).Cast<XmlProperty?>().ToArray(),
+                IEnumerable<TextProperty?> txtPropEnumerable => txtPropEnumerable.Select(Cloned).Cast<TextProperty?>().ToArray(),
+                IEnumerable<DateAndOrTimeProperty?> dtTimePropEnumerable => dtTimePropEnumerable.Select(Cloned).Cast<DateAndOrTimeProperty?>().ToArray(),
+                IEnumerable<AddressProperty?> adrPropEnumerable => adrPropEnumerable.Select(Cloned).Cast<AddressProperty?>().ToArray(),
+                IEnumerable<NameProperty?> namePropEnumerable => namePropEnumerable.Select(Cloned).Cast<NameProperty?>().ToArray(),
+                IEnumerable<RelationProperty?> relPropEnumerable => relPropEnumerable.Select(Cloned).Cast<RelationProperty?>().ToArray(),
+                IEnumerable<OrgProperty?> orgPropEnumerable => orgPropEnumerable.Select(Cloned).Cast<OrgProperty?>().ToArray(),
+                IEnumerable<StringCollectionProperty?> strCollPropEnumerable => strCollPropEnumerable.Select(Cloned).Cast<StringCollectionProperty?>().ToArray(),
+                IEnumerable<GenderProperty?> sexPropEnumerable => sexPropEnumerable.Select(Cloned).Cast<GenderProperty?>().ToArray(),
+                IEnumerable<GeoProperty?> geoPropEnumerable => geoPropEnumerable.Select(Cloned).Cast<GeoProperty?>().ToArray(),
+                IEnumerable<DataProperty?> dataPropEnumerable => dataPropEnumerable.Select(Cloned).Cast<DataProperty?>().ToArray(),
+                IEnumerable<NonStandardProperty?> nStdPropEnumerable => nStdPropEnumerable.Select(Cloned).Cast<NonStandardProperty?>().ToArray(),
+                IEnumerable<AppIDProperty?> pidMapPropEnumerable => pidMapPropEnumerable.Select(Cloned).Cast<AppIDProperty?>().ToArray(),
+                IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(Cloned).Cast<TimeZoneProperty?>().ToArray(),
 #if DEBUG
                 _ => throw new NotImplementedException()
 #endif
