@@ -177,9 +177,10 @@ public sealed class Address
     /// <summary> The floor or level the address is located on. (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Floor => Get(AdrProp.Floor);
 
-    /// <summary> The street number, e.g., "123". This value is not restricted to numeric values and can include
+    /// <summary> The street number, e.g., "123". (4 - RFC 9554)</summary>
+    /// <value>This value is not restricted to numeric values and can include
     /// any value such as number ranges ("112-10"), grid style ("39.2 RD"), alphanumerics ("N6W23001"), or 
-    /// fractionals ("123 1/2"). (4 - RFC 9554)</summary>
+    /// fractionals ("123 1/2").</value>
     public ReadOnlyCollection<string> StreetNumber => Get(AdrProp.StreetNumber);
 
     /// <summary> The street name. (4 - RFC 9554)</summary>

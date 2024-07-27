@@ -226,7 +226,10 @@ public class AddressBuilder
     public AddressBuilder AddFloor(IEnumerable<string?> collection) => AddRange(AdrProp.Floor, collection);
 
     /// <summary>Adds a <see cref="string"/> to <see cref="Address.StreetNumber"/>. (4 - RFC 9554)</summary>
-    /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
+    /// <param name="value">The <see cref="string"/> value to add or <c>null</c>. <paramref name="value"/> 
+    /// is not restricted to numeric values and can include
+    /// any value such as number ranges ("112-10"), grid style ("39.2 RD"), alphanumerics ("N6W23001"), or 
+    /// fractionals ("123 1/2").</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
@@ -241,7 +244,10 @@ public class AddressBuilder
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
     /// <see cref="Address.StreetNumber"/>. (4 - RFC 9554)</summary>
-    /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
+    /// <param name="collection">The collection containing the <see cref="string"/>s to add. Values are 
+    /// not restricted to numeric values and can include
+    /// any value such as number ranges ("112-10"), grid style ("39.2 RD"), alphanumerics ("N6W23001"), or 
+    /// fractionals ("123 1/2").</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
