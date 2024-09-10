@@ -1,4 +1,7 @@
-﻿using FolkerKinzel.VCards.Models;
+﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -8,9 +11,6 @@ public class NextCloudPhotoIssueTests
     [TestMethod]
     public void NextCloudPhotoIssueTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         string contentsVCFFile = File.ReadAllText(TestFiles.NextCloudPhotoIssueTxt);
         VCard? convertedItem = Vcf.Parse(contentsVCFFile).FirstOrDefault();
         Assert.IsNotNull(convertedItem);
@@ -18,4 +18,23 @@ public class NextCloudPhotoIssueTests
         DataProperty? photo = convertedItem!.Photos!.FirstOrDefault();
         Assert.IsFalse(photo!.IsEmpty);
     }
+
+
+    //[TestMethod]
+    //public void NextCloudPhotoIssueTest2()
+    //{
+    //    VCard card = Vcf.Load(TestFiles.NextCloudPhotoIssueTxt)[0];
+
+    //    DataProperty? photo = card.Photos.PrefOrNull();
+
+    //    if (photo?.Value is DataPropertyValue dataUrl)
+    //    {
+    //        string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), $"example{photo.GetFileTypeExtension()}");
+
+    //        dataUrl.Switch(
+    //            bytes => File.WriteAllBytes(filePath, bytes),
+    //            url => { },
+    //            text => { });
+    //    }
+    //}
 }
