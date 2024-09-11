@@ -21,9 +21,9 @@ public class NextCloudPhotoIssueTests
 
 
     //[TestMethod]
-    //public void NextCloudPhotoIssueTest2()
+    //public void NextCloudPhotoIssue2Test()
     //{
-    //    VCard card = Vcf.Load(TestFiles.NextCloudPhotoIssueTxt)[0];
+    //    VCard card = Vcf.Load(TestFiles.NextCloudPhotoIssue2Txt)[0];
 
     //    DataProperty? photo = card.Photos.PrefOrNull();
 
