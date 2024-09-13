@@ -205,7 +205,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     {
         if (DataUrl.TryParse(vcfRow.Value, out DataUrlInfo dataUrlInfo))
         {
-            return DataUrlConverter.ParseDataUrl(vcfRow, ref dataUrlInfo);
+            return DataUrlConverter.ToDataProperty(vcfRow, ref dataUrlInfo);
         }
 
         if (vcfRow.Parameters.Encoding == Enc.Base64)

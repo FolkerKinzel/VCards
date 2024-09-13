@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class DataUrlConverter
 {
-    internal static DataProperty ParseDataUrl(VcfRow vcfRow, ref DataUrlInfo dataUrlInfo)
+    internal static DataProperty ToDataProperty(VcfRow vcfRow, ref DataUrlInfo dataUrlInfo)
     {
         ReadOnlyMemory<char> mime = dataUrlInfo.MimeType;
         bool maskedBase64DataUrl = UnMaskMimeType(ref mime);
