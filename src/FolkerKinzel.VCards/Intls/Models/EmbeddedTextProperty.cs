@@ -2,6 +2,7 @@ using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
@@ -9,8 +10,8 @@ internal sealed class EmbeddedTextProperty : DataProperty
 {
     private readonly TextProperty _textProp;
 
-    internal EmbeddedTextProperty(TextProperty textProp)
-       : base(textProp.Parameters,
+    internal EmbeddedTextProperty(TextProperty textProp, ParameterSection parameters)
+       : base(parameters,
               textProp.Group) => _textProp = textProp;
 
     public new string? Value => _textProp.Value;
@@ -27,7 +28,11 @@ internal sealed class EmbeddedTextProperty : DataProperty
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override object Clone() => new EmbeddedTextProperty((TextProperty)_textProp.Clone());
+    public override object Clone()
+    {
+        var tProp = (TextProperty)_textProp.Clone();
+        return new EmbeddedTextProperty(tProp, tProp.Parameters);
+    }
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
