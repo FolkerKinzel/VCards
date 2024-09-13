@@ -148,7 +148,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                            : null;
         textProp.Parameters.DataType = Data.Text;
 
-        return new EmbeddedTextProperty(textProp, textProp.Parameters);
+        return new EmbeddedTextProperty(textProp);
     }
 
     /// <summary>
@@ -200,36 +200,12 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters",
-        Justification = "Not localizable")]
+
     internal static DataProperty Parse(VcfRow vcfRow, VCdVersion version)
     {
         if (DataUrl.TryParse(vcfRow.Value, out DataUrlInfo dataUrlInfo))
         {
-            ReadOnlyMemory<char> mime = dataUrlInfo.MimeType;
-            bool maskedBase64DataUrl = UnMaskMimeType(ref mime);
-
-            string mediaType = MimeTypeInfo.TryParse(mime, out MimeTypeInfo mimeTypeInfo)
-                               ? mimeTypeInfo.ToString()
-                               : MimeString.OctetStream;
-
-            vcfRow.Parameters.MediaType = mediaType;
-
-            if (maskedBase64DataUrl)
-            {
-                // If the "data" URL is masked and contains the text ;base64\, dataUrlInfo has to be parsed again.
-                // (Otherwise the Base64 encoded data would be treated as URL-encoded.)
-
-                int length = 13 + mediaType.Length + dataUrlInfo.Data.Length;
-
-                using ArrayPoolHelper.SharedArray<char> shared = ArrayPoolHelper.Rent<char>(length);
-                Memory<char> mem = shared.Array;
-                CopyDataUrl(mem.Span, mediaType, dataUrlInfo.Data);
-                _ = DataUrl.TryParse(mem.Slice(0, length), out dataUrlInfo);
-                return FromDataUrlInfo(vcfRow, version, in dataUrlInfo);
-            }
-
-            return FromDataUrlInfo(vcfRow, version, in dataUrlInfo);
+            return DataUrlConverter.ParseDataUrl(vcfRow, ref dataUrlInfo);
         }
 
         if (vcfRow.Parameters.Encoding == Enc.Base64)
@@ -279,57 +255,8 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                               (
                                new UriProperty(uri, vcfRow.Parameters, vcfRow.Group)
                               )
-                       : new EmbeddedTextProperty(new TextProperty(vcfRow, version), vcfRow.Parameters);
+                       : new EmbeddedTextProperty(new TextProperty(vcfRow, version));
         }
-
-        static void CopyDataUrl(Span<char> span, string mediaType, ReadOnlySpan<char> data)
-        {
-            "data:".AsSpan().CopyTo(span);
-            span = span.Slice(5);
-            mediaType.AsSpan().CopyTo(span);
-            span = span.Slice(mediaType.Length);
-            ";base64,".AsSpan().CopyTo(span);
-            span = span.Slice(8);
-            data.CopyTo(span);
-        }
-
-        static DataProperty FromDataUrlInfo(VcfRow vcfRow, VCdVersion version, in DataUrlInfo dataUrlInfo)
-        {
-            return dataUrlInfo.TryGetEmbeddedData(out OneOf<string, byte[]> data)
-                    ? data.Match<DataProperty>
-                       (
-                        s => new EmbeddedTextProperty(new TextProperty(s, vcfRow.Group), vcfRow.Parameters),
-                        b => new EmbeddedBytesProperty(b, vcfRow.Group, vcfRow.Parameters)
-                        )
-                    : FromText(vcfRow.Value.ToString(), dataUrlInfo.MimeType.ToString(), vcfRow.Group);
-        }
-    }
-
-    private static bool UnMaskMimeType(ref ReadOnlyMemory<char> mime)
-    {
-        bool maskedBase64DataUrl = false;
-        int trimEndLength = 0;
-        ReadOnlySpan<char> span = mime.Span;
-
-        if (span.EndsWith(@";base64\")) // masked comma
-        {
-            maskedBase64DataUrl = true;
-
-            trimEndLength += 8;
-            span = span.Slice(0, span.Length - 8);
-
-            if (span.EndsWith('\\')) // masked semicolon
-            {
-                trimEndLength++;
-                span = span.Slice(0, span.Length - 1);
-            }
-
-            // The MIME type may have parameters, separated by masked semicolons:
-            mime = span.Contains('\\') ? span.UnMaskValue(VCdVersion.V4_0).AsMemory()
-                                       : mime.Slice(0, mime.Length - trimEndLength);
-        }
-
-        return maskedBase64DataUrl;
     }
 
     private void InitializeValue()

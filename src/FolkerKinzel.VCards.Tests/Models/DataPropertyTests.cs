@@ -254,6 +254,28 @@ public class DataPropertyTests
         Assert.AreEqual("image/png; parameter=value", photo.Parameters.MediaType);
     }
 
+    [TestMethod]
+    public void ParseTest8()
+    {
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        KEY:data:text/plain;base64\,
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+        
+        Assert.IsNotNull(vcard.Keys);
+
+        DataProperty key = vcard.Keys!.First()!;
+        Assert.IsTrue(key.IsEmpty);
+        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.AreEqual("text/plain", key.Parameters.MediaType);
+    }
+
 
     [TestMethod]
     public void IsEmptyTest1()

@@ -10,8 +10,8 @@ internal sealed class EmbeddedTextProperty : DataProperty
 {
     private readonly TextProperty _textProp;
 
-    internal EmbeddedTextProperty(TextProperty textProp, ParameterSection parameters)
-       : base(parameters,
+    internal EmbeddedTextProperty(TextProperty textProp)
+       : base(textProp.Parameters,
               textProp.Group) => _textProp = textProp;
 
     public new string? Value => _textProp.Value;
@@ -28,11 +28,7 @@ internal sealed class EmbeddedTextProperty : DataProperty
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override object Clone()
-    {
-        var tProp = (TextProperty)_textProp.Clone();
-        return new EmbeddedTextProperty(tProp, tProp.Parameters);
-    }
+    public override object Clone() => new EmbeddedTextProperty((TextProperty)_textProp.Clone());
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
