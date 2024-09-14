@@ -215,7 +215,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                         Base64Helper.GetBytesOrNull(vcfRow.Value.Span),
                         vcfRow.Group,
                         vcfRow.Parameters
-                        );
+                       );
         }
 
         if (vcfRow.Parameters.DataType is Data.Uri or Data.Text)
