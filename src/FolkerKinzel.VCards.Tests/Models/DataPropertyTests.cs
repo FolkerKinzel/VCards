@@ -127,7 +127,28 @@ public class DataPropertyTests
 
         DataProperty? photo = vcard.Photos!.First();
         Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
-        Assert.AreEqual("application/octet-stream", photo!.Parameters.MediaType);
+        Assert.AreEqual("blabla", photo!.Parameters.MediaType);
+    }
+
+    [TestMethod]
+    public void ParseTest1b()
+    {
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        KEY:data:\,The%20password
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+        Assert.IsNotNull(vcard.Keys);
+        DataProperty? key = vcard.Keys.First();
+        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsNotNull(key.Value);
+        Assert.AreEqual("The password", key.Value.String);
+        Assert.AreEqual("text/plain", key.Parameters.MediaType);
     }
 
     [TestMethod]
@@ -251,7 +272,7 @@ public class DataPropertyTests
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
         Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
-        Assert.AreEqual("image/png; parameter=value", photo.Parameters.MediaType);
+        Assert.AreEqual("image/png;parameter=value", photo.Parameters.MediaType);
     }
 
     [TestMethod]
