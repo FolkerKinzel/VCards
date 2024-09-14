@@ -61,6 +61,7 @@ public sealed partial class VCard
 #if DEBUG
                 _ => throw new NotImplementedException()
 #endif
+
             });
 #if !DEBUG
 #pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).

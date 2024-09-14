@@ -69,8 +69,6 @@ internal static class DataUrlConverter
         return true;
     }
 
-    //[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters",
-    //Justification = "Not localizable")]
     private static void CopyDataUrl(Span<char> span, ReadOnlySpan<char> mime, ReadOnlySpan<char> data, bool base64Encoded)
     {
         if (base64Encoded)
