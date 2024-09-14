@@ -18,7 +18,8 @@ public class IEnumerableExtensionTests
     public void OrderByIndexTest1()
     {
         var props = new TextProperty[] { new(null), new("1") };
-        CollectionAssert.AreNotEqual(props, props.OrderByIndexIntl(true).ToArray());
+        TextProperty[] arr = props.OrderByIndexIntl(true).ToArray();
+        Assert.AreNotEqual(props.Length, arr.Length);
     }
 
     [TestMethod]

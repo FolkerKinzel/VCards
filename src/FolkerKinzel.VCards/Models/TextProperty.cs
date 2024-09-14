@@ -25,6 +25,10 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
         : base(new ParameterSection(), group)
         => Value = string.IsNullOrWhiteSpace(value) ? null : value;
 
+    internal TextProperty(string value, VcfRow vcfRow)
+        : base(vcfRow.Parameters, vcfRow.Group)
+        => Value = value.Length == 0 ? null : value;
+
     internal TextProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {

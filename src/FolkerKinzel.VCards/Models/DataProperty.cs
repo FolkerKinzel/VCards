@@ -2,6 +2,7 @@ using System.Collections;
 using FolkerKinzel.DataUrls;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
@@ -146,6 +147,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                            ? mimeInfo.ToString()
                            : null;
         textProp.Parameters.DataType = Data.Text;
+
         return new EmbeddedTextProperty(textProp);
     }
 
@@ -198,25 +200,12 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
+
     internal static DataProperty Parse(VcfRow vcfRow, VCdVersion version)
     {
         if (DataUrl.TryParse(vcfRow.Value, out DataUrlInfo dataUrlInfo))
         {
-            ReadOnlyMemory<char> mime = dataUrlInfo.MimeType;
-            UnMaskMimeType(ref mime);
-
-            vcfRow.Parameters.MediaType =
-                MimeTypeInfo.TryParse(mime, out MimeTypeInfo mimeTypeInfo)
-                                  ? mimeTypeInfo.ToString()
-                                  : MimeString.OctetStream;
-
-            return dataUrlInfo.TryGetEmbeddedData(out OneOf<string, byte[]> data)
-                    ? data.Match<DataProperty>
-                       (
-                        s => new EmbeddedTextProperty(new TextProperty(vcfRow, version)),
-                        b => new EmbeddedBytesProperty(b, vcfRow.Group, vcfRow.Parameters)
-                        )
-                    : FromText(vcfRow.Value.ToString(), dataUrlInfo.MimeType.ToString(), vcfRow.Group);
+            return DataUrlConverter.ToDataProperty(vcfRow, ref dataUrlInfo);
         }
 
         if (vcfRow.Parameters.Encoding == Enc.Base64)
@@ -267,28 +256,6 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
                                new UriProperty(uri, vcfRow.Parameters, vcfRow.Group)
                               )
                        : new EmbeddedTextProperty(new TextProperty(vcfRow, version));
-        }
-    }
-
-    private static void UnMaskMimeType(ref ReadOnlyMemory<char> mime)
-    {
-        int trimEndLength = 0;
-        ReadOnlySpan<char> span = mime.Span;
-
-        if(span.EndsWith(@";base64\")) // masked comma
-        {
-            trimEndLength += 8;
-            span = span.Slice(0, span.Length - trimEndLength);
-
-            if(span.EndsWith('\\')) // masked semicolon
-            {
-                trimEndLength++;
-                span = span.Slice(0, span.Length - 1);
-            }
-
-            // The MIME type may have parameters, separated by masked semicolons:
-            mime = span.Contains('\\') ? span.UnMaskValue(VCdVersion.V4_0).AsMemory() 
-                                       : mime.Slice(0, mime.Length - trimEndLength);
         }
     }
 

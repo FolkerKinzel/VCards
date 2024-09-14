@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.DataUrls;
+﻿using System.Text;
+using FolkerKinzel.DataUrls;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
@@ -122,12 +123,79 @@ public class DataPropertyTests
 
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Keys);
-        Assert.IsNotNull(vcard.Photos);
-        Assert.IsInstanceOfType(vcard.Keys!.First(), typeof(EmbeddedTextProperty));
+        DataProperty? key = vcard.Keys!.First();
+        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsNotNull(key.Value);
+        Assert.AreEqual("The password", key.Value.String);
+        Assert.AreEqual("text/plain", key.Parameters.MediaType);
 
+        Assert.IsNotNull(vcard.Photos);
         DataProperty? photo = vcard.Photos!.First();
         Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
-        Assert.AreEqual("application/octet-stream", photo!.Parameters.MediaType);
+        Assert.AreEqual("blabla", photo!.Parameters.MediaType);
+    }
+
+    [TestMethod]
+    public void ParseTest1b()
+    {
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        KEY:data:\,The%20password
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+        Assert.IsNotNull(vcard.Keys);
+        DataProperty? key = vcard.Keys.First();
+        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsNotNull(key.Value);
+        Assert.AreEqual("The password", key.Value.String);
+        Assert.AreEqual("text/plain", key.Parameters.MediaType);
+    }
+
+    [TestMethod]
+    public void ParseTest1c()
+    {
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        KEY:data:;charset=utf-8\,The%20password
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+        Assert.IsNotNull(vcard.Keys);
+        DataProperty? key = vcard.Keys.First();
+        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsNotNull(key.Value);
+        Assert.AreEqual("The password", key.Value.String);
+        Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
+    }
+
+    [TestMethod]
+    public void ParseTest1d()
+    {
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        KEY:data:\;charset=utf-8\,The%20password
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+        Assert.IsNotNull(vcard.Keys);
+        DataProperty? key = vcard.Keys.First();
+        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsNotNull(key.Value);
+        Assert.AreEqual("The password", key.Value.String);
+        Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
     }
 
     [TestMethod]
@@ -194,10 +262,11 @@ public class DataPropertyTests
     [TestMethod]
     public void ParseTest5()
     {
+        byte[] arr = [1, 2, 3];
         string vcf = $"""
         BEGIN:VCARD
         VERSION:4.0
-        PHOTO:data:image/png\;base64\,{Convert.ToBase64String([1,2,3])}
+        PHOTO:data:image/png\;base64\,{Convert.ToBase64String(arr)}
         END:VCARD
         """;
 
@@ -210,15 +279,17 @@ public class DataPropertyTests
         Assert.IsFalse(photo.IsEmpty);
         Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
         Assert.AreEqual("image/png", photo.Parameters.MediaType);
+        CollectionAssert.AreEqual(arr, photo.Value.Bytes);
     }
 
     [TestMethod]
-    public void ParseTest6()
+    public void ParseTest5b()
     {
+        byte[] arr = [1, 2, 3];
         string vcf = $"""
         BEGIN:VCARD
         VERSION:4.0
-        PHOTO:data:image/png;base64\,{Convert.ToBase64String([1, 2, 3])}
+        PHOTO:data:image/png;base64\,{Convert.ToBase64String(arr)}
         END:VCARD
         """;
 
@@ -231,7 +302,75 @@ public class DataPropertyTests
         Assert.IsFalse(photo.IsEmpty);
         Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
         Assert.AreEqual("image/png", photo.Parameters.MediaType);
+        CollectionAssert.AreEqual(arr, photo.Value.Bytes);
     }
+
+    [TestMethod]
+    public void ParseTest5c()
+    {
+        byte[] arr = [1, 2, 3];
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        PHOTO:data:image/png\;base64\,{Convert.ToBase64String(arr)}
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+        Assert.IsNotNull(vcard.Photos);
+
+        DataProperty photo = vcard.Photos!.First()!;
+        Assert.IsFalse(photo.IsEmpty);
+        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.AreEqual("image/png", photo.Parameters.MediaType);
+        CollectionAssert.AreEqual(arr, photo.Value.Bytes);
+    }
+
+    [TestMethod]
+    public void ParseTest5d()
+    {
+        byte[] arr = [1, 2, 3];
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        PHOTO:data:image/png\,{Uri.EscapeDataString(Encoding.UTF8.GetString(arr))}
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+        Assert.IsNotNull(vcard.Photos);
+
+        DataProperty photo = vcard.Photos!.First()!;
+        Assert.IsFalse(photo.IsEmpty);
+        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.AreEqual("image/png", photo.Parameters.MediaType);
+        CollectionAssert.AreEqual(arr, photo.Value.Bytes);
+    }
+
+    //[TestMethod]
+    //public void ParseTest6()
+    //{
+    //    string vcf = $"""
+    //    BEGIN:VCARD
+    //    VERSION:4.0
+    //    PHOTO:data:image/png\;base64\,{Convert.ToBase64String([1, 2, 3])}
+    //    END:VCARD
+    //    """;
+
+    //    VCard vcard = Vcf.Parse(vcf)[0];
+
+    //    Assert.IsNotNull(vcard);
+    //    Assert.IsNotNull(vcard.Photos);
+
+    //    DataProperty photo = vcard.Photos!.First()!;
+    //    Assert.IsFalse(photo.IsEmpty);
+    //    Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+    //    Assert.AreEqual("image/png", photo.Parameters.MediaType);
+    //}
 
     [TestMethod]
     public void ParseTest7()
@@ -251,7 +390,104 @@ public class DataPropertyTests
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
         Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
-        Assert.AreEqual("image/png; parameter=value", photo.Parameters.MediaType);
+        Assert.AreEqual("image/png;parameter=value", photo.Parameters.MediaType);
+    }
+
+    [TestMethod]
+    public void ParseTest8()
+    {
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        KEY:data:text/plain;base64\,
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+        
+        Assert.IsNotNull(vcard.Keys);
+
+        DataProperty key = vcard.Keys!.First()!;
+        Assert.IsTrue(key.IsEmpty);
+        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.AreEqual("text/plain", key.Parameters.MediaType);
+    }
+
+    [TestMethod]
+    public void ParseTest9()
+    {
+        const string PASSWORD = "password";
+
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        KEY:data:text/plain;base64\,{Base64.Encode(Encoding.UTF8.GetBytes(PASSWORD))}
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+
+        Assert.IsNotNull(vcard.Keys);
+
+        DataProperty key = vcard.Keys!.First()!;
+        Assert.IsFalse(key.IsEmpty);
+        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.AreEqual("text/plain", key.Parameters.MediaType);
+        Assert.AreEqual(PASSWORD, key.Value.String);
+    }
+
+    [TestMethod]
+    public void ParseTest10()
+    {
+        const string PASSWORD = "password";
+
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        KEY:data:;charset=utf-8;base64\,{Base64.Encode(Encoding.UTF8.GetBytes(PASSWORD))}
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+
+        Assert.IsNotNull(vcard.Keys);
+
+        DataProperty key = vcard.Keys!.First()!;
+        Assert.IsFalse(key.IsEmpty);
+        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
+        Assert.AreEqual(PASSWORD, key.Value.String);
+    }
+
+    [TestMethod]
+    public void ParseTest11()
+    {
+        const string PASSWORD = "password";
+
+        string vcf = $"""
+        BEGIN:VCARD
+        VERSION:4.0
+        KEY:data:\;charset=utf-8\;base64\,{Base64.Encode(Encoding.UTF8.GetBytes(PASSWORD))}
+        END:VCARD
+        """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        Assert.IsNotNull(vcard);
+
+        Assert.IsNotNull(vcard.Keys);
+
+        DataProperty key = vcard.Keys!.First()!;
+        Assert.IsFalse(key.IsEmpty);
+        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
+        Assert.AreEqual(PASSWORD, key.Value.String);
     }
 
 
