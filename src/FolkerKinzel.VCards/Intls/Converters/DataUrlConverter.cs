@@ -12,28 +12,11 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class DataUrlConverter
 {
-    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters",
-        Justification = "Not localizeable")]
     internal static DataProperty ToDataProperty(VcfRow vcfRow, ref DataUrlInfo dataUrlInfo)
     {
         ReadOnlyMemory<char> mime = dataUrlInfo.MimeType;
 
         bool masked = UnMaskMimeType(ref mime, out bool base64Encoded);
-
-        //string mediaType;
-
-        //if (mime.Length == 0)
-        //{
-        //    mediaType = DataUrl.DefaultMediaType;
-        //}
-        //else
-        //{
-        //    ReadOnlySpan<char> span = mime.Span;
-        //    mediaType = span[0] == ';' ? StaticStringMethod.Concat(DataUrl.DefaultMediaType.AsSpan(), span) 
-        //                               : mime.ToString();
-        //}
-
-        //vcfRow.Parameters.MediaType = mediaType;
 
         if (masked)
         {
@@ -86,8 +69,8 @@ internal static class DataUrlConverter
         return true;
     }
 
-    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters",
-    Justification = "Not localizable")]
+    //[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters",
+    //Justification = "Not localizable")]
     private static void CopyDataUrl(Span<char> span, ReadOnlySpan<char> mime, ReadOnlySpan<char> data, bool base64Encoded)
     {
         if (base64Encoded)
@@ -121,7 +104,6 @@ internal static class DataUrlConverter
             data.CopyTo(span);
         }
     }
-
 
     private static DataProperty FromDataUrlInfo(VcfRow vcfRow, in DataUrlInfo dataUrlInfo)
     {

@@ -40,7 +40,9 @@ public sealed partial class VCard
 
         foreach (KeyValuePair<Prop, object> kvp in vCard._propDic)
         {
+#if !DEBUG
 #pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
+#endif
             Set(kvp.Key, kvp.Value switch
             {
                 XmlProperty xmlProp => xmlProp.Clone(),
@@ -78,7 +80,9 @@ public sealed partial class VCard
                 _ => throw new NotImplementedException()
 #endif
             });
+#if !DEBUG
 #pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
+#endif
         }//foreach
 
         Debug.Assert(VCard.IsAppRegistered);
