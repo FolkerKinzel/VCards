@@ -58,6 +58,7 @@ public sealed partial class VCard
                 IEnumerable<NonStandardProperty?> nStdPropEnumerable => nStdPropEnumerable.Select(Cloned).Cast<NonStandardProperty?>().ToArray(),
                 IEnumerable<AppIDProperty?> pidMapPropEnumerable => pidMapPropEnumerable.Select(Cloned).Cast<AppIDProperty?>().ToArray(),
                 IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(Cloned).Cast<TimeZoneProperty?>().ToArray(),
+                IEnumerable<GramProperty?> gramPropEnumerable => gramPropEnumerable.Select(Cloned).Cast<GramProperty?>().ToArray(),
 #if DEBUG
                 _ => throw new NotImplementedException()
 #endif

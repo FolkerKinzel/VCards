@@ -80,7 +80,8 @@ and let it store as string[]
     - [x] Make new enum value `Opts.WriteRfc9554Extensions`
     - [x] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
     - [x] Implement `GramConverter`
-    - [ ] Implement the `GramProperty` class that has a `Gram` value as `Value`
+    - [x] Implement the `GramProperty` class that has a `Gram?` value as `Value`
+    - [x] Update the VCard copy ctor to process `IEnumerable<GramProperty?>`
     - [ ] Implement `readonly struct GramGendersBuilder`
     - [x] Implement the `Phonetic` enum ("ipa", "jyut", "piny", "script")
     - [x] Implement `PhoneticConverter`
