@@ -189,8 +189,12 @@ public enum Prop
     /// used for synchronizing different revisions of the same vCard. <c>(4)</c></summary>
     AppIDs,
 
-    /// <summary>vCard-Properties that don't belong to the standard.</summary>
-    NonStandards,
+    /// <summary>
+    /// <c>GRAMGENDER</c>: Defines which grammatical gender to use in salutations and other 
+    /// grammatical constructs. <c>4 - RFC&#160;9554</c>
+    /// </summary>
+    GramGenders,
 
-    
+    /// <summary>vCard-Properties that don't belong to the standard.</summary>
+    NonStandards
 }

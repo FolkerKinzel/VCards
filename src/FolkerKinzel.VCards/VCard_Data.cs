@@ -319,6 +319,23 @@ public sealed partial class VCard
         set => Set(Prop.GeoCoordinates, value);
     }
 
+    /// <summary>
+    /// <c>GRAMGENDER</c>: Defines which grammatical gender to use in salutations and other 
+    /// grammatical constructs. <c>4 - RFC&#160;9554</c>
+    /// </summary>
+    /// <remarks>
+    /// This property defines the grammatical gender that the contact prefers to be addressed 
+    /// by or referred to as in written or spoken form. For example, the German language 
+    /// distinguishes by grammatical gender in salutations such as "Sehr geehrte" (feminine) 
+    /// and "Sehr geehrter" (masculine). Multiple occurrences of this property MUST be 
+    /// distinguished by the LANGUAGE parameter.
+    /// </remarks>
+    public IEnumerable<GramProperty?>? GramGenders
+    {
+        get => Get<IEnumerable<GramProperty?>?>(Prop.GramGenders);
+        set => Set(Prop.GeoCoordinates, value);
+    }
+
     /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
     /// in. <c>(4 - RFC&#160;6715)</c></summary>
     /// <remarks> Define the level of interest with the parameter 

@@ -106,7 +106,7 @@ and let it store as string[]
     - [ ] Change the `VCard` class
         - Make a new default parameter `setCreated` that defaults to `true` to the `VCard` ctor and to `VCardBuilder.Create`
         - [ ] Add property: `TimeStampProperty Created {get; set;}`
-        - [ ] Add property: `IEnumerable<GramProperty?>? GramGenders {get; set;}`
+        - [x] Add property: `IEnumerable<GramProperty?>? GramGenders {get; set;}`
         - [ ] Add property: `TextProperty Language {get; set;}`
         - [ ] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
         - [ ] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
