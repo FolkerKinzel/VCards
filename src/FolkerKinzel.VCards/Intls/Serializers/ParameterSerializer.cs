@@ -158,13 +158,13 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             case VCard.PropKeys.XML:
                 BuildXmlPara();
                 break;
-            case VCard.PropKeys.NonStandard.BIRTHPLACE:
+            case VCard.PropKeys.Rfc6474.BIRTHPLACE:
                 BuildBirthPlacePara();
                 break;
-            case VCard.PropKeys.NonStandard.DEATHDATE:
+            case VCard.PropKeys.Rfc6474.DEATHDATE:
                 BuildDeathDatePara();
                 break;
-            case VCard.PropKeys.NonStandard.DEATHPLACE:
+            case VCard.PropKeys.Rfc6474.DEATHPLACE:
                 BuildDeathPlacePara();
                 break;
             case VCard.PropKeys.Rfc6715.EXPERTISE:

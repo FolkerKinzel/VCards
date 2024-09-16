@@ -92,7 +92,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             return;
         }
 
-        BuildPropertyViews(VCard.PropKeys.NonStandard.BIRTHPLACE, value);
+        BuildPropertyViews(VCard.PropKeys.Rfc6474.BIRTHPLACE, value);
     }
 
     protected override void AppendCalendarAddresses(IEnumerable<TextProperty?> value)
@@ -121,7 +121,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             return;
         }
 
-        BuildPropertyViews(VCard.PropKeys.NonStandard.DEATHDATE, value);
+        BuildPropertyViews(VCard.PropKeys.Rfc6474.DEATHDATE, value);
     }
 
     protected override void AppendDeathPlaceViews(IEnumerable<TextProperty?> value)
@@ -131,7 +131,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             return;
         }
 
-        BuildPropertyViews(VCard.PropKeys.NonStandard.DEATHPLACE, value);
+        BuildPropertyViews(VCard.PropKeys.Rfc6474.DEATHPLACE, value);
     }
 
     protected override void AppendDisplayNames(IEnumerable<TextProperty?> value)

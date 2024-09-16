@@ -412,15 +412,15 @@ public sealed partial class VCard
                     break;
 
                 // Extensions to the vCard standard:
-                case PropKeys.NonStandard.DEATHDATE:
+                case PropKeys.Rfc6474.DEATHDATE:
                     this.DeathDateViews =
                         Concat(DeathDateViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version, info));
                     break;
-                case PropKeys.NonStandard.BIRTHPLACE:
+                case PropKeys.Rfc6474.BIRTHPLACE:
                     this.BirthPlaceViews =
                         Concat(BirthPlaceViews, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.NonStandard.DEATHPLACE:
+                case PropKeys.Rfc6474.DEATHPLACE:
                     this.DeathPlaceViews =
                         Concat(DeathPlaceViews, new TextProperty(vcfRow, this.Version));
                     break;

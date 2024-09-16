@@ -207,8 +207,7 @@ public sealed partial class VCard
             internal const string INTEREST = "INTEREST";
         }
 
-
-        internal static class NonStandard
+        internal static class Rfc6474
         {
             /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
             /// RFC 6474)</c></summary>
@@ -220,7 +219,11 @@ public sealed partial class VCard
             /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
             /// RFC 6474)</c></summary>
             internal const string DEATHPLACE = "DEATHPLACE";
+        }
 
+
+        internal static class NonStandard
+        {
             /// <summary> <c>ORG-DIRECTORY</c>: A URI representing the person's work place,
             /// which can be used to look up information on the person's co-workers. <c>(RFC
             /// 6715)</c></summary>
