@@ -96,10 +96,10 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     }
 
     protected override void AppendCalendarAddresses(IEnumerable<TextProperty?> value)
-        => BuildPropertyCollection(VCard.PropKeys.CALURI, value);
+        => BuildPropertyCollection(VCard.PropKeys.Rfc2739.CALURI, value);
 
     protected override void AppendCalendarUserAddresses(IEnumerable<TextProperty?> value)
-        => BuildPropertyCollection(VCard.PropKeys.CALADRURI, value);
+        => BuildPropertyCollection(VCard.PropKeys.Rfc2739.CALADRURI, value);
 
     protected override void AppendCategories(IEnumerable<StringCollectionProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.CATEGORIES, value);
@@ -142,7 +142,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
         if (!displNames.Any())
         {
-            var name = VCardToSerialize.NameViews?.FirstOrNullIntl(IgnoreEmptyItems);
+            NameProperty? name = VCardToSerialize.NameViews?.FirstOrNullIntl(IgnoreEmptyItems);
 
             if (name is not null)
             {
@@ -173,7 +173,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     }
 
     protected override void AppendFreeBusyUrls(IEnumerable<TextProperty?> value)
-        => BuildPropertyCollection(VCard.PropKeys.FBURL, value);
+        => BuildPropertyCollection(VCard.PropKeys.Rfc2739.FBURL, value);
 
     protected override void AppendGenderViews(IEnumerable<GenderProperty?> value)
         => BuildPropertyViews(VCard.PropKeys.GENDER, value);

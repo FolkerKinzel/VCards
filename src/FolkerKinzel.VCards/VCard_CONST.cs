@@ -32,17 +32,6 @@ public sealed partial class VCard
         /// <c>(2,3,4)</c></summary>
         internal const string BDAY = "BDAY";
 
-        /// <summary> <c>CAPURI</c>: A protocol independent location from which a calendaring and 
-        /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
-        internal const string CAPURI = "CAPURI";
-
-        /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
-        /// the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
-        internal const string CALADRURI = "CALADRURI";
-
-        /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
-        internal const string CALURI = "CALURI";
-
         /// <summary> <c>CATEGORIES</c>: Lists of "tags" that can be used to describe the
         /// object represented by this vCard. <c>(3,4)</c></summary>
         internal const string CATEGORIES = "CATEGORIES";
@@ -58,10 +47,6 @@ public sealed partial class VCard
         /// <summary> <c>EMAIL</c>: The addresses for electronic mail communication with
         /// the vCard object. <c>(2,3,4)</c></summary>
         internal const string EMAIL = "EMAIL";
-
-        /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
-        /// "busy" on their calendar. <c>(4, 3 - RFC 2739)</c></summary>
-        internal const string FBURL = "FBURL";
 
         /// <summary> <c>FN</c>: The formatted name string associated with the vCard object.
         /// <c>(2,3,4)</c></summary>
@@ -188,6 +173,24 @@ public sealed partial class VCard
 
         /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
         internal const string XML = "XML";
+
+        internal static class Rfc2739
+        {
+            /// <summary> <c>CAPURI</c>: A protocol independent location from which a calendaring and 
+            /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
+            internal const string CAPURI = "CAPURI";
+
+            /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
+            /// the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
+            internal const string CALADRURI = "CALADRURI";
+
+            /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
+            internal const string CALURI = "CALURI";
+
+            /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
+            /// "busy" on their calendar. <c>(4, 3 - RFC 2739)</c></summary>
+            internal const string FBURL = "FBURL";
+        }
 
 
         internal static class NonStandard

@@ -87,7 +87,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         if(Options.HasFlag(Opts.WriteRfc2739Extensions))
         {
-            BuildPropertyCollection(VCard.PropKeys.CAPURI, value);
+            BuildPropertyCollection(VCard.PropKeys.Rfc2739.CAPURI, value);
         }
     }
 
@@ -95,7 +95,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         if (Options.HasFlag(Opts.WriteRfc2739Extensions))
         {
-            BuildPropertyCollection(VCard.PropKeys.CALURI, value);
+            BuildPropertyCollection(VCard.PropKeys.Rfc2739.CALURI, value);
         }
     }
 
@@ -103,7 +103,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         if (Options.HasFlag(Opts.WriteRfc2739Extensions))
         {
-            BuildPropertyCollection(VCard.PropKeys.CALADRURI, value);
+            BuildPropertyCollection(VCard.PropKeys.Rfc2739.CALADRURI, value);
         }
     }
 
@@ -111,7 +111,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         if (Options.HasFlag(Opts.WriteRfc2739Extensions))
         {
-            BuildPropertyCollection(VCard.PropKeys.FBURL, value);
+            BuildPropertyCollection(VCard.PropKeys.Rfc2739.FBURL, value);
         }
     }
 
@@ -130,7 +130,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
         if (displayName is null)
         {
             Debug.Assert(VCardToSerialize.NameViews is not null);
-            var name = VCardToSerialize.NameViews.FirstOrNullIntl(IgnoreEmptyItems);
+            NameProperty? name = VCardToSerialize.NameViews.FirstOrNullIntl(IgnoreEmptyItems);
 
             if (name is not null)
             {

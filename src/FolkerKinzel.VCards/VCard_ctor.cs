@@ -134,16 +134,16 @@ public sealed partial class VCard
                 case PropKeys.REV:
                     TimeStamp = new TimeStampProperty(vcfRow, info);
                     break;
-                case PropKeys.CAPURI:
+                case PropKeys.Rfc2739.CAPURI:
                     CalendarAccessUris = Concat(CalendarAccessUris, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.CALURI:
+                case PropKeys.Rfc2739.CALURI:
                     CalendarAddresses = Concat(CalendarAddresses, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.CALADRURI:
+                case PropKeys.Rfc2739.CALADRURI:
                     CalendarUserAddresses = Concat(CalendarUserAddresses, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.FBURL:
+                case PropKeys.Rfc2739.FBURL:
                     FreeOrBusyUrls = Concat(FreeOrBusyUrls, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.TITLE:

@@ -39,13 +39,13 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             case VCard.PropKeys.BDAY:
                 BuildBdayPara();
                 break;
-            case VCard.PropKeys.CAPURI:
+            case VCard.PropKeys.Rfc2739.CAPURI:
                 BuildCapuriPara(isPref);
                 break;
-            case VCard.PropKeys.CALADRURI:
+            case VCard.PropKeys.Rfc2739.CALADRURI:
                 BuildCaladruriPara(isPref);
                 break;
-            case VCard.PropKeys.CALURI:
+            case VCard.PropKeys.Rfc2739.CALURI:
                 BuildCaluriPara(isPref);
                 break;
             case VCard.PropKeys.CATEGORIES:
@@ -60,7 +60,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             case VCard.PropKeys.EMAIL:
                 BuildEmailPara(isPref);
                 break;
-            case VCard.PropKeys.FBURL:
+            case VCard.PropKeys.Rfc2739.FBURL:
                 BuildFburlPara(isPref);
                 break;
             case VCard.PropKeys.FN:
@@ -415,6 +415,8 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     protected void AppendV2_1Type(string value) => Builder.Append(';').Append(value);
 
+    [SuppressMessage("Style", "IDE0066:Convert switch statement to expression", 
+        Justification = "Better style")]
     protected void AppendNonStandardParameters()
     {
         if (!Options.IsSet(Opts.WriteNonStandardParameters))

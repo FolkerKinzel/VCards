@@ -130,6 +130,7 @@ and let it store as string[]
         - [ ] Add property `string? Script`
         - [ ] Add property `string? ServiceType`
         - [ ] Add property `string? UserName`
+        - [ ] Update ParameterSerializer.AppendNonStandardParameters()
         - [ ] Redirect `X-SERVICE-TYPE` to the `ServiceType` property. Use the `X-SERVICE-TYPE` parameter 
         to preserve the value of `ParameterSection.ServiceType` with `VCard.Messengers` when writing vCard 4.0 and the
         `Opts.WriteRfc9554Extensions` flag is not set.
