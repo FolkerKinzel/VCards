@@ -228,7 +228,11 @@ public sealed partial class VCard
 
         internal static class Rfc9554
         {
-
+            /// <summary>
+            /// <c>GRAMGENDER</c>: Defines which grammatical gender to use in salutations and other 
+            /// grammatical constructs. <c>4 - RFC&#160;9554</c>
+            /// </summary>
+            internal const string GRAMGENDER = "GRAMGENDER";
         }
 
         internal static class NonStandard
