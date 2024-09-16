@@ -424,13 +424,13 @@ public sealed partial class VCard
                     this.DeathPlaceViews =
                         Concat(DeathPlaceViews, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.NonStandard.EXPERTISE:
+                case PropKeys.Rfc6715.EXPERTISE:
                     Expertises = Concat(Expertises, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.NonStandard.INTEREST:
+                case PropKeys.Rfc6715.INTEREST:
                     Interests = Concat(Interests, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.NonStandard.HOBBY:
+                case PropKeys.Rfc6715.HOBBY:
                     Hobbies = Concat(Hobbies, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.NonStandard.ORG_DIRECTORY:

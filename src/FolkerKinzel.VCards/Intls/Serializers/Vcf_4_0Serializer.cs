@@ -169,7 +169,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             return;
         }
 
-        BuildPropertyCollection(VCard.PropKeys.NonStandard.EXPERTISE, value);
+        BuildPropertyCollection(VCard.PropKeys.Rfc6715.EXPERTISE, value);
     }
 
     protected override void AppendFreeBusyUrls(IEnumerable<TextProperty?> value)
@@ -188,7 +188,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             return;
         }
 
-        BuildPropertyCollection(VCard.PropKeys.NonStandard.HOBBY, value);
+        BuildPropertyCollection(VCard.PropKeys.Rfc6715.HOBBY, value);
     }
 
     protected override void AppendInstantMessengerHandles(IEnumerable<TextProperty?> value)
@@ -223,7 +223,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             return;
         }
 
-        BuildPropertyCollection(VCard.PropKeys.NonStandard.INTEREST, value);
+        BuildPropertyCollection(VCard.PropKeys.Rfc6715.INTEREST, value);
     }
 
     protected override void AppendKind(KindProperty value)

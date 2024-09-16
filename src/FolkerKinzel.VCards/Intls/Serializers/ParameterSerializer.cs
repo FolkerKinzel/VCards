@@ -167,13 +167,13 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             case VCard.PropKeys.NonStandard.DEATHPLACE:
                 BuildDeathPlacePara();
                 break;
-            case VCard.PropKeys.NonStandard.EXPERTISE:
+            case VCard.PropKeys.Rfc6715.EXPERTISE:
                 BuildExpertisePara();
                 break;
-            case VCard.PropKeys.NonStandard.HOBBY:
+            case VCard.PropKeys.Rfc6715.HOBBY:
                 BuildHobbyPara();
                 break;
-            case VCard.PropKeys.NonStandard.INTEREST:
+            case VCard.PropKeys.Rfc6715.INTEREST:
                 BuildInterestPara();
                 break;
             case VCard.PropKeys.NonStandard.ORG_DIRECTORY:

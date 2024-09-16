@@ -173,7 +173,7 @@ public sealed partial class ParameterSection
                         break;
                     }
                 case ParameterKey.LEVEL:
-                    if (propertyKey == VCard.PropKeys.NonStandard.EXPERTISE)
+                    if (propertyKey == VCard.PropKeys.Rfc6715.EXPERTISE)
                     {
                         Expertise? expertise =
                             ExpertiseConverter.Parse(parameter.Value.Span.Trim(TRIM_CHARS));

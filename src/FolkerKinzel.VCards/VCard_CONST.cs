@@ -192,8 +192,7 @@ public sealed partial class VCard
             internal const string FBURL = "FBURL";
         }
 
-
-        internal static class NonStandard
+        internal static class Rfc6715
         {
             /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has
             /// knowledge of. <c>(RFC 6715)</c></summary>
@@ -206,7 +205,11 @@ public sealed partial class VCard
             /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
             /// in, but does not necessarily take part in. <c>(4 - RFC 6715)</c></summary>
             internal const string INTEREST = "INTEREST";
+        }
 
+
+        internal static class NonStandard
+        {
             /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
             /// RFC 6474)</c></summary>
             internal const string BIRTHPLACE = "BIRTHPLACE";
