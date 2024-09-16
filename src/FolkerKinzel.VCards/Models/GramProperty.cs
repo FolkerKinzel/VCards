@@ -27,7 +27,8 @@ public sealed class GramProperty : VCardProperty, IEnumerable<GramProperty>
         : base(new ParameterSection(), group) => Value = value;
 
     internal GramProperty(VcfRow vcfRow)
-        : base(vcfRow.Parameters, vcfRow.Group) => Value = GramConverter.Parse(vcfRow.Value.Span);
+        : base(vcfRow.Parameters, vcfRow.Group)
+        => Value = GramConverter.Parse(vcfRow.Value.Span);
 
     /// <summary> The data provided by the <see cref="GramProperty" />.
     /// </summary>
@@ -46,7 +47,6 @@ public sealed class GramProperty : VCardProperty, IEnumerable<GramProperty>
     internal override void AppendValue(VcfSerializer serializer)
     {
         Debug.Assert(serializer is not null);
-
         _ = serializer.Builder.Append(Value.ToVcfString());
     }
 

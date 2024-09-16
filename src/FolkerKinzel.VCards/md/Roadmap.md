@@ -82,7 +82,7 @@ and let it store as string[]
     - [x] Implement `GramConverter`
     - [x] Implement the `GramProperty` class that has a `Gram?` value as `Value`
     - [x] Update the VCard copy ctor to process `IEnumerable<GramProperty?>`
-    - [ ] Implement `readonly struct GramGendersBuilder`
+    - [ ] Implement `readonly struct GramBuilder`
     - [x] Implement the `Phonetic` enum ("ipa", "jyut", "piny", "script")
     - [x] Implement `PhoneticConverter`
     - [x] Add the values `billing` and `delivery` to the `Adr` enum
