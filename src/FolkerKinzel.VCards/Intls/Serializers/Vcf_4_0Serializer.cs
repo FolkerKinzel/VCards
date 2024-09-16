@@ -265,7 +265,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             return;
         }
 
-        BuildPropertyCollection(VCard.PropKeys.NonStandard.ORG_DIRECTORY, value);
+        BuildPropertyCollection(VCard.PropKeys.Rfc6715.ORG_DIRECTORY, value);
     }
 
     protected override void AppendPhones(IEnumerable<TextProperty?> value)

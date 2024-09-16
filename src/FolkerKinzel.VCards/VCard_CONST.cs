@@ -192,21 +192,6 @@ public sealed partial class VCard
             internal const string FBURL = "FBURL";
         }
 
-        internal static class Rfc6715
-        {
-            /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has
-            /// knowledge of. <c>(RFC 6715)</c></summary>
-            internal const string EXPERTISE = "EXPERTISE";
-
-            /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
-            /// in. <c>(4 - RFC 6715)</c></summary>
-            internal const string HOBBY = "HOBBY";
-
-            /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
-            /// in, but does not necessarily take part in. <c>(4 - RFC 6715)</c></summary>
-            internal const string INTEREST = "INTEREST";
-        }
-
         internal static class Rfc6474
         {
             /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
@@ -221,14 +206,33 @@ public sealed partial class VCard
             internal const string DEATHPLACE = "DEATHPLACE";
         }
 
-
-        internal static class NonStandard
+        internal static class Rfc6715
         {
+            /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has
+            /// knowledge of. <c>(RFC 6715)</c></summary>
+            internal const string EXPERTISE = "EXPERTISE";
+
+            /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
+            /// in. <c>(4 - RFC 6715)</c></summary>
+            internal const string HOBBY = "HOBBY";
+
+            /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
+            /// in, but does not necessarily take part in. <c>(4 - RFC 6715)</c></summary>
+            internal const string INTEREST = "INTEREST";
+
             /// <summary> <c>ORG-DIRECTORY</c>: A URI representing the person's work place,
             /// which can be used to look up information on the person's co-workers. <c>(RFC
             /// 6715)</c></summary>
             internal const string ORG_DIRECTORY = "ORG-DIRECTORY";
+        }
 
+        internal static class Rfc9554
+        {
+
+        }
+
+        internal static class NonStandard
+        {
             /// <summary>Sex (values: <c>Male</c> or <c>Female</c>) </summary>
             internal const string X_GENDER = "X-GENDER";
 

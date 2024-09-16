@@ -433,7 +433,7 @@ public sealed partial class VCard
                 case PropKeys.Rfc6715.HOBBY:
                     Hobbies = Concat(Hobbies, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.NonStandard.ORG_DIRECTORY:
+                case PropKeys.Rfc6715.ORG_DIRECTORY:
                     OrgDirectories = Concat(OrgDirectories, new TextProperty(vcfRow, this.Version));
                     break;
                 default:

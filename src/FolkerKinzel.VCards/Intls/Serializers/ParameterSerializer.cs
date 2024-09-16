@@ -176,7 +176,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             case VCard.PropKeys.Rfc6715.INTEREST:
                 BuildInterestPara();
                 break;
-            case VCard.PropKeys.NonStandard.ORG_DIRECTORY:
+            case VCard.PropKeys.Rfc6715.ORG_DIRECTORY:
                 BuildOrgDirectoryPara();
                 break;
             case VCard.PropKeys.NonStandard.InstantMessenger.X_AIM:
@@ -476,6 +476,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
                 case ParameterSection.ParameterKey.TYPE:
                 case ParameterSection.ParameterKey.TZ:
                 case ParameterSection.ParameterKey.VALUE:
+                case ParameterSection.ParameterKey.CC:
                     return true;
                 default:
                     return false;
