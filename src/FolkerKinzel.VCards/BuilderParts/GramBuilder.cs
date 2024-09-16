@@ -163,7 +163,9 @@ public readonly struct GramBuilder
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that the 
     /// <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// 
+    /// <remarks>
+    /// Multiple occurrences of this property MUST be distinguished by the <c>LANGUAGE</c> parameter.
+    /// </remarks>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GramBuilder"/> to 
     /// be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 

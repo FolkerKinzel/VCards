@@ -116,7 +116,7 @@ and let it store as string[]
         - [ ] Add `X-SOCIALPROFILE` to the documentation of the `VCard.NonStandards` property
     - [ ] Change the `VCardBuilder` class
         - [ ] Add property: `TimeStampBuilder Created {get;}`
-        - [ ] Add property: `GramBuilder GramGenders {get;}`
+        - [x] Add property: `GramBuilder GramGenders {get;}`
         - [ ] Add property: `TextSingletonBuilder Language {get;}`
         - [ ] Add property: `TextBuilder Pronouns {get;}`
         - [ ] Add property: `TextBuilder SocialMediaProfiles {get;}`
