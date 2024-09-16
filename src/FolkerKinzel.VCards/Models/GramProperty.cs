@@ -1,3 +1,4 @@
+using System.Collections;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -10,7 +11,7 @@ namespace FolkerKinzel.VCards.Models;
 /// defines which grammatical gender to use in salutations and other grammatical constructs.</summary>
 /// <seealso cref="VCard.GramGenders"/>
 /// <seealso cref="Gram"/>
-public sealed class GramProperty : VCardProperty
+public sealed class GramProperty : VCardProperty, IEnumerable<GramProperty>
 {
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="GramProperty"/> instance to clone.</param>
@@ -48,4 +49,13 @@ public sealed class GramProperty : VCardProperty
 
         _ = serializer.Builder.Append(Value.ToVcfString());
     }
+
+    /// <inheritdoc />
+    IEnumerator<GramProperty> IEnumerable<GramProperty>.GetEnumerator()
+    {
+        yield return this;
+    }
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GramProperty>)this).GetEnumerator();
 }

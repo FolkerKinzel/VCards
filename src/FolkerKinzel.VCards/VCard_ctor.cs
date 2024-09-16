@@ -436,6 +436,9 @@ public sealed partial class VCard
                 case PropKeys.Rfc6715.ORG_DIRECTORY:
                     OrgDirectories = Concat(OrgDirectories, new TextProperty(vcfRow, this.Version));
                     break;
+                case PropKeys.Rfc9554.GRAMGENDER:
+                    GramGenders = Concat(GramGenders, new GramProperty(vcfRow));
+                    break;
                 default:
                     NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
                     break;
