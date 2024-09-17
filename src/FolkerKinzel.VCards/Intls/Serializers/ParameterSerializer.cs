@@ -222,7 +222,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             //case VCard.PropKeys.NonStandard.X_ASSISTANT:
             //case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ASSISTANT:
             //break;
-            case VCard.PropKeys.NonStandard.CONTACT_URI:
+            case VCard.PropKeys.Rfc8605.CONTACT_URI:
                 BuildContactUriPara();
                 break;
             default:

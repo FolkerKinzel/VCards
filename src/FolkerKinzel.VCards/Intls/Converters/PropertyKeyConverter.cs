@@ -21,7 +21,11 @@ internal static class PropertyKeyConverter
             : span.Equals(VCard.PropKeys.LABEL, comp) ? VCard.PropKeys.LABEL
             : span.Equals(VCard.PropKeys.RELATED, comp) ? VCard.PropKeys.RELATED
             : span.Equals(VCard.PropKeys.GENDER, comp) ? VCard.PropKeys.GENDER
-            : span.Equals(VCard.PropKeys.NonStandard.CONTACT_URI, comp) ? VCard.PropKeys.NonStandard.CONTACT_URI
+            : span.Equals(VCard.PropKeys.Rfc8605.CONTACT_URI, comp) ? VCard.PropKeys.Rfc8605.CONTACT_URI
+            : span.Equals(VCard.PropKeys.Rfc9554.CREATED, comp) ? VCard.PropKeys.Rfc9554.CREATED
+            : span.Equals(VCard.PropKeys.Rfc9554.GRAMGENDER, comp) ? VCard.PropKeys.Rfc9554.GRAMGENDER
+            : span.Equals(VCard.PropKeys.Rfc9554.SOCIALPROFILE, comp) ? VCard.PropKeys.Rfc9554.SOCIALPROFILE
+            : span.Equals(VCard.PropKeys.NonStandard.X_SOCIALPROFILE, comp) ? VCard.PropKeys.Rfc9554.SOCIALPROFILE
             : span.ToString().ToUpperInvariant();
     }
 }
