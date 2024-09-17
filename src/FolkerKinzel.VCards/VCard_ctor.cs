@@ -131,6 +131,9 @@ public sealed partial class VCard
                     labels ??= [];
                     labels.Add(new TextProperty(vcfRow, this.Version));
                     break;
+                case PropKeys.Rfc9554.CREATED:
+                    Created = new TimeStampProperty(vcfRow, info);
+                    break;
                 case PropKeys.REV:
                     TimeStamp = new TimeStampProperty(vcfRow, info);
                     break;
