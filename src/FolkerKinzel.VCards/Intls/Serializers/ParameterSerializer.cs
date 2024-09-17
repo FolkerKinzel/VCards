@@ -457,30 +457,8 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             Debug.Assert(key is not null);
             Debug.Assert(StringComparer.Ordinal.Equals(key, key.Trim()));
 
-            switch (key.ToUpperInvariant())
-            {
-                case ParameterSection.ParameterKey.ALTID:
-                case ParameterSection.ParameterKey.CALSCALE:
-                case ParameterSection.ParameterKey.CHARSET:
-                case ParameterSection.ParameterKey.CONTEXT:
-                case ParameterSection.ParameterKey.ENCODING:
-                case ParameterSection.ParameterKey.GEO:
-                case ParameterSection.ParameterKey.INDEX:
-                case ParameterSection.ParameterKey.LABEL:
-                case ParameterSection.ParameterKey.LANGUAGE:
-                case ParameterSection.ParameterKey.LEVEL:
-                case ParameterSection.ParameterKey.MEDIATYPE:
-                case ParameterSection.ParameterKey.PID:
-                case ParameterSection.ParameterKey.PREF:
-                case ParameterSection.ParameterKey.SORT_AS:
-                case ParameterSection.ParameterKey.TYPE:
-                case ParameterSection.ParameterKey.TZ:
-                case ParameterSection.ParameterKey.VALUE:
-                case ParameterSection.ParameterKey.CC:
-                    return true;
-                default:
-                    return false;
-            }
+            return !key.StartsWith("X-", StringComparison.OrdinalIgnoreCase) &&
+                   !key.Equals(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

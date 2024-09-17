@@ -72,10 +72,11 @@ public enum Opts
     /// vCard&#160;3.0.</summary>
     WriteImppExtension = 1 << 7,
 
-    /// <summary>Set the flag to write the following vCard&#160;properties if necessary:
+    /// <summary>Set the flag to write the following vCard&#160;properties (if necessary):
     /// <c>X-AIM</c>, <c>X-GADUGADU</c>, <c>X-GOOGLE-TALK</c>, <c>X-GTALK</c>, <c>X-ICQ</c>,
     /// <c>X-JABBER</c>, <c>X-MSN</c>, <c>X-SKYPE</c>, <c>X-TWITTER</c>, <c>X-YAHOO</c>,
-    /// <c>X-MS-IMADDRESS</c>, <c>X-GENDER</c>, <c>X-ANNIVERSARY</c> and <c>X-SPOUSE</c>.</summary>
+    /// <c>X-MS-IMADDRESS</c>, <c>X-GENDER</c>, <c>X-ANNIVERSARY</c>, <c>X-SPOUSE</c>,
+    /// <c>X-SOCIALPROFILE</c>, and the <c>X-SERVICE-TYPE</c> parameter.</summary>
     WriteXExtensions = 1 << 8,
 
     /// <summary>Set the flag to write the following vCard properties if necessary:

@@ -111,8 +111,9 @@ and let it store as string[]
         - [ ] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
         - [ ] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
         - [ ] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
-        - [ ] Write `X-SOCIALPROFILE` in vCard 4.0 when `Opts.WriteRfc9554Extensions` is not set.
-        Use the `X-SERVICE-TYPE` parameter to preserve the `ParameterSection.ServiceType` property.
+        - [ ] Write `X-SOCIALPROFILE` in vCard 4.0 to preserve `VCard.SocialMediaProfiles` when 
+        `Opts.WriteRfc9554Extensions` is not set. Make this dependent on whether the `Opts.WriteXExtensions`
+        flag is set.
         - [ ] Add `X-SOCIALPROFILE` to the documentation of the `VCard.NonStandards` property
     - [ ] Change the `VCardBuilder` class
         - [ ] Add property: `TimeStampBuilder Created {get;}`
@@ -130,10 +131,12 @@ and let it store as string[]
         - [ ] Add property `string? Script`
         - [ ] Add property `string? ServiceType`
         - [ ] Add property `string? UserName`
-        - [ ] Update ParameterSerializer.AppendNonStandardParameters()
-        - [ ] Redirect `X-SERVICE-TYPE` to the `ServiceType` property. Use the `X-SERVICE-TYPE` parameter 
-        to preserve the value of `ParameterSection.ServiceType` with `VCard.Messengers` when writing vCard 4.0 and the
-        `Opts.WriteRfc9554Extensions` flag is not set.
+        - [ ] Redirect `X-SERVICE-TYPE` to the `ParameterSection.ServiceType` property. 
+        - [ ] Use the `X-SERVICE-TYPE` parameter to preserve the value of `ParameterSection.ServiceType` with 
+        `VCard.Messengers` and `VCard.SocialMediaProfiles` when writing vCard 4.0 and the 
+        `Opts.WriteRfc9554Extensions` flag is not set. Make this dependent on whether the `Opts.WriteXExtensions`
+        flag is set.
+        
 
 ### 7.2.0
 - [x] Implement RFC 8605:
