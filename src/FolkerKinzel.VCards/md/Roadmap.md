@@ -104,7 +104,7 @@ and let it store as string[]
         - [x] Add read-only property: `ReadOnlyCollection<string> Surname2` (let the name be singular)
         - [x] Add read-only property: `ReadOnlyCollection<string> Generation` (let the name be singular)
     - [ ] Change the `VCard` class
-        - Make a new default parameter `setCreated` that defaults to `true` to the `VCard` ctor and to `VCardBuilder.Create`
+        - [x] Make a new default parameter `setCreated` that defaults to `true` to the `VCard` ctor and to `VCardBuilder.Create`
         - [x] Add property: `TimeStampProperty? Created {get; set;}`
         - [x] Add property: `IEnumerable<GramProperty?>? GramGenders {get; set;}`
         - [ ] Add property: `TextProperty? Language {get; set;}`

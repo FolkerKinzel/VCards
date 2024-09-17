@@ -17,13 +17,23 @@ public sealed partial class VCard
     /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/>
     /// property with a newly created <see cref="IDProperty"/>, otherwise
     /// <c>false</c>.</param>
+    /// <param name="setCreated">
+    /// <c>true</c> to set the <see cref="VCard.Created"/>
+    /// property with a newly created <see cref="TimeStampProperty"/>, otherwise
+    /// <c>false</c>.
+    /// </param>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
-    public VCard(bool setID = true)
+    public VCard(bool setID = true, bool setCreated = true)
     {
         if (setID)
         {
             ID = new IDProperty();
+        }
+
+        if(setCreated)
+        {
+            Created = new TimeStampProperty();
         }
 
         // Should be the last in ctor:
