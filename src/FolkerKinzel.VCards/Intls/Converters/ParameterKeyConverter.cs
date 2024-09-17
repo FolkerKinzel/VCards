@@ -26,6 +26,16 @@ internal static class ParameterKeyConverter
             : key.Equals(ParameterSection.ParameterKey.CALSCALE, comp) ? ParameterSection.ParameterKey.CALSCALE
             : key.Equals(ParameterSection.ParameterKey.CONTEXT, comp) ? ParameterSection.ParameterKey.CONTEXT
             : key.Equals(ParameterSection.ParameterKey.CC, comp) ? ParameterSection.ParameterKey.CC
+            : key.Equals(ParameterSection.ParameterKey.Rfc9554.PROP_ID, comp) ? ParameterSection.ParameterKey.Rfc9554.PROP_ID
+            : key.Equals(ParameterSection.ParameterKey.Rfc9554.CREATED, comp) ? ParameterSection.ParameterKey.Rfc9554.CREATED
+            : key.Equals(ParameterSection.ParameterKey.Rfc9554.DERIVED, comp) ? ParameterSection.ParameterKey.Rfc9554.DERIVED
+            : key.Equals(ParameterSection.ParameterKey.Rfc9554.PHONETIC, comp) ? ParameterSection.ParameterKey.Rfc9554.PHONETIC
+            : key.Equals(ParameterSection.ParameterKey.Rfc9554.SCRIPT, comp) ? ParameterSection.ParameterKey.Rfc9554.SCRIPT
+            : key.Equals(ParameterSection.ParameterKey.Rfc9554.SERVICE_TYPE, comp) ? ParameterSection.ParameterKey.Rfc9554.SERVICE_TYPE
+            : key.Equals(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, comp) ? ParameterSection.ParameterKey.Rfc9554.SERVICE_TYPE
+            : key.Equals(ParameterSection.ParameterKey.Rfc9554.USERNAME, comp) ? ParameterSection.ParameterKey.Rfc9554.USERNAME
+            : key.Equals(ParameterSection.ParameterKey.Rfc9554.AUTHOR, comp) ? ParameterSection.ParameterKey.Rfc9554.AUTHOR
+            : key.Equals(ParameterSection.ParameterKey.Rfc9554.AUTHOR_NAME, comp) ? ParameterSection.ParameterKey.Rfc9554.AUTHOR_NAME
             : key.ToString();
     }
 }
