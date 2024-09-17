@@ -34,13 +34,13 @@ public readonly struct TimeStampBuilder
     }
 
     /// <summary>
-    /// Edits the content of the <see cref="VCard.TimeStamp"/> property with a delegate and 
+    /// Edits the content of the specified <see cref="VCard"/> property with a delegate and 
     /// allows to pass <paramref name="data"/> to this delegate.
     /// </summary>
     /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// <see cref="VCard.TimeStamp"/> property and <paramref name="data"/> as arguments. Its return value 
-    /// will be the new content of the <see cref="VCard.TimeStamp"/> property.</param>
+    /// specified <see cref="VCard"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// will be the new content of the specified <see cref="VCard"/> property.</param>
     /// <param name="data">The data to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeStampBuilder"/>
     /// to be able to chain calls.</returns>
@@ -59,12 +59,12 @@ public readonly struct TimeStampBuilder
     }
 
     /// <summary>
-    /// Edits the content of the <see cref="VCard.TimeStamp"/> property with a delegate.
+    /// Edits the content of the specified <see cref="VCard"/> property with a delegate.
     /// </summary>
     /// <param name="func">
     /// A function called with the content of the 
-    /// <see cref="VCard.TimeStamp"/> property as argument. Its return value will be the new content of the 
-    /// <see cref="VCard.TimeStamp"/> property.
+    /// specified <see cref="VCard"/> property as argument. Its return value will be the new content of the 
+    /// specified <see cref="VCard"/> property.
     /// </param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeStampBuilder"/>
     /// to be able to chain calls.</returns>
@@ -80,7 +80,7 @@ public readonly struct TimeStampBuilder
     }
 
     /// <summary>
-    /// Sets the <see cref="VCard.TimeStamp"/> property to a <see cref="TimeStampProperty"/> instance that 
+    /// Sets the specified <see cref="VCard"/> property to a <see cref="TimeStampProperty"/> instance that 
     /// is newly initialized using the UTC time stamp of the method call.
     /// </summary>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
@@ -105,7 +105,7 @@ public readonly struct TimeStampBuilder
     }
 
     /// <summary>
-    /// Sets the <see cref="VCard.TimeStamp"/> property to a <see cref="TimeStampProperty"/> instance that is 
+    /// Sets the specified <see cref="VCard"/> property to a <see cref="TimeStampProperty"/> instance that is 
     /// newly initialized from a <see cref="DateTimeOffset"/> value.
     /// </summary>
     /// <param name="value">The <see cref="DateTimeOffset" /> value to embed.</param>
@@ -132,7 +132,7 @@ public readonly struct TimeStampBuilder
     }
 
     /// <summary>
-    /// Sets the <see cref="VCard.TimeStamp"/> property to <c>null</c>.
+    /// Sets the specified <see cref="VCard"/> property to <c>null</c>.
     /// </summary>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeStampBuilder"/>
     /// to be able to chain calls.</returns>

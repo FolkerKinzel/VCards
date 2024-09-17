@@ -41,7 +41,7 @@ public readonly struct DateAndOrTimeBuilder
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Index"/> properties of 
-    /// the items in in the specified property ascending depending on their 
+    /// the items in in the specified <see cref="VCard"/> property ascending depending on their 
     /// position in that collection and allows to specify whether to skip empty items in that 
     /// process.
     /// </summary>
@@ -62,7 +62,7 @@ public readonly struct DateAndOrTimeBuilder
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
-    /// the items in in the specified property to <c>null</c>.
+    /// the items in in the specified <see cref="VCard"/> property to <c>null</c>.
     /// </summary>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DateAndOrTimeBuilder"/>
     /// to be able to chain calls.</returns>
@@ -76,13 +76,13 @@ public readonly struct DateAndOrTimeBuilder
         });
 
     /// <summary>
-    /// Edits the content of the specified property with a delegate and 
+    /// Edits the content of the specified <see cref="VCard"/> property with a delegate and 
     /// allows to pass <paramref name="data"/> to this delegate.
     /// </summary>
     /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// specified property and <paramref name="data"/> as arguments. Its return value 
-    /// will be the new content of the specified property.</param>
+    /// specified <see cref="VCard"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// will be the new content of the specified <see cref="VCard"/> property.</param>
     /// <param name="data">The data to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="DateAndOrTimeBuilder"/> to be able to chain calls.</returns>
@@ -103,12 +103,12 @@ public readonly struct DateAndOrTimeBuilder
     }
 
     /// <summary>
-    /// Edits the content of the specified property with a delegate.
+    /// Edits the content of the specified <see cref="VCard"/> property with a delegate.
     /// </summary>
     /// <param name="func">
-    /// A function called with a collection of the non-<c>null</c> items of the specified property
+    /// A function called with a collection of the non-<c>null</c> items of the specified <see cref="VCard"/> property
     /// as argument.
-    /// Its return value will be the new content of the specified property.
+    /// Its return value will be the new content of the specified <see cref="VCard"/> property.
     /// </param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
     /// to be able to chain calls.</returns>
