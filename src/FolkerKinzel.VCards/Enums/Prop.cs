@@ -13,6 +13,12 @@ public enum Prop
     /// <c>(4)</c></summary>
     Kind,
 
+    /// <summary>
+    /// <c>CREATED</c>: Defines the date and time when the vCard was created.
+    /// <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    Created,
+
     /// <summary> <c>REV</c>: A timestamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
     TimeStamp,
 
@@ -196,5 +202,7 @@ public enum Prop
     GramGenders,
 
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
-    NonStandards
+    NonStandards,
+
+    
 }

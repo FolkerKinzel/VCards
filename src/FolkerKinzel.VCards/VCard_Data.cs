@@ -211,6 +211,26 @@ public sealed partial class VCard
         set => Set(Prop.ContactUris, value);
     }
 
+    /// <summary>
+    /// <c>CREATED</c>: Defines the date and time when the vCard was created.
+    /// <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This is the timestamp when the vCard was created. Copying the vCard across systems does 
+    /// not count as a new creation nor a new revision. Instead, the timestamp value typically 
+    /// stays unchanged for the existence of the vCard.
+    /// </para>
+    /// <para>
+    /// Use the <see cref="TimeStamp"/> property to specify the last revision.
+    /// </para>
+    /// </remarks>
+    public TimeStampProperty? Created
+    {
+        get => Get<TimeStampProperty?>(Prop.Created);
+        set => Set(Prop.Created, value);
+    }
+
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
