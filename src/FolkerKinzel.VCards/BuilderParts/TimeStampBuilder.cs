@@ -22,11 +22,16 @@ namespace FolkerKinzel.VCards.BuilderParts;
 public readonly struct TimeStampBuilder
 {
     private readonly VCardBuilder? _builder;
+    private readonly Prop _prop;
 
     [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
-    internal TimeStampBuilder(VCardBuilder builder) => _builder = builder;
+    internal TimeStampBuilder(VCardBuilder builder, Prop prop)
+    {
+        _builder = builder;
+        _prop = prop;
+    }
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.TimeStamp"/> property with a delegate and 
@@ -47,9 +52,9 @@ public readonly struct TimeStampBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TData>(Func<TimeStampProperty?, TData, TimeStampProperty?> func, TData data)
     {
-        var prop = Builder.VCard.TimeStamp;
+        TimeStampProperty? prop = Builder.VCard.Get<TimeStampProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.TimeStamp = func.Invoke(prop, data);
+        _builder.VCard.Set(_prop, func.Invoke(prop, data));
         return _builder;
     }
 
@@ -68,9 +73,9 @@ public readonly struct TimeStampBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<TimeStampProperty?, TimeStampProperty?> func)
     {
-        var prop = Builder.VCard.TimeStamp;
+        TimeStampProperty? prop = Builder.VCard.Get<TimeStampProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.TimeStamp = func.Invoke(prop);
+        _builder.VCard.Set(_prop, func.Invoke(prop));
         return _builder;
     }
 
@@ -91,11 +96,11 @@ public readonly struct TimeStampBuilder
     public VCardBuilder Set(Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        var vc = Builder.VCard;
+        VCard vc = Builder.VCard;
         var property = new TimeStampProperty(group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 
-        vc.Set(Prop.TimeStamp, property);
+        vc.Set(_prop, property);
         return _builder;
     }
 
@@ -118,11 +123,11 @@ public readonly struct TimeStampBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        var vc = Builder.VCard;
+        VCard vc = Builder.VCard;
         var property = new TimeStampProperty(value, group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 
-        vc.Set(Prop.TimeStamp, property);
+        vc.Set(_prop, property);
         return _builder;
     }
 
@@ -135,7 +140,7 @@ public readonly struct TimeStampBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Clear()
     {
-        Builder.VCard.Set(Prop.TimeStamp, null);
+        Builder.VCard.Set(_prop, null);
         return _builder;
     }
 

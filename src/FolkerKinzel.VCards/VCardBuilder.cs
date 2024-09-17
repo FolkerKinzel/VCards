@@ -131,6 +131,22 @@ public sealed class VCardBuilder
     /// </remarks>
     public TextBuilder ContactUris => new(this, Prop.ContactUris);
 
+    /// <summary>
+    /// <c>CREATED</c>: Defines the date and time when the vCard was created.
+    /// <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This is the timestamp when the vCard was created. Copying the vCard across systems does 
+    /// not count as a new creation nor a new revision. Instead, the timestamp value typically 
+    /// stays unchanged for the existence of the vCard.
+    /// </para>
+    /// <para>
+    /// Use the <see cref="TimeStamp"/> property to specify the last revision.
+    /// </para>
+    /// </remarks>
+    public TimeStampBuilder Created => new(this, Prop.Created);
+
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
@@ -459,7 +475,7 @@ public sealed class VCardBuilder
     /// With <see cref="Opts.Default"/> the flag <see cref="Opts.UpdateTimeStamp"/> is set. So 
     /// this property is normally updated automatically when serializing VCF.
     /// </remarks>
-    public TimeStampBuilder TimeStamp => new(this);
+    public TimeStampBuilder TimeStamp => new(this, Prop.TimeStamp);
 
     /// <summary> <c>TZ</c>: The time zone(s) of the vCard object. <c>(2,3,4)</c></summary>
     /// <remarks>

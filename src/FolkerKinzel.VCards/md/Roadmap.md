@@ -47,6 +47,8 @@ and let it store as string[]
 - [ ] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `NameViewsBuilder`
 - [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
+- [ ] Rename the `VCardBuilder.TimeStamp` property to `VCardBuilder.Updated`
+- [ ] Rename the `Prop.TimeStamp` property to `Prop.Updated`
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
 
@@ -110,13 +112,13 @@ and let it store as string[]
         - [ ] Add property: `TextProperty? Language {get; set;}`
         - [ ] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
         - [ ] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
-        - [ ] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
+        - [x] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
         - [ ] Write `X-SOCIALPROFILE` in vCard 4.0 to preserve `VCard.SocialMediaProfiles` when 
         `Opts.WriteRfc9554Extensions` is not set. Make this dependent on whether the `Opts.WriteXExtensions`
         flag is set.
         - [ ] Add `X-SOCIALPROFILE` to the documentation of the `VCard.NonStandards` property
     - [ ] Change the `VCardBuilder` class
-        - [ ] Add property: `TimeStampBuilder Created {get;}`
+        - [x] Add property: `TimeStampBuilder Created {get;}`
         - [x] Add property: `GramBuilder GramGenders {get;}`
         - [ ] Add property: `TextSingletonBuilder Language {get;}`
         - [ ] Add property: `TextBuilder Pronouns {get;}`

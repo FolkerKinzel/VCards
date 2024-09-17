@@ -53,7 +53,7 @@ public readonly struct TextSingletonBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TData>(Func<TextProperty?, TData, TextProperty?> func, TData data)
     {
-        var prop = Builder.VCard.Get<TextProperty?>(_prop);
+        TextProperty? prop = Builder.VCard.Get<TextProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Set(_prop, func.Invoke(prop, data));
         return _builder;
