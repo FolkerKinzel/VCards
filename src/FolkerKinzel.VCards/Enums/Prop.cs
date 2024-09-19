@@ -55,6 +55,11 @@ public enum Prop
     /// object. <c>(3,4)</c></summary>
     ProductID,
 
+    /// <summary> <c>LANGUAGE</c>: Defines the default language that human-readable 
+    /// text values in this vCard are assumed to be written in.
+    /// <c>(4 - RFC 9554)</c></summary>
+    Language,
+
     /// <summary> <c>FN</c>: The formatted name string associated with the vCard object.
     /// <c>(2,3,4)</c></summary>
     DisplayNames,
@@ -169,11 +174,6 @@ public enum Prop
     /// in. <c>(4 - RFC&#160;6715)</c></summary>
     Hobbies,
 
-    /// <summary> <c>LANGUAGE</c>: Defines the default language that human-readable 
-    /// text values in this vCard are assumed to be written in.
-    /// <c>(4 - RFC 9554)</c></summary>
-    Language,
-
     /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
     Languages,
 
@@ -206,6 +206,11 @@ public enum Prop
     /// </summary>
     GramGenders,
 
+    /// <summary> <c>PRONOUNS</c>: Defines the pronouns that shall be used to refer to the entity 
+    /// represented by this <see cref="VCard"/>. <c>(4 - RFC 9554)</c></summary>
+    Pronouns,
+
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
     NonStandards,
+    
 }

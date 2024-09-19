@@ -406,12 +406,12 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>LANGUAGE</c>: Defines the default language that human-readable 
-    /// text values in this vCard are assumed to be written in.
+    /// text values in this <see cref="VCard"/> are assumed to be written in.
     /// <c>(4 - RFC 9554)</c></summary>
     /// <remarks>
     /// <para>
     /// This property defines the language that property values of type <c>TEXT</c> are assumed 
-    /// to be written in for this vCard. If a <see cref="VCardProperty"/> includes the 
+    /// to be written in for this <see cref="VCard"/>. If a <see cref="VCardProperty"/> includes the 
     /// <see cref="ParameterSection.Language"/> parameter, 
     /// then the parameter value has higher precedence than the <see cref="Language"/> property value.
     /// </para>
@@ -656,6 +656,22 @@ public sealed partial class VCard
     {
         get => Get<ProfileProperty?>(Prop.Profile);
         set => Set(Prop.Profile, value);
+    }
+
+    /// <summary> <c>PRONOUNS</c>: Defines the pronouns that shall be used to refer to the entity 
+    /// represented by this <see cref="VCard"/>. <c>(4 - RFC 9554)</c></summary>
+    /// <remarks>
+    /// This property contains the pronouns that the contact chooses to use for themselves. 
+    /// The value is free-form text. These pronouns shall be used when addressing or referring to the 
+    /// contact. Multiple occurrences of this property MAY define pronouns for multiple languages, 
+    /// preferences, and contexts. Multiple pronouns in the same language SHOULD use the 
+    /// <see cref="ParameterSection.Preference"/> parameter; 
+    /// otherwise, the order of preference is implementation-specific.
+    /// </remarks>
+    public IEnumerable<TextProperty?>? Pronouns
+    {
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Pronouns);
+        set => Set(Prop.Pronouns, value);
     }
 
     /// <summary> <c>RELATED</c>: Other entities that the person or organization is 

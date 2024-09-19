@@ -122,7 +122,7 @@ and let it store as string[]
         - [x] Add property: `TimeStampBuilder Created {get;}`
         - [x] Add property: `GramBuilder GramGenders {get;}`
         - [x] Add property: `TextSingletonBuilder Language {get;}`
-        - [ ] Add property: `TextBuilder Pronouns {get;}`
+        - [x] Add property: `TextBuilder Pronouns {get;}`
         - [ ] Add property: `TextBuilder SocialMediaProfiles {get;}`
     - [ ] Change the ParameterSection class
         - [ ] Add property `string? Author` that takes an absolute Uri
