@@ -455,6 +455,9 @@ public sealed partial class VCard
                 case PropKeys.Rfc9554.LANGUAGE:
                     Language = new TextProperty(vcfRow, this.Version);
                     break;
+                case PropKeys.Rfc9554.PRONOUNS:
+                    Pronouns = Concat(Pronouns, new TextProperty(vcfRow, Version));
+                    break;
                 default:
                     NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
                     break;
