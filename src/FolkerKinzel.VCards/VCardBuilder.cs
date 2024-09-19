@@ -269,6 +269,23 @@ public sealed class VCardBuilder
     /// <c>(4)</c></summary>
     public KindBuilder Kind => new(this);
 
+    /// <summary> <c>LANGUAGE</c>: Defines the default language that human-readable 
+    /// text values in this vCard are assumed to be written in.
+    /// <c>(4 - RFC 9554)</c></summary>
+    /// <remarks>
+    /// <para>
+    /// This property defines the language that property values of type <c>TEXT</c> are assumed 
+    /// to be written in for this vCard. If a <see cref="VCardProperty"/> includes the 
+    /// <see cref="ParameterSection.Language"/> parameter, 
+    /// then the parameter value has higher precedence than the <see cref="Language"/> property value.
+    /// </para>
+    /// <para>
+    /// The <see cref="ParameterSection.Language"/> parameter MUST NOT be assigned to this property.
+    /// </para>
+    /// </remarks>
+    /// <value>RFC 5646 language tag.</value>
+    public TextSingletonBuilder Language => new(this, Prop.Language);
+
     /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
     public TextBuilder Languages => new(this, Prop.Languages);
 

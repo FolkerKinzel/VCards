@@ -121,7 +121,7 @@ and let it store as string[]
     - [ ] Change the `VCardBuilder` class
         - [x] Add property: `TimeStampBuilder Created {get;}`
         - [x] Add property: `GramBuilder GramGenders {get;}`
-        - [ ] Add property: `TextSingletonBuilder Language {get;}`
+        - [x] Add property: `TextSingletonBuilder Language {get;}`
         - [ ] Add property: `TextBuilder Pronouns {get;}`
         - [ ] Add property: `TextBuilder SocialMediaProfiles {get;}`
     - [ ] Change the ParameterSection class
