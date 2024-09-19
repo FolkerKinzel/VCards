@@ -141,9 +141,6 @@ public sealed partial class VCard
                     labels ??= [];
                     labels.Add(new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.Rfc9554.CREATED:
-                    Created = new TimeStampProperty(vcfRow, info);
-                    break;
                 case PropKeys.REV:
                     TimeStamp = new TimeStampProperty(vcfRow, info);
                     break;
@@ -448,6 +445,9 @@ public sealed partial class VCard
                     break;
                 case PropKeys.Rfc6715.ORG_DIRECTORY:
                     OrgDirectories = Concat(OrgDirectories, new TextProperty(vcfRow, this.Version));
+                    break;
+                case PropKeys.Rfc9554.CREATED:
+                    Created = new TimeStampProperty(vcfRow, info);
                     break;
                 case PropKeys.Rfc9554.GRAMGENDER:
                     GramGenders = Concat(GramGenders, new GramProperty(vcfRow));
