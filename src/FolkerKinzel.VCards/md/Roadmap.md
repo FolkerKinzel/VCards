@@ -111,7 +111,7 @@ and let it store as string[]
         - [x] Add property: `TimeStampProperty? Created {get; set;}`
         - [x] Add property: `IEnumerable<GramProperty?>? GramGenders {get; set;}`
         - [x] Add property: `TextProperty? Language {get; set;}`
-        - [ ] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
+        - [x] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
         - [ ] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
         - [x] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
         - [ ] Write `X-SOCIALPROFILE` in vCard 4.0 to preserve `VCard.SocialMediaProfiles` when 

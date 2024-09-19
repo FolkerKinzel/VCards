@@ -467,6 +467,18 @@ public sealed class VCardBuilder
     /// <summary> <c>PROFILE</c>: States that the <see cref="VCards.VCard"/> is a vCard. <c>(3)</c></summary>
     public ProfileBuilder Profile => new(this);
 
+    /// <summary> <c>PRONOUNS</c>: Defines the pronouns that shall be used to refer to the entity 
+    /// represented by this <see cref="VCard"/>. <c>(4 - RFC 9554)</c></summary>
+    /// <remarks>
+    /// This property contains the pronouns that the contact chooses to use for themselves. 
+    /// The value is free-form text. These pronouns shall be used when addressing or referring to the 
+    /// contact. Multiple occurrences of this property MAY define pronouns for multiple languages, 
+    /// preferences, and contexts. Multiple pronouns in the same language SHOULD use the 
+    /// <see cref="ParameterSection.Preference"/> parameter; 
+    /// otherwise, the order of preference is implementation-specific.
+    /// </remarks>
+    public TextBuilder Pronouns => new(this, Prop.Pronouns);
+
     /// <summary> <c>RELATED</c>: Other entities that the person or organization is 
     /// related to. <c>(4)</c></summary>
     /// <example>
