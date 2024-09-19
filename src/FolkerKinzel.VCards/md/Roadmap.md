@@ -49,6 +49,7 @@ and let it store as string[]
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
 - [ ] Rename the `VCardBuilder.TimeStamp` property to `VCardBuilder.Updated`
 - [ ] Rename the `Prop.TimeStamp` property to `Prop.Updated`
+- [ ] Rename the `VCard.Languages` property to `SpokenLanguages`
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
 
@@ -109,7 +110,7 @@ and let it store as string[]
         - [x] Make a new default parameter `setCreated` that defaults to `true` to the `VCard` ctor and to `VCardBuilder.Create`
         - [x] Add property: `TimeStampProperty? Created {get; set;}`
         - [x] Add property: `IEnumerable<GramProperty?>? GramGenders {get; set;}`
-        - [ ] Add property: `TextProperty? Language {get; set;}`
+        - [x] Add property: `TextProperty? Language {get; set;}`
         - [ ] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
         - [ ] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
         - [x] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`

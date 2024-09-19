@@ -169,6 +169,11 @@ public enum Prop
     /// in. <c>(4 - RFC&#160;6715)</c></summary>
     Hobbies,
 
+    /// <summary> <c>LANGUAGE</c>: Defines the default language that human-readable 
+    /// text values in this vCard are assumed to be written in.
+    /// <c>(4 - RFC 9554)</c></summary>
+    Language,
+
     /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
     Languages,
 
@@ -203,6 +208,4 @@ public enum Prop
 
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
     NonStandards,
-
-    
 }
