@@ -31,7 +31,7 @@ public sealed partial class VCard
             ID = new IDProperty();
         }
 
-        if(setCreated)
+        if (setCreated)
         {
             Created = new TimeStampProperty();
         }
@@ -451,6 +451,9 @@ public sealed partial class VCard
                     break;
                 case PropKeys.Rfc9554.GRAMGENDER:
                     GramGenders = Concat(GramGenders, new GramProperty(vcfRow));
+                    break;
+                case PropKeys.Rfc9554.LANGUAGE:
+                    Language = new TextProperty(vcfRow, this.Version);
                     break;
                 default:
                     NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
