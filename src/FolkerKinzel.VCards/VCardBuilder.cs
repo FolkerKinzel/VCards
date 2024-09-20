@@ -490,6 +490,21 @@ public sealed class VCardBuilder
     /// object within an organization. <c>(2,3,4)</c></summary>
     public TextBuilder Roles => new(this, Prop.Roles);
 
+    /// <summary> <c>SOCIALPROFILE</c>: Specifies the URI or username for social media 
+    /// profiles associated with the object the <see cref="VCard"/> represents. <c>(4 - RFC 9554)</c></summary>
+    /// <value>A single URI or TEXT value. The default value type is URI.</value>
+    /// <remarks>
+    /// <para>
+    /// In addition to the typical use of this property with URI values, it also allows setting usernames for social 
+    /// media services as free-text TEXT values, in which case the <see cref="ParameterSection.ServiceType"/> parameter
+    /// MUST be provided.
+    /// </para>
+    /// <para>
+    /// The <see cref="ParameterSection.ServiceType"/> parameter MAY be assigned if the value type is URI.
+    /// </para>
+    /// </remarks>
+    public TextBuilder SocialMediaProfiles => new(this, Prop.SocialMediaProfiles);
+
     /// <summary> <c>SOUND</c>: Specifies the pronunciation of the <see cref="VCard.DisplayNames"
     /// /> property of the <see cref="VCard" />-object. <c>(2,3,4)</c></summary>
     public DataBuilder Sounds => new(this, Prop.Sounds);
