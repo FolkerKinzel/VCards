@@ -1,6 +1,7 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Syncs;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -81,9 +82,9 @@ public sealed partial class ParameterSection
     {
         get => Get<string?>(VCdParam.Calendar) ?? DefaultCalendar;
 
-        set => Set<string?>(VCdParam.Calendar, 
-                            string.IsNullOrWhiteSpace(value) 
-                             ? null 
+        set => Set<string?>(VCdParam.Calendar,
+                            string.IsNullOrWhiteSpace(value)
+                             ? null
                              : value.Trim());
     }
 
@@ -423,5 +424,19 @@ public sealed partial class ParameterSection
     {
         get => Get<TimeZoneID?>(VCdParam.TimeZone);
         set => Set(VCdParam.TimeZone, value);
+    }
+
+    public Uri? Author
+    {
+        get => Get<Uri?>(VCdParam.Author);
+        set
+        {
+            if (!value?.IsAbsoluteUri ?? false)
+            {
+                throw new ArgumentException(string.Format(Res.RelativeUri, value));
+            }
+
+            Set(VCdParam.Author, value);
+        }
     }
 }

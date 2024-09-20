@@ -111,7 +111,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             return;
         }
 
-        BuildPropertyCollection(VCard.PropKeys.NonStandard.CONTACT_URI, value);
+        BuildPropertyCollection(VCard.PropKeys.Rfc8605.CONTACT_URI, value);
     }
 
     protected override void AppendDeathDateViews(IEnumerable<DateAndOrTimeProperty?> value)

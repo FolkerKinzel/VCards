@@ -103,6 +103,7 @@ public sealed partial class ParameterSection
         /// <summary>
         /// <c>CC</c>: ISO&#160;3166 two-character country code. <c>(4 - RFC&#160;8605)</c>
         /// </summary>
-        CountryCode
+        CountryCode,
+        Author
     }
 }
