@@ -457,4 +457,10 @@ public sealed partial class ParameterSection
         get => Get<bool>(VCdParam.Derived);
         set => Set(VCdParam.Derived, value);
     }
+
+    public Phonetic? Phonetic
+    {
+        get => Get<Phonetic?>(VCdParam.Phonetic);
+        set => Set(VCdParam.Phonetic, value);
+    }
 }
