@@ -63,7 +63,57 @@ public sealed partial class ParameterSection
         set => Set(VCdParam.AltID, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
+    /// <summary>
+    /// <c>AUTHOR</c>: Identifies the author of the associated <see cref="VCardProperty.Value"/>. <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <value>An absolute <see cref="Uri"/> or <c>null</c>.</value>
+    /// <remarks>
+    /// This parameter MAY be set on any <see cref="VCardProperty"/> where conveying authorship is desired. 
+    /// It identifies the author as an absolute <see cref="Uri"/>. As an alternative or in addition to this parameter, 
+    /// the <see cref="AuthorName"/> parameter allows naming an author as a free-text value.
+    /// </remarks>
+    /// <exception cref="ArgumentException">The value is a relative <see cref="Uri"/>.</exception>
+    public Uri? Author
+    {
+        get => Get<Uri?>(VCdParam.Author);
+        set
+        {
+            if (!value?.IsAbsoluteUri ?? false)
+            {
+                throw new ArgumentException(string.Format(Res.RelativeUri, value));
+            }
 
+            Set(VCdParam.Author, value);
+        }
+    }
+
+    /// <summary>
+    /// <c>AUTHOR-NAME</c>: Names the author of the associated <see cref="VCardProperty.Value"/>. <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <value>Author's name as a free-text value</value>
+    /// <remarks>
+    /// This parameter MAY be set on any <see cref="VCardProperty"/> where conveying authorship is desired. 
+    /// As an alternative or in addition to this parameter, the <see cref="Author"/> parameter allows identifying
+    /// an author by <see cref="Uri"/>.
+    /// </remarks>
+    public string? AuthorName
+    {
+        get => Get<string?>(VCdParam.AuthorName);
+        set => Set(VCdParam.AuthorName, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
+    }
+
+    /// <summary>
+    /// <c>CREATED</c>: Defines the date and time when a <see cref="VCardProperty"/> was created. <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <remarks>
+    /// This parameter MAY be set on any <see cref="VCardProperty"/> to define the point in time when the property was created. 
+    /// Generally, updating a <see cref="VCardProperty"/> value SHOULD NOT change the creation timestamp.
+    /// </remarks>
+    public DateTimeOffset? Created
+    {
+        get => Get<DateTimeOffset?>(VCdParam.Created);
+        set => Set(VCdParam.Created, value);
+    }
 
     /// <summary><c>CALSCALE</c>: The calendar system in which a date or 
     /// date-time value is expressed. <c>(4)</c></summary>
@@ -143,6 +193,28 @@ public sealed partial class ParameterSection
     {
         get => Get<Data?>(VCdParam.DataType);
         set => Set(VCdParam.DataType, value);
+    }
+
+    /// <summary>
+    /// <c>DERIVED</c>: Specifies that the value of the associated <see cref="VCardProperty"/> is derived from some other 
+    /// <see cref="VCardProperty"/> values in the same <see cref="VCard"/>. <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This property parameter SHOULD be specified on a <see cref="VCardProperty"/> if the property value is derived 
+    /// from some other 
+    /// properties in the same <see cref="VCard"/>. When present with a value of <c>true</c>, clients MUST NOT update 
+    /// the <see cref="VCardProperty"/>.
+    /// </para>
+    /// <para>
+    /// As an example, an implementation may derive the value of the FN property from the name components of the N property.
+    /// It indicates this fact by setting the DERIVED parameter on the FN property to "true".
+    /// </para>
+    /// </remarks>
+    public bool Derived
+    {
+        get => Get<bool>(VCdParam.Derived);
+        set => Set(VCdParam.Derived, value);
     }
 
     /// <summary> <c>TYPE</c>: Describes the type of an e-mail address. <c>(2,3)</c></summary>
@@ -308,6 +380,21 @@ public sealed partial class ParameterSection
         set => Set(VCdParam.NonStandard, value);
     }
 
+    /// <summary>
+    /// <c>PHONETIC</c>: Defines how to pronounce the value of another property in the same vCard. <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <value>The parameter value indicates the phonetic system.</value>
+    /// <remarks>
+    /// This property parameter indicates that the value of its property contains the phonetic representation of another 
+    /// same-named property in the same vCard. Exemplary uses are defining how to pronounce Japanese names and romanizing 
+    /// Mandarin or Cantonese names and address components.
+    /// </remarks>
+    public Phonetic? Phonetic
+    {
+        get => Get<Phonetic?>(VCdParam.Phonetic);
+        set => Set(VCdParam.Phonetic, value);
+    }
+
     /// <summary><c>TYPE</c>: Describes a phone number. <c>(2,3,4)</c></summary>
     public Tel? PhoneType
     {
@@ -360,6 +447,37 @@ public sealed partial class ParameterSection
         }
     }
 
+    /// <summary>
+    /// <c>PROP-ID</c>: Identifies a property among all its siblings of the same property name. <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <value>
+    /// A valid value must be a <see cref="string"/> of 1 and a maximum of 255 characters in size, and it MUST only 
+    /// contain the ASCII alphanumeric characters ("A-Za-z0-9"), hyphen (-), and underscore ("_"). 
+    /// </value>
+    /// <remarks>
+    /// <para>
+    /// (This is the property identification mechanism newly introduced with RFC 9554. The vCard 4.0 property identification
+    /// is <see cref="PropertyIDs"/>.)
+    /// </para>
+    /// <para>
+    /// This parameter uniquely identifies a <see cref="VCardProperty"/> among all of its siblings with the same name within a vCard. 
+    /// The identifier's only purpose is to uniquely identify siblings; its value has no other meaning. If an application
+    /// makes use of <see cref="PropertyID"/>, it SHOULD 
+    /// assign a unique identifier to each sibling <see cref="VCardProperty"/> of the same name within their embedding component. The same 
+    /// identifier MAY be used for properties of a different name, and it MAY also be assigned to a same-named property
+    /// that is not a sibling.
+    /// </para>
+    /// <para>
+    /// Resolving duplicate identifier conflicts is specific to the application. Similarly, handling properties where 
+    /// some but not all siblings have a <see cref="PropertyID"/> assigned is application-specific.
+    /// </para>
+    /// </remarks>
+    public string? PropertyID
+    {
+        get => Get<string?>(VCdParam.PropertyID);
+        set => Set(VCdParam.PropertyID, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
+    }
+
     /// <summary> <c>PID</c>: Gets the <see cref="PropertyID" />s used 
     /// to identify the <see cref="VCardProperty" />. <c>(4)</c></summary>
     /// <remarks>
@@ -390,6 +508,39 @@ public sealed partial class ParameterSection
         }
     }
 
+    /// <summary>
+    /// <c>SCRIPT</c>: Defines the script that a <see cref="VCardProperty.Value"/> is written in. <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <remarks>
+    /// This parameter allows defining a script for a <see cref="VCardProperty.Value"/> without also defining a language as 
+    /// the <see cref="Language"/> parameter would. The value MUST be a script subtag as 
+    /// defined in Section 2.2.3 of RFC 5646. The <see cref="Script"/> parameter is often used in combination 
+    /// with the <see cref="Phonetic"/> parameter.
+    /// </remarks>
+    public string? Script
+    {
+        get => Get<string?>(VCdParam.Script);
+        set => Set(VCdParam.Script, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
+    }
+
+    /// <summary>
+    /// <c>SERVICE-TYPE</c>: Defines the online service name associated with a messaging or
+    /// social media profile. <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <remarks>
+    /// This parameter MAY be specified on a <see cref="VCard.Messengers"/> or 
+    /// a <see cref="VCard.SocialMediaProfiles"/> property to name the online service associated 
+    /// with that property value. 
+    /// Its value is case-sensitive.
+    /// </remarks>
+    /// <seealso cref="VCard.Messengers"/>
+    /// <seealso cref="VCard.SocialMediaProfiles"/>
+    public string? ServiceType
+    {
+        get => Get<string?>(VCdParam.ServiceType);
+        set => Set(VCdParam.ServiceType, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
+    }
+    
     /// <summary><c>SORT-AS</c>: Determines the sort order. <c>([3],4)</c></summary>
     /// <value><see cref="string"/>s (case-sensitive!). Maximum as many as fields of the compound property.</value>
     /// <example>
@@ -424,159 +575,6 @@ public sealed partial class ParameterSection
     {
         get => Get<TimeZoneID?>(VCdParam.TimeZone);
         set => Set(VCdParam.TimeZone, value);
-    }
-
-    /// <summary>
-    /// <c>AUTHOR</c>: Identifies the author of the associated <see cref="VCardProperty.Value"/>. <c>(4 - RFC&#160;9554)</c>
-    /// </summary>
-    /// <value>An absolute <see cref="Uri"/> or <c>null</c>.</value>
-    /// <remarks>
-    /// This parameter MAY be set on any <see cref="VCardProperty"/> where conveying authorship is desired. 
-    /// It identifies the author as an absolute <see cref="Uri"/>. As an alternative or in addition to this parameter, 
-    /// the <see cref="AuthorName"/> parameter allows naming an author as a free-text value.
-    /// </remarks>
-    /// <exception cref="ArgumentException">The value is a relative <see cref="Uri"/>.</exception>
-    public Uri? Author
-    {
-        get => Get<Uri?>(VCdParam.Author);
-        set
-        {
-            if (!value?.IsAbsoluteUri ?? false)
-            {
-                throw new ArgumentException(string.Format(Res.RelativeUri, value));
-            }
-
-            Set(VCdParam.Author, value);
-        }
-    }
-
-    /// <summary>
-    /// <c>AUTHOR-NAME</c>: Names the author of the associated <see cref="VCardProperty.Value"/>. <c>(4 - RFC&#160;9554)</c>
-    /// </summary>
-    /// <value>Author's name as a free-text value</value>
-    /// <remarks>
-    /// This parameter MAY be set on any <see cref="VCardProperty"/> where conveying authorship is desired. 
-    /// As an alternative or in addition to this parameter, the <see cref="Author"/> parameter allows identifying
-    /// an author by <see cref="Uri"/>.
-    /// </remarks>
-    public string? AuthorName
-    {
-        get => Get<string?>(VCdParam.AuthorName);
-        set => Set(VCdParam.AuthorName, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
-    }
-
-    /// <summary>
-    /// <c>CREATED</c>: Defines the date and time when a <see cref="VCardProperty"/> was created. <c>(4 - RFC&#160;9554)</c>
-    /// </summary>
-    /// <remarks>
-    /// This parameter MAY be set on any <see cref="VCardProperty"/> to define the point in time when the property was created. 
-    /// Generally, updating a <see cref="VCardProperty"/> value SHOULD NOT change the creation timestamp.
-    /// </remarks>
-    public DateTimeOffset? Created
-    {
-        get => Get<DateTimeOffset?>(VCdParam.Created);
-        set => Set(VCdParam.Created, value);
-    }
-
-    /// <summary>
-    /// <c>DERIVED</c>: Specifies that the value of the associated <see cref="VCardProperty"/> is derived from some other 
-    /// <see cref="VCardProperty"/> values in the same <see cref="VCard"/>. <c>(4 - RFC&#160;9554)</c>
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This property parameter SHOULD be specified on a <see cref="VCardProperty"/> if the property value is derived 
-    /// from some other 
-    /// properties in the same <see cref="VCard"/>. When present with a value of <c>true</c>, clients MUST NOT update 
-    /// the <see cref="VCardProperty"/>.
-    /// </para>
-    /// <para>
-    /// As an example, an implementation may derive the value of the FN property from the name components of the N property.
-    /// It indicates this fact by setting the DERIVED parameter on the FN property to "true".
-    /// </para>
-    /// </remarks>
-    public bool Derived
-    {
-        get => Get<bool>(VCdParam.Derived);
-        set => Set(VCdParam.Derived, value);
-    }
-
-    /// <summary>
-    /// <c>PHONETIC</c>: Defines how to pronounce the value of another property in the same vCard. <c>(4 - RFC&#160;9554)</c>
-    /// </summary>
-    /// <value>The parameter value indicates the phonetic system.</value>
-    /// <remarks>
-    /// This property parameter indicates that the value of its property contains the phonetic representation of another 
-    /// same-named property in the same vCard. Exemplary uses are defining how to pronounce Japanese names and romanizing 
-    /// Mandarin or Cantonese names and address components.
-    /// </remarks>
-    public Phonetic? Phonetic
-    {
-        get => Get<Phonetic?>(VCdParam.Phonetic);
-        set => Set(VCdParam.Phonetic, value);
-    }
-
-    /// <summary>
-    /// <c>PROP-ID</c>: Identifies a property among all its siblings of the same property name. <c>(4 - RFC&#160;9554)</c>
-    /// </summary>
-    /// <value>
-    /// A valid value must be a <see cref="string"/> of 1 and a maximum of 255 characters in size, and it MUST only 
-    /// contain the ASCII alphanumeric characters ("A-Za-z0-9"), hyphen (-), and underscore ("_"). 
-    /// </value>
-    /// <remarks>
-    /// <para>
-    /// (This is the property identification mechanism newly introduced with RFC 9554. The vCard 4.0 property identification
-    /// is <see cref="PropertyIDs"/>.)
-    /// </para>
-    /// <para>
-    /// This parameter uniquely identifies a <see cref="VCardProperty"/> among all of its siblings with the same name within a vCard. 
-    /// The identifier's only purpose is to uniquely identify siblings; its value has no other meaning. If an application
-    /// makes use of <see cref="PropertyID"/>, it SHOULD 
-    /// assign a unique identifier to each sibling <see cref="VCardProperty"/> of the same name within their embedding component. The same 
-    /// identifier MAY be used for properties of a different name, and it MAY also be assigned to a same-named property
-    /// that is not a sibling.
-    /// </para>
-    /// <para>
-    /// Resolving duplicate identifier conflicts is specific to the application. Similarly, handling properties where 
-    /// some but not all siblings have a <see cref="PropertyID"/> assigned is application-specific.
-    /// </para>
-    /// </remarks>
-    public string? PropertyID
-    {
-        get => Get<string?>(VCdParam.PropertyID);
-        set => Set(VCdParam.PropertyID, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
-    }
-
-    /// <summary>
-    /// <c>SCRIPT</c>: Defines the script that a <see cref="VCardProperty.Value"/> is written in. <c>(4 - RFC&#160;9554)</c>
-    /// </summary>
-    /// <remarks>
-    /// This parameter allows defining a script for a <see cref="VCardProperty.Value"/> without also defining a language as 
-    /// the <see cref="Language"/> parameter would. The value MUST be a script subtag as 
-    /// defined in Section 2.2.3 of RFC 5646. The <see cref="Script"/> parameter is often used in combination 
-    /// with the <see cref="Phonetic"/> parameter.
-    /// </remarks>
-    public string? Script
-    {
-        get => Get<string?>(VCdParam.Script);
-        set => Set(VCdParam.Script, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
-    }
-
-    /// <summary>
-    /// <c>SERVICE-TYPE</c>: Defines the online service name associated with a messaging or
-    /// social media profile. <c>(4 - RFC&#160;9554)</c>
-    /// </summary>
-    /// <remarks>
-    /// This parameter MAY be specified on a <see cref="VCard.Messengers"/> or 
-    /// a <see cref="VCard.SocialMediaProfiles"/> property to name the online service associated 
-    /// with that property value. 
-    /// Its value is case-sensitive.
-    /// </remarks>
-    /// <seealso cref="VCard.Messengers"/>
-    /// <seealso cref="VCard.SocialMediaProfiles"/>
-    public string? ServiceType
-    {
-        get => Get<string?>(VCdParam.ServiceType);
-        set => Set(VCdParam.ServiceType, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
     /// <summary>
