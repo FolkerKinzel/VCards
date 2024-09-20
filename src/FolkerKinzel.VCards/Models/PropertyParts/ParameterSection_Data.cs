@@ -443,7 +443,7 @@ public sealed partial class ParameterSection
     public string? AuthorName
     {
         get => Get<string?>(VCdParam.AuthorName);
-        set => Set(VCdParam.AuthorName, value);
+        set => Set(VCdParam.AuthorName, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
     public DateTimeOffset? Created
@@ -467,24 +467,38 @@ public sealed partial class ParameterSection
     public string? PropertyID
     {
         get => Get<string?>(VCdParam.PropertyID);
-        set => Set(VCdParam.PropertyID, value);
+        set => Set(VCdParam.PropertyID, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
     public string? Script
     {
         get => Get<string?>(VCdParam.Script);
-        set => Set(VCdParam.Script, value);
+        set => Set(VCdParam.Script, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
     public string? ServiceType
     {
         get => Get<string?>(VCdParam.ServiceType);
-        set => Set(VCdParam.ServiceType, value);
+        set => Set(VCdParam.ServiceType, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
+    /// <summary>
+    /// <c>USERNAME</c>: Defines a username such as the user of a messaging or 
+    /// social media service. <c>(4 - RFC 9554)</c>
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This parameter MAY be specified on a <see cref="VCard.Messengers"/> or a <see cref="VCard.SocialMediaProfiles"/> 
+    /// property to name the user with that property value. Its value is case-sensitive.
+    /// </para>
+    /// <para>
+    /// The value of the <see cref="VCard.Messengers"/> or the <see cref="VCard.SocialMediaProfiles"/> 
+    /// property MUST be a URI.
+    /// </para>
+    /// </remarks>
     public string? UserName
     {
         get => Get<string?>(VCdParam.UserName);
-        set => Set(VCdParam.UserName, value);
+        set => Set(VCdParam.UserName, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 }
