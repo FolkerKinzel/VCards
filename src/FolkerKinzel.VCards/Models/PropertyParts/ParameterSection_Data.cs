@@ -475,4 +475,10 @@ public sealed partial class ParameterSection
         get => Get<string?>(VCdParam.Script);
         set => Set(VCdParam.Script, value);
     }
+
+    public string? ServiceType
+    {
+        get => Get<string?>(VCdParam.ServiceType);
+        set => Set(VCdParam.ServiceType, value);
+    }
 }

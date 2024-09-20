@@ -132,7 +132,7 @@ and let it store as string[]
         - [x] Add property `Phonetic? Phonetic`
         - [x] Add property `string? PropertyID`
         - [x] Add property `string? Script`
-        - [ ] Add property `string? ServiceType`
+        - [x] Add property `string? ServiceType`
         - [ ] Add property `string? UserName`
         - [ ] Redirect `X-SERVICE-TYPE` to the `ParameterSection.ServiceType` property. 
         - [ ] Use the `X-SERVICE-TYPE` parameter to preserve the value of `ParameterSection.ServiceType` with 
