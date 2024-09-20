@@ -123,7 +123,7 @@ and let it store as string[]
         - [x] Add property: `GramBuilder GramGenders {get;}`
         - [x] Add property: `TextSingletonBuilder Language {get;}`
         - [x] Add property: `TextBuilder Pronouns {get;}`
-        - [ ] Add property: `TextBuilder SocialMediaProfiles {get;}`
+        - [x] Add property: `TextBuilder SocialMediaProfiles {get;}`
     - [ ] Change the ParameterSection class
         - [x] Add property `Uri? Author` that takes an absolute Uri
         - [x] Add property `string? AuthorName`
