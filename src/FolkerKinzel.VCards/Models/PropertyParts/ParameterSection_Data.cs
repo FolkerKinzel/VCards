@@ -439,4 +439,12 @@ public sealed partial class ParameterSection
             Set(VCdParam.Author, value);
         }
     }
+
+    public string? AuthorName
+    {
+        get => Get<string?>(VCdParam.AuthorName);
+        set => Set(VCdParam.AuthorName, value);
+    }
+
+
 }
