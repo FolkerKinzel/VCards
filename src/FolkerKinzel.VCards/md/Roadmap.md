@@ -125,12 +125,12 @@ and let it store as string[]
         - [x] Add property: `TextBuilder Pronouns {get;}`
         - [ ] Add property: `TextBuilder SocialMediaProfiles {get;}`
     - [ ] Change the ParameterSection class
-        - [ ] Add property `Uri? Author` that takes an absolute Uri
-        - [ ] Add property `string? AuthorName`
-        - [ ] Add property `DateTimeOffset? Created`
-        - [ ] Add property `bool Derived`
-        - [ ] Add property `Phonetic? Phonetic`
-        - [ ] Add property `string? PropID`
+        - [x] Add property `Uri? Author` that takes an absolute Uri
+        - [x] Add property `string? AuthorName`
+        - [x] Add property `DateTimeOffset? Created`
+        - [x] Add property `bool Derived`
+        - [x] Add property `Phonetic? Phonetic`
+        - [x] Add property `string? PropertyID`
         - [ ] Add property `string? Script`
         - [ ] Add property `string? ServiceType`
         - [ ] Add property `string? UserName`

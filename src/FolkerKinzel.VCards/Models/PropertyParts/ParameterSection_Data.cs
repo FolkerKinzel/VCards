@@ -463,4 +463,10 @@ public sealed partial class ParameterSection
         get => Get<Phonetic?>(VCdParam.Phonetic);
         set => Set(VCdParam.Phonetic, value);
     }
+
+    public string? PropertyID
+    {
+        get => Get<string?>(VCdParam.PropertyID);
+        set => Set(VCdParam.PropertyID, value);
+    }
 }

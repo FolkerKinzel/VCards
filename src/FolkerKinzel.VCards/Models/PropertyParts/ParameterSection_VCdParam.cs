@@ -108,6 +108,7 @@ public sealed partial class ParameterSection
         AuthorName,
         Created,
         Derived,
-        Phonetic
+        Phonetic,
+        PropertyID
     }
 }
