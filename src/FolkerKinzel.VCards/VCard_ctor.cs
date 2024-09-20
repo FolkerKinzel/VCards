@@ -458,7 +458,11 @@ public sealed partial class VCard
                 case PropKeys.Rfc9554.PRONOUNS:
                     Pronouns = Concat(Pronouns, new TextProperty(vcfRow, Version));
                     break;
+                case PropKeys.Rfc9554.SOCIALPROFILE:
+                    SocialMediaProfiles = Concat(SocialMediaProfiles, new TextProperty(vcfRow, Version));
+                    break;
                 default:
+                    Debug.Assert(!vcfRow.Key.Equals(PropKeys.NonStandard.X_SOCIALPROFILE, StringComparison.OrdinalIgnoreCase));
                     NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
                     break;
             };//switch

@@ -127,6 +127,10 @@ public enum Prop
     /// some way. <c>(2,3,4)</c></summary>
     Urls,
 
+    /// <summary> <c>SOCIALPROFILE</c>: Specifies the URI or username for social media 
+    /// profiles associated with the object the <see cref="VCard"/> represents. <c>(4 - RFC 9554)</c></summary>
+    SocialMediaProfiles,
+
     /// <summary> <c>IMPP</c>: Instant messenger handles. <c>(3,4)</c></summary>
     Messengers,
 
@@ -212,5 +216,6 @@ public enum Prop
 
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
     NonStandards,
-    SocialMediaProfiles,
+
+    
 }
