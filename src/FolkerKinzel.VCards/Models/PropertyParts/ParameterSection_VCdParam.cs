@@ -111,6 +111,7 @@ public sealed partial class ParameterSection
         Phonetic,
         PropertyID,
         Script,
-        ServiceType
+        ServiceType,
+        UserName
     }
 }

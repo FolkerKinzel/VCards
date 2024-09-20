@@ -133,8 +133,8 @@ and let it store as string[]
         - [x] Add property `string? PropertyID`
         - [x] Add property `string? Script`
         - [x] Add property `string? ServiceType`
-        - [ ] Add property `string? UserName`
-        - [ ] Redirect `X-SERVICE-TYPE` to the `ParameterSection.ServiceType` property. 
+        - [x] Add property `string? UserName`
+        - [x] Redirect `X-SERVICE-TYPE` to the `ParameterSection.ServiceType` property. 
         - [ ] Use the `X-SERVICE-TYPE` parameter to preserve the value of `ParameterSection.ServiceType` with 
         `VCard.Messengers` and `VCard.SocialMediaProfiles` when writing vCard 4.0 and the 
         `Opts.WriteRfc9554Extensions` flag is not set. Make this dependent on whether the `Opts.WriteXExtensions`

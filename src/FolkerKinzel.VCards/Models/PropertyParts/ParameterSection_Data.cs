@@ -481,4 +481,10 @@ public sealed partial class ParameterSection
         get => Get<string?>(VCdParam.ServiceType);
         set => Set(VCdParam.ServiceType, value);
     }
+
+    public string? UserName
+    {
+        get => Get<string?>(VCdParam.UserName);
+        set => Set(VCdParam.UserName, value);
+    }
 }
