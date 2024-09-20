@@ -30,6 +30,18 @@ public sealed partial class ParameterSection
         /// <summary> <c>LEVEL</c>: A person's level of expertise. <c>(4 - RFC&#160;6715)</c></summary>
         Expertise,
 
+        /// <summary>
+        /// <c>SERVICE-TYPE</c>: Defines the online service name associated with a messaging or
+        /// social media profile. <c>(4 - RFC&#160;9554)</c>
+        /// </summary>
+        ServiceType,
+
+        /// <summary>
+        /// <c>USERNAME</c>: Defines a username such as the user of a messaging or 
+        /// social media service. <c>(4 - RFC&#160;9554)</c>
+        /// </summary>
+        UserName,
+
         /// <summary><c>TYPE</c>: Description of an instant messenger address. <c>(3 - RFC&#160;4770)</c>
         /// </summary>
         InstantMessengerType,
@@ -59,6 +71,16 @@ public sealed partial class ParameterSection
         /// the <see cref="VCardProperty"/>. <c>(2,3,4)</c></summary>
         Language,
 
+        /// <summary>
+        /// <c>PHONETIC</c>: Defines how to pronounce the value of another property in the same vCard. <c>(4 - RFC&#160;9554)</c>
+        /// </summary>
+        Phonetic,
+
+        /// <summary>
+        /// <c>SCRIPT</c>: Defines the script that a <see cref="VCardProperty.Value"/> is written in. <c>(4 - RFC&#160;9554)</c>
+        /// </summary>
+        Script,
+
         /// <summary><c>VALUE</c>: Indicates which of the data types predefined by the vCard
         /// standard the content of the vCard property corresponds to. <c>(3,4)</c></summary>
         DataType,
@@ -87,6 +109,11 @@ public sealed partial class ParameterSection
         /// <summary>Non-standard attributes. <c>(2,3,4)</c></summary>
         NonStandard,
 
+        /// <summary>
+        /// <c>PROP-ID</c>: Identifies a property among all its siblings of the same property name. <c>(4 - RFC&#160;9554)</c>
+        /// </summary>
+        PropertyID,
+
         /// <summary> <c>PID</c>: <see cref="PropertyID" />s to identify the 
         /// <see cref="VCardProperty" />. <c>(4)</c></summary>
         PropertyIDs,
@@ -104,14 +131,26 @@ public sealed partial class ParameterSection
         /// <c>CC</c>: ISO&#160;3166 two-character country code. <c>(4 - RFC&#160;8605)</c>
         /// </summary>
         CountryCode,
+
+        /// <summary>
+        /// <c>AUTHOR</c>: Identifies the author of the associated <see cref="VCardProperty.Value"/>. <c>(4 - RFC&#160;9554)</c>
+        /// </summary>
         Author,
+
+        /// <summary>
+        /// <c>AUTHOR-NAME</c>: Names the author of the associated <see cref="VCardProperty.Value"/>. <c>(4 - RFC&#160;9554)</c>
+        /// </summary>
         AuthorName,
+
+        /// <summary>
+        /// <c>CREATED</c>: Defines the date and time when a <see cref="VCardProperty"/> was created. <c>(4 - RFC&#160;9554)</c>
+        /// </summary>
         Created,
+
+        /// <summary>
+        /// <c>DERIVED</c>: Specifies that the value of the associated <see cref="VCardProperty"/> is derived from some other 
+        /// <see cref="VCardProperty"/> values in the same <see cref="VCard"/>. <c>(4 - RFC&#160;9554)</c>
+        /// </summary>
         Derived,
-        Phonetic,
-        PropertyID,
-        Script,
-        ServiceType,
-        UserName
     }
 }
