@@ -446,5 +446,15 @@ public sealed partial class ParameterSection
         set => Set(VCdParam.AuthorName, value);
     }
 
+    public DateTimeOffset? Created
+    {
+        get => Get<DateTimeOffset?>(VCdParam.Created);
+        set => Set(VCdParam.Created, value);
+    }
 
+    public bool Derived
+    {
+        get => Get<bool>(VCdParam.Derived);
+        set => Set(VCdParam.Derived, value);
+    }
 }

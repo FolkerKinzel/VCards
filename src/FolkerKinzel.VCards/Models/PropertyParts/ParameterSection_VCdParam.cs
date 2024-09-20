@@ -105,6 +105,8 @@ public sealed partial class ParameterSection
         /// </summary>
         CountryCode,
         Author,
-        AuthorName
+        AuthorName,
+        Created,
+        Derived
     }
 }
