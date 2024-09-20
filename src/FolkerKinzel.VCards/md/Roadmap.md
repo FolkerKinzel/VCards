@@ -112,7 +112,7 @@ and let it store as string[]
         - [x] Add property: `IEnumerable<GramProperty?>? GramGenders {get; set;}`
         - [x] Add property: `TextProperty? Language {get; set;}`
         - [x] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
-        - [ ] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
+        - [x] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
         - [x] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
         - [ ] Write `X-SOCIALPROFILE` in vCard 4.0 to preserve `VCard.SocialMediaProfiles` when 
         `Opts.WriteRfc9554Extensions` is not set. Make this dependent on whether the `Opts.WriteXExtensions`

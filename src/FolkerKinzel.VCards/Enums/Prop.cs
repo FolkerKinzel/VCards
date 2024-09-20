@@ -212,5 +212,5 @@ public enum Prop
 
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
     NonStandards,
-    
+    SocialMediaProfiles,
 }
