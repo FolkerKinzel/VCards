@@ -469,4 +469,10 @@ public sealed partial class ParameterSection
         get => Get<string?>(VCdParam.PropertyID);
         set => Set(VCdParam.PropertyID, value);
     }
+
+    public string? Script
+    {
+        get => Get<string?>(VCdParam.Script);
+        set => Set(VCdParam.Script, value);
+    }
 }

@@ -109,6 +109,7 @@ public sealed partial class ParameterSection
         Created,
         Derived,
         Phonetic,
-        PropertyID
+        PropertyID,
+        Script
     }
 }
