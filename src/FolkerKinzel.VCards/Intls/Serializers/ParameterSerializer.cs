@@ -442,23 +442,12 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
             key = key.Trim();
 
-            if (string.IsNullOrWhiteSpace(parameter.Value) || IsKnownParameter(key))
+            if (string.IsNullOrWhiteSpace(parameter.Value) || !key.StartsWith("X-", StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }
 
             AppendParameter(key, parameter.Value);
-        }
-
-        ////////////////////////////////////////////
-
-        static bool IsKnownParameter(string key)
-        {
-            Debug.Assert(key is not null);
-            Debug.Assert(StringComparer.Ordinal.Equals(key, key.Trim()));
-
-            return !key.StartsWith("X-", StringComparison.OrdinalIgnoreCase) &&
-                   !key.Equals(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
