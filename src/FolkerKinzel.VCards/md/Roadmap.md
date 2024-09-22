@@ -106,7 +106,7 @@ and let it store as string[]
     - [x] Change the `Name` class
         - [x] Add read-only property: `ReadOnlyCollection<string> Surname2` (let the name be singular)
         - [x] Add read-only property: `ReadOnlyCollection<string> Generation` (let the name be singular)
-    - [ ] Change the `VCard` class
+    - [x] Change the `VCard` class
         - [x] Make a new default parameter `setCreated` that defaults to `true` to the `VCard` ctor and to `VCardBuilder.Create`
         - [x] Add property: `TimeStampProperty? Created {get; set;}`
         - [x] Add property: `IEnumerable<GramProperty?>? GramGenders {get; set;}`
@@ -114,11 +114,11 @@ and let it store as string[]
         - [x] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
         - [x] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
         - [x] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
-        - [ ] Write `X-SOCIALPROFILE` in vCard 4.0 to preserve `VCard.SocialMediaProfiles` when 
+        - [x] Write `X-SOCIALPROFILE` in vCard 4.0 to preserve `VCard.SocialMediaProfiles` when 
         `Opts.WriteRfc9554Extensions` is not set. Make this dependent on whether the `Opts.WriteXExtensions`
         flag is set.
-        - [ ] Add `X-SOCIALPROFILE` to the documentation of the `VCard.NonStandards` property
-    - [ ] Change the `VCardBuilder` class
+        - [x] Add `X-SOCIALPROFILE` to the documentation of the `VCard.NonStandards` property
+    - [x] Change the `VCardBuilder` class
         - [x] Add property: `TimeStampBuilder Created {get;}`
         - [x] Add property: `GramBuilder GramGenders {get;}`
         - [x] Add property: `TextSingletonBuilder Language {get;}`

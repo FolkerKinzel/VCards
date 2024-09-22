@@ -411,6 +411,9 @@ public sealed class VCardBuilder
     /// <c>X-SKYPE-USERNAME</c>
     /// </item>
     /// <item>
+    /// <c>X-SOCIALPROFILE</c>
+    /// </item>
+    /// <item>
     /// <c>X-SPOUSE</c>
     /// </item>
     /// <item>
