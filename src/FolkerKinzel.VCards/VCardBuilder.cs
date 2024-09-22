@@ -29,12 +29,17 @@ public sealed class VCardBuilder
     /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/> property
     /// of the newly created <see cref="VCard"/> object automatically to a new 
     /// <see cref="Guid"/>, otherwise <c>false</c>.</param>
+    /// <param name="setCreated">
+    /// <c>true</c> to set the <see cref="VCard.Created"/>
+    /// property with a newly created <see cref="TimeStampProperty"/>, otherwise
+    /// <c>false</c>.
+    /// </param>
     /// <returns>The <see cref="VCardBuilder"/> that creates a new <see cref="VCard"/>.</returns>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static VCardBuilder Create(bool setID = true)
-        => new(new VCard(setID));
+    public static VCardBuilder Create(bool setID = true, bool setCreated = true)
+        => new(new VCard(setID: setID, setCreated: setCreated));
 
     /// <summary>
     /// Returns a <see cref="VCardBuilder"/> that edits the <see cref="VCard"/>

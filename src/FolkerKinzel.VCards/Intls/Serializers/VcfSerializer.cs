@@ -328,6 +328,7 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.ContactUris:
                     AppendContactUris((IEnumerable<TextProperty?>)kvp.Value);
                     break;
+                   
 #if DEBUG
                 default:
                     throw new NotImplementedException();
