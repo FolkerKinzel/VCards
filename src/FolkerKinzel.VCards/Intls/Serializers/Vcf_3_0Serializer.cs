@@ -156,7 +156,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         Debug.Assert(value is not null);
 
-        if (Options.IsSet(Opts.WriteImppExtension))
+        if (Options.HasFlag(Opts.WriteImppExtension))
         {
             bool first = true;
 

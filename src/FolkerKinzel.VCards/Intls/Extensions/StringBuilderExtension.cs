@@ -139,7 +139,7 @@ internal static class StringBuilderExtension
     /// parameter.</param>
     /// <returns>A reference to <paramref name="builder"/>.</returns>
     internal static StringBuilder AppendParameterValueEscapedAndQuoted(this StringBuilder builder,
-                                                                       string paramVal,
+                                                                       string? paramVal,
                                                                        VCdVersion version,
                                                                        bool isLabel = false)
     {
@@ -151,7 +151,7 @@ internal static class StringBuilderExtension
                 : builder;
     }
 
-    private static bool AppendParameterValueEscapedV30(StringBuilder sb, string s)
+    private static bool AppendParameterValueEscapedV30(StringBuilder sb, string? s)
     {
         ReadOnlySpan<char> span = s.AsSpan();
 
@@ -203,7 +203,7 @@ internal static class StringBuilderExtension
     /// </para>
     /// </remarks>
     private static bool AppendParameterValueEscapedV40(StringBuilder builder,
-                                                       string paramVal,
+                                                       string? paramVal,
                                                        bool isLabel)
     {
         ReadOnlySpan<char> span = paramVal.AsSpan();

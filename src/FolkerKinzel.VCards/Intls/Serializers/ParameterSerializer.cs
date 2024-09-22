@@ -440,7 +440,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     #endregion
 
-    protected void AppendParameter(string key, string value, bool escapedAndQuoted = false, bool isLabel = false)
+    protected void AppendParameter(string key, string? value, bool escapedAndQuoted = false, bool isLabel = false)
     {
         Builder.Append(';').Append(key).Append('=');
 
@@ -491,4 +491,13 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             AppendParameter(key, parameter.Value);
         }
     }
+
+    protected virtual void AppendServiceType()
+    {
+        Debug.Assert(Options.HasFlag(Opts.WriteXExtensions));
+
+        if (ParaSection.ServiceType is string serviceType)
+        {
+            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, serviceType);
+        }
 }
