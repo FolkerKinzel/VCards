@@ -192,6 +192,12 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendAuthorAndCreated();
     }
 
+    protected override void BuildCreatedPara()
+    {
+        AppendValue(this.ParaSection.DataType);
+        AppendNonStandardParameters();
+    }
+
     protected override void BuildDeathDatePara()
     {
         AppendValue(this.ParaSection.DataType);
@@ -295,6 +301,17 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendAuthorAndCreated();
     }
 
+    protected override void BuildGramGenderPara()
+    {
+        AppendPref();
+        AppendLanguage();
+        AppendAltId();
+        AppendPidAndPropID();
+        AppendIndex();
+        AppendNonStandardParameters();
+        AppendAuthorAndCreated();
+    }
+
     protected override void BuildImppPara(bool isPref)
     {
         _actionList.Clear();
@@ -354,6 +371,12 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendAltId();
         AppendPidAndPropID();
         AppendIndex();
+        AppendNonStandardParameters();
+        AppendAuthorAndCreated();
+    }
+
+    protected override void BuildLanguagePara()
+    {
         AppendNonStandardParameters();
         AppendAuthorAndCreated();
     }
@@ -481,6 +504,21 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendAuthorAndCreated();
     }
 
+    protected override void BuildPronounsPara()
+    {
+        _actionList.Clear();
+        _actionList.Add(_collectPropertyClassTypes);
+
+        AppendLanguage();
+        AppendType();
+        AppendPref();
+        AppendAltId();
+        AppendPidAndPropID();
+        AppendIndex();
+        AppendNonStandardParameters();
+        AppendAuthorAndCreated();
+    }
+
     protected override void BuildRelatedPara()
     {
         _actionList.Clear();
@@ -527,6 +565,18 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendPref();
         AppendValue(this.ParaSection.DataType);
         AppendLanguage();
+        AppendAltId();
+        AppendPidAndPropID();
+        AppendIndex();
+        AppendNonStandardParameters();
+        AppendAuthorAndCreated();
+    }
+
+    protected override void BuildSocialProfilePara()
+    {
+        AppendPref();
+        AppendValue(this.ParaSection.DataType);
+        AppendServiceTypeAndUsername();
         AppendAltId();
         AppendPidAndPropID();
         AppendIndex();
@@ -741,56 +791,6 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendAuthorAndCreated();
     }
 
-    protected override void BuildCreatedPara()
-    {
-        AppendValue(this.ParaSection.DataType);
-        AppendNonStandardParameters();
-    }
-
-    protected override void BuildGramGenderPara()
-    {
-        AppendPref();
-        AppendLanguage();
-        AppendAltId();
-        AppendPidAndPropID();
-        AppendIndex();
-        AppendNonStandardParameters();
-        AppendAuthorAndCreated();
-    }
-
-    protected override void BuildLanguagePara()
-    {
-        AppendNonStandardParameters();
-        AppendAuthorAndCreated();
-    }
-
-    protected override void BuildPronounsPara()
-    {
-        _actionList.Clear();
-        _actionList.Add(_collectPropertyClassTypes);
-        
-        AppendLanguage();
-        AppendType();
-        AppendPref();
-        AppendAltId();
-        AppendPidAndPropID();
-        AppendIndex();
-        AppendNonStandardParameters();
-        AppendAuthorAndCreated();
-    }
-
-    protected override void BuildSocialProfilePara()
-    {
-        AppendPref();
-        AppendValue(this.ParaSection.DataType);
-        AppendServiceTypeAndUsername();
-        AppendAltId();
-        AppendPidAndPropID();
-        AppendIndex();
-        AppendNonStandardParameters();
-        AppendAuthorAndCreated();
-    }
-
     #endregion
 
     #region Append
@@ -800,6 +800,33 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         if (ParaSection.AltID is string altId)
         {
             AppendParameter(ParameterSection.ParameterKey.ALTID, altId, escapedAndQuoted: true);
+        }
+    }
+
+    private void AppendAuthorAndCreated()
+    {
+        if (!writeRfc9554)
+        {
+            return;
+        }
+
+        if (ParaSection.AuthorName is string authorName)
+        {
+            AppendParameter(ParaKey.Rfc9554.AUTHOR_NAME, authorName, escapedAndQuoted: true);
+        }
+
+        if (ParaSection.Author is Uri author)
+        {
+            Debug.Assert(author.IsAbsoluteUri);
+            AppendParameter(ParaKey.Rfc9554.AUTHOR, author.AbsoluteUri, escapedAndQuoted: true);
+        }
+
+        DateTimeOffset? created = ParaSection.Created;
+
+        if (created.HasValue)
+        {
+            AppendParameter(ParaKey.Rfc9554.CREATED, null);
+            DateTimeConverter.AppendTimeStampTo(this.Builder, created.Value, VCdVersion.V4_0);
         }
     }
 
@@ -821,6 +848,14 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         if (ParaSection.CountryCode is string countryCode)
         {
             AppendParameter(ParameterSection.ParameterKey.CC, countryCode, escapedAndQuoted: true);
+        }
+    }
+    
+    private void AppendDerived()
+    {
+        if (writeRfc9554 && ParaSection.Derived)
+        {
+            AppendParameter(ParaKey.Rfc9554.DERIVED, "TRUE");
         }
     }
 
@@ -900,6 +935,28 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
     }
 
+    private void AppendPhoneticAndScript()
+    {
+        if (!writeRfc9554)
+        {
+            return;
+        }
+
+        if (PhoneticConverter.ToVcfString(ParaSection.Phonetic) is string phonetic)
+        {
+            AppendParameter(ParaKey.Rfc9554.PHONETIC, phonetic);
+        }
+        else
+        {
+            AppendNonStandardWithKey(ParaKey.Rfc9554.PHONETIC);
+        }
+
+        if (ParaSection.Script is string script)
+        {
+            AppendParameter(ParaKey.Rfc9554.SCRIPT, script);
+        }
+    }
+
     private void AppendPidAndPropID()
     {
         AppendPid();
@@ -953,6 +1010,29 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         if (val < ParameterSection.PREF_MAX_VALUE)
         {
             AppendParameter(ParaKey.PREF, val.ToString(CultureInfo.InvariantCulture));
+        }
+    }
+
+    private void AppendServiceTypeAndUsername()
+    {
+        if (writeRfc9554)
+        {
+            if (ParaSection.ServiceType is string serviceType)
+            {
+                AppendParameter(ParaKey.Rfc9554.SERVICE_TYPE, serviceType, escapedAndQuoted: true);
+            }
+
+            if (writeRfc9554 && ParaSection.UserName is string userName)
+            {
+                AppendParameter(ParaKey.Rfc9554.USERNAME, userName, escapedAndQuoted: true);
+            }
+
+            return;
+        }
+
+        if (Options.HasFlag(Opts.WriteXExtensions) && ParaSection.ServiceType is string xServiceType)
+        {
+            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, xServiceType);
         }
     }
 
@@ -1056,86 +1136,6 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
 
         AppendNonStandardWithKey(ParaKey.VALUE);
-    }
-
-    private void AppendAuthorAndCreated()
-    {
-        if (!writeRfc9554)
-        {
-            return;
-        }
-
-        if (ParaSection.AuthorName is string authorName)
-        {
-            AppendParameter(ParaKey.Rfc9554.AUTHOR_NAME, authorName, escapedAndQuoted: true);
-        }
-
-        if (ParaSection.Author is Uri author)
-        {
-            Debug.Assert(author.IsAbsoluteUri);
-            AppendParameter(ParaKey.Rfc9554.AUTHOR, author.AbsoluteUri, escapedAndQuoted: true);
-        }
-    
-        DateTimeOffset? created = ParaSection.Created;
-
-        if (created.HasValue)
-        {
-            AppendParameter(ParaKey.Rfc9554.CREATED, null);
-            DateTimeConverter.AppendTimeStampTo(this.Builder, created.Value, VCdVersion.V4_0);
-        }
-    }
-
-    private void AppendDerived()
-    {
-        if (writeRfc9554 && ParaSection.Derived)
-        {
-            AppendParameter(ParaKey.Rfc9554.DERIVED, "TRUE");
-        }
-    }
-
-    private void AppendPhoneticAndScript()
-    {
-        if (!writeRfc9554)
-        {
-            return;
-        }
-
-        if (PhoneticConverter.ToVcfString(ParaSection.Phonetic) is string phonetic)
-        {
-            AppendParameter(ParaKey.Rfc9554.PHONETIC, phonetic);
-        }
-        else
-        {
-            AppendNonStandardWithKey(ParaKey.Rfc9554.PHONETIC);
-        }
-
-        if (ParaSection.Script is string script)
-        {
-            AppendParameter(ParaKey.Rfc9554.SCRIPT, script);
-        }
-    }
-
-    private void AppendServiceTypeAndUsername()
-    {
-        if (writeRfc9554)
-        {
-            if (ParaSection.ServiceType is string serviceType)
-            {
-                AppendParameter(ParaKey.Rfc9554.SERVICE_TYPE, serviceType, escapedAndQuoted: true);
-            }
-
-            if (writeRfc9554 && ParaSection.UserName is string userName)
-            {
-                AppendParameter(ParaKey.Rfc9554.USERNAME, userName, escapedAndQuoted: true);
-            }
-
-            return;
-        }
-
-        if (Options.HasFlag(Opts.WriteXExtensions) && ParaSection.ServiceType is string xServiceType)
-        {
-            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, xServiceType);
-        }
     }
 
     private void AppendNonStandardWithKey(string key)
