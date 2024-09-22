@@ -275,7 +275,6 @@ public sealed partial class VCard
             /// <summary>
             /// <c>X-SOCIALPROFILE</c>: Specifies the URI or username for social media profiles 
             /// associated with the object the vCard represents.
-            /// <c>(4)</c>
             /// </summary>
             internal const string X_SOCIALPROFILE = "X-SOCIALPROFILE";
 

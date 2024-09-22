@@ -312,10 +312,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
             return;
         }
 
-        if (Options.HasFlag(Opts.WriteXExtensions))
-        {
-            BuildPropertyCollection(VCard.PropKeys.NonStandard.X_SOCIALPROFILE, value);
-        }
+        base.AppendSocialMediaProfiles(value);
     }
 
     protected override void AppendSounds(IEnumerable<DataProperty?> value)

@@ -800,8 +800,13 @@ internal abstract class VcfSerializer : IDisposable
     [ExcludeFromCodeCoverage]
     protected virtual void AppendSources(IEnumerable<TextProperty?> value) { }
 
-    [ExcludeFromCodeCoverage]
-    protected virtual void AppendSocialMediaProfiles(IEnumerable<TextProperty?> value) { }
+    protected virtual void AppendSocialMediaProfiles(IEnumerable<TextProperty?> value)
+    {
+        if (Options.HasFlag(Opts.WriteXExtensions))
+        {
+            BuildPropertyCollection(VCard.PropKeys.NonStandard.X_SOCIALPROFILE, value);
+        }
+    }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendTimeZones(IEnumerable<TimeZoneProperty?> value) { }
