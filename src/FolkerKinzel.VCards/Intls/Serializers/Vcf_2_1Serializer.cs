@@ -246,6 +246,14 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendRoles(IEnumerable<TextProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.ROLE, value);
 
+    protected override void AppendSocialMediaProfiles(IEnumerable<TextProperty?> value)
+    {
+        if (Options.HasFlag(Opts.WriteXExtensions))
+        {
+            BuildPropertyCollection(VCard.PropKeys.NonStandard.X_SOCIALPROFILE, value);
+        }
+    }
+
     protected override void AppendSounds(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.SOUND,
                              value,
