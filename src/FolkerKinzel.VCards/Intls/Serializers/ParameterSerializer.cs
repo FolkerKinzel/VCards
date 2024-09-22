@@ -483,7 +483,9 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
             key = key.Trim();
 
-            if (string.IsNullOrWhiteSpace(parameter.Value) || !key.StartsWith("X-", StringComparison.OrdinalIgnoreCase))
+            if (string.IsNullOrWhiteSpace(parameter.Value) 
+                || !key.StartsWith("X-", StringComparison.OrdinalIgnoreCase) 
+                || key.Equals(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }
@@ -491,13 +493,4 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             AppendParameter(key, parameter.Value);
         }
     }
-
-    protected virtual void AppendServiceType()
-    {
-        Debug.Assert(Options.HasFlag(Opts.WriteXExtensions));
-
-        if (ParaSection.ServiceType is string serviceType)
-        {
-            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, serviceType);
-        }
 }

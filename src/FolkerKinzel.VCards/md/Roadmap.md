@@ -79,7 +79,7 @@ and let it store as string[]
 - [x] Change `FolkerKinzel.VCards.BuilderParts.NameBuilder` to have an overload for the `Add` method that takes a `FolkerKinzel.VCards.NameBuilder`
 
  &nbsp;
-- [ ] Implement RFC 9554:
+- [x] Implement RFC 9554:
     - [x] Make new enum value `Opts.WriteRfc9554Extensions`
     - [x] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
     - [x] Implement `GramConverter`
@@ -124,7 +124,7 @@ and let it store as string[]
         - [x] Add property: `TextSingletonBuilder Language {get;}`
         - [x] Add property: `TextBuilder Pronouns {get;}`
         - [x] Add property: `TextBuilder SocialMediaProfiles {get;}`
-    - [ ] Change the ParameterSection class
+    - [x] Change the ParameterSection class
         - [x] Add property `Uri? Author` that takes an absolute Uri
         - [x] Add property `string? AuthorName`
         - [x] Add property `DateTimeOffset? Created`
@@ -135,7 +135,7 @@ and let it store as string[]
         - [x] Add property `string? ServiceType`
         - [x] Add property `string? UserName`
         - [x] Redirect `X-SERVICE-TYPE` to the `ParameterSection.ServiceType` property. 
-        - [ ] Use the `X-SERVICE-TYPE` parameter to preserve the value of `ParameterSection.ServiceType` with 
+        - [x] Use the `X-SERVICE-TYPE` parameter to preserve the value of `ParameterSection.ServiceType` with 
         `VCard.Messengers` and `VCard.SocialMediaProfiles` when writing vCard 4.0 and the 
         `Opts.WriteRfc9554Extensions` flag is not set. Make this dependent on whether the `Opts.WriteXExtensions`
         flag is set.

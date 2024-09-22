@@ -200,6 +200,8 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         _actionList.Add(_collectImppTypes);
 
         AppendType(isPref);
+        AppendServiceType();
+        AppendNonStandardParameters();
     }
 
     protected override void BuildKeyPara()
@@ -544,6 +546,15 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
     #endregion
 
+    private void AppendServiceType()
+    {
+        Debug.Assert(Options.HasFlag(Opts.WriteXExtensions));
+
+        if (ParaSection.ServiceType is string serviceType)
+        {
+            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, serviceType);
+        }
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void AppendRfc2739Pref() => Builder.Append(";TYPE=PREF");

@@ -14,6 +14,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 {
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer4_0>> _actionList = new(2);
+    private readonly bool writeRfc9554 = options.HasFlag(Opts.WriteRfc9554Extensions);
 
     private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes = CollectPropertyClassTypes;
     private readonly Action<ParameterSerializer4_0> _collectPhoneTypes = CollectPhoneTypes;
@@ -70,11 +71,13 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendGeo();
         AppendTz();
         AppendLanguage();
+        AppendPhoneticAndScript();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendCC();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildAnniversaryPara()
@@ -91,9 +94,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
 
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildBdayPara()
@@ -108,9 +112,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
 
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildBirthPlacePara()
@@ -118,9 +123,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildCaladruriPara(bool isPref)
@@ -133,9 +139,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendMediatype();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildCaluriPara(bool isPref)
@@ -148,9 +155,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendMediatype();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildCategoriesPara()
@@ -162,9 +170,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendPref();
         AppendValue(this.ParaSection.DataType);
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildClientpidmapPara()
@@ -177,9 +186,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
     {
         AppendPref();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildDeathDatePara()
@@ -193,9 +203,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
 
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildDeathPlacePara()
@@ -203,9 +214,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildEmailPara(bool isPref)
@@ -217,9 +229,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendPref();
         AppendValue(this.ParaSection.DataType);
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildFburlPara(bool isPref)
@@ -232,9 +245,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendMediatype();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildFnPara()
@@ -244,21 +258,24 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         AppendType();
         AppendPref();
+        AppendDerived();
         AppendValue(this.ParaSection.DataType);
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildGenderPara()
     {
         AppendValue(this.ParaSection.DataType);
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildGeoPara()
@@ -271,9 +288,11 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendMediatype();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
+        AppendDerived();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildImppPara(bool isPref)
@@ -284,11 +303,13 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendType();
         AppendPref();
         AppendValue(this.ParaSection.DataType);
-        AppendMediatype();
+        //AppendMediatype();
+        AppendServiceTypeAndUsername();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildKeyPara()
@@ -310,9 +331,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
 
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildKindPara()
@@ -330,9 +352,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendPref();
         AppendValue(this.ParaSection.DataType);
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildLogoPara()
@@ -350,9 +373,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildMemberPara()
@@ -361,9 +385,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendMediatype();
         AppendPref();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildNPara()
@@ -371,10 +396,12 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendSortAs();
         AppendLanguage();
+        AppendPhoneticAndScript();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildNicknamePara()
@@ -387,9 +414,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildNotePara()
@@ -402,9 +430,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildOrgPara()
@@ -418,9 +447,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendSortAs();
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildPhotoPara()
@@ -438,15 +468,17 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         AppendPref();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildProdidPara()
     {
         AppendValue(this.ParaSection.DataType);
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildRelatedPara()
@@ -473,9 +505,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
 
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0022:Ausdruckskörper für Methoden verwenden", Justification = "<Ausstehend>")]
@@ -495,9 +528,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildSoundPara()
@@ -515,9 +549,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendPref();
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildSourcePara()
@@ -526,9 +561,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendMediatype();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildTelPara(bool isPref)
@@ -547,9 +583,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
 
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildTitlePara()
@@ -562,9 +599,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildTzPara()
@@ -577,9 +615,11 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendMediatype();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
+        AppendDerived();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildUidPara()
@@ -598,17 +638,21 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendValue(this.ParaSection.DataType);
         AppendMediatype();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildXmlPara()
     {
         AppendValue(this.ParaSection.DataType);
+        AppendMediatype();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
+        AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildExpertisePara()
@@ -621,9 +665,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendExpertiseLevel();
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildHobbyPara()
@@ -636,9 +681,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendInterestLevel();
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildInterestPara()
@@ -651,9 +697,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendInterestLevel();
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildOrgDirectoryPara()
@@ -665,9 +712,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendPref();
         AppendLanguage();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     protected override void BuildNonStandardPropertyPara(bool isPref)
@@ -678,15 +726,69 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendType();
         AppendPref();
         AppendLanguage();
+        AppendPhoneticAndScript();
         AppendMediatype();
         AppendGeo();
         AppendCalScale();
+        AppendServiceTypeAndUsername();
         AppendTz();
         AppendSortAs();
         AppendAltId();
-        AppendPid();
+        AppendPidAndPropID();
+        AppendIndex();
+        AppendDerived();
+        AppendNonStandardParameters();
+        AppendAuthorAndCreated();
+    }
+
+    protected override void BuildCreatedPara()
+    {
+        AppendValue(this.ParaSection.DataType);
+        AppendNonStandardParameters();
+    }
+
+    protected override void BuildGramGenderPara()
+    {
+        AppendPref();
+        AppendLanguage();
+        AppendAltId();
+        AppendPidAndPropID();
         AppendIndex();
         AppendNonStandardParameters();
+        AppendAuthorAndCreated();
+    }
+
+    protected override void BuildLanguagePara()
+    {
+        AppendNonStandardParameters();
+        AppendAuthorAndCreated();
+    }
+
+    protected override void BuildPronounsPara()
+    {
+        _actionList.Clear();
+        _actionList.Add(_collectPropertyClassTypes);
+        
+        AppendLanguage();
+        AppendType();
+        AppendPref();
+        AppendAltId();
+        AppendPidAndPropID();
+        AppendIndex();
+        AppendNonStandardParameters();
+        AppendAuthorAndCreated();
+    }
+
+    protected override void BuildSocialProfilePara()
+    {
+        AppendPref();
+        AppendValue(this.ParaSection.DataType);
+        AppendServiceTypeAndUsername();
+        AppendAltId();
+        AppendPidAndPropID();
+        AppendIndex();
+        AppendNonStandardParameters();
+        AppendAuthorAndCreated();
     }
 
     #endregion
@@ -798,6 +900,12 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
     }
 
+    private void AppendPidAndPropID()
+    {
+        AppendPid();
+        AppendPropId();
+    }
+
     private void AppendPid()
     {
         IEnumerable<PropertyID>? pids = ParaSection.PropertyIDs;
@@ -827,6 +935,14 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         else
         {
             --Builder.Length;
+        }
+    }
+
+    private void AppendPropId()
+    {
+        if (writeRfc9554 && ParaSection.PropertyID is string propID)
+        {
+            AppendParameter(ParaKey.Rfc9554.PROP_ID, propID, escapedAndQuoted: true);
         }
     }
 
@@ -942,9 +1058,9 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         AppendNonStandardWithKey(ParaKey.VALUE);
     }
 
-    private void AppendAuthor()
+    private void AppendAuthorAndCreated()
     {
-        if (!Options.HasFlag(Opts.WriteRfc9554Extensions))
+        if (!writeRfc9554)
         {
             return;
         }
@@ -959,15 +1075,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             Debug.Assert(author.IsAbsoluteUri);
             AppendParameter(ParaKey.Rfc9554.AUTHOR, author.AbsoluteUri, escapedAndQuoted: true);
         }
-    }
-
-    private void AppendCreated()
-    {
-        if (!Options.HasFlag(Opts.WriteRfc9554Extensions))
-        {
-            return;
-        }
-
+    
         DateTimeOffset? created = ParaSection.Created;
 
         if (created.HasValue)
@@ -979,7 +1087,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendDerived()
     {
-        if (Options.HasFlag(Opts.WriteRfc9554Extensions) && ParaSection.Derived)
+        if (writeRfc9554 && ParaSection.Derived)
         {
             AppendParameter(ParaKey.Rfc9554.DERIVED, "TRUE");
         }
@@ -987,7 +1095,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendPhoneticAndScript()
     {
-        if (!Options.HasFlag(Opts.WriteRfc9554Extensions))
+        if (!writeRfc9554)
         {
             return;
         }
@@ -1007,38 +1115,28 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
     }
 
-    private void AppendPropId()
+    private void AppendServiceTypeAndUsername()
     {
-        if(Options.HasFlag(Opts.WriteRfc9554Extensions) && ParaSection.PropertyID is string propID)
-        {
-            AppendParameter(ParaKey.Rfc9554.PROP_ID, propID, escapedAndQuoted: true);
-        }
-    }
-
-    protected override void AppendServiceType()
-    {
-        if (Options.HasFlag(Opts.WriteRfc9554Extensions))
+        if (writeRfc9554)
         {
             if (ParaSection.ServiceType is string serviceType)
             {
                 AppendParameter(ParaKey.Rfc9554.SERVICE_TYPE, serviceType, escapedAndQuoted: true);
             }
 
+            if (writeRfc9554 && ParaSection.UserName is string userName)
+            {
+                AppendParameter(ParaKey.Rfc9554.USERNAME, userName, escapedAndQuoted: true);
+            }
+
             return;
         }
 
-        base.AppendServiceType();
-    }
-
-    private void AppendUserName()
-    {
-        if (Options.HasFlag(Opts.WriteRfc9554Extensions) && ParaSection.UserName is string userName)
+        if (Options.HasFlag(Opts.WriteXExtensions) && ParaSection.ServiceType is string xServiceType)
         {
-            AppendParameter(ParaKey.Rfc9554.USERNAME, userName, escapedAndQuoted: true);
+            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, xServiceType);
         }
     }
-
-    
 
     private void AppendNonStandardWithKey(string key)
     {
