@@ -132,7 +132,7 @@
     <None Remove="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FolkerKinzel.DataUrls" Version="1.1.2" />
+    <PackageReference Include="FolkerKinzel.DataUrls" Version="1.1.3-alpha.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
