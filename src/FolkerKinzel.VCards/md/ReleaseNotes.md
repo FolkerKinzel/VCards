@@ -1,3 +1,4 @@
-Fixes an issue that the content of a base64-encoded "data" URL was not correctly decoded if the "data" URL was masked.
+**It's strongly recommended to install this update:**
+- Dependency updates: Uses `FolkerKinzel.Strings 9.0.0` now. This update fixes an important issue.
 &nbsp;
->**Project reference:** On some systems the content of the CHM file in the Assets is blocked. Before opening the file right click on the file icon, select Properties, and **check the "Allow" checkbox** - if it is present - in the lower right corner of the General tab in the Properties dialog.
+>**Project reference:** On some systems, the content of the CHM file in the Assets is blocked. Before opening the file right click on the file icon, select Properties, and **check the "Allow" checkbox** - if it is present - in the lower right corner of the General tab in the Properties dialog.
