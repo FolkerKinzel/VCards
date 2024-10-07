@@ -234,7 +234,7 @@ public class VCardTests
     [TestMethod]
     public void GroupsTest2()
     {
-        var vc = new VCard(setID: false)
+        var vc = new VCard(setID: false, setCreated: false)
         {
             DisplayNames = [new TextProperty("1"),
                                 new TextProperty("2"),

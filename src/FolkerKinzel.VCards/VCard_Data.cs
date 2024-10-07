@@ -353,7 +353,7 @@ public sealed partial class VCard
     public IEnumerable<GramProperty?>? GramGenders
     {
         get => Get<IEnumerable<GramProperty?>?>(Prop.GramGenders);
-        set => Set(Prop.GeoCoordinates, value);
+        set => Set(Prop.GramGenders, value);
     }
 
     /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages

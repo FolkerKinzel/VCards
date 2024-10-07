@@ -108,11 +108,26 @@ public static class VCardExample
                              }
                            )
                 .EMails.SetPreferences()
+                .SocialMediaProfiles.Add("https://y.com/Semaphore",
+                                          parameters: p =>
+                                          {
+                                              p.UserName = "Semaphore";
+                                              p.ServiceType = "Y";
+                                          }
+                                        )
                 .BirthDayViews.Add(1984, 3, 28)
                 .Relations.Add("Paul Müller-Risinowsky",
                                Rel.Spouse | Rel.CoResident | Rel.Colleague
                               )
                 .AnniversaryViews.Add(2006, 7, 14)
+                .Notes.Add("Very experienced in Blazor.",
+                            parameters: p =>
+                            {
+                                p.Created = DateTimeOffset.Now;
+                                p.Author = new Uri("https://www.microsoft.com/");
+                                p.AuthorName = "Satya Nadella";
+                            }
+                          )
                 .VCard;
         }
 
@@ -156,8 +171,8 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2024-05-23T16:13:19Z
-UID:9abde489-7440-48e8-8438-58c2f0dae753
+REV:2024-10-07T11:39:58Z
+UID:2434cf1e-65cc-4efa-95b8-a5025b01b3c3
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra =
 Caroline M=C3=BCller-Risinowsky
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
@@ -177,11 +192,13 @@ TEL;WORK;VOICE;MSG;CELL;BBS:tel:+49-321-1234567
 TEL;HOME;VOICE;BBS:tel:+49-123-9876543
 EMAIL;PREF;INTERNET:kaethe_mueller@internet.com
 EMAIL;INTERNET:mailto:kaethe_at_home@internet.com
+X-SOCIALPROFILE;X-SERVICE-TYPE=Y:https://y.com/Semaphore
 X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
+NOTE:Very experienced in Blazor.
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- ER4xGDkvK9SnOWrpamw3JBSXCUpjnWWXTPtgVTNNBTDziBmGQvi/u9yRK1YdXqmIJ2H97VnBT2
- VtsNAn
+ YGfz84bPez/DuwsZznFFwOhX3aIM9yffkgHG9HeMY19FO3A2Xs6egB2hIbBnr3RjaW9ELXPjxp
+ IlvYB9
 
 END:VCARD
 
@@ -190,8 +207,8 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-05-23T16:13:20Z
-UID:9abde489-7440-48e8-8438-58c2f0dae753
+REV:2024-10-07T11:39:59Z
+UID:2434cf1e-65cc-4efa-95b8-a5025b01b3c3
 FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
 X-GENDER:Female
@@ -209,9 +226,11 @@ TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
 TEL;TYPE=HOME,VOICE,BBS:tel:+49-123-9876543
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 EMAIL;TYPE=INTERNET:mailto:kaethe_at_home@internet.com
+X-SOCIALPROFILE;X-SERVICE-TYPE=Y:https://y.com/Semaphore
 X-SPOUSE:Paul Müller-Risinowsky
-PHOTO;ENCODING=b;TYPE=JPEG:ER4xGDkvK9SnOWrpamw3JBSXCUpjnWWXTPtgVTNNBTDziBmG
- Qvi/u9yRK1YdXqmIJ2H97VnBT2VtsNAn
+NOTE:Very experienced in Blazor.
+PHOTO;ENCODING=b;TYPE=JPEG:YGfz84bPez/DuwsZznFFwOhX3aIM9yffkgHG9HeMY19FO3A2
+ Xs6egB2hIbBnr3RjaW9ELXPjxpIlvYB9
 END:VCARD
 
 
@@ -219,15 +238,16 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-REV:20240523T161320Z
-UID:urn:uuid:9abde489-7440-48e8-8438-58c2f0dae753
+CREATED;VALUE=TIMESTAMP:20241007T113958Z
+REV:20241007T113959Z
+UID:urn:uuid:2434cf1e-65cc-4efa-95b8-a5025b01b3c3
 FN;PID=1.1:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
-N:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
-GENDER:F
+N;PID=1.1:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
+GENDER;PID=1.1:F
 TITLE;PID=1.1:CEO
 ORG;PID=1.1:Millers Company;C#;Webdesign
-BDAY;VALUE=DATE:19840328
-ANNIVERSARY;VALUE=DATE:20060714
+BDAY;VALUE=DATE;PID=1.1:19840328
+ANNIVERSARY;VALUE=DATE;PID=1.1:20060714
 0.ADR;TYPE=WORK;LABEL=Friedrichstraße 22\n10117 Berlin\nGERMANY;GEO="geo:5
  2.511821,13.389581";TZ=Europe/Berlin;PID=1.1:;;Friedrichstraße 22;Berlin;
  ;10117;Germany
@@ -235,10 +255,14 @@ TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=1.1;INDEX=1:tel:+49-321-1234567
 TEL;TYPE=HOME,VOICE;VALUE=URI;PID=2.1;INDEX=2:tel:+49-123-9876543
 EMAIL;TYPE=WORK;PREF=1;PID=1.1:kaethe_mueller@internet.com
 EMAIL;TYPE=HOME;PREF=2;VALUE=URI;PID=2.1:mailto:kaethe_at_home@internet.com
-RELATED;TYPE=COLLEAGUE,CO-RESIDENT,SPOUSE;VALUE=TEXT;PID=1.1:Paul Müller-R
+SOCIALPROFILE;SERVICE-TYPE=Y;USERNAME=Semaphore;PID=1.1:https://y.com/Semap
+ hore
+RELATED;TYPE=colleague,co-resident,spouse;VALUE=TEXT;PID=1.1:Paul Müller-R
  isinowsky
-PHOTO;PID=1.1:data:image/jpeg;base64,ER4xGDkvK9SnOWrpamw3JBSXCUpjnWWXTPtgVT
- NNBTDziBmGQvi/u9yRK1YdXqmIJ2H97VnBT2VtsNAn
+NOTE;PID=1.1;AUTHOR-NAME=Satya Nadella;AUTHOR="https://www.microsoft.com/";
+ CREATED=20241007T113958Z:Very experienced in Blazor.
+PHOTO;PID=1.1:data:image/jpeg;base64,YGfz84bPez/DuwsZznFFwOhX3aIM9yffkgHG9H
+ eMY19FO3A2Xs6egB2hIbBnr3RjaW9ELXPjxpIlvYB9
 CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
 END:VCARD
 
@@ -248,9 +272,9 @@ Read VCard:
 Version: 3.0
 
 [DataType: TimeStamp]
-TimeStamp: 05/23/2024 16:13:20 +00:00
+TimeStamp: 10/07/2024 11:39:59 +00:00
 
-ID: 9abde489-7440-48e8-8438-58c2f0dae753
+ID: 2434cf1e-65cc-4efa-95b8-a5025b01b3c3
 
 DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
 
@@ -288,9 +312,14 @@ EMails: kaethe_mueller@internet.com
 [EMailType: INTERNET]
 EMails: mailto:kaethe_at_home@internet.com
 
+[ServiceType: Y]
+SocialMediaProfiles: https://y.com/Semaphore
+
 [RelationType: Spouse]
 [DataType: Text]
 Relations: System.String: Paul Müller-Risinowsky
+
+Notes: Very experienced in Blazor.
 
 [Encoding: Base64]
 [MediaType: image/jpeg]
