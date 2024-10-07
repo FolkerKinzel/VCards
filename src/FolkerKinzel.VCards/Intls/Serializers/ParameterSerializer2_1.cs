@@ -324,6 +324,21 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
         }
     }
 
+    protected override void BuildSocialProfilePara()
+    {
+        // X-SOCIALPROFILE
+        Debug.Assert(Options.HasFlag(Opts.WriteXExtensions));
+
+        string? serviceType = this.ParaSection.ServiceType;
+
+        if (serviceType is not null)
+        {
+            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, serviceType);
+        }
+
+        AppendNonStandardParameters();
+    }
+
     private void AppendSoundType()
     {
         string? s = MimeTypeConverter.SoundTypeFromMimeType(ParaSection.MediaType);

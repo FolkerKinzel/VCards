@@ -182,6 +182,7 @@ internal static class Utility
             Mailer = new TextProperty("The Mailer"),
             Languages = new TextProperty("de"),
             Notes = new TextProperty("Kommentar"),
+            GramGenders = [new GramProperty(Gram.Neuter), new GramProperty(Gram.Common)],
 
             Messengers =
             [

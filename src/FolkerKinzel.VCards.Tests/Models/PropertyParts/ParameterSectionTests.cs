@@ -179,8 +179,31 @@ public class ParameterSectionTests
             END:VCARD
             """;
 
-        var vc = Vcf.Parse(vcf)[0];
+        VCard vc = Vcf.Parse(vcf)[0];
         Assert.IsNotNull(vc.BirthDayViews);
         Assert.AreEqual(ParameterSection.DefaultCalendar, vc.BirthDayViews.First()!.Parameters.Calendar);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void AuthorRelativeUriTest()
+    {
+        var prop = new TextProperty("text");
+        prop.Parameters.Author = new Uri("www.nix.com", UriKind.Relative);
+    }
+
+    [TestMethod]
+    public void AuthorRelativeUriParseTest()
+    {
+        const string vcf = """
+            BEGIN:VCARD
+            VERSION:4.0
+            NOTE;AUTHOR="www.nix.com":bla
+            END:VCARD
+            """;
+
+        VCard vc = Vcf.Parse(vcf)[0];
+        Assert.IsNotNull(vc.Notes);
+        Assert.IsNull(vc.Notes.First()!.Parameters.Author);
     }
 }

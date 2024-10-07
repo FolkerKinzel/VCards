@@ -247,21 +247,6 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
         }
     }
 
-    protected virtual void BuildSocialProfilePara()
-    {
-        // X-SOCIALPROFILE
-        Debug.Assert(Options.HasFlag(Opts.WriteXExtensions));
-
-        string? serviceType = this.ParaSection.ServiceType;
-
-        if (serviceType is not null)
-        {
-            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, serviceType, escapedAndQuoted: true);
-        }
-
-        AppendNonStandardParameters();
-    }
-
     #region BuildPara
 
     [ExcludeFromCodeCoverage]
@@ -404,6 +389,9 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     [ExcludeFromCodeCoverage]
     protected virtual void BuildRolePara() { }
+
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildSocialProfilePara() { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void BuildSortStringPara() { }

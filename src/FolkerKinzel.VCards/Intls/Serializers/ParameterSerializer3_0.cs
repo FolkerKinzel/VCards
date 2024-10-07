@@ -334,6 +334,22 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         AppendNonStandardParameters();
     }
 
+    protected override void BuildSocialProfilePara()
+    {
+        // X-SOCIALPROFILE
+        Debug.Assert(Options.HasFlag(Opts.WriteXExtensions));
+
+        string? serviceType = this.ParaSection.ServiceType;
+
+        if (serviceType is not null)
+        {
+            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, serviceType, escapedAndQuoted: true);
+        }
+
+        AppendValue(ParaSection.DataType);
+        AppendNonStandardParameters();
+    }
+
     protected override void BuildSortStringPara()
     {
         AppendValue(ParaSection.DataType);

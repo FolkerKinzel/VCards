@@ -333,6 +333,7 @@ public class VCardTests
         Assert.AreEqual(2, vc1.NonStandards?.Count());
         Assert.AreEqual(1, vc1.AppIDs?.Count());
         Assert.AreEqual(1, vc1.TimeZones?.Count());
+        Assert.AreEqual(2, vc1.GramGenders?.Count());
 
         var vc2 = (VCard)vc1.Clone();
         Assert.AreEqual(1, vc2.Xmls?.Count());
@@ -354,6 +355,8 @@ public class VCardTests
         Assert.AreNotSame(vc1.AppIDs!.First(), vc2.AppIDs!.First());
         Assert.AreEqual(1, vc2.TimeZones?.Count());
         Assert.AreNotSame(vc1.TimeZones!.First(), vc2.TimeZones!.First());
+        Assert.AreEqual(2, vc2.GramGenders?.Count());
+        Assert.AreNotSame(vc1.GramGenders!.First(), vc2.GramGenders!.First());
 
         Assert.AreNotSame(vc1, vc2);
     }
