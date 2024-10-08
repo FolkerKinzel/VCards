@@ -73,7 +73,7 @@ public sealed class Address
         List<string>? newVals = null;
         bool streetHasData = false;
 
-        foreach (KeyValuePair<AdrProp, List<string>> kvp in builder.Data)
+        foreach (KeyValuePair<AdrProp, List<string>> kvp in builder.Data.OrderBy(x => x.Key))
         {
             if (kvp.Value.Count != 0)
             {
