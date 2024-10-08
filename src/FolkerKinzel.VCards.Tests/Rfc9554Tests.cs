@@ -237,6 +237,162 @@ public class Rfc9554Tests
         Assert.IsTrue(par.Created.HasValue);
     }
 
+    [TestMethod]
+    public void ImppTest1()
+    {
+        const string serviceType = "WhatsDown";
+        const string userName = "Susi";
+        VCard vc = VCardBuilder
+           .Create(false, false)
+           .Messengers.Add("123",
+           p =>
+           {
+               p.ServiceType = serviceType;
+               p.UserName = userName;
+           })
+           .VCard;
+
+        Serialize(vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2);
+
+        string v4Pure = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteXExtensions).Unset(Opts.WriteRfc9554Extensions));
+        string v3Pure = vc.ToVcfString(VCdVersion.V3_0, options: Opts.Default.Unset(Opts.WriteXExtensions).Unset(Opts.WriteRfc9554Extensions));
+
+        Assert.IsTrue(v4.Contains("\nIMPP", StringComparison.OrdinalIgnoreCase));
+        Assert.IsTrue(v4.Contains(";SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v4.Contains(";X-SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsTrue(v4.Contains(";USERNAME", StringComparison.OrdinalIgnoreCase));
+
+        Assert.IsTrue(v4WithoutRfc9554.Contains("\nIMPP", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v4WithoutRfc9554.Contains(";SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsTrue(v4WithoutRfc9554.Contains(";X-SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v4WithoutRfc9554.Contains(";USERNAME", StringComparison.OrdinalIgnoreCase));
+
+        Assert.IsTrue(v4Pure.Contains("\nIMPP", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v4Pure.Contains(";SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v4Pure.Contains(";X-SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v4Pure.Contains(";USERNAME", StringComparison.OrdinalIgnoreCase));
+
+        Assert.IsTrue(v3.Contains("\nIMPP", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v3.Contains(";SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsTrue(v3.Contains(";X-SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v3.Contains(";USERNAME", StringComparison.OrdinalIgnoreCase));
+
+        Assert.IsTrue(v3Pure.Contains("\nIMPP", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v3Pure.Contains(";SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v3Pure.Contains(";X-SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v3Pure.Contains(";USERNAME", StringComparison.OrdinalIgnoreCase));
+
+        Assert.IsFalse(v2.Contains("\nIMPP", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v2.Contains(";SERVICE_TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v2.Contains(";X-SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v2.Contains(";USERNAME", StringComparison.OrdinalIgnoreCase));
+
+        vc = Vcf.Parse(v4)[0];
+
+        VCards.Models.PropertyParts.ParameterSection? par = vc.Messengers?.First()?.Parameters;
+        Assert.IsNotNull(par);
+        Assert.AreEqual(serviceType, par.ServiceType);
+        Assert.AreEqual(userName, par.UserName);
+
+        vc = Vcf.Parse(v4WithoutRfc9554)[0];
+
+        par = vc.Messengers?.First()?.Parameters;
+        Assert.IsNotNull(par);
+        Assert.AreEqual(serviceType, par.ServiceType);
+        Assert.IsNull(par.UserName);
+
+        vc = Vcf.Parse(v4Pure)[0];
+
+        par = vc.Messengers?.First()?.Parameters;
+        Assert.IsNotNull(par);
+        Assert.IsNull(par.ServiceType);
+        Assert.IsNull(par.UserName);
+
+        vc = Vcf.Parse(v3)[0];
+
+        par = vc.Messengers?.First()?.Parameters;
+        Assert.IsNotNull(par);
+        Assert.AreEqual(serviceType, par.ServiceType);
+        Assert.IsNull(par.UserName);
+
+        vc = Vcf.Parse(v3Pure)[0];
+
+        par = vc.Messengers?.First()?.Parameters;
+        Assert.IsNotNull(par);
+        Assert.IsNull(par.ServiceType);
+        Assert.IsNull(par.UserName);
+    }
+
+    [TestMethod]
+    public void PhoneticAndScriptTest1()
+    {
+        VCard vc = VCardBuilder
+           .Create(false, false)
+           .NameViews.Add(NameBuilder.Create().AddFamilyName("Kinzel"),
+           p =>
+           {
+               p.Phonetic = Phonetic.Ipa;
+               p.Script = "Latn";
+           })
+           .VCard;
+
+        Serialize(vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2);
+
+        Assert.IsTrue(v4.Contains(";PHONETIC=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsTrue(v4.Contains(";SCRIPT=", StringComparison.OrdinalIgnoreCase));
+
+        Assert.IsFalse(v4WithoutRfc9554.Contains(";PHONETIC=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v4WithoutRfc9554.Contains(";SCRIPT=", StringComparison.OrdinalIgnoreCase));
+
+        Assert.IsFalse(v3.Contains(";PHONETIC=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v3.Contains(";SCRIPT=", StringComparison.OrdinalIgnoreCase));
+
+        Assert.IsFalse(v2.Contains(";PHONETIC=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v2.Contains(";SCRIPT=", StringComparison.OrdinalIgnoreCase));
+
+        vc = Vcf.Parse(v4)[0];
+
+        VCards.Models.PropertyParts.ParameterSection? par = vc.NameViews?.First()?.Parameters;
+        Assert.IsNotNull(par);
+        Assert.IsTrue(par.Phonetic.HasValue);
+        Assert.IsNotNull(par.Script);
+    }
+
+    [TestMethod]
+    public void PhoneticAndScriptTest2()
+    {
+        VCard vc = VCardBuilder
+           .Create(false, false)
+           .Addresses.Add(AddressBuilder.Create().AddLocality("Berlin"),
+           p =>
+           {
+               p.Phonetic = Phonetic.Ipa;
+               p.Script = "Latn";
+           })
+           .VCard;
+
+        Serialize(vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2);
+
+        Assert.IsTrue(v4.Contains(";PHONETIC=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsTrue(v4.Contains(";SCRIPT=", StringComparison.OrdinalIgnoreCase));
+
+        Assert.IsFalse(v4WithoutRfc9554.Contains(";PHONETIC=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v4WithoutRfc9554.Contains(";SCRIPT=", StringComparison.OrdinalIgnoreCase));
+
+        Assert.IsFalse(v3.Contains(";PHONETIC=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v3.Contains(";SCRIPT=", StringComparison.OrdinalIgnoreCase));
+
+        Assert.IsFalse(v2.Contains(";PHONETIC=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v2.Contains(";SCRIPT=", StringComparison.OrdinalIgnoreCase));
+
+        vc = Vcf.Parse(v4)[0];
+
+        VCards.Models.PropertyParts.ParameterSection? par = vc.Addresses?.First()?.Parameters;
+        Assert.IsNotNull(par);
+        Assert.IsTrue(par.Phonetic.HasValue);
+        Assert.IsNotNull(par.Script);
+    }
+
     private static void Serialize(VCard vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2)
     {
         v4 = vc.ToVcfString(VCdVersion.V4_0);

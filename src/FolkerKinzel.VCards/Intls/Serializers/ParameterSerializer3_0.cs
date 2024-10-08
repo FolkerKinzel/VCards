@@ -560,13 +560,10 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         }
     }
 
-    #endregion
 
     private void AppendServiceType()
     {
-        Debug.Assert(Options.HasFlag(Opts.WriteXExtensions));
-
-        if (ParaSection.ServiceType is string serviceType)
+        if (Options.HasFlag(Opts.WriteXExtensions) && ParaSection.ServiceType is string serviceType)
         {
             AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, serviceType);
         }
@@ -574,4 +571,6 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void AppendRfc2739Pref() => Builder.Append(";TYPE=PREF");
+
+    #endregion
 }
