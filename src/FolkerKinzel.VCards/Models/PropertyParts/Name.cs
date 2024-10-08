@@ -77,16 +77,67 @@ public sealed class Name
         Justification = "Performance: Collection initializer initializes a new List.")]
     internal Name(NameBuilder builder)
     {
+        IList<string> familyNames, surname2, suffixes, generation;
+        familyNames = surname2 = suffixes = generation = Array.Empty<string>();
+
         foreach (KeyValuePair<NameProp, List<string>> kvp in builder.Data)
         {
             if (kvp.Value.Count != 0)
             {
+                // Copy kvp.Value because it comes from NameBuilder and can be reused!
                 _dic[kvp.Key] = new ReadOnlyCollection<string>(kvp.Value.ToArray());
+
+                switch (kvp.Key)
+                {
+                    case NameProp.FamilyNames:
+                        familyNames = kvp.Value;
+                        break;
+                    case NameProp.Surname2:
+                        surname2 = kvp.Value;
+                        break;
+                    case NameProp.Suffixes:
+                        suffixes = kvp.Value;
+                        break;
+                    case NameProp.Generation:
+                        generation = kvp.Value;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
+        AddOldValueForCompatibility(NameProp.FamilyNames, familyNames, surname2);
+        AddOldValueForCompatibility(NameProp.Suffixes, suffixes, generation);
+
         _familyNamesView = GetFamilyNamesView();
         _suffixesView = GetSuffixesView();
+    }
+
+    [SuppressMessage("Style", "IDE0305:Simplify collection initialization", 
+        Justification = "Performance: Collection initializer allocate a new List<string>")]
+    private void AddOldValueForCompatibility(NameProp oldPropKey, IList<string> oldPropVals, IList<string> newPropVals)
+    {
+        string[] newValuesNotInOldProp = newPropVals.Where(x => !oldPropVals.Contains(x, StringComparer.CurrentCultureIgnoreCase)).ToArray();
+
+        if (newValuesNotInOldProp.Length != 0)
+        {
+
+            if (oldPropVals.Count != 0)
+            {
+                Debug.Assert(oldPropVals is List<string>);
+                ((List<string>)oldPropVals).AddRange(newValuesNotInOldProp);
+
+                // Copy oldPropVals because it comes from NameBuilder and can be reused!
+                oldPropVals = oldPropVals.ToArray();
+            }
+            else
+            {
+                oldPropVals = newValuesNotInOldProp;
+            }
+
+            _dic[oldPropKey] = new ReadOnlyCollection<string>(oldPropVals);
+        }
     }
 
     internal Name(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
@@ -239,7 +290,7 @@ public sealed class Name
         {
             string old = oldProps[i];
 
-            if (!newProps.Contains(old))
+            if (!newProps.Contains(old, StringComparer.CurrentCultureIgnoreCase))
             {
                 list ??= [];
                 list.Add(old);
@@ -247,7 +298,7 @@ public sealed class Name
         }
 
         return list is null ? ReadOnlyStringCollection.Empty
-                            : list.SequenceEqual(oldProps)
+                            : list.Count == oldProps.Count
                                  ? oldProps
                                  : list.AsReadOnly();
     }

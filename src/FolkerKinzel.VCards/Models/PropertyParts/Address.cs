@@ -70,14 +70,46 @@ public sealed class Address
         Justification = "Performance: Collection initializer initializes a new List.")]
     internal Address(AddressBuilder builder)
     {
+        List<string>? newVals = null;
+        bool streetHasData = false;
+
         foreach (KeyValuePair<AdrProp, List<string>> kvp in builder.Data)
         {
             if (kvp.Value.Count != 0)
             {
+                // Copy kvp.Value because it comes from AddressBuilder and can be reused!
                 _dic[kvp.Key] = new ReadOnlyCollection<string>(kvp.Value.ToArray());
+
+                switch (kvp.Key)
+                {
+                    case AdrProp.Street:
+                        streetHasData |= true;
+                        break;
+                    case AdrProp.Room:
+                    case AdrProp.Apartment:
+                    case AdrProp.Floor:
+                    case AdrProp.StreetNumber:
+                    case AdrProp.StreetName:
+                    case AdrProp.Building:
+                    case AdrProp.Block:
+                    case AdrProp.SubDistrict:
+                    case AdrProp.District:
+                    case AdrProp.Landmark:
+                    case AdrProp.Direction:
+                        newVals ??= [];
+                        newVals.AddRange(kvp.Value);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-        
+
+        if (!streetHasData && newVals is not null)
+        {
+            _dic[AdrProp.Street] = newVals.AsReadOnly();
+        }
+
         _streetView = GetStreetView();
     }
 
@@ -155,7 +187,7 @@ public sealed class Address
     /// </list>
     /// </remarks>
     public ReadOnlyCollection<string> Street => _streetView;
-        
+
     /// <summary>The locality (e.g., city).</summary>
     public ReadOnlyCollection<string> Locality => Get(AdrProp.Locality);
 
@@ -242,7 +274,7 @@ public sealed class Address
             CompoundObjectConverter.EncodeQuotedPrintable(builder, startIdx);
         }
     }
-    
+
     internal bool NeedsToBeQpEncoded()
     {
         foreach (KeyValuePair<AdrProp, ReadOnlyCollection<string>> kvp in _dic)
