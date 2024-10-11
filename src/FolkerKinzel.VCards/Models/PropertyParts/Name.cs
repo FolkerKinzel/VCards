@@ -107,22 +107,29 @@ public sealed class Name
             }
         }
 
-        AddOldValueForCompatibility(NameProp.FamilyNames, familyNames, surname2);
-        AddOldValueForCompatibility(NameProp.Suffixes, suffixes, generation);
+
+        if (surname2.Count != 0)
+        {
+            AddOldValueForCompatibility(NameProp.FamilyNames, familyNames, surname2, builder.Worker);
+        }
+
+        if (generation.Count != 0)
+        {
+            AddOldValueForCompatibility(NameProp.Suffixes, suffixes, generation, builder.Worker);
+        }
 
         _familyNamesView = GetFamilyNamesView();
         _suffixesView = GetSuffixesView();
     }
 
-    [SuppressMessage("Style", "IDE0305:Simplify collection initialization", 
+    [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
         Justification = "Performance: Collection initializer allocate a new List<string>")]
-    private void AddOldValueForCompatibility(NameProp oldPropKey, IList<string> oldPropVals, IList<string> newPropVals)
+    private void AddOldValueForCompatibility(NameProp oldPropKey, IList<string> oldPropVals, IList<string> newPropVals, List<string> newValuesNotInOldProp)
     {
-        string[] newValuesNotInOldProp = newPropVals.Where(x => !oldPropVals.Contains(x, StringComparer.CurrentCultureIgnoreCase)).ToArray();
+        GetNewValuesNotInOldProp(oldPropVals, newPropVals, newValuesNotInOldProp);
 
-        if (newValuesNotInOldProp.Length != 0)
+        if (newValuesNotInOldProp.Count != 0)
         {
-
             if (oldPropVals.Count != 0)
             {
                 Debug.Assert(oldPropVals is List<string>);
@@ -137,6 +144,27 @@ public sealed class Name
             }
 
             _dic[oldPropKey] = new ReadOnlyCollection<string>(oldPropVals);
+        }
+
+        static void GetNewValuesNotInOldProp(IList<string> oldPropVals, IList<string> newPropVals, List<string> newValuesNotInOldProp)
+        {
+            newValuesNotInOldProp.Clear();
+
+            foreach (string newVal in newPropVals)
+            {
+                foreach (string oldVal in oldPropVals)
+                {
+                    if(oldVal.Contains(newVal, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        goto repeat;
+                    }
+                }
+
+                newValuesNotInOldProp.Add(newVal);
+
+repeat:
+                continue;
+            }
         }
     }
 

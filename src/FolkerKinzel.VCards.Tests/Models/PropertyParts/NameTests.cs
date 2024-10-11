@@ -70,12 +70,13 @@ public class NameTests
         string vcfRfc9554 = vc.ToVcfString(VCdVersion.V4_0);
         string vcf4 = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteRfc9554Extensions));
 
-        const string standard = "1;2;3;4;5\r\n";
-        const string rfc9554 = "1;2;3;4;5;6;7\r\n";
+        const string standard = "1 6;2;3;4;5 7\r\n";
+        const string standardV4 = "1,6;2;3;4;5,7\r\n";
+        const string rfc9554 = "1,6;2;3;4;5,7;6;7\r\n";
 
         Assert.IsTrue(vcf2.Contains(standard));
         Assert.IsTrue(vcf3.Contains(standard));
-        Assert.IsTrue(vcf4.Contains(standard));
+        Assert.IsTrue(vcf4.Contains(standardV4));
         Assert.IsTrue(vcfRfc9554.Contains(rfc9554));
     }
 

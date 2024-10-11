@@ -18,6 +18,16 @@ namespace FolkerKinzel.VCards;
 public class NameBuilder
 {
     private readonly Dictionary<NameProp, List<string>> _dic = [];
+    private List<string>? _worker;
+
+    internal List<string> Worker
+    {
+        get
+        {
+            _worker ??= [];
+            return _worker;
+        }
+    }
 
     /// <summary>
     /// Creates a new <see cref="NameBuilder"/> instance.
