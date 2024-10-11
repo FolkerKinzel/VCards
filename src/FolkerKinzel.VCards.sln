@@ -31,8 +31,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Experiments", "Experiments\
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "FolkerKinzel.VCards.Reference.Website", "FolkerKinzel.VCards.Reference.Website\FolkerKinzel.VCards.Reference.Website.shfbproj", "{CD1E32C0-4A48-4857-9070-63F20C8D442E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MethodNotFoundIssue", "MethodNotFoundIssue\MethodNotFoundIssue.csproj", "{DDFF35D3-4B4C-4CA9-B32C-ED45DFAC5342}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,10 +69,6 @@ Global
 		{F8EF72BB-8C77-4764-862E-0AA88CF34432}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD1E32C0-4A48-4857-9070-63F20C8D442E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD1E32C0-4A48-4857-9070-63F20C8D442E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDFF35D3-4B4C-4CA9-B32C-ED45DFAC5342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDFF35D3-4B4C-4CA9-B32C-ED45DFAC5342}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDFF35D3-4B4C-4CA9-B32C-ED45DFAC5342}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDFF35D3-4B4C-4CA9-B32C-ED45DFAC5342}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
