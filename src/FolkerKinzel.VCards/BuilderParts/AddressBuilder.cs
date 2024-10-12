@@ -318,7 +318,7 @@ public readonly struct AddressBuilder
     /// <exception cref="ArgumentNullException"><paramref name="addressFormatter"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder AttachAutoLabels(IAddressFormatter addressFormatter)
+    public VCardBuilder AttachLabels(IAddressFormatter addressFormatter)
     {
         VCard vc = Builder.VCard;
         _ArgumentNullException.ThrowIfNull(addressFormatter, nameof(addressFormatter));

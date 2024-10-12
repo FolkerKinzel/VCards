@@ -111,7 +111,7 @@ public static class VCardExample
                      },
                      group: vc => vc.NewGroup()
                               )
-                .Addresses.AttachAutoLabels(AddressFormatter.Default)
+                .Addresses.AttachLabels(AddressFormatter.Default)
                 .EMails.Add("kaethe_mueller@internet.com", parameters: p => p.PropertyClass = PCl.Work)
                 .EMails.Add("mailto:kaethe_at_home@internet.com",
                              parameters: p =>

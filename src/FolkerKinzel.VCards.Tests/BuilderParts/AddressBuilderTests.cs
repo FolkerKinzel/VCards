@@ -116,4 +116,8 @@ public class AddressBuilderTests
 
     [TestMethod]
     public void ToStringTest1() => Assert.IsNotNull(new AddressBuilder().ToString());
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void AttachLabelsTest1() => new AddressBuilder().AttachLabels(AddressFormatter.Default);
 }
