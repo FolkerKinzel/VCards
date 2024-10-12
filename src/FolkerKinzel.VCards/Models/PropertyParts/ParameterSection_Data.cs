@@ -1,7 +1,7 @@
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Syncs;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Resources;
+using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
@@ -540,7 +540,7 @@ public sealed partial class ParameterSection
         get => Get<string?>(VCdParam.ServiceType);
         set => Set(VCdParam.ServiceType, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
-    
+
     /// <summary><c>SORT-AS</c>: Determines the sort order. <c>([3],4)</c></summary>
     /// <value><see cref="string"/>s (case-sensitive!). Maximum as many as fields of the compound property.</value>
     /// <example>

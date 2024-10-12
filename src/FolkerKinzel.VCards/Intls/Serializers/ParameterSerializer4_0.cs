@@ -1,4 +1,3 @@
-using System.Configuration;
 using System.Globalization;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
@@ -850,7 +849,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             AppendParameter(ParameterSection.ParameterKey.CC, countryCode, escapedAndQuoted: true);
         }
     }
-    
+
     private void AppendDerived()
     {
         if (writeRfc9554 && ParaSection.Derived)

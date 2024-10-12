@@ -199,14 +199,20 @@ public class Rfc9554Tests
     [TestMethod]
     public void ParametersTest1()
     {
+        const string propID = "propID";
+        const string authorName = "Susi";
+        var author = new Uri("https://wwww.susi.com/");
+
         VCard vc = VCardBuilder
             .Create(false, false)
-            .Notes.Add("note",
+            .DisplayNames.Add("note",
             p =>
             {
-                p.Author = new Uri("https://wwww.susi.com/");
-                p.AuthorName = "Susi";
+                p.Author = author;
+                p.AuthorName = authorName;
                 p.Created = DateTimeOffset.UtcNow;
+                p.PropertyID = propID;
+                p.Derived = true;
             })
             .VCard;
 
@@ -215,26 +221,36 @@ public class Rfc9554Tests
         Assert.IsTrue(v4.Contains(";AUTHOR=", StringComparison.OrdinalIgnoreCase));
         Assert.IsTrue(v4.Contains(";AUTHOR-NAME=", StringComparison.OrdinalIgnoreCase));
         Assert.IsTrue(v4.Contains(";CREATED=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsTrue(v4.Contains(";DERIVED", StringComparison.OrdinalIgnoreCase));
+        Assert.IsTrue(v4.Contains(";PROP-ID", StringComparison.OrdinalIgnoreCase));
 
         Assert.IsFalse(v4WithoutRfc9554.Contains(";AUTHOR=", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(v4WithoutRfc9554.Contains(";AUTHOR-NAME=", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(v4WithoutRfc9554.Contains(";CREATED=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v4WithoutRfc9554.Contains(";DERIVED", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v4WithoutRfc9554.Contains(";PROP-ID", StringComparison.OrdinalIgnoreCase));
 
         Assert.IsFalse(v3.Contains(";AUTHOR=", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(v3.Contains(";AUTHOR-NAME=", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(v3.Contains(";CREATED=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v3.Contains(";DERIVED", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v3.Contains(";PROP-ID", StringComparison.OrdinalIgnoreCase));
 
         Assert.IsFalse(v2.Contains(";AUTHOR=", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(v2.Contains(";AUTHOR-NAME=", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(v2.Contains(";CREATED=", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v2.Contains(";DERIVED", StringComparison.OrdinalIgnoreCase));
+        Assert.IsFalse(v2.Contains(";PROP-ID", StringComparison.OrdinalIgnoreCase));
 
         vc = Vcf.Parse(v4)[0];
 
-        VCards.Models.PropertyParts.ParameterSection? par = vc.Notes?.First()?.Parameters;
+        VCards.Models.PropertyParts.ParameterSection? par = vc.DisplayNames?.First()?.Parameters;
         Assert.IsNotNull(par);
-        Assert.IsNotNull(par.Author);
-        Assert.IsNotNull(par.AuthorName);
+        Assert.AreEqual(author, par.Author);
+        Assert.AreEqual(authorName, par.AuthorName);
         Assert.IsTrue(par.Created.HasValue);
+        Assert.AreEqual(propID, par.PropertyID);
+        Assert.IsTrue(par.Derived);
     }
 
     [TestMethod]

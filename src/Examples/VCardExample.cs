@@ -58,11 +58,18 @@ public static class VCardExample
 
             return VCardBuilder
                 .Create()
-                .NameViews.Add(familyNames: ["Müller-Risinowsky"],
-                               givenNames: ["Käthe"],
-                               additionalNames: ["Alexandra", "Caroline"],
-                               prefixes: ["Prof.", "Dr."],
-                               displayName: (displayNames, name) => displayNames.Add(name.ToDisplayName())
+                .NameViews.Add(NameBuilder
+                    .Create()
+                    .AddPrefix("Prof.")
+                    .AddPrefix("Dr.")
+                    .AddGivenName("Käthe")
+                    .AddAdditionalName("Alexandra")
+                    .AddAdditionalName("Caroline")
+                    .AddFamilyName("Müller-Risinowsky")
+                    .AddGeneration("II."),
+                    displayName: (displayNames, name) => displayNames.Add(name.ToDisplayName(), 
+                                                                          parameters: p => p.Derived = true
+                                                                          )
                               )
                 .GenderViews.Add(Sex.Female)
                 .Organizations.Add("Millers Company", ["C#", "Webdesign"])
@@ -89,15 +96,25 @@ public static class VCardExample
                 // Specifying the country helps to format this label correctly.
                 // Applying a group name to the AddressProperty helps to automatically preserve its Label,
                 // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
-                .Addresses.Add("Friedrichstraße 22", "Berlin", null, "10117", "Germany",
-                                parameters: p =>
-                                {
-                                    p.PropertyClass = PCl.Work;
-                                    p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel;
-                                    p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
-                                    p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
-                                },
-                                group: vc => vc.NewGroup()
+                .Addresses.Add(AddressBuilder
+                    .Create()
+                    .AddStreetName("Friedrichstraße")
+                    .AddStreetNumber("22")
+                    .AddLocality("Berlin")
+                    .AddPostalCode("10117")
+                    .AddCountry("Germany"),
+                     parameters: p =>
+                     {
+                         p.PropertyClass = PCl.Work;
+                         p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel|Adr.Billing|Adr.Delivery;
+                         p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
+                         p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
+                         p.Label = """
+                                   Friedrichstraße 22
+                                   10117 Berlin
+                                   """;
+                     },
+                     group: vc => vc.NewGroup()
                               )
                 .EMails.Add("kaethe_mueller@internet.com", parameters: p => p.PropertyClass = PCl.Work)
                 .EMails.Add("mailto:kaethe_at_home@internet.com",
@@ -108,6 +125,8 @@ public static class VCardExample
                              }
                            )
                 .EMails.SetPreferences()
+                .Messengers.Add("https://wd.me/0123456789",
+                                parameters: p => p.ServiceType = "WhatsDown")
                 .SocialMediaProfiles.Add("https://y.com/Semaphore",
                                           parameters: p =>
                                           {
@@ -171,21 +190,19 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2024-10-07T11:39:58Z
-UID:2434cf1e-65cc-4efa-95b8-a5025b01b3c3
+REV:2024-10-12T11:22:56Z
+UID:f241c93a-3afc-4f3e-95c7-8251963fe6e0
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Prof. Dr. K=C3=A4the Alexandra =
-Caroline M=C3=BCller-Risinowsky
+Caroline M=C3=BCller-Risinowsky II.
 N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:M=C3=BCller-Risinowsky;K=C3=A4th=
-e;Alexandra Caroline;Prof. Dr.;
+e;Alexandra Caroline;Prof. Dr.;II.
 X-GENDER:Female
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
 BDAY:1984-03-28
 X-ANNIVERSARY:2006-07-14
 0.ADR;DOM;INTL;POSTAL;PARCEL;WORK;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:=
-;;Friedrichstra=C3=9Fe 22;Berlin;;10117;Germany
-0.LABEL;DOM;INTL;POSTAL;PARCEL;WORK;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:=
-Friedrichstra=C3=9Fe 22=0D=0A10117 Berlin=0D=0AGERMANY
+;;22 Friedrichstra=C3=9Fe;Berlin;;10117;Germany
 0.GEO:52.511821;13.389581
 0.TZ:+01:00
 TEL;WORK;VOICE;MSG;CELL;BBS:tel:+49-321-1234567
@@ -197,8 +214,8 @@ X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 NOTE:Very experienced in Blazor.
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- YGfz84bPez/DuwsZznFFwOhX3aIM9yffkgHG9HeMY19FO3A2Xs6egB2hIbBnr3RjaW9ELXPjxp
- IlvYB9
+ ClUfr35pvue5vs5DN84aT/Y9Se23g+hlvHww437y5RIpcX1Sq6reZ3foyUgm6K2GrHpxwU0tSD
+ d/586x
 
 END:VCARD
 
@@ -207,19 +224,17 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-10-07T11:39:59Z
-UID:2434cf1e-65cc-4efa-95b8-a5025b01b3c3
-FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
-N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;
+REV:2024-10-12T11:22:56Z
+UID:f241c93a-3afc-4f3e-95c7-8251963fe6e0
+FN:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky II.
+N:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;II.
 X-GENDER:Female
 TITLE:CEO
 ORG:Millers Company;C#;Webdesign
 BDAY;VALUE=DATE:1984-03-28
 X-ANNIVERSARY:2006-07-14
-0.ADR;TYPE=WORK,DOM,INTL,POSTAL,PARCEL:;;Friedrichstraße 22;Berlin;;10117;
+0.ADR;TYPE=WORK,DOM,INTL,POSTAL,PARCEL:;;22 Friedrichstraße;Berlin;;10117;
  Germany
-0.LABEL;TYPE=WORK,DOM,INTL,POSTAL,PARCEL:Friedrichstraße 22\n10117 Berlin\
- nGERMANY
 0.GEO:52.511821;13.389581
 0.TZ:+01:00
 TEL;TYPE=WORK,VOICE,MSG,CELL,BBS:tel:+49-321-1234567
@@ -227,10 +242,11 @@ TEL;TYPE=HOME,VOICE,BBS:tel:+49-123-9876543
 EMAIL;TYPE=INTERNET,PREF:kaethe_mueller@internet.com
 EMAIL;TYPE=INTERNET:mailto:kaethe_at_home@internet.com
 X-SOCIALPROFILE;X-SERVICE-TYPE=Y:https://y.com/Semaphore
+IMPP;X-SERVICE-TYPE=WhatsDown:https://wd.me/0123456789
 X-SPOUSE:Paul Müller-Risinowsky
 NOTE:Very experienced in Blazor.
-PHOTO;ENCODING=b;TYPE=JPEG:YGfz84bPez/DuwsZznFFwOhX3aIM9yffkgHG9HeMY19FO3A2
- Xs6egB2hIbBnr3RjaW9ELXPjxpIlvYB9
+PHOTO;ENCODING=b;TYPE=JPEG:ClUfr35pvue5vs5DN84aT/Y9Se23g+hlvHww437y5RIpcX1S
+ q6reZ3foyUgm6K2GrHpxwU0tSDd/586x
 END:VCARD
 
 
@@ -238,31 +254,33 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-CREATED;VALUE=TIMESTAMP:20241007T113958Z
-REV:20241007T113959Z
-UID:urn:uuid:2434cf1e-65cc-4efa-95b8-a5025b01b3c3
-FN;PID=1.1:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
-N;PID=1.1:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;
+CREATED;VALUE=TIMESTAMP:20241012T112255Z
+REV:20241012T112256Z
+UID:urn:uuid:f241c93a-3afc-4f3e-95c7-8251963fe6e0
+FN;DERIVED=TRUE;PID=1.1:Prof. Dr. Käthe Alexandra Caroline Müller-Risinow
+ sky II.
+N;PID=1.1:Müller-Risinowsky;Käthe;Alexandra,Caroline;Prof.,Dr.;II.;;II.
 GENDER;PID=1.1:F
 TITLE;PID=1.1:CEO
 ORG;PID=1.1:Millers Company;C#;Webdesign
 BDAY;VALUE=DATE;PID=1.1:19840328
 ANNIVERSARY;VALUE=DATE;PID=1.1:20060714
-0.ADR;TYPE=WORK;LABEL=Friedrichstraße 22\n10117 Berlin\nGERMANY;GEO="geo:5
- 2.511821,13.389581";TZ=Europe/Berlin;PID=1.1:;;Friedrichstraße 22;Berlin;
- ;10117;Germany
+0.ADR;TYPE=WORK,billing,delivery;GEO="geo:52.511821,13.389581";TZ=Europe/Be
+ rlin;PID=1.1:;;22,Friedrichstraße;Berlin;;10117;Germany;;;;22;Friedrichst
+ raße;;;;;;
 TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=1.1;INDEX=1:tel:+49-321-1234567
 TEL;TYPE=HOME,VOICE;VALUE=URI;PID=2.1;INDEX=2:tel:+49-123-9876543
 EMAIL;TYPE=WORK;PREF=1;PID=1.1:kaethe_mueller@internet.com
 EMAIL;TYPE=HOME;PREF=2;VALUE=URI;PID=2.1:mailto:kaethe_at_home@internet.com
 SOCIALPROFILE;SERVICE-TYPE=Y;USERNAME=Semaphore;PID=1.1:https://y.com/Semap
  hore
+IMPP;SERVICE-TYPE=WhatsDown;PID=1.1:https://wd.me/0123456789
 RELATED;TYPE=colleague,co-resident,spouse;VALUE=TEXT;PID=1.1:Paul Müller-R
  isinowsky
 NOTE;PID=1.1;AUTHOR-NAME=Satya Nadella;AUTHOR="https://www.microsoft.com/";
- CREATED=20241007T113958Z:Very experienced in Blazor.
-PHOTO;PID=1.1:data:image/jpeg;base64,YGfz84bPez/DuwsZznFFwOhX3aIM9yffkgHG9H
- eMY19FO3A2Xs6egB2hIbBnr3RjaW9ELXPjxpIlvYB9
+ CREATED=20241012T112256Z:Very experienced in Blazor.
+PHOTO;PID=1.1:data:image/jpeg;base64,ClUfr35pvue5vs5DN84aT/Y9Se23g+hlvHww43
+ 7y5RIpcX1Sq6reZ3foyUgm6K2GrHpxwU0tSDd/586x
 CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
 END:VCARD
 
@@ -272,17 +290,18 @@ Read VCard:
 Version: 3.0
 
 [DataType: TimeStamp]
-TimeStamp: 10/07/2024 11:39:59 +00:00
+TimeStamp: 10/12/2024 11:22:56 +00:00
 
-ID: 2434cf1e-65cc-4efa-95b8-a5025b01b3c3
+ID: f241c93a-3afc-4f3e-95c7-8251963fe6e0
 
-DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
+DisplayNames: Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky II.
 
 NameViews:
     FamilyNames:     Müller-Risinowsky
     GivenNames:      Käthe
     AdditionalNames: Alexandra Caroline
     Prefixes:        Prof. Dr.
+    Suffixes:        II.
 
 GenderViews: Female
 
@@ -315,6 +334,9 @@ EMails: mailto:kaethe_at_home@internet.com
 [ServiceType: Y]
 SocialMediaProfiles: https://y.com/Semaphore
 
+[ServiceType: WhatsDown]
+Messengers: https://wd.me/0123456789
+
 [RelationType: Spouse]
 [DataType: Text]
 Relations: System.String: Paul Müller-Risinowsky
@@ -335,17 +357,13 @@ GeoCoordinates:
 
 [PropertyClass: Work]
 [AddressType: Dom, Intl, Postal, Parcel]
-[Label:
-    Friedrichstraße 22
-    10117 Berlin
-    GERMANY]
 [GeoPosition:
     Latitude:    52.511821
     Longitude:   13.389581]
 [TimeZone: +01:00]
 [Group: 0]
 Addresses:
-    Street:     Friedrichstraße 22
+    Street:     22 Friedrichstraße
     Locality:   Berlin
     PostalCode: 10117
     Country:    Germany

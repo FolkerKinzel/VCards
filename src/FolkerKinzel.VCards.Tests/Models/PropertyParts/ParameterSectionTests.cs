@@ -206,4 +206,86 @@ public class ParameterSectionTests
         Assert.IsNotNull(vc.Notes);
         Assert.IsNull(vc.Notes.First()!.Parameters.Author);
     }
+
+    [TestMethod]
+    public void AuthorTest2()
+    {
+        var p = new ParameterSection();
+        p.Author = new Uri("http://folker.de");
+        Assert.IsNotNull(p.Author);
+        p.Author = null;
+        Assert.IsNull(p.Author);
+    }
+
+    [TestMethod]
+    public void AuthorNameTest1()
+    {
+        var p = new ParameterSection();
+
+        Assert.IsNull(p.AuthorName);
+        p.AuthorName = "  ";
+        Assert.IsNull(p.AuthorName);
+        p.AuthorName = "   t e s t    ";
+        Assert.AreEqual("t e s t", p.AuthorName);
+    }
+
+    [TestMethod]
+    public void PropertyIDTest1()
+    {
+        var p = new ParameterSection();
+
+        Assert.IsNull(p.PropertyID);
+        p.PropertyID = "   abc   ";
+        Assert.AreEqual("abc", p.PropertyID);
+        p.PropertyID = "   ";
+        Assert.IsNull(p.PropertyID);
+    }
+
+    [TestMethod]
+    public void ScriptTest1()
+    {
+        var p = new ParameterSection();
+
+        Assert.IsNull(p.Script);
+        p.Script = "   abc   ";
+        Assert.AreEqual("abc", p.Script);
+        p.Script = "   ";
+        Assert.IsNull(p.Script);
+    }
+
+    [TestMethod]
+    public void ServiceTypeTest1()
+    {
+        var p = new ParameterSection();
+
+        Assert.IsNull(p.ServiceType);
+        p.ServiceType = "   abc   ";
+        Assert.AreEqual("abc", p.ServiceType);
+        p.ServiceType = "   ";
+        Assert.IsNull(p.ServiceType);
+    }
+
+    [TestMethod]
+    public void UserNameTest1()
+    {
+        var p = new ParameterSection();
+
+        Assert.IsNull(p.UserName);
+        p.UserName = "   abc   ";
+        Assert.AreEqual("abc", p.UserName);
+        p.UserName = "   ";
+        Assert.IsNull(p.UserName);
+    }
+
+    [TestMethod]
+    public void DerivedTest1()
+    {
+        var p = new ParameterSection();
+
+        Assert.IsFalse(p.Derived);
+        p.Derived = true;
+        Assert.IsTrue(p.Derived);
+        p.Derived = false;
+        Assert.IsFalse(p.Derived);
+    }
 }
