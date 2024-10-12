@@ -1,7 +1,6 @@
-﻿using FolkerKinzel.VCards.Intls.Formatters;
-using FolkerKinzel.VCards.Models;
+﻿using FolkerKinzel.VCards.Models;
 
-namespace FolkerKinzel.VCards;
+namespace FolkerKinzel.VCards.Formatters;
 
 /// <summary>
 /// Interface that allows implementing classes to convert <see cref="NameProperty"/> instances

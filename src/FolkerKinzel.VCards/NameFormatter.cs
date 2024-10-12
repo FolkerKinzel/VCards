@@ -1,10 +1,15 @@
-﻿using FolkerKinzel.VCards.Intls.Formatters;
+﻿using FolkerKinzel.VCards.Formatters;
+using FolkerKinzel.VCards.Intls.Formatters;
 
 namespace FolkerKinzel.VCards;
 
 /// <summary>
 /// Static class that provides <see cref="INameFormatter"/> implementations.
 /// </summary>
+/// <remarks>
+/// Since this is a partial class, it can be extended with custom implementations of 
+/// <see cref="INameFormatter"/>.
+/// </remarks>
 public static partial class NameFormatter
 {
     /// <summary>
