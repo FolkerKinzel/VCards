@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Formatters;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 

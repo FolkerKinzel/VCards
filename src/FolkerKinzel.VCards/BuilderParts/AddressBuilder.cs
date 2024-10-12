@@ -280,10 +280,6 @@ public readonly struct AddressBuilder
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <param name="label">A function that returns a formatted address label or <c>null</c>. The function is 
-    /// called with the newly created <see cref="AddressProperty"/> instance as argument. The return value will be
-    /// set as the value of the <see cref="ParameterSection.Label"/> property of the newly created <see cref="AddressProperty"/> instance.
-    /// </param>
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> to 
     /// be able to chain calls.</returns>
@@ -292,8 +288,7 @@ public readonly struct AddressBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(FolkerKinzel.VCards.AddressBuilder builder,
                             Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null,
-                            Func<AddressProperty, string?>? label = null)
+                            Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
         var prop = new AddressProperty(builder, group?.Invoke(vc));
@@ -302,9 +297,48 @@ public readonly struct AddressBuilder
                                 vc.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
                                 parameters));
 
-        if(label != null)
+        return _builder;
+    }
+
+    /// <summary>
+    /// Attaches <c>LABEL</c> parameters (<see cref="ParameterSection.Label"/>) to all 
+    /// <see cref="AddressProperty"/> instances that are currently in the <see cref="VCard"/>.
+    /// </summary>
+    /// <param name="addressFormatter">The <see cref="IAddressFormatter"/> instance to
+    /// use for the conversion.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> to 
+    /// be able to chain calls.</returns>
+    /// 
+    /// <remarks><see cref="AddressProperty"/> instances whose <see cref="ParameterSection.Label"/> property
+    /// is not <c>null</c> will be skipped.</remarks>
+    /// 
+    /// <seealso cref="AddressFormatter"/>
+    /// 
+    /// <exception cref="ArgumentNullException"><paramref name="addressFormatter"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    public VCardBuilder AttachAutoLabels(IAddressFormatter addressFormatter)
+    {
+        VCard vc = Builder.VCard;
+        _ArgumentNullException.ThrowIfNull(addressFormatter, nameof(addressFormatter));
+        IEnumerable<AddressProperty?>? addresses = vc.Addresses;
+        
+        if(addresses is null)
         {
-            prop.Parameters.Label = label.Invoke(prop);
+            return _builder;
+        }
+
+        foreach (AddressProperty? adrProp in addresses)
+        {
+            if(adrProp is null)
+            {
+                continue;
+            }
+
+            if(adrProp.Parameters.Label is null)
+            {
+                adrProp.Parameters.Label = addressFormatter.ToLabel(adrProp);
+            }
         }
 
         return _builder;

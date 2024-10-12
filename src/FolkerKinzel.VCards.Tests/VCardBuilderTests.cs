@@ -162,9 +162,8 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .Addresses.Add(AddressBuilder.Create().AddStreet("Elm Street").AddLocality("Springwood"),
-                            parameters: p => p.CountryCode = "US",
-                            group: vc => "gr1",
-                            label: (p) => "label"
+                            parameters: p => { p.CountryCode = "US"; p.Label = "label"; },
+                            group: vc => "gr1"
                             )
             .Addresses.Add(AddressBuilder.Create().AddStreet("Ulmenstaße").AddLocality("Frühlingswald"),
                            parameters: p => p.CountryCode = "DE")
@@ -1093,11 +1092,11 @@ public class VCardBuilderTests
             .Create()
             .NameViews.Add(NameBuilder.Create().AddFamilyName("Miller").AddGivenName("John"),
                             parameters: p => p.Language = "en",
-                            group: vc => "gr1",
-                            displayName: (b, p) => b.Add("John Miller")
+                            group: vc => "gr1"
                             )
+            .NameViews.FormatToDisplayNames(NameFormatter.Default)
             .NameViews.Add(NameBuilder.Create().AddFamilyName("Müller").AddGivenName("Johann"),
-                         parameters: p => p.Language = "de")
+                           parameters: p => p.Language = "de")
             .VCard;
 
         Assert.IsNotNull(vc.NameViews);

@@ -4,7 +4,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards.Intls.Converters;
+namespace FolkerKinzel.VCards.Intls.Formatters;
 
 internal static class AddressLabelFormatter
 {
@@ -16,11 +16,19 @@ internal static class AddressLabelFormatter
     static AddressLabelFormatter() => _defaultAddressOrder = AddressOrderConverter.ParseCultureInfo(CultureInfo.CurrentCulture);
 
     [Obsolete()]
-    internal static string ToLabel(Address address)
-        => DoConvertToLabel(address, AddressOrderConverter.ParseAddress(address) ?? _defaultAddressOrder);
+    internal static string? ToLabel(Address address)
+    {
+        return address.IsEmpty
+            ? null
+            : DoConvertToLabel(address, AddressOrderConverter.ParseAddress(address) ?? _defaultAddressOrder);
+    }
 
-    internal static string ToLabel(AddressProperty prop)
-        => DoConvertToLabel(prop.Value, AddressOrderConverter.ParseAddressProperty(prop) ?? _defaultAddressOrder);
+    internal static string? ToLabel(AddressProperty prop)
+    {
+        return prop.Value.IsEmpty
+            ? null
+            : DoConvertToLabel(prop.Value, AddressOrderConverter.ParseAddressProperty(prop) ?? _defaultAddressOrder);
+    }
 
     private static string DoConvertToLabel(Address address, AddressOrder addressOrder)
     {
@@ -90,7 +98,6 @@ internal static class AddressLabelFormatter
         worker.Clear().AppendReadableProperty(address.Country, null).ToUpperInvariant();
         return builder.AppendNewLineIfNeeded().Append(worker).ToString();
     }
-
 
     private static StringBuilder AppendNewLineIfNeeded(this StringBuilder builder)
     {

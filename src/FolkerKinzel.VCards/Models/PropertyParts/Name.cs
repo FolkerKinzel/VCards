@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Intls.Formatters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
@@ -42,7 +43,7 @@ public sealed class Name
     /// </list>
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string? ToDisplayName() => NameFormatter.ToDisplayName(this);
+    public string? ToDisplayName() => DisplayNameFormatter.ToDisplayName(this);
 
     private void Add(NameProp prop, ReadOnlyCollection<string> coll)
     {

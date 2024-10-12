@@ -10,9 +10,12 @@ public static class SimpleVCardExample
     {
         VCard vCard = VCardBuilder
                 .Create()
-                .NameViews.Add(familyName: "Sonntag",
-                               givenName: "Susi"
+                .NameViews.Add(NameBuilder
+                    .Create()
+                    .AddGivenName("Susi")
+                    .AddFamilyName("Sonntag")
                               )
+                .NameViews.FormatToDisplayNames(NameFormatter.Default)
                 .GenderViews.Add(Sex.Female)
                 .Phones.Add("+49-321-1234567",
                              parameters: p =>  p.PhoneType = Tel.Cell
@@ -50,8 +53,8 @@ vCard:
 
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-05-23T16:17:11Z
-UID:ef476146-dcbb-482d-8db9-ac3d63a624f9
+REV:2024-10-12T14:10:09Z
+UID:27d7b637-b806-430a-a345-d6604406fec8
 FN:Susi Sonntag
 N:Sonntag;Susi;;;
 X-GENDER:Female

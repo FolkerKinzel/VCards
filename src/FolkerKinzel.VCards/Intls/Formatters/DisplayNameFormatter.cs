@@ -1,9 +1,10 @@
 ﻿using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards.Intls.Converters;
+namespace FolkerKinzel.VCards.Intls.Formatters;
 
-internal static class NameFormatter
+internal static class DisplayNameFormatter
 {
     internal static string? ToDisplayName(Name name)
     {

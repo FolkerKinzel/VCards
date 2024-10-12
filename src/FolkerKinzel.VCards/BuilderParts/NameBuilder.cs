@@ -248,9 +248,6 @@ public readonly struct NameBuilder
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <param name="displayName">An <see cref="Action{T1, T2}"/> delegate that's invoked with the 
-    /// <see cref="TextBuilder"/> the <see cref="VCardBuilder.DisplayNames"/> property returns and the newly
-    /// created <see cref="NameProperty"/> instance as arguments.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> to 
     /// be able to chain calls.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
@@ -258,8 +255,7 @@ public readonly struct NameBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(FolkerKinzel.VCards.NameBuilder builder,
                             Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null,
-                            Action<TextBuilder, NameProperty>? displayName = null)
+                            Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
         var prop = new NameProperty(builder,
@@ -269,7 +265,68 @@ public readonly struct NameBuilder
                                 vc.Get<IEnumerable<NameProperty?>?>(Prop.NameViews),
                                 parameters));
 
-        displayName?.Invoke(Builder.DisplayNames, prop);
+        return _builder;
+    }
+
+    /// <summary>
+    /// Adds automatically corresponding <see cref="TextProperty"/> instances for each <see cref="NameProperty"/> that is 
+    /// currently in the <see cref="VCard"/> to <see cref="VCard.DisplayNames"/>.
+    /// </summary>
+    /// <param name="nameFormatter"></param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> to 
+    /// be able to chain calls.</returns>
+    /// 
+    /// <remarks>
+    /// <para>
+    /// The <see cref="NameProperty"/> instances are processed ordered by their <see cref="ParameterSection.Preference"/> value.
+    /// If a <see cref="TextProperty"/> instance that is not empty and has the same <see cref="ParameterSection.Language"/>
+    /// is still in <see cref="VCard.DisplayNames"/>, the corresponding <see cref="NameProperty"/> instance will be skipped.
+    /// </para>
+    /// <para>
+    /// The newly created <see cref="TextProperty"/> instances will have their <see cref="ParameterSection.Derived"/> property set
+    /// to <c>true</c>. The values of their <see cref="VCardProperty.Group"/> property will be taken from the 
+    /// <see cref="NameProperty"/> instances.
+    /// </para>
+    /// <para>
+    /// Empty <see cref="NameProperty"/> instances will be skipped.
+    /// </para>
+    /// </remarks>
+    /// 
+    /// <seealso cref="NameFormatter"/>
+    /// 
+    /// <exception cref="ArgumentNullException"><paramref name="nameFormatter"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+
+    public VCardBuilder FormatToDisplayNames(INameFormatter nameFormatter)
+    {
+        VCard vc = Builder.VCard;
+        _ArgumentNullException.ThrowIfNull(nameFormatter, nameof(nameFormatter));
+
+        IEnumerable<NameProperty?>? names = vc.NameViews;
+
+        if(names is null)
+        {
+            return _builder;
+        }
+
+        IEnumerable<TextProperty> displayNames = vc.DisplayNames?.WhereNotEmpty() ?? [];
+
+        foreach (NameProperty nameProp in names.OrderByPref())
+        {
+            string? language = nameProp.Parameters.Language;
+
+            if (displayNames.Any(x => x.Parameters.Language == language))
+            {
+                continue;
+            }
+
+            _builder.DisplayNames.Add(
+                nameFormatter.ToDisplayName(nameProp, vc), 
+                parameters: p => { p.Language = language; p.Derived = true; },
+                group: v => nameProp.Group
+                ); 
+        }
 
         return _builder;
     }

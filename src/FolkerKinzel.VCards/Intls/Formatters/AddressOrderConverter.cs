@@ -4,7 +4,7 @@ using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards.Intls.Converters;
+namespace FolkerKinzel.VCards.Intls.Formatters;
 
 internal static class AddressOrderConverter
 {
@@ -24,7 +24,7 @@ internal static class AddressOrderConverter
     {
         string? countryCode = prop.Parameters.CountryCode;
 
-        return countryCode != null ? ParseCountryCode(countryCode) 
+        return countryCode != null ? ParseCountryCode(countryCode)
                                    : ParseAddress(prop.Value);
     }
 
@@ -113,7 +113,7 @@ internal static class AddressOrderConverter
     {
         ReadOnlyCollection<string> country = address.Country;
 
-        if(country.Count == 0)
+        if (country.Count == 0)
         {
             return null;
         }
@@ -184,7 +184,7 @@ internal static class AddressOrderConverter
                span.Contains("COLOMBI", StringComparison.Ordinal) || // Colombia
                span.Contains("VIET", StringComparison.Ordinal)  // Viet Nam
                ? AddressOrder.Usa
-               : span.StartsWith("PAPUA") || span.EndsWith("VENEZUELA") 
+               : span.StartsWith("PAPUA") || span.EndsWith("VENEZUELA")
                ? AddressOrder.Venezuela
                : AddressOrder.Din;
     }

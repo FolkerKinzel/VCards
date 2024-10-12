@@ -23,7 +23,7 @@ public static class AnsiFilterExample
         // contain a CHARSET parameter. In our example we choose windows-1255 (Hebrew).
         var ansiFilter = new AnsiFilter(1255);
 
-        var outFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
+        string outFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
 
         using (StreamWriter writer = File.AppendText(outFileName))
         {

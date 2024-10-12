@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Intls.Formatters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
@@ -35,7 +36,7 @@ public sealed class Address
     /// </remarks>
     [Obsolete("Use AddressProperty.ToLabel() instead.", false)]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string ToLabel() => AddressLabelFormatter.ToLabel(this);
+    public string? ToLabel() => AddressLabelFormatter.ToLabel(this);
 
     private void Add(AdrProp prop, ReadOnlyCollection<string> coll)
     {
