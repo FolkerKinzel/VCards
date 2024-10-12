@@ -120,4 +120,35 @@ public class AddressBuilderTests
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void AttachLabelsTest1() => new AddressBuilder().AttachLabels(AddressFormatter.Default);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void AttachLabelsTest2() => VCardBuilder.Create().Addresses.AttachLabels(null!);
+
+    [TestMethod]
+    public void AttachLabelsTest3()
+    {
+        VCardBuilder
+            .Create().Addresses.AttachLabels(AddressFormatter.Default);
+    }
+
+    [TestMethod]
+    public void AttachLabelsTest4()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Addresses.Add(VCards.AddressBuilder.Create().AddLocality("London"))
+            .Addresses.Add(VCards.AddressBuilder.Create().AddLocality("New York"), p => p.Label = "Borna")
+            .Addresses.Edit(props => props.Append(null))
+            .Addresses.AttachLabels(AddressFormatter.Default)
+            .VCard;
+
+        IEnumerable<Models.AddressProperty?>? adr = vc.Addresses;
+        Assert.IsNotNull(adr);
+        Assert.AreEqual(3, adr.Count());
+        Assert.IsTrue(adr.Any(x => StringComparer.Ordinal.Equals("London", x?.Value.Locality.First()) && 
+                                   (x.Parameters.Label?.Contains("London", StringComparison.Ordinal) ?? false)));
+        Assert.IsTrue(adr.Any(x => StringComparer.Ordinal.Equals("New York", x?.Value.Locality.First()) &&
+                                   (x.Parameters.Label?.Contains("Borna", StringComparison.Ordinal) ?? false)));
+    }
 }
