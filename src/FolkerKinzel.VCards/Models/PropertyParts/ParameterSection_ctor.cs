@@ -222,14 +222,8 @@ public sealed partial class ParameterSection
                     }
                     break;
                 case ParameterKey.Rfc9554.DERIVED:
-                    {
-                        ReadOnlySpan<char> span = parameter.Value.Span.TrimStart(TRIM_CHARS);
-
-                        if (!span.IsEmpty && char.ToUpperInvariant(span[0]) == 'T')
-                        {
-                            Derived = true;
-                        }
-                    }
+                    Derived = parameter.Value.Span.TrimStart(TRIM_CHARS)
+                                                  .StartsWith("T", StringComparison.OrdinalIgnoreCase);
                     break;
                 case ParameterKey.Rfc9554.PHONETIC:
                     Phonetic = PhoneticConverter.Parse(parameter.Value.Span.Trim(TRIM_CHARS));
