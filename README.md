@@ -33,7 +33,7 @@ Read the ["Getting Started" wiki](https://github.com/FolkerKinzel/VCards/wiki) i
 ### Code Examples
 - [Reading and writing of VCF files (simple example)](https://github.com/FolkerKinzel/VCards/wiki#simple-example)
 - [Reading and writing of VCF files (advanced features)](src/Examples/VCardExample.cs)
-- [Example implementation of ITimeZoneIDConverter](src/Examples/TimeZoneIDConverter.cs)
+- [Example implementation of ITimeZoneIDConverter](https://github.com/FolkerKinzel/VCards/wiki/Example-implementation-of-ITimeZoneIDConverter)
 - [Automatic detection of VCF files written with ANSI encodings](src/Examples/AnsiFilterExample.cs)
 - [Setting up vCard 4.0 data synchronization](https://github.com/FolkerKinzel/VCards/wiki/Setting-up-vCard-4.0-data-synchronization)
 - [Loading a VCF file from the internet](src/Examples/WebExample.cs)
