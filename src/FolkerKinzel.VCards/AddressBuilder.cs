@@ -42,14 +42,15 @@ public class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddPostOfficeBox(IEnumerable<string?> collection) => AddRange(AdrProp.PostOfficeBox, collection);
 
-    /// <summary>Adds a family name (also known as surname). (2,3,4)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.ExtendedAddress"/> (e.g., apartment or suite number). (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <seealso cref="Address.ExtendedAddress"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddExtendedAddress(string? value) => Add(AdrProp.ExtendedAddress, value);
 
-    /// <summary>Adds the content of a <paramref name="collection"/> of family names (also known as surnames). (2,3,4)</summary>
+    /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
+    /// <see cref="Address.ExtendedAddress"/> (e.g., apartment or suite number). (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <seealso cref="Address.ExtendedAddress"/>
@@ -73,21 +74,21 @@ public class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddStreet(IEnumerable<string?> collection) => AddRange(AdrProp.Street, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Locality"/>. (2,3,4)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Locality"/> (e.g., city). (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddLocality(string? value) => Add(AdrProp.Locality, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.Locality"/>. (2,3,4)</summary>
+    /// <see cref="Address.Locality"/> (e.g., city). (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddLocality(IEnumerable<string?> collection) => AddRange(AdrProp.Locality, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Region"/>. (2,3,4)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Region"/> (e.g., state or province). (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <seealso cref="Address.Region"/>
@@ -95,7 +96,7 @@ public class AddressBuilder
     public AddressBuilder AddRegion(string? value) => Add(AdrProp.Region, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.Region"/>. (2,3,4)</summary>
+    /// <see cref="Address.Region"/> (e.g., state or province). (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <seealso cref="Address.Region"/>
@@ -119,7 +120,7 @@ public class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddPostalCode(IEnumerable<string?> collection) => AddRange(AdrProp.PostalCode, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Country"/>. (2,3,4)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Country"/>. (The full country name.) (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <seealso cref="Address.Country"/>
@@ -127,7 +128,7 @@ public class AddressBuilder
     public AddressBuilder AddCountry(string? value) => Add(AdrProp.Country, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.Country"/>. (2,3,4)</summary>
+    /// <see cref="Address.Country"/>. (The full country name.) (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <seealso cref="Address.Country"/>
@@ -135,7 +136,7 @@ public class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddCountry(IEnumerable<string?> collection) => AddRange(AdrProp.Country, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Room"/>. (4 - RFC 9554)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Room"/>. (The room, suite number, or identifier.) (4 - RFC 9554)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -150,7 +151,7 @@ public class AddressBuilder
     public AddressBuilder AddRoom(string? value) => Add(AdrProp.Room, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.Room"/>. (4 - RFC 9554)</summary>
+    /// <see cref="Address.Room"/>. (The room, suite number, or identifier.) (4 - RFC 9554)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -165,7 +166,8 @@ public class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddRoom(IEnumerable<string?> collection) => AddRange(AdrProp.Room, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Apartment"/>. (4 - RFC 9554)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Apartment"/>. (The extension designation 
+    /// such as the apartment number, unit, or box number.) (4 - RFC 9554)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -180,7 +182,8 @@ public class AddressBuilder
     public AddressBuilder AddApartment(string? value) => Add(AdrProp.Apartment, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.Apartment"/>. (4 - RFC 9554)</summary>
+    /// <see cref="Address.Apartment"/>. (The extension designation such as the apartment number,
+    /// unit, or box number.) (4 - RFC 9554)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -193,15 +196,17 @@ public class AddressBuilder
     /// <seealso cref="Address.Street"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public AddressBuilder AddApartment(IEnumerable<string?> collection) => AddRange(AdrProp.Apartment, collection);
+    public AddressBuilder AddApartment(IEnumerable<string?> collection) 
+        => AddRange(AdrProp.Apartment, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Floor"/>. (4 - RFC 9554)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Floor"/>. (The floor or level the address 
+    /// is located on.) (4 - RFC 9554)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddStreet(string?)"/> to make a copy of <paramref name="value"/> in <see cref="Address.Street"/>
-    /// for backwards compatibility.
+    /// Use <see cref="AddStreet(string?)"/> to make a copy of <paramref name="value"/> in 
+    /// <see cref="Address.Street"/> for backwards compatibility.
     /// </note>
     /// </remarks>
     /// <seealso cref="Address.Floor"/>
@@ -210,7 +215,7 @@ public class AddressBuilder
     public AddressBuilder AddFloor(string? value) => Add(AdrProp.Floor, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.Floor"/>. (4 - RFC 9554)</summary>
+    /// <see cref="Address.Floor"/>. (The floor or level the address is located on.) (4 - RFC 9554)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -291,7 +296,8 @@ public class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddStreetName(IEnumerable<string?> collection) => AddRange(AdrProp.StreetName, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Building"/>. (4 - RFC 9554)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Building"/>. (The building, tower, 
+    /// or condominium the address is located in.) (4 - RFC 9554)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -306,7 +312,8 @@ public class AddressBuilder
     public AddressBuilder AddBuilding(string? value) => Add(AdrProp.Building, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.Building"/>. (4 - RFC 9554)</summary>
+    /// <see cref="Address.Building"/>. (The building, tower, or condominium the address is located in.)
+    /// (4 - RFC 9554)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -321,7 +328,8 @@ public class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddBuilding(IEnumerable<string?> collection) => AddRange(AdrProp.Building, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Block"/>. (4 - RFC 9554)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Block"/>. (The block name or number.) 
+    /// (4 - RFC 9554)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -336,7 +344,7 @@ public class AddressBuilder
     public AddressBuilder AddBlock(string? value) => Add(AdrProp.Block, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.Block"/>. (4 - RFC 9554)</summary>
+    /// <see cref="Address.Block"/>. (The block name or number.) (4 - RFC 9554)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -351,7 +359,8 @@ public class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddBlock(IEnumerable<string?> collection) => AddRange(AdrProp.Block, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.SubDistrict"/>. (4 - RFC 9554)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.SubDistrict"/>. (The subdistrict, 
+    /// ward, or other subunit of a district.) (4 - RFC 9554)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -366,7 +375,8 @@ public class AddressBuilder
     public AddressBuilder AddSubDistrict(string? value) => Add(AdrProp.SubDistrict, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.SubDistrict"/>. (4 - RFC 9554)</summary>
+    /// <see cref="Address.SubDistrict"/>. (The subdistrict, ward, or other subunit of a district.)
+    /// (4 - RFC 9554)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -411,7 +421,9 @@ public class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddDistrict(IEnumerable<string?> collection) => AddRange(AdrProp.District, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Landmark"/>. (4 - RFC 9554)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Landmark"/>. (The publicly known prominent 
+    /// feature that can substitute the street name and number, e.g., "White House" or "Taj Mahal".) 
+    /// (4 - RFC 9554)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -426,7 +438,8 @@ public class AddressBuilder
     public AddressBuilder AddLandmark(string? value) => Add(AdrProp.Landmark, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.Landmark"/>. (4 - RFC 9554)</summary>
+    /// <see cref="Address.Landmark"/>. (The publicly known prominent feature that can substitute the street
+    /// name and number, e.g., "White House" or "Taj Mahal".) (4 - RFC 9554)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -441,7 +454,8 @@ public class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddLandmark(IEnumerable<string?> collection) => AddRange(AdrProp.Landmark, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Direction"/>. (4 - RFC 9554)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.Direction"/>. (The cardinal direction
+    /// or quadrant, e.g., "north".) (4 - RFC 9554)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
@@ -456,7 +470,8 @@ public class AddressBuilder
     public AddressBuilder AddDirection(string? value) => Add(AdrProp.Direction, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.Direction"/>. (4 - RFC 9554)</summary>
+    /// <see cref="Address.Direction"/>. (The cardinal direction or quadrant, e.g., "north".) 
+    /// (4 - RFC 9554)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>

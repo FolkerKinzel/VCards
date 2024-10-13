@@ -98,8 +98,8 @@ public class NameTests
         Assert.IsNotNull(vc.NameViews);
         Name name = vc.NameViews.First()!.Value;
 
-        Assert.AreEqual("surname2", name.Surname2.First());
-        Assert.AreEqual("generation", name.Generation.First());
+        Assert.AreEqual("surname2", name.Surnames2.First());
+        Assert.AreEqual("generation", name.Generations.First());
     }
 
     [TestMethod]

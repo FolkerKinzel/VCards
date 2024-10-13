@@ -25,8 +25,8 @@ internal enum NameProp
     Suffixes,
 
     /// <summary>A secondary surname (used in some cultures), also known as "maternal surname". (4 - RFC 9554)</summary>
-    Surname2,
+    Surnames2,
 
     /// <summary>A generation marker or qualifier, e.g., "Jr." or "III". (4 - RFC 9554)</summary>
-    Generation
+    Generations
 }

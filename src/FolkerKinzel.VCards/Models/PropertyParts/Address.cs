@@ -160,11 +160,10 @@ public sealed class Address
                                     version).ToArray();
     }
 
-    /// <summary>The post office box. (Don't use this property!)</summary>
+    /// <summary>The post office box.</summary>
     public ReadOnlyCollection<string> PostOfficeBox => Get(AdrProp.PostOfficeBox);
 
-    /// <summary>The extended address (e.g., apartment or suite number). (Don't use this
-    /// property!)</summary>
+    /// <summary>The extended address (e.g., apartment or suite number).</summary>
     public ReadOnlyCollection<string> ExtendedAddress => Get(AdrProp.ExtendedAddress);
 
     /// <summary>The street address.</summary>

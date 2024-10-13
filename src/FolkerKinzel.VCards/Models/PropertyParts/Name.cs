@@ -93,13 +93,13 @@ public sealed class Name
                     case NameProp.FamilyNames:
                         familyNames = kvp.Value;
                         break;
-                    case NameProp.Surname2:
+                    case NameProp.Surnames2:
                         surname2 = kvp.Value;
                         break;
                     case NameProp.Suffixes:
                         suffixes = kvp.Value;
                         break;
-                    case NameProp.Generation:
+                    case NameProp.Generations:
                         generation = kvp.Value;
                         break;
                     default:
@@ -214,10 +214,10 @@ repeat:
                                     version).ToArray();
     }
 
-    /// <summary>Family Name(s) (also known as surname(s)). (2,3,4)</summary>
+    /// <summary>Family Name(s) (also known as "surname(s)"). (2,3,4)</summary>
     /// <remarks>
     /// Returns a collection that omits any value if an equal value is set to
-    /// <see cref="Surname2"/> accordingly.
+    /// <see cref="Surnames2"/> accordingly.
     /// </remarks>
     public ReadOnlyCollection<string> FamilyNames => _familyNamesView;
 
@@ -234,15 +234,15 @@ repeat:
     /// 
     /// <remarks>
     /// Returns a collection that omits any value if an equal value is set to
-    /// <see cref="Generation"/> accordingly.
+    /// <see cref="Generations"/> accordingly.
     /// </remarks>
     public ReadOnlyCollection<string> Suffixes => _suffixesView;
 
     /// <summary>A secondary surname (used in some cultures), also known as "maternal surname". (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Surname2 => Get(NameProp.Surname2);
+    public ReadOnlyCollection<string> Surnames2 => Get(NameProp.Surnames2);
 
     /// <summary>A generation marker or qualifier, e.g., "Jr." or "III". (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Generation => Get(NameProp.Generation);
+    public ReadOnlyCollection<string> Generations => Get(NameProp.Generations);
 
     /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain
     /// any usable data, otherwise <c>false</c>.</summary>
@@ -265,7 +265,7 @@ repeat:
 
         if (serializer.Version >= VCdVersion.V4_0
             && serializer.Options.HasFlag(Opts.WriteRfc9554Extensions)
-            && _dic.Any(x => x.Key >= NameProp.Surname2))
+            && _dic.Any(x => x.Key >= NameProp.Surnames2))
         {
             for (int i = STANDARD_COUNT; i < MAX_COUNT; i++)
             {
@@ -296,10 +296,10 @@ repeat:
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private ReadOnlyCollection<string> GetFamilyNamesView() => GetDiffView(NameProp.FamilyNames, NameProp.Surname2);
+    private ReadOnlyCollection<string> GetFamilyNamesView() => GetDiffView(NameProp.FamilyNames, NameProp.Surnames2);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private ReadOnlyCollection<string> GetSuffixesView() => GetDiffView(NameProp.Suffixes, NameProp.Generation);
+    private ReadOnlyCollection<string> GetSuffixesView() => GetDiffView(NameProp.Suffixes, NameProp.Generations);
 
     private ReadOnlyCollection<string> GetDiffView(NameProp oldIdx, NameProp newIdx)
     {

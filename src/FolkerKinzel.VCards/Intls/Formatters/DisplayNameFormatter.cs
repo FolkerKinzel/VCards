@@ -21,8 +21,8 @@ internal static class DisplayNameFormatter
         .Concat(name.GivenNames)
         .Concat(name.AdditionalNames)
         .Concat(name.FamilyNames)
-        .Concat(name.Surname2)
+        .Concat(name.Surnames2)
         .Concat(name.Suffixes)
-        .Concat(name.Generation));
+        .Concat(name.Generations));
     }
 }
