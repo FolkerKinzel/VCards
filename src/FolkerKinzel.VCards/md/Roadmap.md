@@ -1,99 +1,142 @@
 ﻿# FolkerKinzel.VCards
 ## Roadmap
+### 8.1.0
+- [ ] Implement `VCard.Clean()`.
+- [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
+
 ### 8.0.0
 - [ ] Fix the issue that with `UID` only Guid values are supported
     - [ ] Implement a `ContactID` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
     - [ ] Let the 'IDProperty' have an instance of the `ContactID` class as value.
     - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
 
+&nbsp;
+- [ ] **Remove Address.ToLabel()**
+- [ ] **Remove AddressProperty.AttachLabel()**
+- [ ] **Remove AddressProperty.ToLabel()**
+- [ ] **Remove Name.ToDisplayName()**
+- [ ] **Remove NameProperty.ToDisplayName()**
+
+&nbsp;
+- [ ] **Change the properties of the `Name` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`**
+- [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method
+
+&nbsp;
+- [ ] **Change the properties of the `Address` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`**
+- [ ] Let `Address` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.AddressBuilder.Add` method
+
+&nbsp;
+- [ ] **Change the `StringCollection.Value` property to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`**
+and let it store as string[]
+
+&nbsp;
 - [ ] `VCard` properties: Don't allow `null` values in collections anymore.
 - [ ] `VCard.Reference` properties: Don't allow `null` values in collections anymore.
 - [ ] `VCard.Dereference` properties: Don't allow `null` values in collections anymore.
 - [ ] `Vcf` methods: Don't allow `null` values in collections anymore.
 - [ ] `IEnumerableExtension`: Don't allow `null` values in collections anymore.
-- [ ] `NameProperty`: Allow ctors only that take a `NameBuilder` as argument.
-- [ ] `AddressProperty`: Allow ctors only that take an `AddressBuilder` as argument
+- [ ] `NameProperty`: Allow only ctors that take a `NamePropertyBuilder` as argument.
+- [ ] `AddressProperty`: Allow only ctors that take an `AddressPropertyBuilder` as argument
 
-- [ ] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `FolkerKinzel.VCards.BuilderParts.NamePropertyBuilder`
-- [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `FolkerKinzel.VCards.BuilderParts.AddressPropertyBuilder`
-- [ ] Rename the `Opts` enum to `VcfOpts` (to separate it from JSContactOpts)
+&nbsp;
+- [ ] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `NameViewsBuilder`
+- [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
+- [ ] Rename the `VCardBuilder.TimeStamp` property to `VCardBuilder.Updated`
+- [ ] Rename the `Prop.TimeStamp` property to `Prop.Updated`
+- [ ] Rename the `VCard.Languages` property to `SpokenLanguages`
+- [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
-### 7.4.0
-- [ ] Implement `VCard.Clean()`.
-- [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
 ### 7.3.0
-- [ ] Implement the internal `AdrProp` enum that addresses the properties of the `Address` class.
-- [ ] Let the `Address` class have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
-- [ ] Implement the internal `NameProp` enum that addresses the properties of the `Name` class.
-- Let the `Name` class have a data struct `Dictionary<NameProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
-- [ ] Implement `FolkerKinzel.VCards.AddressBuilder` class
+- [x] Refactor the `VCard` copy ctor to clone only `IEnumerable<VCardProperty?>` and `VCardProperty`
+- [x] Remove the `ObsoleteAttribute` from the properties `Address.PostOfficeBox` and `Address.ExtendedAddress`
+
+&nbsp;
+- [x] Implement the internal `AdrProp` enum that addresses the properties of the `Address` class.
+- [x] Let the `Address` class have a data struct `Dictionary<AdrProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
+- [x] Implement `FolkerKinzel.VCards.AddressBuilder` class
     - Let it have a data struct `Dictionary<AdrProp, List<string>>`
     - Make it reusable implementing a `Clear` method
-- [ ] Implement `FolkerKinzel.VCards.NameBuilder` class
+- [x] Give `AddressProperty` a ctor that takes an "AddressBuilder".
+- [x] Add an internal ctor to `Address` that takes an `AddressBuilder`
+- [x] Change `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to have an overload for the `Add` method that takes a `FolkerKinzel.VCards.AddressBuilder`
+
+
+&nbsp;
+- [x] Implement the internal `NameProp` enum that addresses the properties of the `Name` class.
+- [x] Let the `Name` class have a data struct `Dictionary<NameProp, ReadOnlyCollection<string>>` (Don't use `FrozenDictionary`: It's not efficient for such small data.)
+- [x] Implement `FolkerKinzel.VCards.NameBuilder` class
     - Let it have a data struct `Dictionary<NameProp, List<string>>`
     - Make it reusable implementing a `Clear` method
-- [ ] Implement RFC 9554:
-    - [ ] Make new enum value `Opts.WriteRfc9554Extensions`
-    - [ ] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
-    - [ ] Implement `GramConverter`
-    - [ ] Implement the `GramProperty` class that has a `Gram` value as `Value`
-    - [ ] Implement `readonly struct GramBuilder`
-    - [ ] Implement the `Phonetic` enum ("ipa", "jyut", "piny", "script")
-    - [ ] Implement `PhoneticConverter`
-    - [ ] Add the values `billing` and `delivery` to the `Adr` enum
-    - [ ] Update `AdrConverter`
-    - [ ] Change the `Address` class
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Room`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Apartment`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Floor`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> StreetNumber`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> StreetName`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Building`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Block`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> SubDistrict`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> District`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Landmark`
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Direction`
-        - [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
-    - [ ] Add a new ctor to `AddressProperty` that takes an `AddressBuilder`.
-    - [ ] Add an internal ctor to `Address` that takes an `AddressBuilder`
-    - [ ] Change the `Name` class
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Surname2` (let the name be singular)
-        - [ ] Add read-only property: `ReadOnlyCollection<string> Generation` (let the name be singular)
-    - [ ] Add a new ctor to `NameProperty` that takes an `NameBuilder`
-    - [ ] Add an internal ctor to `Name` that takes an `NameBuilder`
-    - [ ] Change the `VCard` class
-        - Make a new default parameter `setCreated` that defaults to `true` to the `VCard` ctor and to `VCardBuilder.Create`
-        - [ ] Add property: `TimeStampProperty Created {get; set;}`
-        - [ ] Add property: `IEnumerable<GramProperty?>? GramGenders {get; set;}`
-        - [ ] Add property: `TextProperty Language {get; set;}`
-        - [ ] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
-        - [ ] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
-        - [ ] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
-        - [ ] Write `X-SOCIALPROFILE` in vCard 4.0 when `Opts.WriteRfc9554Extensions` is not set.
-        Use the `X-SERVICE-TYPE` parameter to preserve the `ParameterSection.ServiceType` property.
-        - [ ] Add `X-SOCIALPROFILE` to the documentation of the `VCard.NonStandards` property
-    - [ ] Change the `VCardBuilder` class
-        - [ ] Add property: `TimeStampBuilder Created {get;}`
-        - [ ] Add property: `GramBuilder GramGenders {get;}`
-        - [ ] Add property: `TextSingletonBuilder Language {get;}`
-        - [ ] Add property: `TextBuilder Pronouns {get;}`
-        - [ ] Add property: `TextBuilder SocialMediaProfiles {get;}`
-    - [ ] Change the ParameterSection class
-        - [ ] Add property `string? Author` that takes an absolute Uri
-        - [ ] Add property `string? AuthorName`
-        - [ ] Add property `DateTimeOffset? Created`
-        - [ ] Add property `bool Derived`
-        - [ ] Add property `Phonetic? Phonetic`
-        - [ ] Add property `string? PropID`
-        - [ ] Add property `string? Script`
-        - [ ] Add property `string? ServiceType`
-        - [ ] Add property `string? UserName`
-        - [ ] Redirect `X-SERVICE-TYPE` to the `ServiceType` property. Use the `X-SERVICE-TYPE` parameter 
-        to preserve the value of `ParameterSection.ServiceType` with `VCard.Messengers` when writing vCard 4.0 and the
-        `Opts.WriteRfc9554Extensions` flag is not set.
+- [x] Give `NameProperty` a ctor that takes a "NameBuilder".
+- [x] Add an internal ctor to `Name` that takes an `NameBuilder`
+- [x] Change `FolkerKinzel.VCards.BuilderParts.NameBuilder` to have an overload for the `Add` method that takes a `FolkerKinzel.VCards.NameBuilder`
+
+ &nbsp;
+- [x] Implement RFC 9554:
+    - [x] Make new enum value `Opts.WriteRfc9554Extensions`
+    - [x] Implement the `Gram` enum ("animate", "common", "feminine", "inanimate", "masculine", "neuter")
+    - [x] Implement `GramConverter`
+    - [x] Implement the `GramProperty` class that has a `Gram?` value as `Value`
+    - [x] Update the VCard copy ctor to process `IEnumerable<GramProperty?>`
+    - [x] Implement `readonly struct GramBuilder`
+    - [x] Implement the `Phonetic` enum ("ipa", "jyut", "piny", "script")
+    - [x] Implement `PhoneticConverter`
+    - [x] Add the values `billing` and `delivery` to the `Adr` enum
+    - [x] Update `AdrConverter`
+    - [x] Change the `Address` class
+        - [x] Add read-only property: `ReadOnlyCollection<string> Room`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Apartment`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Floor`
+        - [x] Add read-only property: `ReadOnlyCollection<string> StreetNumber`
+        - [x] Add read-only property: `ReadOnlyCollection<string> StreetName`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Building`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Block`
+        - [x] Add read-only property: `ReadOnlyCollection<string> SubDistrict`
+        - [x] Add read-only property: `ReadOnlyCollection<string> District`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Landmark`
+        - [x] Add read-only property: `ReadOnlyCollection<string> Direction`
+        - [x] Add an internal ctor to `Address` that takes an `AddressBuilder`
+    - [x] Change the `Name` class
+        - [x] Add read-only property: `ReadOnlyCollection<string> Surname2` (let the name be singular)
+        - [x] Add read-only property: `ReadOnlyCollection<string> Generation` (let the name be singular)
+    - [x] Change the `VCard` class
+        - [x] Make a new default parameter `setCreated` that defaults to `true` to the `VCard` ctor and to `VCardBuilder.Create`
+        - [x] Add property: `TimeStampProperty? Created {get; set;}`
+        - [x] Add property: `IEnumerable<GramProperty?>? GramGenders {get; set;}`
+        - [x] Add property: `TextProperty? Language {get; set;}`
+        - [x] Add property: `IEnumerable<TextProperty?>? Pronouns {get; set;}`
+        - [x] Add property: `IEnumerable<TextProperty?>? SocialMediaProfiles {get; set;}`
+        - [x] Redirect `X-SOCIALPROFILE` to `VCard.SocialMediaProfiles`
+        - [x] Write `X-SOCIALPROFILE` in vCard 4.0 to preserve `VCard.SocialMediaProfiles` when 
+        `Opts.WriteRfc9554Extensions` is not set. Make this dependent on whether the `Opts.WriteXExtensions`
+        flag is set.
+        - [x] Add `X-SOCIALPROFILE` to the documentation of the `VCard.NonStandards` property
+    - [x] Change the `VCardBuilder` class
+        - [x] Add property: `TimeStampBuilder Created {get;}`
+        - [x] Add property: `GramBuilder GramGenders {get;}`
+        - [x] Add property: `TextSingletonBuilder Language {get;}`
+        - [x] Add property: `TextBuilder Pronouns {get;}`
+        - [x] Add property: `TextBuilder SocialMediaProfiles {get;}`
+    - [x] Change the ParameterSection class
+        - [x] Add property `Uri? Author` that takes an absolute Uri
+        - [x] Add property `string? AuthorName`
+        - [x] Add property `DateTimeOffset? Created`
+        - [x] Add property `bool Derived`
+        - [x] Add property `Phonetic? Phonetic`
+        - [x] Add property `string? PropertyID`
+        - [x] Add property `string? Script`
+        - [x] Add property `string? ServiceType`
+        - [x] Add property `string? UserName`
+        - [x] Redirect `X-SERVICE-TYPE` to the `ParameterSection.ServiceType` property. 
+        - [x] Use the `X-SERVICE-TYPE` parameter to preserve the value of `ParameterSection.ServiceType` with 
+        `VCard.Messengers` and `VCard.SocialMediaProfiles` when writing vCard 4.0 and the 
+        `Opts.WriteRfc9554Extensions` flag is not set. Make this dependent on whether the `Opts.WriteXExtensions`
+        flag is set.
+        
 
 ### 7.2.0
 - [x] Implement RFC 8605:

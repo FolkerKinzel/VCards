@@ -11,12 +11,23 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer3_0>> _actionList = new(2);
 
-    private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes = static serializer
+    private readonly Action<ParameterSerializer3_0> _collectPropertyClassTypes = CollectPropertyClassTypes;
+    private readonly Action<ParameterSerializer3_0> _collectPhoneTypes = CollectPhoneTypes;
+    private readonly Action<ParameterSerializer3_0> _collectAddressTypes = CollectAddressTypes;
+    private readonly Action<ParameterSerializer3_0> _collectImppTypes = CollectImppTypes;
+    private readonly Action<ParameterSerializer3_0> _collectKeyType = CollectKeyType;
+    private readonly Action<ParameterSerializer3_0> _collectImageType = CollectImageType;
+    private readonly Action<ParameterSerializer3_0> _collectEmailType = CollectEmailType;
+    private readonly Action<ParameterSerializer3_0> _collectSoundType = CollectSoundType;
+    private readonly Action<ParameterSerializer3_0> _collectMediaType = CollectMediaType;
+
+    #region Collect
+
+    private static void CollectPropertyClassTypes(ParameterSerializer3_0 serializer)
         => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
                                       serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer3_0> _collectPhoneTypes = static serializer
-        =>
+    private static void CollectPhoneTypes(ParameterSerializer3_0 serializer)
     {
         const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Fax | Tel.Msg |
         Tel.Cell | Tel.Pager | Tel.BBS | Tel.Modem | Tel.Car |
@@ -24,21 +35,67 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
         EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
                                    serializer._stringCollectionList);
-    };
+    }
 
-    private readonly Action<ParameterSerializer3_0> _collectAddressTypes = static serializer
-        => EnumValueCollector.Collect(serializer.ParaSection.AddressType,
+    private static void CollectAddressTypes(ParameterSerializer3_0 serializer)
+    {
+        const Adr DEFINED_ADDRESS_TYPES = Adr.Intl | Adr.Parcel | Adr.Postal | Adr.Dom;
+
+        EnumValueCollector.Collect(serializer.ParaSection.AddressType & DEFINED_ADDRESS_TYPES,
+                                          serializer._stringCollectionList);
+    }
+
+    private static void CollectImppTypes(ParameterSerializer3_0 serializer)
+         => EnumValueCollector.Collect(serializer.ParaSection.InstantMessengerType,
                                       serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer3_0> _collectImppTypes = static serializer
-        => EnumValueCollector.Collect(serializer.ParaSection.InstantMessengerType,
-                                      serializer._stringCollectionList);
+    private static void CollectKeyType(ParameterSerializer3_0 serializer)
+    {
+        string? s = MimeTypeConverter.KeyTypeFromMimeType(serializer.ParaSection.MediaType);
 
-    private readonly Action<ParameterSerializer3_0> _collectKeyType = static serializer => serializer.DoCollectKeyType();
-    private readonly Action<ParameterSerializer3_0> _collectImageType = static serializer => serializer.DoCollectImageType();
-    private readonly Action<ParameterSerializer3_0> _collectEmailType = static serializer => serializer.DoCollectEmailType();
-    private readonly Action<ParameterSerializer3_0> _collectSoundType = static serializer => serializer.DoCollectSoundType();
-    private readonly Action<ParameterSerializer3_0> _collectMediaType = static serializer => serializer.DoCollectMediaType();
+        if (s is not null)
+        {
+            serializer._stringCollectionList.Add(s);
+        }
+    }
+
+    private static void CollectImageType(ParameterSerializer3_0 serializer)
+    {
+        string? s = MimeTypeConverter.ImageTypeFromMimeType(serializer.ParaSection.MediaType);
+
+        if (s is not null)
+        {
+            serializer._stringCollectionList.Add(s);
+        }
+
+    }
+
+    private static void CollectSoundType(ParameterSerializer3_0 serializer)
+    {
+        string? s = MimeTypeConverter.SoundTypeFromMimeType(serializer.ParaSection.MediaType);
+
+        if (s is not null)
+        {
+            serializer._stringCollectionList.Add(s);
+        }
+
+    }
+
+    private static void CollectEmailType(ParameterSerializer3_0 serializer)
+        => serializer._stringCollectionList.Add(serializer.ParaSection.EMailType ?? EMail.SMTP);
+
+    private static void CollectMediaType(ParameterSerializer3_0 serializer)
+    {
+        string? m = serializer.ParaSection.MediaType;
+
+        if (m is not null)
+        {
+            serializer._stringCollectionList.Add(m);
+        }
+    }
+
+    #endregion
+    
 
     #region Build
 
@@ -143,6 +200,8 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         _actionList.Add(_collectImppTypes);
 
         AppendType(isPref);
+        AppendServiceType();
+        AppendNonStandardParameters();
     }
 
     protected override void BuildKeyPara()
@@ -272,6 +331,22 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
     {
         AppendValue(ParaSection.DataType);
         AppendLanguage();
+        AppendNonStandardParameters();
+    }
+
+    protected override void BuildSocialProfilePara()
+    {
+        // X-SOCIALPROFILE
+        Debug.Assert(Options.HasFlag(Opts.WriteXExtensions));
+
+        string? serviceType = this.ParaSection.ServiceType;
+
+        if (serviceType is not null)
+        {
+            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, serviceType, escapedAndQuoted: true);
+        }
+
+        AppendValue(ParaSection.DataType);
         AppendNonStandardParameters();
     }
 
@@ -485,59 +560,17 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
         }
     }
 
-    #endregion
 
-
-    #region Collect
-
-    private void DoCollectKeyType()
+    private void AppendServiceType()
     {
-        string? s = MimeTypeConverter.KeyTypeFromMimeType(ParaSection.MediaType);
-
-        if (s is not null)
+        if (Options.HasFlag(Opts.WriteXExtensions) && ParaSection.ServiceType is string serviceType)
         {
-            _stringCollectionList.Add(s);
+            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, serviceType);
         }
     }
-
-    private void DoCollectImageType()
-    {
-        string? s = MimeTypeConverter.ImageTypeFromMimeType(ParaSection.MediaType);
-
-        if (s is not null)
-        {
-            _stringCollectionList.Add(s);
-        }
-
-    }
-
-    private void DoCollectSoundType()
-    {
-        string? s = MimeTypeConverter.SoundTypeFromMimeType(ParaSection.MediaType);
-
-        if (s is not null)
-        {
-            _stringCollectionList.Add(s);
-        }
-
-    }
-
-    private void DoCollectEmailType()
-        => _stringCollectionList.Add(ParaSection.EMailType ?? EMail.SMTP);
-
-    private void DoCollectMediaType()
-    {
-        string? m = ParaSection.MediaType;
-
-        if (m is not null)
-        {
-            _stringCollectionList.Add(m);
-        }
-    }
-
-    #endregion
-
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void AppendRfc2739Pref() => Builder.Append(";TYPE=PREF");
+
+    #endregion
 }

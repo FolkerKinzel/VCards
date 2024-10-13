@@ -20,7 +20,7 @@ public class NameBuilderTests
 
         VCard vc = builder.VCard;
 
-        var property = vc.NameViews;
+        IEnumerable<Models.NameProperty?>? property = vc.NameViews;
 
         Assert.IsNotNull(property);
         Assert.AreEqual(2, property.Count());
@@ -61,7 +61,11 @@ public class NameBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest2() => new NameBuilder().Add(Enumerable.Empty<string>());
+    public void AddTest2() => new NameBuilder().Add([]);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void AddTest3() => new NameBuilder().Add(FolkerKinzel.VCards.NameBuilder.Create());
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
@@ -82,4 +86,45 @@ public class NameBuilderTests
 
     [TestMethod]
     public void ToStringTest1() => Assert.IsNotNull(new NameBuilder().ToString());
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void ToDisplayNamesTest1() => new NameBuilder().ToDisplayNames(NameFormatter.Default);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ToDisplayNamesTest2() => VCardBuilder.Create().NameViews.ToDisplayNames(null!);
+
+    [TestMethod]
+    public void ToDisplayNamesTest3()
+    {
+        VCardBuilder
+            .Create().NameViews.ToDisplayNames(NameFormatter.Default);
+    }
+
+    [TestMethod]
+    public void ToDisplayNamesTest4()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .DisplayNames.Add("Sven")
+            .DisplayNames.Edit(props => props.Append(null))
+            .NameViews.Add(VCards.NameBuilder.Create().AddGivenName("Ulf"))
+            .NameViews.Add(VCards.NameBuilder.Create(),                        p => { p.Language = "de-DE"; p.Preference = 1; }, v => "1")
+            .NameViews.Add(VCards.NameBuilder.Create().AddGivenName("Detlef"), p => { p.Language = "de-DE"; p.Preference = 3; }, v => "3")
+            .NameViews.Add(VCards.NameBuilder.Create().AddGivenName("Folker"), p => { p.Language = "de-DE"; p.Preference = 2; }, v => "2")
+            .NameViews.Add(VCards.NameBuilder.Create().AddGivenName("Susi"),   p => { p.Language = "en-US"; p.Preference = 4; }, v => "4")
+            .NameViews.Edit(props => props.Append(null))
+            .NameViews.ToDisplayNames(NameFormatter.Default)
+            .VCard;
+
+        StringComparer comp = StringComparer.Ordinal;
+        IEnumerable<Models.TextProperty?>? dn = vc.DisplayNames;
+        Assert.IsNotNull(dn);
+        Assert.AreEqual(4, dn.Count());
+        CollectionAssert.Contains(dn.ToArray(), null);
+        Assert.IsTrue(dn.Any(x => comp.Equals("Sven", x?.Value)));
+        Assert.IsTrue(dn.Any(x => comp.Equals("Folker", x?.Value) && comp.Equals("2", x.Group) && comp.Equals("de-DE", x.Parameters.Language) && x.Parameters.Derived ));
+        Assert.IsTrue(dn.Any(x => comp.Equals("Susi", x?.Value) && comp.Equals("4", x.Group) && comp.Equals("en-US", x.Parameters.Language) && x.Parameters.Derived ));
+    }
 }

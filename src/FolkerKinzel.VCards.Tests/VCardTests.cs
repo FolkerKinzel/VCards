@@ -234,7 +234,7 @@ public class VCardTests
     [TestMethod]
     public void GroupsTest2()
     {
-        var vc = new VCard(setID: false)
+        var vc = new VCard(setID: false, setCreated: false)
         {
             DisplayNames = [new TextProperty("1"),
                                 new TextProperty("2"),
@@ -324,13 +324,16 @@ public class VCardTests
 
         Assert.AreEqual(1, vc1.Xmls?.Count());
         Assert.AreEqual(1, vc1.BirthDayViews?.Count());
-        Assert.AreEqual(1, vc1.Addresses?.Count());
+        Assert.AreEqual(2, vc1.Addresses?.Count());
+        Assert.IsNotNull(vc1.Addresses);
+        vc1.Addresses = vc1.Addresses.First();
         Assert.AreEqual(1, vc1.NickNames?.Count());
         Assert.AreEqual(1, vc1.GenderViews?.Count());
         Assert.AreEqual(1, vc1.GeoCoordinates?.Count());
         Assert.AreEqual(2, vc1.NonStandards?.Count());
         Assert.AreEqual(1, vc1.AppIDs?.Count());
         Assert.AreEqual(1, vc1.TimeZones?.Count());
+        Assert.AreEqual(2, vc1.GramGenders?.Count());
 
         var vc2 = (VCard)vc1.Clone();
         Assert.AreEqual(1, vc2.Xmls?.Count());
@@ -352,6 +355,8 @@ public class VCardTests
         Assert.AreNotSame(vc1.AppIDs!.First(), vc2.AppIDs!.First());
         Assert.AreEqual(1, vc2.TimeZones?.Count());
         Assert.AreNotSame(vc1.TimeZones!.First(), vc2.TimeZones!.First());
+        Assert.AreEqual(2, vc2.GramGenders?.Count());
+        Assert.AreNotSame(vc1.GramGenders!.First(), vc2.GramGenders!.First());
 
         Assert.AreNotSame(vc1, vc2);
     }
@@ -372,7 +377,7 @@ public class VCardTests
         Assert.AreEqual(2, vc1.BirthDayViews?.Count());
 
         vc1.Addresses = vc1.Addresses.ConcatWith((AddressProperty)vc1.Addresses!.First()!.Clone());
-        Assert.AreEqual(2, vc1.Addresses?.Count());
+        Assert.AreEqual(3, vc1.Addresses?.Count());
 
         vc1.NickNames = vc1.NickNames.ConcatWith((StringCollectionProperty)vc1.NickNames!.First()!.Clone());
         Assert.AreEqual(2, vc1.NickNames?.Count());
@@ -396,7 +401,7 @@ public class VCardTests
         Assert.AreNotSame(vc1.Xmls!.First(), vc2.Xmls!.First());
         Assert.AreEqual(2, vc2.BirthDayViews?.Count());
         Assert.AreNotSame(vc1.BirthDayViews!.First(), vc2.BirthDayViews!.First());
-        Assert.AreEqual(2, vc2.Addresses?.Count());
+        Assert.AreEqual(3, vc2.Addresses?.Count());
         Assert.AreNotSame(vc1.Addresses!.First(), vc2.Addresses!.First());
         Assert.AreEqual(2, vc2.NickNames?.Count());
         Assert.AreNotSame(vc1.NickNames!.First(), vc2.NickNames!.First());

@@ -35,7 +35,18 @@ public sealed partial class VCard
         {
             return prop switch
             {
-                Prop.TimeStamp or Prop.AppIDs or Prop.ID or Prop.Kind or Prop.Access or Prop.Mailer or Prop.ProductID or Prop.Profile => true,
+                Prop.Created 
+                    or Prop.ID
+                    or Prop.TimeStamp
+                    or Prop.AppIDs
+                    or Prop.Kind
+                    or Prop.Language
+                    or Prop.Pronouns
+                    or Prop.GramGenders
+                    or Prop.Access 
+                    or Prop.Mailer 
+                    or Prop.ProductID 
+                    or Prop.Profile => true,
                 _ => false,
             };
         }

@@ -70,15 +70,6 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The executing application is not yet registered with the VCard class. Call the static VCard.RegisterApp method when the program starts!.
-        /// </summary>
-        internal static string AppNotRegistered {
-            get {
-                return ResourceManager.GetString("AppNotRegistered", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t instantiate the struct yourself. Use VCardBuilder instead..
         /// </summary>
         internal static string DefaultCtor {
@@ -115,29 +106,11 @@ namespace FolkerKinzel.VCards.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The value is not a valid URI..
-        /// </summary>
-        internal static string NotAUri {
-            get {
-                return ResourceManager.GetString("NotAUri", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The argument is not a valid X-Name..
         /// </summary>
         internal static string NoXName {
             get {
                 return ResourceManager.GetString("NoXName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The value must be a positive integer. (Zero is not allowed.).
-        /// </summary>
-        internal static string PidValue {
-            get {
-                return ResourceManager.GetString("PidValue", resourceCulture);
             }
         }
         

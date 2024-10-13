@@ -5,10 +5,7 @@ public class VcfReaderTests
 {
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void VcfReaderTest()
-    {
-        _ = new VcfReader(null!);
-    }
+    public void VcfReaderTest() => _ = new VcfReader(null!);
 
     [TestMethod]
     public void ReadToEndTest1()

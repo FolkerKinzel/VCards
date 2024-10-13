@@ -31,7 +31,7 @@ internal static class IEnumerableIntlExtension
     internal static void UnsetIndexesIntl<TSource>(this IEnumerable<TSource?> values)
         where TSource : VCardProperty
     {
-        foreach (var item in values)
+        foreach (TSource? item in values)
         {
             if (item is not null)
             {
@@ -50,7 +50,7 @@ internal static class IEnumerableIntlExtension
     internal static IEnumerable<TSource> WhereNotNullAnd<TSource>(
         this IEnumerable<TSource?> values, Func<TSource, bool> filter) where TSource : VCardProperty
     {
-        foreach (var item in values)
+        foreach (TSource? item in values)
         {
             if (item is not null && filter(item))
             {
@@ -66,7 +66,7 @@ internal static class IEnumerableIntlExtension
     internal static IEnumerable<TSource> WhereNotEmptyAnd<TSource>(
         this IEnumerable<TSource?> values, Func<TSource, bool> filter) where TSource : VCardProperty
     {
-        foreach (var item in values)
+        foreach (TSource? item in values)
         {
             if (item is not null && !item.IsEmpty && filter(item))
             {

@@ -139,7 +139,7 @@ internal static class StringBuilderExtension
     /// parameter.</param>
     /// <returns>A reference to <paramref name="builder"/>.</returns>
     internal static StringBuilder AppendParameterValueEscapedAndQuoted(this StringBuilder builder,
-                                                                       string paramVal,
+                                                                       string? paramVal,
                                                                        VCdVersion version,
                                                                        bool isLabel = false)
     {
@@ -151,7 +151,7 @@ internal static class StringBuilderExtension
                 : builder;
     }
 
-    private static bool AppendParameterValueEscapedV30(StringBuilder sb, string s)
+    private static bool AppendParameterValueEscapedV30(StringBuilder sb, string? s)
     {
         ReadOnlySpan<char> span = s.AsSpan();
 
@@ -203,7 +203,7 @@ internal static class StringBuilderExtension
     /// </para>
     /// </remarks>
     private static bool AppendParameterValueEscapedV40(StringBuilder builder,
-                                                       string paramVal,
+                                                       string? paramVal,
                                                        bool isLabel)
     {
         ReadOnlySpan<char> span = paramVal.AsSpan();
@@ -250,39 +250,5 @@ internal static class StringBuilderExtension
         return mustBeQuoted;
     }
 
-    internal static StringBuilder AppendReadableProperty(this StringBuilder sb, ReadOnlyCollection<string> strings, int? maxLen = null)
-    {
-        Debug.Assert(sb is not null);
-        Debug.Assert(strings is not null);
-        Debug.Assert(strings.All(x => !string.IsNullOrEmpty(x)));
-
-        // If strings is empty, the loop is not entered:
-        for (int i = 0; i < strings.Count; i++)
-        {
-            AppendEntry(sb, strings[i], maxLen);
-        }
-
-        return sb;
-
-        static void AppendEntry(StringBuilder sb, string entry, int? maxLen)
-        {
-            if (maxLen.HasValue)
-            {
-                int lineStartIndex = sb.LastIndexOf(Environment.NewLine[0]);
-                lineStartIndex = lineStartIndex < 0 ? 0 : lineStartIndex + Environment.NewLine.Length;
-
-                if (sb.Length != 0 && lineStartIndex != sb.Length)
-                {
-                    _ = sb.Length - lineStartIndex + entry.Length + 1 > maxLen.Value
-                        ? sb.AppendLine()
-                        : sb.Append(' ');
-                }
-            }
-            else if (sb.Length != 0)
-            {
-                _ = sb.Append(' ');
-            }
-            _ = sb.Append(entry);
-        }
-    }
+    
 }

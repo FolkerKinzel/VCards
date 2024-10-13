@@ -32,7 +32,15 @@ internal static class Utility
         var expertise1 = new TextProperty("C#");
         expertise1.Parameters.Expertise = Expertise.Average;
 
-        var adr1 = new AddressProperty("Elmstraße 13", "Entenhausen", null, postalCode: "01234");
+        var adr1 = new AddressProperty(
+            AddressBuilder
+            .Create()
+            .AddStreet("Elmstraße 13")
+            .AddStreetName("Elmstraße")
+            .AddStreetNumber("13")
+            .AddLocality("Entenhausen")
+            .AddPostalCode("01234")
+            .AddCountry("Germany"));
         adr1.Parameters.Label = "  ";
         adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
         adr1.Parameters.GeoPosition = new GeoCoordinate(12.98, 7.86);
@@ -46,6 +54,16 @@ internal static class Utility
         var pidMap = new AppID(7, "http://www.contoso.com/");
         adr1.Parameters.PropertyIDs = [new(3, pidMap), new(2, null)];
         adr1.Parameters.AddressType = Adr.Dom | Adr.Intl | Adr.Parcel | Adr.Postal;
+
+        var adr2 = new AddressProperty(
+            AddressBuilder
+            .Create()
+            .AddStreet("Elm Street 13")
+            .AddStreetName("Elm Street")
+            .AddStreetNumber("13")
+            .AddLocality("New York")
+            .AddPostalCode("01234")
+            .AddCountry("USA"));
 
         var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
         //logo1.Parameters.MediaType = "image/jpeg";
@@ -139,7 +157,7 @@ internal static class Utility
             DeathPlaceViews = new TextProperty("Somewhere"),
             BirthPlaceViews = new TextProperty("Dessau"),
             ProductID = new TextProperty("Testcode"),
-            Addresses = adr1,
+            Addresses = [adr1, adr2],
             CalendarAddresses = new TextProperty("Calender address"),
             CalendarUserAddresses = new TextProperty("Calendar user address"),
             FreeOrBusyUrls = new TextProperty("Free Busy"),
@@ -164,6 +182,7 @@ internal static class Utility
             Mailer = new TextProperty("The Mailer"),
             Languages = new TextProperty("de"),
             Notes = new TextProperty("Kommentar"),
+            GramGenders = [new GramProperty(Gram.Neuter), new GramProperty(Gram.Common)],
 
             Messengers =
             [

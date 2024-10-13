@@ -328,6 +328,21 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.ContactUris:
                     AppendContactUris((IEnumerable<TextProperty?>)kvp.Value);
                     break;
+                case Prop.Created:
+                    AppendCreated((TimeStampProperty)kvp.Value);
+                    break;
+                case Prop.GramGenders:
+                    AppendGramGenders((IEnumerable<GramProperty?>)kvp.Value);
+                    break;
+                case Prop.Language:
+                    AppendLanguage((TextProperty)kvp.Value);
+                    break;
+                case Prop.Pronouns:
+                    AppendPronouns((IEnumerable<TextProperty?>)kvp.Value);
+                    break;
+                case Prop.SocialMediaProfiles:
+                    AppendSocialMediaProfiles((IEnumerable<TextProperty?>)kvp.Value);
+                    break;
 #if DEBUG
                 default:
                     throw new NotImplementedException();
@@ -551,6 +566,9 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendContactUris(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
+    protected virtual void AppendCreated(TimeStampProperty value) { }
+
+    [ExcludeFromCodeCoverage]
     protected virtual void AppendDeathDateViews(IEnumerable<DateAndOrTimeProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
@@ -615,6 +633,9 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendGeoCoordinates(IEnumerable<GeoProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
+    protected virtual void AppendGramGenders(IEnumerable<GramProperty?> value) { }
+
+    [ExcludeFromCodeCoverage]
     protected virtual void AppendHobbies(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
@@ -628,6 +649,9 @@ internal abstract class VcfSerializer : IDisposable
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendKind(KindProperty value) { }
+
+    [ExcludeFromCodeCoverage]
+    protected virtual void AppendLanguage(TextProperty value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendLanguages(IEnumerable<TextProperty?> value) { }
@@ -692,6 +716,9 @@ internal abstract class VcfSerializer : IDisposable
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendProfile(ProfileProperty value) { }
+
+    [ExcludeFromCodeCoverage]
+    protected virtual void AppendPronouns(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendVCardClients(IEnumerable<AppIDProperty?> value) { }
@@ -772,6 +799,9 @@ internal abstract class VcfSerializer : IDisposable
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendSources(IEnumerable<TextProperty?> value) { }
+
+    [ExcludeFromCodeCoverage]
+    protected virtual void AppendSocialMediaProfiles(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendTimeZones(IEnumerable<TimeZoneProperty?> value) { }

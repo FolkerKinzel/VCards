@@ -1,25 +1,38 @@
+using System.Collections.ObjectModel;
 using System.Globalization;
+using FolkerKinzel.VCards.Intls.Enums;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards.Intls.Converters;
+namespace FolkerKinzel.VCards.Intls.Formatters;
 
 internal static class AddressOrderConverter
 {
-    internal static AddressOrder ToAddressOrder(this CultureInfo cultureInfo)
+    internal static AddressOrder ParseCultureInfo(CultureInfo cultureInfo)
     {
         Debug.Assert(cultureInfo is not null);
 
         string name = cultureInfo.Name;
         int separatorIndex = name.IndexOf('-');
 
-        if (separatorIndex == -1 || name.Length < separatorIndex + 3)
-        {
-            return AddressOrder.Din;
-        }
+        return separatorIndex == -1 || name.Length < separatorIndex + 3
+            ? AddressOrder.Din
+            : ParseCountryCode(name.Substring(separatorIndex + 1, 2)) ?? AddressOrder.Din;
+    }
 
-        string countryName = name.Substring(separatorIndex + 1, 2);
+    internal static AddressOrder? ParseAddressProperty(AddressProperty prop)
+    {
+        string? countryCode = prop.Parameters.CountryCode;
 
-        switch (countryName)
+        return countryCode != null ? ParseCountryCode(countryCode)
+                                   : ParseAddress(prop.Value);
+    }
+
+    private static AddressOrder? ParseCountryCode(string countryCode)
+    {
+        Debug.Assert(!string.IsNullOrWhiteSpace(countryCode));
+
+        switch (countryCode)
         {
             case "AU": // AUSTRALIA												
             case "BH": // BAHRAIN												
@@ -92,22 +105,22 @@ internal static class AddressOrderConverter
             case "PG": // PAPUA NEW GUINEA (LOCALITY POSTAL_CODE PROVINCE)		
                 return AddressOrder.Venezuela;
             default:
-                return AddressOrder.Din;
+                return null;
         }
     }
 
-    internal static AddressOrder? GetAddressOrder(this Address address)
+    internal static AddressOrder? ParseAddress(Address address)
     {
-        var arr = address.Country.SelectMany(x => x)
-                       .Where(x => char.IsLetter(x))
-                       .Select(x => char.ToUpperInvariant(x)).ToArray();
+        ReadOnlyCollection<string> country = address.Country;
 
-        if (arr.Length == 0)
+        if (country.Count == 0)
         {
             return null;
         }
 
-        var span = new ReadOnlySpan<char>(arr);
+        ReadOnlySpan<char> span = country.SelectMany(x => x)
+                       .Where(x => char.IsLetter(x))
+                       .Select(x => char.ToUpperInvariant(x)).ToArray();
 
         return span.Equals("USA", StringComparison.Ordinal) ||
                span.StartsWith("UNITEDSTATES") ||
@@ -171,7 +184,8 @@ internal static class AddressOrderConverter
                span.Contains("COLOMBI", StringComparison.Ordinal) || // Colombia
                span.Contains("VIET", StringComparison.Ordinal)  // Viet Nam
                ? AddressOrder.Usa
-               : span.StartsWith("PAPUA") || span.EndsWith("VENEZUELA") ? AddressOrder.Venezuela
-                                                                        : AddressOrder.Din;
+               : span.StartsWith("PAPUA") || span.EndsWith("VENEZUELA")
+               ? AddressOrder.Venezuela
+               : AddressOrder.Din;
     }
 }

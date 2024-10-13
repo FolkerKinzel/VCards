@@ -10,23 +10,34 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer2_1>> _actionList = new(2);
 
-    private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes = static serializer
+    private readonly Action<ParameterSerializer2_1> _collectPropertyClassTypes = CollectPropertyClassTypes;
+    private readonly Action<ParameterSerializer2_1> _collectPhoneTypes = CollectPhoneTypes;
+    private readonly Action<ParameterSerializer2_1> _collectAddressTypes = CollectAddressTypes;
+
+    #region Collect
+
+    private static void CollectPropertyClassTypes(ParameterSerializer2_1 serializer)
         => EnumValueCollector.Collect(serializer.ParaSection.PropertyClass,
                                       serializer._stringCollectionList);
 
-    private readonly Action<ParameterSerializer2_1> _collectPhoneTypes = static serializer =>
+    private static void CollectPhoneTypes(ParameterSerializer2_1 serializer)
     {
         const Tel DEFINED_PHONE_TYPES = Tel.Voice | Tel.Fax | Tel.Msg | Tel.Cell |
         Tel.Pager | Tel.BBS | Tel.Modem | Tel.Car | Tel.ISDN | Tel.Video;
 
         EnumValueCollector.Collect(serializer.ParaSection.PhoneType & DEFINED_PHONE_TYPES,
                                    serializer._stringCollectionList);
-    };
+    }
 
-    private readonly Action<ParameterSerializer2_1> _collectAddressTypes = static serializer
-        => EnumValueCollector.Collect(serializer.ParaSection.AddressType,
-                                      serializer._stringCollectionList);
+    private static void CollectAddressTypes(ParameterSerializer2_1 serializer)
+    {
+        const Adr DEFINED_ADDRESS_TYPES = Adr.Intl | Adr.Parcel | Adr.Postal | Adr.Dom;
 
+        EnumValueCollector.Collect(serializer.ParaSection.AddressType & DEFINED_ADDRESS_TYPES,
+                                          serializer._stringCollectionList);
+    }
+
+    #endregion
 
     #region Build
 
@@ -311,6 +322,21 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
         {
             AppendParameter(ParameterSection.ParameterKey.TYPE, s);
         }
+    }
+
+    protected override void BuildSocialProfilePara()
+    {
+        // X-SOCIALPROFILE
+        Debug.Assert(Options.HasFlag(Opts.WriteXExtensions));
+
+        string? serviceType = this.ParaSection.ServiceType;
+
+        if (serviceType is not null)
+        {
+            AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, serviceType);
+        }
+
+        AppendNonStandardParameters();
     }
 
     private void AppendSoundType()

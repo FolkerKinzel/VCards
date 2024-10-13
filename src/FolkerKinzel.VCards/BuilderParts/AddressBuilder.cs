@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
@@ -157,6 +158,8 @@ public readonly struct AddressBuilder
     private IEnumerable<AddressProperty> GetProperty()
         => Builder.VCard.Addresses?.WhereNotNull() ?? [];
 
+    #region Remove this code with version 8.0.0
+
     /// <summary>
     /// Adds an <see cref="AddressProperty"/> instance, which is newly 
     /// initialized using the specified arguments, to the <see cref="VCard.Addresses"/> property.
@@ -179,6 +182,11 @@ public readonly struct AddressBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="AddressBuilder"/> to be able to chain calls.</returns>
+    /// <remarks>
+    /// <note type="tip">
+    /// Use the method overload that takes a <see cref="FolkerKinzel.VCards.AddressBuilder"/> as argument.
+    /// </note>
+    /// </remarks>
     /// 
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
@@ -209,7 +217,6 @@ public readonly struct AddressBuilder
         return _builder;
     }
 
-
     /// <summary>
     /// Adds an <see cref="AddressProperty"/> instance, which is newly 
     /// initialized using the specified arguments, to the <see cref="VCard.Addresses"/> property.
@@ -231,6 +238,11 @@ public readonly struct AddressBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> 
     /// to be able to chain calls.</returns>
+    /// <remarks>
+    /// <note type="tip">
+    /// Use the method overload that takes a <see cref="FolkerKinzel.VCards.AddressBuilder"/> as argument.
+    /// </note>
+    /// </remarks>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(IEnumerable<string?>? street,
@@ -253,6 +265,83 @@ public readonly struct AddressBuilder
                                            _builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
                                            parameters)
                            );
+        return _builder;
+    }
+
+    #endregion
+
+    /// <summary>
+    /// Adds an <see cref="AddressProperty"/> instance, which is newly 
+    /// initialized using the content of a specified <see cref="FolkerKinzel.VCards.AddressBuilder"/>, to the <see cref="VCard.Addresses"/> property.
+    /// </summary>
+    /// <param name="builder">The <see cref="FolkerKinzel.VCards.AddressBuilder"/> whose content is used.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
+    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
+    /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
+    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> to 
+    /// be able to chain calls.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    public VCardBuilder Add(FolkerKinzel.VCards.AddressBuilder builder,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
+    {
+        VCard vc = Builder.VCard;
+        var prop = new AddressProperty(builder, group?.Invoke(vc));
+        vc.Set(Prop.Addresses,
+               VCardBuilder.Add(prop,
+                                vc.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
+                                parameters));
+
+        return _builder;
+    }
+
+    /// <summary>
+    /// Attaches <c>LABEL</c> parameters (<see cref="ParameterSection.Label"/>) to all 
+    /// <see cref="AddressProperty"/> instances that are currently in the <see cref="VCard"/>.
+    /// </summary>
+    /// <param name="addressFormatter">The <see cref="IAddressFormatter"/> instance to
+    /// use for the conversion.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> to 
+    /// be able to chain calls.</returns>
+    /// 
+    /// <remarks><see cref="AddressProperty"/> instances whose <see cref="ParameterSection.Label"/> property
+    /// is not <c>null</c> will be skipped.</remarks>
+    /// 
+    /// <seealso cref="AddressFormatter"/>
+    /// 
+    /// <exception cref="ArgumentNullException"><paramref name="addressFormatter"/> is <c>null</c>.</exception>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    public VCardBuilder AttachLabels(IAddressFormatter addressFormatter)
+    {
+        VCard vc = Builder.VCard;
+        _ArgumentNullException.ThrowIfNull(addressFormatter, nameof(addressFormatter));
+        IEnumerable<AddressProperty?>? addresses = vc.Addresses;
+        
+        if(addresses is null)
+        {
+            return _builder;
+        }
+
+        foreach (AddressProperty? adrProp in addresses)
+        {
+            if(adrProp is null)
+            {
+                continue;
+            }
+
+            if(adrProp.Parameters.Label is null)
+            {
+                adrProp.Parameters.Label = addressFormatter.ToLabel(adrProp);
+            }
+        }
+
         return _builder;
     }
 

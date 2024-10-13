@@ -32,17 +32,6 @@ public sealed partial class VCard
         /// <c>(2,3,4)</c></summary>
         internal const string BDAY = "BDAY";
 
-        /// <summary> <c>CAPURI</c>: A protocol independent location from which a calendaring and 
-        /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
-        internal const string CAPURI = "CAPURI";
-
-        /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
-        /// the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
-        internal const string CALADRURI = "CALADRURI";
-
-        /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
-        internal const string CALURI = "CALURI";
-
         /// <summary> <c>CATEGORIES</c>: Lists of "tags" that can be used to describe the
         /// object represented by this vCard. <c>(3,4)</c></summary>
         internal const string CATEGORIES = "CATEGORIES";
@@ -58,10 +47,6 @@ public sealed partial class VCard
         /// <summary> <c>EMAIL</c>: The addresses for electronic mail communication with
         /// the vCard object. <c>(2,3,4)</c></summary>
         internal const string EMAIL = "EMAIL";
-
-        /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
-        /// "busy" on their calendar. <c>(4, 3 - RFC 2739)</c></summary>
-        internal const string FBURL = "FBURL";
 
         /// <summary> <c>FN</c>: The formatted name string associated with the vCard object.
         /// <c>(2,3,4)</c></summary>
@@ -189,8 +174,39 @@ public sealed partial class VCard
         /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
         internal const string XML = "XML";
 
+        internal static class Rfc2739
+        {
+            /// <summary> <c>CAPURI</c>: A protocol independent location from which a calendaring and 
+            /// scheduling client can communicate with a user's entire calendar. <c>(3 - RFC 2739)</c></summary>
+            internal const string CAPURI = "CAPURI";
 
-        internal static class NonStandard
+            /// <summary> <c>CALADRURI</c>: URLs to use for sending a scheduling request to
+            /// the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
+            internal const string CALADRURI = "CALADRURI";
+
+            /// <summary> <c>CALURI</c>: URLs to the person's calendar. <c>(4, 3 - RFC 2739)</c></summary>
+            internal const string CALURI = "CALURI";
+
+            /// <summary> <c>FBURL</c>: Defines URLs that show when the person is "free" or
+            /// "busy" on their calendar. <c>(4, 3 - RFC 2739)</c></summary>
+            internal const string FBURL = "FBURL";
+        }
+
+        internal static class Rfc6474
+        {
+            /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
+            /// RFC 6474)</c></summary>
+            internal const string BIRTHPLACE = "BIRTHPLACE";
+
+            /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
+            internal const string DEATHDATE = "DEATHDATE";
+
+            /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
+            /// RFC 6474)</c></summary>
+            internal const string DEATHPLACE = "DEATHPLACE";
+        }
+
+        internal static class Rfc6715
         {
             /// <summary> <c>EXPERTISE</c>: A professional subject area, that the person has
             /// knowledge of. <c>(RFC 6715)</c></summary>
@@ -204,21 +220,63 @@ public sealed partial class VCard
             /// in, but does not necessarily take part in. <c>(4 - RFC 6715)</c></summary>
             internal const string INTEREST = "INTEREST";
 
-            /// <summary> <c>BIRTHPLACE</c>: The location of the individual's birth. <c>(4 -
-            /// RFC 6474)</c></summary>
-            internal const string BIRTHPLACE = "BIRTHPLACE";
-
-            /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC 6474)</c></summary>
-            internal const string DEATHDATE = "DEATHDATE";
-
-            /// <summary> <c>DEATHPLACE</c>: The location of the individual's death. <c>(4 -
-            /// RFC 6474)</c></summary>
-            internal const string DEATHPLACE = "DEATHPLACE";
-
             /// <summary> <c>ORG-DIRECTORY</c>: A URI representing the person's work place,
             /// which can be used to look up information on the person's co-workers. <c>(RFC
             /// 6715)</c></summary>
             internal const string ORG_DIRECTORY = "ORG-DIRECTORY";
+        }
+
+        internal static class Rfc8605
+        {
+            /// <summary>
+            /// URIs representing an email address or a location for a web form.<c>(4 - RFC 8605)</c>
+            /// </summary>
+            internal const string CONTACT_URI = "CONTACT-URI";
+        }
+
+        internal static class Rfc9554
+        {
+            /// <summary>
+            /// <c>GRAMGENDER</c>: Defines which grammatical gender to use in salutations and other 
+            /// grammatical constructs. <c>(4 - RFC&#160;9554)</c>
+            /// </summary>
+            internal const string GRAMGENDER = "GRAMGENDER";
+
+            /// <summary>
+            /// <c>CREATED</c>: Defines the date and time when the vCard was created.
+            /// <c>(4 - RFC&#160;9554)</c>
+            /// </summary>
+            internal const string CREATED = "CREATED";
+
+            /// <summary>
+            /// <c>LANGUAGE</c>: Defines the default language that human-readable text values in 
+            /// this vCard are assumed to be written in.
+            /// <c>(4 - RFC&#160;9554)</c>
+            /// </summary>
+            internal const string LANGUAGE = "LANGUAGE";
+
+            /// <summary>
+            /// <c>PRONOUNS</c>: Defines the pronouns that shall be used to refer to the entity 
+            /// represented by this vCard.
+            /// <c>(4 - RFC&#160;9554)</c>
+            /// </summary>
+            internal const string PRONOUNS = "PRONOUNS";
+
+            /// <summary>
+            /// <c>SOCIALPROFILE</c>: Specifies the URI or username for social media profiles 
+            /// associated with the object the vCard represents.
+            /// <c>(4 - RFC&#160;9554)</c>
+            /// </summary>
+            internal const string SOCIALPROFILE = "SOCIALPROFILE";
+        }
+
+        internal static class NonStandard
+        {
+            /// <summary>
+            /// <c>X-SOCIALPROFILE</c>: Specifies the URI or username for social media profiles 
+            /// associated with the object the vCard represents.
+            /// </summary>
+            internal const string X_SOCIALPROFILE = "X-SOCIALPROFILE";
 
             /// <summary>Sex (values: <c>Male</c> or <c>Female</c>) </summary>
             internal const string X_GENDER = "X-GENDER";
@@ -242,12 +300,6 @@ public sealed partial class VCard
 
             /// <summary>Assistant's name (instead of <see cref="AGENT"/>)</summary>
             internal const string X_ASSISTANT = "X-ASSISTANT";
-
-            /// <summary>
-            /// URIs representing an email address or a location for a web form.<c>(4 [RFC 8605])</c>
-            /// </summary>
-            internal const string CONTACT_URI = "CONTACT-URI";
-
 
             internal static class InstantMessenger
             {

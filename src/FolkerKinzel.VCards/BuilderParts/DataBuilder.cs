@@ -43,7 +43,7 @@ public readonly struct DataBuilder
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Preference"/> properties of 
-    /// the items in the specified property depending on their position
+    /// the items in the specified <see cref="VCard"/> property depending on their position
     /// in that collection and allows to specify whether to skip empty items in that process.
     /// (The first item gets the highest preference <c>1</c>.)
     /// </summary>
@@ -64,7 +64,7 @@ public readonly struct DataBuilder
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Preference"/> properties of 
-    /// the items in in the specified property to the lowest value (100).
+    /// the items in in the specified <see cref="VCard"/> property to the lowest value (100).
     /// </summary>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
     /// to be able to chain calls.</returns>
@@ -79,7 +79,7 @@ public readonly struct DataBuilder
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Index"/> properties of 
-    /// the items in in the specified property ascending depending on their 
+    /// the items in in the specified <see cref="VCard"/> property ascending depending on their 
     /// position in that collection and allows to specify whether to skip empty items in that 
     /// process.
     /// </summary>
@@ -100,7 +100,7 @@ public readonly struct DataBuilder
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
-    /// the items in in the specified property to <c>null</c>.
+    /// the items in in the specified <see cref="VCard"/> property to <c>null</c>.
     /// </summary>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
     /// to be able to chain calls.</returns>
@@ -114,12 +114,12 @@ public readonly struct DataBuilder
         });
 
     /// <summary>
-    /// Edits the content of the specified property with a delegate and 
+    /// Edits the content of the specified <see cref="VCard"/> property with a delegate and 
     /// allows to pass <paramref name="data"/> to this delegate.
     /// </summary>
     /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// specified property and <paramref name="data"/> as arguments. Its return value 
+    /// specified <see cref="VCard"/> property and <paramref name="data"/> as arguments. Its return value 
     /// will be the new content of the specified property.</param>
     /// <param name="data">The data to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
@@ -139,12 +139,12 @@ public readonly struct DataBuilder
     }
 
     /// <summary>
-    /// Edits the content of the specified property with a delegate.
+    /// Edits the content of the specified <see cref="VCard"/> property with a delegate.
     /// </summary>
     /// <param name="func">
-    /// A function called with a collection of the non-<c>null</c> items of the specified property
+    /// A function called with a collection of the non-<c>null</c> items of the specified <see cref="VCard"/> property
     /// as argument.
-    /// Its return value will be the new content of the specified property.</param>
+    /// Its return value will be the new content of the specified <see cref="VCard"/> property.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
@@ -171,7 +171,7 @@ public readonly struct DataBuilder
     /// <summary>
     /// Adds a <see cref="DataProperty"/> instance, which is newly 
     /// initialized using the binary content 
-    /// of a file, to the specified property of the <see cref="VCardBuilder.VCard"/>.
+    /// of a file, to the specified <see cref="VCard"/> property.
     /// </summary>
     /// <param name="filePath">Path to the file whose content is to embed.</param>
     /// <param name="mimeType">The Internet Media Type ("MIME type") of the file content

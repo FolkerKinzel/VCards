@@ -22,7 +22,4 @@ public class ImppConverterTest
     [TestMethod]
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void ToVcfStringTest() => _ = ImppConverter.ToVcfString((Impp)4711);
-
-
-
 }

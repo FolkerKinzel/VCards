@@ -211,6 +211,26 @@ public sealed partial class VCard
         set => Set(Prop.ContactUris, value);
     }
 
+    /// <summary>
+    /// <c>CREATED</c>: Defines the date and time when the vCard was created.
+    /// <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This is the timestamp when the vCard was created. Copying the vCard across systems does 
+    /// not count as a new creation nor a new revision. Instead, the timestamp value typically 
+    /// stays unchanged for the existence of the vCard.
+    /// </para>
+    /// <para>
+    /// Use the <see cref="TimeStamp"/> property to specify the last revision.
+    /// </para>
+    /// </remarks>
+    public TimeStampProperty? Created
+    {
+        get => Get<TimeStampProperty?>(Prop.Created);
+        set => Set(Prop.Created, value);
+    }
+
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
@@ -319,6 +339,23 @@ public sealed partial class VCard
         set => Set(Prop.GeoCoordinates, value);
     }
 
+    /// <summary>
+    /// <c>GRAMGENDER</c>: Defines which grammatical gender to use in salutations and other 
+    /// grammatical constructs. <c>4 - RFC&#160;9554</c>
+    /// </summary>
+    /// <remarks>
+    /// This property defines the grammatical gender that the contact prefers to be addressed 
+    /// by or referred to as in written or spoken form. For example, the German language 
+    /// distinguishes by grammatical gender in salutations such as "Sehr geehrte" (feminine) 
+    /// and "Sehr geehrter" (masculine). Multiple occurrences of this property MUST be 
+    /// distinguished by the LANGUAGE parameter.
+    /// </remarks>
+    public IEnumerable<GramProperty?>? GramGenders
+    {
+        get => Get<IEnumerable<GramProperty?>?>(Prop.GramGenders);
+        set => Set(Prop.GramGenders, value);
+    }
+
     /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
     /// in. <c>(4 - RFC&#160;6715)</c></summary>
     /// <remarks> Define the level of interest with the parameter 
@@ -366,6 +403,27 @@ public sealed partial class VCard
     {
         get => Get<KindProperty?>(Prop.Kind);
         set => Set(Prop.Kind, value);
+    }
+
+    /// <summary> <c>LANGUAGE</c>: Defines the default language that human-readable 
+    /// text values in this <see cref="VCard"/> are assumed to be written in.
+    /// <c>(4 - RFC 9554)</c></summary>
+    /// <remarks>
+    /// <para>
+    /// This property defines the language that property values of type <c>TEXT</c> are assumed 
+    /// to be written in for this <see cref="VCard"/>. If a <see cref="VCardProperty"/> includes the 
+    /// <see cref="ParameterSection.Language"/> parameter, 
+    /// then the parameter value has higher precedence than the <see cref="Language"/> property value.
+    /// </para>
+    /// <para>
+    /// The <see cref="ParameterSection.Language"/> parameter MUST NOT be assigned to this property.
+    /// </para>
+    /// </remarks>
+    /// <value>RFC 5646 language tag.</value>
+    public TextProperty? Language
+    {
+        get => Get<TextProperty?>(Prop.Language);
+        set => Set(Prop.Language, value);
     }
 
     /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
@@ -513,6 +571,9 @@ public sealed partial class VCard
     /// <c>X-SKYPE-USERNAME</c>
     /// </item>
     /// <item>
+    /// <c>X-SOCIALPROFILE</c>
+    /// </item>
+    /// <item>
     /// <c>X-SPOUSE</c>
     /// </item>
     /// <item>
@@ -597,6 +658,22 @@ public sealed partial class VCard
         set => Set(Prop.Profile, value);
     }
 
+    /// <summary> <c>PRONOUNS</c>: Defines the pronouns that shall be used to refer to the entity 
+    /// represented by this <see cref="VCard"/>. <c>(4 - RFC 9554)</c></summary>
+    /// <remarks>
+    /// This property contains the pronouns that the contact chooses to use for themselves. 
+    /// The value is free-form text. These pronouns shall be used when addressing or referring to the 
+    /// contact. Multiple occurrences of this property MAY define pronouns for multiple languages, 
+    /// preferences, and contexts. Multiple pronouns in the same language SHOULD use the 
+    /// <see cref="ParameterSection.Preference"/> parameter; 
+    /// otherwise, the order of preference is implementation-specific.
+    /// </remarks>
+    public IEnumerable<TextProperty?>? Pronouns
+    {
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Pronouns);
+        set => Set(Prop.Pronouns, value);
+    }
+
     /// <summary> <c>RELATED</c>: Other entities that the person or organization is 
     /// related to. <c>(4)</c></summary>
     public IEnumerable<RelationProperty?>? Relations
@@ -611,6 +688,25 @@ public sealed partial class VCard
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.Roles);
         set => Set(Prop.Roles, value);
+    }
+
+    /// <summary> <c>SOCIALPROFILE</c>: Specifies the URI or username for social media 
+    /// profiles associated with the object the <see cref="VCard"/> represents. <c>(4 - RFC 9554)</c></summary>
+    /// <value>A single URI or TEXT value. The default value type is URI.</value>
+    /// <remarks>
+    /// <para>
+    /// In addition to the typical use of this property with URI values, it also allows setting usernames for social 
+    /// media services as free-text TEXT values, in which case the <see cref="ParameterSection.ServiceType"/> parameter
+    /// MUST be provided.
+    /// </para>
+    /// <para>
+    /// The <see cref="ParameterSection.ServiceType"/> parameter MAY be assigned if the value type is URI.
+    /// </para>
+    /// </remarks>
+    public IEnumerable<TextProperty?>? SocialMediaProfiles
+    {
+        get => Get<IEnumerable<TextProperty?>?>(Prop.SocialMediaProfiles);
+        set => Set(Prop.SocialMediaProfiles, value);
     }
 
     /// <summary> <c>SOUND</c>: Specifies the pronunciation of the <see cref="VCard.DisplayNames"

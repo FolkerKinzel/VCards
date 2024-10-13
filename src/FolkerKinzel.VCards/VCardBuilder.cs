@@ -29,12 +29,17 @@ public sealed class VCardBuilder
     /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/> property
     /// of the newly created <see cref="VCard"/> object automatically to a new 
     /// <see cref="Guid"/>, otherwise <c>false</c>.</param>
+    /// <param name="setCreated">
+    /// <c>true</c> to set the <see cref="VCard.Created"/>
+    /// property with a newly created <see cref="TimeStampProperty"/>, otherwise
+    /// <c>false</c>.
+    /// </param>
     /// <returns>The <see cref="VCardBuilder"/> that creates a new <see cref="VCard"/>.</returns>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static VCardBuilder Create(bool setID = true)
-        => new(new VCard(setID));
+    public static VCardBuilder Create(bool setID = true, bool setCreated = true)
+        => new(new VCard(setID: setID, setCreated: setCreated));
 
     /// <summary>
     /// Returns a <see cref="VCardBuilder"/> that edits the <see cref="VCard"/>
@@ -79,7 +84,7 @@ public sealed class VCardBuilder
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public AddressBuilder Addresses => new(this);
+    public BuilderParts.AddressBuilder Addresses => new(this);
 
     /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
@@ -130,6 +135,22 @@ public sealed class VCardBuilder
     /// <see cref="ParameterSection.Preference"/> property must be set.
     /// </remarks>
     public TextBuilder ContactUris => new(this, Prop.ContactUris);
+
+    /// <summary>
+    /// <c>CREATED</c>: Defines the date and time when the vCard was created.
+    /// <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This is the timestamp when the vCard was created. Copying the vCard across systems does 
+    /// not count as a new creation nor a new revision. Instead, the timestamp value typically 
+    /// stays unchanged for the existence of the vCard.
+    /// </para>
+    /// <para>
+    /// Use the <see cref="TimeStamp"/> property to specify the last revision.
+    /// </para>
+    /// </remarks>
+    public TimeStampBuilder Created => new(this, Prop.Created);
 
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
@@ -209,6 +230,19 @@ public sealed class VCardBuilder
     /// </remarks>
     public GeoBuilder GeoCoordinates => new(this);
 
+    /// <summary>
+    /// <c>GRAMGENDER</c>: Defines which grammatical gender to use in salutations and other 
+    /// grammatical constructs. <c>4 - RFC&#160;9554</c>
+    /// </summary>
+    /// <remarks>
+    /// This property defines the grammatical gender that the contact prefers to be addressed 
+    /// by or referred to as in written or spoken form. For example, the German language 
+    /// distinguishes by grammatical gender in salutations such as "Sehr geehrte" (feminine) 
+    /// and "Sehr geehrter" (masculine). Multiple occurrences of this property MUST be 
+    /// distinguished by the <c>LANGUAGE</c> parameter.
+    /// </remarks>
+    public GramBuilder GramGenders => new(this);
+
     /// <summary> <c>HOBBY</c>: Recreational activities that the person actively engages
     /// in. <c>(4 - RFC&#160;6715)</c></summary>
     /// <remarks> Define the level of interest with the parameter 
@@ -239,6 +273,23 @@ public sealed class VCardBuilder
     /// <summary> <c>KIND</c>: Defines the type of entity, that this vCard represents.
     /// <c>(4)</c></summary>
     public KindBuilder Kind => new(this);
+
+    /// <summary> <c>LANGUAGE</c>: Defines the default language that human-readable 
+    /// text values in this vCard are assumed to be written in.
+    /// <c>(4 - RFC 9554)</c></summary>
+    /// <remarks>
+    /// <para>
+    /// This property defines the language that property values of type <c>TEXT</c> are assumed 
+    /// to be written in for this vCard. If a <see cref="VCardProperty"/> includes the 
+    /// <see cref="ParameterSection.Language"/> parameter, 
+    /// then the parameter value has higher precedence than the <see cref="Language"/> property value.
+    /// </para>
+    /// <para>
+    /// The <see cref="ParameterSection.Language"/> parameter MUST NOT be assigned to this property.
+    /// </para>
+    /// </remarks>
+    /// <value>RFC 5646 language tag.</value>
+    public TextSingletonBuilder Language => new(this, Prop.Language);
 
     /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
     public TextBuilder Languages => new(this, Prop.Languages);
@@ -280,7 +331,7 @@ public sealed class VCardBuilder
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public NameBuilder NameViews => new(this);
+    public BuilderParts.NameBuilder NameViews => new(this);
 
     /// <summary> <c>NICKNAME</c>: One or more descriptive/familiar names for the object
     /// represented by this vCard. <c>(3,4)</c></summary>
@@ -360,6 +411,9 @@ public sealed class VCardBuilder
     /// <c>X-SKYPE-USERNAME</c>
     /// </item>
     /// <item>
+    /// <c>X-SOCIALPROFILE</c>
+    /// </item>
+    /// <item>
     /// <c>X-SPOUSE</c>
     /// </item>
     /// <item>
@@ -421,6 +475,18 @@ public sealed class VCardBuilder
     /// <summary> <c>PROFILE</c>: States that the <see cref="VCards.VCard"/> is a vCard. <c>(3)</c></summary>
     public ProfileBuilder Profile => new(this);
 
+    /// <summary> <c>PRONOUNS</c>: Defines the pronouns that shall be used to refer to the entity 
+    /// represented by this <see cref="VCard"/>. <c>(4 - RFC 9554)</c></summary>
+    /// <remarks>
+    /// This property contains the pronouns that the contact chooses to use for themselves. 
+    /// The value is free-form text. These pronouns shall be used when addressing or referring to the 
+    /// contact. Multiple occurrences of this property MAY define pronouns for multiple languages, 
+    /// preferences, and contexts. Multiple pronouns in the same language SHOULD use the 
+    /// <see cref="ParameterSection.Preference"/> parameter; 
+    /// otherwise, the order of preference is implementation-specific.
+    /// </remarks>
+    public TextBuilder Pronouns => new(this, Prop.Pronouns);
+
     /// <summary> <c>RELATED</c>: Other entities that the person or organization is 
     /// related to. <c>(4)</c></summary>
     /// <example>
@@ -431,6 +497,21 @@ public sealed class VCardBuilder
     /// <summary> <c>ROLE</c>: The role, occupation, or business category of the vCard
     /// object within an organization. <c>(2,3,4)</c></summary>
     public TextBuilder Roles => new(this, Prop.Roles);
+
+    /// <summary> <c>SOCIALPROFILE</c>: Specifies the URI or username for social media 
+    /// profiles associated with the object the <see cref="VCard"/> represents. <c>(4 - RFC 9554)</c></summary>
+    /// <value>A single URI or TEXT value. The default value type is URI.</value>
+    /// <remarks>
+    /// <para>
+    /// In addition to the typical use of this property with URI values, it also allows setting usernames for social 
+    /// media services as free-text TEXT values, in which case the <see cref="ParameterSection.ServiceType"/> parameter
+    /// MUST be provided.
+    /// </para>
+    /// <para>
+    /// The <see cref="ParameterSection.ServiceType"/> parameter MAY be assigned if the value type is URI.
+    /// </para>
+    /// </remarks>
+    public TextBuilder SocialMediaProfiles => new(this, Prop.SocialMediaProfiles);
 
     /// <summary> <c>SOUND</c>: Specifies the pronunciation of the <see cref="VCard.DisplayNames"
     /// /> property of the <see cref="VCard" />-object. <c>(2,3,4)</c></summary>
@@ -446,7 +527,7 @@ public sealed class VCardBuilder
     /// With <see cref="Opts.Default"/> the flag <see cref="Opts.UpdateTimeStamp"/> is set. So 
     /// this property is normally updated automatically when serializing VCF.
     /// </remarks>
-    public TimeStampBuilder TimeStamp => new(this);
+    public TimeStampBuilder TimeStamp => new(this, Prop.TimeStamp);
 
     /// <summary> <c>TZ</c>: The time zone(s) of the vCard object. <c>(2,3,4)</c></summary>
     /// <remarks>

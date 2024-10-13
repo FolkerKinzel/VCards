@@ -243,7 +243,7 @@ public readonly struct TimeZoneBuilder
 
     /// <summary>
     /// Removes <see cref="TimeZoneProperty"/> objects that match a specified predicate from the 
-    /// <see cref="VCard.GeoCoordinates"/> property.
+    /// <see cref="VCard.TimeZones"/> property.
     /// </summary>
     /// <param name="predicate">A function that returns <c>true</c> for <see cref="TimeZoneProperty"/> 
     /// objects that shall be removed.</param>

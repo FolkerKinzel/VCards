@@ -642,7 +642,7 @@ public static class IEnumerableExtension
             yield break;
         }
 
-        foreach (var item in values)
+        foreach (TSource? item in values)
         {
             if (item is null || item == value)
             {
@@ -679,7 +679,7 @@ public static class IEnumerableExtension
                 yield break;
             }
 
-            foreach (var item in values)
+            foreach (T? item in values)
             {
                 if (item is null || predicate(item))
                 {
@@ -717,7 +717,7 @@ public static class IEnumerableExtension
 
         int cnt = 1;
 
-        foreach (var item in values.Distinct())
+        foreach (TSource? item in values.Distinct())
         {
             if (item is not null)
             {
@@ -743,7 +743,7 @@ public static class IEnumerableExtension
             return;
         }
 
-        foreach (var item in values)
+        foreach (TSource? item in values)
         {
             if (item is not null)
             {
@@ -820,7 +820,7 @@ public static class IEnumerableExtension
             return;
         }
 
-        foreach (var item in values)
+        foreach (TSource? item in values)
         {
             if (item is not null)
             {

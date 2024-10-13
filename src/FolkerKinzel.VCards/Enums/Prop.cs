@@ -13,6 +13,12 @@ public enum Prop
     /// <c>(4)</c></summary>
     Kind,
 
+    /// <summary>
+    /// <c>CREATED</c>: Defines the date and time when the vCard was created.
+    /// <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    Created,
+
     /// <summary> <c>REV</c>: A timestamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
     TimeStamp,
 
@@ -48,6 +54,11 @@ public enum Prop
     /// <summary> <c>PRODID</c>: The identifier for the product that created the vCard
     /// object. <c>(3,4)</c></summary>
     ProductID,
+
+    /// <summary> <c>LANGUAGE</c>: Defines the default language that human-readable 
+    /// text values in this vCard are assumed to be written in.
+    /// <c>(4 - RFC 9554)</c></summary>
+    Language,
 
     /// <summary> <c>FN</c>: The formatted name string associated with the vCard object.
     /// <c>(2,3,4)</c></summary>
@@ -115,6 +126,10 @@ public enum Prop
     /// <summary> <c>URL</c>: URLs pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>
     Urls,
+
+    /// <summary> <c>SOCIALPROFILE</c>: Specifies the URI or username for social media 
+    /// profiles associated with the object the <see cref="VCard"/> represents. <c>(4 - RFC 9554)</c></summary>
+    SocialMediaProfiles,
 
     /// <summary> <c>IMPP</c>: Instant messenger handles. <c>(3,4)</c></summary>
     Messengers,
@@ -188,6 +203,16 @@ public enum Prop
     /// <summary> <c>CLIENTPIDMAP</c>: Mappings for <see cref="PropertyID" />s. It is
     /// used for synchronizing different revisions of the same vCard. <c>(4)</c></summary>
     AppIDs,
+
+    /// <summary>
+    /// <c>GRAMGENDER</c>: Defines which grammatical gender to use in salutations and other 
+    /// grammatical constructs. <c>4 - RFC&#160;9554</c>
+    /// </summary>
+    GramGenders,
+
+    /// <summary> <c>PRONOUNS</c>: Defines the pronouns that shall be used to refer to the entity 
+    /// represented by this <see cref="VCard"/>. <c>(4 - RFC 9554)</c></summary>
+    Pronouns,
 
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
     NonStandards,

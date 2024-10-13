@@ -17,13 +17,23 @@ public sealed partial class VCard
     /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/>
     /// property with a newly created <see cref="IDProperty"/>, otherwise
     /// <c>false</c>.</param>
+    /// <param name="setCreated">
+    /// <c>true</c> to set the <see cref="VCard.Created"/>
+    /// property with a newly created <see cref="TimeStampProperty"/>, otherwise
+    /// <c>false</c>.
+    /// </param>
     /// <exception cref="InvalidOperationException">The executing application is
     /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
-    public VCard(bool setID = true)
+    public VCard(bool setID = true, bool setCreated = true)
     {
         if (setID)
         {
             ID = new IDProperty();
+        }
+
+        if (setCreated)
+        {
+            Created = new TimeStampProperty();
         }
 
         // Should be the last in ctor:
@@ -36,8 +46,6 @@ public sealed partial class VCard
     {
         Version = vCard.Version;
 
-        Func<ICloneable?, object?> cloner = Cloned;
-
         foreach (KeyValuePair<Prop, object> kvp in vCard._propDic)
         {
 #if !DEBUG
@@ -45,37 +53,22 @@ public sealed partial class VCard
 #endif
             Set(kvp.Key, kvp.Value switch
             {
-                XmlProperty xmlProp => xmlProp.Clone(),
-                IEnumerable<XmlProperty?> xmlPropEnumerable => xmlPropEnumerable.Select(cloner).Cast<XmlProperty?>().ToArray(),
-                ProfileProperty profProp => profProp.Clone(),
-                TextProperty txtProp => txtProp.Clone(),
-                IEnumerable<TextProperty?> txtPropEnumerable => txtPropEnumerable.Select(cloner).Cast<TextProperty?>().ToArray(),
-                DateAndOrTimeProperty dtTimeProp => dtTimeProp.Clone(),
-                IEnumerable<DateAndOrTimeProperty?> dtTimePropEnumerable => dtTimePropEnumerable.Select(cloner).Cast<DateAndOrTimeProperty?>().ToArray(),
-                AddressProperty adrProp => adrProp.Clone(),
-                IEnumerable<AddressProperty?> adrPropEnumerable => adrPropEnumerable.Select(cloner).Cast<AddressProperty?>().ToArray(),
-                NameProperty nameProp => nameProp.Clone(),
-                IEnumerable<NameProperty?> namePropEnumerable => namePropEnumerable.Select(cloner).Cast<NameProperty?>().ToArray(),
-                RelationProperty relProp => relProp.Clone(),
-                IEnumerable<RelationProperty?> relPropEnumerable => relPropEnumerable.Select(cloner).Cast<RelationProperty?>().ToArray(),
-                OrgProperty orgProp => orgProp.Clone(),
-                IEnumerable<OrgProperty?> orgPropEnumerable => orgPropEnumerable.Select(cloner).Cast<OrgProperty?>().ToArray(),
-                StringCollectionProperty strCollProp => strCollProp.Clone(),
-                IEnumerable<StringCollectionProperty?> strCollPropEnumerable => strCollPropEnumerable.Select(cloner).Cast<StringCollectionProperty?>().ToArray(),
-                GenderProperty sexProp => sexProp.Clone(),
-                IEnumerable<GenderProperty?> sexPropEnumerable => sexPropEnumerable.Select(cloner).Cast<GenderProperty?>().ToArray(),
-                GeoProperty geoProp => geoProp.Clone(),
-                IEnumerable<GeoProperty?> geoPropEnumerable => geoPropEnumerable.Select(cloner).Cast<GeoProperty?>().ToArray(),
-                DataProperty dataProp => dataProp.Clone(),
-                IEnumerable<DataProperty?> dataPropEnumerable => dataPropEnumerable.Select(cloner).Cast<DataProperty?>().ToArray(),
-                NonStandardProperty nStdProp => nStdProp.Clone(),
-                IEnumerable<NonStandardProperty?> nStdPropEnumerable => nStdPropEnumerable.Select(cloner).Cast<NonStandardProperty?>().ToArray(),
-                AppIDProperty pidMapProp => pidMapProp.Clone(),
-                IEnumerable<AppIDProperty?> pidMapPropEnumerable => pidMapPropEnumerable.Select(cloner).Cast<AppIDProperty?>().ToArray(),
-                TimeZoneProperty tzProp => tzProp.Clone(),
-                IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(cloner).Cast<TimeZoneProperty?>().ToArray(),
-
-                ICloneable cloneable => cloneable.Clone(), // AccessProperty, KindProperty, TimeStampProperty, UuidProperty
+                VCardProperty prop => prop.Clone(),
+                IEnumerable<XmlProperty?> xmlPropEnumerable => xmlPropEnumerable.Select(Cloned).Cast<XmlProperty?>().ToArray(),
+                IEnumerable<TextProperty?> txtPropEnumerable => txtPropEnumerable.Select(Cloned).Cast<TextProperty?>().ToArray(),
+                IEnumerable<DateAndOrTimeProperty?> dtTimePropEnumerable => dtTimePropEnumerable.Select(Cloned).Cast<DateAndOrTimeProperty?>().ToArray(),
+                IEnumerable<AddressProperty?> adrPropEnumerable => adrPropEnumerable.Select(Cloned).Cast<AddressProperty?>().ToArray(),
+                IEnumerable<NameProperty?> namePropEnumerable => namePropEnumerable.Select(Cloned).Cast<NameProperty?>().ToArray(),
+                IEnumerable<RelationProperty?> relPropEnumerable => relPropEnumerable.Select(Cloned).Cast<RelationProperty?>().ToArray(),
+                IEnumerable<OrgProperty?> orgPropEnumerable => orgPropEnumerable.Select(Cloned).Cast<OrgProperty?>().ToArray(),
+                IEnumerable<StringCollectionProperty?> strCollPropEnumerable => strCollPropEnumerable.Select(Cloned).Cast<StringCollectionProperty?>().ToArray(),
+                IEnumerable<GenderProperty?> sexPropEnumerable => sexPropEnumerable.Select(Cloned).Cast<GenderProperty?>().ToArray(),
+                IEnumerable<GeoProperty?> geoPropEnumerable => geoPropEnumerable.Select(Cloned).Cast<GeoProperty?>().ToArray(),
+                IEnumerable<DataProperty?> dataPropEnumerable => dataPropEnumerable.Select(Cloned).Cast<DataProperty?>().ToArray(),
+                IEnumerable<NonStandardProperty?> nStdPropEnumerable => nStdPropEnumerable.Select(Cloned).Cast<NonStandardProperty?>().ToArray(),
+                IEnumerable<AppIDProperty?> pidMapPropEnumerable => pidMapPropEnumerable.Select(Cloned).Cast<AppIDProperty?>().ToArray(),
+                IEnumerable<TimeZoneProperty?> tzPropEnumerable => tzPropEnumerable.Select(Cloned).Cast<TimeZoneProperty?>().ToArray(),
+                IEnumerable<GramProperty?> gramPropEnumerable => gramPropEnumerable.Select(Cloned).Cast<GramProperty?>().ToArray(),
 #if DEBUG
                 _ => throw new NotImplementedException()
 #endif
@@ -151,16 +144,16 @@ public sealed partial class VCard
                 case PropKeys.REV:
                     TimeStamp = new TimeStampProperty(vcfRow, info);
                     break;
-                case PropKeys.CAPURI:
+                case PropKeys.Rfc2739.CAPURI:
                     CalendarAccessUris = Concat(CalendarAccessUris, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.CALURI:
+                case PropKeys.Rfc2739.CALURI:
                     CalendarAddresses = Concat(CalendarAddresses, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.CALADRURI:
+                case PropKeys.Rfc2739.CALADRURI:
                     CalendarUserAddresses = Concat(CalendarUserAddresses, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.FBURL:
+                case PropKeys.Rfc2739.FBURL:
                     FreeOrBusyUrls = Concat(FreeOrBusyUrls, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.TITLE:
@@ -175,7 +168,7 @@ public sealed partial class VCard
                 case PropKeys.URL:
                     Urls = Concat(Urls, new TextProperty(vcfRow, Version));
                     break;
-                case PropKeys.NonStandard.CONTACT_URI:
+                case PropKeys.Rfc8605.CONTACT_URI:
                     ContactUris = Concat(ContactUris, new TextProperty(vcfRow, Version));
                     break;
                 case PropKeys.UID:
@@ -429,31 +422,47 @@ public sealed partial class VCard
                     break;
 
                 // Extensions to the vCard standard:
-                case PropKeys.NonStandard.DEATHDATE:
+                case PropKeys.Rfc6474.DEATHDATE:
                     this.DeathDateViews =
                         Concat(DeathDateViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version, info));
                     break;
-                case PropKeys.NonStandard.BIRTHPLACE:
+                case PropKeys.Rfc6474.BIRTHPLACE:
                     this.BirthPlaceViews =
                         Concat(BirthPlaceViews, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.NonStandard.DEATHPLACE:
+                case PropKeys.Rfc6474.DEATHPLACE:
                     this.DeathPlaceViews =
                         Concat(DeathPlaceViews, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.NonStandard.EXPERTISE:
+                case PropKeys.Rfc6715.EXPERTISE:
                     Expertises = Concat(Expertises, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.NonStandard.INTEREST:
+                case PropKeys.Rfc6715.INTEREST:
                     Interests = Concat(Interests, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.NonStandard.HOBBY:
+                case PropKeys.Rfc6715.HOBBY:
                     Hobbies = Concat(Hobbies, new TextProperty(vcfRow, this.Version));
                     break;
-                case PropKeys.NonStandard.ORG_DIRECTORY:
+                case PropKeys.Rfc6715.ORG_DIRECTORY:
                     OrgDirectories = Concat(OrgDirectories, new TextProperty(vcfRow, this.Version));
                     break;
+                case PropKeys.Rfc9554.CREATED:
+                    Created = new TimeStampProperty(vcfRow, info);
+                    break;
+                case PropKeys.Rfc9554.GRAMGENDER:
+                    GramGenders = Concat(GramGenders, new GramProperty(vcfRow));
+                    break;
+                case PropKeys.Rfc9554.LANGUAGE:
+                    Language = new TextProperty(vcfRow, this.Version);
+                    break;
+                case PropKeys.Rfc9554.PRONOUNS:
+                    Pronouns = Concat(Pronouns, new TextProperty(vcfRow, Version));
+                    break;
+                case PropKeys.Rfc9554.SOCIALPROFILE:
+                    SocialMediaProfiles = Concat(SocialMediaProfiles, new TextProperty(vcfRow, Version));
+                    break;
                 default:
+                    Debug.Assert(!vcfRow.Key.Equals(PropKeys.NonStandard.X_SOCIALPROFILE, StringComparison.OrdinalIgnoreCase));
                     NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
                     break;
             };//switch

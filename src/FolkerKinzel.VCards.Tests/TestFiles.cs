@@ -52,6 +52,7 @@ internal static class TestFiles
     internal static string NextCloudPhotoIssue3Txt => Path.Combine(_testFileDirectory, "NextCloudPhotoIssue3.txt");
     internal static string NextCloudPhoto3 => Path.Combine(_testFileDirectory, "NextCloudPhoto3.png");
 
+    internal static string NextCloudPhotoIssue2Txt => Path.Combine(_testFileDirectory, "NextCloudPhotoIssue2.txt");
 
     internal static string LargeFileVcf => Path.Combine(_testFileDirectory, "LargeFile.vcf");
 

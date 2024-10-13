@@ -212,7 +212,6 @@ internal sealed class DateTimeConverter
                                           dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
                 break;
         }
-
     }
 
     internal static void AppendDateTo(StringBuilder builder,

@@ -5,6 +5,7 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Syncs;
+using OneOf;
 using static FolkerKinzel.VCards.VCard;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
@@ -93,7 +94,7 @@ public sealed partial class ParameterSection
                     }
                 case ParameterKey.PID:
                     {
-                        this.PropertyIDs = PropertyID.Parse(parameter.Value.Span);
+                        this.PropertyIDs = Syncs.PropertyID.Parse(parameter.Value.Span);
                         break;
                     }
                 case ParameterKey.TYPE:
@@ -173,7 +174,7 @@ public sealed partial class ParameterSection
                         break;
                     }
                 case ParameterKey.LEVEL:
-                    if (propertyKey == VCard.PropKeys.NonStandard.EXPERTISE)
+                    if (propertyKey == VCard.PropKeys.Rfc6715.EXPERTISE)
                     {
                         Expertise? expertise =
                             ExpertiseConverter.Parse(parameter.Value.Span.Trim(TRIM_CHARS));
@@ -202,9 +203,46 @@ public sealed partial class ParameterSection
                         }
                     }//else
                     break;
-
+                case ParameterKey.Rfc9554.AUTHOR:
+                    if (Uri.TryCreate(parameter.Value.Span.Trim(TRIM_CHARS).UnMaskParameterValue(isLabel: false), UriKind.Absolute, out Uri? uri))
+                    {
+                        Author = uri;
+                    }
+                    break;
+                case ParameterKey.Rfc9554.AUTHOR_NAME:
+                    AuthorName = parameter.Value.Span.Trim(TRIM_CHARS).UnMaskParameterValue(isLabel: false);
+                    break;
+                case ParameterKey.Rfc9554.CREATED:
+                    if (info.DateAndOrTimeConverter.TryParse(parameter.Value.Span.Trim(TRIM_CHARS), out OneOf<DateOnly, DateTimeOffset> value))
+                    {
+                        if (value.IsT1)
+                        {
+                            Created = value.AsT1;
+                        }
+                    }
+                    break;
+                case ParameterKey.Rfc9554.DERIVED:
+                    Derived = parameter.Value.Span.TrimStart(TRIM_CHARS)
+                                                  .StartsWith("T", StringComparison.OrdinalIgnoreCase);
+                    break;
+                case ParameterKey.Rfc9554.PHONETIC:
+                    Phonetic = PhoneticConverter.Parse(parameter.Value.Span.Trim(TRIM_CHARS));
+                    break;
+                case ParameterKey.Rfc9554.PROP_ID:
+                    this.PropertyID = parameter.Value.Span.Trim(TRIM_CHARS).UnMaskParameterValue(isLabel: false);
+                    break;
+                case ParameterKey.Rfc9554.SCRIPT:
+                    Script = parameter.Value.Span.Trim(TRIM_CHARS).UnMaskParameterValue(isLabel: false);
+                    break;
+                case ParameterKey.Rfc9554.SERVICE_TYPE:
+                    ServiceType = parameter.Value.Span.Trim(TRIM_CHARS).UnMaskParameterValue(isLabel: false);
+                    break;
+                case ParameterKey.Rfc9554.USERNAME:
+                    UserName = parameter.Value.Span.Trim(TRIM_CHARS).UnMaskParameterValue(isLabel: false);
+                    break;
                 default:
                     {
+                        Debug.Assert(!parameter.Key.Equals(ParameterKey.NonStandard.X_SERVICE_TYPE, StringComparison.OrdinalIgnoreCase));
                         AddNonStandardParameter(in parameter);
                         break;
                     }

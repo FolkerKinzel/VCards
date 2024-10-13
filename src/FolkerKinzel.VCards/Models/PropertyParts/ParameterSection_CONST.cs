@@ -37,6 +37,24 @@ public sealed partial class ParameterSection
         internal const string INDEX = "INDEX";
         internal const string LEVEL = "LEVEL";
         internal const string CC = "CC";
+
+        internal static class Rfc9554
+        {
+            internal const string AUTHOR = "AUTHOR";
+            internal const string AUTHOR_NAME = "AUTHOR-NAME";
+            internal const string CREATED = "CREATED";
+            internal const string DERIVED = "DERIVED";
+            internal const string PHONETIC = "PHONETIC";
+            internal const string PROP_ID = "PROP-ID";
+            internal const string SCRIPT = "SCRIPT";
+            internal const string SERVICE_TYPE = "SERVICE-TYPE";
+            internal const string USERNAME = "USERNAME";
+        }
+
+        internal static class NonStandard
+        {
+            internal const string X_SERVICE_TYPE = "X-SERVICE-TYPE";
+        }
     }
 
     internal static class TypeValue

@@ -35,7 +35,7 @@ public readonly struct TextSingletonBuilder
     }
 
     /// <summary>
-    /// Edits the content of the specified property with a delegate and 
+    /// Edits the content of the specified <see cref="VCard"/> property with a delegate and 
     /// allows to pass <paramref name="data"/> to this delegate.
     /// </summary>
     /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
@@ -53,21 +53,21 @@ public readonly struct TextSingletonBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TData>(Func<TextProperty?, TData, TextProperty?> func, TData data)
     {
-        var prop = Builder.VCard.Get<TextProperty?>(_prop);
+        TextProperty? prop = Builder.VCard.Get<TextProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Set(_prop, func.Invoke(prop, data));
         return _builder;
     }
 
     /// <summary>
-    /// Edits the content of the specified property with a delegate.
+    /// Edits the content of the specified <see cref="VCard"/> property with a delegate.
     /// </summary>
     /// <param name="func">
     /// A function called with the content of the 
-    /// specified property as argument. Its return value will be the new content of the 
-    /// specified property.
+    /// specified <see cref="VCard"/> property as argument. Its return value will be the new content of the 
+    /// specified <see cref="VCard"/> property.
     /// An <see cref="Action{T}"/> delegate that's invoked with the 
-    /// content of the specified property as argument.</param>
+    /// content of the specified <see cref="VCard"/> property as argument.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="TextSingletonBuilder"/> to be able to chain calls.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
@@ -82,7 +82,7 @@ public readonly struct TextSingletonBuilder
     }
 
     /// <summary>
-    /// Sets the specified property to a <see cref="TextProperty"/> instance that is newly 
+    /// Sets the specified <see cref="VCard"/> property to a <see cref="TextProperty"/> instance that is newly 
     /// initialized from a <see cref="string"/>.
     /// </summary>
     /// <param name="value">A <see cref="string" /> or <c>null</c>.</param>

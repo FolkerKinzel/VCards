@@ -1,5 +1,6 @@
 using System.Collections;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
@@ -22,10 +23,24 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="NameProperty.ToDisplayName"/>
 public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 {
-    /// <summary>Copy ctor.</summary>
-    /// <param name="prop">The <see cref="NameProperty"/> instance to clone.</param>
-    private NameProperty(NameProperty prop) : base(prop)
-        => Value = prop.Value;
+    #region Remove this code with version 8.0.0
+
+    /// <summary>Formats the data encapsulated by the instance into a human-readable
+    /// form.</summary>
+    /// <returns>The data encapsulated by the instance in human-readable form
+    /// or <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
+    /// <remarks>
+    /// The method takes only the properties defined in RFC 6350 into account:
+    /// <list type="bullet">
+    /// <item><see cref="Name.Prefixes"/></item>
+    /// <item><see cref="Name.GivenNames"/></item>
+    /// <item><see cref="Name.AdditionalNames"/></item>
+    /// <item><see cref="Name.FamilyNames"/></item>
+    /// <item><see cref="Name.Suffixes"/></item>
+    /// </list>
+    /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public string? ToDisplayName() => Value.ToDisplayName();
 
     /// <summary>  Initializes a new <see cref="NameProperty" /> object. </summary>
     /// <param name="familyNames">Family Names (also known as surnames)</param>
@@ -36,6 +51,12 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <remarks>
+    /// <note type="tip">
+    /// It's recommended to use the constructor overload that takes a <see cref="NameBuilder"/>
+    /// as argument.
+    /// </note>
+    /// </remarks>
     /// <seealso cref="ToDisplayName" />
     public NameProperty(
         IEnumerable<string?>? familyNames = null,
@@ -61,6 +82,12 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <remarks>
+    /// <note type="tip">
+    /// It's recommended to use the constructor overload that takes a <see cref="NameBuilder"/>
+    /// as argument.
+    /// </note>
+    /// </remarks>
     /// <seealso cref="ToDisplayName" />
     public NameProperty(
         string? familyName,
@@ -76,6 +103,30 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
                          prefixes: ReadOnlyCollectionConverter.ToReadOnlyCollection(prefix),
                          suffixes: ReadOnlyCollectionConverter.ToReadOnlyCollection(suffix));
     }
+
+    #endregion
+
+    /// <summary>
+    /// Initializes a new <see cref="NameProperty"/> instance with the content of a 
+    /// specified <see cref="NameBuilder"/>.
+    /// </summary>
+    /// <param name="builder">The <see cref="NameBuilder"/> whose content is used.</param>
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
+    /// <seealso cref="ToDisplayName" />
+    public NameProperty(NameBuilder builder, string? group = null) 
+        : base(new ParameterSection(), group)
+    {
+        _ArgumentNullException.ThrowIfNull(builder, nameof(builder));
+        Value = new Name(builder);
+    }
+
+    /// <summary>Copy ctor.</summary>
+    /// <param name="prop">The <see cref="NameProperty"/> instance to clone.</param>
+    private NameProperty(NameProperty prop) : base(prop)
+        => Value = prop.Value;
 
     internal NameProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
@@ -103,13 +154,6 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
     /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;
-
-    /// <summary>Formats the data encapsulated by the instance into a human-readable
-    /// form.</summary>
-    /// <returns>The data encapsulated by the instance in human-readable form
-    /// or <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string? ToDisplayName() => Value.ToDisplayName();
 
     /// <inheritdoc />
     public override object Clone() => new NameProperty(this);
@@ -144,5 +188,5 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal override void AppendValue(VcfSerializer serializer)
-        => Value.AppendVCardString(serializer);
+        => Value.AppendVcfString(serializer);
 }

@@ -6,26 +6,26 @@ internal static class RelConverter
 {
     private static class RelationTypeValue
     {
-        internal const string CONTACT = "CONTACT";
-        internal const string ACQUAINTANCE = "ACQUAINTANCE";
-        internal const string FRIEND = "FRIEND";
-        internal const string MET = "MET";
-        internal const string CO_WORKER = "CO-WORKER";
-        internal const string COLLEAGUE = "COLLEAGUE";
-        internal const string CO_RESIDENT = "CO-RESIDENT";
-        internal const string NEIGHBOR = "NEIGHBOR";
-        internal const string CHILD = "CHILD";
-        internal const string PARENT = "PARENT";
-        internal const string SIBLING = "SIBLING";
-        internal const string SPOUSE = "SPOUSE";
-        internal const string KIN = "KIN";
-        internal const string MUSE = "MUSE";
-        internal const string CRUSH = "CRUSH";
-        internal const string DATE = "DATE";
-        internal const string SWEETHEART = "SWEETHEART";
-        internal const string ME = "ME";
-        internal const string AGENT = "AGENT";
-        internal const string EMERGENCY = "EMERGENCY";
+        internal const string CONTACT = "contact";
+        internal const string ACQUAINTANCE = "acquaintance";
+        internal const string FRIEND = "friend";
+        internal const string MET = "met";
+        internal const string CO_WORKER = "co-worker";
+        internal const string COLLEAGUE = "colleague";
+        internal const string CO_RESIDENT = "co-resident";
+        internal const string NEIGHBOR = "neighbor";
+        internal const string CHILD = "child";
+        internal const string PARENT = "parent";
+        internal const string SIBLING = "sibling";
+        internal const string SPOUSE = "spouse";
+        internal const string KIN = "kin";
+        internal const string MUSE = "muse";
+        internal const string CRUSH = "crush";
+        internal const string DATE = "date";
+        internal const string SWEETHEART = "sweetheart";
+        internal const string ME = "me";
+        internal const string AGENT = "agent";
+        internal const string EMERGENCY = "emergency";
     }
 
     internal const Rel DEFINED_RELATION_TYPES_VALUES = Rel.Contact
