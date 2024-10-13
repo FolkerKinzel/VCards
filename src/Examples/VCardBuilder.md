@@ -13,12 +13,18 @@ See an example how `VCardBuilder` can be used:
 ```csharp
 VCard vCard = VCardBuilder
     .Create()
-    .NameViews.Add(familyNames: ["Müller-Risinowsky"],
-                   givenNames: ["Käthe"],
-                   additionalNames: ["Alexandra", "Caroline"],
-                   prefixes: ["Prof.", "Dr."],
-                   displayName: (displayNames, name) => displayNames.Add(name.ToDisplayName())
-                  )
+    .NameViews.Add(NameBuilder
+        .Create()
+        .AddPrefix("Prof.")
+        .AddPrefix("Dr.")
+        .AddGivenName("Käthe")
+        .AddAdditionalName("Alexandra")
+        .AddAdditionalName("Caroline")
+        .AddFamilyName("Müller-Risinowsky")
+        .AddGeneration("II."),
+         parameters: p => p.Language = "de-DE",
+         group: vc => vc.NewGroup())
+    .NameViews.ToDisplayNames(NameFormatter.Default)
     .GenderViews.Add(Sex.Female)
     .Organizations.Add("Millers Company", ["C#", "Webdesign"])
     .Titles.Add("CEO")
@@ -44,16 +50,23 @@ VCard vCard = VCardBuilder
     // Specifying the country helps to format this label correctly.
     // Applying a group name to the AddressProperty helps to automatically preserve its Label,
     // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
-    .Addresses.Add("Friedrichstraße 22", "Berlin", null, "10117", "Germany",
-                    parameters: p =>
-                    {
-                        p.PropertyClass = PCl.Work;
-                        p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel;
-                        p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
-                        p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
-                    },
-                    group: vc => vc.NewGroup()
+    .Addresses.Add(AddressBuilder
+        .Create()
+        .AddStreetName("Friedrichstraße")
+        .AddStreetNumber("22")
+        .AddLocality("Berlin")
+        .AddPostalCode("10117")
+        .AddCountry("Germany"),
+         parameters: p =>
+         {
+             p.PropertyClass = PCl.Work;
+             p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel|Adr.Billing|Adr.Delivery;
+             p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
+             p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
+         },
+         group: vc => vc.NewGroup()
                   )
+    .Addresses.AttachLabels(AddressFormatter.Default)
     .EMails.Add("kaethe_mueller@internet.com", parameters: p => p.PropertyClass = PCl.Work)
     .EMails.Add("mailto:kaethe_at_home@internet.com",
                  parameters: p =>
@@ -63,10 +76,27 @@ VCard vCard = VCardBuilder
                  }
                )
     .EMails.SetPreferences()
+    .Messengers.Add("https://wd.me/0123456789",
+                    parameters: p => p.ServiceType = "WhatsDown")
+    .SocialMediaProfiles.Add("https://y.com/Semaphore",
+                              parameters: p =>
+                              {
+                                  p.UserName = "Semaphore";
+                                  p.ServiceType = "Y";
+                              }
+                            )
     .BirthDayViews.Add(1984, 3, 28)
     .Relations.Add("Paul Müller-Risinowsky",
                    Rel.Spouse | Rel.CoResident | Rel.Colleague
                   )
     .AnniversaryViews.Add(2006, 7, 14)
+    .Notes.Add("Very experienced in Blazor.",
+                parameters: p =>
+                {
+                    p.Created = DateTimeOffset.Now;
+                    p.Author = new Uri("https://www.microsoft.com/");
+                    p.AuthorName = "Satya Nadella";
+                }
+              )
     .VCard;
 ```

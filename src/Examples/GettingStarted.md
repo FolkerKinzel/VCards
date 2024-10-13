@@ -18,19 +18,22 @@ Read here:
 public static void WritingAndReadingVCard(string filePath)
 {
     VCard vCard = VCardBuilder
-      .Create()
-      .NameViews.Add(familyName: "Sonntag",
-                     givenName: "Susi"
-                    )
-      .GenderViews.Add(Sex.Female)
-      .Phones.Add("+49-321-1234567",
-                   parameters: p =>  p.PhoneType = Tel.Cell
-                 )
-      .EMails.Add("susi@contoso.com")
-      .EMails.Add("susi@home.de")
-      .EMails.SetPreferences()
-      .BirthDayViews.Add(1984, 3, 28)
-      .VCard;
+            .Create()
+            .NameViews.Add(NameBuilder
+                .Create()
+                .AddGivenName("Susi")
+                .AddFamilyName("Sonntag")
+                          )
+            .NameViews.ToDisplayNames(NameFormatter.Default)
+            .GenderViews.Add(Sex.Female)
+            .Phones.Add("+49-321-1234567",
+                         parameters: p =>  p.PhoneType = Tel.Cell
+                       )
+            .EMails.Add("susi@contoso.com")
+            .EMails.Add("susi@home.de")
+            .EMails.SetPreferences()
+            .BirthDayViews.Add(1984, 3, 28)
+            .VCard;
 
     // Save vCard as vCard 3.0:
     // (You don't need to specify the version: Version 3.0 is the default.)
@@ -49,8 +52,8 @@ The VCF file the method creates is:
 ```
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-05-11T09:18:56Z
-UID:207ad3f4-6607-4b19-9411-f0bccbab471c
+REV:2024-10-12T14:10:09Z
+UID:27d7b637-b806-430a-a345-d6604406fec8
 FN:Susi Sonntag
 N:Sonntag;Susi;;;
 X-GENDER:Female
