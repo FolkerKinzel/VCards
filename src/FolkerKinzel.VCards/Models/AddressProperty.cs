@@ -204,6 +204,11 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// Initializes a new <see cref="AddressProperty"/> instance with the content of a 
     /// specified <see cref="AddressBuilder"/>.
     /// </summary>
+    /// <remarks>
+    /// <note type="caution">
+    /// The constructor does not <see cref="AddressBuilder.Clear"/> the <see cref="AddressBuilder"/>.
+    /// </note>
+    /// </remarks>
     /// <param name="builder">The <see cref="AddressBuilder"/> whose content is used.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>

@@ -194,7 +194,7 @@ public sealed class NameBuilder
     internal IEnumerable<KeyValuePair<NameProp, List<string>>> Data => _dic;
 
     /// <summary>
-    /// Clears every content of the <see cref="NameBuilder"/> instance but keeps the 
+    /// Clears each content of the <see cref="NameBuilder"/> instance but keeps the 
     /// allocated memory for reuse.
     /// </summary>
     /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>

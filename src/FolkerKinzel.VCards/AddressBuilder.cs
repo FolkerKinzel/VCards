@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 namespace FolkerKinzel.VCards;
 
 /// <summary>
-/// Collects the data used to initialize a <see cref="Models.AddressProperty"></see> instance.
+/// Collects the data used to initialize an <see cref="Models.AddressProperty"></see> instance.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -490,7 +490,7 @@ public sealed class AddressBuilder
     internal IEnumerable<KeyValuePair<AdrProp, List<string>>> Data => _dic;
 
     /// <summary>
-    /// Clears every content of the <see cref="AddressBuilder"/> instance but keeps the 
+    /// Clears each content of the <see cref="AddressBuilder"/> instance but keeps the 
     /// allocated memory for reuse.
     /// </summary>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>

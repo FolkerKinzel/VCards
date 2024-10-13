@@ -110,6 +110,11 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// Initializes a new <see cref="NameProperty"/> instance with the content of a 
     /// specified <see cref="NameBuilder"/>.
     /// </summary>
+    /// <remarks>
+    /// <note type="caution">
+    /// The constructor does not <see cref="NameBuilder.Clear"/> the <see cref="NameBuilder"/>.
+    /// </note>
+    /// </remarks>
     /// <param name="builder">The <see cref="NameBuilder"/> whose content is used.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>

@@ -238,10 +238,10 @@ repeat:
     /// </remarks>
     public ReadOnlyCollection<string> Suffixes => _suffixesView;
 
-    /// <summary>A secondary surname (used in some cultures), also known as "maternal surname". (4 - RFC 9554)</summary>
+    /// <summary>Secondary surnames (used in some cultures), also known as "maternal surnames". (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Surnames2 => Get(NameProp.Surnames2);
 
-    /// <summary>A generation marker or qualifier, e.g., "Jr." or "III". (4 - RFC 9554)</summary>
+    /// <summary>Generation markers or qualifiers, e.g., "Jr." or "III". (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Generations => Get(NameProp.Generations);
 
     /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain

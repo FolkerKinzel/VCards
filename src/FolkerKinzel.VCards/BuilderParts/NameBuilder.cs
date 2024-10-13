@@ -150,11 +150,6 @@ public readonly struct NameBuilder
     /// Use the method overload that takes a <see cref="FolkerKinzel.VCards.NameBuilder"/> as argument.
     /// </note>
     /// </remarks>
-    /// 
-    /// <example>
-    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
-    /// </example>
-    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(IEnumerable<string?>? familyNames = null,
@@ -251,6 +246,13 @@ public readonly struct NameBuilder
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameBuilder"/> to 
     /// be able to chain calls.</returns>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
+    /// 
+    /// <seealso cref="VCards.NameBuilder"/>
+    /// 
     /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -293,6 +295,10 @@ public readonly struct NameBuilder
     /// Empty <see cref="NameProperty"/> instances will be skipped.
     /// </para>
     /// </remarks>
+    /// 
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCardExample.cs"/>
+    /// </example>
     /// 
     /// <seealso cref="NameFormatter"/>
     /// 
