@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Formatters;
 
-internal class DefaultAddressFormatter : IAddressFormatter
+internal sealed class DefaultAddressFormatter : IAddressFormatter
 {
     public string? ToLabel(AddressProperty addressProperty)
     {

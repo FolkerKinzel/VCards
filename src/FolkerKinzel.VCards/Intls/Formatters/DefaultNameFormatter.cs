@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Formatters;
 
-internal class DefaultNameFormatter : INameFormatter
+internal sealed class DefaultNameFormatter : INameFormatter
 {
     public string? ToDisplayName(NameProperty nameProperty, VCard vCard)
     {

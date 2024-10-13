@@ -57,7 +57,8 @@
 <NamespaceSummaryItem name="FolkerKinzel.VCards.Extensions" isDocumented="True">Contains extension methods.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.BuilderParts" isDocumented="True">Contains structs instantiated by VCardBuilder. You don't need to publish this namespace.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.Enums" isDocumented="True">Contains enums.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="FolkerKinzel.VCards.Syncs" isDocumented="True">Contains classes that support the vCard 4.0 data synchronization. You don't need to publish this namespace.</NamespaceSummaryItem></NamespaceSummaries>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Syncs" isDocumented="True">Contains classes that support the vCard 4.0 data synchronization. You don't need to publish this namespace.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Formatters" isDocumented="True">Contains types used to format names and postal addresses into localized strings.</NamespaceSummaryItem></NamespaceSummaries>
     <VisibleItems>ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, ProtectedInternalAsProtected, NonBrowsable</VisibleItems>
     <RootNamespaceTitle>FolkerKinzel.VCards Namespaces</RootNamespaceTitle>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>

@@ -15,7 +15,7 @@ namespace FolkerKinzel.VCards;
 /// </para>
 /// <threadsafety static="true" instance="false"/>
 /// </remarks>
-public class AddressBuilder
+public sealed class AddressBuilder
 {
     private readonly Dictionary<AdrProp, List<string>> _dic = [];
 

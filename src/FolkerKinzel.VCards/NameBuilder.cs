@@ -15,7 +15,7 @@ namespace FolkerKinzel.VCards;
 /// </para>
 /// <threadsafety static="true" instance="false"/>
 /// </remarks>
-public class NameBuilder
+public sealed class NameBuilder
 {
     private readonly Dictionary<NameProp, List<string>> _dic = [];
     private List<string>? _worker;
