@@ -1021,7 +1021,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
                 AppendParameter(ParaKey.Rfc9554.SERVICE_TYPE, serviceType, escapedAndQuoted: true);
             }
 
-            if (writeRfc9554 && ParaSection.UserName is string userName)
+            if (ParaSection.UserName is string userName)
             {
                 AppendParameter(ParaKey.Rfc9554.USERNAME, userName, escapedAndQuoted: true);
             }

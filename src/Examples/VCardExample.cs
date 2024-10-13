@@ -69,7 +69,7 @@ public static class VCardExample
                     .AddGeneration("II."),
                      parameters: p => p.Language = "de-DE",
                      group: vc => vc.NewGroup())
-                .NameViews.FormatToDisplayNames(NameFormatter.Default)
+                .NameViews.ToDisplayNames(NameFormatter.Default)
                 .GenderViews.Add(Sex.Female)
                 .Organizations.Add("Millers Company", ["C#", "Webdesign"])
                 .Titles.Add("CEO")

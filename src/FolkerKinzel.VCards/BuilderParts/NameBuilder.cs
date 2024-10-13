@@ -280,6 +280,7 @@ public readonly struct NameBuilder
     /// <remarks>
     /// <para>
     /// The <see cref="NameProperty"/> instances are processed ordered by their <see cref="ParameterSection.Preference"/> value.
+    /// Empty <see cref="NameProperty"/> instances will be skipped.
     /// If a <see cref="TextProperty"/> instance that is not empty and has the same <see cref="ParameterSection.Language"/>
     /// is still in <see cref="VCard.DisplayNames"/>, the corresponding <see cref="NameProperty"/> instance will be skipped.
     /// </para>
@@ -298,8 +299,7 @@ public readonly struct NameBuilder
     /// <exception cref="ArgumentNullException"><paramref name="nameFormatter"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-
-    public VCardBuilder FormatToDisplayNames(INameFormatter nameFormatter)
+    public VCardBuilder ToDisplayNames(INameFormatter nameFormatter)
     {
         VCard vc = Builder.VCard;
         _ArgumentNullException.ThrowIfNull(nameFormatter, nameof(nameFormatter));
@@ -311,13 +311,11 @@ public readonly struct NameBuilder
             return _builder;
         }
 
-        IEnumerable<TextProperty> displayNames = vc.DisplayNames?.WhereNotEmpty() ?? [];
-
         foreach (NameProperty nameProp in names.OrderByPref())
         {
             string? language = nameProp.Parameters.Language;
 
-            if (displayNames.Any(x => x.Parameters.Language == language))
+            if (vc.DisplayNames?.WhereNotEmpty().Any(x => x.Parameters.Language == language) ?? false)
             {
                 continue;
             }

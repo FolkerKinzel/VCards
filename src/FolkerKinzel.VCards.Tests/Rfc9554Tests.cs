@@ -111,8 +111,10 @@ public class Rfc9554Tests
         VCard vc = VCardBuilder
             .Create()
             .SocialMediaProfiles.Add("https:www.x.com/y", p => { p.ServiceType = "X"; p.UserName = "Y"; })
+            .SocialMediaProfiles.Add("https:www.x.com/z", p => { p.ServiceType = "X"; p.UserName = "Z"; p.DataType = Data.Uri; })
             .SocialMediaProfiles.Add("Y", p => { p.ServiceType = "X"; p.UserName = "Y"; p.DataType = Data.Text; })
             .SocialMediaProfiles.SetPreferences()
+            .SocialMediaProfiles.Edit(p => p.Append(null))
             .VCard;
 
         Serialize(vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2);
@@ -166,34 +168,38 @@ public class Rfc9554Tests
         vc = Vcf.Parse(v4)[0];
 
         Assert.IsNotNull(vc.SocialMediaProfiles);
-        Assert.AreEqual(2, vc.SocialMediaProfiles.Count());
+        Assert.AreEqual(3, vc.SocialMediaProfiles.Count());
         Assert.IsTrue(vc.SocialMediaProfiles.All(x => x?.Parameters.ServiceType is not null && x.Parameters.Preference < 100));
         Assert.IsTrue(vc.SocialMediaProfiles.Any(x => x?.Parameters.DataType == Data.Text));
         Assert.IsTrue(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y")));
+        Assert.IsTrue(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z")));
 
         vc = Vcf.Parse(v4WithoutRfc9554)[0];
 
         Assert.IsNotNull(vc.SocialMediaProfiles);
-        Assert.AreEqual(2, vc.SocialMediaProfiles.Count());
+        Assert.AreEqual(3, vc.SocialMediaProfiles.Count());
         Assert.IsTrue(vc.SocialMediaProfiles.All(x => x?.Parameters.ServiceType is not null && x.Parameters.Preference < 100));
         Assert.IsTrue(vc.SocialMediaProfiles.Any(x => x?.Parameters.DataType == Data.Text));
         Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y")));
+        Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z")));
 
         vc = Vcf.Parse(v3)[0];
 
         Assert.IsNotNull(vc.SocialMediaProfiles);
-        Assert.AreEqual(2, vc.SocialMediaProfiles.Count());
+        Assert.AreEqual(3, vc.SocialMediaProfiles.Count());
         Assert.IsTrue(vc.SocialMediaProfiles.All(x => x?.Parameters.ServiceType is not null));
         Assert.IsTrue(vc.SocialMediaProfiles.Any(x => x?.Parameters.DataType == Data.Text));
         Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y")));
+        Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z")));
 
         vc = Vcf.Parse(v2)[0];
 
         Assert.IsNotNull(vc.SocialMediaProfiles);
-        Assert.AreEqual(1, vc.SocialMediaProfiles.Count());
+        Assert.AreEqual(2, vc.SocialMediaProfiles.Count());
         Assert.IsTrue(vc.SocialMediaProfiles.All(x => x?.Parameters.ServiceType is not null));
         Assert.IsFalse(vc.SocialMediaProfiles.Any(x => x?.Parameters.DataType == Data.Text));
         Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y")));
+        Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z")));
     }
 
     [TestMethod]

@@ -1094,7 +1094,7 @@ public class VCardBuilderTests
                             parameters: p => p.Language = "en",
                             group: vc => "gr1"
                             )
-            .NameViews.FormatToDisplayNames(NameFormatter.Default)
+            .NameViews.ToDisplayNames(NameFormatter.Default)
             .NameViews.Add(NameBuilder.Create().AddFamilyName("Müller").AddGivenName("Johann"),
                            parameters: p => p.Language = "de")
             .VCard;

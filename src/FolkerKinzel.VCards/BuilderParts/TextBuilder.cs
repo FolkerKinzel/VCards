@@ -136,7 +136,7 @@ public readonly struct TextBuilder
     public VCardBuilder Edit<TData>(
         Func<IEnumerable<TextProperty>, TData, IEnumerable<TextProperty?>?> func, TData data)
     {
-        var props = GetProperty();
+        IEnumerable<TextProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func.Invoke(props, data));
         return _builder;
@@ -157,7 +157,7 @@ public readonly struct TextBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<TextProperty>, IEnumerable<TextProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<TextProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func.Invoke(props));
         return _builder;

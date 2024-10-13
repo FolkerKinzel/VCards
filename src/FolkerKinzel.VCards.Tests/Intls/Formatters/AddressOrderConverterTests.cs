@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Formatters;
 using FolkerKinzel.VCards.Models;
 
-namespace FolkerKinzel.VCards.Intls.Converters.Tests;
+namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
 
 [TestClass]
 public class AddressOrderConverterTests

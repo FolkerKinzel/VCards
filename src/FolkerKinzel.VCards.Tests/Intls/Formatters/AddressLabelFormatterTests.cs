@@ -1,9 +1,10 @@
 ﻿using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Tests;
-namespace FolkerKinzel.VCards.Intls.Converters.Tests;
+
+namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
 
 [TestClass]
-public class AddressToLabelConverterTests
+public class AddressLabelFormatterTests
 {
     [TestMethod]
     public void ToLabelTest1()
@@ -126,6 +127,16 @@ public class AddressToLabelConverterTests
         StringAssert.Contains(label, city);
         StringAssert.Contains(label, street);
         Assert.IsFalse(label.HasEmptyLine());
+    }
+
+    [TestMethod]
+    public void ToLabelTest5c()
+    { 
+        var address = new AddressProperty(AddressBuilder.Create());
+#pragma warning disable CS0618 // Type or member is obsolete
+        string? label = address.Value.ToLabel();
+#pragma warning restore CS0618 // Type or member is obsolete
+        Assert.IsNull(label);
     }
 
     [TestMethod]
