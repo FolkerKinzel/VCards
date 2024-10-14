@@ -32,11 +32,6 @@
 and let it store as string[]
 
 &nbsp;
-- [ ] `VCard` properties: Don't allow `null` values in collections anymore.
-- [ ] `VCard.Reference` properties: Don't allow `null` values in collections anymore.
-- [ ] `VCard.Dereference` properties: Don't allow `null` values in collections anymore.
-- [ ] `Vcf` methods: Don't allow `null` values in collections anymore.
-- [ ] `IEnumerableExtension`: Don't allow `null` values in collections anymore.
 - [ ] `NameProperty`: Allow only ctors that take a `NamePropertyBuilder` as argument.
 - [ ] `AddressProperty`: Allow only ctors that take an `AddressPropertyBuilder` as argument
 
@@ -48,6 +43,16 @@ and let it store as string[]
 - [ ] Rename the `Prop.TimeStamp` property to `Prop.Updated`
 - [ ] Rename the `VCard.Languages` property to `SpokenLanguages`
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
+
+### 7.4.0
+- [ ] `X-ABLabel` to `VCard.ABLabels` property [from Apple Address Book]
+       https://www.w3.org/2002/12/cal/vcard-notes.html and https://datatracker.ietf.org/doc/html/rfc9555#name-x-ablabel
+- [ ] Add `X-ABLabel` to the documentation of the `VCard.NonStandards` property
+- [ ] Update `ParameterSerializer.AppendNonStandardParameters` to ignore `X-ABLabel`
+- [ ] - [ ] - [ ] Implement RFC 9554 (partially):
+    - [ ] `JSPROP` to `VCard.JSContactProps`
+    - [ ] `JSCOMPS` to `ParameterSection.xxxxxxx`
+    - [ ] `JSPTR` to `ParameterSection.xxxxxxx`
 
 
 ### 7.3.0
