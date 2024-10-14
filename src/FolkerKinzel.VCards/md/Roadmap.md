@@ -49,7 +49,7 @@ and let it store as string[]
        https://www.w3.org/2002/12/cal/vcard-notes.html and https://datatracker.ietf.org/doc/html/rfc9555#name-x-ablabel
 - [ ] Add `X-ABLabel` to the documentation of the `VCard.NonStandards` property
 - [ ] Update `ParameterSerializer.AppendNonStandardParameters` to ignore `X-ABLabel`
-- [ ] - [ ] - [ ] Implement RFC 9554 (partially):
+- [ ] Implement RFC 9554 (partially):
     - [ ] `JSPROP` to `VCard.JSContactProps`
     - [ ] `JSCOMPS` to `ParameterSection.xxxxxxx`
     - [ ] `JSPTR` to `ParameterSection.xxxxxxx`
