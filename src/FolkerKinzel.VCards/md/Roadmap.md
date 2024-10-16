@@ -48,14 +48,20 @@ and let it store as string[]
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
 ### 7.4.0
-- [ ] `X-ABLabel` to `VCard.ABLabels` property [from Apple Address Book]
+- [ ] Implement in VCard: `IEnumerable<TextProperty?>? ABLabels {get; set;}`  (`X-ABLabel` from Apple Address Book)
        https://www.w3.org/2002/12/cal/vcard-notes.html and https://datatracker.ietf.org/doc/html/rfc9555#name-x-ablabel
+- [ ] Implement in `VCardBuilder`: `TextBuilder ABLabels { get; }
 - [ ] Add `X-ABLabel` to the documentation of the `VCard.NonStandards` property
 - [ ] Update `ParameterSerializer.AppendNonStandardParameters` to ignore `X-ABLabel`
-- [ ] Implement RFC 9554 (partially):
-    - [ ] `JSPROP` to `VCard.JSContactProps`
-    - [ ] `JSCOMPS` to `ParameterSection.xxxxxxx`
-    - [ ] `JSPTR` to `ParameterSection.xxxxxxx`
+
+&nbsp;
+- [ ] Implement RFC 9555 (partially):
+    - [ ] Add enum value `Opts.WriteRfc9555Extensions` 
+    - [ ] Implement in `VCard`: `IEnumerable<TextProperty?>? JSContactProps { get; set; }` (`JSPROP`)
+    - [ ] Implement in `ParameterSection`: `string? JSContactOrder { get; set; }` (`JSCOMPS`)
+    - [ ] Implement in `ParameterSection`: `string? JsonPointer { get; set; }` (`JSPTR`)
+    - [ ] Change `DefaultNameFormatter` to respect `ParameterSection.JSContactOrder`
+    - [ ] Change `DefaultAddressFormatter` to respect `ParameterSection.JSContactOrder`
 
 
 ### 7.3.0
