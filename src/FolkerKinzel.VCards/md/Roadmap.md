@@ -40,8 +40,11 @@ and let it store as string[]
 - [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
 - [ ] Rename the `VCardBuilder.TimeStamp` property to `VCardBuilder.Updated`
-- [ ] Rename the `Prop.TimeStamp` property to `Prop.Updated`
+- [ ] Rename the `Prop.TimeStamp` value to `Prop.Updated`
+- [ ] Rename the `setTimeStamp` parameter in the `VCard` ctor to `setUpdated`
+- [ ] Rename the `setTimeStamp` parameter in `VCardBuilder.Create(bool, bool)` to `setUpdated`
 - [ ] Rename the `VCard.Languages` property to `SpokenLanguages`
+- [ ] Rename the `Prop.Languages` value to `Prop.SpokenLanguages`
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
 ### 7.4.0
