@@ -777,7 +777,7 @@ internal abstract class VcfSerializer : IDisposable
 
                 if (vcdName is not null)
                 {
-                    name = vcdName.ToDisplayName();
+                    name = NameFormatter.Default.ToDisplayName(vcdName, spousesVCard);
                 }
                 else
                 {

@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Formatters;
 
+[Obsolete()]
 internal static class DisplayNameFormatter
 {
     internal static string? ToDisplayName(Name name)

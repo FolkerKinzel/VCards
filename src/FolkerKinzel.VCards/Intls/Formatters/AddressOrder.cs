@@ -1,4 +1,4 @@
-namespace FolkerKinzel.VCards.Intls.Enums;
+namespace FolkerKinzel.VCards.Intls.Formatters;
 
 internal enum AddressOrder
 {

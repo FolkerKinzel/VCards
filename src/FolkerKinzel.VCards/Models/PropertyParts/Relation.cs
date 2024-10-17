@@ -81,12 +81,15 @@ public sealed class Relation
         str = Convert(
             static s => s,
             static vc => vc.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value ??
-                          vc.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true)?.ToDisplayName() ??
-                          vc.Organizations?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value.OrganizationName,
+                         ToDisplayName(vc.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true), vc) ??
+                         vc.Organizations?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value.OrganizationName,
             static guid => null,
             static uri => uri.ToString()
             );
         return str is not null;
+
+        static string? ToDisplayName(NameProperty? nameProperty, VCard vCard)
+            => nameProperty is null ? null :  NameFormatter.Default.ToDisplayName(nameProperty, vCard);
     }
 
     /// <summary>

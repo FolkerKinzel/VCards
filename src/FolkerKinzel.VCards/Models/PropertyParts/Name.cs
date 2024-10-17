@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
@@ -43,6 +44,8 @@ public sealed class Name
     /// </list>
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use NameFormatter instead.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public string? ToDisplayName() => DisplayNameFormatter.ToDisplayName(this);
 
     private void Add(NameProp prop, ReadOnlyCollection<string> coll)

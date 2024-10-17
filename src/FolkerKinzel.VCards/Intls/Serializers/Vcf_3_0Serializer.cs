@@ -134,7 +134,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
             if (name is not null)
             {
-                displayName = new TextProperty(name.ToDisplayName(), name.Group);
+                displayName = new TextProperty(NameFormatter.Default.ToDisplayName(name, this.VCardToSerialize), name.Group);
                 displayName.Parameters.Assign(name.Parameters);
             }
         }

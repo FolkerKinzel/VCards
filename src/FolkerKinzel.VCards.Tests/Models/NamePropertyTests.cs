@@ -73,6 +73,7 @@ public class NamePropertyTests
     }
 
     [TestMethod]
+    [Obsolete]
     public void ToDisplayNameTest1()
     {
         var name = new NameProperty(LAST_NAME, FIRST_NAME, MIDDLE_NAME, PREFIX, SUFFIX);
@@ -83,6 +84,7 @@ public class NamePropertyTests
     }
 
     [TestMethod]
+    [Obsolete]
     public void ToDisplayNameTest2()
     {
         var name = new NameProperty(LAST_NAME, FIRST_NAME);
@@ -93,6 +95,7 @@ public class NamePropertyTests
     }
 
     [TestMethod]
+    [Obsolete]
     public void ToDisplayNameTest3()
     {
         var name = new NameProperty((string?) null, FIRST_NAME);
@@ -103,6 +106,7 @@ public class NamePropertyTests
     }
 
     [TestMethod]
+    [Obsolete]
     public void ToDisplayNameTest4()
     {
         var name = new NameProperty();

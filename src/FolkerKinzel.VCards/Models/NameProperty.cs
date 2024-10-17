@@ -1,4 +1,5 @@
 using System.Collections;
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
@@ -40,6 +41,8 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// </list>
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use NameFormatter instead.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public string? ToDisplayName() => Value.ToDisplayName();
 
     /// <summary>  Initializes a new <see cref="NameProperty" /> object. </summary>
