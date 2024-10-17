@@ -298,7 +298,7 @@ public class V2Tests
     [TestMethod]
     public void LineWrappingTest1()
     {
-        var bytes = Enumerable.Range(0 - 255, 255).Select(x => (byte)x).ToArray();
+        byte[] bytes = Enumerable.Range(0 - 255, 255).Select(x => (byte)x).ToArray();
         var agent = new VCard
         {
             DisplayNames = new TextProperty("007"),
@@ -417,7 +417,7 @@ public class V2Tests
             TEL;WORK;FAX:+1-213-555-5678
             """;
 
-        var vcs = Vcf.Parse(cropped);
+        IList<VCard> vcs = Vcf.Parse(cropped);
 
         Assert.IsNotNull(vcs);
         Assert.AreEqual(1, vcs.Count);
@@ -431,7 +431,7 @@ public class V2Tests
             BEGIN:VCARD
             """;
 
-        var vcs = Vcf.Parse(cropped);
+        IList<VCard> vcs = Vcf.Parse(cropped);
 
         Assert.IsNotNull(vcs);
         Assert.AreEqual(0, vcs.Count);
@@ -622,7 +622,7 @@ public class V2Tests
             """;
 
         VCard vc = Vcf.Parse(vcf)[0];
-        var gender = vc.GenderViews.FirstOrNull();
+        GenderProperty? gender = vc.GenderViews.FirstOrNull();
         Assert.IsNotNull(gender);
         Assert.AreEqual(Sex.Male, gender.Value.Sex);
     }
@@ -637,7 +637,7 @@ public class V2Tests
             """;
 
         VCard vc = Vcf.Parse(vcf)[0];
-        var gender = vc.GenderViews.FirstOrNull();
+        GenderProperty? gender = vc.GenderViews.FirstOrNull();
         Assert.IsNotNull(gender);
         Assert.AreEqual(Sex.Female, gender.Value.Sex);
     }

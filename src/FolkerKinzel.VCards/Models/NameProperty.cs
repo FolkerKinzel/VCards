@@ -12,16 +12,8 @@ namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Represents the vCard property <c>N</c>, which stores the name of the
 /// vCard subject.</summary>
-/// <remarks>
-/// <note type="tip">
-/// You can use the <see cref="NameProperty.ToDisplayName" />  method to generate 
-/// formatted representations from the structured name representations that are readable 
-/// by the users of the application.
-/// </note>
-/// </remarks>
 /// <seealso cref="VCard.NameViews"/>
 /// <seealso cref="Name"/>
-/// <seealso cref="NameProperty.ToDisplayName"/>
 public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 {
     #region Remove this code with version 8.0.0
@@ -60,7 +52,6 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// as argument.
     /// </note>
     /// </remarks>
-    /// <seealso cref="ToDisplayName" />
     public NameProperty(
         IEnumerable<string?>? familyNames = null,
         IEnumerable<string?>? givenNames = null,
@@ -91,7 +82,6 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// as argument.
     /// </note>
     /// </remarks>
-    /// <seealso cref="ToDisplayName" />
     public NameProperty(
         string? familyName,
         string? givenName = null,
@@ -123,7 +113,6 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
-    /// <seealso cref="ToDisplayName" />
     public NameProperty(NameBuilder builder, string? group = null) 
         : base(new ParameterSection(), group)
     {

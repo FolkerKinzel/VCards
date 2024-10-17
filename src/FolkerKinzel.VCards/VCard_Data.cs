@@ -263,18 +263,9 @@ public sealed partial class VCard
     /// <summary> <c>FN</c>: The formatted name string associated with the vCard object.
     /// <c>(2,3,4)</c></summary>
     /// <remarks>
-    /// <para>
     /// The name representations stored in this property are typically intended to be 
     /// presented to the users of the application. 
-    /// </para>
-    /// <note type="tip">
-    /// You can use the <see cref="NameProperty.ToDisplayName" /> method to convert the 
-    /// structured name representations that are stored in the <see cref="NameViews" /> 
-    /// property to produce formatted representations readable by the users of the 
-    /// application.  
-    /// </note>
     /// </remarks>
-    /// <seealso cref="NameProperty.ToDisplayName" />
     public IEnumerable<TextProperty?>? DisplayNames
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.DisplayNames);
