@@ -611,4 +611,34 @@ public class V2Tests
         VCard vc = Vcf.Parse(vcf)[0];
         Assert.IsNotNull(vc.Relations);
     }
+
+    [TestMethod]
+    public void XWabGenderTest1()
+    {
+        const string vcf = """
+            BEGIN:VCARD
+            X-WAB-GENDER:2
+            END:VCARD
+            """;
+
+        VCard vc = Vcf.Parse(vcf)[0];
+        var gender = vc.GenderViews.FirstOrNull();
+        Assert.IsNotNull(gender);
+        Assert.AreEqual(Sex.Male, gender.Value.Sex);
+    }
+
+    [TestMethod]
+    public void XWabGenderTest2()
+    {
+        const string vcf = """
+            BEGIN:VCARD
+            X-WAB-GENDER:1
+            END:VCARD
+            """;
+
+        VCard vc = Vcf.Parse(vcf)[0];
+        var gender = vc.GenderViews.FirstOrNull();
+        Assert.IsNotNull(gender);
+        Assert.AreEqual(Sex.Female, gender.Value.Sex);
+    }
 }
