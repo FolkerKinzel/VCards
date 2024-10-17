@@ -1,6 +1,9 @@
 # Source: Interpol (UK) : A Guide To Names And Naming Practices
 
-## family name + personal name:
+## Default
+Prefixes + GivenNames + AdditionalNames + Surnames2 + FamilyNames + Generations + Suffixes
+
+## FamilyNames + GivenNames:
 
 | Language |      |
 | -------- | ---- |
@@ -12,8 +15,14 @@
 |KOREAN    |  ko- |
 
 
-
-## family name + middle name + personal name:
+&nbsp;
+## FamilyNames + AdditionalNames + GivenNames:
 
 |VIETNAMESE | vi- |
 | --------- | --- |
+
+&nbsp;
+## GivenNames + FamilyNames + Surnames2
+|SPANISH | es- |
+| ------ | --- |
+

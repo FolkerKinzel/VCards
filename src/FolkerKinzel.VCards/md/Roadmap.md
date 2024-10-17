@@ -21,6 +21,8 @@
 - [ ] **Change the properties of the `Name` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`**
 - [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
 - [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method
+- [ ] Rename `Name.AdditionalNames` to `Name.MiddleNames`
+- [ ] Rename `NameBuilder.AddAdditionalName(string)` to `NameBuilder.AddMiddleName(string)`
 
 &nbsp;
 - [ ] **Change the properties of the `Address` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`**
