@@ -54,7 +54,6 @@ and let it store as string[]
        https://www.w3.org/2002/12/cal/vcard-notes.html and https://datatracker.ietf.org/doc/html/rfc9555#name-x-ablabel
 - [ ] Implement in `VCardBuilder`: `TextBuilder ABLabels { get; }
 - [ ] Add `X-ABLabel` to the documentation of the `VCard.NonStandards` property
-- [ ] Update `ParameterSerializer.AppendNonStandardParameters` to ignore `X-ABLabel`
 
 &nbsp;
 - [ ] Implement RFC 9555 (partially):

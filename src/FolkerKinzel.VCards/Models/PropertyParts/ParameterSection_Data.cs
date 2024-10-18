@@ -371,9 +371,15 @@ public sealed partial class ParameterSection
     }
 
     /// <summary>Non-standard attributes. <c>(2,3,4)</c></summary>
-    /// <remarks> In order to write non-standardized attributes into a VCF file, the 
+    /// <remarks>
+    /// <para>In order to write non-standardized attributes into a VCF file, the 
     /// <see cref="Opts.WriteNonStandardParameters">VcfOptions.WriteNonStandardParameters</see> 
-    /// flag must be set explicitly when serializing the <see cref="VCard" /> object.</remarks>
+    /// flag must be set explicitly when serializing the <see cref="VCard" /> object.
+    /// </para>
+    /// <para>
+    /// Don't use this property for <c>X-SERVICE-TYPE</c>. Use <see cref="ServiceType"/> instead.
+    /// </para>
+    /// </remarks>
     public IEnumerable<KeyValuePair<string, string>>? NonStandard
     {
         get => Get<IEnumerable<KeyValuePair<string, string>>?>(VCdParam.NonStandard);
