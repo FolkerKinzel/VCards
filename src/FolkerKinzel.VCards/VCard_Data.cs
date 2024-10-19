@@ -506,81 +506,110 @@ public sealed partial class VCard
     /// <para>
     /// These vCard properties are the following: 
     /// </para>
-    /// <list type="bullet">
+    /// <list type="table">
+    /// <listheader>
+    /// <term>Key</term>
+    /// <term>Property of the <see cref="VCard"/> class</term>
+    /// </listheader>
     /// <item>
-    /// <c>X-AIM</c>
+    /// <term><c>X-AIM</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-ANNIVERSARY</c>
+    /// <term><c>X-ANNIVERSARY</c></term>
+    /// <term><see cref="AnniversaryViews"/></term>
     /// </item>
     /// <item>
-    /// <c>X-EVOLUTION-SPOUSE</c>
+    /// <term><c>X-EVOLUTION-SPOUSE</c></term>
+    /// <term><see cref="Relations"/></term>
     /// </item>
     /// <item>
-    /// <c>X-EVOLUTION-ANNIVERSARY</c>
+    /// <term><c>X-EVOLUTION-ANNIVERSARY</c></term>
+    /// <term><see cref="AnniversaryViews"/></term>
     /// </item>
     /// <item>
-    /// <c>X-GADUGADU</c>
+    /// <term><c>X-GADUGADU</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-GENDER</c>
+    /// <term><c>X-GENDER</c></term>
+    /// <term><see cref="GenderViews"/></term>
     /// </item>
     /// <item>
-    /// <c>X-GOOGLE-TALK</c>
+    /// <term><c>X-GOOGLE-TALK</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-GROUPWISE</c>
+    /// <term><c>X-GROUPWISE</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-GTALK</c>
+    /// <term><c>X-GTALK</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-ICQ</c>
+    /// <term><c>X-ICQ</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-JABBER</c>
+    /// <term><c>X-JABBER</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-KADDRESSBOOK-X-ANNIVERSARY</c>
+    /// <term><c>X-KADDRESSBOOK-X-ANNIVERSARY</c></term>
+    /// <term><see cref="AnniversaryViews"/></term>
     /// </item>
     /// <item>
-    /// <c>X-KADDRESSBOOK-X-IMADDRESS</c>
+    /// <term><c>X-KADDRESSBOOK-X-IMADDRESS</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-KADDRESSBOOK-X-SPOUSENAME</c>
+    /// <term><c>X-KADDRESSBOOK-X-SPOUSENAME</c></term>
+    /// <term><see cref="Relations"/></term>
     /// </item>
     /// <item>
-    /// <c>X-MS-IMADDRESS</c>
+    /// <term><c>X-MS-IMADDRESS</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-MSN</c>
+    /// <term><c>X-MSN</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-SKYPE</c>
+    /// <term><c>X-SKYPE</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-SKYPE-USERNAME</c>
+    /// <term><c>X-SKYPE-USERNAME</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-SOCIALPROFILE</c>
+    /// <term><c>X-SOCIALPROFILE</c></term>
+    /// <term><see cref="SocialMediaProfiles"/></term>
     /// </item>
     /// <item>
-    /// <c>X-SPOUSE</c>
+    /// <term><c>X-SPOUSE</c></term>
+    /// <term><see cref="Relations"/></term>
     /// </item>
     /// <item>
-    /// <c>X-TWITTER</c>
+    /// <term><c>X-TWITTER</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// <item>
-    /// <c>X-WAB-GENDER</c>
+    /// <term><c>X-WAB-GENDER</c></term>
+    /// <term><see cref="GenderViews"/></term>
     /// </item>
     /// <item>
-    /// <c>X-WAB-WEDDING_ANNIVERSARY</c>
+    /// <term><c>X-WAB-WEDDING_ANNIVERSARY</c></term>
+    /// <term><see cref="AnniversaryViews"/></term>
     /// </item>
     /// <item>
-    /// <c>X-WAB-SPOUSE_NAME</c>
+    /// <term><c>X-WAB-SPOUSE_NAME</c></term>
+    /// <term><see cref="Relations"/></term>
     /// </item>
     /// <item>
-    /// <c>X-YAHOO</c>
+    /// <term><c>X-YAHOO</c></term>
+    /// <term><see cref="Messengers"/></term>
     /// </item>
     /// </list>
     /// </remarks>
