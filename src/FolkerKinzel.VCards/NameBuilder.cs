@@ -53,7 +53,7 @@ public sealed class NameBuilder
     /// <seealso cref="Name.FamilyNames"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public NameBuilder AddFamilyName(IEnumerable<string?> collection) 
+    public NameBuilder AddFamilyName(IEnumerable<string?> collection)
         => AddRange(NameProp.FamilyNames, collection);
 
     /// <summary>Adds a <see cref="string"/> to <see cref="Name.GivenNames"/>. (A given name, also 
@@ -122,7 +122,7 @@ public sealed class NameBuilder
     /// <seealso cref="Name.Suffixes"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public NameBuilder AddSuffix(IEnumerable<string?> collection) 
+    public NameBuilder AddSuffix(IEnumerable<string?> collection)
         => AddRange(NameProp.Suffixes, collection);
 
     /// <summary>Adds a <see cref="string"/> to <see cref="Name.Surnames2"/>. (A secondary surname 
@@ -155,7 +155,7 @@ public sealed class NameBuilder
     /// <seealso cref="Name.FamilyNames"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public NameBuilder AddSurname2(IEnumerable<string?> collection) 
+    public NameBuilder AddSurname2(IEnumerable<string?> collection)
         => AddRange(NameProp.Surnames2, collection);
 
     /// <summary>Adds a <see cref="string"/> to <see cref="Name.Generations"/>. (A generation

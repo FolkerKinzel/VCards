@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Formatters;
 public interface IAddressFormatter
 {
     /// <summary>
-    /// Converts <see cref="AddressProperty"/> to an address label.
+    /// Converts an <see cref="AddressProperty"/> instance to an address label.
     /// </summary>
     /// <param name="addressProperty">The <see cref="AddressProperty"/> to convert.</param>
     /// <returns>A <see cref="string"/> that represents an address label, or <c>null</c>.</returns>

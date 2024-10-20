@@ -111,7 +111,6 @@ public sealed class Name
             }
         }
 
-
         if (surname2.Count != 0)
         {
             AddOldValueForCompatibility(NameProp.FamilyNames, familyNames, surname2, builder.Worker);

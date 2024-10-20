@@ -9,7 +9,8 @@ namespace FolkerKinzel.VCards.Formatters;
 public interface INameFormatter
 {
     /// <summary>
-    /// Converts the content of a <see cref="NameProperty"/> instance to a formatted <see cref="string"/>.
+    /// Converts the content of a <see cref="NameProperty"/> instance to a formatted <see cref="string"/>,
+    /// which can by displayed to users.
     /// </summary>
     /// <param name="nameProperty">The <see cref="NameProperty"/> instance to convert.</param>
     /// <param name="vCard">The <see cref="VCard"/> instance <paramref name="nameProperty"/> belongs to.</param>
