@@ -285,6 +285,14 @@
 
         <list class="bullet">
           <listItem>
+          <para>
+            <externalLink>
+              <linkText>RFC 9555: JSContact: Converting from and to vCard</linkText>
+              <linkUri>https://datatracker.ietf.org/doc/html/rfc9555</linkUri>
+            </externalLink>
+          </para>
+        </listItem>
+          <listItem>
             <para>
               <externalLink>
                 <linkText>RFC 9554: vCard Format Extensions for JSContact</linkText>
