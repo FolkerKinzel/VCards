@@ -60,8 +60,8 @@ and let it store as string[]
 - [ ] Implement RFC 9555 (partially):
     - [x] Add enum value `Opts.WriteRfc9555Extensions` 
     - [ ] Implement in `VCard`: `IEnumerable<TextProperty?>? JSContactProps { get; set; }` (`JSPROP`)
-    - [ ] Implement in `ParameterSection`: `string? JSContactOrder { get; set; }` (`JSCOMPS`)
-    - [ ] Implement in `ParameterSection`: `string? JsonPointer { get; set; }` (`JSPTR`)
+    - [ ] Implement in `ParameterSection`: `string? ComponentOrder { get; set; }` (`JSCOMPS`)
+    - [ ] Implement in `ParameterSection`: `string? JSContactPointer { get; set; }` (`JSPTR`)
     - [ ] Change `DefaultNameFormatter` to respect `ParameterSection.JSContactOrder`
     - [ ] Change `DefaultAddressFormatter` to respect `ParameterSection.JSContactOrder`
 
