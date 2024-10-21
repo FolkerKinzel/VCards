@@ -30,16 +30,23 @@ public enum Opts
     /// <summary>All flags are unset.</summary>
     None = 0,
 
-    /// <summary> Default setting (corresponds to  <see cref="WriteGroups" />
+    /// <summary> 
+    /// <para>
+    /// Default setting
+    /// </para>
+    /// <para>
+    /// (corresponds to  <see cref="WriteGroups" />
     /// | <see cref="WriteRfc6474Extensions" /> | <see cref="WriteRfc6715Extensions" /> 
     /// | <see cref="WriteImppExtension" /> | <see cref="WriteXExtensions" /> 
     /// | <see cref="AllowMultipleAdrAndLabelInVCard21" /> | <see cref="UpdateTimeStamp"/>
     /// | <see cref="WriteRfc2739Extensions"/> | <see cref="WriteRfc8605Extensions"/>
-    /// | <see cref="WriteRfc9554Extensions"/>) </summary>
+    /// | <see cref="WriteRfc9554Extensions"/>) | <see cref="WriteRfc9555Extensions"/>)
+    /// </para>
+    /// </summary>
     Default = WriteGroups | WriteRfc6474Extensions | WriteRfc6715Extensions
             | WriteImppExtension | WriteXExtensions | AllowMultipleAdrAndLabelInVCard21
             | UpdateTimeStamp | WriteRfc2739Extensions | WriteRfc8605Extensions
-            | WriteRfc9554Extensions,
+            | WriteRfc9554Extensions | WriteRfc9555Extensions,
 
     /// <summary>Set the flag to write property group identifiers.</summary>
     WriteGroups = 1,
@@ -126,4 +133,7 @@ public enum Opts
 
     /// <summary>Set the flag to write the extensions from RFC 9554 in vCard&#160;4.0.</summary>
     WriteRfc9554Extensions = 1 << 18,
+
+    /// <summary>Set the flag to write the extensions from RFC 9555 in vCard&#160;4.0.</summary>
+    WriteRfc9555Extensions = 1 << 19,
 }
