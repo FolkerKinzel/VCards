@@ -241,6 +241,12 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             case VCard.PropKeys.Rfc8605.CONTACT_URI:
                 BuildContactUriPara();
                 break;
+            case VCard.PropKeys.NonStandard.X_AB_LABEL:
+                BuildXABLabelPara();
+                break;
+            case VCard.PropKeys.Rfc9555.JSPROP:
+                BuildJSPropPara();
+                break;
             default:
                 BuildNonStandardPropertyPara(isPref);
                 break;
@@ -323,6 +329,9 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     [ExcludeFromCodeCoverage]
     protected virtual void BuildInterestPara() { }
+
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildJSPropPara() { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void BuildKeyPara() { }
@@ -416,6 +425,9 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     [ExcludeFromCodeCoverage]
     protected virtual void BuildUrlPara() { }
+
+    [ExcludeFromCodeCoverage]
+    protected virtual void BuildXABLabelPara() => AppendNonStandardParameters();
 
     [ExcludeFromCodeCoverage]
     protected virtual void BuildXMessengerPara(bool isPref) { }
