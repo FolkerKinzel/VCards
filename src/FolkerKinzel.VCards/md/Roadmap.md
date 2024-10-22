@@ -50,20 +50,20 @@ and let it store as string[]
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
 ### 7.4.0
-- [ ] Implement in VCard: `IEnumerable<TextProperty?>? ABLabels {get; set;}`  (`X-ABLabel` from Apple Address Book)
+- [x] Implement in VCard: `IEnumerable<TextProperty?>? ABLabels {get; set;}`  (`X-ABLabel` from Apple Address Book)
        https://www.w3.org/2002/12/cal/vcard-notes.html and https://datatracker.ietf.org/doc/html/rfc9555#name-x-ablabel
-- [ ] Implement in `VCardBuilder`: `TextBuilder ABLabels { get; }
-- [ ] Add `X-ABLabel` to the documentation of the `VCard.NonStandards` property
-- [ ] Add `X-ABLabel` to the documentation of the `VCardBuilder.NonStandards` property
+- [x] Implement in `VCardBuilder`: `TextBuilder ABLabels { get; }
+- [x] Add `X-ABLabel` to the documentation of the `VCard.NonStandards` property
+- [x] Add `X-ABLabel` to the documentation of the `VCardBuilder.NonStandards` property
 
 &nbsp;
 - [ ] Implement RFC 9555 (partially):
     - [x] Add enum value `Opts.WriteRfc9555Extensions` 
-    - [ ] Implement in `VCard`: `IEnumerable<TextProperty?>? JSContactProps { get; set; }` (`JSPROP`)
+    - [x] Implement in `VCard`: `IEnumerable<TextProperty?>? JSContactProps { get; set; }` (`JSPROP`)
     - [ ] Implement in `ParameterSection`: `string? ComponentOrder { get; set; }` (`JSCOMPS`)
     - [ ] Implement in `ParameterSection`: `string? JSContactPointer { get; set; }` (`JSPTR`)
-    - [ ] Change `DefaultNameFormatter` to respect `ParameterSection.JSContactOrder`
-    - [ ] Change `DefaultAddressFormatter` to respect `ParameterSection.JSContactOrder`
+    - [ ] Change `DefaultNameFormatter` to respect `ParameterSection.ComponentOrder`
+    - [ ] Change `DefaultAddressFormatter` to respect `ParameterSection.ComponentOrder`
 
 
 ### 7.3.0

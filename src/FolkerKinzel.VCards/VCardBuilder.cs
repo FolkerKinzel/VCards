@@ -75,6 +75,16 @@ public sealed class VCardBuilder
     /// </example>
     public VCard VCard { get; }
 
+    /// <summary>
+    /// <c>X-ABLabel</c>: An Apple AddressBook (AB) extension to give other vCard properties a label.
+    /// </summary>
+    /// <remarks>
+    /// The <see cref="TextProperty"/> instances stored in this <see cref="VCards.VCard"/> property must have 
+    /// the same <see cref="VCardProperty.Group"/> 
+    /// name as the <see cref="VCardProperty"/> instances they label.
+    /// </remarks>
+    public TextBuilder ABLabels => new(this, Prop.ABLabels);
+
     /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
     /// <see cref="VCards.VCard"/>. <c>(3)</c></summary>
     public AccessBuilder Access => new(this);
@@ -265,6 +275,12 @@ public sealed class VCardBuilder
     /// <see cref="ParameterSection.Interest" />!</remarks>
     public TextBuilder Interests => new(this, Prop.Interests);
 
+    /// <summary>
+    /// <c>JSPROP</c>: JSContact properties that cannot be converted to standardized
+    /// vCard properties. <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    public TextBuilder JSContactProps => new(this, Prop.JSContactProps);
+
     /// <summary> <c>KEY</c>: Public encryption keys associated with the vCard object.
     /// <c>(2,3,4)</c></summary>
     /// <value>It may point to an external URL, may be plain text, or may be embedded
@@ -361,6 +377,10 @@ public sealed class VCardBuilder
     /// <term>Key</term>
     /// <term>Property of the <see cref="VCardBuilder"/> class</term>
     /// </listheader>
+    /// <item>
+    /// <term><c>X-ABLabel</c></term>
+    /// <term><see cref="ABLabels"/></term>
+    /// </item>
     /// <item>
     /// <term><c>X-AIM</c></term>
     /// <term><see cref="Messengers"/></term>

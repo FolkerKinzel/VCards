@@ -214,8 +214,17 @@ public enum Prop
     /// represented by this <see cref="VCard"/>. <c>(4 - RFC 9554)</c></summary>
     Pronouns,
 
+    /// <summary>
+    /// <c>JSPROP</c>: JSContact properties that cannot be converted to standardized
+    /// vCard properties. <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    JSContactProps,
+
+    /// <summary>
+    /// <c>X-ABLabel</c>: An Apple AddressBook (AB) extension to give other vCard properties a label.
+    /// </summary>
+    ABLabels,
+
     /// <summary>vCard-Properties that don't belong to the standard.</summary>
     NonStandards,
-
-    
 }

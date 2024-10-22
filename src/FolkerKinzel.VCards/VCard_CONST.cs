@@ -270,8 +270,22 @@ public sealed partial class VCard
             internal const string SOCIALPROFILE = "SOCIALPROFILE";
         }
 
+        internal static class Rfc9555
+        {
+            /// <summary>
+            /// <c>JSPROP</c>: JSContact properties that cannot be converted to standardized
+            /// vCard properties. <c>(4 - RFC&#160;9554)</c>
+            /// </summary>
+            internal const string JSPROP = "JSPROP";
+        }
+
         internal static class NonStandard
         {
+            /// <summary>
+            /// <c>X-ABLabel</c>: An Apple AddressBook (AB) extension to give other vCard properties a label.
+            /// </summary>
+            internal const string X_AB_LABEL = "X-ABLabel";
+
             /// <summary>
             /// <c>X-SOCIALPROFILE</c>: Specifies the URI or username for social media profiles 
             /// associated with the object the vCard represents.

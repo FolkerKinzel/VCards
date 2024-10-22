@@ -103,6 +103,19 @@ public sealed partial class VCard
         }
     }
 
+    /// <summary>
+    /// <c>X-ABLabel</c>: An Apple AddressBook (AB) extension to give other vCard properties a label.
+    /// </summary>
+    /// <remarks>
+    /// The <see cref="TextProperty"/> instances stored in this property must have the same <see cref="VCardProperty.Group"/> 
+    /// name as the <see cref="VCardProperty"/> instances they label.
+    /// </remarks>
+    public IEnumerable<TextProperty?>? ABLabels
+    {
+        get => Get<IEnumerable<XmlProperty?>?>(Prop.ABLabels);
+        set => Set(Prop.ABLabels, value);
+    }
+
     /// <summary> <c>CLASS</c>: Describes the sensitivity of the information in the
     /// <see cref="VCard"/>. <c>(3)</c></summary>
     public AccessProperty? Access
@@ -378,6 +391,16 @@ public sealed partial class VCard
         set => Set(Prop.Interests, value);
     }
 
+    /// <summary>
+    /// <c>JSPROP</c>: JSContact properties that cannot be converted to standardized
+    /// vCard properties. <c>(4 - RFC&#160;9554)</c>
+    /// </summary>
+    public IEnumerable<TextProperty?>? JSContactProps
+    {
+        get => Get<IEnumerable<XmlProperty?>?>(Prop.JSContactProps);
+        set => Set(Prop.JSContactProps, value);
+    }
+
     /// <summary> <c>KEY</c>: Public encryption keys associated with the vCard object.
     /// <c>(2,3,4)</c></summary>
     /// <value>It may point to an external URL, may be plain text, or may be embedded
@@ -511,6 +534,10 @@ public sealed partial class VCard
     /// <term>Key</term>
     /// <term>Property of the <see cref="VCard"/> class</term>
     /// </listheader>
+    /// <item>
+    /// <term><c>X-ABLabel</c></term>
+    /// <term><see cref="ABLabels"/></term>
+    /// </item>
     /// <item>
     /// <term><c>X-AIM</c></term>
     /// <term><see cref="Messengers"/></term>

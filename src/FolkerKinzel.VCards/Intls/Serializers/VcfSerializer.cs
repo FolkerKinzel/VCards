@@ -343,6 +343,12 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.SocialMediaProfiles:
                     AppendSocialMediaProfiles((IEnumerable<TextProperty?>)kvp.Value);
                     break;
+                case Prop.ABLabels:
+                    AppendABLabels((IEnumerable<TextProperty?>)kvp.Value);
+                    break;
+                case Prop.JSContactProps:
+                    AppendJSContactProps((IEnumerable<TextProperty?>)kvp.Value);
+                    break;
 #if DEBUG
                 default:
                     throw new NotImplementedException();
@@ -350,6 +356,7 @@ internal abstract class VcfSerializer : IDisposable
             }//switch
         }//foreach
     }
+
 
     protected void BuildProperty(string propertyKey, VCardProperty prop, bool isPref = false)
     {
@@ -547,6 +554,14 @@ internal abstract class VcfSerializer : IDisposable
         BuildProperty(propKey, xAnniversary);
     }
 
+    private void AppendABLabels(IEnumerable<TextProperty?> value)
+    {
+        if(this.Options.HasFlag(Opts.WriteXExtensions))
+        {
+            BuildPropertyCollection(VCard.PropKeys.NonStandard.X_AB_LABEL, value);
+        }
+    }
+
     [ExcludeFromCodeCoverage]
     protected virtual void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value) { }
 
@@ -645,6 +660,9 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendInterests(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
+    protected virtual void AppendJSContactProps(IEnumerable<TextProperty?> value) { }
+
+    [ExcludeFromCodeCoverage]
     protected virtual void AppendKeys(IEnumerable<DataProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
@@ -671,7 +689,7 @@ internal abstract class VcfSerializer : IDisposable
     [ExcludeFromCodeCoverage]
     protected virtual void AppendNameViews(IEnumerable<NameProperty?> value) { }
 
-    protected void AppendNonStandardProperties(IEnumerable<NonStandardProperty?> value)
+    private void AppendNonStandardProperties(IEnumerable<NonStandardProperty?> value)
     {
         Debug.Assert(value is not null);
 

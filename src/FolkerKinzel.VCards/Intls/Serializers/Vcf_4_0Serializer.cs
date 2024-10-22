@@ -228,6 +228,14 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
         }
     }
 
+    protected override void AppendJSContactProps(IEnumerable<TextProperty?> value)
+    {
+        if (Options.HasFlag(Opts.WriteRfc9555Extensions))
+        {
+            BuildPropertyCollection(VCard.PropKeys.Rfc9555.JSPROP, value);
+        }
+    }
+
     protected override void AppendKind(KindProperty value)
         => BuildProperty(VCard.PropKeys.KIND, value);
 
