@@ -51,6 +51,12 @@ public sealed partial class ParameterSection
             internal const string USERNAME = "USERNAME";
         }
 
+        internal static class Rfc9555
+        {
+            internal const string JSCOMPS = "JSCOMPS";
+            internal const string JSPTR = "JSPTR";
+        }
+
         internal static class NonStandard
         {
             internal const string X_SERVICE_TYPE = "X-SERVICE-TYPE";

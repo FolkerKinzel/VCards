@@ -36,6 +36,8 @@ internal static class ParameterKeyConverter
              : key.Equals(ParameterSection.ParameterKey.Rfc9554.USERNAME, comp) ? ParameterSection.ParameterKey.Rfc9554.USERNAME
              : key.Equals(ParameterSection.ParameterKey.Rfc9554.AUTHOR, comp) ? ParameterSection.ParameterKey.Rfc9554.AUTHOR
              : key.Equals(ParameterSection.ParameterKey.Rfc9554.AUTHOR_NAME, comp) ? ParameterSection.ParameterKey.Rfc9554.AUTHOR_NAME
+             : key.Equals(ParameterSection.ParameterKey.Rfc9555.JSCOMPS, comp) ? ParameterSection.ParameterKey.Rfc9555.JSCOMPS
+             : key.Equals(ParameterSection.ParameterKey.Rfc9555.JSPTR, comp) ? ParameterSection.ParameterKey.Rfc9555.JSPTR
              : key.ToString();
     }
 }
