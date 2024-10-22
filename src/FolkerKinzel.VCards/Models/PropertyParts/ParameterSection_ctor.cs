@@ -240,6 +240,12 @@ public sealed partial class ParameterSection
                 case ParameterKey.Rfc9554.USERNAME:
                     UserName = parameter.Value.Span.Trim(TRIM_CHARS).UnMaskParameterValue(isLabel: false);
                     break;
+                case ParameterKey.Rfc9555.JSPTR:
+                    JSContactPointer = parameter.Value.Span.Trim(TRIM_CHARS).UnMaskParameterValue(isLabel: false);
+                    break;
+                case ParameterKey.Rfc9555.JSCOMPS:
+                    ComponentOrder = parameter.Value.Span.Trim(TRIM_CHARS).UnMaskParameterValue(isLabel: false);
+                    break;
                 default:
                     {
                         Debug.Assert(!parameter.Key.Equals(ParameterKey.NonStandard.X_SERVICE_TYPE, StringComparison.OrdinalIgnoreCase));
