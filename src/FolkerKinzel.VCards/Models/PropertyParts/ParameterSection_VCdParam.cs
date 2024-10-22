@@ -152,5 +152,16 @@ public sealed partial class ParameterSection
         /// <see cref="VCardProperty"/> values in the same <see cref="VCard"/>. <c>(4 - RFC&#160;9554)</c>
         /// </summary>
         Derived,
+
+        /// <summary>
+        /// <c>JSCOMPS</c>: Defines the order and separators for the elements of a structured property value. <c>(4 - RFC&#160;9555)</c>
+        /// </summary>
+        ComponentOrder,
+
+        /// <summary>
+        /// <c>JSPTR</c>: This parameter is used with the instances in <see cref="VCard.JSContactProps"/>. Its value
+        /// points to the JSContact property whose value is stored in the <see cref="VCardProperty"/>. <c>(4 - RFC&#160;9555)</c>
+        /// </summary>
+        JSContactPointer,
     }
 }

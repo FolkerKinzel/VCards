@@ -149,6 +149,24 @@ public sealed partial class ParameterSection
         set => Set(VCdParam.CharSet, value);
     }
 
+    /// <summary>
+    /// <c>JSCOMPS</c>: Defines the order and separators for the elements of a structured property value. <c>(4 - RFC&#160;9555)</c>
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The value facilitates converting name and address components between JSContact and vCard. It preserves the order of the components 
+    /// of the JSContact property and contains the verbatim values of separator components. (See RFC&#160;9555 for details.)
+    /// </para>
+    /// <para>
+    /// This parameter can be used with the <see cref="VCardProperty"/> instances in <see cref="VCard.NameViews"/> and <see cref="VCard.Addresses"/>.
+    /// </para>
+    /// </remarks>
+    public string? ComponentOrder
+    {
+        get => Get<string?>(VCdParam.ComponentOrder);
+        set => Set(VCdParam.ComponentOrder, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
+    }
+
     /// <summary><c>VALUE</c>: Indicates where the actual content of the property 
     /// is located. <c>(2)</c></summary>
     public Loc ContentLocation
@@ -304,6 +322,17 @@ public sealed partial class ParameterSection
     {
         get => Get<Interest?>(VCdParam.Interest);
         set => Set(VCdParam.Interest, value);
+    }
+
+    /// <summary>
+    /// <c>JSPTR</c>: This parameter is used with the instances in <see cref="VCard.JSContactProps"/>. Its value
+    /// points to the JSContact property whose value is stored in the <see cref="VCardProperty"/>. <c>(4 - RFC&#160;9555)</c>
+    /// </summary>
+    /// <value>A valid JSON pointer as defined in RFC&#160;6901.</value>
+    public string? JSContactPointer
+    {
+        get => Get<string?>(VCdParam.JSContactPointer);
+        set => Set(VCdParam.JSContactPointer, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
     /// <summary><c>LABEL</c>: Represents the actual text that should be put on the mailing 
