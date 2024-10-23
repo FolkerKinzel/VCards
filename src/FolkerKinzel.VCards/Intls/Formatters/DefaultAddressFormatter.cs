@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Formatters;
+﻿using System.ComponentModel;
+using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Formatters;
@@ -15,4 +16,9 @@ internal sealed class DefaultAddressFormatter : IAddressFormatter
                 : AddressLabelFormatter.ToLabel(addressProperty);
 
     }
+
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string ToString() => base.ToString() ?? "";
 }

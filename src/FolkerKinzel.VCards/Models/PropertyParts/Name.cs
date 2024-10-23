@@ -286,6 +286,7 @@ repeat:
         }
     }
 
+    /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator() => ((IReadOnlyList<IReadOnlyList<string>>)this).GetEnumerator();
 
     /// <inheritdoc/>
