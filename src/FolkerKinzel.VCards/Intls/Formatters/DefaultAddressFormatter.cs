@@ -8,6 +8,11 @@ internal sealed class DefaultAddressFormatter : IAddressFormatter
     public string? ToLabel(AddressProperty addressProperty)
     {
         _ArgumentNullException.ThrowIfNull(addressProperty, nameof(addressProperty));
-        return AddressLabelFormatter.ToLabel(addressProperty);
+        return addressProperty.Value.IsEmpty
+            ? null 
+            : JSCompsFormatter.TryFormat(addressProperty, out string? formatted) 
+                ? formatted 
+                : AddressLabelFormatter.ToLabel(addressProperty);
+
     }
 }

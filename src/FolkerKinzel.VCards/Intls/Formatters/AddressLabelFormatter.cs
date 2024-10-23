@@ -19,18 +19,18 @@ internal static class AddressLabelFormatter
     {
         return address.IsEmpty
             ? null
-            : DoConvertToLabel(address, AddressOrderConverter.ParseAddress(address) ?? _defaultAddressOrder);
+            : DoConvertToLabel(address);
     }
 
-    internal static string? ToLabel(AddressProperty prop)
+    internal static string ToLabel(AddressProperty prop)
     {
-        return prop.Value.IsEmpty
-            ? null
-            : DoConvertToLabel(prop.Value, AddressOrderConverter.ParseAddressProperty(prop) ?? _defaultAddressOrder);
+        Debug.Assert(!prop.Value.IsEmpty);
+        return DoConvertToLabel(prop.Value);
     }
 
-    private static string DoConvertToLabel(Address address, AddressOrder addressOrder)
+    private static string DoConvertToLabel(Address address)
     {
+        AddressOrder addressOrder = AddressOrderConverter.ParseAddressProperty(prop) ?? _defaultAddressOrder;
         var worker = new StringBuilder(WORKER_CAPACITY);
 
         return new StringBuilder(BUILDER_CAPACITY)

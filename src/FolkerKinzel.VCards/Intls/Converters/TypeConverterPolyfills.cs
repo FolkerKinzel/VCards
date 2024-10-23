@@ -47,15 +47,9 @@ internal static class _Float
 [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
 internal static class _Double
 {
-    //    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    //    internal static double Parse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider)
-    //#if NET462 || NETSTANDARD2_0
-    //        => double.Parse(s.ToString(), style, provider);
-    //#else
-    //        => double.Parse(s, style, provider);
-    //#endif
-
+#if !(NET462 || NETSTANDARD2)
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     internal static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out double result)
 #if NET462 || NETSTANDARD2_0
         => double.TryParse(s.ToString(), style, provider, out result);
@@ -68,7 +62,7 @@ internal static class _Double
 internal static class _Int
 {
 #if !(NET462 || NETSTANDARD2)
-[MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
     public static bool TryParse(ReadOnlySpan<char> value, out int result)
 #if NET462 || NETSTANDARD2_0
@@ -90,7 +84,17 @@ internal static class _Int
         return true;
     }
 #else
-            => int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
+     => int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
+#endif
+
+#if !(NET462 || NETSTANDARD2)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+    public static int Parse(ReadOnlySpan<char> value)
+#if NET462 || NETSTANDARD2_0
+        => int.Parse(value.ToString(), NumberStyles.None);
+#else
+        => int.Parse(value, NumberStyles.None);
 #endif
 }
 

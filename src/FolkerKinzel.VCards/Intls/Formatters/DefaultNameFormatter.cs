@@ -17,6 +17,11 @@ internal sealed class DefaultNameFormatter : INameFormatter
             return null;
         }
 
+        if(JSCompsFormatter.TryFormat(nameProperty, out string? formatted))
+        {
+            return formatted;
+        }
+
         NameOrder order = GetNameOrder(nameProperty, vCard);
         List<string> list = [];
 

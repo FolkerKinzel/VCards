@@ -32,7 +32,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// for a mailing label.</returns>
     /// <seealso cref="AttachLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string? ToLabel() => AddressLabelFormatter.ToLabel(this);
+    public string? ToLabel() => AddressFormatter.Default.ToLabel(this);
 
     /// <summary> Initializes a new <see cref="AddressProperty" /> object.</summary>
     /// <param name="street">The street address.</param>
