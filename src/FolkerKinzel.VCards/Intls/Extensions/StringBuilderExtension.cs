@@ -147,7 +147,7 @@ internal static class StringBuilderExtension
 
         int startIdx = builder.Length;
         return (version == VCdVersion.V3_0 ? AppendParameterValueEscapedV30(builder, paramVal) : AppendParameterValueEscapedV40(builder, paramVal, isLabel))
-                ? builder.Insert(startIdx, '\"').Append('\"') // this allocation is very rarely
+                ? builder.Insert(startIdx, '\"').Append('\"')
                 : builder;
     }
 
