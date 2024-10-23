@@ -112,7 +112,7 @@ public sealed partial class VCard
     /// </remarks>
     public IEnumerable<TextProperty?>? ABLabels
     {
-        get => Get<IEnumerable<XmlProperty?>?>(Prop.ABLabels);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.ABLabels);
         set => Set(Prop.ABLabels, value);
     }
 
@@ -397,7 +397,7 @@ public sealed partial class VCard
     /// </summary>
     public IEnumerable<TextProperty?>? JSContactProps
     {
-        get => Get<IEnumerable<XmlProperty?>?>(Prop.JSContactProps);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.JSContactProps);
         set => Set(Prop.JSContactProps, value);
     }
 

@@ -211,18 +211,25 @@ public class Rfc9554Tests
 
         VCard vc = VCardBuilder
             .Create(false, false)
-            .DisplayNames.Add("note",
+            .DisplayNames.Add("Folker", p => p.Derived = true)
+            .Notes.Add("note",
             p =>
             {
                 p.Author = author;
                 p.AuthorName = authorName;
                 p.Created = DateTimeOffset.UtcNow;
                 p.PropertyID = propID;
-                p.Derived = true;
             })
             .VCard;
 
         Serialize(vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2);
+
+        string v4Conserved = v4;
+
+        v4 = v4.ReplaceWhiteSpaceWith("");
+        v4WithoutRfc9554 = v4WithoutRfc9554.ReplaceWhiteSpaceWith("");
+        v3 = v3.ReplaceWhiteSpaceWith("");
+        v2 = v2.ReplaceWhiteSpaceWith("");
 
         Assert.IsTrue(v4.Contains(";AUTHOR=", StringComparison.OrdinalIgnoreCase));
         Assert.IsTrue(v4.Contains(";AUTHOR-NAME=", StringComparison.OrdinalIgnoreCase));
@@ -248,15 +255,20 @@ public class Rfc9554Tests
         Assert.IsFalse(v2.Contains(";DERIVED", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(v2.Contains(";PROP-ID", StringComparison.OrdinalIgnoreCase));
 
-        vc = Vcf.Parse(v4)[0];
+        vc = Vcf.Parse(v4Conserved)[0];
 
         VCards.Models.PropertyParts.ParameterSection? par = vc.DisplayNames?.First()?.Parameters;
         Assert.IsNotNull(par);
+        Assert.IsTrue(par.Derived);
+
+
+        par = vc.Notes?.First()?.Parameters;
+        Assert.IsNotNull(par);
+
         Assert.AreEqual(author, par.Author);
         Assert.AreEqual(authorName, par.AuthorName);
         Assert.IsTrue(par.Created.HasValue);
         Assert.AreEqual(propID, par.PropertyID);
-        Assert.IsTrue(par.Derived);
     }
 
     [TestMethod]
