@@ -1,5 +1,6 @@
 using System.Collections;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -14,7 +15,7 @@ namespace FolkerKinzel.VCards.Models;
 /// information about the postal address.</summary>
 /// <remarks>See <see cref="VCard.Addresses"/>.</remarks>
 /// <seealso cref="VCard.Addresses"/>
-public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty>
+public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty>, ICompoundProperty
 {
     #region Remove this code with Version 8.0.0
 
@@ -67,7 +68,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                postOfficeBox: null,
                extendedAddress: null,
                autoLabel: autoLabel,
-               group: group) { }
+               group: group)
+    { }
 
     /// <summary> Initializes a new <see cref="AddressProperty" /> object. </summary>
     /// <param name="street">The street address.</param>
@@ -149,7 +151,8 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
               postOfficeBox: null,
               extendedAddress: null,
               autoLabel: autoLabel,
-              group: group) { }
+              group: group)
+    { }
 
     /// <summary> Initializes a new <see cref="AddressProperty" /> object. </summary>
     /// <param name="street">The street address.</param>
@@ -238,7 +241,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                     TextEncodingConverter.GetEncoding(this.Parameters.CharSet)).AsMemory(); // null-check not needed
         }
 
-        Value = val.Span.IsWhiteSpace() 
+        Value = val.Span.IsWhiteSpace()
             ? new Address()
             : new Address(in val, version);
     }
@@ -259,12 +262,10 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// to <c>null</c>, <see cref="IsEmpty"/> returns <c>false</c>.
     /// </note>
     /// </remarks>
-    public override bool IsEmpty => Value.IsEmpty 
-                                 && Parameters.Label is null 
-                                 && Parameters.GeoPosition is null 
+    public override bool IsEmpty => Value.IsEmpty
+                                 && Parameters.Label is null
+                                 && Parameters.GeoPosition is null
                                  && Parameters.TimeZone is null;
-
-    
 
     /// <inheritdoc />
     public override object Clone() => new AddressProperty(this);
@@ -278,6 +279,12 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator()
         => ((IEnumerable<AddressProperty>)this).GetEnumerator();
+
+    int ICompoundProperty.Count
+        => ((IReadOnlyList<IReadOnlyList<string>>)Value).Count;
+
+    IReadOnlyList<string> ICompoundProperty.this[int index]
+        => ((IReadOnlyList<IReadOnlyList<string>>)Value)[index];
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

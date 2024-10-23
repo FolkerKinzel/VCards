@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
@@ -12,7 +13,7 @@ using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary>Encapsulates information about a postal delivery address.</summary>
-public sealed class Address
+public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 {
     private const int STANDARD_COUNT = (int)AdrProp.Country + 1;
     private const int MAX_COUNT = (int)AdrProp.Direction + 1;
@@ -241,6 +242,34 @@ public sealed class Address
     /// contain any usable data.</summary>
     public bool IsEmpty => _dic.Count == 0;
 
+    int IReadOnlyCollection<IReadOnlyList<string>>.Count => MAX_COUNT;
+
+    IReadOnlyList<string> IReadOnlyList<IReadOnlyList<string>>.this[int index]
+    {
+        get
+        {
+            if ((uint)index >= MAX_COUNT)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            var adr = (AdrProp)index;
+
+            return adr == AdrProp.Street ? _streetView : Get(adr);
+        }
+    }
+
+    IEnumerator<IReadOnlyList<string>> IEnumerable<IReadOnlyList<string>>.GetEnumerator()
+    {
+        for (int i = 0; i < MAX_COUNT; i++)
+        {
+            yield return ((IReadOnlyList<IReadOnlyList<string>>)this)[i];
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => ((IReadOnlyList<IReadOnlyList<string>>)this).GetEnumerator();
+
+
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => CompoundObjectConverter.ToString(_dic);
@@ -293,5 +322,7 @@ public sealed class Address
         => _dic.Any(x => x.Key > AdrProp.Country)
                 ? ReadOnlyStringCollection.Empty
                 : Get(AdrProp.Street);
+
+
 
 }

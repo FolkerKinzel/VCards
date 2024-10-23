@@ -1,6 +1,7 @@
 using System.Collections;
 using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -14,7 +15,7 @@ namespace FolkerKinzel.VCards.Models;
 /// vCard subject.</summary>
 /// <seealso cref="VCard.NameViews"/>
 /// <seealso cref="Name"/>
-public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
+public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICompoundProperty
 {
     #region Remove this code with version 8.0.0
 
@@ -151,6 +152,11 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>
 
     /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;
+
+    int ICompoundProperty.Count => ((IReadOnlyList<IReadOnlyList<string>>)Value).Count;
+
+    IReadOnlyList<string> ICompoundProperty.this[int index] 
+        => ((IReadOnlyList<IReadOnlyList<string>>)Value)[index];
 
     /// <inheritdoc />
     public override object Clone() => new NameProperty(this);

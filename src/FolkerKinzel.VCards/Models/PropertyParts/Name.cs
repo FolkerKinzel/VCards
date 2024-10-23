@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
@@ -14,7 +15,7 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary>Encapsulates information about the name of the person the 
 /// <see cref="VCard"/> represents.</summary>
-public sealed class Name
+public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
 {
     private const int STANDARD_COUNT = 5;
     private const int MAX_COUNT = 7;
@@ -249,6 +250,38 @@ repeat:
     /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain
     /// any usable data, otherwise <c>false</c>.</summary>
     public bool IsEmpty => _dic.Count == 0;
+
+    int IReadOnlyCollection<IReadOnlyList<string>>.Count => MAX_COUNT;
+
+    IReadOnlyList<string> IReadOnlyList<IReadOnlyList<string>>.this[int index]
+    {
+        get
+        {
+            if ((uint)index >= MAX_COUNT)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            var nameProp = (NameProp)index;
+
+            return nameProp switch
+            {
+                NameProp.FamilyNames => _familyNamesView,
+                NameProp.Suffixes => _suffixesView,
+                _ => Get(nameProp)
+            };
+        }
+    }
+
+    IEnumerator<IReadOnlyList<string>> IEnumerable<IReadOnlyList<string>>.GetEnumerator()
+    {
+        for (int i = 0; i < MAX_COUNT; i++)
+        {
+            yield return ((IReadOnlyList<IReadOnlyList<string>>)this)[i];
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => ((IReadOnlyList<IReadOnlyList<string>>)this).GetEnumerator();
 
     /// <inheritdoc/>
     public override string ToString() => CompoundObjectConverter.ToString(_dic);
