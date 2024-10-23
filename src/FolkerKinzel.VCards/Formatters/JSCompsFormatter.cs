@@ -2,14 +2,36 @@
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Formatters;
 
+/// <summary>
+/// Static class that provides functionality to convert a <see cref="VCardProperty"/> instance that 
+/// implements <see cref="ICompoundProperty"/> (<see cref="AddressProperty"/> or <see cref="NameProperty"/>)
+/// to a formatted <see cref="string"/>, depending on the value of its <see cref="ParameterSection.ComponentOrder"/>
+/// property (<c>JSCOMPS</c>).
+/// </summary>
+/// <remarks>
+/// Implementors of <see cref="IAddressFormatter"/> or <see cref="INameFormatter"/> may use this class.
+/// </remarks>
 public static class JSCompsFormatter
 {
     private const int NOT_FOUND = -1;
     private const int SEPARATOR_INDICATOR_LENGTH = 2;
 
+    /// <summary>
+    /// Tries to convert an object that implements <see cref="ICompoundProperty"/> (<see cref="AddressProperty"/> 
+    /// or <see cref="NameProperty"/>) to a formatted <see cref="string"/>, depending on the value of its 
+    /// <see cref="ParameterSection.ComponentOrder"/>
+    /// property (<c>JSCOMPS</c>).
+    /// </summary>
+    /// <param name="property">The <see cref="ICompoundProperty"/> instance to convert.</param>
+    /// <param name="formatted">Contains the formatted <see cref="string"/> after the method returns
+    /// successfully.</param>
+    /// <returns><c>true</c> if the conversion was successful, otherwise <c>false</c>.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="property"/> is <c>null</c>.</exception>
     public static bool TryFormat(ICompoundProperty property, [NotNullWhen(true)] out string? formatted)
     {
         _ArgumentNullException.ThrowIfNull(property, nameof(property));

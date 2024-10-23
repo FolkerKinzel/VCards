@@ -27,6 +27,8 @@ internal static class AddressOrderConverter
                                    : ParseAddress(prop.Value);
     }
 
+    [SuppressMessage("Style", "IDE0066:Convert switch statement to expression", 
+        Justification = "Readability")]
     private static AddressOrder? ParseCountryCode(string countryCode)
     {
         Debug.Assert(!string.IsNullOrWhiteSpace(countryCode));

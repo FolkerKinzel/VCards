@@ -251,8 +251,12 @@ repeat:
     /// any usable data, otherwise <c>false</c>.</summary>
     public bool IsEmpty => _dic.Count == 0;
 
+    /// <inheritdoc/>
     int IReadOnlyCollection<IReadOnlyList<string>>.Count => MAX_COUNT;
 
+    /// <inheritdoc/>
+    /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is less than zero, or equal or greater than
+    /// <see cref="IReadOnlyCollection{T}.Count"/></exception>
     IReadOnlyList<string> IReadOnlyList<IReadOnlyList<string>>.this[int index]
     {
         get
@@ -273,6 +277,7 @@ repeat:
         }
     }
 
+    /// <inheritdoc/>
     IEnumerator<IReadOnlyList<string>> IEnumerable<IReadOnlyList<string>>.GetEnumerator()
     {
         for (int i = 0; i < MAX_COUNT; i++)

@@ -280,9 +280,11 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     IEnumerator IEnumerable.GetEnumerator()
         => ((IEnumerable<AddressProperty>)this).GetEnumerator();
 
+    /// <inheritdoc/>
     int ICompoundProperty.Count
         => ((IReadOnlyList<IReadOnlyList<string>>)Value).Count;
 
+    /// <inheritdoc/>
     IReadOnlyList<string> ICompoundProperty.this[int index]
         => ((IReadOnlyList<IReadOnlyList<string>>)Value)[index];
 

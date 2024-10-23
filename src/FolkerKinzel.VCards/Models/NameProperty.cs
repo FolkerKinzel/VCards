@@ -153,8 +153,10 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
     /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;
 
+    /// <inheritdoc/>
     int ICompoundProperty.Count => ((IReadOnlyList<IReadOnlyList<string>>)Value).Count;
 
+    /// <inheritdoc/>
     IReadOnlyList<string> ICompoundProperty.this[int index] 
         => ((IReadOnlyList<IReadOnlyList<string>>)Value)[index];
 
