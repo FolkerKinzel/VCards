@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="34.0.2" />
+    <PackageReference Include="Bogus" Version="35.6.1" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
   </ItemGroup>

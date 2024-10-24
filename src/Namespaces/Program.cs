@@ -16,3 +16,4 @@ using FolkerKinzel.VCards;
 
 // Application registration:
 VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
+

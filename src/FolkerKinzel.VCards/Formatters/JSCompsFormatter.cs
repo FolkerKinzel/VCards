@@ -58,7 +58,7 @@ public static class JSCompsFormatter
 
             while (length != NOT_FOUND)
             {
-                jsComps = jsComps.Slice(length);
+                jsComps = jsComps.Slice(length + 1);
                 length = GetSemicolon(jsComps);
 
                 ReadOnlySpan<char> chunk = length == NOT_FOUND ? jsComps : jsComps.Slice(0,length);
@@ -75,9 +75,8 @@ public static class JSCompsFormatter
                         list.Add(defaultSeparator);
                     }
 
-                    addDefaultSeparator = true;
-
                     list.Add(ParseToken(chunk, property));
+                    addDefaultSeparator = true;
                 }
             }
         }
@@ -115,8 +114,10 @@ public static class JSCompsFormatter
         return idx;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsSeparator(ReadOnlySpan<char> jsComps) => jsComps.StartsWith('s');
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static string ParseSeparator(ReadOnlySpan<char> jsComps)
         => jsComps.Slice(SEPARATOR_INDICATOR_LENGTH).UnMaskValue(VCdVersion.V4_0);
 }

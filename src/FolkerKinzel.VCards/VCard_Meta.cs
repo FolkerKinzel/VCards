@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Enums;
+﻿using System.Globalization;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards;
@@ -84,13 +85,13 @@ public sealed partial class VCard
 
         foreach (string group in GroupIDs)
         {
-            if (int.TryParse(group, out int result) && result > i)
+            if (int.TryParse(group, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int result) && result > i)
             {
                 i = result;
             }
         }
 
-        return (++i).ToString();
+        return (++i).ToString("X");
     }
 
     private IEnumerable<string> EnumerateGroupIDs()

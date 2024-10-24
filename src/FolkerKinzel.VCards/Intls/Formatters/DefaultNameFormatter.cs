@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Globalization;
+﻿using System.Globalization;
 using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -18,7 +17,7 @@ internal sealed class DefaultNameFormatter : INameFormatter
             return null;
         }
 
-        if(JSCompsFormatter.TryFormat(nameProperty, out string? formatted))
+        if (JSCompsFormatter.TryFormat(nameProperty, out string? formatted))
         {
             return formatted;
         }
@@ -44,10 +43,6 @@ internal sealed class DefaultNameFormatter : INameFormatter
 
         return string.Join(" ", list);
     }
-
-    /// <inheritdoc/>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override string ToString() => base.ToString() ?? "";
 
     private static NameOrder GetNameOrder(NameProperty nameProperty, VCard vCard)
     {
