@@ -135,6 +135,7 @@ internal static class AddressLabelFormatter
             {
                 _ = sb.Append(' ');
             }
+
             _ = sb.Append(entry);
         }
     }

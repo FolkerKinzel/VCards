@@ -61,7 +61,7 @@ public static class JSCompsFormatter
                 jsComps = jsComps.Slice(length + 1);
                 length = GetSemicolon(jsComps);
 
-                ReadOnlySpan<char> chunk = length == NOT_FOUND ? jsComps : jsComps.Slice(0,length);
+                ReadOnlySpan<char> chunk = length == NOT_FOUND ? jsComps : jsComps.Slice(0, length);
 
                 if (IsSeparator(jsComps))
                 {
@@ -70,7 +70,7 @@ public static class JSCompsFormatter
                 }
                 else
                 {
-                    if(addDefaultSeparator)
+                    if (addDefaultSeparator)
                     {
                         list.Add(defaultSeparator);
                     }

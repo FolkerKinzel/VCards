@@ -98,7 +98,6 @@ public class Rfc9555Tests
         Assert.IsFalse(v2.Contains("X-ABLabel", comp));
     }
 
-
     private static void Serialize(VCard vc, out string v4, out string v4WithoutRfc9555, out string v3, out string v2)
     {
         v4 = vc.ToVcfString(VCdVersion.V4_0);

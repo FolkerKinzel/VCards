@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
+﻿namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
 
 [TestClass]
 public class DefaultNameFormatterTests
@@ -42,5 +40,22 @@ public class DefaultNameFormatterTests
             .VCard;
 
         Assert.AreEqual(result, NameFormatter.Default.ToDisplayName(vc.NameViews!.First()!, vc));
+    }
+
+    [TestMethod]
+    public void DefaultNameFormatterTest3()
+    {
+        VCard vc = VCardBuilder
+           .Create()
+           .NameViews.Add(NameBuilder
+               .Create()
+               .AddGivenName("Folker")
+               .AddFamilyName("Kinzel"),
+               parameters: p => p.ComponentOrder = ";4711"
+               )
+           .Language.Set("de-DE")
+        .VCard;
+
+        Assert.AreEqual("Folker Kinzel", NameFormatter.Default.ToDisplayName(vc.NameViews!.First()!, vc));
     }
 }
