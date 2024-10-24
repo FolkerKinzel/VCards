@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Tests;
 
@@ -119,5 +120,35 @@ public class NamePropertyTests
     {
         var prop = new NameProperty("Duck");
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+    }
+
+    [TestMethod]
+    public void CountTest1()
+    {
+        ICompoundProperty prop = new NameProperty(NameBuilder.Create());
+        Assert.AreEqual(7, prop.Count);
+    }
+
+    [TestMethod]
+    public void ItemTest1()
+    {
+        ICompoundProperty prop = new NameProperty(NameBuilder.Create());
+        Assert.IsNotNull(prop[prop.Count - 1]);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(IndexOutOfRangeException))]
+    public void ItemTest2()
+    {
+        ICompoundProperty prop = new NameProperty(NameBuilder.Create());
+        Assert.IsNotNull(prop[prop.Count]);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(IndexOutOfRangeException))]
+    public void ItemTest3()
+    {
+        ICompoundProperty prop = new NameProperty(NameBuilder.Create());
+        Assert.IsNotNull(prop[-1]);
     }
 }

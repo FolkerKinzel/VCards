@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
@@ -138,5 +139,25 @@ public class NameTests
             .AddSurname2(arr));
 
         Assert.AreEqual(0, prop.Value.FamilyNames.Count);
+    }
+
+    [TestMethod]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
+        "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", 
+        "CA1829:Use Length/Count property instead of Count() when available", Justification = "Test")]
+    public void IEnumerableTest1()
+    {
+        IReadOnlyList<IReadOnlyList<string>> name = new Name(NameBuilder.Create());
+        Assert.AreEqual(name.Count, name.Count());
+    }
+
+    [TestMethod]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
+        "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
+    public void IEnumerableTest2()
+    {
+        IReadOnlyList<IReadOnlyList<string>> name = new Name(NameBuilder.Create());
+        Assert.AreEqual(name.Count, name.AsWeakEnumerable().Count());
     }
 }

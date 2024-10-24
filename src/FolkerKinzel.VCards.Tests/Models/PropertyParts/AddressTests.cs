@@ -1,6 +1,8 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 
@@ -55,4 +57,23 @@ public class AddressTests
         StringAssert.Contains(s, "7a");
     }
 
+    [TestMethod]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", 
+        "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
+        "CA1829:Use Length/Count property instead of Count() when available", Justification = "Test")]
+    public void IEnumerableTest1()
+    {
+        IReadOnlyList<IReadOnlyList<string>> adr = new Address(AddressBuilder.Create());
+        Assert.AreEqual(adr.Count, adr.Count());
+    }
+
+    [TestMethod]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
+        "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
+    public void IEnumerableTest2()
+    {
+        IReadOnlyList<IReadOnlyList<string>> adr = new Address(AddressBuilder.Create());
+        Assert.AreEqual(adr.Count, adr.AsWeakEnumerable().Count());
+    }
 }

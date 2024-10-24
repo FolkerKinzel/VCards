@@ -1,5 +1,4 @@
-﻿
-using FolkerKinzel.VCards.Enums;
+﻿using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Extensions.Tests;
 

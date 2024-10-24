@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -252,5 +253,35 @@ public class AddressPropertyTests
 
         Assert.AreSame(prop1.Value, prop2.Value);
         Assert.AreNotSame(prop1, prop2);
+    }
+
+    [TestMethod]
+    public void CountTest1()
+    {
+        ICompoundProperty prop = new AddressProperty(AddressBuilder.Create());
+        Assert.AreEqual(18, prop.Count);
+    }
+
+    [TestMethod]
+    public void ItemTest1()
+    {
+        ICompoundProperty prop = new AddressProperty(AddressBuilder.Create());
+        Assert.IsNotNull(prop[prop.Count - 1]);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(IndexOutOfRangeException))]
+    public void ItemTest2()
+    {
+        ICompoundProperty prop = new AddressProperty(AddressBuilder.Create());
+        Assert.IsNotNull(prop[prop.Count]);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(IndexOutOfRangeException))]
+    public void ItemTest3()
+    {
+        ICompoundProperty prop = new AddressProperty(AddressBuilder.Create());
+        Assert.IsNotNull(prop[-1]);
     }
 }

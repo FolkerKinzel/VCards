@@ -288,4 +288,20 @@ public class ParameterSectionTests
         p.Derived = false;
         Assert.IsFalse(p.Derived);
     }
+
+    [TestMethod]
+    public void ComponentOrderTest1()
+    {
+        var p = new ParameterSection();
+        p.ComponentOrder = "   ";
+        Assert.IsNull(p.ComponentOrder);
+    }
+
+    [TestMethod]
+    public void JSContactPointerTest1()
+    {
+        var p = new ParameterSection();
+        p.JSContactPointer = "   ";
+        Assert.IsNull(p.JSContactPointer);
+    }
 }
