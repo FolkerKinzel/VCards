@@ -1,3 +1,5 @@
-Implements [RFC 9554 - vCard Format Extensions for JSContact](https://datatracker.ietf.org/doc/html/rfc9554).
+- Implements from [RFC 9555 - JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/html/rfc9555): `JSPROP`, `JSCOMPS`, and `JSPTR`.
+- `X-ABLabel` is now supported like a standard vCard property
+
 &nbsp;
 >**Project reference:** On some systems, the content of the CHM file in the Assets is blocked. Before opening the file right click on the file icon, select Properties, and **check the "Allow" checkbox** - if it is present - in the lower right corner of the General tab in the Properties dialog.
