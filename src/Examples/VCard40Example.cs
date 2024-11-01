@@ -63,8 +63,9 @@ public static class VCard40Example
         Console.WriteLine();
         Console.WriteLine(
             referenced
-                .Where(x => x.DisplayNames?
-                             .Any(x => StringComparer.Ordinal.Equals(x?.Value, "Composers")) ?? false)
+                .Where(x => x.DisplayNames
+                             .Items()
+                             .Any(x => StringComparer.Ordinal.Equals(x.Value, "Composers")))
                 .First()
                 .ToVcfString(VCdVersion.V4_0));
 
@@ -92,7 +93,7 @@ public static class VCard40Example
         composersVCard = dereferenced
             .FirstOrDefault
              (
-              x => x.DisplayNames?.Any(x => x?.Value == "Composers") ?? false
+              x => x.DisplayNames.Items().Any(x => x.Value == "Composers")
              );
 
         if (composersVCard is null)
@@ -123,11 +124,12 @@ public static class VCard40Example
         DateOnly date = default;
         bool found = composersVCard.Members
                 .OrderByPref()
-                .Where(x => x.Value!.VCard is not null)
+                .Where(x => x.Value?.VCard is not null)
                 .Select(x => x.Value!.VCard)
-                    .FirstOrDefault(x => x!.DisplayNames?
-                                           .Any(x => x?.Value == "Ludwig van Beethoven") ?? false)?
-                    .BirthDayViews?
+                    .FirstOrDefault(x => x!.DisplayNames
+                                           .Items()
+                                           .Any(x => x.Value == "Ludwig van Beethoven"))?
+                    .BirthDayViews
                     .FirstOrNull(x => x.Value?.TryAsDateOnly(out date) ?? false)
                      is not null;
 

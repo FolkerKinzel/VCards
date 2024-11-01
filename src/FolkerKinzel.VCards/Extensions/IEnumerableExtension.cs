@@ -448,6 +448,35 @@ public static class IEnumerableExtension
                           : values.OrderByPrefIntl(discardEmptyItems);
 
     /// <summary>
+    /// Yields the <see cref="VCardProperty"/> instances in <paramref name="values"/> in their 
+    /// current order and allows to specify whether or not empty <see cref="VCardProperty"/> 
+    /// instances shall be part of the result.
+    /// </summary>
+    /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
+    /// derived from <see cref="VCardProperty"/>.</typeparam>
+    /// <param name="values">The <see cref="IEnumerable{T}"/> of <see cref="VCardProperty"/>
+    /// objects to yield. The collection may be <c>null</c>, empty, or may contain <c>null</c> 
+    /// references.</param>
+    /// <param name="discardEmptyItems">Pass <c>false</c> to include empty items in the return value. 
+    /// ("Empty" means that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
+    /// references are removed in any case.</param>
+    /// <returns>A collection that contains the items of <paramref name="values"/> in their current order.
+    /// The returned collection won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c>,
+    /// an empty collection will be returned.</returns>
+    /// <remarks>
+    /// The method is useful to examine <see cref="VCard"/> properties with plural names.
+    /// </remarks>
+    /// <example>
+    /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
+    /// </example>
+    public static IEnumerable<TSource> Items<TSource>(this IEnumerable<TSource?>? values,
+                                                      bool discardEmptyItems = true)
+        where TSource : VCardProperty
+        => values is null ? []
+                          : discardEmptyItems ? values.WhereNotNull() 
+                                              : values.WhereNotEmpty();
+
+    /// <summary>
     /// Sorts the elements in <paramref name="values"/> ascending by the value of their 
     /// <see cref="ParameterSection.Index"/> property.
     /// </summary>
