@@ -124,11 +124,11 @@ public static class VCard40Example
         DateOnly date = default;
         bool found = composersVCard.Members
                 .OrderByPref()
-                .Where(x => x.Value?.VCard is not null)
-                .Select(x => x.Value!.VCard)
-                    .FirstOrDefault(x => x!.DisplayNames
-                                           .Items()
-                                           .Any(x => x.Value == "Ludwig van Beethoven"))?
+                .Select(x => x.Value?.VCard)
+                .OfType<VCard>()
+                .FirstOrDefault(x => x.DisplayNames
+                                      .Items()
+                                      .Any(x => x.Value == "Ludwig van Beethoven"))?
                     .BirthDayViews
                     .FirstOrNull(x => x.Value?.TryAsDateOnly(out date) ?? false)
                      is not null;
@@ -148,12 +148,13 @@ composersVCard:
 BEGIN:VCARD
 VERSION:4.0
 KIND:group
-REV:20240215T212254Z
-UID:urn:uuid:51784d87-7ad3-4c47-a199-995544b3c769
+CREATED;VALUE=TIMESTAMP:20241101T222925Z
+REV:20241101T222930Z
+UID:urn:uuid:2a842cde-fcef-4dd1-8ddf-d8bdd5311c8a
 FN:Composers
-MEMBER;VALUE=URI:urn:uuid:1b5097d0-5e4b-457a-99b0-d0c988e45eb9
-MEMBER;VALUE=URI:urn:uuid:733732f0-75c0-44bb-8199-0ce56ce3c4d0
-MEMBER;VALUE=URI:urn:uuid:80971089-e932-4e73-a241-6b79415d00d2
+MEMBER;VALUE=URI:urn:uuid:f289f7a3-cff1-4218-917d-4b658327d01f
+MEMBER;VALUE=URI:urn:uuid:1f2ebe9f-ae42-4fd9-8ff8-3abcfd58f4bb
+MEMBER;VALUE=URI:urn:uuid:333eeeaf-b39c-49ce-8320-89154af2f8ad
 END:VCARD
 
 What year was Beethoven born?: 1770

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Extensions;
 
 namespace Examples;
 
@@ -48,7 +49,7 @@ public static class AnsiFilterExample
         writer.Write(Path.GetFileName(vcfFileName));
         writer.WriteLine(':');
         writer.Write(indent);
-        writer.WriteLine(vCards.FirstOrDefault()?.DisplayNames?.FirstOrDefault()?.Value);
+        writer.WriteLine(vCards.FirstOrDefault()?.DisplayNames.FirstOrNull()?.Value);
         writer.Write(indent);
         writer.Write("Encoding: ");
         writer.WriteLine(encodingWebName);

@@ -15,7 +15,7 @@ public class ExtensionMethodExample
         Console.WriteLine(vc);
         Console.WriteLine("\n=====================================\n");
 
-        // (The extension methods will undertake all the necerssary
+        // (The extension methods will do all the necerssary
         // null checking.)
 
         // Group properties by their group name. (Group names are

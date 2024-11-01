@@ -473,8 +473,8 @@ public static class IEnumerableExtension
                                                       bool discardEmptyItems = true)
         where TSource : VCardProperty
         => values is null ? []
-                          : discardEmptyItems ? values.WhereNotNull() 
-                                              : values.WhereNotEmpty();
+                          : discardEmptyItems ? values.WhereNotEmpty()
+                                              : values.WhereNotNull();
 
     /// <summary>
     /// Sorts the elements in <paramref name="values"/> ascending by the value of their 

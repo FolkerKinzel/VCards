@@ -55,8 +55,6 @@ internal class Program
 
     }
 
-
-
     private static void StartAnsiFilterExample()
     {
         string sourcePath = Path.GetFullPath(@"..\..\..\AnsiFilterExamples");

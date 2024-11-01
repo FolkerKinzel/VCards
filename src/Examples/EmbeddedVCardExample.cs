@@ -26,14 +26,14 @@ public static class EmbeddedVCardExample
 
         // In order to fix this you need to get the VCard reference from the
         // RelationProperty:
-        var vc3 = new VCard();
+        VCard vc3 = new();
         var prop3 = Mod::RelationProperty.FromVCard(vc3);
-        vc3 = prop3.Value!.VCard; // Get the reference!
-        vc3!.DisplayNames = new Mod::TextProperty("Dagobert Duck");
+        vc3 = prop3.Value!.VCard!; // Get the reference!
+        vc3.DisplayNames = new Mod::TextProperty("Dagobert Duck");
         Console.WriteLine("prop3, DisplayName: {0}", GetDisplayName(prop3));
 
         static string GetDisplayName(Mod::RelationProperty prop)
-            => prop.Value!.VCard!.DisplayNames.PrefOrNull()?.Value ?? "<null>";
+            => prop.Value?.VCard?.DisplayNames.PrefOrNull()?.Value ?? "<null>";
     }
 }
 

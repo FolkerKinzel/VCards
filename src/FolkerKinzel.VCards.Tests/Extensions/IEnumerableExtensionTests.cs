@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Extensions.Tests;
 
@@ -409,35 +410,35 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void PrefOrNullTest2()
     {
-        VCardProperty[]? props = new[] { new TextProperty(null) };
+        VCardProperty[]? props = [new TextProperty(null)];
         Assert.IsNull(props.PrefOrNull());
     }
 
     [TestMethod]
     public void PrefOrNullTest3()
     {
-        VCardProperty[]? props = new[] { new TextProperty(null) };
+        VCardProperty[]? props = [new TextProperty(null)];
         Assert.IsNotNull(props.PrefOrNull(ignoreEmptyItems: false));
     }
 
     [TestMethod]
     public void PrefOrNullTest4()
     {
-        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        VCardProperty[]? props = [new TextProperty("Hi")];
         Assert.IsNotNull(props.PrefOrNull());
     }
 
     [TestMethod]
     public void PrefOrNullTest5()
     {
-        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        VCardProperty[]? props = [new TextProperty("Hi")];
         Assert.IsNotNull(props.PrefOrNull(null));
     }
 
     [TestMethod]
     public void PrefOrNullTest6()
     {
-        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        VCardProperty[]? props = [new TextProperty("Hi")];
         props.PrefOrNull(static x => x is TextProperty);
     }
 
@@ -472,35 +473,35 @@ public class IEnumerableExtensionTests
     [TestMethod]
     public void FirstOrNullTest2()
     {
-        VCardProperty[]? props = new[] { new TextProperty(null) };
+        VCardProperty[]? props = [new TextProperty(null)];
         Assert.IsNull(props.FirstOrNull());
     }
 
     [TestMethod]
     public void FirstOrNullTest3()
     {
-        VCardProperty[]? props = new[] { new TextProperty(null) };
+        VCardProperty[]? props = [new TextProperty(null)];
         Assert.IsNotNull(props.FirstOrNull(ignoreEmptyItems: false));
     }
 
     [TestMethod]
     public void FirstOrNullTest4()
     {
-        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        VCardProperty[]? props = [new TextProperty("Hi")];
         Assert.IsNotNull(props.FirstOrNull());
     }
 
     [TestMethod]
     public void FirstOrNullTest5()
     {
-        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        VCardProperty[]? props = [new TextProperty("Hi")];
         Assert.IsNotNull(props.FirstOrNull(null));
     }
 
     [TestMethod]
     public void FirstOrNullTest6()
     {
-        VCardProperty[]? props = new[] { new TextProperty("Hi") };
+        VCardProperty[]? props = [new TextProperty("Hi")];
         props.FirstOrNull(static x => x is TextProperty);
     }
 
@@ -536,7 +537,7 @@ public class IEnumerableExtensionTests
     public void OrderByPrefTest2()
     {
         var prop = new TextProperty("Hi");
-        VCardProperty[]? props = new[] { prop };
+        VCardProperty[]? props = [prop];
         Assert.IsTrue(props.OrderByPref(false).Any());
     }
 
@@ -545,7 +546,7 @@ public class IEnumerableExtensionTests
     {
         var prop = new TextProperty("Hi");
         prop.Parameters.Index = 1;
-        VCardProperty[]? props = new[] { prop };
+        VCardProperty[]? props = [prop];
         Assert.IsTrue(props.OrderByIndex(false).Any());
     }
 
@@ -793,5 +794,34 @@ public class IEnumerableExtensionTests
         IEnumerable<TextProperty?>? newProp = numerable.Remove(prop);
         Assert.IsNotNull(newProp);
         Assert.AreEqual(0, newProp.Count());
+    }
+
+    [TestMethod]
+    public void ItemsTest1()
+    {
+        TextProperty?[]? props = null;
+        Assert.IsNotNull(props.Items());
+    }
+
+    [TestMethod]
+    public void ItemsTest2()
+    {
+        TextProperty?[] props = [new TextProperty("")];
+        Assert.IsFalse(props.Items().Any());
+    }
+
+    [TestMethod]
+    public void ItemsTest3()
+    {
+        TextProperty?[] props = [new TextProperty("")];
+        Assert.IsNotNull(props.Items(discardEmptyItems: false).FirstOrDefault());
+    }
+
+    [TestMethod]
+    public void ItemsTest4()
+    {
+        TextProperty?[] props = [null, new TextProperty(""), null, new TextProperty("1")];
+        Assert.AreEqual(1, props.Items().Count());  
+        Assert.IsNotNull(props.Items().First());
     }
 }
