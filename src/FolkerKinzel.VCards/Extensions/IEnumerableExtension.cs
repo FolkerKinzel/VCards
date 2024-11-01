@@ -830,7 +830,6 @@ public static class IEnumerableExtension
         values.UnsetIndexesIntl();
     }
 
-
     /// <summary>
     /// Sets the <see cref="ParameterSection.AltID"/>s of the items in a 
     /// <see cref="VCardProperty"/> collection to the specified value.
@@ -857,6 +856,4 @@ public static class IEnumerableExtension
             }
         }
     }
-
-
 }

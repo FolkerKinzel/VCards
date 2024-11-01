@@ -57,13 +57,20 @@ and let it store as string[]
 - [x] Add `X-ABLabel` to the documentation of the `VCardBuilder.NonStandards` property
 
 &nbsp;
-- [ ] Implement RFC 9555 (partially):
+- [x] Implement RFC 9555 (partially):
     - [x] Add enum value `Opts.WriteRfc9555Extensions` 
     - [x] Implement in `VCard`: `IEnumerable<TextProperty?>? JSContactProps { get; set; }` (`JSPROP`)
-    - [ ] Implement in `ParameterSection`: `string? ComponentOrder { get; set; }` (`JSCOMPS`)
-    - [ ] Implement in `ParameterSection`: `string? JSContactPointer { get; set; }` (`JSPTR`)
-    - [ ] Change `DefaultNameFormatter` to respect `ParameterSection.ComponentOrder`
-    - [ ] Change `DefaultAddressFormatter` to respect `ParameterSection.ComponentOrder`
+    - [x] Implement in `ParameterSection`: `string? ComponentOrder { get; set; }` (`JSCOMPS`)
+    - [x] Implement in `ParameterSection`: `string? JSContactPointer { get; set; }` (`JSPTR`)
+    - [x] Change `DefaultNameFormatter` to respect `ParameterSection.ComponentOrder`
+    - [x] Change `DefaultAddressFormatter` to respect `ParameterSection.ComponentOrder`
+
+&nbsp;
+- [x] New extension method:
+```csharp
+IEnumerable<TSource> Items<TSource>(this IEnumerable<TSource?>?, bool discardEmptyItems = true)
+        where TSource : VCardProperty
+```
 
 
 ### 7.3.0
