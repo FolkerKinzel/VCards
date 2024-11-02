@@ -10,6 +10,10 @@
     - [ ] Let the 'IDProperty' have an instance of the `ContactID` class as value.
     - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
 
+ &nbsp;
+ - [ ] Change `VCards.Enums.EMail` to be an enum
+ - [ ] Change the `string? ParameterSection.EMailType` property to `Email? ParameterSection.EMailType`
+
 &nbsp;
 - [ ] **Remove Address.ToLabel()**
 - [ ] **Remove AddressProperty.AttachLabel()**
