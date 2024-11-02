@@ -4,7 +4,7 @@
             had been embedded in their <a href="dd88778d-2741-7f5e-33a2-1ce764d4da37.htm">Relations</a> property. The previously 
             embedded <a href="23413828-9a4a-2851-b88b-84d0afcb0031.htm">VCard</a> objects are now referenced by <a href="fafb9a2d-3fc2-1db2-dd49-90299dc5fc8e.htm">RelationProperty</a> 
             objects that are initialized with the value of the <a href="5913b05b-0099-90a2-2736-25ace1bce6f9.htm">ID</a>
-            property of these previously embedded <a href="23413828-9a4a-2851-b88b-84d0afcb0031.htm">VCard</a>s.</div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Definition</h2><div id="IDBSection"><strong>Namespace:</strong> <a href="67dce261-ab8f-dd0a-4c0c-bc2633c1719e.htm">FolkerKinzel.VCards</a><br /><strong>Assembly:</strong> FolkerKinzel.VCards (in FolkerKinzel.VCards.dll) Version: 7.4.0-beta.1+7a57e47c47dbc0104e95827c4a80f7095fcaa06e<div class="codeSnippet" data-codeSnippetLanguage="cs"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs"><span class="keyword">public</span> <span class="keyword">static</span> <span class="identifier">IEnumerable</span>&lt;<span class="identifier">VCard</span>&gt; <span class="identifier">Reference</span>(
+            property of these previously embedded <a href="23413828-9a4a-2851-b88b-84d0afcb0031.htm">VCard</a>s.</div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Definition</h2><div id="IDBSection"><strong>Namespace:</strong> <a href="67dce261-ab8f-dd0a-4c0c-bc2633c1719e.htm">FolkerKinzel.VCards</a><br /><strong>Assembly:</strong> FolkerKinzel.VCards (in FolkerKinzel.VCards.dll) Version: 7.4.0+e9f689a8a20c8a4389aa1945ca74e1096cd522fc<div class="codeSnippet" data-codeSnippetLanguage="cs"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs"><span class="keyword">public</span> <span class="keyword">static</span> <span class="identifier">IEnumerable</span>&lt;<span class="identifier">VCard</span>&gt; <span class="identifier">Reference</span>(
 	<span class="identifier">IEnumerable</span>&lt;<span class="identifier">VCard</span>?&gt; <span class="parameter">vCards</span>
 )</code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="vb"><div class="codeHeader"><span class="codeHeaderTitle">VB</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-vb"><span class="keyword">Public</span> <span class="keyword">Shared</span> <span class="keyword">Function</span> <span class="identifier">Reference</span> ( 
 	<span class="parameter">vCards</span> <span class="keyword">As</span> <span class="identifier">IEnumerable</span>(<span class="keyword">Of</span> <span class="identifier">VCard</span>)
@@ -108,8 +108,9 @@ public static class VCard40Example
         Console.WriteLine();
         Console.WriteLine(
             referenced
-                .Where(x =&gt; x.DisplayNames?
-                             .Any(x =&gt; StringComparer.Ordinal.Equals(x?.Value, "Composers")) ?? false)
+                .Where(x =&gt; x.DisplayNames
+                             .Items()
+                             .Any(x =&gt; StringComparer.Ordinal.Equals(x.Value, "Composers")))
                 .First()
                 .ToVcfString(VCdVersion.V4_0));
 
@@ -137,7 +138,7 @@ public static class VCard40Example
         composersVCard = dereferenced
             .FirstOrDefault
              (
-              x =&gt; x.DisplayNames?.Any(x =&gt; x?.Value == "Composers") ?? false
+              x =&gt; x.DisplayNames.Items().Any(x =&gt; x.Value == "Composers")
              );
 
         if (composersVCard is null)
@@ -168,11 +169,12 @@ public static class VCard40Example
         DateOnly date = default;
         bool found = composersVCard.Members
                 .OrderByPref()
-                .Where(x =&gt; x.Value!.VCard is not null)
-                .Select(x =&gt; x.Value!.VCard)
-                    .FirstOrDefault(x =&gt; x!.DisplayNames?
-                                           .Any(x =&gt; x?.Value == "Ludwig van Beethoven") ?? false)?
-                    .BirthDayViews?
+                .Select(x =&gt; x.Value?.VCard)
+                .OfType&lt;VCard&gt;()
+                .FirstOrDefault(x =&gt; x.DisplayNames
+                                      .Items()
+                                      .Any(x =&gt; x.Value == "Ludwig van Beethoven"))?
+                    .BirthDayViews
                     .FirstOrNull(x =&gt; x.Value?.TryAsDateOnly(out date) ?? false)
                      is not null;
 
@@ -191,12 +193,13 @@ composersVCard:
 BEGIN:VCARD
 VERSION:4.0
 KIND:group
-REV:20240215T212254Z
-UID:urn:uuid:51784d87-7ad3-4c47-a199-995544b3c769
+CREATED;VALUE=TIMESTAMP:20241101T222925Z
+REV:20241101T222930Z
+UID:urn:uuid:2a842cde-fcef-4dd1-8ddf-d8bdd5311c8a
 FN:Composers
-MEMBER;VALUE=URI:urn:uuid:1b5097d0-5e4b-457a-99b0-d0c988e45eb9
-MEMBER;VALUE=URI:urn:uuid:733732f0-75c0-44bb-8199-0ce56ce3c4d0
-MEMBER;VALUE=URI:urn:uuid:80971089-e932-4e73-a241-6b79415d00d2
+MEMBER;VALUE=URI:urn:uuid:f289f7a3-cff1-4218-917d-4b658327d01f
+MEMBER;VALUE=URI:urn:uuid:1f2ebe9f-ae42-4fd9-8ff8-3abcfd58f4bb
+MEMBER;VALUE=URI:urn:uuid:333eeeaf-b39c-49ce-8320-89154af2f8ad
 END:VCARD
 
 What year was Beethoven born?: 1770
