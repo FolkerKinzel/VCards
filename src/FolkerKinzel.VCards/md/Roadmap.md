@@ -4,54 +4,76 @@
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
+### 8.0.1
+- Remove symbols that are marked as `Obsolete` errors.
+
 ### 8.0.0
 - [ ] Fix the issue that with `UID` only Guid values are supported
     - [ ] Implement a `ContactID` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
     - [ ] Let the 'IDProperty' have an instance of the `ContactID` class as value.
     - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
 
- &nbsp;
- - [ ] Change `VCards.Enums.EMail` to be an enum
- - [ ] Change the `string? ParameterSection.EMailType` property to `Email? ParameterSection.EMailType`
+&nbsp;
+- [ ] Remove NameProperty.ToDisplayName()
+- [ ] `NameProperty`: Allow only ctors that take a `NamePropertyBuilder` as argument.
 
 &nbsp;
-- [ ] **Remove Address.ToLabel()**
-- [ ] **Remove AddressProperty.AttachLabel()**
-- [ ] **Remove AddressProperty.ToLabel()**
-- [ ] **Remove Name.ToDisplayName()**
-- [ ] **Remove NameProperty.ToDisplayName()**
-
-&nbsp;
-- [ ] **Change the properties of the `Name` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`**
-- [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
 - [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method
-- [ ] Rename `Name.AdditionalNames` to `Name.MiddleNames`
-- [ ] Rename `NameBuilder.AddAdditionalName(string)` to `NameBuilder.AddMiddleName(string)`
+- [ ] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `NameViewsBuilder`
 
 &nbsp;
-- [ ] **Change the properties of the `Address` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`**
-- [ ] Let `Address` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [ ] Change the properties of the `Name` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
+- [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [ ] Remove all ctors that don't take a `NameBuilder` or `VcfRow` as argument
+- [ ] Remove Name.ToDisplayName()
+<!--- [ ] Rename `Name.Prefixes` to `Name.Titles`
+- [ ] Rename `NameBuilder.AddPrefix(string)` to `NameBuilder.AddTitle(string)`-->
+- [ ] Rename `Name.GivenNames` to `Name.Given`
+- [ ] Rename `NameBuilder.AddGivenName(string)` to `NameBuilder.AddGiven(string)`
+
+- [ ] Rename `Name.AdditionalNames` to `Name.Given2`
+- [ ] Rename `NameBuilder.AddAdditionalName(string)` to `NameBuilder.AddGiven2(string)`
+- [ ] Rename `Name.FamilyNames` to `Name.Surnames`
+- [ ] Rename `NameBuilder.AddFamilyName(string)` to `NameBuilder.AddSurname(string)`
+<!--- [ ] Rename `Name.Suffixes` to `Name.Credentials`
+- [ ] Rename `NameBuilder.AddSuffix(string)` to `NameBuilder.AddCredential(string)`-->
+
+&nbsp;
+- [ ] `AddressProperty`: Allow only ctors that take an `AddressBuilder` as argument
+- [ ] Remove `AddressProperty.AttachLabel()`
+- [ ] Remove `AddressProperty.ToLabel()`
+
+&nbsp;
 - [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.AddressBuilder.Add` method
+- [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
+
 
 &nbsp;
-- [ ] **Change the `StringCollection.Value` property to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`**
+- [ ] Change the properties of the `Address` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
+- [ ] Let `Address` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [ ] Remove Address.ToLabel()
+
+
+&nbsp;
+- [ ] Change the `StringCollection.Value` property to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
 and let it store as string[]
 
 &nbsp;
-- [ ] `NameProperty`: Allow only ctors that take a `NamePropertyBuilder` as argument.
-- [ ] `AddressProperty`: Allow only ctors that take an `AddressPropertyBuilder` as argument
-
-&nbsp;
-- [ ] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `NameViewsBuilder`
-- [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
 - [ ] Rename the `VCardBuilder.TimeStamp` property to `VCardBuilder.Updated`
 - [ ] Rename the `Prop.TimeStamp` value to `Prop.Updated`
 - [ ] Rename the `setTimeStamp` parameter in the `VCard` ctor to `setUpdated`
 - [ ] Rename the `setTimeStamp` parameter in `VCardBuilder.Create(bool, bool)` to `setUpdated`
+
+&nbsp;
 - [ ] Rename the `VCard.Languages` property to `SpokenLanguages`
 - [ ] Rename the `Prop.Languages` value to `Prop.SpokenLanguages`
+
+&nbsp;
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
+
+### 7.4.1
+- [ ] Dependency update
 
 ### 7.4.0
 - [x] Implement in VCard: `IEnumerable<TextProperty?>? ABLabels {get; set;}`  (`X-ABLabel` from Apple Address Book)
