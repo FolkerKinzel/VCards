@@ -1,7 +1,7 @@
 # FolkerKinzel.VCards
 [![NuGet](https://img.shields.io/nuget/v/FolkerKinzel.VCards)](https://www.nuget.org/packages/FolkerKinzel.VCards/)
 [![GitHub](https://img.shields.io/github/license/FolkerKinzel/VCards)](https://github.com/FolkerKinzel/VCards/blob/master/LICENSE)
-
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 ## .NET library for reading, writing, and converting VCF files that comply with vCard standards 2.1, 3.0 and 4.0
 
 [&rarr; Project Reference](https://folkerkinzel.github.io/VCards/reference/)
