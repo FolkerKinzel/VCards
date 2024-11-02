@@ -329,6 +329,9 @@ public sealed partial class ParameterSection
     /// points to the JSContact property whose value is stored in the <see cref="VCardProperty"/>. <c>(4 - RFC&#160;9555)</c>
     /// </summary>
     /// <value>A valid JSON pointer as defined in RFC&#160;6901.</value>
+#if NET8_0_OR_GREATER
+    [StringSyntax(StringSyntaxAttribute.Json)]
+#endif
     public string? JSContactPointer
     {
         get => Get<string?>(VCdParam.JSContactPointer);
