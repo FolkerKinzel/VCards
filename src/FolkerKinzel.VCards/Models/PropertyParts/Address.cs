@@ -19,6 +19,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
     private const int MAX_COUNT = (int)AdrProp.Direction + 1;
     private readonly Dictionary<AdrProp, ReadOnlyCollection<string>> _dic = [];
     private readonly ReadOnlyCollection<string> _streetView;
+    private readonly ReadOnlyCollection<string> _extendedView;
 
     private ReadOnlyCollection<string> Get(AdrProp prop)
         => _dic.TryGetValue(prop, out ReadOnlyCollection<string>? coll)
@@ -64,6 +65,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         Add(AdrProp.Country, country);
 
         _streetView = street;
+        _extendedView = extendedAddress;
     }
 
     #endregion
@@ -72,10 +74,13 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         Justification = "Performance: Collection initializer initializes a new List.")]
     internal Address(AddressBuilder builder)
     {
-        List<string>? newVals = null;
+        Dictionary<AdrProp, List<string>>? newVals = null;
         bool streetHasData = false;
+        bool extendedHasData = false;
+        bool newStreetHasData = false;
+        bool newExtendedHasData = false;
 
-        foreach (KeyValuePair<AdrProp, List<string>> kvp in builder.Data.OrderBy(x => x.Key))
+        foreach (KeyValuePair<AdrProp, List<string>> kvp in builder.Data)
         {
             if (kvp.Value.Count != 0)
             {
@@ -85,21 +90,29 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
                 switch (kvp.Key)
                 {
                     case AdrProp.Street:
-                        streetHasData |= true;
+                        streetHasData = true;
+                        break;
+                    case AdrProp.ExtendedAddress:
+                        extendedHasData = true;
                         break;
                     case AdrProp.Room:
                     case AdrProp.Apartment:
                     case AdrProp.Floor:
+                    case AdrProp.Building:
+                        newVals ??= [];
+                        newVals[kvp.Key] = kvp.Value;
+                        newExtendedHasData = true;
+                        break;
+                    case AdrProp.Block:
                     case AdrProp.StreetNumber:
                     case AdrProp.StreetName:
-                    case AdrProp.Building:
-                    case AdrProp.Block:
                     case AdrProp.SubDistrict:
                     case AdrProp.District:
                     case AdrProp.Landmark:
                     case AdrProp.Direction:
                         newVals ??= [];
-                        newVals.AddRange(kvp.Value);
+                        newVals[kvp.Key] = kvp.Value;
+                        newStreetHasData = true;
                         break;
                     default:
                         break;
@@ -107,19 +120,61 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
             }
         }
 
-        if (!streetHasData && newVals is not null)
+        if (!streetHasData && newStreetHasData)
         {
-            _dic[AdrProp.Street] = newVals.AsReadOnly();
+            Debug.Assert(newVals is not null);
+
+            ReadOnlySpan<AdrProp> keys = [AdrProp.StreetName,
+                                          AdrProp.StreetNumber,
+                                          AdrProp.Block,
+                                          AdrProp.Landmark,
+                                          AdrProp.Direction,
+                                          AdrProp.SubDistrict,
+                                          AdrProp.District];
+
+            Add(keys, newVals, AdrProp.Street);
         }
 
-        _streetView = GetStreetView();
+        if (!extendedHasData && newExtendedHasData)
+        {
+            Debug.Assert(newVals is not null);
+            ReadOnlySpan<AdrProp> keys = [AdrProp.Building,
+                                          AdrProp.Floor,
+                                          AdrProp.Apartment,
+                                          AdrProp.Room];
+
+            Add(keys, newVals, AdrProp.ExtendedAddress);
+        }
+
+        _streetView = newStreetHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.Street);
+        _extendedView = newExtendedHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.ExtendedAddress);
     }
 
-    internal Address() => _streetView = ReadOnlyStringCollection.Empty;
+    private void Add(ReadOnlySpan<AdrProp> keys, Dictionary<AdrProp, List<string>> dic, AdrProp target)
+    {
+        List<string> list = [];
+
+        for (int i = 0; i < keys.Length; i++)
+        {
+            if (dic.TryGetValue(keys[i], out List<string>? strings))
+            {
+                Debug.Assert(strings.Count != 0);
+                list.AddRange(strings);
+            }
+        }
+
+        Debug.Assert(list.Count != 0);
+
+        _dic[target] = list.AsReadOnly();
+    }
+
+    internal Address() => _streetView = _extendedView = ReadOnlyStringCollection.Empty;
 
     internal Address(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
         int index = -1;
+        bool newStreetHasData = false;
+        bool newExtendedHasData = false;
 
         foreach (ReadOnlyMemory<char> mem in PropertyValueSplitter.SplitIntoMemories(vCardValue, ';'))
         {
@@ -145,27 +200,51 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
                 continue;
             }
 
-            _dic[(AdrProp)index] = coll;
+            var key = (AdrProp)index;
+            _dic[key] = coll;
+
+            switch (key)
+            {
+                case AdrProp.Room:
+                case AdrProp.Apartment:
+                case AdrProp.Floor:
+                case AdrProp.Building:
+                    newExtendedHasData = true;
+                    break;
+                case AdrProp.Block:
+                case AdrProp.StreetNumber:
+                case AdrProp.StreetName:
+                case AdrProp.SubDistrict:
+                case AdrProp.District:
+                case AdrProp.Landmark:
+                case AdrProp.Direction:
+                    newStreetHasData = true;
+                    break;
+                default:
+                    break;
+            }
+
         }//foreach
 
-        _streetView = GetStreetView();
+        _streetView = newStreetHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.Street);
+        _extendedView = newExtendedHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.ExtendedAddress);
 
         ////////////////////////////////////////////////
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static string[] ToArray(in ReadOnlyMemory<char> mem, VCdVersion version)
-            => PropertyValueSplitter.Split(mem,
-                                    ',',
-                                    StringSplitOptions.RemoveEmptyEntries,
-                                    unMask: true,
-                                    version).ToArray();
+        => PropertyValueSplitter.Split(mem,
+                                ',',
+                                StringSplitOptions.RemoveEmptyEntries,
+                                unMask: true,
+                                version).ToArray();
     }
 
     /// <summary>The post office box.</summary>
     public ReadOnlyCollection<string> PostOfficeBox => Get(AdrProp.PostOfficeBox);
 
     /// <summary>The extended address (e.g., apartment or suite number).</summary>
-    public ReadOnlyCollection<string> ExtendedAddress => Get(AdrProp.ExtendedAddress);
+    public ReadOnlyCollection<string> ExtendedAddress => _extendedView;
 
     /// <summary>The street address.</summary>
     /// <remarks>
@@ -322,12 +401,4 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
         return false;
     }
-
-    private ReadOnlyCollection<string> GetStreetView()
-        => _dic.Any(x => x.Key > AdrProp.Country)
-                ? ReadOnlyStringCollection.Empty
-                : Get(AdrProp.Street);
-
-
-
 }

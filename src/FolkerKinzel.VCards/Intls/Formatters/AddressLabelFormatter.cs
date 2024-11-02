@@ -41,27 +41,41 @@ internal static class AddressLabelFormatter
 
     private static StringBuilder AppendStreet(this StringBuilder builder, Address address)
     {
-        return address.PostOfficeBox.Count != 0 ? builder.AppendReadableProperty(address.PostOfficeBox, MAX_LINE_LENGTH)
-            : address.Street.Count != 0 ? builder.AppendReadableProperty(address.Street, MAX_LINE_LENGTH)
-            : builder.AppendReadableProperty(
-                address.StreetName
-                .Concat(address.StreetNumber)
-                .Concat(address.Building)
-                .Concat(address.Block)
-                .Concat(address.Floor)
-                .Concat(address.Apartment)
-                .Concat(address.Room)
-                .Concat(address.District)
-                .Concat(address.SubDistrict)
-                .Concat(address.Landmark)
-                .Concat(address.Direction), MAX_LINE_LENGTH);
+        IReadOnlyList<string> poBox = address.PostOfficeBox;
+
+        if (poBox.Count != 0)
+        {
+            return builder.AppendReadableProperty(poBox, MAX_LINE_LENGTH);
+        }
+
+        IReadOnlyList<string> street = address.Street;
+
+            return street.Count != 0 
+                    ? builder.AppendReadableProperty(street, MAX_LINE_LENGTH)
+                    : builder.AppendReadableProperty(
+                        address.StreetName
+                        .Concat(address.StreetNumber)
+                        .Concat(address.Block)
+                        .Concat(address.Landmark)
+                        .Concat(address.Direction)
+                        .Concat(address.SubDistrict)
+                        .Concat(address.District)
+                        , MAX_LINE_LENGTH);
+        
     }
 
     private static StringBuilder AppendExtendedAddress(this StringBuilder builder, Address address)
     {
-        return address.ExtendedAddress.Count != 0
-            ? builder.AppendNewLineIfNeeded().AppendReadableProperty(address.ExtendedAddress, MAX_LINE_LENGTH)
-            : builder;
+        IReadOnlyList<string> extAddress = address.ExtendedAddress;
+
+        return extAddress.Count != 0
+            ? builder.AppendNewLineIfNeeded().AppendReadableProperty(extAddress, MAX_LINE_LENGTH)
+            : builder.AppendNewLineIfNeeded().AppendReadableProperty(
+                address.Building
+                .Concat(address.Floor)
+                .Concat(address.Apartment)
+                .Concat(address.Room)
+                , MAX_LINE_LENGTH);
     }
 
     private static StringBuilder AppendLocality(this StringBuilder builder,
