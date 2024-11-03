@@ -9,6 +9,8 @@ using FolkerKinzel.VCards.Models;
 
 //var frozen = Enumerable.Range(1,2).ToFrozenDictionary(x => x);
 
-BenchmarkDotNet.Reports.Summary report = BenchmarkRunner.Run<FrozenDictionaryBench>();
+//BenchmarkDotNet.Reports.Summary report = BenchmarkRunner.Run<FrozenDictionaryBench>();
+BenchmarkDotNet.Reports.Summary report = BenchmarkRunner.Run<ConcatBench>();
+
 
 Console.WriteLine(report);
