@@ -47,7 +47,7 @@ public readonly struct IDBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TData>(Func<IDProperty?, TData, IDProperty?> func, TData data)
     {
-        var prop = Builder.VCard.ID;
+        IDProperty? prop = Builder.VCard.ID;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.ID = func.Invoke(prop, data);
         return _builder;
@@ -68,7 +68,7 @@ public readonly struct IDBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IDProperty?, IDProperty?> func)
     {
-        var prop = Builder.VCard.ID;
+        IDProperty? prop = Builder.VCard.ID;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.ID = func.Invoke(prop);
         return _builder;
@@ -91,7 +91,7 @@ public readonly struct IDBuilder
     public VCardBuilder Set(Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        var vc = Builder.VCard;
+        VCard vc = Builder.VCard;
         var property = new IDProperty(group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 
@@ -103,7 +103,7 @@ public readonly struct IDBuilder
     /// Sets the <see cref="VCard.ID"/> property to a <see cref="IDProperty"/> instance that is newly 
     /// initialized using a specified <see cref="Guid"/>.
     /// </summary>
-    /// <param name="value">A <see cref="Guid" /> value.</param>
+    /// <param name="uuid">A <see cref="Guid" /> value.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
@@ -114,12 +114,71 @@ public readonly struct IDBuilder
     /// be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Set(Guid value,
+    public VCardBuilder Set(Guid uuid,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        var vc = Builder.VCard;
-        var property = new IDProperty(value, group?.Invoke(vc));
+        VCard vc = Builder.VCard;
+        var property = new IDProperty(uuid, group?.Invoke(vc));
+        parameters?.Invoke(property.Parameters);
+
+        vc.Set(Prop.ID, property);
+        return _builder;
+    }
+
+    /// <summary>
+    /// Sets the <see cref="VCard.ID"/> property to a <see cref="IDProperty"/> instance that is newly 
+    /// initialized using a specified absolute <see cref="Uri"/>.
+    /// </summary>
+    /// <param name="uri">An absolute <see cref="Uri" />.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
+    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
+    /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
+    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
+    /// be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="uri"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="uri"/> is not an absolute <see cref="Uri"/>.</exception>
+    public VCardBuilder Set(Uri uri,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
+    {
+        VCard vc = Builder.VCard;
+        var property = new IDProperty(uri, group?.Invoke(vc));
+        parameters?.Invoke(property.Parameters);
+
+        vc.Set(Prop.ID, property);
+        return _builder;
+    }
+
+    /// <summary>
+    /// Sets the <see cref="VCard.ID"/> property to a <see cref="IDProperty"/> instance that is newly 
+    /// initialized using specified free-form text.
+    /// </summary>
+    /// <param name="text">Free-form text that can be used as identifier.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
+    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
+    /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
+    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
+    /// be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="text"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="text"/> is an empty <see cref="string"/> 
+    /// or consists only of white space.</exception>
+    public VCardBuilder Set(string text,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
+    {
+        VCard vc = Builder.VCard;
+        var property = new IDProperty(text, group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 
         vc.Set(Prop.ID, property);

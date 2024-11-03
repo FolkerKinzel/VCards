@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Resources;
+﻿using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Resources;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
@@ -19,25 +20,51 @@ public sealed class ContactID : IEquatable<ContactID>
     internal static ContactID Create(Guid guid) 
         => guid == System.Guid.Empty ? Empty : new ContactID(guid);
 
+    /// <summary>
+    /// Creates a new <see cref="ContactID"/> instance from a specified
+    /// absolute <see cref="System.Uri"/>.
+    /// </summary>
+    /// <param name="uri">An absolute <see cref="System.Uri"/>.</param>
+    /// <returns>The newly created <see cref="ContactID"/> instance.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="uri"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="uri"/> is not an absolute <see cref="Uri"/>.</exception>
     internal static ContactID Create(Uri uri)
     {
-        Debug.Assert(uri != null);
-        Debug.Assert(uri.IsAbsoluteUri);
+        _ArgumentNullException.ThrowIfNull(uri, nameof(uri));
+
+        if (!uri.IsAbsoluteUri)
+        {
+            throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)));
+        }
 
         return new ContactID(uri);
     }
 
-    internal static ContactID Create(String str)
+    /// <summary>
+    /// Creates a new <see cref="ContactID"/> instance from a specified
+    /// <see cref="string"/>.
+    /// </summary>
+    /// <param name="text">A <see cref="string"/> that can be used as identifier.</param>
+    /// <returns>The newly created <see cref="ContactID"/> instance.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="text"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="text"/> is an empty <see cref="string"/> 
+    /// or consists only of white space.</exception>
+    internal static ContactID Create(string text)
     {
-        Debug.Assert(!string.IsNullOrWhiteSpace(str));
+        _ArgumentNullException.ThrowIfNull(text, nameof(text));
 
-        return new ContactID(str);
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            throw new ArgumentException(string.Format(Res.Whitespace, nameof(text)));
+        }
+
+        return new ContactID(text);
     }
 
     /// <summary>
     /// <c>true</c> if the instance doesn't reference anything, otherwise <c>false</c>.
     /// </summary>
-    public bool IsEmpty => IsGuid && Guid.Value == System.Guid.Empty;
+    public bool IsEmpty => object.ReferenceEquals(this, Empty);
 
     internal static ContactID Empty { get; } = new ContactID(System.Guid.Empty);
 
@@ -121,20 +148,39 @@ public sealed class ContactID : IEquatable<ContactID>
 
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(_oneOf);
-    
+
+    /// <summary>
+    /// Overloads the equality operator for <see cref="ContactID"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="ContactID"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="ContactID"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the <see cref="Value"/> of <paramref name="left"/> and 
+    /// <paramref name="right"/> is equal, otherwise <c>false</c>.</returns>
+    public static bool operator ==(ContactID? left, ContactID? right)
+        => object.ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
+
+    /// <summary>
+    /// Overloads the not-equal-to operator for <see cref="ContactID"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="ContactID"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="ContactID"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the <see cref="Value"/> of <paramref name="left"/> and 
+    /// <paramref name="right"/> is not equal, otherwise <c>false</c>.</returns>
+    public static bool operator !=(ContactID? left, ContactID? right)
+        => !(left == right);
 
     [MemberNotNullWhen(true, nameof(Guid))]
-    private bool IsGuid => _oneOf.IsT0;
+    internal bool IsGuid => _oneOf.IsT0;
 
     private Guid AsGuid => _oneOf.AsT0;
 
     [MemberNotNullWhen(true, nameof(Uri))]
-    private bool IsUri => _oneOf.IsT1;
+    internal bool IsUri => _oneOf.IsT1;
 
     private Uri AsUri => _oneOf.AsT1;
 
     [MemberNotNullWhen(true, nameof(String))]
-    private bool IsString => _oneOf.IsT2;
+    internal bool IsString => _oneOf.IsT2;
 
     private string AsString => _oneOf.AsT2;
 }

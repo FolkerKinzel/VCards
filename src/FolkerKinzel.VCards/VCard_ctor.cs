@@ -172,7 +172,7 @@ public sealed partial class VCard
                     ContactUris = Concat(ContactUris, new TextProperty(vcfRow, Version));
                     break;
                 case PropKeys.UID:
-                    ID = new IDProperty(vcfRow);
+                    ID = new IDProperty(vcfRow, Version);
                     break;
                 case PropKeys.ORG:
                     Organizations = Concat(Organizations, new OrgProperty(vcfRow, this.Version));

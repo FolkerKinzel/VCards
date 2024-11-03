@@ -37,18 +37,18 @@ internal static class UuidConverter
         return false;
     }
 
-    internal static Guid ToGuid(ReadOnlySpan<char> uuid)
+    internal static bool TryAsGuid(ReadOnlySpan<char> uuid, out Guid guid)
     {
         if (uuid.IsWhiteSpace() || uuid.Length < GUID_MIN_LENGTH)
         {
-            return Guid.Empty;
+            guid = Guid.Empty;
+            return false;
         }
 
         // e.g., urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
         uuid = uuid.Slice(uuid.LastIndexOf(':') + 1);
         
-        _ = _Guid.TryParse(uuid, out Guid guid);
-        return guid;
+        return _Guid.TryParse(uuid, out guid);
     }
 
     internal static StringBuilder AppendUuid(this StringBuilder builder, Guid guid, VCdVersion version = VCdVersion.V4_0)
@@ -59,7 +59,7 @@ internal static class UuidConverter
         {
             _ = builder.Append(UUID_PROTOCOL);
         }
-        _ = builder.Append(guid.ToString()); // FormatProvider ist reserviert
+        _ = builder.Append(guid.ToString()); // FormatProvider is reserved
 
         return builder;
     }
