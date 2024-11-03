@@ -20,8 +20,6 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
     private const int STANDARD_COUNT = 5;
     private const int MAX_COUNT = 7;
     private readonly Dictionary<NameProp, ReadOnlyCollection<string>> _dic = [];
-    private readonly ReadOnlyCollection<string> _familyNamesView;
-    private readonly ReadOnlyCollection<string> _suffixesView;
 
     private ReadOnlyCollection<string> Get(NameProp prop)
         => _dic.TryGetValue(prop, out ReadOnlyCollection<string>? coll)
@@ -70,13 +68,13 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
         Add(NameProp.Prefixes, prefixes);
         Add(NameProp.Suffixes, suffixes);
 
-        _familyNamesView = familyNames;
-        _suffixesView = suffixes;
+        FamilyNames = familyNames;
+        Suffixes = suffixes;
     }
 
     #endregion
 
-    internal Name() => _familyNamesView = _suffixesView = ReadOnlyStringCollection.Empty;
+    internal Name() => FamilyNames = Suffixes = ReadOnlyStringCollection.Empty;
 
     [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
         Justification = "Performance: Collection initializer initializes a new List.")]
@@ -122,8 +120,8 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
             AddOldValueForCompatibility(NameProp.Suffixes, suffixes, generation, builder.Worker);
         }
 
-        _familyNamesView = GetFamilyNamesView();
-        _suffixesView = GetSuffixesView();
+        FamilyNames = GetFamilyNamesView();
+        Suffixes = GetSuffixesView();
     }
 
     [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
@@ -203,8 +201,8 @@ repeat:
             _dic[(NameProp)index] = coll;
         }//foreach
 
-        _familyNamesView = GetFamilyNamesView();
-        _suffixesView = GetSuffixesView();
+        FamilyNames = GetFamilyNamesView();
+        Suffixes = GetSuffixesView();
 
         /////////////////////////////////////////
 
@@ -222,7 +220,7 @@ repeat:
     /// Returns a collection that omits any value if an equal value is set to
     /// <see cref="Surnames2"/> accordingly.
     /// </remarks>
-    public ReadOnlyCollection<string> FamilyNames => _familyNamesView;
+    public ReadOnlyCollection<string> FamilyNames { get; }
 
     /// <summary>Given Name(s) (first name(s)). (2,3,4)</summary>
     public ReadOnlyCollection<string> GivenNames => Get(NameProp.GivenNames);
@@ -239,7 +237,7 @@ repeat:
     /// Returns a collection that omits any value if an equal value is set to
     /// <see cref="Generations"/> accordingly.
     /// </remarks>
-    public ReadOnlyCollection<string> Suffixes => _suffixesView;
+    public ReadOnlyCollection<string> Suffixes { get; }
 
     /// <summary>Secondary surnames (used in some cultures), also known as "maternal surnames". (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Surnames2 => Get(NameProp.Surnames2);
@@ -270,8 +268,8 @@ repeat:
 
             return nameProp switch
             {
-                NameProp.FamilyNames => _familyNamesView,
-                NameProp.Suffixes => _suffixesView,
+                NameProp.FamilyNames => FamilyNames,
+                NameProp.Suffixes => Suffixes,
                 _ => Get(nameProp)
             };
         }
