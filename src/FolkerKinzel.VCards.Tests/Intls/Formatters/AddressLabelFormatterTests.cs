@@ -14,11 +14,17 @@ public class AddressLabelFormatterTests
         const string city = "Maxdorf";
         const string country = "Germany";
         const string street = "Röntgenstr. 9";
-        var address = new AddressProperty(street, city, null, zip, country);
+        var address = new AddressProperty(AddressBuilder
+            .Create()
+            .AddStreet(street)
+            .AddLocality(city)
+            .AddCountry(country)
+            .AddPostalCode(zip));
+        address.Parameters.Label = AddressFormatter.Default.ToLabel(address);
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{zip} {city}");
-        StringAssert.Contains(label, country.ToUpperInvariant());
+        StringAssert.Contains(label, country);
         Assert.IsFalse(label.HasEmptyLine());
     }
 
@@ -30,13 +36,23 @@ public class AddressLabelFormatterTests
         const string country = "Germany";
         const string street = "Röntgenstr. 9";
         const string poBox = "Postfach 4711";
-        var address = new AddressProperty(street, city, null, zip, country, postOfficeBox: poBox, extendedAddress: null);
+        var address = new AddressProperty(AddressBuilder
+            .Create()
+            .AddCountry(country)
+            .AddPostalCode(zip)
+            .AddLocality(city)
+            .AddStreet(street)
+            .AddPostOfficeBox(poBox)
+            );
+
+        address.Parameters.Label = AddressFormatter.Default.ToLabel(address);
+
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{zip} {city}");
         Assert.IsFalse(label!.Contains(street));
         Assert.IsTrue(label!.Contains(poBox));
-        StringAssert.Contains(label, country.ToUpperInvariant());
+        StringAssert.Contains(label, country);
         Assert.IsFalse(label.HasEmptyLine());
     }
 
@@ -48,11 +64,21 @@ public class AddressLabelFormatterTests
         const string state = "Sachsen-Anhalt";
         const string country = "Germany";
         const string street = "Röntgenstr. 9";
-        var address = new AddressProperty(street, city, state, zip, country);
+        var address = new AddressProperty(AddressBuilder
+            .Create()
+            .AddCountry(country)
+            .AddPostalCode(zip)
+            .AddLocality(city)
+            .AddStreet(street)
+            .AddRegion(state)
+            );
+
+        address.Parameters.Label = AddressFormatter.Default.ToLabel(address);
+
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{zip} {city}");
-        StringAssert.Contains(label, country.ToUpperInvariant());
+        StringAssert.Contains(label, country);
         StringAssert.Contains(label, state);
         Assert.IsFalse(label.HasEmptyLine());
     }
@@ -66,11 +92,23 @@ public class AddressLabelFormatterTests
         const string country = "Germany";
         const string street = "Röntgenstr. 9";
         const string extended = "3. Stock";
-        var address = new AddressProperty(street, city, state, zip, country, postOfficeBox: null, extendedAddress: extended);
+
+        var address = new AddressProperty(AddressBuilder
+            .Create()
+            .AddCountry(country)
+            .AddPostalCode(zip)
+            .AddLocality(city)
+            .AddStreet(street)
+            .AddRegion(state)
+            .AddExtendedAddress(extended)
+            );
+
+        address.Parameters.Label = AddressFormatter.Default.ToLabel(address);
+
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{zip} {city}");
-        StringAssert.Contains(label, country.ToUpperInvariant());
+        StringAssert.Contains(label, country);
         StringAssert.Contains(label, state);
         Assert.IsFalse(label.HasEmptyLine());
     }
@@ -85,11 +123,23 @@ public class AddressLabelFormatterTests
         const string zip = "2008";
         const string country = "United States";
         const string extended = "";
-        var address = new AddressProperty(street, city, state, zip, country, postOfficeBox: null, extendedAddress: extended);
+
+        var address = new AddressProperty(AddressBuilder
+            .Create()
+            .AddCountry(country)
+            .AddPostalCode(zip)
+            .AddLocality(city)
+            .AddStreet(street)
+            .AddRegion(state)
+            .AddExtendedAddress(extended)
+            );
+
+        address.Parameters.Label = AddressFormatter.Default.ToLabel(address);
+
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{city} {state} {zip}");
-        StringAssert.Contains(label, country.ToUpperInvariant());
+        StringAssert.Contains(label, country);
         StringAssert.Contains(label, state);
         Assert.IsFalse(label.HasEmptyLine());
     }
@@ -109,7 +159,7 @@ public class AddressLabelFormatterTests
 #pragma warning restore CS0618 // Type or member is obsolete
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{city} {state} {zip}");
-        StringAssert.Contains(label, country.ToUpperInvariant());
+        StringAssert.Contains(label, country);
         StringAssert.Contains(label, state);
         Assert.IsFalse(label.HasEmptyLine());
     }
@@ -153,7 +203,7 @@ public class AddressLabelFormatterTests
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{city} {zip} {state}");
-        StringAssert.Contains(label, country.ToUpperInvariant());
+        StringAssert.Contains(label, country);
         StringAssert.Contains(label, state);
         Assert.IsFalse(label.HasEmptyLine());
     }
@@ -167,11 +217,23 @@ public class AddressLabelFormatterTests
         const string zip = "2008";
         const string country = "United States";
         const string extended = "";
-        var prop = new AddressProperty(street, city, state, zip, country, postOfficeBox: null, extendedAddress: extended);
+
+        var prop = new AddressProperty(AddressBuilder
+            .Create()
+            .AddCountry(country)
+            .AddPostalCode(zip)
+            .AddLocality(city)
+            .AddStreet(street)
+            .AddRegion(state)
+            .AddExtendedAddress(extended)
+            );
+
+        prop.Parameters.Label = AddressFormatter.Default.ToLabel(prop);
+
         string? label = prop.Parameters.Label;
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{city} {state} {zip}");
-        StringAssert.Contains(label, country.ToUpperInvariant());
+        StringAssert.Contains(label, country);
         StringAssert.Contains(label, state);
         Assert.IsFalse(label.HasEmptyLine());
 
@@ -179,7 +241,7 @@ public class AddressLabelFormatterTests
         label = prop.ToLabel();
         Assert.IsNotNull(label);
         StringAssert.Contains(label, $"{zip} {city}");
-        StringAssert.Contains(label, country.ToUpperInvariant());
+        StringAssert.Contains(label, country);
         StringAssert.Contains(label, state);
         Assert.IsFalse(label.HasEmptyLine());
 

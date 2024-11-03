@@ -18,8 +18,6 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
     private const int STANDARD_COUNT = (int)AdrProp.Country + 1;
     private const int MAX_COUNT = (int)AdrProp.Direction + 1;
     private readonly Dictionary<AdrProp, ReadOnlyCollection<string>> _dic = [];
-    private readonly ReadOnlyCollection<string> _streetView;
-    private readonly ReadOnlyCollection<string> _extendedView;
 
     private ReadOnlyCollection<string> Get(AdrProp prop)
         => _dic.TryGetValue(prop, out ReadOnlyCollection<string>? coll)
@@ -64,8 +62,8 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         Add(AdrProp.PostalCode, postalCode);
         Add(AdrProp.Country, country);
 
-        _streetView = street;
-        _extendedView = extendedAddress;
+        Street = street;
+        ExtendedAddress = extendedAddress;
     }
 
     #endregion
@@ -146,8 +144,8 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
             Add(keys, newVals, AdrProp.ExtendedAddress);
         }
 
-        _streetView = newStreetHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.Street);
-        _extendedView = newExtendedHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.ExtendedAddress);
+        Street = newStreetHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.Street);
+        ExtendedAddress = newExtendedHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.ExtendedAddress);
     }
 
     private void Add(ReadOnlySpan<AdrProp> keys, Dictionary<AdrProp, List<string>> dic, AdrProp target)
@@ -168,7 +166,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         _dic[target] = list.AsReadOnly();
     }
 
-    internal Address() => _streetView = _extendedView = ReadOnlyStringCollection.Empty;
+    internal Address() => Street = ExtendedAddress = ReadOnlyStringCollection.Empty;
 
     internal Address(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
@@ -226,8 +224,8 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
         }//foreach
 
-        _streetView = newStreetHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.Street);
-        _extendedView = newExtendedHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.ExtendedAddress);
+        Street = newStreetHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.Street);
+        ExtendedAddress = newExtendedHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.ExtendedAddress);
 
         ////////////////////////////////////////////////
 
@@ -244,7 +242,19 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
     public ReadOnlyCollection<string> PostOfficeBox => Get(AdrProp.PostOfficeBox);
 
     /// <summary>The extended address (e.g., apartment or suite number).</summary>
-    public ReadOnlyCollection<string> ExtendedAddress => _extendedView;
+    /// <remarks>
+    /// <para>
+    /// This property returns an empty collection if any of these properties
+    /// contains data:
+    /// </para>
+    /// <list type="bullet">
+    /// <item><see cref="Building"/></item>
+    /// <item><see cref="Floor"/></item>
+    /// <item><see cref="Apartment"/></item>
+    /// <item><see cref="Room"/></item>
+    /// </list>
+    /// </remarks>
+    public ReadOnlyCollection<string> ExtendedAddress { get; }
 
     /// <summary>The street address.</summary>
     /// <remarks>
@@ -256,17 +266,13 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
     /// <item><see cref="StreetName"/></item>
     /// <item><see cref="StreetNumber"/></item>
     /// <item><see cref="Block"/></item>
-    /// <item><see cref="Building"/></item>
-    /// <item><see cref="Floor"/></item>
-    /// <item><see cref="Apartment"/></item>
-    /// <item><see cref="Room"/></item>
-    /// <item><see cref="District"/></item>
-    /// <item><see cref="SubDistrict"/></item>
     /// <item><see cref="Landmark"/></item>
     /// <item><see cref="Direction"/></item>
+    /// <item><see cref="SubDistrict"/></item>
+    /// <item><see cref="District"/></item>
     /// </list>
     /// </remarks>
-    public ReadOnlyCollection<string> Street => _streetView;
+    public ReadOnlyCollection<string> Street { get; }
 
     /// <summary>The locality (e.g., city).</summary>
     public ReadOnlyCollection<string> Locality => Get(AdrProp.Locality);
@@ -283,7 +289,8 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
     /// <summary> The room, suite number, or identifier. (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Room => Get(AdrProp.Room);
 
-    /// <summary> The extension designation such as the apartment number, unit, or box number. (4 - RFC 9554)</summary>
+    /// <summary> The extension designation such as the apartment number, unit,
+    /// or box number. (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Apartment => Get(AdrProp.Apartment);
 
     /// <summary> The floor or level the address is located on. (4 - RFC 9554)</summary>
@@ -291,30 +298,34 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
     /// <summary> The street number, e.g., "123". (4 - RFC 9554)</summary>
     /// <value>This value is not restricted to numeric values and can include
-    /// any value such as number ranges ("112-10"), grid style ("39.2 RD"), alphanumerics ("N6W23001"), or 
-    /// fractionals ("123 1/2").</value>
+    /// any value such as number ranges ("112-10"), grid style ("39.2 RD"), 
+    /// alphanumerics ("N6W23001"), or fractionals ("123 1/2").</value>
     public ReadOnlyCollection<string> StreetNumber => Get(AdrProp.StreetNumber);
 
     /// <summary> The street name. (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> StreetName => Get(AdrProp.StreetName);
 
-    /// <summary> The building, tower, or condominium the address is located in. (4 - RFC 9554)</summary>
+    /// <summary> The building, tower, or condominium the address is located in.
+    /// (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Building => Get(AdrProp.Building);
 
     /// <summary> The block name or number. (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Block => Get(AdrProp.Block);
 
-    /// <summary> The subdistrict, ward, or other subunit of a district. (4 - RFC 9554)</summary>
+    /// <summary> The subdistrict, ward, or other subunit of a district.
+    /// (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> SubDistrict => Get(AdrProp.SubDistrict);
 
     /// <summary> The district name. (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> District => Get(AdrProp.District);
 
-    /// <summary> The publicly known prominent feature that can substitute the street name and number,
-    /// e.g., "White House" or "Taj Mahal". (4 - RFC 9554)</summary>
+    /// <summary> The publicly known prominent feature that can substitute
+    /// the street name and number, e.g., "White House" or "Taj Mahal". 
+    /// (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Landmark => Get(AdrProp.Landmark);
 
-    /// <summary> The cardinal direction or quadrant, e.g., "north". (4 - RFC 9554)</summary>
+    /// <summary> The cardinal direction or quadrant, e.g., "north". 
+    /// (4 - RFC 9554)</summary>
     public ReadOnlyCollection<string> Direction => Get(AdrProp.Direction);
 
     /// <summary>Returns <c>true</c>, if the <see cref="Address" /> object does not
@@ -325,8 +336,9 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
     int IReadOnlyCollection<IReadOnlyList<string>>.Count => MAX_COUNT;
 
     /// <inheritdoc/>
-    /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is less than zero, or equal or greater than
-    /// <see cref="IReadOnlyCollection{T}.Count"/></exception>
+    /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is 
+    /// less than zero, or equal or greater than
+    /// <see cref="IReadOnlyCollection{T}.Count"/>.</exception>
     IReadOnlyList<string> IReadOnlyList<IReadOnlyList<string>>.this[int index]
     {
         get
@@ -338,7 +350,12 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
             var adr = (AdrProp)index;
 
-            return adr == AdrProp.Street ? _streetView : Get(adr);
+            return adr switch
+            {
+                AdrProp.Street => Street,
+                AdrProp.ExtendedAddress => ExtendedAddress,
+                _ => Get(adr)
+            };
         }
     }
 

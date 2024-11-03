@@ -18,7 +18,7 @@ public class DefaultAddressFormatterTests
         prop.Parameters.CountryCode = "DE";
         prop.Parameters.ComponentOrder = ";4711";
 
-        Assert.AreEqual($"Friedrichstr. 1{Environment.NewLine}Berlin{Environment.NewLine}", AddressFormatter.Default.ToLabel(prop));
+        Assert.AreEqual($"Friedrichstr. 1{Environment.NewLine}Berlin", AddressFormatter.Default.ToLabel(prop));
     }
 
     [TestMethod]

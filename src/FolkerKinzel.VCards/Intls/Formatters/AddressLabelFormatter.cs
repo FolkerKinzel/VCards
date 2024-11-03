@@ -7,8 +7,7 @@ namespace FolkerKinzel.VCards.Intls.Formatters;
 
 internal static class AddressLabelFormatter
 {
-    private const int BUILDER_CAPACITY = 256;
-    private const int WORKER_CAPACITY = 64;
+    private const int BUILDER_CAPACITY = 128;
     private static readonly AddressOrder _defaultAddressOrder;
     private const int MAX_LINE_LENGTH = 30;
 
@@ -30,13 +29,12 @@ internal static class AddressLabelFormatter
 
     private static string DoConvertToLabel(Address address, AddressOrder addressOrder)
     {
-        var worker = new StringBuilder(WORKER_CAPACITY);
-
         return new StringBuilder(BUILDER_CAPACITY)
             .AppendStreet(address)
-            .AppendExtendedAddress(address)
-            .AppendLocality(address, worker, addressOrder)
-            .AppendCountry(address, worker);
+            .AppendLocality(address, addressOrder)
+            .AppendCountry(address)
+            .TrimEnd()
+            .ToString();
     }
 
     private static StringBuilder AppendStreet(this StringBuilder builder, Address address)
@@ -50,66 +48,53 @@ internal static class AddressLabelFormatter
 
         IReadOnlyList<string> street = address.Street;
 
-            return street.Count != 0 
-                    ? builder.AppendReadableProperty(street, MAX_LINE_LENGTH)
-                    : builder.AppendReadableProperty(
-                        address.StreetName
-                        .Concat(address.StreetNumber)
-                        .Concat(address.Block)
-                        .Concat(address.Landmark)
-                        .Concat(address.Direction)
-                        .Concat(address.SubDistrict)
-                        .Concat(address.District)
-                        , MAX_LINE_LENGTH);
-        
-    }
+        IEnumerable<string> strings =
+            street.Count != 0 ? street
+                              : address.StreetName
+                                .Concat(address.StreetNumber)
+                                .Concat(address.Block)
+                                .Concat(address.Landmark)
+                                .Concat(address.Direction)
+                                .Concat(address.SubDistrict)
+                                .Concat(address.District);
 
-    private static StringBuilder AppendExtendedAddress(this StringBuilder builder, Address address)
-    {
         IReadOnlyList<string> extAddress = address.ExtendedAddress;
 
-        return extAddress.Count != 0
-            ? builder.AppendNewLineIfNeeded().AppendReadableProperty(extAddress, MAX_LINE_LENGTH)
-            : builder.AppendNewLineIfNeeded().AppendReadableProperty(
-                address.Building
-                .Concat(address.Floor)
-                .Concat(address.Apartment)
-                .Concat(address.Room)
-                , MAX_LINE_LENGTH);
+        strings = extAddress.Count != 0 ? strings.Concat(extAddress)
+                                        : strings.Concat(address.Building)
+                                                 .Concat(address.Floor)
+                                                 .Concat(address.Apartment)
+                                                 .Concat(address.Room);
+
+        return builder.AppendReadableProperty(strings, MAX_LINE_LENGTH);
     }
 
     private static StringBuilder AppendLocality(this StringBuilder builder,
                                                 Address address,
-                                                StringBuilder worker,
                                                 AddressOrder addressOrder)
     {
-        switch (addressOrder)
+        builder.AppendNewLineIfNeeded();
+
+        return addressOrder switch
         {
-            case AddressOrder.Usa:
-                worker.AppendReadableProperty(address.Locality, null)
-                      .AppendReadableProperty(address.Region, MAX_LINE_LENGTH)
-                      .AppendReadableProperty(address.PostalCode, MAX_LINE_LENGTH);
-                break;
-            case AddressOrder.Venezuela:
-                worker.AppendReadableProperty(address.Locality, null)
-                      .AppendReadableProperty(address.PostalCode, MAX_LINE_LENGTH)
-                      .AppendReadableProperty(address.Region, MAX_LINE_LENGTH);
-                break;
-            default: // AddressOrder.Din
-                worker.AppendReadableProperty(address.PostalCode, null)
-                      .AppendReadableProperty(address.Locality, null)
-                      .AppendReadableProperty(address.Region, MAX_LINE_LENGTH);
-                break;
-        }
+            AddressOrder.Usa =>
+                builder.AppendReadableProperty(address.Locality, null)
+                       .AppendReadableProperty(address.Region, MAX_LINE_LENGTH)
+                       .AppendReadableProperty(address.PostalCode, MAX_LINE_LENGTH),
 
-        return builder.AppendNewLineIfNeeded().Append(worker);
+            AddressOrder.Venezuela =>
+                builder.AppendReadableProperty(address.Locality, null)
+                       .AppendReadableProperty(address.PostalCode, MAX_LINE_LENGTH)
+                       .AppendReadableProperty(address.Region, MAX_LINE_LENGTH),
+            _ => // AddressOrder.Din
+                builder.AppendReadableProperty(address.PostalCode, null)
+                       .AppendReadableProperty(address.Locality, null)
+                       .AppendReadableProperty(address.Region, MAX_LINE_LENGTH)
+        };
     }
 
-    private static string AppendCountry(this StringBuilder builder, Address address, StringBuilder worker)
-    {
-        worker.Clear().AppendReadableProperty(address.Country, null).ToUpperInvariant();
-        return builder.AppendNewLineIfNeeded().Append(worker).ToString();
-    }
+    private static StringBuilder AppendCountry(this StringBuilder builder, Address address)
+        => builder.AppendNewLineIfNeeded().AppendReadableProperty(address.Country, null);
 
     private static StringBuilder AppendNewLineIfNeeded(this StringBuilder builder)
     {
@@ -123,31 +108,46 @@ internal static class AddressLabelFormatter
         Debug.Assert(strings is not null);
         Debug.Assert(strings.All(x => !string.IsNullOrEmpty(x)));
 
+        int lineStartIndex = maxLen.HasValue ? sb.LastIndexOf(Environment.NewLine[Environment.NewLine.Length - 1]) + 1 : 0;
+
         // If strings is empty, the loop is not entered:
         foreach (string s in strings)
         {
-            AppendEntry(sb, s, maxLen);
+            if (maxLen.HasValue)
+            {
+                AppendEntryWithLength(sb, s, maxLen.Value, ref lineStartIndex);
+            }
+            else
+            {
+                AppendEntry(sb, s);
+            }
         }
 
         return sb;
 
-        static void AppendEntry(StringBuilder sb, string entry, int? maxLen)
+        static void AppendEntry(StringBuilder sb, string entry)
         {
-            if (maxLen.HasValue)
-            {
-                int lineStartIndex = sb.LastIndexOf(Environment.NewLine[0]);
-                lineStartIndex = lineStartIndex < 0 ? 0 : lineStartIndex + Environment.NewLine.Length;
-
-                if (sb.Length != 0 && lineStartIndex != sb.Length)
-                {
-                    _ = sb.Length - lineStartIndex + entry.Length + 1 > maxLen.Value
-                        ? sb.AppendLine()
-                        : sb.Append(' ');
-                }
-            }
-            else if (sb.Length != 0)
+            if (sb.Length != 0 && !sb[sb.Length - 1].IsNewLine())
             {
                 _ = sb.Append(' ');
+            }
+
+            _ = sb.Append(entry);
+        }
+
+        static void AppendEntryWithLength(StringBuilder sb, string entry, int maxLen, ref int lineStartIndex)
+        {
+            if (sb.Length != 0 && lineStartIndex != sb.Length)
+            {
+                if (sb.Length - lineStartIndex + entry.Length >= maxLen)
+                {
+                    _ = sb.AppendLine();
+                    lineStartIndex = sb.Length;
+                }
+                else
+                {
+                    _ = sb.Append(' ');
+                }
             }
 
             _ = sb.Append(entry);

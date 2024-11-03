@@ -135,6 +135,19 @@ public class AddressBuilderTests
     public void AddExtendedAddressTest3() => AddressBuilder.Create().AddExtendedAddress((string[]?)null!);
 
     [TestMethod()]
+    public void AddExtendedAddressTest4()
+    {
+        var prop = new AddressProperty(
+            AddressBuilder.Create()
+                          .AddExtendedAddress("1")
+                          .AddExtendedAddress("2")
+                          .AddApartment("a"));
+
+        Assert.AreEqual(0, prop.Value.ExtendedAddress.Count);
+        Assert.AreEqual("a", prop.Value.Apartment.Single());
+    }
+
+    [TestMethod()]
     public void AddStreetTest1()
     {
         string[] expected = ["1", "2"];
@@ -155,6 +168,18 @@ public class AddressBuilderTests
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
     public void AddStreetTest3() => AddressBuilder.Create().AddStreet((string[]?)null!);
+
+    [TestMethod()]
+    public void AddStreetTest4()
+    {
+        var prop = new AddressProperty(AddressBuilder.Create()
+                                                     .AddStreet("1")
+                                                     .AddStreet("2")
+                                                     .AddStreetName("s"));
+
+        Assert.AreEqual(0, prop.Value.Street.Count);
+        Assert.AreEqual("s", prop.Value.StreetName.Single());
+    }
 
     [TestMethod()]
     public void AddLocalityTest1()

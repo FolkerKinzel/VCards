@@ -42,6 +42,7 @@
 - [ ] `AddressProperty`: Allow only ctors that take an `AddressBuilder` as argument
 - [ ] Remove `AddressProperty.AttachLabel()`
 - [ ] Remove `AddressProperty.ToLabel()`
+- [ ] Refactor `DefaultAddressFormatter` to contain `AddressLabelFormatter`
 
 &nbsp;
 - [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.AddressBuilder.Add` method
@@ -60,6 +61,10 @@
 and let it store as string[]
 
 &nbsp;
+- [ ] Refactor `ReadOnlyCollectionConverter` to return arrays
+- [ ] Remove `ReadOnlyStringCollection`
+
+&nbsp;
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
 - [ ] Rename the `VCardBuilder.TimeStamp` property to `VCardBuilder.Updated`
 - [ ] Rename the `Prop.TimeStamp` value to `Prop.Updated`
@@ -73,8 +78,14 @@ and let it store as string[]
 &nbsp;
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
-### 7.4.1
+### 7.4.2
 - [ ] Dependency update
+
+### 7.4.1
+- [x] Fix an issue that `Address.ExtendedAddress` might show some values even if any of the properties 
+`Address.Building`, `Address.Floor`, `Address.Apartment`, or `Address.Room` has a value.
+- [x] Fix an issue that someone might have invalid JSON warnings with `ParameterSection.JSContactPointer`.
+- [x] Fix issues with address label formatting with `DefaultAddressFormatter`
 
 ### 7.4.0
 - [x] Implement in VCard: `IEnumerable<TextProperty?>? ABLabels {get; set;}`  (`X-ABLabel` from Apple Address Book)

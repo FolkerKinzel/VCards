@@ -141,12 +141,12 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddStreet(string?)"/> to make a copy of <paramref name="value"/> in <see cref="Address.Street"/>
+    /// Use <see cref="AddExtendedAddress(string?)"/> to make a copy of <paramref name="value"/> in <see cref="Address.ExtendedAddress"/>
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
     /// <seealso cref="Address.Room"/>
-    /// <seealso cref="Address.Street"/>
+    /// <seealso cref="Address.ExtendedAddress"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddRoom(string? value) => Add(AdrProp.Room, value);
 
@@ -156,12 +156,12 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddStreet(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
-    /// in <see cref="Address.Street"/> for backwards compatibility.
+    /// Use <see cref="AddExtendedAddress(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
+    /// in <see cref="Address.ExtendedAddress"/> for backwards compatibility.
     /// </note>
     /// </remarks>
     /// <seealso cref="Address.Room"/>
-    /// <seealso cref="Address.Street"/>
+    /// <seealso cref="Address.ExtendedAddress"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddRoom(IEnumerable<string?> collection) => AddRange(AdrProp.Room, collection);
@@ -172,12 +172,12 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddStreet(string?)"/> to make a copy of <paramref name="value"/> in <see cref="Address.Street"/>
-    /// for backwards compatibility.
+    /// Use <see cref="AddExtendedAddress(string?)"/> to make a copy of <paramref name="value"/> in 
+    /// <see cref="Address.ExtendedAddress"/> for backwards compatibility.
     /// </note>
     /// </remarks>
     /// <seealso cref="Address.Apartment"/>
-    /// <seealso cref="Address.Street"/>
+    /// <seealso cref="Address.ExtendedAddress"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddApartment(string? value) => Add(AdrProp.Apartment, value);
 
@@ -188,12 +188,12 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddStreet(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
-    /// in <see cref="Address.Street"/> for backwards compatibility.
+    /// Use <see cref="AddExtendedAddress(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
+    /// in <see cref="Address.ExtendedAddress"/> for backwards compatibility.
     /// </note>
     /// </remarks>
     /// <seealso cref="Address.Apartment"/>
-    /// <seealso cref="Address.Street"/>
+    /// <seealso cref="Address.ExtendedAddress"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddApartment(IEnumerable<string?> collection) 
@@ -205,12 +205,12 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddStreet(string?)"/> to make a copy of <paramref name="value"/> in 
-    /// <see cref="Address.Street"/> for backwards compatibility.
+    /// Use <see cref="AddExtendedAddress(string?)"/> to make a copy of <paramref name="value"/> in 
+    /// <see cref="Address.ExtendedAddress"/> for backwards compatibility.
     /// </note>
     /// </remarks>
     /// <seealso cref="Address.Floor"/>
-    /// <seealso cref="Address.Street"/>
+    /// <seealso cref="Address.ExtendedAddress"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddFloor(string? value) => Add(AdrProp.Floor, value);
 
@@ -220,12 +220,12 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddStreet(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
-    /// in <see cref="Address.Street"/> for backwards compatibility.
+    /// Use <see cref="AddExtendedAddress(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
+    /// in <see cref="Address.ExtendedAddress"/> for backwards compatibility.
     /// </note>
     /// </remarks>
     /// <seealso cref="Address.Floor"/>
-    /// <seealso cref="Address.Street"/>
+    /// <seealso cref="Address.ExtendedAddress"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddFloor(IEnumerable<string?> collection) => AddRange(AdrProp.Floor, collection);
@@ -302,12 +302,12 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddStreet(string?)"/> to make a copy of <paramref name="value"/> in <see cref="Address.Street"/>
-    /// for backwards compatibility.
+    /// Use <see cref="AddExtendedAddress(string?)"/> to make a copy of <paramref name="value"/> in 
+    /// <see cref="Address.ExtendedAddress"/> for backwards compatibility.
     /// </note>
     /// </remarks>
     /// <seealso cref="Address.Building"/>
-    /// <seealso cref="Address.Street"/>
+    /// <seealso cref="Address.ExtendedAddress"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddBuilding(string? value) => Add(AdrProp.Building, value);
 
@@ -318,12 +318,12 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddStreet(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
-    /// in <see cref="Address.Street"/> for backwards compatibility.
+    /// Use <see cref="AddExtendedAddress(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
+    /// in <see cref="Address.ExtendedAddress"/> for backwards compatibility.
     /// </note>
     /// </remarks>
     /// <seealso cref="Address.Building"/>
-    /// <seealso cref="Address.Street"/>
+    /// <seealso cref="Address.ExtendedAddress"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public AddressBuilder AddBuilding(IEnumerable<string?> collection) => AddRange(AdrProp.Building, collection);
