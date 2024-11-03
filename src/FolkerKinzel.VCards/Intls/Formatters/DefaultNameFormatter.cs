@@ -23,14 +23,25 @@ internal sealed class DefaultNameFormatter : INameFormatter
         }
 
         NameOrder order = GetNameOrder(nameProperty, vCard);
+        List<string> list = [];
 
-        return order switch
+        switch (order)
         {
-            NameOrder.Hungarian => FormatHungarian(nameProperty.Value),
-            NameOrder.Vietnamese => FormatVietnamese(nameProperty.Value),
-            NameOrder.Spanish => FormatSpanish(nameProperty.Value),
-            _ => FormatDefault(nameProperty.Value)
-        };
+            case NameOrder.Hungarian:
+                FillHungarian(nameProperty.Value, list);
+                break;
+            case NameOrder.Vietnamese:
+                FillVietnamese(nameProperty.Value, list);
+                break;
+            case NameOrder.Spanish:
+                FillSpanish(nameProperty.Value, list);
+                break;
+            default:
+                FillDefault(nameProperty.Value, list);
+                break;
+        }
+
+        return string.Join(" ", list);
     }
 
     private static NameOrder GetNameOrder(NameProperty nameProperty, VCard vCard)
@@ -49,41 +60,47 @@ internal sealed class DefaultNameFormatter : INameFormatter
             : NameOrderConverter.ParseIetfLanguageTag(CultureInfo.CurrentCulture.Name);
     }
 
-    private static string FormatDefault(Name name) => string.Join(" ",
-        name.Prefixes
-        .Concat(name.GivenNames)
-        .Concat(name.AdditionalNames)
-        .Concat(name.Surnames2)
-        .Concat(name.FamilyNames)
-        .Concat(name.Generations)
-        .Concat(name.Suffixes));
+    private static void FillDefault(Name name, List<string> list)
+    {
+        list.AddRange(name.Prefixes);
+        list.AddRange(name.GivenNames);
+        list.AddRange(name.AdditionalNames);
+        list.AddRange(name.Surnames2);
+        list.AddRange(name.FamilyNames);
+        list.AddRange(name.Generations);
+        list.AddRange(name.Suffixes);
+    }
 
+    private static void FillSpanish(Name name, List<string> list)
+    {
+        list.AddRange(name.Prefixes);
+        list.AddRange(name.GivenNames);
+        list.AddRange(name.AdditionalNames);
+        list.AddRange(name.FamilyNames);
+        list.AddRange(name.Surnames2);
+        list.AddRange(name.Generations);
+        list.AddRange(name.Suffixes);
+    }
 
-    private static string FormatSpanish(Name name) => string.Join(" ",
-        name.Prefixes
-        .Concat(name.GivenNames)
-        .Concat(name.AdditionalNames)
-        .Concat(name.FamilyNames)
-        .Concat(name.Surnames2)
-        .Concat(name.Generations)
-        .Concat(name.Suffixes));
+    private static void FillHungarian(Name name, List<string> list)
+    {
+        list.AddRange(name.Prefixes);
+        list.AddRange(name.Surnames2);
+        list.AddRange(name.FamilyNames);
+        list.AddRange(name.Generations);
+        list.AddRange(name.GivenNames);
+        list.AddRange(name.AdditionalNames);
+        list.AddRange(name.Suffixes);
+    }
 
-    private static string FormatHungarian(Name name) => string.Join(" ",
-        name.Prefixes
-        .Concat(name.Surnames2)
-        .Concat(name.FamilyNames)
-        .Concat(name.Generations)
-        .Concat(name.GivenNames)
-        .Concat(name.AdditionalNames)
-        .Concat(name.Suffixes));
-
-
-    private static string FormatVietnamese(Name name) => string.Join(" ",
-        name.Prefixes
-        .Concat(name.Surnames2)
-        .Concat(name.FamilyNames)
-        .Concat(name.Generations)
-        .Concat(name.AdditionalNames)
-        .Concat(name.GivenNames)
-        .Concat(name.Suffixes));
+    private static void FillVietnamese(Name name, List<string> list)
+    {
+        list.AddRange(name.Prefixes);
+        list.AddRange(name.Surnames2);
+        list.AddRange(name.FamilyNames);
+        list.AddRange(name.Generations);
+        list.AddRange(name.AdditionalNames);
+        list.AddRange(name.GivenNames);
+        list.AddRange(name.Suffixes);
+    }
 }

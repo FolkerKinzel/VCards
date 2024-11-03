@@ -86,6 +86,7 @@ and let it store as string[]
 `Address.Building`, `Address.Floor`, `Address.Apartment`, or `Address.Room` has a value.
 - [x] Fix an issue that someone might have invalid JSON warnings with `ParameterSection.JSContactPointer`.
 - [x] Fix issues with address label formatting with `DefaultAddressFormatter`
+- [x] Better performance of `DefaultAddressFormatter`
 
 ### 7.4.0
 - [x] Implement in VCard: `IEnumerable<TextProperty?>? ABLabels {get; set;}`  (`X-ABLabel` from Apple Address Book)

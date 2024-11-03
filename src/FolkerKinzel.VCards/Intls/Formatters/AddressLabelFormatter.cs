@@ -46,25 +46,37 @@ internal static class AddressLabelFormatter
             return builder.AppendReadableProperty(poBox, MAX_LINE_LENGTH);
         }
 
+        List<string> strings;
         IReadOnlyList<string> street = address.Street;
 
-        IEnumerable<string> strings =
-            street.Count != 0 ? street
-                              : address.StreetName
-                                .Concat(address.StreetNumber)
-                                .Concat(address.Block)
-                                .Concat(address.Landmark)
-                                .Concat(address.Direction)
-                                .Concat(address.SubDistrict)
-                                .Concat(address.District);
+        if (street.Count != 0)
+        {
+            strings = new List<string>(street);
+        }
+        else
+        {
+            strings = new List<string>(address.StreetName);
+            strings.AddRange(address.StreetNumber);
+            strings.AddRange(address.Block);
+            strings.AddRange(address.Landmark);
+            strings.AddRange(address.Direction);
+            strings.AddRange(address.SubDistrict);
+            strings.AddRange(address.District);
+        }
 
         IReadOnlyList<string> extAddress = address.ExtendedAddress;
 
-        strings = extAddress.Count != 0 ? strings.Concat(extAddress)
-                                        : strings.Concat(address.Building)
-                                                 .Concat(address.Floor)
-                                                 .Concat(address.Apartment)
-                                                 .Concat(address.Room);
+        if (extAddress.Count != 0)
+        {
+            strings.AddRange(extAddress);
+        }
+        else
+        {
+            strings.AddRange(address.Building);
+            strings.AddRange(address.Floor);
+            strings.AddRange(address.Apartment);
+            strings.AddRange(address.Room);
+        }
 
         return builder.AppendReadableProperty(strings, MAX_LINE_LENGTH);
     }
@@ -102,7 +114,7 @@ internal static class AddressLabelFormatter
         return builder;
     }
 
-    private static StringBuilder AppendReadableProperty(this StringBuilder sb, IEnumerable<string> strings, int? maxLen)
+    private static StringBuilder AppendReadableProperty(this StringBuilder sb, IReadOnlyList<string> strings, int? maxLen)
     {
         Debug.Assert(sb is not null);
         Debug.Assert(strings is not null);
@@ -111,15 +123,15 @@ internal static class AddressLabelFormatter
         int lineStartIndex = maxLen.HasValue ? sb.LastIndexOf(Environment.NewLine[Environment.NewLine.Length - 1]) + 1 : 0;
 
         // If strings is empty, the loop is not entered:
-        foreach (string s in strings)
+        for (int i = 0; i < strings.Count; i++)
         {
             if (maxLen.HasValue)
             {
-                AppendEntryWithLength(sb, s, maxLen.Value, ref lineStartIndex);
+                AppendEntryWithLength(sb, strings[i], maxLen.Value, ref lineStartIndex);
             }
             else
             {
-                AppendEntry(sb, s);
+                AppendEntry(sb, strings[i]);
             }
         }
 

@@ -5,8 +5,8 @@ namespace Experiments;
 [MemoryDiagnoser]
 public class ConcatBench
 {
-    //private const int COUNT = 50;
-    private readonly string[] _empty = [];
+    //private readonly string[] _empty = [];
+    private readonly string[] _empty = ["sdfghjkfgh", "qwertzui"];
 
     [Benchmark]
     public int ListAddRange()
