@@ -56,11 +56,11 @@ public sealed class Relation
     public VCard? VCard => IsVCard ? AsVCardIntl : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="Models.ContactID"/>,
+    /// Gets the encapsulated <see cref="VCards.ContactID"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <remarks>
-    /// The <see cref="Models.ContactID"/> references another <see cref="VCard"/> with
+    /// The <see cref="VCards.ContactID"/> references another <see cref="VCard"/> with
     /// its <see cref="VCard.ID"/> property.
     /// </remarks>
     public ContactID? ContactID => IsContactID ? AsContactIDIntl : null;

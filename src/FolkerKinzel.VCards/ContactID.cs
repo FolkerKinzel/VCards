@@ -1,4 +1,16 @@
-﻿using FolkerKinzel.VCards.Intls;
+﻿
+/* Unmerged change from project 'FolkerKinzel.VCards (netstandard2.1)'
+Before:
+using FolkerKinzel.VCards.Intls;
+After:
+using FolkerKinzel;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Models;
+*/
+using FolkerKinzel.VCards.Intls;
+
 
 /* Unmerged change from project 'FolkerKinzel.VCards (netstandard2.1)'
 Before:
@@ -12,7 +24,7 @@ using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Resources;
 using OneOf;
 
-namespace FolkerKinzel.VCards.Models;
+namespace FolkerKinzel.VCards;
 
 /// <summary>
 /// Encapsulates a globally unique identifier corresponding to the entity associated 
@@ -48,7 +60,7 @@ public sealed class ContactID : IEquatable<ContactID>
     {
         _ArgumentNullException.ThrowIfNull(uri, nameof(uri));
 
-        return uri.IsAbsoluteUri ? new ContactID(uri) 
+        return uri.IsAbsoluteUri ? new ContactID(uri)
                                  : throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)));
     }
 
