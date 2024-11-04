@@ -8,7 +8,7 @@
 - Remove symbols that are marked as `Obsolete` errors.
 
 ### 8.0.0
-- Make .NET 9.0 version of the package
+- [ ] Make .NET 9.0 version of the package
 
 - [ ] Fix the issue that with `UID` only Guid values are supported
     - [x] Implement a `ContactID` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
@@ -19,7 +19,8 @@
 
     - [ ] Let `ContactID.Create()` use `Guid.CreateVersion7` in .NET 9.0
     - [x] Update the `IDBuilder.Set` methods
-    - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
+    - [x] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
+    - [x] Update the `RelationBuilder` struct.
 
 &nbsp;
 - [ ] Remove NameProperty.ToDisplayName()

@@ -207,13 +207,15 @@ public static partial class Vcf
                     continue;
                 }
 
-                if (vCard.Relations.PrefOrNullIntl(x => x is RelationVCardProperty &&
+                if (vCard.Relations.PrefOrNullIntl(x => x.Value.IsVCard &&
                                                         x.Parameters.RelationType.IsSet(Rel.Agent),
-                                                        ignoreEmptyItems: true) is RelationVCardProperty agent)
+                                                        ignoreEmptyItems: true) is RelationProperty agent)
                 {
-                    if (!list.Contains(agent.Value))
+                    Debug.Assert(agent.Value.VCard != null);
+
+                    if (!list.Contains(agent.Value.VCard))
                     {
-                        list.Add(agent.Value);
+                        list.Add(agent.Value.VCard);
                     }
                 }
 

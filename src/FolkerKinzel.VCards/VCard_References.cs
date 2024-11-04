@@ -239,34 +239,32 @@ public sealed partial class VCard
 
         static void DoDereference(List<RelationProperty?> relations, IEnumerable<VCard?> vCards)
         {
-            IEnumerable<RelationUuidProperty> guidProps = relations
-                .Select(x => x as RelationUuidProperty)
-                .WhereNotEmpty()
+            IEnumerable<RelationProperty> contactIDProps = relations
+                .Items()
+                .Where(x => x.Value.IsContactID)
                 .ToArray(); // We need ToArray here because relations
                             // might change.
 
-            foreach (RelationUuidProperty guidProp in guidProps)
+            foreach (RelationProperty contactIDProp in contactIDProps)
             {
                 VCard? referencedVCard =
-                    vCards.Where(x => x?.ID is not null)
-                          .FirstOrDefault(x => x!.ID!.Value == guidProp.Value);
+                    vCards.FirstOrDefault(x => x?.ID?.Value == contactIDProp.Value.ContactID);
 
                 if (referencedVCard is not null)
                 {
-                    if (relations.Any(x => x is RelationVCardProperty xVc &&
-                                           xVc.Value.ID == referencedVCard.ID))
+                    if (relations.Any(x => x?.Value.VCard is VCard vc &&
+                                           vc.ID == referencedVCard.ID))
                     {
                         continue;
                     }
 
-                    // Use the constructor here in order NOT to clone referenced VCard
-                    var vcardProp = new RelationVCardProperty(
+                    var vcardProp = new RelationProperty(
                                         referencedVCard,
-                                        guidProp.Parameters.RelationType,
-                                        group: guidProp.Group);
-                    vcardProp.Parameters.Assign(guidProp.Parameters);
+                                        contactIDProp.Parameters.RelationType,
+                                        group: contactIDProp.Group);
+                    vcardProp.Parameters.Assign(contactIDProp.Parameters);
 
-                    _ = relations.Remove(guidProp);
+                    _ = relations.Remove(contactIDProp);
                     relations.Add(vcardProp);
                 }
             }
