@@ -48,7 +48,7 @@ public readonly struct AccessBuilder
     {
         AccessProperty? prop = Builder.VCard.Access;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Access = func.Invoke(prop, data);
+        _builder.VCard.Access = func(prop, data);
         return _builder;
     }
 
@@ -67,7 +67,7 @@ public readonly struct AccessBuilder
     {
         AccessProperty? prop = Builder.VCard.Access;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Access = func.Invoke(prop);
+        _builder.VCard.Access = func(prop);
         return _builder;
     }
 

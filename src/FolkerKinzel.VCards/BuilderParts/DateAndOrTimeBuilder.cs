@@ -96,9 +96,9 @@ public readonly struct DateAndOrTimeBuilder
         Func<IEnumerable<DateAndOrTimeProperty>, TData, IEnumerable<DateAndOrTimeProperty?>?> func,
         TData data)
     {
-        var props = GetProperty();
+        IEnumerable<DateAndOrTimeProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        SetProperty(func.Invoke(props, data));
+        SetProperty(func(props, data));
         return _builder;
     }
 
@@ -120,7 +120,7 @@ public readonly struct DateAndOrTimeBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        SetProperty(func.Invoke(props));
+        SetProperty(func(props));
         return _builder;
     }
 

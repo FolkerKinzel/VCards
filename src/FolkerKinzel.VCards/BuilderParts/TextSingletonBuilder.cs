@@ -55,7 +55,7 @@ public readonly struct TextSingletonBuilder
     {
         TextProperty? prop = Builder.VCard.Get<TextProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Set(_prop, func.Invoke(prop, data));
+        _builder.VCard.Set(_prop, func(prop, data));
         return _builder;
     }
 
@@ -77,7 +77,7 @@ public readonly struct TextSingletonBuilder
     {
         var prop = Builder.VCard.Get<TextProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Set(_prop, func.Invoke(prop));
+        _builder.VCard.Set(_prop, func(prop));
         return _builder;
     }
 

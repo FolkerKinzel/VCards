@@ -49,7 +49,7 @@ public readonly struct IDBuilder
     {
         IDProperty? prop = Builder.VCard.ID;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.ID = func.Invoke(prop, data);
+        _builder.VCard.ID = func(prop, data);
         return _builder;
     }
 
@@ -70,7 +70,7 @@ public readonly struct IDBuilder
     {
         IDProperty? prop = Builder.VCard.ID;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.ID = func.Invoke(prop);
+        _builder.VCard.ID = func(prop);
         return _builder;
     }
 

@@ -127,7 +127,7 @@ public readonly struct OrgBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Organizations = func.Invoke(props, data);
+        _builder.VCard.Organizations = func(props, data);
         return _builder;
     }
 
@@ -148,7 +148,7 @@ public readonly struct OrgBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Organizations = func.Invoke(props);
+        _builder.VCard.Organizations = func(props);
         return _builder;
     }
 

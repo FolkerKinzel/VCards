@@ -124,7 +124,7 @@ public readonly struct TimeZoneBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.TimeZones = func.Invoke(props, data);
+        _builder.VCard.TimeZones = func(props, data);
         return _builder;
     }
 
@@ -145,7 +145,7 @@ public readonly struct TimeZoneBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.TimeZones = func.Invoke(props);
+        _builder.VCard.TimeZones = func(props);
         return _builder;
     }
 

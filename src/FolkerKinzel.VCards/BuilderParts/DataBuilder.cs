@@ -132,9 +132,9 @@ public readonly struct DataBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TData>(Func<IEnumerable<DataProperty>, TData, IEnumerable<DataProperty?>?> func, TData data)
     {
-        var props = GetProperty();
+        IEnumerable<DataProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        SetProperty(func.Invoke(props, data));
+        SetProperty(func(props, data));
         return _builder;
     }
 
@@ -154,7 +154,7 @@ public readonly struct DataBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        SetProperty(func.Invoke(props));
+        SetProperty(func(props));
         return _builder;
     }
 

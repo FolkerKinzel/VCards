@@ -1,26 +1,4 @@
-﻿
-/* Unmerged change from project 'FolkerKinzel.VCards (netstandard2.1)'
-Before:
-using FolkerKinzel.VCards.Intls;
-After:
-using FolkerKinzel;
-using FolkerKinzel.VCards;
-using FolkerKinzel.VCards;
-using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Models;
-*/
-using FolkerKinzel.VCards.Intls;
-
-
-/* Unmerged change from project 'FolkerKinzel.VCards (netstandard2.1)'
-Before:
-using FolkerKinzel.VCards.Resources;
-After:
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Resources;
-*/
+﻿using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Resources;
 using OneOf;
 

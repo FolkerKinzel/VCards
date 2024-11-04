@@ -93,7 +93,7 @@ public readonly struct NameBuilder
     {
         IEnumerable<NameProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.NameViews = func.Invoke(props, data);
+        _builder.VCard.NameViews = func(props, data);
         return _builder;
     }
 
@@ -115,7 +115,7 @@ public readonly struct NameBuilder
     {
         IEnumerable<NameProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.NameViews = func.Invoke(props);
+        _builder.VCard.NameViews = func(props);
         return _builder;
     }
 

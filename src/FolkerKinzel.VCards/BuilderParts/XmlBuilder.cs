@@ -125,7 +125,7 @@ public readonly struct XmlBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Xmls = func.Invoke(props, data);
+        _builder.VCard.Xmls = func(props, data);
         return _builder;
     }
 
@@ -146,7 +146,7 @@ public readonly struct XmlBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Xmls = func.Invoke(props);
+        _builder.VCard.Xmls = func(props);
         return _builder;
     }
 

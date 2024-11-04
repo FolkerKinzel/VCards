@@ -44,7 +44,7 @@ public readonly struct ProfileBuilder
     {
         var prop = Builder.VCard.Profile;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Profile = func.Invoke(prop);
+        _builder.VCard.Profile = func(prop);
         return _builder;
     }
 

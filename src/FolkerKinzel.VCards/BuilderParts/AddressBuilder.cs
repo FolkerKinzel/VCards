@@ -129,7 +129,7 @@ public readonly struct AddressBuilder
     {
         IEnumerable<AddressProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Addresses = func.Invoke(props, data);
+        _builder.VCard.Addresses = func(props, data);
         return _builder;
     }
 
@@ -150,7 +150,7 @@ public readonly struct AddressBuilder
     {
         IEnumerable<AddressProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Addresses = func.Invoke(props);
+        _builder.VCard.Addresses = func(props);
         return _builder;
     }
 

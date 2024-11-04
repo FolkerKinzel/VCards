@@ -90,7 +90,7 @@ public readonly struct GenderBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.GenderViews = func.Invoke(props, data);
+        _builder.VCard.GenderViews = func(props, data);
         return _builder;
     }
 
@@ -112,7 +112,7 @@ public readonly struct GenderBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.GenderViews = func.Invoke(props);
+        _builder.VCard.GenderViews = func(props);
         return _builder;
     }
 

@@ -54,7 +54,7 @@ public readonly struct TimeStampBuilder
     {
         TimeStampProperty? prop = Builder.VCard.Get<TimeStampProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Set(_prop, func.Invoke(prop, data));
+        _builder.VCard.Set(_prop, func(prop, data));
         return _builder;
     }
 
@@ -75,7 +75,7 @@ public readonly struct TimeStampBuilder
     {
         TimeStampProperty? prop = Builder.VCard.Get<TimeStampProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Set(_prop, func.Invoke(prop));
+        _builder.VCard.Set(_prop, func(prop));
         return _builder;
     }
 

@@ -124,7 +124,7 @@ public readonly struct GeoBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.GeoCoordinates = func.Invoke(props, data);
+        _builder.VCard.GeoCoordinates = func(props, data);
         return _builder;
     }
 
@@ -146,7 +146,7 @@ public readonly struct GeoBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.GeoCoordinates = func.Invoke(props);
+        _builder.VCard.GeoCoordinates = func(props);
         return _builder;
     }
 

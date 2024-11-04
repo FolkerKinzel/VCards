@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="VCard.ID"/>
 /// <seealso cref="ContactID"/>
 /// <seealso cref="RelationProperty"/>
-public sealed class IDProperty : VCardProperty, IEquatable<IDProperty>
+public sealed class IDProperty : VCardProperty
 {
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="IDProperty"/> instance
@@ -109,35 +109,6 @@ public sealed class IDProperty : VCardProperty, IEquatable<IDProperty>
     /// <inheritdoc />
     public override object Clone() => new IDProperty(this);
 
-    /// <inheritdoc />
-    public override bool Equals(object? obj) => Equals(obj as IDProperty);
-
-    /// <inheritdoc />
-    public bool Equals(IDProperty? other)
-        => (other is not null) && Value.Equals(other.Value);
-
-    /// <inheritdoc />
-    public override int GetHashCode() => HashCode.Combine(Value);
-
-    /// <summary>
-    /// Overloads the equality operator for <see cref="IDProperty"/> instances.
-    /// </summary>
-    /// <param name="left">The left <see cref="IDProperty"/> object or <c>null</c>.</param>
-    /// <param name="right">The right <see cref="IDProperty"/> object or <c>null</c>.</param>
-    /// <returns><c>true</c> if the <see cref="Value"/> of <paramref name="left"/> and 
-    /// <paramref name="right"/> is equal, otherwise <c>false</c>.</returns>
-    public static bool operator ==(IDProperty? left, IDProperty? right)
-        => object.ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
-
-    /// <summary>
-    /// Overloads the not-equal-to operator for <see cref="IDProperty"/> instances.
-    /// </summary>
-    /// <param name="left">The left <see cref="IDProperty"/> object or <c>null</c>.</param>
-    /// <param name="right">The right <see cref="IDProperty"/> object or <c>null</c>.</param>
-    /// <returns><c>true</c> if the <see cref="Value"/> of <paramref name="left"/> and 
-    /// <paramref name="right"/> is not equal, otherwise <c>false</c>.</returns>
-    public static bool operator !=(IDProperty? left, IDProperty? right)
-        => !(left == right);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

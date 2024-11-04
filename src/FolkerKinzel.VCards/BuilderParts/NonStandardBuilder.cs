@@ -54,7 +54,7 @@ public readonly struct NonStandardBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.NonStandards = func.Invoke(props, data);
+        _builder.VCard.NonStandards = func(props, data);
         return _builder;
     }
 
@@ -76,7 +76,7 @@ public readonly struct NonStandardBuilder
     {
         var props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.NonStandards = func.Invoke(props);
+        _builder.VCard.NonStandards = func(props);
         return _builder;
     }
 

@@ -49,7 +49,7 @@ public readonly struct KindBuilder
     {
         var prop = Builder.VCard.Kind;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Kind = func.Invoke(prop, data);
+        _builder.VCard.Kind = func(prop, data);
         return _builder;
     }
 
@@ -70,7 +70,7 @@ public readonly struct KindBuilder
     {
         var prop = Builder.VCard.Kind;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Kind = func.Invoke(prop);
+        _builder.VCard.Kind = func(prop);
         return _builder;
     }
 

@@ -124,7 +124,7 @@ public readonly struct GramBuilder
     {
         IEnumerable<GramProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.GramGenders = func.Invoke(props, data);
+        _builder.VCard.GramGenders = func(props, data);
         return _builder;
     }
 
@@ -145,7 +145,7 @@ public readonly struct GramBuilder
     {
         IEnumerable<GramProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.GramGenders = func.Invoke(props);
+        _builder.VCard.GramGenders = func(props);
         return _builder;
     }
 
