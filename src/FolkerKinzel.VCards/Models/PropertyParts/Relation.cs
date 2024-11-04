@@ -1,4 +1,7 @@
+using FolkerKinzel.VCards.Intls;
+using System;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Resources;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
@@ -13,15 +16,38 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 /// <seealso cref="RelationProperty"/>
 public sealed class Relation
 {
-    private readonly OneOf<string, VCard, Guid, Uri> _oneOf;
+    private readonly OneOf<VCard, ContactID> _oneOf;
 
-    internal Relation(OneOf<string, VCard, Guid, Uri> oneOf) => _oneOf = oneOf;
+    private Relation(OneOf<VCard, ContactID> oneOf) => _oneOf = oneOf;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="string"/>
-    /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
+    /// <c>true</c> if the instance doesn't contain usable data, otherwise <c>false</c>.
     /// </summary>
-    public string? String => IsString ? AsStringIntl : null;
+    public bool IsEmpty => object.ReferenceEquals(this, Empty);
+
+    internal static Relation Empty { get; } = new Relation(ContactID.Empty);
+
+    internal static Relation Create(VCard vCard)
+    {
+        _ArgumentNullException.ThrowIfNull(vCard, nameof(vCard));
+
+        // Clone vCard in order to avoid circular references:
+        return new Relation((VCard)vCard.Clone());
+    }
+
+    //internal static Relation CreateNoClone(VCard vCard)
+    //{
+    //    Debug.Assert(vCard != null);
+
+    //    // Clone vCard in order to avoid circular references:
+    //    return new Relation(vCard);
+    //}
+
+    internal static Relation Create(ContactID id)
+    {
+        _ArgumentNullException.ThrowIfNull(id, nameof(id));
+        return id.IsEmpty ? Empty : new Relation(id);
+    }
 
     /// <summary>
     /// Gets the encapsulated <see cref="VCards.VCard"/>,
@@ -30,21 +56,14 @@ public sealed class Relation
     public VCard? VCard => IsVCard ? AsVCardIntl : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="System.Guid"/>,
+    /// Gets the encapsulated <see cref="Models.ContactID"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <remarks>
-    /// The <see cref="Guid"/> references another <see cref="VCard"/> with
+    /// The <see cref="Models.ContactID"/> references another <see cref="VCard"/> with
     /// its <see cref="VCard.ID"/> property.
     /// </remarks>
-    public Guid? Guid => IsGuid ? AsGuidIntl : null;
-
-    /// <summary>
-    /// Gets the encapsulated <see cref="System.Uri"/>,
-    /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
-    /// </summary>
-    /// <value>An absolute <see cref="System.Uri"/> or <c>null</c>.</value>
-    public Uri? Uri => IsUri ? AsUriIntl : null;
+    public ContactID? ContactID => IsContactID ? AsContactIDIntl : null;
 
     /// <summary>
     /// Gets the encapsulated value.
@@ -69,7 +88,7 @@ public sealed class Relation
     /// </para>
     /// The method fails
     /// <list type="bullet">
-    /// <item>if the instance encapsulates a <see cref="System.Guid"/></item>
+    /// <item>if the instance encapsulates a <see cref="ContactID"/></item>
     /// <item>if the instance contains a <see cref="VCards.VCard"/> and if this <see cref="VCards.VCard"/>
     /// contains no data that can be displayed as its name.</item>
     /// </list>
@@ -78,13 +97,17 @@ public sealed class Relation
     /// </remarks>
     public bool TryAsString([NotNullWhen(true)] out string? str)
     {
-        str = Convert(
-            static s => s,
+        str = Convert
+            (
             static vc => vc.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value ??
                          ToDisplayName(vc.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true), vc) ??
                          vc.Organizations?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value.OrganizationName,
-            static guid => null,
-            static uri => uri.ToString()
+            static contactID => contactID.Convert<string?>
+                                (
+                                guid => null,
+                                uri => uri.AbsoluteUri,
+                                str => str
+                                )
             );
         return str is not null;
 
@@ -96,69 +119,52 @@ public sealed class Relation
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
     /// encapsulated value.
     /// </summary>
-    /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="string"/>.</param>
     /// <param name="vCardAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="VCards.VCard"/>.</param>
-    /// <param name="guidAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.Guid"/>.</param>
-    /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.Uri"/>.</param>
+    /// <param name="contactIDAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="ContactID"/>.</param>
+    /// 
+    /// 
     /// <exception cref="InvalidOperationException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Switch(Action<string> stringAction,
-                       Action<VCard> vCardAction,
-                       Action<Guid> guidAction,
-                       Action<Uri> uriAction)
-        => _oneOf.Switch(stringAction, vCardAction, guidAction, uriAction);
+    public void Switch(Action<VCard> vCardAction,
+                       Action<ContactID> contactIDAction)
+        => _oneOf.Switch(vCardAction, contactIDAction);
 
     /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/>.
     /// </summary>
     /// <typeparam name="TResult">Generic type parameter.</typeparam>
-    /// <param name="stringFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
-    /// value is a <see cref="string"/>.</param>
     /// <param name="vCardFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="VCards.VCard"/>.</param>
-    /// <param name="guidFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
-    /// value is a <see cref="System.Guid"/>.</param>
-    /// <param name="uriFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
-    /// value is a <see cref="System.Uri"/>.</param>
+    /// <param name="contactIDFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
+    /// value is a <see cref="ContactID"/>.</param>
+    /// 
+    /// 
     /// <returns>A <typeparamref name="TResult"/>.</returns>
     /// <exception cref="InvalidOperationException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public TResult Convert<TResult>(Func<string, TResult> stringFunc,
-                                  Func<VCard, TResult> vCardFunc,
-                                  Func<Guid, TResult> guidFunc,
-                                  Func<Uri, TResult> uriFunc)
-        => _oneOf.Match(stringFunc, vCardFunc, guidFunc, uriFunc);
+    public TResult Convert<TResult>(Func<VCard, TResult> vCardFunc,
+                                    Func<ContactID, TResult> contactIDFunc)
+        => _oneOf.Match(vCardFunc, contactIDFunc);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => _oneOf.ToString();
 
-    [MemberNotNullWhen(true, nameof(String))]
-    private bool IsString => _oneOf.IsT0;
-
     [MemberNotNullWhen(true, nameof(VCard))]
-    private bool IsVCard => _oneOf.IsT1;
+    internal bool IsVCard => _oneOf.IsT0;
 
-    [MemberNotNullWhen(true, nameof(Guid))]
-    private bool IsGuid => _oneOf.IsT2;
+    [MemberNotNullWhen(true, nameof(ContactID))]
+    internal bool IsContactID => _oneOf.IsT1;
 
-    [MemberNotNullWhen(true, nameof(Uri))]
-    private bool IsUri => _oneOf.IsT3;
+    private VCard AsVCardIntl => _oneOf.AsT0;
 
-    private string AsStringIntl => _oneOf.AsT0;
+    private ContactID AsContactIDIntl => _oneOf.AsT1;
 
-    private VCard AsVCardIntl => _oneOf.AsT1;
-
-    private Guid AsGuidIntl => _oneOf.AsT2;
-
-    private Uri AsUriIntl => _oneOf.AsT3;
 }
 

@@ -367,7 +367,7 @@ public sealed partial class VCard
                         vcfRow.Parameters.DataType ??= Data.Text;
                         vcfRow.Parameters.RelationType = Rel.Agent;
 
-                        Relations = Concat(Relations, new RelationTextProperty(new TextProperty(vcfRow, this.Version)));
+                        Relations = Concat(Relations, RelationProperty.Parse(vcfRow, this.Version));
                     }
 
                     break;
@@ -378,8 +378,8 @@ public sealed partial class VCard
 
                         if (valSpan.IsWhiteSpace())
                         {
-                            Relations = Concat(Relations, RelationProperty.FromText(null, Rel.Agent, vcfRow.Group));
-                        }
+                            Relations = Concat(Relations, new RelationProperty(ContactID.Empty, Rel.Agent, vcfRow.Group));
+                        } 
                         else
                         {
                             if (valSpan.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
@@ -387,12 +387,9 @@ public sealed partial class VCard
                                 VCard? nested = ParseNestedVcard(vcfRow.Value.Span, info, this.Version);
 
                                 Relations =
-                                    Concat(Relations, nested is null
-                                                       ? new RelationTextProperty(new TextProperty(vcfRow, Version))
-
-                                                       // use the ctor directly because nested can't be a circular
-                                                       // reference and therefore don't neeed to be cloned:
-                                                       : new RelationVCardProperty(nested, Rel.Agent, vcfRow.Group));
+                                    Concat(Relations,
+                                           nested is null ? RelationProperty.Parse(vcfRow, Version)
+                                                          : new RelationProperty(nested, Rel.Agent, vcfRow.Group));
                             }
                             else
                             {

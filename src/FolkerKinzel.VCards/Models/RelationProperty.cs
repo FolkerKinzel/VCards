@@ -1,15 +1,16 @@
 using System.Collections;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models;
 
-/// <summary>Encapsulates data from vCard properties which describe relationships 
+/// <summary>Encapsulates data from vCard properties that describe relationships 
 /// with other people. </summary>
 /// <remarks>
 /// vCard properties whose data is encapsulated by <see cref="RelationProperty"/> 
@@ -20,149 +21,47 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="VCard.Relations"/>
 /// <seealso cref="VCard.Members"/>
 /// <seealso cref="Relation"/>
-public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProperty>
+public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProperty>
 {
-    private bool _isValueInitialized;
-    private Relation? _value;
-
     /// <summary>Copy constructor.</summary>
     /// <param name="prop">The <see cref="RelationProperty" /> instance to clone.</param>
-    protected RelationProperty(RelationProperty prop) : base(prop) { }
-
-    /// <summary> Constructor used by derived classes when parsing VCF. </summary>
-    /// <param name="parameters">The <see cref="ParameterSection" /> of the 
-    /// newly initialized <see cref="RelationProperty" /> object.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    protected RelationProperty(ParameterSection parameters, string? group)
-        : base(parameters, group) { }
-
-    /// <summary>Constructor used by derived classes.</summary>
-    /// <param name="relationType">A single <see cref="Rel" /> value, a combination
-    /// of several <see cref="Rel" /> values, or <c>null</c>.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    protected RelationProperty(Rel? relationType, string? group)
-        : base(new ParameterSection(), group)
-        => this.Parameters.RelationType = relationType;
+    private RelationProperty(RelationProperty prop) : base(prop) => Value = prop.Value;
 
     /// <summary>
-    /// The data provided by the <see cref="RelationProperty"/>.
+    /// Creates a new <see cref="RelationProperty"/> instance from a <see cref="ContactID"/>.
     /// </summary>
-    public new Relation? Value
-    {
-        get
-        {
-            if (!_isValueInitialized)
-            {
-                InitializeValue();
-            }
-
-            return _value;
-        }
-    }
-
-    /// <inheritdoc />
-    [MemberNotNullWhen(false, nameof(Value))]
-    public override bool IsEmpty => base.IsEmpty;
-
-    /// <summary>
-    /// Creates a new <see cref="RelationProperty"/> instance from an absolute 
-    /// <see cref="Uri"/>.
-    /// </summary>
-    /// <param name="uri">An absolute <see cref="Uri"/> or <c>null</c>.</param>
-    /// <param name="relationType">Standardized description of the relationship with the
-    /// person or organization that <paramref name="uri"/> represents. 
-    /// <see cref="ParameterSection.RelationType"/> of the returned instance will be
-    /// set to this value.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The newly created <see cref="RelationProperty"/> instance.</returns>
-    /// <exception cref="ArgumentException"><paramref name="uri"/> is neither <c>null</c> nor
-    /// an absolute <see cref="Uri"/>.</exception>
-    public static RelationProperty FromUri(Uri? uri,
-                                           Rel? relationType = null,
-                                           string? group = null)
-        => uri is null
-            ? FromText(null, relationType, group)
-            : !uri.IsAbsoluteUri
-                ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)), nameof(uri))
-                : UuidConverter.IsUuidUri(uri.OriginalString)
-                        ? new RelationUuidProperty(UuidConverter.ToGuid(uri.OriginalString.AsSpan()))
-                        : new RelationUriProperty
-                          (
-                            new UriProperty(uri,
-                                            new ParameterSection() { RelationType = relationType },
-                                            group)
-                          );
-
-    /// <summary>
-    /// Creates a new <see cref="RelationProperty"/> instance from text.
-    /// </summary>
-    /// <param name="text">Text that represents a person or organization, e.g., the name
-    /// of the person or organization, or <c>null</c>.</param>
-    /// <param name="relationType">Standardized description of the relationship with the
-    /// person or organization that the <paramref name="text"/> represents.
-    /// <see cref="ParameterSection.RelationType"/> of the returned instance will be
-    /// set to this value.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The newly created <see cref="RelationProperty"/> instance.</returns>
-    public static RelationProperty FromText(string? text,
-                                            Rel? relationType = null,
-                                            string? group = null)
-    {
-        var prop = new TextProperty(text, group);
-        prop.Parameters.RelationType = relationType;
-        prop.Parameters.DataType = Data.Text;
-
-        return new RelationTextProperty(prop);
-    }
-
-    /// <summary>
-    /// Creates a new <see cref="RelationProperty"/> instance from a <c>Guid</c>.
-    /// </summary>
-    /// <param name="uuid">A <see cref="Guid"/> that refers to the vCard of the person
+    /// <param name="id">A <see cref="ContactID"/> that refers to the vCard of the person
     /// or organization via its <see cref="VCard.ID"/> property (<c>UID</c>).</param>
     /// <param name="relationType">Standardized description of the relationship with the
-    /// person or organization to whose vCard the <paramref name="uuid"/> refers. 
+    /// person or organization to whose vCard the <paramref name="id"/> refers. 
     /// <see cref="ParameterSection.RelationType"/> of the returned instance will be
     /// set to this value.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The newly created <see cref="RelationProperty"/> instance.</returns>
-    /// <remarks>
-    /// Normally this method will not be used in own code. Use 
-    /// <see cref="FromVCard(VCard?, Rel?, string?)"/> instead if you own the 
-    /// <see cref="VCard"/>. When serializing VCF the <see cref="VCard"/>s will be automatically
-    /// replaced by their <see cref="Guid"/>s and when parsing VCF the <see cref="Guid"/>s will
-    /// be automatically dereferenced to their corresponding <see cref="VCard"/>s if these
-    /// <see cref="VCard"/>s are available.
-    /// </remarks>
-    public static RelationProperty FromGuid(Guid uuid,
-                                            Rel? relationType = null,
-                                            string? group = null)
-        => new RelationUuidProperty(uuid, relationType, group);
+    /// <exception cref="ArgumentNullException"><paramref name="id"/> is <c>null</c>.</exception>
+    public RelationProperty(ContactID id,
+                            Rel? relationType = null,
+                            string? group = null)
+        : base(new ParameterSection(), group)
+    {
+        Value = Relation.Create(id);
+        Parameters.RelationType = relationType;
+    }
 
     /// <summary>
-    /// Creates a new <see cref="RelationProperty"/> object from a <see cref="VCard"/>.
+    /// Initializes a new <see cref="RelationProperty"/> object from a specified <see cref="VCard"/> 
+    /// instance.
     /// </summary>
     /// <param name="vCard">The <see cref="VCard"/>-object that represents a person or 
-    /// organization to whom there is a relationship, or <c>null</c>.</param>
+    /// organization to whom there is a relationship.</param>
     /// <param name="relationType">Standardized description of the relationship with the
     /// person or organization that the <paramref name="vCard"/> represents.
-    /// <see cref="ParameterSection.RelationType"/> of the returned instance will be
+    /// <see cref="ParameterSection.RelationType"/> of the new instance will be
     /// set to this value.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the returned <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the returned <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>A <see cref="RelationProperty"/> object that provides a copy of <paramref name="vCard"/>.
-    /// </returns>
     /// <remarks>
     /// <note type="important">
     /// This constructor clones <paramref name="vCard"/> in order to avoid circular references.
@@ -179,13 +78,22 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// <example>
     /// <code language="cs" source="..\Examples\EmbeddedVCardExample.cs" />
     /// </example>
-    public static RelationProperty FromVCard(VCard? vCard,
-                                             Rel? relationType = null,
-                                             string? group = null)
-        => vCard is null
-            ? FromText(null, relationType, group)
-            // Clone vCard in order to avoid circular references:
-            : new RelationVCardProperty((VCard)vCard.Clone(), relationType, group);
+    /// <exception cref="ArgumentNullException"><paramref name="vCard"/> is <c>null</c>.</exception>
+    public RelationProperty(VCard vCard, Rel? relationType = null, string? group = null)
+        : base(new ParameterSection(), group)
+    {
+        Value = Relation.Create(vCard);
+        Parameters.RelationType = relationType;
+        Parameters.DataType = Data.VCard;
+    }
+
+    /// <summary>
+    /// The data provided by the <see cref="RelationProperty"/>.
+    /// </summary>
+    public new Relation Value { get; }
+
+    /// <inheritdoc />
+    public override bool IsEmpty => object.ReferenceEquals(Value, Relation.Empty);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -205,61 +113,119 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-
     internal static RelationProperty Parse(VcfRow vcfRow, VCdVersion version)
     {
+        RelationProperty prop;
         ReadOnlySpan<char> valSpan = vcfRow.Value.Span.Trim();
 
-        if (valSpan.IsEmpty || vcfRow.Parameters.DataType == Data.Text)
+        if (valSpan.IsEmpty)
         {
-            return new RelationTextProperty(new TextProperty(vcfRow, version));
+            prop = new RelationProperty(ContactID.Empty);
+            goto done;
+        }
+
+        if (UuidConverter.TryAsGuid(vcfRow.Value.Span, out Guid uuid))
+        {
+            prop = new RelationProperty(ContactID.Create(uuid));
+            goto done;
         }
 
         string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
                 ? valSpan.UnMaskAndDecodeValue(vcfRow.Parameters.CharSet)
                 : valSpan.UnMaskValue(version);
 
-        if (val.IsUuidUri())
+        if (string.IsNullOrWhiteSpace(val))
         {
-            var relation = new RelationUuidProperty(UuidConverter.ToGuid(valSpan),
-                                                    vcfRow.Parameters.RelationType,
-                                                    group: vcfRow.Group);
-
-            relation.Parameters.Assign(vcfRow.Parameters);
-
-            return relation;
+            prop = new RelationProperty(ContactID.Empty);
+            goto done;
         }
-        else if (Uri.TryCreate(val, UriKind.Absolute, out Uri? uri))
-        {
-            var relation = new RelationUriProperty
-                (
-                new UriProperty(uri, vcfRow.Parameters, group: vcfRow.Group)
-                );
 
-            return relation;
+        if (vcfRow.Parameters.DataType == Data.Text)
+        {
+            prop = new RelationProperty(ContactID.Create(val));
+            goto done;
+        }
+
+        if (Uri.TryCreate(val, UriKind.Absolute, out Uri? uri))
+        {
+            prop = new RelationProperty(ContactID.Create(uri));
+            goto done;
         }
         else
         {
-            return new RelationTextProperty(new TextProperty(vcfRow, version));
+            prop = new RelationProperty(ContactID.Create(val));
+            goto done;
         }
+
+done:
+        prop.Parameters.Assign(vcfRow.Parameters);
+        prop.Group = vcfRow.Group;
+        return prop;
     }
 
+    /// <inheritdoc/>
+    public override object Clone() => new RelationProperty(this);
 
-    private void InitializeValue()
+    internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        _isValueInitialized = true;
+        base.PrepareForVcfSerialization(serializer);
 
-        _value = this switch
+        if (Value.IsContactID && Value.ContactID.IsString)
         {
-            RelationTextProperty tProp => tProp.IsEmpty ? null : new Relation(tProp.Value),
+            Parameters.DataType = Data.Text;
 
-            // The vCard could be empty or not when initializing, but users get
-            // always a reference to it to change it afterwards:
-            RelationVCardProperty vcProp => new Relation(vcProp.Value),
+            if (serializer.Version == VCdVersion.V2_1 && Value.ContactID.String.NeedsToBeQpEncoded())
+            {
+                this.Parameters.Encoding = Enc.QuotedPrintable;
+                this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
+            }
+        }
 
-            RelationUuidProperty guidProp => guidProp.IsEmpty ? null : new Relation(guidProp.Value),
-            RelationUriProperty uriProp => new Relation(uriProp.Value),
-            _ => null
-        };
+        if (Value.IsVCard) { Parameters.DataType = Data.VCard; }
+    }
+
+    internal override void AppendValue(VcfSerializer serializer)
+    {
+        StringBuilder builder = serializer.Builder;
+
+        if (Value.IsContactID)
+        {
+            if (Value.ContactID.IsGuid)
+            {
+                _ = builder.AppendUuid(this.Value.ContactID.Guid.Value, serializer.Version);
+                return;
+            }
+
+            if (Value.ContactID.IsString)
+            {
+                _ = serializer.Version == VCdVersion.V2_1
+                    ? this.Parameters.Encoding == Enc.QuotedPrintable
+                        ? builder.AppendQuotedPrintable(Value.ContactID.String.AsSpan(), builder.Length)
+                        : builder.Append(Value.ContactID.String)
+                    : builder.AppendValueMasked(Value.ContactID.String, serializer.Version);
+            }
+
+            if (Value.ContactID.IsUri)
+            {
+                _ = builder.Append(Value.ContactID.Uri.AbsoluteUri);
+                return;
+            }
+        }
+
+        if (Value.IsVCard)
+        {
+            Debug.Assert(serializer.Version < VCdVersion.V4_0);
+            Debug.Assert(serializer.PropertyKey == VCard.PropKeys.AGENT);
+
+            string vc = Value.VCard.ToVcfString(
+                serializer.Version,
+                options: serializer.Options.Unset(Opts.AppendAgentAsSeparateVCard));
+
+            _ = serializer.Version == VCdVersion.V3_0
+                ? builder.AppendValueMasked(vc, serializer.Version)
+                : builder.Append(VCard.NewLine).Append(vc); // Version 2.1
+
+            return;
+        }
     }
 }

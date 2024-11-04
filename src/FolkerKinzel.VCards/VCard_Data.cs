@@ -822,9 +822,9 @@ public sealed partial class VCard
     }
 
     /// <summary>
-    /// Replaces <see cref="RelationTextProperty"/> instances in <see cref="Members"/>
-    /// with <see cref="RelationUriProperty"/> instances if possible, if not, with
-    /// <see cref="RelationVCardProperty"/> instances.
+    /// Replaces <see cref="RelationProperty"/> instances in <see cref="Members"/>
+    /// that contain text with <see cref="RelationProperty"/> instances that contain <see cref="Uri"/>s
+    /// if possible, if not, with <see cref="RelationProperty"/> instances that contain <see cref="VCard"/>s.
     /// </summary>
     /// <param name="ignoreEmptyItems">Specifies whether empty <see cref="VCardProperty"/>
     /// instances should be ignored when serializing VCF.</param>
@@ -843,16 +843,14 @@ public sealed partial class VCard
         {
             RelationProperty prop = span[i];
 
-            if (prop is RelationTextProperty textProp)
+            if (prop.Value.IsContactID && prop.Value.ContactID.IsString)
             {
-                if (textProp.IsEmpty && ignoreEmptyItems)
-                {
-                    continue;
-                }
+                Debug.Assert(!prop.IsEmpty);
 
-                span[i] = Uri.TryCreate(textProp.Value?.Trim(), UriKind.Absolute, out Uri? uri)
-                    ? RelationProperty.FromUri(uri, prop.Parameters.RelationType, prop.Group)
-                    : RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(textProp.Value) },
+                string text = prop.Value.ContactID.String;
+                span[i] = Uri.TryCreate(text.Trim(), UriKind.Absolute, out Uri? uri)
+                    ? new RelationProperty(ContactID.Create(uri), prop.Parameters.RelationType, prop.Group)
+                    : new RelationProperty(new VCard(setID: true, setCreated: false) { DisplayNames = new TextProperty(text) },
                                                  prop.Parameters.RelationType,
                                                  prop.Group);
             }

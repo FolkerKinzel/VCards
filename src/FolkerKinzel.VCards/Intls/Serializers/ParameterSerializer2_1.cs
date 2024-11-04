@@ -268,7 +268,7 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
     {
         string? lang = ParaSection.Language;
 
-        if (lang is not null && lang != "en-US")
+        if (lang is not null and not "en-US")
         {
             AppendParameter(ParameterSection.ParameterKey.LANGUAGE, lang);
         }

@@ -556,7 +556,7 @@ internal abstract class VcfSerializer : IDisposable
 
     private void AppendABLabels(IEnumerable<TextProperty?> value)
     {
-        if(this.Options.HasFlag(Opts.WriteXExtensions))
+        if (this.Options.HasFlag(Opts.WriteXExtensions))
         {
             BuildPropertyCollection(VCard.PropKeys.NonStandard.X_AB_LABEL, value);
         }
@@ -754,38 +754,45 @@ internal abstract class VcfSerializer : IDisposable
         RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Spouse),
                                                         IgnoreEmptyItems);
 
-        if (spouse is not null)
+        if (spouse is null || (spouse.Value.IsContactID && spouse.Value.ContactID.IsGuid))
         {
-            if (spouse is RelationVCardProperty vCardProp && !vCardProp.IsEmpty)
+            return;
+        }
+
+        VCardProperty? prop = spouse;
+
+        if (spouse.Value.IsVCard)
+        {
+            VCard vc = spouse.Value.VCard;
+            prop = ConvertSpouseVCardToRelationTextProperty(spouse.Value.VCard, spouse.Group);
+
+            if (prop is null)
             {
-                spouse = ConvertSpouseVCardToRelationTextProperty(vCardProp.Value, vCardProp.Group);
-            }
-
-            if (spouse is RelationTextProperty)
-            {
-                if (Options.HasFlag(Opts.WriteXExtensions))
-                {
-                    BuildProperty(VCard.PropKeys.NonStandard.X_SPOUSE, spouse);
-                }
-
-                if (Options.HasFlag(Opts.WriteKAddressbookExtensions))
-                {
-                    BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_SpouseName, spouse);
-                }
-
-                if (Options.HasFlag(Opts.WriteEvolutionExtensions))
-                {
-                    BuildProperty(VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE, spouse);
-                }
-
-                if (Options.HasFlag(Opts.WriteWabExtensions))
-                {
-                    BuildProperty(VCard.PropKeys.NonStandard.X_WAB_SPOUSE_NAME, spouse);
-                }
+                return;
             }
         }
 
-        static RelationProperty? ConvertSpouseVCardToRelationTextProperty(VCard spousesVCard, string? group)
+        if (Options.HasFlag(Opts.WriteXExtensions))
+        {
+            BuildProperty(VCard.PropKeys.NonStandard.X_SPOUSE, prop);
+        }
+
+        if (Options.HasFlag(Opts.WriteKAddressbookExtensions))
+        {
+            BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_SpouseName, prop);
+        }
+
+        if (Options.HasFlag(Opts.WriteEvolutionExtensions))
+        {
+            BuildProperty(VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE, prop);
+        }
+
+        if (Options.HasFlag(Opts.WriteWabExtensions))
+        {
+            BuildProperty(VCard.PropKeys.NonStandard.X_WAB_SPOUSE_NAME, prop);
+        }
+
+        static TextProperty? ConvertSpouseVCardToRelationTextProperty(VCard spousesVCard, string? group)
         {
             string? name = spousesVCard.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value;
 
@@ -803,9 +810,7 @@ internal abstract class VcfSerializer : IDisposable
                 }
             }
 
-            return RelationProperty.FromText(name,
-                                             Rel.Spouse,
-                                             group);
+            return new TextProperty(name, group);
         }
     }
 

@@ -1,8 +1,18 @@
 ﻿using FolkerKinzel.VCards.Intls;
+
+/* Unmerged change from project 'FolkerKinzel.VCards (netstandard2.1)'
+Before:
+using FolkerKinzel.VCards.Resources;
+After:
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Resources;
+*/
 using FolkerKinzel.VCards.Resources;
 using OneOf;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
 /// Encapsulates a globally unique identifier corresponding to the entity associated 
@@ -17,7 +27,13 @@ public sealed class ContactID : IEquatable<ContactID>
 
     internal static ContactID Create() => new(System.Guid.NewGuid());
 
-    internal static ContactID Create(Guid guid) 
+    /// <summary>
+    /// Creates a new <see cref="ContactID"/> instance from a specified
+    /// <see cref="System.Guid"/>.
+    /// </summary>
+    /// <param name="guid">A <see cref="System.Guid"/>.</param>
+    /// <returns>The newly created <see cref="ContactID"/> instance.</returns>
+    public static ContactID Create(Guid guid)
         => guid == System.Guid.Empty ? Empty : new ContactID(guid);
 
     /// <summary>
@@ -28,16 +44,12 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <returns>The newly created <see cref="ContactID"/> instance.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="uri"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="uri"/> is not an absolute <see cref="Uri"/>.</exception>
-    internal static ContactID Create(Uri uri)
+    public static ContactID Create(Uri uri)
     {
         _ArgumentNullException.ThrowIfNull(uri, nameof(uri));
 
-        if (!uri.IsAbsoluteUri)
-        {
-            throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)));
-        }
-
-        return new ContactID(uri);
+        return uri.IsAbsoluteUri ? new ContactID(uri) 
+                                 : throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)));
     }
 
     /// <summary>
@@ -49,22 +61,19 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <exception cref="ArgumentNullException"><paramref name="text"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="text"/> is an empty <see cref="string"/> 
     /// or consists only of white space.</exception>
-    internal static ContactID Create(string text)
+    public static ContactID Create(string text)
     {
         _ArgumentNullException.ThrowIfNull(text, nameof(text));
 
-        if (string.IsNullOrWhiteSpace(text))
-        {
-            throw new ArgumentException(string.Format(Res.Whitespace, nameof(text)));
-        }
-
-        return new ContactID(text);
+        return string.IsNullOrWhiteSpace(text)
+            ? throw new ArgumentException(string.Format(Res.Whitespace, nameof(text)))
+            : new ContactID(text);
     }
 
     /// <summary>
     /// <c>true</c> if the instance doesn't reference anything, otherwise <c>false</c>.
     /// </summary>
-    public bool IsEmpty => object.ReferenceEquals(this, Empty);
+    public bool IsEmpty => ReferenceEquals(this, Empty);
 
     internal static ContactID Empty { get; } = new ContactID(System.Guid.Empty);
 
@@ -139,7 +148,7 @@ public sealed class ContactID : IEquatable<ContactID>
     {
         return other is not null
           && (IsGuid ? other.IsGuid && Guid.Equals(other.Guid)
-            : IsUri  ? other.IsUri && Uri.Equals(other.Uri)
+            : IsUri ? other.IsUri && Uri.Equals(other.Uri)
             : StringComparer.Ordinal.Equals(String, other.String));
     }
 
@@ -157,7 +166,7 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <returns><c>true</c> if the <see cref="Value"/> of <paramref name="left"/> and 
     /// <paramref name="right"/> is equal, otherwise <c>false</c>.</returns>
     public static bool operator ==(ContactID? left, ContactID? right)
-        => object.ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
+        => ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
 
     /// <summary>
     /// Overloads the not-equal-to operator for <see cref="ContactID"/> instances.

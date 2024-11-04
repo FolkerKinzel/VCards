@@ -77,6 +77,10 @@
     <Compile Remove="Intls\Encodings\Base64.cs" />
     <Compile Remove="Intls\Extensions\DoubleExtension.cs" />
     <Compile Remove="Intls\Extensions\PolyfillExtension.cs" />
+    <Compile Remove="Intls\Models\RelationTextProperty.cs" />
+    <Compile Remove="Intls\Models\RelationUriProperty.cs" />
+    <Compile Remove="Intls\Models\RelationUuidProperty.cs" />
+    <Compile Remove="Intls\Models\RelationVCardProperty.cs" />
     <Compile Remove="Intls\Net40LeaveOpenStream.cs" />
     <Compile Remove="Models\ContentSizeRestriction.cs" />
     <Compile Remove="Models\DataProperty_OBSOLETE.cs" />

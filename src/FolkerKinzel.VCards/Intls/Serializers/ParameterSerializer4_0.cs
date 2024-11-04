@@ -13,7 +13,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 {
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer4_0>> _actionList = new(2);
-    private readonly bool writeRfc9554 = options.HasFlag(Opts.WriteRfc9554Extensions);
+    private readonly bool _writeRfc9554 = options.HasFlag(Opts.WriteRfc9554Extensions);
 
     private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes = CollectPropertyClassTypes;
     private readonly Action<ParameterSerializer4_0> _collectPhoneTypes = CollectPhoneTypes;
@@ -787,7 +787,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendAuthorAndCreated()
     {
-        if (!writeRfc9554)
+        if (!_writeRfc9554)
         {
             return;
         }
@@ -849,7 +849,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendDerived()
     {
-        if (writeRfc9554 && ParaSection.Derived)
+        if (_writeRfc9554 && ParaSection.Derived)
         {
             AppendParameter(ParaKey.Rfc9554.DERIVED, "TRUE");
         }
@@ -943,7 +943,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendPhoneticAndScript()
     {
-        if (!writeRfc9554)
+        if (!_writeRfc9554)
         {
             return;
         }
@@ -1003,7 +1003,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendPropId()
     {
-        if (writeRfc9554 && ParaSection.PropertyID is string propID)
+        if (_writeRfc9554 && ParaSection.PropertyID is string propID)
         {
             AppendParameter(ParaKey.Rfc9554.PROP_ID, propID, escapedAndQuoted: true);
         }
@@ -1021,7 +1021,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendServiceTypeAndUsername()
     {
-        if (writeRfc9554)
+        if (_writeRfc9554)
         {
             if (ParaSection.ServiceType is string serviceType)
             {

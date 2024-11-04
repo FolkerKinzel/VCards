@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls;
+﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
@@ -105,26 +106,25 @@ public sealed partial class VCard
             }
 
             static bool HasRelationVCardProperty(IEnumerable<RelationProperty?>? props)
-                => props?.Any(static x => x is RelationVCardProperty) ?? false;
+                => props?.Any(static x => x is not null && x.Value.IsVCard) ?? false;
         }
 
         static void DoSetReferences(List<VCard> vCardList, List<RelationProperty?> relations)
         {
-            Debug.Assert(relations.Where(x => x is RelationVCardProperty).All(x => !x!.IsEmpty));
+            Debug.Assert(relations.Items().Where(x => x.Value.IsVCard).All(x => !x.IsEmpty));
 
-            RelationVCardProperty[] vcdProps = relations
-                            .WhereNotNullAnd(static x => x is RelationVCardProperty)
-                            .Cast<RelationVCardProperty>()
+            RelationProperty[] vcdProps = relations
+                            .WhereNotNullAnd(static x => x.Value.IsVCard)
                             .ToArray(); // We need ToArray here because relations
                                         // might change.
 
-            foreach (RelationVCardProperty vcdProp in vcdProps)
+            foreach (RelationProperty vcdProp in vcdProps)
             {
                 Debug.Assert(vcdProp is not null);
 
                 _ = relations.Remove(vcdProp);
 
-                VCard vc = vcdProp.Value;
+                VCard vc = vcdProp.Value.VCard!;
 
                 if (vc.ID is null || vc.ID.IsEmpty)
                 {
@@ -136,14 +136,14 @@ public sealed partial class VCard
                     vCardList.Add(vc);
                 }
 
-                if (relations.Any(x => x is RelationUuidProperty xUid
-                                       && xUid.Value == vc.ID.Value
-                                       && xUid.Parameters.RelationType == vcdProp.Parameters.RelationType))
+                if (relations.WhereNotNull().Any(x => x.Value.IsContactID
+                                       && x.Value.ContactID == vc.ID.Value
+                                       && x.Parameters.RelationType == vcdProp.Parameters.RelationType))
                 {
                     continue;
                 }
 
-                var relationUuid = new RelationUuidProperty(
+                var relationUuid = new RelationProperty(
                     vc.ID.Value,
                     group: vcdProp.Group);
 

@@ -11,6 +11,7 @@ namespace FolkerKinzel.VCards.Models;
 /// <summary>Represents the vCard property <c>UID</c>, which stores a unique identifier
 /// for the vCard subject.</summary>
 /// <seealso cref="VCard.ID"/>
+/// <seealso cref="ContactID"/>
 /// <seealso cref="RelationProperty"/>
 public sealed class IDProperty : VCardProperty, IEquatable<IDProperty>
 {
@@ -146,12 +147,7 @@ public sealed class IDProperty : VCardProperty, IEquatable<IDProperty>
     {
         base.PrepareForVcfSerialization(serializer);
 
-        if (IsEmpty || Parameters.DataType == Data.Uri)
-        {
-            // Valid URIs consist of ASCII characters and don't include
-            // line breaks.
-            return;
-        }
+        if (Value.IsString) { Parameters.DataType = Data.Text; }
 
         if (serializer.Version == VCdVersion.V2_1 && Value.IsString && Value.String.NeedsToBeQpEncoded())
         {
@@ -163,26 +159,25 @@ public sealed class IDProperty : VCardProperty, IEquatable<IDProperty>
     internal override void AppendValue(VcfSerializer serializer)
     {
         Debug.Assert(serializer is not null);
+        StringBuilder builder = serializer.Builder;
 
         if (Value.IsGuid)
         {
-            _ = serializer.Builder.AppendUuid(this.Value.Guid.Value, serializer.Version);
+            _ = builder.AppendUuid(this.Value.Guid.Value, serializer.Version);
         }
         else if (Value.IsUri)
         {
             // URIs are not masked according to the "Verifier notes" in
             // https://www.rfc-editor.org/errata/eid3845
             // It says that "the ABNF does not support escaping for URIs."
-            _ = serializer.Builder.Append(Value.Uri.AbsoluteUri);
+            _ = builder.Append(Value.Uri.AbsoluteUri);
         }
         else
         {
-            StringBuilder builder = serializer.Builder;
-
             _ = serializer.Version == VCdVersion.V2_1
                 ? this.Parameters.Encoding == Enc.QuotedPrintable
                     ? builder.AppendQuotedPrintable(Value.String.AsSpan(), builder.Length)
-                    : builder.Append(Value)
+                    : builder.Append(Value.String)
                 : builder.AppendValueMasked(Value.String, serializer.Version);
         }
     }

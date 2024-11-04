@@ -17,6 +17,6 @@ public class RelationUuidPropertyTests
     {
         var prop = RelationProperty.FromGuid(Guid.NewGuid());
         Assert.IsFalse(prop.IsEmpty);
-        Assert.IsNotNull(prop.Value!.Guid);
+        Assert.IsNotNull(prop.Value!.ContactID);
     }
 }
