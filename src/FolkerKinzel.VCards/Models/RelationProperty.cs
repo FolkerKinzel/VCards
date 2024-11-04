@@ -28,64 +28,18 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
     private RelationProperty(RelationProperty prop) : base(prop) => Value = prop.Value;
 
     /// <summary>
-    /// Creates a new <see cref="RelationProperty"/> instance from a <see cref="ContactID"/>.
+    /// Creates a new <see cref="RelationProperty"/> instance from a <see cref="Relation"/>.
     /// </summary>
-    /// <param name="id">A <see cref="ContactID"/> that refers to the vCard of the person
-    /// or organization via its <see cref="VCard.ID"/> property (<c>UID</c>).</param>
-    /// <param name="relationType">Standardized description of the relationship with the
-    /// person or organization to whose vCard the <paramref name="id"/> refers. 
-    /// <see cref="ParameterSection.RelationType"/> of the returned instance will be
-    /// set to this value.</param>
+    /// <param name="relation">A <see cref="Relation"/> instance that identifies the person
+    /// or organization with whome there is a relationship.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="id"/> is <c>null</c>.</exception>
-    public RelationProperty(ContactID id,
-                            Rel? relationType = null,
+    /// <exception cref="ArgumentNullException"><paramref name="relation"/> is <c>null</c>.</exception>
+    public RelationProperty(Relation relation,
                             string? group = null)
         : base(new ParameterSection(), group)
-    {
-        Value = Relation.Create(id);
-        Parameters.RelationType = relationType;
-    }
-
-    /// <summary>
-    /// Initializes a new <see cref="RelationProperty"/> object from a specified <see cref="VCard"/> 
-    /// instance.
-    /// </summary>
-    /// <param name="vCard">The <see cref="VCard"/>-object that represents a person or 
-    /// organization to whom there is a relationship.</param>
-    /// <param name="relationType">Standardized description of the relationship with the
-    /// person or organization that the <paramref name="vCard"/> represents.
-    /// <see cref="ParameterSection.RelationType"/> of the new instance will be
-    /// set to this value.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the returned <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the returned <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <remarks>
-    /// <note type="important">
-    /// This constructor clones <paramref name="vCard"/> in order to avoid circular references.
-    /// Changing the <paramref name="vCard"/> instance AFTER assigning it to this constructor 
-    /// leads to unexpected results!
-    /// </note>
-    /// <para>
-    /// vCard&#160;2.1 and vCard&#160;3.0 can embed nested vCards if the flag <see cref="Rel.Agent"/> is 
-    /// set in their <see cref="ParameterSection.RelationType"/> property . When serializing a vCard&#160;4.0, 
-    /// embedded <see cref="VCard"/>s will be automatically replaced by <see cref="Guid"/> references and
-    /// appended as separate vCards to the VCF file.
-    /// </para>
-    /// </remarks>
-    /// <example>
-    /// <code language="cs" source="..\Examples\EmbeddedVCardExample.cs" />
-    /// </example>
-    /// <exception cref="ArgumentNullException"><paramref name="vCard"/> is <c>null</c>.</exception>
-    public RelationProperty(VCard vCard, Rel? relationType = null, string? group = null)
-        : base(new ParameterSection(), group)
-    {
-        Value = Relation.Create(vCard);
-        Parameters.RelationType = relationType;
-        Parameters.DataType = Data.VCard;
-    }
+        => Value = relation ?? throw new ArgumentNullException(nameof(relation));
 
     /// <summary>
     /// The data provided by the <see cref="RelationProperty"/>.
@@ -120,13 +74,13 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
 
         if (valSpan.IsEmpty)
         {
-            prop = new RelationProperty(ContactID.Empty);
+            prop = new RelationProperty(Relation.Empty);
             goto done;
         }
 
         if (UuidConverter.TryAsGuid(vcfRow.Value.Span, out Guid uuid))
         {
-            prop = new RelationProperty(ContactID.Create(uuid));
+            prop = new RelationProperty(Relation.Create(ContactID.Create(uuid)));
             goto done;
         }
 
@@ -136,24 +90,24 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
 
         if (string.IsNullOrWhiteSpace(val))
         {
-            prop = new RelationProperty(ContactID.Empty);
+            prop = new RelationProperty(Relation.Empty);
             goto done;
         }
 
         if (vcfRow.Parameters.DataType == Data.Text)
         {
-            prop = new RelationProperty(ContactID.Create(val));
+            prop = new RelationProperty(Relation.Create(ContactID.Create(val)));
             goto done;
         }
 
         if (Uri.TryCreate(val, UriKind.Absolute, out Uri? uri))
         {
-            prop = new RelationProperty(ContactID.Create(uri));
+            prop = new RelationProperty(Relation.Create(ContactID.Create(uri)));
             goto done;
         }
         else
         {
-            prop = new RelationProperty(ContactID.Create(val));
+            prop = new RelationProperty(Relation.Create(ContactID.Create(val)));
             goto done;
         }
 
@@ -170,7 +124,7 @@ done:
     {
         base.PrepareForVcfSerialization(serializer);
 
-        if (Value.IsContactID && Value.ContactID.IsString)
+        if (Value.ContactID?.String is not null)
         {
             Parameters.DataType = Data.Text;
 
@@ -188,42 +142,42 @@ done:
     {
         StringBuilder builder = serializer.Builder;
 
-        if (Value.IsContactID)
+        if (Value.ContactID is not null)
         {
-            if (Value.ContactID.IsGuid)
+            if (Value.ContactID.Guid.HasValue)
             {
                 _ = builder.AppendUuid(this.Value.ContactID.Guid.Value, serializer.Version);
                 return;
             }
 
-            if (Value.ContactID.IsString)
+            if (Value.ContactID.String is string txt)
             {
                 _ = serializer.Version == VCdVersion.V2_1
                     ? this.Parameters.Encoding == Enc.QuotedPrintable
-                        ? builder.AppendQuotedPrintable(Value.ContactID.String.AsSpan(), builder.Length)
+                        ? builder.AppendQuotedPrintable(txt.AsSpan(), builder.Length)
                         : builder.Append(Value.ContactID.String)
                     : builder.AppendValueMasked(Value.ContactID.String, serializer.Version);
             }
 
-            if (Value.ContactID.IsUri)
+            if (Value.ContactID.Uri is Uri uri)
             {
-                _ = builder.Append(Value.ContactID.Uri.AbsoluteUri);
+                _ = builder.Append(uri.AbsoluteUri);
                 return;
             }
         }
 
-        if (Value.IsVCard)
+        if (Value.VCard is VCard vCard)
         {
             Debug.Assert(serializer.Version < VCdVersion.V4_0);
             Debug.Assert(serializer.PropertyKey == VCard.PropKeys.AGENT);
 
-            string vc = Value.VCard.ToVcfString(
+            string vcf = vCard.ToVcfString(
                 serializer.Version,
                 options: serializer.Options.Unset(Opts.AppendAgentAsSeparateVCard));
 
             _ = serializer.Version == VCdVersion.V3_0
-                ? builder.AppendValueMasked(vc, serializer.Version)
-                : builder.Append(VCard.NewLine).Append(vc); // Version 2.1
+                ? builder.AppendValueMasked(vcf, serializer.Version)
+                : builder.Append(VCard.NewLine).Append(vcf); // Version 2.1
 
             return;
         }
