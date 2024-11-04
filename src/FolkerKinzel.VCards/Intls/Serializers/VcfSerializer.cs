@@ -754,16 +754,15 @@ internal abstract class VcfSerializer : IDisposable
         RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Spouse),
                                                         IgnoreEmptyItems);
 
-        if (spouse is null || (spouse.Value.IsContactID && spouse.Value.ContactID.IsGuid))
+        if (spouse is null || (spouse.Value.ContactID?.Guid is Guid))
         {
             return;
         }
 
         VCardProperty? prop = spouse;
 
-        if (spouse.Value.IsVCard)
+        if (spouse.Value.VCard is VCard vc)
         {
-            VCard vc = spouse.Value.VCard;
             prop = ConvertSpouseVCardToRelationTextProperty(spouse.Value.VCard, spouse.Group);
 
             if (prop is null)

@@ -175,7 +175,9 @@ public readonly struct RelationBuilder
     [Obsolete("Use Add(ContactID,...) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public VCardBuilder Add(Guid uuid,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null) => throw new NotImplementedException();
@@ -184,7 +186,9 @@ public readonly struct RelationBuilder
     [Obsolete("Use Add(ContactID,...) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public VCardBuilder Add(string? text,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null) => throw new NotImplementedException();
@@ -192,7 +196,9 @@ public readonly struct RelationBuilder
     [Obsolete("Use Add(ContactID,...) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public VCardBuilder Add(Uri? uri,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null) => throw new NotImplementedException();

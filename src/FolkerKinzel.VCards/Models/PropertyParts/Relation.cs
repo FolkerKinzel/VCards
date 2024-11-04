@@ -70,50 +70,50 @@ public sealed class Relation
     /// </summary>
     public object Value => this._oneOf.Value;
 
-    /// <summary>
-    /// Tries to convert the encapsulated data to a <see cref="string"/> that can be
-    /// displayed to users.
-    /// </summary>
-    /// <param name="str">When the method
-    /// returns <c>true</c>, contains a <see cref="string"/> that
-    /// represents the data that is encapsulated in the instance. The
-    /// parameter is passed uninitialized.</param>
-    /// <returns><c>true</c> if the conversion was successful, otherwise <c>false</c>.</returns>
-    /// <remarks>
-    /// <para>
-    /// The method differs from the <see cref="ToString"/> method in that it tries to convert 
-    /// the information contained in the encapsulated data to a human-readable <see cref="string"/>,
-    /// whereas the <see cref="ToString"/> method provides meta-information about the 
-    /// <see cref="Relation"/> object itself.
-    /// </para>
-    /// The method fails
-    /// <list type="bullet">
-    /// <item>if the instance encapsulates a <see cref="ContactID"/></item>
-    /// <item>if the instance contains a <see cref="VCards.VCard"/> and if this <see cref="VCards.VCard"/>
-    /// contains no data that can be displayed as its name.</item>
-    /// </list>
-    /// <para>Encapsulated <see cref="System.Uri"/>s will be converted using <see cref="System.Uri.ToString"/>
-    /// in order to get a more readable <see cref="string"/> than with <see cref="System.Uri.AbsoluteUri"/>.</para>
-    /// </remarks>
-    public bool TryAsString([NotNullWhen(true)] out string? str)
-    {
-        str = Convert
-            (
-            static vc => vc.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value ??
-                         ToDisplayName(vc.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true), vc) ??
-                         vc.Organizations?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value.OrganizationName,
-            static contactID => contactID.Convert<string?>
-                                (
-                                guid => null,
-                                uri => uri.AbsoluteUri,
-                                str => str
-                                )
-            );
-        return str is not null;
+    ///// <summary>
+    ///// Tries to convert the encapsulated data to a <see cref="string"/> that can be
+    ///// displayed to users.
+    ///// </summary>
+    ///// <param name="str">When the method
+    ///// returns <c>true</c>, contains a <see cref="string"/> that
+    ///// represents the data that is encapsulated in the instance. The
+    ///// parameter is passed uninitialized.</param>
+    ///// <returns><c>true</c> if the conversion was successful, otherwise <c>false</c>.</returns>
+    ///// <remarks>
+    ///// <para>
+    ///// The method differs from the <see cref="ToString"/> method in that it tries to convert 
+    ///// the information contained in the encapsulated data to a human-readable <see cref="string"/>,
+    ///// whereas the <see cref="ToString"/> method provides meta-information about the 
+    ///// <see cref="Relation"/> object itself.
+    ///// </para>
+    ///// The method fails
+    ///// <list type="bullet">
+    ///// <item>if the instance encapsulates a <see cref="ContactID"/></item>
+    ///// <item>if the instance contains a <see cref="VCards.VCard"/> and if this <see cref="VCards.VCard"/>
+    ///// contains no data that can be displayed as its name.</item>
+    ///// </list>
+    ///// <para>Encapsulated <see cref="System.Uri"/>s will be converted using <see cref="System.Uri.ToString"/>
+    ///// in order to get a more readable <see cref="string"/> than with <see cref="System.Uri.AbsoluteUri"/>.</para>
+    ///// </remarks>
+    //public bool TryAsString([NotNullWhen(true)] out string? str)
+    //{
+    //    str = Convert
+    //        (
+    //        static vc => vc.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value ??
+    //                     ToDisplayName(vc.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true), vc) ??
+    //                     vc.Organizations?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value.OrganizationName,
+    //        static contactID => contactID.Convert<string?>
+    //                            (
+    //                            guid => null,
+    //                            uri => uri.AbsoluteUri,
+    //                            str => str
+    //                            )
+    //        );
+    //    return str is not null;
 
-        static string? ToDisplayName(NameProperty? nameProperty, VCard vCard)
-            => nameProperty is null ? null :  NameFormatter.Default.ToDisplayName(nameProperty, vCard);
-    }
+    //    static string? ToDisplayName(NameProperty? nameProperty, VCard vCard)
+    //        => nameProperty is null ? null :  NameFormatter.Default.ToDisplayName(nameProperty, vCard);
+    //}
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 

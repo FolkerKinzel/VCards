@@ -9,73 +9,73 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
-internal class RelationPropertyDerived : RelationProperty
-{
-    public RelationPropertyDerived(RelationProperty prop) : base(prop)
-    {
-    }
+//internal class RelationPropertyDerived : RelationProperty
+//{
+//    public RelationPropertyDerived(RelationProperty prop) : base(prop)
+//    {
+//    }
 
-    public RelationPropertyDerived(ParameterSection parameters, string? group)
-        : base(parameters, group)
-    {
-    }
+//    public RelationPropertyDerived(ParameterSection parameters, string? group)
+//        : base(parameters, group)
+//    {
+//    }
 
-    public RelationPropertyDerived(Rel? relation, string? group)
-        : base(relation, group)
-    {
-    }
+//    public RelationPropertyDerived(Rel? relation, string? group)
+//        : base(relation, group)
+//    {
+//    }
 
-    public override object Clone() => throw new NotImplementedException();
-    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
-}
+//    public override object Clone() => throw new NotImplementedException();
+//    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
+//}
 
 [TestClass]
 public class RelationPropertyTests
 {
-    private class TestIEnumerable : RelationProperty
-    {
-        public TestIEnumerable() : base(Rel.Contact, null) { }
-        public override object Clone() => throw new NotImplementedException();
-        protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
-        internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
-    }
+    //private class TestIEnumerable : RelationProperty
+    //{
+    //    public TestIEnumerable() : base(Rel.Contact, null) { }
+    //    public override object Clone() => throw new NotImplementedException();
+    //    protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
+    //    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
+    //}
 
     [TestMethod]
     public void IEnumerableTest()
-        => Assert.AreEqual(1, new TestIEnumerable().AsWeakEnumerable().Count());
+        => Assert.AreEqual(1, new RelationProperty(ContactID.Empty).AsWeakEnumerable().Count());
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void FromUriTest1()
     {
         Assert.IsTrue(Uri.TryCreate("../bla.txt", UriKind.Relative, out Uri? uri));
-        _ = RelationProperty.FromUri(uri);
+        _ = new RelationProperty(ContactID.Create(uri));
     }
 
     [TestMethod]
-    public void FromUriTest2() => Assert.IsTrue(RelationProperty.FromUri(null).IsEmpty);
+    public void FromUriTest2() => Assert.IsTrue(new RelationProperty(ContactID.Empty).IsEmpty);
 
 
     [TestMethod]
     public void FromUriTest3()
     {
         Assert.IsTrue(Uri.TryCreate("mailto:jemand@beispiel.com", UriKind.Absolute, out Uri? uri));
-        Assert.IsInstanceOfType(RelationProperty.FromUri(uri), typeof(RelationUriProperty));
+        Assert.IsInstanceOfType(new RelationProperty(ContactID.Create(uri)), typeof(RelationProperty));
     }
 
     [TestMethod]
     public void FromUriTest4()
     {
         Assert.IsTrue(Uri.TryCreate("urn:uuid:550e8400-e29b-11d4-a716-446655440000", UriKind.Absolute, out Uri? uri));
-        var prop = RelationProperty.FromUri(uri);
-        Assert.IsInstanceOfType(prop, typeof(RelationUuidProperty));
+        var prop = new RelationProperty(ContactID.Create(uri));
+        Assert.IsInstanceOfType(prop, typeof(RelationProperty));
         Assert.IsFalse(prop.IsEmpty);
     }
 
     [TestMethod]
     public void IsEmptyTest1()
     {
-        RelationProperty prop = new RelationPropertyDerived(RelationProperty.FromText("Hi"));
+        var prop = new RelationProperty(ContactID.Empty);
         Assert.IsTrue(prop.IsEmpty);
     }
 
@@ -89,7 +89,7 @@ public class RelationPropertyTests
         Assert.IsNotNull(row);
 
         var prop = RelationProperty.Parse(row!, VCdVersion.V4_0);
-        Assert.IsInstanceOfType(prop, typeof(RelationTextProperty));
+        Assert.IsInstanceOfType(prop, typeof(RelationProperty));
     }
 
     [TestMethod]
@@ -100,13 +100,13 @@ public class RelationPropertyTests
         Assert.AreEqual(Enc.QuotedPrintable, row.Parameters.Encoding);
 
         var prop = RelationProperty.Parse(row, VCdVersion.V2_1);
-        Assert.AreEqual("Müller", prop.Value!.String);
+        Assert.AreEqual("Müller", prop.Value.ContactID?.String);
     }
 
     [TestMethod]
     public void ValueTest1()
     {
-        VCardProperty prop = RelationProperty.FromText("abc");
+        VCardProperty prop = new RelationProperty(ContactID.Create("abc"));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(Relation));
     }
@@ -114,7 +114,7 @@ public class RelationPropertyTests
     [TestMethod]
     public void ValueTest2()
     {
-        VCardProperty prop = RelationProperty.FromGuid(Guid.NewGuid());
+        VCardProperty prop = new RelationProperty(ContactID.Create(Guid.NewGuid()));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(Relation));
     }
@@ -122,7 +122,7 @@ public class RelationPropertyTests
     [TestMethod]
     public void ValueTest3()
     {
-        VCardProperty prop = RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty("Folker") });
+        VCardProperty prop = new RelationProperty(new VCard { DisplayNames = new TextProperty("Folker") });
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(Relation));
     }

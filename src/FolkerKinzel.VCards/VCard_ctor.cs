@@ -28,7 +28,7 @@ public sealed partial class VCard
     {
         if (setID)
         {
-            ID = new IDProperty();
+            ID = new IDProperty(ContactID.Create());
         }
 
         if (setCreated)

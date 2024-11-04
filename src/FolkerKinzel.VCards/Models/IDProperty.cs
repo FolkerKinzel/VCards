@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -15,59 +16,30 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="RelationProperty"/>
 public sealed class IDProperty : VCardProperty
 {
+    [Obsolete("Use the constructor that takes a ContactID.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public IDProperty(string? group = null)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        : base(new ParameterSection(), group) => throw new NotImplementedException();
+
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="IDProperty"/> instance
     /// to clone.</param>
     private IDProperty(IDProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary> Initializes a new <see cref="IDProperty" /> object with a
-    /// new <see cref="Guid" />. </summary>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public IDProperty(string? group = null)
-        : base(new ParameterSection(), group) => Value = ContactID.Create();
-
     /// <summary> Initializes a new <see cref="IDProperty" /> object with a 
-    /// specified <see cref="Guid"/>. </summary>
-    /// <param name="uuid">A <see cref="Guid" /> value.</param>
+    /// specified <see cref="ContactID"/>. </summary>
+    /// <param name="id">A <see cref="Guid" /> value.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public IDProperty(Guid uuid, string? group = null)
-        : base(new ParameterSection(), group) => Value = ContactID.Create(uuid);
-
-    /// <summary> Initializes a new <see cref="IDProperty" /> object with a 
-    /// specified absolute <see cref="Uri"/>. </summary>
-    /// <param name="uri">An absolute <see cref="Uri" />.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="uri"/> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="uri"/> is not an absolute <see cref="Uri"/>.</exception>
-    public IDProperty(Uri uri, string? group = null)
+    /// <exception cref="ArgumentNullException"><paramref name="id"/> is <c>null</c>.</exception>
+    public IDProperty(ContactID id, string? group = null)
         : base(new ParameterSection(), group)
-    {
-        Value = ContactID.Create(uri);
-        Parameters.DataType = Data.Uri;
-    }
-
-    /// <summary> Initializes a new <see cref="IDProperty" /> object with
-    /// specified free-form text. </summary>
-    /// <param name="text">Free-form text that can be used as identifier.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="text"/> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="text"/> is an empty <see cref="string"/> 
-    /// or consists only of white space.</exception>
-    public IDProperty(string text, string? group = null)
-        : base(new ParameterSection(), group)
-    {
-        Value = ContactID.Create(text);
-        Parameters.DataType = Data.Text;
-    }
+        => Value = id ?? throw new ArgumentNullException(nameof(id));
 
     internal IDProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
     {

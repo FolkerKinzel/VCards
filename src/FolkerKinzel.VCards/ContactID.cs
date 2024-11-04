@@ -1,4 +1,7 @@
-﻿using FolkerKinzel.VCards.Intls;
+﻿using System;
+using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Resources;
 using OneOf;
 
@@ -15,7 +18,12 @@ public sealed class ContactID : IEquatable<ContactID>
     private ContactID(OneOf<Guid, Uri, string> oneOf)
         => _oneOf = oneOf;
 
-    internal static ContactID Create() => new(System.Guid.NewGuid());
+    /// <summary>
+    /// Creates a new <see cref="ContactID"/> instance from a newly
+    /// created <see cref="System.Guid"/>.
+    /// </summary>
+    /// <returns></returns>
+    public static ContactID Create() => new(System.Guid.NewGuid());
 
     /// <summary>
     /// Creates a new <see cref="ContactID"/> instance from a specified
@@ -32,14 +40,23 @@ public sealed class ContactID : IEquatable<ContactID>
     /// </summary>
     /// <param name="uri">An absolute <see cref="System.Uri"/>.</param>
     /// <returns>The newly created <see cref="ContactID"/> instance.</returns>
+    /// <remarks>
+    /// If <paramref name="uri"/> is a valid "uuid" URN, a <see cref="ContactID"/> instance
+    /// with this <see cref="Guid"/> value will be created.
+    /// </remarks>
     /// <exception cref="ArgumentNullException"><paramref name="uri"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="uri"/> is not an absolute <see cref="Uri"/>.</exception>
     public static ContactID Create(Uri uri)
     {
         _ArgumentNullException.ThrowIfNull(uri, nameof(uri));
 
-        return uri.IsAbsoluteUri ? new ContactID(uri)
-                                 : throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)));
+        return !uri.IsAbsoluteUri
+            ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)))
+            : uri.AbsoluteUri.StartsWith("urn:uuid:", StringComparison.OrdinalIgnoreCase) 
+                ? UuidConverter.TryAsGuid(uri.AbsoluteUri.AsSpan(), out Guid uuid)
+                    ? ContactID.Create(uuid)
+                    : new ContactID(uri)
+                : new ContactID(uri);
     }
 
     /// <summary>
@@ -48,6 +65,10 @@ public sealed class ContactID : IEquatable<ContactID>
     /// </summary>
     /// <param name="text">A <see cref="string"/> that can be used as identifier.</param>
     /// <returns>The newly created <see cref="ContactID"/> instance.</returns>
+    /// <remarks>
+    /// If <paramref name="text"/> represents a <see cref="Guid"/>, a <see cref="ContactID"/> instance
+    /// with this <see cref="Guid"/> value will be created.
+    /// </remarks>
     /// <exception cref="ArgumentNullException"><paramref name="text"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="text"/> is an empty <see cref="string"/> 
     /// or consists only of white space.</exception>
@@ -57,7 +78,9 @@ public sealed class ContactID : IEquatable<ContactID>
 
         return string.IsNullOrWhiteSpace(text)
             ? throw new ArgumentException(string.Format(Res.Whitespace, nameof(text)))
-            : new ContactID(text);
+            : UuidConverter.TryAsGuid(text.AsSpan().Trim(), out Guid uuid)
+                ? ContactID.Create(uuid) 
+                : new ContactID(text);
     }
 
     /// <summary>
@@ -74,7 +97,7 @@ public sealed class ContactID : IEquatable<ContactID>
     public Guid? Guid => IsGuid ? AsGuid : null;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="System.Uri"/>,
+    /// Gets the encapsulated absolute <see cref="System.Uri"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <value>An absolute <see cref="System.Uri"/> or <c>null</c>.</value>
@@ -136,10 +159,11 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <inheritdoc/>
     public bool Equals(ContactID? other)
     {
+        StringComparer comp = StringComparer.Ordinal;
         return other is not null
           && (IsGuid ? other.IsGuid && Guid.Equals(other.Guid)
-            : IsUri ? other.IsUri && Uri.Equals(other.Uri)
-            : StringComparer.Ordinal.Equals(String, other.String));
+                     : IsUri ? (other.IsUri && Uri.Equals(other.Uri)) || (other.IsString && comp.Equals(other.String, Uri.AbsoluteUri))
+             /* IsString */  : comp.Equals(String, other.String) || (other.IsUri && comp.Equals(other.Uri.AbsoluteUri, String)));
     }
 
     /// <inheritdoc/>
