@@ -81,7 +81,6 @@ public sealed class IDProperty : VCardProperty
     /// <inheritdoc />
     public override object Clone() => new IDProperty(this);
 
-
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
@@ -90,12 +89,15 @@ public sealed class IDProperty : VCardProperty
     {
         base.PrepareForVcfSerialization(serializer);
 
-        if (Value.IsString) { Parameters.DataType = Data.Text; }
-
-        if (serializer.Version == VCdVersion.V2_1 && Value.IsString && Value.String.NeedsToBeQpEncoded())
+        if (Value.String is string str)
         {
-            this.Parameters.Encoding = Enc.QuotedPrintable;
-            this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
+            Parameters.DataType = Data.Text;
+
+            if (serializer.Version == VCdVersion.V2_1 && str.NeedsToBeQpEncoded())
+            {
+                this.Parameters.Encoding = Enc.QuotedPrintable;
+                this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
+            }
         }
     }
 
@@ -104,16 +106,16 @@ public sealed class IDProperty : VCardProperty
         Debug.Assert(serializer is not null);
         StringBuilder builder = serializer.Builder;
 
-        if (Value.IsGuid)
+        if (Value.Guid.HasValue)
         {
             _ = builder.AppendUuid(this.Value.Guid.Value, serializer.Version);
         }
-        else if (Value.IsUri)
+        else if (Value.Uri is Uri uri)
         {
             // URIs are not masked according to the "Verifier notes" in
             // https://www.rfc-editor.org/errata/eid3845
             // It says that "the ABNF does not support escaping for URIs."
-            _ = builder.Append(Value.Uri.AbsoluteUri);
+            _ = builder.Append(uri.AbsoluteUri);
         }
         else
         {

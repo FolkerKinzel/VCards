@@ -193,17 +193,17 @@ public sealed class ContactID : IEquatable<ContactID>
         => !(left == right);
 
     [MemberNotNullWhen(true, nameof(Guid))]
-    internal bool IsGuid => _oneOf.IsT0;
+    private bool IsGuid => _oneOf.IsT0;
 
     private Guid AsGuid => _oneOf.AsT0;
 
     [MemberNotNullWhen(true, nameof(Uri))]
-    internal bool IsUri => _oneOf.IsT1;
+    private bool IsUri => _oneOf.IsT1;
 
     private Uri AsUri => _oneOf.AsT1;
 
     [MemberNotNullWhen(true, nameof(String))]
-    internal bool IsString => _oneOf.IsT2;
+    private bool IsString => _oneOf.IsT2;
 
     private string AsString => _oneOf.AsT2;
 }
