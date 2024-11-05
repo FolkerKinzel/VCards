@@ -135,7 +135,7 @@ public sealed partial class DateAndOrTime
     /// </remarks>
     public bool TryAsDateTimeOffset(out DateTimeOffset value)
     {
-        var result = _oneOf.Match<(DateTimeOffset Value, bool Result)>
+        (DateTimeOffset Value, bool Result) result = _oneOf.Match<(DateTimeOffset Value, bool Result)>
          (
           dateOnly => (new DateTimeOffset(dateOnly.Year, dateOnly.Month, dateOnly.Day, 12, 0, 0, TimeSpan.Zero), true),
           dtOffset => (dtOffset, true),

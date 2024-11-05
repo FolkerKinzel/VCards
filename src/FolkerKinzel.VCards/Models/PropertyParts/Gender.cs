@@ -7,13 +7,15 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary>Encapsulates information to specify the components of the gender and 
 /// gender identity of the object the <see cref="VCard"/> represents.</summary>
-public sealed class GenderInfo
+/// <seealso cref="VCard.GenderViews"/>
+/// <seealso cref="GenderProperty"/>
+public sealed class Gender
 {
-    /// <summary> Initializes a new <see cref="GenderInfo" /> object. </summary>
+    /// <summary> Initializes a new <see cref="Gender" /> object. </summary>
     /// <param name="sex">Standardized information about the sex of the object
     /// the <see cref="VCard"/> represents.</param>
     /// <param name="identity">Free text describing the gender identity.</param>
-    internal GenderInfo(Sex? sex, string? identity)
+    internal Gender(Sex? sex, string? identity)
     {
         Sex = sex;
         Identity = string.IsNullOrWhiteSpace(identity) ? null : identity;
@@ -26,7 +28,7 @@ public sealed class GenderInfo
     /// <summary>Free text describing the gender identity.</summary>
     public string? Identity { get; }
 
-    /// <summary> Returns <c>true</c> if the <see cref="GenderInfo" /> object does not 
+    /// <summary> Returns <c>true</c> if the <see cref="Gender" /> object does not 
     /// contain any usable data, otherwise <c>false</c>.</summary>
     public bool IsEmpty => !Sex.HasValue && Identity is null;
 

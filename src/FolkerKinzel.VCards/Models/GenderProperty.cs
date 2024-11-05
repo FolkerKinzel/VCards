@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.Models;
 /// which stores information to specify the components of gender and gender identity
 /// of the object the <see cref="VCard"/> represents.
 /// </summary>
-/// <seealso cref="GenderInfo"/>
+/// <seealso cref="Gender"/>
 /// <seealso cref="VCard.GenderViews"/>
 public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
 {
@@ -32,7 +32,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     public GenderProperty(Sex? sex,
                           string? identity = null,
                           string? group = null) : base(new ParameterSection(), group)
-        => Value = new GenderInfo(sex, identity);
+        => Value = new Gender(sex, identity);
 
 
     internal GenderProperty(VcfRow vcfRow, VCdVersion version)
@@ -53,11 +53,11 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
             }
         }
         
-        Value = new GenderInfo(sex, genderIdentity);
+        Value = new Gender(sex, genderIdentity);
     }
 
     /// <summary>The data provided by the <see cref="GenderProperty" />. </summary>
-    public new GenderInfo Value
+    public new Gender Value
     {
         get;
     }
