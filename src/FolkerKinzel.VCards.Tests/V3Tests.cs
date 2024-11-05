@@ -169,7 +169,7 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest2()
     {
-        IList<VCard> vc = Vcf.Load(TestFiles.PhotoV3vcf).ToList();
+        IList<VCard> vc = [.. Vcf.Load(TestFiles.PhotoV3vcf)];
         vc.Add(vc[0]);
 
         string s = vc.ToVcfString();
@@ -749,7 +749,7 @@ END:VCARD";
         RelationProperty? rel = vc.Relations.First();
         Assert.IsNotNull(rel);
         Assert.IsNotNull(rel.Value);
-        Assert.AreEqual("BEGIN:VCARDThis is not a vCard.", rel.Value.String);
+        Assert.AreEqual("BEGIN:VCARDThis is not a vCard.", rel.Value.ContactID?.String);
         Assert.AreEqual(Rel.Agent, rel.Parameters.RelationType);
     }
 }

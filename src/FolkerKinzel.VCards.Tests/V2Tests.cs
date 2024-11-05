@@ -202,9 +202,12 @@ public class V2Tests
     [TestMethod]
     public void SpouseTest1()
     {
+        var relProp = new RelationProperty(Relation.Create(new VCard { NameViews = new NameProperty("wife", "best") }));
+        relProp.Parameters.RelationType = Rel.Spouse;
+
         var vc = new VCard
         {
-            Relations = RelationProperty.FromVCard(new VCard { NameViews = new NameProperty("wife", "best") }, Rel.Spouse)
+            Relations = relProp
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
@@ -218,9 +221,11 @@ public class V2Tests
     [TestMethod]
     public void SpouseTest2()
     {
+        var relProp = new RelationProperty(Relation.Create(new VCard()));
+        relProp.Parameters.RelationType = Rel.Spouse;
         var vc = new VCard
         {
-            Relations = RelationProperty.FromVCard(new VCard(), Rel.Spouse)
+            Relations = relProp
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
@@ -232,9 +237,12 @@ public class V2Tests
     [TestMethod]
     public void SpouseTest3()
     {
+        var relProp = new RelationProperty(Relation.Create(new VCard { DisplayNames = new TextProperty("Mausi") }));
+        relProp.Parameters.RelationType = Rel.Spouse;
+
         var vc = new VCard
         {
-            Relations = RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty("Mausi") }, Rel.Spouse)
+            Relations = relProp
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
@@ -248,9 +256,11 @@ public class V2Tests
     [TestMethod]
     public void SpouseTest4()
     {
+        var relProp = new RelationProperty(Relation.Create(new VCard { DisplayNames = new TextProperty(null) }));
+        relProp.Parameters.RelationType = Rel.Spouse;
         var vc = new VCard
         {
-            Relations = RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(null) }, Rel.Spouse)
+            Relations = relProp
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
@@ -283,9 +293,6 @@ public class V2Tests
     [TestMethod]
     public void EmbeddedBytesTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vCard = new VCard { Photos = DataProperty.FromBytes(null) };
 
         string s = vCard.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteEmptyProperties));
@@ -306,10 +313,14 @@ public class V2Tests
             Photos = DataProperty.FromBytes(bytes)
         };
 
+        var relProp = new RelationProperty(Relation.Create(agent));
+        relProp.Parameters.RelationType = Rel.Agent | Rel.Colleague;
+
         var vCard = new VCard
         {
             DisplayNames = new TextProperty("Secret Service"),
-            Relations = RelationProperty.FromVCard(agent, Rel.Agent | Rel.Colleague)
+
+            Relations = relProp
         };
 
         string s = vCard.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Set(Opts.AppendAgentAsSeparateVCard));

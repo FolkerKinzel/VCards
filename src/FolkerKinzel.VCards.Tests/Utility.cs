@@ -113,8 +113,9 @@ internal static class Utility
         var impp11 = new TextProperty("twitter:uri.com");
         var impp12 = new TextProperty("ymsgr:uri.com");
 
-        var rel1 = RelationProperty.FromText("Agent", Rel.Agent);
-        var rel2 = RelationProperty.FromText("Spouse");
+        var rel1 = new RelationProperty(Relation.Create(ContactID.Create("Agent")));
+        rel1.Parameters.RelationType = Rel.Agent;
+        var rel2 = new RelationProperty(Relation.Create(ContactID.Create("Spouse")));
         rel2.Parameters.RelationType = default(Rel);
         rel2.Parameters.RelationType = Rel.Spouse | Rel.CoResident;
 
@@ -171,7 +172,7 @@ internal static class Utility
             EMails = email1,
             Roles = new TextProperty("Rechte Hand"),
             Titles = new TextProperty("Sündenbock"),
-            ID = new IDProperty(),
+            ID = new IDProperty(ContactID.Create()),
             Urls = new TextProperty("www.folker.com"),
             DirectoryName = new TextProperty("Webseite"),
             Access = new AccessProperty(Access.Confidential),

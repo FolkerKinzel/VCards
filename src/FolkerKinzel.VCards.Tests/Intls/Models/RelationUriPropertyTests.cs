@@ -147,11 +147,12 @@ public class RelationUriPropertyTests
     [TestMethod]
     public void CloneTest1()
     {
-        var prop1 = RelationProperty.FromUri(new Uri("http://folker.de/", UriKind.Absolute));
+        var prop1 = new RelationProperty(Relation.Create(ContactID.Create(new Uri("http://folker.de/", UriKind.Absolute))));
 
         var prop2 = (RelationProperty)prop1.Clone();
 
-        Assert.AreSame(prop1.Value!.Uri, prop2.Value!.Uri);
+        Assert.IsNotNull(prop1.Value.ContactID?.Uri);
+        Assert.AreSame(prop1.Value.ContactID.Uri, prop2.Value.ContactID?.Uri);
         Assert.AreNotSame(prop1, prop2);
     }
 

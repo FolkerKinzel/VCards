@@ -155,7 +155,7 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromText("http://folkers-website.de"),
+            Members = new RelationProperty(Relation.Create(ContactID.Create("http://folkers-website.de"))),
             Kind = new KindProperty(Kind.Group)
         };
 
@@ -175,7 +175,7 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromText("Important Member"),
+            Members = new RelationProperty(Relation.Create(ContactID.Create("Important Member"))),
         };
 
         Assert.IsNotNull(vc.Members);
@@ -196,10 +196,10 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false)
+            Members = new RelationProperty(Relation.Create(VCardBuilder.Create(setID: false)
                                                               .DisplayNames.Add("Important Member")
                                                               .ID.Set(Guid.Empty)
-                                                              .VCard),
+                                                              .VCard)),
         };
 
         Assert.IsNotNull(vc.Members);
@@ -209,7 +209,7 @@ public class V4Tests
         Assert.AreEqual(2, list.Count);
         vc = list[1];
 
-        Assert.AreNotEqual(Guid.Empty, vc.ID?.Value);
+        Assert.AreNotEqual(Guid.Empty, vc.ID?.Value.Guid);
     }
 
     [TestMethod]
@@ -217,7 +217,7 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false).DisplayNames.Add("Important Member").VCard),
+            Members = new  RelationProperty(Relation.Create(VCardBuilder.Create(setID: false).DisplayNames.Add("Important Member").VCard)),
         };
 
         Assert.IsNotNull(vc.Members);
@@ -237,11 +237,11 @@ public class V4Tests
         var guid = Guid.NewGuid();
         var vc = new VCard
         {
-            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false)
+            Members = new RelationProperty(Relation.Create(VCardBuilder.Create(setID: false)
                                                               .DisplayNames.Add("Important Member")
                                                               .ID.Set(guid)
-                                                              .VCard)
-                      .Concat(RelationProperty.FromGuid(guid)),
+                                                              .VCard))
+                      .Concat(new RelationProperty(Relation.Create(ContactID.Create(guid)))),
         };
 
         Assert.IsNotNull(vc.Members);
@@ -259,7 +259,7 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromText(null),
+            Members = new RelationProperty(Relation.Empty),
         };
 
         Assert.IsNotNull(vc.Members);
@@ -492,7 +492,7 @@ public class V4Tests
             .Relations.Add(vc.ID!.Value)
             .Relations.Add(vc);
 
-        var result = vc.Dereference();
+        IList<VCard> result = vc.Dereference();
 
         Assert.AreEqual(1, result.Count);
         Assert.AreEqual(2, result[0].Relations!.Count());

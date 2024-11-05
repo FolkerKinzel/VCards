@@ -4,12 +4,12 @@
 public class UuidPropertyTests
 {
     [TestMethod]
-    public void EqualsTest1() => Assert.IsFalse(new IDProperty() == new IDProperty());
+    public void EqualsTest1() => Assert.IsFalse(new IDProperty(ContactID.Create()) == new IDProperty(ContactID.Create()));
 
     [TestMethod]
     public void EqualsTest2()
     {
-        var uid1 = new IDProperty();
+        var uid1 = new IDProperty(ContactID.Create());
         var uid2 = new IDProperty(uid1.Value);
         Assert.IsTrue(uid1 == uid2);
         Assert.IsFalse(uid1 != uid2);
@@ -24,7 +24,7 @@ public class UuidPropertyTests
     [TestMethod]
     public void EqualityOperatorTest1()
     {
-        var uid1 = new IDProperty();
+        var uid1 = new IDProperty(ContactID.Create());
 #pragma warning disable CS1718 // Comparison made to same variable
         Assert.IsTrue(uid1 == uid1);
 #pragma warning restore CS1718 // Comparison made to same variable

@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class IDBuilderTests
@@ -24,7 +26,7 @@ public class IDBuilderTests
     {
         VCard vc = VCardBuilder
             .Create(setID: false)
-            .ID.Edit((p, d) => new Models.IDProperty(d), Guid.NewGuid())
+            .ID.Edit((p, d) => new Models.IDProperty(d), ContactID.Create())
             .VCard;
 
         Assert.IsNotNull(vc.ID);
@@ -32,7 +34,7 @@ public class IDBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void SetTest1() => new IDBuilder().Set(null);
+    public void SetTest1() => new IDBuilder().Set(ContactID.Empty);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

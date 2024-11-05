@@ -828,7 +828,7 @@ public class VCardBuilderTests
     public void EditIDTest1()
     {
         var builder = VCardBuilder.Create(setID: false);
-        var prop = new IDProperty();
+        var prop = new IDProperty(ContactID.Create());
         builder.ID.Edit(p => prop = p);
         Assert.IsNull(prop);
         builder.ID.Set()
@@ -1454,7 +1454,10 @@ public class VCardBuilderTests
         builder.Relations.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.Relations = RelationProperty.FromText("Susi", Rel.Friend).Append(null);
+        var relProp = new RelationProperty(Relation.Create(ContactID.Create("Susi")));
+        relProp.Parameters.RelationType = Rel.Friend;
+        
+        builder.VCard.Relations = relProp.Append(null);
         builder.Relations.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());

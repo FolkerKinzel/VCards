@@ -23,13 +23,13 @@
     - [x] Update the `RelationBuilder` struct.
 
 &nbsp;
-- [x] Rename `Relation.Value` to `Object`
-- [x] Rename `DataPropertyValue.Value` to `Object`
-- [x] Rename `DateAndOrTime.Value` to `Object`
-
-&nbsp;
 - [x] Rename `DataPropertyValue` to `RawData`
 - [x] Rename `GenderInfo` to Gender
+
+&nbsp;
+- [x] Rename `Relation.Value` to `Object`
+- [x] Rename `RawData.Value` to `Object`
+- [x] Rename `DateAndOrTime.Value` to `Object`
 
 &nbsp;
 - [ ] Remove NameProperty.ToDisplayName()

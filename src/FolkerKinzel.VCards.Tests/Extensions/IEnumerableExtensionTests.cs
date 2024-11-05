@@ -23,6 +23,8 @@ public class IEnumerableExtensionTests
             ]
         };
 
+        var relProp = new RelationProperty(Relation.Create(agent), "otherGroup");
+        relProp.Parameters.RelationType = Rel.Agent | Rel.CoWorker;
         return
         [
             null,
@@ -31,7 +33,7 @@ public class IEnumerableExtensionTests
                 Relations =
                 [
                     null,
-                    new RelationVCardProperty(agent, Rel.Agent | Rel.CoWorker, "otherGroup" )
+                    relProp
                 ]
             }
         ];
@@ -51,10 +53,10 @@ public class IEnumerableExtensionTests
         Assert.IsInstanceOfType(vc1, typeof(VCard));
         Assert.IsNotNull(vc1?.Relations);
 
-        var uuidProp = vc1?.Relations?.FirstOrDefault(x => x is RelationUuidProperty) as RelationUuidProperty;
+        var uuidProp = vc1?.Relations?.FirstOrDefault(x => x is not null) as RelationProperty;
         Assert.IsNotNull(uuidProp);
-        Guid o1 = uuidProp!.Value;
-
+        Guid? o1 = uuidProp.Value.ContactID?.Guid;
+        Assert.IsNotNull(o1);
         Assert.IsFalse(uuidProp.IsEmpty);
 
         VCard? vc2 = list[1];
@@ -62,10 +64,10 @@ public class IEnumerableExtensionTests
         Assert.IsInstanceOfType(vc2, typeof(VCard));
         Assert.IsNotNull(vc2?.ID);
 
-        Guid? o2 = vc2?.ID?.Value;
+        Guid? o2 = vc2.ID.Value.Guid;
 
         Assert.IsTrue(o2.HasValue);
-        Assert.AreEqual((Guid)o1!, o2!.Value);
+        Assert.AreEqual(o1.Value, o2.Value);
     }
 
     [TestMethod]
@@ -76,12 +78,12 @@ public class IEnumerableExtensionTests
         list = list.Reference().ToList()!;
 
         Assert.AreEqual(2, list.Count);
-        Assert.IsNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
+        Assert.IsNull(list[0]?.Relations?.FirstOrDefault(x => x?.Value.VCard is not null));
 
         list = list.Dereference().ToList()!;
 
         Assert.AreEqual(2, list.Count);
-        Assert.IsNotNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
+        Assert.IsNotNull(list[0]?.Relations?.FirstOrDefault(x => x?.Value.VCard is not null));
     }
 
     [DataTestMethod]
@@ -649,15 +651,15 @@ public class IEnumerableExtensionTests
         var vc = new VCard();
 
         vc.Relations = vc.Relations.ConcatWith(null);
-        vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
+        vc.Relations = vc.Relations.ConcatWith(new RelationProperty(Relation.Create(ContactID.Create("Hi"))));
         vc.Relations = vc.Relations.ConcatWith(null);
-        vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
+        vc.Relations = vc.Relations.ConcatWith(new RelationProperty(Relation.Create(ContactID.Create("Hi"))));
         vc.Relations = vc.Relations.ConcatWith(null);
         CollectionAssert.AllItemsAreNotNull(vc.Relations.ToArray());
         Assert.AreEqual(2, vc.Relations.Count());
 
-        vc.Relations = RelationProperty.FromText("Hi");
-        vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
+        vc.Relations = new RelationProperty(Relation.Create(ContactID.Create("Hi")));
+        vc.Relations = vc.Relations.ConcatWith(new RelationProperty(Relation.Create(ContactID.Create("Hi"))));
         Assert.AreEqual(2, vc.Relations.Count());
 
     }

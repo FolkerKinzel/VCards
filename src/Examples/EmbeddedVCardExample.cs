@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
 using Mod = FolkerKinzel.VCards.Models;
 
 namespace Examples;
@@ -14,20 +15,20 @@ public static class EmbeddedVCardExample
             DisplayNames = new Mod::TextProperty("Donald Duck")
         };
 
-        var prop1 = Mod::RelationProperty.FromVCard(vc1);
+        var prop1 = new Mod::RelationProperty(Relation.Create(vc1));
         Console.WriteLine("prop1, DisplayName: {0}", GetDisplayName(prop1));
 
         // This won't work because RelationProperty.FromVCard(..) clones
         // its input:
         var vc2 = new VCard();
-        var prop2 = Mod::RelationProperty.FromVCard(vc2);
+        var prop2 = new Mod::RelationProperty(Relation.Create(vc2));
         vc2.DisplayNames = new Mod::TextProperty("Dagobert Duck");
         Console.WriteLine("prop2, DisplayName: {0}", GetDisplayName(prop2));
 
         // In order to fix this you need to get the VCard reference from the
         // RelationProperty:
         VCard vc3 = new();
-        var prop3 = Mod::RelationProperty.FromVCard(vc3);
+        var prop3 = new Mod::RelationProperty(Relation.Create(vc3));
         vc3 = prop3.Value!.VCard!; // Get the reference!
         vc3.DisplayNames = new Mod::TextProperty("Dagobert Duck");
         Console.WriteLine("prop3, DisplayName: {0}", GetDisplayName(prop3));
