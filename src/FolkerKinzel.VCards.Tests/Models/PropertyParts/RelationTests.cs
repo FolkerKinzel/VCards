@@ -7,7 +7,7 @@ public class RelationTests
     public void ValueTest1()
     {
         var rel = Relation.Create(ContactID.Create("Hi"));
-        Assert.IsNotNull(rel.Value);
+        Assert.IsNotNull(rel.Object);
         Assert.IsNotNull(rel.ContactID);
         Assert.IsNotNull(rel.ContactID.String);
         Assert.IsNull(rel.ContactID.Uri);
@@ -19,7 +19,7 @@ public class RelationTests
     public void ValueTest2()
     {
         var rel = Relation.Create(ContactID.Create());
-        Assert.IsNotNull(rel.Value);
+        Assert.IsNotNull(rel.Object);
         Assert.IsNotNull(rel.ContactID);
         Assert.IsNull(rel.VCard);
     }
@@ -32,7 +32,7 @@ public class RelationTests
         VCard.RegisterApp(null);
 
         var rel = Relation.Create(new VCard());
-        Assert.IsNotNull(rel.Value);
+        Assert.IsNotNull(rel.Object);
         Assert.IsNull(rel.ContactID);
         Assert.IsNotNull(rel.VCard);
     }
@@ -41,7 +41,7 @@ public class RelationTests
     public void ValueTest4()
     {
         var rel = Relation.Create(ContactID.Create(new Uri("http://folker.de/")));
-        Assert.IsNotNull(rel.Value);
+        Assert.IsNotNull(rel.Object);
         Assert.IsNotNull(rel.ContactID);
         Assert.IsNotNull(rel.ContactID.Uri);
         Assert.IsNull(rel.VCard);

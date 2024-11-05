@@ -44,8 +44,8 @@ public class DataPropertyTests
     public void ValueTest1()
     {
         var prop = DataProperty.FromText("abc");
-        DataPropertyValue? val1 = prop.Value;
-        DataPropertyValue? val2 = prop.Value;
+        RawData? val1 = prop.Value;
+        RawData? val2 = prop.Value;
         Assert.IsNotNull(val1);
         Assert.AreEqual(val1, val2);
         Assert.AreSame(val1, val2);
@@ -56,7 +56,7 @@ public class DataPropertyTests
     {
         VCardProperty prop = DataProperty.FromText("abc");
         Assert.IsFalse(prop.IsEmpty);
-        Assert.IsInstanceOfType(prop.Value, typeof(DataPropertyValue));
+        Assert.IsInstanceOfType(prop.Value, typeof(RawData));
     }
 
 
@@ -66,7 +66,7 @@ public class DataPropertyTests
         Assert.IsTrue(Uri.TryCreate("http://folker.de/", UriKind.Absolute, out Uri? uri));
         VCardProperty prop = DataProperty.FromUri(uri);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.IsInstanceOfType(prop.Value, typeof(DataPropertyValue));
+        Assert.IsInstanceOfType(prop.Value, typeof(RawData));
     }
 
     [TestMethod]
@@ -74,7 +74,7 @@ public class DataPropertyTests
     {
         VCardProperty prop = DataProperty.FromBytes([1, 2, 3]);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.IsInstanceOfType(prop.Value, typeof(DataPropertyValue));
+        Assert.IsInstanceOfType(prop.Value, typeof(RawData));
     }
 
     [TestMethod]

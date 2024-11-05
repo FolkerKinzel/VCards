@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Globalization;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
@@ -63,7 +64,14 @@ public sealed partial class DateAndOrTime
     /// <summary>
     /// Gets the encapsulated value.
     /// </summary>
-    public object Value => this._oneOf.Value;
+    public object Object => this._oneOf.Value;
+
+    [Obsolete("Use Object instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public object Value => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     /// <summary>
     /// Tries to convert the encapsulated data to a <see cref="System.DateOnly"/> value.

@@ -112,7 +112,7 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <summary>
     /// Gets the encapsulated value.
     /// </summary>
-    public object Value => this._oneOf.Value;
+    public object Object => this._oneOf.Value;
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
@@ -177,7 +177,7 @@ public sealed class ContactID : IEquatable<ContactID>
     /// </summary>
     /// <param name="left">The left <see cref="ContactID"/> object or <c>null</c>.</param>
     /// <param name="right">The right <see cref="ContactID"/> object or <c>null</c>.</param>
-    /// <returns><c>true</c> if the <see cref="Value"/> of <paramref name="left"/> and 
+    /// <returns><c>true</c> if the <see cref="Object"/> of <paramref name="left"/> and 
     /// <paramref name="right"/> is equal, otherwise <c>false</c>.</returns>
     public static bool operator ==(ContactID? left, ContactID? right)
         => ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
@@ -187,7 +187,7 @@ public sealed class ContactID : IEquatable<ContactID>
     /// </summary>
     /// <param name="left">The left <see cref="ContactID"/> object or <c>null</c>.</param>
     /// <param name="right">The right <see cref="ContactID"/> object or <c>null</c>.</param>
-    /// <returns><c>true</c> if the <see cref="Value"/> of <paramref name="left"/> and 
+    /// <returns><c>true</c> if the <see cref="Object"/> of <paramref name="left"/> and 
     /// <paramref name="right"/> is not equal, otherwise <c>false</c>.</returns>
     public static bool operator !=(ContactID? left, ContactID? right)
         => !(left == right);

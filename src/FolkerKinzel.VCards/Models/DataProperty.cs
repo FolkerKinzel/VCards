@@ -16,14 +16,14 @@ namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates the information of vCard properties that provides
 /// external data.</summary>
-/// <seealso cref="DataPropertyValue"/>
+/// <seealso cref="RawData"/>
 /// <seealso cref="VCard.Photos"/>
 /// <seealso cref="VCard.Logos"/>
 /// <seealso cref="VCard.Sounds"/>
 /// <seealso cref="VCard.Keys"/>
 public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
 {
-    private DataPropertyValue? _value;
+    private RawData? _value;
     private bool _isValueInitialized;
 
     /// <summary>Copy constructor.</summary>
@@ -37,7 +37,7 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         : base(parameters, group) { }
 
     /// <summary> The data provided by the <see cref="DataProperty" />.</summary>
-    public new DataPropertyValue? Value
+    public new RawData? Value
     {
         get
         {
@@ -264,9 +264,9 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
         _isValueInitialized = true;
         _value = this switch
         {
-            EmbeddedBytesProperty bt => bt.IsEmpty ? null : new DataPropertyValue(bt.Value),
-            EmbeddedTextProperty text => text.IsEmpty ? null : new DataPropertyValue(text.Value),
-            ReferencedDataProperty uri => new DataPropertyValue(uri.Value),
+            EmbeddedBytesProperty bt => bt.IsEmpty ? null : new RawData(bt.Value),
+            EmbeddedTextProperty text => text.IsEmpty ? null : new RawData(text.Value),
+            ReferencedDataProperty uri => new RawData(uri.Value),
             _ => null
         };
     }

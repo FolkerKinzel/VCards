@@ -4,32 +4,23 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Resources;
 using OneOf;
 using FolkerKinzel.VCards.Enums;
-
-/* Unmerged change from project 'FolkerKinzel.VCards (netstandard2.0)'
-Added:
-using FolkerKinzel;
-using FolkerKinzel.VCards;
-using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Models;
-*/
-using FolkerKinzel.VCards.Models.PropertyParts;
+using System.ComponentModel;
 
 namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
-/// Encapsulates the data that describes a relation with a person or
-/// organization.
-/// This can be a <see cref="string"/>, a 
-/// <see cref="VCards.VCard"/>, a <see cref="Guid"/>,
-/// or an absolute <see cref="Uri"/>.
+/// Encapsulates the data that describes a person or organization 
+/// with whom a relationship exists.
+/// This can be either a 
+/// <see cref="VCards.VCard"/>, or a <see cref="ContactID"/>.
 /// </summary>
 /// <seealso cref="RelationProperty"/>
+/// <seealso cref="VCards.VCard"/>
+/// <seealso cref="ContactID"/>
 public sealed class Relation
 {
-    private readonly OneOf<VCard, ContactID> _oneOf;
-
-    private Relation(OneOf<VCard, ContactID> oneOf) => _oneOf = oneOf;
+    private Relation(object obj) => Object = obj;
 
     /// <summary>
     /// <c>true</c> if the instance doesn't contain usable data, otherwise <c>false</c>.
@@ -101,7 +92,7 @@ public sealed class Relation
     /// Gets the encapsulated <see cref="VCards.VCard"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
-    public VCard? VCard => Value as VCard;
+    public VCard? VCard => Object as VCard;
 
     /// <summary>
     /// Gets the encapsulated <see cref="Models.ContactID"/>,
@@ -111,12 +102,19 @@ public sealed class Relation
     /// The <see cref="Models.ContactID"/> references another <see cref="VCard"/> with
     /// its <see cref="VCard.ID"/> property.
     /// </remarks>
-    public ContactID? ContactID => Value as ContactID;
+    public ContactID? ContactID => Object as ContactID;
 
     /// <summary>
     /// Gets the encapsulated value.
     /// </summary>
-    public object Value => this._oneOf.Value;
+    public object Object {  get; }
+
+    [Obsolete("Use Object instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public object Value => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
@@ -134,7 +132,26 @@ public sealed class Relation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Switch(Action<VCard> vCardAction,
                        Action<ContactID> contactIDAction)
-        => _oneOf.Switch(vCardAction, contactIDAction);
+    {
+        if (Object is VCard vc)
+        {
+            if (vCardAction is null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            vCardAction(vc);
+        }
+        else
+        {
+            if(contactIDAction is null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            contactIDAction((ContactID)Object);
+        }
+    }
 
     /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/>.
@@ -153,11 +170,14 @@ public sealed class Relation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TResult Convert<TResult>(Func<VCard, TResult> vCardFunc,
                                     Func<ContactID, TResult> contactIDFunc)
-        => _oneOf.Match(vCardFunc, contactIDFunc);
+        => Object is VCard vCard 
+            ? vCardFunc is null ? throw new InvalidOperationException() : vCardFunc.Invoke(vCard)
+            : contactIDFunc is null ? throw new InvalidOperationException() : contactIDFunc.Invoke((ContactID)Object);
+    
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => $"{Value.GetType().FullName}: {Value}";
+    public override string ToString() => $"{Object.GetType().FullName}: {Object}";
 
 }
 

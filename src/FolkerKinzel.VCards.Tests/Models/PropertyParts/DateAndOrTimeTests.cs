@@ -10,7 +10,7 @@ public class DateAndOrTimeTests
     public void ValueTest1()
     {
         var rel = new DateAndOrTime(new DateOnly(2023, 10, 14));
-        Assert.IsNotNull(rel.Value);
+        Assert.IsNotNull(rel.Object);
         Assert.IsNotNull(rel.DateOnly);
         Assert.IsNull(rel.DateTimeOffset);
         Assert.IsNull(rel.TimeOnly);
@@ -25,7 +25,7 @@ public class DateAndOrTimeTests
     public void ValueTest2()
     {
         var rel = new DateAndOrTime(DateTimeOffset.Now);
-        Assert.IsNotNull(rel.Value);
+        Assert.IsNotNull(rel.Object);
         Assert.IsNull(rel.DateOnly);
         Assert.IsNotNull(rel.DateTimeOffset);
         Assert.IsNull(rel.TimeOnly);
@@ -40,7 +40,7 @@ public class DateAndOrTimeTests
     public void ValueTest3()
     {
         var rel = new DateAndOrTime(new TimeOnly(23, 10));
-        Assert.IsNotNull(rel.Value);
+        Assert.IsNotNull(rel.Object);
         Assert.IsNull(rel.DateOnly);
         Assert.IsNull(rel.DateTimeOffset);
         Assert.IsNotNull(rel.TimeOnly);
@@ -55,7 +55,7 @@ public class DateAndOrTimeTests
     public void ValueTest4()
     {
         var rel = new DateAndOrTime("Midnight");
-        Assert.IsNotNull(rel.Value);
+        Assert.IsNotNull(rel.Object);
         Assert.IsNull(rel.DateOnly);
         Assert.IsNull(rel.DateTimeOffset);
         Assert.IsNull(rel.TimeOnly);
@@ -69,7 +69,7 @@ public class DateAndOrTimeTests
     public void ValueTest5()
     {
         var rel = new DateAndOrTime(DateTimeOffset.Now.ToString(CultureInfo.CurrentCulture));
-        Assert.IsNotNull(rel.Value);
+        Assert.IsNotNull(rel.Object);
         Assert.IsNull(rel.DateOnly);
         Assert.IsNull(rel.DateTimeOffset);
         Assert.IsNull(rel.TimeOnly);

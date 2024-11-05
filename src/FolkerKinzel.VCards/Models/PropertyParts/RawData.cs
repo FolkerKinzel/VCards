@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;
@@ -8,11 +9,11 @@ namespace FolkerKinzel.VCards.Models.PropertyParts;
 /// an absolute <see cref="System.Uri"/>, or a <see cref="string"/>.
 /// </summary>
 /// <seealso cref="DataProperty"/>
-public sealed partial class DataPropertyValue
+public sealed partial class RawData
 {
     private readonly OneOf<byte[], Uri, string> _oneOf;
 
-    internal DataPropertyValue(OneOf<byte[], Uri, string> oneOf)
+    internal RawData(OneOf<byte[], Uri, string> oneOf)
         => _oneOf = oneOf;
 
     /// <summary>
@@ -37,7 +38,14 @@ public sealed partial class DataPropertyValue
     /// <summary>
     /// Gets the encapsulated value.
     /// </summary>
-    public object Value => this._oneOf.Value;
+    public object Object => this._oneOf.Value;
+
+    [Obsolete("Use Object instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public object Value => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 

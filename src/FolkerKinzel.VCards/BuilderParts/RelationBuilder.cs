@@ -180,7 +180,7 @@ public readonly struct RelationBuilder
     /// or organization via its <see cref="VCard.ID"/> property (<c>UID</c>).</param>
     /// <param name="relationType">Standardized description of the relationship with the
     /// person or organization to whose vCard the <paramref name="uuid"/> refers. 
-    /// <see cref="ParameterSection.RelationType"/> of the returned instance will be
+    /// The <see cref="ParameterSection.RelationType"/> property of the added instance will be
     /// set to this value.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
@@ -193,22 +193,12 @@ public readonly struct RelationBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder Add(Guid uuid,
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-    {
-        VCard vc = Builder.VCard;
-        var relProp = new RelationProperty(Relation.Create(ContactID.Create(uuid)), group?.Invoke(_builder.VCard));
-        relProp.Parameters.RelationType = relationType;
-
-        vc.Set(_prop,
-                          VCardBuilder.Add(relProp,
-                                           _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop),
-                                           parameters)
-                          );
-        return _builder;
-    }
+        => Add(Relation.Create(ContactID.Create(uuid)), relationType, parameters, group);
 
     /// <summary>
     /// Adds a <see cref="RelationProperty"/> instance, which is newly 
@@ -217,10 +207,10 @@ public readonly struct RelationBuilder
     /// </summary>
     /// <param name="text">Text that represents a person or organization, e.g., the name
     /// of the person or organization, or <c>null</c>.</param>
-    /// <param name="relationType">Standardized description of the relationship with the
-    /// person or organization that the <paramref name="text"/> represents.
-    /// <see cref="ParameterSection.RelationType"/> of the returned instance will be
-    /// set to this value.</param>
+    /// <param name="relationType">Standardized description of the relationship with the person 
+    /// or organization that the <paramref name="text"/> names.
+    /// The <see cref="ParameterSection.RelationType"/> property of the added instance will be set to this 
+    /// value.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
@@ -235,24 +225,15 @@ public readonly struct RelationBuilder
     /// </example>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder Add(string? text,
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-    {
-        VCard vc = Builder.VCard;
-        RelationProperty relProp = string.IsNullOrWhiteSpace(text)
-                                    ? new RelationProperty(Relation.Empty, group?.Invoke(_builder.VCard))
-                                    : new RelationProperty(Relation.Create(ContactID.Create(text)), group?.Invoke(_builder.VCard));
-        relProp.Parameters.RelationType = relationType;
-
-        vc.Set(_prop,
-                          VCardBuilder.Add(relProp,
-                                           _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop),
-                                           parameters)
-                          );
-        return _builder;
-    }
+        => Add(string.IsNullOrWhiteSpace(text) 
+               ? Relation.Empty 
+               : Relation.Create(ContactID.Create(text)), 
+                relationType, parameters, group);
 
     /// <summary>
     /// Adds a <see cref="RelationProperty"/> instance, which is newly initialized using a 
@@ -260,10 +241,10 @@ public readonly struct RelationBuilder
     /// of the <see cref="VCardBuilder.VCard"/>.
     /// </summary>
     /// <param name="uri">An absolute <see cref="Uri"/> or <c>null</c>.</param>
-    /// <param name="relationType">Standardized description of the relationship with the
-    /// person or organization that <paramref name="uri"/> represents. 
-    /// <see cref="ParameterSection.RelationType"/> of the returned instance will be
-    /// set to this value.</param>
+    /// <param name="relationType">Standardized description of the relationship with the person 
+    /// or organization that the <paramref name="uri"/> represents.
+    /// The <see cref="ParameterSection.RelationType"/> property of the added instance will be set to this 
+    /// value.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
@@ -275,26 +256,12 @@ public readonly struct RelationBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder Add(Uri? uri,
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-    {
-        VCard vc = Builder.VCard;
-        RelationProperty relProp = uri is null
-                                    ? new RelationProperty(Relation.Empty, group?.Invoke(_builder.VCard))
-                                    : uri.IsAbsoluteUri 
-                                          ? new RelationProperty(Relation.Create(ContactID.Create(uri)), group?.Invoke(_builder.VCard))
-                                          : new RelationProperty(Relation.Create(ContactID.Create(uri.OriginalString)));
-        relProp.Parameters.RelationType = relationType;
-
-        vc.Set(_prop,
-                          VCardBuilder.Add(relProp,
-                                           _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop),
-                                           parameters)
-                          );
-        return _builder;
-    }
+        => Add(Relation.Create(IDBuilder.ContactIDFromUri(uri)), relationType, parameters, group);
 
     /// <summary>
     /// Adds a <see cref="RelationProperty"/> instance, which is newly initialized using the 
@@ -305,7 +272,7 @@ public readonly struct RelationBuilder
     /// to whom there is a relationship, or <c>null</c>.</param>
     /// <param name="relationType">Standardized description of the relationship with the person 
     /// or organization that the <paramref name="vCard"/> represents.
-    /// <see cref="ParameterSection.RelationType"/> of the returned instance will be set to this 
+    /// The <see cref="ParameterSection.RelationType"/> property of the added instance will be set to this 
     /// value.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
@@ -336,24 +303,13 @@ public readonly struct RelationBuilder
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder Add(VCard? vCard,
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-    {
-        VCard vc = Builder.VCard;
-        RelationProperty relProp = vCard is null
-                                    ? new RelationProperty(Relation.Empty, group?.Invoke(_builder.VCard))
-                                    : new RelationProperty(Relation.Create(vCard), group?.Invoke(_builder.VCard));
-        relProp.Parameters.RelationType = relationType;
-
-        vc.Set(_prop,
-                          VCardBuilder.Add(relProp,
-                                           _builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop),
-                                           parameters)
-                          );
-        return _builder;
-    }
+        => Add(vCard is null ? Relation.Empty : Relation.Create(vCard), relationType, parameters, group);
+    
 
     /// <summary>
     /// Adds a <see cref="RelationProperty"/> instance, which is newly initialized using a 
@@ -363,8 +319,8 @@ public readonly struct RelationBuilder
     /// <param name="id">The <see cref="ContactID"/> that represents a person or organization
     /// to whom there is a relationship, or <c>null</c>.</param>
     /// <param name="relationType">Standardized description of the relationship with the person 
-    /// or organization that the <paramref name="id"/> represents.
-    /// <see cref="ParameterSection.RelationType"/> of the returned instance will be set to this 
+    /// or organization that the <paramref name="id"/> references.
+    /// The <see cref="ParameterSection.RelationType"/> property of the added instance will be set to this 
     /// value.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
@@ -377,15 +333,42 @@ public readonly struct RelationBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder Add(ContactID? id,
+                            Rel? relationType = null,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
+        => Add(Relation.Create(id ?? ContactID.Empty), relationType, parameters, group);
+
+    /// <summary>
+    /// Adds a <see cref="RelationProperty"/> instance, which is newly initialized using a 
+    /// <see cref="Relation"/> instance that encapsulates the data that describes a person or organization 
+    /// with whom a relationship exists, to the specified property of the <see cref="VCardBuilder.VCard"/>.
+    /// </summary>
+    /// <param name="relation">The <see cref="Relation"/> that describes a person or organization
+    /// with whom there is a relationship, or <c>null</c>.</param>
+    /// <param name="relationType">Standardized description of the relationship with the person 
+    /// or organization that the <paramref name="relation"/> represents.
+    /// The <see cref="ParameterSection.RelationType"/> property of the added instance will be set to this 
+    /// value.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
+    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
+    /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
+    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RelationBuilder"/>
+    /// to be able to chain calls.</returns>
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    public VCardBuilder Add(Relation? relation,
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
-        RelationProperty relProp = id is null
-                                    ? new RelationProperty(Relation.Empty, group?.Invoke(_builder.VCard))
-                                    : new RelationProperty(Relation.Create(id), group?.Invoke(_builder.VCard));
+        var relProp = new RelationProperty(relation ?? Relation.Empty, group?.Invoke(_builder.VCard));
         relProp.Parameters.RelationType = relationType;
 
         vc.Set(_prop,

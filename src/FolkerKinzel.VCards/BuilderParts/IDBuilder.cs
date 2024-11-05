@@ -88,16 +88,10 @@ public readonly struct IDBuilder
     /// be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder Set(Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-    {
-        VCard vc = Builder.VCard;
-        var property = new IDProperty(ContactID.Create(), group?.Invoke(vc));
-        parameters?.Invoke(property.Parameters);
-
-        vc.Set(Prop.ID, property);
-        return _builder;
-    }
+        => Set(ContactID.Create(), parameters, group);
 
     /// <summary>
     /// Sets the <see cref="VCard.ID"/> property to a <see cref="IDProperty"/> instance that is newly 
@@ -158,22 +152,21 @@ public readonly struct IDBuilder
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
+    [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder Set(Uri? uri,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
+        => Set(ContactIDFromUri(uri), parameters, group);
+
+    internal static ContactID ContactIDFromUri(Uri? uri)
     {
-        VCard vc = Builder.VCard;
-
-        IDProperty property = uri is null
-                         ? new IDProperty(ContactID.Empty)
-                         : uri.IsAbsoluteUri
-                            ? new IDProperty(ContactID.Create(uri), group?.Invoke(vc))
-                            : new IDProperty(ContactID.Create(uri.OriginalString), group?.Invoke(vc));
-                         
-        parameters?.Invoke(property.Parameters);
-
-        vc.Set(Prop.ID, property);
-        return _builder;
+        return uri is null
+                   ? ContactID.Empty
+                   : uri.IsAbsoluteUri
+                      ? ContactID.Create(uri)
+                      : string.IsNullOrEmpty(uri.OriginalString)
+                          ? ContactID.Empty
+                          : ContactID.Create(uri.OriginalString);
     }
 
     /// <summary>
@@ -205,18 +198,9 @@ public readonly struct IDBuilder
     public VCardBuilder Set(string? text,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-    {
-        VCard vc = Builder.VCard;
-
-        IDProperty property = string.IsNullOrWhiteSpace(text)
-                         ? new IDProperty(ContactID.Empty)
-                         : new IDProperty(ContactID.Create(text), group?.Invoke(vc));
-
-        parameters?.Invoke(property.Parameters);
-
-        vc.Set(Prop.ID, property);
-        return _builder;
-    }
+        => Set(string.IsNullOrWhiteSpace(text)
+                         ? ContactID.Empty
+                         : ContactID.Create(text), parameters, group);
 
     /// <summary>
     /// Sets the <see cref="VCard.ID"/> property to a <see cref="IDProperty"/> instance that is newly 
@@ -236,17 +220,11 @@ public readonly struct IDBuilder
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder Set(Guid guid,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-    {
-        VCard vc = Builder.VCard;
-        var property = new IDProperty(ContactID.Create(guid), group?.Invoke(vc));
-        parameters?.Invoke(property.Parameters);
-
-        vc.Set(Prop.ID, property);
-        return _builder;
-    }
+        => Set(ContactID.Create(guid), parameters, group);
 
     /// <summary>
     /// Sets the <see cref="VCard.ID"/> property to <c>null</c>.
@@ -274,5 +252,4 @@ public readonly struct IDBuilder
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => base.ToString()!;
-
 }
