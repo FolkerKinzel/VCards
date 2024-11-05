@@ -106,15 +106,15 @@ public sealed partial class VCard
             }
 
             static bool HasRelationVCardProperty(IEnumerable<RelationProperty?>? props)
-                => props?.Any(static x => x is not null && x.Value.IsVCard) ?? false;
+                => props?.Any(static x => x?.Value.VCard is not null) ?? false;
         }
 
         static void DoSetReferences(List<VCard> vCardList, List<RelationProperty?> relations)
         {
-            Debug.Assert(relations.Items().Where(x => x.Value.IsVCard).All(x => !x.IsEmpty));
+            Debug.Assert(relations.OfType<RelationProperty>().Where(x => x.Value.VCard is not null).All(x => !x.IsEmpty));
 
             RelationProperty[] vcdProps = relations
-                            .WhereNotNullAnd(static x => x.Value.IsVCard)
+                            .WhereNotNullAnd(static x => x.Value.VCard is not null)
                             .ToArray(); // We need ToArray here because relations
                                         // might change.
 
@@ -136,15 +136,15 @@ public sealed partial class VCard
                     vCardList.Add(vc);
                 }
 
-                if (relations.WhereNotNull().Any(x => x.Value.IsContactID
-                                       && x.Value.ContactID == vc.ID.Value
+                if (relations.WhereNotNull().Any(x => x.Value.ContactID is ContactID contactID
+                                       && contactID == vc.ID.Value
                                        && x.Parameters.RelationType == vcdProp.Parameters.RelationType))
                 {
                     continue;
                 }
 
                 var relationUuid = new RelationProperty(
-                    vc.ID.Value,
+                    Relation.Create(vc.ID.Value),
                     group: vcdProp.Group);
 
                 relationUuid.Parameters.Assign(vcdProp.Parameters);
@@ -241,7 +241,7 @@ public sealed partial class VCard
         {
             IEnumerable<RelationProperty> contactIDProps = relations
                 .Items()
-                .Where(x => x.Value.IsContactID)
+                .Where(x => x.Value.ContactID is not null)
                 .ToArray(); // We need ToArray here because relations
                             // might change.
 
@@ -259,8 +259,7 @@ public sealed partial class VCard
                     }
 
                     var vcardProp = new RelationProperty(
-                                        referencedVCard,
-                                        contactIDProp.Parameters.RelationType,
+                                        Relation.CreateNoClone(referencedVCard),
                                         group: contactIDProp.Group);
                     vcardProp.Parameters.Assign(contactIDProp.Parameters);
 

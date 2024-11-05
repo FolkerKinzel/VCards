@@ -378,18 +378,21 @@ public sealed partial class VCard
 
                         if (valSpan.IsWhiteSpace())
                         {
-                            Relations = Concat(Relations, new RelationProperty(ContactID.Empty, Rel.Agent, vcfRow.Group));
+                            var relProp = new RelationProperty(Relation.Empty, vcfRow.Group);
+                            relProp.Parameters.RelationType = Rel.Agent;
+                            Relations = Concat(Relations, relProp);
                         } 
                         else
                         {
                             if (valSpan.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                             {
                                 VCard? nested = ParseNestedVcard(vcfRow.Value.Span, info, this.Version);
+                                RelationProperty relProp = nested is null 
+                                                            ? RelationProperty.Parse(vcfRow, Version)
+                                                            : new RelationProperty(Relation.CreateNoClone(nested), vcfRow.Group);
+                                relProp.Parameters.RelationType = Rel.Agent;
 
-                                Relations =
-                                    Concat(Relations,
-                                           nested is null ? RelationProperty.Parse(vcfRow, Version)
-                                                          : new RelationProperty(nested, Rel.Agent, vcfRow.Group));
+                                Relations =  Concat(Relations, relProp);
                             }
                             else
                             {

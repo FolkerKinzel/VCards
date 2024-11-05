@@ -826,9 +826,7 @@ public sealed partial class VCard
     /// that contain text with <see cref="RelationProperty"/> instances that contain <see cref="Uri"/>s
     /// if possible, if not, with <see cref="RelationProperty"/> instances that contain <see cref="VCard"/>s.
     /// </summary>
-    /// <param name="ignoreEmptyItems">Specifies whether empty <see cref="VCardProperty"/>
-    /// instances should be ignored when serializing VCF.</param>
-    internal void NormalizeMembers(bool ignoreEmptyItems)
+    internal void NormalizeMembers()
     {
         if (Members is null)
         {
@@ -843,16 +841,18 @@ public sealed partial class VCard
         {
             RelationProperty prop = span[i];
 
-            if (prop.Value.IsContactID && prop.Value.ContactID.IsString)
+            if (prop.Value.ContactID?.String is string text)
             {
                 Debug.Assert(!prop.IsEmpty);
 
-                string text = prop.Value.ContactID.String;
-                span[i] = Uri.TryCreate(text.Trim(), UriKind.Absolute, out Uri? uri)
-                    ? new RelationProperty(ContactID.Create(uri), prop.Parameters.RelationType, prop.Group)
-                    : new RelationProperty(new VCard(setID: true, setCreated: false) { DisplayNames = new TextProperty(text) },
-                                                 prop.Parameters.RelationType,
-                                                 prop.Group);
+                RelationProperty relProp = Uri.TryCreate(text.Trim(), UriKind.Absolute, out Uri? uri)
+                    ? new RelationProperty(Relation.Create(ContactID.Create(uri)),  prop.Group)
+                    : new RelationProperty(Relation.Create(new VCard(setID: true, setCreated: false) 
+                                                          { 
+                                                            DisplayNames = new TextProperty(text) 
+                                                           }), prop.Group);
+                relProp.Parameters.RelationType = prop.Parameters.RelationType;
+                span[i] = relProp;
             }
         }
     }

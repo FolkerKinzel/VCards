@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Resources;
 using OneOf;
 
-namespace FolkerKinzel.VCards;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
 /// Encapsulates a globally unique identifier corresponding to the entity associated 
@@ -52,9 +52,9 @@ public sealed class ContactID : IEquatable<ContactID>
 
         return !uri.IsAbsoluteUri
             ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)))
-            : uri.AbsoluteUri.StartsWith("urn:uuid:", StringComparison.OrdinalIgnoreCase) 
+            : uri.AbsoluteUri.StartsWith("urn:uuid:", StringComparison.OrdinalIgnoreCase)
                 ? UuidConverter.TryAsGuid(uri.AbsoluteUri.AsSpan(), out Guid uuid)
-                    ? ContactID.Create(uuid)
+                    ? Create(uuid)
                     : new ContactID(uri)
                 : new ContactID(uri);
     }
@@ -79,7 +79,7 @@ public sealed class ContactID : IEquatable<ContactID>
         return string.IsNullOrWhiteSpace(text)
             ? throw new ArgumentException(string.Format(Res.Whitespace, nameof(text)))
             : UuidConverter.TryAsGuid(text.AsSpan().Trim(), out Guid uuid)
-                ? ContactID.Create(uuid) 
+                ? Create(uuid)
                 : new ContactID(text);
     }
 

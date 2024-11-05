@@ -135,7 +135,7 @@ done:
             }
         }
 
-        if (Value.IsVCard) { Parameters.DataType = Data.VCard; }
+        if (Value.VCard is not null) { Parameters.DataType = Data.VCard; }
     }
 
     internal override void AppendValue(VcfSerializer serializer)

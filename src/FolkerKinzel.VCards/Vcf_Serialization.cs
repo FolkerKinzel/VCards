@@ -153,7 +153,7 @@ public static partial class Vcf
         {
             foreach (VCard vCard in list)
             {
-                vCard.NormalizeMembers(serializer.IgnoreEmptyItems);
+                vCard.NormalizeMembers();
             }
 
             VCard.ReferenceIntl(list);
@@ -207,7 +207,7 @@ public static partial class Vcf
                     continue;
                 }
 
-                if (vCard.Relations.PrefOrNullIntl(x => x.Value.IsVCard &&
+                if (vCard.Relations.PrefOrNullIntl(x => x.Value.VCard is not null &&
                                                         x.Parameters.RelationType.IsSet(Rel.Agent),
                                                         ignoreEmptyItems: true) is RelationProperty agent)
                 {

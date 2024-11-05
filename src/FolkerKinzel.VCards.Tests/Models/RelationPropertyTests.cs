@@ -3,7 +3,6 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -42,32 +41,32 @@ public class RelationPropertyTests
 
     [TestMethod]
     public void IEnumerableTest()
-        => Assert.AreEqual(1, new RelationProperty(ContactID.Empty).AsWeakEnumerable().Count());
+        => Assert.AreEqual(1, new RelationProperty(Relation.Empty).AsWeakEnumerable().Count());
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void FromUriTest1()
     {
         Assert.IsTrue(Uri.TryCreate("../bla.txt", UriKind.Relative, out Uri? uri));
-        _ = new RelationProperty(ContactID.Create(uri));
+        _ = new RelationProperty(Relation.Create(ContactID.Create(uri)));
     }
 
     [TestMethod]
-    public void FromUriTest2() => Assert.IsTrue(new RelationProperty(ContactID.Empty).IsEmpty);
+    public void FromUriTest2() => Assert.IsTrue(new RelationProperty(Relation.Empty).IsEmpty);
 
 
     [TestMethod]
     public void FromUriTest3()
     {
         Assert.IsTrue(Uri.TryCreate("mailto:jemand@beispiel.com", UriKind.Absolute, out Uri? uri));
-        Assert.IsInstanceOfType(new RelationProperty(ContactID.Create(uri)), typeof(RelationProperty));
+        Assert.IsInstanceOfType(new RelationProperty(Relation.Create(ContactID.Create(uri))), typeof(RelationProperty));
     }
 
     [TestMethod]
     public void FromUriTest4()
     {
         Assert.IsTrue(Uri.TryCreate("urn:uuid:550e8400-e29b-11d4-a716-446655440000", UriKind.Absolute, out Uri? uri));
-        var prop = new RelationProperty(ContactID.Create(uri));
+        var prop = new RelationProperty(Relation.Create(ContactID.Create(uri)));
         Assert.IsInstanceOfType(prop, typeof(RelationProperty));
         Assert.IsFalse(prop.IsEmpty);
     }
@@ -75,7 +74,7 @@ public class RelationPropertyTests
     [TestMethod]
     public void IsEmptyTest1()
     {
-        var prop = new RelationProperty(ContactID.Empty);
+        var prop = new RelationProperty(Relation.Empty);
         Assert.IsTrue(prop.IsEmpty);
     }
 
@@ -106,7 +105,7 @@ public class RelationPropertyTests
     [TestMethod]
     public void ValueTest1()
     {
-        VCardProperty prop = new RelationProperty(ContactID.Create("abc"));
+        VCardProperty prop = new RelationProperty(Relation.Create(ContactID.Create("abc")));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(Relation));
     }
@@ -114,7 +113,7 @@ public class RelationPropertyTests
     [TestMethod]
     public void ValueTest2()
     {
-        VCardProperty prop = new RelationProperty(ContactID.Create(Guid.NewGuid()));
+        VCardProperty prop = new RelationProperty(Relation.Create(ContactID.Create()));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(Relation));
     }
@@ -122,7 +121,7 @@ public class RelationPropertyTests
     [TestMethod]
     public void ValueTest3()
     {
-        VCardProperty prop = new RelationProperty(new VCard { DisplayNames = new TextProperty("Folker") });
+        VCardProperty prop = new RelationProperty(Relation.Create(new VCard { DisplayNames = new TextProperty("Folker") }));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(Relation));
     }
