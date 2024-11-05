@@ -112,6 +112,12 @@ public readonly struct IDBuilder
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
     /// be able to chain calls.</returns>
+    /// 
+    /// <remarks>
+    /// The method sets <see cref="VCard.ID"/> to an empty <see cref="IDProperty"/> instance if
+    /// <paramref name="id"/> is <c>null</c>. 
+    /// </remarks>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Set(ContactID? id,
@@ -139,6 +145,17 @@ public readonly struct IDBuilder
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
     /// be able to chain calls.</returns>
+    /// 
+    /// <remarks>
+    /// <para>If <paramref name="uri"/> is a valid "uuid" URN, a <see cref="ContactID"/> instance
+    /// with this <see cref="Guid"/> value will be created.</para>
+    /// <para>
+    /// The method sets <see cref="VCard.ID"/> to an empty <see cref="IDProperty"/> instance if
+    /// <paramref name="uri"/> is <c>null</c>. If <paramref name="uri"/> is a relative <see cref="Uri"/>,
+    /// its <see cref="Uri.OriginalString"/> will be preserved.
+    /// </para>
+    /// </remarks>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Set(Uri? uri,
@@ -172,6 +189,17 @@ public readonly struct IDBuilder
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
     /// be able to chain calls.</returns>
+    /// 
+    /// <remarks>
+    /// <para>If <paramref name="text"/> represents a <see cref="Guid"/>, a <see cref="ContactID"/> instance
+    /// with this <see cref="Guid"/> value will be created.</para>
+    /// <para>
+    /// The method sets <see cref="VCard.ID"/> to an empty <see cref="IDProperty"/> instance if
+    /// <paramref name="text"/> is <c>null</c>, or an empty <see cref="string"/>, or if it consists only of 
+    /// white space.
+    /// </para>
+    /// </remarks>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Set(string? text,
@@ -203,6 +231,9 @@ public readonly struct IDBuilder
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
     /// be able to chain calls.</returns>
+    /// 
+    /// 
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Set(Guid guid,
