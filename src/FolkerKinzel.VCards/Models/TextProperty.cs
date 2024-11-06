@@ -70,36 +70,9 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
         Debug.Assert(serializer is not null);
 
         base.PrepareForVcfSerialization(serializer);
-
-        if(IsEmpty || Parameters.DataType == Data.Uri)
-        {
-            // Valid URIs consist of ASCII characters and don't include
-            // line breaks.
-            return;
-        }
-
-        if (serializer.Version == VCdVersion.V2_1 && Value.NeedsToBeQpEncoded())
-        {
-            this.Parameters.Encoding = Enc.QuotedPrintable;
-            this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
-        }
+        StringSerializer.Prepare(Value, this, serializer.Version);
     }
 
     internal override void AppendValue(VcfSerializer serializer)
-    {
-        Debug.Assert(serializer is not null);
-
-        StringBuilder builder = serializer.Builder;
-
-        _ = serializer.Version == VCdVersion.V2_1
-            ? this.Parameters.Encoding == Enc.QuotedPrintable
-                ? builder.AppendQuotedPrintable(Value.AsSpan(), builder.Length)
-                : builder.Append(Value)
-            // URIs are not masked according to the "Verifier notes" in
-            // https://www.rfc-editor.org/errata/eid3845
-            // It says that "the ABNF does not support escaping for URIs."
-            : Parameters.DataType == Data.Uri
-                ? builder.Append(Value)
-                : builder.AppendValueMasked(Value, serializer.Version);
-    }
+        => StringSerializer.AppendVcf(serializer.Builder, Value, Parameters, serializer.Version);
 }

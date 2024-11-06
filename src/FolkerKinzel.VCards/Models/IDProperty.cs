@@ -92,12 +92,7 @@ public sealed class IDProperty : VCardProperty
         if (Value.String is string str)
         {
             Parameters.DataType = Data.Text;
-
-            if (serializer.Version == VCdVersion.V2_1 && str.NeedsToBeQpEncoded())
-            {
-                this.Parameters.Encoding = Enc.QuotedPrintable;
-                this.Parameters.CharSet = VCard.DEFAULT_CHARSET;
-            }
+            StringSerializer.Prepare(str, this, serializer.Version);
         }
     }
 
@@ -119,11 +114,7 @@ public sealed class IDProperty : VCardProperty
         }
         else
         {
-            _ = serializer.Version == VCdVersion.V2_1
-                ? this.Parameters.Encoding == Enc.QuotedPrintable
-                    ? builder.AppendQuotedPrintable(Value.String.AsSpan(), builder.Length)
-                    : builder.Append(Value.String)
-                : builder.AppendValueMasked(Value.String, serializer.Version);
+            StringSerializer.AppendVcf(builder, Value.String, Parameters, serializer.Version);
         }
     }
 }
