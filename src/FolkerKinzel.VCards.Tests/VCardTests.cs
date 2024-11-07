@@ -205,6 +205,46 @@ public class VCardTests
     public void DereferenceTest1() => _ = FolkerKinzel.VCards.VCard.Dereference(null!).Count;
 
     [TestMethod]
+    public void DereferenceTest2()
+    {
+        var vc = new VCard(setID: true);
+        vc.Relations = 
+            [null, 
+            RelationProperty.FromGuid(Guid.Empty), 
+            RelationProperty.FromGuid(Guid.NewGuid()), 
+            RelationProperty.FromGuid(vc.ID?.Value ?? Guid.Empty)];
+
+        IList<VCard> dereferenced = vc.Dereference();
+
+        Assert.AreEqual(1, dereferenced.Count);
+        RelationProperty?[]? rel = dereferenced[0].Relations?.ToArray();
+
+        Assert.IsNotNull(rel);
+        Assert.AreEqual(4, rel.Length);
+        Assert.IsTrue(rel.Any(x => x?.Value?.VCard is not null));
+    }
+
+    [TestMethod]
+    public void DereferenceTest3()
+    {
+        var vc = new VCard(setID: true);
+        vc.Relations =
+            [null,
+            RelationProperty.FromGuid(Guid.Empty),
+            RelationProperty.FromGuid(Guid.NewGuid()),
+            ];
+
+        IList<VCard> dereferenced = new VCard?[] { null, new VCard(setID: false), new VCard(setID: true), vc }.Dereference();
+
+        Assert.AreEqual(3, dereferenced.Count);
+        RelationProperty?[]? rel = dereferenced[2].Relations?.ToArray();
+
+        Assert.IsNotNull(rel);
+        Assert.AreEqual(3, rel.Length);
+        Assert.IsFalse(rel.Any(x => x?.Value?.VCard is not null));
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void ReferenceTest1() => _ = FolkerKinzel.VCards.VCard.Reference(null!);
 

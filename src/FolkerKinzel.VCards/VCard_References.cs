@@ -242,7 +242,7 @@ public sealed partial class VCard
             }
         }
 
-        static void DoDereference(List<RelationProperty?> relations, IEnumerable<VCard?> vCards)
+        static void DoDereference(List<RelationProperty?> relations, IEnumerable<VCard> vCards)
         {
             ReadOnlySpan<RelationUuidProperty> guidProps = relations
                 .Select(x => x as RelationUuidProperty)
@@ -253,8 +253,7 @@ public sealed partial class VCard
             foreach (RelationUuidProperty guidProp in guidProps)
             {
                 VCard? referencedVCard =
-                    vCards.Where(x => x?.ID is not null)
-                          .FirstOrDefault(x => x!.ID!.Value == guidProp.Value);
+                    vCards.FirstOrDefault(x => x.ID?.Value == guidProp.Value);
 
                 if (referencedVCard is not null)
                 {

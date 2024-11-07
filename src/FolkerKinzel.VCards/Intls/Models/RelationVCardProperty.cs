@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Intls.Models;
 internal sealed class RelationVCardProperty : RelationProperty
 {
     private RelationVCardProperty(RelationVCardProperty prop) : base(prop)
-        => Value = (VCard)prop.Value.Clone();
+        => Value = prop.Value;
 
     /// <summary> Initializes a new <see cref="RelationVCardProperty" /> object.
     /// </summary>
