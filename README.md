@@ -41,7 +41,6 @@ Read the ["Getting Started" wiki](https://github.com/FolkerKinzel/VCards/wiki) i
 - [Setting up vCard 4.0 data synchronization](https://github.com/FolkerKinzel/VCards/wiki/Setting-up-vCard-4.0-data-synchronization)
 - [Loading a VCF file from the internet](src/Examples/WebExample.cs)
 - [Reading and writing group vCards](src/Examples/VCard40Example.cs)
-- [Connecting vCards](src/Examples/EmbeddedVCardExample.cs)
 - [Parsing a very large VCF file](src/Examples/VcfReaderExample.cs)
 
 *_(All of the examples are in C# and with nullable reference types enabled. For the sake of 

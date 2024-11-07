@@ -78,8 +78,13 @@ and let it store as string[]
 &nbsp;
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
-### 7.4.2
+### 7.4.3
+- [ ] .NET 9.0 version of the package
+- [ ] Change the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0
 - [ ] Dependency update
+
+### 7.4.2
+- [x] Fix issues with `RelationProperty` instances that contain `VCard` objects
 
 ### 7.4.1
 - [x] Fix an issue that `Address.ExtendedAddress` might show some values even if any of the properties 

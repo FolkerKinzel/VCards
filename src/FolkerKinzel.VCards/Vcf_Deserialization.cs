@@ -76,7 +76,7 @@ public static partial class Vcf
     {
         _ArgumentNullException.ThrowIfNull(fileNames, nameof(fileNames));
 
-        foreach (var fileName in fileNames)
+        foreach (string? fileName in fileNames)
         {
             if (fileName is null)
             {
@@ -207,8 +207,6 @@ public static partial class Vcf
     /// </exception>
     /// <exception cref="IOException"> The method could not read from the <see cref="Stream"/>.
     /// </exception>
-    [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
-        Justification = "Performance: The collection expression creates a new List<VCard> instead of Array.Empty<VCard>().")]
     public static async Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
                                                             Encoding? enc = null,
                                                             CancellationToken token = default)
@@ -290,13 +288,11 @@ public static partial class Vcf
     /// closed stream.
     /// </exception>
     /// <exception cref="IOException"> The method could not read from one of the <see cref="Stream"/>s.</exception>
-    [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
-        Justification = "Performance: The collection initializer creates a new List<VCard> instead of Array.Empty<VCard>().")]
     public static IEnumerable<VCard> DeserializeMany(IEnumerable<Func<Stream?>?> factories, AnsiFilter? filter = null)
     {
         _ArgumentNullException.ThrowIfNull(factories, nameof(factories));
 
-        foreach (var factory in factories)
+        foreach (Func<Stream?>? factory in factories)
         {
             if (factory is null)
             {
@@ -307,7 +303,7 @@ public static partial class Vcf
 
             if (filter is null)
             {
-                using var stream = factory();
+                using Stream? stream = factory();
 
                 vCards = stream is null ? Array.Empty<VCard>()
                                         : Deserialize(stream);
@@ -360,7 +356,7 @@ public static partial class Vcf
     {
         _ArgumentNullException.ThrowIfNull(factories, nameof(factories));
 
-        foreach (var factory in factories)
+        foreach (Func<CancellationToken, Task<Stream>>? factory in factories)
         {
             if (factory is null)
             {

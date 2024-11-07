@@ -40,8 +40,6 @@ public class RelationVCardPropertyTests
         string s = prop.ToString();
 
         Assert.IsNotNull(s);
-        StringAssert.Contains(s, phone);
-        Assert.IsTrue(s.Length > phone.Length);
     }
 
 
@@ -49,7 +47,6 @@ public class RelationVCardPropertyTests
     public void CircularReferenceTest1()
     {
         var vc = new VCard() { DisplayNames = new TextProperty("Donald Duck") };
-
         vc.Relations = RelationProperty.FromVCard(vc);
         string s = vc.ToString();
         Assert.IsNotNull(s);

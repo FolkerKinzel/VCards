@@ -164,28 +164,17 @@ public abstract class RelationProperty : VCardProperty, IEnumerable<RelationProp
     /// <returns>A <see cref="RelationProperty"/> object that provides a copy of <paramref name="vCard"/>.
     /// </returns>
     /// <remarks>
-    /// <note type="important">
-    /// This constructor clones <paramref name="vCard"/> in order to avoid circular references.
-    /// Changing the <paramref name="vCard"/> instance AFTER assigning it to this constructor 
-    /// leads to unexpected results!
-    /// </note>
-    /// <para>
     /// vCard&#160;2.1 and vCard&#160;3.0 can embed nested vCards if the flag <see cref="Rel.Agent"/> is 
     /// set in their <see cref="ParameterSection.RelationType"/> property . When serializing a vCard&#160;4.0, 
     /// embedded <see cref="VCard"/>s will be automatically replaced by <see cref="Guid"/> references and
     /// appended as separate vCards to the VCF file.
-    /// </para>
     /// </remarks>
-    /// <example>
-    /// <code language="cs" source="..\Examples\EmbeddedVCardExample.cs" />
-    /// </example>
     public static RelationProperty FromVCard(VCard? vCard,
                                              Rel? relationType = null,
                                              string? group = null)
         => vCard is null
             ? FromText(null, relationType, group)
-            // Clone vCard in order to avoid circular references:
-            : new RelationVCardProperty((VCard)vCard.Clone(), relationType, group);
+            : new RelationVCardProperty(vCard, relationType, group);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

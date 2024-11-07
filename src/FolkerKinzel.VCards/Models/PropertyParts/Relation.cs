@@ -1,3 +1,4 @@
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
 using OneOf;
 
@@ -139,7 +140,7 @@ public sealed class Relation
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => _oneOf.ToString();
+    public override string ToString() => IsVCard ? $"{{ {nameof(VCard)}: {VCard.DisplayNames.FirstOrNull()?.Value} }}" : _oneOf.ToString();
 
     [MemberNotNullWhen(true, nameof(String))]
     private bool IsString => _oneOf.IsT0;

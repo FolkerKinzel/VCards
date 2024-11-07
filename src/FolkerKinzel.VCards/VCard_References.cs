@@ -126,25 +126,30 @@ public sealed partial class VCard
 
                 VCard vc = vcdProp.Value;
 
-                if (vc.ID is null || vc.ID.IsEmpty)
+                IDProperty? idProp = vc.ID;
+
+                if (idProp is null || idProp.IsEmpty)
                 {
-                    vc.ID = new IDProperty();
+                    idProp = new IDProperty();
+                    vc.ID = idProp;
                 }
 
-                if (!vCardList.Any(c => vc.ID == c.ID))
+                // Use reference comparison here because several VCard instances with
+                // the same VCard.ID.Value can be in vCardList
+                if (!vCardList.Contains(vc))
                 {
                     vCardList.Add(vc);
                 }
 
                 if (relations.Any(x => x is RelationUuidProperty xUid
-                                       && xUid.Value == vc.ID.Value
+                                       && xUid.Value == idProp.Value
                                        && xUid.Parameters.RelationType == vcdProp.Parameters.RelationType))
                 {
                     continue;
                 }
 
                 var relationUuid = new RelationUuidProperty(
-                    vc.ID.Value,
+                    idProp.Value,
                     group: vcdProp.Group);
 
                 relationUuid.Parameters.Assign(vcdProp.Parameters);
@@ -239,7 +244,7 @@ public sealed partial class VCard
 
         static void DoDereference(List<RelationProperty?> relations, IEnumerable<VCard?> vCards)
         {
-            IEnumerable<RelationUuidProperty> guidProps = relations
+            ReadOnlySpan<RelationUuidProperty> guidProps = relations
                 .Select(x => x as RelationUuidProperty)
                 .WhereNotEmpty()
                 .ToArray(); // We need ToArray here because relations
@@ -253,13 +258,13 @@ public sealed partial class VCard
 
                 if (referencedVCard is not null)
                 {
-                    if (relations.Any(x => x is RelationVCardProperty xVc &&
-                                           xVc.Value.ID == referencedVCard.ID))
+                    if (relations.Any(x => x is RelationVCardProperty xVc
+                                          && xVc.Value.ID == referencedVCard.ID
+                                          && xVc.Parameters.RelationType == guidProp.Parameters.RelationType))
                     {
                         continue;
                     }
 
-                    // Use the constructor here in order NOT to clone referenced VCard
                     var vcardProp = new RelationVCardProperty(
                                         referencedVCard,
                                         guidProp.Parameters.RelationType,

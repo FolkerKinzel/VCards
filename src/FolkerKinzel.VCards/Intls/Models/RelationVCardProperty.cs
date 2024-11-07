@@ -80,4 +80,6 @@ internal sealed class RelationVCardProperty : RelationProperty
             _ = builder.Append(VCard.NewLine).Append(vc);
         }
     }
+
+    public override string ToString() => Value is null ? base.ToString() : $"{{ {nameof(VCard)}: {Value.DisplayNames.FirstOrNull()?.Value} }}";
 }
