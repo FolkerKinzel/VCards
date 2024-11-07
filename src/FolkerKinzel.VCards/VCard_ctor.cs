@@ -389,7 +389,7 @@ public sealed partial class VCard
                                 VCard? nested = ParseNestedVcard(vcfRow.Value.Span, info, this.Version);
                                 RelationProperty relProp = nested is null 
                                                             ? RelationProperty.Parse(vcfRow, Version)
-                                                            : new RelationProperty(Relation.CreateNoClone(nested), vcfRow.Group);
+                                                            : new RelationProperty(Relation.Create(nested), vcfRow.Group);
                                 relProp.Parameters.RelationType = Rel.Agent;
 
                                 Relations =  Concat(Relations, relProp);

@@ -33,7 +33,6 @@ internal class Program
 
         //NoPidExample.RemovePropertyIdentification();
 
-        //EmbeddedVCardExample.FromVCardExample();
 
         //WhatsAppDemo1.IntegrateWhatsAppNumberUsingIMPP();
         //WhatsAppDemo2.UsingTheWhatsAppType();

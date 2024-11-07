@@ -39,17 +39,10 @@ public sealed class Relation
     /// <returns>The newly created <see cref="Relation"/> instance.</returns>
     /// 
     /// <remarks>
-    /// <note type="important">
-    /// This method clones <paramref name="vCard"/> in order to avoid circular references.
-    /// Changing the <paramref name="vCard"/> instance AFTER assigning it to this constructor 
-    /// leads to unexpected results!
-    /// </note>
-    /// <para>
     /// vCard&#160;2.1 and vCard&#160;3.0 can embed nested vCards if the flag <see cref="Rel.Agent"/> is 
     /// set in their <see cref="ParameterSection.RelationType"/> property. When serializing a vCard&#160;4.0, 
     /// embedded <see cref="VCard"/>s will be automatically replaced by their <see cref="VCard.ID"/>
     /// references and appended as separate vCards to the VCF file.
-    /// </para>
     /// </remarks>
     /// <example>
     /// <code language="cs" source="..\Examples\EmbeddedVCardExample.cs" />
@@ -60,17 +53,11 @@ public sealed class Relation
     {
         _ArgumentNullException.ThrowIfNull(vCard, nameof(vCard));
 
-        // Clone vCard in order to avoid circular references:
-        return new Relation((VCard)vCard.Clone());
-    }
-
-    internal static Relation CreateNoClone(VCard vCard)
-    {
-        Debug.Assert(vCard != null);
-
-        // Clone vCard in order to avoid circular references:
         return new Relation(vCard);
     }
+
+    //internal static Relation CreateNoClone(VCard vCard) => Create(vCard);
+   
 
     /// <summary>
     /// Creates a new <see cref="Relation"/> instance, which is newly initialized using the 

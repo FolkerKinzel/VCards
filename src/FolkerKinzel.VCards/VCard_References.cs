@@ -13,7 +13,7 @@ public sealed partial class VCard
     /// <see cref = "VCard" /> objects passed as a collection as well as those which
     /// had been embedded in their <see cref="VCard.Relations"/> property. The previously 
     /// embedded <see cref="VCard"/> objects are now referenced by <see cref = "RelationProperty" /> 
-    /// objects that are initialized with the value of the <see cref="VCard.ID"/>
+    /// objects that are initialized with the <see cref="ContactID"/> instance of the <see cref="VCard.ID"/>
     /// property of these previously embedded <see cref="VCard"/>s.</summary>
     /// 
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
@@ -72,11 +72,21 @@ public sealed partial class VCard
         // IEnumerable<VCard?> can be used here because the input is cloned.
         _ArgumentNullException.ThrowIfNull(vCards, nameof(vCards));
 
-        var list = vCards.WhereNotNull().ToList();
+        var list = vCards.OfType<VCard>().ToList();
         ReferenceIntl(list);
         return list;
     }
 
+
+    /// <summary>
+    /// Returns a collection of <see cref="VCard" /> objects containing both the
+    /// <see cref = "VCard" /> objects passed as a <see cref="List{T}"/> as well as those which
+    /// had been embedded in their <see cref="VCard.Relations"/> property. The previously 
+    /// embedded <see cref="VCard"/> objects are now referenced by <see cref = "RelationProperty" /> 
+    /// objects that are initialized with the <see cref="ContactID"/> instance of the <see cref="VCard.ID"/>
+    /// property of these previously embedded <see cref="VCard"/>s.
+    /// </summary>
+    /// <param name="vCards">A <see cref="List{T}"/> of <see cref="VCard"/> instances to process.</param>
     internal static void ReferenceIntl(List<VCard> vCards)
     {
         for (int i = vCards.Count - 1; i >= 0; i--)
@@ -85,6 +95,8 @@ public sealed partial class VCard
 
             if (HasRelationVCardProperty(vcard.Relations) || HasRelationVCardProperty(vcard.Members))
             {
+                // Clone the VCard to be changed to let the data
+                // on the callers side unchanged
                 vcard = (VCard)vcard.Clone();
                 vCards[i] = vcard;
 
@@ -120,31 +132,34 @@ public sealed partial class VCard
 
             foreach (RelationProperty vcdProp in vcdProps)
             {
-                Debug.Assert(vcdProp is not null);
-
                 _ = relations.Remove(vcdProp);
 
-                VCard vc = vcdProp.Value.VCard!;
+                Debug.Assert(vcdProp.Value.VCard is not null);
 
-                if (vc.ID is null || vc.ID.IsEmpty)
+                VCard vc = vcdProp.Value.VCard;
+                ContactID? id = vc.ID?.Value;
+
+                if (id is null || id.IsEmpty)
                 {
-                    vc.ID = new IDProperty(ContactID.Create());
+                    id = ContactID.Create();
+                    vc.ID = new IDProperty(id);
                 }
 
-                if (!vCardList.Any(c => vc.ID == c.ID))
+                // Use reference comparison because several versions of a VCard with
+                // the same VCard.ID can be in vCardList
+                if (!vCardList.Contains(vc))
                 {
                     vCardList.Add(vc);
                 }
 
-                if (relations.WhereNotNull().Any(x => x.Value.ContactID is ContactID contactID
-                                       && contactID == vc.ID.Value
+                if (relations.Any(x => x?.Value.ContactID == id
                                        && x.Parameters.RelationType == vcdProp.Parameters.RelationType))
                 {
                     continue;
                 }
 
                 var relationUuid = new RelationProperty(
-                    Relation.Create(vc.ID.Value),
+                    Relation.Create(id),
                     group: vcdProp.Group);
 
                 relationUuid.Parameters.Assign(vcdProp.Parameters);
@@ -203,9 +218,9 @@ public sealed partial class VCard
     public static IList<VCard> Dereference(IEnumerable<VCard?> vCards)
     {
         VCard[] arr = vCards?
-                  .WhereNotNull()
+                  .OfType<VCard>()
                   .Select(vcard => (vcard.Relations is not null || vcard.Members is not null)
-                                     ? (VCard)vcard.Clone()
+                                     ? (VCard)vcard.Clone() // clone the content of vCards in order not to change the data on callers side
                                      : vcard)
                   .ToArray() ?? throw new ArgumentNullException(nameof(vCards));
 
@@ -213,9 +228,9 @@ public sealed partial class VCard
         return arr;
     }
 
-    internal static void DereferenceIntl(IList<VCard> vCards)
+    internal static void DereferenceIntl(IReadOnlyCollection<VCard> vCards)
     {
-        // Use IList<VCard> here instead of IEnumerable<VCard> to force the caller
+        // Use IReadOnlyCollection<VCard> here instead of IEnumerable<VCard> to force the caller
         // to pass something that is persisted in memory because vCards is enumerated 
         // several times.
         Debug.Assert(vCards is not null);
@@ -239,31 +254,32 @@ public sealed partial class VCard
 
         static void DoDereference(List<RelationProperty?> relations, IEnumerable<VCard?> vCards)
         {
-            IEnumerable<RelationProperty> contactIDProps = relations
+            ReadOnlySpan<RelationProperty> idProps = relations
                 .Items()
                 .Where(x => x.Value.ContactID is not null)
                 .ToArray(); // We need ToArray here because relations
                             // might change.
 
-            foreach (RelationProperty contactIDProp in contactIDProps)
+            foreach (RelationProperty idProp in idProps)
             {
                 VCard? referencedVCard =
-                    vCards.FirstOrDefault(x => x?.ID?.Value == contactIDProp.Value.ContactID);
+                    vCards.FirstOrDefault(x => x?.ID?.Value == idProp.Value.ContactID);
 
                 if (referencedVCard is not null)
                 {
-                    if (relations.Any(x => x?.Value.VCard is VCard vc &&
-                                           vc.ID == referencedVCard.ID))
+                    if (relations.Any(x => x?.Value.VCard is VCard vc 
+                                           && vc.ID == referencedVCard.ID
+                                           && x.Parameters.RelationType == idProp.Parameters.RelationType))
                     {
                         continue;
                     }
 
                     var vcardProp = new RelationProperty(
-                                        Relation.CreateNoClone(referencedVCard),
-                                        group: contactIDProp.Group);
-                    vcardProp.Parameters.Assign(contactIDProp.Parameters);
+                                        Relation.Create(referencedVCard),
+                                        group: idProp.Group);
+                    vcardProp.Parameters.Assign(idProp.Parameters);
 
-                    _ = relations.Remove(contactIDProp);
+                    _ = relations.Remove(idProp);
                     relations.Add(vcardProp);
                 }
             }

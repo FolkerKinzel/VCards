@@ -826,6 +826,11 @@ public sealed partial class VCard
     /// that contain text with <see cref="RelationProperty"/> instances that contain <see cref="Uri"/>s
     /// if possible, if not, with <see cref="RelationProperty"/> instances that contain <see cref="VCard"/>s.
     /// </summary>
+    /// <remarks>
+    /// RFC 6350 allows only URIs as value for <c>MEMBER</c>. Values that can't be preserved as URI will be saved in 
+    /// <see cref="VCard"/>s and the <see cref="VCard.ID"/> Guids of these <see cref="VCard"/> instances will be 
+    /// the content of <c>MEMBER</c> after <see cref="VCard.ReferenceIntl(List{VCard})"/>.
+    /// </remarks>
     internal void NormalizeMembers()
     {
         if (Members is null)
@@ -833,7 +838,7 @@ public sealed partial class VCard
             return;
         }
 
-        RelationProperty[] members = Members.WhereNotNull().ToArray();
+        RelationProperty[] members = Members.OfType<RelationProperty>().ToArray();
         Members = members;
         Span<RelationProperty> span = members.AsSpan();
 
