@@ -13,10 +13,13 @@ namespace FolkerKinzel.VCards.Models;
 /// </summary>
 public sealed class ContactID : IEquatable<ContactID>
 {
-    private readonly OneOf<Guid, Uri, string> _oneOf;
+    private ContactID(Guid guid)
+    {
+        Guid = guid;
+        Object = guid;
+    }
 
-    private ContactID(OneOf<Guid, Uri, string> oneOf)
-        => _oneOf = oneOf;
+    private ContactID(object value) => Object = value;
 
     /// <summary>
     /// Creates a new <see cref="ContactID"/> instance from a newly
@@ -95,25 +98,25 @@ public sealed class ContactID : IEquatable<ContactID>
     /// Gets the encapsulated <see cref="Guid"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
-    public Guid? Guid => IsGuid ? AsGuid : null;
+    public Guid? Guid { get; }
 
     /// <summary>
     /// Gets the encapsulated absolute <see cref="System.Uri"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <value>An absolute <see cref="System.Uri"/> or <c>null</c>.</value>
-    public Uri? Uri => IsUri ? AsUri : null;
+    public Uri? Uri => Object as Uri;
 
     /// <summary>
     /// Gets the encapsulated <see cref="string"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
-    public string? String => IsString ? AsString : null;
+    public string? String => Object as string;
 
     /// <summary>
     /// Gets the encapsulated value.
     /// </summary>
-    public object Object => this._oneOf.Value;
+    public object Object { get; }
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
@@ -132,7 +135,42 @@ public sealed class ContactID : IEquatable<ContactID>
     public void Switch(Action<Guid> guidAction,
                        Action<Uri> uriAction,
                        Action<string> stringAction)
-        => _oneOf.Switch(guidAction, uriAction, stringAction);
+    {
+        if (Guid.HasValue) 
+        { 
+            if (guidAction is null)
+            {
+                throw new InvalidOperationException(); 
+            } 
+            else
+            {
+                guidAction(Guid.Value);
+            }
+        }
+
+        if (Object is Uri uri)
+        {
+            if(uriAction is null)
+            {
+                throw new InvalidOperationException();
+            }
+            else
+            {
+                uriAction(uri);
+            }
+        }
+        else
+        {
+            if (stringAction is null)
+            {
+                throw new InvalidOperationException();
+            }
+            else
+            {
+                stringAction((string)Object);
+            }
+        }
+    }
 
     /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/>.
@@ -152,26 +190,35 @@ public sealed class ContactID : IEquatable<ContactID>
     public TResult Convert<TResult>(Func<Guid, TResult>? guidFunc,
                                     Func<Uri, TResult> uriFunc,
                                     Func<string, TResult> stringFunc)
-        => _oneOf.Match(guidFunc, uriFunc, stringFunc);
+    {
+        return Guid.HasValue ? guidFunc is null ? throw new InvalidOperationException() 
+                                                : guidFunc(Guid.Value) 
+                             : Object is Uri uri ? uriFunc is null ? throw new InvalidOperationException() 
+                                                                   : uriFunc(uri)
+                                                 : stringFunc is null ? throw new InvalidOperationException() 
+                                                                      : stringFunc((string)Object);
+    }
 
     /// <inheritdoc/>
-    public override string ToString() => _oneOf.ToString();
+    public override string ToString() => $"{Object.GetType().FullName}: {Object}";
 
     /// <inheritdoc/>
     public bool Equals(ContactID? other)
     {
         StringComparer comp = StringComparer.Ordinal;
         return other is not null
-          && (IsGuid ? other.IsGuid && Guid.Equals(other.Guid)
-                     : IsUri ? (other.IsUri && Uri.Equals(other.Uri)) || (other.IsString && comp.Equals(other.String, Uri.AbsoluteUri))
-             /* IsString */  : comp.Equals(String, other.String) || (other.IsUri && comp.Equals(other.Uri.AbsoluteUri, String)));
+          && (Guid.HasValue
+                     ? other.Guid.HasValue && Guid.Value.Equals(other.Guid.Value)
+                     : Object is Uri uri 
+                            ? (other.Object is Uri otherUri && uri.Equals(otherUri)) || (other.Object is string && comp.Equals(other.String, ((Uri)Object).AbsoluteUri))
+            /* IsString */  : comp.Equals(String, other.String) || (other.Object is Uri && comp.Equals(((Uri)other.Object).AbsoluteUri, String)));
     }
 
     /// <inheritdoc/>
     public override bool Equals(object? obj) => Equals(obj as ContactID);
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(_oneOf);
+    public override int GetHashCode() => Object.GetHashCode();
 
     /// <summary>
     /// Overloads the equality operator for <see cref="ContactID"/> instances.
@@ -192,19 +239,4 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <paramref name="right"/> is not equal, otherwise <c>false</c>.</returns>
     public static bool operator !=(ContactID? left, ContactID? right)
         => !(left == right);
-
-    [MemberNotNullWhen(true, nameof(Guid))]
-    private bool IsGuid => _oneOf.IsT0;
-
-    private Guid AsGuid => _oneOf.AsT0;
-
-    [MemberNotNullWhen(true, nameof(Uri))]
-    private bool IsUri => _oneOf.IsT1;
-
-    private Uri AsUri => _oneOf.AsT1;
-
-    [MemberNotNullWhen(true, nameof(String))]
-    private bool IsString => _oneOf.IsT2;
-
-    private string AsString => _oneOf.AsT2;
 }
