@@ -10,6 +10,10 @@
 ### 8.0.0
 - [ ] Make .NET 9.0 version of the package
 
+&nbsp;
+- [ ] Let `Vcf.DoDeserialize` return `IReadOnlyList<VCard>`
+
+&nbsp;
 - [ ] Fix the issue that with `UID` only Guid values are supported
     - [x] Implement a `ContactID` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
     - [x] Let the 'IDProperty' have an instance of the `ContactID` class as value.
