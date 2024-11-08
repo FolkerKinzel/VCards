@@ -19,7 +19,7 @@ internal static class IEnumerableIntlExtension
     {
         int idx = 1;
 
-        foreach (var item in values.Distinct())
+        foreach (TSource? item in values.Distinct())
         {
             if (item is not null)
             {

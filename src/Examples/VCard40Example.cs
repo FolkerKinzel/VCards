@@ -87,10 +87,10 @@ public static class VCard40Example
 
         // Make the reloaded VCard objects searchable. (The Dereference method doesn't
         // change anything in vCards. Don't forget to assign the return value!):
-        IEnumerable<VCard> dereferenced = vCards.Dereference();
+        vCards.Dereference();
 
         // Find the parsed result from "Composers.vcf":
-        composersVCard = dereferenced
+        composersVCard = vCards
             .FirstOrDefault
              (
               x => x.DisplayNames.Items().Any(x => x.Value == "Composers")

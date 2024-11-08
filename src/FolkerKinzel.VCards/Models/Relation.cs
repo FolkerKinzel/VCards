@@ -1,11 +1,8 @@
-using FolkerKinzel.VCards.Intls;
-using System;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Resources;
-using OneOf;
-using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using System.ComponentModel;
+using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -44,9 +41,6 @@ public sealed class Relation
     /// embedded <see cref="VCard"/>s will be automatically replaced by their <see cref="VCard.ID"/>
     /// references and appended as separate vCards to the VCF file.
     /// </remarks>
-    /// <example>
-    /// <code language="cs" source="..\Examples\EmbeddedVCardExample.cs" />
-    /// </example>
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vCard"/> is <c>null</c>.</exception>
     public static Relation Create(VCard vCard)
@@ -55,9 +49,6 @@ public sealed class Relation
 
         return new Relation(vCard);
     }
-
-    //internal static Relation CreateNoClone(VCard vCard) => Create(vCard);
-   
 
     /// <summary>
     /// Creates a new <see cref="Relation"/> instance, which is newly initialized using the 
@@ -94,7 +85,7 @@ public sealed class Relation
     /// <summary>
     /// Gets the encapsulated value.
     /// </summary>
-    public object Object {  get; }
+    public object Object { get; }
 
     [Obsolete("Use Object instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -131,7 +122,7 @@ public sealed class Relation
         }
         else
         {
-            if(contactIDAction is null)
+            if (contactIDAction is null)
             {
                 throw new InvalidOperationException();
             }
@@ -157,14 +148,15 @@ public sealed class Relation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TResult Convert<TResult>(Func<VCard, TResult> vCardFunc,
                                     Func<ContactID, TResult> contactIDFunc)
-        => Object is VCard vCard 
+        => Object is VCard vCard
             ? vCardFunc is null ? throw new InvalidOperationException() : vCardFunc.Invoke(vCard)
             : contactIDFunc is null ? throw new InvalidOperationException() : contactIDFunc.Invoke((ContactID)Object);
-    
+
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => $"{Object.GetType().FullName}: {Object}";
-
+    public override string ToString() => Object is VCard vc 
+                                            ? $"{{ {nameof(VCard)}: {vc.DisplayNames.FirstOrNull()?.Value} }}" 
+                                            : $"{Object.GetType().FullName}: {Object}";
 }
 

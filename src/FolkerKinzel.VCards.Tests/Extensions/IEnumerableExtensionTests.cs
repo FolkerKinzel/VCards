@@ -80,7 +80,7 @@ public class IEnumerableExtensionTests
         Assert.AreEqual(2, list.Count);
         Assert.IsNull(list[0]?.Relations?.FirstOrDefault(x => x?.Value.VCard is not null));
 
-        list = list.Dereference().ToList()!;
+        list.Dereference();
 
         Assert.AreEqual(2, list.Count);
         Assert.IsNotNull(list[0]?.Relations?.FirstOrDefault(x => x?.Value.VCard is not null));

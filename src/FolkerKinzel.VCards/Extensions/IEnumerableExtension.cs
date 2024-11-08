@@ -67,23 +67,14 @@ public static class IEnumerableExtension
         => VCard.Reference(vCards);
 
     /// <summary>
-    /// Returns a collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
-    /// referenced by their <see cref="VCard.ID"/> property are embedded in 
-    /// <see cref ="RelationProperty"/> objects, provided that <paramref name="vCards"/> 
-    /// contains these <see cref="VCard"/> objects.</summary>
+    /// Replaces the <see cref="RelationProperty"/> instances that refer external vCards with their <see cref="ContactID"/>
+    /// values by <see cref="RelationProperty"/> instances that contain these <see cref="VCard"/> instances directly, 
+    /// provided that <paramref name="vCards"/> 
+    /// contains these <see cref="VCard"/> instances.</summary>
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
     /// may be empty or may contain <c>null</c> values.</param>
     /// 
-    /// <returns> A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
-    /// referenced by their <see cref="VCard.ID"/> property are embedded in 
-    /// <see cref ="RelationProperty"/> objects, provided that <paramref name="vCards"/>
-    /// contains these <see cref="VCard"/> objects.</returns>
     /// <remarks>
-    /// <note type="caution">
-    /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
-    /// passed to the method are not. Block read and write access to these <see cref="VCard"
-    /// /> objects, while this method is being executed!
-    /// </note>
     /// <para>
     /// The method is automatically called by the deserialization methods of the <see
     /// cref="VCard" /> class. Using it in your own code can be useful, e.g., if <see
@@ -108,7 +99,7 @@ public static class IEnumerableExtension
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IList<VCard> Dereference(this IEnumerable<VCard?> vCards)
+    public static void Dereference(this IEnumerable<VCard?> vCards)
         => VCard.Dereference(vCards);
 
     /// <summary>Saves a collection of <see cref="VCard" /> objects in a common VCF

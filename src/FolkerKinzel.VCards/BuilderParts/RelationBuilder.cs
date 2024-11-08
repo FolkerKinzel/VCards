@@ -290,9 +290,6 @@ public readonly struct RelationBuilder
     /// embedded <see cref="VCard"/>s will be automatically replaced by their <see cref="VCards.VCard.ID"/>
     /// references and appended as separate vCards to the VCF file.
     /// </remarks>
-    /// <example>
-    /// <code language="cs" source="..\Examples\EmbeddedVCardExample.cs" />
-    /// </example>
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>

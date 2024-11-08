@@ -492,10 +492,9 @@ public class V4Tests
             .Relations.Add(vc.ID!.Value)
             .Relations.Add(vc);
 
-        IList<VCard> result = vc.Dereference();
+        vc.Dereference();
 
-        Assert.AreEqual(1, result.Count);
-        Assert.AreEqual(2, result[0].Relations!.Count());
+        Assert.AreEqual(2, vc.Relations!.Count());
     }
 
     [TestMethod]
