@@ -9,8 +9,8 @@ public class UuidPropertyTests
     [TestMethod]
     public void EqualsTest2()
     {
-        var uid1 = new IDProperty(ContactID.Create());
-        var uid2 = new IDProperty(uid1.Value);
+        var uid1 = ContactID.Create();
+        var uid2 = uid1;
         Assert.IsTrue(uid1 == uid2);
         Assert.IsFalse(uid1 != uid2);
         object o1 = uid1;

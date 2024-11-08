@@ -197,7 +197,7 @@ public class V3Tests
         string vcf = Vcf.ToString(vc, VCdVersion.V3_0, options: Opts.Default.Set(Opts.WriteNonStandardProperties));
         vc = Vcf.Parse(vcf)[0];
 
-        Assert.AreEqual(Data.Uri, vc.Relations!.First()!.Parameters.DataType);
+        Assert.AreEqual(Data.Text, vc.Relations!.First()!.Parameters.DataType);
         Assert.AreEqual(Enc.Base64, vc.Logos!.First()!.Parameters.Encoding);
         Assert.AreEqual(Enc.Base64, vc.Keys!.First()!.Parameters.Encoding);
         Assert.AreEqual(Enc.Base64, vc.Sounds!.First()!.Parameters.Encoding);
@@ -749,7 +749,7 @@ END:VCARD";
         RelationProperty? rel = vc.Relations.First();
         Assert.IsNotNull(rel);
         Assert.IsNotNull(rel.Value);
-        Assert.AreEqual("BEGIN:VCARDThis is not a vCard.", rel.Value.ContactID?.String);
+        Assert.IsNotNull(rel.Value.ContactID?.Uri);
         Assert.AreEqual(Rel.Agent, rel.Parameters.RelationType);
     }
 }

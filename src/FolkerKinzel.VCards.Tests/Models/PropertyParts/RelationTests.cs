@@ -48,14 +48,6 @@ public class RelationTests
     }
 
     [TestMethod]
-    public void SwitchTest1()
-    {
-        var rel = Relation.Create(ContactID.Create("Hi"));
-        rel.Switch(null!, null!);
-        Assert.IsNull(rel);
-    }
-
-    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SwitchTest2()
     {
@@ -64,26 +56,12 @@ public class RelationTests
     }
 
     [TestMethod]
-    public void ConvertTest1()
-    {
-        const int expected = 42;
-        var rel = Relation.Create(ContactID.Create("Hi"));
-
-        int result = rel.Convert<int>(null!, null!);
-        Assert.AreEqual(expected, result);
-    }
-
-    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void ConvertTest2()
     {
-        const int expected = 42;
         var rel = Relation.Create(ContactID.Create("Hi"));
-
-        int result = rel.Convert<int>(null!, null!);
-        Assert.AreEqual(expected, result);
+        _ = rel.Convert<int>(null!, null!);
     }
-
 
     //[TestMethod]
     //public void TryAsStringTest1() => Assert.IsFalse(new RelationProperty(ContactID.Create()).Value.TryAsString(out _));

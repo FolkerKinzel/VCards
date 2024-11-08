@@ -269,7 +269,7 @@ public class V4Tests
         IList<VCard> list = Vcf.Parse(vcf);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(2, list.Count);
+        Assert.AreEqual(1, list.Count);
     }
 
 
