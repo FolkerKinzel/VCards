@@ -109,8 +109,6 @@ internal static class IEnumerableIntlExtension
          => ignoreEmptyItems ? values.WhereNotEmptyAnd(filter).OrderBy(GetIndex).FirstOrDefault()
                              : values.WhereNotNullAnd(filter).OrderBy(GetIndex).FirstOrDefault();
 
-
-
     private static int GetPreference(VCardProperty prop) => prop.Parameters.Preference;
 
     private static int GetIndex(VCardProperty prop) => prop.Parameters.Index ?? int.MaxValue;

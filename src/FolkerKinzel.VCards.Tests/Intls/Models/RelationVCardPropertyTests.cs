@@ -40,6 +40,26 @@ public class RelationVCardPropertyTests
         string s = prop.ToString();
 
         Assert.IsNotNull(s);
+
+        VCards.Models.PropertyParts.Relation? val = prop.Value;
+        Assert.IsNotNull(val);
+        s = val.ToString();
+        Assert.IsNotNull(s);
+    }
+
+    [TestMethod]
+    public void ToStringTest2()
+    {
+       
+        var prop = RelationProperty.FromVCard(new VCard());
+        string s = prop.ToString();
+
+        Assert.IsNotNull(s);
+
+        VCards.Models.PropertyParts.Relation? val = prop.Value;
+        Assert.IsNotNull(val);
+        s = val.ToString();
+        Assert.IsNotNull(s);
     }
 
 

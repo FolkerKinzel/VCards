@@ -81,5 +81,5 @@ internal sealed class RelationVCardProperty : RelationProperty
         }
     }
 
-    public override string ToString() => Value is null ? base.ToString() : $"{{ {nameof(VCard)}: {Value.DisplayNames.FirstOrNull()?.Value} }}";
+    public override string ToString() => $"{{ {nameof(VCard)}: {Value.DisplayNames.FirstOrNull()?.Value} }}";
 }

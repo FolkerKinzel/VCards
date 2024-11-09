@@ -11,6 +11,22 @@ public class IEnumerableExtensionTests
         => Assert.IsNotNull(new TextProperty[] { new(null) }.FirstOrNullIntl(false));
 
     [TestMethod]
+    public void FirstOrNullIntlTest2()
+        => Assert.IsNull(new TextProperty?[] { null }.FirstOrNullIntl(false));
+
+    [TestMethod]
+    public void FirstOrNullIntlTest3()
+        => Assert.IsNull(new TextProperty[] { new(null) }.FirstOrNullIntl(true));
+
+    [TestMethod]
+    public void FirstOrNullIntlTest4()
+        => Assert.IsNotNull(new TextProperty[] { new("Hi") }.FirstOrNullIntl(true));
+
+    [TestMethod]
+    public void FirstOrNullIntlTest5()
+        => Assert.IsNull(new TextProperty?[] { null }.FirstOrNullIntl(true));
+
+    [TestMethod]
     public void PrefOrNullIntlTest1()
         => Assert.IsNotNull(new TextProperty[] { new(null) }.PrefOrNullIntl(static x => true, false));
 
