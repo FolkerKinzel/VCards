@@ -152,10 +152,11 @@ public class IEnumerableExtensionTests
 
         list.SaveVcf(path, VCdVersion.V2_1);
 
-        IList<VCard> list2 = Vcf.Load(path);
+        IReadOnlyList<VCard> list2 = Vcf.Load(path);
 
         Assert.AreNotEqual(list.Count, list2.Count);
-        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+        Assert.AreNotEqual(0, list2.Count);
+        Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value?.VCard);
     }
 
     [TestMethod]
@@ -167,10 +168,11 @@ public class IEnumerableExtensionTests
 
         list.SaveVcf(path, VCdVersion.V3_0);
 
-        IList<VCard> list2 = Vcf.Load(path);
+        IReadOnlyList<VCard> list2 = Vcf.Load(path);
 
         Assert.AreNotEqual(list.Count, list2.Count);
-        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+        Assert.AreNotEqual(0, list2.Count);
+        Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value?.VCard);
     }
 
     [TestMethod]
@@ -182,10 +184,11 @@ public class IEnumerableExtensionTests
 
         list.SaveVcf(path, VCdVersion.V4_0);
 
-        IList<VCard> list2 = Vcf.Load(path);
+        IReadOnlyList<VCard> list2 = Vcf.Load(path);
 
         Assert.AreEqual(2, list2.Count);
-        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+        Assert.AreNotEqual(0, list2.Count);
+        Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value?.VCard);
     }
 
     [DataTestMethod]
@@ -203,7 +206,7 @@ public class IEnumerableExtensionTests
 
         vcard.SaveVcf(path, version);
 
-        IList<VCard> list = Vcf.Load(path);
+        IReadOnlyList<VCard> list = Vcf.Load(path);
 
         Assert.AreEqual(1, list.Count);
         Assert.IsNotNull(list[0].DisplayNames);
@@ -362,10 +365,10 @@ public class IEnumerableExtensionTests
 
         string s = list.ToVcfString(version);
 
-        IList<VCard> list2 = Vcf.Parse(s);
+        IReadOnlyList<VCard> list2 = Vcf.Parse(s);
 
         Assert.AreNotEqual(0, list2.Count);
-        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+        Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value?.VCard);
         Assert.AreEqual(version, list2[0].Version);
     }
 
@@ -375,8 +378,6 @@ public class IEnumerableExtensionTests
     [DataRow(VCdVersion.V4_0)]
     public void ToVcfStringTest1(VCdVersion version)
     {
-        VCard.SyncTestReset();
-
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker")
@@ -384,7 +385,7 @@ public class IEnumerableExtensionTests
 
         string s = vcard.ToVcfString(version);
 
-        IList<VCard> list = Vcf.Parse(s);
+        IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.AreEqual(1, list.Count);
         Assert.IsNotNull(list[0].DisplayNames);

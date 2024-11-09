@@ -11,7 +11,7 @@ public class V2Tests
     [TestMethod]
     public void Parse()
     {
-        IList<VCard> vcard = Vcf.Load(fileName: TestFiles.V2vcf);
+        IReadOnlyList<VCard> vcard = Vcf.Load(fileName: TestFiles.V2vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -21,10 +21,10 @@ public class V2Tests
     [TestMethod]
     public void ParseOutlook()
     {
-        IList<VCard> vcard = Vcf.Load(fileName: TestFiles.OutlookV2vcf);
+        IReadOnlyList<VCard> vcard = Vcf.Load(fileName: TestFiles.OutlookV2vcf);
 
         Assert.IsNotNull(vcard);
-        Assert.IsNotNull(vcard.FirstOrDefault());
+        Assert.AreNotEqual(0, vcard.Count);
 
         //string s = vcard[0].ToString();
 
@@ -34,7 +34,7 @@ public class V2Tests
         Assert.AreEqual(photo?.Parameters.MediaType, "image/jpeg");
         //System.IO.File.WriteAllBytes(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"Testbild{dataUrl.GetFileExtension()}"), dataUrl.GetEmbeddedBytes());
 
-        Vcf.Save(vcard!,
+        Vcf.Save(vcard,
             System.IO.Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"), VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteNonStandardProperties));
     }
@@ -46,7 +46,7 @@ public class V2Tests
         var vcard = new VCard();
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
-        IList<VCard> cards = Vcf.Parse(s);
+        IReadOnlyList<VCard> cards = Vcf.Parse(s);
 
         Assert.AreEqual(cards.Count, 1);
 
@@ -119,7 +119,7 @@ public class V2Tests
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = Vcf.Parse(s);
+        IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -152,7 +152,7 @@ public class V2Tests
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
-        IList<VCard> vCards = Vcf.Parse(vcf);
+        IReadOnlyList<VCard> vCards = Vcf.Parse(vcf);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
@@ -188,7 +188,7 @@ public class V2Tests
         var arr = new VCard[] { vc };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Unset(Opts.AllowMultipleAdrAndLabelInVCard21));
-        IList<VCard> vCards = Vcf.Parse(vcf);
+        IReadOnlyList<VCard> vCards = Vcf.Parse(vcf);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
@@ -325,7 +325,7 @@ public class V2Tests
 
         string s = vCard.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Set(Opts.AppendAgentAsSeparateVCard));
 
-        IList<VCard> vCards = Vcf.Parse(s);
+        IReadOnlyList<VCard> vCards = Vcf.Parse(s);
         Assert.AreEqual(2, vCards.Count);
         Assert.IsNotNull(vCards[0].Relations);
     }
@@ -347,7 +347,7 @@ public class V2Tests
 
             """;
 
-        IList<VCard> vcs = Vcf.Parse(agent);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(agent);
         Assert.AreEqual(1, vcs.Count);
         Assert.IsNotNull(vcs[0].Relations);
     }
@@ -428,7 +428,7 @@ public class V2Tests
             TEL;WORK;FAX:+1-213-555-5678
             """;
 
-        IList<VCard> vcs = Vcf.Parse(cropped);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(cropped);
 
         Assert.IsNotNull(vcs);
         Assert.AreEqual(1, vcs.Count);
@@ -442,7 +442,7 @@ public class V2Tests
             BEGIN:VCARD
             """;
 
-        IList<VCard> vcs = Vcf.Parse(cropped);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(cropped);
 
         Assert.IsNotNull(vcs);
         Assert.AreEqual(0, vcs.Count);
@@ -484,7 +484,7 @@ public class V2Tests
             end:vcard
             """;
 
-        IList<VCard> vcs = Vcf.Parse(s);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(s);
 
         Assert.IsNotNull(vcs);
         Assert.AreEqual(1, vcs.Count);
@@ -505,7 +505,7 @@ public class V2Tests
             ENvcnBvcmF0aW9uMRwwGgYDVQQLExNJbmZvcm1hdGlvbiBTeXN0ZW1zMRwwGgYDVQQD
             """;
 
-        IList<VCard> vcs = Vcf.Parse(s);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(s);
 
         Assert.IsNotNull(vcs);
         Assert.AreEqual(1, vcs.Count);

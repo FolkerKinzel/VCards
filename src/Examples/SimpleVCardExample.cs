@@ -30,9 +30,9 @@ public static class SimpleVCardExample
         // (You don't need to specify the version: Version 3.0 is the default.)
         Vcf.Save(vCard, filePath);
 
-        // Load the VCF file. (The result is IList<VCard> because a VCF file may contain
+        // Load the VCF file. (The result is IReadOnlyList<VCard> because a VCF file may contain
         // many vCards.):
-        IList<VCard> vCards = Vcf.Load(filePath);
+        IReadOnlyList<VCard> vCards = Vcf.Load(filePath);
         vCard = vCards[0];
 
         // Use Linq and/or extension methods to query the data:

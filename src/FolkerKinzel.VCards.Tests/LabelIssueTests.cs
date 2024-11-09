@@ -11,7 +11,7 @@ public class LabelIssueTests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        IList<VCard> vCards = Vcf.Load(TestFiles.LabelIssueVcf, new AnsiFilter());
+        IReadOnlyList<VCard> vCards = Vcf.Load(TestFiles.LabelIssueVcf, new AnsiFilter());
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         Assert.IsNotNull(vCards[0]);
@@ -41,7 +41,7 @@ public class LabelIssueTests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        IList<VCard> vCards = Vcf.Load(TestFiles.LabelTest1Vcf, new AnsiFilter());
+        IReadOnlyList<VCard> vCards = Vcf.Load(TestFiles.LabelTest1Vcf, new AnsiFilter());
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         Assert.IsNotNull(vCards[0]);
@@ -72,7 +72,7 @@ public class LabelIssueTests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        IList<VCard> vCards = Vcf.Load(TestFiles.LabelTest2Vcf, new AnsiFilter());
+        IReadOnlyList<VCard> vCards = Vcf.Load(TestFiles.LabelTest2Vcf, new AnsiFilter());
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         Assert.IsNotNull(vCards[0]);
@@ -119,7 +119,7 @@ public class LabelIssueTests
             END:VCARD
             """;
 
-        IList<VCard> vcs = Vcf.Parse(vcf);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(vcf);
         IEnumerable<AddressProperty?>? adr = vcs[0].Addresses;
         Assert.IsNotNull(adr);
         Assert.AreEqual(5, adr.Count());
@@ -144,7 +144,7 @@ public class LabelIssueTests
             END:VCARD
             """;
 
-        IList<VCard> vcs = Vcf.Parse(vcf);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(vcf);
         IEnumerable<AddressProperty?>? adr = vcs[0].Addresses;
         Assert.IsNotNull(adr);
         Assert.AreEqual(4, adr.Count());

@@ -28,7 +28,7 @@ public static partial class Vcf
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    public static IList<VCard> Load(string fileName, Encoding? enc = null)
+    public static IReadOnlyList<VCard> Load(string fileName, Encoding? enc = null)
     {
         using StreamReader reader = InitializeStreamReader(fileName, enc);
         return DoDeserialize(reader);
@@ -52,7 +52,7 @@ public static partial class Vcf
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    public static IList<VCard> Load(string fileName, AnsiFilter filter)
+    public static IReadOnlyList<VCard> Load(string fileName, AnsiFilter filter)
         => filter?.Load(fileName) ?? throw new ArgumentNullException(nameof(filter));
 
     /// <summary>
@@ -83,8 +83,8 @@ public static partial class Vcf
                 continue;
             }
 
-            IList<VCard> vCards = filter is null ? Load(fileName)
-                                                 : filter.Load(fileName);
+            IReadOnlyList<VCard> vCards = filter is null ? Load(fileName)
+                                                         : filter.Load(fileName);
 
             for (int i = 0; i < vCards.Count; i++)
             {
@@ -109,7 +109,7 @@ public static partial class Vcf
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vcf" /> is <c>null</c>.
     /// </exception>
-    public static IList<VCard> Parse(string vcf)
+    public static IReadOnlyList<VCard> Parse(string vcf)
     {
         _ArgumentNullException.ThrowIfNull(vcf, nameof(vcf));
 
@@ -139,7 +139,7 @@ public static partial class Vcf
     /// </exception>
     /// <exception cref="IOException"> Could not read from <paramref name="stream"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IList<VCard> Deserialize(Stream stream,
+    public static IReadOnlyList<VCard> Deserialize(Stream stream,
                                            Encoding? enc = null,
                                            bool leaveStreamOpen = false)
     {
@@ -179,7 +179,7 @@ public static partial class Vcf
     /// </exception>
     /// <exception cref="IOException"> The method could not read from the <see cref="Stream"/>
     /// that <paramref name="factory"/> returns.</exception>
-    public static IList<VCard> Deserialize(Func<Stream?> factory, AnsiFilter filter)
+    public static IReadOnlyList<VCard> Deserialize(Func<Stream?> factory, AnsiFilter filter)
         => filter?.Deserialize(factory) ?? throw new ArgumentNullException(nameof(filter));
 
     /// <summary>
@@ -207,15 +207,15 @@ public static partial class Vcf
     /// </exception>
     /// <exception cref="IOException"> The method could not read from the <see cref="Stream"/>.
     /// </exception>
-    public static async Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
-                                                            Encoding? enc = null,
-                                                            CancellationToken token = default)
+    public static async Task<IReadOnlyList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
+                                                                    Encoding? enc = null,
+                                                                    CancellationToken token = default)
     {
         _ArgumentNullException.ThrowIfNull(factory, nameof(factory));
 
         using Stream? stream = await factory(token).ConfigureAwait(false);
 
-        return stream is null ? Array.Empty<VCard>()
+        return stream is null ? []
                               : Deserialize(stream, enc);
     }
 
@@ -255,9 +255,9 @@ public static partial class Vcf
     /// </exception>
     /// <exception cref="IOException"> The method could not read from the <see cref="Stream"/>.
     /// </exception>
-    public static Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
-                                                      AnsiFilter filter,
-                                                      CancellationToken token = default)
+    public static Task<IReadOnlyList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
+                                                              AnsiFilter filter,
+                                                              CancellationToken token = default)
         => filter?.DeserializeAsync(factory, token) ?? throw new ArgumentNullException(nameof(filter));
 
 
@@ -299,14 +299,12 @@ public static partial class Vcf
                 continue;
             }
 
-            IList<VCard> vCards;
+            IReadOnlyList<VCard> vCards;
 
             if (filter is null)
             {
                 using Stream? stream = factory();
-
-                vCards = stream is null ? Array.Empty<VCard>()
-                                        : Deserialize(stream);
+                vCards = stream is null ? [] : Deserialize(stream);
             }
             else
             {
@@ -363,14 +361,12 @@ public static partial class Vcf
                 continue;
             }
 
-            IList<VCard> vCards;
+            IReadOnlyList<VCard> vCards;
 
             if (filter is null)
             {
                 using Stream stream = await factory(token).ConfigureAwait(false);
-
-                vCards = stream is null ? []
-                                        : Deserialize(stream);
+                vCards = stream is null ? [] : Deserialize(stream);
             }
             else
             {
@@ -384,7 +380,7 @@ public static partial class Vcf
         }
     }
 
-    internal static IList<VCard> DoDeserialize(TextReader reader,
+    internal static IReadOnlyList<VCard> DoDeserialize(TextReader reader,
                                               VCdVersion versionHint = VCdVersion.V2_1)
     {
         Debug.Assert(reader is not null);

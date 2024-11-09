@@ -47,7 +47,7 @@ public class AccessPropertyTests
 
         string serialized = vcard.ToVcfString();
 
-        IList<VCard> list = Vcf.Parse(serialized);
+        IReadOnlyList<VCard> list = Vcf.Parse(serialized);
 
         Assert.AreEqual(1, list.Count);
 

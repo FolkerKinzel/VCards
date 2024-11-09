@@ -503,9 +503,9 @@ public sealed partial class VCard
 
             using var reader = new StringReader(s);
 
-            IList<VCard> list = Vcf.DoDeserialize(reader, versionHint);
+            IReadOnlyList<VCard> list = Vcf.DoDeserialize(reader, versionHint);
 
-            return list.FirstOrDefault();
+            return list.Count == 0 ? null : list[0];
         }
     }//ctor
 

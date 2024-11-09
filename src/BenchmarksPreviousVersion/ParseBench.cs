@@ -35,20 +35,20 @@ public class ParseBench
     }
 
     [Benchmark]
-    public IReadOnlyList<VCard> Parse21() => Vcf.Parse(_vCardString21);
+    public IList<VCard> Parse21() => Vcf.Parse(_vCardString21);
 
     [Benchmark]
-    public IReadOnlyList<VCard> Parse21Photo() => Vcf.Parse(_vCardStringPhoto21);
+    public IList<VCard> Parse21Photo() => Vcf.Parse(_vCardStringPhoto21);
 
     [Benchmark]
-    public IReadOnlyList<VCard> Parse30() => Vcf.Parse(_vCardString30);
+    public IList<VCard> Parse30() => Vcf.Parse(_vCardString30);
 
     [Benchmark]
-    public IReadOnlyList<VCard> Parse30Photo() => Vcf.Parse(_vCardStringPhoto30);
+    public IList<VCard> Parse30Photo() => Vcf.Parse(_vCardStringPhoto30);
 
     [Benchmark]
-    public IReadOnlyList<VCard> Parse40() => Vcf.Parse(_vCardString40);
+    public IList<VCard> Parse40() => Vcf.Parse(_vCardString40);
 
     [Benchmark]
-    public IReadOnlyList<VCard> Parse40Photo() => Vcf.Parse(_vCardStringPhoto40);
+    public IList<VCard> Parse40Photo() => Vcf.Parse(_vCardStringPhoto40);
 }

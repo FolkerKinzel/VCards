@@ -12,7 +12,7 @@ public class V3Tests
     [TestMethod]
     public void ParseTest()
     {
-        IList<VCard>? vcard = Vcf.Load(TestFiles.V3vcf);
+        IReadOnlyList<VCard>? vcard = Vcf.Load(TestFiles.V3vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreEqual(2, vcard.Count);
@@ -22,7 +22,7 @@ public class V3Tests
     [TestMethod]
     public void ParseTest2()
     {
-        IList<VCard>? vcard = Vcf.Load(@"C:\Users\fkinz\OneDrive\Kontakte\Thunderbird\21-01-13.vcf");
+        IReadOnlyList<VCard>? vcard = Vcf.Load(@"C:\Users\fkinz\OneDrive\Kontakte\Thunderbird\21-01-13.vcf");
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -31,7 +31,7 @@ public class V3Tests
     [TestMethod]
     public void ParseTest3()
     {
-        IList<VCard>? vcard = Vcf.Load(TestFiles.PhotoV3vcf);
+        IReadOnlyList<VCard>? vcard = Vcf.Load(TestFiles.PhotoV3vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -45,7 +45,7 @@ public class V3Tests
 
         string s = vcard.ToVcfString(VCdVersion.V3_0);
 
-        IList<VCard>? cards = Vcf.Parse(s);
+        IReadOnlyList<VCard>? cards = Vcf.Parse(s);
 
         Assert.AreEqual(cards.Count, 1);
 
@@ -153,7 +153,7 @@ public class V3Tests
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = Vcf.Parse(s);
+        IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
 
@@ -169,14 +169,14 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest2()
     {
-        IList<VCard> vc = [.. Vcf.Load(TestFiles.PhotoV3vcf)];
+        List<VCard> vc = [.. Vcf.Load(TestFiles.PhotoV3vcf)];
         vc.Add(vc[0]);
 
         string s = vc.ToVcfString();
 
-        vc = Vcf.Parse(s);
+        IReadOnlyList<VCard> vc2 = Vcf.Parse(s);
 
-        Assert.AreEqual(2, vc.Count);
+        Assert.AreEqual(2, vc2.Count);
     }
 
     [TestMethod]

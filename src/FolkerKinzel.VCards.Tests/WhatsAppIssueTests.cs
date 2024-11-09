@@ -11,7 +11,7 @@ public class WhatsAppIssueTests
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
 
-        IList<VCard> list = Vcf.Load(TestFiles.WhatsAppIssueVcf);
+        IReadOnlyList<VCard> list = Vcf.Load(TestFiles.WhatsAppIssueVcf);
         Assert.AreNotEqual(0, list.Count);
 
         IEnumerable<TextProperty?>? phoneNumbers = list[0].Phones;

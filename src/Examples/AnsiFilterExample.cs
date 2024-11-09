@@ -32,7 +32,7 @@ public static class AnsiFilterExample
                 .EnumerateFiles(directoryPath)
                 .Where(x => StringComparer.OrdinalIgnoreCase.Equals(Path.GetExtension(x), ".vcf")))
             {
-                IList<VCard> vCards = Vcf.Load(vcfFileName, ansiFilter);
+                IReadOnlyList<VCard> vCards = Vcf.Load(vcfFileName, ansiFilter);
                 WriteToTextFile(vcfFileName, vCards, ansiFilter.UsedEncoding.WebName, writer);
             }
         }
@@ -41,7 +41,7 @@ public static class AnsiFilterExample
     }
 
     private static void WriteToTextFile(string vcfFileName,
-                                        IList<VCard> vCards,
+                                        IEnumerable<VCard> vCards,
                                         string? encodingWebName,
                                         TextWriter writer)
     {

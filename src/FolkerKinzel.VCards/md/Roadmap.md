@@ -11,7 +11,7 @@
 - [ ] Make .NET 9.0 version of the package
 
 &nbsp;
-- [ ] Let `Vcf.DoDeserialize` return `IReadOnlyList<VCard>`
+- [x] Let `Vcf.DoDeserialize` return `IReadOnlyList<VCard>`
 
 &nbsp;
 - [ ] Fix the issue that with `UID` only Guid values are supported

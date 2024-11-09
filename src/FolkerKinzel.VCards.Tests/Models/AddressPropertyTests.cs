@@ -100,7 +100,7 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = Vcf.Parse(vcf);
+        IReadOnlyList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
         vc = cards[0];
@@ -142,7 +142,7 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = Vcf.Parse(vcf);
+        IReadOnlyList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
         vc = cards[0];
@@ -184,7 +184,7 @@ public class AddressPropertyTests
         Assert.IsTrue(vc.IsEmpty());
 
         string vcf = vc.ToVcfString(version);
-        IList<VCard> cards = Vcf.Parse(vcf);
+        IReadOnlyList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
         Assert.AreEqual(1, cards.Count);
         vc = cards[0];
