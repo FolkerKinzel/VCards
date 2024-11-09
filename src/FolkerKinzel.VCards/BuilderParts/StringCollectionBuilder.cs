@@ -129,7 +129,7 @@ public readonly struct StringCollectionBuilder
         Func<IEnumerable<StringCollectionProperty>, TData, IEnumerable<StringCollectionProperty?>?> func,
         TData data)
     {
-        var props = GetProperty();
+        IEnumerable<StringCollectionProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props, data));
         return _builder;
@@ -151,7 +151,7 @@ public readonly struct StringCollectionBuilder
     public VCardBuilder Edit(
         Func<IEnumerable<StringCollectionProperty>, IEnumerable<StringCollectionProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<StringCollectionProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props));
         return _builder;
@@ -160,8 +160,8 @@ public readonly struct StringCollectionBuilder
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<StringCollectionProperty> GetProperty() =>
         Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(_prop)?
-                                 .WhereNotNull()
-                    ?? [];
+                                 .OfType<StringCollectionProperty>()
+                                 ?? [];
 
     private void SetProperty(IEnumerable<StringCollectionProperty?>? value)
     {

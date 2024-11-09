@@ -166,7 +166,7 @@ public readonly struct TextBuilder
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<TextProperty> GetProperty() =>
         Builder.VCard.Get<IEnumerable<TextProperty?>?>(_prop)?
-                                 .WhereNotNull() ?? [];
+                                 .OfType<TextProperty>() ?? [];
 
     private void SetProperty(IEnumerable<TextProperty?>? value)
     {

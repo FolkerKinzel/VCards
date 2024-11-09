@@ -88,7 +88,7 @@ public readonly struct GenderBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TData>(Func<IEnumerable<GenderProperty>, TData, IEnumerable<GenderProperty?>?> func, TData data)
     {
-        var props = GetProperty();
+        IEnumerable<GenderProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.GenderViews = func(props, data);
         return _builder;
@@ -110,7 +110,7 @@ public readonly struct GenderBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<GenderProperty>, IEnumerable<GenderProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<GenderProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.GenderViews = func(props);
         return _builder;
@@ -118,7 +118,7 @@ public readonly struct GenderBuilder
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<GenderProperty> GetProperty() =>
-        Builder.VCard.GenderViews?.WhereNotNull() ?? [];
+        Builder.VCard.GenderViews?.OfType<GenderProperty>() ?? [];
 
     /// <summary>
     /// Adds a <see cref="GenderProperty"/> instance, which is newly initialized using the specified 

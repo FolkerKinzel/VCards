@@ -125,7 +125,7 @@ public readonly struct OrgBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TData>(Func<IEnumerable<OrgProperty>, TData, IEnumerable<OrgProperty?>?> func, TData data)
     {
-        var props = GetProperty();
+        IEnumerable<OrgProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Organizations = func(props, data);
         return _builder;
@@ -146,7 +146,7 @@ public readonly struct OrgBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<OrgProperty>, IEnumerable<OrgProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<OrgProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Organizations = func(props);
         return _builder;
@@ -154,7 +154,7 @@ public readonly struct OrgBuilder
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<OrgProperty> GetProperty()
-        => Builder.VCard.Organizations?.WhereNotNull() ?? [];
+        => Builder.VCard.Organizations?.OfType<OrgProperty>() ?? [];
 
     /// <summary>
     /// Adds an <see cref="OrgProperty"/> instance, which is newly 
@@ -186,7 +186,7 @@ public readonly struct OrgBuilder
                             Func<VCard, string?>? group = null,
                             Action<TextBuilder, OrgProperty>? displayName = null)
     {
-        var vc = Builder.VCard;
+        VCard vc = Builder.VCard;
         var prop = new OrgProperty(orgName, orgUnits, group?.Invoke(_builder.VCard));
 
         Builder.VCard.Set(Prop.Organizations,
@@ -227,7 +227,7 @@ public readonly struct OrgBuilder
                             Func<VCard, string?>? group = null,
                             Action<TextBuilder, OrgProperty>? displayName = null)
     {
-        var vc = Builder.VCard;
+        VCard vc = Builder.VCard;
         var prop = new OrgProperty(org, group?.Invoke(_builder.VCard));
 
         Builder.VCard.Set(Prop.Organizations,

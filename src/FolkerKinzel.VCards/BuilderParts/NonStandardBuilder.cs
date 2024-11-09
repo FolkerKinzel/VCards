@@ -52,7 +52,7 @@ public readonly struct NonStandardBuilder
         Func<IEnumerable<NonStandardProperty>, TData, IEnumerable<NonStandardProperty?>?> func,
         TData data)
     {
-        var props = GetProperty();
+        IEnumerable<NonStandardProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.NonStandards = func(props, data);
         return _builder;
@@ -74,7 +74,7 @@ public readonly struct NonStandardBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<NonStandardProperty>, IEnumerable<NonStandardProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<NonStandardProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.NonStandards = func(props);
         return _builder;
@@ -82,7 +82,7 @@ public readonly struct NonStandardBuilder
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<NonStandardProperty> GetProperty() =>
-        Builder.VCard.NonStandards?.WhereNotNull() ?? [];
+        Builder.VCard.NonStandards?.OfType<NonStandardProperty>() ?? [];
 
     /// <summary>
     /// Adds a <see cref="NonStandardProperty"/> instance, which is newly initialized using the 

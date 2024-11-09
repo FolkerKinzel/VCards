@@ -122,7 +122,7 @@ public readonly struct GeoBuilder
     public VCardBuilder Edit<TData>(Func<IEnumerable<GeoProperty>, TData, IEnumerable<GeoProperty?>?> func,
                                     TData data)
     {
-        var props = GetProperty();
+        IEnumerable<GeoProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.GeoCoordinates = func(props, data);
         return _builder;
@@ -144,7 +144,7 @@ public readonly struct GeoBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<GeoProperty>, IEnumerable<GeoProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<GeoProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.GeoCoordinates = func(props);
         return _builder;
@@ -152,7 +152,7 @@ public readonly struct GeoBuilder
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<GeoProperty> GetProperty()
-        => Builder.VCard.GeoCoordinates?.WhereNotNull() ?? [];
+        => Builder.VCard.GeoCoordinates?.OfType<GeoProperty>() ?? [];
 
     /// <summary>
     /// Adds a <see cref="GeoProperty"/> instance, which is newly initialized using the specified 

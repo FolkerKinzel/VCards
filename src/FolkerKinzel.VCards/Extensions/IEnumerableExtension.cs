@@ -547,7 +547,7 @@ public static class IEnumerableExtension
     public static string NewAltID(this IEnumerable<VCardProperty?>? values)
     {
         IEnumerable<string> numerable = values?.Select(x => x?.Parameters.AltID)
-                                               .WhereNotNull()
+                                               .OfType<string>()
                                                .Distinct()
                                          ?? [];
         int i = -1;

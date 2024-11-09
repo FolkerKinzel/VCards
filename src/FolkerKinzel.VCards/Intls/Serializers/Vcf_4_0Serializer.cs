@@ -57,7 +57,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
         {
             Debug.Assert(props is not null);
 
-            if (props.WhereNotNull().Take(2).Count() <= 1)
+            if (props.OfType<VCardProperty>().Take(2).Count() <= 1)
             {
                 return;
             }

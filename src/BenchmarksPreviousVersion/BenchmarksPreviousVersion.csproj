@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\BenchmarksCurrentVersion\ParseBench.cs" />
     <Compile Include="..\BenchmarksCurrentVersion\WriteBench.cs" />
     <Compile Include="..\BenchmarksCurrentVersion\VCardProvider.cs" />
   </ItemGroup>

@@ -122,7 +122,7 @@ public readonly struct TimeZoneBuilder
     public VCardBuilder Edit<TData>(
         Func<IEnumerable<TimeZoneProperty>, TData, IEnumerable<TimeZoneProperty?>?> func, TData data)
     {
-        var props = GetProperty();
+        IEnumerable<TimeZoneProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.TimeZones = func(props, data);
         return _builder;
@@ -143,7 +143,7 @@ public readonly struct TimeZoneBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<TimeZoneProperty>, IEnumerable<TimeZoneProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<TimeZoneProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.TimeZones = func(props);
         return _builder;
@@ -151,7 +151,7 @@ public readonly struct TimeZoneBuilder
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<TimeZoneProperty> GetProperty() =>
-        Builder.VCard.TimeZones?.WhereNotNull() ?? [];
+        Builder.VCard.TimeZones?.OfType<TimeZoneProperty>() ?? [];
 
     /// <summary>
     /// Adds a <see cref="TimeZoneProperty"/> instance, which is newly 

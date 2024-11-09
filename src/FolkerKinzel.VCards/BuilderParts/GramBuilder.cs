@@ -151,7 +151,7 @@ public readonly struct GramBuilder
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<GramProperty> GetProperty() =>
-        Builder.VCard.GramGenders?.WhereNotNull() ?? [];
+        Builder.VCard.GramGenders?.OfType<GramProperty>() ?? [];
 
     /// <summary>
     /// Adds a new <see cref="GramProperty"/> instance to the <see cref="VCard.GramGenders"/> property.

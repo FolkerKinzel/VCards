@@ -152,7 +152,7 @@ public readonly struct DataBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<DataProperty>, IEnumerable<DataProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<DataProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props));
         return _builder;
@@ -160,7 +160,7 @@ public readonly struct DataBuilder
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<DataProperty> GetProperty() =>
-        Builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop)?.WhereNotNull() ?? [];
+        Builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop)?.OfType<DataProperty>() ?? [];
 
     private void SetProperty(IEnumerable<DataProperty?>? value)
     {

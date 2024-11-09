@@ -137,7 +137,7 @@ public sealed class SyncOperation
             return;
         }
 
-        var resident = _vCard.AppIDs.FirstOrDefault(x => StringComparer.Ordinal.Equals(VCard.App, x.Value.GlobalID));
+        AppIDProperty? resident = _vCard.AppIDs.FirstOrDefault(x => StringComparer.Ordinal.Equals(VCard.App, x.Value.GlobalID));
 
         CurrentAppID = resident is null
             ? new AppID
@@ -150,7 +150,7 @@ public sealed class SyncOperation
 
     private void SetPropertyID(ParameterSection parameters, IEnumerable<VCardProperty?> props)
     {
-        var propIDs = parameters.PropertyIDs ?? [];
+        IEnumerable<PropertyID> propIDs = parameters.PropertyIDs ?? [];
         int? appLocalID = CurrentAppID?.LocalID;
 
         if (propIDs.Any(x => x.App == appLocalID))
@@ -158,7 +158,8 @@ public sealed class SyncOperation
             return;
         }
 
-        var id = props.WhereNotNull()
+        int id = props
+            .OfType<VCardProperty>()
             .Select(static x => x.Parameters.PropertyIDs)
             .SelectMany(static x => x ?? [])
             .Where(x => x.App == appLocalID)

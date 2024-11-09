@@ -162,7 +162,7 @@ public readonly struct RelationBuilder
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<RelationProperty> GetProperty() =>
-        Builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop)?.WhereNotNull() ?? [];
+        Builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop)?.OfType<RelationProperty>() ?? [];
 
     private void SetProperty(IEnumerable<RelationProperty?>? value)
     {

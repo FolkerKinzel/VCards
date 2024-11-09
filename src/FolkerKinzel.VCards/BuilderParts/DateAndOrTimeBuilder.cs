@@ -118,7 +118,7 @@ public readonly struct DateAndOrTimeBuilder
     public VCardBuilder Edit(
         Func<IEnumerable<DateAndOrTimeProperty>, IEnumerable<DateAndOrTimeProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<DateAndOrTimeProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props));
         return _builder;
@@ -126,7 +126,7 @@ public readonly struct DateAndOrTimeBuilder
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<DateAndOrTimeProperty> GetProperty() =>
-        Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop)?.WhereNotNull() ?? [];
+        Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop)?.OfType<DateAndOrTimeProperty>() ?? [];
 
     private void SetProperty(IEnumerable<DateAndOrTimeProperty?>? value)
     {

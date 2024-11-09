@@ -156,7 +156,7 @@ public readonly struct AddressBuilder
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<AddressProperty> GetProperty()
-        => Builder.VCard.Addresses?.WhereNotNull() ?? [];
+        => Builder.VCard.Addresses?.OfType<AddressProperty>() ?? [];
 
     #region Remove this code with version 8.0.0
 

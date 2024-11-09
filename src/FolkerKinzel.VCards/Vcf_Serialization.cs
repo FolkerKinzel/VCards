@@ -140,7 +140,7 @@ public static partial class Vcf
                                                            options,
                                                            tzConverter);
 
-        var list = vCards.WhereNotNull().ToList();
+        var list = vCards.OfType<VCard>().ToList();
 
         if (version < VCdVersion.V4_0)
         {

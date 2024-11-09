@@ -121,7 +121,7 @@ public readonly struct NameBuilder
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<NameProperty> GetProperty() =>
-        Builder.VCard.NameViews?.WhereNotNull() ?? [];
+        Builder.VCard.NameViews?.OfType<NameProperty>() ?? [];
 
     #region Remove this code with version 8.0.0
 

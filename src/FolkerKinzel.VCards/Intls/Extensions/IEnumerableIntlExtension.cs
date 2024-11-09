@@ -6,7 +6,7 @@ internal static class IEnumerableIntlExtension
 {
     public static IEnumerable<IGrouping<string?, VCardProperty>> GroupByVCardGroup(
         this IEnumerable<VCardProperty?> values)
-        => values.WhereNotNull()
+        => values.OfType<VCardProperty>()
                  .GroupBy(static x => x.Group, StringComparer.OrdinalIgnoreCase);
 
 #if NET462
@@ -42,7 +42,7 @@ internal static class IEnumerableIntlExtension
 
     internal static bool IsSingle([NotNullWhen(true)] this IEnumerable<VCardProperty?>? values, bool ignoreEmptyItems)
         => ignoreEmptyItems ? values?.WhereNotEmpty().Take(2).Count() == 1
-                            : values?.WhereNotNull().Take(2).Count() == 1;
+                            : values?.OfType<VCardProperty>().Take(2).Count() == 1;
 
     internal static IEnumerable<TSource> WhereNotNull<TSource>(this IEnumerable<TSource?> values)
         => values.Where(static x => x is not null)!;
