@@ -23,4 +23,7 @@ internal static class ReadOnlyCollectionConverter
                   : new ReadOnlyCollection<string>(coll.Where(x => !string.IsNullOrWhiteSpace(x))
                                                        .ToArray()!);
     }
+
+    internal static IReadOnlyList<string> ToReadOnlyList(IEnumerable<string?>? coll) 
+        => (coll?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() ?? [])!;
 }

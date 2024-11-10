@@ -61,6 +61,11 @@
 - [ ] Rename `NameBuilder.AddSuffix(string)` to `NameBuilder.AddCredential(string)`-->
 
 &nbsp;
+- [x] Rename `Organization.OrganizationName` to `OrgName`
+- [x] Rename `Organization.OrganizationalUnits` to `OrgUnits`
+- [x] Change `Organization.OrgUnits` to return `IReadOnlyList<string>`
+
+&nbsp;
 - [ ] `AddressProperty`: Allow only ctors that take an `AddressBuilder` as argument
 - [ ] Remove `AddressProperty.AttachLabel()`
 - [ ] Remove `AddressProperty.ToLabel()`

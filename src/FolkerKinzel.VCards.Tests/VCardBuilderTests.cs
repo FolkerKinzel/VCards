@@ -1269,7 +1269,7 @@ public class VCardBuilderTests
         builder.Organizations.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.Organizations = new OrgProperty("Contoso").Append(null);
+        builder.VCard.Organizations = new OrgProperty(new Organization("Contoso")).Append(null);
         builder.Organizations.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());

@@ -140,6 +140,8 @@ internal static class Utility
         source.Parameters.Context = " ";
         source.Parameters.Context = "VCARD";
 
+        var org = new Organization("The ÄÖÜ Organization", ["Department", "Office"]);
+
         var vc = new VCard
         {
             AppIDs = new AppIDProperty(pidMap),
@@ -191,7 +193,7 @@ internal static class Utility
             ],
 
             Relations = [rel1, rel2],
-            Organizations = new OrgProperty("The ÄÖÜ Organization", ["Department", "Office"]),
+            Organizations = new OrgProperty(org),
             NonStandards = nonStandard,
             Xmls = xml1,
         };

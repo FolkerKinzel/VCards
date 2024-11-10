@@ -1,4 +1,5 @@
 using System.Collections;
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
@@ -14,24 +15,22 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="Organization"/>
 public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
 {
+    [Obsolete("Use OrgProperty(Organization, string?) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public OrgProperty(string? orgName,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                       IEnumerable<string?>? orgUnits = null,
+                       string? group = null)
+        : base(new ParameterSection(), group) => throw new NotImplementedException();
+
     /// <summary>
     /// <summary>Copy ctor.</summary>
     /// </summary>
     /// <param name="prop">The <see cref="OrgProperty"/> instance to clone.</param>
     private OrgProperty(OrgProperty prop) : base(prop)
         => Value = prop.Value;
-
-    /// <summary> Initializes a new <see cref="OrgProperty" /> object.
-    /// </summary>
-    /// <param name="orgName">Organization name or <c>null</c>.</param>
-    /// <param name="orgUnits">Organization unit(s) or <c>null</c>.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public OrgProperty(string? orgName,
-                       IEnumerable<string?>? orgUnits = null,
-                       string? group = null)
-        : base(new ParameterSection(), group) => Value = new Organization(orgName, orgUnits);
 
     /// <summary>
     /// Initializes a new <see cref="OrgProperty" /> instance with an existing
@@ -43,7 +42,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
     /// which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <exception cref="ArgumentNullException"><paramref name="org"/> is <c>null</c>.</exception>
-    public OrgProperty(Organization org, string? group)
+    public OrgProperty(Organization org, string? group = null)
         : base(new ParameterSection(), group) => Value = org ?? throw new ArgumentNullException(nameof(org));
 
     internal OrgProperty(VcfRow vcfRow, VCdVersion version)
@@ -58,8 +57,19 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
                     TextEncodingConverter.GetEncoding(this.Parameters.CharSet)).AsMemory(); // null-check not needed
         }
 
-        Value = new Organization(new List<string>(
-            PropertyValueSplitter.Split(val, ';', StringSplitOptions.None, unMask: true, version)));
+        var orgList = new List<string>(
+            PropertyValueSplitter.Split(val, ';', StringSplitOptions.None, unMask: true, version));
+
+        if (orgList.Count == 0)
+        {
+            Value = new Organization(orgName: null);
+        }
+        else
+        {
+            string? orgName = orgList[0];
+            orgList.RemoveAt(0);
+            Value = new Organization(orgName, orgList);
+        }
     }
 
     /// <summary> The data provided by the  <see cref="OrgProperty" />. </summary>

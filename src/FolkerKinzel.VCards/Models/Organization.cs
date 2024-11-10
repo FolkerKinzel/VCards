@@ -13,38 +13,38 @@ namespace FolkerKinzel.VCards.Models;
 /// object the <see cref="VCard"/> represents.</summary>
 public sealed class Organization
 {
+    [Obsolete("Use OrgName instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public string? OrganizationName => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use OrganizationalUnits instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ReadOnlyCollection<string>? OrganizationalUnits => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
     /// <summary>Initializes a new <see cref="Organization" /> object.</summary>
     /// <param name="orgName">Organization name or <c>null</c>.</param>
     /// <param name="orgUnits">Organization unit(s) or <c>null</c>.</param>
     public Organization(string? orgName, IEnumerable<string?>? orgUnits = null)
     {
-        (string? orgNameParsed, ReadOnlyCollection<string>? orgUnitsParsed) = ParseProperties(orgName, orgUnits);
+        (string? orgNameParsed, IReadOnlyList<string>? orgUnitsParsed) = ParseProperties(orgName, orgUnits);
 
         OrgName = orgNameParsed;
         OrgUnits = orgUnitsParsed;
     }
 
-    internal Organization(List<string> orgList)
-    {
-        if (orgList.Count == 0)
-        {
-            return;
-        }
-
-        string orgName = orgList[0];
-        orgList.RemoveAt(0);
-
-        (string? orgNameParsed, ReadOnlyCollection<string>? orgUnitsParsed) = ParseProperties(orgName, orgList);
-
-        OrgName = orgNameParsed;
-        OrgUnits = orgUnitsParsed;
-    }
-
-    private static (string?, ReadOnlyCollection<string>?) ParseProperties(string? orgName,
-                                                                          IEnumerable<string?>? orgUnits)
+    private static (string?, IReadOnlyList<string>?) ParseProperties(string? orgName,
+                                                                     IEnumerable<string?>? orgUnits)
     {
         orgName = string.IsNullOrWhiteSpace(orgName) ? null : orgName;
-        var orgUnitsColl = ReadOnlyCollectionConverter.ToReadOnlyCollection(orgUnits);
+        IReadOnlyList<string>? orgUnitsColl = ReadOnlyCollectionConverter.ToReadOnlyList(orgUnits);
+
+        Debug.Assert(!object.ReferenceEquals(orgUnits, orgUnitsColl));
 
         if (orgUnitsColl.Count == 0)
         {
@@ -57,24 +57,8 @@ public sealed class Organization
     /// <summary>Organization name.</summary>
     public string? OrgName { get; }
 
-    [Obsolete("Use OrgName instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public string? OrganizationName => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-
     /// <summary>Organizational unit name(s).</summary>
-    public ReadOnlyCollection<string>? OrgUnits { get; }
-
-    [Obsolete("Use OrganizationalUnits instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public ReadOnlyCollection<string>? OrganizationalUnits => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
+    public IReadOnlyList<string>? OrgUnits { get; }
 
     /// <summary>Returns <c>true</c>, if the <see cref="Organization" /> object does
     /// not contain any usable data.</summary>

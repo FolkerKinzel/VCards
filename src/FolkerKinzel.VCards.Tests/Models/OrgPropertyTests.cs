@@ -17,12 +17,12 @@ public class OrgPropertyTests
     [DataRow(null, "ABC, Inc.", null)]
     public void OrganizationPropertyTest1(string? expectedGroup, string? expectedOrganizationName, string[] expectedOrganizationalUnits)
     {
-        var orgProp = new OrgProperty(expectedOrganizationName, expectedOrganizationalUnits, expectedGroup);
+        var orgProp = new OrgProperty(new Organization(expectedOrganizationName, expectedOrganizationalUnits), expectedGroup);
 
         Assert.IsNotNull(orgProp.Value);
         Assert.AreEqual(expectedGroup, orgProp.Group);
         Assert.AreEqual(expectedOrganizationName, orgProp.Value.OrgName);
-        CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.OrgUnits);
+        CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.OrgUnits?.ToArray());
     }
 
 
@@ -54,7 +54,7 @@ public class OrgPropertyTests
         Assert.IsNotNull(orgProp.Value);
         Assert.AreEqual(expectedGroup, orgProp.Group);
         Assert.AreEqual(expectedOrganizationName, orgProp.Value.OrgName);
-        CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.OrgUnits);
+        CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.OrgUnits?.ToArray());
     }
 
 
@@ -71,14 +71,14 @@ public class OrgPropertyTests
     [TestMethod]
     public void IEnumerableTest1()
     {
-        var prop = new OrgProperty("Contoso");
+        var prop = new OrgProperty(new Organization("Contoso"));
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 
     [TestMethod]
     public void ToStringTest1()
     {
-        var prop = new OrgProperty("Contoso", ["Marketing", "Internet"]);
+        var prop = new OrgProperty(new Organization("Contoso", ["Marketing", "Internet"]));
         string s = prop.ToString();
         Assert.IsNotNull(s);
     }

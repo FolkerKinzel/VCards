@@ -7,7 +7,7 @@ public class OrganizationTests
     [TestMethod]
     public void ToStringTest1()
     {
-        var org = new Organization(["  "]);
+        var org = new Organization(null, ["  "]);
         string s = org.ToString();
 
         Assert.IsTrue(org.IsEmpty);
@@ -25,15 +25,14 @@ public class OrganizationTests
     [DataRow("org", "unit", false)]
     public void NeedsToBeQpEncodedTest1(string org, string units, bool expected)
     {
-        var list = new List<string>() { org, units };
-        var organization = new Organization(list);
+        var organization = new Organization(org, [units]);
         Assert.AreEqual(expected, organization.NeedsToBeQpEncoded());
     }
 
     [TestMethod]
     public void CtorTest()
     {
-        var org = new Organization([]);
+        var org = new Organization(null);
         Assert.IsNotNull(org);
         Assert.IsTrue(org.IsEmpty);
     }

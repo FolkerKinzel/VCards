@@ -84,7 +84,7 @@ public class ParameterSectionTests
     {
         List<string?> list = ["", "  ", " Contoso ", null, "IT"];
 
-        var prop = new OrgProperty("Contoso", ["Computer", "Internet"]);
+        var prop = new OrgProperty(new Organization("Contoso", ["Computer", "Internet"]));
         prop.Parameters.SortAs = list!;
 
         IEnumerable<string> result = prop.Parameters.SortAs;
@@ -210,8 +210,10 @@ public class ParameterSectionTests
     [TestMethod]
     public void AuthorTest2()
     {
-        var p = new ParameterSection();
-        p.Author = new Uri("http://folker.de");
+        var p = new ParameterSection
+        {
+            Author = new Uri("http://folker.de")
+        };
         Assert.IsNotNull(p.Author);
         p.Author = null;
         Assert.IsNull(p.Author);
@@ -292,16 +294,22 @@ public class ParameterSectionTests
     [TestMethod]
     public void ComponentOrderTest1()
     {
-        var p = new ParameterSection();
-        p.ComponentOrder = "   ";
+        var p = new ParameterSection
+        {
+            ComponentOrder = "   "
+        };
+
         Assert.IsNull(p.ComponentOrder);
     }
 
     [TestMethod]
     public void JSContactPointerTest1()
     {
-        var p = new ParameterSection();
-        p.JSContactPointer = "   ";
+        var p = new ParameterSection
+        {
+            JSContactPointer = "   "
+        };
+
         Assert.IsNull(p.JSContactPointer);
     }
 }
