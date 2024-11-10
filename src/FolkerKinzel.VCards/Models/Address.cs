@@ -396,7 +396,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         foreach (KeyValuePair<AdrProp, string[]> kvp in _dic)
         {
             if (kvp.Key <= AdrProp.Country
-                && kvp.Value.Any(StringExtension.NeedsToBeQpEncoded))
+                && StringExtension.ContainsAnyThatNeedsQpEncoding(kvp.Value))
             {
                 return true;
             }
@@ -404,4 +404,6 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
         return false;
     }
+
+    
 }

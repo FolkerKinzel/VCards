@@ -317,7 +317,7 @@ repeat:
         foreach (KeyValuePair<NameProp, string[]> kvp in _dic)
         {
             if (kvp.Key <= NameProp.Suffixes
-                && kvp.Value.Any(StringExtension.NeedsToBeQpEncoded))
+                && StringExtension.ContainsAnyThatNeedsQpEncoding(kvp.Value))
             {
                 return true;
             }

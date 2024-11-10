@@ -28,4 +28,17 @@ internal static partial class StringExtension
 
         return false;
     }
+
+    internal static bool ContainsAnyThatNeedsQpEncoding(string[] strings)
+    {
+        foreach (string s in strings.AsSpan())
+        {
+            if (NeedsToBeQpEncoded(s))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
