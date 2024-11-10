@@ -1,4 +1,4 @@
-﻿using FolkerKinzel.VCards.Models.PropertyParts;
+﻿using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 

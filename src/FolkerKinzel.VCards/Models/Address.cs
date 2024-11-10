@@ -9,9 +9,19 @@ using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Formatters;
 using FolkerKinzel.VCards.Intls.Serializers;
+
+/* Unmerged change from project 'FolkerKinzel.VCards (netstandard2.0)'
+Before:
+using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
+After:
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
+using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
+*/
 using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates information about a postal delivery address.</summary>
 /// <remarks>
@@ -187,7 +197,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
         }//foreach
 
-        Street = newStreetHasData ? [] : Get(AdrProp.Street); 
+        Street = newStreetHasData ? [] : Get(AdrProp.Street);
         Extended = newExtendedHasData ? [] : Get(AdrProp.Extended);
 
         ////////////////////////////////////////////////
