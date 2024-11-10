@@ -43,7 +43,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
     /// which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <exception cref="ArgumentNullException"><paramref name="org"/> is <c>null</c>.</exception>
-    public OrgProperty(Organization org, string? group)
+    public OrgProperty(Organization org, string? group = null)
         : base(new ParameterSection(), group) => Value = org ?? throw new ArgumentNullException(nameof(org));
 
     internal OrgProperty(VcfRow vcfRow, VCdVersion version)
