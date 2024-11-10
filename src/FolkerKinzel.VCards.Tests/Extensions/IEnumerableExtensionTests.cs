@@ -62,9 +62,9 @@ public class IEnumerableExtensionTests
         VCard? vc2 = list[1];
 
         Assert.IsInstanceOfType(vc2, typeof(VCard));
-        Assert.IsNotNull(vc2?.ID);
+        Assert.IsNotNull(vc2?.ContactID);
 
-        Guid? o2 = vc2.ID.Value.Guid;
+        Guid? o2 = vc2.ContactID.Value.Guid;
 
         Assert.IsTrue(o2.HasValue);
         Assert.AreEqual(o1.Value, o2.Value);

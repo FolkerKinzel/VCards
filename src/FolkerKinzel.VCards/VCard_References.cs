@@ -12,7 +12,7 @@ public sealed partial class VCard
     /// <see cref = "VCard" /> objects passed as a collection as well as those which
     /// had been embedded in their <see cref="VCard.Relations"/> property. The previously 
     /// embedded <see cref="VCard"/> objects are now referenced by <see cref = "RelationProperty" /> 
-    /// objects that are initialized with the <see cref="ContactID"/> instance of the <see cref="VCard.ID"/>
+    /// objects that are initialized with the <see cref="Models.ContactID"/> instance of the <see cref="VCard.ContactID"/>
     /// property of these previously embedded <see cref="VCard"/>s.</summary>
     /// 
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
@@ -21,9 +21,9 @@ public sealed partial class VCard
     /// <returns> 
     /// A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/> 
     /// objects previously embedded in the <see cref="VCard.Relations"/> property are appended 
-    /// separately and referenced through their <see cref="VCard.ID"/> property. 
+    /// separately and referenced through their <see cref="VCard.ContactID"/> property. 
     /// (If the appended <see cref="VCard" /> objects did not already have a 
-    /// <see cref="VCard.ID" /> property, the method automatically assigns them 
+    /// <see cref="VCard.ContactID" /> property, the method automatically assigns them 
     /// a new one.)</returns>
     /// 
     /// <remarks>
@@ -77,7 +77,7 @@ public sealed partial class VCard
     /// had been embedded in their <see cref="VCard.Relations"/> or <see cref="VCard.Members"/> properties.
     /// The previously 
     /// embedded <see cref="VCard"/> objects are now referenced by <see cref = "RelationProperty" /> 
-    /// objects that are initialized with the <see cref="ContactID"/> instance of the <see cref="VCard.ID"/>
+    /// objects that are initialized with the <see cref="Models.ContactID"/> instance of the <see cref="VCard.ContactID"/>
     /// property of these previously embedded <see cref="VCard"/>s.
     /// </summary>
     /// <param name="vCards">A <see cref="List{T}"/> of <see cref="VCard"/> instances to process.</param>
@@ -126,12 +126,12 @@ public sealed partial class VCard
                 Debug.Assert(vcdProp.Value.VCard is not null);
 
                 VCard vc = vcdProp.Value.VCard;
-                ContactID? id = vc.ID?.Value;
+                ContactID? id = vc.ContactID?.Value;
 
                 if (id is null || id.IsEmpty)
                 {
-                    id = ContactID.Create();
-                    vc.ID = new ContactIDProperty(id);
+                    id = Models.ContactID.Create();
+                    vc.ContactID = new ContactIDProperty(id);
                 }
 
                 // Use reference comparison because several versions of a VCard with
@@ -159,14 +159,14 @@ public sealed partial class VCard
 
     /// <summary>
     /// Replaces the <see cref="RelationProperty"/> instances that refer external vCards with their 
-    /// <see cref="ContactID"/> values by <see cref="RelationProperty"/> instances that contain 
+    /// <see cref="Models.ContactID"/> values by <see cref="RelationProperty"/> instances that contain 
     /// these <see cref="VCard"/> instances directly, provided that <paramref name="vCards"/> 
     /// contains these <see cref="VCard"/> instances.</summary>
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
     /// may be empty or may contain <c>null</c> values.</param>
     /// <returns> 
     ///  A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
-    /// referenced by their <see cref="VCard.ID"/> property are embedded in 
+    /// referenced by their <see cref="VCard.ContactID"/> property are embedded in 
     /// <see cref ="RelationProperty"/> objects, provided that <paramref name="vCards"/>
     /// contains these <see cref="VCard"/> objects.
     /// </returns>
@@ -244,7 +244,7 @@ public sealed partial class VCard
             if (TryFindReferencedVCard(vCards, idProp.Value.ContactID, out VCard? referencedVCard))
             {
                 if (relations.Any(x => x?.Value.VCard is VCard vc
-                                       && vc.ID == referencedVCard.ID
+                                       && vc.ContactID == referencedVCard.ContactID
                                        && x.Parameters.RelationType == idProp.Parameters.RelationType))
                 {
                     continue;
@@ -264,7 +264,7 @@ public sealed partial class VCard
         {
             foreach (VCard vCard in vCards)
             {
-                if (vCard.ID?.Value == id)
+                if (vCard.ContactID?.Value == id)
                 {
                     referencedVCard = vCard;
                     return true;

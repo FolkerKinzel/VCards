@@ -38,7 +38,7 @@ public sealed class Relation
     /// <remarks>
     /// vCard&#160;2.1 and vCard&#160;3.0 can embed nested vCards if the flag <see cref="Rel.Agent"/> is 
     /// set in their <see cref="ParameterSection.RelationType"/> property. When serializing a vCard&#160;4.0, 
-    /// embedded <see cref="VCard"/>s will be automatically replaced by their <see cref="VCard.ID"/>
+    /// embedded <see cref="VCard"/>s will be automatically replaced by their <see cref="VCard.ContactID"/>
     /// references and appended as separate vCards to the VCF file.
     /// </remarks>
     /// 
@@ -78,7 +78,7 @@ public sealed class Relation
     /// </summary>
     /// <remarks>
     /// The <see cref="Models.ContactID"/> references another <see cref="VCard"/> with
-    /// its <see cref="VCard.ID"/> property.
+    /// its <see cref="VCard.ContactID"/> property.
     /// </remarks>
     public ContactID? ContactID => Object as ContactID;
 

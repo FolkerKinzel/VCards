@@ -11,7 +11,7 @@ namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Represents the vCard property <c>UID</c>, which stores a unique identifier
 /// for the vCard subject.</summary>
-/// <seealso cref="VCard.ID"/>
+/// <seealso cref="VCard.ContactID"/>
 /// <seealso cref="ContactID"/>
 /// <seealso cref="RelationProperty"/>
 public sealed class ContactIDProperty : VCardProperty

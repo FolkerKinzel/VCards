@@ -49,6 +49,17 @@ public sealed partial class VCard
         set => throw new NotImplementedException();
     }
 
+    [Obsolete("Use ContactID instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ContactIDProperty? ID
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
+
     #endregion
 
     private readonly Dictionary<Prop, object> _propDic = [];
@@ -271,6 +282,17 @@ public sealed partial class VCard
         set => Set(Prop.Created, value);
     }
 
+    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
+    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
+    /// </summary>
+    /// <value>Although the standard allows any strings for identification, the library
+    /// only supports UUIDs.</value>
+    public ContactIDProperty? ContactID
+    {
+        get => Get<ContactIDProperty?>(Prop.ContactID);
+        set => Set(Prop.ContactID, value);
+    }
+
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
@@ -395,17 +417,6 @@ public sealed partial class VCard
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.Hobbies);
         set => Set(Prop.Hobbies, value);
-    }
-
-    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
-    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>Although the standard allows any strings for identification, the library
-    /// only supports UUIDs.</value>
-    public ContactIDProperty? ID
-    {
-        get => Get<ContactIDProperty?>(Prop.ID);
-        set => Set(Prop.ID, value);
     }
 
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
@@ -855,7 +866,7 @@ public sealed partial class VCard
     /// </summary>
     /// <remarks>
     /// RFC 6350 allows only URIs as value for <c>MEMBER</c>. Values that can't be preserved as URI will be saved in 
-    /// <see cref="VCard"/>s and the <see cref="VCard.ID"/> Guids of these <see cref="VCard"/> instances will be 
+    /// <see cref="VCard"/>s and the <see cref="VCard.ContactID"/> Guids of these <see cref="VCard"/> instances will be 
     /// the content of <c>MEMBER</c> after <see cref="VCard.ReferenceIntl(List{VCard})"/>.
     /// </remarks>
     internal void NormalizeMembers()
@@ -878,7 +889,7 @@ public sealed partial class VCard
                 Debug.Assert(!prop.IsEmpty);
 
                 RelationProperty relProp = Uri.TryCreate(text.Trim(), UriKind.Absolute, out Uri? uri)
-                    ? new RelationProperty(Relation.Create(ContactID.Create(uri)),  prop.Group)
+                    ? new RelationProperty(Relation.Create(Models.ContactID.Create(uri)),  prop.Group)
                     : new RelationProperty(Relation.Create(new VCard(setContactID: true, setCreated: false) 
                                                           { 
                                                             DisplayNames = new TextProperty(text) 

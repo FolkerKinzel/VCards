@@ -15,16 +15,16 @@ public static class IEnumerableExtension
     /// <see cref = "VCard" /> objects passed as a collection as well as those which
     /// had been embedded in their <see cref="VCard.Relations"/> property. The previously 
     /// embedded <see cref="VCard"/> objects are now referenced by <see cref = "RelationProperty" /> 
-    /// objects that are initialized with the value of the <see cref="VCard.ID"/>
+    /// objects that are initialized with the value of the <see cref="VCard.ContactID"/>
     /// property of these previously embedded <see cref="VCard"/>s.
     /// </summary>
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
     /// may be empty or may contain <c>null</c> values.</param>
     /// <returns> A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/> 
     /// objects previously embedded in the <see cref="VCard.Relations"/> property are appended 
-    /// separately and referenced through their <see cref="VCard.ID"/> property. 
+    /// separately and referenced through their <see cref="VCard.ContactID"/> property. 
     /// (If the appended <see cref="VCard" /> objects did not already have a 
-    /// <see cref="VCard.ID" /> property, the method automatically assigns them 
+    /// <see cref="VCard.ContactID" /> property, the method automatically assigns them 
     /// a new one.)
     /// </returns>
     /// 

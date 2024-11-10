@@ -100,8 +100,9 @@ and let it store as string[]
 <!--- [ ] Rename the `Opts.UpdateTimeStamp` value in the `VCard` ctor to `Opts.UpdateUpdated`-->
 
 &nbsp;
-- [ ] Rename `VCard.ID` to `VCard.ContactID`
-- [ ] Rename the `Prop.ID` value to `Prop.ContactID`
+- [x] Rename `VCard.ID` to `VCard.ContactID`
+- [x] Rename `VCardBuilder.ID` to `VCardBuilder.ContactID`
+- [x] Rename the `Prop.ID` value to `Prop.ContactID`
 - [x] Rename the `setID` parameter in the VCard ctor to `setContactID`
 - [x] Rename the `setID` parameter in the `VCardBuilder.Create` method to `setContactID`
 - [x] Rename `IDBuilder` to `ContactIDBuilder`

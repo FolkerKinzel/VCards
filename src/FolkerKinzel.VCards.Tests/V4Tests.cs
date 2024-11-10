@@ -198,7 +198,7 @@ public class V4Tests
         {
             Members = new RelationProperty(Relation.Create(VCardBuilder.Create(setContactID: false)
                                                               .DisplayNames.Add("Important Member")
-                                                              .ID.Set(Guid.Empty)
+                                                              .ContactID.Set(Guid.Empty)
                                                               .VCard)),
         };
 
@@ -209,7 +209,7 @@ public class V4Tests
         Assert.AreEqual(2, list.Count);
         vc = list[1];
 
-        Assert.AreNotEqual(Guid.Empty, vc.ID?.Value.Guid);
+        Assert.AreNotEqual(Guid.Empty, vc.ContactID?.Value.Guid);
     }
 
     [TestMethod]
@@ -221,14 +221,14 @@ public class V4Tests
         };
 
         Assert.IsNotNull(vc.Members);
-        Assert.IsNull(vc.Members!.First()?.Value?.VCard?.ID);
+        Assert.IsNull(vc.Members!.First()?.Value?.VCard?.ContactID);
 
         IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
         Assert.AreEqual(2, list.Count);
         vc = list[1];
 
-        Assert.IsNotNull(vc.ID);
+        Assert.IsNotNull(vc.ContactID);
     }
 
     [TestMethod]
@@ -239,7 +239,7 @@ public class V4Tests
         {
             Members = new RelationProperty(Relation.Create(VCardBuilder.Create(setContactID: false)
                                                               .DisplayNames.Add("Important Member")
-                                                              .ID.Set(guid)
+                                                              .ContactID.Set(guid)
                                                               .VCard))
                       .Concat(new RelationProperty(Relation.Create(ContactID.Create(guid)))),
         };
@@ -489,7 +489,7 @@ public class V4Tests
 
         VCardBuilder
             .Create(vc)
-            .Relations.Add(vc.ID!.Value)
+            .Relations.Add(vc.ContactID!.Value)
             .Relations.Add(vc);
 
         vc.Dereference();

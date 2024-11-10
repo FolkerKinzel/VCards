@@ -37,6 +37,13 @@ public sealed class VCardBuilder
     public TimeStampBuilder TimeStamp => throw new NotImplementedException();
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
+    [Obsolete("Use ContactID instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ContactIDBuilder ID => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
     #endregion
 
     private VCardBuilder(VCard vCard) => VCard = vCard;
@@ -45,7 +52,7 @@ public sealed class VCardBuilder
     /// Returns a <see cref="VCardBuilder"/> that creates a new <see cref="VCard"/>
     /// object.
     /// </summary>
-    /// <param name="setContactID"><c>true</c> to set the <see cref="VCard.ID"/> property
+    /// <param name="setContactID"><c>true</c> to set the <see cref="VCard.ContactID"/> property
     /// of the newly created <see cref="VCard"/> object automatically with a newly created 
     /// <see cref="ContactIDProperty"/> instance, otherwise <c>false</c>.</param>
     /// <param name="setCreated">
@@ -179,6 +186,15 @@ public sealed class VCardBuilder
     /// </remarks>
     public TimeStampBuilder Created => new(this, Prop.Created);
 
+    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
+    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
+    /// </summary>
+    /// <value>Although the standard allows any strings for identification, the library
+    /// only supports UUIDs.</value>
+    /// <remarks>As a default setting each newly created <see cref="VCard"/> gets an <see cref="ContactID"/>
+    /// automatically.</remarks>
+    public ContactIDBuilder ContactID => new(this);
+
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,
@@ -276,15 +292,6 @@ public sealed class VCardBuilder
     /// <remarks> Define the level of interest with the parameter 
     /// <see cref="ParameterSection.Interest" />.</remarks>
     public TextBuilder Hobbies => new(this, Prop.Hobbies);
-
-    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
-    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>Although the standard allows any strings for identification, the library
-    /// only supports UUIDs.</value>
-    /// <remarks>As a default setting each newly created <see cref="VCard"/> gets an <see cref="ID"/>
-    /// automatically.</remarks>
-    public ContactIDBuilder ID => new(this);
 
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
     /// in, but does not necessarily take part in. <c>(4 - RFC&#160;6715)</c></summary>

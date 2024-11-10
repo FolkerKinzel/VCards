@@ -173,11 +173,11 @@ public readonly struct RelationBuilder
     /// <summary>
     /// Adds a <see cref="RelationProperty"/> instance, which is newly initialized using a 
     /// <see cref="Guid"/> that refers to the vCard of the person or organization via its 
-    /// <see cref="VCard.ID"/> property (<c>UID</c>), to the specified property of the 
+    /// <see cref="VCard.ContactID"/> property (<c>UID</c>), to the specified property of the 
     /// <see cref="VCardBuilder.VCard"/>.
     /// </summary>
     /// <param name="uuid">A <see cref="Guid"/> that refers to the vCard of the person
-    /// or organization via its <see cref="VCard.ID"/> property (<c>UID</c>).</param>
+    /// or organization via its <see cref="VCard.ContactID"/> property (<c>UID</c>).</param>
     /// <param name="relationType">Standardized description of the relationship with the
     /// person or organization to whose vCard the <paramref name="uuid"/> refers. 
     /// The <see cref="ParameterSection.RelationType"/> property of the added instance will be
@@ -287,7 +287,7 @@ public readonly struct RelationBuilder
     /// <remarks>
     /// vCard&#160;2.1 and vCard&#160;3.0 can embed nested vCards if the flag <see cref="Rel.Agent"/> is 
     /// set in their <see cref="ParameterSection.RelationType"/> property. When serializing a vCard&#160;4.0, 
-    /// embedded <see cref="VCard"/>s will be automatically replaced by their <see cref="VCards.VCard.ID"/>
+    /// embedded <see cref="VCard"/>s will be automatically replaced by their <see cref="VCards.VCard.ContactID"/>
     /// references and appended as separate vCards to the VCF file.
     /// </remarks>
     /// 

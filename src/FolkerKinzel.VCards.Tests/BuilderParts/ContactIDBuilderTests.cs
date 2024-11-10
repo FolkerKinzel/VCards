@@ -11,7 +11,7 @@ public class ContactIDBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().ID.Edit(null!);
+    public void EditTest2() => VCardBuilder.Create().ContactID.Edit(null!);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
@@ -19,17 +19,17 @@ public class ContactIDBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().ID.Edit(null!, true);
+    public void EditTest4() => VCardBuilder.Create().ContactID.Edit(null!, true);
 
     [TestMethod]
     public void EditTest5()
     {
         VCard vc = VCardBuilder
             .Create(setContactID: false)
-            .ID.Edit((p, d) => new Models.ContactIDProperty(d), ContactID.Create())
+            .ContactID.Edit((p, d) => new Models.ContactIDProperty(d), ContactID.Create())
             .VCard;
 
-        Assert.IsNotNull(vc.ID);
+        Assert.IsNotNull(vc.ContactID);
     }
 
     [TestMethod]

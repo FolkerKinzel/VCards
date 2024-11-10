@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards;
 public sealed partial class VCard
 {
     /// <summary>Initializes a new <see cref="VCard" /> object.</summary>
-    /// <param name="setContactID"><c>true</c> to set the <see cref="VCard.ID"/>
+    /// <param name="setContactID"><c>true</c> to set the <see cref="VCard.ContactID"/>
     /// property with a newly created <see cref="ContactIDProperty"/> instance, otherwise
     /// <c>false</c>.</param>
     /// <param name="setCreated">
@@ -26,7 +26,7 @@ public sealed partial class VCard
     {
         if (setContactID)
         {
-            ID = new ContactIDProperty(ContactID.Create());
+            ContactID = new ContactIDProperty(Models.ContactID.Create());
         }
 
         if (setCreated)
@@ -170,7 +170,7 @@ public sealed partial class VCard
                     ContactUris = Concat(ContactUris, new TextProperty(vcfRow, Version));
                     break;
                 case PropKeys.UID:
-                    ID = new ContactIDProperty(vcfRow, Version);
+                    ContactID = new ContactIDProperty(vcfRow, Version);
                     break;
                 case PropKeys.ORG:
                     Organizations = Concat(Organizations, new OrgProperty(vcfRow, this.Version));

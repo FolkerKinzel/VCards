@@ -24,7 +24,7 @@ public enum Prop
 
     /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
     /// unique identifier, associated with the object. <c>(2,3,4)</c></summary>
-    ID,
+    ContactID,
 
     /// <summary> <c>CATEGORIES</c>: Lists of "tags" that can be used to describe the
     /// object represented by this vCard. <c>(3,4)</c></summary>

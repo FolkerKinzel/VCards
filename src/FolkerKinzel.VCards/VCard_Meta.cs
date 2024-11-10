@@ -37,7 +37,7 @@ public sealed partial class VCard
             return prop switch
             {
                 Prop.Created 
-                    or Prop.ID
+                    or Prop.ContactID
                     or Prop.Updated
                     or Prop.AppIDs
                     or Prop.Kind

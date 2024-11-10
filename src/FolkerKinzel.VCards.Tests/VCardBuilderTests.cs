@@ -18,7 +18,7 @@ public class VCardBuilderTests
         VCard vc = builder.VCard;
         Assert.IsNotNull(vc);
         Assert.IsInstanceOfType(vc, typeof(VCard));
-        Assert.IsNotNull(vc.ID);
+        Assert.IsNotNull(vc.ContactID);
     }
 
     [TestMethod()]
@@ -30,7 +30,7 @@ public class VCardBuilderTests
         VCard vc = builder.VCard;
         Assert.IsNotNull(vc);
         Assert.IsInstanceOfType(vc, typeof(VCard));
-        Assert.IsNull(vc.ID);
+        Assert.IsNull(vc.ContactID);
     }
 
     [TestMethod()]
@@ -751,16 +751,16 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .ID.Set(Guid.NewGuid())
+            .ContactID.Set(Guid.NewGuid())
             .VCard;
 
-        Assert.IsNotNull(vc.ID);
+        Assert.IsNotNull(vc.ContactID);
 
         VCardBuilder
             .Create(vc)
-            .ID.Clear();
+            .ContactID.Clear();
 
-        Assert.IsNull(vc.ID);
+        Assert.IsNull(vc.ContactID);
     }
 
     [TestMethod()]
@@ -771,15 +771,15 @@ public class VCardBuilderTests
 
         VCard vc = VCardBuilder
             .Create()
-            .ID.Set(Guid.NewGuid(),
+            .ContactID.Set(Guid.NewGuid(),
                     parameters: p => p.NonStandard = [new KeyValuePair<string, string>(key, val)],
                     group: vc => "g")
             .VCard;
 
-        Assert.IsNotNull(vc.ID);
-        Assert.AreEqual("g", vc.ID.Group);
+        Assert.IsNotNull(vc.ContactID);
+        Assert.AreEqual("g", vc.ContactID.Group);
 
-        KeyValuePair<string, string> para = vc.ID.Parameters.NonStandard!.First();
+        KeyValuePair<string, string> para = vc.ContactID.Parameters.NonStandard!.First();
         Assert.AreEqual(key, para.Key);
         Assert.AreEqual(val, para.Value);
     }
@@ -789,16 +789,16 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .ID.Set()
+            .ContactID.Set()
             .VCard;
 
-        Assert.IsNotNull(vc.ID);
+        Assert.IsNotNull(vc.ContactID);
 
         VCardBuilder
             .Create(vc)
-            .ID.Clear();
+            .ContactID.Clear();
 
-        Assert.IsNull(vc.ID);
+        Assert.IsNull(vc.ContactID);
     }
 
     [TestMethod()]
@@ -809,15 +809,15 @@ public class VCardBuilderTests
 
         VCard vc = VCardBuilder
             .Create()
-            .ID.Set(
+            .ContactID.Set(
                     parameters: p => p.NonStandard = [new KeyValuePair<string, string>(key, val)],
                     group: vc => "g")
             .VCard;
 
-        Assert.IsNotNull(vc.ID);
-        Assert.AreEqual("g", vc.ID.Group);
+        Assert.IsNotNull(vc.ContactID);
+        Assert.AreEqual("g", vc.ContactID.Group);
 
-        KeyValuePair<string, string> para = vc.ID.Parameters.NonStandard!.First();
+        KeyValuePair<string, string> para = vc.ContactID.Parameters.NonStandard!.First();
         Assert.AreEqual(key, para.Key);
         Assert.AreEqual(val, para.Value);
     }
@@ -827,14 +827,14 @@ public class VCardBuilderTests
     {
         var builder = VCardBuilder.Create(setContactID: false);
         var prop = new ContactIDProperty(ContactID.Create());
-        builder.ID.Edit(p => prop = p);
+        builder.ContactID.Edit(p => prop = p);
         Assert.IsNull(prop);
-        builder.ID.Set()
-               .ID.Edit(p => prop = p);
+        builder.ContactID.Set()
+               .ContactID.Edit(p => prop = p);
         Assert.IsNotNull(prop);
 
-        builder.ID.Edit(x => null);
-        Assert.IsNull(builder.VCard.ID);
+        builder.ContactID.Edit(x => null);
+        Assert.IsNull(builder.VCard.ContactID);
     }
 
 
