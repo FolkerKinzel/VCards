@@ -92,8 +92,6 @@ public static class VCardExample
                              }
                            )
                 .Phones.SetIndexes()
-                // Applying a group name to the AddressProperty helps to automatically preserve its Label,
-                // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
                 .Addresses.Add(AddressBuilder
                     .Create()
                     .AddStreetName("Friedrichstraße")
@@ -109,6 +107,8 @@ public static class VCardExample
                          p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
                          p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
                      },
+                     // Applying a group name to the AddressProperty helps to automatically preserve its Label,
+                     // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
                      group: vc => vc.NewGroup()
                               )
                 // Specifying the country or the ParameterSection.CountryCode property helps to format automatically
