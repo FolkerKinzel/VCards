@@ -111,7 +111,7 @@ public class NameBuilderTests
             .DisplayNames.Add("Sven")
             .DisplayNames.Edit(props => props.Append(null))
             .NameViews.Add(NameBuilder.Create().AddGiven("Ulf").Build())
-            .NameViews.Add(null,                                                p => { p.Language = "de-DE"; p.Preference = 1; }, v => "1")
+            .NameViews.Add((Name?)null,                                     p => { p.Language = "de-DE"; p.Preference = 1; }, v => "1")
             .NameViews.Add(NameBuilder.Create().AddGiven("Detlef").Build(), p => { p.Language = "de-DE"; p.Preference = 3; }, v => "3")
             .NameViews.Add(NameBuilder.Create().AddGiven("Folker").Build(), p => { p.Language = "de-DE"; p.Preference = 2; }, v => "2")
             .NameViews.Add(NameBuilder.Create().AddGiven("Susi").Build(),   p => { p.Language = "en-US"; p.Preference = 4; }, v => "4")

@@ -77,12 +77,12 @@
 
 
 &nbsp;
-- [ ] Change the properties of the `Address` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
-- [ ] Let `Address` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [x] Change the properties of the `Address` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
+- [x] Let `Address` internally store `string[]` rather than `ReadOnlyCollection<string>`
 - [x] Remove Address.ToLabel()
 
-- [ ] Rename `Address.ExtendedAddress` to `Address.Extended`
-- [ ] Rename `AddressBuilder.AddExtendedAddress` to `AddressBuilder.AddExtended`
+- [x] Rename `Address.ExtendedAddress` to `Address.Extended`
+- [x] Rename `AddressBuilder.AddExtendedAddress` to `AddressBuilder.AddExtended`
 
 &nbsp;
 - [ ] Change the `StringCollection.Value` property to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`

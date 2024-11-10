@@ -100,7 +100,7 @@ public class AddressLabelFormatterTests
             .AddLocality(city)
             .AddStreet(street)
             .AddRegion(state)
-            .AddExtendedAddress(extended)
+            .AddExtended(extended)
             );
 
         address.Parameters.Label = AddressFormatter.Default.ToLabel(address);
@@ -131,7 +131,7 @@ public class AddressLabelFormatterTests
             .AddLocality(city)
             .AddStreet(street)
             .AddRegion(state)
-            .AddExtendedAddress(extended)
+            .AddExtended(extended)
             );
 
         address.Parameters.Label = AddressFormatter.Default.ToLabel(address);
@@ -225,7 +225,7 @@ public class AddressLabelFormatterTests
             .AddLocality(city)
             .AddStreet(street)
             .AddRegion(state)
-            .AddExtendedAddress(extended)
+            .AddExtended(extended)
             );
 
         prop.Parameters.Label = AddressFormatter.Default.ToLabel(prop);

@@ -39,7 +39,8 @@ internal static class Utility
             .AddStreetNumber("13")
             .AddLocality("Entenhausen")
             .AddPostalCode("01234")
-            .AddCountry("Germany"));
+            .AddCountry("Germany")
+            .Build());
         adr1.Parameters.Label = "  ";
         adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
         adr1.Parameters.GeoPosition = new GeoCoordinate(12.98, 7.86);
@@ -62,7 +63,8 @@ internal static class Utility
             .AddStreetNumber("13")
             .AddLocality("New York")
             .AddPostalCode("01234")
-            .AddCountry("USA"));
+            .AddCountry("USA")
+            .Build());
 
         var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
         //logo1.Parameters.MediaType = "image/jpeg";

@@ -34,7 +34,7 @@ public class NameBuilderTests
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddSurname("1").AddSurname("2").Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Surnames);
+        CollectionAssert.AreEqual(expected, prop.Value.Surnames.ToArray());
     }
 
     [TestMethod()]
@@ -43,7 +43,7 @@ public class NameBuilderTests
         string[] expected = ["1", "2"];
         var prop = new NameProperty(NameBuilder.Create().AddSurname(expected).Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Surnames);
+        CollectionAssert.AreEqual(expected, prop.Value.Surnames.ToArray());
     }
 
     [TestMethod()]

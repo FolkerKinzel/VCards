@@ -17,6 +17,24 @@ namespace FolkerKinzel.VCards;
 /// </remarks>
 public sealed class AddressBuilder
 {
+    #region Remove with version 8.0.1
+
+    [Obsolete("Use AddExtended instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public AddressBuilder AddExtendedAddress(string? value) => Add(AdrProp.Extended, value);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use AddExtended instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public AddressBuilder AddExtendedAddress(IEnumerable<string?> collection) => AddRange(AdrProp.Extended, collection);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    #endregion
+
     private readonly Dictionary<AdrProp, List<string>> _dic = [];
 
     /// <summary>
@@ -59,7 +77,7 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <seealso cref="Address.Extended"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public AddressBuilder AddExtendedAddress(string? value) => Add(AdrProp.Extended, value);
+    public AddressBuilder AddExtended(string? value) => Add(AdrProp.Extended, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
     /// <see cref="Address.Extended"/> (e.g., apartment or suite number). (2,3,4)</summary>
@@ -68,7 +86,7 @@ public sealed class AddressBuilder
     /// <seealso cref="Address.Extended"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public AddressBuilder AddExtendedAddress(IEnumerable<string?> collection) => AddRange(AdrProp.Extended, collection);
+    public AddressBuilder AddExtended(IEnumerable<string?> collection) => AddRange(AdrProp.Extended, collection);
 
     /// <summary>Adds a <see cref="string"/> to <see cref="Address.Street"/>. (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
@@ -153,7 +171,7 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddExtendedAddress(string?)"/> to make a copy of <paramref name="value"/> in <see cref="Address.Extended"/>
+    /// Use <see cref="AddExtended(string?)"/> to make a copy of <paramref name="value"/> in <see cref="Address.Extended"/>
     /// for backwards compatibility.
     /// </note>
     /// </remarks>
@@ -168,7 +186,7 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddExtendedAddress(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
+    /// Use <see cref="AddExtended(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
     /// in <see cref="Address.Extended"/> for backwards compatibility.
     /// </note>
     /// </remarks>
@@ -184,7 +202,7 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddExtendedAddress(string?)"/> to make a copy of <paramref name="value"/> in 
+    /// Use <see cref="AddExtended(string?)"/> to make a copy of <paramref name="value"/> in 
     /// <see cref="Address.Extended"/> for backwards compatibility.
     /// </note>
     /// </remarks>
@@ -200,7 +218,7 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddExtendedAddress(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
+    /// Use <see cref="AddExtended(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
     /// in <see cref="Address.Extended"/> for backwards compatibility.
     /// </note>
     /// </remarks>
@@ -217,7 +235,7 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddExtendedAddress(string?)"/> to make a copy of <paramref name="value"/> in 
+    /// Use <see cref="AddExtended(string?)"/> to make a copy of <paramref name="value"/> in 
     /// <see cref="Address.Extended"/> for backwards compatibility.
     /// </note>
     /// </remarks>
@@ -232,7 +250,7 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddExtendedAddress(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
+    /// Use <see cref="AddExtended(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
     /// in <see cref="Address.Extended"/> for backwards compatibility.
     /// </note>
     /// </remarks>
@@ -314,7 +332,7 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddExtendedAddress(string?)"/> to make a copy of <paramref name="value"/> in 
+    /// Use <see cref="AddExtended(string?)"/> to make a copy of <paramref name="value"/> in 
     /// <see cref="Address.Extended"/> for backwards compatibility.
     /// </note>
     /// </remarks>
@@ -330,7 +348,7 @@ public sealed class AddressBuilder
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
     /// <remarks>
     /// <note type="tip">
-    /// Use <see cref="AddExtendedAddress(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
+    /// Use <see cref="AddExtended(IEnumerable{string?})"/> to make a copy of <paramref name="collection"/> 
     /// in <see cref="Address.Extended"/> for backwards compatibility.
     /// </note>
     /// </remarks>
