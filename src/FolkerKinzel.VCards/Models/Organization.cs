@@ -34,8 +34,8 @@ public sealed class Organization
     {
         (string? orgNameParsed, IReadOnlyList<string>? orgUnitsParsed) = ParseProperties(orgName, orgUnits);
 
-        OrgName = orgNameParsed;
-        OrgUnits = orgUnitsParsed;
+        Name = orgNameParsed;
+        Units = orgUnitsParsed;
     }
 
     private static (string?, IReadOnlyList<string>?) ParseProperties(string? orgName,
@@ -48,35 +48,35 @@ public sealed class Organization
     }
 
     /// <summary>Organization name.</summary>
-    public string? OrgName { get; }
+    public string? Name { get; }
 
     /// <summary>Organizational unit name(s).</summary>
-    public IReadOnlyList<string>? OrgUnits { get; }
+    public IReadOnlyList<string>? Units { get; }
 
     /// <summary>Returns <c>true</c>, if the <see cref="Organization" /> object does
     /// not contain any usable data.</summary>
-    public bool IsEmpty => OrgName is null && OrgUnits is null;
+    public bool IsEmpty => Name is null && Units is null;
 
     internal bool NeedsToBeQpEncoded()
-        => OrgName.NeedsToBeQpEncoded() ||
-           (OrgUnits?.Any(s => s.NeedsToBeQpEncoded()) ?? false);
+        => Name.NeedsToBeQpEncoded() ||
+           (Units?.Any(s => s.NeedsToBeQpEncoded()) ?? false);
 
     /// <inheritdoc/>
     public override string ToString()
     {
         var sb = new StringBuilder();
 
-        string orgName = OrgName is null ? "" : nameof(OrgName);
-        string orgUnit = OrgUnits is null ? "" : nameof(OrgUnits);
+        string orgName = Name is null ? "" : nameof(Name);
+        string orgUnit = Units is null ? "" : nameof(Units);
 
         int padLength = Math.Max(orgName.Length, orgUnit.Length) + 2;
 
-        if (OrgName is not null)
+        if (Name is not null)
         {
-            _ = sb.Append($"{orgName}: ".PadRight(padLength)).Append(OrgName);
+            _ = sb.Append($"{orgName}: ".PadRight(padLength)).Append(Name);
         }
 
-        if (OrgUnits is not null)
+        if (Units is not null)
         {
             if (sb.Length != 0)
             {
@@ -85,12 +85,12 @@ public sealed class Organization
 
             _ = sb.Append($"{orgUnit}: ".PadRight(padLength));
 
-            for (int i = 0; i < OrgUnits.Count - 1; i++)
+            for (int i = 0; i < Units.Count - 1; i++)
             {
-                _ = sb.Append(OrgUnits[i]).Append("; ");
+                _ = sb.Append(Units[i]).Append("; ");
             }
 
-            _ = sb.Append(OrgUnits[OrgUnits.Count - 1]);
+            _ = sb.Append(Units[Units.Count - 1]);
         }
 
         return sb.ToString();
@@ -101,13 +101,13 @@ public sealed class Organization
         StringBuilder builder = serializer.Builder;
         int startIdx = builder.Length;
 
-        _ = builder.AppendValueMasked(OrgName, serializer.Version);
+        _ = builder.AppendValueMasked(Name, serializer.Version);
 
-        if (OrgUnits is not null)
+        if (Units is not null)
         {
-            for (int i = 0; i < OrgUnits.Count; i++)
+            for (int i = 0; i < Units.Count; i++)
             {
-                _ = builder.Append(';').AppendValueMasked(OrgUnits[i], serializer.Version);
+                _ = builder.Append(';').AppendValueMasked(Units[i], serializer.Version);
             }
         }
 

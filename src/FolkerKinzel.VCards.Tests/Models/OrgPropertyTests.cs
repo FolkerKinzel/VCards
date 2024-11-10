@@ -21,8 +21,8 @@ public class OrgPropertyTests
 
         Assert.IsNotNull(orgProp.Value);
         Assert.AreEqual(expectedGroup, orgProp.Group);
-        Assert.AreEqual(expectedOrganizationName, orgProp.Value.OrgName);
-        CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.OrgUnits?.ToArray());
+        Assert.AreEqual(expectedOrganizationName, orgProp.Value.Name);
+        CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.Units?.ToArray());
     }
 
 
@@ -53,8 +53,8 @@ public class OrgPropertyTests
 
         Assert.IsNotNull(orgProp.Value);
         Assert.AreEqual(expectedGroup, orgProp.Group);
-        Assert.AreEqual(expectedOrganizationName, orgProp.Value.OrgName);
-        CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.OrgUnits?.ToArray());
+        Assert.AreEqual(expectedOrganizationName, orgProp.Value.Name);
+        CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.Units?.ToArray());
     }
 
 

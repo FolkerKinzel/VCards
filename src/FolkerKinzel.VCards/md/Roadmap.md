@@ -61,8 +61,8 @@
 - [ ] Rename `NameBuilder.AddSuffix(string)` to `NameBuilder.AddCredential(string)`-->
 
 &nbsp;
-- [x] Rename `Organization.OrganizationName` to `OrgName`
-- [x] Rename `Organization.OrganizationalUnits` to `OrgUnits`
+- [x] Rename `Organization.OrganizationName` to `Name`
+- [x] Rename `Organization.OrganizationalUnits` to `Units`
 - [x] Change `Organization.OrgUnits` to return `IReadOnlyList<string>`
 
 &nbsp;
