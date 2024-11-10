@@ -30,7 +30,8 @@ internal static class VCardProvider
     {
         return VCardBuilder
             .Create()
-            .NameViews.Add("Mustermann", "Jürgen", displayName: (dn, name) => dn.Add("Jürgen Mustermann"))
+            .NameViews.Add(NameBuilder.Create().AddFamilyName( "Mustermann").AddGivenName( "Jürgen"))
+            .DisplayNames.Add("Jürgen Mustermann")
             .EMails.Add("juergen@home.de", parameters: p => p.PropertyClass = PCl.Home)
             .EMails.Add("juergen@work.com", parameters: p => p.PropertyClass = PCl.Work)
             .EMails.SetPreferences()

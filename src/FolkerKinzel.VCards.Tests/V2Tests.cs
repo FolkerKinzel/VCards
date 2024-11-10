@@ -202,7 +202,10 @@ public class V2Tests
     [TestMethod]
     public void SpouseTest1()
     {
-        var relProp = new RelationProperty(Relation.Create(new VCard { NameViews = new NameProperty("wife", "best") }));
+        var relProp = new RelationProperty(
+            Relation.Create(new VCard { NameViews = new NameProperty(NameBuilder.Create()
+                                                                                .AddFamilyName("wife")
+                                                                                .AddGivenName("best")) }));
         relProp.Parameters.RelationType = Rel.Spouse;
 
         var vc = new VCard
@@ -367,7 +370,7 @@ public class V2Tests
         {
             NameViews =
             [
-                    new(familyName: null, givenName: "zzMad Perla 45")
+                    new(NameBuilder.Create().AddFamilyName("").AddGivenName("zzMad Perla 45"))
             ],
 
             DisplayNames =

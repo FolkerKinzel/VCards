@@ -9,6 +9,17 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal sealed class Vcf_3_0Serializer : VcfSerializer
 {
+    private NameBuilder? _nameBuilder;
+
+    internal NameBuilder NameBuilder
+    {
+        get
+        {
+            this._nameBuilder ??= NameBuilder.Create();
+            return _nameBuilder;
+        }
+    }
+
     internal Vcf_3_0Serializer(TextWriter writer,
                                Opts options,
                                ITimeZoneIDConverter? tzConverter)
@@ -208,8 +219,8 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
         NameProperty name = value.FirstOrNullIntl(IgnoreEmptyItems)
                             ?? (IgnoreEmptyItems
-                                ? new NameProperty("?")
-                                : new NameProperty());
+                                ? new NameProperty(NameBuilder.Clear().AddFamilyName("?"))
+                                : new NameProperty(NameBuilder.Clear()));
 
         BuildProperty(VCard.PropKeys.N, name);
 

@@ -34,9 +34,10 @@ internal static class LongVCardCreator
                 (
                 VCardBuilder
                 .Create(false)
-                .NameViews.Add(familyName: name2.LastName,
-                               givenName: name2.FirstName,
-                               additionalName: name2.MiddleName)
+                .NameViews.Add(NameBuilder.Create()
+                                          .AddFamilyName(name2.LastName)
+                                          .AddGivenName( name2.FirstName)
+                                          .AddAdditionalName(name2.MiddleName))
                 .NameViews.ToDisplayNames(NameFormatter.Default)
                 .VCard
                 );

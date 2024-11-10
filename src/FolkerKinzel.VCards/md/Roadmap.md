@@ -40,8 +40,8 @@
 - [x] `NameProperty`: Allow only ctors that take a `NamePropertyBuilder` as argument.
 
 &nbsp;
-- [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method
-- [ ] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `NameViewsBuilder`
+- [x] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method
+- [x] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `NameViewsBuilder`
 
 &nbsp;
 - [ ] Change the properties of the `Name` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`

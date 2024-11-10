@@ -187,13 +187,13 @@ public sealed class VCardBuilder
     /// presented to the users of the application. 
     /// </para>
     /// <note type="tip">
-    /// You can use the <see cref="BuilderParts.NameBuilder.ToDisplayNames(Formatters.INameFormatter)" /> method to convert the 
+    /// You can use the <see cref="BuilderParts.NameViewsBuilder.ToDisplayNames(Formatters.INameFormatter)" /> method to convert the 
     /// structured name representations that are stored in the <see cref="NameViews" /> 
     /// property to produce formatted representations readable by the users of the 
     /// application.  
     /// </note>
     /// </remarks>
-    /// <seealso cref="BuilderParts.NameBuilder.ToDisplayNames(Formatters.INameFormatter)" />
+    /// <seealso cref="BuilderParts.NameViewsBuilder.ToDisplayNames(Formatters.INameFormatter)" />
     /// <seealso cref="NameFormatter"/>
     public TextBuilder DisplayNames => new(this, Prop.DisplayNames);
 
@@ -348,7 +348,7 @@ public sealed class VCardBuilder
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public BuilderParts.NameBuilder NameViews => new(this);
+    public BuilderParts.NameViewsBuilder NameViews => new(this);
 
     /// <summary> <c>NICKNAME</c>: One or more descriptive/familiar names for the object
     /// represented by this vCard. <c>(3,4)</c></summary>

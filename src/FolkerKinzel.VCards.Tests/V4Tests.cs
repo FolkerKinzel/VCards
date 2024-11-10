@@ -217,7 +217,7 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = new  RelationProperty(Relation.Create(VCardBuilder.Create(setID: false).DisplayNames.Add("Important Member").VCard)),
+            Members = new RelationProperty(Relation.Create(VCardBuilder.Create(setID: false).DisplayNames.Add("Important Member").VCard)),
         };
 
         Assert.IsNotNull(vc.Members);
@@ -335,7 +335,7 @@ public class V4Tests
     [TestMethod]
     public void DisplayNameTest1()
     {
-        var nm = new NameProperty("Kinzel", "Folker");
+        var nm = new NameProperty(NameBuilder.Create().AddFamilyName("Kinzel").AddGivenName("Folker"));
 
         var vCard = new VCard { NameViews = nm };
 
@@ -431,7 +431,7 @@ public class V4Tests
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add(null, "Folker", parameters: p => p.SortAs = [])
+            .NameViews.Add(NameBuilder.Create().AddGivenName("Folker"), parameters: p => p.SortAs = [])
             .AnniversaryViews.Add("In summer", parameters: p => p.Language = "en")
             .Phones.Add("tel:123",
                         parameters: p =>

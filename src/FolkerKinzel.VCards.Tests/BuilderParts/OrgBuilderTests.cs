@@ -103,7 +103,6 @@ public class OrgBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void AddTest3()
     => VCardBuilder.Create().Organizations.Add((Organization?)null!);
 

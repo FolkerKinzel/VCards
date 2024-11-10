@@ -7,15 +7,16 @@ public class NameBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void SetIndexesTest1() => new NameBuilder().SetIndexes();
+    public void SetIndexesTest1() => new NameViewsBuilder().SetIndexes();
 
     [TestMethod]
     public void SetIndexesTest2()
     {
+        NameBuilder nameBuilder = new();
         VCardBuilder builder = VCardBuilder
             .Create()
-            .NameViews.Add("")
-            .NameViews.Add("Miller")
+            .NameViews.Add(nameBuilder)
+            .NameViews.Add(nameBuilder.AddFamilyName("Miller"))
             .NameViews.SetIndexes();
 
         VCard vc = builder.VCard;
@@ -37,11 +38,11 @@ public class NameBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetIndexesTest1() => new NameBuilder().UnsetIndexes();
+    public void UnsetIndexesTest1() => new NameViewsBuilder().UnsetIndexes();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new NameBuilder().Edit(p => p);
+    public void EditTest1() => new NameViewsBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -49,47 +50,47 @@ public class NameBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new NameBuilder().Edit((p, d) => p, true);
+    public void EditTest3() => new NameViewsBuilder().Edit((p, d) => p, true);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void EditTest4() => VCardBuilder.Create().NameViews.Edit(null!, true);
 
-    [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new NameBuilder().Add((string?)null);
+    //[TestMethod]
+    //[ExpectedException(typeof(InvalidOperationException))]
+    //public void AddTest1() => new NameViewsBuilder().Add((string?)null);
+
+    //[TestMethod]
+    //[ExpectedException(typeof(InvalidOperationException))]
+    //public void AddTest2() => new NameViewsBuilder().Add([]);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest2() => new NameBuilder().Add([]);
+    public void AddTest3() => new NameViewsBuilder().Add(FolkerKinzel.VCards.NameBuilder.Create());
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest3() => new NameBuilder().Add(FolkerKinzel.VCards.NameBuilder.Create());
+    public void ClearTest1() => new NameViewsBuilder().Clear();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new NameBuilder().Clear();
-
-    [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void RemoveTest1() => new NameBuilder().Remove(p => true);
+    public void RemoveTest1() => new NameViewsBuilder().Remove(p => true);
 
     [TestMethod]
     public void EqualsTest1()
     {
-        Assert.IsFalse(new NameBuilder().Equals((NameBuilder?)null));
+        Assert.IsFalse(new NameViewsBuilder().Equals((NameViewsBuilder?)null));
 
-        var builder = new NameBuilder();
+        var builder = new NameViewsBuilder();
         Assert.AreEqual(builder.GetHashCode(), ((object)builder).GetHashCode());
     }
 
     [TestMethod]
-    public void ToStringTest1() => Assert.IsNotNull(new NameBuilder().ToString());
+    public void ToStringTest1() => Assert.IsNotNull(new NameViewsBuilder().ToString());
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void ToDisplayNamesTest1() => new NameBuilder().ToDisplayNames(NameFormatter.Default);
+    public void ToDisplayNamesTest1() => new NameViewsBuilder().ToDisplayNames(NameFormatter.Default);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

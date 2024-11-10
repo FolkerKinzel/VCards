@@ -10,6 +10,17 @@ namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal sealed class Vcf_2_1Serializer : VcfSerializer
 {
+    private NameBuilder? _nameBuilder;
+
+    internal NameBuilder NameBuilder
+    {
+        get
+        {
+            this._nameBuilder ??= NameBuilder.Create();
+            return _nameBuilder;
+        }
+    }
+
     internal Vcf_2_1Serializer(TextWriter writer,
                                Opts options,
                                ITimeZoneIDConverter? tzConverter)
@@ -116,7 +127,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
                         c = span[j];
 
-                        if (c == ' ' || c == '\t')
+                        if (c is ' ' or '\t')
                         {
                             _writer.WriteLine(shared.Array, chunkStart, j - chunkStart);
 
@@ -130,7 +141,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
                 }
                 else if (counter > VCard.MAX_BYTES_PER_LINE) // if none SPACE or TAB char 
                 {                                            // has been found before
-                    if (c == ' ' || c == '\t')
+                    if (c is ' ' or '\t')
                     {
                         _writer.WriteLine(shared.Array, chunkStart, i - chunkStart);
                         chunkStart = i;
@@ -221,8 +232,8 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
         NameProperty? name = value.FirstOrNullIntl(IgnoreEmptyItems)
                              ?? (IgnoreEmptyItems
-                                   ? new NameProperty("?")
-                                   : new NameProperty());
+                                   ? new NameProperty(NameBuilder.Clear().AddFamilyName("?"))
+                                   : new NameProperty(NameBuilder.Clear()));
         BuildProperty(VCard.PropKeys.N, name);
     }
 

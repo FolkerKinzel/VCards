@@ -15,7 +15,7 @@ internal static class WhatsAppDemo2
         // Initialize the VCard:
         var vcard = new VCard
         {
-            NameViews = [new(familyName: null, givenName: "zzMad Perla 45")],
+            NameViews = [new(NameBuilder.Create().AddFamilyName("").AddGivenName("zzMad Perla 45"))],
             DisplayNames = [new("zzMad Perla 45")],
             Phones = xiamoiMobilePhone
         };

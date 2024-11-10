@@ -7,7 +7,6 @@ namespace FolkerKinzel.VCards.Tests;
 
 internal static class Utility
 {
-    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>")]
     internal static VCard CreateVCard()
     {
         VCard.SyncTestReset();
@@ -83,10 +82,10 @@ internal static class Utility
         email1.Parameters.EMailType = "  ";
         email1.Parameters.EMailType = EMail.SMTP;
 
-        var name1 = new NameProperty("Künzel", "Folker");
+        var name1 = new NameProperty(NameBuilder.Create().AddFamilyName("Künzel").AddGivenName("Folker"));
         name1.Parameters.SortAs = ["Kinzel", "Folker"];
 
-        var name2 = new NameProperty("Кинцэл", "Фолкер");
+        var name2 = new NameProperty(NameBuilder.Create().AddFamilyName("Кинцэл").AddGivenName("Фолкер"));
         name2.Parameters.SortAs = ["Kinzel", "Folker"];
         name2.Parameters.Language = "ru-RU";
         name2.Parameters.AltID = "  ";

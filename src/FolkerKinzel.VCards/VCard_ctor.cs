@@ -220,7 +220,7 @@ public sealed partial class VCard
                             }
                             else
                             {
-                                var name = new NameProperty();
+                                var name = new NameProperty(info.NameBuilder.Clear());
                                 name.Parameters.SortAs = [textProp.Value];
                                 NameViews = name;
                             }

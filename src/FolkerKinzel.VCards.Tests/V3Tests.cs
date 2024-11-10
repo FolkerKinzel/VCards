@@ -129,7 +129,7 @@ public class V3Tests
 
         vcard.NameViews =
         [
-                new("Test", "Paul", null, null, null)
+                new(NameBuilder.Create().AddFamilyName("Test").AddGivenName("Paul"))
         ];
 
         vcard.DisplayNames =
@@ -314,7 +314,7 @@ END:VCARD";
     }
 
     [TestMethod]
-    public void ImppTest3() 
+    public void ImppTest3()
     {
         const string serialized = """
             BEGIN:VCARD
@@ -419,7 +419,7 @@ END:VCARD";
     [TestMethod]
     public void DisplayNameTest1()
     {
-        var nm = new NameProperty("Kinzel", "Folker");
+        var nm = new NameProperty(NameBuilder.Create().AddFamilyName("Kinzel").AddGivenName("Folker"));
 
         var vCard = new VCard { NameViews = nm };
 
@@ -469,7 +469,7 @@ END:VCARD";
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add("Name", parameters: p => p.SortAs = ["abc", "123"])
+            .NameViews.Add(NameBuilder.Create().AddFamilyName("Name"), parameters: p => p.SortAs = ["abc", "123"])
             .VCard;
 
         string serialized = vc.ToVcfString();
@@ -487,7 +487,7 @@ END:VCARD";
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add("Name")
+            .NameViews.Add(NameBuilder.Create().AddFamilyName("Name"))
             .Organizations.Add("Org", parameters: p => p.SortAs = ["abc", "123"])
             .VCard;
 
@@ -543,7 +543,7 @@ END:VCARD";
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add("Name", parameters: p => p.SortAs = ["abc", "123"])
+            .NameViews.Add(NameBuilder.Create().AddFamilyName("Name"), parameters: p => p.SortAs = ["abc", "123"])
             .Organizations.Add("Org", parameters: p => p.SortAs = ["xyz"])
             .VCard;
 

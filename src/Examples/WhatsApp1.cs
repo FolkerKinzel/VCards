@@ -28,7 +28,7 @@ internal static class WhatsAppDemo1
         // Initialize the VCard:
         var vcard = new VCard
         {
-            NameViews = new Mod::NameProperty(familyName: null, givenName: "zzMad Perla 45"),
+            NameViews = new Mod::NameProperty(NameBuilder.Create().AddFamilyName("").AddGivenName("zzMad Perla 45")),
 
             DisplayNames = new Mod::TextProperty("zzMad Perla 45"),
 
