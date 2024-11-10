@@ -25,14 +25,14 @@ namespace FolkerKinzel.VCards.BuilderParts;
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
     Justification = "Overriding does not change the default behavior.")]
 #endif
-public readonly struct AddressBuilder
+public readonly struct AddressesBuilder
 {
     private readonly VCardBuilder? _builder;
 
     [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
-    internal AddressBuilder(VCardBuilder builder) => _builder = builder;
+    internal AddressesBuilder(VCardBuilder builder) => _builder = builder;
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Preference"/> properties of 
@@ -44,7 +44,7 @@ public readonly struct AddressBuilder
     /// objects always the lowest <see cref="ParameterSection.Preference"/> (100), independently
     /// of their position in the collection, or <c>false</c> to treat empty <see cref="VCardProperty"/> 
     /// objects like any other. (<c>null</c> references are always skipped.)</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -59,7 +59,7 @@ public readonly struct AddressBuilder
     /// Resets the <see cref="ParameterSection.Preference"/> properties of 
     /// the items in in the <see cref="VCard.Addresses"/> property to the lowest value (100).
     /// </summary>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -80,7 +80,7 @@ public readonly struct AddressBuilder
     /// of empty <see cref="VCardProperty"/> objects to <c>null</c>, or <c>false</c> to treat 
     /// empty <see cref="VCardProperty"/> objects like any other. (<c>null</c> references are 
     /// always skipped.)</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -96,7 +96,7 @@ public readonly struct AddressBuilder
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
     /// the items in in the <see cref="VCard.Addresses"/> property to <c>null</c>.
     /// </summary>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -116,7 +116,7 @@ public readonly struct AddressBuilder
     /// <see cref="VCard.Addresses"/> property and <paramref name="data"/> as arguments. Its return value 
     /// will be the new content of the <see cref="VCard.Addresses"/> property.</param>
     /// <param name="data">The data to pass to <paramref name="func"/>.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/>
     /// to be able to chain calls.</returns>
     /// <remarks>
     /// This overload allows to pass external data to the delegate without having to use closures.
@@ -141,7 +141,7 @@ public readonly struct AddressBuilder
     /// property as argument.
     /// Its return value will be the 
     /// new content of the <see cref="VCard.Addresses"/> property.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been 
@@ -160,123 +160,57 @@ public readonly struct AddressBuilder
 
     #region Remove this code with version 8.0.0
 
-    /// <summary>
-    /// Adds an <see cref="AddressProperty"/> instance, which is newly 
-    /// initialized using the specified arguments, to the <see cref="VCard.Addresses"/> property.
-    /// </summary>
-    /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g., city).</param>
-    /// <param name="region">The region (e.g., state or province).</param>
-    /// <param name="postalCode">The postal code.</param>
-    /// <param name="country">The country name (full name).</param>
-    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
-    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
-    /// <param name="group">A function that returns the identifier of the group of 
-    /// <see cref="VCardProperty" /> objects, which the <see cref="VCardProperty" /> should belong 
-    /// to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function 
-    /// is called with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter of the newly 
-    /// created <see cref="AddressProperty"/>.</param>
-    /// 
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
-    /// <see cref="AddressBuilder"/> to be able to chain calls.</returns>
-    /// <remarks>
-    /// <note type="tip">
-    /// Use the method overload that takes a <see cref="FolkerKinzel.VCards.AddressBuilder"/> as argument.
-    /// </note>
-    /// </remarks>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance 
-    /// that had been initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use Add(Address?, ...) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public VCardBuilder Add(string? street,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
                             string? locality,
                             string? region,
                             string? postalCode,
                             string? country = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null,
-                            bool autoLabel = true)
-    {
-        Builder.VCard.Set(Prop.Addresses,
-                          VCardBuilder.Add(new AddressProperty(street,
-                                                               locality,
-                                                               region,
-                                                               postalCode,
-                                                               country,
-                                                               autoLabel,
-                                                               group?.Invoke(_builder.VCard)),
-                                           _builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
-                                           parameters)
-                          );
-        return _builder;
-    }
+                            bool autoLabel = true) => throw new NotImplementedException();
 
-    /// <summary>
-    /// Adds an <see cref="AddressProperty"/> instance, which is newly 
-    /// initialized using the specified arguments, to the <see cref="VCard.Addresses"/> property.
-    /// </summary>
-    /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g., city).</param>
-    /// <param name="region">The region (e.g., state or province).</param>
-    /// <param name="postalCode">The postal code.</param>
-    /// <param name="country">The country name (full name).</param>
-    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
-    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
-    /// <param name="group">A function that returns the identifier of the group of 
-    /// <see cref="VCardProperty" /> objects, which the <see cref="VCardProperty" /> should belong to,
-    /// or <c>null</c> to indicate that the <see cref="VCardProperty" /> does not belong to any group. The 
-    /// function is called with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter of the newly 
-    /// created <see cref="VCardProperty"/>.</param>
-    /// 
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> 
-    /// to be able to chain calls.</returns>
-    /// <remarks>
-    /// <note type="tip">
-    /// Use the method overload that takes a <see cref="FolkerKinzel.VCards.AddressBuilder"/> as argument.
-    /// </note>
-    /// </remarks>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
-    /// been initialized using the default constructor.</exception>
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use Add(Address?, ...) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public VCardBuilder Add(IEnumerable<string?>? street,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
                             IEnumerable<string?>? locality,
                             IEnumerable<string?>? region,
                             IEnumerable<string?>? postalCode,
                             IEnumerable<string?>? country = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null,
-                            bool autoLabel = true)
-    {
-        Builder.VCard.Set(Prop.Addresses,
-                          VCardBuilder.Add(new AddressProperty(street,
-                                                               locality,
-                                                               region,
-                                                               postalCode,
-                                                               country,
-                                                               autoLabel,
-                                                               group?.Invoke(_builder.VCard)),
-                                           _builder.VCard.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
-                                           parameters)
-                           );
-        return _builder;
-    }
+                            bool autoLabel = true) => throw new NotImplementedException();
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use Add(Address?, ...) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public VCardBuilder Add(AddressBuilder builder,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null) => throw new NotImplementedException();
     #endregion
 
     /// <summary>
     /// Adds an <see cref="AddressProperty"/> instance, which is newly 
-    /// initialized using the content of a specified <see cref="FolkerKinzel.VCards.AddressBuilder"/>, to the <see cref="VCard.Addresses"/> property.
+    /// initialized with the specified <see cref="Name"/>.
     /// </summary>
-    /// <param name="builder">The <see cref="FolkerKinzel.VCards.AddressBuilder"/> whose content is used.</param>
+    /// <param name="address">The <see cref="Address"/> instance, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> to 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
     /// <example>
@@ -285,15 +219,14 @@ public readonly struct AddressBuilder
     /// 
     /// <seealso cref="VCards.AddressBuilder"/>
     /// 
-    /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(FolkerKinzel.VCards.AddressBuilder builder,
+    public VCardBuilder Add(Address? address,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
-        var prop = new AddressProperty(builder, group?.Invoke(vc));
+        var prop = new AddressProperty(address ?? new Address(), group?.Invoke(vc));
         vc.Set(Prop.Addresses,
                VCardBuilder.Add(prop,
                                 vc.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
@@ -308,7 +241,7 @@ public readonly struct AddressBuilder
     /// </summary>
     /// <param name="addressFormatter">The <see cref="IAddressFormatter"/> instance to
     /// use for the conversion.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> to 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
     /// <remarks><see cref="AddressProperty"/> instances whose <see cref="ParameterSection.Label"/> property
@@ -353,7 +286,7 @@ public readonly struct AddressBuilder
     /// <summary>
     /// Sets the <see cref="VCard.Addresses"/> property to <c>null</c>.
     /// </summary>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -369,7 +302,7 @@ public readonly struct AddressBuilder
     /// </summary>
     /// <param name="predicate">A function that returns <c>true</c> for <see cref="AddressProperty"/> 
     /// objects that shall be removed.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressBuilder"/> 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/> 
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
@@ -13,60 +14,40 @@ using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 namespace FolkerKinzel.VCards.Models.PropertyParts;
 
 /// <summary>Encapsulates information about a postal delivery address.</summary>
+/// <remarks>
+/// <note type="tip">Use <see cref="AddressBuilder"/> to create an instance.</note>
+/// </remarks>
+/// <seealso cref="AddressBuilder"/>
+/// <seealso cref="AddressProperty"/>
+/// <seealso cref="VCard.Addresses"/>
 public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 {
-    private const int STANDARD_COUNT = (int)AdrProp.Country + 1;
-    private const int MAX_COUNT = (int)AdrProp.Direction + 1;
-    private readonly Dictionary<AdrProp, ReadOnlyCollection<string>> _dic = [];
-
-    private ReadOnlyCollection<string> Get(AdrProp prop)
-        => _dic.TryGetValue(prop, out ReadOnlyCollection<string>? coll)
-            ? coll
-            : ReadOnlyStringCollection.Empty;
 
     #region Remove this code with version 8.0.0
 
-    /// <summary>Converts the data encapsulated in the instance into formatted text
-    /// for a mailing label.</summary>
-    /// <returns>The data encapsulated in the instance, converted to formatted text
-    /// for a mailing label.</returns>
-    /// <remarks>
-    /// Use <see cref="AddressProperty.ToLabel"/> method instead because this takes also the 
-    /// the <see cref="ParameterSection.CountryCode"/> parameter into account.
-    /// </remarks>
-    [Obsolete("Use AddressProperty.ToLabel() instead.", false)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string? ToLabel() => AddressLabelFormatter.ToLabel(this);
 
-    private void Add(AdrProp prop, ReadOnlyCollection<string> coll)
-    {
-        if (coll.Count != 0)
-        {
-            _dic[prop] = coll;
-        }
-    }
+    [Obsolete("Use AddressProperty.ToLabel() instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public string? ToLabel() => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-    internal Address(ReadOnlyCollection<string> street,
-                     ReadOnlyCollection<string> locality,
-                     ReadOnlyCollection<string> region,
-                     ReadOnlyCollection<string> postalCode,
-                     ReadOnlyCollection<string> country,
-                     ReadOnlyCollection<string> postOfficeBox,
-                     ReadOnlyCollection<string> extendedAddress)
-    {
-        Add(AdrProp.PostOfficeBox, postOfficeBox);
-        Add(AdrProp.ExtendedAddress, extendedAddress);
-        Add(AdrProp.Street, street);
-        Add(AdrProp.Locality, locality);
-        Add(AdrProp.Region, region);
-        Add(AdrProp.PostalCode, postalCode);
-        Add(AdrProp.Country, country);
-
-        Street = street;
-        ExtendedAddress = extendedAddress;
-    }
+    [Obsolete("Use Extended instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ReadOnlyCollection<string> ExtendedAddress => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     #endregion
+
+    private const int STANDARD_COUNT = (int)AdrProp.Country + 1;
+    private const int MAX_COUNT = (int)AdrProp.Direction + 1;
+    private readonly Dictionary<AdrProp, string[]> _dic = [];
+
+    private string[] Get(AdrProp prop)
+        => _dic.TryGetValue(prop, out string[]? coll) ? coll : [];
 
     [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
         Justification = "Performance: Collection initializer initializes a new List.")]
@@ -83,14 +64,14 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
             if (kvp.Value.Count != 0)
             {
                 // Copy kvp.Value because it comes from AddressBuilder and can be reused!
-                _dic[kvp.Key] = new ReadOnlyCollection<string>(kvp.Value.ToArray());
+                _dic[kvp.Key] = kvp.Value.ToArray();
 
                 switch (kvp.Key)
                 {
                     case AdrProp.Street:
                         streetHasData = true;
                         break;
-                    case AdrProp.ExtendedAddress:
+                    case AdrProp.Extended:
                         extendedHasData = true;
                         break;
                     case AdrProp.Room:
@@ -141,32 +122,14 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
                                           AdrProp.Apartment,
                                           AdrProp.Room];
 
-            Add(keys, newVals, AdrProp.ExtendedAddress);
+            Add(keys, newVals, AdrProp.Extended);
         }
 
-        Street = newStreetHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.Street);
-        ExtendedAddress = newExtendedHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.ExtendedAddress);
+        Street = newStreetHasData ? [] : Get(AdrProp.Street);
+        Extended = newExtendedHasData ? [] : Get(AdrProp.Extended);
     }
 
-    private void Add(ReadOnlySpan<AdrProp> keys, Dictionary<AdrProp, List<string>> dic, AdrProp target)
-    {
-        List<string> list = [];
-
-        for (int i = 0; i < keys.Length; i++)
-        {
-            if (dic.TryGetValue(keys[i], out List<string>? strings))
-            {
-                Debug.Assert(strings.Count != 0);
-                list.AddRange(strings);
-            }
-        }
-
-        Debug.Assert(list.Count != 0);
-
-        _dic[target] = list.AsReadOnly();
-    }
-
-    internal Address() => Street = ExtendedAddress = ReadOnlyStringCollection.Empty;
+    internal Address() => Street = Extended = [];
 
     internal Address(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
@@ -189,11 +152,11 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
             }
 
             ReadOnlySpan<char> span = mem.Span;
-            ReadOnlyCollection<string> coll = span.Contains(',')
-                ? ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(in mem, version))
-                : ReadOnlyCollectionConverter.ToReadOnlyCollection(span.UnMaskValue(version));
+            string[]? coll = span.Contains(',')
+                ? ReadOnlyCollectionConverter.ToReadOnlyList(ToArray(in mem, version))
+                : ReadOnlyCollectionConverter.ToReadOnlyList(span.UnMaskValue(version));
 
-            if (coll.Count == 0)
+            if (coll is null)
             {
                 continue;
             }
@@ -224,8 +187,8 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
         }//foreach
 
-        Street = newStreetHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.Street);
-        ExtendedAddress = newExtendedHasData ? ReadOnlyStringCollection.Empty : Get(AdrProp.ExtendedAddress);
+        Street = newStreetHasData ? [] : Get(AdrProp.Street); 
+        Extended = newExtendedHasData ? [] : Get(AdrProp.Extended);
 
         ////////////////////////////////////////////////
 
@@ -238,8 +201,26 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
                                 version).ToArray();
     }
 
+    private void Add(ReadOnlySpan<AdrProp> keys, Dictionary<AdrProp, List<string>> dic, AdrProp target)
+    {
+        List<string> list = [];
+
+        for (int i = 0; i < keys.Length; i++)
+        {
+            if (dic.TryGetValue(keys[i], out List<string>? strings))
+            {
+                Debug.Assert(strings.Count != 0);
+                list.AddRange(strings);
+            }
+        }
+
+        Debug.Assert(list.Count != 0);
+
+        _dic[target] = [.. list];
+    }
+
     /// <summary>The post office box.</summary>
-    public ReadOnlyCollection<string> PostOfficeBox => Get(AdrProp.PostOfficeBox);
+    public IReadOnlyList<string> PostOfficeBox => Get(AdrProp.PostOfficeBox);
 
     /// <summary>The extended address (e.g., apartment or suite number).</summary>
     /// <remarks>
@@ -254,7 +235,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
     /// <item><see cref="Room"/></item>
     /// </list>
     /// </remarks>
-    public ReadOnlyCollection<string> ExtendedAddress { get; }
+    public IReadOnlyList<string> Extended { get; }
 
     /// <summary>The street address.</summary>
     /// <remarks>
@@ -272,61 +253,61 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
     /// <item><see cref="District"/></item>
     /// </list>
     /// </remarks>
-    public ReadOnlyCollection<string> Street { get; }
+    public IReadOnlyList<string> Street { get; }
 
     /// <summary>The locality (e.g., city).</summary>
-    public ReadOnlyCollection<string> Locality => Get(AdrProp.Locality);
+    public IReadOnlyList<string> Locality => Get(AdrProp.Locality);
 
     /// <summary>The region (e.g., state or province).</summary>
-    public ReadOnlyCollection<string> Region => Get(AdrProp.Region);
+    public IReadOnlyList<string> Region => Get(AdrProp.Region);
 
     /// <summary>The postal code.</summary>
-    public ReadOnlyCollection<string> PostalCode => Get(AdrProp.PostalCode);
+    public IReadOnlyList<string> PostalCode => Get(AdrProp.PostalCode);
 
     /// <summary>The country name (full name).</summary>
-    public ReadOnlyCollection<string> Country => Get(AdrProp.Country);
+    public IReadOnlyList<string> Country => Get(AdrProp.Country);
 
     /// <summary> The room, suite number, or identifier. (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Room => Get(AdrProp.Room);
+    public IReadOnlyList<string> Room => Get(AdrProp.Room);
 
     /// <summary> The extension designation such as the apartment number, unit,
     /// or box number. (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Apartment => Get(AdrProp.Apartment);
+    public IReadOnlyList<string> Apartment => Get(AdrProp.Apartment);
 
     /// <summary> The floor or level the address is located on. (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Floor => Get(AdrProp.Floor);
+    public IReadOnlyList<string> Floor => Get(AdrProp.Floor);
 
     /// <summary> The street number, e.g., "123". (4 - RFC 9554)</summary>
     /// <value>This value is not restricted to numeric values and can include
     /// any value such as number ranges ("112-10"), grid style ("39.2 RD"), 
     /// alphanumerics ("N6W23001"), or fractionals ("123 1/2").</value>
-    public ReadOnlyCollection<string> StreetNumber => Get(AdrProp.StreetNumber);
+    public IReadOnlyList<string> StreetNumber => Get(AdrProp.StreetNumber);
 
     /// <summary> The street name. (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> StreetName => Get(AdrProp.StreetName);
+    public IReadOnlyList<string> StreetName => Get(AdrProp.StreetName);
 
     /// <summary> The building, tower, or condominium the address is located in.
     /// (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Building => Get(AdrProp.Building);
+    public IReadOnlyList<string> Building => Get(AdrProp.Building);
 
     /// <summary> The block name or number. (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Block => Get(AdrProp.Block);
+    public IReadOnlyList<string> Block => Get(AdrProp.Block);
 
     /// <summary> The subdistrict, ward, or other subunit of a district.
     /// (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> SubDistrict => Get(AdrProp.SubDistrict);
+    public IReadOnlyList<string> SubDistrict => Get(AdrProp.SubDistrict);
 
     /// <summary> The district name. (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> District => Get(AdrProp.District);
+    public IReadOnlyList<string> District => Get(AdrProp.District);
 
     /// <summary> The publicly known prominent feature that can substitute
     /// the street name and number, e.g., "White House" or "Taj Mahal". 
     /// (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Landmark => Get(AdrProp.Landmark);
+    public IReadOnlyList<string> Landmark => Get(AdrProp.Landmark);
 
     /// <summary> The cardinal direction or quadrant, e.g., "north". 
     /// (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Direction => Get(AdrProp.Direction);
+    public IReadOnlyList<string> Direction => Get(AdrProp.Direction);
 
     /// <summary>Returns <c>true</c>, if the <see cref="Address" /> object does not
     /// contain any usable data.</summary>
@@ -353,7 +334,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
             return adr switch
             {
                 AdrProp.Street => Street,
-                AdrProp.ExtendedAddress => ExtendedAddress,
+                AdrProp.Extended => Extended,
                 _ => Get(adr)
             };
         }
@@ -407,7 +388,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
     internal bool NeedsToBeQpEncoded()
     {
-        foreach (KeyValuePair<AdrProp, ReadOnlyCollection<string>> kvp in _dic)
+        foreach (KeyValuePair<AdrProp, string[]> kvp in _dic)
         {
             if (kvp.Key <= AdrProp.Country
                 && kvp.Value.Any(StringExtension.NeedsToBeQpEncoded))

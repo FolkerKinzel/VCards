@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Formatters;
 
@@ -19,9 +18,9 @@ internal static class DisplayNameFormatter
             : string.Join(' '
 #endif
         , name.Prefixes
-        .Concat(name.GivenNames)
-        .Concat(name.AdditionalNames)
-        .Concat(name.FamilyNames)
+        .Concat(name.Given)
+        .Concat(name.Given2)
+        .Concat(name.Surnames)
         .Concat(name.Surnames2)
         .Concat(name.Suffixes)
         .Concat(name.Generations));

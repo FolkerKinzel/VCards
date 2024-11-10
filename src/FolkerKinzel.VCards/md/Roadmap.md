@@ -44,19 +44,19 @@
 - [x] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `NameViewsBuilder`
 
 &nbsp;
-- [ ] Change the properties of the `Name` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
-- [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
-- [ ] Remove all ctors that don't take a `NameBuilder` or `VcfRow` as argument
-- [ ] Remove Name.ToDisplayName()
+- [x] Change the properties of the `Name` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
+- [x] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [x] Remove all ctors that don't take a `NameBuilder` or `VcfRow` as argument
+- [x] Remove Name.ToDisplayName()
 <!--- [ ] Rename `Name.Prefixes` to `Name.Titles`
 - [ ] Rename `NameBuilder.AddPrefix(string)` to `NameBuilder.AddTitle(string)`-->
-- [ ] Rename `Name.GivenNames` to `Name.Given`
-- [ ] Rename `NameBuilder.AddGivenName(string)` to `NameBuilder.AddGiven(string)`
+- [x] Rename `Name.GivenNames` to `Name.Given`
+- [x] Rename `NameBuilder.AddGivenName(string)` to `NameBuilder.AddGiven(string)`
 
-- [ ] Rename `Name.AdditionalNames` to `Name.Given2`
-- [ ] Rename `NameBuilder.AddAdditionalName(string)` to `NameBuilder.AddGiven2(string)`
-- [ ] Rename `Name.FamilyNames` to `Name.Surnames`
-- [ ] Rename `NameBuilder.AddFamilyName(string)` to `NameBuilder.AddSurname(string)`
+- [x] Rename `Name.AdditionalNames` to `Name.Given2`
+- [x] Rename `NameBuilder.AddAdditionalName(string)` to `NameBuilder.AddGiven2(string)`
+- [x] Rename `Name.FamilyNames` to `Name.Surnames`
+- [x] Rename `NameBuilder.AddFamilyName(string)` to `NameBuilder.AddSurname(string)`
 <!--- [ ] Rename `Name.Suffixes` to `Name.Credentials`
 - [ ] Rename `NameBuilder.AddSuffix(string)` to `NameBuilder.AddCredential(string)`-->
 
@@ -72,14 +72,15 @@
 - [ ] Refactor `DefaultAddressFormatter` to contain `AddressLabelFormatter`
 
 &nbsp;
-- [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.AddressBuilder.Add` method
-- [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
+- [x] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
+- [x] Remove deprecated overloads of the `AddressesBuilder.Add` method
 
 
 &nbsp;
 - [ ] Change the properties of the `Address` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
 - [ ] Let `Address` internally store `string[]` rather than `ReadOnlyCollection<string>`
-- [ ] Remove Address.ToLabel()
+- [x] Remove Address.ToLabel()
+
 - [ ] Rename `Address.ExtendedAddress` to `Address.Extended`
 - [ ] Rename `AddressBuilder.AddExtendedAddress` to `AddressBuilder.AddExtended`
 

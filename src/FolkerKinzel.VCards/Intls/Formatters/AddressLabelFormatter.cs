@@ -64,7 +64,7 @@ internal static class AddressLabelFormatter
             strings.AddRange(address.District);
         }
 
-        IReadOnlyList<string> extAddress = address.ExtendedAddress;
+        IReadOnlyList<string> extAddress = address.Extended;
 
         if (extAddress.Count != 0)
         {

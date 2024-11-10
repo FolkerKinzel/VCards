@@ -220,7 +220,7 @@ public sealed partial class VCard
                             }
                             else
                             {
-                                var name = new NameProperty(info.NameBuilder.Clear());
+                                var name = new NameProperty(new Name());
                                 name.Parameters.SortAs = [textProp.Value];
                                 NameViews = name;
                             }
@@ -578,7 +578,7 @@ public sealed partial class VCard
 
         static AddressProperty CreateEmptyAddressPropertyWithLabel(TextProperty label)
         {
-            var adrProp = new AddressProperty("", null, null, null, autoLabel: false);
+            var adrProp = new AddressProperty(new Address());
             adrProp.Parameters.Assign(label.Parameters);
             adrProp.Parameters.Label = label.Value;
             return adrProp;

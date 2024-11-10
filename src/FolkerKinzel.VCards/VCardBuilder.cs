@@ -94,7 +94,7 @@ public sealed class VCardBuilder
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public BuilderParts.AddressBuilder Addresses => new(this);
+    public BuilderParts.AddressesBuilder Addresses => new(this);
 
     /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them

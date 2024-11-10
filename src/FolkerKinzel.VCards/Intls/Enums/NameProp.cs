@@ -10,13 +10,13 @@ namespace FolkerKinzel.VCards.Intls.Enums;
 internal enum NameProp
 {
     /// <summary>Family Name(s) (also known as surname(s)). (2,3,4)</summary>
-    FamilyNames,
+    Surnames,
 
     /// <summary>Given Name(s) (first name(s)). (2,3,4)</summary>
-    GivenNames,
+    Given,
 
     /// <summary>Additional Name(s) (middle name(s)). (2,3,4)</summary>
-    AdditionalNames,
+    Given2,
 
     /// <summary>Honorific Prefix(es). (2,3,4)</summary>
     Prefixes,

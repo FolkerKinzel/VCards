@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
+﻿using FolkerKinzel.VCards.Models;
+
+namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
 
 [TestClass]
 public class DefaultNameFormatterTests
@@ -6,7 +8,7 @@ public class DefaultNameFormatterTests
     [TestMethod]
     public void DefaultNameFormatterTest1()
     {
-        VCard vc = VCardBuilder.Create().NameViews.Add(NameBuilder.Create()).VCard;
+        VCard vc = VCardBuilder.Create().NameViews.Add((Name?)null).VCard;
         Assert.IsNull(NameFormatter.Default.ToDisplayName(vc.NameViews!.First()!, vc));
     }
 
@@ -23,18 +25,19 @@ public class DefaultNameFormatterTests
                 .Create()
                 .AddPrefix("1")
                 .AddPrefix("A")
-                .AddGivenName("2")
-                .AddGivenName("B")
-                .AddAdditionalName("3")
-                .AddAdditionalName("C")
+                .AddGiven("2")
+                .AddGiven("B")
+                .AddGiven2("3")
+                .AddGiven2("C")
                 .AddSurname2("4")
                 .AddSurname2("D")
-                .AddFamilyName("5")
-                .AddFamilyName("E")
+                .AddSurname("5")
+                .AddSurname("E")
                 .AddGeneration("6")
                 .AddGeneration("F")
                 .AddSuffix("7")
                 .AddSuffix("G")
+                .Build()
                 )
             .Language.Set(lang)
             .VCard;
@@ -49,8 +52,9 @@ public class DefaultNameFormatterTests
            .Create()
            .NameViews.Add(NameBuilder
                .Create()
-               .AddGivenName("Folker")
-               .AddFamilyName("Kinzel"),
+               .AddGiven("Folker")
+               .AddSurname("Kinzel")
+               .Build(),
                parameters: p => p.ComponentOrder = ";4711"
                )
            .Language.Set("de-DE")

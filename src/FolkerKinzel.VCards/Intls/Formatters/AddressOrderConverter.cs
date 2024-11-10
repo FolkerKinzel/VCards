@@ -112,7 +112,7 @@ internal static class AddressOrderConverter
 
     internal static AddressOrder? ParseAddress(Address address)
     {
-        ReadOnlyCollection<string> country = address.Country;
+        IReadOnlyList<string> country = address.Country;
 
         if (country.Count == 0)
         {

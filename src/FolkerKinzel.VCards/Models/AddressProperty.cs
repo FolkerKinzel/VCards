@@ -1,4 +1,5 @@
 using System.Collections;
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Intls;
@@ -19,80 +20,39 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 {
     #region Remove this code with Version 8.0.0
 
-    /// <summary> Assigns an automatical generated mailing label to the 
-    /// <see cref="ParameterSection.Label" /> property. Any previously stored data in the 
-    /// <see cref="ParameterSection.Label" /> property will be overwritten.</summary>
-    /// <seealso cref="ToLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void AttachLabel() => Parameters.Label = ToLabel();
+    [Obsolete("Use AddressFormatter instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public void AttachLabel() => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-    /// <summary>Converts the data encapsulated in the instance to formatted text
-    /// for a mailing label.</summary>
-    /// <returns>The data encapsulated in the instance, converted to formatted text
-    /// for a mailing label.</returns>
-    /// <seealso cref="AttachLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public string? ToLabel() => AddressFormatter.Default.ToLabel(this);
+    [Obsolete("Use AddressFormatter instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public string? ToLabel() => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-    /// <summary> Initializes a new <see cref="AddressProperty" /> object.</summary>
-    /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g., city).</param>
-    /// <param name="region">The region (e.g., state or province).</param>
-    /// <param name="postalCode">The postal code.</param>
-    /// <param name="country">The country name (full name).</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <remarks>
-    /// <note type="tip">
-    /// It's recommended to use the constructor overload that takes an <see cref="AddressBuilder"/>
-    /// as argument.
-    /// </note>
-    /// </remarks>
-    /// <seealso cref="AttachLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use AddressProperty(Address, string?) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public AddressProperty(IEnumerable<string?>? street,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
                            IEnumerable<string?>? locality,
                            IEnumerable<string?>? region,
                            IEnumerable<string?>? postalCode,
                            IEnumerable<string?>? country = null,
                            bool autoLabel = true,
-                           string? group = null)
-        : this(street: street,
-               locality: locality,
-               region: region,
-               postalCode: postalCode,
-               country: country,
-               postOfficeBox: null,
-               extendedAddress: null,
-               autoLabel: autoLabel,
-               group: group)
-    { }
+                           string? group = null) : base(new ParameterSection(), group) => throw new NotImplementedException();
 
-    /// <summary> Initializes a new <see cref="AddressProperty" /> object. </summary>
-    /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g. city).</param>
-    /// <param name="region">The region (e.g. state or province).</param>
-    /// <param name="postalCode">The postal code.</param>
-    /// <param name="country">The country name (full name).</param>
-    /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
-    /// <param name="extendedAddress">The extended address (e.g., apartment or suite
-    /// number). (Don't use this parameter!)</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <remarks>
-    /// <note type="tip">
-    /// It's recommended to use the constructor overload that takes an <see cref="AddressBuilder"/>
-    /// as argument.
-    /// </note>
-    /// </remarks>
-    /// <seealso cref="AttachLabel" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use AddressProperty(Address, string?) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public AddressProperty(IEnumerable<string?>? street,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
                            IEnumerable<string?>? locality,
                            IEnumerable<string?>? region,
                            IEnumerable<string?>? postalCode,
@@ -100,82 +60,28 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
                            IEnumerable<string?>? postOfficeBox,
                            IEnumerable<string?>? extendedAddress,
                            bool autoLabel = true,
-                           string? group = null) : base(new ParameterSection(), group)
-    {
-        Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
-                            locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
-                            region: ReadOnlyCollectionConverter.ToReadOnlyCollection(region),
-                            postalCode: ReadOnlyCollectionConverter.ToReadOnlyCollection(postalCode),
-                            country: ReadOnlyCollectionConverter.ToReadOnlyCollection(country),
-                            postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
-                            extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
+                           string? group = null) : base(new ParameterSection(), group) => throw new NotImplementedException();
 
-        if (autoLabel)
-        {
-            AttachLabel();
-        }
-    }
-
-    /// <summary>Initializes a new <see cref="AddressProperty" /> object. </summary>
-    /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g., city).</param>
-    /// <param name="region">The region (e.g., state or province).</param>
-    /// <param name="postalCode">The postal code.</param>
-    /// <param name="country">The country name (full name).</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <remarks>
-    /// <note type="tip">
-    /// It's recommended to use the constructor overload that takes an <see cref="AddressBuilder"/>
-    /// as argument.
-    /// </note>
-    /// </remarks>
-    /// <seealso cref="AttachLabel" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use AddressProperty(Address, string?) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public AddressProperty(
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         string? street,
         string? locality,
         string? region,
         string? postalCode,
         string? country = null,
         bool autoLabel = true,
-        string? group = null)
-        : this(street: street,
-              locality: locality,
-              region: region,
-              postalCode: postalCode,
-              country: country,
-              postOfficeBox: null,
-              extendedAddress: null,
-              autoLabel: autoLabel,
-              group: group)
-    { }
+        string? group = null) : base(new ParameterSection(), group) => throw new NotImplementedException();
 
-    /// <summary> Initializes a new <see cref="AddressProperty" /> object. </summary>
-    /// <param name="street">The street address.</param>
-    /// <param name="locality">The locality (e.g., city).</param>
-    /// <param name="region">The region (e.g., state or province).</param>
-    /// <param name="postalCode">The postal code.</param>
-    /// <param name="country">The country name (full name).</param>
-    /// <param name="postOfficeBox">The post office box. (Don't use this parameter!)</param>
-    /// <param name="extendedAddress">The extended address (e.g., apartment or suite
-    /// number). (Don't use this parameter!)</param>
-    /// <param name="autoLabel">Pass <c>false</c> to prevent a mailing label from being 
-    /// automatically added to the <see cref="ParameterSection.Label" /> parameter.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <remarks>
-    /// <note type="tip">
-    /// It's recommended to use the constructor overload that takes an <see cref="AddressBuilder"/>
-    /// as argument.
-    /// </note>
-    /// </remarks>
-    /// <seealso cref="AttachLabel" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use AddressProperty(Address, string?) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public AddressProperty(
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         string? street,
         string? locality,
         string? region,
@@ -184,45 +90,33 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         string? postOfficeBox,
         string? extendedAddress,
         bool autoLabel = true,
-        string? group = null)
-        : base(new ParameterSection(), group)
-    {
-        Value = new Address(street: ReadOnlyCollectionConverter.ToReadOnlyCollection(street),
-                            locality: ReadOnlyCollectionConverter.ToReadOnlyCollection(locality),
-                            region: ReadOnlyCollectionConverter.ToReadOnlyCollection(region),
-                            postalCode: ReadOnlyCollectionConverter.ToReadOnlyCollection(postalCode),
-                            country: ReadOnlyCollectionConverter.ToReadOnlyCollection(country),
-                            postOfficeBox: ReadOnlyCollectionConverter.ToReadOnlyCollection(postOfficeBox),
-                            extendedAddress: ReadOnlyCollectionConverter.ToReadOnlyCollection(extendedAddress));
+        string? group = null) : base(new ParameterSection(), group) => throw new NotImplementedException();
 
-        if (autoLabel)
-        {
-            AttachLabel();
-        }
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use AddressProperty(Address, string?) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public AddressProperty(AddressBuilder builder, string? group = null)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        : base(new ParameterSection(), group) => throw new NotImplementedException();
 
     #endregion
 
     /// <summary>
-    /// Initializes a new <see cref="AddressProperty"/> instance with the content of a 
-    /// specified <see cref="AddressBuilder"/>.
+    /// Initializes a new <see cref="AddressProperty"/> instance with a 
+    /// specified <see cref="Address"/>.
     /// </summary>
-    /// <remarks>
-    /// <note type="caution">
-    /// The constructor does not <see cref="AddressBuilder.Clear"/> the <see cref="AddressBuilder"/>.
-    /// </note>
-    /// </remarks>
-    /// <param name="builder">The <see cref="AddressBuilder"/> whose content is used.</param>
+    /// 
+    /// <param name="address">The <see cref="Address"/> instance used as <see cref="Value"/>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <seealso cref="ToLabel" />
-    /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
-    public AddressProperty(AddressBuilder builder, string? group = null)
+    /// <exception cref="ArgumentNullException"><paramref name="address"/> is <c>null</c>.</exception>
+    public AddressProperty(Address address, string? group = null)
         : base(new ParameterSection(), group)
     {
-        _ArgumentNullException.ThrowIfNull(builder, nameof(builder));
-        Value = new Address(builder);
+        _ArgumentNullException.ThrowIfNull(address, nameof(address));
+        Value = address;
     }
 
     /// <summary>Copy ctor.</summary>

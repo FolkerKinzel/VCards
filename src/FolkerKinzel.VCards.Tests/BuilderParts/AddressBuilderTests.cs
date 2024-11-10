@@ -5,7 +5,7 @@ public class AddressBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void SetPreferencesTest1() => new AddressBuilder().SetPreferences();
+    public void SetPreferencesTest1() => new AddressesBuilder().SetPreferences();
 
     [TestMethod]
     public void SetPreferencesTest2()
@@ -33,11 +33,11 @@ public class AddressBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetPreferencesTest1() => new AddressBuilder().UnsetPreferences();
+    public void UnsetPreferencesTest1() => new AddressesBuilder().UnsetPreferences();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void SetIndexesTest1() => new AddressBuilder().SetIndexes();
+    public void SetIndexesTest1() => new AddressesBuilder().SetIndexes();
 
     [TestMethod]
     public void SetIndexesTest2()
@@ -67,11 +67,11 @@ public class AddressBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetIndexesTest1() => new AddressBuilder().UnsetIndexes();
+    public void UnsetIndexesTest1() => new AddressesBuilder().UnsetIndexes();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new AddressBuilder().Edit(p => p);
+    public void EditTest1() => new AddressesBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -79,7 +79,7 @@ public class AddressBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new AddressBuilder().Edit((p, d) => p, true);
+    public void EditTest3() => new AddressesBuilder().Edit((p, d) => p, true);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -87,39 +87,39 @@ public class AddressBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new AddressBuilder().Add("", null, null, null);
+    public void AddTest1() => new AddressesBuilder().Add("", null, null, null);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest2() => new AddressBuilder().Add([], null, null, null);
+    public void AddTest2() => new AddressesBuilder().Add([], null, null, null);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest3() => new AddressBuilder().Add(FolkerKinzel.VCards.AddressBuilder.Create());
+    public void AddTest3() => new AddressesBuilder().Add(FolkerKinzel.VCards.AddressBuilder.Create());
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new AddressBuilder().Clear();
+    public void ClearTest1() => new AddressesBuilder().Clear();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void RemoveTest1() => new AddressBuilder().Remove(p => true);
+    public void RemoveTest1() => new AddressesBuilder().Remove(p => true);
 
     [TestMethod]
     public void EqualsTest1()
     {
-        Assert.IsFalse(new AddressBuilder().Equals((AddressBuilder?)null));
+        Assert.IsFalse(new AddressesBuilder().Equals((AddressesBuilder?)null));
 
-        var builder = new AddressBuilder();
+        var builder = new AddressesBuilder();
         Assert.AreEqual(builder.GetHashCode(), ((object)builder).GetHashCode());
     }
 
     [TestMethod]
-    public void ToStringTest1() => Assert.IsNotNull(new AddressBuilder().ToString());
+    public void ToStringTest1() => Assert.IsNotNull(new AddressesBuilder().ToString());
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AttachLabelsTest1() => new AddressBuilder().AttachLabels(AddressFormatter.Default);
+    public void AttachLabelsTest1() => new AddressesBuilder().AttachLabels(AddressFormatter.Default);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]

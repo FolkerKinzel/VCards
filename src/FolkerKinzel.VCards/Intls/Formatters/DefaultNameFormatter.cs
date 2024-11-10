@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards.Intls.Formatters;
 
@@ -63,10 +62,10 @@ internal sealed class DefaultNameFormatter : INameFormatter
     private static void FillDefault(Name name, List<string> list)
     {
         list.AddRange(name.Prefixes);
-        list.AddRange(name.GivenNames);
-        list.AddRange(name.AdditionalNames);
+        list.AddRange(name.Given);
+        list.AddRange(name.Given2);
         list.AddRange(name.Surnames2);
-        list.AddRange(name.FamilyNames);
+        list.AddRange(name.Surnames);
         list.AddRange(name.Generations);
         list.AddRange(name.Suffixes);
     }
@@ -74,9 +73,9 @@ internal sealed class DefaultNameFormatter : INameFormatter
     private static void FillSpanish(Name name, List<string> list)
     {
         list.AddRange(name.Prefixes);
-        list.AddRange(name.GivenNames);
-        list.AddRange(name.AdditionalNames);
-        list.AddRange(name.FamilyNames);
+        list.AddRange(name.Given);
+        list.AddRange(name.Given2);
+        list.AddRange(name.Surnames);
         list.AddRange(name.Surnames2);
         list.AddRange(name.Generations);
         list.AddRange(name.Suffixes);
@@ -86,10 +85,10 @@ internal sealed class DefaultNameFormatter : INameFormatter
     {
         list.AddRange(name.Prefixes);
         list.AddRange(name.Surnames2);
-        list.AddRange(name.FamilyNames);
+        list.AddRange(name.Surnames);
         list.AddRange(name.Generations);
-        list.AddRange(name.GivenNames);
-        list.AddRange(name.AdditionalNames);
+        list.AddRange(name.Given);
+        list.AddRange(name.Given2);
         list.AddRange(name.Suffixes);
     }
 
@@ -97,10 +96,10 @@ internal sealed class DefaultNameFormatter : INameFormatter
     {
         list.AddRange(name.Prefixes);
         list.AddRange(name.Surnames2);
-        list.AddRange(name.FamilyNames);
+        list.AddRange(name.Surnames);
         list.AddRange(name.Generations);
-        list.AddRange(name.AdditionalNames);
-        list.AddRange(name.GivenNames);
+        list.AddRange(name.Given2);
+        list.AddRange(name.Given);
         list.AddRange(name.Suffixes);
     }
 }

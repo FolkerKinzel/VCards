@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
@@ -12,11 +13,10 @@ public class NameBuilderTests
     [TestMethod]
     public void SetIndexesTest2()
     {
-        NameBuilder nameBuilder = new();
         VCardBuilder builder = VCardBuilder
             .Create()
-            .NameViews.Add(nameBuilder)
-            .NameViews.Add(nameBuilder.AddFamilyName("Miller"))
+            .NameViews.Add((Name?) null)
+            .NameViews.Add(NameBuilder.Create().AddSurname("Miller").Build())
             .NameViews.SetIndexes();
 
         VCard vc = builder.VCard;
@@ -66,7 +66,7 @@ public class NameBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest3() => new NameViewsBuilder().Add(FolkerKinzel.VCards.NameBuilder.Create());
+    public void AddTest3() => new NameViewsBuilder().Add(FolkerKinzel.VCards.NameBuilder.Create().Build());
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
@@ -110,11 +110,11 @@ public class NameBuilderTests
             .Create()
             .DisplayNames.Add("Sven")
             .DisplayNames.Edit(props => props.Append(null))
-            .NameViews.Add(VCards.NameBuilder.Create().AddGivenName("Ulf"))
-            .NameViews.Add(VCards.NameBuilder.Create(),                        p => { p.Language = "de-DE"; p.Preference = 1; }, v => "1")
-            .NameViews.Add(VCards.NameBuilder.Create().AddGivenName("Detlef"), p => { p.Language = "de-DE"; p.Preference = 3; }, v => "3")
-            .NameViews.Add(VCards.NameBuilder.Create().AddGivenName("Folker"), p => { p.Language = "de-DE"; p.Preference = 2; }, v => "2")
-            .NameViews.Add(VCards.NameBuilder.Create().AddGivenName("Susi"),   p => { p.Language = "en-US"; p.Preference = 4; }, v => "4")
+            .NameViews.Add(NameBuilder.Create().AddGiven("Ulf").Build())
+            .NameViews.Add(null,                                                p => { p.Language = "de-DE"; p.Preference = 1; }, v => "1")
+            .NameViews.Add(NameBuilder.Create().AddGiven("Detlef").Build(), p => { p.Language = "de-DE"; p.Preference = 3; }, v => "3")
+            .NameViews.Add(NameBuilder.Create().AddGiven("Folker").Build(), p => { p.Language = "de-DE"; p.Preference = 2; }, v => "2")
+            .NameViews.Add(NameBuilder.Create().AddGiven("Susi").Build(),   p => { p.Language = "en-US"; p.Preference = 4; }, v => "4")
             .NameViews.Edit(props => props.Append(null))
             .NameViews.ToDisplayNames(NameFormatter.Default)
             .VCard;

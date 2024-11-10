@@ -129,7 +129,7 @@ public class V3Tests
 
         vcard.NameViews =
         [
-                new(NameBuilder.Create().AddFamilyName("Test").AddGivenName("Paul"))
+                new(NameBuilder.Create().AddSurname("Test").AddGiven("Paul").Build())
         ];
 
         vcard.DisplayNames =
@@ -419,7 +419,7 @@ END:VCARD";
     [TestMethod]
     public void DisplayNameTest1()
     {
-        var nm = new NameProperty(NameBuilder.Create().AddFamilyName("Kinzel").AddGivenName("Folker"));
+        var nm = new NameProperty(NameBuilder.Create().AddSurname("Kinzel").AddGiven("Folker").Build());
 
         var vCard = new VCard { NameViews = nm };
 
@@ -469,7 +469,7 @@ END:VCARD";
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add(NameBuilder.Create().AddFamilyName("Name"), parameters: p => p.SortAs = ["abc", "123"])
+            .NameViews.Add(NameBuilder.Create().AddSurname("Name").Build(), parameters: p => p.SortAs = ["abc", "123"])
             .VCard;
 
         string serialized = vc.ToVcfString();
@@ -487,7 +487,7 @@ END:VCARD";
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add(NameBuilder.Create().AddFamilyName("Name"))
+            .NameViews.Add(NameBuilder.Create().AddSurname("Name").Build())
             .Organizations.Add("Org", parameters: p => p.SortAs = ["abc", "123"])
             .VCard;
 
@@ -543,7 +543,7 @@ END:VCARD";
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add(NameBuilder.Create().AddFamilyName("Name"), parameters: p => p.SortAs = ["abc", "123"])
+            .NameViews.Add(NameBuilder.Create().AddSurname("Name").Build(), parameters: p => p.SortAs = ["abc", "123"])
             .Organizations.Add("Org", parameters: p => p.SortAs = ["xyz"])
             .VCard;
 

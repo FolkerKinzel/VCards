@@ -28,6 +28,49 @@ namespace FolkerKinzel.VCards.BuilderParts;
 #endif
 public readonly struct NameViewsBuilder
 {
+
+    #region Remove this code with version 8.0.0
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use Add(Name?, ...) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public VCardBuilder Add(IEnumerable<string?>? familyNames = null,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                            IEnumerable<string?>? givenNames = null,
+                            IEnumerable<string?>? additionalNames = null,
+                            IEnumerable<string?>? prefixes = null,
+                            IEnumerable<string?>? suffixes = null,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null,
+                            Action<TextBuilder, NameProperty>? displayName = null) => throw new NotImplementedException();
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use Add(Name?, ...) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public VCardBuilder Add(string? familyName,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                            string? givenName = null,
+                            string? additionalName = null,
+                            string? prefix = null,
+                            string? suffix = null,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null,
+                            Action<TextBuilder, NameProperty>? displayName = null) => throw new NotImplementedException();
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use Add(Name?, ...) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public VCardBuilder Add(FolkerKinzel.VCards.NameBuilder builder,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null) => throw new NotImplementedException();
+
+    #endregion
+
     private readonly VCardBuilder? _builder;
 
     [MemberNotNull(nameof(_builder))]
@@ -123,44 +166,11 @@ public readonly struct NameViewsBuilder
     private IEnumerable<NameProperty> GetProperty() =>
         Builder.VCard.NameViews?.OfType<NameProperty>() ?? [];
 
-    #region Remove this code with version 8.0.0
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use Add(NameBuilder, ...) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public VCardBuilder Add(IEnumerable<string?>? familyNames = null,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                            IEnumerable<string?>? givenNames = null,
-                            IEnumerable<string?>? additionalNames = null,
-                            IEnumerable<string?>? prefixes = null,
-                            IEnumerable<string?>? suffixes = null,
-                            Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null,
-                            Action<TextBuilder, NameProperty>? displayName = null) => throw new NotImplementedException();
-
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use Add(NameBuilder, ...) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public VCardBuilder Add(string? familyName,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                            string? givenName = null,
-                            string? additionalName = null,
-                            string? prefix = null,
-                            string? suffix = null,
-                            Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null,
-                            Action<TextBuilder, NameProperty>? displayName = null) => throw new NotImplementedException();
-    
-    #endregion
-
     /// <summary>
     /// Adds a <see cref="NameProperty"/> instance, which is newly 
-    /// initialized using the content of a specified <see cref="NameBuilder"/>, to the <see cref="VCard.NameViews"/> property.
+    /// initialized with the specified <see cref="Name"/>.
     /// </summary>
-    /// <param name="builder">The <see cref="NameBuilder"/> whose content is used.</param>
+    /// <param name="name">The <see cref="Name"/> instance, or <c>null</c>.</param>
     /// 
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
@@ -177,15 +187,14 @@ public readonly struct NameViewsBuilder
     /// 
     /// <seealso cref="NameBuilder"/>
     /// 
-    /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(NameBuilder builder,
+    public VCardBuilder Add(Name? name,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
-        var prop = new NameProperty(builder,
+        var prop = new NameProperty(name ?? new Name(),
                                     group?.Invoke(vc));
         vc.Set(Prop.NameViews,
                VCardBuilder.Add(prop,

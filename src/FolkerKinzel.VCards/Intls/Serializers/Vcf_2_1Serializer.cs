@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using Base64Bcl = System.Buffers.Text.Base64;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
@@ -232,8 +233,8 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
         NameProperty? name = value.FirstOrNullIntl(IgnoreEmptyItems)
                              ?? (IgnoreEmptyItems
-                                   ? new NameProperty(NameBuilder.Clear().AddFamilyName("?"))
-                                   : new NameProperty(NameBuilder.Clear()));
+                                   ? new NameProperty(NameBuilder.AddSurname("?").Build())
+                                   : new NameProperty(new Name()));
         BuildProperty(VCard.PropKeys.N, name);
     }
 

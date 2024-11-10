@@ -32,7 +32,7 @@ public class AddressPropertyTests
         Assert.AreEqual(REGION, adr.Value.Region[0]);
         Assert.AreEqual(COUNTRY, adr.Value.Country[0]);
         Assert.AreEqual(PO_BOX, adr.Value.PostOfficeBox[0]);
-        Assert.AreEqual(EXTENDED_ADDRESS, adr.Value.ExtendedAddress[0]);
+        Assert.AreEqual(EXTENDED_ADDRESS, adr.Value.Extended[0]);
         Assert.AreEqual(GROUP, adr.Group);
         Assert.IsFalse(adr.IsEmpty);
     }
@@ -58,7 +58,7 @@ public class AddressPropertyTests
         Assert.AreEqual(REGION, adr.Value.Region[0]);
         Assert.AreEqual(COUNTRY, adr.Value.Country[0]);
         Assert.AreEqual(PO_BOX, adr.Value.PostOfficeBox[0]);
-        Assert.AreEqual(EXTENDED_ADDRESS, adr.Value.ExtendedAddress[0]);
+        Assert.AreEqual(EXTENDED_ADDRESS, adr.Value.Extended[0]);
         Assert.AreEqual(GROUP, adr.Group);
         Assert.IsFalse(adr.IsEmpty);
     }

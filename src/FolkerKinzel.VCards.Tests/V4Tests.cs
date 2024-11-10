@@ -335,7 +335,7 @@ public class V4Tests
     [TestMethod]
     public void DisplayNameTest1()
     {
-        var nm = new NameProperty(NameBuilder.Create().AddFamilyName("Kinzel").AddGivenName("Folker"));
+        var nm = new NameProperty(NameBuilder.Create().AddSurname("Kinzel").AddGiven("Folker").Build());
 
         var vCard = new VCard { NameViews = nm };
 
@@ -431,7 +431,7 @@ public class V4Tests
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add(NameBuilder.Create().AddGivenName("Folker"), parameters: p => p.SortAs = [])
+            .NameViews.Add(NameBuilder.Create().AddGiven("Folker").Build(), parameters: p => p.SortAs = [])
             .AnniversaryViews.Add("In summer", parameters: p => p.Language = "en")
             .Phones.Add("tel:123",
                         parameters: p =>

@@ -82,10 +82,10 @@ internal static class Utility
         email1.Parameters.EMailType = "  ";
         email1.Parameters.EMailType = EMail.SMTP;
 
-        var name1 = new NameProperty(NameBuilder.Create().AddFamilyName("Künzel").AddGivenName("Folker"));
+        var name1 = new NameProperty(NameBuilder.Create().AddSurname("Künzel").AddGiven("Folker").Build());
         name1.Parameters.SortAs = ["Kinzel", "Folker"];
 
-        var name2 = new NameProperty(NameBuilder.Create().AddFamilyName("Кинцэл").AddGivenName("Фолкер"));
+        var name2 = new NameProperty(NameBuilder.Create().AddSurname("Кинцэл").AddGiven("Фолкер").Build());
         name2.Parameters.SortAs = ["Kinzel", "Folker"];
         name2.Parameters.Language = "ru-RU";
         name2.Parameters.AltID = "  ";

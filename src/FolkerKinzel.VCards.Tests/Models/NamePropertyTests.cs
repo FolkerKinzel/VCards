@@ -21,16 +21,17 @@ public class NamePropertyTests
     {
         var adr = new NameProperty(NameBuilder
             .Create()
-            .AddFamilyName(LAST_NAME)
-            .AddGivenName(FIRST_NAME)
-            .AddAdditionalName(MIDDLE_NAME)
+            .AddSurname(LAST_NAME)
+            .AddGiven(FIRST_NAME)
+            .AddGiven2(MIDDLE_NAME)
             .AddPrefix(PREFIX)
-            .AddSuffix(SUFFIX), group: GROUP);
+            .AddSuffix(SUFFIX)
+            .Build(), group: GROUP);
 
         Assert.IsNotNull(adr);
-        Assert.AreEqual(LAST_NAME, adr.Value.FamilyNames[0]);
-        Assert.AreEqual(FIRST_NAME, adr.Value.GivenNames[0]);
-        Assert.AreEqual(MIDDLE_NAME, adr.Value.AdditionalNames[0]);
+        Assert.AreEqual(LAST_NAME, adr.Value.Surnames[0]);
+        Assert.AreEqual(FIRST_NAME, adr.Value.Given[0]);
+        Assert.AreEqual(MIDDLE_NAME, adr.Value.Given2[0]);
         Assert.AreEqual(PREFIX, adr.Value.Prefixes[0]);
         Assert.AreEqual(SUFFIX, adr.Value.Suffixes[0]);
         Assert.AreEqual(GROUP, adr.Group);
@@ -71,7 +72,7 @@ public class NamePropertyTests
     [TestMethod()]
     public void ToStringTest()
     {
-        var name = new NameProperty(NameBuilder.Create().AddFamilyName(LAST_NAME));
+        var name = new NameProperty(NameBuilder.Create().AddSurname(LAST_NAME).Build());
 
         string s = name.ToString();
 
@@ -124,21 +125,21 @@ public class NamePropertyTests
     [TestMethod]
     public void IEnumerableTest1()
     {
-        var prop = new NameProperty(NameBuilder.Create().AddFamilyName("Duck"));
+        var prop = new NameProperty(NameBuilder.Create().AddSurname("Duck").Build());
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 
     [TestMethod]
     public void CountTest1()
     {
-        ICompoundProperty prop = new NameProperty(NameBuilder.Create());
+        ICompoundProperty prop = new NameProperty(NameBuilder.Create().Build());
         Assert.AreEqual(7, prop.Count);
     }
 
     [TestMethod]
     public void ItemTest1()
     {
-        ICompoundProperty prop = new NameProperty(NameBuilder.Create());
+        ICompoundProperty prop = new NameProperty(NameBuilder.Create().Build());
         Assert.IsNotNull(prop[prop.Count - 1]);
     }
 
@@ -146,7 +147,7 @@ public class NamePropertyTests
     [ExpectedException(typeof(IndexOutOfRangeException))]
     public void ItemTest2()
     {
-        ICompoundProperty prop = new NameProperty(NameBuilder.Create());
+        ICompoundProperty prop = new NameProperty(NameBuilder.Create().Build());
         Assert.IsNotNull(prop[prop.Count]);
     }
 
@@ -154,7 +155,7 @@ public class NamePropertyTests
     [ExpectedException(typeof(IndexOutOfRangeException))]
     public void ItemTest3()
     {
-        ICompoundProperty prop = new NameProperty(NameBuilder.Create());
+        ICompoundProperty prop = new NameProperty(NameBuilder.Create().Build());
         Assert.IsNotNull(prop[-1]);
     }
 }

@@ -20,14 +20,15 @@ public class Rfc9555Tests
             .JSContactProps.Add("{\"bar\":1234}", parameters: p => p.JSContactPointer = "example.com:foo")
             .NameViews.Add(NameBuilder
                 .Create()
-                .AddFamilyName("0")
-                .AddGivenName("1a")
-                .AddGivenName("1b")
-                .AddAdditionalName("2")
+                .AddSurname("0")
+                .AddGiven("1a")
+                .AddGiven("1b")
+                .AddGiven2("2")
                 .AddPrefix("3")
                 .AddSuffix("4")
                 .AddSurname2("5")
-                .AddGeneration("6"),
+                .AddGeneration("6")
+                .Build(),
                 parameters: p => p.ComponentOrder = "s,\\,;6;5;s, ;4;s,\\;;3;s,\r\n;2;1,1;1;0"
                 )
             .NameViews.ToDisplayNames(NameFormatter.Default)

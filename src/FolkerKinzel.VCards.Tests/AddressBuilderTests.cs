@@ -118,7 +118,7 @@ public class AddressBuilderTests
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddExtendedAddress("1").AddExtendedAddress("2"));
 
-        CollectionAssert.AreEqual(expected, prop.Value.ExtendedAddress);
+        CollectionAssert.AreEqual(expected, prop.Value.Extended);
     }
 
     [TestMethod()]
@@ -127,7 +127,7 @@ public class AddressBuilderTests
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddExtendedAddress(expected));
 
-        CollectionAssert.AreEqual(expected, prop.Value.ExtendedAddress);
+        CollectionAssert.AreEqual(expected, prop.Value.Extended);
     }
 
     [TestMethod()]
@@ -143,7 +143,7 @@ public class AddressBuilderTests
                           .AddExtendedAddress("2")
                           .AddApartment("a"));
 
-        Assert.AreEqual(0, prop.Value.ExtendedAddress.Count);
+        Assert.AreEqual(0, prop.Value.Extended.Count);
         Assert.AreEqual("a", prop.Value.Apartment.Single());
     }
 

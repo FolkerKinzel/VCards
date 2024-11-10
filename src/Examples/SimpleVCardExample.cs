@@ -12,8 +12,9 @@ public static class SimpleVCardExample
                 .Create()
                 .NameViews.Add(NameBuilder
                     .Create()
-                    .AddGivenName("Susi")
-                    .AddFamilyName("Sonntag")
+                    .AddGiven("Susi")
+                    .AddSurname("Sonntag")
+                    .Build()
                               )
                 .NameViews.ToDisplayNames(NameFormatter.Default)
                 .GenderViews.Add(Sex.Female)

@@ -6,7 +6,7 @@ internal enum AdrProp
     PostOfficeBox,
 
     /// <summary>The extended address (e.g., apartment or suite number). (2,3,4)</summary>
-    ExtendedAddress,
+    Extended,
 
     /// <summary>The street address. (2,3,4)</summary>
     Street,

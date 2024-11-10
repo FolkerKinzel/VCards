@@ -1090,12 +1090,12 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add(NameBuilder.Create().AddFamilyName("Miller").AddGivenName("John"),
+            .NameViews.Add(NameBuilder.Create().AddSurname("Miller").AddGiven("John").Build(),
                             parameters: p => p.Language = "en",
                             group: vc => "gr1"
                             )
             .NameViews.ToDisplayNames(NameFormatter.Default)
-            .NameViews.Add(NameBuilder.Create().AddFamilyName("Müller").AddGivenName("Johann"),
+            .NameViews.Add(NameBuilder.Create().AddSurname("Müller").AddGiven("Johann").Build(),
                            parameters: p => p.Language = "de")
             .VCard;
 
@@ -1107,7 +1107,7 @@ public class VCardBuilderTests
 
         Assert.IsNotNull(vc.NameViews?.FirstOrDefault());
 
-        Assert.AreEqual("Miller", prop1.Value.FamilyNames[0]);
+        Assert.AreEqual("Miller", prop1.Value.Surnames[0]);
         Assert.AreEqual("en", prop1.Parameters.Language);
         Assert.AreEqual("gr1", prop1.Group);
 
@@ -1122,7 +1122,7 @@ public class VCardBuilderTests
         builder.NameViews.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.NameViews = new NameProperty(NameBuilder.Create().AddFamilyName((string?)null).AddGivenName("Heinz")).Append(null);
+        builder.VCard.NameViews = new NameProperty(NameBuilder.Create().AddSurname((string?)null).AddGiven("Heinz").Build()).Append(null);
         builder.NameViews.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());

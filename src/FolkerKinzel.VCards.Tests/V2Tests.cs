@@ -204,8 +204,9 @@ public class V2Tests
     {
         var relProp = new RelationProperty(
             Relation.Create(new VCard { NameViews = new NameProperty(NameBuilder.Create()
-                                                                                .AddFamilyName("wife")
-                                                                                .AddGivenName("best")) }));
+                                                                                .AddSurname("wife")
+                                                                                .AddGiven("best")
+                                                                                .Build()) }));
         relProp.Parameters.RelationType = Rel.Spouse;
 
         var vc = new VCard
@@ -368,20 +369,9 @@ public class V2Tests
         // Initialize the VCard:
         var vcard = new VCard
         {
-            NameViews =
-            [
-                    new(NameBuilder.Create().AddFamilyName("").AddGivenName("zzMad Perla 45"))
-            ],
-
-            DisplayNames =
-            [
-                    new("zzMad Perla 45")
-            ],
-
-            Phones =
-            [
-                    xiamoiMobilePhone
-            ]
+            NameViews = new NameProperty(NameBuilder.Create().AddSurname("").AddGiven("zzMad Perla 45").Build()),
+            DisplayNames = new TextProperty("zzMad Perla 45"),
+            Phones = xiamoiMobilePhone
         };
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the

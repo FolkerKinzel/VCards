@@ -8,8 +8,7 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class CompoundObjectConverter
 {
-
-    public static string ToString<TKey>(IReadOnlyDictionary<TKey, ReadOnlyCollection<string>> sourceDic) where TKey : struct, Enum
+    public static string ToString<TKey>(IReadOnlyDictionary<TKey, string[]> sourceDic) where TKey : struct, Enum
     {
         if (sourceDic.Count == 0)
         {
@@ -19,7 +18,7 @@ internal static class CompoundObjectConverter
         var worker = new StringBuilder();
         var dic = new List<Tuple<string, string>>();
 
-        foreach (KeyValuePair<TKey, ReadOnlyCollection<string>> pair in sourceDic.OrderBy(x => x.Key))
+        foreach (KeyValuePair<TKey, string[]> pair in sourceDic.OrderBy(x => x.Key))
         {
             string s = BuildProperty(pair.Value);
             dic.Add(new Tuple<string, string>(pair.Key.ToString(), s));
@@ -42,7 +41,7 @@ internal static class CompoundObjectConverter
 
         ////////////////////////////////////////////
 
-        string BuildProperty(IList<string> strings)
+        string BuildProperty(IReadOnlyList<string> strings)
         {
             _ = worker.Clear();
 
@@ -59,7 +58,7 @@ internal static class CompoundObjectConverter
         }
     }
 
-    internal static void SerializeProperty(IList<string> strings, char joinChar, VcfSerializer serializer)
+    internal static void SerializeProperty(IReadOnlyList<string> strings, char joinChar, VcfSerializer serializer)
     {
         StringBuilder builder = serializer.Builder;
 

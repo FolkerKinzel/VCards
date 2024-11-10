@@ -362,7 +362,7 @@ public class Rfc9554Tests
     {
         VCard vc = VCardBuilder
            .Create(false, false)
-           .NameViews.Add(NameBuilder.Create().AddFamilyName("Kinzel"),
+           .NameViews.Add(NameBuilder.Create().AddSurname("Kinzel").Build(),
            p =>
            {
                p.Phonetic = Phonetic.Ipa;

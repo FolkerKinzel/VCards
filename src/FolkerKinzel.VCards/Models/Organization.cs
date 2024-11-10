@@ -42,14 +42,7 @@ public sealed class Organization
                                                                      IEnumerable<string?>? orgUnits)
     {
         orgName = string.IsNullOrWhiteSpace(orgName) ? null : orgName;
-        IReadOnlyList<string>? orgUnitsColl = ReadOnlyCollectionConverter.ToReadOnlyList(orgUnits);
-
-        Debug.Assert(!object.ReferenceEquals(orgUnits, orgUnitsColl));
-
-        if (orgUnitsColl.Count == 0)
-        {
-            orgUnitsColl = null;
-        }
+        string[]? orgUnitsColl = ReadOnlyCollectionConverter.ToReadOnlyList(orgUnits?.ToArray());
 
         return (orgName, orgUnitsColl);
     }

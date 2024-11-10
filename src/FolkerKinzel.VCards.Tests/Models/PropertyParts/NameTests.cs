@@ -57,13 +57,14 @@ public class NameTests
             .Create()
             .NameViews.Add(NameBuilder
                 .Create()
-                .AddFamilyName("1")
-                .AddGivenName("2")
-                .AddAdditionalName("3")
+                .AddSurname("1")
+                .AddGiven("2")
+                .AddGiven2("3")
                 .AddPrefix("4")
                 .AddSuffix("5")
                 .AddSurname2("6")
-                .AddGeneration("7"))
+                .AddGeneration("7")
+                .Build())
             .VCard;
 
         string vcf2 = vc.ToVcfString(VCdVersion.V2_1);
@@ -89,7 +90,8 @@ public class NameTests
             .NameViews.Add(NameBuilder
                 .Create()
                 .AddSurname2("surname2")
-                .AddGeneration("generation"))
+                .AddGeneration("generation")
+                .Build())
             .VCard;
 
         string vcfRfc9554 = vc.ToVcfString(VCdVersion.V4_0);
@@ -109,10 +111,11 @@ public class NameTests
         var prop = new NameProperty(
             NameBuilder
             .Create()
-            .AddFamilyName(["1", "2"])
-            .AddSurname2("2"));
+            .AddSurname(["1", "2"])
+            .AddSurname2("2")
+            .Build());
 
-        CollectionAssert.AreEqual(new string[] { "1" }, prop.Value.FamilyNames);
+        CollectionAssert.AreEqual(new string[] { "1" }, prop.Value.Surnames);
     }
 
     [TestMethod]
@@ -121,10 +124,11 @@ public class NameTests
         var prop = new NameProperty(
             NameBuilder
             .Create()
-            .AddFamilyName(["1", "2"])
-            .AddSurname2("3"));
+            .AddSurname(["1", "2"])
+            .AddSurname2("3")
+            .Build());
 
-        CollectionAssert.AreEqual(new string[] { "1", "2" }, prop.Value.FamilyNames);
+        CollectionAssert.AreEqual(new string[] { "1", "2" }, prop.Value.Surnames);
     }
 
     [TestMethod]
@@ -135,16 +139,17 @@ public class NameTests
         var prop = new NameProperty(
             NameBuilder
             .Create()
-            .AddFamilyName(arr)
-            .AddSurname2(arr));
+            .AddSurname(arr)
+            .AddSurname2(arr)
+            .Build());
 
-        Assert.AreEqual(0, prop.Value.FamilyNames.Count);
+        Assert.AreEqual(0, prop.Value.Surnames.Count);
     }
 
     [TestMethod]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
         "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
         "CA1829:Use Length/Count property instead of Count() when available", Justification = "Test")]
     public void IEnumerableTest1()
     {

@@ -27,7 +27,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use NameProperty(NameBuilder, string?) instead.", true)]
+    [Obsolete("Use NameProperty(Name, string?) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public NameProperty(
@@ -41,7 +41,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use NameProperty(NameBuilder, string?) instead.", true)]
+    [Obsolete("Use NameProperty(Name, string?) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public NameProperty(
@@ -53,27 +53,30 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
         string? suffix = null,
         string? group = null) : base(new ParameterSection(), group) => throw new NotImplementedException();
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use NameProperty(Name, string?) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public NameProperty(NameBuilder builder, string? group = null)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        : base(new ParameterSection(), group) => throw new NotImplementedException();
+
     #endregion
 
     /// <summary>
-    /// Initializes a new <see cref="NameProperty"/> instance with the content of a 
-    /// specified <see cref="NameBuilder"/>.
+    /// Initializes a new <see cref="NameProperty"/> instance with a 
+    /// specified <see cref="Name"/>.
     /// </summary>
-    /// <remarks>
-    /// <note type="caution">
-    /// The constructor does not <see cref="NameBuilder.Clear"/> the <see cref="NameBuilder"/>.
-    /// </note>
-    /// </remarks>
-    /// <param name="builder">The <see cref="NameBuilder"/> whose content is used.</param>
+    /// <param name="name">The <see cref="Name"/> instance used as <see cref="Value"/>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
-    public NameProperty(NameBuilder builder, string? group = null) 
+    /// <exception cref="ArgumentNullException"><paramref name="name"/> is <c>null</c>.</exception>
+    public NameProperty(Name name, string? group = null) 
         : base(new ParameterSection(), group)
     {
-        _ArgumentNullException.ThrowIfNull(builder, nameof(builder));
-        Value = new Name(builder);
+        _ArgumentNullException.ThrowIfNull(name, nameof(name));
+        Value = name;
     }
 
     /// <summary>Copy ctor.</summary>

@@ -97,7 +97,7 @@ public class OrgBuilderTests
         VCard vc = VCardBuilder.Create().Organizations.Add(new Organization("Contoso")).VCard;
 
         Assert.IsNotNull(vc.Organizations);
-        var org = vc.Organizations.FirstOrDefault();
+        OrgProperty? org = vc.Organizations.FirstOrDefault();
         Assert.IsNotNull(org);
         Assert.IsFalse(org.IsEmpty);
     }

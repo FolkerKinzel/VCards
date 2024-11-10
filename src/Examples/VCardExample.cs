@@ -62,11 +62,12 @@ public static class VCardExample
                     .Create()
                     .AddPrefix("Prof.")
                     .AddPrefix("Dr.")
-                    .AddGivenName("Käthe")
-                    .AddAdditionalName("Alexandra")
-                    .AddAdditionalName("Caroline")
-                    .AddFamilyName("Müller-Risinowsky")
-                    .AddGeneration("II."),
+                    .AddGiven("Käthe")
+                    .AddGiven2("Alexandra")
+                    .AddGiven2("Caroline")
+                    .AddSurname("Müller-Risinowsky")
+                    .AddGeneration("II.")
+                    .Build(),
                      parameters: p => p.Language = "de-DE",
                      group: vc => vc.NewGroup())
                 .NameViews.ToDisplayNames(NameFormatter.Default)

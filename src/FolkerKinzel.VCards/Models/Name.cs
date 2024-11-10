@@ -11,89 +11,84 @@ using FolkerKinzel.VCards.Intls.Formatters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates information about the name of the person the 
 /// <see cref="VCard"/> represents.</summary>
+/// <remarks>
+/// <note type="tip">Use <see cref="NameBuilder"/> to create an instance.</note>
+/// </remarks>
+/// <seealso cref="NameBuilder"/>
+/// <seealso cref="NameProperty"/>
+/// <seealso cref="VCard.NameViews"/>
 public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
 {
-    private const int STANDARD_COUNT = 5;
-    private const int MAX_COUNT = 7;
-    private readonly Dictionary<NameProp, ReadOnlyCollection<string>> _dic = [];
+    #region Remove this code with version 8.0.1
 
-    private ReadOnlyCollection<string> Get(NameProp prop)
-        => _dic.TryGetValue(prop, out ReadOnlyCollection<string>? coll)
-            ? coll
-            : ReadOnlyStringCollection.Empty;
-
-    #region Remove this code with version 8.0.0
-
-    /// <summary>Formats the data encapsulated by the instance into a human-readable
-    /// form.</summary>
-    /// <returns>The data encapsulated by the instance in human-readable form or
-    /// <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
-    /// <remarks>
-    /// The method takes only the properties defined in RFC 6350 into account:
-    /// <list type="bullet">
-    /// <item><see cref="Prefixes"/></item>
-    /// <item><see cref="GivenNames"/></item>
-    /// <item><see cref="AdditionalNames"/></item>
-    /// <item><see cref="FamilyNames"/></item>
-    /// <item><see cref="Suffixes"/></item>
-    /// </list>
-    /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use NameFormatter instead.")]
+    [Obsolete("Use NameFormatter instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public string? ToDisplayName() => DisplayNameFormatter.ToDisplayName(this);
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public string? ToDisplayName() => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-    private void Add(NameProp prop, ReadOnlyCollection<string> coll)
-    {
-        if (coll.Count != 0)
-        {
-            _dic[prop] = coll;
-        }
-    }
+    [Obsolete("Use Given instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ReadOnlyCollection<string> GivenNames => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-    internal Name(
-        ReadOnlyCollection<string> familyNames,
-        ReadOnlyCollection<string> givenNames,
-        ReadOnlyCollection<string> additionalNames,
-        ReadOnlyCollection<string> prefixes,
-        ReadOnlyCollection<string> suffixes)
-    {
-        Add(NameProp.FamilyNames, familyNames);
-        Add(NameProp.GivenNames, givenNames);
-        Add(NameProp.AdditionalNames, additionalNames);
-        Add(NameProp.Prefixes, prefixes);
-        Add(NameProp.Suffixes, suffixes);
+    [Obsolete("Use Given instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ReadOnlyCollection<string> AdditionalNames => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-        FamilyNames = familyNames;
-        Suffixes = suffixes;
-    }
+    [Obsolete("Use Surnames instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public IReadOnlyCollection<string> FamilyNames => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     #endregion
 
-    internal Name() => FamilyNames = Suffixes = ReadOnlyStringCollection.Empty;
+    private const int STANDARD_COUNT = 5;
+    private const int MAX_COUNT = 7;
+    private readonly Dictionary<NameProp, string[]> _dic = [];
 
+    private string[] Get(NameProp prop)
+        => _dic.TryGetValue(prop, out string[]? coll) ? coll : [];
+
+    internal Name() => Surnames = Suffixes = [];
+
+    /// <summary>
+    /// Initializes a new <see cref="Name"/> instance with the content of a 
+    /// specified <see cref="NameBuilder"/>.
+    /// </summary>
+    /// 
+    /// <param name="builder">The <see cref="NameBuilder"/> whose content is used.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
     [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
         Justification = "Performance: Collection initializer initializes a new List.")]
     internal Name(NameBuilder builder)
     {
-        IList<string> familyNames, surname2, suffixes, generation;
-        familyNames = surname2 = suffixes = generation = Array.Empty<string>();
+        List<string> surnames, surname2, suffixes, generation;
+        surnames = surname2 = suffixes = generation = [];
 
         foreach (KeyValuePair<NameProp, List<string>> kvp in builder.Data)
         {
             if (kvp.Value.Count != 0)
             {
                 // Copy kvp.Value because it comes from NameBuilder and can be reused!
-                _dic[kvp.Key] = new ReadOnlyCollection<string>(kvp.Value.ToArray());
+                _dic[kvp.Key] = kvp.Value.ToArray();
 
                 switch (kvp.Key)
                 {
-                    case NameProp.FamilyNames:
-                        familyNames = kvp.Value;
+                    case NameProp.Surnames:
+                        surnames = kvp.Value;
                         break;
                     case NameProp.Surnames2:
                         surname2 = kvp.Value;
@@ -112,7 +107,7 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
 
         if (surname2.Count != 0)
         {
-            AddOldValueForCompatibility(NameProp.FamilyNames, familyNames, surname2, builder.Worker);
+            AddOldValueForCompatibility(NameProp.Surnames, surnames, surname2, builder.Worker);
         }
 
         if (generation.Count != 0)
@@ -120,13 +115,13 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
             AddOldValueForCompatibility(NameProp.Suffixes, suffixes, generation, builder.Worker);
         }
 
-        FamilyNames = GetFamilyNamesView();
+        Surnames = GetSurnamesView();
         Suffixes = GetSuffixesView();
     }
 
     [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
         Justification = "Performance: Collection initializer allocate a new List<string>")]
-    private void AddOldValueForCompatibility(NameProp oldPropKey, IList<string> oldPropVals, IList<string> newPropVals, List<string> newValuesNotInOldProp)
+    private void AddOldValueForCompatibility(NameProp oldPropKey, List<string> oldPropVals, IReadOnlyList<string> newPropVals, List<string> newValuesNotInOldProp)
     {
         GetNewValuesNotInOldProp(oldPropVals, newPropVals, newValuesNotInOldProp);
 
@@ -134,21 +129,18 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
         {
             if (oldPropVals.Count != 0)
             {
-                Debug.Assert(oldPropVals is List<string>);
-                ((List<string>)oldPropVals).AddRange(newValuesNotInOldProp);
+                oldPropVals.AddRange(newValuesNotInOldProp);
 
                 // Copy oldPropVals because it comes from NameBuilder and can be reused!
-                oldPropVals = oldPropVals.ToArray();
+                _dic[oldPropKey] = oldPropVals.ToArray();
             }
             else
             {
-                oldPropVals = newValuesNotInOldProp;
+                _dic[oldPropKey] = newValuesNotInOldProp.ToArray();
             }
-
-            _dic[oldPropKey] = new ReadOnlyCollection<string>(oldPropVals);
         }
 
-        static void GetNewValuesNotInOldProp(IList<string> oldPropVals, IList<string> newPropVals, List<string> newValuesNotInOldProp)
+        static void GetNewValuesNotInOldProp(IReadOnlyList<string> oldPropVals, IReadOnlyList<string> newPropVals, List<string> newValuesNotInOldProp)
         {
             newValuesNotInOldProp.Clear();
 
@@ -156,7 +148,7 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
             {
                 foreach (string oldVal in oldPropVals)
                 {
-                    if(oldVal.Contains(newVal, StringComparison.CurrentCultureIgnoreCase))
+                    if (oldVal.Contains(newVal, StringComparison.CurrentCultureIgnoreCase))
                     {
                         goto repeat;
                     }
@@ -189,11 +181,11 @@ repeat:
             }
 
             ReadOnlySpan<char> span = mem.Span;
-            ReadOnlyCollection<string> coll = span.Contains(',')
-                ? ReadOnlyCollectionConverter.ToReadOnlyCollection(ToArray(in mem, version))
-                : ReadOnlyCollectionConverter.ToReadOnlyCollection(span.UnMaskValue(version));
+            string[]? coll = span.Contains(',')
+                ? ReadOnlyCollectionConverter.ToReadOnlyList(ToArray(in mem, version))
+                : ReadOnlyCollectionConverter.ToReadOnlyList(span.UnMaskValue(version));
 
-            if (coll.Count == 0)
+            if (coll is null)
             {
                 continue;
             }
@@ -201,7 +193,7 @@ repeat:
             _dic[(NameProp)index] = coll;
         }//foreach
 
-        FamilyNames = GetFamilyNamesView();
+        Surnames = GetSurnamesView();
         Suffixes = GetSuffixesView();
 
         /////////////////////////////////////////
@@ -215,21 +207,21 @@ repeat:
                                     version).ToArray();
     }
 
-    /// <summary>Family Name(s) (also known as "surname(s)"). (2,3,4)</summary>
+    /// <summary>Surname(s) (also known as "family name(s)"). (2,3,4)</summary>
     /// <remarks>
     /// Returns a collection that omits any value if an equal value is set to
     /// <see cref="Surnames2"/> accordingly.
     /// </remarks>
-    public ReadOnlyCollection<string> FamilyNames { get; }
+    public IReadOnlyList<string> Surnames { get; }
 
     /// <summary>Given Name(s) (first name(s)). (2,3,4)</summary>
-    public ReadOnlyCollection<string> GivenNames => Get(NameProp.GivenNames);
+    public IReadOnlyList<string> Given => Get(NameProp.Given);
 
     /// <summary>Additional Name(s) (middle name(s)). (2,3,4)</summary>
-    public ReadOnlyCollection<string> AdditionalNames => Get(NameProp.AdditionalNames);
+    public IReadOnlyList<string> Given2 => Get(NameProp.Given2);
 
     /// <summary>Honorific Prefix(es). (2,3,4)</summary>
-    public ReadOnlyCollection<string> Prefixes => Get(NameProp.Prefixes);
+    public IReadOnlyList<string> Prefixes => Get(NameProp.Prefixes);
 
     /// <summary>Honorific Suffix(es). (2,3,4)</summary>
     /// 
@@ -237,13 +229,13 @@ repeat:
     /// Returns a collection that omits any value if an equal value is set to
     /// <see cref="Generations"/> accordingly.
     /// </remarks>
-    public ReadOnlyCollection<string> Suffixes { get; }
+    public IReadOnlyList<string> Suffixes { get; }
 
     /// <summary>Secondary surnames (used in some cultures), also known as "maternal surnames". (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Surnames2 => Get(NameProp.Surnames2);
+    public IReadOnlyList<string> Surnames2 => Get(NameProp.Surnames2);
 
     /// <summary>Generation markers or qualifiers, e.g., "Jr." or "III". (4 - RFC 9554)</summary>
-    public ReadOnlyCollection<string> Generations => Get(NameProp.Generations);
+    public IReadOnlyList<string> Generations => Get(NameProp.Generations);
 
     /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain
     /// any usable data, otherwise <c>false</c>.</summary>
@@ -268,7 +260,7 @@ repeat:
 
             return nameProp switch
             {
-                NameProp.FamilyNames => FamilyNames,
+                NameProp.Surnames => Surnames,
                 NameProp.Suffixes => Suffixes,
                 _ => Get(nameProp)
             };
@@ -322,7 +314,7 @@ repeat:
 
     internal bool NeedsToBeQpEncoded()
     {
-        foreach (KeyValuePair<NameProp, ReadOnlyCollection<string>> kvp in _dic)
+        foreach (KeyValuePair<NameProp, string[]> kvp in _dic)
         {
             if (kvp.Key <= NameProp.Suffixes
                 && kvp.Value.Any(StringExtension.NeedsToBeQpEncoded))
@@ -335,29 +327,27 @@ repeat:
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private ReadOnlyCollection<string> GetFamilyNamesView() => GetDiffView(NameProp.FamilyNames, NameProp.Surnames2);
+    private IReadOnlyList<string> GetSurnamesView() => GetDiffView(NameProp.Surnames, NameProp.Surnames2);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private ReadOnlyCollection<string> GetSuffixesView() => GetDiffView(NameProp.Suffixes, NameProp.Generations);
+    private IReadOnlyList<string> GetSuffixesView() => GetDiffView(NameProp.Suffixes, NameProp.Generations);
 
-    private ReadOnlyCollection<string> GetDiffView(NameProp oldIdx, NameProp newIdx)
+    private IReadOnlyList<string> GetDiffView(NameProp oldIdx, NameProp newIdx)
     {
-        if (!_dic.TryGetValue(oldIdx, out ReadOnlyCollection<string>? oldProps))
+        if (!_dic.TryGetValue(oldIdx, out string[]? oldProps))
         {
-            return ReadOnlyStringCollection.Empty;
+            return [];
         }
 
-        if (!_dic.TryGetValue(newIdx, out ReadOnlyCollection<string>? newProps))
+        if (!_dic.TryGetValue(newIdx, out string[]? newProps))
         {
             return oldProps;
         }
 
         List<string>? list = null;
 
-        for (int i = 0; i < oldProps.Count; i++)
+        foreach (string old in oldProps.AsSpan())
         {
-            string old = oldProps[i];
-
             if (!newProps.Contains(old, StringComparer.CurrentCultureIgnoreCase))
             {
                 list ??= [];
@@ -365,10 +355,10 @@ repeat:
             }
         }
 
-        return list is null ? ReadOnlyStringCollection.Empty
-                            : list.Count == oldProps.Count
+        return list is null ? []
+                            : list.Count == oldProps.Length
                                  ? oldProps
-                                 : list.AsReadOnly();
+                                 : list;
     }
 }
 
