@@ -36,8 +36,8 @@
 - [x] Rename `DateAndOrTime.Value` to `Object`
 
 &nbsp;
-- [ ] Remove NameProperty.ToDisplayName()
-- [ ] `NameProperty`: Allow only ctors that take a `NamePropertyBuilder` as argument.
+- [x] Remove NameProperty.ToDisplayName()
+- [x] `NameProperty`: Allow only ctors that take a `NamePropertyBuilder` as argument.
 
 &nbsp;
 - [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method

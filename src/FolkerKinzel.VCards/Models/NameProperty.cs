@@ -17,86 +17,41 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="Name"/>
 public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICompoundProperty
 {
-    #region Remove this code with version 8.0.0
-
-    /// <summary>Formats the data encapsulated by the instance into a human-readable
-    /// form.</summary>
-    /// <returns>The data encapsulated by the instance in human-readable form
-    /// or <c>null</c> if the instance <see cref="IsEmpty"/>.</returns>
-    /// <remarks>
-    /// The method takes only the properties defined in RFC 6350 into account:
-    /// <list type="bullet">
-    /// <item><see cref="Name.Prefixes"/></item>
-    /// <item><see cref="Name.GivenNames"/></item>
-    /// <item><see cref="Name.AdditionalNames"/></item>
-    /// <item><see cref="Name.FamilyNames"/></item>
-    /// <item><see cref="Name.Suffixes"/></item>
-    /// </list>
-    /// </remarks>
+    #region Remove this code with version 8.0.1
+    
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use NameFormatter instead.")]
+    [Obsolete("Use NameFormatter instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public string? ToDisplayName() => Value.ToDisplayName();
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public string? ToDisplayName() => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-    /// <summary>  Initializes a new <see cref="NameProperty" /> object. </summary>
-    /// <param name="familyNames">Family Names (also known as surnames)</param>
-    /// <param name="givenNames">Given Names (first names)</param>
-    /// <param name="additionalNames">Additional Names (middle names)</param>
-    /// <param name="prefixes">Honorific Prefixes</param>
-    /// <param name="suffixes">Honorific Suffixes</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <remarks>
-    /// <note type="tip">
-    /// It's recommended to use the constructor overload that takes a <see cref="NameBuilder"/>
-    /// as argument.
-    /// </note>
-    /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use NameProperty(NameBuilder, string?) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public NameProperty(
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         IEnumerable<string?>? familyNames = null,
         IEnumerable<string?>? givenNames = null,
         IEnumerable<string?>? additionalNames = null,
         IEnumerable<string?>? prefixes = null,
         IEnumerable<string?>? suffixes = null,
-        string? group = null) : base(new ParameterSection(), group)
-    {
-        Value = new Name(familyNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(familyNames),
-                         givenNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(givenNames),
-                         additionalNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(additionalNames),
-                         prefixes: ReadOnlyCollectionConverter.ToReadOnlyCollection(prefixes),
-                         suffixes: ReadOnlyCollectionConverter.ToReadOnlyCollection(suffixes));
-    }
+        string? group = null) : base(new ParameterSection(), group) => throw new NotImplementedException();
 
-    /// <summary>  Initializes a new <see cref="NameProperty" /> object. </summary>
-    /// <param name="familyName">Family Name (also known as surname)</param>
-    /// <param name="givenName">Given Name (first name)</param>
-    /// <param name="additionalName">Additional Name (middle name)</param>
-    /// <param name="prefix">Honorific Prefix</param>
-    /// <param name="suffix">Honorific Suffix</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <remarks>
-    /// <note type="tip">
-    /// It's recommended to use the constructor overload that takes a <see cref="NameBuilder"/>
-    /// as argument.
-    /// </note>
-    /// </remarks>
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use NameProperty(NameBuilder, string?) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public NameProperty(
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         string? familyName,
         string? givenName = null,
         string? additionalName = null,
         string? prefix = null,
         string? suffix = null,
-        string? group = null) : base(new ParameterSection(), group)
-    {
-        Value = new Name(familyNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(familyName),
-                         givenNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(givenName),
-                         additionalNames: ReadOnlyCollectionConverter.ToReadOnlyCollection(additionalName),
-                         prefixes: ReadOnlyCollectionConverter.ToReadOnlyCollection(prefix),
-                         suffixes: ReadOnlyCollectionConverter.ToReadOnlyCollection(suffix));
-    }
+        string? group = null) : base(new ParameterSection(), group) => throw new NotImplementedException();
 
     #endregion
 
