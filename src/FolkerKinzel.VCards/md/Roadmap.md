@@ -97,8 +97,14 @@ and let it store as string[]
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
 - [ ] Rename the `VCardBuilder.TimeStamp` property to `VCardBuilder.Updated`
 - [ ] Rename the `Prop.TimeStamp` value to `Prop.Updated`
-- [ ] Rename the `setTimeStamp` parameter in the `VCard` ctor to `setUpdated`
-- [ ] Rename the `setTimeStamp` parameter in `VCardBuilder.Create(bool, bool)` to `setUpdated`
+<!--- [ ] Rename the `Opts.UpdateTimeStamp` value in the `VCard` ctor to `Opts.UpdateUpdated`-->
+
+&nbsp;
+- [ ] Rename `VCard.ID` to `VCard.ContactID`
+- [ ] Rename the `Prop.ID` value to `Prop.ContactID`
+- [ ] Rename the `setID` parameter in the VCard ctor to `setContactID`
+- [ ] Rename the `setID` parameter in the `VCardBuilder.Create` method to `setContactID`
+- [ ] Rename `IDBuilder` to `ContactIDBuilder`
 
 &nbsp;
 - [ ] Rename the `VCard.Languages` property to `SpokenLanguages`
