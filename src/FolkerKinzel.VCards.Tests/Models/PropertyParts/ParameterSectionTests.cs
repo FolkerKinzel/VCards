@@ -181,7 +181,7 @@ public class ParameterSectionTests
 
         VCard vc = Vcf.Parse(vcf)[0];
         Assert.IsNotNull(vc.BirthDayViews);
-        Assert.AreEqual(ParameterSection.DefaultCalendar, vc.BirthDayViews.First()!.Parameters.Calendar);
+        Assert.AreEqual(VCard.DefaultCalendar, vc.BirthDayViews.First()!.Parameters.Calendar);
     }
 
     [TestMethod]

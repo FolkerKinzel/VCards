@@ -12,22 +12,12 @@ internal static class AddressLabelFormatter
 
     static AddressLabelFormatter() => _defaultAddressOrder = AddressOrderConverter.ParseCultureInfo(CultureInfo.CurrentCulture);
 
-    [Obsolete()]
-    internal static string? ToLabel(Address address)
-    {
-        return address.IsEmpty
-            ? null
-            : DoConvertToLabel(address, AddressOrderConverter.ParseAddress(address) ?? _defaultAddressOrder);
-    }
-
     internal static string ToLabel(AddressProperty prop)
-    {
-        Debug.Assert(!prop.Value.IsEmpty);
-        return DoConvertToLabel(prop.Value, AddressOrderConverter.ParseAddressProperty(prop) ?? _defaultAddressOrder);
-    }
+    { 
+        AddressOrder addressOrder = AddressOrderConverter.ParseAddressProperty(prop) ?? _defaultAddressOrder;
+        Address address = prop.Value;
+        Debug.Assert(!address.IsEmpty);
 
-    private static string DoConvertToLabel(Address address, AddressOrder addressOrder)
-    {
         return new StringBuilder(BUILDER_CAPACITY)
             .AppendStreet(address)
             .AppendLocality(address, addressOrder)

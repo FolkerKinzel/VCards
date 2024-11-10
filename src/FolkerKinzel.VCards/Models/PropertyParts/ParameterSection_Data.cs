@@ -120,7 +120,7 @@ public sealed partial class ParameterSection
     /// <value>
     /// <para>
     /// A <see cref="string"/> that specifies the calendar system. If none
-    /// is specified, returns <see cref="DefaultCalendar"/>.
+    /// is specified, returns <see cref="VCard.DefaultCalendar"/>.
     /// </para>
     /// <para>If you want to specify a <c>CALSCALE</c> parameter in the VCF file, pass a 
     /// <see cref="string"/> to this property, otherwise assign
@@ -130,7 +130,7 @@ public sealed partial class ParameterSection
     [AllowNull]
     public string Calendar
     {
-        get => Get<string?>(VCdParam.Calendar) ?? DefaultCalendar;
+        get => Get<string?>(VCdParam.Calendar) ?? VCard.DefaultCalendar;
 
         set => Set<string?>(VCdParam.Calendar,
                             string.IsNullOrWhiteSpace(value)

@@ -5,7 +5,7 @@
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
 ### 8.0.1
-- Remove symbols that are marked as `Obsolete` errors.
+- [ ] Remove symbols that are marked as `Obsolete` errors.
 
 ### 8.0.0
 - [ ] Make .NET 9.0 version of the package
@@ -66,10 +66,9 @@
 - [x] Change `Organization.OrgUnits` to return `IReadOnlyList<string>`
 
 &nbsp;
-- [ ] `AddressProperty`: Allow only ctors that take an `AddressBuilder` as argument
-- [ ] Remove `AddressProperty.AttachLabel()`
-- [ ] Remove `AddressProperty.ToLabel()`
-- [ ] Refactor `DefaultAddressFormatter` to contain `AddressLabelFormatter`
+- [x] `AddressProperty`: Allow only ctors that take an `Address` as argument
+- [x] Remove `AddressProperty.AttachLabel()`
+- [x] Remove `AddressProperty.ToLabel()`
 
 &nbsp;
 - [x] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
@@ -106,7 +105,7 @@ and let it store as string[]
 - [ ] Rename the `Prop.Languages` value to `Prop.SpokenLanguages`
 
 &nbsp;
-- [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
+- [x] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
 ### 7.4.2
 - [ ] Dependency update

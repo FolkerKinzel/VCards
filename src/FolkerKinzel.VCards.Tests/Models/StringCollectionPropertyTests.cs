@@ -68,7 +68,7 @@ public class StringCollectionPropertyTests
     [TestMethod]
     public void ToStringTest1()
     {
-        string s = new StringCollectionProperty(new string[] { "Bla", "Blub" }).ToString();
+        string s = new StringCollectionProperty(["Bla", "Blub"]).ToString();
 
         Assert.IsNotNull(s);
         Assert.AreNotEqual(0, s.Length);
