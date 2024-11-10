@@ -114,9 +114,9 @@ public class OrgBuilderTests
             .Create()
             .Organizations.Add(new Organization("Contoso"),
                                group: vc => vc.NewGroup(),
-                               displayName: (dn, org) => dn.Add(org.Value.OrganizationName))
+                               displayName: (dn, org) => dn.Add(org.Value.OrgName))
             .Organizations.Add("The Bad Ones",
-                                displayName: (dn, org) => dn.Add(org.Value.OrganizationName))
+                                displayName: (dn, org) => dn.Add(org.Value.OrgName))
             .VCard;
 
         Assert.IsNotNull(vc.DisplayNames);

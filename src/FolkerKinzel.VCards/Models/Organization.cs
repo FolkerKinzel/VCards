@@ -1,15 +1,11 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
-
-// Organization is a PropertyPart, but it could be useful to reuse a single
-// Organization object for more than one VCard (e.g., the vCards of a team).
-// That's why Organization has a public constructor and why it is in the Models
-// namespace rather than in the PropertyParts namespace.
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -24,8 +20,8 @@ public sealed class Organization
     {
         (string? orgNameParsed, ReadOnlyCollection<string>? orgUnitsParsed) = ParseProperties(orgName, orgUnits);
 
-        OrganizationName = orgNameParsed;
-        OrganizationalUnits = orgUnitsParsed;
+        OrgName = orgNameParsed;
+        OrgUnits = orgUnitsParsed;
     }
 
     internal Organization(List<string> orgList)
@@ -40,8 +36,8 @@ public sealed class Organization
 
         (string? orgNameParsed, ReadOnlyCollection<string>? orgUnitsParsed) = ParseProperties(orgName, orgList);
 
-        OrganizationName = orgNameParsed;
-        OrganizationalUnits = orgUnitsParsed;
+        OrgName = orgNameParsed;
+        OrgUnits = orgUnitsParsed;
     }
 
     private static (string?, ReadOnlyCollection<string>?) ParseProperties(string? orgName,
@@ -59,35 +55,51 @@ public sealed class Organization
     }
 
     /// <summary>Organization name.</summary>
-    public string? OrganizationName { get; }
+    public string? OrgName { get; }
+
+    [Obsolete("Use OrgName instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public string? OrganizationName => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
 
     /// <summary>Organizational unit name(s).</summary>
-    public ReadOnlyCollection<string>? OrganizationalUnits { get; }
+    public ReadOnlyCollection<string>? OrgUnits { get; }
+
+    [Obsolete("Use OrganizationalUnits instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ReadOnlyCollection<string>? OrganizationalUnits => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
 
     /// <summary>Returns <c>true</c>, if the <see cref="Organization" /> object does
     /// not contain any usable data.</summary>
-    public bool IsEmpty => OrganizationName is null && OrganizationalUnits is null;
+    public bool IsEmpty => OrgName is null && OrgUnits is null;
 
     internal bool NeedsToBeQpEncoded()
-        => OrganizationName.NeedsToBeQpEncoded() ||
-           (OrganizationalUnits?.Any(s => s.NeedsToBeQpEncoded()) ?? false);
+        => OrgName.NeedsToBeQpEncoded() ||
+           (OrgUnits?.Any(s => s.NeedsToBeQpEncoded()) ?? false);
 
     /// <inheritdoc/>
     public override string ToString()
     {
         var sb = new StringBuilder();
 
-        string orgName = OrganizationName is null ? "" : nameof(OrganizationName);
-        string orgUnit = OrganizationalUnits is null ? "" : nameof(OrganizationalUnits);
+        string orgName = OrgName is null ? "" : nameof(OrgName);
+        string orgUnit = OrgUnits is null ? "" : nameof(OrgUnits);
 
         int padLength = Math.Max(orgName.Length, orgUnit.Length) + 2;
 
-        if (OrganizationName is not null)
+        if (OrgName is not null)
         {
-            _ = sb.Append($"{orgName}: ".PadRight(padLength)).Append(OrganizationName);
+            _ = sb.Append($"{orgName}: ".PadRight(padLength)).Append(OrgName);
         }
 
-        if (OrganizationalUnits is not null)
+        if (OrgUnits is not null)
         {
             if (sb.Length != 0)
             {
@@ -96,12 +108,12 @@ public sealed class Organization
 
             _ = sb.Append($"{orgUnit}: ".PadRight(padLength));
 
-            for (int i = 0; i < OrganizationalUnits.Count - 1; i++)
+            for (int i = 0; i < OrgUnits.Count - 1; i++)
             {
-                _ = sb.Append(OrganizationalUnits[i]).Append("; ");
+                _ = sb.Append(OrgUnits[i]).Append("; ");
             }
 
-            _ = sb.Append(OrganizationalUnits[OrganizationalUnits.Count - 1]);
+            _ = sb.Append(OrgUnits[OrgUnits.Count - 1]);
         }
 
         return sb.ToString();
@@ -112,13 +124,13 @@ public sealed class Organization
         StringBuilder builder = serializer.Builder;
         int startIdx = builder.Length;
 
-        _ = builder.AppendValueMasked(OrganizationName, serializer.Version);
+        _ = builder.AppendValueMasked(OrgName, serializer.Version);
 
-        if (OrganizationalUnits is not null)
+        if (OrgUnits is not null)
         {
-            for (int i = 0; i < OrganizationalUnits.Count; i++)
+            for (int i = 0; i < OrgUnits.Count; i++)
             {
-                _ = builder.Append(';').AppendValueMasked(OrganizationalUnits[i], serializer.Version);
+                _ = builder.Append(';').AppendValueMasked(OrgUnits[i], serializer.Version);
             }
         }
 
