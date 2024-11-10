@@ -83,14 +83,16 @@
 
 - [x] Rename `Address.ExtendedAddress` to `Address.Extended`
 - [x] Rename `AddressBuilder.AddExtendedAddress` to `AddressBuilder.AddExtended`
+- [x] Rename `Address.PostOfficeBox` to `Address.POBox`
+- [x] Rename `AddressBuilder.AddPostOfficeBox` to `AddressBuilder.AddPOBox`
 
 &nbsp;
-- [ ] Change the `StringCollection.Value` property to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
+- [x] Change the `StringCollectionProperty.Value` property to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
 and let it store as string[]
 
 &nbsp;
-- [ ] Refactor `ReadOnlyCollectionConverter` to return arrays
-- [ ] Remove `ReadOnlyStringCollection`
+- [x] Refactor `ReadOnlyCollectionConverter` to return arrays
+- [x] Remove `ReadOnlyStringCollection`
 
 &nbsp;
 - [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).

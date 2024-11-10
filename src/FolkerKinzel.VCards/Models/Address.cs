@@ -9,16 +9,6 @@ using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Formatters;
 using FolkerKinzel.VCards.Intls.Serializers;
-
-/* Unmerged change from project 'FolkerKinzel.VCards (netstandard2.0)'
-Before:
-using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
-After:
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
-using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
-*/
 using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
 namespace FolkerKinzel.VCards.Models;
@@ -32,9 +22,7 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="VCard.Addresses"/>
 public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 {
-
     #region Remove this code with version 8.0.0
-
 
     [Obsolete("Use AddressProperty.ToLabel() instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -48,6 +36,13 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
     [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public ReadOnlyCollection<string> ExtendedAddress => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use POBox instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ReadOnlyCollection<string> PostOfficeBox => throw new NotImplementedException();
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     #endregion
@@ -163,8 +158,8 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
             ReadOnlySpan<char> span = mem.Span;
             string[]? coll = span.Contains(',')
-                ? ReadOnlyCollectionConverter.ToReadOnlyList(ToArray(in mem, version))
-                : ReadOnlyCollectionConverter.ToReadOnlyList(span.UnMaskValue(version));
+                ? StringArrayConverter.AsNonEmptyStringArray(ToArray(in mem, version))
+                : StringArrayConverter.AsNonEmptyStringArray(span.UnMaskValue(version));
 
             if (coll is null)
             {
@@ -230,7 +225,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
     }
 
     /// <summary>The post office box.</summary>
-    public IReadOnlyList<string> PostOfficeBox => Get(AdrProp.PostOfficeBox);
+    public IReadOnlyList<string> POBox => Get(AdrProp.POBox);
 
     /// <summary>The extended address (e.g., apartment or suite number).</summary>
     /// <remarks>

@@ -38,7 +38,7 @@ internal static class AddressLabelFormatter
 
     private static StringBuilder AppendStreet(this StringBuilder builder, Address address)
     {
-        IReadOnlyList<string> poBox = address.PostOfficeBox;
+        IReadOnlyList<string> poBox = address.POBox;
 
         if (poBox.Count != 0)
         {

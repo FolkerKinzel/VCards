@@ -24,7 +24,7 @@ public class StringCollectionPropertyTests
         var nickNameProp = new StringCollectionProperty(inputNickNames, expectedGroup);
 
         Assert.AreEqual(expectedGroup, nickNameProp.Group);
-        CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value);
+        CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value?.ToArray());
     }
 
 
@@ -42,7 +42,7 @@ public class StringCollectionPropertyTests
         var nickNameProp = new StringCollectionProperty(s, expectedGroup);
 
         Assert.AreEqual(expectedGroup, nickNameProp.Group);
-        CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value);
+        CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value?.ToArray());
     }
 
 
@@ -61,7 +61,7 @@ public class StringCollectionPropertyTests
         var nickNameProp = new StringCollectionProperty(vcfRow!, VCdVersion.V4_0);
 
         Assert.AreEqual(expectedGroup, nickNameProp.Group);
-        CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value);
+        CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value?.ToArray());
     }
 
 

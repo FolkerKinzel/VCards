@@ -32,7 +32,7 @@ public class AddressBuilderTests
             .AddLandmark("i")
             .AddLocality("k")
             .AddPostalCode("l")
-            .AddPostOfficeBox("m")
+            .AddPOBox("m")
             .AddRegion("n")
             .AddRoom("o")
             .AddStreet("p")
@@ -96,23 +96,23 @@ public class AddressBuilderTests
     public void AddPostOfficeBoxTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddPostOfficeBox("1").AddPostOfficeBox("2").Build());
+        var prop = new AddressProperty(AddressBuilder.Create().AddPOBox("1").AddPOBox("2").Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.PostOfficeBox.ToArray());
+        CollectionAssert.AreEqual(expected, prop.Value.POBox.ToArray());
     }
 
     [TestMethod()]
     public void AddPostOfficeBoxTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new AddressProperty(AddressBuilder.Create().AddPostOfficeBox(expected).Build());
+        var prop = new AddressProperty(AddressBuilder.Create().AddPOBox(expected).Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.PostOfficeBox.ToArray());
+        CollectionAssert.AreEqual(expected, prop.Value.POBox.ToArray());
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddPostOfficeBoxTest3() => AddressBuilder.Create().AddPostOfficeBox((string[]?)null!);
+    public void AddPostOfficeBoxTest3() => AddressBuilder.Create().AddPOBox((string[]?)null!);
 
     [TestMethod()]
     public void AddExtendedAddressTest1()

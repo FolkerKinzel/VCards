@@ -16,11 +16,13 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="VCard.Categories"/>
 public sealed class StringCollectionProperty : VCardProperty, IEnumerable<StringCollectionProperty>
 {
+    private readonly string[]? _value;
+
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="StringCollectionProperty"/>
     /// instance to clone</param>
     private StringCollectionProperty(StringCollectionProperty prop) : base(prop)
-        => Value = prop.Value;
+        => _value = prop._value;
 
     /// <summary>Initializes a new <see cref="StringCollectionProperty" /> object.</summary>
     /// <param name="value">A collection of <see cref="string" />s or <c>null</c>.</param>
@@ -28,15 +30,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public StringCollectionProperty(IEnumerable<string?>? value, string? group = null)
-        : base(new ParameterSection(), group)
-    {
-        this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
-
-        if (Value.Count == 0)
-        {
-            Value = null;
-        }
-    }
+        : base(new ParameterSection(), group) => _value = StringArrayConverter.AsNonEmptyStringArray(value?.ToArray());
 
     /// <summary>Initializes a new <see cref="StringCollectionProperty" /> object.</summary>
     /// <param name="value">A <see cref="string" /> or <c>null</c>.</param>
@@ -44,15 +38,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public StringCollectionProperty(string? value, string? group = null)
-        : base(new ParameterSection(), group)
-    {
-        this.Value = ReadOnlyCollectionConverter.ToReadOnlyCollection(value);
-
-        if (Value.Count == 0)
-        {
-            Value = null;
-        }
-    }
+        : base(new ParameterSection(), group) => _value = StringArrayConverter.AsNonEmptyStringArray(value);
 
     internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
@@ -78,38 +64,16 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
         if (arr.Length != 0)
         {
-            this.Value = new ReadOnlyCollection<string>(arr);
+            _value = arr;
         }
     }
 
     /// <summary>The data provided by the <see cref="StringCollectionProperty" />.</summary>
-    public new ReadOnlyCollection<string>? Value
-    {
-        get;
-    }
+    public new IReadOnlyList<string>? Value => _value;
+
 
     /// <inheritdoc />
-    public override string ToString()
-    {
-        string s = "";
-
-        if (Value is null)
-        {
-            return s;
-        }
-
-        Debug.Assert(Value.Count != 0);
-
-        for (int i = 0; i < Value.Count - 1; i++)
-        {
-            s += Value[i];
-            s += ", ";
-        }
-
-        s += Value[Value.Count - 1];
-
-        return s;
-    }
+    public override string ToString() => _value is null ? "" : string.Join(", ", _value);
 
     /// <inheritdoc />
     public override object Clone() => new StringCollectionProperty(this);
@@ -142,11 +106,10 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
         StringBuilder builder = serializer.Builder;
        
-        for (int i = 0; i < Value.Count; i++)
+        foreach(string s  in _value.AsSpan())
         {
-            Debug.Assert(!string.IsNullOrEmpty(Value[i]));
-
-            _ = builder.AppendValueMasked(Value[i], serializer.Version).Append(',');
+            Debug.Assert(!string.IsNullOrEmpty(s));
+            _ = builder.AppendValueMasked(s, serializer.Version).Append(',');
         }
 
         --builder.Length;

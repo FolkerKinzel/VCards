@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>7.4.1</Version>
-    <FileVersion>7.4.1.48</FileVersion>
+    <FileVersion>7.4.1.52</FileVersion>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v7.4.1</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
@@ -82,6 +82,7 @@
     <Compile Remove="Intls\Models\RelationUuidProperty.cs" />
     <Compile Remove="Intls\Models\RelationVCardProperty.cs" />
     <Compile Remove="Intls\Net40LeaveOpenStream.cs" />
+    <Compile Remove="Intls\ReadOnlyCollectionEmptyPolyfill.cs" />
     <Compile Remove="Models\ContentSizeRestriction.cs" />
     <Compile Remove="Models\DataProperty_OBSOLETE.cs" />
     <Compile Remove="Models\DataUrl.cs" />

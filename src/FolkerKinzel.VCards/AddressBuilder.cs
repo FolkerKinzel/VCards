@@ -33,6 +33,20 @@ public sealed class AddressBuilder
     public AddressBuilder AddExtendedAddress(IEnumerable<string?> collection) => AddRange(AdrProp.Extended, collection);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
+    [Obsolete("Use AddPOBox instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public AddressBuilder AddPostOfficeBox(string? value) => Add(AdrProp.POBox, value);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use AddPOBox instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public AddressBuilder AddPostOfficeBox(IEnumerable<string?> collection) => AddRange(AdrProp.POBox, collection);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
     #endregion
 
     private readonly Dictionary<AdrProp, List<string>> _dic = [];
@@ -58,21 +72,21 @@ public sealed class AddressBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static AddressBuilder Create() => new();
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Address.PostOfficeBox"/>. (2,3,4)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Address.POBox"/>. (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
-    /// <seealso cref="Address.PostOfficeBox"/>
+    /// <seealso cref="Address.POBox"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public AddressBuilder AddPostOfficeBox(string? value) => Add(AdrProp.PostOfficeBox, value);
+    public AddressBuilder AddPOBox(string? value) => Add(AdrProp.POBox, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Address.PostOfficeBox"/>. (2,3,4)</summary>
+    /// <see cref="Address.POBox"/>. (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="AddressBuilder"/> instance to be able to chain calls.</returns>
-    /// <seealso cref="Address.PostOfficeBox"/>
+    /// <seealso cref="Address.POBox"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public AddressBuilder AddPostOfficeBox(IEnumerable<string?> collection) => AddRange(AdrProp.PostOfficeBox, collection);
+    public AddressBuilder AddPOBox(IEnumerable<string?> collection) => AddRange(AdrProp.POBox, collection);
 
     /// <summary>Adds a <see cref="string"/> to <see cref="Address.Extended"/> (e.g., apartment or suite number). (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>

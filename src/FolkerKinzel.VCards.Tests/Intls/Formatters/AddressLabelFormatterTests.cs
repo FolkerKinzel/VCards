@@ -43,7 +43,7 @@ public class AddressLabelFormatterTests
             .AddPostalCode(zip)
             .AddLocality(city)
             .AddStreet(street)
-            .AddPostOfficeBox(poBox)
+            .AddPOBox(poBox)
             .Build()
             );
 

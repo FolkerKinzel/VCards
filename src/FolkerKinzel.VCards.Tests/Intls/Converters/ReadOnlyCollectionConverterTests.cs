@@ -6,18 +6,10 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 public class ReadOnlyCollectionConverterTests
 {
     [TestMethod]
-    public void ToReadOnlyCollectionTest1() => Assert.IsNotNull(ReadOnlyCollectionConverter.ToReadOnlyCollection(new string[] { "Hello" }));
+    public void ToReadOnlyCollectionTest1() => Assert.IsNotNull(StringArrayConverter.AsNonEmptyStringArray(["Hello"]));
+
 
     [TestMethod]
-    public void ToReadOnlyCollectionTest3() => Assert.IsNotNull(ReadOnlyCollectionConverter.ToReadOnlyCollection(new ReadOnlyCollection<string>(["Hello"])));
-
-    [TestMethod]
-    public void ToReadOnlyCollectionTest2() => Assert.IsNotNull(ReadOnlyCollectionConverter.ToReadOnlyCollection(Yielder()));
-
-
-    private static IEnumerable<string> Yielder()
-    {
-        yield return "Hello";
-    }
+    public void ToReadOnlyCollectionTest2() => Assert.IsNull(StringArrayConverter.AsNonEmptyStringArray(["    "]));
 
 }

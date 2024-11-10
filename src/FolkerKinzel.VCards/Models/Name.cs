@@ -182,8 +182,8 @@ repeat:
 
             ReadOnlySpan<char> span = mem.Span;
             string[]? coll = span.Contains(',')
-                ? ReadOnlyCollectionConverter.ToReadOnlyList(ToArray(in mem, version))
-                : ReadOnlyCollectionConverter.ToReadOnlyList(span.UnMaskValue(version));
+                ? StringArrayConverter.AsNonEmptyStringArray(ToArray(in mem, version))
+                : StringArrayConverter.AsNonEmptyStringArray(span.UnMaskValue(version));
 
             if (coll is null)
             {
