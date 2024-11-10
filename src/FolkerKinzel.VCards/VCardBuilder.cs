@@ -286,7 +286,7 @@ public sealed class VCardBuilder
     /// only supports UUIDs.</value>
     /// <remarks>As a default setting each newly created <see cref="VCard"/> gets an <see cref="ID"/>
     /// automatically.</remarks>
-    public IDBuilder ID => new(this);
+    public ContactIDBuilder ID => new(this);
 
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
     /// in, but does not necessarily take part in. <c>(4 - RFC&#160;6715)</c></summary>

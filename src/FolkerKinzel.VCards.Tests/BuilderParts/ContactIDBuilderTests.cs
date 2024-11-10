@@ -3,11 +3,11 @@
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
-public class IDBuilderTests
+public class ContactIDBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new IDBuilder().Edit(p => p);
+    public void EditTest1() => new ContactIDBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -15,7 +15,7 @@ public class IDBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new IDBuilder().Edit((p, d) => p, true);
+    public void EditTest3() => new ContactIDBuilder().Edit((p, d) => p, true);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -34,21 +34,21 @@ public class IDBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void SetTest1() => new IDBuilder().Set(ContactID.Empty);
+    public void SetTest1() => new ContactIDBuilder().Set(ContactID.Empty);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new IDBuilder().Clear();
+    public void ClearTest1() => new ContactIDBuilder().Clear();
 
     [TestMethod]
     public void EqualsTest1()
     {
-        Assert.IsFalse(new IDBuilder().Equals((IDBuilder?)null));
+        Assert.IsFalse(new ContactIDBuilder().Equals((ContactIDBuilder?)null));
 
-        var builder = new IDBuilder();
+        var builder = new ContactIDBuilder();
         Assert.AreEqual(builder.GetHashCode(), ((object)builder).GetHashCode());
     }
 
     [TestMethod]
-    public void ToStringTest1() => Assert.IsNotNull(new IDBuilder().ToString());
+    public void ToStringTest1() => Assert.IsNotNull(new ContactIDBuilder().ToString());
 }

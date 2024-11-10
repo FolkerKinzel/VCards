@@ -3,7 +3,7 @@
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
-public class AddressBuilderTests
+public class AddressesBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

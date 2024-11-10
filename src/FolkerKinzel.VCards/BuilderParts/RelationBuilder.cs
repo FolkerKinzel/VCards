@@ -261,7 +261,7 @@ public readonly struct RelationBuilder
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-        => Add(Relation.Create(IDBuilder.ContactIDFromUri(uri)), relationType, parameters, group);
+        => Add(Relation.Create(ContactIDBuilder.ContactIDFromUri(uri)), relationType, parameters, group);
 
     /// <summary>
     /// Adds a <see cref="RelationProperty"/> instance, which is newly initialized using the 

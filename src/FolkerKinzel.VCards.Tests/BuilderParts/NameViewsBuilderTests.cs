@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
-public class NameBuilderTests
+public class NameViewsBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

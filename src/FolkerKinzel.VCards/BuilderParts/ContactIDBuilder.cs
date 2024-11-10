@@ -19,14 +19,14 @@ namespace FolkerKinzel.VCards.BuilderParts;
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
     Justification = "Overriding does not change the default behavior.")]
 #endif
-public readonly struct IDBuilder
+public readonly struct ContactIDBuilder
 {
     private readonly VCardBuilder? _builder;
 
     [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
-    internal IDBuilder(VCardBuilder builder) => _builder = builder;
+    internal ContactIDBuilder(VCardBuilder builder) => _builder = builder;
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.ID"/> property with a delegate and 
@@ -37,7 +37,7 @@ public readonly struct IDBuilder
     /// <see cref="VCard.ID"/> property and <paramref name="data"/> as arguments. Its return value 
     /// will be the new content of the <see cref="VCard.ID"/> property.</param>
     /// <param name="data">The data to pass to <paramref name="func"/>.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="ContactIDBuilder"/>
     /// to be able to chain calls.</returns>
     /// <remarks>
     /// This overload allows to pass external data to the delegate without having to use closures.
@@ -61,7 +61,7 @@ public readonly struct IDBuilder
     /// <see cref="VCard.ID"/> property as argument. Its return value will be the new content of the 
     /// <see cref="VCard.ID"/> property.
     /// </param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="ContactIDBuilder"/> 
     /// to be able to chain calls.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
@@ -84,7 +84,7 @@ public readonly struct IDBuilder
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is 
     /// called with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="ContactIDBuilder"/> to 
     /// be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -104,7 +104,7 @@ public readonly struct IDBuilder
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="ContactIDBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
     /// <remarks>
@@ -137,7 +137,7 @@ public readonly struct IDBuilder
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="ContactIDBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
     /// <remarks>
@@ -180,7 +180,7 @@ public readonly struct IDBuilder
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="ContactIDBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
     /// <remarks>
@@ -213,7 +213,7 @@ public readonly struct IDBuilder
     /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="ContactIDBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
     /// 
@@ -229,7 +229,7 @@ public readonly struct IDBuilder
     /// <summary>
     /// Sets the <see cref="VCard.ID"/> property to <c>null</c>.
     /// </summary>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="IDBuilder"/> to 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="ContactIDBuilder"/> to 
     /// be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>

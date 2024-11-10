@@ -15,6 +15,8 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="Organization"/>
 public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
 {
+    #region Remove with version 8.0.1
+
     [Obsolete("Use OrgProperty(Organization, string?) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [ExcludeFromCodeCoverage]
@@ -24,6 +26,8 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
                        IEnumerable<string?>? orgUnits = null,
                        string? group = null)
         : base(new ParameterSection(), group) => throw new NotImplementedException();
+
+    #endregion
 
     /// <summary>
     /// <summary>Copy ctor.</summary>
