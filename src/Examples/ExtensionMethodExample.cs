@@ -67,7 +67,7 @@ public class ExtensionMethodExample
     private static VCard InitializeTestVCard()
     {
         return VCardBuilder
-            .Create(setID: false)
+            .Create(setContactID: false)
             .DisplayNames.Add("vCard zum Testen",
                                parameters:
                                p =>

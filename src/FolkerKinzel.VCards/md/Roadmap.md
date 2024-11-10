@@ -102,9 +102,10 @@ and let it store as string[]
 &nbsp;
 - [ ] Rename `VCard.ID` to `VCard.ContactID`
 - [ ] Rename the `Prop.ID` value to `Prop.ContactID`
-- [ ] Rename the `setID` parameter in the VCard ctor to `setContactID`
-- [ ] Rename the `setID` parameter in the `VCardBuilder.Create` method to `setContactID`
+- [x] Rename the `setID` parameter in the VCard ctor to `setContactID`
+- [x] Rename the `setID` parameter in the `VCardBuilder.Create` method to `setContactID`
 - [x] Rename `IDBuilder` to `ContactIDBuilder`
+- [x] Rename `IDProperty` to `ContactIDProperty`
 
 &nbsp;
 - [x] Rename the `VCard.Languages` property to `SpokenLanguages`

@@ -14,34 +14,34 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="VCard.ID"/>
 /// <seealso cref="ContactID"/>
 /// <seealso cref="RelationProperty"/>
-public sealed class IDProperty : VCardProperty
+public sealed class ContactIDProperty : VCardProperty
 {
     [Obsolete("Use the constructor that takes a ContactID.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public IDProperty(string? group = null)
+    public ContactIDProperty(string? group = null)
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         : base(new ParameterSection(), group) => throw new NotImplementedException();
 
     /// <summary>Copy ctor.</summary>
-    /// <param name="prop">The <see cref="IDProperty"/> instance
+    /// <param name="prop">The <see cref="ContactIDProperty"/> instance
     /// to clone.</param>
-    private IDProperty(IDProperty prop) : base(prop)
+    private ContactIDProperty(ContactIDProperty prop) : base(prop)
         => Value = prop.Value;
 
-    /// <summary> Initializes a new <see cref="IDProperty" /> object with a 
+    /// <summary> Initializes a new <see cref="ContactIDProperty" /> object with a 
     /// specified <see cref="ContactID"/>. </summary>
     /// <param name="id">A <see cref="Guid" /> value.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <exception cref="ArgumentNullException"><paramref name="id"/> is <c>null</c>.</exception>
-    public IDProperty(ContactID id, string? group = null)
+    public ContactIDProperty(ContactID id, string? group = null)
         : base(new ParameterSection(), group)
         => Value = id ?? throw new ArgumentNullException(nameof(id));
 
-    internal IDProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
+    internal ContactIDProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
     {
         if (Parameters.DataType == Data.Text)
         {
@@ -68,7 +68,7 @@ public sealed class IDProperty : VCardProperty
         Value = string.IsNullOrWhiteSpace(uriString) ? ContactID.Empty : ContactID.Create(uriString);
     }
 
-    /// <summary> The <see cref="ContactID"/> provided by the <see cref="IDProperty" />.
+    /// <summary> The <see cref="ContactID"/> provided by the <see cref="ContactIDProperty" />.
     /// </summary>
     public new ContactID Value
     {
@@ -79,7 +79,7 @@ public sealed class IDProperty : VCardProperty
     public override bool IsEmpty => Value.IsEmpty;
 
     /// <inheritdoc />
-    public override object Clone() => new IDProperty(this);
+    public override object Clone() => new ContactIDProperty(this);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

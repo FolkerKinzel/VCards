@@ -131,7 +131,7 @@ public sealed partial class VCard
                 if (id is null || id.IsEmpty)
                 {
                     id = ContactID.Create();
-                    vc.ID = new IDProperty(id);
+                    vc.ID = new ContactIDProperty(id);
                 }
 
                 // Use reference comparison because several versions of a VCard with

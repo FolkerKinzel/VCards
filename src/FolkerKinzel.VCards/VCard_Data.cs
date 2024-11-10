@@ -402,9 +402,9 @@ public sealed partial class VCard
     /// </summary>
     /// <value>Although the standard allows any strings for identification, the library
     /// only supports UUIDs.</value>
-    public IDProperty? ID
+    public ContactIDProperty? ID
     {
-        get => Get<IDProperty?>(Prop.ID);
+        get => Get<ContactIDProperty?>(Prop.ID);
         set => Set(Prop.ID, value);
     }
 
@@ -879,7 +879,7 @@ public sealed partial class VCard
 
                 RelationProperty relProp = Uri.TryCreate(text.Trim(), UriKind.Absolute, out Uri? uri)
                     ? new RelationProperty(Relation.Create(ContactID.Create(uri)),  prop.Group)
-                    : new RelationProperty(Relation.Create(new VCard(setID: true, setCreated: false) 
+                    : new RelationProperty(Relation.Create(new VCard(setContactID: true, setCreated: false) 
                                                           { 
                                                             DisplayNames = new TextProperty(text) 
                                                            }), prop.Group);

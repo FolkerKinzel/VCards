@@ -23,7 +23,7 @@ public class NonStandardBuilderTests
     public void EditTest5()
     {
         VCard vc = VCardBuilder
-            .Create(setID: false)
+            .Create(setContactID: false)
             .NonStandards.Edit((p, d) => d, new Models.NonStandardProperty("X-TEST", "The value"))
             .VCard;
 

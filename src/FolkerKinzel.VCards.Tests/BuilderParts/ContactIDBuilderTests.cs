@@ -25,8 +25,8 @@ public class ContactIDBuilderTests
     public void EditTest5()
     {
         VCard vc = VCardBuilder
-            .Create(setID: false)
-            .ID.Edit((p, d) => new Models.IDProperty(d), ContactID.Create())
+            .Create(setContactID: false)
+            .ID.Edit((p, d) => new Models.ContactIDProperty(d), ContactID.Create())
             .VCard;
 
         Assert.IsNotNull(vc.ID);

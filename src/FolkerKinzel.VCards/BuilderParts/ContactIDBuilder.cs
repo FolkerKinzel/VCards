@@ -45,9 +45,9 @@ public readonly struct ContactIDBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(Func<IDProperty?, TData, IDProperty?> func, TData data)
+    public VCardBuilder Edit<TData>(Func<ContactIDProperty?, TData, ContactIDProperty?> func, TData data)
     {
-        IDProperty? prop = Builder.VCard.ID;
+        ContactIDProperty? prop = Builder.VCard.ID;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.ID = func(prop, data);
         return _builder;
@@ -66,16 +66,16 @@ public readonly struct ContactIDBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit(Func<IDProperty?, IDProperty?> func)
+    public VCardBuilder Edit(Func<ContactIDProperty?, ContactIDProperty?> func)
     {
-        IDProperty? prop = Builder.VCard.ID;
+        ContactIDProperty? prop = Builder.VCard.ID;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.ID = func(prop);
         return _builder;
     }
 
     /// <summary>
-    /// Sets the <see cref="VCard.ID"/> property to a <see cref="IDProperty"/> instance that is newly 
+    /// Sets the <see cref="VCard.ID"/> property to a <see cref="ContactIDProperty"/> instance that is newly 
     /// initialized with a new <see cref="Guid"/>.
     /// </summary>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
@@ -94,7 +94,7 @@ public readonly struct ContactIDBuilder
         => Set(ContactID.Create(), parameters, group);
 
     /// <summary>
-    /// Sets the <see cref="VCard.ID"/> property to a <see cref="IDProperty"/> instance that is newly 
+    /// Sets the <see cref="VCard.ID"/> property to a <see cref="ContactIDProperty"/> instance that is newly 
     /// initialized using a specified <see cref="ContactID"/>.
     /// </summary>
     /// <param name="id">A <see cref="ContactID" /> instance, or <c>null</c>.</param>
@@ -108,7 +108,7 @@ public readonly struct ContactIDBuilder
     /// be able to chain calls.</returns>
     /// 
     /// <remarks>
-    /// The method sets <see cref="VCard.ID"/> to an empty <see cref="IDProperty"/> instance if
+    /// The method sets <see cref="VCard.ID"/> to an empty <see cref="ContactIDProperty"/> instance if
     /// <paramref name="id"/> is <c>null</c>. 
     /// </remarks>
     /// 
@@ -119,7 +119,7 @@ public readonly struct ContactIDBuilder
                             Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
-        var property = new IDProperty(id ?? ContactID.Empty, group?.Invoke(vc));
+        var property = new ContactIDProperty(id ?? ContactID.Empty, group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 
         vc.Set(Prop.ID, property);
@@ -127,7 +127,7 @@ public readonly struct ContactIDBuilder
     }
 
     /// <summary>
-    /// Sets the <see cref="VCard.ID"/> property to a <see cref="IDProperty"/> instance that is newly 
+    /// Sets the <see cref="VCard.ID"/> property to a <see cref="ContactIDProperty"/> instance that is newly 
     /// initialized using a specified absolute <see cref="Uri"/>.
     /// </summary>
     /// <param name="uri">An absolute <see cref="Uri" />, or <c>null</c>.</param>
@@ -144,7 +144,7 @@ public readonly struct ContactIDBuilder
     /// <para>If <paramref name="uri"/> is a valid "uuid" URN, a <see cref="ContactID"/> instance
     /// with this <see cref="Guid"/> value will be created.</para>
     /// <para>
-    /// The method sets <see cref="VCard.ID"/> to an empty <see cref="IDProperty"/> instance if
+    /// The method sets <see cref="VCard.ID"/> to an empty <see cref="ContactIDProperty"/> instance if
     /// <paramref name="uri"/> is <c>null</c>. If <paramref name="uri"/> is a relative <see cref="Uri"/>,
     /// its <see cref="Uri.OriginalString"/> will be preserved.
     /// </para>
@@ -170,7 +170,7 @@ public readonly struct ContactIDBuilder
     }
 
     /// <summary>
-    /// Sets the <see cref="VCard.ID"/> property to a <see cref="IDProperty"/> instance that is newly 
+    /// Sets the <see cref="VCard.ID"/> property to a <see cref="ContactIDProperty"/> instance that is newly 
     /// initialized using free-form text.
     /// </summary>
     /// <param name="text">Free-form text, or <c>null</c>.</param>
@@ -187,7 +187,7 @@ public readonly struct ContactIDBuilder
     /// <para>If <paramref name="text"/> represents a <see cref="Guid"/>, a <see cref="ContactID"/> instance
     /// with this <see cref="Guid"/> value will be created.</para>
     /// <para>
-    /// The method sets <see cref="VCard.ID"/> to an empty <see cref="IDProperty"/> instance if
+    /// The method sets <see cref="VCard.ID"/> to an empty <see cref="ContactIDProperty"/> instance if
     /// <paramref name="text"/> is <c>null</c>, or an empty <see cref="string"/>, or if it consists only of 
     /// white space.
     /// </para>
@@ -203,7 +203,7 @@ public readonly struct ContactIDBuilder
                          : ContactID.Create(text), parameters, group);
 
     /// <summary>
-    /// Sets the <see cref="VCard.ID"/> property to a <see cref="IDProperty"/> instance that is newly 
+    /// Sets the <see cref="VCard.ID"/> property to a <see cref="ContactIDProperty"/> instance that is newly 
     /// initialized using a specified <see cref="Guid"/>.
     /// </summary>
     /// <param name="guid">A <see cref="Guid" /> value.</param>

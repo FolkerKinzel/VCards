@@ -24,7 +24,7 @@ public class VCardBuilderTests
     [TestMethod()]
     public void CreateTest2()
     {
-        var builder = VCardBuilder.Create(setID: false);
+        var builder = VCardBuilder.Create(setContactID: false);
         Assert.IsNotNull(builder);
         Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
         VCard vc = builder.VCard;
@@ -825,8 +825,8 @@ public class VCardBuilderTests
     [TestMethod]
     public void EditIDTest1()
     {
-        var builder = VCardBuilder.Create(setID: false);
-        var prop = new IDProperty(ContactID.Create());
+        var builder = VCardBuilder.Create(setContactID: false);
+        var prop = new ContactIDProperty(ContactID.Create());
         builder.ID.Edit(p => prop = p);
         Assert.IsNull(prop);
         builder.ID.Set()

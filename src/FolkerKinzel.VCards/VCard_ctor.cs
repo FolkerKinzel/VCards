@@ -14,21 +14,19 @@ namespace FolkerKinzel.VCards;
 public sealed partial class VCard
 {
     /// <summary>Initializes a new <see cref="VCard" /> object.</summary>
-    /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/>
-    /// property with a newly created <see cref="IDProperty"/>, otherwise
+    /// <param name="setContactID"><c>true</c> to set the <see cref="VCard.ID"/>
+    /// property with a newly created <see cref="ContactIDProperty"/> instance, otherwise
     /// <c>false</c>.</param>
     /// <param name="setCreated">
     /// <c>true</c> to set the <see cref="VCard.Created"/>
-    /// property with a newly created <see cref="TimeStampProperty"/>, otherwise
+    /// property with a newly created <see cref="TimeStampProperty"/> instance, otherwise
     /// <c>false</c>.
     /// </param>
-    /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
-    public VCard(bool setID = true, bool setCreated = true)
+    public VCard(bool setContactID = true, bool setCreated = true)
     {
-        if (setID)
+        if (setContactID)
         {
-            ID = new IDProperty(ContactID.Create());
+            ID = new ContactIDProperty(ContactID.Create());
         }
 
         if (setCreated)
@@ -172,7 +170,7 @@ public sealed partial class VCard
                     ContactUris = Concat(ContactUris, new TextProperty(vcfRow, Version));
                     break;
                 case PropKeys.UID:
-                    ID = new IDProperty(vcfRow, Version);
+                    ID = new ContactIDProperty(vcfRow, Version);
                     break;
                 case PropKeys.ORG:
                     Organizations = Concat(Organizations, new OrgProperty(vcfRow, this.Version));

@@ -23,7 +23,7 @@ public class TextSingletonBuilderTests
     public void EditTest5()
     {
         VCard vc = VCardBuilder
-            .Create(setID: false)
+            .Create(setContactID: false)
             .DirectoryName.Edit((p, d) => new Models.TextProperty(d), "The directory")
             .VCard;
 
