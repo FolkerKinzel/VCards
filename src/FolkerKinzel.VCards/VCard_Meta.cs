@@ -38,7 +38,7 @@ public sealed partial class VCard
             {
                 Prop.Created 
                     or Prop.ID
-                    or Prop.TimeStamp
+                    or Prop.Updated
                     or Prop.AppIDs
                     or Prop.Kind
                     or Prop.Language

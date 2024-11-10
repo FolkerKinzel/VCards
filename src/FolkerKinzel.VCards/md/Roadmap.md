@@ -94,9 +94,9 @@ and let it store as string[]
 - [x] Remove `ReadOnlyStringCollection`
 
 &nbsp;
-- [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
-- [ ] Rename the `VCardBuilder.TimeStamp` property to `VCardBuilder.Updated`
-- [ ] Rename the `Prop.TimeStamp` value to `Prop.Updated`
+- [x] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
+- [x] Rename the `VCardBuilder.TimeStamp` property to `VCardBuilder.Updated`
+- [x] Rename the `Prop.TimeStamp` value to `Prop.Updated`
 <!--- [ ] Rename the `Opts.UpdateTimeStamp` value in the `VCard` ctor to `Opts.UpdateUpdated`-->
 
 &nbsp;
@@ -107,14 +107,20 @@ and let it store as string[]
 - [ ] Rename `IDBuilder` to `ContactIDBuilder`
 
 &nbsp;
-- [ ] Rename the `VCard.Languages` property to `SpokenLanguages`
-- [ ] Rename the `Prop.Languages` value to `Prop.SpokenLanguages`
+- [x] Rename the `VCard.Languages` property to `SpokenLanguages`
+- [x] Rename the `Prop.Languages` value to `Prop.SpokenLanguages`
+- [x] Rename the `VCardBuilder.Languages` property to `VCardBuilder.SpokenLanguages`
 
 &nbsp;
 - [x] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
-### 7.4.2
+### 7.4.3
+- [ ] .NET 9.0 version of the package
+- [ ] Change the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0
 - [ ] Dependency update
+
+### 7.4.2
+- [x] Fix issues with `RelationProperty` instances that contain `VCard` objects
 
 ### 7.4.1
 - [x] Fix an issue that `Address.ExtendedAddress` might show some values even if any of the properties 

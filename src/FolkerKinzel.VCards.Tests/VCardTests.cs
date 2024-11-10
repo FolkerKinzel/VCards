@@ -219,7 +219,7 @@ public class VCardTests
         Assert.IsFalse(groups.Any());
 
         vc.DisplayNames = new TextProperty("Donald", " 4 1 ");
-        vc.TimeStamp = new TimeStampProperty();
+        vc.Updated = new TimeStampProperty();
         vc.Addresses = [ null,
                          new(adr1, group: " g r 1 "),
                          new(adr2, group: "41")

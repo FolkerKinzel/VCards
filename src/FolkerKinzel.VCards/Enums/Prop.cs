@@ -20,7 +20,7 @@ public enum Prop
     Created,
 
     /// <summary> <c>REV</c>: A timestamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
-    TimeStamp,
+    Updated,
 
     /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
     /// unique identifier, associated with the object. <c>(2,3,4)</c></summary>
@@ -179,7 +179,7 @@ public enum Prop
     Hobbies,
 
     /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
-    Languages,
+    SpokenLanguages,
 
     /// <summary> <c>NOTE</c>: Specifies supplemental informations or comments, that
     /// are associated with the vCard. <c>(2,3,4)</c></summary>

@@ -967,11 +967,11 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Languages.Add("1")
+            .SpokenLanguages.Add("1")
             .VCard;
 
-        Assert.IsNotNull(vc.Languages);
-        Assert.AreEqual(1, vc.Languages.Count());
+        Assert.IsNotNull(vc.SpokenLanguages);
+        Assert.AreEqual(1, vc.SpokenLanguages.Count());
     }
 
     [TestMethod()]
@@ -1520,16 +1520,16 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .TimeStamp.Set(DateTimeOffset.UtcNow)
+            .Updated.Set(DateTimeOffset.UtcNow)
             .VCard;
 
-        Assert.IsNotNull(vc.TimeStamp);
+        Assert.IsNotNull(vc.Updated);
 
         VCardBuilder
             .Create(vc)
-            .TimeStamp.Clear();
+            .Updated.Clear();
 
-        Assert.IsNull(vc.TimeStamp);
+        Assert.IsNull(vc.Updated);
     }
 
     [TestMethod()]
@@ -1540,23 +1540,23 @@ public class VCardBuilderTests
 
         VCard vc = VCardBuilder
             .Create()
-            .TimeStamp.Set(DateTimeOffset.UtcNow,
+            .Updated.Set(DateTimeOffset.UtcNow,
                            parameters: p => p.NonStandard = [new KeyValuePair<string, string>(key, val)],
                            group: vc => "g")
             .VCard;
 
-        Assert.IsNotNull(vc.TimeStamp);
-        Assert.AreEqual("g", vc.TimeStamp.Group);
+        Assert.IsNotNull(vc.Updated);
+        Assert.AreEqual("g", vc.Updated.Group);
 
-        KeyValuePair<string, string> para = vc.TimeStamp.Parameters.NonStandard!.First();
+        KeyValuePair<string, string> para = vc.Updated.Parameters.NonStandard!.First();
         Assert.AreEqual(key, para.Key);
         Assert.AreEqual(val, para.Value);
 
         VCardBuilder
             .Create(vc)
-            .TimeStamp.Clear();
+            .Updated.Clear();
 
-        Assert.IsNull(vc.TimeStamp);
+        Assert.IsNull(vc.Updated);
     }
 
     [TestMethod()]
@@ -1564,16 +1564,16 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .TimeStamp.Set()
+            .Updated.Set()
             .VCard;
 
-        Assert.IsNotNull(vc.TimeStamp);
+        Assert.IsNotNull(vc.Updated);
 
         VCardBuilder
             .Create(vc)
-            .TimeStamp.Clear();
+            .Updated.Clear();
 
-        Assert.IsNull(vc.TimeStamp);
+        Assert.IsNull(vc.Updated);
     }
 
     [TestMethod]
@@ -1581,14 +1581,14 @@ public class VCardBuilderTests
     {
         var builder = VCardBuilder.Create();
         var prop = new TimeStampProperty();
-        builder.TimeStamp.Edit(p => prop = p);
+        builder.Updated.Edit(p => prop = p);
         Assert.IsNull(prop);
-        builder.TimeStamp.Set()
-               .TimeStamp.Edit(p => prop = p);
+        builder.Updated.Set()
+               .Updated.Edit(p => prop = p);
         Assert.IsNotNull(prop);
 
-        builder.TimeStamp.Edit(x => null);
-        Assert.IsNull(builder.VCard.TimeStamp);
+        builder.Updated.Edit(x => null);
+        Assert.IsNull(builder.VCard.Updated);
     }
 
     [TestMethod()]
@@ -1599,22 +1599,22 @@ public class VCardBuilderTests
 
         VCard vc = VCardBuilder
             .Create()
-            .TimeStamp.Set(parameters: p => p.NonStandard = [new KeyValuePair<string, string>(key, val)],
+            .Updated.Set(parameters: p => p.NonStandard = [new KeyValuePair<string, string>(key, val)],
                            group: vc => "g")
             .VCard;
 
-        Assert.IsNotNull(vc.TimeStamp);
-        Assert.AreEqual("g", vc.TimeStamp.Group);
+        Assert.IsNotNull(vc.Updated);
+        Assert.AreEqual("g", vc.Updated.Group);
 
-        KeyValuePair<string, string> para = vc.TimeStamp.Parameters.NonStandard!.First();
+        KeyValuePair<string, string> para = vc.Updated.Parameters.NonStandard!.First();
         Assert.AreEqual(key, para.Key);
         Assert.AreEqual(val, para.Value);
 
         VCardBuilder
             .Create(vc)
-            .TimeStamp.Clear();
+            .Updated.Clear();
 
-        Assert.IsNull(vc.TimeStamp);
+        Assert.IsNull(vc.Updated);
     }
 
     [TestMethod()]

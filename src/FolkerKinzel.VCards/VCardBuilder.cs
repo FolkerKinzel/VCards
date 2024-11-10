@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.BuilderParts;
+﻿using System.ComponentModel;
+using FolkerKinzel.VCards.BuilderParts;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -20,6 +21,24 @@ namespace FolkerKinzel.VCards;
 /// </example>
 public sealed class VCardBuilder
 {
+    #region Remove with version 8.0.1
+
+    [Obsolete("Use SpokenLanguages instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public TextBuilder Languages => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use Updated instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public TimeStampBuilder TimeStamp => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    #endregion
+
     private VCardBuilder(VCard vCard) => VCard = vCard;
 
     /// <summary>
@@ -157,7 +176,7 @@ public sealed class VCardBuilder
     /// stays unchanged for the existence of the vCard.
     /// </para>
     /// <para>
-    /// Use the <see cref="TimeStamp"/> property to specify the last revision.
+    /// Use the <see cref="Updated"/> property to specify the last revision.
     /// </para>
     /// </remarks>
     public TimeStampBuilder Created => new(this, Prop.Created);
@@ -307,9 +326,6 @@ public sealed class VCardBuilder
     /// </remarks>
     /// <value>RFC 5646 language tag.</value>
     public TextSingletonBuilder Language => new(this, Prop.Language);
-
-    /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
-    public TextBuilder Languages => new(this, Prop.Languages);
 
     /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
     /// is associated with the individual to which the <see cref="VCard"/> belongs. 
@@ -572,12 +588,8 @@ public sealed class VCardBuilder
     /// <remarks>vCard&#160;3.0 allows only one instance of this property.</remarks>
     public TextBuilder Sources => new(this, Prop.Sources);
 
-    /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
-    /// <remarks>
-    /// With <see cref="Opts.Default"/> the flag <see cref="Opts.UpdateTimeStamp"/> is set. So 
-    /// this property is normally updated automatically when serializing VCF.
-    /// </remarks>
-    public TimeStampBuilder TimeStamp => new(this, Prop.TimeStamp);
+    /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
+    public TextBuilder SpokenLanguages => new(this, Prop.SpokenLanguages);
 
     /// <summary> <c>TZ</c>: The time zone(s) of the vCard object. <c>(2,3,4)</c></summary>
     /// <remarks>
@@ -595,6 +607,13 @@ public sealed class VCardBuilder
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
     public TextBuilder Titles => new(this, Prop.Titles);
+
+    /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
+    /// <remarks>
+    /// With <see cref="Opts.Default"/> the flag <see cref="Opts.UpdateTimeStamp"/> is set. So 
+    /// this property is normally updated automatically when serializing VCF.
+    /// </remarks>
+    public TimeStampBuilder Updated => new(this, Prop.Updated);
 
     /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>

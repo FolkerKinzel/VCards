@@ -165,7 +165,7 @@ public static partial class Vcf
 
             if (options.HasFlag(Opts.UpdateTimeStamp))
             {
-                vCard.TimeStamp = new TimeStampProperty();
+                vCard.Updated = new TimeStampProperty();
             }
 
             serializer.Serialize(vCard);

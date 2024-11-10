@@ -10,7 +10,7 @@ namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates the vCard property <c>REV</c>, which represents 
 /// the timestamp of the last update of the <see cref="VCard" />.</summary>
-/// <see cref="VCard.TimeStamp"/>
+/// <see cref="VCard.Updated"/>
 public sealed class TimeStampProperty : VCardProperty
 {
     /// <summary>Copy ctor.</summary>

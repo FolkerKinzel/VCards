@@ -8,7 +8,7 @@ using FolkerKinzel.VCards.Resources;
 namespace FolkerKinzel.VCards.BuilderParts;
 
 /// <summary>
-/// Provides methods for editing the <see cref="VCard.TimeStamp"/> property.
+/// Provides methods for editing the <see cref="VCard.Updated"/> property.
 /// </summary>
 /// <remarks>
 /// <note type="important">

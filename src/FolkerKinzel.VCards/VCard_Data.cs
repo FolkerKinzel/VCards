@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
@@ -24,6 +25,32 @@ namespace FolkerKinzel.VCards;
 /// </example>
 public sealed partial class VCard
 {
+    #region Remove with version 8.0.1
+
+    [Obsolete("Use SpokenLanguages instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public IEnumerable<TextProperty?>? Languages
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
+
+    [Obsolete("Use Updated instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public TimeStampProperty? TimeStamp
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
+
+    #endregion
+
     private readonly Dictionary<Prop, object> _propDic = [];
 
     [return: MaybeNull]
@@ -235,7 +262,7 @@ public sealed partial class VCard
     /// stays unchanged for the existence of the vCard.
     /// </para>
     /// <para>
-    /// Use the <see cref="TimeStamp"/> property to specify the last revision.
+    /// Use the <see cref="Updated"/> property to specify the last revision.
     /// </para>
     /// </remarks>
     public TimeStampProperty? Created
@@ -438,13 +465,6 @@ public sealed partial class VCard
     {
         get => Get<TextProperty?>(Prop.Language);
         set => Set(Prop.Language, value);
-    }
-
-    /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
-    public IEnumerable<TextProperty?>? Languages
-    {
-        get => Get<IEnumerable<TextProperty?>?>(Prop.Languages);
-        set => Set(Prop.Languages, value);
     }
 
     /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
@@ -773,15 +793,11 @@ public sealed partial class VCard
         set => Set(Prop.Sources, value);
     }
 
-    /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
-    /// <remarks>
-    /// With <see cref="Opts.Default"/> the flag <see cref="Opts.UpdateTimeStamp"/> is set. So 
-    /// this property is normally updated automatically when serializing VCF.
-    /// </remarks>
-    public TimeStampProperty? TimeStamp
+    /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
+    public IEnumerable<TextProperty?>? SpokenLanguages
     {
-        get => Get<TimeStampProperty?>(Prop.TimeStamp);
-        set => Set(Prop.TimeStamp, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.SpokenLanguages);
+        set => Set(Prop.SpokenLanguages, value);
     }
 
     /// <summary> <c>TZ</c>: The time zone(s) of the vCard object. <c>(2,3,4)</c></summary>
@@ -804,6 +820,17 @@ public sealed partial class VCard
     {
         get => Get<IEnumerable<TextProperty?>?>(Prop.Titles);
         set => Set(Prop.Titles, value);
+    }
+
+    /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
+    /// <remarks>
+    /// With <see cref="Opts.Default"/> the flag <see cref="Opts.UpdateTimeStamp"/> is set. So 
+    /// this property is normally updated automatically when serializing VCF.
+    /// </remarks>
+    public TimeStampProperty? Updated
+    {
+        get => Get<TimeStampProperty?>(Prop.Updated);
+        set => Set(Prop.Updated, value);
     }
 
     /// <summary> <c>URL</c>: URLs pointing to websites that represent the person in

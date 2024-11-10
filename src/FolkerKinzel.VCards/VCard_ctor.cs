@@ -142,7 +142,7 @@ public sealed partial class VCard
                     labels.Add(new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.REV:
-                    TimeStamp = new TimeStampProperty(vcfRow, info);
+                    Updated = new TimeStampProperty(vcfRow, info);
                     break;
                 case PropKeys.Rfc2739.CAPURI:
                     CalendarAccessUris = Concat(CalendarAccessUris, new TextProperty(vcfRow, this.Version));
@@ -321,7 +321,7 @@ public sealed partial class VCard
 
                     break;
                 case PropKeys.LANG:
-                    Languages = Concat(Languages, new TextProperty(vcfRow, this.Version));
+                    SpokenLanguages = Concat(SpokenLanguages, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.MAILER:
                     Mailer = new TextProperty(vcfRow, this.Version);

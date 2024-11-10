@@ -112,7 +112,7 @@ public class V4Tests
         Assert.AreEqual(VCdVersion.V4_0, vcard.Version);
 
         Assert.IsNull(vcard.DirectoryName);
-        Assert.IsNotNull(vcard.TimeStamp);
+        Assert.IsNotNull(vcard.Updated);
         Assert.IsNull(vcard.Mailer);
         Assert.IsNotNull(vcard.ProductID);
         vcard.ProductID = null;

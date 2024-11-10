@@ -193,7 +193,7 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.ProductID:
                     AppendProdID((TextProperty)kvp.Value);
                     break;
-                case Prop.TimeStamp:
+                case Prop.Updated:
                     AppendLastRevision((TimeStampProperty)kvp.Value);
                     break;
                 case Prop.ID:
@@ -301,7 +301,7 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.Hobbies:
                     AppendHobbies((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case Prop.Languages:
+                case Prop.SpokenLanguages:
                     AppendLanguages((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case Prop.Notes:

@@ -171,7 +171,7 @@ internal static class Utility
             OrgDirectories = new TextProperty("OrgDirectory"),
             Profile = new ProfileProperty(),
             Categories = new StringCollectionProperty(["Person", "Data"]),
-            TimeStamp = new TimeStampProperty(),
+            Updated = new TimeStampProperty(),
             EMails = email1,
             Roles = new TextProperty("Rechte Hand"),
             Titles = new TextProperty("Sündenbock"),
@@ -184,7 +184,7 @@ internal static class Utility
             NickNames = new StringCollectionProperty(["Genius", "The Brain"]),
             Kind = new KindProperty(Kind.Organization),
             Mailer = new TextProperty("The Mailer"),
-            Languages = new TextProperty("de"),
+            SpokenLanguages = new TextProperty("de"),
             Notes = new TextProperty("Kommentar"),
             GramGenders = [new GramProperty(Gram.Neuter), new GramProperty(Gram.Common)],
 

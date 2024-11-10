@@ -104,7 +104,7 @@ public enum Opts
     AllowMultipleAdrAndLabelInVCard21 = 1 << 12,
 
     /// <summary>
-    /// Set the flag to update the <see cref="VCard.TimeStamp"/> property automatically when
+    /// Set the flag to update the <see cref="VCard.Updated"/> property automatically when
     /// serializing VCF.
     /// </summary>
     UpdateTimeStamp = 1 << 13,

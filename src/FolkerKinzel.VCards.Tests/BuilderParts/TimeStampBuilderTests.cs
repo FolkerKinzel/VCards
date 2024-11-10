@@ -9,7 +9,7 @@ public class TimeStampBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().TimeStamp.Edit(null!);
+    public void EditTest2() => VCardBuilder.Create().Updated.Edit(null!);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
@@ -17,17 +17,17 @@ public class TimeStampBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().TimeStamp.Edit(null!, true);
+    public void EditTest4() => VCardBuilder.Create().Updated.Edit(null!, true);
 
     [TestMethod]
     public void EditTest5()
     {
         VCard vc = VCardBuilder
             .Create()
-            .TimeStamp.Edit((p, d) => new Models.TimeStampProperty(d), DateTimeOffset.UtcNow)
+            .Updated.Edit((p, d) => new Models.TimeStampProperty(d), DateTimeOffset.UtcNow)
             .VCard;
 
-        Assert.IsNotNull(vc.TimeStamp);
+        Assert.IsNotNull(vc.Updated);
     }
 
     [TestMethod]
