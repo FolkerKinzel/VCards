@@ -5,8 +5,8 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Intls.Converters.Tests.ReadOnlyCollectionConverterTests.ToReadOnlyCollectionTest1")]
-[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Intls.Converters.Tests.ReadOnlyCollectionConverterTests.ToReadOnlyCollectionTest3")]
+[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Intls.Converters.Tests.StringArrayConverterTests.ToReadOnlyCollectionTest1")]
+[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Intls.Converters.Tests.StringArrayConverterTests.ToReadOnlyCollectionTest3")]
 [assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Models.Tests.OrgPropertyTests.OrganizationPropertyTest1(System.String,System.String,System.String[])")]
 [assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Models.Tests.OrgPropertyTests.OrganizationPropertyTest2(System.String,System.String,System.String,System.String[])")]
 [assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Models.Tests.StringCollectionPropertyTests.StringCollectionPropertyTest1(System.String[],System.String,System.String[])")]

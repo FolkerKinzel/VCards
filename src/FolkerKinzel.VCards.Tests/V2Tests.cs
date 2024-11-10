@@ -279,6 +279,7 @@ public class V2Tests
         var adr = new AddressProperty(AddressBuilder.Create().AddStreet("1").Build());
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
+        adr.Parameters.Label = AddressFormatter.Default.ToLabel(adr);
         Assert.IsNotNull(adr.Parameters.Label);
 
         var vCard = new VCard { Addresses = adr };

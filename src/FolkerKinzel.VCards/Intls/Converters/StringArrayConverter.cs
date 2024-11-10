@@ -22,7 +22,9 @@ internal static class StringArrayConverter
             }
         }
 
-        return (containsWS ? coll.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() : coll)!;
+        string[] arr = (containsWS ? coll.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() : coll)!;
+
+        return arr.Length == 0 ? null : arr;
     }
 
     internal static string[]? AsNonEmptyStringArray(string? s)
