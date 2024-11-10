@@ -800,6 +800,16 @@ public class IEnumerableExtensionTests
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void RemoveTest5()
+    {
+        var prop = new TextProperty("Hi");
+        IEnumerable<TextProperty> numerable = prop;
+        Func<TextProperty, bool>? func = null;
+        IEnumerable<TextProperty> newProp = numerable.Remove(func!);
+    }
+
+    [TestMethod]
     public void ItemsTest1()
     {
         TextProperty?[]? props = null;

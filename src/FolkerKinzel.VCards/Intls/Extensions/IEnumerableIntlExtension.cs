@@ -14,12 +14,11 @@ internal static class IEnumerableIntlExtension
         => sources.Concat(Enumerable.Repeat(value, 1));
 #endif
 
-    internal static void SetIndexesIntl<TSource>(this IEnumerable<TSource?> values, bool skipEmptyItems)
-        where TSource : VCardProperty
+    internal static void SetIndexesIntl(this IEnumerable<VCardProperty?> values, bool skipEmptyItems)
     {
         int idx = 1;
 
-        foreach (TSource? item in values.Distinct())
+        foreach (VCardProperty? item in values.Distinct())
         {
             if (item is not null)
             {
@@ -28,10 +27,9 @@ internal static class IEnumerableIntlExtension
         }
     }
 
-    internal static void UnsetIndexesIntl<TSource>(this IEnumerable<TSource?> values)
-        where TSource : VCardProperty
+    internal static void UnsetIndexesIntl(this IEnumerable<VCardProperty?> values)
     {
-        foreach (TSource? item in values)
+        foreach (VCardProperty? item in values)
         {
             if (item is not null)
             {
@@ -43,9 +41,6 @@ internal static class IEnumerableIntlExtension
     internal static bool IsSingle([NotNullWhen(true)] this IEnumerable<VCardProperty?>? values, bool ignoreEmptyItems)
         => ignoreEmptyItems ? values?.WhereNotEmpty().Take(2).Count() == 1
                             : values?.OfType<VCardProperty>().Take(2).Count() == 1;
-
-    internal static IEnumerable<TSource> WhereNotNull<TSource>(this IEnumerable<TSource?> values)
-        => values.Where(static x => x is not null)!;
 
     internal static IEnumerable<TSource> WhereNotNullAnd<TSource>(
         this IEnumerable<TSource?> values, Func<TSource, bool> filter) where TSource : VCardProperty
@@ -75,41 +70,61 @@ internal static class IEnumerableIntlExtension
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static IEnumerable<TSource> OrderByPrefIntl<TSource>(
         this IEnumerable<TSource?> values, bool discardEmptyItems) where TSource : VCardProperty
-        => discardEmptyItems ? values.WhereNotEmpty().OrderBy(GetPreference)
-                             : values.WhereNotNull().OrderBy(GetPreference);
+        => OrderByIntl(values, GetPreference, discardEmptyItems);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static IEnumerable<TSource> OrderByIndexIntl<TSource>(
         this IEnumerable<TSource?> values, bool discardEmptyItems) where TSource : VCardProperty
-        => discardEmptyItems ? values.WhereNotEmpty().OrderBy(GetIndex)
-                             : values.WhereNotNull().OrderBy(GetIndex);
+        => OrderByIntl(values, GetIndex, discardEmptyItems);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static TSource? PrefOrNullIntl<TSource>(
         this IEnumerable<TSource?> values, bool ignoreEmptyItems) where TSource : VCardProperty
-        => ignoreEmptyItems ? values.WhereNotEmpty().OrderBy(GetPreference).FirstOrDefault()
-                            : values.WhereNotNull().OrderBy(GetPreference).FirstOrDefault();
+        => ItemOrNullIntl(values, GetPreference, ignoreEmptyItems);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static TSource? PrefOrNullIntl<TSource>(
         this IEnumerable<TSource?> values,
         Func<TSource, bool> filter,
         bool ignoreEmptyItems) where TSource : VCardProperty
-        => ignoreEmptyItems ? values.WhereNotEmptyAnd(filter).OrderBy(GetPreference).FirstOrDefault()
-                            : values.WhereNotNullAnd(filter).OrderBy(GetPreference).FirstOrDefault();
+        => ItemOrNullIntl(values, GetPreference, filter, ignoreEmptyItems);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static TSource? FirstOrNullIntl<TSource>(
         this IEnumerable<TSource?> values, bool ignoreEmptyItems) where TSource : VCardProperty
-        => ignoreEmptyItems ? values.WhereNotEmpty().OrderBy(GetIndex).FirstOrDefault()
-                            : values.WhereNotNull().OrderBy(GetIndex).FirstOrDefault();
+        => ItemOrNullIntl(values, GetIndex, ignoreEmptyItems);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static TSource? FirstOrNullIntl<TSource>(
         this IEnumerable<TSource?> values,
         Func<TSource, bool> filter,
         bool ignoreEmptyItems) where TSource : VCardProperty
-         => ignoreEmptyItems ? values.WhereNotEmptyAnd(filter).OrderBy(GetIndex).FirstOrDefault()
-                             : values.WhereNotNullAnd(filter).OrderBy(GetIndex).FirstOrDefault();
+        => ItemOrNullIntl(values, GetIndex, filter, ignoreEmptyItems);
 
+    private static IEnumerable<TSource> OrderByIntl<TSource>(
+        this IEnumerable<TSource?> values, 
+        Func<TSource, int> sortingCriterion,
+        bool discardEmptyItems) where TSource : VCardProperty
+        => discardEmptyItems ? values.WhereNotEmpty().OrderBy(sortingCriterion)
+                             : values.OfType<TSource>().OrderBy(sortingCriterion);
 
+    private static TSource? ItemOrNullIntl<TSource>(
+        IEnumerable<TSource?> values,
+        Func<TSource, int> sortingCriterion,
+        bool ignoreEmptyItems) where TSource : VCardProperty
+    => ignoreEmptyItems ? values.WhereNotEmpty().OrderBy(sortingCriterion).FirstOrDefault()
+                        : values.OfType<TSource>().OrderBy(sortingCriterion).FirstOrDefault();
+
+    private static TSource? ItemOrNullIntl<TSource>(
+        IEnumerable<TSource?> values,
+        Func<TSource, int> sortingCriterion,
+        Func<TSource, bool> filter,
+        bool ignoreEmptyItems) where TSource : VCardProperty
+         => ignoreEmptyItems ? values.WhereNotEmptyAnd(filter).OrderBy(sortingCriterion).FirstOrDefault()
+                             : values.WhereNotNullAnd(filter).OrderBy(sortingCriterion).FirstOrDefault();
 
     private static int GetPreference(VCardProperty prop) => prop.Parameters.Preference;
 

@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
@@ -465,7 +466,7 @@ public static class IEnumerableExtension
         where TSource : VCardProperty
         => values is null ? []
                           : discardEmptyItems ? values.WhereNotEmpty()
-                                              : values.WhereNotNull();
+                                              : values.OfType<TSource>();
 
     /// <summary>
     /// Sorts the elements in <paramref name="values"/> ascending by the value of their 
@@ -531,7 +532,7 @@ public static class IEnumerableExtension
     /// </example>
     public static IEnumerable<IGrouping<string?, TSource>> GroupByAltID<TSource>(
         this IEnumerable<TSource?>? values) where TSource : VCardProperty, IEnumerable<TSource>
-        => values?.WhereNotNull()
+        => values?.OfType<TSource>()
                   .GroupBy(static x => x.Parameters.AltID, StringComparer.Ordinal)
            ?? [];
 
@@ -583,12 +584,23 @@ public static class IEnumerableExtension
     /// <remarks>
     /// The comparison of group identifiers is case-insensitive.
     /// </remarks>
-    public static TSource? FirstOrNullIsMemberOf<TSource>(
+    public static TSource? FirstOrNullHasGroup<TSource>(
         this IEnumerable<TSource?>? values,
         string? group,
         bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values?.FirstOrNullIntl(x => StringComparer.OrdinalIgnoreCase.Equals(group, x.Group),
                                         ignoreEmptyItems);
+
+    [Obsolete("Use FirstOrNullHasGroup instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public static TSource? FirstOrNullIsMemberOf<TSource>(
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        this IEnumerable<TSource?>? values,
+        string? group,
+        bool ignoreEmptyItems = true) where TSource : VCardProperty
+        => throw new NotImplementedException();
 
     /// <summary>
     /// Indicates whether <paramref name="values"/> contains an item that has the
@@ -614,7 +626,7 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? values,
         string? group,
         bool ignoreEmptyItems = true) where TSource : VCardProperty
-        => values.FirstOrNullIsMemberOf(group, ignoreEmptyItems) is not null;
+        => values.FirstOrNullHasGroup(group, ignoreEmptyItems) is not null;
 
     /// <summary>
     /// Concatenates two sequences of <see cref="VCardProperty"/> objects. 
@@ -639,7 +651,7 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
     {
         second ??= [];
-        return first is null ? second.WhereNotNull() : first.Concat(second).WhereNotNull();
+        return first is null ? second.OfType<TSource>() : first.Concat(second).OfType<TSource>();
     }
 
     /// <summary>
@@ -692,7 +704,7 @@ public static class IEnumerableExtension
         return DoRemove(values, predicate ?? throw new ArgumentNullException(nameof(predicate)));
 
         static IEnumerable<T> DoRemove<T>(IEnumerable<T?>? values,
-                                                      Func<T, bool> predicate) where T : VCardProperty
+                                          Func<T, bool> predicate) where T : VCardProperty
         {
             if (values is null)
             {
