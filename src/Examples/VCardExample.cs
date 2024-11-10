@@ -92,8 +92,6 @@ public static class VCardExample
                              }
                            )
                 .Phones.SetIndexes()
-                // Unless specified, an address label is automatically applied to the AddressProperty object.
-                // Specifying the country helps to format this label correctly.
                 // Applying a group name to the AddressProperty helps to automatically preserve its Label,
                 // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
                 .Addresses.Add(AddressBuilder
@@ -113,6 +111,8 @@ public static class VCardExample
                      },
                      group: vc => vc.NewGroup()
                               )
+                // Specifying the country or the ParameterSection.CountryCode property helps to format automatically
+                // appended address labels correctly.
                 .Addresses.AttachLabels(AddressFormatter.Default)
                 .EMails.Add("kaethe_mueller@internet.com", parameters: p => p.PropertyClass = PCl.Work)
                 .EMails.Add("mailto:kaethe_at_home@internet.com",
