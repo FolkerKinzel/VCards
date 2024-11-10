@@ -13,6 +13,7 @@ public class DefaultAddressFormatterTests
             .Create()
             .AddStreet("Friedrichstr. 1")
             .AddLocality("Berlin")
+            .Build()
             );
 
         prop.Parameters.CountryCode = "DE";
@@ -28,6 +29,7 @@ public class DefaultAddressFormatterTests
             .Create()
             .AddStreet("Friedrichstr. 1")
             .AddLocality("Berlin")
+            .Build()
             );
 
         prop.Parameters.CountryCode = "DE";
@@ -39,9 +41,7 @@ public class DefaultAddressFormatterTests
     [TestMethod]
     public void DefaultAddressFormatterTest3()
     {
-        var prop = new AddressProperty(AddressBuilder
-           .Create()
-           );
+        var prop = new AddressProperty(AddressBuilder.Create().Build());
 
         Assert.IsNull(AddressFormatter.Default.ToLabel(prop));
     }

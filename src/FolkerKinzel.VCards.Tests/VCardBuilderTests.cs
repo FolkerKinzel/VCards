@@ -92,15 +92,14 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add("Schlossallee", null, null, null,
+            .Addresses.Add(AddressBuilder.Create().AddStreet( "Schlossallee").Build(),
                          parameters: p => p.AddressType = Adr.Dom)
-            .Addresses.Add("Elm Street", null, null, null,
+            .Addresses.AttachLabels(AddressFormatter.Default)
+            .Addresses.Add(AddressBuilder.Create().AddStreet("Elm Street").Build(),
                             parameters: p => p.AddressType = Adr.Intl,
-                            group: vc => "gr1"
-,
-                            autoLabel: false)
-            .Addresses.Add("3", null, null, null)
-            .Addresses.Add("4", null, null, null)
+                            group: vc => "gr1")
+            .Addresses.Add(AddressBuilder.Create().AddStreet("3").Build())
+            .Addresses.Add(AddressBuilder.Create().AddStreet("4").Build())
             .Addresses.SetPreferences()
             .VCard;
 
@@ -134,12 +133,11 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add(["2"], null, null, null)
-            .Addresses.Add(Enumerable.Repeat("Elm Street", 1), null, null, null,
+            .Addresses.Add(AddressBuilder.Create().AddStreet(["2"]).Build())
+            .Addresses.AttachLabels(AddressFormatter.Default)
+            .Addresses.Add(AddressBuilder.Create().AddStreet(Enumerable.Repeat("Elm Street", 1)).Build(),
                            parameters: p => p.AddressType = Adr.Intl,
-                           group: vc => "gr1"
-,
-                           autoLabel: false)
+                           group: vc => "gr1")
             .Addresses.SetPreferences()
             .VCard;
 
@@ -161,11 +159,11 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add(AddressBuilder.Create().AddStreet("Elm Street").AddLocality("Springwood"),
+            .Addresses.Add(AddressBuilder.Create().AddStreet("Elm Street").AddLocality("Springwood").Build(),
                             parameters: p => { p.CountryCode = "US"; p.Label = "label"; },
                             group: vc => "gr1"
                             )
-            .Addresses.Add(AddressBuilder.Create().AddStreet("Ulmenstaße").AddLocality("Frühlingswald"),
+            .Addresses.Add(AddressBuilder.Create().AddStreet("Ulmenstaße").AddLocality("Frühlingswald").Build(),
                            parameters: p => p.CountryCode = "DE")
             .VCard;
 
@@ -195,7 +193,7 @@ public class VCardBuilderTests
         builder.Addresses.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.Addresses = new AddressProperty("Elmstreet", null, null, null).Append(null);
+        builder.VCard.Addresses = new AddressProperty(AddressBuilder.Create().AddStreet("Elmstreet").Build()).Append(null);
         builder.Addresses.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());

@@ -37,6 +37,8 @@ public sealed class AddressBuilder
 
     private readonly Dictionary<AdrProp, List<string>> _dic = [];
 
+    private AddressBuilder() { }
+
     /// <summary>
     /// Builds a new <see cref="Address"/> instance with the content of the <see cref="AddressBuilder"/>
     /// and clears all of this content when it returns.

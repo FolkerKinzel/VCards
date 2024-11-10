@@ -43,13 +43,17 @@ public class Rfc8605Tests
         Assert.AreEqual(contactUri, vc.ContactUris.PrefOrNull()?.Value);
     }
 
-
     [TestMethod]
     public void CcTest1()
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add("Blümchenweg 42", "Holzhausen", "01234", "Germany",
+            .Addresses.Add(AddressBuilder.Create()
+                                         .AddStreet("Blümchenweg 42")
+                                         .AddLocality("Holzhausen")
+                                         .AddPostalCode("01234")
+                                         .AddCountry("Germany")
+                                         .Build(),
                             parameters: p => p.CountryCode = "DE"
                           )
             .VCard;
@@ -63,7 +67,6 @@ public class Rfc8605Tests
         Assert.IsFalse(vcfStr2.Contains("CC=", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(vcfStr3.Contains("CC=", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(vcfStr4.Contains("CC=", StringComparison.OrdinalIgnoreCase));
-
 
         vc = Vcf.Parse(vcfStr1)[0];
 

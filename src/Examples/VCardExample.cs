@@ -102,7 +102,8 @@ public static class VCardExample
                     .AddStreetNumber("22")
                     .AddLocality("Berlin")
                     .AddPostalCode("10117")
-                    .AddCountry("Germany"),
+                    .AddCountry("Germany")
+                    .Build(),
                      parameters: p =>
                      {
                          p.PropertyClass = PCl.Work;

@@ -76,6 +76,8 @@ public sealed class NameBuilder
         }
     }
 
+    private NameBuilder() { }
+
     /// <summary>
     /// Builds a new <see cref="Name"/> instance with the content of the <see cref="NameBuilder"/>
     /// and clears all of this content when it returns.

@@ -128,7 +128,7 @@ public class NameTests
             .AddSurname2("3")
             .Build());
 
-        CollectionAssert.AreEqual(new string[] { "1", "2" }, prop.Value.Surnames);
+        CollectionAssert.AreEqual(new string[] { "1", "2" }, prop.Value.Surnames.ToArray());
     }
 
     [TestMethod]

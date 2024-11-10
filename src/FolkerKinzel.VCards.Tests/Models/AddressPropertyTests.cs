@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -20,53 +21,53 @@ public class AddressPropertyTests
     private const string GROUP = "myGroup";
 
 
-    [TestMethod()]
-    public void AddressPropertyTest()
-    {
-        var adr = new AddressProperty(STREET, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PO_BOX, EXTENDED_ADDRESS, group: GROUP);
+    //[TestMethod()]
+    //public void AddressPropertyTest()
+    //{
+    //    var adr = new AddressProperty(STREET, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PO_BOX, EXTENDED_ADDRESS, group: GROUP);
 
-        Assert.IsNotNull(adr);
-        Assert.AreEqual(STREET, adr.Value.Street[0]);
-        Assert.AreEqual(LOCALITY, adr.Value.Locality[0]);
-        Assert.AreEqual(POSTAL_CODE, adr.Value.PostalCode[0]);
-        Assert.AreEqual(REGION, adr.Value.Region[0]);
-        Assert.AreEqual(COUNTRY, adr.Value.Country[0]);
-        Assert.AreEqual(PO_BOX, adr.Value.PostOfficeBox[0]);
-        Assert.AreEqual(EXTENDED_ADDRESS, adr.Value.Extended[0]);
-        Assert.AreEqual(GROUP, adr.Group);
-        Assert.IsFalse(adr.IsEmpty);
-    }
+    //    Assert.IsNotNull(adr);
+    //    Assert.AreEqual(STREET, adr.Value.Street[0]);
+    //    Assert.AreEqual(LOCALITY, adr.Value.Locality[0]);
+    //    Assert.AreEqual(POSTAL_CODE, adr.Value.PostalCode[0]);
+    //    Assert.AreEqual(REGION, adr.Value.Region[0]);
+    //    Assert.AreEqual(COUNTRY, adr.Value.Country[0]);
+    //    Assert.AreEqual(PO_BOX, adr.Value.PostOfficeBox[0]);
+    //    Assert.AreEqual(EXTENDED_ADDRESS, adr.Value.Extended[0]);
+    //    Assert.AreEqual(GROUP, adr.Group);
+    //    Assert.IsFalse(adr.IsEmpty);
+    //}
 
-    [TestMethod()]
-    public void AddressPropertyTest1()
-    {
-        var adr = new AddressProperty(
-            [STREET],
-            [LOCALITY],
-            [REGION],
-            [POSTAL_CODE],
-            [COUNTRY],
-            [PO_BOX],
-            [EXTENDED_ADDRESS],
+    //[TestMethod()]
+    //public void AddressPropertyTest1()
+    //{
+    //    var adr = new AddressProperty(
+    //        [STREET],
+    //        [LOCALITY],
+    //        [REGION],
+    //        [POSTAL_CODE],
+    //        [COUNTRY],
+    //        [PO_BOX],
+    //        [EXTENDED_ADDRESS],
 
-            group: GROUP);
+    //        group: GROUP);
 
-        Assert.IsNotNull(adr);
-        Assert.AreEqual(STREET, adr.Value.Street[0]);
-        Assert.AreEqual(LOCALITY, adr.Value.Locality[0]);
-        Assert.AreEqual(POSTAL_CODE, adr.Value.PostalCode[0]);
-        Assert.AreEqual(REGION, adr.Value.Region[0]);
-        Assert.AreEqual(COUNTRY, adr.Value.Country[0]);
-        Assert.AreEqual(PO_BOX, adr.Value.PostOfficeBox[0]);
-        Assert.AreEqual(EXTENDED_ADDRESS, adr.Value.Extended[0]);
-        Assert.AreEqual(GROUP, adr.Group);
-        Assert.IsFalse(adr.IsEmpty);
-    }
+    //    Assert.IsNotNull(adr);
+    //    Assert.AreEqual(STREET, adr.Value.Street[0]);
+    //    Assert.AreEqual(LOCALITY, adr.Value.Locality[0]);
+    //    Assert.AreEqual(POSTAL_CODE, adr.Value.PostalCode[0]);
+    //    Assert.AreEqual(REGION, adr.Value.Region[0]);
+    //    Assert.AreEqual(COUNTRY, adr.Value.Country[0]);
+    //    Assert.AreEqual(PO_BOX, adr.Value.PostOfficeBox[0]);
+    //    Assert.AreEqual(EXTENDED_ADDRESS, adr.Value.Extended[0]);
+    //    Assert.AreEqual(GROUP, adr.Group);
+    //    Assert.IsFalse(adr.IsEmpty);
+    //}
 
     [TestMethod()]
     public void ToStringTest()
     {
-        var adr = new AddressProperty(STREET, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PO_BOX, EXTENDED_ADDRESS);
+        var adr = new AddressProperty(AddressBuilder.Create().AddLocality(LOCALITY).Build());
 
         string s = adr.ToString();
 
@@ -89,7 +90,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V2_1;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new("", null, null, null, autoLabel: false);
+        AddressProperty adr = new(new Address());
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard
@@ -131,7 +132,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V3_0;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new("", null, null, null, autoLabel: false);
+        AddressProperty adr = new(new Address());
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard
@@ -173,7 +174,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V4_0;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new("", null, null, null);
+        AddressProperty adr = new(new Address());
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard
@@ -212,7 +213,7 @@ public class AddressPropertyTests
     [TestMethod]
     public void IsEmptyTest1()
     {
-        AddressProperty adr = new("", null, null, null, autoLabel: false);
+        AddressProperty adr = new(new Address());
         Assert.IsTrue(adr.IsEmpty);
 
         adr.Parameters.Label = "Nice label";
@@ -240,14 +241,14 @@ public class AddressPropertyTests
     [TestMethod]
     public void IEnumerableTest1()
     {
-        var prop = new AddressProperty("Elm Street", null, null, null);
+        var prop = new AddressProperty(AddressBuilder.Create().AddStreet("Elm Street").Build());
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 
     [TestMethod]
     public void CloneTest1()
     {
-        var prop1 = new AddressProperty("street", null, null, null);
+        var prop1 = new AddressProperty(AddressBuilder.Create().AddStreet("Elm Street").Build());
 
         var prop2 = (AddressProperty)prop1.Clone();
 
@@ -258,14 +259,14 @@ public class AddressPropertyTests
     [TestMethod]
     public void CountTest1()
     {
-        ICompoundProperty prop = new AddressProperty(AddressBuilder.Create());
+        ICompoundProperty prop = new AddressProperty(AddressBuilder.Create().Build());
         Assert.AreEqual(18, prop.Count);
     }
 
     [TestMethod]
     public void ItemTest1()
     {
-        ICompoundProperty prop = new AddressProperty(AddressBuilder.Create());
+        ICompoundProperty prop = new AddressProperty(new Address());
         Assert.IsNotNull(prop[prop.Count - 1]);
     }
 
@@ -273,7 +274,7 @@ public class AddressPropertyTests
     [ExpectedException(typeof(IndexOutOfRangeException))]
     public void ItemTest2()
     {
-        ICompoundProperty prop = new AddressProperty(AddressBuilder.Create());
+        ICompoundProperty prop = new AddressProperty(AddressBuilder.Create().Build());
         Assert.IsNotNull(prop[prop.Count]);
     }
 
@@ -281,7 +282,7 @@ public class AddressPropertyTests
     [ExpectedException(typeof(IndexOutOfRangeException))]
     public void ItemTest3()
     {
-        ICompoundProperty prop = new AddressProperty(AddressBuilder.Create());
+        ICompoundProperty prop = new AddressProperty(AddressBuilder.Create().Build());
         Assert.IsNotNull(prop[-1]);
     }
 }

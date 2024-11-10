@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -173,7 +174,7 @@ public class VCardTests
         var vc = new VCard();
         Assert.IsTrue(vc.IsEmpty());
 
-        var adr = new AddressProperty("  ", null, null, postalCode: "", autoLabel: false);
+        var adr = new AddressProperty(new Address());
         adr.Parameters.Label = "  ";
 
         vc.Addresses = [null, adr];
@@ -212,6 +213,8 @@ public class VCardTests
     public void GroupsTest1()
     {
         var vc = new VCard();
+        Address adr1 = AddressBuilder.Create().AddStreet("1").Build();
+        Address adr2 = AddressBuilder.Create().AddStreet("2").Build();
 
         IEnumerable<string> groups = vc.GroupIDs;
         Assert.IsFalse(groups.Any());
@@ -219,8 +222,8 @@ public class VCardTests
         vc.DisplayNames = new TextProperty("Donald", " 4 1 ");
         vc.TimeStamp = new TimeStampProperty();
         vc.Addresses = [ null,
-                         new("1", null, null, null, group: " g r 1 "),
-                         new("2", null, null, null, group: "41")
+                         new(adr1, group: " g r 1 "),
+                         new(adr2, group: "41")
                        ];
         vc.GeoCoordinates = [
                               new(new GeoCoordinate(1, 1), group: "GR1"),

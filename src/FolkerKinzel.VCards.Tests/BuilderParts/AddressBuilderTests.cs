@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models.PropertyParts;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class AddressBuilderTests
@@ -12,8 +14,8 @@ public class AddressBuilderTests
     {
         VCardBuilder builder = VCardBuilder
             .Create()
-            .Addresses.Add("", null, null, null)
-            .Addresses.Add(null, "New York", null, null)
+            .Addresses.Add((Address?)null)
+            .Addresses.Add(AddressBuilder.Create().AddLocality("New York").Build())
             .Addresses.SetPreferences();
 
         VCard vc = builder.VCard;
@@ -44,8 +46,8 @@ public class AddressBuilderTests
     {
         VCardBuilder builder = VCardBuilder
             .Create()
-            .Addresses.Add("", null, null, null)
-            .Addresses.Add(null, "New York", null, null)
+            .Addresses.Add((Address?)null)
+            .Addresses.Add(AddressBuilder.Create().AddLocality("New York").Build())
             .Addresses.SetIndexes();
 
         VCard vc = builder.VCard;
@@ -87,15 +89,15 @@ public class AddressBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new AddressesBuilder().Add("", null, null, null);
+    public void AddTest1() => new AddressesBuilder().Add((Address?)null);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest2() => new AddressesBuilder().Add([], null, null, null);
+    public void AddTest2() => new AddressesBuilder().Add((Address?)null);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest3() => new AddressesBuilder().Add(FolkerKinzel.VCards.AddressBuilder.Create());
+    public void AddTest3() => new AddressesBuilder().Add(AddressBuilder.Create().Build());
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
@@ -137,8 +139,8 @@ public class AddressBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add(VCards.AddressBuilder.Create().AddLocality("London"))
-            .Addresses.Add(VCards.AddressBuilder.Create().AddLocality("New York"), p => p.Label = "Borna")
+            .Addresses.Add(VCards.AddressBuilder.Create().AddLocality("London").Build())
+            .Addresses.Add(VCards.AddressBuilder.Create().AddLocality("New York").Build(), p => p.Label = "Borna")
             .Addresses.Edit(props => props.Append(null))
             .Addresses.AttachLabels(AddressFormatter.Default)
             .VCard;

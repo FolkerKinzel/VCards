@@ -38,8 +38,9 @@ public class AddressBuilderTests
             .AddStreet("p")
             .AddStreetName("q")
             .AddStreetNumber("r")
-            .AddSubDistrict("s")
-            .Clear();
+            .AddSubDistrict("s");
+
+        _ = bldr.Build();
 
         Assert.IsInstanceOfType(bldr, typeof(AddressBuilder));
         Assert.IsTrue(bldr.Data.All(x => x.Value.Count == 0));
@@ -82,14 +83,14 @@ public class AddressBuilderTests
     [TestMethod]
     public void EqualsTest1()
     {
-        Assert.IsFalse(new AddressBuilder().Equals((AddressBuilder?)null));
+        Assert.IsFalse(AddressBuilder.Create().Equals((AddressBuilder?)null));
 
-        var builder = new AddressBuilder();
+        var builder = AddressBuilder.Create();
         Assert.AreEqual(builder.GetHashCode(), ((object)builder).GetHashCode());
     }
 
     [TestMethod]
-    public void ToStringTest1() => Assert.IsNotNull(new AddressBuilder().ToString());
+    public void ToStringTest1() => Assert.IsNotNull(AddressBuilder.Create().ToString());
 
     [TestMethod()]
     public void AddPostOfficeBoxTest1()
@@ -190,7 +191,7 @@ public class AddressBuilderTests
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddLocality("1").AddLocality("2").Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Locality);
+        CollectionAssert.AreEqual(expected, prop.Value.Locality.ToArray());
     }
 
     [TestMethod()]
@@ -212,7 +213,7 @@ public class AddressBuilderTests
         string[] expected = ["1", "2"];
         var prop = new AddressProperty(AddressBuilder.Create().AddRegion("1").AddRegion("2").Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Region);
+        CollectionAssert.AreEqual(expected, prop.Value.Region.ToArray());
     }
 
     [TestMethod()]

@@ -376,7 +376,7 @@ END:VCARD";
     [TestMethod]
     public void PreserveTimeZoneAndGeoTest1()
     {
-        var adr = new AddressProperty("1", "", "", "", "");
+        var adr = new AddressProperty(AddressBuilder.Create().AddStreet("1").Build());
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
         Assert.IsNotNull(adr.Parameters.Label);
@@ -397,7 +397,7 @@ END:VCARD";
     [TestMethod]
     public void PreserveTimeZoneAndGeoTest2()
     {
-        var adr = new AddressProperty("1", "", "", "", "");
+        var adr = new AddressProperty(AddressBuilder.Create().AddStreet("1").Build());
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
         Assert.IsNotNull(adr.Parameters.Label);
@@ -691,8 +691,8 @@ END:VCARD";
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add("street", null, null, null)
-            .Addresses.Add("street2", null, null, null)
+            .Addresses.Add(AddressBuilder.Create().AddStreet("street").Build())
+            .Addresses.Add(AddressBuilder.Create().AddStreet("street2").Build())
             .Addresses.SetPreferences()
             .VCard;
 

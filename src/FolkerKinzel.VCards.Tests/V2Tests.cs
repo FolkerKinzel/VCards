@@ -135,13 +135,13 @@ public class V2Tests
         const string label0 = "Elmstreet 13";
         const string label1 = "Sackgasse 5";
 
-        var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", autoLabel: false);
+        var addr0 = new AddressProperty(AddressBuilder.Create().AddStreet(label0).AddLocality("Entenhausen").AddPostalCode("01234").Build());
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
         addr0.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr0.Parameters.PropertyClass = PCl.Home;
 
-        var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", autoLabel: false);
+        var addr1 = new AddressProperty(AddressBuilder.Create().AddStreet(label1).AddLocality("Borna").AddPostalCode("43210").Build());
         addr1.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr1.Parameters.PropertyClass = PCl.Work;
         addr1.Parameters.Label = label1;
@@ -169,13 +169,13 @@ public class V2Tests
         const string label0 = "Elmstreet 13";
         const string label1 = "Sackgasse 5";
 
-        var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", autoLabel: false);
+        var addr0 = new AddressProperty(AddressBuilder.Create().AddStreet(label0).AddLocality("Entenhausen").AddPostalCode("01234").Build());
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
         addr0.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr0.Parameters.PropertyClass = PCl.Home;
 
-        var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", autoLabel: false);
+        var addr1 = new AddressProperty(AddressBuilder.Create().AddStreet(label1).AddLocality("Borna").AddPostalCode("43210").Build());
         addr1.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr1.Parameters.PropertyClass = PCl.Work;
         addr1.Parameters.Label = label1;
@@ -276,7 +276,7 @@ public class V2Tests
     [TestMethod]
     public void PreserveTimeZoneAndGeoTest1()
     {
-        var adr = new AddressProperty("1", "", "", "", "");
+        var adr = new AddressProperty(AddressBuilder.Create().AddStreet("1").Build());
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
         Assert.IsNotNull(adr.Parameters.Label);

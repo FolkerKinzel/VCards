@@ -397,7 +397,7 @@ public class Rfc9554Tests
     {
         VCard vc = VCardBuilder
            .Create(false, false)
-           .Addresses.Add(AddressBuilder.Create().AddLocality("Berlin"),
+           .Addresses.Add(AddressBuilder.Create().AddLocality("Berlin").Build(),
            p =>
            {
                p.Phonetic = Phonetic.Ipa;
