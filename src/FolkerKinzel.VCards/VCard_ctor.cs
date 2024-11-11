@@ -22,8 +22,6 @@ public sealed partial class VCard
     /// property with a newly created <see cref="TimeStampProperty"/>, otherwise
     /// <c>false</c>.
     /// </param>
-    /// <exception cref="InvalidOperationException">The executing application is
-    /// not yet registered with the <see cref="VCard"/> class. (See <see cref="VCard.RegisterApp(Uri?)"/>.)</exception>
     public VCard(bool setID = true, bool setCreated = true)
     {
         if (setID)

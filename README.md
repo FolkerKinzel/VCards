@@ -4,7 +4,7 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 ## .NET library for reading, writing, and converting VCF files that comply with vCard standards 2.1, 3.0 and 4.0
 
-[&rarr; Project Reference](https://folkerkinzel.github.io/VCards/reference/)
+[Project Reference](https://folkerkinzel.github.io/VCards/reference/)
 
 FolkerKinzel.VCards is a full-featured .NET library for working with vCard files (*.vcf).
 

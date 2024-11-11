@@ -2,7 +2,7 @@
             Adds a <a href="aa898609-8843-98f4-56c5-cc0c7bf76b89.htm">DataProperty</a> instance, which is newly 
             initialized using the binary content 
             of a file, to the specified <a href="23413828-9a4a-2851-b88b-84d0afcb0031.htm">VCard</a> property.
-            </div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Definition</h2><div id="IDBSection"><strong>Namespace:</strong> <a href="30716183-7f69-ceb8-b5fe-4d9f23e7fd2b.htm">FolkerKinzel.VCards.BuilderParts</a><br /><strong>Assembly:</strong> FolkerKinzel.VCards (in FolkerKinzel.VCards.dll) Version: 7.4.2+49e1f6f07c61c1e0141ed2f5b5e79c007c800cbc<div class="codeSnippet" data-codeSnippetLanguage="cs"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs"><span class="keyword">public</span> <span class="identifier">VCardBuilder</span> <span class="identifier">AddFile</span>(
+            </div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Definition</h2><div id="IDBSection"><strong>Namespace:</strong> <a href="30716183-7f69-ceb8-b5fe-4d9f23e7fd2b.htm">FolkerKinzel.VCards.BuilderParts</a><br /><strong>Assembly:</strong> FolkerKinzel.VCards (in FolkerKinzel.VCards.dll) Version: 7.4.2+341eb6222a3d0a2dbec4605087b4a9273f6b866b<div class="codeSnippet" data-codeSnippetLanguage="cs"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs"><span class="keyword">public</span> <span class="identifier">VCardBuilder</span> <span class="identifier">AddFile</span>(
 	<span class="identifier">string</span> <span class="parameter">filePath</span>,
 	<span class="identifier">string</span>? <span class="parameter">mimeType</span> = <span class="keyword">null</span>,
 	<span class="identifier">Action</span>&lt;<span class="identifier">ParameterSection</span>&gt;? <span class="parameter">parameters</span> = <span class="keyword">null</span>,
@@ -127,10 +127,6 @@ public static class VCardExample
                              }
                            )
                 .Phones.SetIndexes()
-                // Unless specified, an address label is automatically applied to the AddressProperty object.
-                // Specifying the country helps to format this label correctly.
-                // Applying a group name to the AddressProperty helps to automatically preserve its Label,
-                // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
                 .Addresses.Add(AddressBuilder
                     .Create()
                     .AddStreetName("Friedrichstraße")
@@ -145,8 +141,12 @@ public static class VCardExample
                          p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
                          p.GeoPosition = new GeoCoordinate(52.51182050685474, 13.389581454284256);
                      },
+                     // Applying a group name to the AddressProperty helps to automatically preserve its Label,
+                     // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
                      group: vc =&gt; vc.NewGroup()
                               )
+                // Specifying the country or the ParameterSection.CountryCode property helps to format automatically
+                // appended address labels correctly.
                 .Addresses.AttachLabels(AddressFormatter.Default)
                 .EMails.Add("kaethe_mueller@internet.com", parameters: p =&gt; p.PropertyClass = PCl.Work)
                 .EMails.Add("mailto:kaethe_at_home@internet.com",
