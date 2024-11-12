@@ -1,6 +1,7 @@
 ﻿using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Tests;

@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using FolkerKinzel.VCards.Models.Properties;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;

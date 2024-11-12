@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class AddressesBuilderTests
@@ -50,7 +52,14 @@ public class AddressesBuilderTests
 
         VCard vc = builder.VCard;
 
+
+/* Unmerged change from project 'FolkerKinzel.VCards.Tests (net48)'
+Before:
         IEnumerable<Models.AddressProperty?>? property = vc.Addresses;
+After:
+        IEnumerable<Models.Properties.AddressProperty?>? property = vc.Addresses;
+*/
+        IEnumerable<AddressProperty?>? property = vc.Addresses;
 
         Assert.IsNotNull(property);
         Assert.AreEqual(2, property.Count());
@@ -143,7 +152,16 @@ public class AddressesBuilderTests
             .Addresses.AttachLabels(AddressFormatter.Default)
             .VCard;
 
+
+/* Unmerged change from project 'FolkerKinzel.VCards.Tests (net48)'
+Before:
         IEnumerable<Models.AddressProperty?>? adr = vc.Addresses;
+        Assert.IsNotNull(adr);
+After:
+        IEnumerable<Models.Properties.AddressProperty?>? adr = vc.Addresses;
+        Assert.IsNotNull(adr);
+*/
+        IEnumerable<AddressProperty?>? adr = vc.Addresses;
         Assert.IsNotNull(adr);
         Assert.AreEqual(3, adr.Count());
         Assert.IsTrue(adr.Any(x => StringComparer.Ordinal.Equals("London", x?.Value.Locality.First()) && 

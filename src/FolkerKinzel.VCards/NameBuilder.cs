@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Intls.Enums;
 namespace FolkerKinzel.VCards;
 
 /// <summary>
-/// Collects the data used to initialize a <see cref="Models.NameProperty"></see> instance.
+/// Collects the data used to initialize a <see cref="Models.Properties.NameProperty"></see> instance.
 /// </summary>
 /// <remarks>
 /// <para>

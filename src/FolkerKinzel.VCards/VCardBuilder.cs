@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.BuilderParts;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
 namespace FolkerKinzel.VCards;

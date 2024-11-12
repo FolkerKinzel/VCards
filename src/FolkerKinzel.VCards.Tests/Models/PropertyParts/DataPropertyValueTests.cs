@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+﻿using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
 
 [TestClass]
 public class DataPropertyValueTests

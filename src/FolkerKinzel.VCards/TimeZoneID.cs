@@ -3,14 +3,13 @@ using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards;
 
 /// <summary>Represents the standardized name of a time zone.</summary>
-/// <seealso cref="Models.TimeZoneProperty"/>
+/// <seealso cref="Models.Properties.TimeZoneProperty"/>
 /// <seealso cref="VCard.TimeZones"/>
 /// <seealso cref="ParameterSection.TimeZone"/>
 public sealed partial class TimeZoneID

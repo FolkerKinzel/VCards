@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Globalization;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models.Properties;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Models.PropertyParts;

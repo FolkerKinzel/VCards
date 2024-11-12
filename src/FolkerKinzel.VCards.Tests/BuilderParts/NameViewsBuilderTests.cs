@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FolkerKinzel.VCards.Models.Properties;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
@@ -20,7 +21,14 @@ public class NameViewsBuilderTests
 
         VCard vc = builder.VCard;
 
+
+/* Unmerged change from project 'FolkerKinzel.VCards.Tests (net48)'
+Before:
         IEnumerable<Models.NameProperty?>? property = vc.NameViews;
+After:
+        IEnumerable<Models.Properties.NameProperty?>? property = vc.NameViews;
+*/
+        IEnumerable<NameProperty?>? property = vc.NameViews;
 
         Assert.IsNotNull(property);
         Assert.AreEqual(2, property.Count());
@@ -119,7 +127,16 @@ public class NameViewsBuilderTests
             .VCard;
 
         StringComparer comp = StringComparer.Ordinal;
+
+/* Unmerged change from project 'FolkerKinzel.VCards.Tests (net48)'
+Before:
         IEnumerable<Models.TextProperty?>? dn = vc.DisplayNames;
+        Assert.IsNotNull(dn);
+After:
+        IEnumerable<Models.Properties.TextProperty?>? dn = vc.DisplayNames;
+        Assert.IsNotNull(dn);
+*/
+        IEnumerable<TextProperty?>? dn = vc.DisplayNames;
         Assert.IsNotNull(dn);
         Assert.AreEqual(4, dn.Count());
         CollectionAssert.Contains(dn.ToArray(), null);

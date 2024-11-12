@@ -1,5 +1,5 @@
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards;
 

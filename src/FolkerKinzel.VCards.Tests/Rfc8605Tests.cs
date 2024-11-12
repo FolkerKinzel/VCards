@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -73,7 +74,16 @@ public class Rfc8605Tests
         Assert.IsNotNull(vc);
         Assert.IsNotNull(vc.Addresses);
 
+
+/* Unmerged change from project 'FolkerKinzel.VCards.Tests (net48)'
+Before:
         VCards.Models.AddressProperty? adr = vc.Addresses.First();
+        Assert.IsNotNull(adr);
+After:
+        Models.Properties.AddressProperty? adr = vc.Addresses.First();
+        Assert.IsNotNull(adr);
+*/
+        AddressProperty? adr = vc.Addresses.First();
         Assert.IsNotNull(adr);
 
         Assert.AreEqual("DE", adr.Parameters.CountryCode);
