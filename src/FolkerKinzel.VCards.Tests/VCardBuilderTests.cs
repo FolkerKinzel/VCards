@@ -644,7 +644,7 @@ public class VCardBuilderTests
         builder.GenderViews.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.GenderViews = new GenderProperty(Sex.Female).Append(null);
+        builder.VCard.GenderViews = new GenderProperty(Gender.Female).Append(null);
         builder.GenderViews.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());

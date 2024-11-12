@@ -109,7 +109,7 @@ public class VcfSerializerTests
             .Create()
             .GenderViews.Edit(props => [null])
             .GenderViews.Add(null, "something other")
-            .GenderViews.Add(null, null)
+            .GenderViews.Add(Gender.Empty)
             .GenderViews.Add(Sex.Other)
             .VCard;
 

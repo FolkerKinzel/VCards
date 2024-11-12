@@ -23,7 +23,7 @@ public class GenderPropertyTests
     [DataRow(GROUP, Sex.Female, IDENTITY)]
     public void GenderPropertyTest1(string? expectedGroup, Sex? expectedSex, string? expectedGenderIdentity)
     {
-        var genderProp = new GenderProperty(expectedSex, expectedGenderIdentity, expectedGroup);
+        var genderProp = new GenderProperty(new Gender( expectedSex, expectedGenderIdentity), expectedGroup);
 
         Assert.IsNotNull(genderProp.Value);
         Assert.AreEqual(expectedGroup, genderProp.Group);
@@ -63,7 +63,7 @@ public class GenderPropertyTests
     [TestMethod]
     public void GenderPropertyTest3()
     {
-        var prop = new GenderProperty(Sex.Female, IDENTITY, GROUP);
+        var prop = new GenderProperty(new Gender(Sex.Female, IDENTITY), GROUP);
 
         var vcard = new VCard
         {
@@ -94,14 +94,14 @@ public class GenderPropertyTests
     [TestMethod]
     public void IEnumerableTest1()
     {
-        var prop = new GenderProperty(Sex.Other);
+        var prop = new GenderProperty(new Gender(Sex.Other));
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 
     [TestMethod]
     public void CloneTest1()
     {
-        var prop1 = new GenderProperty(Sex.Other, "difficult");
+        var prop1 = new GenderProperty(new Gender(Sex.Other, "difficult"));
 
         var prop2 = (GenderProperty)prop1.Clone();
 
@@ -112,7 +112,7 @@ public class GenderPropertyTests
     [TestMethod]
     public void ToStringTest1()
     {
-        var prop1 = new GenderProperty(Sex.Other, "difficult");
+        var prop1 = new GenderProperty(new Gender(Sex.Other, "difficult"));
         Assert.IsNotNull(prop1.ToString());
     }
 }
