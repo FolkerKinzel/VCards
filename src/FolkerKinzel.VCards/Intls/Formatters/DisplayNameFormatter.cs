@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Formatters;
 

@@ -1,6 +1,4 @@
-﻿using FolkerKinzel.VCards.Models;
-
-namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class ContactIDBuilderTests

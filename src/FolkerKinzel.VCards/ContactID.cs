@@ -1,11 +1,21 @@
 ﻿using System;
+
+/* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
+Before:
+using FolkerKinzel.VCards.Intls;
+After:
+using FolkerKinzel;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Intls;
+*/
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Resources;
 using OneOf;
 
-namespace FolkerKinzel.VCards.Models;
+namespace FolkerKinzel.VCards;
 
 /// <summary>
 /// Encapsulates a globally unique identifier corresponding to the entity associated 
@@ -136,12 +146,12 @@ public sealed class ContactID : IEquatable<ContactID>
                        Action<Uri> uriAction,
                        Action<string> stringAction)
     {
-        if (Guid.HasValue) 
-        { 
+        if (Guid.HasValue)
+        {
             if (guidAction is null)
             {
-                throw new InvalidOperationException(); 
-            } 
+                throw new InvalidOperationException();
+            }
             else
             {
                 guidAction(Guid.Value);
@@ -150,7 +160,7 @@ public sealed class ContactID : IEquatable<ContactID>
 
         if (Object is Uri uri)
         {
-            if(uriAction is null)
+            if (uriAction is null)
             {
                 throw new InvalidOperationException();
             }
@@ -191,11 +201,11 @@ public sealed class ContactID : IEquatable<ContactID>
                                     Func<Uri, TResult> uriFunc,
                                     Func<string, TResult> stringFunc)
     {
-        return Guid.HasValue ? guidFunc is null ? throw new InvalidOperationException() 
-                                                : guidFunc(Guid.Value) 
-                             : Object is Uri uri ? uriFunc is null ? throw new InvalidOperationException() 
+        return Guid.HasValue ? guidFunc is null ? throw new InvalidOperationException()
+                                                : guidFunc(Guid.Value)
+                             : Object is Uri uri ? uriFunc is null ? throw new InvalidOperationException()
                                                                    : uriFunc(uri)
-                                                 : stringFunc is null ? throw new InvalidOperationException() 
+                                                 : stringFunc is null ? throw new InvalidOperationException()
                                                                       : stringFunc((string)Object);
     }
 
@@ -209,9 +219,9 @@ public sealed class ContactID : IEquatable<ContactID>
         return other is not null
           && (Guid.HasValue
                      ? other.Guid.HasValue && Guid.Value.Equals(other.Guid.Value)
-                     : Object is Uri uri 
-                            ? (other.Object is Uri otherUri && uri.Equals(otherUri)) || (other.Object is string && comp.Equals(other.String, ((Uri)Object).AbsoluteUri))
-            /* IsString */  : comp.Equals(String, other.String) || (other.Object is Uri && comp.Equals(((Uri)other.Object).AbsoluteUri, String)));
+                     : Object is Uri uri
+                            ? other.Object is Uri otherUri && uri.Equals(otherUri) || other.Object is string && comp.Equals(other.String, ((Uri)Object).AbsoluteUri)
+            /* IsString */  : comp.Equals(String, other.String) || other.Object is Uri && comp.Equals(((Uri)other.Object).AbsoluteUri, String));
     }
 
     /// <inheritdoc/>

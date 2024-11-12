@@ -1,6 +1,16 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+
+/* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
+Before:
+using FolkerKinzel.VCards.Enums;
+After:
+using FolkerKinzel;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Enums;
+*/
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
@@ -9,9 +19,10 @@ using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Formatters;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Models;
 using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
-namespace FolkerKinzel.VCards.Models;
+namespace FolkerKinzel.VCards;
 
 /// <summary>Encapsulates information about a postal delivery address.</summary>
 /// <remarks>
@@ -396,7 +407,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         foreach (KeyValuePair<AdrProp, string[]> kvp in _dic)
         {
             if (kvp.Key <= AdrProp.Country
-                && StringExtension.ContainsAnyThatNeedsQpEncoding(kvp.Value))
+                && kvp.Value.ContainsAnyThatNeedsQpEncoding())
             {
                 return true;
             }
@@ -405,5 +416,5 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         return false;
     }
 
-    
+
 }

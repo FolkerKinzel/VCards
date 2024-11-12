@@ -889,7 +889,7 @@ public sealed partial class VCard
                 Debug.Assert(!prop.IsEmpty);
 
                 RelationProperty relProp = Uri.TryCreate(text.Trim(), UriKind.Absolute, out Uri? uri)
-                    ? new RelationProperty(Relation.Create(Models.ContactID.Create(uri)),  prop.Group)
+                    ? new RelationProperty(Relation.Create(VCards.ContactID.Create(uri)),  prop.Group)
                     : new RelationProperty(Relation.Create(new VCard(setContactID: true, setCreated: false) 
                                                           { 
                                                             DisplayNames = new TextProperty(text) 

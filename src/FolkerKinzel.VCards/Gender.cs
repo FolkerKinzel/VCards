@@ -1,9 +1,20 @@
+
+/* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
+Before:
+using FolkerKinzel.VCards.Enums;
+After:
+using FolkerKinzel;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Enums;
+*/
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Models;
 
-namespace FolkerKinzel.VCards.Models;
+namespace FolkerKinzel.VCards;
 
 /// <summary>Encapsulates information to specify the components of the gender and 
 /// gender identity of the object the <see cref="VCard"/> represents.</summary>
@@ -27,12 +38,12 @@ public sealed class Gender(Sex? sex, string? identity = null)
     public bool IsEmpty => !Sex.HasValue && Identity is null;
 
     /// <summary>
-    /// A singleton that encapsulates <see cref="Enums.Sex.Male"/>
+    /// A singleton that encapsulates <see cref="Sex.Male"/>
     /// </summary>
     public static Gender Male { get; } = new(Enums.Sex.Male);
 
     /// <summary>
-    /// A singleton that encapsulates <see cref="Enums.Sex.Female"/>
+    /// A singleton that encapsulates <see cref="Sex.Female"/>
     /// </summary>
     public static Gender Female { get; } = new(Enums.Sex.Female);
 

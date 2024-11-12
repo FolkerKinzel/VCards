@@ -1,10 +1,21 @@
 using System.ComponentModel;
+
+/* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
+Before:
+using FolkerKinzel.VCards.Enums;
+After:
+using FolkerKinzel;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Enums;
+*/
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.PropertyParts;
 
-namespace FolkerKinzel.VCards.Models;
+namespace FolkerKinzel.VCards;
 
 /// <summary>
 /// Encapsulates the data that describes a person or organization 
@@ -73,11 +84,11 @@ public sealed class Relation
     public VCard? VCard => Object as VCard;
 
     /// <summary>
-    /// Gets the encapsulated <see cref="Models.ContactID"/>,
+    /// Gets the encapsulated <see cref="VCards.ContactID"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <remarks>
-    /// The <see cref="Models.ContactID"/> references another <see cref="VCard"/> with
+    /// The <see cref="VCards.ContactID"/> references another <see cref="VCard"/> with
     /// its <see cref="VCard.ContactID"/> property.
     /// </remarks>
     public ContactID? ContactID => Object as ContactID;
@@ -155,8 +166,8 @@ public sealed class Relation
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => Object is VCard vc 
-                                            ? $"{{ {nameof(VCard)}: {vc.DisplayNames.FirstOrNull()?.Value} }}" 
+    public override string ToString() => Object is VCard vc
+                                            ? $"{{ {nameof(VCard)}: {vc.DisplayNames.FirstOrNull()?.Value} }}"
                                             : $"{Object.GetType().FullName}: {Object}";
 }
 

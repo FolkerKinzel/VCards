@@ -1,6 +1,4 @@
-﻿using FolkerKinzel.VCards.Models;
-
-namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
+﻿namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
 
 [TestClass]
 public class DefaultNameFormatterTests

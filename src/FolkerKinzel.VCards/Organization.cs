@@ -1,5 +1,15 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+
+/* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
+Before:
+using FolkerKinzel.VCards.Enums;
+After:
+using FolkerKinzel;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards;
+using FolkerKinzel.VCards.Enums;
+*/
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
@@ -8,7 +18,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
-namespace FolkerKinzel.VCards.Models;
+namespace FolkerKinzel.VCards;
 
 /// <summary>Encapsulates information about the organization (or company) of the
 /// object the <see cref="VCard"/> represents.</summary>
@@ -66,7 +76,7 @@ public sealed class Organization
 
     internal bool NeedsToBeQpEncoded()
         => Name.NeedsToBeQpEncoded() ||
-           (_units is not null && StringExtension.ContainsAnyThatNeedsQpEncoding(_units));
+           _units is not null && _units.ContainsAnyThatNeedsQpEncoding();
 
     /// <inheritdoc/>
     public override string ToString()

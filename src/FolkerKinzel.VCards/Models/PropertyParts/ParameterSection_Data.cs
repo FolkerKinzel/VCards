@@ -362,11 +362,11 @@ public sealed partial class ParameterSection
     /// plays an important role for the application, the application should check this in 
     /// the case of vCard&#160;2.1 or vCard&#160;3.0 by text comparison or create its own labels 
     /// from the <see cref="Address"/> data, e.g., using the <see 
-    /// cref="AddressProperty.AttachLabel()" /> method.
+    /// cref="AddressFormatter" /> class.
     /// </para>
     /// </note>
     /// </remarks>
-    /// <seealso cref="AddressProperty.AttachLabel" />
+    /// <seealso cref="AddressFormatter" />
     public string? Label
     {
         get => Get<string?>(VCdParam.Label);

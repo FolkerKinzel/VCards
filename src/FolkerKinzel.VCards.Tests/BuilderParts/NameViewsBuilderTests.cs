@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 

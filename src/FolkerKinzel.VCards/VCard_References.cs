@@ -12,7 +12,7 @@ public sealed partial class VCard
     /// <see cref = "VCard" /> objects passed as a collection as well as those which
     /// had been embedded in their <see cref="VCard.Relations"/> property. The previously 
     /// embedded <see cref="VCard"/> objects are now referenced by <see cref = "RelationProperty" /> 
-    /// objects that are initialized with the <see cref="Models.ContactID"/> instance of the <see cref="VCard.ContactID"/>
+    /// objects that are initialized with the <see cref="VCards.ContactID"/> instance of the <see cref="VCard.ContactID"/>
     /// property of these previously embedded <see cref="VCard"/>s.</summary>
     /// 
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
@@ -77,7 +77,7 @@ public sealed partial class VCard
     /// had been embedded in their <see cref="VCard.Relations"/> or <see cref="VCard.Members"/> properties.
     /// The previously 
     /// embedded <see cref="VCard"/> objects are now referenced by <see cref = "RelationProperty" /> 
-    /// objects that are initialized with the <see cref="Models.ContactID"/> instance of the <see cref="VCard.ContactID"/>
+    /// objects that are initialized with the <see cref="VCards.ContactID"/> instance of the <see cref="VCard.ContactID"/>
     /// property of these previously embedded <see cref="VCard"/>s.
     /// </summary>
     /// <param name="vCards">A <see cref="List{T}"/> of <see cref="VCard"/> instances to process.</param>
@@ -130,7 +130,7 @@ public sealed partial class VCard
 
                 if (id is null || id.IsEmpty)
                 {
-                    id = Models.ContactID.Create();
+                    id = VCards.ContactID.Create();
                     vc.ContactID = new ContactIDProperty(id);
                 }
 
@@ -159,7 +159,7 @@ public sealed partial class VCard
 
     /// <summary>
     /// Replaces the <see cref="RelationProperty"/> instances that refer external vCards with their 
-    /// <see cref="Models.ContactID"/> values by <see cref="RelationProperty"/> instances that contain 
+    /// <see cref="VCards.ContactID"/> values by <see cref="RelationProperty"/> instances that contain 
     /// these <see cref="VCard"/> instances directly, provided that <paramref name="vCards"/> 
     /// contains these <see cref="VCard"/> instances.</summary>
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
